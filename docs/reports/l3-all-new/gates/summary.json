@@ -1,0 +1,460 @@
+{
+  "assetRevision": "f3046139c",
+  "sourcePipelineRevision": "bb5ac82",
+  "exitCodes": {
+    "npm test": 0,
+    "npm run assets:validate": 0,
+    "npm run verify -- E21": 0,
+    "npm run test:smoke": 0,
+    "npm run scene:gate": 0,
+    "tools/playtest --levels L3 --no-skip": 0
+  },
+  "unitTests": 96,
+  "validator": {
+    "rows": 1262,
+    "errors": 0,
+    "command": "npm run assets:validate",
+    "assetRevision": "f3046139c"
+  },
+  "smoke": {
+    "qa": {
+      "startTime": "2026-10-27T19:24:55.621Z",
+      "duration": 131282.616,
+      "expected": 6,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "public": {
+      "startTime": "2026-10-27T19:27:14.219Z",
+      "duration": 4980.674,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "freezeGuard": [
+      {
+        "type": "builds after warm-up",
+        "description": "{}"
+      },
+      {
+        "type": "frames",
+        "description": "max 17 ms in 168"
+      }
+    ]
+  },
+  "sceneGate": {
+    "rows": 48,
+    "passed": 42,
+    "known": [
+      {
+        "name": "inf-chase-l3@high-z0.5",
+        "failed": [
+          "courierSwingsMin 0 > 1"
+        ],
+        "reason": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; courierSwings 0 at every zoom (scene expects the courier to swing at least once)"
+      },
+      {
+        "name": "ped-zoo-staff@high",
+        "failed": [
+          "clipping 4 > 0"
+        ],
+        "reason": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; 4 hand-vs-held-prop grip overlaps (coffee, bag x2, watering can); sheet looks fine"
+      },
+      {
+        "name": "ped-sit-all@high",
+        "failed": [
+          "clipping 1 > 0"
+        ],
+        "reason": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; right hand vs held cane, 215 tris, grip overlap only (sheet looks fine)"
+      },
+      {
+        "name": "ped-water-flowerbed@high",
+        "failed": [
+          "clipping 1 > 0"
+        ],
+        "reason": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; right hand vs watering can grip overlap"
+      },
+      {
+        "name": "dog-pet-trot@low-z1.5",
+        "failed": [
+          "footSlideMaxCm 8.2 > 3"
+        ],
+        "reason": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; footSlideMaxCm 8.2 > 3 at every zoom (low tier dog trot)"
+      },
+      {
+        "name": "ped-sit-all@low",
+        "failed": [
+          "clipping 1 > 0"
+        ],
+        "reason": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; same hand/cane overlap"
+      }
+    ],
+    "unexpected": 0,
+    "notRun": 0,
+    "sourceIdentity": {
+      "revision": "f3046139c51ca0358f4cbc810822de20915a2752",
+      "inputs": "c00e73e510d27f4eda421d85ed99a5b7c62235e2ec28344c510734f4e6309519",
+      "mode": "gate",
+      "rows": [
+        [
+          "webgl2",
+          "low",
+          "courier-gear-tier4-female@low-z1.5"
+        ],
+        [
+          "webgpu",
+          "high",
+          "courier-gear-tier4-male@high-z0.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "courier-gear-tier2-female@high-z1.5"
+        ],
+        [
+          "webgpu",
+          "low",
+          "courier-gear-tier4-swing-female@low-z0.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "e18-courier-armed-male@high-z1.5"
+        ],
+        [
+          "webgpu",
+          "low",
+          "e18-courier-armed-female@low-z0.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "courier-locomotion-f@high-z1.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "courier-turns@high-z1.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "ped-walk-all@high"
+        ],
+        [
+          "webgpu",
+          "low",
+          "ped-walk-all@low"
+        ],
+        [
+          "webgl2",
+          "high",
+          "ped-sit-all@high"
+        ],
+        [
+          "webgpu",
+          "low",
+          "ped-sit-all@low"
+        ],
+        [
+          "webgl2",
+          "low",
+          "ped-newchars-walk-1@low-z0.5"
+        ],
+        [
+          "webgl2",
+          "low",
+          "ped-newchars-sit@low"
+        ],
+        [
+          "webgpu",
+          "low",
+          "ped-hats-glasses@low-z1.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "ped-hats-spots-l1@high-z0.5"
+        ],
+        [
+          "webgpu",
+          "low",
+          "ped-l1-staged-cast@low-z1.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "ped-water-flowerbed@high"
+        ],
+        [
+          "webgpu",
+          "high",
+          "ped-zoo-staff@high"
+        ],
+        [
+          "webgl2",
+          "low",
+          "ped-bitten@low"
+        ],
+        [
+          "webgl2",
+          "low",
+          "inf-chase-l1@low-z1.5"
+        ],
+        [
+          "webgpu",
+          "high",
+          "inf-chase-l3@high-z0.5"
+        ],
+        [
+          "webgpu",
+          "low",
+          "inf-looks@low"
+        ],
+        [
+          "webgl2",
+          "high",
+          "inf-horde-headwear@high-z1.5"
+        ],
+        [
+          "webgl2",
+          "low",
+          "inf-attack-knockdown@low"
+        ],
+        [
+          "webgpu",
+          "low",
+          "alpha-variants-close@low-z1.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "alpha-hit-corpse-suit@high-z1.5"
+        ],
+        [
+          "webgl2",
+          "low",
+          "mega-alpha-variants-lineup@low-z0.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "corgi-tongue-female@high-z1.5"
+        ],
+        [
+          "webgpu",
+          "low",
+          "dog-pet-trot@low-z1.5"
+        ],
+        [
+          "webgpu",
+          "low",
+          "animal-zoo-healthy@low-z0.5"
+        ],
+        [
+          "webgpu",
+          "high",
+          "wave3-zoo-routines@high-z1.5"
+        ],
+        [
+          "webgl2",
+          "low",
+          "corpse-look-close@low-z1.5"
+        ],
+        [
+          "webgpu",
+          "high",
+          "corpse-look-alpha@high-z0.5"
+        ],
+        [
+          "webgpu",
+          "low",
+          "corpse-placement-pile@low-z0.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "l4-broken-army-line@high-z0.5"
+        ],
+        [
+          "webgpu",
+          "high",
+          "fight-army-line-zoom06@high-z1.5"
+        ],
+        [
+          "webgl2",
+          "low",
+          "l10-d2-military-breach@low-z0.5"
+        ],
+        [
+          "webgl2",
+          "low",
+          "l10-mega-close-contact@low-z1.5"
+        ],
+        [
+          "webgpu",
+          "low",
+          "seethrough-open-sidewalk-l4@low-z0.5"
+        ],
+        [
+          "webgl2",
+          "low",
+          "seethrough-gear-four@low-z1.5"
+        ],
+        [
+          "webgpu",
+          "high",
+          "seat-bench-l1-start@high-z1.5"
+        ],
+        [
+          "webgl2",
+          "low",
+          "seat-bench-tipped@low"
+        ],
+        [
+          "webgpu",
+          "low",
+          "seat-grip-coffee-game@low-z1.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "veh-bus-hero@high-z0.5"
+        ],
+        [
+          "webgpu",
+          "low",
+          "veh-apc-damage-250@low-z1.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "collision-vehicle-admission@high-z0.5"
+        ],
+        [
+          "webgpu",
+          "high",
+          "inf-mega-arrival@high-z0.5"
+        ]
+      ],
+      "maxRows": 15
+    }
+  },
+  "playthrough": {
+    "mode": "campaign",
+    "quality": "low",
+    "heroine": "female",
+    "zoom": 1.5,
+    "levels": [
+      "L3"
+    ],
+    "runs": [
+      {
+        "level": "L3",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 209,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 14.666666666666666,
+        "deaths": 0,
+        "assists": 0,
+        "attacks": {
+          "weapon.handgun": 167,
+          "ability.corgi-lure": 2
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "ability.corgi-lure",
+          "weapon.molotov"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.handgun",
+          "ability.corgi-lure",
+          "weapon.molotov"
+        ],
+        "steps": [
+          {
+            "id": "armory",
+            "text": "Take a handgun from the armory \u00b7 19\u00a0m",
+            "tick": 11,
+            "marker": {
+              "anchor": "l3-armory",
+              "ring": {
+                "x": -139.2,
+                "y": 0,
+                "z": -8.4
+              },
+              "drawn": [
+                -139.2,
+                0.05,
+                -8.4
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "defend",
+            "text": "Help defend the station",
+            "tick": 684,
+            "marker": {
+              "anchor": "l3-armory",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "checkpoint",
+            "text": "Get inside the army checkpoint \u00b7 364\u00a0m",
+            "tick": 1344,
+            "marker": {
+              "anchor": "l3-route",
+              "ring": {
+                "x": 225,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": [
+                225,
+                0.05,
+                0
+              ],
+              "playerY": 0.7200000286102295,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "issues": 0,
+    "bySeverity": {
+      "P0": 0,
+      "P1": 0,
+      "P2": 0,
+      "P3": 0
+    }
+  },
+  "logSha256": {
+    "cold-loads.log": "14823260dac89edf8a22006e22bc4e05393afdbc8b58e3268ff02bd52e792df2",
+    "playthrough.log": "85d927f05d0f8fd72fb1f7cf825bdde363740be7e01da2b73e48a6f4c3c3dec9",
+    "pool-client-test.log": "872c4f8e1a5402134b4947723909fe56460c04ae8ad279ca9072ba5d324269aa",
+    "npm-test.log": "f82bd3951cfa3ee075c440693980af4df6e4448181ff1e50b1c552271cd19afc",
+    "lint.log": "5f9aee6b798507e187dcd3d4fbd5bcf5fdc37488cb89c27a01d5667ca7bb9fa1",
+    "verify-e21.log": "6f6d6a876764cace9a573ba55d8c23acb5e6fcd00050ed3752a025e410e6238a",
+    "typecheck.log": "768699d3cead53493237d3322201d28ee449107e90af9a5aa6f5dcab3f066b0c",
+    "smoke.log": "1038f2a8f310d4252b1c115cc704121d9e58711ccf66168f8476141ed88deabd",
+    "validator.log": "8d2c156ca4ce8ba1a6d50c17b7981595134b756b8a1bd1e618fa01f511dfac25",
+    "scene-gate.log": "c0873af86a323a49b84ef3292ff2e332e7b03d065fffc7c259f699522aa678c5"
+  },
+  "playthroughTimingNote": "Use 209 wall seconds: the existing tool reports simSeconds=0 after the automatic L3\u2192L4 world-tick reset."
+}

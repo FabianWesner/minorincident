@@ -1,0 +1,3026 @@
+{
+  "assetRevision": "f3046139c",
+  "baseline": "main 83503eb18",
+  "resourceProtocol": "Matched L3 30-figure street, nine guards plus inherited cast; all 30 submitted. Texture bytes include decoded resident texture and pose payloads, excluding driver padding. Some actors are occluded by street buildings.",
+  "resources": [
+    {
+      "tier": "low",
+      "old": {
+        "resources": {
+          "textureCount": 38,
+          "decodedBytes": 54652920,
+          "rgbaUpperBoundBytes": 72532961
+        },
+        "drawsAndTriangles": {
+          "drawCalls": {
+            "p50": 73,
+            "p95": 73,
+            "max": 77
+          },
+          "triangles": {
+            "p50": 243639,
+            "p95": 243639,
+            "max": 247991
+          },
+          "shadowDrawCalls": {
+            "p50": 40,
+            "p95": 40,
+            "max": 40
+          },
+          "shadowTriangles": {
+            "p50": 115604,
+            "p95": 115604,
+            "max": 115700
+          },
+          "stepMs": {
+            "p50": 10,
+            "p95": 10,
+            "max": 11
+          },
+          "lastFrame": {
+            "drawCalls": 77,
+            "triangles": 247991,
+            "shadowDrawCalls": 40,
+            "shadowTriangles": 115604,
+            "stepMs": 10,
+            "categories": {
+              "other": 53,
+              "shadows": 40,
+              "buildings": 11,
+              "props": 5,
+              "crowd": 8
+            }
+          },
+          "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+        },
+        "visibility": {
+          "frame": 3,
+          "sim": {
+            "corgi": 1,
+            "pedestrian": 28,
+            "infected": 6,
+            "courier": 1,
+            "actors": 30
+          },
+          "drawn": {
+            "vehicle": 0,
+            "infected": 6,
+            "pedestrian": 28,
+            "courier": 1,
+            "corgi": 1
+          }
+        },
+        "spec": {
+          "name": "l3-street-crowd30",
+          "ground": "district",
+          "time": "L3",
+          "tier": 1,
+          "size": 100,
+          "layout": {
+            "district": "D-CORRIDOR",
+            "level": "L3",
+            "bbox": [
+              [
+                -61,
+                -13
+              ],
+              [
+                -30,
+                13
+              ]
+            ]
+          },
+          "actors": [
+            {
+              "id": "courier",
+              "kind": "courier",
+              "at": [
+                -55,
+                -3
+              ],
+              "yaw": -45
+            },
+            {
+              "id": "corgi",
+              "kind": "corgi",
+              "at": [
+                -53,
+                -3
+              ],
+              "yaw": -45
+            },
+            {
+              "id": "ped-2",
+              "kind": "pedestrian",
+              "at": [
+                -51,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-3",
+              "kind": "pedestrian",
+              "at": [
+                -49,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-4",
+              "kind": "pedestrian",
+              "at": [
+                -47,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-5",
+              "kind": "pedestrian",
+              "at": [
+                -45,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-6",
+              "kind": "pedestrian",
+              "at": [
+                -43,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-7",
+              "kind": "pedestrian",
+              "at": [
+                -41,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-8",
+              "kind": "pedestrian",
+              "at": [
+                -39,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-9",
+              "kind": "pedestrian",
+              "at": [
+                -37,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-10",
+              "kind": "pedestrian",
+              "at": [
+                -55,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-11",
+              "kind": "pedestrian",
+              "at": [
+                -53,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.police-officer",
+                "handProp": null,
+                "role": "officer",
+                "tint": "#2f4858"
+              },
+              "state": {
+                "ally": {
+                  "role": "officer"
+                }
+              }
+            },
+            {
+              "id": "ped-12",
+              "kind": "pedestrian",
+              "at": [
+                -51,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.police-officer",
+                "handProp": null,
+                "role": "officer",
+                "tint": "#2f4858"
+              },
+              "state": {
+                "ally": {
+                  "role": "officer"
+                }
+              }
+            },
+            {
+              "id": "ped-13",
+              "kind": "pedestrian",
+              "at": [
+                -49,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.police-officer",
+                "handProp": null,
+                "role": "officer",
+                "tint": "#2f4858"
+              },
+              "state": {
+                "ally": {
+                  "role": "officer"
+                }
+              }
+            },
+            {
+              "id": "ped-14",
+              "kind": "pedestrian",
+              "at": [
+                -47,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.police-officer",
+                "handProp": null,
+                "role": "officer",
+                "tint": "#2f4858"
+              },
+              "state": {
+                "ally": {
+                  "role": "officer"
+                }
+              }
+            },
+            {
+              "id": "ped-15",
+              "kind": "pedestrian",
+              "at": [
+                -45,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.police-officer",
+                "handProp": null,
+                "role": "officer",
+                "tint": "#2f4858"
+              },
+              "state": {
+                "ally": {
+                  "role": "officer"
+                }
+              }
+            },
+            {
+              "id": "ped-16",
+              "kind": "pedestrian",
+              "at": [
+                -43,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-man-a",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-17",
+              "kind": "pedestrian",
+              "at": [
+                -41,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-man-b",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-18",
+              "kind": "pedestrian",
+              "at": [
+                -39,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-woman-a",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-19",
+              "kind": "pedestrian",
+              "at": [
+                -37,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-woman-b",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-20",
+              "kind": "pedestrian",
+              "at": [
+                -55,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-elderly",
+                "handProp": "cane"
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-21",
+              "kind": "pedestrian",
+              "at": [
+                -53,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-man-a",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-22",
+              "kind": "pedestrian",
+              "at": [
+                -51,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-man-b",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-23",
+              "kind": "pedestrian",
+              "at": [
+                -49,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-woman-a",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-24",
+              "kind": "pedestrian",
+              "at": [
+                -47,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-woman-b",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-25",
+              "kind": "pedestrian",
+              "at": [
+                -45,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-elderly",
+                "handProp": "cane"
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-26",
+              "kind": "pedestrian",
+              "at": [
+                -43,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-man-a",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-27",
+              "kind": "pedestrian",
+              "at": [
+                -41,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-man-b",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-28",
+              "kind": "pedestrian",
+              "at": [
+                -39,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-woman-a",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-29",
+              "kind": "pedestrian",
+              "at": [
+                -37,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-woman-b",
+                "handProp": null
+              },
+              "state": "idle"
+            }
+          ],
+          "script": [
+            {
+              "frame": 1,
+              "actor": "ped-16",
+              "do": {
+                "infect": {
+                  "instant": true
+                }
+              }
+            },
+            {
+              "frame": 1,
+              "actor": "ped-17",
+              "do": {
+                "infect": {
+                  "instant": true
+                }
+              }
+            },
+            {
+              "frame": 1,
+              "actor": "ped-18",
+              "do": {
+                "infect": {
+                  "instant": true
+                }
+              }
+            },
+            {
+              "frame": 1,
+              "actor": "ped-19",
+              "do": {
+                "infect": {
+                  "instant": true
+                }
+              }
+            },
+            {
+              "frame": 1,
+              "actor": "ped-20",
+              "do": {
+                "infect": {
+                  "instant": true
+                }
+              }
+            },
+            {
+              "frame": 1,
+              "actor": "ped-21",
+              "do": {
+                "infect": {
+                  "instant": true
+                }
+              }
+            }
+          ],
+          "camera": {
+            "mode": "game",
+            "target": [
+              -46,
+              0.7,
+              0
+            ],
+            "zoom": 1.5
+          },
+          "frames": 3,
+          "shots": [
+            3
+          ],
+          "expect": {
+            "consoleErrors": 0
+          }
+        }
+      },
+      "new": {
+        "resources": {
+          "textureCount": 40,
+          "decodedBytes": 55092312,
+          "rgbaUpperBoundBytes": 74283021
+        },
+        "drawsAndTriangles": {
+          "drawCalls": {
+            "p50": 73,
+            "p95": 73,
+            "max": 77
+          },
+          "triangles": {
+            "p50": 191529,
+            "p95": 191529,
+            "max": 195881
+          },
+          "shadowDrawCalls": {
+            "p50": 40,
+            "p95": 40,
+            "max": 40
+          },
+          "shadowTriangles": {
+            "p50": 115604,
+            "p95": 115604,
+            "max": 115700
+          },
+          "stepMs": {
+            "p50": 9.5,
+            "p95": 9.5,
+            "max": 10.5
+          },
+          "lastFrame": {
+            "drawCalls": 77,
+            "triangles": 195881,
+            "shadowDrawCalls": 40,
+            "shadowTriangles": 115604,
+            "stepMs": 9.5,
+            "categories": {
+              "other": 53,
+              "shadows": 40,
+              "buildings": 11,
+              "props": 5,
+              "crowd": 8
+            }
+          },
+          "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+        },
+        "visibility": {
+          "frame": 3,
+          "sim": {
+            "corgi": 1,
+            "pedestrian": 28,
+            "infected": 6,
+            "courier": 1,
+            "actors": 30
+          },
+          "drawn": {
+            "vehicle": 0,
+            "infected": 6,
+            "pedestrian": 28,
+            "courier": 1,
+            "corgi": 1
+          }
+        },
+        "spec": {
+          "name": "l3-street-crowd30",
+          "ground": "district",
+          "time": "L3",
+          "tier": 1,
+          "size": 100,
+          "layout": {
+            "district": "D-CORRIDOR",
+            "level": "L3",
+            "bbox": [
+              [
+                -61,
+                -13
+              ],
+              [
+                -30,
+                13
+              ]
+            ]
+          },
+          "actors": [
+            {
+              "id": "courier",
+              "kind": "courier",
+              "at": [
+                -55,
+                -3
+              ],
+              "yaw": -45
+            },
+            {
+              "id": "corgi",
+              "kind": "corgi",
+              "at": [
+                -53,
+                -3
+              ],
+              "yaw": -45
+            },
+            {
+              "id": "ped-2",
+              "kind": "pedestrian",
+              "at": [
+                -51,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-3",
+              "kind": "pedestrian",
+              "at": [
+                -49,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-4",
+              "kind": "pedestrian",
+              "at": [
+                -47,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-5",
+              "kind": "pedestrian",
+              "at": [
+                -45,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-6",
+              "kind": "pedestrian",
+              "at": [
+                -43,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-7",
+              "kind": "pedestrian",
+              "at": [
+                -41,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-8",
+              "kind": "pedestrian",
+              "at": [
+                -39,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-9",
+              "kind": "pedestrian",
+              "at": [
+                -37,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-10",
+              "kind": "pedestrian",
+              "at": [
+                -55,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-11",
+              "kind": "pedestrian",
+              "at": [
+                -53,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.police-officer",
+                "handProp": null,
+                "role": "officer",
+                "tint": "#2f4858"
+              },
+              "state": {
+                "ally": {
+                  "role": "officer"
+                }
+              }
+            },
+            {
+              "id": "ped-12",
+              "kind": "pedestrian",
+              "at": [
+                -51,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.police-officer",
+                "handProp": null,
+                "role": "officer",
+                "tint": "#2f4858"
+              },
+              "state": {
+                "ally": {
+                  "role": "officer"
+                }
+              }
+            },
+            {
+              "id": "ped-13",
+              "kind": "pedestrian",
+              "at": [
+                -49,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.police-officer",
+                "handProp": null,
+                "role": "officer",
+                "tint": "#2f4858"
+              },
+              "state": {
+                "ally": {
+                  "role": "officer"
+                }
+              }
+            },
+            {
+              "id": "ped-14",
+              "kind": "pedestrian",
+              "at": [
+                -47,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.police-officer",
+                "handProp": null,
+                "role": "officer",
+                "tint": "#2f4858"
+              },
+              "state": {
+                "ally": {
+                  "role": "officer"
+                }
+              }
+            },
+            {
+              "id": "ped-15",
+              "kind": "pedestrian",
+              "at": [
+                -45,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.police-officer",
+                "handProp": null,
+                "role": "officer",
+                "tint": "#2f4858"
+              },
+              "state": {
+                "ally": {
+                  "role": "officer"
+                }
+              }
+            },
+            {
+              "id": "ped-16",
+              "kind": "pedestrian",
+              "at": [
+                -43,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-man-a",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-17",
+              "kind": "pedestrian",
+              "at": [
+                -41,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-man-b",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-18",
+              "kind": "pedestrian",
+              "at": [
+                -39,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-woman-a",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-19",
+              "kind": "pedestrian",
+              "at": [
+                -37,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-woman-b",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-20",
+              "kind": "pedestrian",
+              "at": [
+                -55,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-elderly",
+                "handProp": "cane"
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-21",
+              "kind": "pedestrian",
+              "at": [
+                -53,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-man-a",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-22",
+              "kind": "pedestrian",
+              "at": [
+                -51,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-man-b",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-23",
+              "kind": "pedestrian",
+              "at": [
+                -49,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-woman-a",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-24",
+              "kind": "pedestrian",
+              "at": [
+                -47,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-woman-b",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-25",
+              "kind": "pedestrian",
+              "at": [
+                -45,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-elderly",
+                "handProp": "cane"
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-26",
+              "kind": "pedestrian",
+              "at": [
+                -43,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-man-a",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-27",
+              "kind": "pedestrian",
+              "at": [
+                -41,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-man-b",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-28",
+              "kind": "pedestrian",
+              "at": [
+                -39,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-woman-a",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-29",
+              "kind": "pedestrian",
+              "at": [
+                -37,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-woman-b",
+                "handProp": null
+              },
+              "state": "idle"
+            }
+          ],
+          "script": [
+            {
+              "frame": 1,
+              "actor": "ped-16",
+              "do": {
+                "infect": {
+                  "instant": true
+                }
+              }
+            },
+            {
+              "frame": 1,
+              "actor": "ped-17",
+              "do": {
+                "infect": {
+                  "instant": true
+                }
+              }
+            },
+            {
+              "frame": 1,
+              "actor": "ped-18",
+              "do": {
+                "infect": {
+                  "instant": true
+                }
+              }
+            },
+            {
+              "frame": 1,
+              "actor": "ped-19",
+              "do": {
+                "infect": {
+                  "instant": true
+                }
+              }
+            },
+            {
+              "frame": 1,
+              "actor": "ped-20",
+              "do": {
+                "infect": {
+                  "instant": true
+                }
+              }
+            },
+            {
+              "frame": 1,
+              "actor": "ped-21",
+              "do": {
+                "infect": {
+                  "instant": true
+                }
+              }
+            }
+          ],
+          "camera": {
+            "mode": "game",
+            "target": [
+              -46,
+              0.7,
+              0
+            ],
+            "zoom": 1.5
+          },
+          "frames": 3,
+          "shots": [
+            3
+          ],
+          "expect": {
+            "consoleErrors": 0
+          }
+        }
+      }
+    },
+    {
+      "tier": "high",
+      "old": {
+        "resources": {
+          "textureCount": 54,
+          "decodedBytes": 82902336,
+          "rgbaUpperBoundBytes": 128744229
+        },
+        "drawsAndTriangles": {
+          "drawCalls": {
+            "p50": 76,
+            "p95": 76,
+            "max": 80
+          },
+          "triangles": {
+            "p50": 261441,
+            "p95": 261441,
+            "max": 271937
+          },
+          "shadowDrawCalls": {
+            "p50": 57,
+            "p95": 57,
+            "max": 57
+          },
+          "shadowTriangles": {
+            "p50": 242374,
+            "p95": 242374,
+            "max": 242470
+          },
+          "stepMs": {
+            "p50": 10.2,
+            "p95": 10.2,
+            "max": 11.9
+          },
+          "lastFrame": {
+            "drawCalls": 80,
+            "triangles": 271937,
+            "shadowDrawCalls": 57,
+            "shadowTriangles": 242374,
+            "stepMs": 10.199999809265137,
+            "categories": {
+              "other": 53,
+              "shadows": 57,
+              "buildings": 11,
+              "props": 8,
+              "crowd": 8
+            }
+          },
+          "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+        },
+        "visibility": {
+          "frame": 3,
+          "sim": {
+            "corgi": 1,
+            "pedestrian": 28,
+            "infected": 6,
+            "courier": 1,
+            "actors": 30
+          },
+          "drawn": {
+            "vehicle": 0,
+            "infected": 6,
+            "pedestrian": 28,
+            "courier": 1,
+            "corgi": 1
+          }
+        },
+        "spec": {
+          "name": "l3-street-crowd30",
+          "ground": "district",
+          "time": "L3",
+          "tier": 1,
+          "size": 100,
+          "layout": {
+            "district": "D-CORRIDOR",
+            "level": "L3",
+            "bbox": [
+              [
+                -61,
+                -13
+              ],
+              [
+                -30,
+                13
+              ]
+            ]
+          },
+          "actors": [
+            {
+              "id": "courier",
+              "kind": "courier",
+              "at": [
+                -55,
+                -3
+              ],
+              "yaw": -45
+            },
+            {
+              "id": "corgi",
+              "kind": "corgi",
+              "at": [
+                -53,
+                -3
+              ],
+              "yaw": -45
+            },
+            {
+              "id": "ped-2",
+              "kind": "pedestrian",
+              "at": [
+                -51,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-3",
+              "kind": "pedestrian",
+              "at": [
+                -49,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-4",
+              "kind": "pedestrian",
+              "at": [
+                -47,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-5",
+              "kind": "pedestrian",
+              "at": [
+                -45,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-6",
+              "kind": "pedestrian",
+              "at": [
+                -43,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-7",
+              "kind": "pedestrian",
+              "at": [
+                -41,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-8",
+              "kind": "pedestrian",
+              "at": [
+                -39,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-9",
+              "kind": "pedestrian",
+              "at": [
+                -37,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-10",
+              "kind": "pedestrian",
+              "at": [
+                -55,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-11",
+              "kind": "pedestrian",
+              "at": [
+                -53,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.police-officer",
+                "handProp": null,
+                "role": "officer",
+                "tint": "#2f4858"
+              },
+              "state": {
+                "ally": {
+                  "role": "officer"
+                }
+              }
+            },
+            {
+              "id": "ped-12",
+              "kind": "pedestrian",
+              "at": [
+                -51,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.police-officer",
+                "handProp": null,
+                "role": "officer",
+                "tint": "#2f4858"
+              },
+              "state": {
+                "ally": {
+                  "role": "officer"
+                }
+              }
+            },
+            {
+              "id": "ped-13",
+              "kind": "pedestrian",
+              "at": [
+                -49,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.police-officer",
+                "handProp": null,
+                "role": "officer",
+                "tint": "#2f4858"
+              },
+              "state": {
+                "ally": {
+                  "role": "officer"
+                }
+              }
+            },
+            {
+              "id": "ped-14",
+              "kind": "pedestrian",
+              "at": [
+                -47,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.police-officer",
+                "handProp": null,
+                "role": "officer",
+                "tint": "#2f4858"
+              },
+              "state": {
+                "ally": {
+                  "role": "officer"
+                }
+              }
+            },
+            {
+              "id": "ped-15",
+              "kind": "pedestrian",
+              "at": [
+                -45,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.police-officer",
+                "handProp": null,
+                "role": "officer",
+                "tint": "#2f4858"
+              },
+              "state": {
+                "ally": {
+                  "role": "officer"
+                }
+              }
+            },
+            {
+              "id": "ped-16",
+              "kind": "pedestrian",
+              "at": [
+                -43,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-man-a",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-17",
+              "kind": "pedestrian",
+              "at": [
+                -41,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-man-b",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-18",
+              "kind": "pedestrian",
+              "at": [
+                -39,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-woman-a",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-19",
+              "kind": "pedestrian",
+              "at": [
+                -37,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-woman-b",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-20",
+              "kind": "pedestrian",
+              "at": [
+                -55,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-elderly",
+                "handProp": "cane"
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-21",
+              "kind": "pedestrian",
+              "at": [
+                -53,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-man-a",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-22",
+              "kind": "pedestrian",
+              "at": [
+                -51,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-man-b",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-23",
+              "kind": "pedestrian",
+              "at": [
+                -49,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-woman-a",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-24",
+              "kind": "pedestrian",
+              "at": [
+                -47,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-woman-b",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-25",
+              "kind": "pedestrian",
+              "at": [
+                -45,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-elderly",
+                "handProp": "cane"
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-26",
+              "kind": "pedestrian",
+              "at": [
+                -43,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-man-a",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-27",
+              "kind": "pedestrian",
+              "at": [
+                -41,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-man-b",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-28",
+              "kind": "pedestrian",
+              "at": [
+                -39,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-woman-a",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-29",
+              "kind": "pedestrian",
+              "at": [
+                -37,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-woman-b",
+                "handProp": null
+              },
+              "state": "idle"
+            }
+          ],
+          "script": [
+            {
+              "frame": 1,
+              "actor": "ped-16",
+              "do": {
+                "infect": {
+                  "instant": true
+                }
+              }
+            },
+            {
+              "frame": 1,
+              "actor": "ped-17",
+              "do": {
+                "infect": {
+                  "instant": true
+                }
+              }
+            },
+            {
+              "frame": 1,
+              "actor": "ped-18",
+              "do": {
+                "infect": {
+                  "instant": true
+                }
+              }
+            },
+            {
+              "frame": 1,
+              "actor": "ped-19",
+              "do": {
+                "infect": {
+                  "instant": true
+                }
+              }
+            },
+            {
+              "frame": 1,
+              "actor": "ped-20",
+              "do": {
+                "infect": {
+                  "instant": true
+                }
+              }
+            },
+            {
+              "frame": 1,
+              "actor": "ped-21",
+              "do": {
+                "infect": {
+                  "instant": true
+                }
+              }
+            }
+          ],
+          "camera": {
+            "mode": "game",
+            "target": [
+              -46,
+              0.7,
+              0
+            ],
+            "zoom": 1.5
+          },
+          "frames": 3,
+          "shots": [
+            3
+          ],
+          "expect": {
+            "consoleErrors": 0
+          }
+        }
+      },
+      "new": {
+        "resources": {
+          "textureCount": 57,
+          "decodedBytes": 84741072,
+          "rgbaUpperBoundBytes": 136087911
+        },
+        "drawsAndTriangles": {
+          "drawCalls": {
+            "p50": 76,
+            "p95": 76,
+            "max": 80
+          },
+          "triangles": {
+            "p50": 209331,
+            "p95": 209331,
+            "max": 219827
+          },
+          "shadowDrawCalls": {
+            "p50": 57,
+            "p95": 57,
+            "max": 57
+          },
+          "shadowTriangles": {
+            "p50": 190264,
+            "p95": 190264,
+            "max": 190360
+          },
+          "stepMs": {
+            "p50": 9.8,
+            "p95": 9.8,
+            "max": 10.7
+          },
+          "lastFrame": {
+            "drawCalls": 80,
+            "triangles": 219827,
+            "shadowDrawCalls": 57,
+            "shadowTriangles": 190264,
+            "stepMs": 9.800000190734863,
+            "categories": {
+              "other": 53,
+              "shadows": 57,
+              "buildings": 11,
+              "props": 8,
+              "crowd": 8
+            }
+          },
+          "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+        },
+        "visibility": {
+          "frame": 3,
+          "sim": {
+            "corgi": 1,
+            "pedestrian": 28,
+            "infected": 6,
+            "courier": 1,
+            "actors": 30
+          },
+          "drawn": {
+            "vehicle": 0,
+            "infected": 6,
+            "pedestrian": 28,
+            "courier": 1,
+            "corgi": 1
+          }
+        },
+        "spec": {
+          "name": "l3-street-crowd30",
+          "ground": "district",
+          "time": "L3",
+          "tier": 1,
+          "size": 100,
+          "layout": {
+            "district": "D-CORRIDOR",
+            "level": "L3",
+            "bbox": [
+              [
+                -61,
+                -13
+              ],
+              [
+                -30,
+                13
+              ]
+            ]
+          },
+          "actors": [
+            {
+              "id": "courier",
+              "kind": "courier",
+              "at": [
+                -55,
+                -3
+              ],
+              "yaw": -45
+            },
+            {
+              "id": "corgi",
+              "kind": "corgi",
+              "at": [
+                -53,
+                -3
+              ],
+              "yaw": -45
+            },
+            {
+              "id": "ped-2",
+              "kind": "pedestrian",
+              "at": [
+                -51,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-3",
+              "kind": "pedestrian",
+              "at": [
+                -49,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-4",
+              "kind": "pedestrian",
+              "at": [
+                -47,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-5",
+              "kind": "pedestrian",
+              "at": [
+                -45,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-6",
+              "kind": "pedestrian",
+              "at": [
+                -43,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-7",
+              "kind": "pedestrian",
+              "at": [
+                -41,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-8",
+              "kind": "pedestrian",
+              "at": [
+                -39,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-9",
+              "kind": "pedestrian",
+              "at": [
+                -37,
+                -3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-10",
+              "kind": "pedestrian",
+              "at": [
+                -55,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.national-guard",
+                "handProp": "rifle",
+                "role": "soldier",
+                "tint": "#4b5a3a"
+              },
+              "state": {
+                "ally": {
+                  "role": "soldier",
+                  "weapon": "rifle"
+                }
+              }
+            },
+            {
+              "id": "ped-11",
+              "kind": "pedestrian",
+              "at": [
+                -53,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.police-officer",
+                "handProp": null,
+                "role": "officer",
+                "tint": "#2f4858"
+              },
+              "state": {
+                "ally": {
+                  "role": "officer"
+                }
+              }
+            },
+            {
+              "id": "ped-12",
+              "kind": "pedestrian",
+              "at": [
+                -51,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.police-officer",
+                "handProp": null,
+                "role": "officer",
+                "tint": "#2f4858"
+              },
+              "state": {
+                "ally": {
+                  "role": "officer"
+                }
+              }
+            },
+            {
+              "id": "ped-13",
+              "kind": "pedestrian",
+              "at": [
+                -49,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.police-officer",
+                "handProp": null,
+                "role": "officer",
+                "tint": "#2f4858"
+              },
+              "state": {
+                "ally": {
+                  "role": "officer"
+                }
+              }
+            },
+            {
+              "id": "ped-14",
+              "kind": "pedestrian",
+              "at": [
+                -47,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.police-officer",
+                "handProp": null,
+                "role": "officer",
+                "tint": "#2f4858"
+              },
+              "state": {
+                "ally": {
+                  "role": "officer"
+                }
+              }
+            },
+            {
+              "id": "ped-15",
+              "kind": "pedestrian",
+              "at": [
+                -45,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.police-officer",
+                "handProp": null,
+                "role": "officer",
+                "tint": "#2f4858"
+              },
+              "state": {
+                "ally": {
+                  "role": "officer"
+                }
+              }
+            },
+            {
+              "id": "ped-16",
+              "kind": "pedestrian",
+              "at": [
+                -43,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-man-a",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-17",
+              "kind": "pedestrian",
+              "at": [
+                -41,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-man-b",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-18",
+              "kind": "pedestrian",
+              "at": [
+                -39,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-woman-a",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-19",
+              "kind": "pedestrian",
+              "at": [
+                -37,
+                0
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-woman-b",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-20",
+              "kind": "pedestrian",
+              "at": [
+                -55,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-elderly",
+                "handProp": "cane"
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-21",
+              "kind": "pedestrian",
+              "at": [
+                -53,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-man-a",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-22",
+              "kind": "pedestrian",
+              "at": [
+                -51,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-man-b",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-23",
+              "kind": "pedestrian",
+              "at": [
+                -49,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-woman-a",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-24",
+              "kind": "pedestrian",
+              "at": [
+                -47,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-woman-b",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-25",
+              "kind": "pedestrian",
+              "at": [
+                -45,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-elderly",
+                "handProp": "cane"
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-26",
+              "kind": "pedestrian",
+              "at": [
+                -43,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-man-a",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-27",
+              "kind": "pedestrian",
+              "at": [
+                -41,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-man-b",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-28",
+              "kind": "pedestrian",
+              "at": [
+                -39,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-woman-a",
+                "handProp": null
+              },
+              "state": "idle"
+            },
+            {
+              "id": "ped-29",
+              "kind": "pedestrian",
+              "at": [
+                -37,
+                3
+              ],
+              "yaw": -45,
+              "look": {
+                "model": "npc.civilian-woman-b",
+                "handProp": null
+              },
+              "state": "idle"
+            }
+          ],
+          "script": [
+            {
+              "frame": 1,
+              "actor": "ped-16",
+              "do": {
+                "infect": {
+                  "instant": true
+                }
+              }
+            },
+            {
+              "frame": 1,
+              "actor": "ped-17",
+              "do": {
+                "infect": {
+                  "instant": true
+                }
+              }
+            },
+            {
+              "frame": 1,
+              "actor": "ped-18",
+              "do": {
+                "infect": {
+                  "instant": true
+                }
+              }
+            },
+            {
+              "frame": 1,
+              "actor": "ped-19",
+              "do": {
+                "infect": {
+                  "instant": true
+                }
+              }
+            },
+            {
+              "frame": 1,
+              "actor": "ped-20",
+              "do": {
+                "infect": {
+                  "instant": true
+                }
+              }
+            },
+            {
+              "frame": 1,
+              "actor": "ped-21",
+              "do": {
+                "infect": {
+                  "instant": true
+                }
+              }
+            }
+          ],
+          "camera": {
+            "mode": "game",
+            "target": [
+              -46,
+              0.7,
+              0
+            ],
+            "zoom": 1.5
+          },
+          "frames": 3,
+          "shots": [
+            3
+          ],
+          "expect": {
+            "consoleErrors": 0
+          }
+        }
+      }
+    }
+  ],
+  "quietUncapped": "pending PO quiet window",
+  "coldLoads": {
+    "rows": [
+      {
+        "variant": "prod",
+        "summary": {
+          "origin": "https://minor-incident.pages.dev",
+          "backend": "webgpu",
+          "quality": "low",
+          "level": "L3",
+          "diagnostic": false,
+          "gameplaySamples": 0,
+          "menuWaits": [
+            0
+          ],
+          "n": 5,
+          "median": 2940.9000005722046,
+          "p90": 3090.300000190735,
+          "max": 3090.300000190735,
+          "maxFrameMs": 16.799999999999272,
+          "errors": []
+        },
+        "samples": [
+          {
+            "sampledAt": "2026-10-27T19:36:42.304Z",
+            "ms": 3090.300000190735,
+            "bundle": "https://minor-incident.pages.dev/build/index-DMykY-ia.js",
+            "adapter": {
+              "vendor": "apple",
+              "architecture": "metal-3",
+              "description": "",
+              "fallback": false
+            },
+            "contexts": [
+              "webgpu",
+              "2d"
+            ],
+            "load": [
+              3.67919921875,
+              4.8994140625,
+              5.38330078125
+            ],
+            "errors": []
+          },
+          {
+            "sampledAt": "2026-10-27T19:36:46.600Z",
+            "ms": 2991.800000190735,
+            "bundle": "https://minor-incident.pages.dev/build/index-DMykY-ia.js",
+            "adapter": {
+              "vendor": "apple",
+              "architecture": "metal-3",
+              "description": "",
+              "fallback": false
+            },
+            "contexts": [
+              "webgpu",
+              "2d"
+            ],
+            "load": [
+              5.62646484375,
+              5.28271484375,
+              5.515625
+            ],
+            "errors": []
+          },
+          {
+            "sampledAt": "2026-10-27T19:36:50.816Z",
+            "ms": 2922.300000190735,
+            "bundle": "https://minor-incident.pages.dev/build/index-DMykY-ia.js",
+            "adapter": {
+              "vendor": "apple",
+              "architecture": "metal-3",
+              "description": "",
+              "fallback": false
+            },
+            "contexts": [
+              "webgpu",
+              "2d"
+            ],
+            "load": [
+              5.3359375,
+              5.22802734375,
+              5.49462890625
+            ],
+            "errors": []
+          },
+          {
+            "sampledAt": "2026-10-27T19:36:54.941Z",
+            "ms": 2908.699999809265,
+            "bundle": "https://minor-incident.pages.dev/build/index-DMykY-ia.js",
+            "adapter": {
+              "vendor": "apple",
+              "architecture": "metal-3",
+              "description": "",
+              "fallback": false
+            },
+            "contexts": [
+              "webgpu",
+              "2d"
+            ],
+            "load": [
+              4.98828125,
+              5.15771484375,
+              5.46826171875
+            ],
+            "errors": []
+          },
+          {
+            "sampledAt": "2026-10-27T19:36:59.213Z",
+            "ms": 2940.9000005722046,
+            "bundle": "https://minor-incident.pages.dev/build/index-DMykY-ia.js",
+            "adapter": {
+              "vendor": "apple",
+              "architecture": "metal-3",
+              "description": "",
+              "fallback": false
+            },
+            "contexts": [
+              "webgpu",
+              "2d"
+            ],
+            "load": [
+              4.98828125,
+              5.15771484375,
+              5.46826171875
+            ],
+            "errors": []
+          }
+        ]
+      },
+      {
+        "variant": "new",
+        "summary": {
+          "origin": "http://127.0.0.1:4355",
+          "backend": "webgpu",
+          "quality": "low",
+          "level": "L3",
+          "diagnostic": false,
+          "gameplaySamples": 0,
+          "menuWaits": [
+            0
+          ],
+          "n": 5,
+          "median": 3041.7000007629395,
+          "p90": 3234.4000005722046,
+          "max": 3234.4000005722046,
+          "maxFrameMs": 16.800000000000182,
+          "errors": []
+        },
+        "samples": [
+          {
+            "sampledAt": "2026-10-27T19:37:03.887Z",
+            "ms": 2840,
+            "bundle": "http://127.0.0.1:4355/build/index-CkeDGIP4.js",
+            "adapter": {
+              "vendor": "apple",
+              "architecture": "metal-3",
+              "description": "",
+              "fallback": false
+            },
+            "contexts": [
+              "webgpu",
+              "2d"
+            ],
+            "load": [
+              5.30908203125,
+              5.22119140625,
+              5.48876953125
+            ],
+            "errors": []
+          },
+          {
+            "sampledAt": "2026-10-27T19:37:07.895Z",
+            "ms": 2837.1000003814697,
+            "bundle": "http://127.0.0.1:4355/build/index-CkeDGIP4.js",
+            "adapter": {
+              "vendor": "apple",
+              "architecture": "metal-3",
+              "description": "",
+              "fallback": false
+            },
+            "contexts": [
+              "webgpu",
+              "2d"
+            ],
+            "load": [
+              4.8837890625,
+              5.13427734375,
+              5.45654296875
+            ],
+            "errors": []
+          },
+          {
+            "sampledAt": "2026-10-27T19:37:12.103Z",
+            "ms": 3041.7000007629395,
+            "bundle": "http://127.0.0.1:4355/build/index-CkeDGIP4.js",
+            "adapter": {
+              "vendor": "apple",
+              "architecture": "metal-3",
+              "description": "",
+              "fallback": false
+            },
+            "contexts": [
+              "webgpu",
+              "2d"
+            ],
+            "load": [
+              4.73291015625,
+              5.0986328125,
+              5.44189453125
+            ],
+            "errors": []
+          },
+          {
+            "sampledAt": "2026-10-27T19:37:16.507Z",
+            "ms": 3234.4000005722046,
+            "bundle": "http://127.0.0.1:4355/build/index-CkeDGIP4.js",
+            "adapter": {
+              "vendor": "apple",
+              "architecture": "metal-3",
+              "description": "",
+              "fallback": false
+            },
+            "contexts": [
+              "webgpu",
+              "2d"
+            ],
+            "load": [
+              4.9140625,
+              5.1298828125,
+              5.45068359375
+            ],
+            "errors": []
+          },
+          {
+            "sampledAt": "2026-10-27T19:37:20.978Z",
+            "ms": 3173,
+            "bundle": "http://127.0.0.1:4355/build/index-CkeDGIP4.js",
+            "adapter": {
+              "vendor": "apple",
+              "architecture": "metal-3",
+              "description": "",
+              "fallback": false
+            },
+            "contexts": [
+              "webgpu",
+              "2d"
+            ],
+            "load": [
+              5.0009765625,
+              5.14404296875,
+              5.45361328125
+            ],
+            "errors": []
+          }
+        ]
+      }
+    ],
+    "ratio": 1.046629777164863,
+    "limit": 1.1,
+    "pass": true,
+    "method": "Five empty contexts per build, shared native Metal WebGPU low, real menu click to loading-card closure. Remote PROD versus local public build; network and browser/device caches differ. Final matched-host uncapped performance remains pending the PO quiet window.",
+    "launchFlags": "Native ANGLE Metal with --enable-unsafe-webgpu, as used by the existing cold-load tool. Separate unflagged public WebGPU smoke passed."
+  },
+  "sharedCadence": [
+    {
+      "tier": "low",
+      "old": {
+        "variant": "old",
+        "tier": "low",
+        "cadence": {
+          "count": 600,
+          "p50": 16.69999999999891,
+          "p95": 16.700000000000728,
+          "max": 16.80000000000109,
+          "over200": 0,
+          "builds": []
+        },
+        "peakLeases": 1,
+        "hostLoad": [
+          3.41455078125,
+          3.95361328125,
+          4.830078125
+        ],
+        "protocol": "shared native Metal WebGL2, 60 Hz cap, 120 warm-up frames + 600 sampled frames, live L3 30-figure cast",
+        "errors": []
+      },
+      "new": {
+        "variant": "new",
+        "tier": "low",
+        "cadence": {
+          "count": 600,
+          "p50": 16.69999999999891,
+          "p95": 16.700000000000728,
+          "max": 16.80000000000109,
+          "over200": 0,
+          "builds": []
+        },
+        "peakLeases": 1,
+        "hostLoad": [
+          3.31005859375,
+          3.90576171875,
+          4.7978515625
+        ],
+        "protocol": "shared native Metal WebGL2, 60 Hz cap, 120 warm-up frames + 600 sampled frames, live L3 30-figure cast",
+        "errors": []
+      },
+      "withinPlusOneMs": true,
+      "uncontended": true
+    },
+    {
+      "tier": "high",
+      "old": {
+        "variant": "old",
+        "tier": "high",
+        "cadence": {
+          "count": 600,
+          "p50": 16.69999999999891,
+          "p95": 16.799999999999272,
+          "max": 16.80000000000291,
+          "over200": 0,
+          "builds": []
+        },
+        "peakLeases": 1,
+        "hostLoad": [
+          2.84619140625,
+          3.76416015625,
+          4.72607421875
+        ],
+        "protocol": "shared native Metal WebGL2, 60 Hz cap, 120 warm-up frames + 600 sampled frames, live L3 30-figure cast",
+        "errors": []
+      },
+      "new": {
+        "variant": "new",
+        "tier": "high",
+        "cadence": {
+          "count": 600,
+          "p50": 16.69999999999891,
+          "p95": 16.700000000000728,
+          "max": 16.80000000000291,
+          "over200": 0,
+          "builds": []
+        },
+        "peakLeases": 1,
+        "hostLoad": [
+          2.734375,
+          3.68115234375,
+          4.67333984375
+        ],
+        "protocol": "shared native Metal WebGL2, 60 Hz cap, 120 warm-up frames + 600 sampled frames, live L3 30-figure cast",
+        "errors": []
+      },
+      "withinPlusOneMs": true,
+      "uncontended": true
+    }
+  ],
+  "sharedCadenceGate": "PASS, refresh-capped; uncapped GPU cost is unmeasured"
+}

@@ -1,0 +1,4970 @@
+{
+  "assetRevision": "f3046139c",
+  "productionStory": [
+    {
+      "name": "l3-army-arrival",
+      "tier": "low",
+      "errors": [],
+      "shots": [
+        {
+          "frame": 0,
+          "tick": 13380,
+          "backend": "webgl",
+          "quality": "low",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": 216.9871826171875,
+              "y": 0.7099999785423279,
+              "z": -0.37747782468795776,
+              "yaw": -0.04707442604208834
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 3.7332948667727006,
+              "vz": 0.01694743362225949,
+              "ax": -8.99990726811276,
+              "az": -0.04085542033937556,
+              "omega": -0.06058927342645819,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "run",
+              "animationTick": 12746,
+              "velocity": {
+                "x": 4.495014917110126,
+                "z": 0.21175668810557022
+              },
+              "grounded": true,
+              "invulnerableUntil": 0,
+              "checkpoint": {
+                "x": 99.3906021118164,
+                "y": 0.8500000238418579,
+                "z": -22.896896362304688,
+                "yaw": -0.004539525619653236
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.handgun",
+                "combo": 0,
+                "started": 12745,
+                "activeAt": 12745,
+                "recoveryAt": 12746,
+                "endsAt": 12746
+              }
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 12662
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 0.9619260169618917,
+                  "z": 0.2733099666895275
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 12765
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 0.9910409903046355,
+                  "z": -0.13355806054299846
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "corridor",
+          "checkpoint": "segment-3b",
+          "entities": 921,
+          "drawCalls": 153,
+          "triangles": 300943,
+          "imageSha256": "89874bf573a491cd8cebac75248e1dba8cdfcb625db0ba02d63b57346357d619"
+        },
+        {
+          "frame": 30,
+          "tick": 13410,
+          "backend": "webgl",
+          "quality": "low",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": 219.23480224609375,
+              "y": 0.7099999785423279,
+              "z": -0.27159860730171204,
+              "yaw": -0.04707518983318167
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 3.7332948667727006,
+              "vz": 0.01694743362225949,
+              "ax": -8.99990726811276,
+              "az": -0.04085542033937556,
+              "omega": -0.06058927342645819,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "run",
+              "animationTick": 12746,
+              "velocity": {
+                "x": 4.495014755370943,
+                "z": 0.21176012135786657
+              },
+              "grounded": true,
+              "invulnerableUntil": 0,
+              "checkpoint": {
+                "x": 99.3906021118164,
+                "y": 0.8500000238418579,
+                "z": -22.896896362304688,
+                "yaw": -0.004539525619653236
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.handgun",
+                "combo": 0,
+                "started": 12745,
+                "activeAt": 12745,
+                "recoveryAt": 12746,
+                "endsAt": 12746
+              }
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 12662
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 0.9619260169618917,
+                  "z": 0.2733099666895275
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 12765
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 0.9910409903046355,
+                  "z": -0.13355806054299846
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "corridor",
+          "checkpoint": "segment-3b",
+          "entities": 919,
+          "drawCalls": 153,
+          "triangles": 303350,
+          "imageSha256": "f7b83f109f8164ad2b3585b4387b9bb4ef17464709d64a2516247e8772603472"
+        },
+        {
+          "frame": 60,
+          "tick": 13440,
+          "backend": "webgl",
+          "quality": "low",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": 221.482421875,
+              "y": 0.7099999785423279,
+              "z": -0.16571733355522156,
+              "yaw": -0.04707634234670615
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 3.7332948667727006,
+              "vz": 0.01694743362225949,
+              "ax": -8.99990726811276,
+              "az": -0.04085542033937556,
+              "omega": -0.06058927342645819,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "run",
+              "animationTick": 12746,
+              "velocity": {
+                "x": 4.495014511311554,
+                "z": 0.2117653019230242
+              },
+              "grounded": true,
+              "invulnerableUntil": 0,
+              "checkpoint": {
+                "x": 99.3906021118164,
+                "y": 0.8500000238418579,
+                "z": -22.896896362304688,
+                "yaw": -0.004539525619653236
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.handgun",
+                "combo": 0,
+                "started": 12745,
+                "activeAt": 12745,
+                "recoveryAt": 12746,
+                "endsAt": 12746
+              }
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 12662
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 0.9619260169618917,
+                  "z": 0.2733099666895275
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 12765
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 0.9910409903046355,
+                  "z": -0.13355806054299846
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "corridor",
+          "checkpoint": "segment-3b",
+          "entities": 918,
+          "drawCalls": 153,
+          "triangles": 305618,
+          "imageSha256": "05d70a7238e44c8c757050fce8c8eaea722eb316779a5f92769226eb2a21357e"
+        }
+      ]
+    },
+    {
+      "name": "l3-boulevard",
+      "tier": "low",
+      "errors": [],
+      "shots": [
+        {
+          "frame": 0,
+          "tick": 10680,
+          "backend": "webgl",
+          "quality": "low",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": 36.0594482421875,
+              "y": 0.8500000238418579,
+              "z": -23.18437957763672,
+              "yaw": -0.004539378600260655
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "run",
+              "animationTick": 10659,
+              "velocity": {
+                "x": 4.499953636673942,
+                "z": 0.02042713354756138
+              },
+              "grounded": false,
+              "invulnerableUntil": 0,
+              "checkpoint": {
+                "x": 12.269552230834961,
+                "y": 0.8500000238418579,
+                "z": -23.745506286621094,
+                "yaw": 0.46340467666672236
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.handgun",
+                "combo": 0,
+                "started": 10654,
+                "activeAt": 10654,
+                "recoveryAt": 10655,
+                "endsAt": 10655
+              }
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 10674
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 0.8459946053188452,
+                  "z": -0.5331914550810163
+                },
+                "aimPoint": {
+                  "x": 39.8652331282759,
+                  "z": -26.66530242408215
+                },
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "corridor",
+          "checkpoint": "segment-2b",
+          "entities": 973,
+          "drawCalls": 144,
+          "triangles": 257001,
+          "imageSha256": "737f3e0c55cab91d2fff635e260785398db1d5c9f4c9575102c577690886483f"
+        },
+        {
+          "frame": 30,
+          "tick": 10710,
+          "backend": "webgl",
+          "quality": "low",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": 38.309471130371094,
+              "y": 0.7099999785423279,
+              "z": -23.174177169799805,
+              "yaw": -0.004539500161166839
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "run",
+              "animationTick": 10659,
+              "velocity": {
+                "x": 4.499953634190767,
+                "z": 0.020427680566003085
+              },
+              "grounded": true,
+              "invulnerableUntil": 0,
+              "checkpoint": {
+                "x": 12.269552230834961,
+                "y": 0.8500000238418579,
+                "z": -23.745506286621094,
+                "yaw": 0.46340467666672236
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.handgun",
+                "combo": 0,
+                "started": 10654,
+                "activeAt": 10654,
+                "recoveryAt": 10655,
+                "endsAt": 10655
+              }
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 10674
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 0.8459946053188452,
+                  "z": -0.5331914550810163
+                },
+                "aimPoint": {
+                  "x": 39.8652331282759,
+                  "z": -26.66530242408215
+                },
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "corridor",
+          "checkpoint": "segment-2b",
+          "entities": 969,
+          "drawCalls": 136,
+          "triangles": 227206,
+          "imageSha256": "2166cc9361e15968c11445a069306ad5c5c1fa7211460962c6e4a4210da05b9a"
+        },
+        {
+          "frame": 60,
+          "tick": 10740,
+          "backend": "webgl",
+          "quality": "low",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": 40.55949401855469,
+              "y": 0.7099999785423279,
+              "z": -23.163963317871094,
+              "yaw": -0.004539502325088092
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "run",
+              "animationTick": 10659,
+              "velocity": {
+                "x": 4.499953634146563,
+                "z": 0.020427690303548393
+              },
+              "grounded": true,
+              "invulnerableUntil": 0,
+              "checkpoint": {
+                "x": 12.269552230834961,
+                "y": 0.8500000238418579,
+                "z": -23.745506286621094,
+                "yaw": 0.46340467666672236
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.handgun",
+                "combo": 0,
+                "started": 10654,
+                "activeAt": 10654,
+                "recoveryAt": 10655,
+                "endsAt": 10655
+              }
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 10674
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 0.8459946053188452,
+                  "z": -0.5331914550810163
+                },
+                "aimPoint": {
+                  "x": 39.8652331282759,
+                  "z": -26.66530242408215
+                },
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "corridor",
+          "checkpoint": "segment-2b",
+          "entities": 964,
+          "drawCalls": 135,
+          "triangles": 230350,
+          "imageSha256": "f1a51b251fae97996980fa7ef8c379f54bc0f80a0c21c30a21ea8181b5877c64"
+        }
+      ]
+    },
+    {
+      "name": "l3-fallback-squad",
+      "tier": "low",
+      "errors": [],
+      "shots": [
+        {
+          "frame": 0,
+          "tick": 2220,
+          "backend": "webgl",
+          "quality": "low",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": -134.94863891601562,
+              "y": 0.7200000286102295,
+              "z": 0.6140632629394531,
+              "yaw": -0.34526119646433845
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "idle",
+              "animationTick": 2205,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 0,
+              "checkpoint": {
+                "x": -134.94863891601562,
+                "y": 0.7200000286102295,
+                "z": 0.6140632629394531,
+                "yaw": -0.34526119646433845
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.handgun",
+                "combo": 0,
+                "started": 2204,
+                "activeAt": 2204,
+                "recoveryAt": 2205,
+                "endsAt": 2205
+              }
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 2224
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 0.9411476394270636,
+                  "z": 0.3379957408028478
+                },
+                "aimPoint": {
+                  "x": -127.9523628017792,
+                  "z": 3.126646229765104
+                },
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "fallback",
+          "checkpoint": "fallback",
+          "entities": 913,
+          "drawCalls": 126,
+          "triangles": 231219,
+          "imageSha256": "d2d2914d4d1f531ddcb84d89734c496452b5449121f2ebb0588d5dd8a7223a67"
+        },
+        {
+          "frame": 30,
+          "tick": 2250,
+          "backend": "webgl",
+          "quality": "low",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": -134.94863891601562,
+              "y": 0.7200000286102295,
+              "z": 0.6140632629394531,
+              "yaw": -0.4945095693676587
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "idle",
+              "animationTick": 2245,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 0,
+              "checkpoint": {
+                "x": -134.94863891601562,
+                "y": 0.7200000286102295,
+                "z": 0.6140632629394531,
+                "yaw": -0.34526119646433845
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.handgun",
+                "combo": 0,
+                "started": 2244,
+                "activeAt": 2244,
+                "recoveryAt": 2245,
+                "endsAt": 2245
+              }
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 2264
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 0.8782187398967553,
+                  "z": 0.4782591817144293
+                },
+                "aimPoint": {
+                  "x": -129.0436822487469,
+                  "z": 3.8297766330266225
+                },
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "fallback",
+          "checkpoint": "fallback",
+          "entities": 917,
+          "drawCalls": 119,
+          "triangles": 226093,
+          "imageSha256": "1e4ac1ccea3470989ede6b5b8f0cf796f7c5d9d7b7dd45462fcad6368d16ef72"
+        },
+        {
+          "frame": 60,
+          "tick": 2280,
+          "backend": "webgl",
+          "quality": "low",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": -134.94863891601562,
+              "y": 0.7200000286102295,
+              "z": 0.6140632629394531,
+              "yaw": -0.49869895752758425
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "idle",
+              "animationTick": 2265,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 0,
+              "checkpoint": {
+                "x": -134.94863891601562,
+                "y": 0.7200000286102295,
+                "z": 0.6140632629394531,
+                "yaw": -0.34526119646433845
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.handgun",
+                "combo": 0,
+                "started": 2264,
+                "activeAt": 2264,
+                "recoveryAt": 2265,
+                "endsAt": 2265
+              }
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 2284
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 0.962681693450844,
+                  "z": -0.27063620802585747
+                },
+                "aimPoint": {
+                  "x": -128.3734000600617,
+                  "z": -1.2344165855355214
+                },
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "fallback",
+          "checkpoint": "fallback",
+          "entities": 918,
+          "drawCalls": 127,
+          "triangles": 241571,
+          "imageSha256": "8fcfc7be54b94eec1348e603ee35f5592b14223fa534f80ad940de3070160ee2"
+        }
+      ]
+    },
+    {
+      "name": "l3-station-attack",
+      "tier": "low",
+      "errors": [],
+      "shots": [
+        {
+          "frame": 0,
+          "tick": 1560,
+          "backend": "webgl",
+          "quality": "low",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": -134.94863891601562,
+              "y": 0.7049999833106995,
+              "z": 0.6140632629394531,
+              "yaw": -0.3037243771863962
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "idle",
+              "animationTick": 1398,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 0,
+              "checkpoint": {
+                "x": -139.34352111816406,
+                "y": 0.7089999914169312,
+                "z": -7.961522102355957,
+                "yaw": 1.2544760275990814
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.handgun",
+                "combo": 0,
+                "started": 1397,
+                "activeAt": 1397,
+                "recoveryAt": 1398,
+                "endsAt": 1398
+              }
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 1417
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 0.954229237232663,
+                  "z": 0.29907618228533417
+                },
+                "aimPoint": {
+                  "x": -126.5501011144129,
+                  "z": 3.246347544824197
+                },
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "attack",
+          "checkpoint": "armory",
+          "entities": 900,
+          "drawCalls": 121,
+          "triangles": 217516,
+          "imageSha256": "3944fed4e8a0aa64668d5a0d31a8441efe6acf620dd1ed6ea336e6fd9f5a4037"
+        },
+        {
+          "frame": 30,
+          "tick": 1590,
+          "backend": "webgl",
+          "quality": "low",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": -134.94863891601562,
+              "y": 0.7049999833106995,
+              "z": 0.6140632629394531,
+              "yaw": -0.3037243771863962
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "idle",
+              "animationTick": 1398,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 0,
+              "checkpoint": {
+                "x": -139.34352111816406,
+                "y": 0.7089999914169312,
+                "z": -7.961522102355957,
+                "yaw": 1.2544760275990814
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.handgun",
+                "combo": 0,
+                "started": 1397,
+                "activeAt": 1397,
+                "recoveryAt": 1398,
+                "endsAt": 1398
+              }
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 1417
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 0.954229237232663,
+                  "z": 0.29907618228533417
+                },
+                "aimPoint": {
+                  "x": -126.5501011144129,
+                  "z": 3.246347544824197
+                },
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "attack",
+          "checkpoint": "armory",
+          "entities": 900,
+          "drawCalls": 121,
+          "triangles": 217516,
+          "imageSha256": "71016ae23fa75291e695fd758981d66f3aeca889bdd569a502ec0c19b8cfc4ba"
+        },
+        {
+          "frame": 60,
+          "tick": 1620,
+          "backend": "webgl",
+          "quality": "low",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": -134.94863891601562,
+              "y": 0.7200000286102295,
+              "z": 0.6140632629394531,
+              "yaw": -0.23603328154179817
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "idle",
+              "animationTick": 1603,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 0,
+              "checkpoint": {
+                "x": -139.34352111816406,
+                "y": 0.7089999914169312,
+                "z": -7.961522102355957,
+                "yaw": 1.2544760275990814
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.handgun",
+                "combo": 0,
+                "started": 1596,
+                "activeAt": 1602,
+                "recoveryAt": 1603,
+                "endsAt": 1603
+              }
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 1622
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 0.9807243605544915,
+                  "z": 0.1953963372609216
+                },
+                "aimPoint": {
+                  "x": -126.32386409578069,
+                  "z": 2.332435394147968
+                },
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "attack",
+          "checkpoint": "armory",
+          "entities": 900,
+          "drawCalls": 123,
+          "triangles": 220109,
+          "imageSha256": "7cb2db07aceca5bd39a56949ed49dcd50bde150081be7aab673b5d7166493589"
+        }
+      ]
+    },
+    {
+      "name": "l3-station-ready",
+      "tier": "low",
+      "errors": [],
+      "shots": [
+        {
+          "frame": 0,
+          "tick": 0,
+          "backend": "webgl",
+          "quality": "low",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": -155.5,
+              "y": 0.705,
+              "z": 1.6,
+              "yaw": 0.3205919885488634
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "idle",
+              "animationTick": 0,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": false,
+              "invulnerableUntil": 0,
+              "checkpoint": {
+                "x": -155.5,
+                "y": 0.705,
+                "z": 1.6,
+                "yaw": 0.3205919885488634
+              },
+              "diedAt": null
+            },
+            "weapons": {
+              "selectedSide": "LEFT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "yard",
+          "checkpoint": null,
+          "entities": 882,
+          "drawCalls": 103,
+          "triangles": 185457,
+          "imageSha256": "b832f1a8f1eb5fb2f32e0e37c3d9ac3b7fa01dea41da1cfc52fe0e74ffaf4411"
+        },
+        {
+          "frame": 30,
+          "tick": 30,
+          "backend": "webgl",
+          "quality": "low",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": -155.5,
+              "y": 0.7049999833106995,
+              "z": 1.600000023841858,
+              "yaw": 0.3205919885488634
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "idle",
+              "animationTick": 0,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 0,
+              "checkpoint": {
+                "x": -155.5,
+                "y": 0.705,
+                "z": 1.6,
+                "yaw": 0.3205919885488634
+              },
+              "diedAt": null
+            },
+            "weapons": {
+              "selectedSide": "LEFT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "yard",
+          "checkpoint": null,
+          "entities": 882,
+          "drawCalls": 103,
+          "triangles": 185457,
+          "imageSha256": "e09f4bd8146d0ea15962cba172fe148d38745b6f3ea11a4e036e947bb53090c1"
+        },
+        {
+          "frame": 60,
+          "tick": 60,
+          "backend": "webgl",
+          "quality": "low",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": -155.5,
+              "y": 0.7049999833106995,
+              "z": 1.600000023841858,
+              "yaw": 0.3205919885488634
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "idle",
+              "animationTick": 0,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 0,
+              "checkpoint": {
+                "x": -155.5,
+                "y": 0.705,
+                "z": 1.6,
+                "yaw": 0.3205919885488634
+              },
+              "diedAt": null
+            },
+            "weapons": {
+              "selectedSide": "LEFT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "yard",
+          "checkpoint": null,
+          "entities": 882,
+          "drawCalls": 103,
+          "triangles": 185457,
+          "imageSha256": "cc1dbcde6cfecdb27503bf019c9593d71f38768735e6f5a2351f581d01d6a83c"
+        }
+      ]
+    },
+    {
+      "name": "l3-army-arrival",
+      "tier": "high",
+      "errors": [],
+      "shots": [
+        {
+          "frame": 0,
+          "tick": 14340,
+          "backend": "webgl",
+          "quality": "high",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": 217.06500244140625,
+              "y": 0.7099999785423279,
+              "z": -0.37386658787727356,
+              "yaw": -0.04708131491268398
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "run",
+              "animationTick": 13726,
+              "velocity": {
+                "x": 4.495013458239046,
+                "z": 0.21178765367663482
+              },
+              "grounded": true,
+              "invulnerableUntil": 13661,
+              "checkpoint": {
+                "x": 100.0487060546875,
+                "y": 0.8500000238418579,
+                "z": -22.92453384399414,
+                "yaw": -0.005505490377102175
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.handgun",
+                "combo": 0,
+                "started": 13725,
+                "activeAt": 13725,
+                "recoveryAt": 13726,
+                "endsAt": 13726
+              }
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 13657
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": -0.033934689839299356,
+                  "z": 0.9994240525550255
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 13745
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 0.896951992980715,
+                  "z": -0.4421279478702105
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "corridor",
+          "checkpoint": "segment-3b",
+          "entities": 925,
+          "drawCalls": 195,
+          "triangles": 616192,
+          "imageSha256": "0e9dac4bcce9c3749d239521fdcf95d0b4a5655c32e8825f1784ae74ec434c20"
+        },
+        {
+          "frame": 30,
+          "tick": 14370,
+          "backend": "webgl",
+          "quality": "high",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": 219.3126220703125,
+              "y": 0.7099999785423279,
+              "z": -0.2679719030857086,
+              "yaw": -0.04708209776667634
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "run",
+              "animationTick": 13726,
+              "velocity": {
+                "x": 4.495013292438858,
+                "z": 0.21179117261580144
+              },
+              "grounded": true,
+              "invulnerableUntil": 13661,
+              "checkpoint": {
+                "x": 100.0487060546875,
+                "y": 0.8500000238418579,
+                "z": -22.92453384399414,
+                "yaw": -0.005505490377102175
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.handgun",
+                "combo": 0,
+                "started": 13725,
+                "activeAt": 13725,
+                "recoveryAt": 13726,
+                "endsAt": 13726
+              }
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 13657
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": -0.033934689839299356,
+                  "z": 0.9994240525550255
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 13745
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 0.896951992980715,
+                  "z": -0.4421279478702105
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "corridor",
+          "checkpoint": "segment-3b",
+          "entities": 924,
+          "drawCalls": 194,
+          "triangles": 616178,
+          "imageSha256": "f9ffb0462fb499fe727c5b975b603e3772bc1d0b7445e04881c9b86b7f847a89"
+        },
+        {
+          "frame": 60,
+          "tick": 14400,
+          "backend": "webgl",
+          "quality": "high",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": 221.56024169921875,
+              "y": 0.7099999785423279,
+              "z": -0.16207507252693176,
+              "yaw": -0.0470832811800683
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "run",
+              "animationTick": 13726,
+              "velocity": {
+                "x": 4.495013041799201,
+                "z": 0.2117964920745804
+              },
+              "grounded": true,
+              "invulnerableUntil": 13661,
+              "checkpoint": {
+                "x": 100.0487060546875,
+                "y": 0.8500000238418579,
+                "z": -22.92453384399414,
+                "yaw": -0.005505490377102175
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.handgun",
+                "combo": 0,
+                "started": 13725,
+                "activeAt": 13725,
+                "recoveryAt": 13726,
+                "endsAt": 13726
+              }
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 13657
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": -0.033934689839299356,
+                  "z": 0.9994240525550255
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 13745
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 0.896951992980715,
+                  "z": -0.4421279478702105
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "corridor",
+          "checkpoint": "segment-3b",
+          "entities": 923,
+          "drawCalls": 191,
+          "triangles": 610252,
+          "imageSha256": "038acb37017534218284a85fd5f6f04c09db3a57d64b9e0317ea2daa4263774b"
+        }
+      ]
+    },
+    {
+      "name": "l3-boulevard",
+      "tier": "high",
+      "errors": [],
+      "shots": [
+        {
+          "frame": 0,
+          "tick": 11340,
+          "backend": "webgl",
+          "quality": "high",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": 35.358367919921875,
+              "y": 0.8500000238418579,
+              "z": -23.129600524902344,
+              "yaw": 0.178150245048174
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0.75745028366918,
+              "vz": 0.0029829047501138462,
+              "ax": -4.34991934199428,
+              "az": -0.017130358714756128,
+              "omega": -2.1850597344997666,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "walk",
+              "animationTick": 11331,
+              "velocity": {
+                "x": 0.75745028366918,
+                "z": 0.0029829047501138462
+              },
+              "grounded": false,
+              "invulnerableUntil": 10081,
+              "checkpoint": {
+                "x": 8.35499382019043,
+                "y": 0.8500000238418579,
+                "z": -24.059146881103516,
+                "yaw": -0.07968129172242726
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.handgun",
+                "combo": 0,
+                "started": 11330,
+                "activeAt": 11330,
+                "recoveryAt": 11331,
+                "endsAt": 11331
+              }
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 10103
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": -0.9761862469896947,
+                  "z": -0.21693411716042937
+                },
+                "aimPoint": {
+                  "x": -2.7006644437034506,
+                  "z": -23.21282369745497
+                },
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 11350
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 0.9173654978389293,
+                  "z": -0.3980459061147766
+                },
+                "aimPoint": {
+                  "x": 42.333524113814455,
+                  "z": -26.161655179534105
+                },
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "corridor",
+          "checkpoint": "segment-2b",
+          "entities": 1066,
+          "drawCalls": 199,
+          "triangles": 508987,
+          "imageSha256": "1f06a6167de6e96fe54e42127a4dfec3f78e287fac7cc2fe9c68b746f07e2713"
+        },
+        {
+          "frame": 30,
+          "tick": 11370,
+          "backend": "webgl",
+          "quality": "high",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": 35.4782829284668,
+              "y": 0.8500000238418579,
+              "z": -23.129127502441406,
+              "yaw": 0.4255432249046993
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0.0427782812878177,
+              "vz": 0.0001684645727994329,
+              "ax": -0.2618415314109935,
+              "az": -0.0010311546046817017,
+              "omega": -0.20093878600823037,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "shoot",
+              "animationTick": 11370,
+              "velocity": {
+                "x": 0.0427782812878177,
+                "z": 0.0001684645727994329
+              },
+              "grounded": false,
+              "invulnerableUntil": 10081,
+              "checkpoint": {
+                "x": 8.35499382019043,
+                "y": 0.8500000238418579,
+                "z": -24.059146881103516,
+                "yaw": -0.07968129172242726
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.handgun",
+                "combo": 0,
+                "started": 11370,
+                "activeAt": 11370,
+                "recoveryAt": 11371,
+                "endsAt": 11371
+              }
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 10103
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": -0.9761862469896947,
+                  "z": -0.21693411716042937
+                },
+                "aimPoint": {
+                  "x": -2.7006644437034506,
+                  "z": -23.21282369745497
+                },
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 11390
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 0.9108146156269731,
+                  "z": -0.4128156198114229
+                },
+                "aimPoint": {
+                  "x": 41.91259931018838,
+                  "z": -26.045728178587538
+                },
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "corridor",
+          "checkpoint": "segment-2b",
+          "entities": 1065,
+          "drawCalls": 198,
+          "triangles": 502987,
+          "imageSha256": "859a6b1495ccdcaab368f0bf5110b2a188c1eb1d83190882600728e6f149b655"
+        },
+        {
+          "frame": 60,
+          "tick": 11400,
+          "backend": "webgl",
+          "quality": "high",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": 35.48053741455078,
+              "y": 0.8500000238418579,
+              "z": -23.129119873046875,
+              "yaw": 0.29943414129279045
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "idle",
+              "animationTick": 11391,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": false,
+              "invulnerableUntil": 10081,
+              "checkpoint": {
+                "x": 8.35499382019043,
+                "y": 0.8500000238418579,
+                "z": -24.059146881103516,
+                "yaw": -0.07968129172242726
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.handgun",
+                "combo": 0,
+                "started": 11390,
+                "activeAt": 11390,
+                "recoveryAt": 11391,
+                "endsAt": 11391
+              }
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 10103
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": -0.9761862469896947,
+                  "z": -0.21693411716042937
+                },
+                "aimPoint": {
+                  "x": -2.7006644437034506,
+                  "z": -23.21282369745497
+                },
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 11410
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 0.11690586536225818,
+                  "z": 0.9931430000981236
+                },
+                "aimPoint": {
+                  "x": 36.24546449639943,
+                  "z": -16.630883239928178
+                },
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "corridor",
+          "checkpoint": "segment-2b",
+          "entities": 1066,
+          "drawCalls": 199,
+          "triangles": 511327,
+          "imageSha256": "a372add19a71aeff89d3dea4e0f482b97c9fa82939856712ff2c9d16c489c99e"
+        }
+      ]
+    },
+    {
+      "name": "l3-fallback-squad",
+      "tier": "high",
+      "errors": [],
+      "shots": [
+        {
+          "frame": 0,
+          "tick": 2280,
+          "backend": "webgl",
+          "quality": "high",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": -134.94863891601562,
+              "y": 0.7200000286102295,
+              "z": 0.6140632629394531,
+              "yaw": -0.16135204487070742
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "idle",
+              "animationTick": 2272,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 0,
+              "checkpoint": {
+                "x": -134.94863891601562,
+                "y": 0.7200000286102295,
+                "z": 0.6140632629394531,
+                "yaw": -0.1917602419459115
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.handgun",
+                "combo": 0,
+                "started": 2271,
+                "activeAt": 2271,
+                "recoveryAt": 2272,
+                "endsAt": 2272
+              }
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 2291
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 0.9994058860120121,
+                  "z": -0.03446556258854651
+                },
+                "aimPoint": {
+                  "x": -128.39217475656105,
+                  "z": 0.3879567040227812
+                },
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "fallback",
+          "checkpoint": "fallback",
+          "entities": 947,
+          "drawCalls": 160,
+          "triangles": 505615,
+          "imageSha256": "78dd1685d39e20ee91eef7994f929aca14ff49f03b60ddf1ec39e717e17ad21e"
+        },
+        {
+          "frame": 30,
+          "tick": 2310,
+          "backend": "webgl",
+          "quality": "high",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": -134.94863891601562,
+              "y": 0.7200000286102295,
+              "z": 0.6140632629394531,
+              "yaw": -0.6538480668527543
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "idle",
+              "animationTick": 2292,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 0,
+              "checkpoint": {
+                "x": -134.94863891601562,
+                "y": 0.7200000286102295,
+                "z": 0.6140632629394531,
+                "yaw": -0.1917602419459115
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.handgun",
+                "combo": 0,
+                "started": 2291,
+                "activeAt": 2291,
+                "recoveryAt": 2292,
+                "endsAt": 2292
+              }
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 2311
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 0.8439313724370988,
+                  "z": 0.5364511521251816
+                },
+                "aimPoint": {
+                  "x": -130.13557505596026,
+                  "z": 3.6735225238537264
+                },
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "fallback",
+          "checkpoint": "fallback",
+          "entities": 948,
+          "drawCalls": 162,
+          "triangles": 487350,
+          "imageSha256": "818e1daa87efb7809a505b32fbbf57bdb2d8ac8b3a48a825f460ce949f97fb1e"
+        },
+        {
+          "frame": 60,
+          "tick": 2340,
+          "backend": "webgl",
+          "quality": "high",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": -134.94863891601562,
+              "y": 0.7200000286102295,
+              "z": 0.6140632629394531,
+              "yaw": -0.14281455102432192
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "idle",
+              "animationTick": 2332,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 0,
+              "checkpoint": {
+                "x": -134.94863891601562,
+                "y": 0.7200000286102295,
+                "z": 0.6140632629394531,
+                "yaw": -0.1917602419459115
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.handgun",
+                "combo": 0,
+                "started": 2331,
+                "activeAt": 2331,
+                "recoveryAt": 2332,
+                "endsAt": 2332
+              }
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 2351
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 0.8716629513037859,
+                  "z": 0.4901058042141248
+                },
+                "aimPoint": {
+                  "x": -130.1703947017274,
+                  "z": 3.300704033747046
+                },
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "fallback",
+          "checkpoint": "fallback",
+          "entities": 949,
+          "drawCalls": 162,
+          "triangles": 487606,
+          "imageSha256": "fe38424419b96689f67e64a58e54211cad6981f73995197a9c214727d396da9e"
+        }
+      ]
+    },
+    {
+      "name": "l3-station-attack",
+      "tier": "high",
+      "errors": [],
+      "shots": [
+        {
+          "frame": 0,
+          "tick": 1560,
+          "backend": "webgl",
+          "quality": "high",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": -134.94863891601562,
+              "y": 0.7200000286102295,
+              "z": 0.6140632629394531,
+              "yaw": 0.23148269135687827
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "shoot",
+              "animationTick": 1560,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 0,
+              "checkpoint": {
+                "x": -139.34352111816406,
+                "y": 0.7089999914169312,
+                "z": -7.961522102355957,
+                "yaw": 1.2544760275990814
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.handgun",
+                "combo": 0,
+                "started": 1560,
+                "activeAt": 1560,
+                "recoveryAt": 1561,
+                "endsAt": 1561
+              }
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 1580
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 0.9733273045844338,
+                  "z": -0.22942091916475443
+                },
+                "aimPoint": {
+                  "x": -127.9007665070774,
+                  "z": -1.047175827548071
+                },
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "attack",
+          "checkpoint": "armory",
+          "entities": 917,
+          "drawCalls": 153,
+          "triangles": 393520,
+          "imageSha256": "99253750eaa845d8041db7a50cafa95cf7cb320355328d5eeff1fe44c8878c7f"
+        },
+        {
+          "frame": 30,
+          "tick": 1590,
+          "backend": "webgl",
+          "quality": "high",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": -134.94863891601562,
+              "y": 0.7049999833106995,
+              "z": 0.6140632629394531,
+              "yaw": 0.23148269135687827
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "idle",
+              "animationTick": 1561,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 0,
+              "checkpoint": {
+                "x": -139.34352111816406,
+                "y": 0.7089999914169312,
+                "z": -7.961522102355957,
+                "yaw": 1.2544760275990814
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.handgun",
+                "combo": 0,
+                "started": 1560,
+                "activeAt": 1560,
+                "recoveryAt": 1561,
+                "endsAt": 1561
+              }
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 1580
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 0.9733273045844338,
+                  "z": -0.22942091916475443
+                },
+                "aimPoint": {
+                  "x": -127.9007665070774,
+                  "z": -1.047175827548071
+                },
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "attack",
+          "checkpoint": "armory",
+          "entities": 917,
+          "drawCalls": 153,
+          "triangles": 393488,
+          "imageSha256": "d65ea68600078e2c99fba20837f6271217179ed9ab3e3fe70165a81e2e95cfe0"
+        },
+        {
+          "frame": 60,
+          "tick": 1620,
+          "backend": "webgl",
+          "quality": "high",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": -134.94863891601562,
+              "y": 0.7049999833106995,
+              "z": 0.6140632629394531,
+              "yaw": 2.4407180372543658
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "idle",
+              "animationTick": 1607,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 0,
+              "checkpoint": {
+                "x": -139.34352111816406,
+                "y": 0.7089999914169312,
+                "z": -7.961522102355957,
+                "yaw": 1.2544760275990814
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.handgun",
+                "combo": 0,
+                "started": 1600,
+                "activeAt": 1606,
+                "recoveryAt": 1607,
+                "endsAt": 1607
+              }
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 1626
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": -0.7614832117084999,
+                  "z": -0.6481846328679106
+                },
+                "aimPoint": {
+                  "x": -141.62182095972122,
+                  "z": -5.066238005101965
+                },
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "attack",
+          "checkpoint": "armory",
+          "entities": 918,
+          "drawCalls": 153,
+          "triangles": 404402,
+          "imageSha256": "03e96ec6972a8a9ec3330ff83bcaa26071a8a39079820bbb3fa2e69c221e1268"
+        }
+      ]
+    },
+    {
+      "name": "l3-station-ready",
+      "tier": "high",
+      "errors": [],
+      "shots": [
+        {
+          "frame": 0,
+          "tick": 0,
+          "backend": "webgl",
+          "quality": "high",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": -155.5,
+              "y": 0.705,
+              "z": 1.6,
+              "yaw": 0.3205919885488634
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "idle",
+              "animationTick": 0,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": false,
+              "invulnerableUntil": 0,
+              "checkpoint": {
+                "x": -155.5,
+                "y": 0.705,
+                "z": 1.6,
+                "yaw": 0.3205919885488634
+              },
+              "diedAt": null
+            },
+            "weapons": {
+              "selectedSide": "LEFT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "yard",
+          "checkpoint": null,
+          "entities": 882,
+          "drawCalls": 124,
+          "triangles": 275477,
+          "imageSha256": "9988f5f7f262f6a746f9d915ec7b5c319f59890923c853778a85f6fa0dac7add"
+        },
+        {
+          "frame": 30,
+          "tick": 30,
+          "backend": "webgl",
+          "quality": "high",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": -155.5,
+              "y": 0.7049999833106995,
+              "z": 1.600000023841858,
+              "yaw": 0.3205919885488634
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "idle",
+              "animationTick": 0,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 0,
+              "checkpoint": {
+                "x": -155.5,
+                "y": 0.705,
+                "z": 1.6,
+                "yaw": 0.3205919885488634
+              },
+              "diedAt": null
+            },
+            "weapons": {
+              "selectedSide": "LEFT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "yard",
+          "checkpoint": null,
+          "entities": 882,
+          "drawCalls": 124,
+          "triangles": 275477,
+          "imageSha256": "24bdc9011962d997719aaccb3df5b745128964b449f2c4265f90fa711eb48941"
+        },
+        {
+          "frame": 60,
+          "tick": 60,
+          "backend": "webgl",
+          "quality": "high",
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": -155.5,
+              "y": 0.7049999833106995,
+              "z": 1.600000023841858,
+              "yaw": 0.3205919885488634
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": -1
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 0,
+              "animation": "idle",
+              "animationTick": 0,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 0,
+              "checkpoint": {
+                "x": -155.5,
+                "y": 0.705,
+                "z": 1.6,
+                "yaw": 0.3205919885488634
+              },
+              "diedAt": null
+            },
+            "weapons": {
+              "selectedSide": "LEFT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            }
+          },
+          "phase": "yard",
+          "checkpoint": null,
+          "entities": 882,
+          "drawCalls": 124,
+          "triangles": 275477,
+          "imageSha256": "fc20459245e9cf79eeec93a2e213a13224d39146f6371f14f5ea69a6126a453c"
+        }
+      ]
+    }
+  ],
+  "fixtures": [
+    {
+      "mode": "states",
+      "tier": "low",
+      "results": [
+        {
+          "model": "npc.national-guard",
+          "state": "healthy",
+          "name": "npc.national-guard-healthy",
+          "pass": true,
+          "checks": [
+            {
+              "name": "consoleErrors",
+              "pass": true,
+              "value": 0,
+              "limit": 0
+            },
+            {
+              "name": "canvas.f0.varianceMin",
+              "pass": true,
+              "value": 321.17932574648876,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f0.variedTilesMin",
+              "pass": true,
+              "value": 63,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f3.varianceMin",
+              "pass": true,
+              "value": 318.2101029801688,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f3.variedTilesMin",
+              "pass": true,
+              "value": 62,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f60.varianceMin",
+              "pass": true,
+              "value": 268.6419681187472,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f60.variedTilesMin",
+              "pass": true,
+              "value": 62,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f90.varianceMin",
+              "pass": true,
+              "value": 268.8192898093166,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f90.variedTilesMin",
+              "pass": true,
+              "value": 60,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f120.varianceMin",
+              "pass": true,
+              "value": 267.61849373624864,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f120.variedTilesMin",
+              "pass": true,
+              "value": 60,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f180.varianceMin",
+              "pass": true,
+              "value": 265.2959247777071,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f180.variedTilesMin",
+              "pass": true,
+              "value": 61,
+              "limit": 8
+            },
+            {
+              "name": "requestedBackend",
+              "pass": true,
+              "value": 1,
+              "limit": 1
+            },
+            {
+              "name": "requestedQuality",
+              "pass": true,
+              "value": 1,
+              "limit": 1
+            }
+          ],
+          "backend": "webgl",
+          "actualTier": "low",
+          "frames": 180,
+          "seconds": 7.562,
+          "failed": [],
+          "clipping": {
+            "gunBodyHits": 0,
+            "staticPairs": 0,
+            "heldPropHits": 0,
+            "actorHits": 0,
+            "piercing": 0
+          },
+          "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-low/npc.national-guard-healthy/sheet.jpg",
+          "sheetKb": 14,
+          "files": [
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-low/npc.national-guard-healthy/shot-0003.png",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-low/npc.national-guard-healthy/shot-0090.png",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-low/npc.national-guard-healthy/shot-0180.png",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-low/npc.national-guard-healthy/sheet.jpg",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-low/npc.national-guard-healthy/metrics.json"
+          ],
+          "consoleErrors": []
+        },
+        {
+          "model": "npc.national-guard",
+          "state": "turned",
+          "name": "npc.national-guard-turned",
+          "pass": true,
+          "checks": [
+            {
+              "name": "consoleErrors",
+              "pass": true,
+              "value": 0,
+              "limit": 0
+            },
+            {
+              "name": "canvas.f0.varianceMin",
+              "pass": true,
+              "value": 321.17932574648876,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f0.variedTilesMin",
+              "pass": true,
+              "value": 63,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f3.varianceMin",
+              "pass": true,
+              "value": 204.38537286817154,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f3.variedTilesMin",
+              "pass": true,
+              "value": 62,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f60.varianceMin",
+              "pass": true,
+              "value": 243.17732436197366,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f60.variedTilesMin",
+              "pass": true,
+              "value": 62,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f90.varianceMin",
+              "pass": true,
+              "value": 286.7888048611112,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f90.variedTilesMin",
+              "pass": true,
+              "value": 62,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f120.varianceMin",
+              "pass": true,
+              "value": 285.5531282555403,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f120.variedTilesMin",
+              "pass": true,
+              "value": 62,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f180.varianceMin",
+              "pass": true,
+              "value": 303.38568818072235,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f180.variedTilesMin",
+              "pass": true,
+              "value": 61,
+              "limit": 8
+            },
+            {
+              "name": "requestedBackend",
+              "pass": true,
+              "value": 1,
+              "limit": 1
+            },
+            {
+              "name": "requestedQuality",
+              "pass": true,
+              "value": 1,
+              "limit": 1
+            }
+          ],
+          "backend": "webgl",
+          "actualTier": "low",
+          "frames": 180,
+          "seconds": 9.265,
+          "failed": [],
+          "clipping": {
+            "gunBodyHits": 0,
+            "staticPairs": 0,
+            "heldPropHits": 0,
+            "actorHits": 0,
+            "piercing": 0
+          },
+          "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-low/npc.national-guard-turned/sheet.jpg",
+          "sheetKb": 14,
+          "files": [
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-low/npc.national-guard-turned/shot-0003.png",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-low/npc.national-guard-turned/shot-0090.png",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-low/npc.national-guard-turned/shot-0180.png",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-low/npc.national-guard-turned/sheet.jpg",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-low/npc.national-guard-turned/metrics.json"
+          ],
+          "consoleErrors": []
+        },
+        {
+          "model": "npc.national-guard",
+          "state": "corpse",
+          "name": "npc.national-guard-corpse",
+          "pass": true,
+          "checks": [
+            {
+              "name": "consoleErrors",
+              "pass": true,
+              "value": 0,
+              "limit": 0
+            },
+            {
+              "name": "canvas.f0.varianceMin",
+              "pass": true,
+              "value": 321.17932574648876,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f0.variedTilesMin",
+              "pass": true,
+              "value": 63,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f3.varianceMin",
+              "pass": true,
+              "value": 233.9354859764553,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f3.variedTilesMin",
+              "pass": true,
+              "value": 62,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f60.varianceMin",
+              "pass": true,
+              "value": 227.95877247856333,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f60.variedTilesMin",
+              "pass": true,
+              "value": 62,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f90.varianceMin",
+              "pass": true,
+              "value": 227.54710625694315,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f90.variedTilesMin",
+              "pass": true,
+              "value": 60,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f120.varianceMin",
+              "pass": true,
+              "value": 227.00742095641908,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f120.variedTilesMin",
+              "pass": true,
+              "value": 60,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f180.varianceMin",
+              "pass": true,
+              "value": 239.5438327572847,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f180.variedTilesMin",
+              "pass": true,
+              "value": 61,
+              "limit": 8
+            },
+            {
+              "name": "requestedBackend",
+              "pass": true,
+              "value": 1,
+              "limit": 1
+            },
+            {
+              "name": "requestedQuality",
+              "pass": true,
+              "value": 1,
+              "limit": 1
+            }
+          ],
+          "backend": "webgl",
+          "actualTier": "low",
+          "frames": 180,
+          "seconds": 10.06,
+          "failed": [],
+          "clipping": {
+            "gunBodyHits": 0,
+            "staticPairs": 0,
+            "heldPropHits": 0,
+            "actorHits": 0,
+            "piercing": 0
+          },
+          "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-low/npc.national-guard-corpse/sheet.jpg",
+          "sheetKb": 14,
+          "files": [
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-low/npc.national-guard-corpse/shot-0003.png",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-low/npc.national-guard-corpse/shot-0090.png",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-low/npc.national-guard-corpse/shot-0180.png",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-low/npc.national-guard-corpse/sheet.jpg",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-low/npc.national-guard-corpse/metrics.json"
+          ],
+          "consoleErrors": []
+        }
+      ]
+    },
+    {
+      "mode": "states",
+      "tier": "high",
+      "results": [
+        {
+          "model": "npc.national-guard",
+          "state": "healthy",
+          "name": "npc.national-guard-healthy",
+          "pass": true,
+          "checks": [
+            {
+              "name": "consoleErrors",
+              "pass": true,
+              "value": 0,
+              "limit": 0
+            },
+            {
+              "name": "canvas.f0.varianceMin",
+              "pass": true,
+              "value": 405.84428010269767,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f0.variedTilesMin",
+              "pass": true,
+              "value": 63,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f3.varianceMin",
+              "pass": true,
+              "value": 402.8688450612044,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f3.variedTilesMin",
+              "pass": true,
+              "value": 63,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f60.varianceMin",
+              "pass": true,
+              "value": 355.1164049186809,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f60.variedTilesMin",
+              "pass": true,
+              "value": 63,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f90.varianceMin",
+              "pass": true,
+              "value": 355.06831863578736,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f90.variedTilesMin",
+              "pass": true,
+              "value": 63,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f120.varianceMin",
+              "pass": true,
+              "value": 354.0509880512036,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f120.variedTilesMin",
+              "pass": true,
+              "value": 63,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f180.varianceMin",
+              "pass": true,
+              "value": 354.5133323518203,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f180.variedTilesMin",
+              "pass": true,
+              "value": 63,
+              "limit": 8
+            },
+            {
+              "name": "requestedBackend",
+              "pass": true,
+              "value": 1,
+              "limit": 1
+            },
+            {
+              "name": "requestedQuality",
+              "pass": true,
+              "value": 1,
+              "limit": 1
+            }
+          ],
+          "backend": "webgl",
+          "actualTier": "high",
+          "frames": 180,
+          "seconds": 9.762,
+          "failed": [],
+          "clipping": {
+            "gunBodyHits": 0,
+            "staticPairs": 0,
+            "heldPropHits": 0,
+            "actorHits": 0,
+            "piercing": 0
+          },
+          "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-high/npc.national-guard-healthy/sheet.jpg",
+          "sheetKb": 16,
+          "files": [
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-high/npc.national-guard-healthy/shot-0003.png",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-high/npc.national-guard-healthy/shot-0090.png",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-high/npc.national-guard-healthy/shot-0180.png",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-high/npc.national-guard-healthy/sheet.jpg",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-high/npc.national-guard-healthy/metrics.json"
+          ],
+          "consoleErrors": []
+        },
+        {
+          "model": "npc.national-guard",
+          "state": "turned",
+          "name": "npc.national-guard-turned",
+          "pass": true,
+          "checks": [
+            {
+              "name": "consoleErrors",
+              "pass": true,
+              "value": 0,
+              "limit": 0
+            },
+            {
+              "name": "canvas.f0.varianceMin",
+              "pass": true,
+              "value": 405.84428010269767,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f0.variedTilesMin",
+              "pass": true,
+              "value": 63,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f3.varianceMin",
+              "pass": true,
+              "value": 321.91021148707114,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f3.variedTilesMin",
+              "pass": true,
+              "value": 63,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f60.varianceMin",
+              "pass": true,
+              "value": 378.1685686574656,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f60.variedTilesMin",
+              "pass": true,
+              "value": 63,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f90.varianceMin",
+              "pass": true,
+              "value": 415.45498866536946,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f90.variedTilesMin",
+              "pass": true,
+              "value": 63,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f120.varianceMin",
+              "pass": true,
+              "value": 436.15890347534696,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f120.variedTilesMin",
+              "pass": true,
+              "value": 62,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f180.varianceMin",
+              "pass": true,
+              "value": 470.78888674009977,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f180.variedTilesMin",
+              "pass": true,
+              "value": 62,
+              "limit": 8
+            },
+            {
+              "name": "requestedBackend",
+              "pass": true,
+              "value": 1,
+              "limit": 1
+            },
+            {
+              "name": "requestedQuality",
+              "pass": true,
+              "value": 1,
+              "limit": 1
+            }
+          ],
+          "backend": "webgl",
+          "actualTier": "high",
+          "frames": 180,
+          "seconds": 11.117,
+          "failed": [],
+          "clipping": {
+            "gunBodyHits": 0,
+            "staticPairs": 0,
+            "heldPropHits": 0,
+            "actorHits": 0,
+            "piercing": 0
+          },
+          "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-high/npc.national-guard-turned/sheet.jpg",
+          "sheetKb": 16,
+          "files": [
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-high/npc.national-guard-turned/shot-0003.png",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-high/npc.national-guard-turned/shot-0090.png",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-high/npc.national-guard-turned/shot-0180.png",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-high/npc.national-guard-turned/sheet.jpg",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-high/npc.national-guard-turned/metrics.json"
+          ],
+          "consoleErrors": []
+        },
+        {
+          "model": "npc.national-guard",
+          "state": "corpse",
+          "name": "npc.national-guard-corpse",
+          "pass": true,
+          "checks": [
+            {
+              "name": "consoleErrors",
+              "pass": true,
+              "value": 0,
+              "limit": 0
+            },
+            {
+              "name": "canvas.f0.varianceMin",
+              "pass": true,
+              "value": 405.84428010269767,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f0.variedTilesMin",
+              "pass": true,
+              "value": 63,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f3.varianceMin",
+              "pass": true,
+              "value": 234.08621097561263,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f3.variedTilesMin",
+              "pass": true,
+              "value": 63,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f60.varianceMin",
+              "pass": true,
+              "value": 228.10580795774695,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f60.variedTilesMin",
+              "pass": true,
+              "value": 63,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f90.varianceMin",
+              "pass": true,
+              "value": 227.6963526328018,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f90.variedTilesMin",
+              "pass": true,
+              "value": 63,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f120.varianceMin",
+              "pass": true,
+              "value": 227.16150414359436,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f120.variedTilesMin",
+              "pass": true,
+              "value": 63,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f180.varianceMin",
+              "pass": true,
+              "value": 239.70800802520898,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f180.variedTilesMin",
+              "pass": true,
+              "value": 63,
+              "limit": 8
+            },
+            {
+              "name": "requestedBackend",
+              "pass": true,
+              "value": 1,
+              "limit": 1
+            },
+            {
+              "name": "requestedQuality",
+              "pass": true,
+              "value": 1,
+              "limit": 1
+            }
+          ],
+          "backend": "webgl",
+          "actualTier": "high",
+          "frames": 180,
+          "seconds": 10.262,
+          "failed": [],
+          "clipping": {
+            "gunBodyHits": 0,
+            "staticPairs": 0,
+            "heldPropHits": 0,
+            "actorHits": 0,
+            "piercing": 0
+          },
+          "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-high/npc.national-guard-corpse/sheet.jpg",
+          "sheetKb": 15,
+          "files": [
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-high/npc.national-guard-corpse/shot-0003.png",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-high/npc.national-guard-corpse/shot-0090.png",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-high/npc.national-guard-corpse/shot-0180.png",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-high/npc.national-guard-corpse/sheet.jpg",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/states-new-high/npc.national-guard-corpse/metrics.json"
+          ],
+          "consoleErrors": []
+        }
+      ]
+    },
+    {
+      "mode": "checkpoint",
+      "tier": "low",
+      "results": [
+        {
+          "file": "tests/scenes/catalog/l3-army-inner-cover.json",
+          "name": "l3-army-inner-cover",
+          "pass": true,
+          "checks": [
+            {
+              "name": "consoleErrors",
+              "pass": true,
+              "value": 0,
+              "limit": 0
+            },
+            {
+              "name": "undrawnFramesMax",
+              "pass": true,
+              "value": 0,
+              "limit": 0
+            },
+            {
+              "name": "canvas.f0.varianceMin",
+              "pass": true,
+              "value": 6599.004055702931,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f0.variedTilesMin",
+              "pass": true,
+              "value": 62,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f120.varianceMin",
+              "pass": true,
+              "value": 6657.888579283503,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f120.variedTilesMin",
+              "pass": true,
+              "value": 62,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f240.varianceMin",
+              "pass": true,
+              "value": 6701.685023045521,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f240.variedTilesMin",
+              "pass": true,
+              "value": 62,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f360.varianceMin",
+              "pass": true,
+              "value": 6664.289581707028,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f360.variedTilesMin",
+              "pass": true,
+              "value": 62,
+              "limit": 8
+            },
+            {
+              "name": "requestedBackend",
+              "pass": true,
+              "value": 1,
+              "limit": 1
+            },
+            {
+              "name": "requestedQuality",
+              "pass": true,
+              "value": 1,
+              "limit": 1
+            }
+          ],
+          "backend": "webgl",
+          "actualTier": "low",
+          "frames": 360,
+          "seconds": 7.179,
+          "failed": [],
+          "clipping": {
+            "gunBodyHits": 0,
+            "staticPairs": 2,
+            "heldPropHits": 0,
+            "actorHits": 0,
+            "piercing": 0
+          },
+          "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/checkpoint-new-low/l3-army-inner-cover/sheet.jpg",
+          "sheetKb": 44,
+          "files": [
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/checkpoint-new-low/l3-army-inner-cover/shot-0000.png",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/checkpoint-new-low/l3-army-inner-cover/sheet.jpg",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/checkpoint-new-low/l3-army-inner-cover/metrics.json"
+          ],
+          "consoleErrors": []
+        }
+      ]
+    },
+    {
+      "mode": "checkpoint",
+      "tier": "high",
+      "results": [
+        {
+          "file": "tests/scenes/catalog/l3-army-inner-cover.json",
+          "name": "l3-army-inner-cover",
+          "pass": true,
+          "checks": [
+            {
+              "name": "consoleErrors",
+              "pass": true,
+              "value": 0,
+              "limit": 0
+            },
+            {
+              "name": "undrawnFramesMax",
+              "pass": true,
+              "value": 0,
+              "limit": 0
+            },
+            {
+              "name": "canvas.f0.varianceMin",
+              "pass": true,
+              "value": 6705.007202891665,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f0.variedTilesMin",
+              "pass": true,
+              "value": 63,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f120.varianceMin",
+              "pass": true,
+              "value": 6747.015241228732,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f120.variedTilesMin",
+              "pass": true,
+              "value": 62,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f240.varianceMin",
+              "pass": true,
+              "value": 6777.251349696064,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f240.variedTilesMin",
+              "pass": true,
+              "value": 62,
+              "limit": 8
+            },
+            {
+              "name": "canvas.f360.varianceMin",
+              "pass": true,
+              "value": 6756.292373273101,
+              "limit": 1
+            },
+            {
+              "name": "canvas.f360.variedTilesMin",
+              "pass": true,
+              "value": 62,
+              "limit": 8
+            },
+            {
+              "name": "requestedBackend",
+              "pass": true,
+              "value": 1,
+              "limit": 1
+            },
+            {
+              "name": "requestedQuality",
+              "pass": true,
+              "value": 1,
+              "limit": 1
+            }
+          ],
+          "backend": "webgl",
+          "actualTier": "high",
+          "frames": 360,
+          "seconds": 8.238,
+          "failed": [],
+          "clipping": {
+            "gunBodyHits": 0,
+            "staticPairs": 2,
+            "heldPropHits": 0,
+            "actorHits": 0,
+            "piercing": 0
+          },
+          "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/checkpoint-new-high/l3-army-inner-cover/sheet.jpg",
+          "sheetKb": 45,
+          "files": [
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/checkpoint-new-high/l3-army-inner-cover/shot-0000.png",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/checkpoint-new-high/l3-army-inner-cover/sheet.jpg",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-all-new/test-results/l3-all-new/checkpoint-new-high/l3-army-inner-cover/metrics.json"
+          ],
+          "consoleErrors": []
+        }
+      ]
+    }
+  ]
+}
