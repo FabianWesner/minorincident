@@ -171,9 +171,9 @@
     }
   },
   "pending": [
-    "final-remote-units",
     "final-smoke",
-    "final-invariants"
+    "final-invariants",
+    "final-production-scan"
   ],
   "productionScan": {
     "jsCssBytes": 11088094,
@@ -354,7 +354,14 @@
     "skipped": 2,
     "skips": "Existing opt-in L4-botprobe and L4-probe measurements",
     "source": "test-results/code-batch1/remote-all-final.json",
-    "coverageComplete": true
+    "coverageComplete": true,
+    "subsequentSourceChanges": [
+      "src/levels/loader.ts",
+      "tests/unit/tooling/scenario-loader.test.ts",
+      "vitest.config.ts"
+    ],
+    "retainedCoverageProof": "Only simulation-source change is the equivalent loader guard under Vitest define __QA_HOOKS__=true; undefined/true/false Node truth table passes and every QA/PROD browser output file is byte-identical.",
+    "reportSha256": "8bb9f91706453b55a0ed4127ea9d489d9818dcf1e9ff5966765d202fda7e3427"
   },
   "remoteCombined": {
     "exitCode": 1,
@@ -416,12 +423,13 @@
     "inventoryTestLimitMilliseconds": 300000,
     "maxWorkers": 1,
     "assertionsAndLimitsUnchanged": true,
-    "fullFolderPending": true,
+    "fullFolderPending": false,
     "inventoryCaseMilliseconds": 240223,
     "navigationFileMilliseconds": 142577,
     "L9NavigationCaseMilliseconds": 101041,
     "L9NavigationLimitMilliseconds": 120000,
-    "bothPriorCasesPassed": true
+    "bothPriorCasesPassed": true,
+    "fullFolderCompletedBy": "remoteUnitFinal"
   },
   "nodeScenarioCompatibility": {
     "commit": "d28fdc12a",
@@ -473,6 +481,18 @@
     "differences": [],
     "maxWorkers": 4,
     "timingFilesSequential": true,
-    "status": "running"
+    "status": "completed"
+  },
+  "remoteUnitFinal": {
+    "exitCode": 0,
+    "files": 408,
+    "passed": 2324,
+    "skipped": 7,
+    "skips": "Existing macOS-only browser capacity cases; all seven passed in the local unit run",
+    "maxWorkers": 4,
+    "timingFilesSequential": true,
+    "coverageComplete": true,
+    "report": "test-results/code-batch1/remote-units-final.json",
+    "reportSha256": "cbb25c70c212b3940000bd88ea19d44a7b1b226d1078b3c4abe20a961ae78cb8"
   }
 }
