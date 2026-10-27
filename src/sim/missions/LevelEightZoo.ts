@@ -11,6 +11,7 @@ import { Outbreak } from '../outbreak/Outbreak';
 import { zooStaffLook } from '../../data/zooStaff';
 import { readyCarriedAlly, allyState } from '../outbreak/Allies';
 import { layoutHouseDoors, doorExit, emergeResident, walkResidents, type HouseEmergence } from '../outbreak/HouseEmergence';
+import { formationSlot, leaderHeading, requireClearPoint } from './missionHelpers';
 
 export interface L8ZooState {
   startedAt: number; breachedAt: number; nextWave: number; alphas: number; carId: number; busId: number;
@@ -26,12 +27,7 @@ export class LevelEightZoo {
   constructor(private readonly mission: Mission) {}
   private get w() { return this.mission.world; }
   private point(at: Point, radius = .4): Point {
-    const nav = this.w.infected!.nav;
-    for (let d = 0; d <= 8; d += .5) for (let i = 0; i < (d ? 16 : 1); i++) {
-      const p = { x: at.x + Math.cos(i * Math.PI / 8) * d, z: at.z + Math.sin(i * Math.PI / 8) * d };
-      if (nav.clear(p.x, p.z, radius)) return p;
-    }
-    throw new Error(`No clear zoo point at ${at.x},${at.z}`);
+    return requireClearPoint(this.w, at, radius, 8, 'zoo');
   }
   prepare(): void {
     if (this.prepared) return;
@@ -224,10 +220,8 @@ export class LevelEightZoo {
     if (!s.breachedAt) return s.roster.includes(e.id);
     c.state = 'calm'; c.story = null; c.survivor!.cover = false;
     const door = this.door(), boarding = w.vehicles!.active === s.carId || distance(p.transform, door) < 12;
-    const slot = c.survivor!.slot, velocity = p.survivor!.velocity, speed = Math.hypot(velocity.x, velocity.z);
-    const hx = speed > .8 ? velocity.x / speed : Math.cos(p.transform.yaw), hz = speed > .8 ? velocity.z / speed : -Math.sin(p.transform.yaw);
-    const back = 2.3 + Math.floor(slot / 3) * 1.2, side = (slot % 3 - 1) * 1.2;
-    const goal = { x: p.transform.x - hx * back - hz * side, z: p.transform.z - hz * back + hx * side };
+    const slot = c.survivor!.slot, velocity = p.survivor!.velocity;
+    const goal = formationSlot(p.transform, leaderHeading(p.transform.yaw, velocity), slot);
     const target = boarding ? door : w.infected!.nav.clear(goal.x, goal.z, .35) ? goal : p.transform;
     if (boarding && distance(e.transform, door) < .7) w.vehicles!.boardPassenger(s.carId, e.id);
     else if (distance(e.transform, target) > (boarding ? .3 : 1)) {

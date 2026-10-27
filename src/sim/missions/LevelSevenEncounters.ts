@@ -4,6 +4,7 @@ import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { Point } from '../npc/types';
 import { l7Encounters } from '../../data/l7';
+import { formationBack, formationSlot, leaderHeading, requireClearPoint } from './missionHelpers';
 
 export interface L7EncounterState {
   started: boolean;
@@ -34,12 +35,11 @@ export class LevelSevenEncounters {
     director.levelCap = 200; director.strict = true;
     const roster = carried ?? this.carried ?? w.progression?.campaign?.results?.L6?.escapedSurvivors;
     const count = roster?.length ?? (director.tier === 'low' ? 15 : 24);
-    const leader = w.entities.get(1)!.transform, hx = Math.cos(leader.yaw), hz = -Math.sin(leader.yaw);
+    const leader = w.entities.get(1)!.transform, heading = leaderHeading(leader.yaw);
     for (let slot = 0; slot < count; slot++) {
       const source = roster?.[slot];
       if (source && (source.health.current <= 0 || source.infected || source.infection)) continue;
-      const back = 2.3 + Math.floor(slot / 3) * 1.2, side = (slot % 3 - 1) * 1.2;
-      const at = this.clearPoint({ x: leader.x - hx * back - hz * side, z: leader.z - hz * back + hx * side }, .4);
+      const at = this.clearPoint(formationSlot(leader, heading, slot), .4);
       const e = source ? structuredClone(source) : w.entities.get(outbreak.spawnPedestrian(at, { model: slot % 2 ? 'npc.civilian-man-b.aftermath' : 'npc.civilian-woman-b.aftermath', role: 'cashier' }))!;
       if (source) {
         if (w.entities.get(e.id)) throw new Error(`L7 incoming survivor id collision: ${e.id}`);
@@ -69,12 +69,7 @@ export class LevelSevenEncounters {
     }
   }
   private clearPoint(at: Point, radius: number): Point {
-    const nav = this.world.infected!.nav;
-    for (let d = 0; d <= 4; d += .5) for (let i = 0; i < (d ? 16 : 1); i++) {
-      const p = { x: at.x + Math.cos(i * Math.PI / 8) * d, z: at.z + Math.sin(i * Math.PI / 8) * d };
-      if (nav.clear(p.x, p.z, radius)) return p;
-    }
-    throw new Error(`No clear L7 encounter point at ${at.x},${at.z}`);
+    return requireClearPoint(this.world, at, radius, 4, 'L7 encounter');
   }
   private group(group: number, centre: Point, count: number, alphas: number): void {
     const ai = this.world.infected!;
@@ -147,13 +142,11 @@ export class LevelSevenEncounters {
     if (this.world.l7Departure?.claims(e)) return true;
     const w = this.world, p = w.entities.get(1)!, c = e.civilian!, s = c.survivor!;
     c.state = 'calm'; c.story = null; s.cover = false;
-    const d = distance(e.transform, p.transform), slot = s.slot, v = p.survivor!.velocity, speed = Math.hypot(v.x, v.z);
+    const d = distance(e.transform, p.transform), slot = s.slot, v = p.survivor!.velocity;
     // Three columns keep a 35-person group inside the street. Nav collapses it through the actual opening.
-    const hx = speed > .8 ? v.x / speed : Math.cos(p.transform.yaw), hz = speed > .8 ? v.z / speed : -Math.sin(p.transform.yaw);
-    const back = 2.3 + Math.floor(slot / 3) * 1.2, side = (slot % 3 - 1) * 1.2;
-    const goal = { x: p.transform.x - hx * back - hz * side, z: p.transform.z - hz * back + hx * side };
+    const goal = formationSlot(p.transform, leaderHeading(p.transform.yaw, v), slot);
     const target = w.infected!.nav.clear(goal.x, goal.z, .35) ? goal : p.transform;
-    if (d > back + 10 && w.tick >= this.state.waitAt) {
+    if (d > formationBack(slot) + 10 && w.tick >= this.state.waitAt) {
       this.state.waitAt = w.tick + 300;
       w.events.emit({ type: 'story.say', tick: w.tick, id: e.id, text: 'Wait for us!', position: e.transform });
     }
