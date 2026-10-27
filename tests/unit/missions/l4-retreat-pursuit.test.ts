@@ -46,3 +46,16 @@ test('a broken third line keeps breach cohorts on the courier until the hold end
   expect(press).toHaveBeenCalledWith(60, 1, expect.any(Number), 40);
   expect(brain.goalX).toBe(0);
 });
+
+test('a breach crossing follows the courier after she moves to another hold post', () => {
+  const player = { id: 1, transform: { x: -5, z: -6 } } as EntitySnapshot;
+  const body = { id: 60, archetype: 'infected.crawler', transform: { x: -28, z: -6 }, health: { current: 100 }, infected: { breachApproach: 'inside', scripted: { x: -26, z: -6 } } } as EntitySnapshot;
+  const world = { entities: { get: () => player }, infected: { active: [body], director: { tier: 'high' } } };
+  const war = Object.assign(Object.create(LevelFourWar.prototype), {
+    mission: { world, state: { l4: { origin: { 60: 1000 } } } },
+    breachOpen: (side: string) => side === 'west', snap: (p: unknown) => p,
+  }) as { funnel(): void };
+  war.funnel();
+  expect(body.infected!.breachApproach).toBe('inside');
+  expect(Math.hypot(body.infected!.scripted!.x - player.transform.x, body.infected!.scripted!.z - player.transform.z)).toBeLessThan(9);
+});

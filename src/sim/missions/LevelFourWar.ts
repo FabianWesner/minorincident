@@ -486,10 +486,12 @@ export class LevelFourWar {
         b.breachApproach = 'outside';
       }
       if (b.breachApproach && b.scripted) {
-        if (b.breachApproach === 'outside' && (inside(e.transform) || dist(e.transform, b.scripted) < 1.4)) {
+        const target = this.low && !b.l4FlankTarget ? player : this.world.entities.get(b.l4FlankTarget ?? b.l1?.focusId ?? 1)?.transform ?? player;
+        // Follow a moving hold position while crossing the plaza. A cached
+        // inside waypoint otherwise strands a slow cohort at the previous post.
+        if (b.breachApproach === 'outside' && (inside(e.transform) || dist(e.transform, b.scripted) < 1.4) || b.breachApproach === 'inside' && dist(b.scripted, target) > 10) {
           // Fan out onto the courier's side of the plaza. A group must finish
           // crossing rather than stop to fight the first guard at the gap.
-          const target = this.low && !b.l4FlankTarget ? player : this.world.entities.get(b.l4FlankTarget ?? b.l1?.focusId ?? 1)?.transform ?? player;
           const dx = e.transform.x - target.x, dz = e.transform.z - target.z, d = Math.hypot(dx, dz) || 1, lane = (e.id % 5 - 2) * 1.1;
           b.scripted = this.snap({ x: target.x + dx / d * 6 - dz / d * lane, z: target.z + dz / d * 6 + dx / d * lane }, .45);
           b.breachApproach = 'inside';
@@ -664,9 +666,7 @@ export class LevelFourWar {
   /** Keep breached groups moving with the nearest live defender or courier. Targets can move while the flood crosses the plaza. */
   private followBreachHorde(): void {
     const { world } = this.mission, tick = world.tick, ai = world.infected!, player = world.entities.get(1)!;
-    // A broken fallback line is still the hold: its breach cohorts keep pressing
-    // the courier until "Fall back!" actually opens the escape phase.
-    if (this.s.phase === 'collapse') {
+    if (this.s.phase === 'collapse' || !this.low && this.s.director.lines[2].brokeAt) {
       const soldiers = this.liveSoldiers();
       if (!soldiers.length) return;
       // Street encounters keep their sight-driven courier job. The retreating
@@ -679,6 +679,9 @@ export class LevelFourWar {
       }
       for (const e of ai.active) {
         if (streetArrivals.has(e.id)) continue;
+        // A broken fallback line is still the hold: its breach cohorts keep
+        // pressing the courier until "Fall back!" opens the escape phase.
+        if (this.s.phase === 'war' && this.s.origin[e.id] >= l4Emergence.length) continue;
         if (e.archetype === 'infected.alpha' && e.health.current > 0 && !e.hidden && !e.infected?.specialAttack && dist(e.transform, player.transform) > l4.director.escape.nearM && tick % 60 === e.id % 60) {
           // Surviving Alphas finish the battle with the retreating army rather
           // than retaining their now-silent tank staging point forever.
@@ -735,7 +738,7 @@ export class LevelFourWar {
         brain.goalX = target.transform.x; brain.goalZ = target.transform.z;
         brain.search.originX = target.transform.x; brain.search.originZ = target.transform.z;
       }
-      return;
+      if (this.s.phase === 'collapse') return;
     }
     const defenders = [player, ...this.liveSoldiers().filter(e => this.insideRing(e.transform))].filter(e => e.health.current > 0 && !e.hidden);
     for (const e of ai.active) {
