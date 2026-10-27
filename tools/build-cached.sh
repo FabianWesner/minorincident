@@ -3,6 +3,11 @@
 set -eu
 export NODE_ENV="${NODE_ENV:-production}"
 root=$(cd "$(dirname "$0")/.." && pwd -P)
+# Custom Vite arguments can change the root, config or output location. Cache
+# only the default invocation, whose artifact contract is always root/dist.
+if [ "$#" -gt 0 ]; then
+  exec "$root/node_modules/.bin/vite" build --configLoader runner "$@"
+fi
 common=$(git -C "$root" rev-parse --path-format=absolute --git-common-dir)
 repo=$(cd "$(dirname "$common")" && pwd -P)
 store="${MI_WORKTREE_CACHE:-$repo/.mi-worktree-cache}"

@@ -1,7 +1,7 @@
 // Shared gate tools: browser/runner admission is used by every lane and gate. If it breaks, the Mac overloads
 // (WindowServer kills, see docs/process/lessons-learned.md) or remote runs lose their caches.
 import { execFile, execFileSync, spawnSync } from 'node:child_process';
-import { chmodSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, utimesSync, writeFileSync } from 'node:fs';
+import { chmodSync, copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, utimesSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { promisify } from 'node:util';
@@ -108,6 +108,45 @@ test('scene gate rejects invalid arguments and empty selections before running c
   expect(f.calls(), 'invalid input must not launch work').toBe(0);
   expect(f.run(['--batch', '1', '--shard', '1/2']).status, 'valid shard').toBe(0);
   f.select([]); expect(f.run().status, 'empty selection').not.toBe(0);
+});
+
+function buildCacheFixture() {
+  const root = mkdtempSync(join(tmpdir(), 'mi-build-cache-')); dirs.push(root);
+  for (const dir of ['tools/qa', 'node_modules/.bin', 'dist']) mkdirSync(join(root, dir), { recursive: true });
+  copyFileSync(process.env.MI_CACHE_WRAPPER ?? 'tools/build-cached.sh', join(root, 'tools/build-cached.sh'));
+  for (const file of ['cache-lock.py', 'prune-build-cache.py']) copyFileSync(`tools/qa/${file}`, join(root, `tools/qa/${file}`));
+  writeFileSync(join(root, '.gitignore'), 'node_modules/\ndist/\ncache/\ncustom-dist/\nbuilds.log\n');
+  writeFileSync(join(root, 'package-lock.json'), '{}');
+  writeFileSync(join(root, 'node_modules/.bin/vite'), `#!/bin/sh
+out=dist
+while [ "$#" -gt 0 ]; do
+  if [ "$1" = --outDir ]; then shift; out=$1; fi
+  shift
+done
+mkdir -p "$out"
+printf fresh > "$out/index.html"
+printf asset > "$out/asset.js"
+printf build\\n >> builds.log
+`); chmodSync(join(root, 'node_modules/.bin/vite'), 0o755);
+  execFileSync('git', ['init', '-q'], { cwd: root });
+  execFileSync('git', ['add', '.'], { cwd: root });
+  execFileSync('git', ['-c', 'user.name=Cache fixture', '-c', 'user.email=cache@example.invalid', '-c', 'core.hooksPath=/dev/null', 'commit', '-qm', 'fixture'], { cwd: root });
+  const run = (...args: string[]) => execFileSync('sh', ['tools/build-cached.sh', ...args], {
+    cwd: root, env: { ...process.env, MI_CACHE_LOCK_HELD: '', MI_BUILD_CACHE: 'on', MI_WORKTREE_CACHE: join(root, 'cache'), VITE_QA_HOOKS: '1' }, encoding: 'utf8', timeout: 10_000,
+  });
+  return { root, run };
+}
+
+test('build-cache honors custom output arguments on repeated clean invocations', () => {
+  const f = buildCacheFixture();
+  writeFileSync(join(f.root, 'dist/index.html'), 'stale default');
+  f.run('--outDir', 'custom-dist');
+  expect(readFileSync(join(f.root, 'dist/index.html'), 'utf8')).toBe('stale default');
+  rmSync(join(f.root, 'custom-dist'), { recursive: true });
+  f.run('--outDir', 'custom-dist');
+  expect(existsSync(join(f.root, 'custom-dist/index.html')), 'cache hit must still honor requested output').toBe(true);
+  expect(readFileSync(join(f.root, 'custom-dist/index.html'), 'utf8')).toBe('fresh');
+  expect(readFileSync(join(f.root, 'dist/index.html'), 'utf8')).toBe('stale default');
 });
 
 test('remote runner cache GC removes inactive caches while keeping the current cache and live jobs', () => {

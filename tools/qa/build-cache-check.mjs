@@ -36,4 +36,12 @@ for (const [label, command, hooks, overrides, reused] of [
   results.push(row);
   console.log(`PASS ${label}: __QA_HOOKS__=${hooks}, cacheHit=${row.cacheHit}`);
 }
+const defaultIndex = readFileSync('dist/index.html');
+const customOut = `${out}/custom-dist`;
+const custom = spawnSync('npm', ['run', 'build', '--', '--outDir', customOut], { env: base, encoding: 'utf8' });
+assert.equal(custom.status, 0, `${custom.stdout ?? ''}\n${custom.stderr ?? ''}`);
+assert.equal(readFileSync('dist/index.html').compare(defaultIndex), 0, 'custom outDir must leave the default dist untouched');
+assert.equal(readFileSync(`${customOut}/index.html`).length > 0, true, 'custom outDir receives a fresh public artifact');
+results.push({ label: 'custom-out-dir', customOut, defaultDistUntouched: true });
+console.log('PASS custom-out-dir: requested artifact fresh; default dist untouched');
 writeFileSync(`${out}/results.json`, JSON.stringify({ revision: spawnSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).stdout.trim(), results }, null, 2) + '\n');
