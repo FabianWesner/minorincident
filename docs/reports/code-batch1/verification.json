@@ -39,10 +39,10 @@
     "webgpu": true,
     "debugControls": 0,
     "debugClass": false,
-    "bundle": "/build/index-BcO8Eaqa.js",
+    "bundle": "/build/index-BWjzbhYE.js",
     "lockedL10": "true",
     "telemetryRequests": [],
-    "canvasColors": 6854,
+    "canvasColors": 6823,
     "errors": [],
     "unsafeWebgpuFlag": false,
     "pass": true
@@ -170,11 +170,7 @@
       "P3": 0
     }
   },
-  "pending": [
-    "final-smoke",
-    "final-invariants",
-    "final-production-scan"
-  ],
+  "pending": [],
   "productionScan": {
     "jsCssBytes": 11088094,
     "totalDistBytes": 422911901,
@@ -200,13 +196,27 @@
       "get(\"preload\")",
       "get(\"telemetry\")"
     ],
-    "hits": []
+    "hits": [],
+    "caseInsensitiveTokens": [
+      "__SS__",
+      "__SCENE__",
+      "__MOTIONLAB__",
+      "__ASSET__",
+      "__LIGHT_SPIKE__",
+      "SceneLab",
+      "MotionLab",
+      "downAll",
+      "testApi",
+      "lookdev"
+    ],
+    "caseInsensitiveHits": []
   },
   "smoke": {
     "simulationPassed": 6,
     "browserPassed": 35,
     "exitCode": 0,
-    "unflaggedWebgpuPipelineCases": 4
+    "unflaggedWebgpuPipelineCases": 4,
+    "finalCodeCommit": "110da3b6f"
   },
   "qaInvariantsFirstAttempt": {
     "simulationPassed": 27,
@@ -247,11 +257,11 @@
   "qaInvariants": {
     "simulationPassed": 28,
     "simulationFailed": 0,
-    "seatDurationMilliseconds": 281133.314066,
+    "seatDurationMilliseconds": 247069.486031,
     "seatLimitMilliseconds": 480000,
     "browserStats": {
-      "startTime": "2026-10-27T02:33:44.006Z",
-      "duration": 191588.521,
+      "startTime": "2026-10-27T05:12:26.290Z",
+      "duration": 197947.522,
       "expected": 12,
       "skipped": 0,
       "unexpected": 0,
@@ -261,27 +271,28 @@
       {
         "stage": "remote-sim",
         "code": 0,
-        "seconds": 1525.131,
-        "revision": "ea8860693b11f9e45ba2f2f6b16b62b4ccfffd2c",
+        "seconds": 568.317,
+        "revision": "f333d571fae64befea27a777b056e7d91e6332e0",
         "log": "test-results/qa-invariants/remote-sim.log"
       },
       {
         "stage": "build",
         "code": 0,
-        "seconds": 331.877,
-        "revision": "ea8860693b11f9e45ba2f2f6b16b62b4ccfffd2c",
+        "seconds": 16.739,
+        "revision": "f333d571fae64befea27a777b056e7d91e6332e0",
         "log": "test-results/qa-invariants/build.log"
       },
       {
         "stage": "Mac-WebGPU-low",
         "code": 0,
-        "seconds": 202.763,
-        "revision": "ea8860693b11f9e45ba2f2f6b16b62b4ccfffd2c",
+        "seconds": 269.288,
+        "revision": "f333d571fae64befea27a777b056e7d91e6332e0",
         "log": "test-results/qa-invariants/Mac-WebGPU-low.log",
         "quietAdmission": true
       }
     ],
-    "exitCode": 0
+    "exitCode": 0,
+    "finalCodeCommit": "110da3b6f"
   },
   "qaSpikeBuild": {
     "BUILD_SPIKES": "1",
@@ -410,13 +421,18 @@
     "replacement": "complete tests/unit with --maxWorkers=1 and exclusive runner; no assertions, timeouts, or skips changed"
   },
   "productionDeliveryBuild": {
-    "commit": "5ea486286b644ed27eb89396724daaf37763f671",
+    "commit": "5ccf53d7b54bf504bb30b8a31d389721efdd8664",
     "branchEnvironment": "main",
+    "NODE_ENV": "production",
     "VITE_QA_HOOKS": "unset",
     "exitCode": 0,
     "jsCssBytes": 11088094,
     "totalDistBytes": 422911901,
-    "hookHits": []
+    "hookHits": [],
+    "html": [
+      "index.html"
+    ],
+    "motionlabAssetsPresent": false
   },
   "remoteSerialRecoveryProgress": {
     "inventoryValidationFileMilliseconds": 254426,
@@ -494,5 +510,73 @@
     "coverageComplete": true,
     "report": "test-results/code-batch1/remote-units-final.json",
     "reportSha256": "cbb25c70c212b3940000bd88ea19d44a7b1b226d1078b3c4abe20a961ae78cb8"
+  },
+  "qaInvariantsReschedule": {
+    "fromHost": "2.31.10.108",
+    "toHost": "88.99.168.213",
+    "reason": "runner 2 occupied by long nightly suite; runner 3 follows our completed unit gate",
+    "priorAttemptCancelledBeforeTests": true,
+    "priorOwnedProcessGroupStopped": 227140
+  },
+  "gatedHooks": {
+    "globals": [
+      "__SS__",
+      "__SCENE__",
+      "__MOTIONLAB__",
+      "__ASSET__",
+      "__LIGHT_SPIKE__"
+    ],
+    "labs": [
+      "SceneLab",
+      "MotionLab",
+      "Inspection",
+      "Lookdev"
+    ],
+    "cheats": [
+      "downAll"
+    ],
+    "controls": [
+      "debug controls",
+      "level unlocks",
+      "audioControls",
+      "inputControls"
+    ],
+    "probes": [
+      "render",
+      "hand",
+      "foot",
+      "corpse",
+      "profiling",
+      "ID masks"
+    ],
+    "urlFlags": [
+      "debug",
+      "test",
+      "testApi",
+      "scenelab",
+      "inspect",
+      "motionlab",
+      "perf",
+      "lookdev",
+      "renderer",
+      "idpass",
+      "loadProfile",
+      "workerCpu",
+      "crowdProbe",
+      "aimcone",
+      "doors",
+      "skin",
+      "dpr",
+      "tone",
+      "preload",
+      "telemetry"
+    ]
+  },
+  "complete": true,
+  "verifiedFinalSource": {
+    "codeCommit": "110da3b6f",
+    "sha256": "0fc83736c4e152bb578b2fe05ee7e474b0127a22795f552a7c1c170537392c10",
+    "checkedFiles": 3002,
+    "changedSinceFinalUnitSnapshot": []
   }
 }
