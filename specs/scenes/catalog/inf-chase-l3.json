@@ -1,6 +1,6 @@
 {
   "name": "inf-chase-l3",
-  "note": "L3 layout (D-CORRIDOR boulevard, 7 m lanes, parked wrecks and shop frontages): two runners chase the courier down the boulevard, then across both lanes between the parked cars. Look for: they keep after her round the cars, close in, never freeze or wander off while she is near.",
+  "note": "Q-207: the route is 54 m and the runners reach her only when she stops at its end (first swing near frame 910), so the run needs 1100 frames, not 780 (fixture, not game behaviour). L3 layout (D-CORRIDOR boulevard, 7 m lanes, parked wrecks and shop frontages): two runners chase the courier down the boulevard, then across both lanes between the parked cars. Look for: they keep after her round the cars, close in, never freeze or wander off while she is near.",
   "ground": "district",
   "time": "L3",
   "layout": {
@@ -86,7 +86,7 @@
     "actor": "courier",
     "zoom": 1.2
   },
-  "frames": 780,
+  "frames": 1100,
   "sheet": 60,
   "expect": {
     "consoleErrors": 0,

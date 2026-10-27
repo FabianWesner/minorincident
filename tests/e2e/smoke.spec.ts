@@ -96,10 +96,12 @@ test('L1 handover + outbreak: no shader builds after warm-up and no frame over 2
   const l2 = await page.evaluate(async () => {
     const a = window.__SS__!;
     await a.loadLevel('L2', { seed: 1 }); const loaded = { ...a.perf().nodeBuildMaterials };
-    a.missions.begin(); a.resume(); await new Promise(r => setTimeout(r, 2500)); a.pause();
+    a.missions.begin(); a.resume(); await new Promise(r => setTimeout(r, 2500));
+    // Q-211: the axe is picked up for real (no pickup entity exists at load), still without a new program.
+    a.cheats.completeObjective('axe'); await new Promise(r => setTimeout(r, 1500)); a.pause();
     return { loaded, after: { ...a.perf().nodeBuildMaterials } };
   });
-  expect(heldBuilds(l2.loaded, l2.after), 'L2 carried-weapon builds after the level warm-up (fire axe at the start)').toEqual([]);
+  expect(heldBuilds(l2.loaded, l2.after), 'L2 carried-weapon builds after the level warm-up (fire axe at the start and at its pickup)').toEqual([]);
 });
 
 // P0 guard (PROD "all other players are invisible"): each on-screen pedestrian's head/torso pixels must change when that

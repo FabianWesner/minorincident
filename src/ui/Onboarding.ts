@@ -84,13 +84,13 @@ export class Onboarding {
         }
         if (l1 && lesson === 'selector') { this.completed.add('selector'); continue; }
         if (l1 && ['attack', 'second-side'].includes(lesson) && !player.weapons) break;
-        if (lesson === 'vehicle' && this.world.vehicles?.cars.size === 0) break;
+        if (lesson === 'vehicle' && !this.world.vehicles?.canInteract()) break;
         this.current = lesson; this.seen.add(lesson); this.startTick = this.world.tick;
         try { this.storage?.setItem(onboardingKey, JSON.stringify([...this.seen])); } catch { /* Once per session when storage is disabled. */ }
         break;
       }
     }
-    setHidden(this.element, !this.current || (!!l1 && this.world.tick - this.startTick >= 180));
+    setHidden(this.element, !this.current || (!!l1 && this.world.tick - this.startTick >= 180) || (this.current === 'vehicle' && !this.world.vehicles?.canInteract()));
     if (!this.current) return;
     attribute(this.element, 'data-action', this.current); attribute(this.element, 'data-scheme', scheme);
     text(this.element, `${this.glyph(this.current, scheme)} · ${descriptions[this.current]}`);

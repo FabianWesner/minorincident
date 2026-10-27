@@ -55,7 +55,10 @@ export class Combat {
    * A level's own pickup is never owned at the level start (a replayed level or a saved rack may still carry it): remove the
    * given actions from both racks, keep the rest, and fall back to fists/kick when a side would be empty.
    */
+  /** Actions a level grants later (no pickup entity at load); the view loads and warms them up front. */
+  readonly withheld = new Set<string>();
   withholdPickups(...ids: string[]): void {
+    for (const id of ids) this.withheld.add(id);
     const st = this.runner.loadout.state, drop = new Set(ids);
     const left = st.LEFT.rack.map(s => s.id).filter(id => !drop.has(id)), right = st.RIGHT.rack.map(s => s.id).filter(id => !drop.has(id));
     if (left.length === st.LEFT.rack.length && right.length === st.RIGHT.rack.length) return;
