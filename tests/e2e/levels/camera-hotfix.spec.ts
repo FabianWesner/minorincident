@@ -68,15 +68,18 @@ for (const renderer of ['webgl', 'webgpu'] as const) for (const quality of ['hig
     await expect(page.locator('[data-input-hint]')).toContainText('WASD');
     for (const [width, height] of [[1280, 720], [1920, 1080], [2000, 990]]) {
       await page.setViewportSize({ width, height });
-      const hint = page.locator('[data-input-hint]'); await expect(hint).toBeVisible();
-      const hintBox = (await hint.boundingBox())!;
-      for (const selector of ['.hud-vitals', '.hud-companion', '[data-audio-controls]', '[data-input-controls]']) {
+      // The 10-19 debug-tools row replaced the floating hint (ui.css hides it).
+      // Check the visible Controls panel against the same game overlays instead.
+      await expect(page.locator('[data-input-hint]')).toBeHidden();
+      const controls = page.locator('[data-input-controls]'); await expect(controls).toBeVisible();
+      const controlsBox = (await controls.boundingBox())!;
+      for (const selector of ['.hud-vitals', '.hud-companion', '[data-audio-controls]']) {
         const other = page.locator(selector); if (!await other.isVisible()) continue;
         const box = (await other.boundingBox())!;
-        expect(hintBox.x >= box.x + box.width || box.x >= hintBox.x + hintBox.width || hintBox.y >= box.y + box.height || box.y >= hintBox.y + hintBox.height, `${width}x${height}: hint overlaps ${selector}`).toBe(true);
+        expect(controlsBox.x >= box.x + box.width || box.x >= controlsBox.x + controlsBox.width || controlsBox.y >= box.y + box.height || box.y >= controlsBox.y + controlsBox.height, `${width}x${height}: controls overlap ${selector}`).toBe(true);
       }
-      expect(hintBox.x).toBeGreaterThanOrEqual(0); expect(hintBox.x + hintBox.width).toBeLessThanOrEqual(width);
-      expect(hintBox.y + hintBox.height).toBeLessThanOrEqual(height);
+      expect(controlsBox.x).toBeGreaterThanOrEqual(0); expect(controlsBox.x + controlsBox.width).toBeLessThanOrEqual(width);
+      expect(controlsBox.y + controlsBox.height).toBeLessThanOrEqual(height);
       await page.screenshot({ path: `${out}/hud-${width}x${height}.png` });
     }
     writeFileSync(`${out}/framing.json`, JSON.stringify(samples, null, 2));
