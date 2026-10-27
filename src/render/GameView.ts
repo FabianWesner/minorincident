@@ -14,8 +14,7 @@ import { lookViewpoints } from '../data/lookViewpoints';
 import { LookUniforms } from './LookUniforms';
 import type { LookPatch } from '../data/lookPatch';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
-import { NoToneMapping, ColorManagement, Raycaster, Vector2 } from 'three/webgpu';
-import { attribute, Discard, Fn, vec4 } from 'three/tsl';
+import { NoToneMapping, ColorManagement } from 'three/webgpu';
 import { HealthBars } from './HealthBars';
 import { CrowdView } from './CrowdView';
 import { MissionUI } from '../ui/MissionUI';
@@ -30,7 +29,7 @@ import { ActionView } from './ActionView';
 import type { SurvivorState } from '../data/survivor';
 import { CharacterView } from './characters/CharacterView';
 import { useSkinnedCourier } from './characters/RiderContacts';
-import { Box3, BoxGeometry, Color, Group, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RingGeometry, Scene, MeshLambertNodeMaterial, MeshStandardMaterial, type Material } from 'three/webgpu';
+import { Box3, BoxGeometry, Color, Group, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RingGeometry, Scene, MeshLambertNodeMaterial, MeshStandardMaterial } from 'three/webgpu';
 import type { Lifecycle } from '../core/Lifecycle';
 import { lerp } from '../core/maths';
 import type { SimWorld } from '../sim/world/SimWorld';
@@ -44,7 +43,7 @@ import { Materials } from './Materials';
 import { Lookdev } from './Lookdev';
 import { photoSpots } from '../../tests/fixtures/scenarios/lookdev';
 import { Occlusion } from './Occlusion';
-import { projectReveal, seeThrough, seeThroughKeep, seeThroughKeepBoss } from './SeeThrough';
+import { projectReveal, seeThrough } from './SeeThrough';
 import { PostFx } from './PostFx';
 import type { TimeOfDay } from '../data/timeOfDay';
 import { Quaternion, Vector3 } from 'three';
@@ -56,9 +55,9 @@ import { DistrictAssets } from '../assets/DistrictAssets';
 import { Grass, windPhase } from './Grass';
 import { DistrictView } from './DistrictView';
 import { PaletteMaterial } from './PaletteMaterial';
-import { color } from 'three/tsl';
 import { InteractionView } from './InteractionView';
 import { MountedGunView } from './MountedGunView';
+import { RenderProbes, type ProbeTargets } from './RenderProbes';
 import { EntityAssets } from './EntityAssets';
 import { loadMeasure } from '../assets/loadTiming';
 import { loadGate } from '../assets/loadGate';
@@ -91,17 +90,11 @@ export class GameView implements Lifecycle {
   private readonly l5ClosingTarget = new Vector3();
   private l3AttackScale = 1;
   private courierForeground = false;
-  /** Scene Lab courier-visibility probe: hide the courier and/or every crowd figure (including the Mega) for one screenshot. */
   private readonly revealSubject = new Box3();
   private readonly revealVehicle = new Box3();
   private readonly revealPet = new Box3();
   private companionId = -1;
   private companionSearch = 0;
-  private probeVisibilityPending = false;
-  private infectedIdPass = false;
-  private readonly infectedIdMasks = new Map<Material, MeshBasicNodeMaterial[]>();
-  private solidCutProbeOff = false;
-  private probeHide = { courier: false, crowd: false, environment: false, bars: false };
   private readonly storyFocus = new Vector3();
   private readonly storyOffset = new Vector3();
   readonly view = new View();
@@ -200,11 +193,6 @@ export class GameView implements Lifecycle {
   private districtResources:{lighting:Lighting;materials:Materials;registry:DistrictAssets;phase:ReturnType<typeof windPhase>;grassMaterial:ReturnType<typeof Grass.material>}|null=null;
   private resourceDistricts = '';
   private districts:DistrictView|null=null;
-  private windowMask=false;
-  private foliageMask: boolean | 'crowns'=false;
-  private readonly foliageMasks = new Map<Material, MeshBasicNodeMaterial>();
-  private readonly occluderIdMasks = new Map<Material, MeshBasicNodeMaterial>();
-  private readonly skylineIdMasks = new Map<Material, MeshBasicNodeMaterial>();
   private labView: Lookdev | null = null;
   private postFx: PostFx | null = null;
   private retiredPostFx: ReturnType<PostFx['diagnostics']> | null = null;
@@ -212,19 +200,15 @@ export class GameView implements Lifecycle {
   private readonly occlusion = new Occlusion();
   private readonly playerPosition = new Vector3();
   private readonly projection = new Vector3();
-  private idPass: boolean | 'skyline' = false;
   private weatherPowerRevision = 0;
-  private weatherProbeAsset: string | null = null;
-  weatherMask(asset: string | null): void { this.weatherProbeAsset = asset; }
+  /** QA builds only (__QA_HOOKS__): Scene Lab / e2e render probes. */
+  private readonly probes = __QA_HOOKS__ ? new RenderProbes(this.probeTargets()) : null;
+  weatherMask(asset: string | null): void { if (this.probes) this.probes.weatherAsset = asset; }
   private readonly flashOverlay = document.createElement('div');
   /** E19 ending: black fade after the shutter slam, and the rolled-down bay shutter. */
   private shutter: Group | null = null;
-  private readonly idBackground = new MeshBasicNodeMaterial({ color: '#000000' });
-  private readonly idPlayer = new MeshBasicNodeMaterial({ color: '#ff00ff' });
-  private readonly savedMaterials = new Map<Mesh, Material | Material[]>();
   constructor(private readonly world: SimWorld, private readonly params: URLSearchParams, private quality: QualityTier = 'high') {
     this.renderer = new Renderer(params);
-    this.idBackground.name = 'keep_idBackground'; this.idPlayer.name = 'keep_idPlayer';
     this.scene.background = new Color('#293447');
   }
   onMissionChange: () => void = () => this.update(1);
@@ -492,7 +476,8 @@ export class GameView implements Lifecycle {
     };
     const finish = (): void => {
       loadMeasure('view:warm-up', t);
-      this.idPass = __QA_HOOKS__ && this.params.get('idpass') === '1'; this.update(1);
+      if (this.probes) this.probes.idPass = this.params.get('idpass') === '1';
+      this.update(1);
       this.missionUI?.prepare();
       this.startPreparation();
     };
@@ -768,14 +753,14 @@ export class GameView implements Lifecycle {
     if (patch.cheapDof !== undefined) { this.dofEnabled = patch.cheapDof; this.postFx?.setDof(this.dofEnabled); }
     if (patch.timeOfDay !== undefined) this.lighting?.set(patch.timeOfDay);
     if (patch.occludersVisible !== undefined) this.occlusion.visible = patch.occludersVisible;
-    if(patch.windowMask!==undefined)this.windowMask=patch.windowMask;
-    if(patch.foliageMask!==undefined)this.foliageMask=patch.foliageMask;
+    if (this.probes && patch.windowMask !== undefined) this.probes.windowMask = patch.windowMask;
+    if (this.probes && patch.foliageMask !== undefined) this.probes.foliageMask = patch.foliageMask;
     if(patch.foliageReveal!==undefined)this.districts?.setFoliageReveal(patch.foliageReveal);
     if(patch.interiorCullOff!==undefined&&this.districts)this.districts.interiorCullOff=patch.interiorCullOff;
     if(patch.seeThroughReference!==undefined&&this.districts)this.districts.seeThroughReference=patch.seeThroughReference;
     if(patch.seeThroughOff!==undefined&&this.districts)this.districts.seeThroughOff=patch.seeThroughOff;
     if(patch.foliageVisible!==undefined)this.districts?.setFoliageVisible(patch.foliageVisible);
-    if (patch.idPass !== undefined) this.idPass = patch.idPass;
+    if (this.probes && patch.idPass !== undefined) this.probes.idPass = patch.idPass;
     this.update(1);
   }
   /** Keep the courier's full silhouette visible in L7's tightly packed following group/horde. */
@@ -803,14 +788,14 @@ export class GameView implements Lifecycle {
     return best;
   }
   /** Scene Lab reference: disable only solid discard, retaining placement eligibility and interior visibility. */
-  probeSolidCut(off: boolean): void { this.solidCutProbeOff = off; this.update(1); }
+  probeSolidCut(off: boolean): void { if (this.probes) this.probes.solidCutOff = off; this.update(1); }
   /** Scene Lab: hide the courier / the crowd (Mega included) and redraw, for the courier-visible-share probe. */
   probeVisibility(hide: { courier: boolean; crowd: boolean; environment?: boolean; bars?: boolean }): number {
-    this.probeHide = { ...hide, environment: hide.environment ?? false, bars: hide.bars ?? false }; this.probeVisibilityPending = true; this.update(1);
+    this.probes?.setHidden(hide); this.update(1);
     const player = this.world.entities.get(1); return player ? this.megaDistance(player.transform) : Infinity;
   }
   /** Scene Lab: depth-tested CrowdView silhouette (including retained bodies), preserving the submitted instance/pose and accessory masks. */
-  probeCrowdMask(enabled: boolean): void { this.infectedIdPass = enabled; this.update(1); }
+  probeCrowdMask(enabled: boolean): void { if (this.probes) this.probes.infectedIdPass = enabled; this.update(1); }
   /** Project a world point to viewport-normalized coordinates, for masks and input integration. */
   project(x: number, y: number, z: number): number[] { return this.projection.set(x, y, z).project(this.camera).toArray(); }
   crowdFigures() { return [...(this.crowd?.getState().figures ?? []), ...(this.npcs?.snapshot().civilians.figures ?? [])]; }
@@ -839,23 +824,19 @@ export class GameView implements Lifecycle {
     for (let i = n; i < postFx.heat.length; i++) postFx.heat[i].w = 0;
   }
   renderDiagnostics() { return { renderer: this.renderer.diagnostics(), postFx: this.postFx?.diagnostics() ?? null, retiredPostFx: this.retiredPostFx, generation: this.generation }; }
-  renderProbe() {
-    const c = this.camera, finite = (m: { elements: number[] }) => m.elements.every(Number.isFinite);
-    return { camera: { position: c.position.toArray(), quaternion: c.quaternion.toArray(), near: c.near, far: c.far, zoom: c.zoom,
-      matrixWorldFinite: finite(c.matrixWorld), projectionFinite: finite(c.projectionMatrix), inverseFinite: finite(c.matrixWorldInverse) },
-      children: this.scene.children.map(o => ({ name: o.name || o.type, visible: o.visible })), hits: this.screenHits(), ...this.renderDiagnostics() };
-  }
-  /** First visible mesh under five screen points (centre and the four quarter points). */
-  private screenHits() {
-    const raycaster = new Raycaster();
-    return [[0, 0], [-.5, -.5], [.5, -.5], [-.5, .5], [.5, .5]].map(([x, y]) => {
-      raycaster.setFromCamera(new Vector2(x, y), this.camera);
-      const hit = raycaster.intersectObject(this.scene, true).find(h => h.object.visible && (h.object as Mesh).isMesh);
-      if (!hit) return null;
-      const m = (hit.object as Mesh).material, material = Array.isArray(m) ? m[0] : m;
-      let path = hit.object.name; for (let p = hit.object.parent; p && path.length < 160; p = p.parent) path = `${p.name || p.type}/${path}`;
-      return { at: [x, y], distance: +hit.distance.toFixed(2), path, instance: hit.instanceId, material: material.name, point: hit.point.toArray().map(v => +v.toFixed(2)), normal: hit.face?.normal.toArray().map(v => +v.toFixed(2)) };
-    });
+  renderProbe() { return this.probes?.renderProbe(this.renderDiagnostics()) ?? {}; }
+  /** The objects the QA render probes read; getters, since each level replaces them. */
+  private probeTargets(): ProbeTargets {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias -- the getters read this view's private, per-level fields
+    const view = this;
+    return {
+      get scene() { return view.scene; }, get renderer() { return view.renderer; }, get camera() { return view.camera; }, get occlusion() { return view.occlusion; },
+      get districts() { return view.districts; }, get character() { return view.character; }, get crowd() { return view.crowd; }, get labView() { return view.labView; },
+      get npcs() { return view.npcs; }, get interactions() { return view.interactions; }, get fixtureProps() { return view.fixtureProps; },
+      get bicycle() { return view.bicycle; }, get vehicles() { return view.vehicles; }, get entityAssets() { return view.entityAssets; },
+      get riding() { return (view.world.entities.get(1) as { riding?: number } | undefined)?.riding !== undefined; },
+      get courierForeground() { return view.courierForeground; },
+    };
   }
   getState() {
     const materialInventory = new Map<string, { name: string; palette: boolean; plainLit: boolean; emissive: number }>();
@@ -973,8 +954,8 @@ export class GameView implements Lifecycle {
       this.playerPosition.copy(this.labView.player.position);
       this.occlusion.update(this.camera, this.playerPosition, 0, this.labView.playerMeshes);
     }
-    if (this.character) this.character.visible = !this.probeHide.courier && (carPose ? carPose.visible : !this.world.entities.get(1)?.hidden);
-    if (this.crowd) this.crowd.visible = !this.probeHide.crowd;
+    if (this.character) this.character.visible = !this.probes?.hide.courier && (carPose ? carPose.visible : !this.world.entities.get(1)?.hidden);
+    if (this.crowd) this.crowd.visible = !this.probes?.hide.crowd;
     if (!this.vehicles && this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.vehicles.ground = this.drawnGround; this.scene.add(this.vehicles); }
     this.vehicles?.update(alpha); this.l2Props?.update(); this.l3Props?.update();
     if (this.actions) this.actions.visible = !this.world.entities.get(1)?.hidden;
@@ -1027,7 +1008,7 @@ export class GameView implements Lifecycle {
       seeThrough.strength.value = subject ? 1 : 0;
       if (subject) projectReveal(this.camera, subject); else seeThrough.center.value.set(-10, -10);
     }
-    if (this.solidCutProbeOff) seeThrough.strength.value = 0;
+    if (this.probes?.solidCutOff) seeThrough.strength.value = 0;
     // Reuse the foreground silhouette at the boss and in L7's close crowd. Building blockers no longer trigger it: their
     // placement cut already clears the whole subject disc, and the near-camera depth slice drew the courier over every
     // nearer person and prop (PO #9 L2 start: on top of firefighter "2"; #26 L1: in front of the closed bay leaf and the horde).
@@ -1052,104 +1033,13 @@ export class GameView implements Lifecycle {
     this.renderer.beginProfile(this.camera);
     const renderStart = profileStart ? performance.now() : 0;
     if (profileStart) this.updateCpuMs = renderStart - profileStart;
-    if (__QA_HOOKS__ && (this.probeVisibilityPending || this.probeHide.courier || this.probeHide.crowd || this.probeHide.environment)) {
-      // The reference removes every possible foreground solid, including static kits and parked cars.
-      if (this.districts) this.districts.visible = !this.probeHide.environment;
-      if (this.npcs) this.npcs.visible = !this.probeHide.environment;
-      if (this.interactions) this.interactions.visible = !this.probeHide.environment;
-      if (this.fixtureProps) this.fixtureProps.visible = !this.probeHide.environment;
-      if (this.bicycle) this.bicycle.visible = !((this.world.entities.get(1) as { riding?: number } | undefined)?.riding !== undefined ? this.probeHide.courier : this.probeHide.environment);
-      this.vehicles?.probeVisibility(this.probeHide.courier, !!this.probeHide.environment);
-      this.entityAssets?.probeVisibility(this.probeHide.courier, !!this.probeHide.environment);
-      this.probeVisibilityPending = false;
+    this.probes?.applyVisibility();
+    // A QA probe pass (id/mask/weather) replaces the production frame.
+    if (!this.probes?.render()) {
+      if (this.postFx) { this.updateHeatHaze(this.postFx); this.postFx.render(); } else this.renderer.render(this.scene, this.camera);
     }
-    if (__QA_HOOKS__ && this.weatherProbeAsset) {
-      const saved = new Map<Mesh, boolean>(), background = this.scene.background, backgroundNode = this.scene.backgroundNode;
-      this.scene.background = new Color(0); this.scene.backgroundNode = null;
-      this.scene.traverse(child => {
-        if (!(child instanceof Mesh)) return;
-        saved.set(child, child.visible); let matches = false;
-        for (let parent: import('three').Object3D | null = child; parent; parent = parent.parent) if ((parent.name === 'weather' && this.weatherProbeAsset === 'weather') || (parent.name === `inst:${this.weatherProbeAsset}` || parent.name.startsWith(`inst:${this.weatherProbeAsset}:`)) || parent.userData.assetId === this.weatherProbeAsset) matches = true;
-        child.visible = child.visible && matches;
-      });
-      this.renderer.render(this.scene, this.camera);
-      for (const [mesh, visible] of saved) mesh.visible = visible;
-      this.scene.background = background; this.scene.backgroundNode = backgroundNode;
-    } else if(__QA_HOOKS__ && this.foliageMask) {
-      const backgroundNode=this.scene.backgroundNode; this.scene.backgroundNode=null;
-      const background=this.scene.background, fog=this.scene.fog, shadow=this.renderer.shadowMap.enabled;
-      this.scene.background=new Color(0); this.scene.fog=null; this.renderer.shadowMap.enabled=false;
-      this.scene.traverse(child => {
-        if (!(child instanceof Mesh)) return;
-        this.savedMaterials.set(child, child.material);
-        const source = child.material as PaletteMaterial;
-        if ((child.name === 'grass-gpu-wind' && this.foliageMask !== 'crowns') || source.name === 'pal_leaf-card-crown') {
-          if (!this.foliageMasks.has(source)) this.foliageMasks.set(source, new MeshBasicNodeMaterial({ color: '#ffffff', side: source.side, alphaTest: source.alphaTest, alphaToCoverage: source.alphaToCoverage, opacityNode: source.opacityNode, positionNode: source.positionNode }));
-          child.material=this.foliageMasks.get(source)!;
-        } else child.material=this.idBackground;
-      });
-      this.renderer.render(this.scene,this.camera);
-      for (const [mesh, material] of this.savedMaterials) mesh.material=material;
-      this.savedMaterials.clear(); this.scene.background=background;this.scene.backgroundNode=backgroundNode;this.scene.fog=fog;this.renderer.shadowMap.enabled=shadow;
-    } else if(__QA_HOOKS__ && this.windowMask&&this.districts){
-      const backgroundNode=this.scene.backgroundNode;this.scene.backgroundNode=null;const background=this.scene.background,fog=this.scene.fog,shadow=this.renderer.shadowMap.enabled;
-      this.scene.background=new Color(0);this.scene.fog=null;this.renderer.shadowMap.enabled=false;this.districts.mask(true);const heroVisible=this.character?.visible;if(this.character)this.character.visible=false;this.renderer.render(this.scene,this.camera);if(this.character)this.character.visible=heroVisible!;this.districts.mask(false);this.scene.background=background;this.scene.backgroundNode=backgroundNode;this.scene.fog=fog;this.renderer.shadowMap.enabled=shadow;
-    } else if (__QA_HOOKS__ && (this.idPass || this.infectedIdPass) && (this.labView || this.character)) {
-      const backgroundNode = this.scene.backgroundNode; this.scene.backgroundNode = null;
-      const background = this.scene.background, fog = this.scene.fog, shadow = this.renderer.shadowMap.enabled;
-      this.scene.background = new Color(0); this.scene.fog = null; this.renderer.shadowMap.enabled = false;
-      this.scene.traverse((child) => {
-        if (child instanceof Mesh) { this.savedMaterials.set(child, child.material); let hero = this.labView?.playerMeshes.includes(child) ?? false;
-          if (this.character) for (let parent = child.parent; parent; parent = parent.parent) if (parent === this.character) { hero = true; break; }
-          if (this.infectedIdPass) {
-            const source = (Array.isArray(child.material) ? child.material[0] : child.material) as PaletteMaterial;
-            let infected = false;
-            for (let parent = child.parent; parent; parent = parent.parent) if (parent === this.crowd) { infected = true; break; }
-            let masks = this.infectedIdMasks.get(source);
-            if (!masks) { masks = []; this.infectedIdMasks.set(source, masks); }
-            const index = infected ? 1 : 0;
-            masks[index] ??= new MeshBasicNodeMaterial({ color: infected ? '#ff00ff' : '#000000', side: source.side, depthTest: source.depthTest, depthWrite: source.depthWrite, transparent: source.transparent, opacity: source.opacity, alphaTest: source.alphaTest, alphaToCoverage: source.alphaToCoverage, opacityNode: source.opacityNode, positionNode: source.positionNode, maskNode: source.maskNode });
-            if (source instanceof PaletteMaterial && !masks[index].outputNode) masks[index].outputNode = source.probeMaskOutput(color(infected ? '#ff00ff' : '#000000').rgb);
-            child.material = masks[index];
-          } else {
-            const skyline = this.idPass === 'skyline';
-            if (skyline) {
-              // Count the visible city buildings, excluding ground, vegetation,
-              // vehicles and the bus. Keep production depth/placement below.
-              hero = false;
-              for (let node: import('three').Object3D | null = child; node; node = node.parent) {
-                if (node.name.startsWith('inst:bld.') || String(node.userData.assetId ?? '').startsWith('bld.')) { hero = true; break; }
-              }
-            }
-            const maskMaterial = (material: Material) => {
-              const source = material as PaletteMaterial;
-              const selected = skyline && hero, masks = selected ? this.skylineIdMasks : this.occluderIdMasks;
-              if (!(source.positionNode || source.opacityNode || source.userData.seeThrough || source.name === 'pal_leaf-card-crown')) return selected ? this.idPlayer : this.idBackground;
-              if (!masks.has(source)) {
-                const mask = new MeshBasicNodeMaterial({ color: selected ? '#ff00ff' : '#000000', side: source.side, alphaTest: source.alphaTest, alphaToCoverage: source.alphaToCoverage, opacityNode: source.opacityNode, positionNode: source.positionNode });
-                // ID probes must retain the visible scene's placement transforms
-                // and holes: an opaque replacement truck otherwise hides a courier
-                // who is plainly visible through its production see-through disc.
-                const reveal = source.userData.seeThrough;
-                if (reveal) mask.outputNode = Fn(() => {
-                  Discard((reveal === 'boss' ? seeThroughKeepBoss() : seeThroughKeep(reveal === 'placement' ? attribute('_occluder', 'float') : undefined)).not());
-                  return selected ? vec4(1, 0, 1, 1) : vec4(0, 0, 0, 1);
-                })();
-                masks.set(source, mask);
-              }
-              return masks.get(source)!;
-            };
-            child.material = hero && !skyline ? this.idPlayer : Array.isArray(child.material) ? child.material.map(maskMaterial) : maskMaterial(child.material);
-          }
-        }
-      });
-      this.idPlayer.depthTest = this.idPass === 'skyline' || !this.courierForeground && !this.occlusion.getState().some((building) => building.blocked);
-      this.renderer.render(this.scene, this.camera);
-      for (const [mesh, material] of this.savedMaterials) mesh.material = material;
-      this.savedMaterials.clear(); this.scene.background = background; this.scene.backgroundNode = backgroundNode; this.scene.fog = fog; this.renderer.shadowMap.enabled = shadow;
-    } else if (this.postFx) { this.updateHeatHaze(this.postFx); this.postFx.render(); } else this.renderer.render(this.scene, this.camera);
     // Health bars keep their CSS size and contrast through DOF, bloom and vignette.
-    if (this.healthBars?.count && !this.probeHide.bars && !this.idPass && !this.windowMask && !this.foliageMask) {
+    if (this.healthBars?.count && !this.probes?.suppressBars) {
       this.renderBars();
     }
     if (profileStart) this.renderCpuMs = performance.now() - renderStart;
@@ -1239,9 +1129,9 @@ export class GameView implements Lifecycle {
   }
   /** Same-district transitions reuse decoded prototypes; leaving the district retires the cache. */
   reset(nextDistricts?: string): void {
-    this.solidCutProbeOff = false;
+    this.probes?.reset();
     const retain = !!nextDistricts && nextDistricts === this.resourceDistricts;
-    this.weatherProbeAsset = null; this.weatherPowerRevision = 0;
+    this.weatherPowerRevision = 0;
     if (this.weather) { this.scene.remove(this.weather); this.weather.dispose(); this.weather = null; }
     this.shadowWarmup?.cancel(); this.shadowWarmup = null;
     this.playSeconds = 0; this.generation++; this.pendingPreparation = null; this.preparation = null; this.epiloguePrepared = null; this.warming = null;
@@ -1264,11 +1154,6 @@ export class GameView implements Lifecycle {
     if (this.l2Props) { this.scene.remove(this.l2Props); this.l2Props.dispose(); this.l2Props = null; }
     if (this.l3Props) { this.scene.remove(this.l3Props); this.l3Props.dispose(); this.l3Props = null; }
     if (this.bicycle) { this.scene.remove(this.bicycle); this.bicycle.dispose(); this.bicycle = null; }
-    this.windowMask=false; this.foliageMask=false;
-    for (const material of this.foliageMasks.values()) material.dispose(); this.foliageMasks.clear();
-    for (const masks of this.infectedIdMasks.values()) for (const material of masks) material?.dispose(); this.infectedIdMasks.clear(); this.infectedIdPass = false;
-    for (const material of this.occluderIdMasks.values()) material.dispose(); this.occluderIdMasks.clear();
-    for (const material of this.skylineIdMasks.values()) material.dispose(); this.skylineIdMasks.clear();
     if (this.postFx) { this.postFx.dispose(); this.retiredPostFx = this.postFx.diagnostics(); } this.postFx = null; this.dofEnabled = false;
     for (const district of this.preparedDistrictViews.values()) { this.scene.remove(district); district.dispose(); }
     if (this.districts && !this.preparedDistrictViews.has(this.districts.world)) { this.scene.remove(this.districts); this.districts.dispose(); }
@@ -1289,7 +1174,7 @@ export class GameView implements Lifecycle {
     } else {
       this.districtResources?.registry.dispose(); this.districtResources?.grassMaterial.dispose(); this.districtResources?.materials.dispose(); this.districtResources?.lighting.dispose(); this.districtResources = null; this.resourceDistricts = '';
     }
-    this.occlusion.reset(); this.idPass = false; this.scene.fog = null; this.scene.backgroundNode = null; this.scene.background = new Color('#293447'); this.renderer.shadowMap.enabled = false;
+    this.occlusion.reset(); this.scene.fog = null; this.scene.backgroundNode = null; this.scene.background = new Color('#293447'); this.renderer.shadowMap.enabled = false;
     for (const mesh of this.meshes) {
       this.scene.remove(mesh); mesh.geometry.dispose();
       for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) if (!(material instanceof PaletteMaterial)) material.dispose();
@@ -1300,5 +1185,5 @@ export class GameView implements Lifecycle {
   }
   /** Newly spawned E11 objects are loaded before screenshot/shader readiness resolves. */
   async synchronizeInteractions(): Promise<void> { await this.interactions?.synchronize(); }
-  dispose(): void { this.reset(); this.environment?.dispose(); this.environment = undefined; this.missionUI?.dispose(); this.missionUI=null; window.removeEventListener('resize', this.resize); this.idPlayer.dispose(); this.idBackground.dispose(); this.renderer.dispose(); this.renderer.domElement.remove(); this.flashOverlay.remove(); }
+  dispose(): void { this.reset(); this.environment?.dispose(); this.environment = undefined; this.missionUI?.dispose(); this.missionUI=null; window.removeEventListener('resize', this.resize); this.probes?.dispose(); this.renderer.dispose(); this.renderer.domElement.remove(); this.flashOverlay.remove(); }
 }
