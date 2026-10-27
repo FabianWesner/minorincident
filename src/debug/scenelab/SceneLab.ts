@@ -226,6 +226,7 @@ export class SceneLab {
   private boom: ArmyCheckpointBoom | null = null;
   private boomClosedAt = 0;
   private setup(world: SimWorld, spec: SceneSpec): void {
+    const combat = world.requireCombat();
     if (spec.weather) world.weather?.setOverride(spec.weather);
     if (spec.weatherTimeline) world.weather?.setTimeline(spec.weatherTimeline);
     for (let i = 0; i < Math.round((spec.weatherWarmup ?? 0) * 60); i++) { world.tick++; world.weather?.update(); }
@@ -239,16 +240,16 @@ export class SceneLab {
     // Simulation ownership follows the authored actor/vehicle, independently of the shot camera.
     const focus = spec.actors?.find(a => a.kind === 'courier')?.at ?? spec.vehicles?.[0]?.at;
     if (focus) world.chunks?.update(focus);
-    if (spec.infectedCap !== undefined) world.infected!.director.levelCap = spec.infectedCap;
+    if (spec.infectedCap !== undefined) world.requireInfected().director.levelCap = spec.infectedCap;
     // An L2 layout scene plays with the L2 infected toughness (the mission sets it in LevelTwoRescue; scenes have no mission).
     if (spec.layout?.level === 'L2') world.infectedMeleeHits = l2.infectedMeleeHits;
     // Hand-overs move in the missions phase, like the L1 story beats, so AgentMotion publishes their walking speed.
     world.events.on('sim.tick', () => this.driveHandovers(), SimPhase.missions);
-    world.combat!.damage.god = true;
-    world.combat!.assist.setting = spec.aimAssist ?? 'Default';
+    combat.damage.god = true;
+    combat.assist.setting = spec.aimAssist ?? 'Default';
     // Q-196 keyboard aim: each courier gun shot against the autoAim intent, and whether it struck a living infected.
     world.events.on('combat.attack', ev => {
-      if (ev.type !== 'combat.attack' || ev.sourceId !== 1 || !this.aim.intent || world.combat!.runner.loadout.definition(ev.actionId).category !== 'ranged') return;
+      if (ev.type !== 'combat.attack' || ev.sourceId !== 1 || !this.aim.intent || combat.runner.loadout.definition(ev.actionId).category !== 'ranged') return;
       const i = this.aim.intent, d = ev.direction;
       this.aim.shots.push({ frame: this.frame, attackId: ev.attackId, errorDeg: Math.abs(Math.atan2(i.x * d.z - i.z * d.x, i.x * d.x + i.z * d.z)) * 180 / Math.PI });
     });
@@ -294,7 +295,7 @@ export class SceneLab {
     }
     spec.actors?.forEach((a, i) => {
       if (spec.cureEncounter && a.id?.startsWith(`${spec.cureEncounter}:`)) {
-        const at = cureEncounterSpot(world.infected!.nav, { x: a.at![0], z: a.at![1], archetype: a.archetype! }, () => true, spec.cureEncounter === 'dispersal-assault' ? 129 : 17);
+        const at = cureEncounterSpot(world.requireInfected().nav, { x: a.at![0], z: a.at![1], archetype: a.archetype! }, () => true, spec.cureEncounter === 'dispersal-assault' ? 129 : 17);
         if (!at) throw new Error(`No clear cure encounter slot: ${a.id}`);
         a = { ...a, at: [at.x, at.z] };
       }
@@ -320,7 +321,7 @@ export class SceneLab {
     }
     if (spec.l2Release) {
       world.scenario = 'L2'; applyCampaign(world, preset('L2-default'));
-      world.infected!.director.setTier(this.game.quality.tier);
+      world.requireInfected().director.setTier(this.game.quality.tier);
       const mission = world.loadMission(resolveCampaignMission('L2', world.districts!));
       mission.begin();
       if (!world.tick) world.update(); // The production release clock uses zero for "not opened".
@@ -340,11 +341,11 @@ export class SceneLab {
         mission.state.l2!.phase = 'done';
         // Reuse production pursuers: the rescue has already filled its cap.
         // Fixture placement must retain identities/counts rather than add extras.
-        const probes = world.infected!.active.filter(e => e.health.current > 0 && !e.hidden).slice(0, 2);
+        const probes = world.requireInfected().active.filter(e => e.health.current > 0 && !e.hidden).slice(0, 2);
         for (const [i, id] of ['jamb-probe', 'panel-probe'].entries()) {
           const e = probes[i]; if (!e) throw new Error('L2 checkpoint fixture needs two living pursuers');
           if (!world.solids.relocate(e, { x: i ? 81.9 : 83.107, y: .7, z: 37 }, 'scene.l2-gate-probe', 0, false)) throw new Error('L2 gate probe placement blocked');
-          world.infected!.rush(e.id, world.entities.get(1)!.transform, world.tick + 600);
+          world.requireInfected().rush(e.id, world.entities.get(1)!.transform, world.tick + 600);
           this.actors.set(id, { id, kind: 'infected', entity: e.id, spec: { id, kind: 'infected', archetype: e.archetype }, plan: null, track: [], lod: {}, drawn: 0, inView: 0, missed: 0, farClose: 0 });
         }
       }
@@ -385,7 +386,7 @@ export class SceneLab {
     }
     if (spec.l3Rendezvous) {
       world.scenario = 'L3';
-      world.infected!.excludeInfected(l3BaseCollision);
+      world.requireInfected().excludeInfected(l3BaseCollision);
       applyCampaign(world, preset('L3-default'));
       const mission = world.loadMission(resolveCampaignMission('L3', world.districts!));
       mission.begin(); mission.completeObjective('armory'); mission.completeObjective('defend');
@@ -408,7 +409,7 @@ export class SceneLab {
     }
     if (spec.l4Convoy) {
       applyCampaign(world, preset('L4-default'));
-      world.infected!.director.setTier(this.game.quality.tier);
+      world.requireInfected().director.setTier(this.game.quality.tier);
       const mission = world.loadMission(resolveCampaignMission('L4', world.districts!));
       mission.begin();
       if (spec.l4Convoy === 'parked' || spec.l4Convoy === 'hold' || spec.l4Convoy === 'pickup' || spec.l4Convoy === 'tank' || spec.l4Convoy === 'first-line') {
@@ -444,8 +445,8 @@ export class SceneLab {
       if (spec.l5Aftermath.found.length) mission.restore(`survivor-${spec.l5Aftermath.found.length}`);
       mission.state.subtitle = null;
       // Isolate discovery and fear from unrelated infected elsewhere in Fairhaven.
-      const alphaId = spec.l5Aftermath.alphaAt ? world.infected!.active.find(e => e.archetype === 'infected.alpha')?.id : undefined;
-      for (const infected of [...world.infected!.active]) if (infected.id !== alphaId) world.infected!.release(infected);
+      const alphaId = spec.l5Aftermath.alphaAt ? world.requireInfected().active.find(e => e.archetype === 'infected.alpha')?.id : undefined;
+      for (const infected of [...world.requireInfected().active]) if (infected.id !== alphaId) world.requireInfected().release(infected);
       if (courier?.at) {
         Object.assign(player.transform, { x: courier.at[0], z: courier.at[1] });
         world.physics.playerBody!.setTranslation(player.transform, true); world.physics.playerBody!.setNextKinematicTranslation(player.transform);
@@ -481,7 +482,7 @@ export class SceneLab {
       }
     }
     if (spec.l5Aftermath?.alphaAt) {
-      const at = spec.l5Aftermath.alphaAt, alpha = world.infected!.active.find(e => e.archetype === 'infected.alpha')!;
+      const at = spec.l5Aftermath.alphaAt, alpha = world.requireInfected().active.find(e => e.archetype === 'infected.alpha')!;
       const id = alpha.id; Object.assign(alpha.transform, { x: at[0], z: at[1], yaw: 0 }); world.spatial.set(id, at[0], at[1]);
       if (alpha.infected!.territory) Object.assign(alpha.infected!.territory, { x: at[0], z: at[1] });
       this.actors.set('alpha', { id: 'alpha', kind: 'infected', entity: id, spec: { id: 'alpha', kind: 'infected', archetype: 'infected.alpha' }, plan: null, track: [], lod: {}, drawn: 0, inView: 0, missed: 0, farClose: 0 });
@@ -567,7 +568,7 @@ export class SceneLab {
         mission.state.cureFront!.elapsed = ticks; mission.state.cureFront!.radius = ticks / 6;
         mission.l10!.epilogue.update(); mission.l10!.cure.apply();
       }
-      world.combat!.runner.loadout.state.selectedSide = spec.cureProgression.checkpoint ? 'RIGHT' : 'LEFT';
+      combat.runner.loadout.state.selectedSide = spec.cureProgression.checkpoint ? 'RIGHT' : 'LEFT';
     }
     if (spec.l7Group) {
       world.scenario = 'L7';
