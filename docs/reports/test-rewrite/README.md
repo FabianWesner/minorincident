@@ -26,7 +26,14 @@ The budget counts collected cases (`vitest list`: 99 Vitest); the QA invariants 
 | `sim/world/solid-admission` queued house resident leaves the doorstep, 12.3407 < 12.349 | 1 cm pinned position in one scripted case | missed (collision core is covered by wall-crossing invariants, not this pin) |
 | `sim/missions/l10-finale` #101 remote living boss joins within 15 s | level-specific scripted scene | missed per change; the nightly campaign did not trip it either: it belongs in Scene Lab / the PO checklist |
 
-NIGHTLY_RESULT
+### New suite results (2026-10-27)
+
+| Check | Result |
+|---|---|
+| `npm test` (Mac / runner) | 77 passed, 15 s / 76 passed + 1 Mac-only skip, 44.5 s |
+| `npm run test:smoke` (Mac, one browser) | 6 passed, 2.2 min |
+| `npm run test:nightly` (runner) | 35 passed: campaign L1 → credits (1,182 s, every level completed, 0 deaths), content ratchets, invariants, sim budget (p95 0.92 ms / 0.25 ms on the Mac); 1,198 s wall, just inside the 20 min budget on a cx33 runner (the campaign alone is ~20 min there; run it on the Mac or an idle runner) |
+| `npm run qa:invariants` | green: remote sim 28 passed, Mac WebGPU-low browser 12 passed |
 
 ## Coverage map (engine module → old tests → new test)
 
@@ -58,4 +65,19 @@ NIGHTLY_RESULT
 | QA invariants | tests/qa/invariants | unchanged |
 | Deleted without replacement | levels/* (88 per-level bot/tuning files), unit/levels/* (33), unit/audio/* (19), unit/vfx, unit/ui, unit/layouts, sim/levels, sim/missions per level, tests/visual (28 goldens/look specs), 214 e2e specs | Level correctness: nightly campaign bot, Scene Lab catalog/matrix, Opus visual QA, PO checklist |
 
-INJECTION_TABLE
+## Regression injection
+
+`node tools/qa/inject-regressions.mjs` applies each bug to `src/` (or the manifest), runs `npm test`'s Vitest project, records the failing tests and restores the file. Results: [injections.json](injections.json).
+
+| Injected regression | Caught by |
+|---|---|
+| Determinism: RNG state leaks across worlds (every 97th draw shifted) | engine/core (seeded streams), engine/determinism (L1/L4/L10 same-seed hash), engine/infected-ai (seeded down time) |
+| Save/carry-over: handover rack cap cuts carried weapons to three per side | engine/save-progression (every handover keeps every carried weapon) |
+| Aim: keyboard assist mirrors the cross-track sign (Q-196 class) | engine/aim-assist (8 facings; idle burst) |
+| Collision: nav clearance uses half the body radius against walls | engine/navigation (capsule margin) |
+| Spawn admission: director drops the 18 m courier radius | engine/spawn-director (placement) |
+| GPU limits: frozen corpse pages stop interleaving their surface (Q-201 class) | shared/render-contracts (GPU limits) |
+| Asset contract: a shipped prop's LOD1 points at a missing file | nightly/content-invariants (asset inventory); per change only if the asset is in the per-category sample |
+| Skinned contract: skin packing normalizes without the dominant weight | shared/render-contracts (skinned crowd) |
+
+Found and fixed while injecting (the old suite had the same blind spots): a 1e-7 RNG drift is below `stateHash`'s 1e-4 rounding (by design, so the injection was made realistic); the first carry injection was masked by `autoRewards` re-racking owned weapons (not a real bug); the spawn test never isolated the 18 m rule (every probe point was also on screen); the asset test filtered validator errors to five kinds, so a missing LOD file passed. The inventory has zero validator errors, so the test now requires none.
