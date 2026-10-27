@@ -88,10 +88,10 @@ export const l4 = {
     /**
      * PO 10-13: "Let them come from all directios, not in bulk." Each wave adds to every street edge; an edge releases a small group
      * (`group`, seeded) from one of its emergence points (`l4Emergence`, in turn) every `groupEveryS` (seeded), so the infected arrive spread
-     * and staggered. `inside`: during the war grouped arrivals come from separated, concealed camp exits (`l4Inside`)
-     * each `insideEveryS`, only when an exit is out of view or hidden behind a building and at least `minM` from the courier.
+     * and staggered. `perimeterPressure`: during the war grouped arrivals come from open breach approaches outside the wire,
+     * only when a source is out of view or occluded and at least `minM` from the courier.
      */
-    group: [2, 5] as P, groupEveryS: [2, 4] as P, inside: { everyS: 1, group: [12, 14] as P, minM: 6, bodyField: { radiusM: 6, count: 40, activeFloor: 8, outerCount: 115 } },
+    group: [2, 5] as P, groupEveryS: [2, 4] as P, perimeterPressure: { everyS: 1, group: [14, 16] as P, minM: 6, bodyField: { radiusM: 6, count: 40, activeFloor: 8, outerCount: 115 } },
     /** Infected hit like L3's (the PO found earlier levels too hard: a sensible player finishes with few deaths). */
     infectedDamage: l3.infectedDamage,
     emergeLeashM: 26,
@@ -320,7 +320,7 @@ export const l4Emergence: readonly { edge: number; at: P; door?: boolean }[] = [
   // the camp. SpawnDirector still applies its live frustum + 6 m guard.
   ...l4OffscreenMouths.map(({ edge, at }) => ({ edge, at })),
 ];
-/** Inside the perimeter (PO 10-13: "ALso from within buildings inside the army area"): behind the tents, the supply crates and the registration kit. */
+/** Former internal-emergence staging anchors, retained for reception dressing/navigation checks; the L4 horde never spawns here. */
 export const l4Inside: readonly P[] = [
   [-30.6, 10.4], [-26.8, 10.4], [-22.8, 10.4], [-31.8, 4], [-20.8, 2.2], [-26, -10.6], [-30.5, -10.6],
   // Rear camp edge, out of the zoom-1.5 player frame from the quartermaster.
@@ -329,13 +329,13 @@ export const l4Inside: readonly P[] = [
   [-33, 19], [-29, 20], [-25, 21],
 ];
 /** Follow-up groups approach the wall from the surrounding streets, then use
- * the physical breaches. The tents release only their opening alarm group. */
+ * the physical breaches. Reception tent flaps are never infected sources. */
 export const l4BreachApproaches = [
   ...[-12, -4, 8, 16].map(z => ({ side: 'west' as const, at: [l4.perimeter.x0 - 3, z] as P })),
   ...[-32, -24, -16].map(x => ({ side: 'north' as const, at: [x, l4.perimeter.z0 - 3] as P })),
   ...[-32, -24, -16].map(x => ({ side: 'south' as const, at: [x, l4.perimeter.z1 + 3] as P })),
 ];
-/** Usable flaps of the three freestanding tents. The furnished reception kit has no connected exit aisle. */
+/** Tent flap geometry retained for level dressing and nav checks only; no infected emergence uses these points. */
 export const l4TentEntrances: readonly { at: P; out: P; step: P; route: readonly P[]; floor: number }[] = [
   ...[-30.65, -26.8, -22.8].map(x => ({ at: [x, 11.15] as P, out: [0, -1] as P, step: [x, 9.55] as P, route: [], floor: 0 })),
 ];

@@ -11,7 +11,7 @@ for (const tier of ['high', 'low'] as const) for (const seed of [1, 2, 3]) test(
   const { world: w, mission: m } = await loadL4(seed, tier); world = w;
   const s = m.state.l4!, ai = w.infected!, p = w.entities.get(1)!;
   // Start at the reported battle state, leaving production controller/AI/cleanup active.
-  s.phase = 'war'; s.turnAt = 1; s.warAt = 1; s.waveAt = 1e9; s.insideAt = 1e9;
+  s.phase = 'war'; s.turnAt = 1; s.warAt = 1; s.waveAt = 1e9; s.perimeterAt = 1e9;
   s.alphaAnchors = l4AlphaEmergence.map(e => e.anchor);
   p.hidden = false; w.storyLock = null; w.combat!.damage.god = true;
   const clear = (x: number, z: number) => {

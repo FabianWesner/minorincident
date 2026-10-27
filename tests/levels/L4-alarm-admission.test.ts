@@ -1,9 +1,8 @@
 import { expect, test, vi } from 'vitest';
 import { l4 } from '../../src/data/l4';
-import { regularInfectedModels } from '../../src/data/crowdAppearance';
 import { loadL4, runL4 } from '../../tools/sim-runner/l4Bots';
 
-for (const tier of ['high', 'low'] as const) test(`T-E22-20-alarm @E22-AC20 ${tier} alarm actors walk out of tent doors with their original IDs and full population`, async () => {
+for (const tier of ['high', 'low'] as const) test(`T-E22-20-alarm @E22-AC20 ${tier} alarm actors arrive from exterior street mouths with their original IDs and full population`, async () => {
   const { world, mission } = await loadL4(2, tier);
   try {
     const admit = vi.spyOn(world.solids, 'admit'); let ids: number[] = [];
@@ -12,12 +11,11 @@ for (const tier of ['high', 'low'] as const) test(`T-E22-20-alarm @E22-AC20 ${ti
     expect(ids).toHaveLength(l4.calm.alarmInfected[tier]);
     for (const id of ids) {
       const calls = admit.mock.calls.filter(([e]) => e.id === id);
-      expect(calls.map(([, writer]) => writer)).toEqual(['infected.spawn', 'house.emergence']);
+      expect(calls.map(([, writer]) => writer)).toEqual(['infected.spawn']);
       const e = world.entities.get(id)!;
       expect(e.infected).toBeDefined(); expect(e.id).toBe(id);
       expect(e.appearance, 'native alarm runners must remain owned by CrowdView').toBeUndefined();
-      expect(regularInfectedModels, 'the alarm retains an authored native look').toContain(e.infected!.variant);
-      expect(e.emerging).toBe(true); expect(e.doorLane).toBeDefined();
+      expect(e.emerging).toBeFalsy(); expect(e.doorLane).toBeUndefined();
       expect(e.pendingAdmission !== undefined || world.solids.clear(e.transform, e.combat!.radius, id)).toBe(true);
     }
     expect(world.solids.snapshot().failures).toBe(0);

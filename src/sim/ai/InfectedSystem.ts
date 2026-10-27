@@ -230,6 +230,12 @@ export class InfectedSystem {
     delete body.locomotion; delete body.motion; delete body.combat!.reaction;
     delete body.infected!.l1; body.infected!.path.length = 0;
     this.release(entity); this.world.entities.replace(body);
+    // Only the explicitly solid large bodies enter actor occupancy queries;
+    // small human corpses remain visual debris and walkable as before.
+    if (body.archetype === 'infected.alpha' || body.infected?.variant.includes('mega-alpha')
+      || ['infected.elephant', 'infected.gorilla', 'infected.lion', 'infected.zebra'].includes(body.archetype ?? '')) {
+      this.world.spatial.set(body.id, body.transform.x, body.transform.z);
+    }
   }
   /** Hearing ignores facing; sight uses a 110° cone and collider line of sight. */
   noise(position: { x: number; z: number }, radius: number, loud = false, sourceId?: number): void {

@@ -7,7 +7,8 @@ import { test, expect, boot } from '../fixtures';
  * 0.5 = closest): the bus exit, the calm before the alarm (soldiers relaxed, people in routines), the alarm (+3 s and +8 s: soldiers
  * to posts, people fleeing), the war (infected from all sides) and the Alphas at the line. Records per shot what the sim says
  * (soldiers aiming / at post, people fleeing, where the infected come from). Headless through tools/e2e-lock.sh, courier idle (god).
- * `L4_CAPTURE_TAG` names the output folder (before / after).
+ * `L4_CAPTURE_TAG` names the output folder (before / after). The 60 s view records the opening-minute flood; 150 s records the
+ * three exterior breaches feeding the plaza and the accumulated corpse field.
  */
 const tag = process.env.L4_CAPTURE_TAG ?? 'after';
 const output = `test-results/l4-po-round/${tag}`;
@@ -19,7 +20,7 @@ async function run(page: Page, quality: 'high' | 'low', zoom: number, renderer: 
   await boot(page, `/?test=1&renderer=${renderer}&dpr=1&quality=${quality}&audio=muted&seed=2&ui=1`);
   // A campaign level load takes the tier from the campaign settings (the URL parameter alone keeps a progression load on high).
   await page.evaluate(q => window.__SS__!.settings.set({ quality: q }), quality);
-  await page.evaluate(() => window.__SS__!.loadLevel('L4', { seed: 2, progression: 'L4-default' }));
+  await page.evaluate(seed => window.__SS__!.loadLevel('L4', { seed, progression: 'L4-default' }), Number(process.env.L4_CAPTURE_SEED ?? 2));
   await page.evaluate(() => window.__SS__!.pause());
   await page.getByRole('button', { name: 'Begin mission' }).click();
   await page.evaluate(() => { const a = window.__SS__!; a.pause(); a.cheats.god(true); });
@@ -84,7 +85,9 @@ async function run(page: Page, quality: 'high' | 'low', zoom: number, renderer: 
   await page.evaluate(() => document.body.classList.remove('ui-hidden'));
   await until(18); await shot('4-alarm-18s');
   await until(40); await shot('5-war-40s');
+  await until(60); await shot('5-opening-minute-60s');
   await until(95); await shot('6-war-95s');
+  await until(150); await shot('7-exterior-breach-flood-150s');
   writeFileSync(`${output}/${name}.json`, JSON.stringify(report, null, 1) + '\n');
 }
 

@@ -157,7 +157,7 @@ describe('L4 The Safe City Falls', () => {
     expect(shots).toBeGreaterThanOrEqual(2000); expect(reloads).toBe(0);
   }, HEAVY);
 
-  test('T-E22-07 @E22 @E22-AC07 the alarm: exactly on the gun pickup tick, 15-25 new infected enter from camp buildings or street mouths with >= 10 humans near the alarm', async () => {
+  test('T-E22-07 @E22 @E22-AC07 the alarm: exactly on the gun pickup tick, 15-25 infected arrive from outside street mouths with >= 10 humans near the alarm', async () => {
     for (const seed of [1, 2, 3]) {
       const l = await loadL4(seed); const w = l.world, s = l.mission.state.l4!;
       while (s.phase === 'convoy') w.update();
@@ -168,21 +168,16 @@ describe('L4 The Safe City Falls', () => {
       expect(turns, `seed ${seed}`).toHaveLength(1);
       expect(turns[0].tick).toBe(s.gunAt);
       expect(turns[0].ids.length).toBeGreaterThanOrEqual(15); expect(turns[0].ids.length).toBeLessThanOrEqual(25); expect(turns[0].near).toBeGreaterThanOrEqual(10);
-      const tentDoors = l4TentEntrances.map(door => door.at);
-      const sources = [...tentDoors, ...l4Inside, ...l4Emergence.filter(p => p.edge < l4Edges.length - 1).map(p => p.at)];
+      const sources = l4Emergence.filter(p => !p.door).map(p => p.at);
       for (const id of turns[0].ids) {
         const p = at.get(id)!;
-        const behindDoor = l4TentEntrances.some(door => {
-          const dx = p.x - door.at[0], dz = p.z - door.at[1], depth = -(dx * door.out[0] + dz * door.out[1]);
-          return depth >= .8 && depth <= 3.4 && Math.abs(dx * -door.out[1] + dz * door.out[0]) < .1;
-        });
-        expect(behindDoor || sources.some(([x, z]) => dist(p, { x, z }) < 2), `new infected ${id} staged inside an authored tent door`).toBe(true);
+        expect(sources.some(([x, z]) => dist(p, { x, z }) < 2), `new infected ${id} must originate at an exterior street mouth`).toBe(true);
       }
       expect([...origins]).not.toContain('L3-bus');
       expect(turns[0].ids.every(id => !s.evacueeIds.includes(id) && !s.residentIds.includes(id))).toBe(true);
       const groups = new Map<number, number>();
       for (const id of turns[0].ids) groups.set(s.origin[id], (groups.get(s.origin[id]) ?? 0) + 1);
-      expect(Math.max(...groups.values()), 'the alarm is split evenly among the animated tent doors').toBeLessThanOrEqual(Math.ceil(l4.calm.alarmInfected.high / tentDoors.length));
+      expect(Math.max(...groups.values()), 'the alarm is spread across exterior street mouths').toBeLessThanOrEqual(Math.ceil(l4.calm.alarmInfected.high / 3));
       w.dispose();
     }
     // The camp remains calm while the player has not collected the gun.

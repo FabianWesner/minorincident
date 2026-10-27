@@ -35,11 +35,11 @@ for (const tier of ['high', 'low'] as const) test(`5 L4 ${tier}: every authored 
       s.phase = collapse ? 'collapse' : 'war'; s.wave = wave; s.collapseWaves = wave;
       if (collapse) c.openGate();
       s.waveAt = collapse ? Infinity : w.tick; s.collapseWaveAt = collapse ? w.tick : Infinity;
-      // Measure this finite street wave independently of the recurring tent
-      // stream. Otherwise unrelated recovering bodies can consume its entire
+      // Measure this finite street wave independently of recurring exterior
+      // perimeter pressure. Otherwise unrelated recovering bodies can consume its entire
       // low-tier admission budget. Alarm identities have their own census;
       // the full-hold action census measures both populations together.
-      s.insideAt = Infinity; s.insidePending = 0;
+      s.perimeterAt = Infinity; s.perimeterPending = 0;
       const base = collapse ? l4.war.collapseWaveSize : l4.war.waveSize[wave];
       const n = Math.max(1, Math.ceil(base * (tier === 'low' ? .5 : 1) * (collapse ? 1 : l4.war.waveScale)));
       const ring = l4Edges.length - 1, expected = collapse ? n * l4.war.edgesPerWave : Math.ceil(n * l4.war.edgesPerWave / ring) * ring;
@@ -72,7 +72,7 @@ for (const tier of ['high', 'low'] as const) test(`5 L4 ${tier}: every authored 
       }
       const name = `L4/${tier}/${collapse ? 'collapse' : `war-${wave}`}`;
       console.log(`[qa:invariants] ${name}: authored=${expected} spawned=${ids.size} admitted=${admitted.size} reached=${reached.size}`);
-      if (ids.size !== expected) console.log(`[qa:invariants] ${name} queued: ${JSON.stringify({ pend: s.pend, insidePending: s.insidePending, active: w.infected!.active.filter(e => e.health.current > 0).map(e => ({ id: e.id, origin: s.origin[e.id], pending: e.pendingAdmission, emerging: e.emerging, at: e.transform })), deadlineTicks })}`);
+      if (ids.size !== expected) console.log(`[qa:invariants] ${name} queued: ${JSON.stringify({ pend: s.pend, perimeterPending: s.perimeterPending, active: w.infected!.active.filter(e => e.health.current > 0).map(e => ({ id: e.id, origin: s.origin[e.id], pending: e.pendingAdmission, emerging: e.emerging, at: e.transform })), deadlineTicks })}`);
       if (reached.size !== ids.size) console.log(`[qa:invariants] ${name} unreached: ${JSON.stringify([...ids].filter(id => !reached.has(id)).map(id => {
         const e = w.entities.get(id);
         const brain=e?.infected?.l1, target=brain&&w.entities.get(brain.targetId);

@@ -15,10 +15,15 @@ const tolerance = .02, skin = .001;
 /** One physical footprint. Reach, crowd spacing and animation envelopes are owned by combat/presentation. */
 export function actorRadius(e: EntitySnapshot): number {
   // Corgi uses a 0.88 m wide capsule, with fore/aft probes for its longer body.
+  if (e.corpse && e.infected?.variant?.includes('mega-alpha')) return 1.45;
+  if (e.corpse && e.archetype === 'infected.alpha') return 1;
   return e.companion ? .44 : e.survivor ? survivor.radius : e.combat?.radius ?? .35;
 }
+function solidLargeCorpse(e: EntitySnapshot): boolean {
+  return !!e.corpse && (!!e.civilian?.zooAnimal || e.archetype === 'infected.alpha' || !!e.infected?.variant?.includes('mega-alpha'));
+}
 function actor(e: EntitySnapshot): boolean {
-  return !!(e.survivor || e.infected || e.civilian || e.companion || e.escort) && e.health.current > 0 && e.civilian?.state !== 'finished' && !e.corpse && !e.hidden && !e.infected?.hidden && !e.pendingAdmission && e.passengerOf === undefined;
+  return !!(e.survivor || e.infected || e.civilian || e.companion || e.escort) && (e.health.current > 0 && !e.corpse || solidLargeCorpse(e)) && e.civilian?.state !== 'finished' && !e.hidden && !e.infected?.hidden && !e.pendingAdmission && e.passengerOf === undefined;
 }
 /** Passengers and clingers have an explicit owner. Cosmetics (dead bodies, debris) have no actor mask. */
 function pairExempt(a: EntitySnapshot | undefined, b: EntitySnapshot): boolean {

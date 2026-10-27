@@ -780,6 +780,16 @@ export class GameView implements Lifecycle {
     }
     return false;
   }
+  /** Keep the courier's silhouette in front when an Alpha, Mega or zoo corpse overlaps her feet. */
+  private nearLargeCorpse(at: { x: number; z: number }): boolean {
+    for (const e of this.world.entities.iterate()) {
+      if (!e.corpse || e.hidden || e.infected?.hidden) continue;
+      const large = e.archetype === 'infected.alpha' || e.infected?.variant?.includes('mega-alpha')
+        || ['infected.elephant', 'infected.gorilla', 'infected.lion', 'infected.zebra'].includes(e.archetype ?? '');
+      if (large && Math.hypot(e.transform.x - at.x, e.transform.z - at.z) < 4) return true;
+    }
+    return false;
+  }
   /** Distance (m) to the nearest living Mega Alpha, Infinity when none. */
   private megaDistance(at: { x: number; z: number }): number {
     let best = Infinity;
@@ -1015,7 +1025,7 @@ export class GameView implements Lifecycle {
     // Reuse the foreground silhouette at the boss and in L7's close crowd. Building blockers no longer trigger it: their
     // placement cut already clears the whole subject disc, and the near-camera depth slice drew the courier over every
     // nearer person and prop (PO #9 L2 start: on top of firefighter "2"; #26 L1: in front of the closed bay leaf and the horde).
-    this.courierForeground = !!current && courierForegroundWanted(this.nearL7Crowd(current), this.megaDistance(current));
+    this.courierForeground = !!current && courierForegroundWanted(this.nearL7Crowd(current) || this.nearLargeCorpse(current), this.megaDistance(current));
     this.character?.setForeground(this.courierForeground);
     this.healthBars?.update(this.camera, this.view.viewportHeight * this.camera.aspect, this.view.viewportHeight, this.barOccluded, this.lighting?.preset === 'L6');
     if (this.world.missions?.state.l3) {
