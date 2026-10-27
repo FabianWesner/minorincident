@@ -1,0 +1,85 @@
+{
+  "id": "npc.national-guard",
+  "source": "/Users/wesner/Workspace/3dp-l4-all-new/cast/l3/npc.national-guard",
+  "elapsedSeconds": 27.361,
+  "manualSteps": [],
+  "receipts": [
+    {
+      "lod": 0,
+      "source": "assets/npc.national-guard/model.glb",
+      "sourceSha256": "49ab394a833762bcc8e5462c262a1b519fa8e1c6939740e673213256892dc91f",
+      "bodySource": "/Users/wesner/Workspace/3dp-l4-all-new/cast/l3/npc.national-guard/source/assembled-lod0.glb",
+      "bodySha256": "f88d72bb670ebf43e66bd10cc48e91d3ca7c151f19efb6a22328b3aea72d5608",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/npc.national-guard.lod0.glb",
+          "bytes": 368976,
+          "sha256": "d5991ecdb18764e6a60245d3a3e9678a9b916b029447d6a1211e061972a95237",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/npc.national-guard.lod0.low.glb",
+          "bytes": 267264,
+          "sha256": "1352a274c158e92a0246c45b4a5c78f4042cd5358f16106388c145154b85a14d",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 1,
+      "source": "assets/npc.national-guard/model.glb",
+      "sourceSha256": "49ab394a833762bcc8e5462c262a1b519fa8e1c6939740e673213256892dc91f",
+      "bodySource": "/Users/wesner/Workspace/3dp-l4-all-new/cast/l3/npc.national-guard/source/assembled-lod1.glb",
+      "bodySha256": "72c62bdb158353e1b662ae446996803b277c8132f024c8066133da470179b8e5",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/npc.national-guard.lod1.glb",
+          "bytes": 190044,
+          "sha256": "5e62513e7cba46ea5817b89676e909612a252c5860d9985be68d24bb5da6fc7a",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/npc.national-guard.lod1.low.glb",
+          "bytes": 190044,
+          "sha256": "5e62513e7cba46ea5817b89676e909612a252c5860d9985be68d24bb5da6fc7a",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 2,
+      "source": "assets/npc.national-guard/model.glb",
+      "sourceSha256": "49ab394a833762bcc8e5462c262a1b519fa8e1c6939740e673213256892dc91f",
+      "bodySource": "/Users/wesner/Workspace/3dp-l4-all-new/cast/l3/npc.national-guard/source/assembled-lod1.glb",
+      "bodySha256": "72c62bdb158353e1b662ae446996803b277c8132f024c8066133da470179b8e5",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/npc.national-guard.lod2.glb",
+          "bytes": 147216,
+          "sha256": "a185ec06c66d08c33d53bf8c0e19264d0a6b7a08fb2acb8b16cdd029760f8ab4",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/npc.national-guard.lod2.low.glb",
+          "bytes": 147216,
+          "sha256": "a185ec06c66d08c33d53bf8c0e19264d0a6b7a08fb2acb8b16cdd029760f8ab4",
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "preparedBakes": {
+    "npc.national-guard:lod0:infected": "/assets/civilians/npc.national-guard.lod0.infected.db6cd2051cffd8ff.bin.gz",
+    "npc.national-guard:lod0": "/assets/civilians/npc.national-guard.lod0.9d2f28d04140d51f.bin.gz",
+    "npc.national-guard:lod1:infected": "/assets/civilians/npc.national-guard.lod1.infected.e6955bbcf3fa6f83.bin.gz",
+    "npc.national-guard:lod1": "/assets/civilians/npc.national-guard.lod1.104d423797ca68c4.bin.gz",
+    "npc.national-guard:lod2:infected": "/assets/civilians/npc.national-guard.lod2.infected.e6955bbcf3fa6f83.bin.gz",
+    "npc.national-guard:lod2": "/assets/civilians/npc.national-guard.lod2.104d423797ca68c4.bin.gz"
+  }
+}

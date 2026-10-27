@@ -641,7 +641,7 @@ if (!out.getRoot().listNodes().some(n => n.getName() === 'front')) {
 }
 const propsPath = arg('--props');
 if (propsPath) {
-  const props = await io.read(propsPath), recipe = JSON.parse(readFileSync(arg('--props-recipe')!, 'utf8')) as { lods: { lod: number; props: { name: string; intended_owner: string }[] }[] };
+  const props = await io.read(propsPath), recipe = JSON.parse(readFileSync(arg('--props-recipe')!, 'utf8')) as { lods: { lod: number; props: { name: string; intended_owner: string; exact_owner?: boolean }[] }[] };
   const entries = recipe.lods.find(l => l.lod === Number(arg('--props-lod', '0')))!.props;
   const selected = props.getRoot().listNodes().filter(n => n.getMesh() && entries.some(e => e.name === n.getName()) && !(args.includes('--retain-corgi-props') && /pack/.test(n.getName())));
   const copied = copyToDocument(out, props, selected);
@@ -649,7 +649,7 @@ if (propsPath) {
     const entry = entries.find(e => e.name === source.getName())!;
     let owner = jointNode.get(entry.intended_owner) ?? jointNode.get(entry.intended_owner === 'neck' ? 'head' : 'torso') ?? jointNode.get('body');
     if (!owner) throw Error(`No rig owner for prop ${entry.name}`);
-    if (/^hand[LR]$/.test(entry.intended_owner)) {
+    if (/^hand[LR]$/.test(entry.intended_owner) && !entry.exact_owner) {
       const low = new Vector3(Infinity, Infinity, Infinity), high = new Vector3(-Infinity, -Infinity, -Infinity), point = new Vector3();
       for (const primitive of source.getMesh()!.listPrimitives()) {
         const position = primitive.getAttribute('POSITION')!;

@@ -34,7 +34,13 @@ const output = 'public/assets/models/skinned', report = join(process.env.CROWD_R
 mkdirSync(output, { recursive: true }); mkdirSync(report, { recursive: true }); mkdirSync(assets, { recursive: true });
 const metadata = existsSync(join(source, 'rig.json')) ? JSON.parse(readFileSync(join(source, 'rig.json'), 'utf8')) as { class?: string; lods: { lod: number; uniform_scale?: number; world_scale?: number; rotation_y_degrees?: number }[] } : undefined;
 const unbound = existsSync(join(source, 'source/manifest.json')) && !metadata;
-const alignment = unbound ? JSON.parse(readFileSync(join(id === 'inf.dog' ? join(dirname(source), 'amb.dog') : source, 'source/manifest.json'), 'utf8')) as { initial_game_height_scale: number; game_alignment_rotation_y_degrees: number } : undefined;
+const alignment = unbound ? JSON.parse(readFileSync(join(id === 'inf.dog' ? join(dirname(source), 'amb.dog') : source, 'source/manifest.json'), 'utf8')) as { initial_game_height_scale: number; game_alignment_rotation_y_degrees: number; triangle_budgets?: [number, number, number]; rig_class?: string } : undefined;
+if (alignment?.triangle_budgets) {
+  const [near, middle, far] = alignment.triangle_budgets;
+  if (![near, middle, far].every(n => Number.isInteger(n) && n > 0) || middle > near || far > middle) throw Error(`${id}: invalid source triangle budgets`);
+  def.budget.triangles = near; def.budget.fileKB = 600;
+  def.authoredLodTriangles = { lod1: middle, lod2: far };
+}
 const io = await assetIO(), started = Date.now(), receipts = [];
 // A carried object fused into the body cannot follow the game's prop lifecycle.
 // Refuse it before changing any active asset; anatomy fits inside this hand envelope.
@@ -63,9 +69,10 @@ for (const lod of [0, 1, 2]) {
   if (existsSync(body)) args.push('--body', body, '--body-scale', String(alignment?.initial_game_height_scale ?? placement?.uniform_scale ?? placement?.world_scale ?? 1), '--body-rot-y', String(alignment?.game_alignment_rotation_y_degrees ?? placement?.rotation_y_degrees ?? 0));
   if (alignment) args.push('--body-yaw-fixed');
   if (unbound && id === 'inf.dog') args.push('--atlas-base-half', '--eyes', join(source, 'eyes.json'));
+  else if (unbound && id.startsWith('inf.') && existsSync(join(source, 'eyes.json'))) args.push('--eyes', join(source, 'eyes.json'));
   else if (metadata) args.push('--reconstruct-body');
   if (id.startsWith('npc.')) args.push('--healthy');
-  if (unbound && id.startsWith('npc.')) args.push('--fit-rig-height');
+  if (unbound && (id.startsWith('npc.') || alignment?.rig_class === 'humanoid' || alignment?.rig_class === 'alpha')) args.push('--fit-rig-height');
   if (['npc.civilian-woman-b', 'npc.civilian-elderly'].includes(id)) args.push('--spectacles');
   if (lod > 0 && ['npc.civilian-woman-b', 'npc.civilian-elderly'].includes(id)) {
     const measured = JSON.parse(readFileSync(join(report, 'lod0.json'), 'utf8')) as { spectacleTop: number };

@@ -1,0 +1,742 @@
+{
+  "source": "Production L4 complete bot, seed 1, sampled every 0.5 s; world population exposure, not camera visibility",
+  "sources": [
+    "src/data/l4.ts",
+    "src/levels/L4/layout.ts",
+    "src/sim/missions/LevelFourWar.ts",
+    "src/data/alphaLooks.ts",
+    "src/render/CrowdView.ts"
+  ],
+  "scope": [
+    "npc.national-guard",
+    "inf.crawler",
+    "inf.riot-cop",
+    "inf.firefighter",
+    "inf.hazmat",
+    "inf.alpha",
+    "inf.alpha-worker",
+    "inf.alpha-hoodie",
+    "inf.alpha-fire",
+    "inf.alpha-suit"
+  ],
+  "carryover": [
+    "inf.common-worker",
+    "npc.civilian-man-a",
+    "npc.civilian-man-b",
+    "npc.civilian-woman-a",
+    "npc.civilian-woman-b",
+    "npc.civilian-elderly",
+    "char.courier-female",
+    "char.courier-male",
+    "char.corgi"
+  ],
+  "excluded": [
+    {
+      "id": "inf.sprinter",
+      "reason": "Every L4 sprinter has an explicit model from l4InfectedLooks; default batch is intentionally omitted by CrowdView"
+    }
+  ],
+  "deferred": [],
+  "rows": [
+    {
+      "id": "inf.common-worker",
+      "inheritedV2": true,
+      "crowdSkin": true,
+      "high": {
+        "peak": 44,
+        "actorSeconds": 7266.5,
+        "infectedSeconds": 7266.5,
+        "corpseSeconds": 6401
+      },
+      "low": {
+        "peak": 38,
+        "actorSeconds": 5935,
+        "infectedSeconds": 5935,
+        "corpseSeconds": 5592.5
+      }
+    },
+    {
+      "id": "npc.national-guard",
+      "inheritedV2": false,
+      "crowdSkin": true,
+      "high": {
+        "peak": 58,
+        "actorSeconds": 12021,
+        "infectedSeconds": 6479,
+        "corpseSeconds": 6708.5
+      },
+      "low": {
+        "peak": 42,
+        "actorSeconds": 7856,
+        "infectedSeconds": 5100.5,
+        "corpseSeconds": 5175.5
+      }
+    },
+    {
+      "id": "npc.civilian-man-a",
+      "inheritedV2": true,
+      "crowdSkin": true,
+      "high": {
+        "peak": 54,
+        "actorSeconds": 10865.5,
+        "infectedSeconds": 7610,
+        "corpseSeconds": 6933
+      },
+      "low": {
+        "peak": 43,
+        "actorSeconds": 7767,
+        "infectedSeconds": 5893,
+        "corpseSeconds": 5596
+      }
+    },
+    {
+      "id": "npc.civilian-man-b",
+      "inheritedV2": true,
+      "crowdSkin": true,
+      "high": {
+        "peak": 54,
+        "actorSeconds": 10062,
+        "infectedSeconds": 6803,
+        "corpseSeconds": 6292.5
+      },
+      "low": {
+        "peak": 31,
+        "actorSeconds": 5385,
+        "infectedSeconds": 3714,
+        "corpseSeconds": 3560.5
+      }
+    },
+    {
+      "id": "npc.civilian-woman-a",
+      "inheritedV2": true,
+      "crowdSkin": true,
+      "high": {
+        "peak": 54,
+        "actorSeconds": 12177.5,
+        "infectedSeconds": 7023.5,
+        "corpseSeconds": 6448
+      },
+      "low": {
+        "peak": 31,
+        "actorSeconds": 5471,
+        "infectedSeconds": 4112.5,
+        "corpseSeconds": 3863.5
+      }
+    },
+    {
+      "id": "npc.civilian-woman-b",
+      "inheritedV2": true,
+      "crowdSkin": true,
+      "high": {
+        "peak": 45,
+        "actorSeconds": 9327.5,
+        "infectedSeconds": 6335,
+        "corpseSeconds": 5907.5
+      },
+      "low": {
+        "peak": 23,
+        "actorSeconds": 4416.5,
+        "infectedSeconds": 2484.5,
+        "corpseSeconds": 2196.5
+      }
+    },
+    {
+      "id": "npc.civilian-elderly",
+      "inheritedV2": true,
+      "crowdSkin": true,
+      "high": {
+        "peak": 42,
+        "actorSeconds": 7457,
+        "infectedSeconds": 6405,
+        "corpseSeconds": 5890.5
+      },
+      "low": {
+        "peak": 19,
+        "actorSeconds": 3447.5,
+        "infectedSeconds": 2060.5,
+        "corpseSeconds": 1882
+      }
+    },
+    {
+      "id": "inf.crawler",
+      "inheritedV2": false,
+      "crowdSkin": true,
+      "high": null,
+      "low": null
+    },
+    {
+      "id": "inf.riot-cop",
+      "inheritedV2": false,
+      "crowdSkin": false,
+      "high": null,
+      "low": null
+    },
+    {
+      "id": "inf.firefighter",
+      "inheritedV2": false,
+      "crowdSkin": false,
+      "high": null,
+      "low": null
+    },
+    {
+      "id": "inf.hazmat",
+      "inheritedV2": false,
+      "crowdSkin": false,
+      "high": null,
+      "low": null
+    },
+    {
+      "id": "inf.alpha",
+      "inheritedV2": false,
+      "crowdSkin": false,
+      "high": null,
+      "low": null
+    },
+    {
+      "id": "inf.alpha-worker",
+      "inheritedV2": false,
+      "crowdSkin": false,
+      "high": null,
+      "low": null
+    },
+    {
+      "id": "inf.alpha-hoodie",
+      "inheritedV2": false,
+      "crowdSkin": false,
+      "high": null,
+      "low": null
+    },
+    {
+      "id": "inf.alpha-fire",
+      "inheritedV2": false,
+      "crowdSkin": false,
+      "high": null,
+      "low": null
+    },
+    {
+      "id": "inf.alpha-suit",
+      "inheritedV2": false,
+      "crowdSkin": false,
+      "high": null,
+      "low": null
+    },
+    {
+      "id": "char.courier-female",
+      "inheritedV2": true,
+      "crowdSkin": false,
+      "high": {
+        "peak": 1,
+        "actorSeconds": 280,
+        "infectedSeconds": 0,
+        "corpseSeconds": 2
+      },
+      "low": {
+        "peak": 1,
+        "actorSeconds": 263.5,
+        "infectedSeconds": 0,
+        "corpseSeconds": 0
+      }
+    },
+    {
+      "id": "char.courier-male",
+      "inheritedV2": true,
+      "crowdSkin": false,
+      "high": null,
+      "low": null
+    },
+    {
+      "id": "char.corgi",
+      "inheritedV2": true,
+      "crowdSkin": true,
+      "high": {
+        "peak": 1,
+        "actorSeconds": 280,
+        "infectedSeconds": 0,
+        "corpseSeconds": 0
+      },
+      "low": {
+        "peak": 1,
+        "actorSeconds": 263.5,
+        "infectedSeconds": 0,
+        "corpseSeconds": 0
+      }
+    }
+  ],
+  "runs": [
+    {
+      "tier": "high",
+      "report": {
+        "profile": "complete",
+        "route": "auto",
+        "seed": 1,
+        "outcome": "complete",
+        "simSeconds": 310.43333333333334,
+        "deaths": 1,
+        "kills": 0,
+        "knockdowns": 141,
+        "damage": 212.9166666666667,
+        "timeline": [
+          {
+            "type": "l4.convoyArrived",
+            "t": 30.483333333333334
+          },
+          {
+            "type": "objective:ride",
+            "t": 30.483333333333334
+          },
+          {
+            "type": "l4.gun",
+            "t": 32.81666666666667
+          },
+          {
+            "type": "l4.firstTurn",
+            "t": 32.81666666666667
+          },
+          {
+            "type": "objective:quartermaster",
+            "t": 32.81666666666667
+          },
+          {
+            "type": "l4.lineBreaks",
+            "t": 210.83333333333334
+          },
+          {
+            "type": "objective:hold",
+            "t": 210.83333333333334
+          },
+          {
+            "type": "l4.heliWithdrawn",
+            "t": 217.83333333333334
+          },
+          {
+            "type": "l4.descended",
+            "t": 302.18333333333334
+          },
+          {
+            "type": "objective:hide",
+            "t": 302.18333333333334
+          },
+          {
+            "type": "l4.doorBarred",
+            "t": 303.43333333333334
+          },
+          {
+            "type": "objective:bar",
+            "t": 303.43333333333334
+          },
+          {
+            "type": "objective:wait",
+            "t": 310.43333333333334
+          }
+        ],
+        "rideS": 30.483333333333334,
+        "controlBackS": 0,
+        "gunS": 32.81666666666667,
+        "turnAfterGunS": 0,
+        "turnAfterArrivalS": 2.3333333333333335,
+        "humansNear": 9,
+        "turnedIds": [
+          203,
+          204,
+          205,
+          206,
+          207,
+          208,
+          209,
+          210,
+          211,
+          212,
+          213,
+          214,
+          215,
+          216,
+          217,
+          218,
+          219,
+          220
+        ],
+        "turnedWithin30": 8,
+        "maxConcurrent": 114,
+        "maxCharacters": 156,
+        "infectedAtT30": 69,
+        "infectedAtBreak": 57,
+        "killsAtBreak": 857,
+        "soldiersAtTurn": 20,
+        "soldiersAtBreak": 16,
+        "soldiersAtCellar": 0,
+        "civiliansAtTurn": 85,
+        "breakCause": "beats",
+        "breakAfterS": 178.01666666666668,
+        "shots": {
+          "tank": [
+            4508,
+            5191,
+            5831,
+            6453,
+            7046,
+            7574,
+            8160,
+            8847,
+            9533,
+            10112,
+            10599,
+            11171,
+            11652,
+            12650
+          ],
+          "heliBursts": 260,
+          "hmgBursts": 54
+        },
+        "kills_": {
+          "player": 141,
+          "soldiers": 492,
+          "armedCivilians": 432,
+          "unarmedCivilians": 0,
+          "heli": 6,
+          "tank": 26,
+          "other": 6
+        },
+        "damageLive": {
+          "fires": 37,
+          "burning": 3,
+          "glass": 14,
+          "scorch": 19
+        },
+        "edges": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "deathsAt": [
+          "200s@-25,3/war"
+        ],
+        "battleAfterBarred": 5
+      },
+      "counts": {
+        "npc.civilian-man-a": {
+          "peak": 54,
+          "actorSeconds": 10865.5,
+          "infectedSeconds": 7610,
+          "corpseSeconds": 6933
+        },
+        "npc.civilian-woman-a": {
+          "peak": 54,
+          "actorSeconds": 12177.5,
+          "infectedSeconds": 7023.5,
+          "corpseSeconds": 6448
+        },
+        "npc.civilian-man-b": {
+          "peak": 54,
+          "actorSeconds": 10062,
+          "infectedSeconds": 6803,
+          "corpseSeconds": 6292.5
+        },
+        "npc.civilian-woman-b": {
+          "peak": 45,
+          "actorSeconds": 9327.5,
+          "infectedSeconds": 6335,
+          "corpseSeconds": 5907.5
+        },
+        "amb.dog.black": {
+          "peak": 1,
+          "actorSeconds": 310,
+          "infectedSeconds": 0,
+          "corpseSeconds": 0
+        },
+        "npc.civilian-elderly": {
+          "peak": 42,
+          "actorSeconds": 7457,
+          "infectedSeconds": 6405,
+          "corpseSeconds": 5890.5
+        },
+        "npc.national-guard": {
+          "peak": 58,
+          "actorSeconds": 12021,
+          "infectedSeconds": 6479,
+          "corpseSeconds": 6708.5
+        },
+        "char.courier-female": {
+          "peak": 1,
+          "actorSeconds": 280,
+          "infectedSeconds": 0,
+          "corpseSeconds": 2
+        },
+        "char.corgi": {
+          "peak": 1,
+          "actorSeconds": 280,
+          "infectedSeconds": 0,
+          "corpseSeconds": 0
+        },
+        "inf.common-worker": {
+          "peak": 44,
+          "actorSeconds": 7266.5,
+          "infectedSeconds": 7266.5,
+          "corpseSeconds": 6401
+        },
+        "infected.firefighter": {
+          "peak": 81,
+          "actorSeconds": 14254.5,
+          "infectedSeconds": 14254.5,
+          "corpseSeconds": 11102.5
+        },
+        "infected.crawler": {
+          "peak": 98,
+          "actorSeconds": 17078,
+          "infectedSeconds": 17078,
+          "corpseSeconds": 13998
+        },
+        "infected.riot": {
+          "peak": 63,
+          "actorSeconds": 10872.5,
+          "infectedSeconds": 10872.5,
+          "corpseSeconds": 7757.5
+        },
+        "infected.hazmat": {
+          "peak": 83,
+          "actorSeconds": 13747,
+          "infectedSeconds": 13747,
+          "corpseSeconds": 10603
+        },
+        "infected.alpha": {
+          "peak": 8,
+          "actorSeconds": 1500,
+          "infectedSeconds": 1500,
+          "corpseSeconds": 1048
+        }
+      }
+    },
+    {
+      "tier": "low",
+      "report": {
+        "profile": "complete",
+        "route": "auto",
+        "seed": 1,
+        "outcome": "complete",
+        "simSeconds": 293.8833333333333,
+        "deaths": 0,
+        "kills": 0,
+        "knockdowns": 121,
+        "damage": 45,
+        "timeline": [
+          {
+            "type": "l4.convoyArrived",
+            "t": 30.483333333333334
+          },
+          {
+            "type": "objective:ride",
+            "t": 30.483333333333334
+          },
+          {
+            "type": "l4.gun",
+            "t": 32.81666666666667
+          },
+          {
+            "type": "l4.firstTurn",
+            "t": 32.81666666666667
+          },
+          {
+            "type": "objective:quartermaster",
+            "t": 32.81666666666667
+          },
+          {
+            "type": "l4.lineBreaks",
+            "t": 210.83333333333334
+          },
+          {
+            "type": "objective:hold",
+            "t": 210.83333333333334
+          },
+          {
+            "type": "l4.heliWithdrawn",
+            "t": 217.83333333333334
+          },
+          {
+            "type": "l4.descended",
+            "t": 285.6333333333333
+          },
+          {
+            "type": "objective:hide",
+            "t": 285.6333333333333
+          },
+          {
+            "type": "l4.doorBarred",
+            "t": 286.8833333333333
+          },
+          {
+            "type": "objective:bar",
+            "t": 286.8833333333333
+          },
+          {
+            "type": "objective:wait",
+            "t": 293.8833333333333
+          }
+        ],
+        "rideS": 30.483333333333334,
+        "controlBackS": 0,
+        "gunS": 32.81666666666667,
+        "turnAfterGunS": 0,
+        "turnAfterArrivalS": 2.3333333333333335,
+        "humansNear": 4,
+        "turnedIds": [
+          160,
+          161,
+          162,
+          163,
+          164,
+          165,
+          166,
+          167,
+          168
+        ],
+        "turnedWithin30": 2,
+        "maxConcurrent": 59,
+        "maxCharacters": 79,
+        "infectedAtT30": 30,
+        "infectedAtBreak": 26,
+        "killsAtBreak": 577,
+        "soldiersAtTurn": 10,
+        "soldiersAtBreak": 9,
+        "soldiersAtCellar": 0,
+        "civiliansAtTurn": 42,
+        "breakCause": "beats",
+        "breakAfterS": 178.01666666666668,
+        "shots": {
+          "tank": [
+            4508,
+            5192,
+            5834,
+            6456,
+            7049,
+            7577,
+            8163,
+            8861,
+            9547,
+            10168,
+            10655,
+            11285,
+            11917,
+            12650
+          ],
+          "heliBursts": 255,
+          "hmgBursts": 68
+        },
+        "kills_": {
+          "player": 121,
+          "soldiers": 360,
+          "armedCivilians": 188,
+          "unarmedCivilians": 0,
+          "heli": 13,
+          "tank": 20,
+          "other": 2
+        },
+        "damageLive": {
+          "fires": 37,
+          "burning": 3,
+          "glass": 13,
+          "scorch": 19
+        },
+        "edges": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "deathsAt": [],
+        "battleAfterBarred": 5
+      },
+      "counts": {
+        "npc.civilian-woman-b": {
+          "peak": 23,
+          "actorSeconds": 4416.5,
+          "infectedSeconds": 2484.5,
+          "corpseSeconds": 2196.5
+        },
+        "npc.civilian-man-a": {
+          "peak": 43,
+          "actorSeconds": 7767,
+          "infectedSeconds": 5893,
+          "corpseSeconds": 5596
+        },
+        "npc.civilian-elderly": {
+          "peak": 19,
+          "actorSeconds": 3447.5,
+          "infectedSeconds": 2060.5,
+          "corpseSeconds": 1882
+        },
+        "npc.civilian-man-b": {
+          "peak": 31,
+          "actorSeconds": 5385,
+          "infectedSeconds": 3714,
+          "corpseSeconds": 3560.5
+        },
+        "npc.civilian-woman-a": {
+          "peak": 31,
+          "actorSeconds": 5471,
+          "infectedSeconds": 4112.5,
+          "corpseSeconds": 3863.5
+        },
+        "npc.national-guard": {
+          "peak": 42,
+          "actorSeconds": 7856,
+          "infectedSeconds": 5100.5,
+          "corpseSeconds": 5175.5
+        },
+        "char.courier-female": {
+          "peak": 1,
+          "actorSeconds": 263.5,
+          "infectedSeconds": 0,
+          "corpseSeconds": 0
+        },
+        "char.corgi": {
+          "peak": 1,
+          "actorSeconds": 263.5,
+          "infectedSeconds": 0,
+          "corpseSeconds": 0
+        },
+        "inf.common-worker": {
+          "peak": 38,
+          "actorSeconds": 5935,
+          "infectedSeconds": 5935,
+          "corpseSeconds": 5592.5
+        },
+        "infected.firefighter": {
+          "peak": 50,
+          "actorSeconds": 8073.5,
+          "infectedSeconds": 8073.5,
+          "corpseSeconds": 6870.5
+        },
+        "infected.crawler": {
+          "peak": 56,
+          "actorSeconds": 8910.5,
+          "infectedSeconds": 8910.5,
+          "corpseSeconds": 7668.5
+        },
+        "infected.riot": {
+          "peak": 40,
+          "actorSeconds": 6649,
+          "infectedSeconds": 6649,
+          "corpseSeconds": 5383.5
+        },
+        "infected.hazmat": {
+          "peak": 40,
+          "actorSeconds": 6043.5,
+          "infectedSeconds": 6043.5,
+          "corpseSeconds": 4764
+        },
+        "infected.alpha": {
+          "peak": 6,
+          "actorSeconds": 978,
+          "infectedSeconds": 978,
+          "corpseSeconds": 748
+        }
+      }
+    }
+  ]
+}
