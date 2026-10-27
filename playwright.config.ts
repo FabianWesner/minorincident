@@ -1,5 +1,10 @@
 import { defineConfig, devices } from '@playwright/test';
 import { poolEndpoint } from './tools/browser-pool/client';
+for (let i = 0; i < process.argv.length; i++) {
+  const arg = process.argv[i];
+  const workers = arg === '--workers' ? process.argv[++i] : arg.startsWith('--workers=') ? arg.slice('--workers='.length) : undefined;
+  if ((arg === '--workers' || workers !== undefined) && workers !== '1' && workers !== '2') throw new Error('Playwright is limited to 1 or 2 workers on this machine');
+}
 const endpoint = await poolEndpoint();
 if (endpoint) { process.env.MI_BROWSER_POOL_WS = endpoint; process.env.MI_BROWSER_POOL = '1'; }
 
