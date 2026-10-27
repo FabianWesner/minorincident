@@ -72,13 +72,15 @@ def rsh(addr, cmd, timeout=20):
 
 STATE_CMD = ("now=$(date +%s); run=0; wait=0; for f in /srv/mi/queue/*.job; do [ -f \"$f\" ] || continue; "
              "n=$(awk -F'\\t' 'NR==1{print NF}' $f); if [ \"$n\" -ge 4 ]; then run=$((run+1)); else wait=$((wait+1)); fi; done; "
-             "echo \"$run $wait $(cat /srv/mi/last-activity 2>/dev/null || echo 0) $(cut -d' ' -f1 /proc/loadavg) $(ls /srv/mi/ws 2>/dev/null | tr '\\n' ',')\"")
+             "occupied=0; for i in " + ' '.join(map(str, range(SLOTS))) + "; do "
+             "flock -n /srv/mi/locks/slot.$i true 2>/dev/null || occupied=$((occupied+1)); done; "
+             "echo \"$run $wait $(cat /srv/mi/last-activity 2>/dev/null || echo 0) $(cut -d' ' -f1 /proc/loadavg) $occupied $(ls /srv/mi/ws 2>/dev/null | tr '\\n' ',')\"")
 
 def state(s):
     rc, out = rsh(ip(s), STATE_CMD)
     if rc != 0 or not out.strip(): return None
     p = out.split()
-    return {"name": s["name"], "ip": ip(s), "running": int(p[0]), "waiting": int(p[1]), "last": int(p[2]), "load": float(p[3]), "ws": p[4] if len(p) > 4 else ""}
+    return {"name": s["name"], "ip": ip(s), "running": int(p[0]), "waiting": int(p[1]), "last": int(p[2]), "load": float(p[3]), "occupied": int(p[4]), "ws": p[5] if len(p) > 5 else ""}
 
 def states(ss):
     with cf.ThreadPoolExecutor(8) as ex:
@@ -169,7 +171,7 @@ def pick_now():
     except Exception as e:
         log(f"runner pool unavailable: {e}")
         return 4
-    free = [x for x in sts if x["running"] + x["waiting"] < SLOTS and x["last"]]
+    free = [x for x in sts if max(x["running"], x.get("occupied", x["running"])) + x["waiting"] < SLOTS and x["last"]]
     if not free:
         return 3
     free.sort(key=lambda x: (x["running"] + x["waiting"], x["load"]))
@@ -203,7 +205,7 @@ def status():
     ss = servers()
     for s, st in zip(ss, states(ss)):
         print(f"{s['name']}  id={s['id']} {s['server_type']['name']} {s['datacenter']['location']['name'] if 'datacenter' in s else s['location']['name']} {ip(s)} {s['status']}"
-              + (f"  jobs {st['running']}/{SLOTS} +{st['waiting']} queued  load {st['load']}  idle {int(time.time()) - st['last'] if st['last'] else '?'}s" if st else "  (ssh not ready)"))
+              + (f"  jobs {st['running']} slots {st['occupied']}/{SLOTS} +{st['waiting']} queued  load {st['load']}  idle {int(time.time()) - st['last'] if st['last'] else '?'}s" if st else "  (ssh not ready)"))
     if not ss: print("no runners (they are created on demand)")
 
 def snapshot(name):

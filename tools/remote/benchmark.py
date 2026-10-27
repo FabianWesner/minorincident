@@ -36,7 +36,7 @@ def main():
     out.mkdir(parents=True, exist_ok=False)
     package = (wt / 'package.json').read_bytes()
     if 'test:gate' not in json.loads(package)['scripts']: raise SystemExit('test:gate script missing')
-    env = dict(os.environ, RUNNER_SLOTS='1', MI_LOCAL_FALLBACK='0' if phase == 'before' else '1')
+    env = dict(os.environ, RUNNER_SLOTS='2', MI_LOCAL_FALLBACK='0' if phase == 'before' else '1')
     events = []
     children, child_lock, cancelled = {}, threading.Lock(), threading.Event()
     def stop(_sig, _frame):
@@ -52,6 +52,7 @@ def main():
     def job(index):
         relative = f'test-results/mac-runner-benchmark/{phase}-{index}.json'
         command = ['sh', str(HERE / 'run.sh'), str(wt), '--pull', relative, '--',
+                   'bash', 'tools/remote/timing-isolated.sh', '--whole-run',
                    'npm', 'run', 'test:gate', '--', '--reporter=default', '--reporter=json', f'--outputFile={relative}']
         at = time.time()
         if cancelled.is_set(): return {'job': index, 'cancelled': True}
@@ -64,7 +65,7 @@ def main():
             for line in p.stdout:
                 now = time.time()
                 log.write(line); log.flush()
-                if '[runner] slot ' in line and 'acquired' in line: backend = 'remote'
+                if '[runner] both slots held for the complete command' in line: backend = 'remote'
                 elif '[local] first file started' in line: backend = 'local'
                 else: continue
                 events.append({'at': now, 'job': index, 'backend': backend, 'event': 'admitted'})

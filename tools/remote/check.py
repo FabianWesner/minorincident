@@ -76,8 +76,12 @@ class SchedulerChecks(unittest.TestCase):
     def test_pool_probe_counts_reserved_queue_capacity(self):
         module = importlib.util.spec_from_file_location('pool_check', HERE / 'pool.py')
         pool = importlib.util.module_from_spec(module); module.loader.exec_module(pool)
+        with patch.object(pool, 'rsh', return_value=(0, '1 0 123 1.5 2 cache,')):
+            self.assertEqual(pool.state({'name': 'fixture', 'public_net': {'ipv4': {'ip': '192.0.2.1'}}})['occupied'], 2)
         with patch.object(pool, 'servers', return_value=[{'status': 'running'}]), patch.object(pool, 'SLOTS', 2), patch.object(pool, 'states', return_value=[{'running': 1, 'waiting': 1, 'last': 1, 'load': 0, 'ip': '192.0.2.1'}]):
             self.assertEqual(pool.pick_now(), 3)
+            with patch.object(pool, 'states', return_value=[{'running': 1, 'occupied': 2, 'waiting': 0, 'last': 1, 'load': 0, 'ip': '192.0.2.1'}]):
+                self.assertEqual(pool.pick_now(), 3)  # One timing job holds both locks.
             with patch.object(pool, 'states', return_value=[{'running': 1, 'waiting': 0, 'last': 1, 'load': 0, 'ip': '192.0.2.1'}]), patch('sys.stdout', new_callable=io.StringIO) as output:
                 self.assertEqual(pool.pick_now(), 0); self.assertEqual(output.getvalue().strip(), '192.0.2.1')
             with patch.object(pool, 'states', side_effect=OSError('unreachable')), patch('sys.stderr', new_callable=io.StringIO):
@@ -87,6 +91,8 @@ class SchedulerChecks(unittest.TestCase):
         self.assertIsNotNone(slot.cpu_command(self.wt, ['npm', 'run', 'test:gate']))
         self.assertIsNotNone(slot.cpu_command(self.wt, ['npm', 'run', 'test:nightly']))
         self.assertIsNotNone(slot.cpu_command(self.wt, ['npm', 'run', 'test:unit']))
+        self.assertEqual(slot.cpu_command(self.wt, ['bash', 'tools/remote/timing-isolated.sh', '--whole-run', 'npm', 'run', 'test:gate']),
+                         slot.cpu_command(self.wt, ['npm', 'run', 'test:gate']))
         for cmd in (['npm', 'run', 'test:sim'], ['npx', 'vitest', 'run', 'tests/unit', 'tests/e2e'],
                     ['npx', 'vitest', 'run', 'tests/unit/../../e2e'], ['sh', '-c', 'vitest run tests/unit'],
                     ['npx', 'vitest', 'run', 'tests/unit', '--browser']):

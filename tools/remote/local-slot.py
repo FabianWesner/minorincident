@@ -132,6 +132,11 @@ def admitted():
 def cpu_command(wt, command, named=False):
     """Expand only known plain Vitest scripts; never execute a shell on the Mac."""
     args = list(command)
+    if len(args) >= 3 and args[0] in ('sh', 'bash') and args[1] == 'tools/remote/timing-isolated.sh':
+        args = args[2:]
+        if args[:1] in (['--whole-run'], ['--all']): args = args[1:]
+        # This wrapper only takes remote slot locks; the Mac has its own slot.
+        return cpu_command(wt, args, named=named)
     if args[:2] == ['npm', 'run'] and len(args) >= 3:
         name = args[2]
         if name not in ('test:unit', 'test:sim', 'test:gate', 'test:nightly'): return None
