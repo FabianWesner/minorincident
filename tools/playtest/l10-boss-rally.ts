@@ -55,7 +55,7 @@ try {
     }
     if (r.d <= 12) joinedAt = r.tick;
   }
-  let maxSeenStep = 0, jumps: { tick: number; m: number; fromSeen: boolean; toSeen: boolean; toD: number }[] = [];
+  let maxSeenStep = 0; const jumps: { tick: number; m: number; fromSeen: boolean; toSeen: boolean; toD: number }[] = [];
   for (let i = 1; i < rows.length; i++) {
     const m = Math.hypot(rows[i].x - rows[i - 1].x, rows[i].z - rows[i - 1].z);
     if (rows[i - 1].seen || rows[i].seen) maxSeenStep = Math.max(maxSeenStep, m);
