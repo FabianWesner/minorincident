@@ -4,6 +4,7 @@ import { l3, l3AttackView } from '../data/l3';
 import { epiloguePull } from '../sim/missions/LevelTenEpilogue';
 import { CrowdAccessories } from './characters/CrowdAccessories';
 import { carTransitionPose } from './characters/carTransition';
+import { CourierPresenter } from './characters/CourierPresenter';
 import { WeatherView } from './WeatherView';
 import { PropFixtureView } from './PropFixtureView';
 import { pickBodies } from './characters/PickBodies';
@@ -26,7 +27,6 @@ import { L3Props } from './L3Props';
 import { BicycleView } from './BicycleView';
 import { combatPhotoSpots } from '../../tests/fixtures/scenarios/combat-arena';
 import { ActionView } from './ActionView';
-import type { SurvivorState } from '../data/survivor';
 import { CharacterView } from './characters/CharacterView';
 import { useSkinnedCourier } from './characters/RiderContacts';
 import { Box3, BoxGeometry, Color, Group, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RingGeometry, Scene, MeshLambertNodeMaterial, MeshStandardMaterial } from 'three/webgpu';
@@ -46,7 +46,7 @@ import { Occlusion } from './Occlusion';
 import { projectReveal, seeThrough } from './SeeThrough';
 import { PostFx } from './PostFx';
 import type { TimeOfDay } from '../data/timeOfDay';
-import { Quaternion, Vector3 } from 'three';
+import { Vector3 } from 'three';
 import { VehicleFeedback } from './vfx/VehicleFeedback';
 import { Vfx, type VfxSettings } from './vfx/Vfx';
 import { LabAccidentFx } from './vfx/labAccident';
@@ -69,13 +69,6 @@ import { Environment } from './lighting/Environment';
 import { courierForegroundWanted } from './courierForeground';
 
 /** Presentation composition: E01 fixture or E02 lookdev, with state flowing only from sim to view. */
-/** Bat roundhouse body turn (presentation only; the sim sweep strikes each target as this angle passes it):
- * a short coil against the swing in the windup, the full circle linearly over the active window. */
-export function roundhouseSpin(attack: { started: number; activeAt: number; recoveryAt: number }, time: number): number {
-  const u = time - attack.started, a = attack.activeAt - attack.started, r = attack.recoveryAt - attack.started;
-  if (u < a) { const t = Math.max(0, u) / Math.max(1, a); return -.45 * t * t * (3 - 2 * t); }
-  return u >= r ? 0 : -.45 + (Math.PI * 2 + .45) * (u - a) / Math.max(1, r - a);
-}
 export class GameView implements Lifecycle {
   // The scene root stays at identity; moving views update their own matrices.
   readonly scene = Object.assign(new Scene(), { matrixAutoUpdate: false });
@@ -111,10 +104,7 @@ export class GameView implements Lifecycle {
   private l2Props: L2Props | null = null;
   private l3Props: L3Props | null = null;
   private bicycle: BicycleView | null = null;
-  private readonly seat = new Vector3();
-  private readonly glance = new Vector3();
-  private readonly gripL = new Vector3();
-  private readonly gripR = new Vector3();
+  private readonly courier: CourierPresenter;
   private actions: ActionView | null = null;
   private contactShadows: ContactShadows | null = null;
   private crowd: CrowdView | null = null;
@@ -177,12 +167,8 @@ export class GameView implements Lifecycle {
   private labWindows: ReturnType<typeof labAccidentTargets> | null = null;
   private vehicleFeedback: VehicleFeedback | null = null;
   private readonly vfxSettings: VfxSettings = {};
-  private hitStopTick = 0;
-  private frozenStarted = -1;
-  private frozenPose: SurvivorState | null = null;
   private destination: Mesh | null = null;
   private militaryPerimeter: MilitaryPerimeter | null = null;
-  private readonly bikeOrientation = new Quaternion();
   private cube: Mesh | null = null;
   private character: CharacterView | null = null;
   private wireframe: PhysicsWireframe | null = null;
@@ -209,6 +195,7 @@ export class GameView implements Lifecycle {
   private shutter: Group | null = null;
   constructor(private readonly world: SimWorld, private readonly params: URLSearchParams, private quality: QualityTier = 'high') {
     this.renderer = new Renderer(params);
+    this.courier = new CourierPresenter(world);
     this.scene.background = new Color('#293447');
   }
   onMissionChange: () => void = () => this.update(1);
@@ -472,8 +459,7 @@ export class GameView implements Lifecycle {
     this.vfx.set({ ...this.vfxSettings, quality: this.quality }); this.scene.add(this.vfx);
     if (this.world.scenario === 'L1') { const targets = labAccidentTargets(this.scene, s => this.view.shake(s), (x, z, w) => this.view.pull(x, z, w)); this.labWindows = targets; this.labAccident = new LabAccidentFx(this.world, this.vfx, targets, anchorLookup(this.world)); this.labAccident.flashReduction = !!this.vfxSettings.flashReduction; this.labAccident.facing = this.camera.quaternion; this.labAccident.column.camera = this.camera; this.scene.add(this.labAccident.column); }
     this.crowd?.setGoreEnabled(this.vfx.snapshot().enabled && this.vfx.snapshot().gore === 'Full');
-    const survivor = this.world.entities.get(1)?.survivor;
-    this.frozenPose = survivor ? structuredClone(survivor) : null;
+    this.courier.capture(this.world.entities.get(1)?.survivor);
   }
   /** Compile every hidden variant of the loaded scene (infected/LOD/VFX/decay, both reveal graphs, the fire branch, the
    * L10 shadow sources) in its real HDR/MSAA pass behind the loading card, then restore the prewarmed objects. */
@@ -870,17 +856,6 @@ export class GameView implements Lifecycle {
     this.gloomShown += (target - this.gloomShown) * (Math.abs(target - this.gloomShown) < .002 ? 1 : .04);
     this.lighting?.setGloom(this.gloomShown);
   }
-  /** Presentation glance target for the courier: the locked attack target within 8 m, else the nearest live infected within 6 m (head height). */
-  private threat(player: { x: number; z: number }): Vector3 | null {
-    const locked = this.world.controls.snapshot()?.attack, lockedEntity = locked ? this.world.entities.get(locked.id) : undefined;
-    let best = lockedEntity && lockedEntity.health.current > 0 && Math.hypot(lockedEntity.transform.x - player.x, lockedEntity.transform.z - player.z) < 8 ? lockedEntity : undefined, distance = 36;
-    if (!best) for (const e of this.world.entities.iterate()) {
-      if (e.id === 1 || e.faction !== 'infected' || e.hidden || e.infected?.hidden || e.corpse || e.health.current <= 0 || e.archetype === 'infected.crow') continue;
-      const d = (e.transform.x - player.x) ** 2 + (e.transform.z - player.z) ** 2;
-      if (d < distance) { distance = d; best = e; }
-    }
-    return best ? this.glance.set(best.transform.x, best.transform.y + .4, best.transform.z) : null;
-  }
   /** Game reports render failures (log once, telemetry). */
   onRenderError: ((kind: string, error: unknown) => void) | null = null;
   /** Q-197: one failing subsystem must never stop the whole view. A throw in the frame's update work still draws the
@@ -917,38 +892,10 @@ export class GameView implements Lifecycle {
     if (!this.bicycle && this.world.vehicles?.bicycle.entity && this.materials) { this.bicycle = new BicycleView(this.world, this.materials); this.bicycle.ground = this.drawnGround; this.scene.add(this.bicycle); }
     this.bicycle?.update(this.camera, alpha); // Sample one bike frame for its saddle, lean and rider.
     if (this.character && current && survivor) {
-      // Portrait hero readability supplements the seven-metre camera floor; collision stays in metres.
-      this.character.scale.setScalar(this.camera.aspect < 1 ? 1.25 : 1);
-      this.character.position.set(lerp(previous?.x ?? current.x, current.x, alpha), lerp(previous?.y ?? current.y, current.y, alpha) - 0.7, lerp(previous?.z ?? current.z, current.z, alpha));
-      const from = previous?.yaw ?? current.yaw;
-      const striking = !!survivor.attack && this.world.tick < survivor.attack.endsAt;
-      const riding = this.world.entities.get(1)?.riding;
-      const mountedFrame = riding !== undefined && this.bicycle?.frameOrientation(this.bikeOrientation);
-      const stopped = this.vfx?.hitStop.active(this.vfx.time) ?? false;
-      if (stopped && this.vfx!.hitStop.started !== this.frozenStarted && this.frozenPose) {
-        this.frozenStarted = this.vfx!.hitStop.started; this.hitStopTick = this.world.tick;
-        const velocity = this.frozenPose.velocity, checkpoint = this.frozenPose.checkpoint;
-        Object.assign(this.frozenPose, survivor);
-        this.frozenPose.velocity = velocity; Object.assign(velocity, survivor.velocity);
-        this.frozenPose.checkpoint = checkpoint; Object.assign(checkpoint, survivor.checkpoint);
-      }
-      this.character.face(carPose ? carPose.yaw : mountedFrame ? current.yaw : from + Math.atan2(Math.sin(current.yaw - from), Math.cos(current.yaw - from)) * alpha, (this.world.tick + alpha) / 60, striking, mountedFrame ? this.bikeOrientation : undefined,
-        striking && survivor.attack!.style === 'roundhouse' ? roundhouseSpin(survivor.attack!, (stopped ? this.hitStopTick : this.world.tick) + (stopped ? 1 : alpha) - 1) : 0);
-      // E19 courier: the bicycle sim (lane F) marks the rider; the bike's crank/steer drive the pose.
-      const bike = riding === undefined ? undefined : (this.world.entities.get(riding) as { bicycle?: { pedal: number; steer: number } } | undefined)?.bicycle;
-      this.character.update(carPose?.pose ?? (stopped && this.frozenPose ? this.frozenPose : survivor), stopped ? this.hitStopTick : this.world.tick, stopped ? 1 : alpha,
-        riding === undefined ? undefined : { pedal: this.bicycle?.presentedRide?.pedal ?? bike?.pedal ?? this.world.tick * .12, steer: this.bicycle?.presentedRide?.steer ?? bike?.steer ?? 0 });
+      this.courier.present(this.character, survivor, this.bicycle, this.vfx, carPose, alpha, this.camera.aspect);
       const cureCollected = this.world.missions?.state?.id === 'L10' && this.world.missions.state.items.includes('cure-canister');
-      this.character.showCure(!!cureCollected && !!this.world.missions?.state?.states['cure-carried'] && !this.world.missions?.state?.states['cure-installed']);
       this.districts?.setCureCollected(!!cureCollected);
       if (this.world.missions?.state.id === 'L10') this.districts?.setDispersalActive(!!this.world.missions.state.states['cure-released']);
-      if (this.character.skinActive) this.character.glanceAt(this.threat(current));
-      // Riding: the pelvis sits on the saddle, measured from the bike's `seat` node every frame (any heading, lean or turn).
-      if (this.character.skinActive) this.character.applyRideContacts(riding !== undefined ? this.bicycle?.riderContacts() : undefined);
-      else if (riding !== undefined && this.bicycle?.seatWorld(this.seat)) {
-        this.character.seatPelvis(this.seat, -.04);
-        if (this.bicycle.gripsWorld(this.gripL, this.gripR)) this.character.holdHandlebar(this.gripL, this.gripR);
-      }
     }
     if (this.character && carPose) {
       this.character.position.set(carPose.x, carPose.y, carPose.z);
@@ -1170,7 +1117,7 @@ export class GameView implements Lifecycle {
     for (const district of this.preparedDistrictViews.values()) { this.scene.remove(district); district.dispose(); }
     if (this.districts && !this.preparedDistrictViews.has(this.districts.world)) { this.scene.remove(this.districts); this.districts.dispose(); }
     this.preparedDistrictViews.clear(); this.districts = null;
-    this.frozenStarted = -1; this.frozenPose = null;
+    this.courier.reset();
     pickBodies.reset();
     if (this.healthBars) { this.healthBars.removeFromParent(); this.healthBars.dispose(); this.healthBars = null; }
     if (this.accessories) { this.scene.remove(this.accessories); this.accessories.dispose(); this.accessories = null; }
