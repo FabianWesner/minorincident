@@ -11,7 +11,10 @@ import type { Game } from '../../src/Game';
  * peak holds the surviving soldiers, not the 15+ of the old static line. Frame, hitch, sim, draw and triangle budgets are unchanged. */
 const dir = process.env.L4_PERF_OUTPUT ?? 'test-results/epics/E22/perf';
 const renderer = process.env.E2E_RENDERER === 'webgpu' ? 'webgpu' : 'webgl';
-test.use({ channel: 'chrome', headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--enable-unsafe-webgpu', '--ignore-gpu-blocklist', '--disable-frame-rate-limit', '--disable-gpu-vsync'] } });
+// Shared A/B diagnoses relative CPU cost without reserving the GPU. The actual
+// budget gate keeps its exclusive, uncapped native Chrome configuration.
+const sharedAB = process.env.L4_SHARED_AB === '1';
+test.use({ ...(sharedAB ? {} : { channel: 'chrome' }), headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--enable-unsafe-webgpu', '--ignore-gpu-blocklist', ...(sharedAB ? [] : ['--disable-frame-rate-limit', '--disable-gpu-vsync'])] } });
 for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
   if (tier === 'low') test.use({ viewport: { width: 390, height: 844 }, deviceScaleFactor: devices['Pixel 7'].deviceScaleFactor, userAgent: devices['Pixel 7'].userAgent, isMobile: true, hasTouch: true });
   test(`T-E22-20 @E22 @E22-AC20 @perf L4 turn, war peak, tank shot, fuel-truck chain and line break ${tier}`, async ({ page, context }) => {
@@ -130,7 +133,7 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     await page.evaluate(async () => { const a = window.__SS__!; a.camera.follow(); await a.step(2); await a.screenshotReady(); });
     const collapseStatic = await page.evaluate(() => window.__SS__!.perf());
     const collapse = await record('true', 6_000);
-    const proof = { renderer, tier, seed: 2, beatTicks: await page.evaluate(() => window.__SS__!.perf().l4), counts, firingSoldiers, warAwakeProps: warStatic.awakeProps, collapseAwakeProps: collapseStatic.awakeProps, warDrawCalls: warStatic.drawCalls, warTriangles: warStatic.triangles, collapseDrawCalls: collapseStatic.drawCalls, collapseTriangles: collapseStatic.triangles,
+    const proof = { renderer, tier, seed: 2, sharedDiagnostic: sharedAB, beatTicks: await page.evaluate(() => window.__SS__!.perf().l4), counts, firingSoldiers, warAwakeProps: warStatic.awakeProps, collapseAwakeProps: collapseStatic.awakeProps, warDrawCalls: warStatic.drawCalls, warTriangles: warStatic.triangles, collapseDrawCalls: collapseStatic.drawCalls, collapseTriangles: collapseStatic.triangles,
       warP50: percentile(war, .5), warP95: percentile(war, .95), warMax: Math.max(...war), turnMaxMs: Math.max(...turn), turnBuilds, tankMaxMs: Math.max(...tank), breakMaxMs: Math.max(...breakFrames), collapseP50: percentile(collapse, .5), collapseP95: percentile(collapse, .95),
       simP95: percentile(warCpu.filter(c => c.ticks > 0).map(c => c.sim), .95), simFrameP95: percentile(warCpu.map(c => c.simFrame), .95), updateP95: percentile(warCpu.map(c => c.update), .95), renderP95: percentile(warCpu.map(c => c.render), .95), lineBroke: await page.evaluate(() => window.__SS__!.missions.state()!.l4!.lineBreakAt > 0) };
     writeFileSync(`${dir}/l4-${tier}.json`, JSON.stringify({ ...proof, coldBuilds: process.env.L4_TIMING_KEYS === '1' ? await page.evaluate(() => (window as unknown as { l4Builds: unknown[] }).l4Builds) : [], phaseCpu: process.env.L4_TIMING_KEYS === '1' ? await page.evaluate(() => (window as unknown as { l4Phases: unknown[] }).l4Phases) : [], slowCalls: process.env.L4_TIMING_KEYS === '1' ? await page.evaluate(() => (window as unknown as { l4Timing: unknown[] }).l4Timing) : [], warProfile: warStatic.profile, collapseProfile: collapseStatic.profile, collapseAssets: collapseStatic.profileAssets, war, turn, tank, breakFrames, collapse }, null, 2));
