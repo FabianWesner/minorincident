@@ -1,7 +1,7 @@
 // Shared gate tools: browser/runner admission is used by every lane and gate. If it breaks, the Mac overloads
 // (WindowServer kills, see docs/process/lessons-learned.md) or remote runs lose their caches.
-import { execFile, execFileSync } from 'node:child_process';
-import { chmodSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, utimesSync, writeFileSync } from 'node:fs';
+import { execFile, execFileSync, spawnSync } from 'node:child_process';
+import { chmodSync, copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, symlinkSync, utimesSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { promisify } from 'node:util';
@@ -38,6 +38,138 @@ test('browser pool admission backs off under WindowServer pressure, keeps a one-
   for (const command of ['node node_modules/.bin/vitest run tests/engine', '/usr/bin/node node_modules/typescript/bin/tsc --noEmit']) expect(quiet.test(command), command).toBe(true);
   expect(quiet.test('node tools/qa/census.ts')).toBe(false);
 });
+
+// Exercise the real runner with a tiny catalog subprocess; no browser is launched.
+function gateFixture() {
+  const root = mkdtempSync(join(tmpdir(), 'mi-gate-runner-')); dirs.push(root);
+  for (const dir of ['tools/scenelab', 'specs/scenes/catalog']) mkdirSync(join(root, dir), { recursive: true });
+  writeFileSync(join(root, 'tools/scenelab/catalog.ts'), '// fixture catalog');
+  for (const scene of ['alpha', 'beta', 'gamma', 'delta']) writeFileSync(join(root, `specs/scenes/catalog/${scene}.json`), '{}');
+  const select = (scenes: string[], backends = scenes.map(() => 'webgl2'), known = {}) => writeFileSync(join(root, 'specs/scenes/gate-list.json'), JSON.stringify({ rows: scenes.map((scene, i) => ({ scene, backend: backends[i], tier: 'high', zoom: null })), known }));
+  select(['alpha', 'beta']);
+  writeFileSync(join(root, 'tools/e2e-lock.sh'), '#!/bin/sh\nexec node tools/child.mjs "$@"\n');
+  writeFileSync(join(root, 'tools/child.mjs'), `
+import { appendFileSync, mkdirSync, writeFileSync } from 'node:fs';
+const args = process.argv.slice(2), flag = name => args[args.lastIndexOf('--' + name) + 1];
+appendFileSync('calls.log', flag('backend') + '\\n');
+const mode = process.env.CHILD_BEHAVIOR;
+if (mode === 'startup') process.exit(2);
+if (mode === 'timeout') process.exit(124);
+if (mode === 'signal') process.kill(process.pid, 'SIGTERM');
+const out = flag('out'); mkdirSync(out, { recursive: true });
+let rows = flag('only').split(',').map(name => ({ name, pass: mode !== 'known' && flag('backend') !== process.env.FAIL_BACKEND, failed: ['fixture'] }));
+if (mode === 'incomplete') rows = rows.slice(0, 1);
+if (mode === 'wrong-types') rows = rows.map(row => ({ ...row, pass: 'false' }));
+writeFileSync(out + '/index.json', mode === 'malformed' ? '{' : JSON.stringify({ rows }));
+process.exit(mode === 'bad-exit' ? 2 : rows.some(r => !r.pass) ? 1 : 0);
+`);
+  const git = (...args: string[]) => execFileSync('git', ['-c', 'user.name=Gate fixture', '-c', 'user.email=gate@example.invalid', '-c', 'core.hooksPath=/dev/null', ...args], { cwd: root, encoding: 'utf8' });
+  git('init', '-q'); git('add', '.'); git('commit', '-qm', 'fixture');
+  const run = (args: string[] = [], env: Record<string, string> = {}, mode = 'gate') => spawnSync(process.execPath,
+    ['--import', resolve('node_modules/tsx/dist/loader.mjs'), process.env.MI_GATE_RUNNER ?? resolve('tools/scenelab/gate-run.ts'), mode, '--out', 'output', ...args],
+    { cwd: root, env: { ...process.env, ...env }, encoding: 'utf8', timeout: 10_000 });
+  const calls = () => existsSync(join(root, 'calls.log')) ? readFileSync(join(root, 'calls.log'), 'utf8').trim().split('\n').length : 0;
+  return { root, run, git, select, calls };
+}
+
+test('scene gate resume requires identical rows, revision and backend identities', () => {
+  const f = gateFixture();
+  expect(f.run().status, 'first run').toBe(0);
+  expect(f.run(['--resume']).status, 'identical resume').toBe(0); expect(f.calls()).toBe(1);
+  f.git('commit', '--allow-empty', '-qm', 'new revision');
+  expect(f.run(['--resume']).status, 'changed revision').toBe(0); expect(f.calls(), 'new revision cannot reuse old passing state').toBe(2);
+  f.select(['gamma', 'delta']);
+  expect(f.run(['--resume']).status, 'same count, different rows').toBe(0); expect(f.calls()).toBe(3);
+  writeFileSync(join(f.root, 'specs/scenes/catalog/gamma.json'), '{"changed":true}');
+  expect(f.run(['--resume']).status, 'changed scene config').toBe(0); expect(f.calls()).toBe(4);
+  f.select(['alpha', 'alpha'], ['webgpu', 'webgl2']);
+  expect(f.run([], { FAIL_BACKEND: 'webgpu' }).status, 'same name on different backends cannot mask a failure').toBe(1);
+});
+
+test('scene gate rejects stale, failed, malformed and incomplete child results', () => {
+  const f = gateFixture();
+  for (const mode of ['startup', 'timeout', 'signal', 'bad-exit', 'malformed', 'incomplete', 'wrong-types']) {
+    const dir = join(f.root, 'output/webgl2-high-1'); mkdirSync(dir, { recursive: true });
+    writeFileSync(join(dir, 'index.json'), JSON.stringify({ rows: ['alpha@high', 'beta@high'].map(name => ({ name, pass: true, failed: [] })) }));
+    expect(f.run([], { CHILD_BEHAVIOR: mode }).status, mode).not.toBe(0);
+  }
+  expect(f.run().status, 'fresh complete successful child').toBe(0);
+  f.select(['alpha', 'beta'], undefined, { 'alpha@high': 'fixture', 'beta@high': 'fixture' });
+  expect(f.run([], { CHILD_BEHAVIOR: 'known' }).status, 'fresh complete failures all explicitly triaged').toBe(0);
+});
+
+test('scene gate rejects invalid arguments and empty selections before running children', () => {
+  const f = gateFixture();
+  for (const args of [
+    ['--batch', 'NaN'], ['--batch', 'Infinity'], ['--batch', '0'], ['--batch', '-1'], ['--batch', '1.5'],
+    ['--shard', '0/2'], ['--shard', '3/2'], ['--shard', '1/0'], ['--shard', '1/NaN'], ['--shard', '2/2'],
+  ]) expect(f.run(args).status, args.join(' ')).not.toBe(0);
+  expect(f.run([], {}, 'other').status, 'unknown mode').not.toBe(0);
+  expect(f.calls(), 'invalid input must not launch work').toBe(0);
+  expect(f.run(['--batch', '1', '--shard', '1/2']).status, 'valid shard').toBe(0);
+  f.select([]); expect(f.run().status, 'empty selection').not.toBe(0);
+});
+
+function buildCacheFixture() {
+  const root = mkdtempSync(join(tmpdir(), 'mi-build-cache-')); dirs.push(root);
+  for (const dir of ['tools/qa', 'node_modules/.bin', 'dist']) mkdirSync(join(root, dir), { recursive: true });
+  copyFileSync(process.env.MI_CACHE_WRAPPER ?? 'tools/build-cached.sh', join(root, 'tools/build-cached.sh'));
+  for (const file of ['cache-lock.py', 'prune-build-cache.py', 'cache-publish.sh']) copyFileSync(`tools/qa/${file}`, join(root, `tools/qa/${file}`));
+  writeFileSync(join(root, '.gitignore'), 'node_modules/\ndist/\ncache/\ncustom-dist/\nbuilds.log\n');
+  writeFileSync(join(root, 'package-lock.json'), '{}');
+  writeFileSync(join(root, 'node_modules/.bin/vite'), `#!/bin/sh
+out=dist
+while [ "$#" -gt 0 ]; do
+  if [ "$1" = --outDir ]; then shift; out=$1; fi
+  shift
+done
+mkdir -p "$out"
+printf fresh > "$out/index.html"
+printf asset > "$out/asset.js"
+printf build\\n >> builds.log
+`); chmodSync(join(root, 'node_modules/.bin/vite'), 0o755);
+  execFileSync('git', ['init', '-q'], { cwd: root });
+  execFileSync('git', ['add', '.'], { cwd: root });
+  execFileSync('git', ['-c', 'user.name=Cache fixture', '-c', 'user.email=cache@example.invalid', '-c', 'core.hooksPath=/dev/null', 'commit', '-qm', 'fixture'], { cwd: root });
+  const run = (...args: string[]) => execFileSync('sh', ['tools/build-cached.sh', ...args], {
+    cwd: root, env: { ...process.env, MI_CACHE_LOCK_HELD: '', MI_BUILD_CACHE: 'on', MI_WORKTREE_CACHE: join(root, 'cache'), VITE_QA_HOOKS: '1' }, encoding: 'utf8', timeout: 10_000,
+  });
+  return { root, run };
+}
+
+test('build-cache honors custom output arguments on repeated clean invocations', () => {
+  const f = buildCacheFixture();
+  writeFileSync(join(f.root, 'dist/index.html'), 'stale default');
+  f.run('--outDir', 'custom-dist');
+  expect(readFileSync(join(f.root, 'dist/index.html'), 'utf8')).toBe('stale default');
+  rmSync(join(f.root, 'custom-dist'), { recursive: true });
+  f.run('--outDir', 'custom-dist');
+  expect(existsSync(join(f.root, 'custom-dist/index.html')), 'cache hit must still honor requested output').toBe(true);
+  expect(readFileSync(join(f.root, 'custom-dist/index.html'), 'utf8')).toBe('fresh');
+  expect(readFileSync(join(f.root, 'dist/index.html'), 'utf8')).toBe('stale default');
+});
+
+test('build-cache publication never leaves an interrupted copy looking complete', async () => {
+  const f = buildCacheFixture(); f.run();
+  const entry = readdirSync(join(f.root, 'cache/dist')).find(name => !name.startsWith('.'))!;
+  rmSync(join(f.root, 'cache/dist', entry, '.complete'), { force: true });
+  rmSync(join(f.root, 'cache/dist', entry, 'asset.js'));
+  expect(f.run(), 'preexisting partial cache must rebuild').not.toContain('Reused production dist');
+  expect(existsSync(join(f.root, 'dist/asset.js'))).toBe(true);
+  const root = mkdtempSync(join(tmpdir(), 'mi-cache-publish-')); dirs.push(root);
+  const source = join(root, 'source'), cache = join(root, 'cache'), bin = join(root, 'bin');
+  mkdirSync(source); mkdirSync(bin); writeFileSync(join(source, 'index.html'), 'complete artifact');
+  const legacy = join(root, 'legacy-cache'); mkdirSync(legacy); writeFileSync(join(legacy, 'index.html'), 'half copied');
+  expect(existsSync(legacy)).toBe(true); // old directory-exists cache test treated this incomplete copy as a hit
+  writeFileSync(join(bin, 'cp'), '#!/bin/sh\nmkdir -p "$3"\nprintf partial > "$3/index.html"\nexit 1\n'); chmodSync(join(bin, 'cp'), 0o755);
+  await expect(exec('sh', ['tools/qa/cache-publish.sh', source, cache], { env: { ...process.env, PATH: `${bin}:${process.env.PATH}` } })).rejects.toBeTruthy();
+  expect(existsSync(cache)).toBe(false); // interrupted copy never becomes a cache hit (N15)
+  expect(readdirSync(root).some(name => name.startsWith('.cache.tmp.'))).toBe(false);
+  const result = await exec('sh', ['tools/qa/cache-publish.sh', source, cache]);
+  expect(result.stderr).toBe('');
+  expect(readFileSync(join(cache, 'index.html'), 'utf8')).toBe('complete artifact');
+  expect(existsSync(join(cache, '.complete'))).toBe(true);
+}, 15_000);
 
 test('remote runner cache GC removes inactive caches while keeping the current cache and live jobs', () => {
   const root = mkdtempSync(join(tmpdir(), 'mi-cache-gc-')); dirs.push(root);

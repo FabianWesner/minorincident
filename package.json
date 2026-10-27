@@ -12,7 +12,7 @@
     "test": "node tools/qa/test-budget.mjs --name test --max-seconds 240 -- npx vitest run --project default --configLoader runner",
     "test:unit": "npm test",
     "test:gate": "npm test",
-    "test:smoke": "npm run build:qa && node tools/qa/test-budget.mjs --name smoke --max-seconds 240 -- sh tools/e2e-lock.sh npx playwright test --project=chromium --grep @smoke --workers=1",
+    "test:smoke": "node tools/qa/test-budget.mjs --name smoke --max-seconds 240 -- sh tools/qa/smoke.sh",
     "test:nightly": "node tools/qa/test-budget.mjs --name nightly --max-seconds 1200 -- sh tools/qa/nightly.sh",
     "test:nightly:remote": "sh tools/remote/run.sh \"$PWD\" --pull test-results/nightly --pull test-results/timings -- bash tools/remote/timing-isolated.sh --all npm run test:nightly",
     "test:e2e": "npm run build:qa && node tools/test-lane.mjs e2e sh tools/e2e-lock.sh playwright test --project=chromium",

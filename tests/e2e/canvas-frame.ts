@@ -2,9 +2,9 @@ import type { Page } from '@playwright/test';
 
 /** Read the presented game canvas itself; DOM menus and labels cannot satisfy this gate.
  * Spatial coverage also rejects a cleared frame containing only a small health bar. */
-export async function canvasFrame(page: Page) {
-  return page.evaluate(async () => {
-    await window.__SS__!.screenshotReady();
+export async function canvasFrame(page: Page, qaReady = true) {
+  return page.evaluate(async useQaReady => {
+    await (useQaReady ? window.__SS__!.screenshotReady() : new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))));
     const canvas = document.querySelector('canvas')!;
     const copy = document.createElement('canvas'); copy.width = canvas.width; copy.height = canvas.height;
     const context = copy.getContext('2d')!; context.drawImage(canvas, 0, 0);
@@ -21,7 +21,7 @@ export async function canvasFrame(page: Page) {
     const variance = Math.max(...mean.map((m, c) => squares.reduce((s, tile) => s + tile[c], 0) / count - m * m));
     const tileVariances = counts.map((n, i) => n ? Math.max(...sums[i].map((s, c) => squares[i][c] / n - (s / n) ** 2)) : 0);
     return { width: copy.width, height: copy.height, mean, variance, variedTiles: tileVariances.filter(v => v > 1).length, tiles: grid * grid };
-  });
+  }, qaReady);
 }
 
 export const canvasFrameLimits = { varianceMin: 1, variedTilesMin: 8 } as const;
