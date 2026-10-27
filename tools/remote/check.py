@@ -52,6 +52,27 @@ class SchedulerChecks(unittest.TestCase):
 
     def ticket(self): return slot.enqueue(os.getpid(), str(self.wt))
 
+    def test_adapter_uses_worktree_vitest_installation(self):
+        # A tiny fake API proves resolution without starting any CPU workers.
+        package = self.wt / 'node_modules/vitest'; package.mkdir(parents=True)
+        (package / 'package.json').write_text(json.dumps({'type': 'module', 'exports': {'./node': './node.mjs'}}))
+        (package / 'node.mjs').write_text('''
+import {writeFileSync} from 'node:fs';
+export class ThreadsPoolWorker {}
+export const parseCLI = () => ({filter: [], options: {}});
+export async function createVitest(options) {
+ const project = {config: {}};
+ return {projects: [project], getRootProject: () => project,
+  start: async () => writeFileSync('worktree-api.json', JSON.stringify({maxWorkers: options.maxWorkers, pool: project.config.pool})),
+  close: async () => {}, state: {getCountOfFailedTests: () => 0, getUnhandledErrors: () => []}};
+}
+''')
+        env = dict(os.environ); env.pop('MI_LOCAL_STATE', None)
+        run = subprocess.run(['node', str(HERE / 'cpu-run.mjs'), 'run', 'tests/unit'], cwd=self.wt,
+                             env=env, capture_output=True, text=True, timeout=10)
+        self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
+        self.assertEqual(json.loads((self.wt / 'worktree-api.json').read_text()), {'maxWorkers': 4, 'pool': 'mi-local-cpu'})
+
     def test_benchmark_requires_actual_receipt_overlap(self):
         jobs = [{'backend': backend, 'executionFilesMs': [[start, end]]} for backend, start, end in
                 [('remote', 1000, 4000), ('remote', 2000, 5000), ('remote', 2500, 6000), ('local', 3000, 7000)]]

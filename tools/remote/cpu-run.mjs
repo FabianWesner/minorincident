@@ -3,8 +3,13 @@
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { writeFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
-import { parseCLI, createVitest, ThreadsPoolWorker } from 'vitest/node';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { createRequire } from 'node:module';
+import { resolve } from 'node:path';
+
+// run.sh may live in another lane with a different node_modules installation.
+const fromWorktree = createRequire(resolve('package.json'));
+const { parseCLI, createVitest, ThreadsPoolWorker } = await import(pathToFileURL(fromWorktree.resolve('vitest/node')).href);
 
 const exec = promisify(execFile);
 const probe = fileURLToPath(new URL('./local-slot.py', import.meta.url));

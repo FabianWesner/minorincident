@@ -10,7 +10,7 @@ Branch: `lane/mac-runner`. Implementation and usage are documented in
 | `npm run typecheck` | Pass |
 | `npm run lint` | Pass; focused ESLint rerun after the pool adapter correction also passed |
 | Shell syntax, Python compilation, Node syntax, `git diff --check` | Pass |
-| `python3 -I tools/remote/check.py --unit` on macOS | 14 checks, 11 passed and 3 worker checks intentionally skipped |
+| `python3 -I tools/remote/check.py --unit` on macOS | 15 checks, 12 passed and 3 worker checks intentionally skipped |
 | Full focused checks on Linux runner `88.99.168.213` | 13 checks, 12 passed and the macOS-only CLI lock check skipped |
 | Actual Linux slot-lock probe | Pass: reported 2, 1, 0 occupied slots as two fixture locks were released |
 | Vitest `@smoke`, two workers | 6 passed, 4,097 skipped; 479.38 s on the loaded remote host |
@@ -22,7 +22,8 @@ real macOS `lockf(1)` refusal, load/RAM boundaries, one local slot, worktree/env
 timing receipts, exit-code preservation (including 75), four-worker enforcement,
 and finishing the current file before pausing/resuming without duplicates. Pool
 admission also checks actual slot locks, so one timing job holding both slots
-cannot appear to leave capacity free. The
+cannot appear to leave capacity free. A lightweight fake API check proves the adapter resolves Vitest from the requested
+worktree, even when the launcher has a different installation. The
 additional benchmark unit check rejects non-overlapping Vitest execution receipts.
 
 Browser smoke passed audio backgrounding and both foundation checks (boot/screenshot
