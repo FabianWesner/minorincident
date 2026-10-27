@@ -756,9 +756,9 @@ export class GameView implements Lifecycle {
     if (this.probes && patch.windowMask !== undefined) this.probes.windowMask = patch.windowMask;
     if (this.probes && patch.foliageMask !== undefined) this.probes.foliageMask = patch.foliageMask;
     if(patch.foliageReveal!==undefined)this.districts?.setFoliageReveal(patch.foliageReveal);
-    if(patch.interiorCullOff!==undefined&&this.districts)this.districts.interiorCullOff=patch.interiorCullOff;
-    if(patch.seeThroughReference!==undefined&&this.districts)this.districts.seeThroughReference=patch.seeThroughReference;
-    if(patch.seeThroughOff!==undefined&&this.districts)this.districts.seeThroughOff=patch.seeThroughOff;
+    if(patch.interiorCullOff!==undefined&&this.districts)this.districts.occlusion.interiorCullOff=patch.interiorCullOff;
+    if(patch.seeThroughReference!==undefined&&this.districts)this.districts.occlusion.seeThroughReference=patch.seeThroughReference;
+    if(patch.seeThroughOff!==undefined&&this.districts)this.districts.occlusion.seeThroughOff=patch.seeThroughOff;
     if(patch.foliageVisible!==undefined)this.districts?.setFoliageVisible(patch.foliageVisible);
     if (this.probes && patch.idPass !== undefined) this.probes.idPass = patch.idPass;
     this.update(1);
@@ -845,7 +845,7 @@ export class GameView implements Lifecycle {
       npcs: this.npcs?.snapshot() ?? null, accessories: this.accessories?.snapshot() ?? [],
       vehicles: [...(this.vehicles?.snapshot() ?? []), ...(this.vehicleFeedback?.getState() ?? []).map(v => ({ ...v, wheels: [], brake: 0, sirens: [], placeholder: true }))], entityAssets: this.entityAssets?.getState() ?? null, character: this.character?.getState() ?? null, contactShadows: this.contactShadows?.getState() ?? null, crowd: this.crowd?.getState() ?? null, healthBars: this.healthBars?.snapshot() ?? null, actions: this.actions?.getState() ?? null,
       vfx: this.vfx?.snapshot() ?? null, infected: this.crowd?.getGoreState() ?? [],
-      materials: [...materialInventory.values()], occlusion: this.occlusion.getState(), courierForeground: this.courierForeground, courierOccluder: this.districts?.occluderId ?? '',
+      materials: [...materialInventory.values()], occlusion: this.occlusion.getState(), courierForeground: this.courierForeground, courierOccluder: this.districts?.occlusion.occluderId ?? '',
       probes: __QA_HOOKS__ && this.labView ? { lamp: this.project(...this.labView.lampHead.position.toArray() as [number, number, number]), shadow: this.project(...this.labView.shadowProbe.position.toArray() as [number, number, number]) } : null };
   }
   private syncMission(): void {
