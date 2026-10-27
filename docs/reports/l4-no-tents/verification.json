@@ -1,0 +1,132 @@
+{
+  "codeSource": "249580fc1 (application); ba56a0798 (shared A/B harness)",
+  "warCensus": {
+    "source": "72454dbd7",
+    "scope": "Seed3, both tiers, observation bot with god mode; ends after Fall back. Later soldier-rescue change applies only in collapse; cower cleanup changes a stale pose.",
+    "receipt": "metrics.json"
+  },
+  "suit": "suit-skin-proof.json",
+  "captures": {
+    "source": "67e4e3f6f",
+    "receipt": "capture-metrics.json",
+    "tests": {
+      "source": "5c9a092a6",
+      "receipt": "checks/l4-no-tents-contact-captures.json",
+      "passed": null,
+      "failed": null,
+      "skipped": null,
+      "success": null
+    }
+  },
+  "remoteUnits": {
+    "source": "5c9a092a6",
+    "receipt": "checks/l4-no-tents-contact-units.json",
+    "passed": 2349,
+    "failed": 1,
+    "skipped": 7,
+    "success": false
+  },
+  "remoteUnitsCorrection": {
+    "source": "67e4e3f6f",
+    "explanation": "Only failure was the new HMG prop overlap. Exact prop/gunner clearance corrected; all-level placement and focused Mac checks passed.",
+    "receipt": "checks/l4-no-tents-nest-gunner-mac.json"
+  },
+  "remoteL4AndRender": {
+    "source": "67e4e3f6f",
+    "passed": 814,
+    "failed": 1,
+    "skipped": 2,
+    "receipt": "checks/l4-no-tents-clear-linux.log",
+    "explanation": "Only failure was stale civilian cower after the last nearby threat died. Current correction passes on Mac and Linux."
+  },
+  "remoteCowerAndRescueCorrection": {
+    "source": "249580fc1",
+    "receipt": "checks/l4-no-tents-cower-linux.json",
+    "passed": 11,
+    "failed": 0,
+    "skipped": 0,
+    "success": true
+  },
+  "macCollapse": {
+    "source": "e7b3c98ee",
+    "threshold": "<10 and <half initial soldiers after90s; unchanged seed2",
+    "soldiersAt0_30_60_90": [
+      16,
+      1,
+      0,
+      0
+    ],
+    "receipt": "checks/l4-no-tents-rescue-mac.json"
+  },
+  "remoteThreeTimeoutRetries": {
+    "bicycleAndBoarding": {
+      "source": "5c9a092a6",
+      "receipt": "checks/l4-no-tents-level-timeout-retries.json",
+      "passed": 10,
+      "failed": 0,
+      "skipped": 1,
+      "success": true
+    },
+    "continuousCampaign": {
+      "source": "5c9a092a6",
+      "receipt": "checks/l4-no-tents-campaign-timeout-retry.json",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "success": true
+    }
+  },
+  "nativeFunctionalInterrupted": {
+    "source": "d645e3f01",
+    "passed": 18,
+    "failedBeforeCancellation": 1,
+    "receipt": "checks/l4-close-native/functional.log",
+    "reason": "Stopped for requested disk cleanup. Roof-band screenshot RPC skipped spatial samples; test now pauses between real keyboard movement checkpoints with the original >=3 and pixel thresholds."
+  },
+  "nativePerformance": {
+    "source": "249580fc1",
+    "status": "budget gate fails under heavy machine load; requested shared-pool A/B in progress",
+    "receipt": "checks/native-perf-final.json"
+  },
+  "pending": [
+    "shared-pool main/branch A/B",
+    "remaining3 native invariants",
+    "remaining93 native functional/smoke cases incl fixed six roof-band cases"
+  ],
+  "noSkipBot": {
+    "source": "e7b3c98ee",
+    "outcome": "complete",
+    "deaths": 0,
+    "simSeconds": 311.7,
+    "receipt": "bot-probe-3.json"
+  },
+  "remoteLevels": {
+    "source": "5c9a092a6",
+    "receipt": "checks/remote-levels-5c9.json",
+    "passed": 482,
+    "failed": 1,
+    "skipped": 2,
+    "explanation": "Only failure is HMG prop ride-grid clearance; corrected at67e4e3f6f and verified with placement/perimeter Mac and Linux checks."
+  },
+  "linuxCollapseFinaleAndInvariants": {
+    "source": "e7b3c98ee",
+    "receipt": "checks/l4-no-tents-rescue-gates.json",
+    "passed": 45,
+    "failed": 1,
+    "explanation": "Original strict collapse, both finale pressure targets, native rescue and28 simulation invariants pass. Only stale cower failure corrected at249580fc1;11 focused Linux checks pass.",
+    "traces": [
+      "checks/rescue-collapse/collapse-high-audit.json",
+      "checks/rescue-collapse/collapse-high-idle.json",
+      "checks/rescue-collapse/collapse-low-idle.json",
+      "checks/rescue-collapse/collapse-high-shooter.json",
+      "checks/rescue-finale/l4-high.json",
+      "checks/rescue-finale/l4-low.json"
+    ]
+  },
+  "nativeInvariants": {
+    "currentQuietRun": "checks/invariants-final.log",
+    "currentL4Load": "checks/load-L4.json",
+    "priorOther11": "checks/invariants-render.json",
+    "status": "current first9 passed including L4; remaining3 queued"
+  }
+}
