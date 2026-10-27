@@ -3,6 +3,7 @@ import type { DistrictLayout } from '../../levels/districts/types';
 import { buildingDoors, doorwayOf } from '../../data/buildingDoors';
 import type { PedestrianOptions } from './Outbreak';
 import { actorRadius } from '../world/SolidRegistry';
+import type { EntitySnapshot } from '../world/types';
 
 /**
  * Residents coming out of a house's front door (L1 beat 9, PO rule 2026-10-07: "10 ... come out of the house ... No
@@ -184,7 +185,7 @@ export function walkResidents(world: SimWorld, house: HouseEmergence, tick: numb
       if (d > 1e-6) { p.x += dx / d * m; p.z += dz / d * m; p.yaw = -Math.atan2(dz, dx); }
       p.y = .7 + (world.districts?.groundHeight(p.x, p.z) ?? 0); world.spatial.set(e.id, p.x, p.z);
       if (d <= step) w.leg++;
-    } else if (e.pendingAdmission && !world.solids.clear(p, actorRadius(e), e.id, false)) {
+    } else if (!clearOutsideDoor(world, e)) {
       // The authored route was baked for a pedestrian. A wider resident keeps
       // walking along its final leg until its whole footprint clears the gate.
       // Body congestion waits at that exit instead of skipping an encounter.
@@ -206,19 +207,25 @@ export function walkResidents(world: SimWorld, house: HouseEmergence, tick: numb
     // Released at the end of the walk only, never inside the house (the AI would snap the body onto the nearest nav cell).
     const outside = (p.x - house.x) * house.nx + (p.z - house.z) * house.nz > 0;
     if (w.leg >= house.route.length || (!house.strictRoute && outside && tick >= w.until)) {
-      if (house.strictRoute && !world.solids.admit(e, 'house.exit', 0, false)) continue;
-      if (e.pendingAdmission) {
-        const radius = actorRadius(e);
-        // A queued resident has finished walking. Body congestion at this one
-        // endpoint must not hide the whole queue indefinitely. Use the normal
-        // bounded admission search once geometry clears: the blocking body may
-        // be larger than this resident. Admission stays connected
-        // to this side of the doorway and retains every encounter.
-        const range = world.solids.clear(p, radius, e.id, false) ? 4 : 0;
-        if (!world.solids.admit(e, 'house.exit', range, false)) continue;
-      }
+      // Admission must validate the ordinary footprint: the aperture exemption owns
+      // only the scripted doorway walk, and cannot survive the handoff to AI.
+      const lane = e.doorLane;
+      delete e.doorLane;
+      // Congestion at this endpoint must not hide the whole queue indefinitely.
+      // Search on this side of the door only after the geometry itself clears.
+      const range = !house.strictRoute && world.solids.clear(p, actorRadius(e), e.id, false) ? 4 : 0;
+      if (!world.solids.admit(e, 'house.exit', range, false)) { e.doorLane = lane; continue; }
       walking.splice(i, 1); e.emerging = undefined; delete e.doorLane; if (e.combat) e.combat.staggerUntil = tick; done.push(w.id);
     }
   }
   return done;
+}
+
+/** Test the exit geometry without borrowing the scripted aperture's wall exemption. */
+function clearOutsideDoor(world: SimWorld, e: EntitySnapshot): boolean {
+  const lane = e.doorLane;
+  delete e.doorLane;
+  const clear = world.solids.clear(e.transform, actorRadius(e), e.id, false);
+  e.doorLane = lane;
+  return clear;
 }
