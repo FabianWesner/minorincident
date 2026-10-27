@@ -30,6 +30,7 @@ export class Occlusion {
       for (const mesh of building.meshes) { (mesh.material as PaletteMaterial).fade.value = building.opacity; }
       for (const roof of building.roofs) roof.visible = !inside;
     }
+    // (Legacy lookdev rule for its own player meshes; the production courier depth lives in characters/courierDepth.ts.)
     // A presentation-only silhouette keeps the complete survivor readable through faded walls.
     for (const mesh of playerMeshes) { (mesh.material as PaletteMaterial).depthTest = !blocked; mesh.renderOrder = blocked ? 20 : 0; }
   }

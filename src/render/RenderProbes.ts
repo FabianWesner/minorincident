@@ -2,6 +2,7 @@ import { Color, Mesh, MeshBasicNodeMaterial, Raycaster, Vector2, type Material, 
 import { attribute, color, Discard, Fn, vec4 } from 'three/tsl';
 import type { Object3D } from 'three';
 import { PaletteMaterial } from './PaletteMaterial';
+import { useCourierDepth } from './characters/courierDepth';
 import { seeThroughKeep, seeThroughKeepBoss } from './SeeThrough';
 import type { Renderer } from './Renderer';
 import type { DistrictView } from './DistrictView';
@@ -49,6 +50,8 @@ export class RenderProbes {
   private readonly savedMaterials = new Map<Mesh, Material | Material[]>();
   constructor(private readonly targets: ProbeTargets) {
     this.idBackground.name = 'keep_idBackground'; this.idPlayer.name = 'keep_idPlayer';
+    // The courier id mask shares the production depth contract (near-camera slice while the foreground is on).
+    useCourierDepth(this.idPlayer);
   }
   /** Hide the courier / the crowd (Mega included) / the environment / the bars for the next draws. */
   setHidden(hide: { courier: boolean; crowd: boolean; environment?: boolean; bars?: boolean }): void {
@@ -75,38 +78,44 @@ export class RenderProbes {
     if (this.weatherAsset) {
       const saved = new Map<Mesh, boolean>(), background = scene.background, backgroundNode = scene.backgroundNode;
       scene.background = new Color(0); scene.backgroundNode = null;
-      scene.traverse(child => {
-        if (!(child instanceof Mesh)) return;
-        saved.set(child, child.visible); let matches = false;
-        for (let parent: Object3D | null = child; parent; parent = parent.parent) if ((parent.name === 'weather' && this.weatherAsset === 'weather') || (parent.name === `inst:${this.weatherAsset}` || parent.name.startsWith(`inst:${this.weatherAsset}:`)) || parent.userData.assetId === this.weatherAsset) matches = true;
-        child.visible = child.visible && matches;
-      });
-      renderer.render(scene, camera);
-      for (const [mesh, visible] of saved) mesh.visible = visible;
-      scene.background = background; scene.backgroundNode = backgroundNode;
+      try {
+        scene.traverse(child => {
+          if (!(child instanceof Mesh)) return;
+          saved.set(child, child.visible); let matches = false;
+          for (let parent: Object3D | null = child; parent; parent = parent.parent) if ((parent.name === 'weather' && this.weatherAsset === 'weather') || (parent.name === `inst:${this.weatherAsset}` || parent.name.startsWith(`inst:${this.weatherAsset}:`)) || parent.userData.assetId === this.weatherAsset) matches = true;
+          child.visible = child.visible && matches;
+        });
+        renderer.render(scene, camera);
+      } finally {
+        for (const [mesh, visible] of saved) mesh.visible = visible;
+        scene.background = background; scene.backgroundNode = backgroundNode;
+      }
     } else if (this.foliageMask) {
       const backgroundNode = scene.backgroundNode; scene.backgroundNode = null;
       const background = scene.background, fog = scene.fog, shadow = renderer.shadowMap.enabled;
       scene.background = new Color(0); scene.fog = null; renderer.shadowMap.enabled = false;
-      scene.traverse(child => {
-        if (!(child instanceof Mesh)) return;
-        this.savedMaterials.set(child, child.material);
-        const source = child.material as PaletteMaterial;
-        if ((child.name === 'grass-gpu-wind' && this.foliageMask !== 'crowns') || source.name === 'pal_leaf-card-crown') {
-          if (!this.foliageMasks.has(source)) this.foliageMasks.set(source, new MeshBasicNodeMaterial({ color: '#ffffff', side: source.side, alphaTest: source.alphaTest, alphaToCoverage: source.alphaToCoverage, opacityNode: source.opacityNode, positionNode: source.positionNode }));
-          child.material = this.foliageMasks.get(source)!;
-        } else child.material = this.idBackground;
-      });
-      renderer.render(scene, camera);
-      for (const [mesh, material] of this.savedMaterials) mesh.material = material;
-      this.savedMaterials.clear(); scene.background = background; scene.backgroundNode = backgroundNode; scene.fog = fog; renderer.shadowMap.enabled = shadow;
+      try {
+        scene.traverse(child => {
+          if (!(child instanceof Mesh)) return;
+          this.savedMaterials.set(child, child.material);
+          const source = child.material as PaletteMaterial;
+          if ((child.name === 'grass-gpu-wind' && this.foliageMask !== 'crowns') || source.name === 'pal_leaf-card-crown') {
+            if (!this.foliageMasks.has(source)) this.foliageMasks.set(source, new MeshBasicNodeMaterial({ color: '#ffffff', side: source.side, alphaTest: source.alphaTest, alphaToCoverage: source.alphaToCoverage, opacityNode: source.opacityNode, positionNode: source.positionNode }));
+            child.material = this.foliageMasks.get(source)!;
+          } else child.material = this.idBackground;
+        });
+        renderer.render(scene, camera);
+      } finally {
+        this.restoreMaterials(); scene.background = background; scene.backgroundNode = backgroundNode; scene.fog = fog; renderer.shadowMap.enabled = shadow;
+      }
     } else if (this.windowMask && t.districts) {
       const backgroundNode = scene.backgroundNode; scene.backgroundNode = null; const background = scene.background, fog = scene.fog, shadow = renderer.shadowMap.enabled;
       scene.background = new Color(0); scene.fog = null; renderer.shadowMap.enabled = false; t.districts.mask(true);
       const heroVisible = t.character?.visible; if (t.character) t.character.visible = false;
-      renderer.render(scene, camera);
-      if (t.character) t.character.visible = heroVisible!;
-      t.districts.mask(false); scene.background = background; scene.backgroundNode = backgroundNode; scene.fog = fog; renderer.shadowMap.enabled = shadow;
+      try { renderer.render(scene, camera); } finally {
+        if (t.character) t.character.visible = heroVisible!;
+        t.districts.mask(false); scene.background = background; scene.backgroundNode = backgroundNode; scene.fog = fog; renderer.shadowMap.enabled = shadow;
+      }
     } else if ((this.idPass || this.infectedIdPass) && (t.labView || t.character)) this.renderIdPass();
     else return false;
     return true;
@@ -116,55 +125,62 @@ export class RenderProbes {
     const backgroundNode = scene.backgroundNode; scene.backgroundNode = null;
     const background = scene.background, fog = scene.fog, shadow = renderer.shadowMap.enabled;
     scene.background = new Color(0); scene.fog = null; renderer.shadowMap.enabled = false;
-    scene.traverse((child) => {
-      if (child instanceof Mesh) { this.savedMaterials.set(child, child.material); let hero = t.labView?.playerMeshes.includes(child) ?? false;
-        if (t.character) for (let parent = child.parent; parent; parent = parent.parent) if (parent === t.character) { hero = true; break; }
-        if (this.infectedIdPass) {
-          const source = (Array.isArray(child.material) ? child.material[0] : child.material) as PaletteMaterial;
-          let infected = false;
-          for (let parent = child.parent; parent; parent = parent.parent) if (parent === t.crowd) { infected = true; break; }
-          let masks = this.infectedIdMasks.get(source);
-          if (!masks) { masks = []; this.infectedIdMasks.set(source, masks); }
-          const index = infected ? 1 : 0;
-          masks[index] ??= new MeshBasicNodeMaterial({ color: infected ? '#ff00ff' : '#000000', side: source.side, depthTest: source.depthTest, depthWrite: source.depthWrite, transparent: source.transparent, opacity: source.opacity, alphaTest: source.alphaTest, alphaToCoverage: source.alphaToCoverage, opacityNode: source.opacityNode, positionNode: source.positionNode, maskNode: source.maskNode });
-          if (source instanceof PaletteMaterial && !masks[index].outputNode) masks[index].outputNode = source.probeMaskOutput(color(infected ? '#ff00ff' : '#000000').rgb);
-          child.material = masks[index];
-        } else {
-          const skyline = this.idPass === 'skyline';
-          if (skyline) {
-            // Count the visible city buildings, excluding ground, vegetation,
-            // vehicles and the bus. Keep production depth/placement below.
-            hero = false;
-            for (let node: Object3D | null = child; node; node = node.parent) {
-              if (node.name.startsWith('inst:bld.') || String(node.userData.assetId ?? '').startsWith('bld.')) { hero = true; break; }
+    try {
+      scene.traverse((child) => {
+        if (child instanceof Mesh) { this.savedMaterials.set(child, child.material); let hero = t.labView?.playerMeshes.includes(child) ?? false;
+          if (t.character) for (let parent = child.parent; parent; parent = parent.parent) if (parent === t.character) { hero = true; break; }
+          if (this.infectedIdPass) {
+            const source = (Array.isArray(child.material) ? child.material[0] : child.material) as PaletteMaterial;
+            let infected = false;
+            for (let parent = child.parent; parent; parent = parent.parent) if (parent === t.crowd) { infected = true; break; }
+            let masks = this.infectedIdMasks.get(source);
+            if (!masks) { masks = []; this.infectedIdMasks.set(source, masks); }
+            const index = infected ? 1 : 0;
+            masks[index] ??= new MeshBasicNodeMaterial({ color: infected ? '#ff00ff' : '#000000', side: source.side, depthTest: source.depthTest, depthWrite: source.depthWrite, transparent: source.transparent, opacity: source.opacity, alphaTest: source.alphaTest, alphaToCoverage: source.alphaToCoverage, opacityNode: source.opacityNode, positionNode: source.positionNode, maskNode: source.maskNode });
+            if (source instanceof PaletteMaterial && !masks[index].outputNode) masks[index].outputNode = source.probeMaskOutput(color(infected ? '#ff00ff' : '#000000').rgb);
+            child.material = masks[index];
+          } else {
+            const skyline = this.idPass === 'skyline';
+            if (skyline) {
+              // Count the visible city buildings, excluding ground, vegetation,
+              // vehicles and the bus. Keep production depth/placement below.
+              hero = false;
+              for (let node: Object3D | null = child; node; node = node.parent) {
+                if (node.name.startsWith('inst:bld.') || String(node.userData.assetId ?? '').startsWith('bld.')) { hero = true; break; }
+              }
             }
+            const maskMaterial = (material: Material) => {
+              const source = material as PaletteMaterial;
+              const selected = skyline && hero, masks = selected ? this.skylineIdMasks : this.occluderIdMasks;
+              if (!(source.positionNode || source.opacityNode || source.userData.seeThrough || source.name === 'pal_leaf-card-crown')) return selected ? this.idPlayer : this.idBackground;
+              if (!masks.has(source)) {
+                const mask = new MeshBasicNodeMaterial({ color: selected ? '#ff00ff' : '#000000', side: source.side, alphaTest: source.alphaTest, alphaToCoverage: source.alphaToCoverage, opacityNode: source.opacityNode, positionNode: source.positionNode });
+                // ID probes must retain the visible scene's placement transforms
+                // and holes: an opaque replacement truck otherwise hides a courier
+                // who is plainly visible through its production see-through disc.
+                const reveal = source.userData.seeThrough;
+                if (reveal) mask.outputNode = Fn(() => {
+                  Discard((reveal === 'boss' ? seeThroughKeepBoss() : seeThroughKeep(reveal === 'placement' ? attribute('_occluder', 'float') : undefined)).not());
+                  return selected ? vec4(1, 0, 1, 1) : vec4(0, 0, 0, 1);
+                })();
+                masks.set(source, mask);
+              }
+              return masks.get(source)!;
+            };
+            child.material = hero && !skyline ? this.idPlayer : Array.isArray(child.material) ? child.material.map(maskMaterial) : maskMaterial(child.material);
           }
-          const maskMaterial = (material: Material) => {
-            const source = material as PaletteMaterial;
-            const selected = skyline && hero, masks = selected ? this.skylineIdMasks : this.occluderIdMasks;
-            if (!(source.positionNode || source.opacityNode || source.userData.seeThrough || source.name === 'pal_leaf-card-crown')) return selected ? this.idPlayer : this.idBackground;
-            if (!masks.has(source)) {
-              const mask = new MeshBasicNodeMaterial({ color: selected ? '#ff00ff' : '#000000', side: source.side, alphaTest: source.alphaTest, alphaToCoverage: source.alphaToCoverage, opacityNode: source.opacityNode, positionNode: source.positionNode });
-              // ID probes must retain the visible scene's placement transforms
-              // and holes: an opaque replacement truck otherwise hides a courier
-              // who is plainly visible through its production see-through disc.
-              const reveal = source.userData.seeThrough;
-              if (reveal) mask.outputNode = Fn(() => {
-                Discard((reveal === 'boss' ? seeThroughKeepBoss() : seeThroughKeep(reveal === 'placement' ? attribute('_occluder', 'float') : undefined)).not());
-                return selected ? vec4(1, 0, 1, 1) : vec4(0, 0, 0, 1);
-              })();
-              masks.set(source, mask);
-            }
-            return masks.get(source)!;
-          };
-          child.material = hero && !skyline ? this.idPlayer : Array.isArray(child.material) ? child.material.map(maskMaterial) : maskMaterial(child.material);
         }
-      }
-    });
-    this.idPlayer.depthTest = this.idPass === 'skyline' || !t.courierForeground && !t.occlusion.getState().some((building) => building.blocked);
-    renderer.render(scene, t.camera);
+      });
+      // Depth against the world unless a faded building hides the courier (the foreground slice is in the shared depth node).
+      this.idPlayer.depthTest = this.idPass === 'skyline' || !t.occlusion.getState().some((building) => building.blocked);
+      renderer.render(scene, t.camera);
+    } finally {
+      this.restoreMaterials(); scene.background = background; scene.backgroundNode = backgroundNode; scene.fog = fog; renderer.shadowMap.enabled = shadow;
+    }
+  }
+  private restoreMaterials(): void {
     for (const [mesh, material] of this.savedMaterials) mesh.material = material;
-    this.savedMaterials.clear(); scene.background = background; scene.backgroundNode = backgroundNode; scene.fog = fog; renderer.shadowMap.enabled = shadow;
+    this.savedMaterials.clear();
   }
   /** Camera sanity, top-level scene children and the first visible mesh under five screen points. */
   renderProbe<T extends object>(diagnostics: T) {
@@ -195,5 +211,6 @@ export class RenderProbes {
     for (const material of this.skylineIdMasks.values()) material.dispose(); this.skylineIdMasks.clear();
     this.idPass = false;
   }
-  dispose(): void { this.idPlayer.dispose(); this.idBackground.dispose(); }
+  /** Releases every cached mask through the same path as a level change, then the two shared id materials. */
+  dispose(): void { this.restoreMaterials(); this.reset(); this.idPlayer.dispose(); this.idBackground.dispose(); }
 }
