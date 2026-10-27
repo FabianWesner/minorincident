@@ -1,12 +1,12 @@
 # L2 all new figures
-- Scope: [production census](census.json) finds 10 IDs per run, 11 with alternate courier; turned residents keep civilian bodies. No remaining L2 rigid figures or batch-3 exclusions.
-- Converted child + police; retained the nine existing v2 figures. [31 decoded runtime files](coverage.json), [12 zero-manual deliveries](build-integrity.json); original skeletons, sockets and clips retained.
-- Sources: pipeline `lane/l2-all-new` commit `9c870fc`; saved child high reused, one officer reconstruction. Plain emission ray bake, closed whole bodies, no rigid cuts or nearest-surface colour repair.
-- Fixed atlas cleanup erasing pupils; restored rocket/backpack star and POLICE marks; applied automatic brim/fringe clearance. Uniforms keep authored colours.
-- Reviewed native low/high 120/400px [child](01-npc.civilian-kid.jpg) and [police](02-npc.police-officer.jpg): eyes/gear readable; fine edges remain softer than the old procedural figures.
-- Runtime: six low-tier scripted scenes and healthy/turned/frozen-corpse captures pass; high-tier scenes, final crowd sheet and playthrough pending.
-- Gates so far: validator 1262 rows/zero errors; `npm test` 86 pass; typecheck/lint and `verify E20` pass. Smoke and `scene:gate` pending.
-- Runtime LOD0/1/2 limits: 6000/2500/4000 triangles, 600/250/150 kB; maxima 5507/2295/2295 triangles and 401432/188860/142548 bytes. Far tier retains LOD1 anatomy as in L1.
-- Perf: final shared A/B draws/decoded-memory capture pending; native p95 and five cold loads pending the PO's quiet measurement window.
-- HF: one inference (36.22 s) + export (29.96 s); no additional compute purchases; Space response does not expose the credit debit. [Receipt](inference-receipt.json).
-- Showcase image and final gate receipts pending; no deploy or merge.
+
+- Scope: [spawn/story census](census.json) finds 11 authored body IDs including both couriers; child + officer converted, nine v2 bodies retained. No batch-3 exclusions; [100 runtime files](coverage.json) across 18 authored/carryover identities decode with skins.
+- Source pipeline `lane/l2-all-new` commits `9c870fc` / `a4c9d84`: reused child high, one officer reconstruction, plain ray bake, whole closed bodies. [HF debit €0](inference-receipt.json), included PRO quota; [12 deliveries, zero manual steps](build-integrity.json).
+- Fixed shared atlas cleanup erasing pupils; scripted rocket/backpack-star and POLICE marks plus brim/fringe clearance. Existing rigs, sockets, clips and uniform colours retained.
+- [Visual review](visual-review.json): all 10 sheets inspected, including 64 native old/new views at 120/400px, low/high, WebGL2/WebGPU, [30-figure crowd](03-l2-crowd-old-new.jpg), six story sequences and healthy/turned/corpse motion. Tiny tailoring remains softer than old.
+- L2 low/high scripted scenes: 12/12 pass; state fixtures 4/4 pass. [Real-input playthrough](gates/playthrough-summary.json) finished in 133 s, no skipped steps or issues, one death; navigation assist uses physical WASD only.
+- [Gates](gates/summary.json): validator 1262 rows/0 errors; npm test 86 pass; typecheck/lint/verify E20 pass; smoke 7 pass, freeze and GPU limits pass; scene:gate exits 0 (42 pass + 6 unchanged known exceptions, no new failures).
+- LOD0/1/2 limits: 6000/2500/4000 triangles, 600/250/150 kB; maxima 5507/2295/2295 triangles and 401432/188860/142548 bytes. Far LOD retains LOD1 anatomy as in L1.
+- [Matched L2 resources](performance.json): draws 99→99, triangles max 238060→227332; decoded scene texture payload 287.29→288.97 MiB (+1.68), excluding driver padding.
+- [Timing](performance.json): shared native low p95 16.8→16.7 ms (refresh-capped); worst of 5 native WebGPU cold loads PROD 3.54 s→local 2.91 s (≤+10%). Final uncapped/matched-host perf pending the PO quiet window; network and browser/device caches differ.
+- Showcase source updated: `img/l2-crowd-old-new.jpg` (1360×1406); best capture 03, supporting close-ups 02 then 01. Game branch `lane/l2-all-new`; source/evidence committed separately, no deploy or merge.

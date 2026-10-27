@@ -12,7 +12,8 @@ const current = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as 
 const old = JSON.parse(execFileSync('git', ['show', `${process.env.REVIEW_BASE ?? '0009f107d'}:src/assets/manifest.json`], { encoding: 'utf8' })) as AssetDef[];
 const ids = (process.env.FIGURES ?? 'npc.depot-clerk').split(',');
 const tier = process.env.REVIEW_TIER === 'low' ? 'low' : 'high';
-const session = new SceneSession({ backend: 'webgl2', tier, viewport: { width: 800, height: 600 } });
+const backend = process.env.REVIEW_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
+const session = new SceneSession({ backend, tier, viewport: { width: 800, height: 600 } });
 const receipts: unknown[] = [];
 try {
   await session.open();
@@ -83,7 +84,7 @@ try {
       return { bounds, targetPixels: pixels, actualPixels: bounds[3] - bounds[1], yaw, lod: pixels === 120 ? 'lod1' : 'lod0' };
     }, { def, pixels, yaw, moving: process.env.POSE === 'run', coat, clip: process.env.CLIP });
     const file = resolve(out, `${id}-${variant}-${pixels}-${yaw}.png`);
-    await session.screenshot(file); receipts.push({ id, variant, tier, file, ...framing });
+    await session.screenshot(file); receipts.push({ id, variant, tier, backend, file, ...framing });
     writeJson(resolve(out, 'receipts.json'), receipts);
     writeJson(resolve(out, `${id}-receipts.json`), receipts.filter(r => (r as { id: string }).id === id));
   }

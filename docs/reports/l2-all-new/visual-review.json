@@ -1,0 +1,165 @@
+{
+  "reviewedAt": "2026-10-27T16:22:32.977565+00:00",
+  "nativeFigures": [
+    {
+      "id": "npc.civilian-kid",
+      "backend": "webgl2",
+      "tier": "low",
+      "views": 8,
+      "pixels": [
+        120,
+        400
+      ],
+      "oldNew": true,
+      "frontBack": true,
+      "maxPixelError": 3.410605131648481e-13
+    },
+    {
+      "id": "npc.police-officer",
+      "backend": "webgl2",
+      "tier": "low",
+      "views": 8,
+      "pixels": [
+        120,
+        400
+      ],
+      "oldNew": true,
+      "frontBack": true,
+      "maxPixelError": 1.3642420526593924e-12
+    },
+    {
+      "id": "npc.civilian-kid",
+      "backend": "webgl2",
+      "tier": "high",
+      "views": 8,
+      "pixels": [
+        120,
+        400
+      ],
+      "oldNew": true,
+      "frontBack": true,
+      "maxPixelError": 3.410605131648481e-13
+    },
+    {
+      "id": "npc.police-officer",
+      "backend": "webgl2",
+      "tier": "high",
+      "views": 8,
+      "pixels": [
+        120,
+        400
+      ],
+      "oldNew": true,
+      "frontBack": true,
+      "maxPixelError": 1.3642420526593924e-12
+    },
+    {
+      "id": "npc.civilian-kid",
+      "backend": "webgpu",
+      "tier": "low",
+      "views": 8,
+      "pixels": [
+        120,
+        400
+      ],
+      "oldNew": true,
+      "frontBack": true,
+      "maxPixelError": 3.410605131648481e-13
+    },
+    {
+      "id": "npc.police-officer",
+      "backend": "webgpu",
+      "tier": "low",
+      "views": 8,
+      "pixels": [
+        120,
+        400
+      ],
+      "oldNew": true,
+      "frontBack": true,
+      "maxPixelError": 1.3642420526593924e-12
+    },
+    {
+      "id": "npc.civilian-kid",
+      "backend": "webgpu",
+      "tier": "high",
+      "views": 8,
+      "pixels": [
+        120,
+        400
+      ],
+      "oldNew": true,
+      "frontBack": true,
+      "maxPixelError": 3.410605131648481e-13
+    },
+    {
+      "id": "npc.police-officer",
+      "backend": "webgpu",
+      "tier": "high",
+      "views": 8,
+      "pixels": [
+        120,
+        400
+      ],
+      "oldNew": true,
+      "frontBack": true,
+      "maxPixelError": 1.3642420526593924e-12
+    }
+  ],
+  "captures": [
+    {
+      "file": "01-npc.civilian-kid.jpg",
+      "review": "Both eyes retained at 120/400px in both tiers after the face-island fix. Shirt/shorts/backpack colour masses remain separate. Rocket motif, backpack star, watch and red shoes retained. Fine shoe stripes and mouth detail are softer at 400px; no missing body parts or floating accessories. WebGPU low/high matches the accepted WebGL2 look.",
+      "verdict": "accepted"
+    },
+    {
+      "file": "02-npc.police-officer.jpg",
+      "review": "Both eyes visible under the lifted navy brim at 120/400px. POLICE lettering restored; cap badge, radio, vest, gloves, duty pouches and holster retained. Uniform broad colours stay clean. Small badge and boot-lace detail softens under ETC1S; no open joint seams. WebGPU low/high matches the accepted WebGL2 look.",
+      "verdict": "accepted"
+    },
+    {
+      "file": "03-l2-crowd-old-new.jpg",
+      "review": "30 named actors drawn in the matched L2 street camera. Two new children and four new officers sit consistently among the already-v2 firefighters, civilians, infected, courier and corgi. Existing occlusion silhouette on the far-right firefighter is unchanged between versions. No new figure invisibility or shards.",
+      "verdict": "accepted"
+    },
+    {
+      "file": "04-fix-p1-l2-start-courier-crew.jpg",
+      "review": "Low/high station sequence keeps all six firefighters readable and separated from the courier. The bench/calm composition and bright station remain organized.",
+      "verdict": "accepted"
+    },
+    {
+      "file": "05-qa-l2-truck-drive-full.jpg",
+      "review": "Low/high full authored truck route: actors stay seated/hidden during transport; vehicle clears corners, ends at market. No visible floating crew or accessory trails.",
+      "verdict": "accepted"
+    },
+    {
+      "file": "06-collision-l2-release.jpg",
+      "review": "Low/high release through both open market doors; child/adult size difference visible, silhouettes stay attached through running/panic. Higher tier has the authored larger population. No new trapped or invisible figures.",
+      "verdict": "accepted"
+    },
+    {
+      "file": "07-l2-finale-streets.jpg",
+      "review": "Low/high street pursuit remains spread out and readable. Existing blood trail/telegraphs are unchanged. Courier and pursuing civilian skins stay intact during movement.",
+      "verdict": "accepted"
+    },
+    {
+      "file": "08-l2-finale-bridge.jpg",
+      "review": "New officers occupy the authored police line in low/high. Navy uniforms, caps and held weapons remain readable among vehicles/gates. No body/weapon separation or floating hats observed.",
+      "verdict": "accepted"
+    },
+    {
+      "file": "09-l2-market-doors.jpg",
+      "review": "Low/high door opening still shows visible leaves and clear doorways. No figure pipeline change to the building choreography.",
+      "verdict": "accepted"
+    },
+    {
+      "file": "10-states-and-motion.jpg",
+      "review": "Healthy child remains protected; police changes to green skin/red eyes without recolouring the navy uniform, runs with attached limbs, and freezes as an intact corpse. Child cap in this fixture is a fitted shared accessory; no head gap or detached gear.",
+      "verdict": "accepted"
+    }
+  ],
+  "captureCount": 10,
+  "p0": 0,
+  "p1": 0,
+  "residual": "The old procedural figures retain crisper tiny tailoring/details at 400px; the PO removed must-beat-old as the rollout gate. Missing eyes and identity marks were fixed before acceptance."
+}

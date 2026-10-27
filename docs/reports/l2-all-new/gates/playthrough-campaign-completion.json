@@ -1,0 +1,311 @@
+{
+  "levels": [
+    {
+      "level": "L2",
+      "tick": 7795,
+      "result": {
+        "time": 129.91666666666666,
+        "kills": 0,
+        "knockdowns": 21,
+        "damage": 154,
+        "deaths": 1,
+        "rescued": 4,
+        "optionalObjectives": []
+      },
+      "steps": [
+        {
+          "id": "axe",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "calm",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "board",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "ride",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "doors",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "bridge",
+          "optional": false,
+          "status": "completed"
+        }
+      ]
+    }
+  ],
+  "campaign": {
+    "version": 2,
+    "seed": 1,
+    "character": "female",
+    "unlockedLevel": 3,
+    "completedLevels": 2,
+    "ownedActions": [
+      "weapon.fists",
+      "weapon.kick",
+      "weapon.bat",
+      "weapon.fire-axe",
+      "weapon.molotov",
+      "ability.corgi-lure"
+    ],
+    "upgrades": [
+      "upgrade.handling.1",
+      "upgrade.melee.1",
+      "upgrade.melee.2",
+      "upgrade.specials.1"
+    ],
+    "racks": {
+      "LEFT": [
+        "weapon.fire-axe",
+        "weapon.bat"
+      ],
+      "RIGHT": [
+        "ability.corgi-lure",
+        "weapon.molotov",
+        "weapon.kick"
+      ]
+    },
+    "settings": {
+      "muted": false,
+      "captions": false,
+      "noiseRings": false,
+      "mono": false,
+      "haptics": true,
+      "tinnitus": true,
+      "gore": "Full",
+      "textSize": 1,
+      "aimAssist": "Default",
+      "cameraShake": true,
+      "flashReduction": false,
+      "colorblind": false,
+      "quality": "low",
+      "slowMotion": true
+    },
+    "usage": {
+      "weapon.fire-axe": 54
+    },
+    "selectedAction": "weapon.fire-axe",
+    "results": {
+      "L2": {
+        "time": 129.91666666666666,
+        "kills": 0,
+        "knockdowns": 21,
+        "damage": 154,
+        "deaths": 1,
+        "rescued": 4,
+        "optionalObjectives": []
+      }
+    }
+  },
+  "mission": {
+    "id": "L3",
+    "phase": "briefing",
+    "completedObjectives": [],
+    "volumes": [],
+    "killedBosses": [],
+    "deadlineTicks": null,
+    "steps": {
+      "armory": {
+        "status": "pending",
+        "started": 0,
+        "kills": [],
+        "events": {},
+        "interaction": 0
+      },
+      "defend": {
+        "status": "pending",
+        "started": 0,
+        "kills": [],
+        "events": {},
+        "interaction": 0
+      },
+      "checkpoint": {
+        "status": "pending",
+        "started": 0,
+        "kills": [],
+        "events": {},
+        "interaction": 0
+      }
+    },
+    "actors": {},
+    "items": [],
+    "states": {
+      "attack": false,
+      "fallback": false,
+      "crossed": false
+    },
+    "counters": {},
+    "gates": {},
+    "marker": null,
+    "checkpoint": null,
+    "tier": 2,
+    "timeOfDay": null,
+    "subtitle": {
+      "id": "L3.briefing",
+      "text": "Sunset Grove Police, behind the bridge line. The gate is shut. For the first time today, people with guns are in charge.",
+      "until": 300
+    },
+    "cinematic": null,
+    "failure": null,
+    "stats": {
+      "time": 0,
+      "kills": 0,
+      "knockdowns": 0,
+      "damage": 0,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": []
+    },
+    "result": null,
+    "l3": {
+      "phase": "yard",
+      "handgunAt": 0,
+      "attackAt": 0,
+      "fallbackAt": 0,
+      "fallbackCause": "",
+      "crossedAt": 0,
+      "doneAt": 0,
+      "gatesClosedAt": 0,
+      "officerIds": [
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33
+      ],
+      "squadIds": [
+        30,
+        31,
+        32,
+        33
+      ],
+      "soldierIds": [
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42
+      ],
+      "medkitIds": [
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104
+      ],
+      "squad": [],
+      "lost": [],
+      "turnedOfficers": [],
+      "waves": [],
+      "waveIds": [],
+      "wavesSpawned": 0,
+      "populated": [
+        false,
+        false,
+        false
+      ],
+      "pending": [],
+      "segmentIds": [
+        [],
+        [],
+        []
+      ],
+      "furthest": null,
+      "furthestAt": 0,
+      "pressureAt": 0,
+      "pressureIds": [],
+      "segment": -1,
+      "segmentSquad": [],
+      "lastShot": {},
+      "retired": 0,
+      "spills": {},
+      "spillIds": [],
+      "waitingIds": [
+        43,
+        44,
+        45,
+        46,
+        47
+      ]
+    }
+  },
+  "backend": "webgl",
+  "quality": "low",
+  "camera": {
+    "zoom": 1.5,
+    "targetZoom": 1.5,
+    "zoomLimits": [
+      0.5,
+      1.5
+    ],
+    "fov": 25,
+    "azimuth": 0.7853981633974483,
+    "polar": 0.9424777960769379,
+    "radius": 28.5,
+    "focus": [
+      -155.5,
+      0,
+      1.6
+    ],
+    "target": [
+      -155.5,
+      0,
+      1.6
+    ],
+    "position": [
+      -139.196250019696,
+      16.751879690335485,
+      17.903749980304006
+    ],
+    "spot": null
+  }
+}

@@ -1,6 +1,7 @@
 /** L2 production-renderer crowd, story and state evidence, one pooled browser at a time. */
 import assert from 'node:assert/strict';
 import { resolve } from 'node:path';
+import { loadavg } from 'node:os';
 import { SceneSession, readSpec, stopServer, writeJson } from './session';
 import { runSpec } from './run';
 import type { SceneSpec, ActorSpec } from '../../src/debug/scenelab/spec';
@@ -35,7 +36,7 @@ try {
     receipts.push({ file, ...result }); writeJson(`${out}/receipts.json`, receipts);
     assert.ok(result.pass, `${spec.name}: ${JSON.stringify(result.failed)}`);
   }
-  if (mode === 'crowd') {
+  if (mode === 'crowd' || mode === 'perf') {
     const result = await runSpec(session, crowd30, { out, sheet: 0 });
     receipts.push(result); assert.ok(result.pass, JSON.stringify(result.failed));
     const metrics = await session.metrics();
@@ -59,6 +60,27 @@ try {
       return { textureCount: textures.size, decodedBytes, rgbaUpperBoundBytes, render: window.__SS__!.getState().render };
     });
     writeJson(`${out}/receipt.json`, { variant, tier, result, metrics, resources, errors: session.errors });
+    if (mode === 'perf') {
+      // Shared-pool cadence, including live AI and animation. Final quiet timing
+      // remains separate; report the refresh cap and competing leases explicitly.
+      let peakLeases = 0;
+      const monitor = setInterval(() => { void fetch('http://127.0.0.1:4329/status').then(r => r.json()).then((s: { leases: unknown[] }) => { peakLeases = Math.max(peakLeases, s.leases.length); }).catch(() => { peakLeases = Infinity; }); }, 1000);
+      const hostLoad = loadavg();
+      try {
+        const cadence = await session.page.evaluate(async () => {
+          const a = window.__SS__!; a.resume();
+          const frames: number[] = []; let previous = 0, warm: Record<string, number> = {};
+          for (let i = 0; i < 720; i++) { const now = await new Promise<number>(requestAnimationFrame); if (i === 119) warm = { ...a.perf().nodeBuildMaterials }; if (i >= 120 && previous) frames.push(now - previous); previous = now; }
+          a.pause(); frames.sort((a, b) => a - b);
+          const builds = Object.entries(a.perf().nodeBuildMaterials).filter(([key, count]) => count !== (warm[key] ?? 0));
+          return { count: frames.length, p50: frames[Math.floor(frames.length * .5)], p95: frames[Math.ceil(frames.length * .95) - 1], max: frames[frames.length - 1], over200: frames.filter(t => t > 200).length, builds };
+        });
+        writeJson(`${out}/cadence.json`, { variant, tier, cadence, peakLeases, hostLoad, protocol: 'shared native Metal WebGL2, 60 Hz cap, 120 warm-up frames + 600 sampled frames, live L2 30-figure cast', errors: session.errors });
+        assert.equal(peakLeases, 1, 'No competing shared context during cadence sample');
+        assert.equal(cadence.over200, 0);
+        assert.deepEqual(cadence.builds, [], 'No shader builds after warm-up');
+      } finally { clearInterval(monitor); }
+    }
   }
   if (mode === 'states') for (const model of ['npc.civilian-kid', 'npc.police-officer']) for (const state of model.endsWith('kid') ? ['healthy'] : ['healthy', 'turned', 'corpse']) {
     const spec: SceneSpec = { name: `${model}-${state}`, ground: 'asphalt', time: 'L2', size: 100,

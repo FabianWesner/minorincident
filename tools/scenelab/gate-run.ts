@@ -6,7 +6,7 @@ import { catalogFlag } from './catalog-args';
 /** Shared batch runner for `npm run scene:gate` (curated list) and `npm run scene:matrix:nightly` (full matrix, sharded, resumable).
  * Every batch is one `catalog.ts --matrix --only <rows>` command under tools/e2e-lock.sh, so each browser reservation stays well
  * inside the 10-minute cap (exit 124 = "split the batch"). A batch that times out is reported and the run goes on.
- * Usage: tsx tools/scenelab/gate-run.ts gate|nightly [--out dir] [--batch 12] [--shard i/n] [--resume] [--filter glob] [--backend webgpu] */
+ * Usage: tsx tools/scenelab/gate-run.ts gate|nightly [--out dir] [--batch 12] [--jobs 1|2] [--shard i/n] [--resume] [--filter glob] [--backend webgpu] */
 interface Row { name: string; scene: string; tier: 'high' | 'low'; backend: string }
 interface Batch { id: string; backend: string; tier: string; rows: Row[] }
 interface CatalogRow { name: string; pass: boolean; error?: string; failed: string[]; sheet?: string }
@@ -28,7 +28,7 @@ function toBatches(rows: Row[], max: number): Batch[] {
 
 function runBatch(b: Batch): { code: number | null; seconds: number; rows: CatalogRow[] } {
   const dir = `${out}/${b.id}`, t0 = Date.now();
-  const res = spawnSync('sh', ['tools/e2e-lock.sh', 'tsx', 'tools/scenelab/catalog.ts', '--matrix', '--backend', b.backend, '--tier', b.tier, '--out', dir, '--only', b.rows.map(r => r.name).join(',')],
+  const res = spawnSync('sh', ['tools/e2e-lock.sh', 'tsx', 'tools/scenelab/catalog.ts', '--jobs', flag('jobs') ?? '2', '--matrix', '--backend', b.backend, '--tier', b.tier, '--out', dir, '--only', b.rows.map(r => r.name).join(',')],
     { stdio: ['ignore', 'inherit', 'inherit'], env: { ...process.env, E2E_UNITS: process.env.E2E_UNITS ?? '2' } });
   const index = `${dir}/index.json`;
   return { code: res.status, seconds: (Date.now() - t0) / 1000, rows: existsSync(index) ? JSON.parse(readFileSync(index, 'utf8')).rows : [] };

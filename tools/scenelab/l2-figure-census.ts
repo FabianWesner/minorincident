@@ -34,6 +34,6 @@ for (const tier of ['high', 'low'] as const) {
 }
 writeFileSync(`${out}/census.json`, JSON.stringify({ source: 'production L2 complete-bot input simulation; world presence, not screen visibility', receipts,
   invariant: 'LevelTwoRescue.emerge -> spawnPedestrian -> turnNow keeps appearance; CrowdView/NpcView render appearance.asset rather than civilian.variant.',
-  additionalPotential: ['char.courier-male', 'char.corgi', 'amb.dog', 'amb.dog.black', 'amb.dog.cream', 'inf.dog', 'inf.dog.black', 'inf.dog.cream', 'npc.depot-clerk', 'npc.lab-tech-a', 'npc.lab-tech-b', 'npc.lab-guard', 'inf.common-worker'],
+  additionalPotential: ['char.courier-male', 'char.corgi', 'amb.dog', 'inf.dog', 'npc.depot-clerk', 'npc.lab-tech-a', 'npc.lab-tech-b', 'npc.lab-guard', 'inf.common-worker'],
   additionalReason: 'Courier choice, companion and L1 campaign corpse carryover; all already v2 at base. No healthy pets are authored in standalone L2.' }, null, 2) + '\n');
 console.log(JSON.stringify(receipts.map(r => ({ tier: r.tier, outcome: r.report.outcome, seconds: r.report.simSeconds, counts: r.counts })), null, 2));
