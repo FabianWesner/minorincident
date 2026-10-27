@@ -1,5 +1,5 @@
 {
-  "revision": "064cc163583cca9ecb6601a3fd3f2b679afb3131",
+  "revision": "713d75c64e39bcd896999ca614e1d157fb829617",
   "source": "Production L4 complete bot, seed 1, sampled every 0.5 s; world population exposure, not camera visibility",
   "sources": [
     "src/data/l4.ts",
@@ -35,9 +35,9 @@
     {
       "id": "npc.national-guard",
       "lane": "lane/l3-all-new",
-      "commit": "2735d6547",
-      "status": "pending-main",
-      "reason": "Orchestrator 2026-10-27: consume the reviewed L3 build after main merge; no second L4 build"
+      "commit": "ab4448ea4a85b6d886317557da912af9e22978fb",
+      "status": "inherited",
+      "reason": "Reviewed corrected L3 build inherited from main; no second L4 build"
     }
   ],
   "excluded": [
@@ -68,7 +68,7 @@
     {
       "id": "npc.national-guard",
       "inheritedV2": true,
-      "crowdSkin": false,
+      "crowdSkin": true,
       "high": {
         "peak": 58,
         "actorSeconds": 12021,

@@ -28,7 +28,7 @@ const crowd30: SceneSpec = {
     if (i < 5) return { id: `guard-${i}`, kind: 'pedestrian', at, yaw: -45, look: { model: 'npc.national-guard', role: 'soldier', handProp: 'rifle' }, state: 'idle' };
     if (i < 13) return { id: `civilian-${i}`, kind: 'pedestrian', at, yaw: -45, look: { model: civilians[(i - 5) % 5], handProp: i < 8 ? ['pistol', 'hunting-rifle', 'bat'][i - 5] : null }, state: 'idle' };
     const model = i < 22 ? converted[i - 13] : ['inf.common-worker', 'npc.national-guard', ...civilians][(i - 22) % 7];
-    if (model.startsWith('npc.')) return { id: `infected-${i}`, kind: 'pedestrian', at, yaw: -45, look: { model }, state: { infect: { instant: true } } };
+    if (model.startsWith('npc.')) return { id: `civilian-${i}`, kind: 'pedestrian', at, yaw: -45, look: { model }, state: 'idle' };
     return { id: `infected-${i}`, kind: 'infected', at, yaw: -45, archetype: archetype(model), look: { model }, state: 'idle' };
   }),
   camera: { mode: 'game', target: [-19, .6, 1], zoom: 1.5 }, frames: 3, shots: [3], expect: { consoleErrors: 0 },
@@ -81,20 +81,28 @@ try {
     await session.page.waitForFunction(() => !!window.__SCENE__ && !!window.__SS__);
     await session.page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.pause(); });
   }
+  const actual = await session.page.evaluate(() => window.__SS__!.getState().render);
+  assert.equal(actual.backend, backend === 'webgl2' ? 'webgl' : 'webgpu'); assert.equal(actual.quality, tier);
   const files = mode === 'story' ? ['specs/scenes/qa-l4-plaza-safe.json', 'specs/scenes/qa-l4-gate-convoy.json', 'specs/scenes/qa-l4-war-line.json', 'specs/scenes/qa-l4-fuel-chain.json', 'specs/scenes/qa-l4-tank-heli.json', 'specs/scenes/qa-l4-kessler-cellar.json', 'tests/scenes/catalog/l4-finale-cellar.json'] : [];
   for (const file of files) {
     const spec = readSpec(resolve(file));
     const result = await runSpec(session, spec, { file, out: resolve(out, spec.name!), sheet: Math.max(60, Math.ceil((spec.frames ?? 180) / 12)) });
-    receipts.push({ file, ...result }); writeJson(`${out}/receipts.json`, receipts);
+    receipts.push({ revision, backend, tier, file, ...result }); writeJson(`${out}/receipts.json`, receipts);
     assert.ok(result.pass, `${spec.name}: ${JSON.stringify(result.failed)}`);
   }
   if (mode === 'guns') {
-    for (const [model, prop] of [['npc.national-guard', 'hmg'], ['npc.national-guard', 'rifle'], ['npc.civilian-man-a', 'hunting-rifle'], ['npc.civilian-woman-a', 'pistol'], ['npc.civilian-man-b', 'shotgun']] as const) for (const yaw of [-45, 45, 135, 225]) {
-      const fixture: SceneSpec = { name: `gun-${prop}-${yaw}`, time: 'L4', ground: 'asphalt', size: 100,
-        actors: [{ id: 'courier', kind: 'courier', at: [30, 30] }, { id: 'holder', kind: 'pedestrian', at: [0, 0], yaw, look: { model, handProp: prop === 'hmg' ? 'rifle' : prop }, state: prop === 'hmg' ? { ally: { role: 'soldier', weapon: 'hmg' } } : 'idle' }],
-        camera: { mode: 'game', target: [0, .9, 0], zoom: .55 }, frames: 3, shots: [3], expect: { consoleErrors: 0 } };
-      const result = await runSpec(session, fixture, { out: `${out}/${prop}-${yaw}`, sheet: 0 });
-      assert.ok(result.pass, JSON.stringify(result.failed)); receipts.push({ model, prop, yaw, result }); writeJson(`${out}/receipts.json`, receipts);
+    const holders = [['npc.national-guard', 'hmg'], ['npc.national-guard', 'rifle'], ['npc.civilian-man-a', 'hunting-rifle'], ['npc.civilian-woman-a', 'pistol'], ['npc.civilian-man-b', 'shotgun']] as const;
+    const fixtures = holders.flatMap(([model, prop], row) => [-45, 45, 135, 225].map((yaw, col) => ({ model, prop, yaw, at: [-30 + col * 20, -40 + row * 20] as [number, number], id: `holder-${row}-${col}` })));
+    const fixture: SceneSpec = { name: 'l4-authored-weapons', time: 'L4', ground: 'asphalt', size: 160,
+      actors: [{ id: 'courier', kind: 'courier', at: [70, 70] }, ...fixtures.map(({ id, model, prop, yaw, at }): ActorSpec => ({ id, kind: 'pedestrian', at, yaw,
+        look: { model, handProp: prop === 'hmg' ? 'rifle' : prop }, state: prop === 'hmg' ? { ally: { role: 'soldier', weapon: 'hmg' } } : 'idle' }))],
+      camera: { mode: 'game', target: [0, .9, 0], zoom: .55 }, frames: 3, expect: { consoleErrors: 0 } };
+    const result = await runSpec(session, fixture, { out, sheet: 0 });
+    assert.ok(result.pass, JSON.stringify(result.failed));
+    for (const { model, prop, yaw, at, id } of fixtures) {
+      await session.page.evaluate(at => window.__SCENE__!.setCamera({ mode: 'game', target: [at[0], .9, at[1]], zoom: .55 }), at);
+      await session.ready(); const file = `${out}/${prop}-${yaw}.png`; await session.screenshot(file);
+      receipts.push({ revision, model, prop, yaw, actor: id, file, result }); writeJson(`${out}/receipts.json`, receipts);
     }
   }
   if (mode === 'battle') {
@@ -179,7 +187,7 @@ try {
         return { relocated, player: player.transform, corpse: body.transform, cutStrength: seeThrough.corpse.value, radius: seeThrough.solidRadius.value };
       });
       assert.ok(cut.relocated && cut.cutStrength > 0);
-      await session.screenshot(`${out}/courier-cut.png`); writeJson(`${out}/corpse-proof.json`, { proof, cut });
+      await session.screenshot(`${out}/courier-cut.png`); writeJson(`${out}/corpse-proof.json`, { revision, backend, tier, variant, proof, cut });
     }
   }
   assert.equal(session.errors.length, 0);
