@@ -301,8 +301,9 @@ export class InfectedSystem {
       }
       if (!b.specialAttack && (this.world.tick + e.id) % 3 === 0 && !e.emerging && !b.perched && !b.hidden && b.grabUntil <= this.world.tick) this.depenetrate(e);
       if (b.scripted && !b.specialAttack) {
-        const breachSpeed = b.breachApproach ? b.l1?.runSpeed : undefined;
-        if (!Status.stunned(e, this.world.tick) && Math.hypot(e.transform.x - b.scripted.x, e.transform.z - b.scripted.z) > .6) this.seek(e, b.scripted, breachSpeed);
+        const retreatRun = b.clearingStreet || b.l4ArmyApproach && this.world.missions?.state.l4?.phase === 'collapse';
+        const scriptedSpeed = retreatRun ? b.l1?.runSpeed ?? Math.max(b.speed, b.clearingStreet ? 4.8 : 3.4) : b.breachApproach ? b.l1?.runSpeed : undefined;
+        if (!Status.stunned(e, this.world.tick) && Math.hypot(e.transform.x - b.scripted.x, e.transform.z - b.scripted.z) > .6) this.seek(e, b.scripted, scriptedSpeed);
         e.combat!.attacking = false; this.world.spatial.set(e.id, e.transform.x, e.transform.z); continue;
       }
       const provoker = this.provoker(e, b);

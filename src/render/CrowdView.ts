@@ -147,7 +147,9 @@ export class CrowdView extends Group {
     const actors = Object.values(this.world.missions?.def.actors ?? {}).map(actor => actor.archetype);
     const l1Roles = new Set<string>(regularCrowd || this.world.scenario === 'L6' || this.world.npcs?.civilians.outbreak || this.world.districts?.districts.some(d => isOutbreakDistrict(d.id)) ? ['infected.runner', ...actors] : ['infected.runner', ...actors, ...civilianRoles.map(role => role.variant), ...models]);
     if (regularCrowd) for (const model of regularInfectedModels) l1Roles.add(model);
-    if (this.world.scenario === 'L4') for (const model of [...l4InfectedArchetypes, ...l4InfectedLooks]) l1Roles.add(model);
+    // L4 sprinters always wear a shared soldier/civilian/suit skin.
+    // Their unused default batch need not delay the level's loading card.
+    if (this.world.scenario === 'L4') for (const model of [...l4InfectedArchetypes.filter(id => id !== 'infected.sprinter'), ...l4InfectedLooks]) l1Roles.add(model);
     // Ordinary and turned pedestrians keep their CivilianCrowd batches (keepsLook
     // below). Only explicit infected model overrides need this view's NPC assets.
     for (const species of animals) { l1Roles.add(`healthy.${species}`); l1Roles.add(`infected.${species}`); }
@@ -212,8 +214,14 @@ export class CrowdView extends Group {
       const role = dogCoat(def.id) ? 'dog' : def.id.startsWith('infected.') ? def.id.slice(9) : 'runner', asset = def.asset;
       const cpuKey = `${def.id}|${asset}|${def.decay ?? ''}|${lod}|${this.low ? 'low' : 'high'}`;
       const prebuilt = this.registry.definition(asset).crowdSkin && !preparedBatches.has(cpuKey) ? loadSkinnedCrowdBake(asset, lod) : undefined;
-      const loaded = await this.registry.loadAsset(asset, lod, def.decay) as Group;
-      await loadGate.foreground(); await loadGate.wait(); // bakes wait for the level pick, then one per frame
+      const [loaded, delivered] = await Promise.all([
+        this.registry.loadAsset(asset, lod, def.decay) as Promise<Group>,
+        this.world.scenario === 'L4' ? prebuilt : undefined,
+      ]);
+      await loadGate.foreground();
+      // Delivered skin batches are already baked. They need foreground admission,
+      // but no extra render-frame wait for CPU baking at each new horde LOD.
+      if (!delivered) await loadGate.wait();
       if (this.disposed) return;
       const fallback = Boolean(loaded.userData.placeholder), model = fallback ? createInfectedPlaceholder(role) : loaded;
       const atlas = model.userData.assetTextureMode === 'baseColor' ? crowdTexture(model) : undefined;
@@ -240,7 +248,7 @@ export class CrowdView extends Group {
         // The finished geometry is cached below (preparedBatches), so the raw bake is not kept a second time.
         const args = [model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback, undefined, undefined, true, textured] as const;
         const bakeStarted = performance.now();
-        const shipped = await prebuilt;
+        const shipped = delivered ?? await prebuilt;
         baked = shipped ? { ...shipped, texture: atlas } : this.world.scenario === 'L8' ? await bakeInfectedAsync(() => loadGate.wait(), ...args) : bakeInfected(...args);
         for (const name of baked.clip.parts) if (!model.getObjectByName(name)) { const joint = model.clone(false); joint.name = name; joint.position.set(0, 0, 0); model.add(joint); }
         loadMeasure(`bake:${asset}:${lod}`, bakeStarted);

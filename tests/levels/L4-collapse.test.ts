@@ -26,7 +26,9 @@ const escapeDistance = (p: { x: number; z: number }) => { const r = l4.director.
 function war(w: SimWorld, m: Mission, seed: number, tier: 'high' | 'low', shoot: boolean, retreatSettleS = 0): Trace {
   const corpseIds = new Set<number>(), retreatAudit: object[] = [];
   const s = m.state.l4!, tr: Trace = { beats: [], soldiers: [], fallBackRadio: -1, breakT: -1, cause: '', knockdowns: 0, barricades: 0, turnedAtTurn: 0, tank: '', maxAlive: 0, maxInside: 0, line1Size: 0, line1Fallback: 0, firstBreach: -1, gapAtFallBack: -1, gapAfter: -1, heapMax: 0, corpseLosses: 0, ringSamples: [], pressMax: 0 };
-  const onStreet = () => { const p = w.entities.get(1)!.transform; return w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) > 12 && e.transform.x > -8 && escapeDistance(e.transform) < l4.director.escape.gapM).length; }; // the street out of the ring (its plaza end holds the pursuers)
+  // Recovery poses cannot move or attack. Count the active street horde,
+  // retaining large Alphas even while their reaction plays.
+  const onStreet = () => { const p = w.entities.get(1)!.transform; return w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && (e.archetype === 'infected.alpha' || !e.combat?.reaction?.heavy || e.combat.reaction.until <= w.tick) && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) > 12 && e.transform.x > -8 && escapeDistance(e.transform) < l4.director.escape.gapM).length; }; // the street out of the ring (its plaza end holds the pursuers)
   const t = (tick: number) => +((tick - s.turnAt) / 60).toFixed(2);
   w.events.on('l4.beat', e => { if (e.type === 'l4.beat') tr.beats.push({ beat: e.beat, t: t(e.tick), cause: e.cause, soldiers: e.soldiers, inside: e.inside }); });
   w.events.on('barricade.broken', e => { if (e.type === 'barricade.broken' && e.groupId === 'l4-wall' && tr.firstBreach < 0) tr.firstBreach = t(e.tick); });

@@ -37,8 +37,11 @@ async function trace(tier: 'high' | 'low') {
       const bucket = Math.floor((w.tick - start) / 900), ids = bins.get(bucket) ?? new Set<number>(); bins.set(bucket, ids);
       if (streetSamples.length <= bucket) streetSamples.push({ second: (w.tick - start) / 60, x: p.x, z: p.z, slots: w.infected!.director.count, groups: s.pendingDoor.filter(q => q.id > 0).map(q => [q.home.x, q.home.z]) });
       for (const e of w.infected!.active) {
-        const b = e.infected?.l1;
-        if (e.health.current > 0 && !e.hidden && b?.targetId === 1 && (b.mode === 'chase' || b.mode === 'bite') && Math.hypot(p.x - e.transform.x, p.z - e.transform.z) < 16 && w.infected!.nav.visible(p, e.transform, 0)) { engage(e.id); }
+        const native = e.infected, b = native?.l1;
+        // The mixed horde also has native chase/attack brains. Apply the same
+        // visible-engagement oracle to every archetype, not just pedestrians.
+        const pursuing = b ? b.targetId === 1 && (b.mode === 'chase' || b.mode === 'bite') : (native?.heardTargetId || 1) === 1 && (native?.state === 'chase' || native?.state === 'attack');
+        if (e.health.current > 0 && !e.hidden && pursuing && Math.hypot(p.x - e.transform.x, p.z - e.transform.z) < 16 && w.infected!.nav.visible(p, e.transform, 0)) { engage(e.id); }
       }
       peak = Math.max(peak, w.infected!.director.count);
       return false;
