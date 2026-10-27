@@ -152,6 +152,10 @@ export class Telemetry implements TelemetrySink {
   }
   scenarioUnloaded(): void { this.stopWorld?.(); this.stopWorld = null; this.attempt = null; if (this.recorder.active) this.recorder.end('home', 0); }
   zoom(delta: number): void { if (this.recorder.active) this.recorder.command('zoom', delta); }
+  renderError(kind: string, message: string): void {
+    const clean = (text: string) => text.replace(/[^\w .:/-]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 40);
+    this.client.push('render_error', { ...(this.attempt ? { l: this.attempt.level, k: this.world.tick } : {}), d: { kind: clean(kind), msg: clean(message), b: this.game.view.renderer.selectedBackend } });
+  }
 
   // ---- per-tick input tap (called by InputSystem.sample for every fixed tick the sim consumes) ----
   private readonly sample = (frame: InputFrame, scheme: Scheme): void => {

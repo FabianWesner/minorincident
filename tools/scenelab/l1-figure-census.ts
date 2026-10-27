@@ -6,7 +6,7 @@ import { runL1 } from '../sim-runner/l1Bots';
 import type { EntitySnapshot } from '../../src/sim/world/types';
 import { infectedDef } from '../../src/data/infected';
 
-const out = 'docs/reports/skinned-prod', cast = '/Users/wesner/Workspace/minorincident_3dpipeline/cast';
+const out = 'test-results/skinned-prod', cast = '/Users/wesner/Workspace/minorincident_3dpipeline/cast';
 const potential = ['char.courier-female', 'char.courier-male', 'char.corgi', 'npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'npc.civilian-elderly', 'npc.depot-clerk', 'npc.lab-tech-a', 'npc.lab-tech-b', 'npc.lab-guard', 'npc.firefighter-alive', 'inf.common-worker', 'amb.dog', 'amb.dog.black', 'amb.dog.cream', 'inf.dog', 'inf.dog.black', 'inf.dog.cream'];
 const model = (e: EntitySnapshot): string | undefined => e.survivor ? `char.courier-${e.survivor.variant}` : e.companion ? 'char.corgi' : e.appearance?.entityId === e.id ? e.appearance.asset : e.infected ? e.infected.model ?? e.infected.variant ?? infectedDef(e.archetype).asset : e.civilian?.pet ? e.civilian.model : e.civilian?.model;
 type Counts = { morning: number; distinct: number; peak: number; infected: number; corpses: number };

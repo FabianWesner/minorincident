@@ -34,7 +34,7 @@ test('@E03 fixed weapon keys in L2 select bat/axe across racks and display every
   await expect(page.locator('[data-input-hint]')).toContainText('1–9');
   await page.keyboard.press('Shift+2'); await tick(page, 20); expect(await active()).toBe('weapon.handgun');
   // Render quality and exact camera ratios vary; DOM shortcut badges retain their screen size.
-  const out = 'docs/reports/weapon-keys'; mkdirSync(out, { recursive: true });
+  const out = 'test-results/weapon-keys'; mkdirSync(out, { recursive: true });
   const captures: { quality: string; zoom: number; actual: number }[] = [];
   await page.keyboard.press('3'); await tick(page, 20);
   for (const quality of ['high', 'low'] as const) {

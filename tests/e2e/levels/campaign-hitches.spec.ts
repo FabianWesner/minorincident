@@ -67,7 +67,7 @@ for (const backend of backends) for (const quality of ['low', 'high'] as const) 
       const population = await page.evaluate(() => window.__SS__!.query({}).map(e => ({ id: e.id, archetype: e.archetype, corpse: e.corpse, health: e.health.current })).sort((a, b) => a.id - b.id));
       writeFileSync(`${out}/population.json`, JSON.stringify(population, null, 2));
       if (phase !== 'before') {
-        const baseline = out.replace(`/${phase}/`, '/before/'), a = PNG.sync.read(readFileSync(`${baseline}/fixed-tick.png`)), b = PNG.sync.read(pixels), diff = new PNG({ width: a.width, height: a.height });
+        const baseline = `tests/fixtures/campaign-hitches/before/${backend}-${quality}-${level}`, a = PNG.sync.read(readFileSync(`${baseline}/fixed-tick.png`)), b = PNG.sync.read(pixels), diff = new PNG({ width: a.width, height: a.height });
         const changed = pixelmatch(a.data, b.data, diff.data, a.width, a.height, { threshold: .1 });
         writeFileSync(`${out}/diff.png`, PNG.sync.write(diff));
         const totalPixels = a.width * a.height;

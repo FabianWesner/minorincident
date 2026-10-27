@@ -2,7 +2,7 @@ import { mkdirSync } from 'node:fs';
 import { SceneSession, stopServer } from '../scenelab/session';
 const tier = process.argv[2] === 'low' ? 'low' : 'high';
 const s = new SceneSession({ tier, viewport: { width: 1600, height: 900 } });
-const out = `docs/reports/night-bodies-eyes/diagnostic-${tier}`; mkdirSync(out, { recursive: true });
+const out = `test-results/night-bodies-eyes/diagnostic-${tier}`; mkdirSync(out, { recursive: true });
 try {
  await s.open();
  await s.page.evaluate(async () => {

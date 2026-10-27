@@ -6,7 +6,7 @@ import { windowLine } from '../../tests/helpers/window-parallax';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 
 // One bounded, headless batch; invoke through quiet-run.sh / e2e-lock.sh after a fresh build.
-const out = resolve(process.argv[2] ?? 'docs/reports/small-fixes-w6/evidence/browser');
+const out = resolve(process.argv[2] ?? 'test-results/small-fixes-w6/evidence/browser');
 // W6_TIMING=0 runs pixel/layout proofs under the ordinary browser lock.
 // Default timing measurements require quiet-run.sh.
 const measureTiming = process.env.W6_TIMING !== '0';

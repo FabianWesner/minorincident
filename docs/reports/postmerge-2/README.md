@@ -47,7 +47,7 @@ The full unit inventory is green, including static, placement and occluder-footp
 
 The browser driver also resumes the authored street route after a collapse death. Its old south-only rejoin conditions clicked later north/west legs diagonally through the fallen camp; every real click and combat check remains enabled.
 
-The unchanged collapse gate passes at high/low: 33/9 unique engagements, 21.66/6.91 per minute, zero deaths, peaks 120/60. The authored route is 151/152.5 seconds at walking speed. [Traces](collapse/).
+The unchanged collapse gate passes at high/low: 33/9 unique engagements, 21.66/6.91 per minute, zero deaths, peaks 120/60. The authored route is 151/152.5 seconds at walking speed. [Traces](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/postmerge-2/collapse).
 
 A concurrent browser run exposed a screenshot-driver overrun to x=69, beyond the roof-band endpoint x=66; the failing probe hit open road, not a building. The real-clock walk now pauses at its original endpoint in the browser, retaining all pixel and route thresholds. The nine targeted browser cases pass; the respawn case also passes three consecutive repeats without retry. The full 100-case browser gate recorded 98 passes, one driver failure and one driver flake; the three corrected-driver cases then passed without retry. [Latest case inventory](browser-validation.json) is 100 expected, zero unexpected, zero flaky. The six simulation smoke checks also pass.
 
@@ -66,6 +66,6 @@ All four unmodified stock checks pass on the final build, under `tools/perf/quie
 
 Original population, firing, corpse, follower, precipitation, draw-call and triangle guards all pass. Timing evidence is native WebGL; both renderer paths have the quality/zoom visual and draw/triangle matrix coverage above.
 
-The first final low run failed with a 182.2 ms tank-window hitch; isolated repeats reproduced it. [CPU diagnosis](perf/hitch-profile-summary.json) identified cold corpse-page creation in view update, not a sim-step overrun. Correct-band prewarming alone reduced the hitch to 131.4 ms. Direct pose transforms, dense index remapping and semantic xyz normal buffers removed the remaining cold work: the final stock check measures 61 ms. Earlier failed attempts remain in `perf/` with explicit names; final canonical E22/E23 records and [quiet conditions](perf/conditions-final.jsonl) contain the passing build.
+The first final low run failed with a 182.2 ms tank-window hitch; isolated repeats reproduced it. [CPU diagnosis](perf/hitch-profile-summary.json) identified cold corpse-page creation in view update, not a sim-step overrun. Correct-band prewarming alone reduced the hitch to 131.4 ms. Direct pose transforms, dense index remapping and semantic xyz normal buffers removed the remaining cold work: the final stock check measures 61 ms. Earlier failed attempts remain in `perf/` with explicit names; final canonical E22/E23 records and [quiet conditions](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/postmerge-2/perf/conditions-final.jsonl) contain the passing build.
 
 No tests, budgets, or PO scope were relaxed. No specification or reference asset changed.

@@ -35,7 +35,7 @@ Headless native Metal Chrome, one worker, fresh production build `index-Wk4oQil5
 | District / WebGPU | 11.7 / 16.9 / 1.8 | **34.7** / 37.0 / 3.9 |
 | Horde / WebGPU | 11.0 / 26.7 / 1.8 | **34.3** / 36.9 / 4.0 |
 
-[WebGL evidence](source-final-native-webgl/), [WebGPU evidence](stream-native-webgpu/), [fresh base](baseline/). Earlier source snapshots remain historical evidence in the other folders and [work-log.md](work-log.md); they do not replace final-source results.
+[WebGL evidence](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/perf-w5b/source-final-native-webgl), [WebGPU evidence](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/perf-w5b/stream-native-webgpu), [fresh base](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/perf-w5b/baseline). Earlier source snapshots remain historical evidence in the other folders and [work-log.md](work-log.md); they do not replace final-source results.
 
 ## Changes and exactness checks
 
@@ -72,7 +72,7 @@ The final E18 browser suites have **28 passing checks and one existing physical-
 | Storm `T-E28-10-frame` | High/low frame p95 **5.2/5.5 ms**, maxima **7.5/14.7 ms**, heaps **103.98/68.82 MB**. |
 | Four disposal cases `T-E23-19-lifecycle`, `T-E29-20-lifecycle` | L5/L7 high/low round trips pass heap/GPU resource limits and preserve gore Off, flash reduction on and camera shake off. |
 
-The final lighting/weather/lifecycle batch passes **14/14** in 5.1 minutes. Evidence: [E18](source-final-e18/), [lighting/weather](source-final-light-weather/), [lifecycle](source-final-lifecycle/), [receipts](receipts/).
+The final lighting/weather/lifecycle batch passes **14/14** in 5.1 minutes. Evidence: [E18](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/perf-w5b/source-final-e18), [lighting/weather](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/perf-w5b/source-final-light-weather), [lifecycle](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/perf-w5b/source-final-lifecycle), [receipts](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/perf-w5b/receipts).
 
 ## Matrix and visual review
 
@@ -80,7 +80,7 @@ The final lighting/weather/lifecycle batch passes **14/14** in 5.1 minutes. Evid
 
 The first WebGL pass was 96/96 (631 s); visual inspection found its inherited HMG fixture hid the mount behind scenery. A revised isolated production nest adds a target-HP-0 gate and passes six replacement WebGL rows. The full WebGPU pass uses that revised fixture and passes 96/96 (618 s). Thus 198 raw cases were executed, with six superseded; original receipts are retained. [coverage-final.json](coverage-final.json) identifies the final 192 cases and hashes the catalog sources.
 
-[The visual review](review/README.md) describes every scene and links all sixteen condition comparisons. It records retained clothing/headwear/bodies, held props, navigation around the table, convoy/LOD/cutaway behavior, the visible HMG barrel/flash and body, bounded sedan reveal, cover hits, ash, rain and rocket effects. It also records crop limits, bright light-lab washout and high close rocket-smoke occlusion; it does not claim those existing readability issues were fixed. Final L4 war and 20-body-return captures were also inspected: [captures](source-final-captures/) and [native WebGL](source-final-native-webgl/).
+[The visual review](review/README.md) describes every scene and links all sixteen condition comparisons. It records retained clothing/headwear/bodies, held props, navigation around the table, convoy/LOD/cutaway behavior, the visible HMG barrel/flash and body, bounded sedan reveal, cover hits, ash, rain and rocket effects. It also records crop limits, bright light-lab washout and high close rocket-smoke occlusion; it does not claim those existing readability issues were fixed. Final L4 war and 20-body-return captures were also inspected: [captures](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/perf-w5b/source-final-captures) and [native WebGL](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/perf-w5b/source-final-native-webgl).
 
 ## Tests and verifier receipts
 
@@ -95,11 +95,11 @@ All heavy CPU suites ran on Hetzner, at most four workers: **1,651 unit tests pa
 
 ### Inherited visual failures, controlled against 8db
 
-- `T-E25-06`: final-source shadow darkness **-0.07202395355885516**, hue **11.380967638577374**, exactly matching original source. Both captures were inspected; the expected dark purple ground shadow is absent at the probe. [Control](shadow-check/).
-- `T-E29-14`: rocket courier contrast high/low **2.019929327882546 / 2.0897818373034385**, below 3.0. Original and final source produce **byte-identical captures and masks**, with identical pixel counts/ratios. The courier is among a lit follower crowd; no contrast repair is claimed. The canonical test stops at rocket, so its subsequent horde contrast remains unmeasured. [Control](l7-visual-check/).
+- `T-E25-06`: final-source shadow darkness **-0.07202395355885516**, hue **11.380967638577374**, exactly matching original source. Both captures were inspected; the expected dark purple ground shadow is absent at the probe. [Control](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/perf-w5b/shadow-check).
+- `T-E29-14`: rocket courier contrast high/low **2.019929327882546 / 2.0897818373034385**, below 3.0. Original and final source produce **byte-identical captures and masks**, with identical pixel counts/ratios. The courier is among a lit follower crowd; no contrast repair is claimed. The canonical test stops at rocket, so its subsequent horde contrast remains unmeasured. [Control](l7-visual-check).
 - `T-E29-18`: all four `pair-*` anchors read by the test are absent from the raw public D-FAIR layout. That file is byte-identical to 8db. Both qualities fail before their image loop on original and final source, so those W5/W6 pair captures remain unmeasured. No criterion or fixture was loosened. [Fixture evidence](l7-visual-check/pair-fixture.json).
 
-The original-source control is an immutable separate production build made earlier with tracked runtime overrides loaded from `git show 8db67f235`; the overrides are hash-verified in [baseline-control.json](diagnostic/baseline-control.json). No source checkout or forbidden reference files were modified. [Verifier JSON](verifiers/) and complete compressed [console receipts](receipts/) retain the failures as well as passes.
+The original-source control is an immutable separate production build made earlier with tracked runtime overrides loaded from `git show 8db67f235`; the overrides are hash-verified in [baseline-control.json](diagnostic/baseline-control.json). No source checkout or forbidden reference files were modified. [Verifier JSON](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/perf-w5b/verifiers) and complete compressed [console receipts](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/perf-w5b/receipts) retain the failures as well as passes.
 
 ## Constraints and remaining work
 

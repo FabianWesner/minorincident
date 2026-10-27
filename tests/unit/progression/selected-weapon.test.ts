@@ -46,20 +46,22 @@ test.each([1, 2, 3, 4, 5, 6, 7, 8, 9] as const)('@E13 Q-158 L%i handover and men
   if (decoded.status !== 'ok') throw new Error('Completed campaign did not reload');
   const g = game(decoded.save);
   await g.continueCampaign(decoded.save, (level + 1) as Level);
-  expect(selected()).toBe(id);
+  const expected = level === 1 ? 'weapon.bat' : id;
+  const expectedKey = level === 1 ? 2 : key;
+  expect(selected()).toBe(expected);
   // Menu Continue traverses the same public entry point without a level override.
   await g.continueCampaign(decoded.save);
-  expect(selected()).toBe(id);
-  world.combat!.runner.loadout.input({ ...emptyInput(), selectedWeaponKey: key }, 120);
-  expect(weaponKey(selected())).toBe(key);
+  expect(selected()).toBe(expected);
+  world.combat!.runner.loadout.input({ ...emptyInput(), selectedWeaponKey: expectedKey }, 120);
+  expect(weaponKey(selected())).toBe(expectedKey);
 });
 
-test.each([2, 3, 4, 5, 6, 7, 8, 9, 10] as const)('@E13 Q-158 Continue into L%i falls back by key order when the saved action is absent', async level => {
+test.each([2, 3, 4, 5, 6, 7, 8, 9, 10] as const)('@E13 Q-198 Continue into L%i chooses the best usable weapon when the saved action is absent', async level => {
   const save = debugCampaign(level, null);
   save.selectedAction = 'weapon.shotgun'; // valid historical action, unavailable in the destination rack
   save.ownedActions = save.ownedActions.filter(id => id !== 'weapon.shotgun');
   for (const side of ['LEFT', 'RIGHT'] as const) save.racks[side] = save.racks[side].filter(id => id !== 'weapon.shotgun');
-  const expected = level === 10 ? 'weapon.fire-axe' : 'weapon.pipe-bomb';
+  const expected = level === 10 ? 'weapon.fire-axe' : 'weapon.handgun';
   if (level !== 10) {
     save.ownedActions.push(...['weapon.pipe-bomb', 'weapon.handgun'].filter(id => !save.ownedActions.includes(id)));
     save.racks.RIGHT = ['weapon.handgun', 'weapon.pipe-bomb'];
@@ -75,6 +77,16 @@ test.each([2, 3, 4, 5, 6, 7, 8, 9, 10] as const)('@E13 Q-158 Continue into L%i f
   expect(selected()).toBe(expected);
   expect(log).toHaveBeenCalledWith(expect.stringContaining('falling back'));
   log.mockRestore();
+});
+
+test.each([1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const)('@E13 Q-198 Continue into L%i from an old save chooses its best usable weapon', async level => {
+  const save = debugCampaign(level, null);
+  delete save.selectedAction;
+  const expected = ['weapon.fists', 'weapon.bat', 'weapon.fire-axe', 'weapon.handgun', 'weapon.army-mg', 'weapon.army-mg', 'weapon.shotgun', 'weapon.rocket-launcher', 'weapon.rocket-launcher', 'weapon.fire-axe'][level - 1];
+  const decoded = decodeSave(JSON.stringify(save));
+  if (decoded.status !== 'ok') throw new Error('Legacy campaign did not reload');
+  await game(decoded.save).continueCampaign(decoded.save);
+  expect(selected()).toBe(expected);
 });
 
 test('@E13 Q-158 a live menu save captures selection and acquired racks for Continue', async () => {

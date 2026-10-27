@@ -81,6 +81,8 @@ export interface SceneSpec {
   /** Navigation-contrast measurement (E31-AC16): route vs verge from `layouts/<district>/routes.json` or an explicit `route`; gated by `expect.navContrastMin`. */
   contrast?: { district?: string; route?: [number, number][][]; halfWidthM?: number; vergeM?: number; stepM?: number; landmarks?: [number, number, number][] };
   expect?: Expectations;
+  /** Q-196 aim assist for the scene's courier (default `Default`); `metrics.aim` scores autoAim gun shots. */
+  aimAssist?: import('../../sim/combat/AimAssist').AimAssistSetting;
   /** alpha-white: crowd-figure colour at every sheet frame (crowd pixels = frame with vs without the crowd view,
    * courier and HUD bars hidden). `whiteShareMax` bounds the share of pale, unsaturated body pixels (a hit-flash
    * or fallback-material white mass); `lumaRiseMax` bounds mean body brightness against frame 0; `hueDriftMaxDeg` bounds the saturation-weighted hue against frame 0 (the live
@@ -222,6 +224,10 @@ export interface Expectations {
   specialActiveMin?: number;
   specialActiveMove?: import('../../data/infected').InfectedSpecialMove;
   courierHpMin?: number;
+  /** Q-196 `metrics.aim`: courier gun shots during autoAim, the share that struck a living infected, and the worst angle to the autoAim intent. */
+  aimShotsMin?: number;
+  aimHitShareMin?: number;
+  aimIntentErrorMaxDeg?: number;
   megaCoarseFramesMin?: number;
   megaDetailedFramesMin?: number;
   /** L4: rendered-hull + 0.3 m versus all live posed actor footprints, every sampled tick. */

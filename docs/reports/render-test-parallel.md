@@ -19,7 +19,7 @@ Telemetry samples at one-second intervals: the owned process tree's summed RSS a
 
 ## Measurements
 
-[Committed measurements](render-test-parallel-data.json) retain resource samples, timings, gates, decoded-pixel hashes and backend capabilities. Raw PNGs and complete metrics remain under `test-results/render-parallel/` in this worktree. All memory figures below are **MiB**; earlier progress updates incorrectly labeled division by 1,000 as GiB.
+[Committed measurements](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/render-test-parallel-data.json) retain resource samples, timings, gates, decoded-pixel hashes and backend capabilities. Raw PNGs and complete metrics remain under `test-results/render-parallel/` in this worktree. All memory figures below are **MiB**; earlier progress updates incorrectly labeled division by 1,000 as GiB.
 
 | Setup | Scenes/min | Peak RSS (MiB) | Peak CPU (%) | GPU mean/peak (%) | Unexpected outcomes |
 | --- | ---: | ---: | ---: | ---: | ---: |

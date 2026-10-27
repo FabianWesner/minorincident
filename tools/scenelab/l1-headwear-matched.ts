@@ -8,7 +8,7 @@ import type { Game } from '../../src/Game';
 import type { EntitySnapshot } from '../../src/sim/world/types';
 import type { CameraPose } from '../../src/render/View';
 
-const out = resolve(process.env.MATCH_OUT ?? 'docs/reports/l1-hats-faces/matched');
+const out = resolve(process.env.MATCH_OUT ?? 'test-results/l1-hats-faces/matched');
 const quality = process.env.MATCH_QUALITY ?? 'low', zoom = Number(process.env.MATCH_ZOOM ?? 1.5), only = process.env.MATCH_SHOTS?.split(',');
 mkdirSync(out, { recursive: true });
 const servers = [];

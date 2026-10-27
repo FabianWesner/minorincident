@@ -1,4 +1,4 @@
-import { stripGlbTextures } from '../helpers/stripGlbTextures';
+import { stripGlbTextures } from '../../../tools/assets/stripGlbTextures';
 import { readFileSync, statSync } from 'node:fs';
 import { expect, test } from 'vitest';
 import { Box3, Matrix4, Vector3 } from 'three';

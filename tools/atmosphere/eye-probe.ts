@@ -4,7 +4,7 @@ import { spawn } from 'node:child_process';
 import { resolve } from 'node:path';
 import { PNG } from 'pngjs';
 import { SceneSession, stopServer, port, origin } from '../scenelab/session';
-const out = `docs/reports/atmosphere/eye-probe${process.env.ATMOSPHERE_BASELINE_DIST ? '-baseline' : ''}`;
+const out = `test-results/atmosphere/eye-probe${process.env.ATMOSPHERE_BASELINE_DIST ? '-baseline' : ''}`;
 let baselineServer: ReturnType<typeof spawn> | undefined;
 const session = new SceneSession({ viewport: { width: 1600, height: 900 } });
 const lum = (r: number, g: number, b: number) => {

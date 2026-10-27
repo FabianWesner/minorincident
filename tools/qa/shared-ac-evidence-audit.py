@@ -1,7 +1,9 @@
 from pathlib import Path
 import json,gzip,hashlib,re
-root=Path('docs/reports/ac-close-shared');ev=root/'evidence';d=json.loads((ev/'final-source.json').read_text())
-for path,digest in {**d['sha256'],**d['supplementalDiagnostics']}.items():assert hashlib.sha256(Path(path).read_bytes()).hexdigest()==digest,path
+root=Path('tests/fixtures/reports/ac-close-shared');ev=root/'evidence';d=json.loads((ev/'final-source.json').read_text())
+def input_path(path):
+ return Path(path.replace('docs/reports/ac-close-shared/', 'tests/fixtures/reports/ac-close-shared/', 1)) if path.startswith('docs/reports/ac-close-shared/') else Path(path)
+for path,digest in {**d['sha256'],**d['supplementalDiagnostics']}.items():assert hashlib.sha256(input_path(path).read_bytes()).hexdigest()==digest,path
 for path,c in d['unchangedMeasurementContracts'].items():assert hashlib.sha256(Path(path).read_bytes()).hexdigest()==c['sha256'],path
 for p in ev.glob('*.json.gz'):json.loads(gzip.decompress(p.read_bytes()))
 moves=json.loads(gzip.decompress((ev/'move-boundaries.json.gz').read_bytes()));assert len(moves)==14 and sum(len(m['captures']) for m in moves)==168
@@ -9,9 +11,9 @@ assert all(len(m['proof'])==11 and len(m['captures'])==12 and not m['consoleErro
 bars=json.loads(gzip.decompress((ev/'phone-bars-final.json.gz').read_bytes()));assert len(bars['proofs'])==7 and len(bars['images'])==58
 g=json.loads((ev/'G-final-images.json').read_text());assert len(g)==28 and len({x['path'] for x in g})==28 and all(len(x['sha256'])==64 for x in g)
 assert len([p for p in root.rglob('*') if p.suffix.lower() in ['.png','.jpg','.jpeg','.webm','.mp4']])==12
-for doc in [root/'README.md',Path('docs/reports/verify-sweep/ACs.md'),Path('docs/reports/verify-sweep/README.md')]:
+for doc in [Path('docs/reports/ac-close-shared/README.md'),Path('docs/reports/verify-sweep/ACs.md'),Path('docs/reports/verify-sweep/README.md')]:
  for target in re.findall(r'\]\(([^)]+)\)',doc.read_text()):
-  if '://' not in target and not target.startswith('#'):assert (doc.parent/target.split('#')[0]).exists(),(str(doc),target)
+  if '://' not in target and not target.startswith(('#', '/')):assert (doc.parent/target.split('#')[0]).exists(),(str(doc),target)
 s=json.loads(Path('specs/status.json').read_text());assert [s[e] for e in ['E07','E27','E28']]==['in-progress','done','in-progress']
 for epic,stem in [('E07','verify-E07-final'),('E27','verify-E27-headwear-final'),('E28','verify-E28-headwear-final')]:
  c=json.loads((ev/(stem+'-checks.json')).read_text())['checks']

@@ -6,7 +6,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import manifest from '../../../src/assets/manifest.json';
 import bakes from '../../../src/assets/civilianBakes.json';
-import { stripGlbTextures } from '../helpers/stripGlbTextures';
+import { stripGlbTextures } from '../../../tools/assets/stripGlbTextures';
 import { decodeCivilianBake } from '../../../src/assets/civilianBakeData';
 import { prepareCivilianRig } from '../../../src/render/npc/prepareCivilianGeometry';
 
@@ -34,7 +34,7 @@ for (const id of figures) for (const lod of ['lod0', 'lod1', 'lod2'] as const) t
   expect(total).toBeGreaterThan(500);
   expect(absent / total).toBeLessThan(.01);
   const tier = Number(lod.slice(-1));
-  const receipt = JSON.parse(readFileSync(`docs/reports/l1-all-new/builds/${id}/lod${tier}.json`, 'utf8'));
+  const receipt = JSON.parse(readFileSync(`tests/fixtures/reports/l1-all-new/builds/${id}/lod${tier}.json`, 'utf8'));
   // A position-only reduction crosses UV islands. The authored middle tier
   // also supplies far anatomy at a smaller texture size, within its 4k budget.
   expect(receipt.body).toMatch(new RegExp(`assembled-lod${Math.min(tier, 1)}\\.glb$`));

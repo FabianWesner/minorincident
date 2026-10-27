@@ -1,0 +1,111 @@
+{
+  "note": "PO 10-26 Q-196: \"Ideally the MP shots at the Zombie that is closes to where I am aiming at (bc I cannot be that precise without my mouse).\" Idle keyboard fire (weapon.shotgun) with zombies at 0, +-30, +-60 deg and 2-14 m: >= 90 % of shots strike an infected.",
+  "ground": "grass",
+  "aimAssist": "Default",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0,
+      "god": true,
+      "loadout": [
+        "weapon.bat",
+        "weapon.shotgun"
+      ]
+    },
+    {
+      "id": "front",
+      "kind": "infected",
+      "archetype": "infected.brute",
+      "at": [
+        8,
+        0.8
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "far",
+      "kind": "infected",
+      "archetype": "infected.brute",
+      "at": [
+        14,
+        -1
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "right30",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        6.06,
+        3.5
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "left30",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        6.06,
+        -3.5
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "right60",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        2,
+        3.46
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "left60",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        1.5,
+        -2.6
+      ],
+      "state": "idle"
+    }
+  ],
+  "script": [
+    {
+      "frame": 1,
+      "actor": "courier",
+      "do": {
+        "autoAim": {
+          "move": [
+            0,
+            0
+          ],
+          "seconds": 2.5
+        }
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      4,
+      0
+    ]
+  },
+  "frames": 170,
+  "sheet": 6,
+  "expect": {
+    "consoleErrors": 0,
+    "aimShotsMin": 3,
+    "aimHitShareMin": 0.9
+  },
+  "name": "aim-assist-keyboard-shotgun"
+}

@@ -5,7 +5,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { MeshLambertNodeMaterial } from 'three/webgpu';
 import manifest from '../../../src/assets/manifest.json';
-import { stripGlbTextures } from '../helpers/stripGlbTextures';
+import { stripGlbTextures } from '../../../tools/assets/stripGlbTextures';
 import { bakeInfected, civilianClips, framesPerClip } from '../../../src/render/characters/bakeInfected';
 import { crowdLimbParts, packCrowdParts } from '../../../src/assets/crowdParts';
 import { compactCrowdGeometry } from '../../../src/render/characters/compactCrowdGeometry';
@@ -105,10 +105,10 @@ test('production indexed skin batches retain a constant, correct severance mask 
 
 test('L1 proof sources and additional unseen builds publish validated compressed skins within every standalone byte limit', () => {
   for (const id of ['npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-woman-b', 'inf.nurse', 'inf.dog']) {
-    const receipt = JSON.parse(readFileSync(`docs/reports/skinned-prod/builds/${id}/build.json`, 'utf8'));
+    const receipt = JSON.parse(readFileSync(`tests/fixtures/reports/skinned-prod/builds/${id}/build.json`, 'utf8'));
     expect(receipt.manualSteps).toEqual([]); expect(receipt.receipts).toHaveLength(3);
     expect(Object.keys(receipt.preparedBakes)).toHaveLength(id.startsWith('npc.') ? 6 : 3);
-    expect(JSON.parse(readFileSync(`docs/reports/skinned-prod/builds/${id}/validation.json`, 'utf8')).flatMap((r: { errors: string[] }) => r.errors)).toEqual([]);
+    expect(JSON.parse(readFileSync(`tests/fixtures/reports/skinned-prod/builds/${id}/validation.json`, 'utf8')).flatMap((r: { errors: string[] }) => r.errors)).toEqual([]);
     for (const row of receipt.receipts) for (const tier of row.tiers) expect(statSync(tier.path).size).toBeLessThanOrEqual([600000, 250000, 150000][row.lod]);
   }
 });
@@ -184,8 +184,8 @@ test('every newly opened wound boundary is closed by cap edges at all production
   for (const def of manifest.filter(d => 'crowdSkin' in d && d.crowdSkin && d.id !== 'char.corgi')) for (const lod of [0, 1, 2]) {
     const path = lod === 0 ? def.glb : lod === 1 ? def.lods!.lod1 : def.lods!.lod2;
     const { scene } = await loader.parseAsync(stripGlbTextures(readFileSync(path!)), '');
-    const current = `docs/reports/l1-all-new/builds/${def.id}/lod${lod}.json`;
-    const fit = JSON.parse(readFileSync(existsSync(current) ? current : `docs/reports/skinned-prod/builds/${def.id}/lod${lod}.json`, 'utf8'));
+    const current = `tests/fixtures/reports/l1-all-new/builds/${def.id}/lod${lod}.json`;
+    const fit = JSON.parse(readFileSync(existsSync(current) ? current : `tests/fixtures/reports/skinned-prod/builds/${def.id}/lod${lod}.json`, 'utf8'));
     const tolerance = fit.body === 'rigid parts welded by position' ? 2e-4 : 1e-6;
     const body = (scene.getObjectByName('skin_body') as SkinnedMesh).geometry;
     const joints = (scene.getObjectByName('skin_body') as SkinnedMesh).skeleton.bones.map(b => b.name);

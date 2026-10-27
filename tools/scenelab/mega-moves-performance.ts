@@ -4,7 +4,7 @@ import type { SceneSpec } from '../../src/debug/scenelab/spec';
 
 /** Run after a fresh build, through tools/perf/quiet-run.sh; one native headless Metal browser, E18 budgets unchanged. */
 const phone = process.env.MEGA_PHONE === '1';
-const out = process.env.MEGA_OUTPUT ?? (phone ? 'docs/reports/phone-perf/mega' : 'docs/reports/l10-mega-moves');
+const out = process.env.MEGA_OUTPUT ?? (phone ? 'test-results/phone-perf/mega' : 'test-results/l10-mega-moves');
 mkdirSync(out, { recursive: true });
 const rows: unknown[] = [];
 try {

@@ -1,6 +1,6 @@
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 
-const root = 'docs/reports/perf-sweep';
+const root = 'test-results/perf-sweep';
 const phase = process.argv[2] ?? 'after';
 type Row = { spot: { id: string }; p50: number; p95: number; p99: number; hitch: number; simMs: number; drawCalls: number; triangles: number; heapMB: number; updateMs: number; renderMs: number; backend: string };
 type Cell = { level: string; tier: string; backend: string; sourceRevision?: string; rows: Row[] };
@@ -31,4 +31,4 @@ lines.push('', `${cells.length}/40 cells recorded.`, '');
 writeFileSync(`${root}/${phase}-table.md`, lines.join('\n'));
 writeFileSync(`${root}/${phase}-ranked.json`, JSON.stringify(offenders.sort((a,b) => b.ratio-a.ratio), null, 2));
 console.log(lines.join('\n'));
-if (existsSync(`${root}/notes.md`)) writeFileSync(`${root}/README.md`, readFileSync(`${root}/notes.md`, 'utf8') + '\n' + lines.join('\n'));
+if (existsSync('docs/reports/perf-sweep/notes.md')) writeFileSync(`${root}/README.md`, readFileSync('docs/reports/perf-sweep/notes.md', 'utf8') + '\n' + lines.join('\n'));

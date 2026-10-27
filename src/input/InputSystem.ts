@@ -154,9 +154,13 @@ export class InputSystem implements Lifecycle {
     }
     const action = held ? this.bindings.action(code) : this.heldTokens.get(code);
     if (held && action) {
-      if (action.startsWith('aim')) { this.pointer.valid = false; this.manualAim = true; }
+      // Q-196: a keyboard attack key (J/K/Space) fires along the keyboard facing, never toward a resting cursor. The pointer
+      // stayed valid after any menu click, so keyboard shots flew at wherever the idle cursor sat; moving the mouse restores it.
+      const keyboardFire = action === 'left' || action === 'right';
+      if (action.startsWith('aim') || keyboardFire) this.pointer.valid = false;
+      if (action.startsWith('aim')) this.manualAim = true;
       if (action.startsWith('move')) this.manualAim = false;
-      this.setScheme(action.startsWith('aim') || this.scheme === 'touch' ? 'keyboard' : this.pointer.valid ? 'mouse-keyboard' : 'keyboard');
+      this.setScheme(action.startsWith('aim') || keyboardFire || this.scheme === 'touch' ? 'keyboard' : this.pointer.valid ? 'mouse-keyboard' : 'keyboard');
       if (action.startsWith('aim') && !this.aiming()) this.arrowStart = performance.now();
     }
     // Short arrow taps snap before releasing the key, preserving combined diagonals.

@@ -15,7 +15,7 @@ Phone: touch/mobile 412×915, DPR 1, 10 Mbps down /3 Mbps up /150 ms RTT. Deskto
 
 Baseline is merged commit 0f885ece. Its default-renderer run deadlocked after L1 selection, so the recorded before batch uses `?preload=0`; after uses default preload. This is an explicit measurement deviation: the comparison includes the repaired preload policy. Frozen builds prevent the unit build test from replacing benchmark files. After startup snapshot: 9e356544; subsequent commits only retire resources, settle the audio suspension fixture, retain streamed shadow flags and clarify the same tier-selection logic.
 
-[Run summaries](load3-timings.json). Complete per-file critical-path tables: [phone](load3-phone-critical-path.csv), [desktop](load3-desktop-critical-path.csv). Values are median CDP bytes received by the playable mark, including partial streams; complete responses include response headers. Build hashes are normalized to HASH. A whole music stream is not counted merely because its request began before play. These wire totals do not use virtual gzip savings.
+[Run summaries](load3-timings.json). Complete per-file critical-path tables: [phone](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/load3-phone-critical-path.csv), [desktop](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/load3-desktop-critical-path.csv). Values are median CDP bytes received by the playable mark, including partial streams; complete responses include response headers. Build hashes are normalized to HASH. A whole music stream is not counted merely because its request began before play. These wire totals do not use virtual gzip savings.
 
 ### Largest phone critical-path removals
 

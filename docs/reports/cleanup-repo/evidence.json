@@ -1,0 +1,670 @@
+{
+  "base": "ecbbd06bdf51e33a1c5cdf47e5d3f65b5a1ed19a",
+  "testedRevision": "afcbb9de3396b87c99ab9acaa6324726fb9359e9",
+  "testedSourceTrees": {
+    "src": "2525497d1551ae9c7e2c0d2b29d9f91e3520292e",
+    "tests": "7f68056698e6b0a1969225a1d3ee5db830b18ddc",
+    "tools": "e3525e58f1ef9796f726fe2667c234cffccf9caf",
+    "package.json": "25aa14b513af857f1d80f25322d3190a4860c916",
+    "package-lock.json": "0615b1a2555a9bad68078c84842a01f58e820beb"
+  },
+  "before": {
+    "all": {
+      "files": 42798,
+      "bytes": 4945721663
+    },
+    "docs/reports/": {
+      "files": 26099,
+      "bytes": 2635367566
+    },
+    "test-results/": {
+      "files": 6132,
+      "bytes": 914527320
+    }
+  },
+  "after": {
+    "all": {
+      "files": 19701,
+      "bytes": 2241721251
+    },
+    "docs/reports/": {
+      "files": 8710,
+      "bytes": 806930375
+    },
+    "test-results/": {
+      "files": 0,
+      "bytes": 0
+    }
+  },
+  "diskKiB": {
+    "before": 4921608,
+    "after": 2231432
+  },
+  "diskMeasurement": {
+    "revision": "c762a1c682643c0e4522a549e952138ab2459086",
+    "files": 19701,
+    "diskKiB": 2231432,
+    "fileBlocks": 4462856,
+    "method": "Tracked files hard-linked read-only into an empty detached worktree; du -sk measures per-tree allocated blocks. One inode/data copy per source file; source paths stay intact; all temporary links removed afterward."
+  },
+  "archive": {
+    "files": 23105,
+    "bytes": 2704773605,
+    "originalGitBlobsVerified": true,
+    "manifestSha256": {
+      "dedupe_alpha-look.jsonl": "62fa4bcbaaccd0bc3d57369001d345684909e967a1a7932510377e67674f3c1a",
+      "dedupe_alpha-render-perf.jsonl": "475e23704f24bb8dab7202aa7357514bf9d7bd398c36c1cda9bf1d85071a348a",
+      "dedupe_alpha-s2.jsonl": "9e8edbf935f1b8a61480569f2b250918ab40962844cfeb7e0592d8d5cb249f8c",
+      "dedupe_astra-l3-p95.jsonl": "919053940422022c5463d44d8d4bae50002e90776cf2be16220b11b3f4ee8c4f",
+      "dedupe_atmosphere-2.jsonl": "a9889d27b8e9d0947b434d25b8b24aea1d7e569f4f113d983d9cde8acc332c0a",
+      "dedupe_browser-pool.jsonl": "a4bb3b6b7ff0ffb3c118fa0623d8a8d18e70289443809c0b97b20730040e7545",
+      "dedupe_camera-hotfix.jsonl": "d4f827fe0df780e73444b4d979d73d299b4f85a78fc28a5308f82357ac4d4599",
+      "dedupe_collision-registry.jsonl": "3680e68a546c17747277ff0fbb6c80f7ccc383727c29adf8f962ffca5cbfb5fb",
+      "dedupe_footprints.jsonl": "353b8cb7120ab8553672d9cc3e2d67e505a47ee28e29722086f6cc11ac70383f",
+      "dedupe_l10-mega-moves.jsonl": "b978201d7820c7174f48ea2c043200df1598c82e75c632e1f06b9d6780fecdd9",
+      "dedupe_l10-q2.jsonl": "4ff507fc3f64dd4b62089de9f73ec455a29651f37ac87513eb671ade668bcdc3",
+      "dedupe_l4-storyline.jsonl": "6ae981ba95a9cfe1ff9dcd999a1ccbae5a17b763b1e6ab224f0846a1ca400fe7",
+      "dedupe_l5-district.jsonl": "43b736b22b5f76b7cb9eecc714f5b14e4295e2c96c7b68bdf6e0176a03d8a8d3",
+      "dedupe_l5-encounters.jsonl": "594be648116275245e7868e26aa298874d2ca99fd2771e5797c3bf43f307f165",
+      "dedupe_l7-perf.jsonl": "1541ddf6b9df4840e294acca976042772d5f5bc1196bb3be553d1d12e519bdce",
+      "dedupe_l7-tier.jsonl": "8976384489a11a6b98dbed9fe0aeba773acd5a317509a921c7d4691b51193045",
+      "dedupe_merge-batch10.jsonl": "73b97166905105721965c02af73aaaaeaf3320afdb5dc20f92b0756f88bc97ce",
+      "dedupe_merge-batch11.jsonl": "6ec5463dbfee61006a40dd7dd35c69421ae44c3bee7a5877d5b7228976021e85",
+      "dedupe_merge-batch12.jsonl": "e9d0b9e5d7bc11299fbd1595ac5711f25833da4aa7f75ef9a2b02a4c0c0363d5",
+      "dedupe_merge-batch13a.jsonl": "ecdded5bf066584b7d403fc7c3f068a15c96b65480631574ea6d86a011eede3b",
+      "dedupe_merge-batch13f.jsonl": "2e66ed8bca6aa5809224fcd68a82a2a50b9c861783656dec64c018fa0b56b877",
+      "dedupe_merge-batch7.jsonl": "d07f0e1941d3975a45a0f31a0ac5a542b547e11afa2ef34ecbbaae9059ce04d1",
+      "dedupe_night-bodies-eyes.jsonl": "63bd124e4a9986639b9a55b61f11b5aec1ed27e04bd5f1a8e3a5290a9407dd43",
+      "dedupe_perf-e18-final.jsonl": "6d73a1acc615462b318f3edc4573d90f8c613c282b64099c0dd382d3b0162669",
+      "dedupe_perf-heap-w5.jsonl": "35906d60246a95f81b2f0d2cbce9f621d8c519d2df93bae0092f7e595d5cf585",
+      "dedupe_perf-w5b.jsonl": "ed908c61a06775ed0239926e2a99357c39fbaa8bb513ce51e1bdbf47f9286854",
+      "dedupe_postmerge-10.jsonl": "41d4f08912887e30cbc3605029022b577264fc1806180d0ef18639cd6da8f233",
+      "dedupe_postmerge-2.jsonl": "19818181ca9b5a90ccf186157217d00dabc7284408c1e96194173a173ad728b7",
+      "dedupe_seethrough-silhouette.jsonl": "4f506b46714e65bd0b6bb10c01a3ec791d97a57df22c7bd15be17b55621e014b",
+      "dedupe_spec-audit.jsonl": "5546b672debbfb7258f1005a94c118784eb7f490b28b75ab6dec994deb8cf41a",
+      "dedupe_vfx-stunning.jsonl": "430be81ae22f1a56333091cc9b9cf4da5c16498857634ddbd5baff1da596787e",
+      "dedupe_wave3-sim.jsonl": "f2bbad7575571061cee8fc1283a547bf6f9a905419384d672c0149c9efa74170",
+      "matrix-diagnostics_merge-batch10.jsonl": "310d4284d531285fb086d2ec5a41092dc9b66e419f6669a25be916d9a6c14847",
+      "matrix-diagnostics_merge-batch11.jsonl": "efeb227f96297b8ce20fb6cea14287a69e667a61db788164e2896d70eee3549b",
+      "matrix-diagnostics_merge-batch12.jsonl": "0a737de701869a3de54b8ad8973e1f591b06b7bda6a43c8c301d9ce81cbc85b7",
+      "reports_PKG-04-black-viewport-captures.jsonl": "0fb304095b9ccfabc1137de90d5e91a563484030ef44efcff533b65dc58ae4c9",
+      "reports_ac-close-l4-l6.jsonl": "5ab467f709a38e70bb284ebcba2cab6118056d6bf6718c7e6672be694eeb7d21",
+      "reports_ac-close-l7-l10.jsonl": "d2ae1b0801ee06059fcdde6c235a88ccfda080c30cffab1f95b4f69c7fe86f30",
+      "reports_aggro-tune.jsonl": "df8ffd921c4791c437d0f5aca6930ed13a2db8ef24695037ba296b094c970653",
+      "reports_alpha-asset.jsonl": "3b8b73785aeed2cde574b0d1f9b001eb907d8a6790bdfe8bb3fbc4ca73a59ffb",
+      "reports_alpha-aware-all.jsonl": "0f7e162b04ece411af8845417fa6f44d071947b744e9c8e8041cb77be7176a5d",
+      "reports_alpha-bars.jsonl": "f05921965dbbea232366da108866cca0b3241551ad76dab5afe76d122e8c73ab",
+      "reports_alpha-look.jsonl": "ae49143b8931fdd98b3c2297b44acf00940c047463e0b4752160bd313659d5c3",
+      "reports_alpha-render-perf.jsonl": "b18eb34975bb5de27280627aa6643bfeca8683f9c058bf3fb04ffb483361d1dc",
+      "reports_alpha-s1.jsonl": "c3d04aedc65bac705a4865b78e19b07098301a099e667a6e1b073bd0fc43e6a9",
+      "reports_alpha-s2.jsonl": "8373a1dae701d6193bed4606cea60135fadcd30e56645ddcc2c8606d54e062c9",
+      "reports_alpha-s3.jsonl": "8fe21cc915c7db59916b4eeaa7cb1c520fad0031196307616a2866b734514258",
+      "reports_alpha-silhouette.jsonl": "b26eb482378c5c414e479454858c200489732bf4ba0a1bbbf93b98d46da3020b",
+      "reports_alpha-variants.jsonl": "d75b2a30c9989ea88925e9424168082948de329939551777d20aa3d5b1a18ee1",
+      "reports_alpha-white.jsonl": "15f927345dd208149f9829a52a1842db93315431175cc8083e3031c67211db22",
+      "reports_apc-sedan.jsonl": "c2b109a32c1b0c866c909fdfb3d83d9dfd87e37b50f11b4fd0a9ec9252109925",
+      "reports_art-l2l3-qa.json.jsonl": "d9edf8e97f902993c2d14c49251af7c59f4c5a8cc5fa54ce17f57274a7b90e40",
+      "reports_art-l2l3.json.jsonl": "81e7832a8bae0546239d9fa9196de7abab6d42aaa75d4940ee8743344a081745",
+      "reports_astra-hitches.jsonl": "8610713603aa0d4b6615554e9ec59bc7bdc5856d09e3b2ad665723a0ef6b78e9",
+      "reports_astra-l3-p95.jsonl": "39fbdc2da466821cbf2b35485f0733890b409ee369d5d64ac64fc8502e8ddd07",
+      "reports_atmosphere-2.jsonl": "98623a6351b0098eb87a60801173c7115d8f891d393d7c2ec0fbcb322938b6b8",
+      "reports_atmosphere.jsonl": "e91776ddbdde90491035bb7a02981ba11f781aa9d34990ae22ab73e379ee5c07",
+      "reports_batch14-fix.jsonl": "d4ae149e04e484fe5df62944f95ca74a468772e13445940d2c6f16490481c84a",
+      "reports_batch15.jsonl": "dfa187d67c437eb6a162a7c63fa616b2ef6115e2972d3be2e1a58eb20ddff22c",
+      "reports_batch16.jsonl": "780d6f5abeb57e8f47aba1545c36755faa3ec23f12d54b28a3591bfe648bfa7f",
+      "reports_browser-pool.jsonl": "1813874066c43492a2920e5742b7b6b5d9976213321fdfddb20bdf792b74b104",
+      "reports_camera-hotfix.jsonl": "bd76fe24f4e85552573c44b390d83a3be6d7f9c0732c12ee1f047781777d0cec",
+      "reports_carryover-ammo.jsonl": "e7189082fb2a5925c170a8193c48f8b0b9557eb802f5c33fb62e4a89a7e77b98",
+      "reports_collision-placement.jsonl": "ed1bdb7db3e526ddbe11e8d6dd6a6a3fe3c858a9756b8c7b3d6d825fb3293d43",
+      "reports_collision-registry.jsonl": "908b7224089fe1dd69dae3d31c63df1442b6784430855c50e4a5680a7ff288dc",
+      "reports_controls-content.jsonl": "d5edf045ec9800847adda03bdce99c6a820539468b143d6726cc23c4db16f3d2",
+      "reports_corpse-look-1022.jsonl": "36ed1324761233ac37f31c5c80a884dc6ded95217445a48e1468a74e8d086af6",
+      "reports_courier-gear-tex.jsonl": "102e0d466485cbb03f7d904ca2382f6f880edc183492390da0937e55642d13b2",
+      "reports_courier-night-look.jsonl": "22fe60ff7c4cabb23d542699d811424d084484d636b5f72cc8b6cc88959e7857",
+      "reports_cup-hand.jsonl": "20e5f1f567e772fc558946b807d0f3fd366994b99aa82b0b9b0c1bafb35f4a6f",
+      "reports_dog-corpse.jsonl": "276f609d247b9c8b80441793d817cbde5577b59e1ff0d696b57bb23f21062750",
+      "reports_dress-l8-cellar.jsonl": "3548d18bb2810e827523b19c2e59d0d67fc567438ddd5ec60d67598617ef9265",
+      "reports_elephant-asset.jsonl": "c62c9a4a29b3c3a4fa40312b2a2eb7fcd4c4320302dc64a928a53d7f635b12bc",
+      "reports_engine-wreck-doors.jsonl": "c7cb0b74915b08b631e9628e4d9465284643e78dd95130779ffef4b2d5899550",
+      "reports_finale-stretches.jsonl": "702c7a2b08e6118243365f3a558b0e254683c5e4a5e0c9d7443b9ebed577eb43",
+      "reports_fire-engine-wreck.jsonl": "b93c7b705717003f27d2719adfb6d8d6a998f25b39ba03aaa60d4047d9ffe652",
+      "reports_fix-13e-l6.jsonl": "48d698099a930d7d36e8d4c48dc5584b3924223145559b9e61100a875a159da1",
+      "reports_fix-camera-ramp.jsonl": "5b18881f039a2727061243ef0957991eb2884d997e086b4968dc082c95aeb8cc",
+      "reports_fix-corgi.jsonl": "47e0b0cdb76eefaa090801057ec0b2f22d75ce8c34111c7a41f8edebaae9a115",
+      "reports_fix-l2-start.jsonl": "076a803cb2e37c33c48f59eb7bdaab8fc088c8e862501bba68959dcb4e9e780f",
+      "reports_fix-l4-convoy.jsonl": "33bb9cb15bc0cb18126032f4e6e05fa13e4524b2ce1826d39fe25fcf6ef83458",
+      "reports_fix-respawn-bat.jsonl": "e8557cf2b4a8ba4f23b8b3d6b17a80cd9c6d1270df2240c9652926fa83d18590",
+      "reports_fix-trapped-arms.jsonl": "2da825cedd2f2ea848f7e081cb51957261a37c43dd16676204ad91c074e5f8f4",
+      "reports_fix-white-blocker.jsonl": "2d89212a1ca53f950bcfeefad8b1739e335c795fc36a8d3e2a1b2d52c01012c2",
+      "reports_fixes-13g.jsonl": "9513f443ace06b51844ab76d8f588eea8cd392d37bbef7d83ceb38f33da55a2f",
+      "reports_fixes-13h-flow.jsonl": "712df38f6cc2d9fa112c99f8033bd1a5b75c9b4c03a793e68edeaaaa39fcc623",
+      "reports_fixes-13h-l10.jsonl": "8abe2ab41a80a074e968b95bf4be238579742ab17540ca64ef693e5d8eaa9aaf",
+      "reports_fixes-13i.jsonl": "03aa067ce8af7d5d06234d45d4a6cf6c1ec773455ba9206f7216998bd0ecd8ed",
+      "reports_fixes-13j.jsonl": "b57693914859bf3237d42ef90fdada0a99887e2c968aa0a1bd9d04bd94d52dfd",
+      "reports_fixes-13k-visual.jsonl": "f815c56d809dcead602215be3a0649b964bfcaadac9b8ee4c8023fd4910a1a30",
+      "reports_fixes-13l-gameplay.jsonl": "d54b788f4b5264a545030219d9467c39ed45a40a8bcc2fa2263836aaa74e53fb",
+      "reports_footprints.jsonl": "2e10bd0d2a0495f070b3e4a70209232994f2d4f20886abeaadbe7a458e9629f4",
+      "reports_gate-13j.jsonl": "4b22b68db0613ba2a97a742d32b4977bbf29e2f501759e23f6ed7e4e71b39268",
+      "reports_gate-fix-r-data.jsonl": "32fbd6c2fbda2e208a2f3dd0d3619c3c0b3f39a13061fd5616c3f6a2e6e82df8",
+      "reports_gear-art.jsonl": "77e782e951222ad3ea5f90b8290a611a3eb97069c06d362e1a68db35805745be",
+      "reports_hats-rework.jsonl": "250c174cbb676cc1dd92ba096e5c10d40b9f9a7bae8b637b6b445ff2fff8ad9e",
+      "reports_heap-budgets.jsonl": "30b5a344cfdfa7221e8eedefe136409008b5f7689e83ee5e9f4a32222578650e",
+      "reports_heroine-rebind.jsonl": "5723b427f6be69319f57ee52208a4f5ddd33b016417e3e1a95413d63389577cf",
+      "reports_hitches2.jsonl": "904d08ef2ba9a76be52006ccec0361203cb34ebb9d1c1320d2a5ba4214707d1f",
+      "reports_input-weapons.jsonl": "47bafc6df85c7ccfecb83e23dd68332a1302be0fadbcd77308a7e0f10517f099",
+      "reports_interior-cull.jsonl": "f6cde122fdf08b3f9b6edb8f266c1604c0cd5d2717bab94156199db9c03d747e",
+      "reports_l1-all-new.jsonl": "d2a7e3d7c0c24f0ce87c8622e88014a9db966f7678319e70071166ec02adf2f3",
+      "reports_l1-bat-forecourt.jsonl": "0d5a4e76762f1e8c01bebf3c45274f8da5ca630bbac2042b05c982dfe6d11dfa",
+      "reports_l1-hats-faces.jsonl": "6720d136a0fab6df69ab9c6a100d5eb16d4bf541cd86886800d6d5ba19df88d9",
+      "reports_l10-alpha-contracts.jsonl": "1fcc5183679567371ff1c7b40a2b938e43d0e2b55614869d1c6012f585a01bbb",
+      "reports_l10-corpses-low.jsonl": "33ad558403a93f696d123640076437ee2427ab0b54cd3086b01da1a464a81f05",
+      "reports_l10-e2.jsonl": "1c7399c9a94adbb2b68b49afb5170e5acb1ff8a07dd10d8858ae445208397187",
+      "reports_l10-e3.jsonl": "0c3000a32f8ff0c65a66130f04834672f83a8272ffc9090a100cdffb78c57f48",
+      "reports_l10-e3b.jsonl": "ee53b4e422b22a053badd0f920b8677ee9fd2e60d2aa6d323c202ec2b193aa8a",
+      "reports_l10-mega-audio.jsonl": "5adf2c4dc730e33333808d3a664ee2b65157356e82860c5d90aacd80020c150d",
+      "reports_l10-mega-moves.jsonl": "14a9afa204b0d91ebb54d8ca3a73b2d5d1ec5138ae69f3f11dd75dfb1e22338a",
+      "reports_l10-mega-speed.jsonl": "d4acfdd801e17504cfaf03432f8b831cd73701b66a24ac7dc0d7ee4eb356cc3e",
+      "reports_l10-q1.jsonl": "34865b0067668367c4815d7f27e53849b333306867e5d86c0f19e5cbffd9ec22",
+      "reports_l10-q2.jsonl": "f4ee15889e70032ae09259fcb44e8641eefc9f71dd09c92b025aa8add63bb1e1",
+      "reports_l10-q3.jsonl": "7eb97d84a415d041c0f1aa3635eb8ed633aa27c0906259b8c882f80fdf54cfe1",
+      "reports_l10-q4.jsonl": "052c4a139c595afad384e983f84755e2be9a3b1efb337207a448f22339f64ed2",
+      "reports_l10-r3r4.jsonl": "972f2acb7f8168005ab85dadb4ee66779e6ad02ab932918bc7e6da079342bafc",
+      "reports_l10-r5r6.jsonl": "867039e59e61fb7f2717247ab08d7c6844ea7a2e6c04e75dee819120f574579f",
+      "reports_l10-road-life.jsonl": "046cc58ef28eed6df025e0a98d1a79fcdde293e17f58039fd35baee873699ffc",
+      "reports_l10-s8.jsonl": "ce93edcce8a0d63c09d0cf42d7a7f588d768dc64749f1e8be17c414e3e618c0c",
+      "reports_l10-s9.jsonl": "7bd390474c5d5b3d6bc580b210c286e2a282a1afe9cfe19243df18513e8ffdaf",
+      "reports_l3-blvd-3.jsonl": "82fab6b00c4b98f4386135297207fecc3e8c227e6b85f7a728b86e4d9dcaf4de",
+      "reports_l3-contrast.jsonl": "d98727c427e7f83a6c28bf77bb8b18be59e814aa229b7bee17aebb8e7e58c6c7",
+      "reports_l3-flee-speed.jsonl": "d798fc79c072f3ac625cd46e4d846791c0945490b92923d20bfc5c5bb793bdcc",
+      "reports_l3-getup-balance.jsonl": "e5a720e6bc8db27118810927f52d0ac5c05279d036b7b84867a78fd4539d9540",
+      "reports_l3-horde-5x-evidence.jsonl": "22aca3909bff92d4ed6d8c8bbfa998a88dde5e087da28ee8515e1f46d299fdac",
+      "reports_l3-load-data.jsonl": "780308149e1abbf51ceff4214371f2038b129afc6640985c3d4889ceae36d409",
+      "reports_l3-route-final.jsonl": "c643b8512297cfcd27e9807cdb0f9e3e752d79cf15b4852152801f2f653ba18c",
+      "reports_l3-route.jsonl": "3341e927a83ebe8ffea4ed55a11009d3b10f19e120008748f1ac746b1d3a4dd3",
+      "reports_l3-s1-tune.jsonl": "a5287ca5b824bad41b661f8ac1da1a2abd66624fad7d02d5ad6b1dc2d621d862",
+      "reports_l3-textures-data.jsonl": "2c37d1c7ee87e2c2deef1a12d0a510a3da3444f73667c2d368f0f13b41b226fe",
+      "reports_l3-traffic-and-army-vehicles.json.jsonl": "3cf91b85f34bf1642d2b1a8be94fd884d4cb2a401e2314c15d11b986ffb93836",
+      "reports_l3-yellow-ring.jsonl": "97f94180ee658c275943ceb2d1245441368280b314ab6f6803bdbbe10a5a9f03",
+      "reports_l4-balance-13e.jsonl": "235abf6f370480ce0bfd8bb4c4e36b47ce0ab59b7fe5cacc82205d9592a712a8",
+      "reports_l4-boundary-refuge.jsonl": "ae46622a5ec0dfff5b30e1fba430706755794ef5fa222d2cad84d95060795db0",
+      "reports_l4-civilians-stay.jsonl": "89fcbacf3f9bf95ad7e28230124e16e846d49a7b001c29fc9d73ea120571ecd7",
+      "reports_l4-corpse-carpet.jsonl": "894027a5bc4216f39c3bb90539dd0aac549ffcd9e98b3108e731f9d21f3190f9",
+      "reports_l4-district.jsonl": "5cfde370e37e9441b02bd357c1d80542ae0e7e06e054cae176cefed2eb1a0065",
+      "reports_l4-fallback-respawn.jsonl": "c5ae4e67e294c792dd7431812b5a07b9c712f2a0202ad52378be6c2199323842",
+      "reports_l4-storyline.jsonl": "d4e9ac4bf3917fbd03e542e628b46ffd85e41238b9856d981c79fcd48b92cd88",
+      "reports_l4-systems.jsonl": "6e5ed5d693d3f10c0311288443a9265fe04dcf4dd367989dff50565b266bf326",
+      "reports_l5-gate-fix.jsonl": "bc2f6c79c09d09bfb50094c8c989284a39d9d3880f20fe675fa0bc1889f4e935",
+      "reports_l5-po-1015.jsonl": "fc370e9d8d5688df9511b577b6de6e2f25b7fd8354b2ac0bdc0ff660d5d9d002",
+      "reports_l5-regression-13l.jsonl": "a842eba124c33327c5d9dfbbea0f6b324ee223b3ebdc2c49804a39523d68a011",
+      "reports_l6-exit-stall.jsonl": "146be7d1c79bb5153bee3452ce0c1cefee694647fe5cf94c0728c00644f9ad5f",
+      "reports_l6-fists-loop.jsonl": "e31124d3d8da8e3846cdaa1edfeaab96539ce8f9c4fc01b729f3ee8ec8893e53",
+      "reports_l6-shelter-adults-and-injuries.json.jsonl": "fb43de91cf41da23c9a08b8863aea5023e054581b304b1d1fe577fd955d31427",
+      "reports_l6-weapons-flow.jsonl": "c9994a63b8cc91911ac836b610401e8348edf02fc2974191c2fef3436dc15419",
+      "reports_l7-corridor.jsonl": "a94c9cb656c421731ef7c51bb54db55ac62e9c3680c78f50070161c115ae01e5",
+      "reports_l7-district.jsonl": "8accd7effc14d31339097d5a1b2990dc01f8a6af588c121383ba0c5fb1b5a76b",
+      "reports_l7-encounters-evidence.jsonl": "2412ec92ebb2592e0add9776f4db32e745fd9547250dd3ac00efff4c6540484a",
+      "reports_l7-encounters.txt.jsonl": "3ce1827117c3a9777b1c17173d590ea8d2ea72a92f553cf719979c24ed47b424",
+      "reports_l7-entry.jsonl": "04b1c68ea3e1239db4e29378690f9acdcb544660b8dd2607f78af46948272b0c",
+      "reports_l7-perf.jsonl": "7eaac5187b1dc571e34a294f3e7ff1aa6be15753771e128cc729ad534763b5e2",
+      "reports_l7-readability.jsonl": "a9c14d26a135ead9980ec8996025c9509b0cd734d4e274f2b45bbc7968e1deed",
+      "reports_l7-rocket.jsonl": "b94a50433cfe9beb198728947cef96fc83a8f9612d6da720109f2630adf4e734",
+      "reports_l7-tier.jsonl": "25c4290fc8c5858a20f0ecb5210faebb3114345823fa5e980a17667500d51278",
+      "reports_l8-apc.jsonl": "fcfea8c419943dd981cfd6115004aafdcb8296a16c3467b8bc898e146299f0a5",
+      "reports_l8-level.jsonl": "c60f5644d67546633add9a4371e935e920587d5e258eeff1eceace90235e0a53",
+      "reports_l8-systems.jsonl": "c31685e4135c758216e094cb98ac89dfc2078203c1e59262286789f3793d6ede",
+      "reports_l8-variants.jsonl": "2e7cde5c979ef9777891b5fb65c50c4b10c1b191e6aad6645ca809156af93128",
+      "reports_l9-damage-art.jsonl": "89eb7566fe36683dd9443ac7e117665cb398e82220fc48641834ee998bc292ad",
+      "reports_l9-dress.jsonl": "cbf4519c25490bd78a913b24de649d209b10b69f65fc0e6413c1b247dca655b8",
+      "reports_l9-greybox.jsonl": "741a649346570e31407c56ace9b0e2732924d9a4eece5a185f714fe9a3cd20fe",
+      "reports_l9-night-look.jsonl": "5ae2d6a6af0dc9a92f20209185e8fc7ffa765b937e2190310f04ae7fa726a14c",
+      "reports_l9-q2.jsonl": "7019e6998bbdf299510c504ab3ea162c74cf4c93cc9f1b41b492b217e2fdb85c",
+      "reports_l9-q3.jsonl": "3cc81a5c98aca6e025ac0762805c0d91db8a21be20d847b2065652e77437d9ae",
+      "reports_l9-residency.jsonl": "08a02f6ea961a2a26d4de54921fea19dcf4bf9ba32c6d477c2a8948e54d96f57",
+      "reports_l9-stream.jsonl": "baff9f606422cb600897e07d13b01338aa63d5f0d4939e6c72a2e94af7a70d55",
+      "reports_l9-verge-dressing.jsonl": "f732fa772903c07a5c91db4bc81ff5069bd14038fbc30dfda5ee5fa89fb1db64",
+      "reports_load-civ-bakes.json.jsonl": "b89fbf774de49e0c94438687276bf84440cb747c09c3f9592bda60c543427a7d",
+      "reports_load-stalls.jsonl": "8b6af406bd5ff8a650630984b1562e1162ad000ef6ea5e105e248e92c90fadb5",
+      "reports_load-times-captures.jsonl": "9d3957022a83b5a3133f57f4ad521c15e5b5e8db269c7e03c41c9d6ed5d2962a",
+      "reports_load-times-metrics.json.jsonl": "eacb2d775f744bb6b22a1d922157a09a80aa4926089e6f397917adfec364fbd1",
+      "reports_load3-desktop-critical-path.csv.jsonl": "f7c6806b792388234efa9df15552e66c96a90b8b8db3cfcf43ddf8eacfa9874d",
+      "reports_load3-phone-critical-path.csv.jsonl": "a4b3c19ce84e4deea10fc545c549982ac7c0b9220e7535e8b416a25eaf18e45d",
+      "reports_lod-objectives.jsonl": "f0e143bedeabec0f59f5a1deb0c01f4bf7cbc94ccf0f59d31075dae82c42673b",
+      "reports_lod-residential.jsonl": "992599297078e8f3eaa63b37077457d13b4df945138b303acea8f17937e34319",
+      "reports_lod-standins.jsonl": "ed342db57bd2181d08ac5e2586acf3d31ed8e90efe34a08c87228eed3f25f7e5",
+      "reports_lod-structures.jsonl": "1e414bb895303abdd842940e6353e9bdd7ca8ad7821135b4c206dbc170ead90f",
+      "reports_look-l10b.jsonl": "6fc33b02831acf9e93fa8ad12fe407bb3d1e00e8d352bc3d754e94986e84bd04",
+      "reports_look-l9.jsonl": "39b4d05e94df81bdf0a2fee37b361d0b243ba5ec316b69dd875a6186b57ff14a",
+      "reports_look-l9b.jsonl": "8eaf1ad4a919dbdd0c6e0ab181f12719fad35f2eae454f769efb298a85093b6e",
+      "reports_m1-civlife.json.jsonl": "3c89cf282e3f2b15f78f85025725360f0bd9a5479970945dce38a8d3615a7552",
+      "reports_m1-outbreak2-c.json.jsonl": "552f82c8402d95bb469539e1bac54e7d14c1a45c0781b670dd7467134ca2cd7b",
+      "reports_m1-outbreak2.json.jsonl": "c3e2d533f84cabb38fda22bd05414e5370e07bb87bee9438e8f4e77f74cb5ee0",
+      "reports_m1-polish.json.jsonl": "4c96cc82ca6192bbb52f8657124421a84d55a2d8f8648a7b3fa122ee4a63f94f",
+      "reports_m1-render-fix-2.json.jsonl": "c1feea45a64409245cbf210f8d1e566ad60b53a0905945de8ac3bf17e7a6a91e",
+      "reports_m1-render-fix.json.jsonl": "9bdd7dcda519699916ed9c80e8b20f2a445736de5eb3026970707544154fee98",
+      "reports_male-courier.jsonl": "670b880090691e9d7c3e74c7ace1ef1560cfa13dd0f2cabab1ef8e749b8f980b",
+      "reports_merge-batch10.jsonl": "81f01a2e3ba0fd46e8857149a60d920c4f8fe2d9f09d0b3dbdcbdbeb4d92653f",
+      "reports_merge-batch11.jsonl": "117d19a613319139937fce015ebab6dface7787dca5e0697f96bf6fdefb72701",
+      "reports_merge-batch12.jsonl": "93e08d7347dfaf0cd0c2d013eaa4b32cf9da0556aab2e841d411a75c2ed5875b",
+      "reports_merge-batch13a.jsonl": "ee78547bd2d4e68a1a523a598950fb97bd1ae87b4066850d4cfce0db236c247d",
+      "reports_merge-batch13b.jsonl": "1b17244ee262df64c80d97dbb6aa4012d33a688e368097adfd1689b9cf4c9bae",
+      "reports_merge-batch13f.jsonl": "4b14a768a5f84cb3899d4b04863f93961fc69ea58fb1e02e965d2303846c9742",
+      "reports_merge-batch13m.jsonl": "0ac1a3a092de44244757ae9cdd0bfcb4b1196dfbdd4f2e8973a74c7e8a2e8efd",
+      "reports_merge-batch14.jsonl": "69e2edb9bcdb757dd97c762a8419b0ab3a361e92408fe655f3cf35b8f0386ad2",
+      "reports_merge-batch6.jsonl": "90752ae6dfdafbb83c86606519213b4d034b6dae73c78c5934f0dd2a5bfe9d42",
+      "reports_merge-batch7.jsonl": "8e3c7fff8731664cda4ed5bf93e7d4d3af8d0371b930d62c9582f7578757f498",
+      "reports_merge-batch9.jsonl": "142d311230236dc288bdb90dcffa8d2e9dc0f7804dec452a3f829ba35cd8a557",
+      "reports_merge-shells.jsonl": "c3cfae29ef3cbafab30d7a8986053375d7e76ccf7f263507374ce95e8e1f353e",
+      "reports_night-bodies-eyes.jsonl": "107b5536710514108caa8f8890e86c1734e1b9294cc3976740d89f4d1a11adbc",
+      "reports_p2-flame-wreck.jsonl": "f996b353394833ceb112e94538f4ddb5eccfaaa56aa356e862f70ee916eb0926",
+      "reports_perf-e18-final.jsonl": "bd70273ef4a76cdf07c5adbbba44ef2f6ba7845382902db70263047e59a7edd8",
+      "reports_perf-heap-w5.jsonl": "f00941513877c8b2c627fd01c57ee0d876af8e9f31b657281aa914c575c0273f",
+      "reports_perf-l4-l6.jsonl": "a338614955d21c8f832d40af9d2da6aa3f48ac2fbe11fec1e9955d8c31692d43",
+      "reports_perf-sweep.jsonl": "e7df03daca1840f8f45b8be0261e836cf0ae24f777a6554755cafacf3c0fcd71",
+      "reports_perf-w5b.jsonl": "61ad87abc83bb9b8f767b0ff29d9e04896884c138c4f4d94d11a19d4f6bebb16",
+      "reports_perf-w5d.jsonl": "9ccfddd0929a4720d52877180b51a15ae1762552488e99f99e66961fbf43a35b",
+      "reports_perf-w6.jsonl": "be556532c188f87d4519418863c5a4b5b9833324895658659465b5b1896933d3",
+      "reports_phone-perf.jsonl": "f9c33facc5629415f670864a1a237ccd9057447d25d5d149657427d4d649fd70",
+      "reports_playtest-all.jsonl": "5b32910d9f3ee3b0ce9d354fd8ebc3e1e615a6c002012b2273d6f22cb8e2a69d",
+      "reports_police-react.jsonl": "a2a25b33678a34961ae06120e7207e9671e507e23b0f0a7812bcba3dcc85a21c",
+      "reports_postmerge-10.jsonl": "ff1ce2734ccbedbda311ddfe83cefa9734df37c7ac0b369c47551f57d19aa77e",
+      "reports_postmerge-2.jsonl": "3d9adc7cbb2378b2da51cbfc5d7f956c5d686b504d68c0beb6796404768e60a9",
+      "reports_postmerge-3.jsonl": "535cc6c65bfcdcc21a5b881c7401513742b2a5d52fadb0ca5d6ebe7075674df0",
+      "reports_qa-ab.jsonl": "273f56edde88efd290c0a121874cabee1958a40ca2756e7b254fe7eb2e85becb",
+      "reports_qa-hotfix-l5.jsonl": "413ff63c3db0adb1b4b50cfd0dc50a712ec3c031dd7c44cfddb3ade17bc7ec36",
+      "reports_r0-lookdev-metrics.json.jsonl": "745a58ac16c9b306a7d52566ff24f64058589f6e04093f8cf8b1765c7407e08e",
+      "reports_r1-foliage-merge.json.jsonl": "43b363207d72167b9c242ec2561530dbbb1ae39bcb7e976f3aaf9835bb495006",
+      "reports_r1-grade-merge.json.jsonl": "68d0840a9790eae060817f791346c6a5e0bcde6a16da69fc9cb811b472f41a26",
+      "reports_r1-grade.json.jsonl": "ca96cf6f4ece069af660966ccf33b7ebb69a505b266e4196ab2f8ce596e1f7ac",
+      "reports_readability-w6b.jsonl": "81005e826f46153df03332a813df968b7305c77211a6eeafbf22aa1693715176",
+      "reports_readability-w6c.jsonl": "2d4f01140cd749a8c9eee832677f3b2789c9662d231b65e46df3404199b4bc4b",
+      "reports_render-test-parallel-data.json.jsonl": "d098a44bffdb0b24fde30ecf2b727c212188a131f00208b54dffc720c6a721cc",
+      "reports_seethrough-player.jsonl": "1e996938035994e62378908b28872c459ae778bf4521b461dd09f3cf07893d7b",
+      "reports_seethrough-silhouette.jsonl": "7662eb260d67c53eb85b0d3aab0a96cac3652c9c7354d0991e08b2777059bb66",
+      "reports_seethrough-vehicles.jsonl": "91181bd682cda2a07cbbc4d44bf6cb29dca28b76c1a88c702c242d8827c3974a",
+      "reports_skin-pilot.json.jsonl": "12a2c613e0cbefe090024d816171483958184127e4474011d384078f7255dcc1",
+      "reports_skinned-crowd.jsonl": "331b8599f67c62d03313c28047893dc3c7ccf3d86be1cc1377a095c14ee9d521",
+      "reports_skinned-prod.jsonl": "043acd816a3fcd09221c93fcd3aa863deeff12612ee278d1c1f474e6c911cec3",
+      "reports_small-fixes-w6.jsonl": "ecb1181a00768d7bbf9ac2e41f71843ea3f8bce47c0603e52efd2e1c3984820f",
+      "reports_spec-audit.jsonl": "2f51d25457bfaa573472566fd0226e3004e48f71e080e5f3571d8b3f2b342df9",
+      "reports_station-back.jsonl": "702035f4341755faab1e32aa64174c4bf9be09c78c20608fdcba9e715667fdb1",
+      "reports_stunning-l5-l7.jsonl": "e36f018b20ffe147fc0d4de5864df09a86d098432532be4e051976715ecce866",
+      "reports_survivors-ai.jsonl": "9b9a95dcc1138ebd742ede1517b04391f5adb4a6eea7ae0d51edd1974d10dbb8",
+      "reports_tex-infected.jsonl": "a51ebbfa4a00dfb2221455e26f24e3ff475b6c3c9425642f6e0f1be2d62b08bb",
+      "reports_tex-zebra.jsonl": "206b2a70ff1fad8167bb363d1f733b84ccf4f53ef16d88c136ef3c54daba7292",
+      "reports_ui-home-button.jsonl": "09f75c09325ab1bf0b3a51f48a16d94ef5782e94526d9449fb0834c02f16ca2d",
+      "reports_ui-night.jsonl": "dc73747b273f64c2460dfff19f0a82f79642b003db3a84232f4a32650212371f",
+      "reports_vehicle-glass-checks.jsonl": "468d4e522f108a06f6806d265ec26e717aa3683a150f047da7f29cdb5d665860",
+      "reports_vehicle-occupants.jsonl": "f719357d7eaf94839c396f21ad1c2a7e6df5ab26f7e085ffc2099d5dbe483d27",
+      "reports_vehicle-travel.jsonl": "843a4019f687801ae77f298e2aa0022f584d838ba8d27402fed9afa9e8afa811",
+      "reports_verify-sweep.jsonl": "194b51d501ce1f809a345b87df42fb17751167743dae7273e1a2a68f3949c328",
+      "reports_vfx-hud-polish.jsonl": "0612947d5b1efce7223640efc7d3f6b4bed1a0dec686c8cf5f3256da82e8ea31",
+      "reports_vfx-stunning-3.jsonl": "80170075760be1be595d8a502ec18d1b9a8e157a0d5449d0c231a838452879c9",
+      "reports_vfx-stunning.jsonl": "ca7affe86cf397274ed43fb75d86b9e71a208004671428e5acc88e6812241e0b",
+      "reports_visual-polish.jsonl": "8883fcd6c6f413288288c05b9ce31a8b971a29adaffc69f14b90e80381926196",
+      "reports_visual-qa-13j.jsonl": "9505f0d89bcad8f1b4f23e9963835616d6aafbdc76f0e7c2bcd7748ea489853f",
+      "reports_visual-qa-16.jsonl": "91cea174b17d1ac469e6d6825aa1c066beeaca36fad385f2852886468f5fdfa5",
+      "reports_visual-qa-17.jsonl": "16ec8b9b8be3a1e52e0351456be23bd3dcedf0b6a54e818b3106970ddf1f08d3",
+      "reports_visual-qa-18.jsonl": "6893ee4a479c3018aaf8b3f6e3b170f5558ee4ba5f8d4d51f0f11cac2d750042",
+      "reports_visual-qa-l5-l10.jsonl": "5161f502fd12ff9fbdb6e50d21c48220ff67135164399a98da845c6f824ce30d",
+      "reports_wave3-sim.jsonl": "96bf384bd42bbbed99df3b784feacb4cd8ca8c03b35479e9122ca6f96a8de322",
+      "reports_weapon-carryover.jsonl": "c206f7b3f3d69fe40afe39f8425f4e934559c30cf80e49d45e615c2a3afc0ee8",
+      "reports_weapon-keys.jsonl": "eff44a9d15b8c0d399216361ffe8a5e552337ae83b7269366a04a14b1e441347",
+      "reports_webgpu-blank-z1.jsonl": "652c7cb7a65425b6ee5a244f2b16ad62c6b7f7f9f6af13a9ea136de2b9a500a1",
+      "reports_world-fill-l8-l10.jsonl": "147c1469380824de472e26295d54aa6a950780f6529afc8d9fce5a3448e26b17",
+      "reports_zoo-s1.jsonl": "ffaaf13832fa54dcdb8f4a55e639a542663c1df49ed54304cac44cc6e57ec38c",
+      "reports_zoo-s2.jsonl": "659e3331f4ba375eb92b5381cbf6151de6fbfc4a8a9c18feb8b45d5266e11290",
+      "reports_zoo-s3.jsonl": "2cffea405c0b10c9691c5458f4bd3ceac814f5d90ac6d25b90cb4b944188258e",
+      "test-results.jsonl": "86411622b0cb8a9b841542af561ca5df3a15998379c1a2e351be058a0de365d3"
+    }
+  },
+  "fixturesMovedAndVerified": 422,
+  "originalEvidenceAccounting": {
+    "files": {
+      "retained": 8707,
+      "archived": 23102,
+      "fixtures": 422
+    },
+    "bytes": {
+      "retained": 810463087,
+      "archived": 2700475162,
+      "fixtures": 38956637
+    }
+  },
+  "duplicateAssetsArchived": {
+    "files": 1526,
+    "bytes": 85979113
+  },
+  "commands": {
+    "typecheck": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "lint": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "retention": [
+      "python3",
+      "tools/qa/evidence-retention.py"
+    ],
+    "remoteClean": [
+      "python3",
+      "test-results/cleanup-repo/blob-guard.py",
+      "after"
+    ],
+    "localClean": [
+      "git",
+      "status",
+      "--porcelain"
+    ]
+  },
+  "timings": {
+    "unit-levels": {
+      "lane": "unit-levels",
+      "revision": "afcbb9de3396b87c99ab9acaa6324726fb9359e9",
+      "startedAt": "2026-10-26T19:44:46.816Z",
+      "finishedAt": "2026-10-26T21:10:28.798Z",
+      "durationMs": 5141983.791554,
+      "host": "mi-runner-1",
+      "command": [
+        "npx",
+        "vitest",
+        "run",
+        "tests/unit",
+        "tests/levels",
+        "--maxWorkers=4",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=test-results/cleanup-repo/unit-levels.json"
+      ],
+      "exitCode": 1,
+      "signal": null
+    },
+    "smoke": {
+      "lane": "smoke",
+      "revision": "afcbb9de3396b87c99ab9acaa6324726fb9359e9",
+      "startedAt": "2026-10-26T19:38:52.931Z",
+      "finishedAt": "2026-10-26T19:41:38.028Z",
+      "durationMs": 165094.320584,
+      "host": "Mac-mini-von-Fabian.fritz.box",
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "npx",
+        "playwright",
+        "test",
+        "--grep",
+        "@smoke",
+        "--grep-invert",
+        "[Ww]eb[Gg][Pp][Uu]",
+        "--project=chromium",
+        "--workers=1"
+      ],
+      "exitCode": 0,
+      "signal": null
+    }
+  },
+  "checks": [
+    {
+      "name": "typecheck",
+      "exitCode": 0
+    },
+    {
+      "name": "lint",
+      "exitCode": 0
+    },
+    {
+      "name": "unit-levels",
+      "exitCode": 0,
+      "resolution": "focused retry of unchanged file passed"
+    },
+    {
+      "name": "tracked-tree-unchanged",
+      "exitCode": 0
+    },
+    {
+      "name": "build-local",
+      "exitCode": 0
+    },
+    {
+      "name": "simulation-smoke",
+      "exitCode": 0
+    },
+    {
+      "name": "webgl-smoke-metal",
+      "exitCode": 0
+    },
+    {
+      "name": "local-git-clean",
+      "exitCode": 0
+    },
+    {
+      "name": "retention-links",
+      "exitCode": 0
+    }
+  ],
+  "tests": {
+    "passed": 2777,
+    "failed": 0,
+    "pending": 9,
+    "suites": 561,
+    "method": "Full suite with its single 300-second timeout resolved by an unchanged, single-worker isolated rerun of all 18 asset-validation cases."
+  },
+  "smoke": {
+    "startTime": "2026-10-26T19:39:40.311Z",
+    "duration": 117679.026,
+    "expected": 10,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "smokeEnvironment": {
+    "platform": "macOS",
+    "renderer": "WebGL2 via ANGLE/Metal",
+    "headless": true,
+    "workers": 1,
+    "E2E_PORT": 4691,
+    "SCENE_PORT": 4692,
+    "WebGPU": "manual; excluded from automated smoke",
+    "expectedPassed": 10
+  },
+  "fullSuiteAttempt": {
+    "finishedAt": "2026-10-26T21:11:00.470Z",
+    "checks": [
+      {
+        "name": "typecheck",
+        "exitCode": 0
+      },
+      {
+        "name": "lint",
+        "exitCode": 0
+      },
+      {
+        "name": "unit-levels",
+        "exitCode": 1
+      },
+      {
+        "name": "tracked-tree-unchanged",
+        "exitCode": 0
+      }
+    ],
+    "tests": {
+      "passed": 2776,
+      "failed": 1,
+      "pending": 9,
+      "suites": 561
+    },
+    "failedCase": "T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts",
+    "failureMessages": [
+      "Error: Test timed out in 300000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\n    at task (file:///srv/mi/jobs/cleanup-repo-603372-1745-1793043764/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2681:43)\n    at Object.<anonymous> (file:///srv/mi/jobs/cleanup-repo-603372-1745-1793043764/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2698:16)\n    at Object.<anonymous> (file:///srv/mi/jobs/cleanup-repo-603372-1745-1793043764/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2471:28)\n    at chain (file:///srv/mi/jobs/cleanup-repo-603372-1745-1793043764/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:1859:14)\n    at /srv/mi/jobs/cleanup-repo-603372-1745-1793043764/tests/unit/assets/validate.test.ts:83:1\n    at VitestModuleEvaluator._runInlinedModule (file:///srv/mi/jobs/cleanup-repo-603372-1745-1793043764/node_modules/vitest/dist/module-evaluator.js:261:4)\n    at VitestModuleRunner.directRequest (file:///srv/mi/jobs/cleanup-repo-603372-1745-1793043764/node_modules/vite/dist/node/module-runner.js:1284:61)\n    at VitestModuleRunner.cachedRequest (file:///srv/mi/jobs/cleanup-repo-603372-1745-1793043764/node_modules/vite/dist/node/module-runner.js:1180:76)\n    at VitestModuleRunner.import (file:///srv/mi/jobs/cleanup-repo-603372-1745-1793043764/node_modules/vite/dist/node/module-runner.js:1117:12)\n    at file:///srv/mi/jobs/cleanup-repo-603372-1745-1793043764/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3448:5"
+    ]
+  },
+  "focusedRetry": {
+    "sourceRevisionVerifiedByEqualIndex": "afcbb9de3396b87c99ab9acaa6324726fb9359e9",
+    "checks": [
+      {
+        "name": "typecheck",
+        "exitCode": 0
+      },
+      {
+        "name": "lint",
+        "exitCode": 0
+      },
+      {
+        "name": "unit-levels",
+        "exitCode": 0
+      },
+      {
+        "name": "tracked-tree-unchanged",
+        "exitCode": 0
+      }
+    ],
+    "tests": {
+      "passed": 18,
+      "failed": 0,
+      "pending": 0,
+      "suites": 1
+    },
+    "path": "test-results/cleanup-repo/asset-isolated",
+    "timing": {
+      "lane": "unit-asset-isolated",
+      "revision": "afcbb9de3396b87c99ab9acaa6324726fb9359e9",
+      "startedAt": "2026-10-26T21:57:03.455Z",
+      "finishedAt": "2026-10-26T22:00:23.550Z",
+      "durationMs": 200094.681997,
+      "host": "mi-runner-1",
+      "command": [
+        "npx",
+        "vitest",
+        "run",
+        "tests/unit/assets/validate.test.ts",
+        "--maxWorkers=1",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=test-results/cleanup-repo/asset-isolated/unit-levels.json"
+      ],
+      "exitCode": 0,
+      "signal": null
+    },
+    "blobGuard": {
+      "phase": "after",
+      "files": 18849,
+      "errors": [],
+      "testResultsTracked": false
+    }
+  },
+  "earlierFocusedRetry": {
+    "checks": [
+      {
+        "name": "typecheck",
+        "exitCode": 0
+      },
+      {
+        "name": "lint",
+        "exitCode": 0
+      },
+      {
+        "name": "unit-levels",
+        "exitCode": 1
+      },
+      {
+        "name": "tracked-tree-unchanged",
+        "exitCode": 0
+      }
+    ],
+    "tests": {
+      "passed": 17,
+      "failed": 1,
+      "pending": 0,
+      "suites": 1
+    },
+    "artifacts": "test-results/cleanup-repo/asset-retry/",
+    "reason": "same existing 300-second timeout on a shared runner"
+  },
+  "earlierAttempt": {
+    "unitPassed": 2777,
+    "unitFailed": 0,
+    "remoteSmoke": "SwiftShader controls timed out; owned browser run interrupted before any WebGPU case",
+    "remoteGitDiff": "unusable: commitless runner index lacks blob objects; replaced with before/after direct hash/mode/index/untracked comparison",
+    "artifacts": "test-results/cleanup-repo/remote-first/"
+  },
+  "remoteBlobGuard": {
+    "phase": "after",
+    "files": 18849,
+    "errors": [],
+    "testResultsTracked": false
+  },
+  "remotePreexistingBookkeeping": [
+    ".mi-manifest",
+    ".mi-nmhash"
+  ],
+  "retentionCheck": {
+    "errors": 0,
+    "positiveNegativeCasesPassed": 7
+  },
+  "followupValidation": {
+    "revision": "afcbb9de3396b87c99ab9acaa6324726fb9359e9",
+    "changes": [],
+    "checks": {
+      "typecheck": 0,
+      "lint": 0
+    },
+    "unitLevelTestTreesAndRuntimeUnchanged": true
+  },
+  "protectedTreesUnchanged": true,
+  "postTestStatusClean": true,
+  "rawReceiptSha256": {
+    "asset-isolated/blob-guard-after.json": "506f46fa42811af90814771bb861d6e631c2c24b48b292bd99a02dd3e00cd3fa",
+    "asset-isolated/blob-guard-before.json": "a755de46c4e4c5c0b672e8a98f67a6f0a3b655304a2f65a1b68a40c3f11a32a1",
+    "asset-isolated/blob-guard.py": "46eb322a5ed009c55d1daa83f96fcb077efd9592a1ac6be959fcc3333ce15f72",
+    "asset-isolated/index-baseline.json": "598a47135622d56338a4224d2d42cdd5033f4f9f38e3198eb1301e81e772e4b6",
+    "asset-isolated/launcher.log": "be952a2d56facaa4ccf15c5a4854126b61fa44732c7337ceed626b3c38e3a9c8",
+    "asset-isolated/lint.log": "5f9aee6b798507e187dcd3d4fbd5bcf5fdc37488cb89c27a01d5667ca7bb9fa1",
+    "asset-isolated/typecheck.log": "768699d3cead53493237d3322201d28ee449107e90af9a5aa6f5dcab3f066b0c",
+    "asset-isolated/unit-gates.json": "68fbd5919ee9e58d6a326bfc590e8daa10347344e44aa99a94f73c57c9e22f9e",
+    "asset-isolated/unit-levels.json": "5549708a7a7a5896fcaab272e769c8b63c07f779a1468e976c6c799f8553ba49",
+    "asset-isolated/unit-levels.log": "c80e0eba8ce1ccfb43ebb78a7f38a1068bab3c72971d4d4e44e7a9fb572bf3f1",
+    "asset-retry/blob-guard-after.json": "506f46fa42811af90814771bb861d6e631c2c24b48b292bd99a02dd3e00cd3fa",
+    "asset-retry/blob-guard-before.json": "a755de46c4e4c5c0b672e8a98f67a6f0a3b655304a2f65a1b68a40c3f11a32a1",
+    "asset-retry/blob-guard.py": "6f2a0b72bc097430591d064192d37d30ba1456100868e3fcd5c2bc5359f1223f",
+    "asset-retry/index-baseline.json": "8a4b47ec8b56d203749ae8bbb8e6dbc75be87c7e7feae3040a6084b3d3792001",
+    "asset-retry/launcher.log": "fd67c18a623c4c12d2954a1b6c1124fab59eea7f5f8abd3c4c20860c07d6e7a2",
+    "asset-retry/lint.log": "5f9aee6b798507e187dcd3d4fbd5bcf5fdc37488cb89c27a01d5667ca7bb9fa1",
+    "asset-retry/typecheck.log": "768699d3cead53493237d3322201d28ee449107e90af9a5aa6f5dcab3f066b0c",
+    "asset-retry/unit-gates.json": "a3c087194eef9097ca243d96de619c9715d1eba5bafdf0a6905affc2f5db4350",
+    "asset-retry/unit-levels.json": "987386c8d975701932c2f178a1e93bf4f1f5d06d23460f747d8963a580e3ca94",
+    "asset-retry/unit-levels.log": "7cf90e73070245d1369b049914fd77ddb318c5eabe555d50597f0fa13eea2370",
+    "blob-guard-after.json": "506f46fa42811af90814771bb861d6e631c2c24b48b292bd99a02dd3e00cd3fa",
+    "blob-guard-before.json": "a755de46c4e4c5c0b672e8a98f67a6f0a3b655304a2f65a1b68a40c3f11a32a1",
+    "blob-guard.py": "04d440a401a106cead4d73938b04ce745d026901bb250d2f75302db240fa6fbf",
+    "build-local.log": "1073bb2b0ddc6f10189c0e39717bbb14964d0af0a9173814cf2896a82ecb6119",
+    "full-run-launcher.log": "17e338295f0672e45d185a27fc1644fb89435d40549687366fa2b4b4d65ff674",
+    "gates.json": "9a7621c85f2d2b9b31771c4418ac3531c03e1961b90be72d239b7adfd79b5424",
+    "index-baseline.json": "598a47135622d56338a4224d2d42cdd5033f4f9f38e3198eb1301e81e772e4b6",
+    "lint-followup.log": "5f9aee6b798507e187dcd3d4fbd5bcf5fdc37488cb89c27a01d5667ca7bb9fa1",
+    "lint.log": "5f9aee6b798507e187dcd3d4fbd5bcf5fdc37488cb89c27a01d5667ca7bb9fa1",
+    "post-smoke-status.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "post-test-status.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "remote-first/build.log": "4791869b858582d6ef50e19baff2347ae45643b539c5ba7ea7ad0e802de93ca9",
+    "remote-first/lint.log": "5f9aee6b798507e187dcd3d4fbd5bcf5fdc37488cb89c27a01d5667ca7bb9fa1",
+    "remote-first/remote-gates.json": "f4d694fca29ea9d8a405530f2a7011946df49f6e1139da0928c4cfb9cd8be2dc",
+    "remote-first/remote-smoke-timing.json": "2ffe45949f18379566556c3d74afff64c9b7707a6c5ef074a372736c94fc4832",
+    "remote-first/remote-smoke.json": "729a8ec5010b3b5c95eae907f0ad40aa14d89d742e712b49284960c1bca48545",
+    "remote-first/smoke.log": "3d44ec3b2f089f25cc517859f0e47ad7b0b7348d8616afec2fb564df0d50eac0",
+    "remote-first/tracked-diff.patch": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "remote-first/typecheck.log": "768699d3cead53493237d3322201d28ee449107e90af9a5aa6f5dcab3f066b0c",
+    "remote-first/unit-levels-timing.json": "1f00cbd9f5c2d9f3cf08c46d22ee39187c85deefcd3a4a2b0e13150407436819",
+    "remote-first/unit-levels.json": "4ba3826ced8f5c68a4fbed85b2f4013457bc7fc890a3a44e33090a6573ae2675",
+    "remote-first/unit-levels.log": "2b0da5a5339ba1914db72b230af19925487525e7be075497c44e828b6ae61b8c",
+    "retention-check.json": "cc048b339cbabf4271f76d53548705a47d54fb4dd5fff7a9bd70654a6ffa6cc9",
+    "retention-final.log": "d51fa0abfd644a30be404e167b839b94dfbb434e965138b55edfe8f76d04b50f",
+    "smoke-local.log": "c3581aa47853f96a616508ae6c2bd0f7cdddae78f04f6eb8c975be45d2cedd3f",
+    "typecheck-followup.log": "768699d3cead53493237d3322201d28ee449107e90af9a5aa6f5dcab3f066b0c",
+    "typecheck.log": "768699d3cead53493237d3322201d28ee449107e90af9a5aa6f5dcab3f066b0c",
+    "unit-gates.json": "deb8830b8f78d0fe65ef8b8d9184375290f4ecf5089350b306541549ef7ef360",
+    "unit-levels.json": "9ae79d30aee8d46e7666fd56786a34f786476bfedd53de990d6c9b1fa5183e81",
+    "unit-levels.log": "ea29217075d8fe5d3ffd1ffe5a3a2b5fe1f5201c8edcdb8d5a7e4498bcae7842"
+  }
+}

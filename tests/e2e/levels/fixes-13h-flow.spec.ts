@@ -4,7 +4,7 @@ import type { Game } from '../../../src/Game';
 import { boot, expect, test } from '../fixtures';
 
 const backend = process.env.FIXES_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
-const out = 'docs/reports/fixes-13h-flow';
+const out = 'test-results/fixes-13h-flow';
 if (backend === 'webgpu') test.use({ launchOptions: { args: ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=metal'] } });
 test.use({ trace: 'off' });
 

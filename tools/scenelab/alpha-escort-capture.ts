@@ -1,6 +1,6 @@
 import { SceneSession, readSpec, stopServer, writeJson } from './session';
 const session = new SceneSession({ viewport: { width: 1280, height: 720 } });
-const out = 'docs/reports/alpha-s2/after/qa-alpha-escort';
+const out = 'test-results/alpha-s2/after/qa-alpha-escort';
 try {
   await session.open(); await session.load(readSpec('tests/scenes/alpha-s2/qa-alpha-ground-slam.json')); await session.step(59);
   const id = await session.page.evaluate(() => window.__SS__!.npcs.escort({ x: 0, z: 2 }));

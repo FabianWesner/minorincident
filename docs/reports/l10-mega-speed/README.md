@@ -33,7 +33,7 @@ Handoff: warm flat ground, a stable courier shadow and the centered warning ring
 
 All new travel/arrival gates pass: zero console errors, zero undrawn frames and LOD placeholder frames, detailed cruise error within 2%, continuous movement, and the catalog's 300 draw / 500k triangle limits. These isolated fixtures complement the full mixed-assault E18 performance checks.
 
-Retained sheets: [captures/](captures/). Headless WebGPU is automated here; manual/device QA is not asserted.
+Retained sheets: [captures/](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/l10-mega-speed/captures). Headless WebGPU is automated here; manual/device QA is not asserted.
 
 
 ## Validation

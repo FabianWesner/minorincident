@@ -4,7 +4,7 @@ import { SceneSession, stopServer, type Backend } from '../scenelab/session';
 import { courierClipping } from '../../tests/visual/courier-clipping';
 import { companionReadability } from '../../tests/visual/companion-readability';
 const phase = process.argv[2] ?? 'after', backend = (process.argv[3] ?? 'webgl2') as Backend;
-const out = `${process.env.READ_REPORT ?? 'docs/reports/readability-w6c'}/${phase}/${backend}`;
+const out = `${process.env.READ_REPORT ?? 'test-results/readability-w6c'}/${phase}/${backend}`;
 const rows: object[] = [];
 mkdirSync(out, { recursive: true });
 try {

@@ -17,7 +17,7 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const quality of ['high
     const alphas = figures.filter(f => [ids['alpha-live'], ids['alpha-dead'], ids['mega-dead']].includes(f.id));
     return { alphas, runner: figures.find(f => f.id === ids['runner-near']), perf: api.perf() };
   }, spec);
-  const out = 'docs/reports/visual-polish/close'; mkdirSync(out, { recursive: true });
+  const out = 'test-results/visual-polish/close'; mkdirSync(out, { recursive: true });
   await page.screenshot({ path: `${out}/${backend}-${quality}-alphas.png` });
   expect(warnings).toEqual([]);
   expect(proof.perf.backend).toBe(backend);

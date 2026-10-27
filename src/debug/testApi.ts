@@ -98,7 +98,7 @@ export interface SSTestApi {
     present(patch: { riding?: boolean; carrying?: string | null }): void };
   setLoadout(left: string[], right: string[]): void;
   physicsProps: { scriptedSequence(): string };
-  cheats: { god(on: boolean): void; infiniteCharges(on: boolean): void; killAll(): void; completeObjective(id?: string): void };
+  cheats: { god(on: boolean): void; infiniteCharges(on: boolean): void; killAll(): void; /** Melee-down every live infected (they recover later, like a bat knockdown). */ downAll(): void; completeObjective(id?: string): void };
   bot: { plan(): { frame: InputFrame; slot: number; target: EntitySnapshot['transform'] | null }; start(policy?: 'complete' | 'newbie' | 'idle' | 'aggressive' | 'driver' | 'no-axe' | 'evade-only', options?: { street?: L3StreetChoice; route?: L4RouteChoice; opening?: L2Opening }): void; stop(): void; status(): BotStatus };
   /** E02: scenario photo spots, follow, bounded shake, cinematic blend, and NDC world projection. */
   camera: { preset(name: string): void; follow(): void; zoom(ratio: number): void; shake(intensity: number): void; project(x: number, y: number, z: number): number[]; cinematic(pose: import('../render/View').CameraPose, instant?: boolean): void };
@@ -225,7 +225,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
     },
     setLoadout: (left, right) => { if (!game.world.combat) throw new Error('Load combat-arena before setting loadout'); game.world.combat.setLoadout(left, right); },
     physicsProps: { scriptedSequence: () => { propSequence(game.world); game.view.update(1); return stateHash(game.world.getState()); } },
-    cheats: { god: (on) => { if (game.world.combat) game.world.combat.damage.god = on; }, infiniteCharges: (on) => { if (game.world.combat) game.world.combat.runner.infiniteCharges = on; }, killAll: () => { if (game.world.infected) for (const e of game.world.infected.active) {e.health.current = 0;e.infected!.recoverAt=-1;} }, completeObjective: (id) => { if (!game.world.missions) throw new Error('No mission loaded'); game.world.missions.completeObjective(id); game.view.update(1); } },
+    cheats: { god: (on) => { if (game.world.combat) game.world.combat.damage.god = on; }, infiniteCharges: (on) => { if (game.world.combat) game.world.combat.runner.infiniteCharges = on; }, killAll: () => { if (game.world.infected) for (const e of game.world.infected.active) {e.health.current = 0;e.infected!.recoverAt=-1;} }, downAll: () => { const damage = game.world.combat?.damage, player = game.world.entities.get(1); if (game.world.infected && damage && player) for (const e of [...game.world.infected.active]) if (e.health.current > 0 && !e.hidden && e.archetype !== 'infected.crow') damage.apply({ attackId: 0, actionId: 'weapon.bat', sourceId: 1, targetId: e.id, origin: player.transform, direction: { x: 1, z: 0 }, base: 1e6, multiplier: 1, type: 'melee', knockback: 0, stagger: 0 }); }, completeObjective: (id) => { if (!game.world.missions) throw new Error('No mission loaded'); game.world.missions.completeObjective(id); game.view.update(1); } },
     bot: { plan: () => {
       if (plannerLevel !== game.world.scenario || !physicalPlanner) { plannerLevel = game.world.scenario ?? ''; physicalPlanner = plannerLevel === 'L3' ? new LevelThreeBot(game.world,'complete') : plannerLevel === 'L6' ? new LevelSixBot(game.world,'complete') : new LevelFourBot(game.world,'complete'); }
       const frame=physicalPlanner.sample(), target=frame.attackTarget?game.world.entities.get(frame.attackTarget.id):undefined;

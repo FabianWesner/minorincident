@@ -84,7 +84,7 @@ test('T-E03-05-assist @E03 @E03-AC05 keyboard WASD J K Q F with nearest infected
   const ids = await page.evaluate(() => {
     const a = window.__SS__!, p = a.getState().player!.transform, facing = -p.yaw;
     const spawn = (angle: number, range: number) => a.spawn('infected.dummy', { x: p.x + Math.cos(angle) * range, z: p.z + Math.sin(angle) * range }, { hp: 1000 });
-    return [spawn(facing + .5, 1.2), spawn(facing + Math.PI, .9)];
+    return [spawn(facing + .35, 1.2), spawn(facing + Math.PI, .9)]; // 20°: inside the Q-196 ±25° Default cone
   });
   for (const key of ['j', 'k']) { await page.keyboard.press(key); expect((await tick(page)).aimSource).toBe('assist'); await tick(page, 40); }
   const hits = await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.hit'));

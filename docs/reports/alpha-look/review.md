@@ -39,18 +39,18 @@ Reproduce lineup with `SCENE_PORT=3521 E2E_PORT=3522 sh tools/e2e-lock.sh npx ts
 
 ## Revision validation
 
-- Asset validation, typecheck, lint and fresh production build pass. [Logs](revision-checks.log.gz).
-- Hetzner: **162/162 focused tests pass** (asset contracts, static-bake parity, catalog thresholds and health-bar/pixel regression). [Log](revision-assets.log.gz). No local Vitest run.
-- Full Hetzner unit suite: **1,497 passed / 2 failed / 7 skipped** (262.83 s), 255 passing / 2 failing / 1 skipped files. [Log](revision-units.log.gz). The failures are `character-loading.test.ts` (female direct loader called twice) and `occluder-footprint.test.ts` (mock missing `cutPlacements`).
-- Both failures reproduce against **fd0a31963**: every changed tracked production/test/tool/asset file was restored from `git archive` inside the remote runner's private job, then only those two files ran (**4 passed / 2 failed**). Local files were not reverted. [Baseline log](revision-baseline.log.gz), [restored paths and command](baseline-restoration.json).
-- **25/25 browser tests pass** (10.1 min): shared Alpha rendering/LODs, physical attacks, support moves, health bars and four E18 stress tests. [Log](revision-browser.log.gz). All 64 full-count L10/L5 budget samples pass across both qualities, both backends and zoom 0.5/1. These are draw/triangle counters; no fresh frame-time benchmark is claimed.
+- Asset validation, typecheck, lint and fresh production build pass. [Logs](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/alpha-look/revision-checks.log.gz).
+- Hetzner: **162/162 focused tests pass** (asset contracts, static-bake parity, catalog thresholds and health-bar/pixel regression). [Log](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/alpha-look/revision-assets.log.gz). No local Vitest run.
+- Full Hetzner unit suite: **1,497 passed / 2 failed / 7 skipped** (262.83 s), 255 passing / 2 failing / 1 skipped files. [Log](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/alpha-look/revision-units.log.gz). The failures are `character-loading.test.ts` (female direct loader called twice) and `occluder-footprint.test.ts` (mock missing `cutPlacements`).
+- Both failures reproduce against **fd0a31963**: every changed tracked production/test/tool/asset file was restored from `git archive` inside the remote runner's private job, then only those two files ran (**4 passed / 2 failed**). Local files were not reverted. [Baseline log](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/alpha-look/revision-baseline.log.gz), [restored paths and command](baseline-restoration.json).
+- **25/25 browser tests pass** (10.1 min): shared Alpha rendering/LODs, physical attacks, support moves, health bars and four E18 stress tests. [Log](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/alpha-look/revision-browser.log.gz). All 64 full-count L10/L5 budget samples pass across both qualities, both backends and zoom 0.5/1. These are draw/triangle counters; no fresh frame-time benchmark is claimed.
 
 | Budget tier | Maximum draws | Maximum triangles | Limits | Evidence (16 samples each) |
 | --- | ---: | ---: | --- | --- |
 | High, both backends | 187 | 424,639 | 600 draws / 1,500,000 triangles | [WebGL](budgets/webgl-high.json), [WebGPU](budgets/webgpu-high.json) |
 | Low, both backends | 181 | 208,149 | 300 draws / 500,000 triangles | [WebGL](budgets/webgl-low.json), [WebGPU](budgets/webgpu-low.json) |
 
-- Full scene matrix: **504/504 pass** (252 per backend), high/low × zoom 0.5/1/1.5. [Aggregate results](matrix-results.json), [WebGL sheets](revision/webgl2/index.md), [WebGPU sheets](revision/webgpu/index.md), logs: [WebGL](revision-webgl2.log.gz) / [WebGPU](revision-webgpu.log.gz). Includes every `l10-q1-*`, all three isolated Mega fixtures, Alpha/L5/appearance fixtures and day/night lineups. Detailed metrics are losslessly compressed as `metrics.json.gz`.
+- Full scene matrix: **504/504 pass** (252 per backend), high/low × zoom 0.5/1/1.5. [Aggregate results](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/alpha-look/matrix-results.json), [WebGL sheets](revision/webgl2/index.md), [WebGPU sheets](revision/webgpu/index.md), logs: [WebGL](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/alpha-look/revision-webgl2.log.gz) / [WebGPU](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/alpha-look/revision-webgpu.log.gz). Includes every `l10-q1-*`, all three isolated Mega fixtures, Alpha/L5/appearance fixtures and day/night lineups. Detailed metrics are losslessly compressed as `metrics.json.gz`.
 - Across all measured variants, minimum courier visible share is **0.662** (required 0.6) and minimum Mega/Alpha visible-pixel ratio is **1.0028** (required 0.9). The aggregate results identify the corresponding scene/backend.
 
 No aggregate `verify -- E07` or fresh sim/level sweep was run for this visual-only revision.

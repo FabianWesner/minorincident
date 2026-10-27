@@ -4,7 +4,7 @@ Audited main **8718d0fb1fbc4c46ee4eda34860955345eed2ea6** in the isolated `spec-
 
 ## Verification
 
-Exact per-epic command: `MI_VERIFY_REMOTE_SIM=1 E2E_PORT=4385 SCENE_PORT=4386 npm run verify -- E25` (then E26, E27, E28). The verifier runs typecheck/lint, a fresh locked production build, selected Vitest on Hetzner (one worker), then locked headless Mac browsers (one Playwright worker). Full unit runs separately on Hetzner with four workers. Logs and process results are in [b-evidence](b-evidence/). Quiet reservations are bounded to 19 minutes including queue time; ordinary browser lock waits are bounded to 30 minutes. No local Vitest sweep, deployment, merge, protected asset change or collision source edit.
+Exact per-epic command: `MI_VERIFY_REMOTE_SIM=1 E2E_PORT=4385 SCENE_PORT=4386 npm run verify -- E25` (then E26, E27, E28). The verifier runs typecheck/lint, a fresh locked production build, selected Vitest on Hetzner (one worker), then locked headless Mac browsers (one Playwright worker). Full unit runs separately on Hetzner with four workers. Logs and process results are in [b-evidence](b-evidence). Quiet reservations are bounded to 19 minutes including queue time; ordinary browser lock waits are bounded to 30 minutes. No local Vitest sweep, deployment, merge, protected asset change or collision source edit.
 
 Full Hetzner units: **1,539 passed / 7 skipped** (267 passing files), plus **4/4** focused verifier CLI tests. Final local typecheck and lint exit **0**; Playwright collection finds all four storm tests. The added native storm cases have **not executed**. Raw command output (`*.txt`), per-command checks, selected Node assertions, browser reporters and [validation summary](b-evidence/validation-summary.json) are retained.
 

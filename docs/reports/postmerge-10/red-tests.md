@@ -4,8 +4,8 @@ Final game source `0caecab8d`; matched main `68f83ae44`. All assertions and limi
 
 | Case | Red on main | Candidate | Main control |
 | --- | --- | --- | --- |
-| wave3-zoo-routines@high-z1.5-webgpu | **Yes** | clipping 2 > 0 ([result](evidence/gate-final-matrix-index.json)) | clipping 2 > 0 ([result](matrix/main-zoo-final/index.json)) |
-| wave3-zoo-routines@low-z1.5-webgpu | **Yes** | clipping 2 > 0 ([result](evidence/gate-final-matrix-index.json)) | clipping 2 > 0 ([result](matrix/main-zoo-final/index.json)) |
+| wave3-zoo-routines@high-z1.5-webgpu | **Yes** | clipping 2 > 0 ([result](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/postmerge-10/evidence/gate-final-matrix-index.json)) | clipping 2 > 0 ([result](matrix/main-zoo-final/index.json)) |
+| wave3-zoo-routines@low-z1.5-webgpu | **Yes** | clipping 2 > 0 ([result](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/postmerge-10/evidence/gate-final-matrix-index.json)) | clipping 2 > 0 ([result](matrix/main-zoo-final/index.json)) |
 | T-E15-lifecycle | **Yes** | 5 textures, expected 2; both attempts ([result](evidence/selected-final-playwright.json)) | 5 textures, expected 2; both attempts ([result](evidence/main-lifecycle-final-playwright.json)) |
 | Scene Lab reload isolates courier gear webgl high | **No** | 32 draw calls > 30; both attempts; gear resets 4→0 ([result](evidence/selected-final-playwright.json)) | passes; independent profile: 29 total draws ([result](evidence/main-gear-final-playwright.json)) |
 | Scene Lab reload isolates courier gear webgpu high | **No** | 32 draw calls > 30; both attempts; gear resets 4→0 ([result](evidence/selected-final-playwright.json)) | passes ([result](evidence/main-gear-final-playwright.json)) |
@@ -14,7 +14,7 @@ Final game source `0caecab8d`; matched main `68f83ae44`. All assertions and limi
 
 Read-only matched WebGL2 high probes show **candidate 18 view + 14 shadow = 32** draws; **main 15 + 14 = 29**. Three visible `ambient-gpu-life` meshes add **64 triangles** to the view pass; shadows are unchanged. Both cold gate loads and gear→gate reloads have the same cost. Gear is zero after the load and all blast particle/debris counts are zero. This traces to inherited atmosphere `e3b6138e7`, present in supplied tip `5a2ea113c`; those source files are unchanged by this job. The catalog profiling path reports view draws separately from shadows; the unprofiled e2e counter includes both. The scene-specific 30-draw cap remains red; the measured E18 blast/L6 budgets pass unchanged.
 
-[Candidate probe](evidence/candidate-gear-probe.json), [main probe](evidence/main-gear-probe.json), [replay script](evidence/gear-probe.mts). These diagnostics use headless Metal, one browser per locked command, no uncapped flags.
+[Candidate probe](evidence/candidate-gear-probe.json), [main probe](evidence/main-gear-probe.json), [replay script](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/postmerge-10/evidence/gear-probe.mts). These diagnostics use headless Metal, one browser per locked command, no uncapped flags.
 
 ## Controls and scope
 

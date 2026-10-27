@@ -77,7 +77,11 @@ export class Mission {
       subtitle: null, cinematic: null, failure: null,
       stats: { time: 0, kills: 0, knockdowns: 0, damage: 0, deaths: 0, rescued: 0, optionalObjectives: [] }, result: null,
     };
-    world.mission = this.state; this.rebuildGates();
+    world.mission = this.state;
+    if (def.id === 'L10' && world.progression?.campaign?.crossingHandover) {
+      this.state.subtitle = { id: 'l10.arsenal-lost', text: 'The crash took our weapons. The axe is all we have.', until: world.tick + 300 };
+    }
+    this.rebuildGates();
     for (const step of def.steps) {this.registerZones(step.complete); for(const fail of step.fail)this.registerZones(fail.trigger);}
     this.stops.push(world.events.on('sim.tick', () => this.update(), SimPhase.missions));
     // Result counters: every pedestrian turned or escaped, whichever lane's event reports it (ids dedupe).

@@ -1,4 +1,4 @@
-import { stripGlbTextures } from '../helpers/stripGlbTextures';
+import { stripGlbTextures } from '../../../tools/assets/stripGlbTextures';
 import { readFileSync } from 'node:fs';
 import { Box3, Vector3, Mesh, Texture, type MeshStandardMaterial } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';

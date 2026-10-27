@@ -6,7 +6,7 @@ from pathlib import Path
 import sys
 from PIL import Image, ImageDraw, ImageFont
 
-DEST = Path('docs/reports/ac-close-shared')
+DEST = Path('test-results/ac-close-shared')
 DEST.mkdir(parents=True, exist_ok=True)
 FONT_PATH = '/System/Library/Fonts/Menlo.ttc'
 FONT = ImageFont.truetype(FONT_PATH, 12) if Path(FONT_PATH).exists() else ImageFont.load_default()

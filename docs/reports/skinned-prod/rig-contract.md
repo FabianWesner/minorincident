@@ -12,4 +12,4 @@ Only present source joints are retained; a lion rig may omit paw aliases. The co
 
 Front chains use `legFL/FR → foreArmL/R → pawFL/FR`; hind chains use `legBL/BR → shinL/R → pawBL/BR`. The five gore groups include both humanoid aliases and the corresponding animal chain; the animal head group includes `head`, `neck`, and `jaw`.
 
-[Healthy zebra](builds/amb.zebra/lod0.json), [infected zebra](builds/inf.zebra/lod0.json), and [dog](builds/inf.dog/lod0.json) receipts record the actual joint lists. Both zebras and the dog are captured in the [quadruped gallery](quadrupeds-webgpu.png). The weighted pose, paw/hoof probe, picking and wound-boundary regressions exercise the animal path.
+[Healthy zebra](../../../tests/fixtures/reports/skinned-prod/builds/amb.zebra/lod0.json), [infected zebra](../../../tests/fixtures/reports/skinned-prod/builds/inf.zebra/lod0.json), and [dog](../../../tests/fixtures/reports/skinned-prod/builds/inf.dog/lod0.json) receipts record the actual joint lists. Both zebras and the dog are captured in the [quadruped gallery](quadrupeds-webgpu.png). The weighted pose, paw/hoof probe, picking and wound-boundary regressions exercise the animal path.

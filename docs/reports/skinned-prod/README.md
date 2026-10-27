@@ -4,7 +4,7 @@
 - All 52 civilian clips, weighted grips, posed picking/bounds/health-bar heights and CrowdFigureProbe are implemented and exercised.
 - Hats and glasses fit native skinned heads; the accessory oracle checks 12 mm spectacle clearance and fit-cache invalidation.
 - Quantized normals/UVs/weights, meshopt and ETC1S: largest LOD0/1/2 files are 473,752 / 206,628 / 146,080 bytes, below every delivery limit.
-- [Automatic build proofs](builds/): unseen L1 man A, man B and woman B, plus nurse/dog, have zero manual steps. The [quadruped contract](rig-contract.md) is proven on both zebras.
+- [Automatic build proofs](../../../tests/fixtures/reports/skinned-prod/builds): unseen L1 man A, man B and woman B, plus nurse/dog, have zero manual steps. The [quadruped contract](rig-contract.md) is proven on both zebras.
 - Healthy-source infection preserves clothing paint while desaturating skin and adding red eyes; shared textures and both couriers are integrated.
 - [Captures](captures.md): both backends, all clips, accessories, infection, arm/leg/head caps, frozen severed corpses, hit flash, combat gibs and LODs; all 12 wound HDR readbacks are finite.
 - [L1 census](l1-census.md): all 20 potential IDs, 14 observed per seeded route, high/low counts, player, named actors, pets, couriers, corpses and cast-source availability.

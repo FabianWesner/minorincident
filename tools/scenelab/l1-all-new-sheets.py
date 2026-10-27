@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 raw=Path('test-results/l1-all-new/figures')
-out=Path('docs/reports/l1-all-new'); out.mkdir(parents=True,exist_ok=True)
+out=Path('test-results/l1-all-new'); out.mkdir(parents=True,exist_ok=True)
 font=ImageFont.truetype('/System/Library/Fonts/Menlo.ttc',16)
 receipts={}
 for path in raw.glob('*receipts*.json'):

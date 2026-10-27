@@ -4,7 +4,7 @@ import { preset, type ProgressionPreset } from '../../src/sim/progression/Campai
 
 /** npm run gear:live -- --backend webgpu --tier high --out dir
  * Live levels with a progressed save: L3 at gear tier 2 (day) and L5 at gear tier 4 (night), both survivors, game camera at its default and its
- * closest zoom. Writes full-viewport PNGs plus a crop around the courier (the evidence for docs/reports/gear-art). */
+ * closest zoom. Writes full-viewport PNGs plus a crop around the courier (the evidence for test-results/gear-art). */
 const args = process.argv.slice(2), flag = (n: string) => { const i = args.indexOf(`--${n}`); return i >= 0 ? args[i + 1] : undefined; };
 const backend = (flag('backend') ?? 'webgpu') as Backend, tier = (flag('tier') ?? 'high') as 'high' | 'low', out = flag('out') ?? 'test-results/gear-live';
 const cases: { level: string; save: ProgressionPreset; expectTier: number; time?: string }[] = [

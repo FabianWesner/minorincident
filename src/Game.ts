@@ -38,6 +38,7 @@ import { Clock, SIM_FRAME_BUDGET_MS } from './core/Clock';
 import { Services } from './core/Services';
 import { Ticker } from './core/Ticker';
 import { GameView } from './render/GameView';
+import { gpuDeviceLostEvent, gpuErrorEvent } from './render/Renderer';
 import { loadLayouts } from './levels/layouts';
 import type { DistrictLayout, LevelComposition, Tier } from './levels/districts/types';
 import { SimWorld } from './sim/world/SimWorld';
@@ -147,6 +148,9 @@ export class Game {
     this.quality.onChange(() => this.applyQuality());
     this.view.renderer.domElement.addEventListener('webglcontextlost', this.contextLost);
     this.view.renderer.domElement.addEventListener('webglcontextrestored', this.contextRestored);
+    this.view.renderer.domElement.addEventListener(gpuDeviceLostEvent, this.deviceLost);
+    this.view.renderer.domElement.addEventListener(gpuErrorEvent, this.gpuError);
+    this.view.onRenderError = (kind, error) => this.renderError(kind, error);
     document.addEventListener('visibilitychange', this.visibility);
   }
   async init(): Promise<void> {
@@ -495,10 +499,43 @@ export class Game {
     if (this.world.infected) this.world.infected.director.setTier(this.world.scenario === 'perf-horde-200' ? 'high' : this.quality.tier);
   }
   private readonly visibility = (): void => { if (document.hidden) { this.clock.pause(); this.input.clear(); this.world.clearInput(); this.ticker.reset(); } };
-  private readonly contextLost = (event: Event): void => { event.preventDefault(); this.view.contextLost = true; this.view.retireLostRenderer(); this.clock.pause(); this.input.clear(); this.world.clearInput(); };
+  private readonly contextLost = (event: Event): void => { event.preventDefault(); this.view.contextLost = true; this.view.retireLostRenderer(); this.clock.pause(); this.awayPaused = true; this.input.clear(); this.world.clearInput(); };
+  /** Q-197: a lost WebGPU device froze the view for good while the sim, HUD and radar ran on. Recover like a WebGL
+   * context loss: pause, retire the renderer and build a new device on the same canvas. After a second loss in one
+   * session, the rebuild uses WebGL2 (a GPU process that keeps dropping WebGPU devices would loop otherwise). */
+  private deviceLosses = 0;
+  private readonly deviceLost = (event: Event): void => {
+    const detail = (event as CustomEvent<{ message?: string; reason?: string | null }>).detail;
+    this.renderError('device-lost', new Error(`${detail?.reason ?? 'unknown'}: ${detail?.message ?? ''}`));
+    if (this.view.contextLost) return;
+    if (++this.deviceLosses >= 2) this.params.set('renderer', 'webgl');
+    this.contextLost(event); this.contextRestored();
+  };
+  /** Uncaptured GPU errors drop that frame's whole command buffer. Repeating every frame for 2 s is a stuck view:
+   * rebuild the renderer as after a device loss. Isolated errors are only reported. */
+  private gpuErrors = { first: 0, count: 0, frames: 0 };
+  private readonly gpuError = (event: Event): void => {
+    const detail = (event as CustomEvent<{ type?: string; message?: string }>).detail;
+    const now = performance.now(), errors = this.gpuErrors;
+    if (now - errors.first > 2000) { errors.first = now; errors.count = 0; errors.frames = this.view.renderedFrames; }
+    this.renderError('gpu-error', new Error(`${detail?.type ?? 'GPUError'}: ${detail?.message ?? ''}`));
+    if (++errors.count >= 60 && this.view.renderedFrames - errors.frames >= 60 && !this.view.contextLost) {
+      errors.first = 0; this.deviceLost(new CustomEvent(gpuDeviceLostEvent, { detail: { reason: 'stuck', message: detail?.message } }));
+    }
+  };
+  private readonly reportedRenderErrors = new Set<string>();
+  /** Render failures are logged once per kind and message and counted in telemetry; the frame loop always goes on. */
+  private renderError(kind: string, error: unknown): void {
+    const message = error instanceof Error ? error.message : String(error), key = `${kind}:${message}`;
+    if (this.reportedRenderErrors.has(key) || this.reportedRenderErrors.size > 50) return;
+    this.reportedRenderErrors.add(key);
+    // A lost device is recovered below (a warning); anything else is a real render bug.
+    if (kind === 'device-lost') console.warn(`Render ${kind}, rebuilding the renderer:`, error); else console.error(`Render ${kind}:`, error);
+    this.telemetry?.renderError(kind, message);
+  }
   private readonly contextRestored = (): void => {
     const restore = this.levelQueue.then(async () => { this.loading = true; try { await this.view.restoreContext(); this.restoredWhilePaused = true; } finally { this.loading = false; this.clock.pause(); this.ticker.reset(); } });
     this.levelQueue = restore.catch(error => console.error(error));
   };
-  dispose(): void { this.inspect?.dispose(); if (this.driver instanceof LevelOneBot) this.driver.dispose(); this.campaignUI?.dispose(); this.ui.dispose(); this.transition.dispose(); document.removeEventListener('visibilitychange', this.visibility); this.view.renderer.domElement.removeEventListener('webglcontextlost', this.contextLost); this.view.renderer.domElement.removeEventListener('webglcontextrestored', this.contextRestored); this.overlay?.dispose(); this.quality.dispose(); this.ticker.dispose(); this.clock.dispose(); this.services.dispose(); }
+  dispose(): void { this.inspect?.dispose(); if (this.driver instanceof LevelOneBot) this.driver.dispose(); this.campaignUI?.dispose(); this.ui.dispose(); this.transition.dispose(); document.removeEventListener('visibilitychange', this.visibility); this.view.renderer.domElement.removeEventListener('webglcontextlost', this.contextLost); this.view.renderer.domElement.removeEventListener('webglcontextrestored', this.contextRestored); this.view.renderer.domElement.removeEventListener(gpuDeviceLostEvent, this.deviceLost); this.view.renderer.domElement.removeEventListener(gpuErrorEvent, this.gpuError); this.overlay?.dispose(); this.quality.dispose(); this.ticker.dispose(); this.clock.dispose(); this.services.dispose(); }
 }

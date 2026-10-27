@@ -1,7 +1,7 @@
 # Fixes 13h — L10 #98 / #100
 
 - #98: freeze complete corpse meshes independently of transient dismemberment; firefighter corpses use authored geometry. Corpse lifetime/counts and living LODs remain unchanged.
-- Reviewed 24 real-assault views (53 low / 167 high bodies): [GL low](corpses-webgl2-low.jpg), [GPU low](corpses-webgpu-low.jpg), [GL high](corpses-webgl2-high.jpg), [GPU high](corpses-webgpu-high.jpg). Heads/limbs replace torso shards; dense overlap and authored faceting remain.
+- Reviewed 24 real-assault views (53 low / 167 high bodies): [GL low](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/fixes-13h-l10/corpses-webgl2-low.jpg), [GPU low](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/fixes-13h-l10/corpses-webgpu-low.jpg), [GL high](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/fixes-13h-l10/corpses-webgl2-high.jpg), [GPU high](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/fixes-13h-l10/corpses-webgpu-high.jpg). Heads/limbs replace torso shards; dense overlap and authored faceting remain.
 - #100: cache sun/spot render variants and incrementally prewarm/link/draw alternate graphs before lamp entry. Earlier debug stalls reproduced at 3.7–4.5 s.
 - Matching production entry maxima before→after: GL debug 441.3→31.9 ms, continue 421.1→26.7; GPU debug 239.4→41.8, continue 261.8→44.4. All four final guards pass.
 - Loading grows 78.7–317.7 ms (limit 1 s). Tick-zero navigation costs ~2.67 s while the existing painted loading card is visible; it was previously misclassified as play.

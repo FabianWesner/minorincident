@@ -26,7 +26,7 @@ try{
     const perf=a.perf(),crowd=a.getState().render.crowd;
     const result={quality,gpu,backend:perf.backend,headless:true,unthrottled:true,count:a.getState().ai!.count,zebraCount:crowd?.batches.filter(b=>b.id==='inf.zebra').reduce((n,b)=>n+b.instances,0),specialActivations:a.events().filter(e=>e.type==='infected.special'&&e.stage==='active').length,durationMs:performance.now()-start,ticks:a.tick()-startTick,renderedFrames:perf.renderedFrames-startFrame,samples:frames.length,frameMsP95:frames[Math.ceil(frames.length*.95)-1],frameMsP50:frames[Math.ceil(frames.length*.5)-1],simMsP95:sim[Math.ceil(sim.length*.95)-1],heapBytes:perf.heapBytes,drawCalls:perf.drawCalls,triangles:perf.triangles,crowdDrawCalls:crowd?.meshDrawCalls,nonInstancedMeshes:crowd?.nonInstancedMeshes,recordedAt:new Date().toISOString()};a.pause();return result;
    },tier);
-   const heap=await cdp.send('Runtime.getHeapUsage');out.push({...proof,cdpHeapUsedBytes:heap.usedSize,consoleErrors:guard.errors});writeFileSync('docs/reports/zoo-s3/frame-performance.json',JSON.stringify(out,null,2)+'\n');
+   const heap=await cdp.send('Runtime.getHeapUsage');out.push({...proof,cdpHeapUsedBytes:heap.usedSize,consoleErrors:guard.errors});writeFileSync('test-results/zoo-s3/frame-performance.json',JSON.stringify(out,null,2)+'\n');
    const high=tier==='high';
    if(proof.count!==(high?200:100)||proof.zebraCount!==4||!proof.specialActivations||proof.frameMsP95>(high?16.7:33.3)||proof.simMsP95>(high?4:6)||proof.drawCalls>(high?600:300)||proof.triangles>(high?1500000:500000)||heap.usedSize>(high?400:250)*1024*1024||(proof.crowdDrawCalls??Infinity)>30||proof.nonInstancedMeshes!==0||guard.errors.length)throw new Error(`E18 zoo-s3 ${tier} budget failed`);
   }finally{await browser.close();}

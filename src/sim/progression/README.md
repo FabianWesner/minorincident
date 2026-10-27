@@ -67,9 +67,12 @@ response to arsenal grants.
 `CampaignSave.selectedAction` records the held action at completion (including replays)
 and live menu saves. Level starts and menu Continue restore its actual side/index without
 spending ammunition or starting a swap cooldown. A known action missing from the next
-rack falls back to the highest numbered owned, racked weapon (9 down to 1), with a reason
-in the campaign log. The crossing explicitly logs its scripted loss and selects the axe.
-The optional field keeps old saves valid and retains their authored default selection.
+rack, or an empty weapon, falls back to the best usable owned, racked weapon: guns
+in the existing number-key order (highest first), axe, then bat. Bottomless campaign guns count as usable.
+Missing selections in old saves use the same fallback. Level-list fixtures preserve a
+carried selection when it exists in their destination rack. The crossing explicitly logs
+its scripted loss, selects the axe, and announces the lost arsenal in the L10 HUD.
+Unarmed is last when choosing a fallback, including racks with older, unkeyed weapons.
 L5's setup respects a recorded selection. Live-save capture belongs to the campaign applied
 to the world, so Continue settings and new campaigns cannot inherit outgoing equipment.
 Existing ammunition/charge boundary rules are unchanged.

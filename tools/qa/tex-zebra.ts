@@ -4,7 +4,7 @@ import { spawn } from 'node:child_process';
 import { SceneSession, readSpec, stopServer } from '../scenelab/session';
 import type { Game } from '../../src/Game';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
-const out = 'test-results/tex-zebra', report = 'docs/reports/tex-zebra';
+const out = 'test-results/tex-zebra', report = 'test-results/tex-zebra';
 mkdirSync(out, { recursive: true }); mkdirSync(report, { recursive: true });
 const onlyMotions = process.argv.includes('--motions-only');
 const baseline = process.env.ZEBRA_BASELINE ?? '/Users/wesner/Workspace/tex-zebra-baseline';

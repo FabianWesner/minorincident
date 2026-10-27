@@ -3,7 +3,7 @@ import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node
 import { resolve } from 'node:path';
 import assert from 'node:assert/strict';
 
-const root = resolve('docs/reports/browser-pool'); mkdirSync(root, { recursive: true });
+const root = resolve('test-results/browser-pool'); mkdirSync(root, { recursive: true });
 const read = (path: string) => JSON.parse(readFileSync(path, 'utf8'));
 const before = read('test-results/browser-pool/benchmark/before/summary.json'), after = read('test-results/browser-pool/benchmark/after/summary.json');
 type Group = { kind: string; clients: number; wallSeconds: number; scenesPerMinute: number; chromePeakRssMiB: number; windowServerCpu: number; windowServerPeakCpu: number; maxGpuRoots: number; results: { code: number; admissionWaitMs: number; evidence: { pass: boolean; consoleErrors: string[]; captures: { changedPixels: number }[] }[] }[] };

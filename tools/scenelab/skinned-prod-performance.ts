@@ -9,7 +9,7 @@ import type { InstancedMesh } from 'three';
 import { SceneSession, stopServer, writeJson, type Backend } from './session';
 
 const root = process.cwd(), baseline = resolve(process.env.BASELINE_ROOT ?? '../skinned-prod-baseline');
-const out = resolve(root, 'docs/reports/skinned-prod'), receipts: Record<string, unknown>[] = [];
+const out = resolve(root, 'test-results/skinned-prod'), receipts: Record<string, unknown>[] = [];
 const models = ['inf.common-worker', 'inf.nurse', 'npc.civilian-woman-a', 'npc.civilian-man-b', 'inf.dog', 'inf.zebra'];
 const spec: SceneSpec = { name: 'skinned-prod-200', size: 120, ground: 'asphalt', time: 'golden', infectedCap: 200,
   actors: [{ id: 'courier', kind: 'courier', at: [0, 0], god: true },

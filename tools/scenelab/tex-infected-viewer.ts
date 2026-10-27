@@ -14,9 +14,9 @@ try {
   await page.evaluate(async()=>{await (window as unknown as {viewerReady:Promise<void>}).viewerReady;});
   await page.locator('[data-view="front"]').click();
   await page.waitForTimeout(500);
-  await page.screenshot({path:'docs/reports/tex-infected/pipeline-viewer.png'});
+  await page.screenshot({path:'test-results/tex-infected/pipeline-viewer.png'});
   await page.locator('#viewport').screenshot({path:'/private/tmp/tex-infected-captures/pipeline-look.png'});
   const state=await page.evaluate(()=>({state:(window as unknown as {currentModelState:unknown}).currentModelState,status:document.getElementById('status')?.textContent}));
-  writeFileSync('docs/reports/tex-infected/pipeline-viewer.json',JSON.stringify({root,...state,errors},null,2));
+  writeFileSync('test-results/tex-infected/pipeline-viewer.json',JSON.stringify({root,...state,errors},null,2));
   if(errors.length)throw new Error(errors.join('\n'));
 } finally { await browser?.close();server.kill(); }

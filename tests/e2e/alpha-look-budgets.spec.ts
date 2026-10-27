@@ -13,7 +13,7 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const quality of ['high
   test(`Alpha visual budgets ${backend} ${quality} @E18-AC01 @E07-AC01`, async ({ page }) => {
     test.setTimeout(360_000);
     const rows = [];
-    const out = 'docs/reports/alpha-look/budgets'; mkdirSync(out, { recursive: true });
+    const out = 'test-results/alpha-look/budgets'; mkdirSync(out, { recursive: true });
     const url = `/?test=1${backend === 'webgl' ? '&renderer=webgl' : ''}&quality=${quality}&audio=muted&dpr=1`;
     const spots = [[547, 0], [937, 80], [1517, 100], [2060, -75], [2707, 45], [3317, 95], [4002, -27]];
     const cases = [

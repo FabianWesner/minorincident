@@ -14,14 +14,14 @@ All objective definitions were reviewed. L1 destination objectives retain their 
 
 ## Captures reviewed at the game camera
 
-- [Before station](before-station.png): courier beside the kerb with a large yellow ring, arrow and diamond; “Help defend the station · 0 m” implies an arrival action that does not exist.
-- [After station](after-station.png): same kerb view; yellow geometry removed, HUD still says “Help defend the station.”
+- [Before station](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/l3-yellow-ring/before-station.png): courier beside the kerb with a large yellow ring, arrow and diamond; “Help defend the station · 0 m” implies an arrival action that does not exist.
+- [After station](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/l3-yellow-ring/after-station.png): same kerb view; yellow geometry removed, HUD still says “Help defend the station.”
 - [Armory interaction](after-armory.png): armory destination ring with “Hold still or press E · Take a handgun from the armory · 3%.”
 - [Before army, supplied PROD 3c30b499](before-army-prod.webp): courier inside the ring near the checkpoint boom, police lined up nearby; L3 remains active. This is supplied production evidence, not a locally replayed capture.
 - [Rest inside the compound, real Boulevard playthrough](after-compound-rest-blvd.png): courier and corgi behind the checkpoint walls with police nearby, health 100, deeper yellow ring ahead and HUD “Reach the rendezvous ring inside the army checkpoint · 5 m.” The five-second rest has finished and L3 is still active. The Oak rest capture was also inspected; it shows the same open lane and deeper ring, with covering fire across the distant checkpoint.
 
-- [Deeper rendezvous before a click](after-compound-rendezvous.png): courier inside the walls, destination ahead, HUD names the ring at 4 m. The civilian at the boom is part of the obstruction regression fixture.
-- [Entry with occupied boom](after-finale-entry.png): courier at the rendezvous, yellow ring/arrow/diamond gone; the turquoise circle is the mouse destination cue. Soldiers remain beside the open road and the army radio responds.
+- [Deeper rendezvous before a click](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/l3-yellow-ring/after-compound-rendezvous.png): courier inside the walls, destination ahead, HUD names the ring at 4 m. The civilian at the boom is part of the obstruction regression fixture.
+- [Entry with occupied boom](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/l3-yellow-ring/after-finale-entry.png): courier at the rendezvous, yellow ring/arrow/diamond gone; the turquoise circle is the mouse destination cue. Soldiers remain beside the open road and the army radio responds.
 - [L4 handover](after-finale-L4.png): Fairhaven briefing over the evacuation bus, confirming progression rather than a stuck L3 objective.
 
 ## Specification correction

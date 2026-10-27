@@ -1,7 +1,7 @@
 /** Door-preserving wreck/burn review at each tier in the real game renderer. */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { SceneSession, stopServer } from './session';
-const out = process.argv[2] ?? 'docs/reports/engine-wreck-doors/captures';
+const out = process.argv[2] ?? 'test-results/engine-wreck-doors/captures';
 const session = new SceneSession({ viewport: { width: 1600, height: 900 } });
 const metrics: unknown[] = [];
 mkdirSync(out, { recursive: true });

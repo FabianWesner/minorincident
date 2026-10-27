@@ -1,7 +1,7 @@
 /** Service-gate prompt capture; invoke under e2e-lock after build. */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { SceneSession, readSpec, stopServer } from '../scenelab/session';
-const out = 'docs/reports/readability-w6b/phone', rows: object[] = [];
+const out = 'test-results/readability-w6b/phone', rows: object[] = [];
 mkdirSync(out, { recursive: true });
 try {
   for (const backend of ['webgl2', 'webgpu'] as const) for (const landscape of [false, true]) {
