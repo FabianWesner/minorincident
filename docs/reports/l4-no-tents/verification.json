@@ -91,7 +91,8 @@
     "explanation": "Main is also over budget. Branch simulation and frame p95 are lower; no >15% CPU regression. No CPU optimization authorized or needed from this comparison."
   },
   "pending": [
-    "real-input playthrough and final focused native corrections"
+    "resolve12 native cases in checks/native-unresolved.json",
+    "perf pending, orchestrator measures in a quiet window (authorized A/B deferral)"
   ],
   "noSkipBot": {
     "source": "e7b3c98ee",
@@ -185,5 +186,31 @@
       "alarmAndRealInputRoute": 2
     },
     "status": "all47 focused corrections rerunning; original assertion thresholds retained except tent opening revised to exterior cue10s/body60s per Q-192"
+  },
+  "status": "incomplete: native gates unresolved at the authorized timebox",
+  "nativeFocusedRetry": {
+    "source": "39323d31f QA build + corrected native harness",
+    "receipt": "checks/native-camera-retry.json",
+    "passed": 33,
+    "failed": 5
+  },
+  "nativeLastRetry": {
+    "source": "05731483b /758cca67f tests",
+    "receipt": "checks/native-guidance-weapons.json",
+    "passed": 2,
+    "failed": 11
+  },
+  "nativeCoverage": {
+    "passedAcrossRuns": 99,
+    "total": 111,
+    "remaining": 12,
+    "remainingGroups": {
+      "cellarGuidanceAngle": 8,
+      "armedCivilianCensus": 1,
+      "highCloseZoomWarMovement": 2,
+      "realInputEscapeDriver": 1
+    },
+    "diagnostics": "checks/native-unresolved.json",
+    "note": "All checks have finished. No normal no-skip bot regression: seed3 remains complete0deaths. Original collapse<10 unchanged and passes on Mac/Linux."
   }
 }

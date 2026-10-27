@@ -1,0 +1,18 @@
+{
+  "exitCode": 1,
+  "command": [
+    "sh",
+    "tools/e2e-lock.sh",
+    "npx",
+    "playwright",
+    "test",
+    "tests/e2e/levels/l4-cellar-guidance.spec.ts",
+    "tests/e2e/levels/l4-weapons.spec.ts",
+    "tests/e2e/levels/l4-plaza-movement.spec.ts",
+    "--grep",
+    "line-broken cellar guidance|T-E22-20|L4 war: mouse WASD stick.*zoom 0.5",
+    "--project=chromium",
+    "--workers=2",
+    "--trace=off"
+  ]
+}
