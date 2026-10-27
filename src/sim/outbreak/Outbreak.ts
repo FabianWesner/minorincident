@@ -486,7 +486,10 @@ export class Outbreak {
     const c = e.civilian!, tick = this.world.tick, attacker = this.world.entities.get(c.attacker);
     // PO 2026-10-12 (L3: "Ideally the Zombies will win against police"): a grabbed L3 officer no longer frees himself; only a
     // teammate's or the courier's hit on the grabber rescues him. Elsewhere officers keep fighting from the hold.
-    if (c.ally && (c.ally.gun || c.ally.role === 'officer' || c.ally.role === 'soldier') && !(c.ally.role === 'officer' && this.world.missions?.def.l3) && attacker?.infected && attacker.health.current > 0) updateAlly(this.world, e, (a, b, id) => this.sees(a, b, id));
+    // A retreating L4 soldier also needs a teammate or courier to rescue him.
+    // Otherwise a point-blank self-shot resets every native hold indefinitely.
+    const needsRescue = c.ally?.role === 'officer' && this.world.missions?.def.l3 || c.ally?.role === 'soldier' && this.world.missions?.state.l4?.phase === 'collapse';
+    if (c.ally && (c.ally.gun || c.ally.role === 'officer' || c.ally.role === 'soldier') && !needsRescue && attacker?.infected && attacker.health.current > 0) updateAlly(this.world, e, (a, b, id) => this.sees(a, b, id));
     if (this.aiBites() && !this.world.npcs!.civilians.holds(c.attacker)) {
       // The bite arrives as `outbreak.bite` (externalBite); a released hold without it is a rescue.
       if (this.world.infected!.holding(e.id) === 0) this.rescued(e);

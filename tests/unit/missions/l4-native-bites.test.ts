@@ -30,3 +30,23 @@ for (const kind of ['crawler', 'riot', 'firefighter', 'hazmat']) for (const resc
     } else expect(soldier.infection).toBeDefined();
   } finally { world.dispose(); }
 });
+
+for (const rescued of [false, true]) test(`a grabbed retreating soldier ${rescued ? 'can still be rescued by a teammate' : 'needs a rescue rather than shooting out of every hold'}`, async () => {
+  const { world, mission } = await loadL4(2);
+  try {
+    const state = mission.state.l4!; state.phase = 'collapse';
+    const soldier = world.entities.get(state.soldierIds.find(id => id !== state.qmId)!)!;
+    expect(soldier.civilian!.ally!.role).toBe('soldier');
+    const id = world.infected!.spawn('infected.riot', { x: soldier.transform.x + .9, z: soldier.transform.z });
+    const attacker = world.entities.get(id)!; attacker.infected!.heardTargetId = soldier.id;
+    (world.infected as unknown as { attackVictim(e: EntitySnapshot, damage: number): void }).attackVictim(attacker, 10);
+    expect(soldier.civilian!.state).toBe('grabbed');
+    world.tick += 90;
+    if (rescued) attacker.combat!.staggerUntil = world.tick + 30;
+    (world.npcs!.civilians.outbreak as unknown as { held(e: EntitySnapshot): void }).held(soldier);
+    if (rescued) {
+      expect(soldier.infection).toBeUndefined();
+      expect(soldier.civilian!.state).toBe('flee');
+    } else expect(soldier.infection).toBeDefined();
+  } finally { world.dispose(); }
+});
