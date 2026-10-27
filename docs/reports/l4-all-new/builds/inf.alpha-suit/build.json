@@ -1,0 +1,82 @@
+{
+  "id": "inf.alpha-suit",
+  "source": "/Users/wesner/Workspace/3dp-l4-all-new/cast/l4/inf.alpha-suit",
+  "elapsedSeconds": 14.656,
+  "manualSteps": [],
+  "receipts": [
+    {
+      "lod": 0,
+      "source": "assets/inf.alpha-suit/model.glb",
+      "sourceSha256": "0266f8c6f6d67a750f45dc443ee59586c822f1427c325738229f3f37c53afeb6",
+      "bodySource": "/Users/wesner/Workspace/3dp-l4-all-new/cast/l4/inf.alpha-suit/source/assembled-lod0.glb",
+      "bodySha256": "440770d3c5c753f63f259a74b1595683a01a6e4d79b74f927f8a52ee12713240",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/inf.alpha-suit.lod0.glb",
+          "bytes": 430204,
+          "sha256": "ac7ad83757fd371b34fba038a9b387899bb2d85dac3c69de8a2c4c7461069f47",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/inf.alpha-suit.lod0.low.glb",
+          "bytes": 325444,
+          "sha256": "be08114ce3bbe01b98ad8d1827d8af1b75283da9efc7f81f1246b9338e5b55c0",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 1,
+      "source": "assets/inf.alpha-suit/model.glb",
+      "sourceSha256": "0266f8c6f6d67a750f45dc443ee59586c822f1427c325738229f3f37c53afeb6",
+      "bodySource": "/Users/wesner/Workspace/3dp-l4-all-new/cast/l4/inf.alpha-suit/source/assembled-lod1.glb",
+      "bodySha256": "1eaf17fab7625860e4bc920a9398a947cbe8f1a3fb73a782c04962f4cb652e5a",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/inf.alpha-suit.lod1.glb",
+          "bytes": 201340,
+          "sha256": "a095f82073b707061a01ea00b3747c25ff65b370c356a53816579511a2889054",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/inf.alpha-suit.lod1.low.glb",
+          "bytes": 201340,
+          "sha256": "a095f82073b707061a01ea00b3747c25ff65b370c356a53816579511a2889054",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 2,
+      "source": "assets/inf.alpha-suit/model.glb",
+      "sourceSha256": "0266f8c6f6d67a750f45dc443ee59586c822f1427c325738229f3f37c53afeb6",
+      "bodySource": "/Users/wesner/Workspace/3dp-l4-all-new/cast/l4/inf.alpha-suit/source/assembled-lod2.glb",
+      "bodySha256": "a0b2ba15e9d00f49b1668c2a755343bfbae675728cdf7f19fb678849f0c4320f",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/inf.alpha-suit.lod2.glb",
+          "bytes": 129632,
+          "sha256": "6986f16411a23444a3f8f50794befa3fd2499f751307d68204ce99157d6f06dd",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/inf.alpha-suit.lod2.low.glb",
+          "bytes": 129632,
+          "sha256": "6986f16411a23444a3f8f50794befa3fd2499f751307d68204ce99157d6f06dd",
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "preparedBakes": {
+    "inf.alpha-suit:lod0:infected": "/assets/civilians/inf.alpha-suit.lod0.infected.f3b8478bbe5bb597.bin.gz",
+    "inf.alpha-suit:lod1:infected": "/assets/civilians/inf.alpha-suit.lod1.infected.dd77e443f00e83a7.bin.gz",
+    "inf.alpha-suit:lod2:infected": "/assets/civilians/inf.alpha-suit.lod2.infected.f03c32ea9f8db6c8.bin.gz"
+  }
+}

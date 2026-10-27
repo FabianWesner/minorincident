@@ -1,0 +1,82 @@
+{
+  "id": "inf.crawler",
+  "source": "/Users/wesner/Workspace/3dp-l4-all-new/cast/l4/inf.crawler",
+  "elapsedSeconds": 7.964,
+  "manualSteps": [],
+  "receipts": [
+    {
+      "lod": 0,
+      "source": "/Users/wesner/Workspace/3dp-l4-all-new/cast/l4/inf.crawler/rig-template.glb",
+      "sourceSha256": "94bf4a43954920d6fa53bc7ce98e613fdadba559c7ce4b56284a4e22ac21482c",
+      "bodySource": "/Users/wesner/Workspace/3dp-l4-all-new/cast/l4/inf.crawler/source/assembled-lod0.glb",
+      "bodySha256": "0ac2791390c595c3222fbd9db9e445df92861569c9def33c40603940c8bdfb62",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/inf.crawler.lod0.glb",
+          "bytes": 277124,
+          "sha256": "be01043ac6e2670f8b635e2d62383d66ac5cec4b75673ad37d7367cec3275e3b",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/inf.crawler.lod0.low.glb",
+          "bytes": 206616,
+          "sha256": "5c5a6dfb183773578fe32b391ee45490892986d262795672d2bd1ed43b545cdf",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 1,
+      "source": "/Users/wesner/Workspace/3dp-l4-all-new/cast/l4/inf.crawler/rig-template.glb",
+      "sourceSha256": "94bf4a43954920d6fa53bc7ce98e613fdadba559c7ce4b56284a4e22ac21482c",
+      "bodySource": "/Users/wesner/Workspace/3dp-l4-all-new/cast/l4/inf.crawler/source/assembled-lod1.glb",
+      "bodySha256": "b560703778386a4717e531d11094149412c6d796dd10d940f4de7bb80992a19a",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/inf.crawler.lod1.glb",
+          "bytes": 137324,
+          "sha256": "5113304701d595e01f2de39d063bedf1b41216acada0f392483b0adb688a4119",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/inf.crawler.lod1.low.glb",
+          "bytes": 137324,
+          "sha256": "5113304701d595e01f2de39d063bedf1b41216acada0f392483b0adb688a4119",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 2,
+      "source": "/Users/wesner/Workspace/3dp-l4-all-new/cast/l4/inf.crawler/rig-template.glb",
+      "sourceSha256": "94bf4a43954920d6fa53bc7ce98e613fdadba559c7ce4b56284a4e22ac21482c",
+      "bodySource": "/Users/wesner/Workspace/3dp-l4-all-new/cast/l4/inf.crawler/source/assembled-lod2.glb",
+      "bodySha256": "1b6e8adce489568c12fd82ecbbcc36d699e62ebb7323727d3bf3e325ec285376",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/inf.crawler.lod2.glb",
+          "bytes": 96240,
+          "sha256": "b3333d932c5a373bc85168a86b736accce1821b8cc571eb2ae3586cd52a24aac",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/inf.crawler.lod2.low.glb",
+          "bytes": 96240,
+          "sha256": "b3333d932c5a373bc85168a86b736accce1821b8cc571eb2ae3586cd52a24aac",
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "preparedBakes": {
+    "inf.crawler:lod0:infected": "/assets/civilians/inf.crawler.lod0.infected.dfff93901485ccf1.bin.gz",
+    "inf.crawler:lod1:infected": "/assets/civilians/inf.crawler.lod1.infected.e44971a04726f622.bin.gz",
+    "inf.crawler:lod2:infected": "/assets/civilians/inf.crawler.lod2.infected.b5186bcee125071d.bin.gz"
+  }
+}

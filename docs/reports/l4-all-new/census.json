@@ -8,7 +8,6 @@
     "src/render/CrowdView.ts"
   ],
   "scope": [
-    "npc.national-guard",
     "inf.crawler",
     "inf.riot-cop",
     "inf.firefighter",
@@ -21,6 +20,7 @@
   ],
   "carryover": [
     "inf.common-worker",
+    "npc.national-guard",
     "npc.civilian-man-a",
     "npc.civilian-man-b",
     "npc.civilian-woman-a",
@@ -29,6 +29,14 @@
     "char.courier-female",
     "char.courier-male",
     "char.corgi"
+  ],
+  "delegated": [
+    {
+      "id": "npc.national-guard",
+      "lane": "lane/l3-all-new",
+      "commit": "2735d6547",
+      "reason": "Orchestrator 2026-10-27: consume the reviewed L3 build after main merge; no second L4 build"
+    }
   ],
   "excluded": [
     {
@@ -57,8 +65,8 @@
     },
     {
       "id": "npc.national-guard",
-      "inheritedV2": false,
-      "crowdSkin": true,
+      "inheritedV2": true,
+      "crowdSkin": false,
       "high": {
         "peak": 58,
         "actorSeconds": 12021,
@@ -161,42 +169,97 @@
       "id": "inf.crawler",
       "inheritedV2": false,
       "crowdSkin": true,
-      "high": null,
-      "low": null
+      "high": {
+        "peak": 98,
+        "actorSeconds": 17078,
+        "infectedSeconds": 17078,
+        "corpseSeconds": 13998
+      },
+      "low": {
+        "peak": 56,
+        "actorSeconds": 8910.5,
+        "infectedSeconds": 8910.5,
+        "corpseSeconds": 7668.5
+      }
     },
     {
       "id": "inf.riot-cop",
       "inheritedV2": false,
-      "crowdSkin": false,
-      "high": null,
-      "low": null
+      "crowdSkin": true,
+      "high": {
+        "peak": 63,
+        "actorSeconds": 10872.5,
+        "infectedSeconds": 10872.5,
+        "corpseSeconds": 7757.5
+      },
+      "low": {
+        "peak": 40,
+        "actorSeconds": 6649,
+        "infectedSeconds": 6649,
+        "corpseSeconds": 5383.5
+      }
     },
     {
       "id": "inf.firefighter",
       "inheritedV2": false,
-      "crowdSkin": false,
-      "high": null,
-      "low": null
+      "crowdSkin": true,
+      "high": {
+        "peak": 81,
+        "actorSeconds": 14254.5,
+        "infectedSeconds": 14254.5,
+        "corpseSeconds": 11102.5
+      },
+      "low": {
+        "peak": 50,
+        "actorSeconds": 8073.5,
+        "infectedSeconds": 8073.5,
+        "corpseSeconds": 6870.5
+      }
     },
     {
       "id": "inf.hazmat",
       "inheritedV2": false,
       "crowdSkin": false,
-      "high": null,
-      "low": null
+      "high": {
+        "peak": 83,
+        "actorSeconds": 13747,
+        "infectedSeconds": 13747,
+        "corpseSeconds": 10603
+      },
+      "low": {
+        "peak": 40,
+        "actorSeconds": 6043.5,
+        "infectedSeconds": 6043.5,
+        "corpseSeconds": 4764
+      }
     },
     {
       "id": "inf.alpha",
       "inheritedV2": false,
-      "crowdSkin": false,
-      "high": null,
-      "low": null
+      "crowdSkin": true,
+      "high": {
+        "peak": 4,
+        "actorSeconds": 710,
+        "infectedSeconds": 710,
+        "corpseSeconds": 371.5
+      },
+      "low": {
+        "peak": 1,
+        "actorSeconds": 169,
+        "infectedSeconds": 169,
+        "corpseSeconds": 129.5
+      }
     },
     {
       "id": "inf.alpha-worker",
       "inheritedV2": false,
       "crowdSkin": false,
-      "high": null,
+      "high": {
+        "peak": 1,
+        "actorSeconds": 139.5,
+        "infectedSeconds": 139.5,
+        "corpseSeconds": 104.5
+      },
       "low": null
     },
     {
@@ -204,21 +267,46 @@
       "inheritedV2": false,
       "crowdSkin": false,
       "high": null,
-      "low": null
+      "low": {
+        "peak": 2,
+        "actorSeconds": 396,
+        "infectedSeconds": 396,
+        "corpseSeconds": 360
+      }
     },
     {
       "id": "inf.alpha-fire",
       "inheritedV2": false,
       "crowdSkin": false,
-      "high": null,
-      "low": null
+      "high": {
+        "peak": 2,
+        "actorSeconds": 457,
+        "infectedSeconds": 457,
+        "corpseSeconds": 403.5
+      },
+      "low": {
+        "peak": 2,
+        "actorSeconds": 290,
+        "infectedSeconds": 290,
+        "corpseSeconds": 180
+      }
     },
     {
       "id": "inf.alpha-suit",
       "inheritedV2": false,
       "crowdSkin": false,
-      "high": null,
-      "low": null
+      "high": {
+        "peak": 1,
+        "actorSeconds": 193.5,
+        "infectedSeconds": 193.5,
+        "corpseSeconds": 168.5
+      },
+      "low": {
+        "peak": 1,
+        "actorSeconds": 123,
+        "infectedSeconds": 123,
+        "corpseSeconds": 78.5
+      }
     },
     {
       "id": "char.courier-female",
@@ -477,35 +565,53 @@
           "infectedSeconds": 7266.5,
           "corpseSeconds": 6401
         },
-        "infected.firefighter": {
+        "inf.firefighter": {
           "peak": 81,
           "actorSeconds": 14254.5,
           "infectedSeconds": 14254.5,
           "corpseSeconds": 11102.5
         },
-        "infected.crawler": {
+        "inf.crawler": {
           "peak": 98,
           "actorSeconds": 17078,
           "infectedSeconds": 17078,
           "corpseSeconds": 13998
         },
-        "infected.riot": {
+        "inf.riot-cop": {
           "peak": 63,
           "actorSeconds": 10872.5,
           "infectedSeconds": 10872.5,
           "corpseSeconds": 7757.5
         },
-        "infected.hazmat": {
+        "inf.hazmat": {
           "peak": 83,
           "actorSeconds": 13747,
           "infectedSeconds": 13747,
           "corpseSeconds": 10603
         },
-        "infected.alpha": {
-          "peak": 8,
-          "actorSeconds": 1500,
-          "infectedSeconds": 1500,
-          "corpseSeconds": 1048
+        "inf.alpha-fire": {
+          "peak": 2,
+          "actorSeconds": 457,
+          "infectedSeconds": 457,
+          "corpseSeconds": 403.5
+        },
+        "inf.alpha": {
+          "peak": 4,
+          "actorSeconds": 710,
+          "infectedSeconds": 710,
+          "corpseSeconds": 371.5
+        },
+        "inf.alpha-suit": {
+          "peak": 1,
+          "actorSeconds": 193.5,
+          "infectedSeconds": 193.5,
+          "corpseSeconds": 168.5
+        },
+        "inf.alpha-worker": {
+          "peak": 1,
+          "actorSeconds": 139.5,
+          "infectedSeconds": 139.5,
+          "corpseSeconds": 104.5
         }
       }
     },
@@ -706,35 +812,53 @@
           "infectedSeconds": 5935,
           "corpseSeconds": 5592.5
         },
-        "infected.firefighter": {
+        "inf.firefighter": {
           "peak": 50,
           "actorSeconds": 8073.5,
           "infectedSeconds": 8073.5,
           "corpseSeconds": 6870.5
         },
-        "infected.crawler": {
+        "inf.crawler": {
           "peak": 56,
           "actorSeconds": 8910.5,
           "infectedSeconds": 8910.5,
           "corpseSeconds": 7668.5
         },
-        "infected.riot": {
+        "inf.riot-cop": {
           "peak": 40,
           "actorSeconds": 6649,
           "infectedSeconds": 6649,
           "corpseSeconds": 5383.5
         },
-        "infected.hazmat": {
+        "inf.hazmat": {
           "peak": 40,
           "actorSeconds": 6043.5,
           "infectedSeconds": 6043.5,
           "corpseSeconds": 4764
         },
-        "infected.alpha": {
-          "peak": 6,
-          "actorSeconds": 978,
-          "infectedSeconds": 978,
-          "corpseSeconds": 748
+        "inf.alpha-hoodie": {
+          "peak": 2,
+          "actorSeconds": 396,
+          "infectedSeconds": 396,
+          "corpseSeconds": 360
+        },
+        "inf.alpha-fire": {
+          "peak": 2,
+          "actorSeconds": 290,
+          "infectedSeconds": 290,
+          "corpseSeconds": 180
+        },
+        "inf.alpha": {
+          "peak": 1,
+          "actorSeconds": 169,
+          "infectedSeconds": 169,
+          "corpseSeconds": 129.5
+        },
+        "inf.alpha-suit": {
+          "peak": 1,
+          "actorSeconds": 123,
+          "infectedSeconds": 123,
+          "corpseSeconds": 78.5
         }
       }
     }

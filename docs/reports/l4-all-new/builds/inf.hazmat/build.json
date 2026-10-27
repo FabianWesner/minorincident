@@ -1,0 +1,82 @@
+{
+  "id": "inf.hazmat",
+  "source": "/Users/wesner/Workspace/3dp-l4-all-new/cast/l4/inf.hazmat",
+  "elapsedSeconds": 10.112,
+  "manualSteps": [],
+  "receipts": [
+    {
+      "lod": 0,
+      "source": "assets/inf.hazmat/model.glb",
+      "sourceSha256": "6c9d5ccd3e51e7ecf98c16bb0160d1a49cc1db695cbaa1fb36e44a2fe32b0115",
+      "bodySource": "/Users/wesner/Workspace/3dp-l4-all-new/cast/l4/inf.hazmat/source/assembled-lod0.glb",
+      "bodySha256": "65f60e1b60575284197f27cd5f6e56fff8f6d1bdb946526b40c740e19a0efeaf",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/inf.hazmat.lod0.glb",
+          "bytes": 340860,
+          "sha256": "a0d94cc5b37bcd55fee61f98d426df4dfcfa8de4cd3e85f20a6387916c114af1",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/inf.hazmat.lod0.low.glb",
+          "bytes": 241912,
+          "sha256": "b305bf237982c7f0d5c560245983a7d6ee649e7a4bd7c8e6656cf8daf028f8da",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 1,
+      "source": "assets/inf.hazmat/model.glb",
+      "sourceSha256": "6c9d5ccd3e51e7ecf98c16bb0160d1a49cc1db695cbaa1fb36e44a2fe32b0115",
+      "bodySource": "/Users/wesner/Workspace/3dp-l4-all-new/cast/l4/inf.hazmat/source/assembled-lod1.glb",
+      "bodySha256": "0f41bc1f9c58369cd3960f96dee44f60a24526258cdd27e5284551c3f0bccb70",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/inf.hazmat.lod1.glb",
+          "bytes": 159412,
+          "sha256": "7ee74f176e6323af799de02dd7ce32cbb904975cc4a913f81df506ca7443ddb5",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/inf.hazmat.lod1.low.glb",
+          "bytes": 159412,
+          "sha256": "7ee74f176e6323af799de02dd7ce32cbb904975cc4a913f81df506ca7443ddb5",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 2,
+      "source": "assets/inf.hazmat/model.glb",
+      "sourceSha256": "6c9d5ccd3e51e7ecf98c16bb0160d1a49cc1db695cbaa1fb36e44a2fe32b0115",
+      "bodySource": "/Users/wesner/Workspace/3dp-l4-all-new/cast/l4/inf.hazmat/source/assembled-lod2.glb",
+      "bodySha256": "0cd29d612a198146eece33167cc7c73981a0b5a67c63db978fb8f4282eda86cc",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/inf.hazmat.lod2.glb",
+          "bytes": 105248,
+          "sha256": "b96103563f1a9ea465247ecd6b4ba12b8db0606091a037c35cd566bfc0d2d006",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/inf.hazmat.lod2.low.glb",
+          "bytes": 105248,
+          "sha256": "b96103563f1a9ea465247ecd6b4ba12b8db0606091a037c35cd566bfc0d2d006",
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "preparedBakes": {
+    "inf.hazmat:lod0:infected": "/assets/civilians/inf.hazmat.lod0.infected.3e58b916f225ec81.bin.gz",
+    "inf.hazmat:lod1:infected": "/assets/civilians/inf.hazmat.lod1.infected.491d3b1217dffbc8.bin.gz",
+    "inf.hazmat:lod2:infected": "/assets/civilians/inf.hazmat.lod2.infected.e40b72a2832203fd.bin.gz"
+  }
+}

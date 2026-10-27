@@ -414,13 +414,13 @@
     "status": "integrated",
     "tier": "hero",
     "script": "assets/inf.alpha/build.py",
-    "glb": "public/assets/models/inf.alpha.glb",
-    "sourceGlb": "assets/inf.alpha/model.glb",
+    "glb": "public/assets/models/skinned/inf.alpha.lod0.glb",
+    "sourceGlb": "assets/inf.alpha/model.skin.glb",
     "dimensions": {
-      "x": 1.32,
-      "y": 2.5104995795160923,
-      "z": 2.3259558475352797,
-      "tolerance": 0.1
+      "x": 1.7903010249137878,
+      "y": 2.3343770503997803,
+      "z": 2.228548049926758,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -472,20 +472,29 @@
     "budget": {
       "triangles": 8000,
       "materials": 6,
-      "fileKB": 800,
+      "fileKB": 600,
       "drawCalls": 40
     },
     "decayVariants": [],
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/inf.alpha.lod1.glb",
-      "lod2": "public/assets/models/inf.alpha.lod2.glb"
+      "lod1": "public/assets/models/skinned/inf.alpha.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.alpha.lod2.glb"
     },
     "sourceScale": 1.08101627,
     "authoredLodTriangles": {
       "lod1": 3000,
       "lod2": 1000
-    }
+    },
+    "rigidBaseline": {
+      "glb": "public/assets/models/inf.alpha.glb",
+      "lods": {
+        "lod1": "public/assets/models/inf.alpha.lod1.glb",
+        "lod2": "public/assets/models/inf.alpha.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "inf.alpha-worker",
@@ -493,13 +502,13 @@
     "status": "integrated",
     "tier": "hero",
     "script": "assets/inf.alpha/build.py",
-    "glb": "public/assets/models/inf.alpha-worker.glb",
-    "sourceGlb": "assets/inf.alpha-worker/model.glb",
+    "glb": "public/assets/models/skinned/inf.alpha-worker.lod0.glb",
+    "sourceGlb": "assets/inf.alpha-worker/model.skin.glb",
     "dimensions": {
-      "x": 1.32,
-      "y": 2.5316,
-      "z": 2.3265,
-      "tolerance": 0.1
+      "x": 1.075870007276535,
+      "y": 2.372283458709717,
+      "z": 2.1915435791015625,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -551,20 +560,29 @@
     "budget": {
       "triangles": 8000,
       "materials": 7,
-      "fileKB": 800,
+      "fileKB": 600,
       "drawCalls": 48
     },
     "decayVariants": [],
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/inf.alpha-worker.lod1.glb",
-      "lod2": "public/assets/models/inf.alpha-worker.lod2.glb"
+      "lod1": "public/assets/models/skinned/inf.alpha-worker.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.alpha-worker.lod2.glb"
     },
     "sourceScale": 1.08101627,
     "authoredLodTriangles": {
       "lod1": 3000,
       "lod2": 1000
-    }
+    },
+    "rigidBaseline": {
+      "glb": "public/assets/models/inf.alpha-worker.glb",
+      "lods": {
+        "lod1": "public/assets/models/inf.alpha-worker.lod1.glb",
+        "lod2": "public/assets/models/inf.alpha-worker.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "inf.alpha-hoodie",
@@ -572,13 +590,13 @@
     "status": "integrated",
     "tier": "hero",
     "script": "assets/inf.alpha/build.py",
-    "glb": "public/assets/models/inf.alpha-hoodie.glb",
-    "sourceGlb": "assets/inf.alpha-hoodie/model.glb",
+    "glb": "public/assets/models/skinned/inf.alpha-hoodie.lod0.glb",
+    "sourceGlb": "assets/inf.alpha-hoodie/model.skin.glb",
     "dimensions": {
-      "x": 1.32,
-      "y": 2.5468,
-      "z": 2.3205,
-      "tolerance": 0.1
+      "x": 1.8030421733856201,
+      "y": 2.3509902954101562,
+      "z": 2.244408130645752,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -630,20 +648,29 @@
     "budget": {
       "triangles": 8000,
       "materials": 7,
-      "fileKB": 800,
+      "fileKB": 600,
       "drawCalls": 48
     },
     "decayVariants": [],
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/inf.alpha-hoodie.lod1.glb",
-      "lod2": "public/assets/models/inf.alpha-hoodie.lod2.glb"
+      "lod1": "public/assets/models/skinned/inf.alpha-hoodie.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.alpha-hoodie.lod2.glb"
     },
     "sourceScale": 1.08101627,
     "authoredLodTriangles": {
       "lod1": 3000,
       "lod2": 1000
-    }
+    },
+    "rigidBaseline": {
+      "glb": "public/assets/models/inf.alpha-hoodie.glb",
+      "lods": {
+        "lod1": "public/assets/models/inf.alpha-hoodie.lod1.glb",
+        "lod2": "public/assets/models/inf.alpha-hoodie.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "inf.alpha-fire",
@@ -651,13 +678,13 @@
     "status": "integrated",
     "tier": "hero",
     "script": "assets/inf.alpha/build.py",
-    "glb": "public/assets/models/inf.alpha-fire.glb",
-    "sourceGlb": "assets/inf.alpha-fire/model.glb",
+    "glb": "public/assets/models/skinned/inf.alpha-fire.lod0.glb",
+    "sourceGlb": "assets/inf.alpha-fire/model.skin.glb",
     "dimensions": {
-      "x": 1.32,
-      "y": 2.5268,
-      "z": 2.321,
-      "tolerance": 0.1
+      "x": 1.8193725943565369,
+      "y": 2.372283458709717,
+      "z": 2.2647359371185303,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -709,20 +736,29 @@
     "budget": {
       "triangles": 8000,
       "materials": 7,
-      "fileKB": 800,
+      "fileKB": 600,
       "drawCalls": 48
     },
     "decayVariants": [],
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/inf.alpha-fire.lod1.glb",
-      "lod2": "public/assets/models/inf.alpha-fire.lod2.glb"
+      "lod1": "public/assets/models/skinned/inf.alpha-fire.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.alpha-fire.lod2.glb"
     },
     "sourceScale": 1.08101627,
     "authoredLodTriangles": {
       "lod1": 3000,
       "lod2": 1000
-    }
+    },
+    "rigidBaseline": {
+      "glb": "public/assets/models/inf.alpha-fire.glb",
+      "lods": {
+        "lod1": "public/assets/models/inf.alpha-fire.lod1.glb",
+        "lod2": "public/assets/models/inf.alpha-fire.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "inf.alpha-suit",
@@ -730,13 +766,13 @@
     "status": "integrated",
     "tier": "hero",
     "script": "assets/inf.alpha/build.py",
-    "glb": "public/assets/models/inf.alpha-suit.glb",
-    "sourceGlb": "assets/inf.alpha-suit/model.glb",
+    "glb": "public/assets/models/skinned/inf.alpha-suit.lod0.glb",
+    "sourceGlb": "assets/inf.alpha-suit/model.skin.glb",
     "dimensions": {
-      "x": 1.32,
-      "y": 2.5419,
-      "z": 2.3266,
-      "tolerance": 0.1
+      "x": 1.7745289206504822,
+      "y": 2.313811779022217,
+      "z": 2.2089149951934814,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -788,20 +824,29 @@
     "budget": {
       "triangles": 8000,
       "materials": 7,
-      "fileKB": 800,
+      "fileKB": 600,
       "drawCalls": 48
     },
     "decayVariants": [],
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/inf.alpha-suit.lod1.glb",
-      "lod2": "public/assets/models/inf.alpha-suit.lod2.glb"
+      "lod1": "public/assets/models/skinned/inf.alpha-suit.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.alpha-suit.lod2.glb"
     },
     "sourceScale": 1.08101627,
     "authoredLodTriangles": {
       "lod1": 3000,
       "lod2": 1000
-    }
+    },
+    "rigidBaseline": {
+      "glb": "public/assets/models/inf.alpha-suit.glb",
+      "lods": {
+        "lod1": "public/assets/models/inf.alpha-suit.lod1.glb",
+        "lod2": "public/assets/models/inf.alpha-suit.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "inf.jogger",
@@ -1602,7 +1647,7 @@
     "sourceGlb": "assets/inf.crawler/model.skin.glb",
     "dimensions": {
       "x": 1.5013813972473145,
-      "y": 1.0542622106149793,
+      "y": 1.0542621910572052,
       "z": 1.0567171573638916,
       "tolerance": 0.15
     },
@@ -1651,9 +1696,9 @@
     ],
     "sockets": [],
     "budget": {
-      "triangles": 40000,
+      "triangles": 6000,
       "materials": 32,
-      "fileKB": 6000,
+      "fileKB": 600,
       "drawCalls": 40
     },
     "decayVariants": [],
@@ -1670,7 +1715,11 @@
       }
     },
     "crowdSkin": true,
-    "textureMode": "baseColor"
+    "textureMode": "baseColor",
+    "authoredLodTriangles": {
+      "lod1": 2500,
+      "lod2": 900
+    }
   },
   {
     "id": "inf.corpse-poses",
@@ -1874,12 +1923,12 @@
     "category": "infected",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/inf.riot-cop.glb",
+    "glb": "public/assets/models/skinned/inf.riot-cop.lod0.glb",
     "dimensions": {
-      "x": 0.8017,
-      "y": 1.8,
-      "z": 1.3467,
-      "tolerance": 0.1
+      "x": 0.8152983486652374,
+      "y": 1.7999984567709362,
+      "z": 1.8126385807991028,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -1929,31 +1978,44 @@
     ],
     "sockets": [],
     "budget": {
-      "triangles": 40000,
+      "triangles": 6000,
       "materials": 32,
-      "fileKB": 6000,
+      "fileKB": 600,
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/inf.riot-cop/model.glb",
+    "sourceGlb": "assets/inf.riot-cop/model.skin.glb",
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/inf.riot-cop.lod1.glb",
-      "lod2": "public/assets/models/inf.riot-cop.lod2.glb"
+      "lod1": "public/assets/models/skinned/inf.riot-cop.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.riot-cop.lod2.glb"
     },
-    "sourceScale": 1.14126421
+    "sourceScale": 1.14126421,
+    "authoredLodTriangles": {
+      "lod1": 2500,
+      "lod2": 900
+    },
+    "rigidBaseline": {
+      "glb": "public/assets/models/inf.riot-cop.glb",
+      "lods": {
+        "lod1": "public/assets/models/inf.riot-cop.lod1.glb",
+        "lod2": "public/assets/models/inf.riot-cop.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "inf.hazmat",
     "category": "infected",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/inf.hazmat.glb",
+    "glb": "public/assets/models/skinned/inf.hazmat.lod0.glb",
     "dimensions": {
-      "x": 0.9019,
-      "y": 1.8,
-      "z": 1.1013,
-      "tolerance": 0.1
+      "x": 1.0048820674419403,
+      "y": 1.6826449325308204,
+      "z": 1.214302897453308,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -2003,35 +2065,44 @@
     ],
     "sockets": [],
     "budget": {
-      "triangles": 40000,
+      "triangles": 6000,
       "materials": 32,
-      "fileKB": 6000,
+      "fileKB": 600,
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/inf.hazmat/model.glb",
+    "sourceGlb": "assets/inf.hazmat/model.skin.glb",
     "sourceForward": "+X",
     "sourceScale": 1.06962587,
     "lods": {
-      "lod1": "public/assets/models/inf.hazmat.lod1.glb",
-      "lod2": "public/assets/models/inf.hazmat.lod2.glb"
+      "lod1": "public/assets/models/skinned/inf.hazmat.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.hazmat.lod2.glb"
     },
     "authoredLodTriangles": {
-      "lod1": 6000,
-      "lod2": 5000
-    }
+      "lod1": 2500,
+      "lod2": 900
+    },
+    "rigidBaseline": {
+      "glb": "public/assets/models/inf.hazmat.glb",
+      "lods": {
+        "lod1": "public/assets/models/inf.hazmat.lod1.glb",
+        "lod2": "public/assets/models/inf.hazmat.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "inf.firefighter",
     "category": "infected",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/inf.firefighter.glb",
+    "glb": "public/assets/models/skinned/inf.firefighter.lod0.glb",
     "dimensions": {
-      "x": 0.8794,
-      "y": 1.8,
-      "z": 1.604,
-      "tolerance": 0.1
+      "x": 1.0730183124542236,
+      "y": 1.799413543078117,
+      "z": 1.3797299265861511,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -2081,19 +2152,32 @@
     ],
     "sockets": [],
     "budget": {
-      "triangles": 40000,
+      "triangles": 6000,
       "materials": 32,
-      "fileKB": 6000,
+      "fileKB": 600,
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/inf.firefighter/model.glb",
+    "sourceGlb": "assets/inf.firefighter/model.skin.glb",
     "sourceForward": "+X",
     "sourceScale": 1.06343739,
     "lods": {
-      "lod1": "public/assets/models/inf.firefighter.lod1.glb",
-      "lod2": "public/assets/models/inf.firefighter.lod2.glb"
-    }
+      "lod1": "public/assets/models/skinned/inf.firefighter.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.firefighter.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 2500,
+      "lod2": 900
+    },
+    "rigidBaseline": {
+      "glb": "public/assets/models/inf.firefighter.glb",
+      "lods": {
+        "lod1": "public/assets/models/inf.firefighter.lod1.glb",
+        "lod2": "public/assets/models/inf.firefighter.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "inf.bloated",
@@ -7311,12 +7395,12 @@
     "category": "character",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/skinned/npc.national-guard.lod0.glb",
+    "glb": "public/assets/models/npc.national-guard.glb",
     "dimensions": {
-      "x": 0.5076742470264435,
-      "y": 1.4286228399723768,
-      "z": 0.8845464289188385,
-      "tolerance": 0.15
+      "x": 0.7084,
+      "y": 1.8,
+      "z": 0.7929,
+      "tolerance": 0.1
     },
     "forward": "+X",
     "frontNodes": [
@@ -7369,27 +7453,18 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/npc.national-guard/model.skin.glb",
+    "sourceGlb": "assets/npc.national-guard/model.glb",
     "sourceForward": "+X",
     "sourceScale": 1.25995466,
     "lods": {
-      "lod1": "public/assets/models/skinned/npc.national-guard.lod1.glb",
-      "lod2": "public/assets/models/skinned/npc.national-guard.lod2.glb"
+      "lod1": "public/assets/models/npc.national-guard.lod1.glb",
+      "lod2": "public/assets/models/npc.national-guard.lod2.glb"
     },
     "script": "assets/npc.national-guard/build.py",
     "authoredLodTriangles": {
       "lod1": 16000,
       "lod2": 15000
-    },
-    "rigidBaseline": {
-      "glb": "public/assets/models/npc.national-guard.glb",
-      "lods": {
-        "lod1": "public/assets/models/npc.national-guard.lod1.glb",
-        "lod2": "public/assets/models/npc.national-guard.lod2.glb"
-      }
-    },
-    "crowdSkin": true,
-    "textureMode": "baseColor"
+    }
   },
   {
     "id": "npc.survivor-group",

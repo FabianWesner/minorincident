@@ -283,12 +283,13 @@ if (arg('--clear-headwear')) {
     const x = Math.max(0, Math.min(png.width - 1, Math.floor(body.uv[i * 2] * png.width))), y = Math.max(0, Math.min(png.height - 1, Math.floor(body.uv[i * 2 + 1] * png.height))), offset = (y * png.width + x) * 4;
     const [r, g, b] = png.data.subarray(offset, offset + 3);
     if (body.pos[i * 3] > centreX && Math.abs(body.pos[i * 3 + 2] - centreZ) < headWidth * .3 && r > 140 && g > r * .45 && g < r * .85 && b > r * .25 && b < r * .8) face.push(i);
-    if (arg('--clear-headwear') === 'brown' ? r >= 80 && r < 170 && r > g * 1.1 && g > b * 1.05 : arg('--clear-headwear') === 'red' ? r > g * 1.6 && r > b * 1.4 : b > r * 1.1 && b >= g * .9) cap.push(i);
+    if (arg('--clear-headwear') === 'brown' ? r >= 80 && r < 170 && r > g * 1.1 && g > b * 1.05 : arg('--clear-headwear') === 'red' ? r > g * 1.6 && r > b * 1.4 : arg('--clear-headwear') === 'yellow' ? r > 130 && g > 100 && b < Math.min(r, g) * .7 : b > r * 1.1 && b >= g * .9) cap.push(i);
   }
-  if (face.length < 4 || cap.length < 4) throw Error('Cannot measure face/headwear clearance from the source atlas');
+  const pickedEyes = arg('--eyes') ? (JSON.parse(readFileSync(arg('--eyes')!, 'utf8')) as { eye_centers: number[][] }).eye_centers.map(p => new Vector3().fromArray(p).applyMatrix4(bodyTransform)) : undefined;
+  if ((!pickedEyes && face.length < 4) || cap.length < 4) throw Error('Cannot measure face/headwear clearance from the source atlas');
   const percentile = (values: number[], p: number) => values.sort((a, b) => a - b)[Math.floor((values.length - 1) * p)];
-  let eyeY = percentile(face.map(i => body.pos[i * 3 + 1]), .72);
-  const eyeX = percentile(face.map(i => body.pos[i * 3]), .3);
+  let eyeY = pickedEyes ? Math.max(...pickedEyes.map(p => p.y)) : percentile(face.map(i => body.pos[i * 3 + 1]), .72);
+  const eyeX = pickedEyes ? pickedEyes.reduce((sum, p) => sum + p.x, 0) / pickedEyes.length : percentile(face.map(i => body.pos[i * 3]), .3);
   if (arg('--clear-headwear') === 'brown') {
     // A fringe can hide the upper face completely, biasing the skin sample to
     // the cheeks. The retained rig's iris meshes give the anatomical eye height.
@@ -461,7 +462,7 @@ if (args.includes('--fit-rig-height')) {
     const areas = new Float64Array(count), triangle = new Triangle();
     for (let t = 0; t < kept.length; t += 3) { triangle.a.fromArray(body.pos, kept[t] * 3); triangle.b.fromArray(body.pos, kept[t + 1] * 3); triangle.c.fromArray(body.pos, kept[t + 2] * 3); areas[group[map[kept[t]]]] += triangle.getArea(); }
     const main = areas.indexOf(Math.max(...areas)), totalArea = areas.reduce((a, b) => a + b, 0);
-    if ([...areas].some((area, i) => i !== main && area >= totalArea * .001)) throw Error(`Contact repair separated an anatomical component: ${JSON.stringify([...areas].map((area, component) => ({ area, fraction: area / totalArea, owners: [...new Set(kept.filter(i => group[map[i]] === component).map(i => JOINTS[body.owner[i]]))] })))}`);
+    if ([...areas].some((area, i) => i !== main && area >= totalArea * .001)) throw Error(`Contact repair separated an anatomical component: ${JSON.stringify([...areas].map((area, component) => ({ area, fraction: area / totalArea, bounds: [0, 1, 2].map(axis => { const values = kept.filter(i => group[map[i]] === component).map(i => body.pos[i * 3 + axis]); return [Math.min(...values), Math.max(...values)]; }), owners: [...new Set(kept.filter(i => group[map[i]] === component).map(i => JOINTS[body.owner[i]]))] })))}`);
     const cleaned: number[] = [];
     for (let t = 0; t < kept.length; t += 3) if (group[map[kept[t]]] === main) cleaned.push(...kept.slice(t, t + 3));
     body.tris = cleaned; fit.contactRepair = { removedTriangles: removed, closedBoundaries: caps, removedScrapTriangles: (kept.length - cleaned.length) / 3 };
@@ -641,7 +642,7 @@ if (!out.getRoot().listNodes().some(n => n.getName() === 'front')) {
 }
 const propsPath = arg('--props');
 if (propsPath) {
-  const props = await io.read(propsPath), recipe = JSON.parse(readFileSync(arg('--props-recipe')!, 'utf8')) as { lods: { lod: number; props: { name: string; intended_owner: string; exact_owner?: boolean }[] }[] };
+  const props = await io.read(propsPath), recipe = JSON.parse(readFileSync(arg('--props-recipe')!, 'utf8')) as { lods: { lod: number; props: { name: string; intended_owner: string; exact_owner?: boolean; bind_matrix?: number[] }[] }[] };
   const entries = recipe.lods.find(l => l.lod === Number(arg('--props-lod', '0')))!.props;
   const selected = props.getRoot().listNodes().filter(n => n.getMesh() && entries.some(e => e.name === n.getName()) && !(args.includes('--retain-corgi-props') && /pack/.test(n.getName())));
   const copied = copyToDocument(out, props, selected);
@@ -667,7 +668,11 @@ if (propsPath) {
       // A carried clipboard follows the hand, but its paint is not skin.
       if (args.includes('--healthy') && /^hand[LR]$/.test(owner.getName())) primitive.setAttribute('_CROWD_REGION', out.createAccessor().setType('SCALAR').setArray(new Float32Array(primitive.getAttribute('POSITION')!.getCount())));
     }
-    node.setMatrix(world(owner).invert().multiply(bodyTransform).multiply(world(source)).toArray());
+    // Authored rigid attachments retain their joint-local grip/fit when a
+    // neutral arm is refitted. Source-space placement alone can float an axe
+    // at the former wrist position after that bone moves.
+    const binding = entry.bind_matrix ? new Matrix4().fromArray(entry.bind_matrix).invert() : world(owner).invert().multiply(bodyTransform);
+    node.setMatrix(binding.multiply(world(source)).toArray());
     copy.get(owner)!.addChild(node);
   }
 }

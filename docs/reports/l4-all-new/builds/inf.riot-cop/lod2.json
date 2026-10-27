@@ -1,0 +1,226 @@
+{
+  "rig": "/Users/wesner/Workspace/3dp-l4-all-new/cast/l4/inf.riot-cop/rig-template.glb",
+  "out": "docs/reports/l4-all-new/builds/inf.riot-cop/lod2.raw.glb",
+  "bytes": 394124,
+  "body": "/Users/wesner/Workspace/3dp-l4-all-new/cast/l4/inf.riot-cop/source/assembled-lod2.glb",
+  "scale": 1.919029329186718,
+  "yaw": 90,
+  "translation": [
+    0.1365799597330912,
+    0.9624430228731691,
+    -0.13082404614593385
+  ],
+  "meanDistanceToRigidSurface": 0.020656024470597334,
+  "headwearClearance": {
+    "eyeX": 0.439476972500382,
+    "eyeY": 1.4047697096581298,
+    "brimY": 1.466344789319236,
+    "vertices": 0,
+    "maxLift": 0
+  },
+  "propBindings": [
+    {
+      "prop": "l4_handR_0",
+      "intended": "handR",
+      "owner": "handR"
+    },
+    {
+      "prop": "l4_handR_1",
+      "intended": "handR",
+      "owner": "handR"
+    },
+    {
+      "prop": "l4_handL_2",
+      "intended": "handL",
+      "owner": "handL"
+    },
+    {
+      "prop": "l4_handL_3",
+      "intended": "handL",
+      "owner": "handL"
+    },
+    {
+      "prop": "l4_handL_4",
+      "intended": "handL",
+      "owner": "handL"
+    },
+    {
+      "prop": "l4_handL_5",
+      "intended": "handL",
+      "owner": "handL"
+    },
+    {
+      "prop": "l4_handL_6",
+      "intended": "handL",
+      "owner": "handL"
+    },
+    {
+      "prop": "l4_handL_7",
+      "intended": "handL",
+      "owner": "handL"
+    }
+  ],
+  "eyeLandmarks": "/Users/wesner/Workspace/3dp-l4-all-new/cast/l4/inf.riot-cop/eyes.json",
+  "vertices": 569,
+  "weldedVertices": 220,
+  "triangles": 436,
+  "bodyTriangleBudget": 436,
+  "components": 1,
+  "openEdges": 0,
+  "unrelatedSeams": 60,
+  "maxInfluences": 3,
+  "zeroNormals": 2,
+  "jointNames": [
+    "root",
+    "hip",
+    "torso",
+    "head",
+    "armL",
+    "armR",
+    "foreArmL",
+    "foreArmR",
+    "handL",
+    "handR",
+    "legL",
+    "legR",
+    "shinL",
+    "shinR",
+    "footL",
+    "footR"
+  ],
+  "rigKind": "humanoid",
+  "capFits": [
+    {
+      "part": "head",
+      "rim": 17,
+      "triangles": 15,
+      "loops": 1,
+      "distance": 0.20791777968307926,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "armL",
+      "rim": 8,
+      "triangles": 6,
+      "loops": 1,
+      "distance": 0.2436903745283501,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "armR",
+      "rim": 7,
+      "triangles": 5,
+      "loops": 1,
+      "distance": 0.16170400216649147,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "foreArmL",
+      "rim": 7,
+      "triangles": 5,
+      "loops": 1,
+      "distance": 0.17098754085431167,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "foreArmR",
+      "rim": 6,
+      "triangles": 4,
+      "loops": 1,
+      "distance": 0.11552925877964598,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "legL",
+      "rim": 9,
+      "triangles": 7,
+      "loops": 1,
+      "distance": 0.21733378700197337,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "legR",
+      "rim": 8,
+      "triangles": 6,
+      "loops": 1,
+      "distance": 0.2157592644164299,
+      "method": "cut-boundary"
+    }
+  ],
+  "removedClosureTriangles": 0,
+  "removedDegenerateTriangles": 0,
+  "joints": 16,
+  "eyes": 2,
+  "seams": {
+    "handR/foreArmR": {
+      "seamVertices": 14,
+      "band": 0.05958312041912033,
+      "blended": 0
+    },
+    "foreArmR/armR": {
+      "seamVertices": 6,
+      "band": 0.0993052006985339,
+      "blended": 4
+    },
+    "torso/hip": {
+      "seamVertices": 27,
+      "band": 0.13902728097794748,
+      "blended": 27
+    },
+    "armR/torso": {
+      "seamVertices": 7,
+      "band": 0.11916624083824066,
+      "blended": 5
+    },
+    "head/torso": {
+      "seamVertices": 22,
+      "band": 0.06951364048897374,
+      "blended": 13
+    },
+    "footR/shinR": {
+      "seamVertices": 13,
+      "band": 0.06951364048897374,
+      "blended": 4
+    },
+    "shinR/legR": {
+      "seamVertices": 12,
+      "band": 0.10923572076838728,
+      "blended": 11
+    },
+    "legR/hip": {
+      "seamVertices": 14,
+      "band": 0.13902728097794748,
+      "blended": 14
+    },
+    "legL/hip": {
+      "seamVertices": 16,
+      "band": 0.13902728097794748,
+      "blended": 16
+    },
+    "shinL/legL": {
+      "seamVertices": 11,
+      "band": 0.10923572076838728,
+      "blended": 8
+    },
+    "armL/torso": {
+      "seamVertices": 5,
+      "band": 0.11916624083824066,
+      "blended": 2
+    },
+    "footL/shinL": {
+      "seamVertices": 13,
+      "band": 0.06951364048897374,
+      "blended": 2
+    },
+    "foreArmL/armL": {
+      "seamVertices": 7,
+      "band": 0.0993052006985339,
+      "blended": 4
+    },
+    "handL/foreArmL": {
+      "seamVertices": 12,
+      "band": 0.05958312041912033,
+      "blended": 0
+    }
+  }
+}
