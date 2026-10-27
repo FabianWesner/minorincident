@@ -74,7 +74,7 @@ export class InputSystem implements Lifecycle {
   private walkHintDone = false;
   /** `controlAzimuth`: the gameplay camera's fixed azimuth. Movement keys and sticks stay on it while a story preset or cinematic
    * frames the scene from another side (P0 10-20: the L5 station view looked south, so a held W walked the courier back out). */
-  constructor(private readonly canvas: HTMLElement, private readonly camera: Camera, private readonly zoom: (delta: number) => void = () => {}, private readonly controlAzimuth?: () => number) {
+  constructor(canvas: HTMLElement, private readonly camera: Camera, private readonly zoom: (delta: number) => void = () => {}, private readonly controlAzimuth?: () => number) {
     let storage: Storage | undefined;
     try { storage = localStorage; } catch { /* Defaults work with storage disabled. */ }
     this.bindings = new Bindings(storage);
