@@ -1,7 +1,7 @@
 import { basename } from 'node:path';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 import { PNG } from 'pngjs';
-import { SceneSession, encodeWebm, evaluate, writeJson, type Backend } from './session';
+import { SceneSession, encodeWebm, evaluate, writeJson } from './session';
 import { canvasFrame, canvasFrameChecks } from '../../tests/e2e/canvas-frame';
 import { canvasEdgeNoise } from './edge-noise';
 import { hueDistance, LOW_CHROMA, measureLook } from './look';
@@ -22,9 +22,6 @@ export function bodyPixels(a: PNG, b: PNG, hole?: RevealDisc): number {
   }
   return n;
 }
-/** The production renderer names its WebGL2 backend `webgl`; catalog requests use `webgl2`. */
-export function matchesBackend(actual: string, requested: Backend): boolean { return actual === (requested === 'webgl2' ? 'webgl' : 'webgpu'); }
-
 /** Frames of the contact sheet: every `sheet` frames from 0, thinned evenly to at most 24 cells. */
 export function sheetFrames(sheet: number, frames: number): number[] {
   const all: number[] = []; for (let f = 0; f <= frames; f += Math.max(1, Math.round(sheet))) all.push(f);
