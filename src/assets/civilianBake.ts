@@ -1,5 +1,6 @@
 import type { PreparedCivilian } from '../render/npc/prepareCivilianGeometry';
 import { decodeCivilianBake } from './civilianBakeData';
+import deliveries from './civilianBakes.json' with { type: 'json' };
 export const civilianBakeStats = { workers: 0, submitted: 0, completed: 0, prebuilt: 0, failed: 0 };
 type Job = { id: number; model: string; lod: string; source: boolean; infected?: boolean; resolve: (value: PreparedCivilian | undefined) => void };
 const queue: Job[] = [], workers: { worker: Worker; job?: Job }[] = [];
@@ -47,8 +48,30 @@ export function loadCivilianBake(model: string, lod: string, source = false): Pr
   return new Promise(resolve => { queue.push({ id: ++sequence, model, lod, source, resolve }); drain(); });
 }
 /** Uses the same lossless worker transfer for a converted infected body. */
-export function loadSkinnedCrowdBake(model: string, lod: string): Promise<PreparedCivilian | undefined> {
+function prepareSkinnedCrowdBake(model: string, lod: string): Promise<PreparedCivilian | undefined> {
   if (typeof Worker === 'undefined' || unavailable) return Promise.resolve(undefined);
   civilianBakeStats.submitted++;
   return new Promise(resolve => { queue.push({ id: ++sequence, model, lod, source: false, infected: true, resolve }); drain(); });
+}
+const prefetchedSkins = new Map<string, Promise<PreparedCivilian | undefined>>();
+/** Start delivered horde preparation alongside layout/nav loading. Each result has
+ * one owner: its eventual batch, or this load's cleanup if the view never uses it. */
+export function prefetchSkinnedCrowdBakes(models: readonly string[]): () => void {
+  const owned = new Map<string, Promise<PreparedCivilian | undefined>>();
+  for (const lod of ['lod1', 'lod2']) for (const model of models) {
+    const key = `${model}:${lod}`;
+    if (!(`${key}:infected` in deliveries) || prefetchedSkins.has(key)) continue;
+    const pending = prepareSkinnedCrowdBake(model, lod);
+    owned.set(key, pending); prefetchedSkins.set(key, pending);
+  }
+  return () => {
+    for (const [key, pending] of owned) if (prefetchedSkins.get(key) === pending) {
+      prefetchedSkins.delete(key); void pending.then(body => body?.geometry.dispose());
+    }
+  };
+}
+export function loadSkinnedCrowdBake(model: string, lod: string): Promise<PreparedCivilian | undefined> {
+  const key = `${model}:${lod}`, pending = prefetchedSkins.get(key);
+  if (!pending) return prepareSkinnedCrowdBake(model, lod);
+  prefetchedSkins.delete(key); return pending;
 }

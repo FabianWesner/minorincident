@@ -31,3 +31,18 @@ test('L4 excess pursuers cover another defender while coherent cohorts keep thei
   expect(active[0].infected!.l1!.goalX).toBe(60);
 });
 
+
+test('a broken third line keeps breach cohorts on the courier until the hold ends', () => {
+  const player = { id: 1, transform: { x: 0, z: 0 }, health: { current: 100 } } as EntitySnapshot;
+  const soldier = { id: 11, transform: { x: 50, z: 0 }, health: { current: 100 } } as EntitySnapshot;
+  const brain = { mode: 'wander', targetId: 0, focusId: 1, focusUntil: 100, goalX: 15, goalZ: 0, search: {} };
+  const runner = { id: 60, archetype: 'infected.runner', transform: { x: 30, z: 0 }, health: { current: 100 }, infected: { l1: brain } } as unknown as EntitySnapshot;
+  const press = vi.fn(), world = { tick: 240, entities: { get: () => player }, infected: { active: [runner], press, director: { tier: 'high' } } };
+  const war = Object.assign(Object.create(LevelFourWar.prototype), {
+    mission: { world, state: { l4: { phase: 'war', director: { lines: [{}, {}, { brokeAt: 1 }] }, origin: { 60: 1000 } } } },
+    liveSoldiers: () => [soldier], insideRing: () => true,
+  }) as { followBreachHorde(): void };
+  war.followBreachHorde();
+  expect(press).toHaveBeenCalledWith(60, 1, expect.any(Number), 40);
+  expect(brain.goalX).toBe(0);
+});

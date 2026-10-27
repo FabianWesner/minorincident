@@ -664,7 +664,9 @@ export class LevelFourWar {
   /** Keep breached groups moving with the nearest live defender or courier. Targets can move while the flood crosses the plaza. */
   private followBreachHorde(): void {
     const { world } = this.mission, tick = world.tick, ai = world.infected!, player = world.entities.get(1)!;
-    if (this.s.phase === 'collapse' || !this.low && this.s.director.lines[2].brokeAt) {
+    // A broken fallback line is still the hold: its breach cohorts keep pressing
+    // the courier until "Fall back!" actually opens the escape phase.
+    if (this.s.phase === 'collapse') {
       const soldiers = this.liveSoldiers();
       if (!soldiers.length) return;
       // Street encounters keep their sight-driven courier job. The retreating

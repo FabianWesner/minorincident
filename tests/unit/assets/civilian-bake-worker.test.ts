@@ -59,3 +59,18 @@ test('worker constructor failure falls back for every pending job', async () => 
   const pool = await import('../../../src/assets/civilianBake');
   expect(await pool.loadCivilianBake('model', 'lod1')).toBeUndefined(); expect(await pool.loadCivilianBake('next', 'lod2')).toBeUndefined();
 });
+
+test('prefetched delivered skins transfer once to their batch and skip undelivered models', async () => {
+  const pool = await import('../../../src/assets/civilianBake');
+  const release = pool.prefetchSkinnedCrowdBakes(['inf.common-worker', 'npc.national-guard']);
+  expect(pool.civilianBakeStats.submitted).toBe(2);
+  const first = pool.loadSkinnedCrowdBake('inf.common-worker', 'lod1');
+  const second = pool.loadSkinnedCrowdBake('inf.common-worker', 'lod2');
+  expect(pool.civilianBakeStats.submitted).toBe(2);
+  for (const slot of slots) slot.onmessage!({ data: { bytes: new ArrayBuffer(1) } } as MessageEvent);
+  expect(await first).toEqual({ geometry: 'prepared' }); expect(await second).toEqual({ geometry: 'prepared' });
+  release();
+  const later = pool.loadSkinnedCrowdBake('inf.common-worker', 'lod1');
+  expect(pool.civilianBakeStats.submitted).toBe(3);
+  slots[0].onmessage!({ data: { bytes: new ArrayBuffer(1) } } as MessageEvent); await later;
+});
