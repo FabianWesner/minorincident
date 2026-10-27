@@ -20,7 +20,7 @@
     "test:perf:l5": "npm run build:qa && node tools/test-lane.mjs perf-l5 sh tools/perf/quiet-run.sh npx playwright test tests/perf/l5-budgets.spec.ts --project=chromium --workers=1",
     "qa:invariants": "node tools/qa/run-invariants.mjs",
     "qa:invariants:sim": "vitest run tests/qa/invariants --maxWorkers=4 --configLoader runner --reporter=default --reporter=json --outputFile=test-results/qa-invariants/sim.json",
-    "qa:invariants:sim:remote": "sh tools/remote/run.sh \"$PWD\" --pull test-results/qa-invariants/sim.json --env E2E_PORT=${E2E_PORT:-4191} --env SCENE_PORT=${SCENE_PORT:-4192} -- timeout 840 npm run qa:invariants:sim",
+    "qa:invariants:sim:remote": "sh tools/remote/run.sh \"$PWD\" --pull test-results/qa-invariants/sim.json --env E2E_PORT=${E2E_PORT:-4191} --env SCENE_PORT=${SCENE_PORT:-4192} -- bash tools/remote/timing-isolated.sh --all timeout 840 npm run qa:invariants:sim",
     "test:e2e:l5-audio": "npm run build:qa && node tools/test-lane.mjs e2e-l5-audio sh tools/e2e-lock.sh playwright test tests/e2e/audio/l5.spec.ts --project=chromium --workers=1",
     "test:smoke": "npm run build:qa && node tools/test-lane.mjs smoke sh -c 'sh tools/sim-lock.sh vitest run -t @smoke --maxWorkers=2 --configLoader runner && sh tools/e2e-lock.sh playwright test --grep @smoke --workers=1'",
     "verify": "tsx tools/verify.ts",
