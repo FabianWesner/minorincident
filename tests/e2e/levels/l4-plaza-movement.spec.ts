@@ -73,7 +73,10 @@ for (const renderer of ['webgl', 'webgpu'] as const) for (const quality of ['hig
     if (phase !== 'plaza') await page.evaluate(() => window.__SS__!.cheats.completeObjective('quartermaster'));
     if (phase !== 'plaza') {
       for (let i = 0; i < 60 && !await page.evaluate(() => window.__SS__!.missions.state()!.l4!.turnAt); i++) await step(page, 60);
-      await step(page, 180);
+      // Q-192 opens the first breach at20s, including its short story camera.
+      // Measure free movement after that beat; close zoom cannot click ground
+      // beside the courier while the authored wall camera is looking elsewhere.
+      await step(page, phase === 'war' ? 1800 : 180);
       expect(await page.evaluate(() => window.__SS__!.missions.state()!.l4!.phase)).toBe('war');
     }
     if (phase === 'respawn') {
