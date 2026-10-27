@@ -1,27 +1,8 @@
 import { defineConfig } from 'vitest/config';
 
-// Wall-clock budgets need the CPU to themselves; functional tests still use four workers.
-// Vitest puts isolated single-worker groupOrder=0 files last; positive orders run timing first.
-const timingFiles = [
-  'tests/sim/ai/director.test.ts',
-  'tests/sim/ai/l1-perception.test.ts',
-  'tests/sim/combat/balance.test.ts',
-  'tests/sim/interact/integration.test.ts',
-  'tests/sim/missions/perf.test.ts',
-  'tests/sim/npc/campaign.test.ts',
-  'tests/sim/performance/**/*.test.ts',
-  'tests/sim/levels/l10-district.test.ts',
-  'tests/sim/levels/l10-assault.test.ts',
-  'tests/sim/levels/l10-arrival.test.ts',
-  'tests/sim/world/chunk-residency.test.ts',
-  'tests/sim/player.test.ts',
-  'tests/sim/vehicles/consequences.test.ts',
-  // Aggregate all-level weather replay has a fixed 120 s deadline and needs the CPU too.
-  'tests/sim/weather.test.ts',
-  'tests/sim/weapons.test.ts',
-  'tests/unit/progression/perf.test.ts',
-];
-
+// Test strategy: docs/qa/test-strategy.md. Budget: tools/qa/test-budget.mjs.
+// default: engine logic and code shared across levels (npm test, every change).
+// nightly: the full-campaign bot, perf budgets and the QA invariants (npm run test:nightly).
 export default defineConfig({
   test: {
     environment: 'node',
@@ -31,8 +12,8 @@ export default defineConfig({
     restoreMocks: true,
     setupFiles: ['tests/setup/node-gltf-images.ts'],
     projects: [
-      { extends: true, test: { name: 'timing', include: timingFiles, fileParallelism: false, sequence: { groupOrder: 1 } } },
-      { extends: true, test: { name: 'functional', include: ['tests/unit/**/*.test.ts', 'tests/sim/**/*.test.ts', 'tests/levels/**/*.test.ts', 'tests/qa/invariants/**/*.test.ts'], exclude: timingFiles, sequence: { groupOrder: 2 } } },
+      { extends: true, test: { name: 'default', include: ['tests/engine/**/*.test.ts', 'tests/shared/**/*.test.ts', 'tests/tools/**/*.test.ts'] } },
+      { extends: true, test: { name: 'nightly', include: ['tests/nightly/**/*.test.ts', 'tests/qa/invariants/**/*.test.ts'], testTimeout: 1_200_000 } },
     ],
   },
 });
