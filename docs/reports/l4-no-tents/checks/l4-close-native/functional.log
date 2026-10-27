@@ -1,0 +1,25 @@
+
+Running 111 tests using 1 worker
+
+  ✓    1 [chromium] › tests/e2e/acceptance/l4-alpha.spec.ts:10:3 › T-E22-12-special-charge-high @E22-AC12 @E07-AC05 @E07-AC06 boundary, cooldown repeat and checkpoint captures webgl (39.7s)
+  ✓    2 [chromium] › tests/e2e/acceptance/l4-alpha.spec.ts:10:3 › T-E22-12-special-ground-slam-high @E22-AC12 @E07-AC05 @E07-AC06 boundary, cooldown repeat and checkpoint captures webgl (39.8s)
+  ✓    3 [chromium] › tests/e2e/acceptance/l4-alpha.spec.ts:10:3 › T-E22-12-special-grab-throw-high @E22-AC12 @E07-AC05 @E07-AC06 boundary, cooldown repeat and checkpoint captures webgl (1.2m)
+  ✓    4 [chromium] › tests/e2e/acceptance/l4-alpha.spec.ts:10:3 › T-E22-12-special-roar-high @E22-AC12 @E07-AC05 @E07-AC06 boundary, cooldown repeat and checkpoint captures webgl (41.3s)
+  ✓    5 [chromium] › tests/e2e/acceptance/l4-alpha.spec.ts:10:3 › T-E22-12-special-charge-low @E22-AC12 @E07-AC05 @E07-AC06 boundary, cooldown repeat and checkpoint captures webgl (34.4s)
+  ✓    6 [chromium] › tests/e2e/acceptance/l4-alpha.spec.ts:10:3 › T-E22-12-special-ground-slam-low @E22-AC12 @E07-AC05 @E07-AC06 boundary, cooldown repeat and checkpoint captures webgl (36.8s)
+  ✓    7 [chromium] › tests/e2e/acceptance/l4-alpha.spec.ts:10:3 › T-E22-12-special-grab-throw-low @E22-AC12 @E07-AC05 @E07-AC06 boundary, cooldown repeat and checkpoint captures webgl (1.0m)
+  ✓    8 [chromium] › tests/e2e/acceptance/l4-alpha.spec.ts:10:3 › T-E22-12-special-roar-low @E22-AC12 @E07-AC05 @E07-AC06 boundary, cooldown repeat and checkpoint captures webgl (33.2s)
+  ✓    9 [chromium] › tests/e2e/acceptance/l4-vision.spec.ts:7:46 › T-E22-19-production @E22-AC19 named L4 vision phases webgl high (3.6m)
+  ✓   10 [chromium] › tests/e2e/acceptance/l4-vision.spec.ts:7:46 › T-E22-19-production @E22-AC19 named L4 vision phases webgl low (2.1m)
+  ✓   11 [chromium] › tests/e2e/audio/l4-bus.spec.ts:5:1 › T-E22-bus-audio @E22 the L4 convoy has engine loops, the bus radio plays during the ride and fades at the alarm (1.6m)
+  ✓   12 [chromium] › tests/e2e/audio/offline.spec.ts:44:1 › T-E22-convoy-music @E22 convoy radio loudness matches or exceeds L4 calm score without clipping (3.1s)
+  ✓   13 [chromium] › tests/e2e/audio/smoke.spec.ts:6:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.8s)
+  ✓   14 [chromium] › tests/e2e/controls-playtest.spec.ts:8:1 › S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB (34.4s)
+  ✓   15 [chromium] › tests/e2e/driving.spec.ts:22:1 › S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit (23.8s)
+  ✓   16 [chromium] › tests/e2e/l4-systems.spec.ts:7:3 › high › T-E22-09-12-13-systems-high @E22-AC09 @E22-AC12 @E22-AC13 Scene Lab soldier focus, human shot blocking and physical gap (1.7m)
+  ✓   17 [chromium] › tests/e2e/l4-systems.spec.ts:7:3 › low › T-E22-09-12-13-systems-low @E22-AC09 @E22-AC12 @E22-AC13 Scene Lab soldier focus, human shot blocking and physical gap (1.8m)
+{"level":"L4","i":0,"tick":75,"phase":"playing","l4":"convoy","player":{"x":-56.777320861816406,"y":0.7049999833106995,"z":41.166831970214844,"yaw":0.3205919885488634}}
+  ✓   18 [chromium] › tests/e2e/levels/l3-physical-bot.spec.ts:5:42 › T-L4-physical @E22 real keyboard and mouse announced exterior breach visibility (1.3m)
+  ✘   19 [chromium] › tests/e2e/levels/l4-blank-viewport.spec.ts:24:80 › T-E22-blank @E22 L4 the walk along Lakeshore Avenue past the former cellar never leaves the viewport one flat colour (webgl) (2.9m)
+  ✘   20 [chromium] › tests/e2e/levels/l4-blank-viewport.spec.ts:24:80 › T-E22-blank @E22 L4 the walk along Lakeshore Avenue past the former cellar never leaves the viewport one flat colour (webgpu) (3.4m)
+Terminated: 15
