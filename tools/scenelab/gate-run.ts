@@ -1,8 +1,10 @@
 import { spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { catalogFlag } from './catalog-args';
 import { validateGateSelection } from './gate-arguments';
+import { resultKey, sameWork } from './gate-identity';
 
 /** Shared batch runner for `npm run scene:gate` (curated list) and `npm run scene:matrix:nightly` (full matrix, sharded, resumable).
  * Every batch is one `catalog.ts --matrix --only <rows>` command under tools/e2e-lock.sh, so each browser reservation stays well
@@ -59,23 +61,40 @@ if (!batches.length) throw new Error('Scene gate shard selected no work');
 mkdirSync(out, { recursive: true });
 const statePath = `${out}/state.json`;
 type State = Record<string, { code: number | null; seconds: number; rows: CatalogRow[] }>;
-const state: State = args.includes('--resume') && existsSync(statePath) ? JSON.parse(readFileSync(statePath, 'utf8')) : {};
+const revision = spawnSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).stdout.trim();
+const inputHash = createHash('sha256');
+const sceneInputs = rows.map(row => ['specs/scenes/catalog', 'tests/scenes/catalog']
+  .map(dir => `${dir}/${row.scene}.json`).find(existsSync));
+if (sceneInputs.some(file => !file)) throw new Error('A selected scene spec is missing from the catalog');
+for (const file of ['tools/scenelab/catalog.ts', 'specs/scenes/gate-list.json', ...new Set(sceneInputs as string[])].sort()) {
+  inputHash.update(file).update(readFileSync(file));
+}
+const dirty = spawnSync('git', ['diff', 'HEAD', '--binary'], { maxBuffer: 1 << 26 });
+if (dirty.status !== 0 || !revision) throw new Error('Cannot establish scene gate source identity');
+inputHash.update(dirty.stdout);
+inputHash.update(JSON.stringify(Object.entries(process.env).filter(([key]) => /^(SCENE_|VITE_|BUILD_)/.test(key)).sort()));
+const identity = JSON.stringify({ revision, inputs: inputHash.digest('hex'), mode, rows: rows.map(r => [r.backend, r.tier, r.name]), maxRows, shard, filter: flag('filter'), backend: flag('backend') });
+type StateFile = { identity: string; batches: State };
+const prior = args.includes('--resume') && existsSync(statePath) ? JSON.parse(readFileSync(statePath, 'utf8')) as StateFile : undefined;
+const state: State = prior?.identity === identity ? prior.batches : {};
+if (prior && prior.identity !== identity) console.error('[scene-' + mode + '] resume state identity changed; starting fresh');
 const t0 = Date.now();
 console.error(`[scene-${mode}] ${rows.length} rows in ${batches.length} batches (<= ${maxRows} rows each)${shard ? `, shard ${shard.join('/')}` : ''}`);
 for (const b of batches) {
-  if (state[b.id]?.rows.length === b.rows.length) { console.error(`[scene-${mode}] ${b.id}: resumed (already ran)`); continue; }
+  const priorRows = state[b.id]?.rows ?? [];
+  if (sameWork(priorRows.map(r => ({ name: r.name, tier: b.tier, backend: b.backend })), b.rows)) { console.error(`[scene-${mode}] ${b.id}: resumed (already ran)`); continue; }
   console.error(`[scene-${mode}] ${b.id}: ${b.rows.length} rows (${b.backend}, ${b.tier})`);
   state[b.id] = runBatch(b);
-  writeFileSync(statePath, JSON.stringify(state, null, 1));
+  writeFileSync(statePath, JSON.stringify({ identity, batches: state }, null, 1));
 }
 // Summary: unexpected failures, known (triaged) failures, rows that never ran (batch timeout or crash).
-const done = new Map(Object.values(state).flatMap(s => s.rows.map(r => [r.name, r] as const)));
+const done = new Map(Object.entries(state).flatMap(([id, s]) => s.rows.map(r => [resultKey(r.name, id.split('-')[0]), r] as const)));
 const wanted = batches.flatMap(b => b.rows);
-const missing = wanted.filter(r => !done.has(r.name)), failed = wanted.filter(r => done.has(r.name) && !done.get(r.name)!.pass);
+const missing = wanted.filter(r => !done.has(resultKey(r.name, r.backend))), failed = wanted.filter(r => done.has(resultKey(r.name, r.backend)) && !done.get(resultKey(r.name, r.backend))!.pass);
 const unexpected = failed.filter(r => !known.has(r.name)), knownFailed = failed.filter(r => known.has(r.name));
 const lines = [`# scene-${mode}`, '', `${wanted.length - failed.length - missing.length}/${wanted.length} rows pass, ${knownFailed.length} known, ${missing.length} not run; ${((Date.now() - t0) / 60000).toFixed(1)} min this run (batch s: ${batches.map(b => `${b.id}=${(state[b.id]?.seconds ?? 0).toFixed(0)}`).join(' ')}).`, '',
-  ...unexpected.map(r => `- **FAIL** ${r.name}: ${done.get(r.name)!.error ?? done.get(r.name)!.failed.join(', ')}`),
-  ...knownFailed.map(r => `- known ${r.name}: ${known.get(r.name)} (${done.get(r.name)!.failed.join(', ')})`),
+  ...unexpected.map(r => `- **FAIL** ${r.name}: ${done.get(resultKey(r.name, r.backend))!.error ?? done.get(resultKey(r.name, r.backend))!.failed.join(', ')}`),
+  ...knownFailed.map(r => `- known ${r.name}: ${known.get(r.name)} (${done.get(resultKey(r.name, r.backend))!.failed.join(', ')})`),
   ...missing.map(r => `- **NOT RUN** ${r.name} (batch timeout or crash; rerun with --resume)`)];
 writeFileSync(`${out}/summary.md`, lines.join('\n') + '\n');
 console.log(lines.join('\n'));

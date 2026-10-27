@@ -72,6 +72,20 @@ process.exit(mode === 'bad-exit' ? 2 : rows.some(r => !r.pass) ? 1 : 0);
   return { root, run, git, select, calls };
 }
 
+test('scene gate resume requires identical rows, revision and backend identities', () => {
+  const f = gateFixture();
+  expect(f.run().status, 'first run').toBe(0);
+  expect(f.run(['--resume']).status, 'identical resume').toBe(0); expect(f.calls()).toBe(1);
+  f.git('commit', '--allow-empty', '-qm', 'new revision');
+  expect(f.run(['--resume']).status, 'changed revision').toBe(0); expect(f.calls(), 'new revision cannot reuse old passing state').toBe(2);
+  f.select(['gamma', 'delta']);
+  expect(f.run(['--resume']).status, 'same count, different rows').toBe(0); expect(f.calls()).toBe(3);
+  writeFileSync(join(f.root, 'specs/scenes/catalog/gamma.json'), '{"changed":true}');
+  expect(f.run(['--resume']).status, 'changed scene config').toBe(0); expect(f.calls()).toBe(4);
+  f.select(['alpha', 'alpha'], ['webgpu', 'webgl2']);
+  expect(f.run([], { FAIL_BACKEND: 'webgpu' }).status, 'same name on different backends cannot mask a failure').toBe(1);
+});
+
 test('scene gate rejects invalid arguments and empty selections before running children', () => {
   const f = gateFixture();
   for (const args of [
