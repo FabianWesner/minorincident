@@ -50,27 +50,36 @@ test('L1 handover + outbreak: no shader builds after warm-up and no frame over 2
     for (let i = 0; i < 40 && a.missions.state()!.steps.escape?.status !== 'active'; i++) await a.step(60);
     a.cheats.completeObjective('escape'); a.cheats.completeObjective('weapon');
     await a.step(120); a.cheats.killAll(); await a.step(30);
-    // The courier's foreground slice switches on within 4 m of a corpse (GameView.nearCorpse).
-    const dead = a.query({}).filter(e => !e.hidden && !e.infected?.hidden && (e.corpse || (e.infected && e.health.current <= 0))).slice(0, 4).map(e => ({ x: e.transform.x, z: e.transform.z }));
-    if (dead[0]) a.teleport(1, { x: dead[0].x + 7, z: dead[0].z });
-    return { dead, loaded };
+    // Ordinary L1 human corpses are not solid foreground triggers. Add a dead Alpha,
+    // whose large corpse is the production trigger, and prove both switch states.
+    const player = a.query({ kind: 'player' })[0];
+    const alphaId = a.spawn('infected.alpha', { x: player.transform.x + 4, z: player.transform.z });
+    a.cheats.killAll(); await a.step(2);
+    const alpha = a.getEntity(alphaId)!;
+    a.teleport(1, { x: alpha.transform.x + 7, z: alpha.transform.z });
+    const far = a.getState().render.courierForeground;
+    a.teleport(1, { x: alpha.transform.x + 1, z: alpha.transform.z });
+    const near = a.getState().render.courierForeground;
+    return { alpha: { x: alpha.transform.x, z: alpha.transform.z }, far, near, loaded };
   });
-  const { dead: corpses, loaded } = pile;
-  expect(corpses.length, 'outbreak corpses to walk over').toBeGreaterThan(0);
+  const { alpha, far, near, loaded } = pile;
+  expect(far, 'courier foreground off beyond the large corpse trigger').toBe(false);
+  expect(near, 'courier foreground on beside a dead Alpha').toBe(true);
   // Warm-up: the level's own prewarm plus a few real frames next to the pile.
   await page.evaluate(async () => { const a = window.__SS__!; a.resume(); await new Promise(r => setTimeout(r, 1500)); });
   const warm = await builds();
   const frames = await page.evaluate(async spots => {
-    const a = window.__SS__!, gaps: number[] = []; let previous = 0, stop = false;
+    const a = window.__SS__!, gaps: number[] = [], foreground: boolean[] = []; let previous = 0, stop = false;
     const sample = (now: number): void => { if (previous) gaps.push(now - previous); previous = now; if (!stop) requestAnimationFrame(sample); };
     requestAnimationFrame(sample);
     for (let round = 0; round < 2; round++) for (const spot of spots) {
-      a.teleport(1, { x: spot.x + 1, z: spot.z }); await new Promise(r => setTimeout(r, 700));
-      a.teleport(1, { x: spot.x + 7, z: spot.z }); await new Promise(r => setTimeout(r, 700));
+      a.teleport(1, { x: spot.x + 7, z: spot.z }); await new Promise(r => setTimeout(r, 700)); foreground.push(a.getState().render.courierForeground);
+      a.teleport(1, { x: spot.x + 1, z: spot.z }); await new Promise(r => setTimeout(r, 700)); foreground.push(a.getState().render.courierForeground);
     }
     stop = true; a.pause();
-    return { max: Math.max(...gaps), over: gaps.filter(g => g > 200), count: gaps.length };
-  }, corpses);
+    return { foreground, max: Math.max(...gaps), over: gaps.filter(g => g > 200), count: gaps.length };
+  }, [alpha]);
+  expect(frames.foreground, 'foreground toggles during the measured frames').toEqual([false, true, false, true]);
   const after = await builds(), built = Object.entries(after).filter(([key, n]) => n !== warm[key]);
   test.info().annotations.push({ type: 'builds after warm-up', description: JSON.stringify(Object.fromEntries(built)) }, { type: 'frames', description: `max ${frames.max.toFixed(0)} ms in ${frames.count}` });
   // Keys are material:object:m<material id>:c<render context>:o<object id> (Renderer loadProfile=2).
@@ -112,6 +121,7 @@ for (const renderer of ['webgl', 'webgpu'] as const) test(`L1 start: pedestrians
       .filter(c => Math.abs(c.head[0]) < .85 && Math.abs(c.head[1]) < .85 && Math.abs(c.chest[1]) < .7 && c.head[2] < 1);
     return { civilians, backend: a.perf().backend };
   });
+  mkdirSync('test-results/smoke', { recursive: true });
   const shown = PNG.sync.read(await page.locator('canvas').screenshot({ path: `test-results/smoke/l1-${renderer}.png` }));
   await page.evaluate(async ids => { const a = window.__SS__!; ids.forEach((id, i) => a.teleport(id, { x: -400 - i * 3, z: -400 })); await a.step(2); await a.screenshotReady(); }, before.civilians.map(c => c.id));
   const hidden = PNG.sync.read(await page.locator('canvas').screenshot());
