@@ -13,6 +13,8 @@ parser.add_argument('command', nargs=argparse.REMAINDER)
 args = parser.parse_args()
 command = args.command[1:] if args.command[:1] == ['--'] else args.command
 child = subprocess.Popen(command, start_new_session=True)
+if os.environ.get('MI_WAIT_STARTED'):
+    subprocess.run(['node', 'tools/qa/log-wait.mjs', os.environ.get('MI_WAIT_KIND', 'browser'), os.environ['MI_WAIT_STARTED']], check=False)
 
 
 class Cancelled(BaseException):
@@ -72,7 +74,7 @@ signal.signal(signal.SIGHUP, stop)
 try:
     code = child.wait(timeout=args.seconds or None)
 except subprocess.TimeoutExpired:
-    print('Quiet-run: 20 minute batch limit reached; release slots and report remaining coverage.', file=sys.stderr)
+    print(f'Browser reservation reached its {args.seconds}s batch limit (10-minute maximum including cleanup); split the batch into smaller commands.', file=sys.stderr)
     terminate()
     code = 124
 except Cancelled as cancelled:

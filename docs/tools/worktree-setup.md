@@ -1,0 +1,11 @@
+# Shared worktree setup
+
+Run `sh tools/install-worktree-hook.sh` once in this checkout. It installs an additive Git `post-checkout` hook in the common Git directory and preserves an existing hook. Git invokes it for fresh linked worktrees, so both the scheduler's `--worktree` (`prepare_worktree` uses `git worktree add`) and Claude Agent's `.claude/worktrees` creation run `tools/worktree-setup.sh` automatically. Existing worktrees can run `sh tools/worktree-setup.sh <path>` explicitly. Reinstall the hook after updating its scripts. The installer refuses to overwrite a configured `core.hooksPath`.
+
+The store defaults to `<main checkout>/.mi-worktree-cache`; override `MI_WORKTREE_CACHE` consistently for setup and build commands. Dependencies are keyed by `package-lock.json` and copied with APFS `cp -cR` (regular-copy fallback). Each worktree owns a writable dependency clone, including Vite/Vitest's temporary config files and relative local-package links. No manual `node_modules/vite` symlink is required. Process-owned file locks release on crashes.
+
+Vite's dependency cache is shared by lockfile and Vite configuration. `npm run build` caches `dist` only for clean Git sources, keyed by tree, commit provenance, lockfile, CLI arguments, build variant, and hashed Vite environment inputs. Dirty trees or ignored source/public inputs build locally. Cached output is cloned into a worktree's writable `dist`, so another lane's rebuild cannot modify it. Use `MI_BUILD_CACHE=off` for a cold build.
+
+`sh tools/worktree-setup.sh --smoke` reports setup footprint/time and the elapsed time for the first green full smoke. It releases the dependency-store lock before running tests. Browser runs need private `E2E_PORT` and `SCENE_PORT` values; port 3300 is reserved for the user's dev server. Retain measurement output under `docs/reports/lane-infra/`.
+
+Browser/legacy and sim acquisitions append `{at,lane,kind,waitMs}` to `$TMPDIR/mi-waits.jsonl`. `node tools/qa/wait-report.mjs [file]` groups by lane/resource/hour and also accepts mac-runner's `{ts,lane,lock,waitMs}` schema. Remote/local CPU slot instrumentation remains owned by the mac-runner lane. `sh tools/browser-busy.sh` exposes the shared GPU reservation probe for that lane.

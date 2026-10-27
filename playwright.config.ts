@@ -1,4 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
+import { poolEndpoint } from './tools/browser-pool/client';
+const endpoint = await poolEndpoint();
+if (endpoint) { process.env.MI_BROWSER_POOL_WS = endpoint; process.env.MI_BROWSER_POOL = '1'; }
 
 // Playwright forces color in child workers; avoid conflicting inherited NO_COLOR.
 delete process.env.NO_COLOR;
@@ -42,7 +45,7 @@ export default defineConfig({
     { name: 'iphone-14-landscape', testMatch: ['**/smoke.spec.ts', '**/input-touch.spec.ts', '**/hud-touch.spec.ts', '**/mobile-hud-layout.spec.ts'], use: { ...devices['iPhone 14 landscape'], browserName: 'chromium', viewport: { width: 844, height: 390 }, deviceScaleFactor: 1 } },
     ...(process.env.E2E_WEBGPU === '1' ? [{ name: 'webgpu', testMatch: '**/webgpu.spec.ts', use: { browserName: 'chromium' as const, headless: true, launchOptions: { args: ['--enable-unsafe-webgpu', '--ignore-gpu-blocklist', '--use-angle=metal'] } } }] : []),
     ...(process.env.E2E_WEBGPU_HEADLESS === '1' ? [{ name: 'webgpu-headless', testMatch: '**/webgpu.spec.ts', use: { browserName: 'chromium' as const, headless: true, launchOptions: { args: ['--enable-gpu', '--enable-unsafe-webgpu', '--ignore-gpu-blocklist'] } } }] : []),
-    { name: 'webkit', testMatch: '**/smoke.spec.ts', use: { browserName: 'webkit', launchOptions: { args: [] }, connectOptions: undefined } },
+    ...(process.env.E2E_LEGACY === '1' ? [{ name: 'webkit', testMatch: '**/smoke.spec.ts', use: { browserName: 'webkit' as const, launchOptions: { args: [] }, connectOptions: undefined } }] : []),
   ],
   // Test the real production output, including the query-gated API chunk.
   webServer: { command: `npx vite preview${process.env.E2E_DIST ? ` --outDir '${process.env.E2E_DIST.replaceAll("'", "'\\''")}'` : ''} --host 127.0.0.1 --port ${port} --strictPort --configLoader runner`, url: `http://127.0.0.1:${port}`, reuseExistingServer: !process.env.CI && !process.env.E2E_PORT, timeout: 30_000 },

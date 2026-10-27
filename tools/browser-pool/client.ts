@@ -1,5 +1,6 @@
 import { chromium, type Browser, type BrowserContextOptions, type LaunchOptions } from '@playwright/test';
 import { delay, gpuAdmission, reserveLegacySlots } from './host';
+import { ensurePool } from './ensure';
 
 type Health = { protocol: number; endpoints: { gpu: string; swiftshader: string }; exclusive: { id: string; granted: boolean }[] };
 export const poolUrl = () => process.env.BROWSER_POOL_URL ?? 'http://127.0.0.1:4329';
@@ -17,6 +18,8 @@ export async function poolHealth(): Promise<Health | null> {
   }
 }
 export async function poolEndpoint(): Promise<string | undefined> {
+  if (process.env.E2E_LEGACY === '1' || process.env.BROWSER_POOL === 'off' || process.env.MI_REMOTE === '1') return undefined;
+  if (process.env.MI_BROWSER_POOL !== '1') await ensurePool();
   const deadline = Date.now() + Number(process.env.BROWSER_POOL_WAIT_MS ?? 1_800_000);
   while (true) {
     const health = await poolHealth();
@@ -42,7 +45,7 @@ export async function launchBrowser(options: LaunchOptions = {}): Promise<Browse
   const endpoint = await poolEndpoint();
   if (endpoint) {
     if (options.channel && !process.env.MI_BROWSER_POOL_EXCLUSIVE) throw new Error('A browser channel override requires quiet-run exclusive mode');
-    const browser = await chromium.connect(endpoint, { timeout: Number(process.env.BROWSER_POOL_WAIT_MS ?? 1_800_000), headers: { 'x-mi-launch-options': JSON.stringify(options), 'x-mi-job': process.env.BROWSER_POOL_JOB_ID ?? '' } });
+    const browser = await chromium.connect(endpoint, { timeout: Number(process.env.BROWSER_POOL_WAIT_MS ?? 1_800_000), headers: { 'x-mi-launch-options': JSON.stringify(options), 'x-mi-job': process.env.BROWSER_POOL_JOB_ID ?? process.env.MI_SLUG ?? process.cwd().split('/').at(-1) ?? '' } });
     const create = browser.newContext.bind(browser), close = browser.close.bind(browser), replacements = new Set<Browser>();
     browser.newContext = async contextOptions => {
       try { return await create(contextOptions); }
@@ -71,7 +74,7 @@ export async function launchBrowser(options: LaunchOptions = {}): Promise<Browse
 /** Each test context owns its connection, so native exclusive runs can restart Chrome
  * between specs without leaving a Playwright worker attached to the retired process. */
 export async function connectForTests(endpoint: string, options: LaunchOptions): Promise<Browser> {
-  const initial = await chromium.connect(await poolEndpoint() ?? endpoint, { timeout: Number(process.env.BROWSER_POOL_WAIT_MS ?? 1_800_000), headers: { 'x-mi-launch-options': JSON.stringify(options), 'x-mi-job': process.env.BROWSER_POOL_JOB_ID ?? '' } });
+  const initial = await chromium.connect(await poolEndpoint() ?? endpoint, { timeout: Number(process.env.BROWSER_POOL_WAIT_MS ?? 1_800_000), headers: { 'x-mi-launch-options': JSON.stringify(options), 'x-mi-job': process.env.BROWSER_POOL_JOB_ID ?? process.env.MI_SLUG ?? process.cwd().split('/').at(-1) ?? '' } });
   const children = new Set<Browser>();
   initial.newContext = async (contextOptions: BrowserContextOptions = {}) => {
     const browser = await launchBrowser(options); children.add(browser);

@@ -1,11 +1,20 @@
 import { defineConfig } from 'vite';
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
 import { assetVersionsDefine, rapierWasmFile } from './tools/build/load-plugins';
 let buildCommit = 'unknown';
 try { buildCommit = execFileSync('git', ['rev-parse', '--short', 'HEAD'], { encoding: 'utf8' }).trim(); } catch { /* Source archives may not include Git metadata. */ }
+let cacheDir = '.vite-cache';
+try {
+  const common = execFileSync('git', ['rev-parse', '--path-format=absolute', '--git-common-dir'], { encoding: 'utf8' }).trim();
+  const cacheKey = createHash('sha256').update(readFileSync('package-lock.json')).update(readFileSync('vite.config.ts')).digest('hex').slice(0, 20);
+  cacheDir = resolve(process.env.MI_WORKTREE_CACHE ?? dirname(common) + '/.mi-worktree-cache', 'vite', cacheKey);
+} catch { /* Source archives use the local cache. */ }
 export default defineConfig({
   define: { __BUILD_COMMIT__: JSON.stringify(buildCommit) },
-  cacheDir: '.vite-cache',
+  cacheDir,
   plugins: [rapierWasmFile(), assetVersionsDefine()],
   resolve: { dedupe: ['three'] },
   optimizeDeps: { entries: ['index.html', 'preview/*.html'] },

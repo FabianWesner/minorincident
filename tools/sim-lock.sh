@@ -9,11 +9,13 @@ command -v lockf >/dev/null 2>&1 || exec "$@"
 export MI_SIM_LOCK_HELD=1
 base="${SIM_LOCK:-/tmp/minor-incident-sim.lock}"
 slots="${SIM_SLOTS:-2}"
+wait_started=$(node -p 'Date.now()')
+export PATH="$PWD/node_modules/.bin:$PATH"
 while :; do
   i=0
   while [ "$i" -lt "$slots" ]; do
     # Keep the inode: unlinking a lock file splits queued and newly arriving users.
-    lockf -k -t "${SIM_WAIT:-0}" "$base.$i" "$@" 2>/dev/null; rc=$?
+    lockf -k -t "${SIM_WAIT:-0}" "$base.$i" sh -c 'exec 2>&3; node tools/qa/log-wait.mjs sim "$1"; shift; exec "$@"' sh "$wait_started" "$@" 3>&2 2>/dev/null; rc=$?
     [ "$rc" -ne 75 ] && exit "$rc"   # 75 = slot busy (EX_TEMPFAIL); anything else is the command's result
     i=$((i + 1))
   done

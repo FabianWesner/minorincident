@@ -29,6 +29,25 @@ try {
   await ca.close(); const cc = await third;
   await cb.close(); await cc.close();
   await until(async () => (await state()).leases.length === 0, 'contexts release admission');
+  const first = await a.newContext(), second = await b.newContext();
+  let olderAdmitted = false;
+  const older = c.newContext().then(context => { olderAdmitted = true; return context; });
+  await until(async () => (await state()).waiting === 1, 'older shared request queued');
+  const barrier = await (await fetch(`${process.env.BROWSER_POOL_URL}/exclusive`, { method: 'POST' })).json() as { id: string };
+  await first.close();
+  const olderContext = await older;
+  assert.equal(olderAdmitted, true, 'shared request before exclusive barrier retains FIFO position');
+  await second.close(); await olderContext.close();
+  await until(async () => (await (await fetch(`${process.env.BROWSER_POOL_URL}/exclusive/${barrier.id}`)).json() as { granted: boolean }).granted, 'exclusive follows older shared request');
+  // A shared request on an existing connection queues while exclusive is active.
+  const later = a.newContext();
+  await until(async () => (await state()).waiting === 1, 'later shared request queued');
+  process.env.MI_BROWSER_POOL_EXCLUSIVE = barrier.id;
+  const exclusiveProbe = await launchBrowser(), exclusiveProbeContext = await exclusiveProbe.newContext();
+  await exclusiveProbeContext.close(); await exclusiveProbe.close();
+  delete process.env.MI_BROWSER_POOL_EXCLUSIVE;
+  await fetch(`${process.env.BROWSER_POOL_URL}/exclusive/${barrier.id}/release`, { method: 'POST' });
+  await (await later).close();
   const active = await a.newContext(), page = await active.newPage();
   await page.evaluate(() => new Promise(resolve => setTimeout(resolve, 2200)));
   assert.equal(page.isClosed(), false, 'in-flight page action survives idle deadline');
@@ -84,10 +103,11 @@ try {
 }
 
 assert.equal(await poolHealth(), null, 'pool is down for fallback check');
+process.env.E2E_LEGACY = '1';
 const fallback = await launchBrowser({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
 try {
   const page = await fallback.newPage(); await page.setContent('<p>fallback works</p>');
   assert.equal(await page.locator('p').innerText(), 'fallback works');
   assert.ok((await page.screenshot()).length > 0);
-  console.log('PASS: pool down -> legacy headless launch, page actions and capture');
+  console.log('PASS: explicit E2E_LEGACY=1 -> legacy headless launch, page actions and capture');
 } finally { await fallback.close(); }

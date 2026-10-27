@@ -1,4 +1,5 @@
 import { createServer } from 'node:http';
+import { appendFileSync } from 'node:fs';
 import { randomUUID } from 'node:crypto';
 import { chromium, type BrowserServer } from '@playwright/test';
 import WebSocket, { WebSocketServer, type RawData } from 'ws';
@@ -8,9 +9,9 @@ import { backoffAdmission, delay, gpuAdmission, quietConditions, reserveLegacySl
 // upgrading Playwright requires running tools/browser-pool/check.ts again.
 type Backend = 'gpu' | 'swiftshader';
 type Wire = { id?: number; guid?: string; method?: string; params?: Record<string, unknown>; result?: { context?: { guid: string } }; error?: unknown };
-type Lease = { id: string; backend: Backend; connection: Connection; context?: string; last: number; calls: number; closing: boolean; exclusive?: string };
-type Exclusive = { id: string; last: number; granted: boolean; external?: boolean };
-type Waiter = { connection: Connection; message: Wire; raw: string; exclusive?: string };
+type Lease = { id: string; backend: Backend; connection: Connection; context?: string; acquiredAt: number; last: number; calls: number; closing: boolean; exclusive?: string };
+type Exclusive = { id: string; order: number; queuedAt: number; grantedAt?: number; job?: string; last: number; granted: boolean; external?: boolean };
+type Waiter = { connection: Connection; message: Wire; raw: string; exclusive?: string; queuedAt: number; order: number };
 type Connection = { client: WebSocket; upstream: WebSocket; backend: Backend; token?: string; parents: Map<string, string>; types: Map<string, string>; pending: Map<number, { lease?: Lease; create?: Lease }>; leases: Set<Lease>; closed: boolean; job?: string };
 const port = Number(process.env.BROWSER_POOL_PORT ?? 4329);
 if (!Number.isInteger(port) || port < 4321 || port > 4329) throw new Error('Pool port must be 4321–4329');
@@ -21,12 +22,16 @@ const browserIdleMs = Number(process.env.BROWSER_POOL_BROWSER_IDLE_MS ?? 60_000)
 let limit = configuredLimit, stopping = false, lastUse = Date.now(), windowServerCpu: number | null = null;
 let releaseSlots: (() => Promise<void>) | undefined;
 let launchChain: Promise<unknown> = Promise.resolve();
-let negativeId = -1;
+let negativeId = -1, order = 0;
 const browsers = new Map<Backend, { server: BrowserServer; signature: string }>();
 const leases = new Map<string, Lease>(), connections = new Set<Connection>();
 const waiters: Waiter[] = [], exclusives: Exclusive[] = [];
 const flags = ['--disable-background-timer-throttling', '--disable-renderer-backgrounding', '--disable-backgrounding-occluded-windows'];
 function event(kind: string, data: Record<string, unknown> = {}) { console.log(JSON.stringify({ at: new Date().toISOString(), kind, ...data })); }
+function recordWait(job: string | undefined, kind: string, waitMs: number) {
+  try { appendFileSync(`${process.env.TMPDIR ?? '/tmp'}/mi-waits.jsonl`, JSON.stringify({ at: new Date().toISOString(), lane: job || 'unknown', kind, waitMs }) + '\n'); }
+  catch (error) { event('wait-log-error', { error: String(error) }); }
+}
 function owner(c: Connection, guid = ''): Lease | undefined {
   const seen = new Set<string>();
   while (guid && !seen.has(guid)) {
@@ -59,20 +64,32 @@ function pump() {
     const expired = exclusives.shift()!;
     for (const lease of leases.values()) if (lease.exclusive === expired.id) closeLease(lease, 'Exclusive owner disconnected');
   }
+  // Shared requests before an exclusive barrier drain first. Once granted, only
+  // its owner may create contexts; later shared requests retain their FIFO order.
+  for (let i = waiters.length - 1; i >= 0; i--) if (waiters[i].connection.closed) waiters.splice(i, 1);
   const exclusive = exclusives[0];
-  if (exclusive && !exclusive.granted && leases.size === 0) { exclusive.granted = true; event('exclusive-granted', { id: exclusive.id }); }
-  for (let i = 0; i < waiters.length;) {
-    const waiter = waiters[i], c = waiter.connection;
-    if (c.closed) { waiters.splice(i, 1); continue; }
+  const earlier = () => exclusive && waiters.some(w => !w.exclusive && w.order < exclusive.order);
+  if (exclusive && !exclusive.granted && leases.size === 0 && !earlier()) {
+    exclusive.granted = true; exclusive.grantedAt = Date.now();
+    const waitMs = Date.now() - exclusive.queuedAt;
+    event('exclusive-granted', { id: exclusive.id, job: exclusive.job, waitMs });
+    recordWait(exclusive.job, 'browser-exclusive', waitMs);
+  }
+  while (waiters.length) {
+    const index = exclusive?.granted ? waiters.findIndex(w => w.exclusive === exclusive.id) : 0;
+    if (index < 0) break;
+    const waiter = waiters[index], c = waiter.connection;
     const softwareFull = c.backend === 'swiftshader' && [...leases.values()].filter(l => l.backend === 'swiftshader').length >= 2;
     const permitted = waiter.exclusive
       ? exclusive?.id === waiter.exclusive && exclusive.granted && leases.size === 0
-      : !exclusive && leases.size < limit && !softwareFull;
-    if (!permitted) { i++; continue; }
-    waiters.splice(i, 1);
-    const lease: Lease = { id: randomUUID(), connection: c, backend: c.backend, last: Date.now(), calls: 1, closing: false, exclusive: waiter.exclusive };
+      : (!exclusive || waiter.order < exclusive.order) && leases.size < limit && !softwareFull;
+    if (!permitted) break;
+    waiters.splice(index, 1);
+    const lease: Lease = { id: randomUUID(), connection: c, backend: c.backend, acquiredAt: Date.now(), last: Date.now(), calls: 1, closing: false, exclusive: waiter.exclusive };
     leases.set(lease.id, lease); c.leases.add(lease); c.pending.set(waiter.message.id!, { create: lease, lease });
-    event('lease-acquire', { id: lease.id, backend: c.backend, exclusive: !!waiter.exclusive, job: c.job, active: leases.size });
+    const waitMs = Date.now() - waiter.queuedAt;
+    event('lease-acquire', { id: lease.id, backend: c.backend, exclusive: !!waiter.exclusive, job: c.job, active: leases.size, waitMs });
+    recordWait(c.job, 'browser', waitMs);
     c.upstream.send(waiter.raw);
   }
 }
@@ -82,7 +99,7 @@ async function closeBrowsers(reason: string, keepSlots = false) {
   if (!keepSlots && releaseSlots) { const release = releaseSlots; releaseSlots = undefined; await release(); }
   event('browsers-released', { reason });
 }
-async function browserFor(backend: Backend, options: { args?: string[]; channel?: string }, token?: string) {
+async function browserFor(backend: Backend, options: { args?: string[]; channel?: string }, token?: string, alive = () => true) {
   const normal = new Set([...flags, '--use-angle=metal', '--use-angle=swiftshader', '--enable-gpu', '--enable-unsafe-webgpu', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist']);
   const extra = token ? (options.args ?? []).filter(a => !normal.has(a)) : [];
   const channel = token ? options.channel : undefined;
@@ -93,12 +110,12 @@ async function browserFor(backend: Backend, options: { args?: string[]; channel?
     if (leases.size) throw new Error('Cannot change browser launch flags while a context is active');
     await current.server.close(); browsers.delete(backend);
   }
-  if (!releaseSlots) releaseSlots = await reserveLegacySlots();
+  if (!releaseSlots) releaseSlots = await reserveLegacySlots(alive);
   if (backend === 'gpu') {
     // Do not let SwiftShader occupy CPU during native timing or GPU admission.
     const software = browsers.get('swiftshader');
     if (token && software) { await software.server.close(); browsers.delete('swiftshader'); }
-    await gpuAdmission();
+    await gpuAdmission(600_000, alive);
   }
   const args = backend === 'gpu'
     ? ['--use-angle=metal', '--enable-gpu', '--enable-unsafe-webgpu', '--ignore-gpu-blocklist']
@@ -137,7 +154,7 @@ function proxy(client: WebSocket, upstream: WebSocket, backend: Backend, token?:
     let m: Wire; try { m = JSON.parse(text) as Wire; } catch { client.close(1003, 'Invalid protocol JSON'); return; }
     if (m.method === 'newContext' && c.types.get(m.guid ?? '') === 'Browser') {
       if (token && !exclusives.some(e => e.id === token)) return wireError(c, m.id, 'Exclusive lease expired');
-      waiters.push({ connection: c, message: m, raw: text, exclusive: token }); pump(); return;
+      waiters.push({ connection: c, message: m, raw: text, exclusive: token, queuedAt: Date.now(), order: order++ }); pump(); return;
     }
     // launchPersistentContext / raw CDP context creation would bypass admission.
     if (m.method === 'send' && /^Target[.](createBrowserContext|createTarget)$/.test(String(m.params?.method))) return wireError(c, m.id, 'Raw CDP target creation bypasses context admission');
@@ -168,11 +185,11 @@ const http = createServer((req, res) => { void (async () => {
     protocol: 1, pid: process.pid, playwright: '1.63.0', limit, configuredLimit, windowServerCpu, idleMs,
     endpoints: { gpu: `ws://127.0.0.1:${port}/ws/gpu`, swiftshader: `ws://127.0.0.1:${port}/ws/swiftshader` },
     browsers: [...browsers.entries()].map(([backend, b]) => ({ backend, pid: b.server.process().pid })),
-    leases: [...leases.values()].map(l => ({ id: l.id, backend: l.backend, context: l.context, idle: Date.now() - l.last, calls: l.calls, exclusive: !!l.exclusive })),
-    waiting: waiters.length, exclusive: exclusives.map(e => ({ id: e.id, granted: e.granted })),
+    leases: [...leases.values()].map(l => ({ id: l.id, backend: l.backend, context: l.context, heldMs: Date.now() - l.acquiredAt, idle: Date.now() - l.last, calls: l.calls, exclusive: !!l.exclusive, job: l.connection.job ?? null })),
+    waiting: waiters.length, waiters: waiters.map(w => ({ job: w.connection.job ?? null, backend: w.connection.backend, waitMs: Date.now() - w.queuedAt })), exclusive: exclusives.map(e => ({ id: e.id, job: e.job, granted: e.granted, waitMs: (e.grantedAt ?? Date.now()) - e.queuedAt, heldMs: e.grantedAt ? Date.now() - e.grantedAt : 0 })),
   });
   if (url.pathname === '/exclusive' && req.method === 'POST') {
-    const e = { id: randomUUID(), last: Date.now(), granted: false }; exclusives.push(e); pump(); return json(200, e);
+    const e: Exclusive = { id: randomUUID(), order: order++, queuedAt: Date.now(), job: url.searchParams.get('job') ?? undefined, last: Date.now(), granted: false }; exclusives.push(e); pump(); return json(200, e);
   }
   const exclusivePath = /^\/exclusive\/([^/]+)(\/(?:release|external))?$/.exec(url.pathname);
   if (exclusivePath) {
@@ -219,7 +236,7 @@ http.on('upgrade', (req, socket, head) => {
     if (!token && exclusives.length) { setTimeout(connect, 100).unref(); return; }
     launchChain = launchChain.then(async () => {
       if (!token && exclusives.length) { setTimeout(connect, 100).unref(); return; }
-      const browser = await browserFor(backend, options, token);
+      const browser = await browserFor(backend, options, token, () => !socket.destroyed);
       if (socket.destroyed) return;
       const upstream = new WebSocket(browser.wsEndpoint());
       await new Promise<void>((resolve, reject) => { upstream.once('open', resolve); upstream.once('error', reject); });
@@ -232,6 +249,7 @@ let previousWindow: Awaited<ReturnType<typeof windowServerSnapshot>>, previousAt
 let sampling = false;
 const timer = setInterval(() => {
   pump();
+  for (const lease of leases.values()) if (Date.now() - lease.acquiredAt >= 600_000) closeLease(lease, '10-minute browser reservation cap reached; split the batch');
   for (const lease of leases.values()) if (!lease.closing && lease.calls === 0 && Date.now() - lease.last >= idleMs) closeLease(lease, 'Idle browser lease released');
   if (!leases.size && !waiters.length && !exclusives.length && browsers.size && Date.now() - lastUse >= browserIdleMs) {
     lastUse = Date.now(); launchChain = launchChain.then(() => closeBrowsers('idle')).catch(error => event('idle-error', { error: String(error) }));
