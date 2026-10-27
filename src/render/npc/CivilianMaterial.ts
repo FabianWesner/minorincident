@@ -38,7 +38,11 @@ export function civilianMaterial(shading: Materials | undefined, doubleSided: bo
     const grimy = parts.y.lessThan(-3).select(clothing, clothing.mul(dirt.mul(-.42).add(1)));
     const skin = mix(grimy, sunken, skinShift);
     const bloody = mix(skin, vec3(.36, .02, .03), blood.mul(dirt).mul(.9));
-    const base = mix(bloody, options.skinned ? vec3(0) : mix(vec3(.02), vec3(1, .015, .025), eyeGlow), options.atlas ? eye.mul(eyeGlow) : eye);
+    const glowing = mix(bloody, options.skinned ? vec3(0) : mix(vec3(.02), vec3(1, .015, .025), eyeGlow), options.atlas ? eye.mul(eyeGlow) : eye);
+    // crowd-texture-quality: healthy textured faces show their fitted eye discs as the toy eyes of the rigid crowd
+    // (white with a dark pupil); painted eyes alone vanish at game size, worst on darker skin tones.
+    const discUV = attribute('uv', 'vec2').sub(.5).mul(2).length();
+    const base = options.atlas && options.skinned ? mix(glowing, discUV.lessThan(.62).select(vec3(.015), vec3(.85)), parts.z.greaterThan(1.5).and(eyeGlow.lessThan(.01)).select(1, 0)) : glowing;
     const eyeColor = options.skinned ? vec3(1, .04373, .02843) : vec3(1, .25 / 3, .22 / 3);
     const eyeStrength = options.skinned ? attribute('uv', 'vec2').sub(.5).mul(2).length().smoothstep(1, .55).mul(3).add(3) : float(3);
     // Red glowing eyes in dark sockets. Kept below the bloom whiteout point: the emissive is a pure red (no luminance
@@ -69,7 +73,7 @@ export function civilianMaterial(shading: Materials | undefined, doubleSided: bo
     material.normalNode = options.skinned ? varying(normal, 'civilianSkinNormal') : normal;
     if (options.atlas) {
       const eyeDisc = parts.z.greaterThan(1.5), radius = attribute('uv', 'vec2').sub(.5).mul(2).length();
-      material.maskNode = eyeDisc.not().or(eyeGlow.greaterThan(.01).and(radius.lessThanEqual(1)));
+      material.maskNode = eyeDisc.not().or(radius.lessThanEqual(1).and(options.skinned ? true : eyeGlow.greaterThan(.01)));
       material.userData.frozenSurfaceMask = eyeDisc.not();
     }
     if (options.skinned) {
