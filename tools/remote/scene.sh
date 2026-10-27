@@ -14,6 +14,6 @@ done
 for arg in "$@"; do [ "$arg" != --list ] || exec npx tsx tools/scenelab/catalog.ts "$@"; done
 if [ "${MI_REMOTE:-}" != 1 ] && [ "$backend" = webgl2 ]; then
   case "$out" in /*|*..*) echo 'Scene output must be a worktree-relative path without ..' >&2; exit 2;; esac
-  exec sh tools/remote/run.sh "$PWD" --pull "$out" --env SCENE_SERVER=preview --env "SCENE_PORT=${SCENE_PORT:-$((44000 + $$ % 10000))}" -- sh -c 'npm run build && exec npx tsx tools/scenelab/catalog.ts "$@"' sh "$@"
+  exec sh tools/remote/run.sh "$PWD" --pull "$out" --env SCENE_SERVER=preview --env "SCENE_PORT=${SCENE_PORT:-$((44000 + $$ % 10000))}" -- sh -c 'npm run build:qa && exec npx tsx tools/scenelab/catalog.ts "$@"' sh "$@"
 fi
 E2E_UNITS=2 exec sh tools/e2e-lock.sh npx tsx tools/scenelab/catalog.ts "$@"

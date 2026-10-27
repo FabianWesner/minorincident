@@ -198,7 +198,12 @@ export class Barricades {
     const ax = attacker.transform.x, az = attacker.transform.z;
     const dx = goal.x - ax, dz = goal.z - az, length = Math.hypot(dx, dz);
     const along = Math.max(.01, length * length), across = Math.max(.01, length);
+    const minX = Math.min(ax, goal.x), maxX = Math.max(ax, goal.x), minZ = Math.min(az, goal.z), maxZ = Math.max(az, goal.z);
     for (const [e, wall, radius] of this.obstacles) {
+      // Streamed districts retain distant prop obstacles. A wall's enclosing
+      // circle must overlap the segment bounds before it can obstruct it.
+      // Keep the original order and exact projection/detour checks below.
+      if (length >= .1 && (wall.x + radius < minX || wall.x - radius > maxX || wall.z + radius < minZ || wall.z - radius > maxZ)) continue;
       const wx = wall.x - ax, wz = wall.z - az;
       const projection = (wx * dx + wz * dz) / along;
       if (projection <= 0 || projection >= 1) continue;

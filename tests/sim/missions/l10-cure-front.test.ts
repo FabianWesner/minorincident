@@ -105,7 +105,7 @@ test('T-E32-24/25-once-S8 @E32-AC24 @E32-AC25 release/retry/load permanent, camp
   } finally { w.dispose(); }
 });
 
-test('T-E32-24-unloaded-S8 @E32-AC24 sleeping infected die in snapshots and survive five revisits without loading regions', async () => {
+test('T-E32-24-unloaded-S8 @nightly @E32-AC24 sleeping infected die in snapshots and survive five revisits without loading regions', async () => {
   const { world: w, mission: m, release } = await ready('L10');
   try {
     // The custom console is at the origin; put a compact record in a known nonresident L10 chunk.

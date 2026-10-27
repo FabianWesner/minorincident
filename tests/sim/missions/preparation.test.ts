@@ -5,7 +5,7 @@ import { missionIds, resolveCampaignMission } from '../../../src/levels/missions
 import { SimWorld } from '../../../src/sim/world/SimWorld';
 import { stateHash } from '../../../src/sim/world/stateHash';
 
-for (const id of missionIds) test(`${id}: loading preparation is idempotent and Begin preserves the initial simulation`, async () => {
+for (const id of missionIds) test(`${id}: @nightly loading preparation is idempotent and Begin preserves the initial simulation`, async () => {
   const run = async (early: boolean) => {
     const world = new SimWorld(); await world.init();
     try {

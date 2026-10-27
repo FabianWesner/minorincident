@@ -5,7 +5,7 @@ import type { Game } from '../../src/Game';
 /** l9-night-look: real-game L9 captures along the drive (start, mid-route, crash, arrival) x zooms, one browser per call.
  * The healthy APC is moved onto each station and driven ~2 s with W, so headlights, dust and residency are live.
  *   E2E_UNITS=1 sh tools/e2e-lock.sh npx tsx tools/qa/l9-night-capture.ts <origin> <webgpu|webgl> <low|high> <outDir> [zooms=0.5,1,1.5]
- * Origin: https://minor-incident.com (PROD) or a local preview (never port 3300). Writes <out>/<station>-z<zoom>.png. */
+ * Origin: https://qa.minor-incident.pages.dev (QA) or a local preview (never port 3300). Writes <out>/<station>-z<zoom>.png. */
 const [origin, renderer, quality, out, zoomArg] = process.argv.slice(2);
 const zooms = (zoomArg ?? '0.5,1,1.5').split(',').map(Number);
 /** Optional: LOOK='{"sunIntensity":.5}' live look patch (lookdev only), STATIONS='1,4' subset. */

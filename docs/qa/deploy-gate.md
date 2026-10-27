@@ -3,7 +3,7 @@
 The orchestrator runs this on `main` before every PROD deploy (PO rules 10-07 / 10-09; long bot batteries are not part of it).
 
 1. `npm run typecheck`, `npm run lint`
-2. `npm run test:unit` (Hetzner: `sh tools/remote/run.sh $PWD -- npm run test:unit`). Since 2026-10-13 it includes the static QA guards:
+2. `npm run test:gate` (Hetzner: `sh tools/remote/run.sh "$PWD" -- bash tools/remote/timing-isolated.sh --whole-run npm run test:gate`, target ≤15 minutes of test command wall time). It runs unit, sim, per-level completion and headless QA invariant suites with at most four Vitest workers. This includes the static QA guards:
    - `tests/unit/assets/lod-fidelity.test.ts`: every static prop/building/vehicle LOD against LOD0 (extent, silhouettes, vanished materials; backlog in `lod-fidelity.baseline.json`).
    - `tests/unit/levels/decoration-surface.test.ts`: drawn decorations only on soil, every district and tier.
    - `tests/sim/world/support-seams.test.ts`: no seam in raised walkable supports, every district.
@@ -12,6 +12,16 @@ The orchestrator runs this on `main` before every PROD deploy (PO rules 10-07 / 
 5. Browser e2e (`--project=chromium --workers=2 --retries=1`, Playwright path filters are regexes on the full path, so level specs need `levels/`): `levels/L1.spec levels/L2.spec levels/L4.spec l4-po-round l4-cellar-guidance l4-plaza-movement l4-barricade-prompts cellar-position l4-blank-viewport webgpu-canvas respawn-bat input-mouse crowd-visible-outbreak menu-10-levels` (10-14: 90 tests); for vehicle/ride changes `tests/e2e/levels/l4-bus-ride-smooth.spec.ts` (all 17 configs: both tiers, both backends, 60/120 Hz, uneven 120 Hz, 30 Hz, uneven phone cadence).
 
 Details and the reasoning behind each guard: `docs/tools/scene-lab.md`, section "Quality x zoom matrix".
+
+## Cleanup checkpoint (2026-10-27)
+
+The PO has assigned a subsequent full test-suite rewrite. The scripts below are the current partition, **not a verified green release gate**: the last completed expanded gate took 16m 05.71s and failed three cases; two asset setup failures were corrected afterward, and the boss-staging expectation is superseded by Q-200. The expanded nightly was interrupted under the wrap directive. See the [failure list and measurements](tests-cleanup.md) before using this checkpoint for release approval.
+
+## Nightly simulation layer
+
+Run `sh tools/remote/run.sh "$PWD" -- bash tools/remote/timing-isolated.sh --whole-run npm run test:nightly` once nightly and before a release. Tests tagged `@nightly` are excluded from `test:gate`; the two scripts partition the same unit/sim/levels/headless-invariants inventory. Both retain Vitest's isolated timing project before functional tests. The nightly layer retains one seed-1 complete L1→L10 continuity run, including the L1→L9 axe reset and L5→L6 racks/roster checks, and the distinct newbie L1→L6 timing regression. Slow soak/diagnostic tests also belong here. Per-level ordinary-input completion remains in the gate, including a standalone L9 crossing/crash run.
+
+Passing the simulation gate does not replace build, browser smoke, Scene Lab, render invariants or native performance checks above. See [test cleanup evidence and coverage](tests-cleanup.md) for the assertion ownership matrix and measured before/after results.
 
 
 ## Browser admission (2026-10-23)

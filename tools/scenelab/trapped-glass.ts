@@ -40,7 +40,7 @@ try {
       await session.page.evaluate(({ clip, roles }) => {
         const lab = window.__SCENE__ as unknown as import('../../src/debug/scenelab/SceneLab').SceneLab;
         const game = (lab as unknown as { game: import('../../src/Game').Game }).game;
-        roles.forEach((role, i) => {
+        roles.forEach((_, i) => {
           const e = game.world.entities.get(lab.actors.get(`g${i}`)!.entity)!, c = e.civilian!;
           c.ambient = false; c.pauseUntil = Number.MAX_SAFE_INTEGER; c.path.length = 0;
           c.story = { clip, start: game.world.tick };

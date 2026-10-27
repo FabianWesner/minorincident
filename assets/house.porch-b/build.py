@@ -9,6 +9,8 @@ from mathutils import Vector
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/'tools/blender'))
 from sslib import palette, ao
+import sys, pathlib; sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2] / 'tools' / 'assets'))
+from blender_prims import smooth_path, star_geometry
 M={}; parts=[]; groups=[]; rng=random.Random(612)
 # Authored distance tiers: --lod 1|2 rebuilds this same model as hard-edged closed solids with thicker thin parts (never decimation).
 LOD=int(sys.argv[sys.argv.index('--lod')+1]) if '--lod' in sys.argv else 0
@@ -93,14 +95,6 @@ def tube(name,path,r,t,parent=None,n=12):
  for p in o.data.polygons:p.use_smooth=len(p.vertices)==4
  return o
 
-def smooth_path(points,steps=6):
- pts=[Vector(points[0]),*[Vector(p) for p in points],Vector(points[-1])];out=[]
- for i in range(1,len(pts)-2):
-  a,b,c,d=pts[i-1:i+3]
-  for j in range(steps):
-   t=j/steps;out.append(.5*((2*b)+(-a+c)*t+(2*a-5*b+4*c-d)*t*t+(-a+3*b-3*c+d)*t*t*t))
- out.append(Vector(points[-1]));return out
-
 def torus(name,loc,major,minor,t,parent=None,axis='Z',n=48):
  n=fine(n,12);minor=max(minor,(0,.016,.026)[LOD]) if minor<.026 else minor
  bpy.ops.mesh.primitive_torus_add(major_segments=n,minor_segments=(6,5,4)[LOD],location=loc,major_radius=major,minor_radius=minor);o=bpy.context.object
@@ -142,9 +136,7 @@ def plant(x,y,z,r=.35,flowers=True):
 
 def star(name,x,y,z,r,t,parent=None):
  # Solid extruded star plaque in the YZ plane, front at +X.
- pts=[(y+(r if i%2==0 else r*.45)*math.sin(i*math.pi/5),z+(r if i%2==0 else r*.45)*math.cos(i*math.pi/5)) for i in range(10)]
- vs=[(xx,yy,zz) for xx in [x,x+.008] for yy,zz in pts];fs=[tuple(reversed(range(10))),tuple(range(10,20))]+[(i,(i+1)%10,(i+1)%10+10,i+10) for i in range(10)]
- return mesh(name,vs,fs,t,parent)
+ return mesh(name,*star_geometry(x,y,z,r),t,parent)
 
 def run(out):
  p=argparse.ArgumentParser()

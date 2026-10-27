@@ -10,7 +10,7 @@ import { preset } from '../../../src/sim/progression/Campaign';
 import type { DistrictLayout } from '../../../src/levels/districts/types';
 const layout = JSON.parse(readFileSync('public/assets/layouts/D-CURE.layout.json', 'utf8')) as DistrictLayout;
 
-for (const tier of ['high', 'low'] as const) test(`T-E32-06-E2-${tier} @E32-AC02 @E32-AC06 @E32-AC09 @E32-AC15 @E32-AC16 @E32-AC27 depth population, health detours and checkpoint slot persistence`, async () => {
+for (const tier of ['high', 'low'] as const) test(`T-E32-06-E2-${tier} @nightly @E32-AC02 @E32-AC06 @E32-AC09 @E32-AC15 @E32-AC16 @E32-AC27 depth population, health detours and checkpoint slot persistence`, async () => {
   const w = new SimWorld(); await w.init();
   try {
     w.loadComposition(compositions.L10, [layout], 32); applyCampaign(w, preset('L10-default'));

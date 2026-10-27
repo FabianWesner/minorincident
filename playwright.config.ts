@@ -52,6 +52,6 @@ export default defineConfig({
     ...(process.env.E2E_WEBGPU_HEADLESS === '1' ? [{ name: 'webgpu-headless', testMatch: '**/webgpu.spec.ts', use: { browserName: 'chromium' as const, headless: true, launchOptions: { args: ['--enable-gpu', '--enable-unsafe-webgpu', '--ignore-gpu-blocklist'] } } }] : []),
     ...(process.env.E2E_LEGACY === '1' ? [{ name: 'webkit', testMatch: '**/smoke.spec.ts', use: { browserName: 'webkit' as const, launchOptions: { args: [] }, connectOptions: undefined } }] : []),
   ],
-  // Test the real production output, including the query-gated API chunk.
+  // Test the optimized QA output, including the query-gated API chunk.
   webServer: { command: `npx vite preview${process.env.E2E_DIST ? ` --outDir '${process.env.E2E_DIST.replaceAll("'", "'\\''")}'` : ''} --host 127.0.0.1 --port ${port} --strictPort --configLoader runner`, url: `http://127.0.0.1:${port}`, reuseExistingServer: !process.env.CI && !process.env.E2E_PORT, timeout: 30_000 },
 });

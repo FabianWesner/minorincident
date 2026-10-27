@@ -124,14 +124,21 @@ describe('L1 v2 bicycle', () => {
   });
   test('T-E19-16c @E19 @E19-AC16 riding into the facility forecourt auto-dismounts at the edge; no mounting inside', async () => {
     await grove();
-    const zone = layout.zones!['lab-nobike-zone'], west = Math.min(...zone.map(p => p[0])), mid = (Math.min(...zone.map(p => p[1])) + Math.max(...zone.map(p => p[1]))) / 2;
-    const start = { x: west - 5, z: mid }; world.vehicles!.bicycle.entity!.transform.x = start.x + .5; world.vehicles!.bicycle.entity!.transform.z = start.z;
+    // Enter through the authored gate; the west edge is a closed wire fence and
+    // the full bicycle footprint correctly stops before the rider reaches it.
+    const zone = layout.zones!['lab-nobike-zone'], north = Math.max(...zone.map(p => p[1]));
+    const start = { x: anchor('lab-gate').x, z: north + 5 };
+    Object.assign(world.vehicles!.bicycle.entity!.transform, { x: start.x, z: start.z - .5, yaw: Math.PI / 2 });
     teleport(start); step(2); press(); expect(bike().riding).toBe(true);
-    world.setInput({ move: { x: 1, z: 0 } }); for (let i = 0; i < 240 && bike().riding; i++) step(1);
+    world.setInput({ move: { x: 0, z: -1 } }); for (let i = 0; i < 240 && bike().riding; i++) step(1);
     expect(bike().riding).toBe(false); world.setInput({ move: { x: 0, z: 0 } }); step(1);
-    expect(bike().atNoBikeZone(pos())).toBe(true); expect(pos().x).toBeLessThan(west + .5);
+    expect(bike().atNoBikeZone(pos())).toBe(true); expect(pos().z).toBeGreaterThan(north - .5);
     expect(bike().inNoBikeZone(bike().entity!.transform)).toBe(false); // left at the edge on the rider's side
-    world.setInput({ move: { x: 0, z: 0 } }); step(30); press(); expect(bike().riding).toBe(false);
+    // The automatic stop is just outside the zone. Walk through the gate before
+    // checking the distinct rule that mounting from inside the forecourt is forbidden.
+    world.setInput({ move: { x: 0, z: -1 } }); step(20); world.setInput({ move: { x: 0, z: 0 } });
+    expect(bike().inNoBikeZone(pos())).toBe(true);
+    step(30); press(); expect(bike().riding).toBe(false);
   });
   test('T-E19-16d @E19 @E19-AC16 an infected touching the rider stops the bicycle and dismounts, with zero damage', async () => {
     await grove(); world.enableInfected();

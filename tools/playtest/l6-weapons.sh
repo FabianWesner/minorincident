@@ -2,7 +2,7 @@
 # L6 real-input playtest (lane l6-weapons-flow). usage: sh tools/playtest/l6-weapons.sh <name> <female|male> <weapons|fists>
 # weapons: seeds a campaign save from the L6-default preset (fire axe, bat | army MG, handgun, kick) through the game's
 # own campaign API, then resumes it from the menu (Continue). fists: same L6 save with only fists and kick.
-# Needs `npm run build`; preview on E2E_PORT (default 4061, never 3300); every browser session goes through tools/e2e-lock.sh.
+# Needs `npm run build:qa`; preview on E2E_PORT (never 3300); every browser session goes through tools/e2e-lock.sh.
 set -e
 name=$1; heroine=${2:-female}; kind=${3:-weapons}
 out=test-results/playtest/$name

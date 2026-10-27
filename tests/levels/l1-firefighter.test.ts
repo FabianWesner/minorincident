@@ -11,7 +11,7 @@ import type { SimWorld } from '../../src/sim/world/SimWorld';
 let world: SimWorld | undefined;
 afterEach(() => { world?.dispose(); world = undefined; });
 
-test('T-E19-firefighter @E19 the firefighter waits at the bay from the start of the objective, infected attack him, he survives a late arrival', async () => {
+test('T-E19-firefighter @nightly @E19 the firefighter waits at the bay from the start of the objective, infected attack him, he survives a late arrival', async () => {
   const { world: w, mission } = await loadL1(1); world = w;
   // This fixture pressures the firefighter while the spectator courier waits at the garage.
   w.combat!.damage.god = true;

@@ -9,6 +9,8 @@ from mathutils import Vector
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/'tools/blender'))
 from sslib import palette, ao
+import sys, pathlib; sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2] / 'tools' / 'assets'))
+from blender_prims import lathe_geometry, smooth_path, star_geometry, tube_geometry
 M={}; parts=[]; groups=[]; rng=random.Random(612)
 def init(asset):
  global ID, root
@@ -70,27 +72,9 @@ def beam(name,start,end,w,t='silver',parent=None):
  o.rotation_euler=d.to_track_quat('Z','Y').to_euler();return o
 
 def tube(name,path,r,t,parent=None,n=12):
- vs=[];fs=[]
- for i,pt in enumerate(path):
-  tangent=Vector(path[min(i+1,len(path)-1)])-Vector(path[max(0,i-1)]);tangent.normalize()
-  u=tangent.cross(Vector((0,0,1)))
-  if u.length<.1:u=tangent.cross(Vector((1,0,0)))
-  u.normalize();v=tangent.cross(u)
-  for j in range(n):vs.append(Vector(pt)+r*(u*math.cos(j*math.tau/n)+v*math.sin(j*math.tau/n)))
- for i in range(len(path)-1):
-  for j in range(n):k=i*n+j;l=i*n+(j+1)%n;fs.append((k,l,l+n,k+n))
- fs += [tuple(reversed(range(n))),tuple((len(path)-1)*n+j for j in range(n))]
- o=mesh(name,vs,fs,t,parent)
+ o=mesh(name,*tube_geometry(path,r,n),t,parent)
  for p in o.data.polygons:p.use_smooth=len(p.vertices)==4
  return o
-
-def smooth_path(points,steps=6):
- pts=[Vector(points[0]),*[Vector(p) for p in points],Vector(points[-1])];out=[]
- for i in range(1,len(pts)-2):
-  a,b,c,d=pts[i-1:i+3]
-  for j in range(steps):
-   t=j/steps;out.append(.5*((2*b)+(-a+c)*t+(2*a-5*b+4*c-d)*t*t+(-a+3*b-3*c+d)*t*t*t))
- out.append(Vector(points[-1]));return out
 
 def torus(name,loc,major,minor,t,parent=None,axis='Z',n=48):
  bpy.ops.mesh.primitive_torus_add(major_segments=n,minor_segments=6,location=loc,major_radius=major,minor_radius=minor);o=bpy.context.object
@@ -99,9 +83,7 @@ def torus(name,loc,major,minor,t,parent=None,axis='Z',n=48):
  return finish(o,name,t,parent,True)
 
 def lathe(name,loc,profile,t,parent=None,n=48):
- vs=[(loc[0]+r*math.cos(i*math.tau/n),loc[1]+r*math.sin(i*math.tau/n),loc[2]+z) for r,z in profile for i in range(n)]
- fs=[(j*n+i,j*n+(i+1)%n,(j+1)*n+(i+1)%n,(j+1)*n+i) for j in range(len(profile)-1) for i in range(n)]
- o=mesh(name,vs,fs,t,parent)
+ o=mesh(name,*lathe_geometry(loc,profile,n),t,parent)
  for p in o.data.polygons:p.use_smooth=True
  return o
 
@@ -130,9 +112,7 @@ def plant(x,y,z,r=.35,flowers=True):
 
 def star(name,x,y,z,r,t,parent=None):
  # Solid extruded star plaque in the YZ plane, front at +X.
- pts=[(y+(r if i%2==0 else r*.45)*math.sin(i*math.pi/5),z+(r if i%2==0 else r*.45)*math.cos(i*math.pi/5)) for i in range(10)]
- vs=[(xx,yy,zz) for xx in [x,x+.008] for yy,zz in pts];fs=[tuple(reversed(range(10))),tuple(range(10,20))]+[(i,(i+1)%10,(i+1)%10+10,i+10) for i in range(10)]
- return mesh(name,vs,fs,t,parent)
+ return mesh(name,*star_geometry(x,y,z,r),t,parent)
 
 def run(out):
  p=argparse.ArgumentParser()

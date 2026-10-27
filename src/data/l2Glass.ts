@@ -17,4 +17,3 @@ export const ROLE_CLIPS: Record<GlassRoleName, readonly string[]> = {
 /** Largest forward reach of any hand/forearm joint from the figure's root per clip (metres), measured with
  * `tools/scenelab/trapped-glass.ts` (rounded up). */
 export const CLIP_REACH_M: Record<string, number> = { 'npc-glance': .5, 'npc-bang': .52, 'npc-press': .68, 'npc-plead': .56, 'npc-hug': .35, 'npc-cower': .52 };
-export const GLASS_GAP_M = 0.05;

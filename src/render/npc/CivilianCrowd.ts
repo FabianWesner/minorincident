@@ -317,7 +317,7 @@ class CivilianBatch extends Group {
     else this.shirt.copy(crowdShirt(e.id));
     writeCrowdAppearance(this.tint, index, e.id, this.shirt, blend, this.accessories?.slot(e), this.accessories?.hidesHair(e, this.lod));
     const figure = this.probe.figures.at(-1);
-    if (this.probe.details && figure?.id === e.id) figure.appearance = renderedCrowdLook(e.id, this.model, this.mesh.geometry, this.shirt, this.accessories?.drawnSlot(e, this.lod) ?? null);
+    if (__QA_HOOKS__ && this.probe.details && figure?.id === e.id) figure.appearance = renderedCrowdLook(e.id, this.model, this.mesh.geometry, this.shirt, this.accessories?.drawnSlot(e, this.lod) ?? null);
   }
   private readonly deadFeet = new Map<number, { id: number; x: number; y: number; z: number }>();
   /** Scene Lab probe: dead pedestrian-look infected as drawn (feet position), frozen corpses included. */

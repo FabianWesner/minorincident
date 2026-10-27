@@ -1,4 +1,4 @@
-/** Native Chrome/Metal, audit phone proxy; run under quiet-run after a production build. */
+/** Native Chrome/Metal, audit phone proxy; run under quiet-run after a QA build. */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import type { Game } from '../../src/Game';
 import { SceneSession, stopServer, origin } from '../scenelab/session';

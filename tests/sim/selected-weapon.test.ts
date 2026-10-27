@@ -15,11 +15,15 @@ test('PO #9 @E03 Space uses the selected weapon for every carried action categor
     expect(attacks[0].side, def.id).toBe('RIGHT');
     if (def.category === 'ranged') expect(health(w, target), `${def.id} actually fires`).toBeLessThan(10000);
   }
-  // Magazine fixtures respect reloads; campaign handgun/army MG are bottomless.
+  // Q-161: Space on an empty magazine selects the usable bat without spending
+  // an attack. A later Space press uses that newly selected weapon.
   const w = await arena(); equip(w, ['weapon.bat'], ['weapon.smg']);
   const loadout = w.combat!.runner.loadout; loadout.state.selectedSide = 'RIGHT';
   Object.assign(loadout.current('RIGHT'), { magazine: 0, reloadUntil: w.tick + 120 });
-  w.setInput({ activeAttack: true, left: { down: true, held: true, up: false } }); step(w, 30);
+  w.setInput({ activeAttack: true, left: { down: true, held: false, up: false } }); step(w, 1); w.clearInput(); step(w, 30);
   expect(w.events.events().filter(e => e.type === 'combat.attack')).toEqual([]);
-  expect(loadout.state.selectedSide).toBe('RIGHT');
+  expect(loadout.state.selectedSide).toBe('LEFT'); expect(loadout.current('LEFT').id).toBe('weapon.bat');
+  expect(loadout.state.RIGHT.rack[0].magazine).toBe(0);
+  w.setInput({ activeAttack: true, left: { down: true, held: false, up: false } }); step(w, 1); w.clearInput(); step(w, 45);
+  expect(w.events.events().filter(e => e.type === 'combat.attack').map(e => ({ id: e.actionId, side: e.side }))).toEqual([{ id: 'weapon.bat', side: 'LEFT' }]);
 });

@@ -1,4 +1,4 @@
-name: Foundation checks
+name: Test gates
 on: [push, pull_request]
 jobs:
   foundation:
@@ -13,7 +13,7 @@ jobs:
       - run: python3 tools/qa/evidence-retention.py
       - run: npx playwright install --with-deps chromium webkit
       - run: npm run typecheck && npm run lint && npm run build
-      - run: npm run test:unit && npm run verify -- E01
+      - run: npm run test:gate && npm run verify -- E01
       - name: Tests leave the checkout clean
         run: test -z "$(git status --porcelain)"
       - uses: actions/upload-artifact@v4

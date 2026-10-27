@@ -230,28 +230,3 @@ export function populateMorning(world: SimWorld): void {
     }
   }
 }
-
-/** Three diner customers run distinct activities and remain addressable by the outbreak checkpoint. */
-export function dinerCustomer(world: SimWorld, index: number, diner: Point): number {
-  prepareReachability(world);
-  const district = world.districts?.districts.find(d => d.id === 'D-MAIN');
-  const safe = (p: Point): Point => routinePoint(world, p);
-  const bench = district?.layout.placements.filter(p => p.assetId === 'prop.bench').find(p => p.position[0] < -17 && p.position[2] < -6);
-  const roles = ['cashier', 'suburban-mom', 'bbq-dad'];
-  const models = ['npc.civilian-man-a', 'npc.civilian-woman-a', 'npc.civilian-elderly'];
-  const a = safe({ x: diner.x + (index - 1) * 3.2, z: diner.z + 2.4 });
-  let schedule: CivilianActivity[];
-  if (index === 0 && bench && district) {
-    const anchored = seatAnchor(bench.assetId, bench.position, bench.yaw, bench.scale, { x: district.origin[0], z: district.origin[1] });
-    const seat = anchored ?? { x: bench.position[0] + district.origin[0], z: bench.position[2] + district.origin[1] }, seatLift = anchored?.lift;
-    const target = safe({ x: seat.x, z: seat.z - .9 });
-    schedule = [{ activity: 'sit', anchor: bench.id, target, seat, seatLift, facing: { x: seat.x, z: seat.z - 3 }, ticks: 540, prop: 'coffee' },
-      { activity: 'stand', anchor: bench.id, target, seat, seatLift, facing: { x: seat.x, z: seat.z - 3 }, ticks: 36, prop: 'coffee' },
-      { activity: 'walk', anchor: 'diner/sidewalk', target: safe({ x: seat.x, z: -3.6 + district.origin[1] }), ticks: 1, prop: 'coffee' },
-      { activity: 'walk', anchor: 'diner/sidewalk', target: a, ticks: 1, prop: 'coffee' }];
-  } else {
-    schedule = [{ activity: index === 2 ? 'look' : 'walk', anchor: 'diner/flowers', target: a, facing: diner, ticks: index === 2 ? 120 : 1, prop: index === 2 ? 'cane' : 'bag' },
-      { activity: 'walk', anchor: 'diner/sidewalk', target: safe({ x: a.x + 2.4, z: a.z }), ticks: 1, prop: index === 2 ? 'cane' : 'bag' }];
-  }
-  return world.npcs!.civilians.spawn(roles[index], schedule[0].target, { model: models[index], panicReaction: index === 1 ? 'flee' : 'freeze', schedule, waypoints: schedule.map(s => s.target) });
-}

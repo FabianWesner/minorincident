@@ -1,9 +1,7 @@
 {
   "id": "house.garage.closed",
   "triangles": {
-    "lod0": 7000,
-    "lod1": 832,
-    "lod2": 204
+    "lod0": 7000
   },
   "dimensions_blender": [
     1.287731647491455,
@@ -31,42 +29,8 @@
     "front"
   ],
   "backface_culling": true,
-  "rounds": 4,
+  "rounds": 1,
   "webgpu_ok": false,
-  "webgl2_ok": true,
-  "gaps": [
-    "WebGPU manual check pending; manifest registration intentionally deferred."
-  ],
-  "delivery": {
-    "model.glb": {
-      "bytes": 222940,
-      "meshopt": true,
-      "quantized": true
-    },
-    "model.lod1.glb": {
-      "bytes": 37216,
-      "meshopt": true,
-      "quantized": true
-    },
-    "model.lod2.glb": {
-      "bytes": 20720,
-      "meshopt": true,
-      "quantized": true
-    }
-  },
-  "lod_ratios": {
-    "lod1": 0.11885714285714286,
-    "lod2": 0.029142857142857144
-  },
-  "within_budget": true,
-  "nodes_ok": true,
-  "determinism": {
-    "id": "house.garage.closed",
-    "geometry_hash": "083ee77a572e5746c6b60ddff2c0b22fbac1508e45c3ee07ae4c74897d305fda",
-    "second_geometry_hash": "083ee77a572e5746c6b60ddff2c0b22fbac1508e45c3ee07ae4c74897d305fda",
-    "geometry_identical": true,
-    "raw_byte_identical": false
-  },
-  "matches_reference": true,
-  "done": true
+  "webgl2_ok": false,
+  "gaps": []
 }

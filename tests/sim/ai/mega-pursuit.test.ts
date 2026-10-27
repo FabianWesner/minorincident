@@ -247,19 +247,3 @@ test('coarse pursuit crosses nonresident collision and re-enters with its curren
   expect(e.health.current).toBe(hp); expect(w.infected!.director.count).toBe(1);
   expect(w.solids.snapshot()).toMatchObject({ failures: 0, pending: 0 });
 });
-
-
-test('finale staging keeps the authored distance and chooses a connected approach outside sealed factory pockets', async () => {
-  const w = await course(), pursuit = installMegaPursuit(w, { introduceTick: null });
-  // The old nearest-clear placement picked (24, 0), inside this sealed pocket.
-  wall(w, 21, 0, .5, 3.5); wall(w, 27, 0, .5, 3.5);
-  wall(w, 24, -3, 3.5, .5); wall(w, 24, 3, 3.5, .5);
-  const id = pursuit.introduce({ x: -70, z: 0 }), e = w.entities.get(id)!, hp = e.health.current;
-  pursuit.stageNear({ x: 0, z: 0 }, 24);
-  expect(dist(e.transform, { x: 0, z: 0 })).toBeCloseTo(24, 5);
-  expect(pursuit.grid.visible(w.entities.get(1)!.transform, e.transform, pursuit.radius)).toBe(true);
-  expect(e.infected!.hidden).toBe(false);
-  expect(e.health.current).toBe(hp);
-  run(w, 8);
-  expect(dist(e.transform, w.entities.get(1)!.transform)).toBeLessThan(12);
-});

@@ -1,0 +1,525 @@
+{
+  "baselineCommit": "ea20915a2",
+  "knipVersion": "6.43.0",
+  "knipConfig": {
+    "entry": [
+      "src/main.ts",
+      "src/assets/viewer.ts",
+      "src/debug/lightingSpike.ts",
+      "src/**/*.worker.ts",
+      "src/assets/prefetch.worker.ts",
+      "tools/**/*.{ts,js,mjs,cjs}",
+      "tests/**/*.{ts,js,mjs}",
+      "preview/**/*.{ts,js,html}",
+      "functions/**/*.ts",
+      "*.config.ts",
+      "eslint.config.js",
+      "scripts/**/*.{ts,js,mjs}"
+    ],
+    "project": [
+      "src/**/*.{ts,tsx,js,mjs}",
+      "tools/**/*.{ts,tsx,js,mjs}",
+      "tests/**/*.{ts,tsx,js,mjs}",
+      "preview/**/*.{ts,js}",
+      "functions/**/*.ts",
+      "*.config.ts",
+      "eslint.config.js",
+      "scripts/**/*.{ts,js,mjs}"
+    ],
+    "includeEntryExports": true
+  },
+  "scope": "Source/tools/tests/preview/functions; generic field names and clamp scoped to owner and corroborated with Knip or noUnused diagnostics. Original l1AccidentEvents/BlastFxPreset definitions and their consumers are retained. No candidates skipped.",
+  "items": [
+    {
+      "id": "D01",
+      "file": "src/render/CombatView.ts",
+      "symbols": [
+        "CombatView"
+      ],
+      "knipBefore": [
+        {
+          "kind": "files",
+          "name": "src/render/CombatView.ts"
+        }
+      ],
+      "knipAfter": [],
+      "grepBefore": [
+        "src/render/CombatView.ts:9:export class CombatView extends Group {"
+      ],
+      "compilerUnusedBefore": []
+    },
+    {
+      "id": "D02",
+      "file": "src/sim/npc/MorningRoutines.ts",
+      "symbols": [
+        "dinerCustomer"
+      ],
+      "knipBefore": [
+        {
+          "kind": "exports",
+          "name": "dinerCustomer",
+          "line": 235,
+          "col": 17,
+          "pos": 16187
+        }
+      ],
+      "knipAfter": [],
+      "grepBefore": [
+        "src/sim/npc/MorningRoutines.ts:235:export function dinerCustomer(world: SimWorld, index: number, diner: Point): number {"
+      ],
+      "compilerUnusedBefore": []
+    },
+    {
+      "id": "D03",
+      "file": "src/data/l4.ts",
+      "symbols": [
+        "l4Edge"
+      ],
+      "knipBefore": [
+        {
+          "kind": "exports",
+          "name": "l4Edge",
+          "line": 432,
+          "col": 17,
+          "pos": 34180
+        }
+      ],
+      "knipAfter": [],
+      "grepBefore": [
+        "src/data/l4.ts:432:export function l4Edge(x: number, z: number): 'lakeshore' | 'harbor' | 'plaza' | 'east' | 'west' {"
+      ],
+      "compilerUnusedBefore": []
+    },
+    {
+      "id": "D04",
+      "file": "src/sim/progression/Campaign.ts",
+      "symbols": [
+        "meleeChoices"
+      ],
+      "knipBefore": [
+        {
+          "kind": "exports",
+          "name": "meleeChoices",
+          "line": 48,
+          "col": 14,
+          "pos": 4244
+        }
+      ],
+      "knipAfter": [],
+      "grepBefore": [
+        "src/sim/progression/Campaign.ts:48:export const meleeChoices=['weapon.bat','weapon.crowbar','weapon.machete'] as const;"
+      ],
+      "compilerUnusedBefore": []
+    },
+    {
+      "id": "D05",
+      "file": "src/data/l2Glass.ts",
+      "symbols": [
+        "GLASS_GAP_M"
+      ],
+      "knipBefore": [
+        {
+          "kind": "exports",
+          "name": "GLASS_GAP_M",
+          "line": 20,
+          "col": 14,
+          "pos": 1125
+        }
+      ],
+      "knipAfter": [],
+      "grepBefore": [
+        "src/data/l2Glass.ts:20:export const GLASS_GAP_M = 0.05;"
+      ],
+      "compilerUnusedBefore": []
+    },
+    {
+      "id": "D06",
+      "file": "src/render/characters/skinnedCrowd.ts",
+      "symbols": [
+        "isSkinnedCrowd"
+      ],
+      "knipBefore": [
+        {
+          "kind": "exports",
+          "name": "isSkinnedCrowd",
+          "line": 96,
+          "col": 17,
+          "pos": 5862
+        }
+      ],
+      "knipAfter": [],
+      "grepBefore": [
+        "src/render/characters/skinnedCrowd.ts:96:export function isSkinnedCrowd(geometry: BufferGeometry): boolean { return geometry.hasAttribute('_skin'); }"
+      ],
+      "compilerUnusedBefore": []
+    },
+    {
+      "id": "D07",
+      "file": "src/core/maths.ts",
+      "symbols": [
+        "clamp"
+      ],
+      "knipBefore": [
+        {
+          "kind": "exports",
+          "name": "clamp",
+          "line": 2,
+          "col": 17,
+          "pos": 65
+        }
+      ],
+      "knipAfter": [],
+      "grepBefore": [
+        "2:export function clamp(value: number, min: number, max: number): number {"
+      ],
+      "compilerUnusedBefore": []
+    },
+    {
+      "id": "D08",
+      "file": "tools/sim-runner/l1Bots.ts",
+      "symbols": [
+        "l1BotConfig"
+      ],
+      "knipBefore": [
+        {
+          "kind": "exports",
+          "name": "l1BotConfig",
+          "line": 32,
+          "col": 14,
+          "pos": 1686
+        }
+      ],
+      "knipAfter": [],
+      "grepBefore": [
+        "tools/sim-runner/l1Bots.ts:32:export const l1BotConfig = l1v2.bots;"
+      ],
+      "compilerUnusedBefore": []
+    },
+    {
+      "id": "D09",
+      "file": "src/data/l1v2.ts",
+      "symbols": [
+        "L1v2Tuning"
+      ],
+      "knipBefore": [
+        {
+          "kind": "types",
+          "name": "L1v2Tuning",
+          "line": 96,
+          "col": 13,
+          "pos": 5989
+        }
+      ],
+      "knipAfter": [],
+      "grepBefore": [
+        "src/data/l1v2.ts:96:export type L1v2Tuning = typeof l1v2;"
+      ],
+      "compilerUnusedBefore": []
+    },
+    {
+      "id": "D10",
+      "file": "src/sim/missions/LevelOneOutbreak.ts",
+      "symbols": [
+        "l1AccidentEvents"
+      ],
+      "knipBefore": [
+        {
+          "kind": "exports",
+          "name": "l1AccidentEvents",
+          "line": 458,
+          "col": 10,
+          "pos": 32898
+        }
+      ],
+      "knipAfter": [],
+      "grepBefore": [
+        "tests/unit/layouts/d-grove-scaffold.test.ts:9:import { l1AccidentEvents } from '../../../src/sim/outbreak/types';",
+        "tests/unit/layouts/d-grove-scaffold.test.ts:28:  expect(l1AccidentEvents).toEqual(['l1.flicker', 'l1.blast', 'l1.ringing', 'l1.smoke', 'l1.screams', 'l1.infectedExit']);",
+        "tests/unit/audio/ambience-guard.test.ts:5:import { l1AccidentEvents } from '../../../src/sim/outbreak/types';",
+        "tests/unit/audio/ambience-guard.test.ts:18:    for (const [i, name] of l1AccidentEvents.entries()) if (Math.abs(t - (blastAt - 1.5 + [0, 1.5, 1.7, 2.9, 3.5, 9][i])) < 1e-6) arc.event(name, t);",
+        "tests/unit/audio/l1-arc.test.ts:4:import { l1AccidentEvents } from '../../../src/sim/outbreak/types';",
+        "tests/unit/audio/l1-arc.test.ts:27:      for (const [i, name] of l1AccidentEvents.entries()) if (Math.abs(t - (blastAt - 1.5 + [0, 1.5, 1.7, 2.9, 3.5, 9][i])) < 1e-6) fire(name, t);",
+        "tests/unit/audio/l1-arc.test.ts:57:    expect(l1AccidentEvents).toEqual(['l1.flicker', 'l1.blast', 'l1.ringing', 'l1.smoke', 'l1.screams', 'l1.infectedExit']);",
+        "tests/unit/audio/l1-arc.test.ts:60:    for (const type of l1AccidentEvents) expect(audioCues[eventCues[type]], type).toBeDefined();",
+        "tests/unit/audio/l1-arc.test.ts:62:    l1AccidentEvents.forEach((type, i) => { arc.event(type, order[i]); for (let t = order[i]; t < (order[i + 1] ?? order[i] + 3); t += 0.05) cues.push(...arc.update(t, 0, false).plays.map(p => p.cue)); });",
+        "tests/levels/L1.test.ts:5:import { l1AccidentEvents } from '../../src/sim/outbreak/types';",
+        "tests/levels/L1.test.ts:313:      for (const type of l1AccidentEvents) w.events.on(type, e => { log.push({ type: e.type, tick: e.tick }); });",
+        "tests/levels/L1.test.ts:317:      expect(log.map(e => e.type)).toEqual([...l1AccidentEvents]);",
+        "src/sim/missions/LevelOneOutbreak.ts:3:import { l1AccidentEvents, type L1AccidentEventName } from '../outbreak/types';",
+        "src/sim/missions/LevelOneOutbreak.ts:458:export { l1AccidentEvents };",
+        "src/sim/outbreak/types.ts:105:export const l1AccidentEvents = ['l1.flicker', 'l1.blast', 'l1.ringing', 'l1.smoke', 'l1.screams', 'l1.infectedExit'] as const;",
+        "src/sim/outbreak/types.ts:106:export type L1AccidentEventName = (typeof l1AccidentEvents)[number];"
+      ],
+      "compilerUnusedBefore": []
+    },
+    {
+      "id": "D11",
+      "file": "src/audio/AudioService.ts",
+      "symbols": [
+        "arcFrame",
+        "lastDamageTick",
+        "lastDamage",
+        "vehicleSpeed"
+      ],
+      "knipBefore": [],
+      "knipAfter": [],
+      "grepBefore": [
+        "100:    private arcFrame: ArcFrame | null = null;",
+        "120:    private lastDamageTick = -1000;",
+        "121:    private lastDamage = 0;",
+        "124:    private vehicleSpeed = 0;",
+        "197:        this.arcFrame = null;",
+        "729:                this.vehicleSpeed = 0;",
+        "736:                this.vehicleSpeed = event.speed;",
+        "828:            this.lastDamageTick = event.tick;",
+        "829:            this.lastDamage = event.amount;",
+        "1062:        const frame = this.arcFrame = arc.update(t, this.points.length, zone.startsWith('interior') && arc.phase === 'chaos');",
+        "1112:        this.vehicleSpeed = 0;"
+      ],
+      "compilerUnusedBefore": [
+        "src/audio/AudioService.ts(100,13): error TS6133: 'arcFrame' is declared but its value is never read.",
+        "src/audio/AudioService.ts(120,13): error TS6133: 'lastDamageTick' is declared but its value is never read.",
+        "src/audio/AudioService.ts(121,13): error TS6133: 'lastDamage' is declared but its value is never read.",
+        "src/audio/AudioService.ts(124,13): error TS6133: 'vehicleSpeed' is declared but its value is never read."
+      ]
+    },
+    {
+      "id": "D12",
+      "file": "src/render/characters/CharacterView.ts",
+      "symbols": [
+        "facingTarget"
+      ],
+      "knipBefore": [],
+      "knipAfter": [],
+      "grepBefore": [
+        "48:  private readonly facingTarget = new Quaternion();"
+      ],
+      "compilerUnusedBefore": [
+        "src/render/characters/CharacterView.ts(48,20): error TS6133: 'facingTarget' is declared but its value is never read."
+      ]
+    },
+    {
+      "id": "D13",
+      "file": "src/render/characters/CourierGroundContacts.ts",
+      "symbols": [
+        "hipRest"
+      ],
+      "knipBefore": [],
+      "knipAfter": [],
+      "grepBefore": [
+        "51:  private readonly hipRest: number;",
+        "70:    this.hipRest = (rig.hip.getWorldPosition(this.joint).y - this.origin.y) / scale;"
+      ],
+      "compilerUnusedBefore": [
+        "src/render/characters/CourierGroundContacts.ts(51,20): error TS6133: 'hipRest' is declared but its value is never read."
+      ]
+    },
+    {
+      "id": "D14",
+      "file": "src/render/L2Props.ts",
+      "symbols": [
+        "yAxis"
+      ],
+      "knipBefore": [],
+      "knipAfter": [],
+      "grepBefore": [
+        "22:  private readonly yAxis = new Vector3(0, 1, 0);"
+      ],
+      "compilerUnusedBefore": [
+        "src/render/L2Props.ts(22,20): error TS6133: 'yAxis' is declared but its value is never read."
+      ]
+    },
+    {
+      "id": "D15",
+      "file": "src/render/vfx/labAccident.ts",
+      "symbols": [
+        "broken"
+      ],
+      "knipBefore": [],
+      "knipAfter": [],
+      "grepBefore": [
+        "43:  private broken = false;",
+        "84:    this.broken = false;",
+        "126:    // Roof vent, the broken side window and the street-facing front: the front column climbs the facade inside the game camera.",
+        "158:      // Orange interior fire glow for ~1.7 s, then the windows stay dark and broken.",
+        "161:      else if (t >= 1.8) { this.glowFrom = -1; this.broken = true; this.targets.windowGlass?.('shatter', 1); }"
+      ],
+      "compilerUnusedBefore": [
+        "src/render/vfx/labAccident.ts(43,11): error TS6133: 'broken' is declared but its value is never read."
+      ]
+    },
+    {
+      "id": "D16",
+      "file": "src/render/vfx/Blasts.ts",
+      "symbols": [
+        "BlastFxPreset"
+      ],
+      "knipBefore": [
+        {
+          "kind": "types",
+          "name": "BlastFxPreset",
+          "line": 650,
+          "col": 15,
+          "pos": 56745
+        }
+      ],
+      "knipAfter": [],
+      "grepBefore": [
+        "src/data/explosions.ts:35:export interface BlastFxPreset {",
+        "src/data/explosions.ts:89:const preset = (id: string, p: Omit<BlastFxPreset, 'id'>): BlastFxPreset => ({ id, ...p });",
+        "src/data/explosions.ts:90:export const blastFxPresets: Readonly<Record<string, BlastFxPreset>> = Object.fromEntries([",
+        "src/data/explosions.ts:109:export function validateExplosions(defs: Readonly<Record<string, ExplosionDef>> = explosionDefs, presets: Readonly<Record<string, BlastFxPreset>> = blastFxPresets): void {",
+        "src/sim/world/types.ts:102:  /** E27: every blast (hazard, throwable, car, scripted stage). `fx` names the BlastFxPreset. */",
+        "src/render/vfx/Blasts.ts:10:import { blastFxPresets, type BlastFxPreset } from '../../data/explosions';",
+        "src/render/vfx/Blasts.ts:650:export type { BlastFxPreset };",
+        "tests/unit/data/explosions.test.ts:5:test('T-E27-01 @E27 @E27-AC01 every ExplosionDef and BlastFxPreset validates and every explosive source references one', () => {"
+      ],
+      "compilerUnusedBefore": []
+    }
+  ],
+  "S06CompilerBefore": [
+    "src/input/InputSystem.ts(77,32): error TS6138: Property 'canvas' is declared but its value is never read.",
+    "src/render/characters/CrowdLocomotion.ts(90,66): error TS6138: Property 'clip' is declared but its value is never read.",
+    "src/sim/ai/InfectedSystem.ts(145,20): error TS6133: 'e' is declared but its value is never read.",
+    "src/sim/ai/InfectedSystem.ts(1102,39): error TS6133: 'b' is declared but its value is never read.",
+    "src/telemetry/codec.ts(42,88): error TS6133: 'headerEnd' is declared but its value is never read.",
+    "tools/scenelab/trapped-glass.ts(43,24): error TS6133: 'role' is declared but its value is never read."
+  ],
+  "compilerUnusedAfter": [
+    "src/render/DistrictView.ts(642,11): error TS6133: 'huggedOccluder' is declared but its value is never read.",
+    "src/render/DistrictView.ts(683,11): error TS6133: 'occluded' is declared but its value is never read.",
+    "tests/unit/levels/l5-static.test.ts(157,40): error TS6133: 'district' is declared but its value is never read.",
+    "tests/unit/performance/nav-player-mask.test.ts(6,22): error TS6133: 'x' is declared but its value is never read."
+  ],
+  "remainingCompilerDiagnostics": "Only the retained S07 DistrictView methods and two unrelated test parameters remain; no D01-D16 or S06 candidate remains.",
+  "additionalReferenceCheck": {
+    "scope": "experiment/tools in this worktree and the main checkout (read-only)",
+    "deletedApiConsumers": 0,
+    "appHookConsumers": 0
+  },
+  "finalImplementationRecheck": {
+    "commit": "23bee9e079e771fd55ed624d7736a5939b9cc19a",
+    "knipVersion": "6.43.0",
+    "knipExitCode": 1,
+    "exitMeaning": "Unrelated existing findings remain; requested candidates absent",
+    "evidence": "test-results/code-batch1/audit/knip-final.json",
+    "items": [
+      {
+        "id": "D01",
+        "ownerPattern": "\\b(?:CombatView)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D02",
+        "ownerPattern": "\\b(?:dinerCustomer)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D03",
+        "ownerPattern": "\\b(?:l4Edge)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D04",
+        "ownerPattern": "\\b(?:meleeChoices)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D05",
+        "ownerPattern": "\\b(?:GLASS_GAP_M)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D06",
+        "ownerPattern": "\\b(?:isSkinnedCrowd)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D07",
+        "ownerPattern": "\\b(?:clamp)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D08",
+        "ownerPattern": "\\b(?:l1BotConfig)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D09",
+        "ownerPattern": "\\b(?:L1v2Tuning)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D10",
+        "ownerPattern": "\\b(?:l1AccidentEvents)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D11",
+        "ownerPattern": "\\b(?:arcFrame|lastDamageTick|lastDamage|vehicleSpeed)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D12",
+        "ownerPattern": "\\b(?:facingTarget)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D13",
+        "ownerPattern": "\\b(?:hipRest)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D14",
+        "ownerPattern": "\\b(?:yAxis)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D15",
+        "ownerPattern": "\\b(?:private\\s+broken|this\\.broken)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D16",
+        "ownerPattern": "\\b(?:BlastFxPreset)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      }
+    ],
+    "S06AbsentPatterns": {
+      "src/input/InputSystem.ts": [
+        "private readonly canvas:"
+      ],
+      "src/render/characters/CrowdLocomotion.ts": [
+        "private readonly clip:"
+      ],
+      "src/sim/ai/InfectedSystem.ts": [
+        "provoker(e:",
+        "this.provoker(e, b)",
+        "wanderL1(e: EntitySnapshot, b:",
+        "this.wanderL1(e, b, brain)"
+      ],
+      "src/telemetry/codec.ts": [
+        "headerEnd"
+      ],
+      "tools/scenelab/trapped-glass.ts": [
+        "roles.forEach((role, i)"
+      ]
+    }
+  }
+}

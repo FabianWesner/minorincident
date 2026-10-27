@@ -1,7 +1,7 @@
 #!/bin/sh
 # Reuse a production dist only for a byte-identical clean Git tree.
 set -eu
-export NODE_ENV=production
+export NODE_ENV="${NODE_ENV:-production}"
 root=$(cd "$(dirname "$0")/.." && pwd -P)
 common=$(git -C "$root" rev-parse --path-format=absolute --git-common-dir)
 repo=$(cd "$(dirname "$common")" && pwd -P)
@@ -21,7 +21,8 @@ for (const file of readdirSync(root).filter(f => /^\.env(?:\.|$)/.test(f)).sort(
   const path = resolve(root, file);
   if (existsSync(path)) hash.update(file).update(readFileSync(path));
 }
-for (const [key, value] of Object.entries(process.env).filter(([key]) => key.startsWith('VITE_')).sort()) hash.update(key).update(value ?? '');
+// Hook selection also depends on NODE_ENV and BRANCH, outside the VITE_ namespace.
+hash.update(JSON.stringify(Object.entries(process.env).filter(([key]) => key.startsWith('VITE_') || ['NODE_ENV', 'VITE_QA_HOOKS', 'BRANCH'].includes(key)).sort()));
 console.log(hash.digest('hex'));
 NODE
 )
@@ -38,7 +39,7 @@ if [ -d "$cache" ]; then
   if ! cp -cR "$cache" "$root/dist" 2>/dev/null; then clone_method=copy; rm -rf "$root/dist"; cp -R "$cache" "$root/dist"; fi
   echo "Reused production dist for tree $tree ($clone_method clone)"
 else
-  NODE_ENV=production "$root/node_modules/.bin/vite" build --configLoader runner "$@"
+  "$root/node_modules/.bin/vite" build --configLoader runner "$@"
   if ! cp -cR "$root/dist" "$cache" 2>/dev/null; then rm -rf "$cache"; cp -R "$root/dist" "$cache"; fi
   echo "Cached production dist for tree $tree"
 fi
