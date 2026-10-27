@@ -13,7 +13,7 @@
     "test:unit": "npm test",
     "test:gate": "npm test",
     "test:smoke": "npm run build:qa && node tools/qa/test-budget.mjs --name smoke --max-seconds 240 -- sh tools/e2e-lock.sh npx playwright test --project=chromium --grep @smoke --workers=1",
-    "test:nightly": "node tools/qa/test-budget.mjs --name nightly --max-seconds 1200 -- sh -c 'npx vitest run --project nightly --configLoader runner --maxWorkers=3 --exclude tests/nightly/sim-budget.test.ts \"$@\" && npx vitest run tests/nightly/sim-budget.test.ts --configLoader runner --maxWorkers=1 \"$@\"' nightly",
+    "test:nightly": "node tools/qa/test-budget.mjs --name nightly --max-seconds 1200 -- sh tools/qa/nightly.sh",
     "test:nightly:remote": "sh tools/remote/run.sh \"$PWD\" --pull test-results/nightly --pull test-results/timings -- bash tools/remote/timing-isolated.sh --all npm run test:nightly",
     "test:e2e": "npm run build:qa && node tools/test-lane.mjs e2e sh tools/e2e-lock.sh playwright test --project=chromium",
     "test:e2e:mobile": "npm run build:qa && node tools/test-lane.mjs e2e-mobile sh tools/e2e-lock.sh playwright test --project=pixel-7 --project=pixel-7-landscape --project=iphone-14 --project=iphone-14-landscape",
