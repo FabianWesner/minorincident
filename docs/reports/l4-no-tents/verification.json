@@ -91,7 +91,6 @@
     "explanation": "Main is also over budget. Branch simulation and frame p95 are lower; no >15% CPU regression. No CPU optimization authorized or needed from this comparison."
   },
   "pending": [
-    "remaining3 native invariants",
     "remaining93 native functional/smoke cases incl fixed six roof-band cases"
   ],
   "noSkipBot": {
@@ -128,6 +127,14 @@
     "currentQuietRun": "checks/invariants-final.log",
     "currentL4Load": "checks/load-L4.json",
     "priorOther11": "checks/invariants-render.json",
-    "status": "current first9 passed including L4; remaining3 queued"
+    "status": "all12 covered: current first9 pass incl L4; current remaining3 pass",
+    "remaining3": "checks/native-invariants-remainder.json"
+  },
+  "sourceChecks": {
+    "source": "ba56a0798",
+    "typecheck": "passed",
+    "lint": "passed",
+    "receipt": "checks/final-source.log",
+    "applicationBuild": "249580fc1"
   }
 }
