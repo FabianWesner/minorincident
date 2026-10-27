@@ -236,7 +236,7 @@ export class InfectedSystem {
     if (this.l1 && !l1v2.infected.hearsPlayer) return; // Long-range player noise stays unchanged; close hearing is queried separately.
     for (const e of this.active) if (e.health.current > 0 && Math.hypot(e.transform.x - position.x, e.transform.z - position.z) <= radius) {
       if (sourceId !== undefined && this.world.combat?.effects.inSmoke(e.transform)) continue;
-      if (sourceId !== undefined && (e.infected!.state === 'idle' || e.infected!.state === 'wander')) this.world.events.emit({ type: 'ai.alerted', tick: this.world.tick, sourceId, targetId: e.id, cause: 'noise', position: { ...e.transform } });
+      if (sourceId !== undefined && (e.infected!.state === 'idle' || e.infected!.state === 'wander')) this.alerted(e, sourceId, 'noise');
       if (loud && e.archetype === 'infected.crow') { e.infected!.state = 'scatter'; e.infected!.scatterUntil = this.world.tick + 300; }
       else this.alert(e);
     }
@@ -637,7 +637,7 @@ export class InfectedSystem {
       if (b.special === 'pounce' || b.special === 'pin') step = this.world.solids.sweep(e, { x: b.dx, z: b.dz }, step);
       if (b.special === 'cling') e.transform.y = 0.7 + Math.sin(Math.min(1, (this.world.tick - b.until) / 60) * Math.PI) * 1.5;
       // Authored leap/charge timing is a combat impulse, like knockback.
-      moveAgent(e, b.dx * step * 60, b.dz * step * 60, this.infectedNav, this.world.tick, e.combat!.radius, true); this.world.spatial.set(e.id, e.transform.x, e.transform.z);
+      moveAgent(e, b.dx * step * 60, b.dz * step * 60, this.infectedNav, this.world.tick, e.combat!.radius, true); this.place(e);
       if (distance > this.strikeRange(e, player) + 0.15) return this.world.tick >= b.activeUntil;
     }
     if (Math.hypot(player.transform.x - e.transform.x, player.transform.z - e.transform.z) > (b.special === 'aura' ? 3 : this.strikeRange(e, player)) + 0.15) return true;
@@ -859,17 +859,17 @@ export class InfectedSystem {
       if(obstacle?.archetype==='l6.service-gate') {
         if(!this.world.barricades!.withinReach(e,obstacle))this.steerL1(e,brain,this.world.barricades!.approach(e,obstacle),brain.runSpeed,false,false);
         else if(tick>=b.cooldown){this.windup(e);b.targetId=obstacle.id;}
-        this.world.spatial.set(e.id,e.transform.x,e.transform.z);return;
+        this.place(e); return;
       }
     }
     if (brain.mode === 'bite') { this.updateBite(e, b, brain); return; }
-    if (brain.cueUntil > 0) { this.herdTurn(e, b, brain); this.world.spatial.set(e.id, e.transform.x, e.transform.z); return; }
+    if (brain.cueUntil > 0) { this.herdTurn(e, b, brain); this.place(e); return; }
     if ((tick + e.id) % l1Ticks(l1v2.infected.targetReevalS) === 0) this.perceive(e, b, brain);
     if (brain.mode === 'chase') this.chaseL1(e, b, brain);
     else if (brain.mode === 'attracted') this.attractedL1(e, b, brain);
     else if (brain.mode === 'search') this.searchL1(e, b, brain);
     else this.wanderL1(e, b, brain);
-    this.world.spatial.set(e.id, e.transform.x, e.transform.z);
+    this.place(e);
   }
   /** PO 10-15 #4b: while the courier is at the garage (bat pickup) only the nearest `maxPursuers` infected may pursue her.
    * Recomputed from live positions every tick (also after a checkpoint restore); the rest are handled in `divertFromForecourt`.
@@ -968,7 +968,7 @@ export class InfectedSystem {
       if (reacting) { brain.pauseUntil = tick + (heard ? hearingReactionTicks : 12 + (brain.reaction ?? 0)); brain.looking = true; brain.lookYaw = -Math.atan2(seen.position.z - e.transform.z, seen.position.x - e.transform.x); }
       brain.hearingUntil = heard && reacting ? tick + hearingReactionTicks : 0;
       brain.headingX = brain.headingZ = 0; brain.distractionId = 0; brain.cueUntil = 0;
-      this.world.events.emit({ type: 'ai.alerted', tick, sourceId: seen.id, targetId: e.id, cause: heard ? 'hearing' : 'sight', position: { ...e.transform } });
+      this.alerted(e, seen.id, heard ? 'hearing' : 'sight');
     }
     brain.mode = 'chase'; b.state = 'chase'; brain.targetId = seen.id; brain.seenX = seen.position.x; brain.seenZ = seen.position.z; brain.seenTick = tick;
   }
@@ -1377,7 +1377,7 @@ export class InfectedSystem {
     const impactAge = leaderAttack.impactTick === undefined ? undefined : this.world.tick - leaderAttack.impactTick;
     if (age >= 180 || impactAge !== undefined && impactAge >= 24) { e.transform.y = (this.world.districts?.pavingHeight(e.transform.x, e.transform.z) ?? 0) + .7; this.finishSpecial(e.id); return; }
     steerFlockDive(e, a.area, age, this.world.tick, impactAge, a.members?.indexOf(e.id) ?? 0, this.world.combat!.query);
-    this.world.spatial.set(e.id, e.transform.x, e.transform.z);
+    this.place(e);
     if (a.leaderId !== e.id || age < 24 || a.impactTick !== undefined) return;
     const birds = (a.members ?? []).map(id => this.world.entities.get(id)).filter(member => member && member.health.current > 0 && member.infected?.specialAttack?.stage === 'active');
     if (!birds.length || !birds.some(member => Math.hypot(member!.transform.x - a.area.x, member!.transform.z - a.area.z) <= 3 && this.world.combat!.query.visible(member!.transform, a.area) && this.physicalPropVisible(member!.transform, a.area))) return;
