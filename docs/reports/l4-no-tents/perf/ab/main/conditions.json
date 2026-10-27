@@ -1,0 +1,35 @@
+{
+  "measurementMode": "Shared pooled diagnostic A/B requested by orchestrator; capped browser, unchanged budget assertions; not a quiet gate",
+  "cpuThrottle": 1,
+  "qaHooks": true,
+  "at": "2026-10-27T07:35:00.660891+01:00",
+  "load": [
+    5.33349609375,
+    5.45458984375,
+    6.25244140625
+  ],
+  "pool": {
+    "protocol": 1,
+    "pid": 91433,
+    "playwright": "1.63.0",
+    "limit": 4,
+    "configuredLimit": 4,
+    "windowServerCpu": 0.39908211115307907,
+    "idleMs": 60000,
+    "endpoints": {
+      "gpu": "ws://127.0.0.1:4329/ws/gpu",
+      "swiftshader": "ws://127.0.0.1:4329/ws/swiftshader"
+    },
+    "starting": [],
+    "browsers": [
+      {
+        "backend": "gpu",
+        "pid": 93090
+      }
+    ],
+    "leases": [],
+    "waiting": 0,
+    "waiters": [],
+    "exclusive": []
+  }
+}

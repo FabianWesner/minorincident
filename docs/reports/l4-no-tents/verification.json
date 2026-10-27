@@ -85,11 +85,12 @@
   },
   "nativePerformance": {
     "source": "249580fc1",
-    "status": "budget gate fails under heavy machine load; requested shared-pool A/B in progress",
-    "receipt": "checks/native-perf-final.json"
+    "status": "perf pending, orchestrator measures in a quiet window",
+    "receipt": "checks/native-perf-final.json",
+    "comparison": "perf/ab/comparison.json",
+    "explanation": "Main is also over budget. Branch simulation and frame p95 are lower; no >15% CPU regression. No CPU optimization authorized or needed from this comparison."
   },
   "pending": [
-    "shared-pool main/branch A/B",
     "remaining3 native invariants",
     "remaining93 native functional/smoke cases incl fixed six roof-band cases"
   ],
