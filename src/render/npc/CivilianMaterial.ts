@@ -9,12 +9,14 @@ import type { Materials } from '../Materials';
 
 type Entry = { material: MeshLambertNodeMaterial; pose: ReturnType<typeof poseTexture>; atlas?: ReturnType<typeof sampleTexture>; uses: number };
 const caches = new WeakMap<Materials, Map<string, Entry>>();
-/** One graph per side/hand layout. Each draw binds its own immutable geometry,
+/** Cache by atlas and side/hand layout. Each draw binds its own immutable geometry,
  * current pose texture, transforms, tint and infection attributes. */
 export function civilianMaterial(shading: Materials | undefined, doubleSided: boolean, handIndex: number, initialTexture: DataTexture, options: { bindRow: number; skinned: boolean; atlas?: Texture; toyEyes?: boolean } = { bindRow: 0, skinned: false }) {
   let cache = shading && caches.get(shading);
   if (!cache) { cache = new Map(); if (shading) caches.set(shading, cache); }
-  const key = `${doubleSided}:${handIndex}:${options.skinned}:${options.bindRow}:${!!options.atlas}:${!!options.toyEyes}`;
+  // WebGL may reuse a material's last texture binding between draws. Distinct
+  // body atlases need distinct materials, even when their shader source matches.
+  const key = `${doubleSided}:${handIndex}:${options.skinned}:${options.bindRow}:${options.atlas?.uuid ?? 'plain'}:${!!options.toyEyes}`;
   let entry = cache.get(key);
   if (!entry) {
     const pose = poseTexture(initialTexture);

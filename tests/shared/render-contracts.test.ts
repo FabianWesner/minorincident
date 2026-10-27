@@ -16,6 +16,7 @@ import { Materials } from '../../src/render/Materials';
 import { installTextureRanges } from '../../src/render/TextureRanges';
 import { uploadFloatTexture, type FloatUploadDevice } from '../../src/render/TextureUpload';
 import { weatherMaterialFlags } from '../../src/render/WeatherView';
+import { civilianMaterial } from '../../src/render/npc/CivilianMaterial';
 import { RoutineProps } from '../../src/render/npc/RoutineProps';
 import { crowdGunHolds, longGunHolds } from '../../src/render/characters/GunAim';
 import type { EntitySnapshot } from '../../src/sim/world/types';
@@ -164,6 +165,12 @@ test('texture route: lossless 256-byte-aligned float uploads; cold WebGPU atlase
 
 // Soldiers and armed civilians in L3/L4 share the courier's real gun contracts.
 test('crowd long guns use asset grip/muzzle sockets and the courier support-hand offsets', async () => {
+  const shading = new Materials(new Lighting(new Scene())), pose = new DataTexture(), a = new DataTexture(), b = new DataTexture();
+  const one = civilianMaterial(shading, false, 2, pose, { bindRow: 0, skinned: true, atlas: a });
+  const same = civilianMaterial(shading, false, 2, pose, { bindRow: 0, skinned: true, atlas: a });
+  const other = civilianMaterial(shading, false, 2, pose, { bindRow: 0, skinned: true, atlas: b });
+  expect(one.material).toBe(same.material); expect(one.material).not.toBe(other.material);
+  one.release(); same.release(); other.release(); shading.dispose();
   const props = new RoutineProps();
   const loadAsset = vi.fn(async (id: string) => {
     const model = new Group(); model.name = id; const material = new MeshLambertNodeMaterial({ color: '#789abc' });
