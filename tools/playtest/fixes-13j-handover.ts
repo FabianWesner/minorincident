@@ -1,8 +1,9 @@
+import { launchBrowser } from '../browser-pool/client';
 import assert from 'node:assert/strict';
 import { appendFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { gunzipSync } from 'node:zlib';
-import { chromium, type Page } from '@playwright/test';
+import { type Page } from '@playwright/test';
 import type { Game } from '../../src/Game';
 import type { CampaignSave } from '../../src/sim/progression/Campaign';
 import type { MissionCheckpoint } from '../../src/sim/missions/types';
@@ -91,7 +92,7 @@ if (process.argv[1]?.endsWith('fixes-13j-handover.ts')) {
   assert.ok(origin && destination, 'Usage: fixes-13j-handover.ts <origin> <outDir>');
   const out = resolve(destination); mkdirSync(out, { recursive: true });
   const args = process.platform === 'darwin' ? ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'];
-  const browser = await chromium.launch({ headless: true, args });
+  const browser = await launchBrowser({ headless: true, args });
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
   try {
     const result = await heldHandoverProbe(page, origin, readHandoverFixture(), async observation => {

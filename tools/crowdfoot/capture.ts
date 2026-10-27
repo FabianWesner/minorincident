@@ -1,7 +1,8 @@
+import { launchBrowser } from '../browser-pool/client';
 import { spawn, execFileSync, type ChildProcess } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { homedir } from 'node:os';
-import { chromium, type Page } from '@playwright/test';
+import { type Page } from '@playwright/test';
 
 /**
  * Crowd footwork evidence: actual renderer and game camera angle at a close review radius, every sim tick
@@ -23,7 +24,7 @@ if (!(await up())) {
   server = spawn('npx', ['vite', 'preview', '--host', '127.0.0.1', '--port', String(port), '--strictPort', '--configLoader', 'runner'], { cwd: root, stdio: 'ignore' });
   for (let i = 0; i < 120 && !(await up()); i++) await new Promise(r => setTimeout(r, 500));
 }
-const browser = await chromium.launch({ headless: true, args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] });
+const browser = await launchBrowser({ headless: true, args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] });
 const page = await browser.newPage({ viewport: { width: 1600, height: 900 }, deviceScaleFactor: 1 });
 page.on('pageerror', e => console.error('pageerror', e.message)); page.on('console', m => { if (m.type() === 'log') console.log('page', m.text()); });
 

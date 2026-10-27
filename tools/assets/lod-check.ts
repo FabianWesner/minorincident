@@ -1,12 +1,12 @@
+import { launchBrowser } from '../browser-pool/client';
 /** Review shipped assets in the game renderer: three LODs, two game-angle views. */
-import { chromium } from '@playwright/test';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { PNG } from 'pngjs';
 
 const roofOff = process.argv.includes('--roof-off');
 const ids = process.argv.slice(2).filter(id => id !== '--roof-off');
 if (!ids.length) throw new Error('Usage: tsx tools/assets/lod-check.ts <id> ... (E2E_PORT selects an existing server)');
-const browser = await chromium.launch({ headless: true, args: ['--use-angle=metal'] });
+const browser = await launchBrowser({ headless: true, args: ['--use-angle=metal'] });
 try {
   const page = await browser.newPage({ viewport: { width: 400, height: 300 } });
   for (const id of ids) {

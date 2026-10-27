@@ -1,0 +1,39 @@
+{
+  "revision": "38ece0ef5c2cf1592de0247b8502c675f5547288",
+  "main": "976573659",
+  "typecheck": {
+    "exitCode": 0
+  },
+  "lint": {
+    "exitCode": 0
+  },
+  "cpuSmoke": {
+    "exitCode": 0,
+    "passed": 6,
+    "skipped": 4091,
+    "failed": 0,
+    "durationSeconds": 97.74,
+    "command": "MI_SLUG=infra-merge sh tools/sim-lock.sh vitest run -t @smoke --maxWorkers=2 --configLoader runner"
+  },
+  "browserSmoke": {
+    "exitCode": 0,
+    "stats": {
+      "startTime": "2026-10-27T06:47:40.176Z",
+      "duration": 426292.91,
+      "expected": 34,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "command": "MI_SLUG=infra-merge E2E_PORT=4371 BROWSER_POOL_BACKEND=gpu sh tools/e2e-lock.sh node node_modules/playwright/cli.js test --grep @smoke --project=chromium --project=pixel-7 --project=pixel-7-landscape --project=iphone-14 --project=iphone-14-landscape --workers=1"
+  },
+  "poolSnapshot": {
+    "gpuRoots": 1,
+    "laneHolders": [
+      {
+        "job": "infra-merge",
+        "backend": "gpu"
+      }
+    ]
+  }
+}

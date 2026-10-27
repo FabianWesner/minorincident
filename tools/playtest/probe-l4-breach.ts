@@ -1,5 +1,5 @@
+import { launchBrowser } from '../browser-pool/client';
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { chromium } from '@playwright/test';
 
 /**
  * PO 10-23 ("L4 is still no action") capture probe: the west wall breach at the PO settings (WebGPU, low, zoom 1.5).
@@ -10,7 +10,7 @@ import { chromium } from '@playwright/test';
 const [origin, out, backend = 'webgpu', quality = 'low'] = process.argv.slice(2);
 if (!origin || !out) throw new Error('Usage: probe-l4-breach.ts <origin> <outDir> [webgpu|webgl] [low|high]');
 mkdirSync(out, { recursive: true });
-const browser = await chromium.launch({ headless: true, args: ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=metal'] });
+const browser = await launchBrowser({ headless: true, args: ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=metal'] });
 try {
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
   await page.goto(`${origin}/?test=1&testApi=1&renderer=${backend}&dpr=1&audio=muted&quality=${quality}`);

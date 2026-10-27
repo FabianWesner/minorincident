@@ -1,9 +1,9 @@
+import { launchBrowser } from '../browser-pool/client';
 /**
  * Large game-lighting sheets for one vehicle (bus-hero QA): a 2x2 ring at 4 azimuths for the chosen quality plus
  * optional close-up crops. Needs a vite dev/preview server on E2E_PORT.
  * Usage: E2E_PORT=3377 sh tools/e2e-lock.sh npx tsx tools/assets/bus-sheet.ts <id> <decay|-> <outDir> <tag> [high|lod1|lod2] [az,az,az,az] [l,t,r,b close-up crop]
  */
-import { chromium } from '@playwright/test';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { PNG } from 'pngjs';
 
@@ -13,7 +13,7 @@ const port = process.env.E2E_PORT ?? 3377;
 const azimuths = azArg.split(',').map(Number);
 const crop = cropArg ? cropArg.split(',').map(Number) as [number, number, number, number] : undefined;
 mkdirSync(out, { recursive: true });
-const browser = await chromium.launch({ headless: true, args: ['--use-angle=metal'] });
+const browser = await launchBrowser({ headless: true, args: ['--use-angle=metal'] });
 try {
   const width = 800, height = 540;
   const page = await browser.newPage({ viewport: { width, height } });

@@ -92,3 +92,6 @@ test-results/look-round/ref/
 
 # Tests always write receipts here; CI rejects forced additions to this tree.
 # Pin inputs under tests/fixtures/ instead of unignoring generated artifacts.
+
+# Shared local dependency and production build stores.
+/.mi-worktree-cache/

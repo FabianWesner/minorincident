@@ -1,5 +1,5 @@
+import { launchBrowser } from '../browser-pool/client';
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { chromium } from '@playwright/test';
 
 /**
  * PO Q-159 ("Also in L4 people behave strange") probe: which L4 civilians are drawn crouched (npc-cower / npc-hug)
@@ -10,7 +10,7 @@ const [origin, out, backend = 'webgpu'] = process.argv.slice(2);
 if (!origin || !out) throw new Error('Usage: probe-l4-civilians.ts <origin> <outDir> [webgpu|webgl]');
 mkdirSync(out, { recursive: true });
 const args = ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=metal'];
-const browser = await chromium.launch({ headless: true, args });
+const browser = await launchBrowser({ headless: true, args });
 const report: unknown[] = [];
 try {
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
