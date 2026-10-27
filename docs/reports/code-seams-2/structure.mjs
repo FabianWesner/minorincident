@@ -43,5 +43,22 @@ for(const key of ['l2Release','l6Subway','l3Rendezvous','l4Convoy','l7Group']) {
  if(tokens(normalize(prior.getText(oldScene)))!==tokens(normalize(next.getText(fixtures))))throw new Error(`Fixture changed: ${name}`);
  fixtureBodies.push({name,body:hash(tokens(normalize(prior.getText(oldScene))))});
 }
-const result={base,fixtureBodies,vfx:{discriminators:bodies.flatMap(b=>b.keys).length,handlers:bodies.length,bodies},crowdSolve:hash(tokens(prior))};
+const oldAudio=parse('src/audio/AudioService.ts',true), mapper=parse('src/audio/AudioEventMapper.ts',false);
+const oldEvent=getClass(oldAudio,'AudioService').members.find(n=>n.name?.getText(oldAudio)==='event');
+const newEvent=getClass(mapper,'AudioEventMapper').members.find(n=>n.name?.getText(mapper)==='event');
+const audioNormalize=source=>source.replaceAll('this.host.','this.').replaceAll('this.level()','this.level').replaceAll('this.l5Music()','this.l5Music').replaceAll('this.arc()','this.arc').replaceAll('this.arc?.phase','this.arc.phase');
+if(tokens(audioNormalize(oldEvent.body.getText(oldAudio)))!==tokens(audioNormalize(newEvent.body.getText(mapper))))throw new Error('Audio event logic changed');
+const audioEventBody=hash(tokens(audioNormalize(oldEvent.body.getText(oldAudio))));
+const variable=(tree,name)=>tree.statements.filter(ts.isVariableStatement).flatMap(n=>n.declarationList.declarations).find(n=>n.name.getText(tree)===name);
+const audioTables={};
+for(const name of ['l5CueSounds','voicedInfected','fleshLike']) {
+ const before=variable(oldAudio,name).initializer.getText(oldAudio), after=variable(mapper,name).initializer.getText(mapper);
+ if(tokens(before)!==tokens(after))throw new Error(`Audio table changed: ${name}`);
+ audioTables[name]=hash(tokens(before));
+}
+const liveScene=parse('src/debug/scenelab/SceneLab.ts',false), liveSetup=getClass(liveScene,'SceneLab').members.find(n=>n.name?.getText(liveScene)==='setup');
+let installAt=-1, combatAt=-1;
+const boundary=node=>{if(ts.isCallExpression(node)){const name=node.expression.getText(liveScene);if(name==='installL1Outbreak')installAt=node.end;if(name==='world.requireCombat')combatAt=node.getStart(liveScene);}ts.forEachChild(node,boundary);};
+boundary(liveSetup);if(installAt<0||combatAt<=installAt)throw new Error('Combat captured before the installer can replace it');
+const result={base,setupCombatAfterInstallation:true,audioTables,audioEventBody,fixtureBodies,vfx:{discriminators:bodies.flatMap(b=>b.keys).length,handlers:bodies.length,bodies},crowdSolve:hash(tokens(prior))};
 mkdirSync('test-results/code-seams-2',{recursive:true});writeFileSync('test-results/code-seams-2/structure.json',JSON.stringify(result,null,2));console.log(JSON.stringify({discriminators:result.vfx.discriminators,handlers:bodies.length,allBodiesIdentical:true,crowdSolve:result.crowdSolve}));
