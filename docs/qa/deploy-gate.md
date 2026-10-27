@@ -2,6 +2,8 @@
 
 The orchestrator runs this on `main` before every PROD deploy (PO rules 10-07 / 10-09; long bot batteries are not part of it).
 
+Lanes run focused tests and `npm run test:gate`; the orchestrator runs the full suite and `npm run test:nightly` once per batch. CPU test commands use `sh tools/remote/run.sh "$PWD" -- <command>` and may fall back to one admitted Mac slot when the remote pool is full. The browser/performance gates below remain coordinated local GPU/quiet-Mac work.
+
 1. `npm run typecheck`, `npm run lint`
 2. `npm run test:gate` (Hetzner: `sh tools/remote/run.sh "$PWD" -- bash tools/remote/timing-isolated.sh --whole-run npm run test:gate`, target ≤15 minutes of test command wall time). It runs unit, sim, per-level completion and headless QA invariant suites with at most four Vitest workers. This includes the static QA guards:
    - `tests/unit/assets/lod-fidelity.test.ts`: every static prop/building/vehicle LOD against LOD0 (extent, silhouettes, vanished materials; backlog in `lod-fidelity.baseline.json`).
