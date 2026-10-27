@@ -47,7 +47,8 @@ for (const { renderer, quality } of configs) for (const [pace, steps] of Object.
       });
     }, [...steps]);
     await boot(page, `${testUrl.replace('renderer=webgl', `renderer=${renderer}`).replace('quality=high', `quality=${quality}`)}&ui=1`);
-    await page.evaluate(() => window.__SS__!.loadLevel('L4', { seed: 1, progression: 'L4-default' }));
+    // The full UI reapplies campaign settings; select the measured tier there too.
+    await page.evaluate(async quality => { const a = window.__SS__!; a.settings.set({ quality }); await a.loadLevel('L4', { seed: 1, progression: 'L4-default' }); }, quality);
     await page.evaluate(() => window.__SS__!.pause());
     await page.getByRole('button', { name: 'Begin mission' }).click();
     await page.evaluate(() => window.__SS__!.resume());
