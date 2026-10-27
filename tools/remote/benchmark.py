@@ -87,6 +87,8 @@ def main():
                'packageSha256': hashlib.sha256(package).hexdigest(), 'jobs': jobs, 'events': sorted(events, key=lambda e: e['at'])}
     (out / 'summary.json').write_text(json.dumps(summary, indent=2)+'\n')
     print(json.dumps(summary, indent=2))
+    if cancelled.is_set(): raise SystemExit(130)
+    if any(job.get('exitCode') != 0 for job in jobs): raise SystemExit('One or more gate runs failed; retain receipts, do not treat this attempt as passing')
     if phase == 'after' and not proof: raise SystemExit('Measured run did not prove the required concurrency; retain it as an unsuccessful attempt')
 
 
