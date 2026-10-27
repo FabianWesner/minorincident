@@ -4,7 +4,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { PNG } from 'pngjs';
 import { SceneSession, stopServer, type Backend } from '../scenelab/session';
-import { courierColourStats, courierFrames, colourFailures, maskLuminance } from '../../tests/visual/courier-colours';
+import { courierColourStats, courierFrames, colourFailures, maskLuminance } from '../../tests/helpers/courier-colours';
 
 const phase = process.argv[2] ?? 'after', backend = (process.argv[3] ?? 'webgl2') as Backend;
 const out = `${process.env.LOOK_OUT ?? 'test-results/courier-look'}/${phase}/${backend}`;

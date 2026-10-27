@@ -1,8 +1,8 @@
 /** Bounded L6/L7 campaign capture batch. Use e2e-lock after a fresh QA build. */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { SceneSession, stopServer, type Backend } from '../scenelab/session';
-import { courierClipping } from '../../tests/visual/courier-clipping';
-import { companionReadability } from '../../tests/visual/companion-readability';
+import { courierClipping } from '../../tests/helpers/courier-clipping';
+import { companionReadability } from '../../tests/helpers/companion-readability';
 const phase = process.argv[2] ?? 'after', backend = (process.argv[3] ?? 'webgl2') as Backend;
 const out = `${process.env.READ_REPORT ?? 'test-results/readability-w6c'}/${phase}/${backend}`;
 const rows: object[] = [];

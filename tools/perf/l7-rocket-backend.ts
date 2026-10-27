@@ -7,7 +7,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { chromium, expect } from '@playwright/test';
 import { boot, attachErrorGuard } from '../../tests/e2e/fixtures';
-import { collectedHeap } from '../../tests/perf/collected-heap';
+import { collectedHeap } from '../../tests/helpers/collected-heap';
 
 if (process.env.MI_PERF_LOCK_HELD !== '1') throw Error('Use tools/perf/quiet-run.sh');
 const port = Number(process.env.E2E_PORT ?? 3971);

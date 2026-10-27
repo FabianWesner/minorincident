@@ -1,5 +1,5 @@
 // Shared render contracts: every crowd figure, corpse and prop in all levels goes through these paths. The compiled-program
-// GPU-limit ground truth is tests/e2e/gpu-limits.spec.ts; these node tests pin the CPU-side layouts and math it relies on.
+// GPU-limit ground truth is tests/e2e/crowd-gpu-limits.spec.ts; these node tests pin the CPU-side layouts and math it relies on.
 import { BufferAttribute, BufferGeometry, Color, DataTexture, FloatType, Frustum, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBufferAttribute, Matrix4, OrthographicCamera, Quaternion, RGBAFormat, Vector3 } from 'three';
 import { MeshLambertNodeMaterial, Scene, type InstancedMesh } from 'three/webgpu';
 import { float, vec3 } from 'three/tsl';

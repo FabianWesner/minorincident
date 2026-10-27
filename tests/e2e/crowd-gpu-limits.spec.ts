@@ -16,7 +16,7 @@ export const HARD = { attributes: 16, varyings: 15, buffers: 8 }, CROWD = { attr
 interface Program { backend: 'webgl' | 'webgpu'; label: string; attributes: number; varyings: number; buffers: number; names: string[]; outputs: string[] }
 
 test.use({ launchOptions:{ args: process.platform==='darwin' ? ['--use-angle=metal','--enable-gpu','--ignore-gpu-blocklist','--enable-unsafe-webgpu'] : ['--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist','--enable-unsafe-webgpu'] } });
-for (const backend of ['webgl','webgpu'] as const) test(`crowd materials compile within GPU limits on ${backend} @smoke @E18-AC01`, async ({page}) => {
+for (const backend of ['webgl','webgpu'] as const) test(`every crowd, corpse and accessory program compiles within the portable GPU limits on ${backend} @smoke`, async ({page}) => {
   test.setTimeout(240000);
   await page.addInitScript(() => {
     const w = window as unknown as { __programs: Program[] };
