@@ -1,6 +1,6 @@
 # scene-gate
 
-42/48 rows pass, 6 known, 0 not run; 7.8 min this run (batch s: webgl2-low-1=142 webgpu-high-1=78 webgl2-high-1=135 webgpu-low-1=116).
+42/48 rows pass, 6 known, 0 not run; 8.9 min this run (batch s: webgl2-low-1=164 webgpu-high-1=88 webgl2-high-1=151 webgpu-low-1=130).
 
 - known ped-zoo-staff@high: pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; 4 hand-vs-held-prop grip overlaps (coffee, bag x2, watering can); sheet looks fine (clipping 4 > 0)
 - known inf-chase-l3@high-z0.5: pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; courierSwings 0 at every zoom (scene expects the courier to swing at least once) (courierSwingsMin 0 > 1)

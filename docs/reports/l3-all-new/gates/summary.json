@@ -1,6 +1,6 @@
 {
-  "assetRevision": "f3046139c",
-  "sourcePipelineRevision": "bb5ac82",
+  "assetRevision": "b8c0520e7",
+  "sourcePipelineRevision": "f2a4d0c",
   "exitCodes": {
     "npm test": 0,
     "npm run assets:validate": 0,
@@ -9,25 +9,25 @@
     "npm run scene:gate": 0,
     "tools/playtest --levels L3 --no-skip": 0
   },
-  "unitTests": 96,
+  "unitTests": 97,
   "validator": {
     "rows": 1262,
     "errors": 0,
     "command": "npm run assets:validate",
-    "assetRevision": "f3046139c"
+    "assetRevision": "b8c0520e7"
   },
   "smoke": {
     "qa": {
-      "startTime": "2026-10-27T19:24:55.621Z",
-      "duration": 131282.616,
+      "startTime": "2026-10-27T20:32:29.948Z",
+      "duration": 153377.135,
       "expected": 6,
       "skipped": 0,
       "unexpected": 0,
       "flaky": 0
     },
     "public": {
-      "startTime": "2026-10-27T19:27:14.219Z",
-      "duration": 4980.674,
+      "startTime": "2026-10-27T20:35:10.643Z",
+      "duration": 5324.864,
       "expected": 1,
       "skipped": 0,
       "unexpected": 0,
@@ -40,7 +40,7 @@
       },
       {
         "type": "frames",
-        "description": "max 17 ms in 168"
+        "description": "max 17 ms in 169"
       }
     ]
   },
@@ -94,8 +94,8 @@
     "unexpected": 0,
     "notRun": 0,
     "sourceIdentity": {
-      "revision": "f3046139c51ca0358f4cbc810822de20915a2752",
-      "inputs": "c00e73e510d27f4eda421d85ed99a5b7c62235e2ec28344c510734f4e6309519",
+      "revision": "b8c0520e7cd826161a64721d1e68645678495df8",
+      "inputs": "8704bff1b16d0951ef05f1a0e254d05f3a6db3452d30d729c2d79d7cb28d7f4d",
       "mode": "gate",
       "rows": [
         [
@@ -357,14 +357,13 @@
         "heroine": "female",
         "finished": true,
         "skipped": [],
-        "wallSeconds": 209,
+        "wallSeconds": 216,
         "simSeconds": 0,
-        "maxNoProgressSeconds": 14.666666666666666,
+        "maxNoProgressSeconds": 15.163,
         "deaths": 0,
         "assists": 0,
         "attacks": {
-          "weapon.handgun": 167,
-          "ability.corgi-lure": 2
+          "weapon.handgun": 174
         },
         "weaponsStart": [
           "weapon.fire-axe",
@@ -384,7 +383,7 @@
           {
             "id": "armory",
             "text": "Take a handgun from the armory \u00b7 19\u00a0m",
-            "tick": 11,
+            "tick": 10,
             "marker": {
               "anchor": "l3-armory",
               "ring": {
@@ -404,7 +403,7 @@
           {
             "id": "defend",
             "text": "Help defend the station",
-            "tick": 684,
+            "tick": 678,
             "marker": {
               "anchor": "l3-armory",
               "ring": null,
@@ -416,7 +415,7 @@
           {
             "id": "checkpoint",
             "text": "Get inside the army checkpoint \u00b7 364\u00a0m",
-            "tick": 1344,
+            "tick": 1520,
             "marker": {
               "anchor": "l3-route",
               "ring": {
@@ -446,15 +445,16 @@
   },
   "logSha256": {
     "cold-loads.log": "14823260dac89edf8a22006e22bc4e05393afdbc8b58e3268ff02bd52e792df2",
-    "playthrough.log": "85d927f05d0f8fd72fb1f7cf825bdde363740be7e01da2b73e48a6f4c3c3dec9",
+    "playthrough.log": "2baa689295267cd6234a76c8223c81498d60405fec36d2010c85198cb768f0b9",
     "pool-client-test.log": "872c4f8e1a5402134b4947723909fe56460c04ae8ad279ca9072ba5d324269aa",
-    "npm-test.log": "f82bd3951cfa3ee075c440693980af4df6e4448181ff1e50b1c552271cd19afc",
+    "npm-test.log": "b2d6413e77fc0ed88a12e480957a4bbb220db257e0cc93f69c5892dcc55e4088",
     "lint.log": "5f9aee6b798507e187dcd3d4fbd5bcf5fdc37488cb89c27a01d5667ca7bb9fa1",
-    "verify-e21.log": "6f6d6a876764cace9a573ba55d8c23acb5e6fcd00050ed3752a025e410e6238a",
+    "verify-e21.log": "4153ace2f2fb4847aa8320879ca23dbf14028da1179eae8546e21ac50d34e112",
     "typecheck.log": "768699d3cead53493237d3322201d28ee449107e90af9a5aa6f5dcab3f066b0c",
-    "smoke.log": "1038f2a8f310d4252b1c115cc704121d9e58711ccf66168f8476141ed88deabd",
-    "validator.log": "8d2c156ca4ce8ba1a6d50c17b7981595134b756b8a1bd1e618fa01f511dfac25",
-    "scene-gate.log": "c0873af86a323a49b84ef3292ff2e332e7b03d065fffc7c259f699522aa678c5"
+    "smoke.log": "32856504916c70646f6c54ccb9d6094cb0c0fd20319528586d76a783435ab650",
+    "validator.log": "8876a8a8511ddcdd668c779416ed7f43b8745dc543f165dc00e19093ad93f7aa",
+    "scene-gate.log": "38cdb1b607a5e711d53c3571f9b05709c20437eb578bf15390c3ca3c7a7e1fbe"
   },
-  "playthroughTimingNote": "Use 209 wall seconds: the existing tool reports simSeconds=0 after the automatic L3\u2192L4 world-tick reset."
+  "playthroughTimingNote": "The runner reports simSeconds=0 across the L3-to-L4 tick reset. Use the measured wallSeconds=216; objective steps, no skips/deaths/assists and zero issue files are retained.",
+  "perfStatus": "pending PO quiet window, as allowed; two simultaneous shared browser leases invalidated the uncontended cadence assertion. No performance threshold was changed."
 }
