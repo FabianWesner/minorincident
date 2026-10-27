@@ -150,11 +150,11 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean): RegionRepo
     absorbed += members.length;
   }
   // Flatten each region to its own hue, keeping a third of the paint's lightness variation (toy masses, not TRELLIS noise); garments move to the tint reference.
-  const shares: Record<string, number> = {}; let covered = 0;
+  const shares: Record<string, number> = {};
   for (const [name, value] of Object.entries(crowdRegion)) {
     let n = 0, mean = 0;
     for (let i = 0; i < w * h; i++) if (owner[i] && cls[i] === value) { n++; mean += labs[i * 3]; }
-    shares[name] = n; covered += value === crowdRegion.authored ? 0 : n;
+    shares[name] = n;
     const reference = colours[name === 'skinMask' ? 'skin' : name];
     if (!n || !reference || value === crowdRegion.authored) continue;
     mean /= n;
