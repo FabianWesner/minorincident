@@ -1,3 +1,4 @@
+import { restoreCrowdGlasses } from './skin-crowd-glasses';
 import { restoreFireHelmet } from './restore-fire-helmet';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -35,7 +36,7 @@ const output = 'public/assets/models/skinned', report = join(process.env.CROWD_R
 mkdirSync(output, { recursive: true }); mkdirSync(report, { recursive: true }); mkdirSync(assets, { recursive: true });
 const metadata = existsSync(join(source, 'rig.json')) ? JSON.parse(readFileSync(join(source, 'rig.json'), 'utf8')) as { class?: string; lods: { lod: number; uniform_scale?: number; world_scale?: number; rotation_y_degrees?: number }[] } : undefined;
 const unbound = existsSync(join(source, 'source/manifest.json')) && !metadata;
-const alignment = unbound ? JSON.parse(readFileSync(join(id === 'inf.dog' ? join(dirname(source), 'amb.dog') : source, 'source/manifest.json'), 'utf8')) as { initial_game_height_scale: number; game_alignment_rotation_y_degrees: number; triangle_budgets?: [number, number, number]; rig_class?: string; rig_source?: string; rig_fit_height?: boolean; authored_skin?: true | string; wraps?: CrowdWrap[]; spectacles?: boolean; covered_legs?: boolean } : undefined;
+const alignment = unbound ? JSON.parse(readFileSync(join(id === 'inf.dog' ? join(dirname(source), 'amb.dog') : source, 'source/manifest.json'), 'utf8')) as { initial_game_height_scale: number; game_alignment_rotation_y_degrees: number; triangle_budgets?: [number, number, number]; rig_class?: string; rig_source?: string; rig_fit_height?: boolean; authored_skin?: true | string; wraps?: CrowdWrap[]; spectacles?: boolean; covered_legs?: boolean; healthy_toy_eyes?: boolean; rectangular_glasses?: boolean } : undefined;
 if (alignment?.triangle_budgets) {
   const [near, middle, far] = alignment.triangle_budgets;
   if (![near, middle, far].every(n => Number.isInteger(n) && n > 0) || middle > near || far > middle) throw Error(`${id}: invalid source triangle budgets`);
@@ -70,7 +71,7 @@ for (const lod of [0, 1, 2]) {
   if (existsSync(body)) args.push('--body', body, '--body-scale', String(alignment?.initial_game_height_scale ?? placement?.uniform_scale ?? placement?.world_scale ?? 1), '--body-rot-y', String(alignment?.game_alignment_rotation_y_degrees ?? placement?.rotation_y_degrees ?? 0));
   if (alignment) args.push('--body-yaw-fixed');
   if (unbound && id === 'inf.dog') args.push('--atlas-base-half', '--eyes', join(source, 'eyes.json'));
-  else if (unbound && id.startsWith('inf.') && existsSync(join(source, 'eyes.json'))) args.push('--eyes', join(source, 'eyes.json'));
+  else if (unbound && (id.startsWith('inf.') || alignment?.healthy_toy_eyes) && existsSync(join(source, 'eyes.json'))) args.push('--eyes', join(source, 'eyes.json'));
   else if (metadata) args.push('--reconstruct-body');
   if (id.startsWith('npc.')) args.push('--healthy');
   if (unbound && (!alignment?.rig_source || alignment.rig_fit_height) && (id.startsWith('npc.') || alignment?.rig_class === 'humanoid' || alignment?.rig_class === 'alpha')) args.push('--fit-rig-height');
@@ -96,7 +97,9 @@ for (const lod of [0, 1, 2]) {
   for (let attempt = 0; attempt < 4; attempt++) {
     execFileSync(process.execPath, ['--import', 'tsx', ...args, ...bodyBudget ? ['--body-budget', String(bodyBudget)] : []], { stdio: 'pipe' });
     if (id === 'npc.firefighter-alive') await restoreFireHelmet(raw, join(assets, 'model.lod1.glb'), lod);
-    const document = await io.read(raw), total = document.getRoot().listNodes().reduce((sum, node) => sum + (node.getMesh()?.listPrimitives().reduce((sum, primitive) => sum + (primitive.getIndices()?.getCount() ?? primitive.getAttribute('POSITION')!.getCount()) / 3, 0) ?? 0), 0);
+    const document = await io.read(raw);
+    if (alignment?.rectangular_glasses) { restoreCrowdGlasses(document, lod); await io.write(raw, document); }
+    const total = document.getRoot().listNodes().reduce((sum, node) => sum + (node.getMesh()?.listPrimitives().reduce((sum, primitive) => sum + (primitive.getIndices()?.getCount() ?? primitive.getAttribute('POSITION')!.getCount()) / 3, 0) ?? 0), 0);
     if (total <= triangleLimit) break;
     const info = JSON.parse(readFileSync(join(report, `lod${lod}.json`), 'utf8')) as { triangles: number };
     bodyBudget = info.triangles - (total - triangleLimit) - 8;

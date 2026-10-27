@@ -53,7 +53,7 @@ try {
       root.traverse(node => {
         const mesh = node as import('three').Mesh;
         if (!mesh.isMesh || !mesh.userData.crowdEye) return;
-        const healthyToyEyes = !!def.crowdSkin && ['npc.civilian-elderly', 'npc.civilian-woman-b', 'npc.mr-okafor.aftermath', 'npc.civilian-woman-b.aftermath'].includes(def.id);
+        const healthyToyEyes = !!def.crowdSkin && ['npc.civilian-elderly', 'npc.civilian-woman-b', 'npc.mr-okafor.aftermath', 'npc.civilian-woman-b.aftermath', 'npc.dale.aftermath', 'npc.rosa.aftermath', 'npc.sam.aftermath'].includes(def.id);
         mesh.visible = def.id.startsWith('inf.') || healthyToyEyes;
         if (!mesh.visible) return;
         const eyeMaterial = healthyToyEyes ? reviewHealthyEyeMaterial : reviewEyeMaterial;

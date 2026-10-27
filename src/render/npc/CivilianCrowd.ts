@@ -311,7 +311,7 @@ class CivilianBatch extends Group {
         const pour = handProp === 'watering-can' && c.state === 'calm' && activity?.activity === 'water' && !!activity.facing && !!c.activityUntil ? Math.min(1, Math.max(0, (this.world.tick - (c.activityStarted ?? 0) - 20) / 20)) : 0;
         if (pour > 0) { this.hand.multiply(this.tilt.makeRotationZ(-.75 * pour)); this.props!.spouts.set(e.id, this.spoutPoint.set(.36, -.13, 0).applyMatrix4(this.hand).clone()); }
         else this.props!.spouts.delete(e.id);
-        this.props!.held(handProp!, this.hand, e.id, weaponProps.has(handProp!) ? undefined : this.gripTriangles, this.gripReach, c.ally?.weapon === 'hmg');
+        this.props!.held(handProp!, this.hand, e.id, weaponProps.has(handProp!) ? undefined : this.gripTriangles, this.gripReach, c.ally?.weapon === 'hmg', authoredCane ? presented.y - .7 : undefined);
       }
       this.tintOf(e, index, blend[0] * 2 + blend[1]);
       const glow = c.eyesGlow ? e.infection ? Math.min(1, (this.world.tick - (e.infection.endsTick - 78)) / 30) : Math.min(1, Math.max(0, (c.veins - .12) / .65)) : 0;
@@ -433,7 +433,7 @@ class CivilianBatch extends Group {
 
 /** Five civilian silhouettes share rigid-part LOD batches and the E07 clip path. */
 /** Spectacled textured figures whose painted eyes do not read at game size (crowd-texture-quality). */
-const toyEyeModels = new Set(['npc.civilian-woman-b', 'npc.civilian-elderly', 'npc.civilian-woman-b.aftermath', 'npc.mr-okafor.aftermath']);
+const toyEyeModels = new Set(['npc.civilian-woman-b', 'npc.civilian-elderly', 'npc.civilian-woman-b.aftermath', 'npc.mr-okafor.aftermath', 'npc.dale.aftermath', 'npc.rosa.aftermath', 'npc.sam.aftermath']);
 export class CivilianCrowd extends Group {
   private readonly batches: CivilianBatch[];
   private readonly props: RoutineProps;

@@ -19,7 +19,9 @@ export function resolveCrowdAppearance(e: EntitySnapshot, ids: readonly string[]
   const channels = crowdAppearance(e.id), explicit = e.appearance?.accessories.find(id => ids.includes(id));
   // A person who turned keeps the head piece they wore alive (story-true); infected generated as infected are capped.
   const turnedPerson = !!e.infected && e.appearance?.entityId === e.id && !e.appearance.bornInfected;
-  const slot = eligible ? explicit ? ids.indexOf(explicit) + 1 : !e.infected || turnedPerson ? channels.accessory % (ids.length + 1) : infectedWearsAccessory(e.id) ? channels.accessory % ids.length + 1 : 0 : 0;
+  // Aftermath bodies carry authored story headwear (or deliberately bare hair).
+  // Random caps must not replace a named person's cap, ponytail or fitted glasses.
+  const slot = eligible ? explicit ? ids.indexOf(explicit) + 1 : model.endsWith('.aftermath') ? 0 : !e.infected || turnedPerson ? channels.accessory % (ids.length + 1) : infectedWearsAccessory(e.id) ? channels.accessory % ids.length + 1 : 0 : 0;
   const accessory = slot ? ids[slot - 1] : null, kind = accessoryKinds.get(accessory ?? '');
   const hidesHair = kind === 'hat' || kind === 'hair' || !!accessory?.startsWith('acc.placeholder-');
   return { ...channels, model, outfit: model, head: model, headwear: kind === 'hat' ? accessory : accessory ? null : model,

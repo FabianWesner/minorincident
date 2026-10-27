@@ -1,0 +1,2362 @@
+{
+  "pass": true,
+  "sourcePipelineCommit": "872d1f030258b3d67be55aae5ca76ba63a6f91be",
+  "triangleCaps": [
+    6000,
+    2500,
+    4000
+  ],
+  "appliedTriangleCaps": [
+    6000,
+    2500,
+    2500
+  ],
+  "byteCaps": [
+    600000,
+    250000,
+    150000
+  ],
+  "builds": [
+    {
+      "id": "npc.dale.aftermath",
+      "source": "/Users/wesner/Workspace/3dp-l5-all-new/cast/l5/npc.dale.aftermath",
+      "sourceContract": {
+        "id": "npc.dale.aftermath",
+        "initial_game_height_scale": 1.7693496315030244,
+        "game_alignment_rotation_y_degrees": 90,
+        "triangle_budgets": [
+          6000,
+          2500,
+          2500
+        ],
+        "source_high": "/Users/wesner/Workspace/trellis-highs/l5-npc.dale.aftermath/raw.glb",
+        "bake": "plain emission ray, no nearest-surface repair",
+        "authored_skin": true,
+        "wraps": [
+          {
+            "joint": "foreArmR",
+            "colour": "#e5dfcc",
+            "stain": true
+          }
+        ],
+        "source_files": {
+          "assembled-lod2.glb": "d1a1e98b969fc455ccdfc0b44fa8458b1ae4065d249290b68ba54f4317512649",
+          "assembled-lod0.glb": "1b7fbe8ad4c4821bd8a09aa769bef93ab605ab06c4a1309069b5f7e4887f23df",
+          "assembled-lod1.glb": "cf6e72bf3dabf386c802f38b2af8f55c985ef9bdc0f9b973a7f629a92678e0df",
+          "body-lod2.glb": "e30576d7310c2e1e2ff77111c57d40e8c0a11bf888f1c33e68fa278dcd763c78",
+          "body-lod1.glb": "d45b21366e53207b0c297c707cc371ff58f1cc0f80672ad40c84c32c51be1a62",
+          "body-lod0.glb": "71651e5c34dd9058aafa1cdae6b1a3f02c1d67ff5d7f1145cb61b806f7372681"
+        },
+        "healthy_toy_eyes": true,
+        "rectangular_glasses": true
+      },
+      "sourceContractSha256": "c21ee019e824e58a7c0483298f8b107b201c70cf7a1c47a4b38c52988f3d80c6",
+      "eyes": {
+        "path": "/Users/wesner/Workspace/3dp-l5-all-new/cast/l5/npc.dale.aftermath/eyes.json",
+        "sha256": "6b34ec490405367d0fa81ae25c45fd661a01ef8cea70b266f62a1327dd0aedf4"
+      },
+      "manualSteps": [],
+      "pipelineViewer": {
+        "source": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l5-all-new/assets/npc.dale.aftermath/model.skin.glb",
+        "source_sha256": "c5f2ce31f8469c4d7b9da1bad1fabc1e7c07db8572d46e823f45aebc0487229f",
+        "emission_only": false,
+        "heading_degrees": 90,
+        "elevation_degrees": 36,
+        "relative_camera_azimuth_degrees": 45,
+        "projection": "PERSP",
+        "game_fov_degrees": 25,
+        "render_crop_fov_degrees": 6.0839389229964365,
+        "canonical_height_m": 1.8,
+        "game_radius_m": 19,
+        "figure_min": [
+          -0.9510578513145447,
+          -0.9999999403953552,
+          -1
+        ],
+        "figure_max": [
+          0.9510578513145447,
+          0.9999999403953552,
+          1.433998942375183
+        ],
+        "mesh_vertices": 16346
+      },
+      "lods": [
+        {
+          "lod": 0,
+          "components": 1,
+          "openEdges": 0,
+          "maxInfluences": 4,
+          "wraps": [
+            {
+              "joint": "foreArmR",
+              "paintedTexels": 5162
+            }
+          ],
+          "regions": {
+            "width": 1024,
+            "height": 1024,
+            "garments": false,
+            "absorbed": 2727,
+            "shares": {
+              "hair": 0,
+              "skin": 0,
+              "shirt": 0,
+              "trousers": 0,
+              "skinMask": 0.156,
+              "authored": 0.844
+            },
+            "colours": {
+              "skin": [
+                77,
+                16.8,
+                31.5
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.dale.aftermath.lod0.glb",
+              "bytes": 308020,
+              "sha256": "1b1f384e02b966f6f4d0a73a7421553b7b6c4df978bab464e413735bfd2fd77e",
+              "errors": [],
+              "triangles": 5685,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    1024,
+                    1024
+                  ]
+                }
+              ]
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.dale.aftermath.lod0.low.glb",
+              "bytes": 239940,
+              "sha256": "05ba00cc3654d47d1dfe66770bbfae87e9d4e8058bf279978e2ccf53ffffd1d3",
+              "errors": [],
+              "triangles": 5685,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    512,
+                    512
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "lod": 1,
+          "components": 1,
+          "openEdges": 0,
+          "maxInfluences": 4,
+          "wraps": [
+            {
+              "joint": "foreArmR",
+              "paintedTexels": 1673
+            }
+          ],
+          "regions": {
+            "width": 512,
+            "height": 512,
+            "garments": false,
+            "absorbed": 1431,
+            "shares": {
+              "hair": 0,
+              "skin": 0,
+              "shirt": 0,
+              "trousers": 0,
+              "skinMask": 0.1575,
+              "authored": 0.8425
+            },
+            "colours": {
+              "skin": [
+                77,
+                16.7,
+                31.5
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.dale.aftermath.lod1.glb",
+              "bytes": 157780,
+              "sha256": "a86cb6f721cccdf889984868fa33241532d1d62813002ecfb8a73aba61cae0e2",
+              "errors": [],
+              "triangles": 2467,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    512,
+                    512
+                  ]
+                }
+              ]
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.dale.aftermath.lod1.low.glb",
+              "bytes": 157780,
+              "sha256": "a86cb6f721cccdf889984868fa33241532d1d62813002ecfb8a73aba61cae0e2",
+              "errors": [],
+              "triangles": 2467,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    512,
+                    512
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "lod": 2,
+          "components": 1,
+          "openEdges": 0,
+          "maxInfluences": 4,
+          "wraps": [
+            {
+              "joint": "foreArmR",
+              "paintedTexels": 1673
+            }
+          ],
+          "regions": {
+            "width": 512,
+            "height": 512,
+            "garments": false,
+            "absorbed": 1431,
+            "shares": {
+              "hair": 0,
+              "skin": 0,
+              "shirt": 0,
+              "trousers": 0,
+              "skinMask": 0.1575,
+              "authored": 0.8425
+            },
+            "colours": {
+              "skin": [
+                77,
+                16.7,
+                31.5
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.dale.aftermath.lod2.glb",
+              "bytes": 129580,
+              "sha256": "142e8ed07f852f8ad89e03b483e8cd374f221dbf2cbc57fd989b8dabf64c46d9",
+              "errors": [],
+              "triangles": 2467,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    256,
+                    256
+                  ]
+                }
+              ]
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.dale.aftermath.lod2.low.glb",
+              "bytes": 129580,
+              "sha256": "142e8ed07f852f8ad89e03b483e8cd374f221dbf2cbc57fd989b8dabf64c46d9",
+              "errors": [],
+              "triangles": 2467,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    256,
+                    256
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "npc.rosa.aftermath",
+      "source": "/Users/wesner/Workspace/3dp-l5-all-new/cast/l5/npc.rosa.aftermath",
+      "sourceContract": {
+        "id": "npc.rosa.aftermath",
+        "initial_game_height_scale": 1.7742833227000068,
+        "game_alignment_rotation_y_degrees": 90,
+        "triangle_budgets": [
+          6000,
+          2500,
+          2500
+        ],
+        "source_high": "/Users/wesner/Workspace/trellis-highs/l5-npc.rosa.aftermath/raw.glb",
+        "bake": "plain emission ray, no nearest-surface repair",
+        "authored_skin": true,
+        "wraps": [
+          {
+            "joint": "armR",
+            "colour": "#e5dfcc",
+            "stain": true
+          }
+        ],
+        "source_files": {
+          "assembled-lod2.glb": "1d8e5c48914abbadf5732decfb57aacf10286e7246f5385a72ba360f0ee7a860",
+          "assembled-lod0.glb": "9cb5aea2b6a383f1364b543f443ec6d5c290b0121d70a19539fa4578fad7c6b8",
+          "assembled-lod1.glb": "1e5a037b9fadd1eeddc51b8d4b7c02c1f2f50cc9c1dff04655b300ef5f0a14ba",
+          "body-lod2.glb": "c390880b72595568f91fc1becaa8da7f3cc9ba585228249bbb500b09d3453072",
+          "body-lod1.glb": "fbd0c64516afcb0bec13ba931152bc65060d91f4f435ac6551e13808f719693b",
+          "body-lod0.glb": "5e2c628cdc7da62c9317d1697d271deafec1ebd6703eda1eee0574622bc56ebb"
+        },
+        "covered_legs": true,
+        "healthy_toy_eyes": true
+      },
+      "sourceContractSha256": "80046a75542cb94f276bb774fe02f56db17fabef030d3176306b7883ee6f2068",
+      "eyes": {
+        "path": "/Users/wesner/Workspace/3dp-l5-all-new/cast/l5/npc.rosa.aftermath/eyes.json",
+        "sha256": "0dbdae716380c7f2fa218a25523c8884b89dc80f83b7ec95487ce3c25b52c04b"
+      },
+      "manualSteps": [],
+      "pipelineViewer": {
+        "source": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l5-all-new/assets/npc.rosa.aftermath/model.skin.glb",
+        "source_sha256": "d46a36e3cd19e669e861f866391df03fc90d2f2c08eec5f1ce7af925df64de94",
+        "emission_only": false,
+        "heading_degrees": 90,
+        "elevation_degrees": 36,
+        "relative_camera_azimuth_degrees": 45,
+        "projection": "PERSP",
+        "game_fov_degrees": 25,
+        "render_crop_fov_degrees": 6.371503974319136,
+        "canonical_height_m": 1.8,
+        "game_radius_m": 19,
+        "figure_min": [
+          -0.9510578513145447,
+          -0.9999999403953552,
+          -1
+        ],
+        "figure_max": [
+          0.9510578513145447,
+          0.9999999403953552,
+          1.4425979852676392
+        ],
+        "mesh_vertices": 15774
+      },
+      "lods": [
+        {
+          "lod": 0,
+          "components": 1,
+          "openEdges": 0,
+          "maxInfluences": 4,
+          "wraps": [
+            {
+              "joint": "armR",
+              "paintedTexels": 3498
+            }
+          ],
+          "regions": {
+            "width": 1024,
+            "height": 1024,
+            "garments": false,
+            "absorbed": 2330,
+            "shares": {
+              "hair": 0,
+              "skin": 0,
+              "shirt": 0,
+              "trousers": 0,
+              "skinMask": 0.0503,
+              "authored": 0.9497
+            },
+            "colours": {
+              "skin": [
+                73.9,
+                32.6,
+                34.6
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.rosa.aftermath.lod0.glb",
+              "bytes": 315004,
+              "sha256": "e4c510fe2e22c66e339d88000fbff11abb6a2dc22731e55ea1311a75e1eec0ff",
+              "errors": [],
+              "triangles": 5431,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    1024,
+                    1024
+                  ]
+                }
+              ]
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.rosa.aftermath.lod0.low.glb",
+              "bytes": 241728,
+              "sha256": "ca217b3c4e7ebce1181cdcb8928778527cd301913c71ac3bfaa74a3a71d0509e",
+              "errors": [],
+              "triangles": 5431,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    512,
+                    512
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "lod": 1,
+          "components": 1,
+          "openEdges": 0,
+          "maxInfluences": 4,
+          "wraps": [
+            {
+              "joint": "armR",
+              "paintedTexels": 1024
+            }
+          ],
+          "regions": {
+            "width": 512,
+            "height": 512,
+            "garments": false,
+            "absorbed": 1059,
+            "shares": {
+              "hair": 0,
+              "skin": 0,
+              "shirt": 0,
+              "trousers": 0,
+              "skinMask": 0.0526,
+              "authored": 0.9474
+            },
+            "colours": {
+              "skin": [
+                73.9,
+                33,
+                34.9
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.rosa.aftermath.lod1.glb",
+              "bytes": 152456,
+              "sha256": "8709db5dd8717de7d8727dd2cec6d15e1dc13bdfec20121dbb9fc28f08bc64b2",
+              "errors": [],
+              "triangles": 2234,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    512,
+                    512
+                  ]
+                }
+              ]
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.rosa.aftermath.lod1.low.glb",
+              "bytes": 152456,
+              "sha256": "8709db5dd8717de7d8727dd2cec6d15e1dc13bdfec20121dbb9fc28f08bc64b2",
+              "errors": [],
+              "triangles": 2234,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    512,
+                    512
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "lod": 2,
+          "components": 1,
+          "openEdges": 0,
+          "maxInfluences": 4,
+          "wraps": [
+            {
+              "joint": "armR",
+              "paintedTexels": 1024
+            }
+          ],
+          "regions": {
+            "width": 512,
+            "height": 512,
+            "garments": false,
+            "absorbed": 1059,
+            "shares": {
+              "hair": 0,
+              "skin": 0,
+              "shirt": 0,
+              "trousers": 0,
+              "skinMask": 0.0526,
+              "authored": 0.9474
+            },
+            "colours": {
+              "skin": [
+                73.9,
+                33,
+                34.9
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.rosa.aftermath.lod2.glb",
+              "bytes": 123176,
+              "sha256": "f5731740d64674f06f474e6b1659fd35a364a72c774298263d9e9b7a2965b145",
+              "errors": [],
+              "triangles": 2234,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    256,
+                    256
+                  ]
+                }
+              ]
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.rosa.aftermath.lod2.low.glb",
+              "bytes": 123176,
+              "sha256": "f5731740d64674f06f474e6b1659fd35a364a72c774298263d9e9b7a2965b145",
+              "errors": [],
+              "triangles": 2234,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    256,
+                    256
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "npc.mr-okafor.aftermath",
+      "source": "/Users/wesner/Workspace/3dp-l5-all-new/cast/l5/npc.mr-okafor.aftermath",
+      "sourceContract": {
+        "id": "npc.mr-okafor.aftermath",
+        "derived_from": "l1/npc.civilian-elderly",
+        "coordinates": "Y up, TRELLIS source units",
+        "initial_game_height_scale": 1.8065658244148857,
+        "game_alignment_rotation_y_degrees": 90,
+        "triangle_budgets": [
+          6000,
+          2500,
+          2500
+        ],
+        "source_high": "inherited original TRELLIS reconstruction; see parent source manifest",
+        "authored_skin": "#704431",
+        "spectacles": true,
+        "wraps": [
+          {
+            "joint": "foreArmR",
+            "colour": "#e5dfcc",
+            "stain": true
+          }
+        ],
+        "deliveries": [
+          {
+            "lod": 0,
+            "source": "cast/l1/npc.civilian-elderly/source/flat-lod0.glb",
+            "source_sha256": "0498fb503c8b73d8d8b043f16662b3c8605898278206f23ff1815a7b429766b2",
+            "output_sha256": "0498fb503c8b73d8d8b043f16662b3c8605898278206f23ff1815a7b429766b2"
+          },
+          {
+            "lod": 1,
+            "source": "cast/l1/npc.civilian-elderly/source/flat-lod1.glb",
+            "source_sha256": "07a276370869aa9015bf46e31266c0222d9385ee31bc50b7b3af4618a4e21265",
+            "output_sha256": "07a276370869aa9015bf46e31266c0222d9385ee31bc50b7b3af4618a4e21265"
+          },
+          {
+            "lod": 2,
+            "source": "cast/l1/npc.civilian-elderly/source/flat-lod2.glb",
+            "source_sha256": "be72d35a8a2284122a01c15c1d3bb539b67198c7267ab9a2fb6292a3049ae11d",
+            "output_sha256": "be72d35a8a2284122a01c15c1d3bb539b67198c7267ab9a2fb6292a3049ae11d"
+          }
+        ],
+        "healthy_toy_eyes": true
+      },
+      "sourceContractSha256": "bd17494dd15ae91e3a43caf7b983cec5d9c3a2ab00e684590d4d1756f5240824",
+      "eyes": {
+        "path": "/Users/wesner/Workspace/3dp-l5-all-new/cast/l5/npc.mr-okafor.aftermath/eyes.json",
+        "sha256": "95da0325b90a53c106e48b9887aed1a711e64445ab5153ea1982fcc644b7c820"
+      },
+      "manualSteps": [],
+      "pipelineViewer": {
+        "source": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l5-all-new/assets/npc.mr-okafor.aftermath/model.skin.glb",
+        "source_sha256": "e843b64745d4fdb3b2f0042ae71cf128c71592579f88b85bfec5836955cd11af",
+        "emission_only": false,
+        "heading_degrees": 90,
+        "elevation_degrees": 36,
+        "relative_camera_azimuth_degrees": 45,
+        "projection": "PERSP",
+        "game_fov_degrees": 25,
+        "render_crop_fov_degrees": 6.213654460618733,
+        "canonical_height_m": 1.8,
+        "game_radius_m": 19,
+        "figure_min": [
+          -0.9510578513145447,
+          -0.9999999403953552,
+          -1
+        ],
+        "figure_max": [
+          0.9510578513145447,
+          0.9999999403953552,
+          1.3989999294281006
+        ],
+        "mesh_vertices": 15894
+      },
+      "lods": [
+        {
+          "lod": 0,
+          "components": 1,
+          "openEdges": 0,
+          "maxInfluences": 4,
+          "wraps": [
+            {
+              "joint": "foreArmR",
+              "paintedTexels": 5124
+            }
+          ],
+          "regions": {
+            "width": 1024,
+            "height": 1024,
+            "garments": false,
+            "absorbed": 2565,
+            "shares": {
+              "hair": 0,
+              "skin": 0,
+              "shirt": 0,
+              "trousers": 0,
+              "skinMask": 0.1043,
+              "authored": 0.8957
+            },
+            "colours": {
+              "skin": [
+                33.6,
+                16.8,
+                19.4
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.mr-okafor.aftermath.lod0.glb",
+              "bytes": 398876,
+              "sha256": "8cb154d6775b82908754fe485fd8a63ec8a7313b100aa0d06b1e5deb97b55b62",
+              "errors": [],
+              "triangles": 5475,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    1024,
+                    1024
+                  ]
+                }
+              ]
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.mr-okafor.aftermath.lod0.low.glb",
+              "bytes": 310096,
+              "sha256": "d0f13d930e718677c5c24128c4914c2bf4d8b24ffd8393f090fcbeefcb5e2713",
+              "errors": [],
+              "triangles": 5475,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    512,
+                    512
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "lod": 1,
+          "components": 1,
+          "openEdges": 0,
+          "maxInfluences": 4,
+          "wraps": [
+            {
+              "joint": "foreArmR",
+              "paintedTexels": 1873
+            }
+          ],
+          "regions": {
+            "width": 512,
+            "height": 512,
+            "garments": false,
+            "absorbed": 835,
+            "shares": {
+              "hair": 0,
+              "skin": 0,
+              "shirt": 0,
+              "trousers": 0,
+              "skinMask": 0.1059,
+              "authored": 0.8941
+            },
+            "colours": {
+              "skin": [
+                33.6,
+                16.8,
+                19.4
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.mr-okafor.aftermath.lod1.glb",
+              "bytes": 191396,
+              "sha256": "b1ed3ebbb10173f84c5e23a8329bde17d981dfa4d72671b3ea42acf4a4fe07a5",
+              "errors": [],
+              "triangles": 2282,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    512,
+                    512
+                  ]
+                }
+              ]
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.mr-okafor.aftermath.lod1.low.glb",
+              "bytes": 191396,
+              "sha256": "b1ed3ebbb10173f84c5e23a8329bde17d981dfa4d72671b3ea42acf4a4fe07a5",
+              "errors": [],
+              "triangles": 2282,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    512,
+                    512
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "lod": 2,
+          "components": 1,
+          "openEdges": 0,
+          "maxInfluences": 4,
+          "wraps": [
+            {
+              "joint": "foreArmR",
+              "paintedTexels": 1873
+            }
+          ],
+          "regions": {
+            "width": 512,
+            "height": 512,
+            "garments": false,
+            "absorbed": 835,
+            "shares": {
+              "hair": 0,
+              "skin": 0,
+              "shirt": 0,
+              "trousers": 0,
+              "skinMask": 0.1059,
+              "authored": 0.8941
+            },
+            "colours": {
+              "skin": [
+                33.6,
+                16.8,
+                19.4
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.mr-okafor.aftermath.lod2.glb",
+              "bytes": 137888,
+              "sha256": "a5ecdadb5b39fdfc821238c5be488a3790844baf7e6eaab13f34524743144272",
+              "errors": [],
+              "triangles": 2282,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    128,
+                    128
+                  ]
+                }
+              ]
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.mr-okafor.aftermath.lod2.low.glb",
+              "bytes": 137888,
+              "sha256": "a5ecdadb5b39fdfc821238c5be488a3790844baf7e6eaab13f34524743144272",
+              "errors": [],
+              "triangles": 2282,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    128,
+                    128
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "npc.mia.aftermath",
+      "source": "/Users/wesner/Workspace/3dp-l5-all-new/cast/l5/npc.mia.aftermath",
+      "sourceContract": {
+        "id": "npc.mia.aftermath",
+        "derived_from": "wave2/npc.civilian-woman-a",
+        "coordinates": "Y up, TRELLIS source units",
+        "initial_game_height_scale": 2.0646949946835744,
+        "game_alignment_rotation_y_degrees": 90,
+        "triangle_budgets": [
+          6000,
+          2500,
+          2500
+        ],
+        "source_high": "inherited original TRELLIS reconstruction; see parent source manifest",
+        "authored_skin": true,
+        "spectacles": false,
+        "wraps": [
+          {
+            "joint": "armR",
+            "colour": "#e5dfcc",
+            "stain": true
+          }
+        ],
+        "deliveries": [
+          {
+            "lod": 0,
+            "source": "cast/wave2/npc.civilian-woman-a/source/flat-lod0.glb",
+            "source_sha256": "31e279959508b96cd86fed20f5960fa61e627b49ffc56d48ac6d40ffc6a3035d",
+            "output_sha256": "31e279959508b96cd86fed20f5960fa61e627b49ffc56d48ac6d40ffc6a3035d"
+          },
+          {
+            "lod": 1,
+            "source": "cast/wave2/npc.civilian-woman-a/source/flat-lod1.glb",
+            "source_sha256": "98e9b3da4c43cd2ce555492896ecce7b28001d89f4a4e02053acd63a3f0d9ae2",
+            "output_sha256": "98e9b3da4c43cd2ce555492896ecce7b28001d89f4a4e02053acd63a3f0d9ae2"
+          },
+          {
+            "lod": 2,
+            "source": "cast/wave2/npc.civilian-woman-a/source/flat-lod2.glb",
+            "source_sha256": "e64c64ef3de7d6ce64f24412ebd55fac2d8b19cd912d3ec1d3ddea6f430b6bfd",
+            "output_sha256": "e64c64ef3de7d6ce64f24412ebd55fac2d8b19cd912d3ec1d3ddea6f430b6bfd"
+          }
+        ]
+      },
+      "sourceContractSha256": "0881277ede00a7ad2e7f9f95bfc753f27e017a192932845f1058ad95751e1c7a",
+      "manualSteps": [],
+      "pipelineViewer": {
+        "source": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l5-all-new/assets/npc.mia.aftermath/model.skin.glb",
+        "source_sha256": "cd039aa239d20727933ca4447a39756bc5137ac3c829add4a64c2f25a00556f3",
+        "emission_only": false,
+        "heading_degrees": 90,
+        "elevation_degrees": 36,
+        "relative_camera_azimuth_degrees": 45,
+        "projection": "PERSP",
+        "game_fov_degrees": 25,
+        "render_crop_fov_degrees": 6.345139444122887,
+        "canonical_height_m": 1.8,
+        "game_radius_m": 19,
+        "figure_min": [
+          -0.9510578513145447,
+          -0.9999999403953552,
+          -1
+        ],
+        "figure_max": [
+          0.9510578513145447,
+          0.9999999403953552,
+          1.4160869121551514
+        ],
+        "mesh_vertices": 17262
+      },
+      "lods": [
+        {
+          "lod": 0,
+          "components": 1,
+          "openEdges": 0,
+          "maxInfluences": 4,
+          "wraps": [
+            {
+              "joint": "armR",
+              "paintedTexels": 3548
+            }
+          ],
+          "regions": {
+            "width": 1024,
+            "height": 1024,
+            "garments": false,
+            "absorbed": 33736,
+            "shares": {
+              "hair": 0,
+              "skin": 0,
+              "shirt": 0,
+              "trousers": 0,
+              "skinMask": 0.1041,
+              "authored": 0.8959
+            },
+            "colours": {
+              "skin": [
+                76.8,
+                28,
+                27.9
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.mia.aftermath.lod0.glb",
+              "bytes": 413400,
+              "sha256": "80cb074c8c3a9dd36b4193f9851ae0b720530c6dea6067d6b89d48ac3df8097a",
+              "errors": [],
+              "triangles": 5965,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    1024,
+                    1024
+                  ]
+                }
+              ]
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.mia.aftermath.lod0.low.glb",
+              "bytes": 297952,
+              "sha256": "0195e15b1543d2b109397f8e8902491ddbf937cef43d3602edb47ccc4b7a0066",
+              "errors": [],
+              "triangles": 5965,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    512,
+                    512
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "lod": 1,
+          "components": 1,
+          "openEdges": 0,
+          "maxInfluences": 4,
+          "wraps": [
+            {
+              "joint": "armR",
+              "paintedTexels": 851
+            }
+          ],
+          "regions": {
+            "width": 512,
+            "height": 512,
+            "garments": false,
+            "absorbed": 19431,
+            "shares": {
+              "hair": 0,
+              "skin": 0,
+              "shirt": 0,
+              "trousers": 0,
+              "skinMask": 0.2436,
+              "authored": 0.7564
+            },
+            "colours": {
+              "skin": [
+                76.4,
+                28.4,
+                28.3
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.mia.aftermath.lod1.glb",
+              "bytes": 206560,
+              "sha256": "aa9900a8283785e7f91887178e09295592e3c31ec699280f8aa714e429360560",
+              "errors": [],
+              "triangles": 2486,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    512,
+                    512
+                  ]
+                }
+              ]
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.mia.aftermath.lod1.low.glb",
+              "bytes": 206560,
+              "sha256": "aa9900a8283785e7f91887178e09295592e3c31ec699280f8aa714e429360560",
+              "errors": [],
+              "triangles": 2486,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    512,
+                    512
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "lod": 2,
+          "components": 1,
+          "openEdges": 0,
+          "maxInfluences": 4,
+          "wraps": [
+            {
+              "joint": "armR",
+              "paintedTexels": 851
+            }
+          ],
+          "regions": {
+            "width": 512,
+            "height": 512,
+            "garments": false,
+            "absorbed": 19431,
+            "shares": {
+              "hair": 0,
+              "skin": 0,
+              "shirt": 0,
+              "trousers": 0,
+              "skinMask": 0.2436,
+              "authored": 0.7564
+            },
+            "colours": {
+              "skin": [
+                76.4,
+                28.4,
+                28.3
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.mia.aftermath.lod2.glb",
+              "bytes": 139076,
+              "sha256": "4b8a60d81a7fa232a76969d33943144e2facf56ff6c106fc898de2e270170e40",
+              "errors": [],
+              "triangles": 2486,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    128,
+                    128
+                  ]
+                }
+              ]
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.mia.aftermath.lod2.low.glb",
+              "bytes": 139076,
+              "sha256": "4b8a60d81a7fa232a76969d33943144e2facf56ff6c106fc898de2e270170e40",
+              "errors": [],
+              "triangles": 2486,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    128,
+                    128
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "npc.sam.aftermath",
+      "source": "/Users/wesner/Workspace/3dp-l5-all-new/cast/l5/npc.sam.aftermath",
+      "sourceContract": {
+        "id": "npc.sam.aftermath",
+        "initial_game_height_scale": 1.7521344584269842,
+        "game_alignment_rotation_y_degrees": 90,
+        "triangle_budgets": [
+          6000,
+          2500,
+          2500
+        ],
+        "source_high": "/Users/wesner/Workspace/trellis-highs/l5-npc.sam.aftermath/raw.glb",
+        "bake": "plain emission ray, no nearest-surface repair",
+        "authored_skin": true,
+        "wraps": [
+          {
+            "joint": "shinR",
+            "colour": "#e5dfcc",
+            "stain": true
+          }
+        ],
+        "source_files": {
+          "assembled-lod2.glb": "d6fd0562a94f3e0fdbfc257c01c6b635c8300add13382f489af0e4f1dbac2fd5",
+          "assembled-lod0.glb": "d9260c11ccf0f13daad7a9e2f471ca3ac3eb2522ab000f1a5dd9da55438d748a",
+          "assembled-lod1.glb": "c314931bcbd61195d3b42fdc03303ca3fff026adba5a828b6960959785ca043c",
+          "body-lod2.glb": "3a8350be8bab6f155b2f743f3fd22a05674faa9a13dcf1f650e50a454c2967a2",
+          "body-lod1.glb": "90a2edeb7413bc0b104500a296d31c09788cc4f647c90cce9ee5b6ab1e2955e1",
+          "body-lod0.glb": "d1aa65fbc8207205960d2bd35527ffac99593aa086760525cd052014928d0513"
+        },
+        "healthy_toy_eyes": true
+      },
+      "sourceContractSha256": "e927b7d55055c8a78f2b649ec73a49ef690955cb739bde28513852c96e871559",
+      "eyes": {
+        "path": "/Users/wesner/Workspace/3dp-l5-all-new/cast/l5/npc.sam.aftermath/eyes.json",
+        "sha256": "00f949e22d069e0ae8156aa0fe313ccc4e5dcbe195d1d1ecc04f40837cbca2dc"
+      },
+      "manualSteps": [],
+      "pipelineViewer": {
+        "source": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l5-all-new/assets/npc.sam.aftermath/model.skin.glb",
+        "source_sha256": "ec9edc155bded199192fd0d73cb999d90caeda1457e451eefb2dda49c0c08119",
+        "emission_only": false,
+        "heading_degrees": 90,
+        "elevation_degrees": 36,
+        "relative_camera_azimuth_degrees": 45,
+        "projection": "PERSP",
+        "game_fov_degrees": 25,
+        "render_crop_fov_degrees": 6.10661387038041,
+        "canonical_height_m": 1.8,
+        "game_radius_m": 19,
+        "figure_min": [
+          -0.9510578513145447,
+          -0.9999999403953552,
+          -1
+        ],
+        "figure_max": [
+          0.9510578513145447,
+          0.9999999403953552,
+          1.4509999752044678
+        ],
+        "mesh_vertices": 15834
+      },
+      "lods": [
+        {
+          "lod": 0,
+          "components": 1,
+          "openEdges": 0,
+          "maxInfluences": 4,
+          "wraps": [
+            {
+              "joint": "shinR",
+              "paintedTexels": 7397
+            }
+          ],
+          "regions": {
+            "width": 1024,
+            "height": 1024,
+            "garments": false,
+            "absorbed": 12134,
+            "shares": {
+              "hair": 0,
+              "skin": 0,
+              "shirt": 0,
+              "trousers": 0,
+              "skinMask": 0.1427,
+              "authored": 0.8573
+            },
+            "colours": {
+              "skin": [
+                78.7,
+                18.5,
+                32.4
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.sam.aftermath.lod0.glb",
+              "bytes": 327204,
+              "sha256": "25544f99c4e670e64b28cf0b93d67259e5761e42c31423435248e219659d2b85",
+              "errors": [],
+              "triangles": 5464,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    1024,
+                    1024
+                  ]
+                }
+              ]
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.sam.aftermath.lod0.low.glb",
+              "bytes": 244188,
+              "sha256": "8f38ef424f4019b74fec274b10d05b836077def658ad238a203f3f1360b2a589",
+              "errors": [],
+              "triangles": 5464,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    512,
+                    512
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "lod": 1,
+          "components": 1,
+          "openEdges": 0,
+          "maxInfluences": 4,
+          "wraps": [
+            {
+              "joint": "shinR",
+              "paintedTexels": 2012
+            }
+          ],
+          "regions": {
+            "width": 512,
+            "height": 512,
+            "garments": false,
+            "absorbed": 972,
+            "shares": {
+              "hair": 0,
+              "skin": 0,
+              "shirt": 0,
+              "trousers": 0,
+              "skinMask": 0.1127,
+              "authored": 0.8873
+            },
+            "colours": {
+              "skin": [
+                78.9,
+                18.5,
+                32.5
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.sam.aftermath.lod1.glb",
+              "bytes": 158768,
+              "sha256": "7172be85130a8ff5677cb1d657a4eb907caeb8c600df90be9a953fcb6f599e5a",
+              "errors": [],
+              "triangles": 2267,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    512,
+                    512
+                  ]
+                }
+              ]
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.sam.aftermath.lod1.low.glb",
+              "bytes": 158768,
+              "sha256": "7172be85130a8ff5677cb1d657a4eb907caeb8c600df90be9a953fcb6f599e5a",
+              "errors": [],
+              "triangles": 2267,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    512,
+                    512
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "lod": 2,
+          "components": 1,
+          "openEdges": 0,
+          "maxInfluences": 4,
+          "wraps": [
+            {
+              "joint": "shinR",
+              "paintedTexels": 2012
+            }
+          ],
+          "regions": {
+            "width": 512,
+            "height": 512,
+            "garments": false,
+            "absorbed": 972,
+            "shares": {
+              "hair": 0,
+              "skin": 0,
+              "shirt": 0,
+              "trousers": 0,
+              "skinMask": 0.1127,
+              "authored": 0.8873
+            },
+            "colours": {
+              "skin": [
+                78.9,
+                18.5,
+                32.5
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.sam.aftermath.lod2.glb",
+              "bytes": 124636,
+              "sha256": "e6ee07e304f00cea35dfc03bfd9ced43ede8185a941a4118397a1d153b980ac2",
+              "errors": [],
+              "triangles": 2267,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    256,
+                    256
+                  ]
+                }
+              ]
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.sam.aftermath.lod2.low.glb",
+              "bytes": 124636,
+              "sha256": "e6ee07e304f00cea35dfc03bfd9ced43ede8185a941a4118397a1d153b980ac2",
+              "errors": [],
+              "triangles": 2267,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    256,
+                    256
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "npc.marcus.aftermath",
+      "source": "/Users/wesner/Workspace/3dp-l5-all-new/cast/l5/npc.marcus.aftermath",
+      "sourceContract": {
+        "id": "npc.marcus.aftermath",
+        "derived_from": "wave2/npc.civilian-man-a",
+        "coordinates": "Y up, TRELLIS source units",
+        "initial_game_height_scale": 1.683984901175773,
+        "game_alignment_rotation_y_degrees": 90,
+        "triangle_budgets": [
+          6000,
+          2500,
+          2500
+        ],
+        "source_high": "inherited original TRELLIS reconstruction; see parent source manifest",
+        "authored_skin": true,
+        "spectacles": false,
+        "wraps": [
+          {
+            "joint": "foreArmL",
+            "colour": "#e5dfcc",
+            "stain": true
+          },
+          {
+            "joint": "armR",
+            "colour": "#edbd4e"
+          }
+        ],
+        "deliveries": [
+          {
+            "lod": 0,
+            "source": "cast/wave2/npc.civilian-man-a/source/flat-lod0.glb",
+            "source_sha256": "48edf00bf7966744cd9bb70e9bce7198f846c9118c0ef25b60e085c291d6c5ce",
+            "output_sha256": "bd94fac663db41fbadd55a33e13cf215acd978eaeb41d9a1048ec91677378556"
+          },
+          {
+            "lod": 1,
+            "source": "cast/wave2/npc.civilian-man-a/source/flat-lod1.glb",
+            "source_sha256": "9d065b80e79e06d3148789bd43b9a10803089814a69a2d3e73331a02dae22855",
+            "output_sha256": "05e6edd7af096e07635784d7360d5099de5cb9a02890888b112e391804736485"
+          },
+          {
+            "lod": 2,
+            "source": "cast/wave2/npc.civilian-man-a/source/flat-lod2.glb",
+            "source_sha256": "cd784cd31939733d6362fc83e59a77fce9c0cfda5da666a6ecc93f7905176645",
+            "output_sha256": "8146ca780750ca0ffac4ddae326df2f453473031db59a4211bf718fa544e75ab"
+          }
+        ]
+      },
+      "sourceContractSha256": "d18f5ea58c10dc65b0b7a86bbf03928849cfce62e49dc3497cece768b431dfa7",
+      "manualSteps": [],
+      "pipelineViewer": {
+        "source": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l5-all-new/assets/npc.marcus.aftermath/model.skin.glb",
+        "source_sha256": "883f45a53e5fd494f9c4faa6d817fa2c292f29c39345877a83d2ceb1006dd514",
+        "emission_only": false,
+        "heading_degrees": 90,
+        "elevation_degrees": 36,
+        "relative_camera_azimuth_degrees": 45,
+        "projection": "PERSP",
+        "game_fov_degrees": 25,
+        "render_crop_fov_degrees": 5.952215309758156,
+        "canonical_height_m": 1.8,
+        "game_radius_m": 19,
+        "figure_min": [
+          -0.9510578513145447,
+          -0.9999999403953552,
+          -1
+        ],
+        "figure_max": [
+          0.9510578513145447,
+          0.9999999403953552,
+          1.4425978660583496
+        ],
+        "mesh_vertices": 15894
+      },
+      "lods": [
+        {
+          "lod": 0,
+          "components": 1,
+          "openEdges": 0,
+          "maxInfluences": 4,
+          "wraps": [
+            {
+              "joint": "foreArmL",
+              "paintedTexels": 13431
+            },
+            {
+              "joint": "armR",
+              "paintedTexels": 13037
+            }
+          ],
+          "regions": {
+            "width": 1024,
+            "height": 1024,
+            "garments": false,
+            "absorbed": 15019,
+            "shares": {
+              "hair": 0,
+              "skin": 0,
+              "shirt": 0,
+              "trousers": 0,
+              "skinMask": 0.1632,
+              "authored": 0.8368
+            },
+            "colours": {
+              "skin": [
+                79.9,
+                22,
+                28.8
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.marcus.aftermath.lod0.glb",
+              "bytes": 317716,
+              "sha256": "cfeb1a1dfdbeb347250731e0b94b76f2a12453b1d1d28f87b0e689e1c5fcf62c",
+              "errors": [],
+              "triangles": 5460,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    1024,
+                    1024
+                  ]
+                }
+              ]
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.marcus.aftermath.lod0.low.glb",
+              "bytes": 234708,
+              "sha256": "d641db9e5e99ca46e65ad69fa6900a301328c9e02f89cf0290a7b732ef0906cc",
+              "errors": [],
+              "triangles": 5460,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    512,
+                    512
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "lod": 1,
+          "components": 1,
+          "openEdges": 0,
+          "maxInfluences": 4,
+          "wraps": [
+            {
+              "joint": "foreArmL",
+              "paintedTexels": 3960
+            },
+            {
+              "joint": "armR",
+              "paintedTexels": 3678
+            }
+          ],
+          "regions": {
+            "width": 512,
+            "height": 512,
+            "garments": false,
+            "absorbed": 355,
+            "shares": {
+              "hair": 0,
+              "skin": 0,
+              "shirt": 0,
+              "trousers": 0,
+              "skinMask": 0.1422,
+              "authored": 0.8578
+            },
+            "colours": {
+              "skin": [
+                80.1,
+                22.1,
+                28.7
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.marcus.aftermath.lod1.glb",
+              "bytes": 159100,
+              "sha256": "cc9fdc632af11f47b44a96b810a750c1d4fc79d9a5b7e56628206db129a873cb",
+              "errors": [],
+              "triangles": 2282,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    512,
+                    512
+                  ]
+                }
+              ]
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.marcus.aftermath.lod1.low.glb",
+              "bytes": 159100,
+              "sha256": "cc9fdc632af11f47b44a96b810a750c1d4fc79d9a5b7e56628206db129a873cb",
+              "errors": [],
+              "triangles": 2282,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    512,
+                    512
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "lod": 2,
+          "components": 1,
+          "openEdges": 0,
+          "maxInfluences": 4,
+          "wraps": [
+            {
+              "joint": "foreArmL",
+              "paintedTexels": 3960
+            },
+            {
+              "joint": "armR",
+              "paintedTexels": 3678
+            }
+          ],
+          "regions": {
+            "width": 512,
+            "height": 512,
+            "garments": false,
+            "absorbed": 355,
+            "shares": {
+              "hair": 0,
+              "skin": 0,
+              "shirt": 0,
+              "trousers": 0,
+              "skinMask": 0.1422,
+              "authored": 0.8578
+            },
+            "colours": {
+              "skin": [
+                80.1,
+                22.1,
+                28.7
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.marcus.aftermath.lod2.glb",
+              "bytes": 122140,
+              "sha256": "b2b166be972ad739155f7307d480e2c88456da5a980f514c182043d29de3ad2e",
+              "errors": [],
+              "triangles": 2282,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    256,
+                    256
+                  ]
+                }
+              ]
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.marcus.aftermath.lod2.low.glb",
+              "bytes": 122140,
+              "sha256": "b2b166be972ad739155f7307d480e2c88456da5a980f514c182043d29de3ad2e",
+              "errors": [],
+              "triangles": 2282,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    256,
+                    256
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "npc.civilian-man-b.aftermath",
+      "source": "/Users/wesner/Workspace/3dp-l5-all-new/cast/l5/npc.civilian-man-b.aftermath",
+      "sourceContract": {
+        "id": "npc.civilian-man-b.aftermath",
+        "derived_from": "wave2/npc.civilian-man-b",
+        "coordinates": "Y up, TRELLIS source units",
+        "initial_game_height_scale": 1.7613074798176274,
+        "game_alignment_rotation_y_degrees": 90,
+        "triangle_budgets": [
+          6000,
+          2500,
+          2500
+        ],
+        "source_high": "inherited original TRELLIS reconstruction; see parent source manifest",
+        "authored_skin": false,
+        "spectacles": false,
+        "wraps": [
+          {
+            "joint": "foreArmL",
+            "colour": "#e5dfcc",
+            "stain": true
+          }
+        ],
+        "deliveries": [
+          {
+            "lod": 0,
+            "source": "cast/wave2/npc.civilian-man-b/source/flat-lod0.glb",
+            "source_sha256": "cf15d0f332527ab205077b756561fc173e5449c172cfa85819365ea928840eea",
+            "output_sha256": "cf15d0f332527ab205077b756561fc173e5449c172cfa85819365ea928840eea"
+          },
+          {
+            "lod": 1,
+            "source": "cast/wave2/npc.civilian-man-b/source/flat-lod1.glb",
+            "source_sha256": "2f5d8d06b1ea4fd92b3d93530cc1591e488816d845ed47a5b3c76bfb3f1ba7f5",
+            "output_sha256": "2f5d8d06b1ea4fd92b3d93530cc1591e488816d845ed47a5b3c76bfb3f1ba7f5"
+          },
+          {
+            "lod": 2,
+            "source": "cast/wave2/npc.civilian-man-b/source/flat-lod2.glb",
+            "source_sha256": "bf88ed9082c9fdd1ad7e1a0a5d1ab0631b2de800bfb1d3d05a594eff8a1c9ea3",
+            "output_sha256": "bf88ed9082c9fdd1ad7e1a0a5d1ab0631b2de800bfb1d3d05a594eff8a1c9ea3"
+          }
+        ]
+      },
+      "sourceContractSha256": "735b40a3f5a69207a40c526eb000c302a1abd18930f407d125c551f5ac6b1cf8",
+      "manualSteps": [],
+      "pipelineViewer": {
+        "source": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l5-all-new/assets/npc.civilian-man-b.aftermath/model.skin.glb",
+        "source_sha256": "1209abd8b24095e64e5cdb75a548da372263a12913cf32046d06bee4859f2c77",
+        "emission_only": false,
+        "heading_degrees": 90,
+        "elevation_degrees": 36,
+        "relative_camera_azimuth_degrees": 45,
+        "projection": "PERSP",
+        "game_fov_degrees": 25,
+        "render_crop_fov_degrees": 6.040553561388515,
+        "canonical_height_m": 1.8,
+        "game_radius_m": 19,
+        "figure_min": [
+          -0.9510578513145447,
+          -0.9999999403953552,
+          -1
+        ],
+        "figure_max": [
+          0.9510578513145447,
+          0.9999999403953552,
+          1.438000202178955
+        ],
+        "mesh_vertices": 15906
+      },
+      "lods": [
+        {
+          "lod": 0,
+          "components": 1,
+          "openEdges": 0,
+          "maxInfluences": 4,
+          "wraps": [
+            {
+              "joint": "foreArmL",
+              "paintedTexels": 4095
+            }
+          ],
+          "regions": {
+            "width": 1024,
+            "height": 1024,
+            "garments": true,
+            "absorbed": 13539,
+            "shares": {
+              "hair": 0.0625,
+              "skin": 0.1086,
+              "shirt": 0.331,
+              "trousers": 0.1908,
+              "skinMask": 0,
+              "authored": 0.3071
+            },
+            "colours": {
+              "skin": [
+                75.3,
+                23,
+                37.3
+              ],
+              "hair": [
+                34.3,
+                3.7,
+                -14.5
+              ],
+              "shirt": [
+                70.8,
+                18.6,
+                62.2
+              ],
+              "trousers": [
+                39.6,
+                6.8,
+                -23.8
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.civilian-man-b.aftermath.lod0.glb",
+              "bytes": 337384,
+              "sha256": "f584b719001bf630e7dd866ff28d2c29ceec8883856ba4f27d73c024ffb5322f",
+              "errors": [],
+              "triangles": 5472,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    1024,
+                    1024
+                  ]
+                }
+              ]
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.civilian-man-b.aftermath.lod0.low.glb",
+              "bytes": 249788,
+              "sha256": "250e868207378b663bdc1fbc7d3b02352c1225ff5d6ec8b3de341c45425915f6",
+              "errors": [],
+              "triangles": 5472,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    512,
+                    512
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "lod": 1,
+          "components": 1,
+          "openEdges": 0,
+          "maxInfluences": 4,
+          "wraps": [
+            {
+              "joint": "foreArmL",
+              "paintedTexels": 1128
+            }
+          ],
+          "regions": {
+            "width": 512,
+            "height": 512,
+            "garments": true,
+            "absorbed": 5658,
+            "shares": {
+              "hair": 0.0652,
+              "skin": 0.1049,
+              "shirt": 0.3224,
+              "trousers": 0.2045,
+              "skinMask": 0,
+              "authored": 0.303
+            },
+            "colours": {
+              "skin": [
+                75.3,
+                23.6,
+                37.3
+              ],
+              "hair": [
+                34.3,
+                3.7,
+                -14.4
+              ],
+              "shirt": [
+                70.8,
+                18.6,
+                62.2
+              ],
+              "trousers": [
+                39.6,
+                6.8,
+                -23.8
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.civilian-man-b.aftermath.lod1.glb",
+              "bytes": 174668,
+              "sha256": "b0d0b980a1eaba840005cacc26587e03f287fc218b0481bf9df62d25463ff481",
+              "errors": [],
+              "triangles": 2302,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    512,
+                    512
+                  ]
+                }
+              ]
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.civilian-man-b.aftermath.lod1.low.glb",
+              "bytes": 174668,
+              "sha256": "b0d0b980a1eaba840005cacc26587e03f287fc218b0481bf9df62d25463ff481",
+              "errors": [],
+              "triangles": 2302,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    512,
+                    512
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "lod": 2,
+          "components": 1,
+          "openEdges": 0,
+          "maxInfluences": 4,
+          "wraps": [
+            {
+              "joint": "foreArmL",
+              "paintedTexels": 1128
+            }
+          ],
+          "regions": {
+            "width": 512,
+            "height": 512,
+            "garments": true,
+            "absorbed": 5658,
+            "shares": {
+              "hair": 0.0652,
+              "skin": 0.1049,
+              "shirt": 0.3224,
+              "trousers": 0.2045,
+              "skinMask": 0,
+              "authored": 0.303
+            },
+            "colours": {
+              "skin": [
+                75.3,
+                23.6,
+                37.3
+              ],
+              "hair": [
+                34.3,
+                3.7,
+                -14.4
+              ],
+              "shirt": [
+                70.8,
+                18.6,
+                62.2
+              ],
+              "trousers": [
+                39.6,
+                6.8,
+                -23.8
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.civilian-man-b.aftermath.lod2.glb",
+              "bytes": 135652,
+              "sha256": "8c93f6053ebb52f8e1e334128ff0a4510d731cde89ca1101f46ec569b5317be4",
+              "errors": [],
+              "triangles": 2302,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    256,
+                    256
+                  ]
+                }
+              ]
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.civilian-man-b.aftermath.lod2.low.glb",
+              "bytes": 135652,
+              "sha256": "8c93f6053ebb52f8e1e334128ff0a4510d731cde89ca1101f46ec569b5317be4",
+              "errors": [],
+              "triangles": 2302,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    256,
+                    256
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "npc.civilian-woman-b.aftermath",
+      "source": "/Users/wesner/Workspace/3dp-l5-all-new/cast/l5/npc.civilian-woman-b.aftermath",
+      "sourceContract": {
+        "id": "npc.civilian-woman-b.aftermath",
+        "derived_from": "wave2/npc.civilian-woman-b",
+        "coordinates": "Y up, TRELLIS source units",
+        "initial_game_height_scale": 1.7788439365602957,
+        "game_alignment_rotation_y_degrees": 90,
+        "triangle_budgets": [
+          6000,
+          2500,
+          2500
+        ],
+        "source_high": "inherited original TRELLIS reconstruction; see parent source manifest",
+        "authored_skin": false,
+        "spectacles": true,
+        "wraps": [
+          {
+            "joint": "foreArmL",
+            "colour": "#e5dfcc",
+            "stain": true
+          }
+        ],
+        "deliveries": [
+          {
+            "lod": 0,
+            "source": "cast/wave2/npc.civilian-woman-b/source/flat-lod0.glb",
+            "source_sha256": "68df1d62ea4211850af1007d691134091828a2f1b04674cf515541cf171340de",
+            "output_sha256": "68df1d62ea4211850af1007d691134091828a2f1b04674cf515541cf171340de"
+          },
+          {
+            "lod": 1,
+            "source": "cast/wave2/npc.civilian-woman-b/source/flat-lod1.glb",
+            "source_sha256": "54711cbf22a160ef052d11fb3cbd1e0cbd18ff735faec961ab393a8aaf522b32",
+            "output_sha256": "54711cbf22a160ef052d11fb3cbd1e0cbd18ff735faec961ab393a8aaf522b32"
+          },
+          {
+            "lod": 2,
+            "source": "cast/wave2/npc.civilian-woman-b/source/flat-lod2.glb",
+            "source_sha256": "3f246c785205f686bbc962e76c326048fdc78e827e9906ad45962f0224a4f41f",
+            "output_sha256": "3f246c785205f686bbc962e76c326048fdc78e827e9906ad45962f0224a4f41f"
+          }
+        ],
+        "rig_source": "../../wave2/npc.civilian-woman-b/lod0.glb",
+        "rig_fit_height": false,
+        "healthy_toy_eyes": true
+      },
+      "sourceContractSha256": "74e0810c1dca1f92d717816bccb038fb048acee678ca5396222d7818e7d083e0",
+      "eyes": {
+        "path": "/Users/wesner/Workspace/3dp-l5-all-new/cast/l5/npc.civilian-woman-b.aftermath/eyes.json",
+        "sha256": "1948ba73dd34c9bdffb53718b81a61935c43ba66ab85b88f4985fe35689119ce"
+      },
+      "manualSteps": [],
+      "pipelineViewer": {
+        "source": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l5-all-new/assets/npc.civilian-woman-b.aftermath/model.skin.glb",
+        "source_sha256": "57aecaad462e7ac06955cfa8954ef7099150cdc23c47ca79867683eb4f96e0cc",
+        "emission_only": false,
+        "heading_degrees": 90,
+        "elevation_degrees": 36,
+        "relative_camera_azimuth_degrees": 45,
+        "projection": "PERSP",
+        "game_fov_degrees": 25,
+        "render_crop_fov_degrees": 6.137525599016595,
+        "canonical_height_m": 1.8,
+        "game_radius_m": 19,
+        "figure_min": [
+          -0.9510578513145447,
+          -0.9999999403953552,
+          -1
+        ],
+        "figure_max": [
+          0.9510578513145447,
+          0.9999999403953552,
+          1.800001859664917
+        ],
+        "mesh_vertices": 15816
+      },
+      "lods": [
+        {
+          "lod": 0,
+          "components": 1,
+          "openEdges": 0,
+          "maxInfluences": 4,
+          "wraps": [
+            {
+              "joint": "foreArmL",
+              "paintedTexels": 9872
+            }
+          ],
+          "regions": {
+            "width": 1024,
+            "height": 1024,
+            "garments": true,
+            "absorbed": 69246,
+            "shares": {
+              "hair": 0.2302,
+              "skin": 0.1114,
+              "shirt": 0.1347,
+              "trousers": 0.3219,
+              "skinMask": 0,
+              "authored": 0.2018
+            },
+            "colours": {
+              "skin": [
+                83.9,
+                14.8,
+                26.4
+              ],
+              "hair": [
+                28.1,
+                11.7,
+                10.6
+              ],
+              "shirt": [
+                77.5,
+                14.6,
+                -24.1
+              ],
+              "trousers": [
+                32.3,
+                4,
+                -7.1
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.civilian-woman-b.aftermath.lod0.glb",
+              "bytes": 366144,
+              "sha256": "877b96db0e9d2b9b8e475bfb1c7586fc2dba789b15cfd7d2178905f4166b4cff",
+              "errors": [],
+              "triangles": 5497,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    1024,
+                    1024
+                  ]
+                }
+              ]
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.civilian-woman-b.aftermath.lod0.low.glb",
+              "bytes": 258028,
+              "sha256": "b8d324ff830133a0aae30461b3b17937ffe6a3e4132c28fa7df71d2c37dcf249",
+              "errors": [],
+              "triangles": 5497,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    512,
+                    512
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "lod": 1,
+          "components": 1,
+          "openEdges": 0,
+          "maxInfluences": 3,
+          "wraps": [
+            {
+              "joint": "foreArmL",
+              "paintedTexels": 2734
+            }
+          ],
+          "regions": {
+            "width": 512,
+            "height": 512,
+            "garments": true,
+            "absorbed": 17581,
+            "shares": {
+              "hair": 0.2274,
+              "skin": 0.1093,
+              "shirt": 0.1408,
+              "trousers": 0.3085,
+              "skinMask": 0,
+              "authored": 0.214
+            },
+            "colours": {
+              "skin": [
+                84.6,
+                14.4,
+                26.2
+              ],
+              "hair": [
+                28,
+                11.6,
+                10.5
+              ],
+              "shirt": [
+                77.5,
+                14.7,
+                -24.1
+              ],
+              "trousers": [
+                32.3,
+                4.1,
+                -7.2
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.civilian-woman-b.aftermath.lod1.glb",
+              "bytes": 177756,
+              "sha256": "6ce0baaeb8139e21ffed63dac6b7a1e12b2d32365337a185b5de352a17ba4438",
+              "errors": [],
+              "triangles": 2326,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    512,
+                    512
+                  ]
+                }
+              ]
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.civilian-woman-b.aftermath.lod1.low.glb",
+              "bytes": 177756,
+              "sha256": "6ce0baaeb8139e21ffed63dac6b7a1e12b2d32365337a185b5de352a17ba4438",
+              "errors": [],
+              "triangles": 2326,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    512,
+                    512
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "lod": 2,
+          "components": 1,
+          "openEdges": 0,
+          "maxInfluences": 3,
+          "wraps": [
+            {
+              "joint": "foreArmL",
+              "paintedTexels": 2734
+            }
+          ],
+          "regions": {
+            "width": 512,
+            "height": 512,
+            "garments": true,
+            "absorbed": 17581,
+            "shares": {
+              "hair": 0.2274,
+              "skin": 0.1093,
+              "shirt": 0.1408,
+              "trousers": 0.3085,
+              "skinMask": 0,
+              "authored": 0.214
+            },
+            "colours": {
+              "skin": [
+                84.6,
+                14.4,
+                26.2
+              ],
+              "hair": [
+                28,
+                11.6,
+                10.5
+              ],
+              "shirt": [
+                77.5,
+                14.7,
+                -24.1
+              ],
+              "trousers": [
+                32.3,
+                4.1,
+                -7.2
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.civilian-woman-b.aftermath.lod2.glb",
+              "bytes": 133164,
+              "sha256": "da1515f63092f5eb261cf46bb8f4063bed55999b1a2137ee223ab59d14573c07",
+              "errors": [],
+              "triangles": 2326,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    256,
+                    256
+                  ]
+                }
+              ]
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.civilian-woman-b.aftermath.lod2.low.glb",
+              "bytes": 133164,
+              "sha256": "da1515f63092f5eb261cf46bb8f4063bed55999b1a2137ee223ab59d14573c07",
+              "errors": [],
+              "triangles": 2326,
+              "textures": [
+                {
+                  "format": "image/ktx2",
+                  "size": [
+                    256,
+                    256
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

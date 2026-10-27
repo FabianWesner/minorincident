@@ -6,7 +6,7 @@ import { float, vec3 } from 'three/tsl';
 import { expect, test, vi } from 'vitest';
 import { packCrowdParts } from '../../src/assets/crowd';
 import { bakeInfected, framesPerClip, infectedClips } from '../../src/render/characters/bakeInfected';
-import { crowdVertexLayout } from '../../src/render/characters/CrowdAppearance';
+import { crowdVertexLayout, resolveCrowdAppearance } from '../../src/render/characters/CrowdAppearance';
 import { createInfectedPlaceholder } from '../../src/render/characters/infectedPlaceholder';
 import { packSkin, premultiplyRow, restInverses, skinnedVertexMatrix } from '../../src/render/characters/skinnedCrowd';
 import { StaticCorpses } from '../../src/render/characters/StaticCorpses';
@@ -26,6 +26,28 @@ import { isCrowdVariant, registerCrowdModel } from '../../src/render/crowdModels
 /** Crowd headroom below the portable hard limits (16 attributes, 8 WebGPU vertex buffers). */
 const CROWD = { attributes: 14, buffers: 7 };
 const deathFrame = () => infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1;
+
+test('a held cane reaches the floor across rig scales without moving its grip', () => {
+  const props = new RoutineProps(), matrix = new Matrix4();
+  for (const scale of [.8, 1, 1.3]) for (const floor of [0, .13]) {
+    const hand = new Matrix4().makeScale(scale, scale, scale).setPosition(.2, floor + .8 * scale, .3);
+    props.begin(); props.held('cane', hand, 7, undefined, .07, false, floor);
+    const mesh = props.children.find(child => (child as InstancedMesh).count === 1) as InstancedMesh;
+    mesh.getMatrixAt(0, matrix);
+    expect(mesh.geometry.boundingBox!.clone().applyMatrix4(matrix).min.y).toBeCloseTo(floor, 5);
+    for (const axis of [12, 13, 14]) expect(matrix.elements[axis]).toBeCloseTo(hand.elements[axis], 6);
+  }
+  props.dispose();
+});
+
+test('authored aftermath headwear survives crowd palette variation and accepts explicit accessories', () => {
+  for (let id = 1; id <= 32; id++) {
+    const entity = { id, archetype: 'civilian.cashier', appearance: { entityId: id, asset: 'npc.person.aftermath', accessories: [], tint: '#888888' } } as unknown as EntitySnapshot;
+    expect(resolveCrowdAppearance(entity, ['acc.test']).accessory, `authored headwear, entity ${id}`).toBeNull();
+    entity.appearance!.accessories = ['acc.test'];
+    expect(resolveCrowdAppearance(entity, ['acc.test']).accessory).toBe('acc.test');
+  }
+});
 
 test('crowd registration retains converted textured variants with their own model identity', () => {
   const native = new Set(['inf.runner']), aliases = new Map<string, string>();

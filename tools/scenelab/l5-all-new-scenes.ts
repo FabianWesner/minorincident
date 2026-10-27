@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { loadavg } from 'node:os';
 import { SceneSession, readSpec, stopServer, writeJson } from './session';
 import { runSpec } from './run';
 import type { ActorSpec, SceneSpec } from '../../src/debug/scenelab/spec';
@@ -16,15 +17,16 @@ const out = resolve(`test-results/l5-all-new/${mode}-${variant}-${tier}-${backen
 const converted = (JSON.parse(readFileSync('docs/reports/l5-all-new/census.json','utf8')) as {scope:string[]}).scope;
 const crowd30: SceneSpec = {
  name: 'l5-street-crowd30', ground: 'district', time: 'L5', tier: 5, size: 100,
- layout: { district: 'D-FAIR', level: 'L5', bbox: [[-25,-52],[24,-20]] },
+ layout: { district: 'D-FAIR', level: 'L5', bbox: [[-12,-55],[9,-32]] },
  actors: Array.from({length:30},(_,i):ActorSpec=>{
   const at:[number,number]=[-10+i%10*1.8,-39+Math.floor(i/10)*2.5];
-  if(i===0)return {id:'courier',kind:'courier',at,yaw:-45,loadout:['weapon.fire-axe','weapon.shotgun']};
+  if(i===0)return {id:'courier',kind:'courier',at,yaw:-45,loadout:['weapon.fire-axe','weapon.shotgun'],state:{aim:'alpha'}};
   if(i===1)return {id:'corgi',kind:'corgi',at,yaw:-45};
   if(i===2)return {id:'alpha',kind:'infected',archetype:'infected.alpha',look:{model:'inf.alpha'},at,yaw:-45,state:'idle'};
   const model=i<27?converted[(i-3)%converted.length]:['npc.national-guard','npc.civilian-man-a','npc.civilian-woman-b'][i-27];
   return {id:`ped-${i}`,kind:'pedestrian',at,yaw:-45,look:{model,accessories:[]},state:'idle'};
  }),
+ script:[{frame:1,actor:'courier',do:{select:'RIGHT'}},{frame:2,actor:'courier',do:{aim:'alpha',seconds:30}}],
  camera:{mode:'game',target:[-2,.6,-36.5],zoom:1.5},frames:3,shots:[3],expect:{consoleErrors:0},
 };
 const states:SceneSpec={name:'l5-body-states',ground:'asphalt',time:'L5',size:100,
@@ -48,8 +50,13 @@ function resourceSnapshot() {
         decodedBytes += mips.reduce((n, mip) => n + (mip.data?.byteLength ?? 0), 0) || image.data?.byteLength || Math.ceil(image.width * image.height * 4 * (texture.generateMipmaps ? 4 / 3 : 1));
         rgbaUpperBoundBytes += image.data?.byteLength ?? Math.ceil(image.width * image.height * 4 * (texture.generateMipmaps || mips.length > 1 ? 4 / 3 : 1));
       }
+      const heldProps = game.view.labProbes().heldProps.map(contact => {
+        const p=contact.geometry.getAttribute('position'),m=contact.matrix.elements;let minY=Infinity;
+        for(let i=0;i<p.count;i++)minY=Math.min(minY,m[1]*p.getX(i)+m[5]*p.getY(i)+m[9]*p.getZ(i)+m[13]);
+        return {entity:contact.entity,prop:contact.prop,minY,floorY:game.world.entities.get(contact.entity)!.transform.y-.7};
+      });
       const render = window.__SS__!.getState().render;
-      return { textureCount: textures.size, decodedBytes, rgbaUpperBoundBytes, render: { crowd: render.crowd ? { batches: render.crowd.batches.map(({ id, instances, lod, source }) => ({ id, instances, lod, source })) } : null } };
+      return { textureCount: textures.size, decodedBytes, rgbaUpperBoundBytes, heldProps, render: { crowd: render.crowd ? { batches: render.crowd.batches.map(({ id, instances, lod, source }) => ({ id, instances, lod, source })) } : null } };
 }
 const session=new SceneSession({backend,tier,viewport:{width:1600,height:900},query:{crowdProbe:'full'}});
 const receipts:unknown[]=[];
@@ -81,9 +88,21 @@ try{
   const spec=mode==='states'?states:crowd30;
   const result=await runSpec(session,spec,{out,sheet:0});assert.ok(result.pass,JSON.stringify(result.failed));
   const metrics=await session.metrics(),resources=await session.page.evaluate(resourceSnapshot);
+  if (mode === 'crowd' && variant === 'new') for (const held of resources.heldProps.filter(p => p.prop === 'cane')) assert.ok(Math.abs(held.minY - held.floorY) < .001, `cane floor contact: ${JSON.stringify(held)}`);
   if(mode!=='states'){
    assert.equal(Object.keys(metrics.actors).length,30);assert.ok(Object.values(metrics.actors).every(a=>a.drawnFrames>0),'Every crowd figure submitted');
    for(const zoom of [1,1.5]){await session.page.evaluate(zoom=>window.__SS__!.camera.zoom(zoom),zoom);await session.ready();await session.screenshot(`${out}/zoom-${zoom}.png`);}
+   for(const [label,target] of [['okafor-cane',[-1,.7,-39]],['courier-shotgun',[-10,.7,-39]]] as const){await session.page.evaluate(target=>window.__SCENE__!.setCamera({mode:'game',target:[...target],zoom:.55}),target);await session.ready();await session.screenshot(`${out}/${label}.png`);}
+   if(process.env.L5_TIMING==='1'){
+    await session.page.evaluate(()=>window.__SCENE__!.setCamera({mode:'game',target:[-2,.6,-36.5],zoom:1.5}));await session.ready();
+    const cadence=await session.page.evaluate(async()=>{
+     const api=window.__SS__!;api.resume();const frames:number[]=[];let previous=0,warm:Record<string,number>={};
+     for(let i=0;i<720;i++){const now=await new Promise<number>(requestAnimationFrame);if(i===119)warm={...api.perf().nodeBuildMaterials};if(i>=120&&previous)frames.push(now-previous);previous=now;}
+     api.pause();frames.sort((a,b)=>a-b);return {count:frames.length,p95:frames[Math.ceil(frames.length*.95)-1],max:frames.at(-1),over200:frames.filter(t=>t>200).length,builds:Object.entries(api.perf().nodeBuildMaterials).filter(([key,count])=>count!==(warm[key]??0)),perf:api.perf()};
+    });
+    writeJson(`${out}/cadence.json`,{revision,base,variant,tier,backend,hostLoad:loadavg(),cadence,status:'Shared-host diagnostic; final quiet-window performance pending'});
+    assert.equal(cadence.over200,0);assert.deepEqual(cadence.builds,[]);
+   }
   }else{
    for(let i=0;i<2;i++){await session.page.evaluate(i=>window.__SCENE__!.setCamera({mode:'game',target:[4.5,.6,i*12+3],zoom:1.5}),i);await session.ready();await session.screenshot(`${out}/group-${i}.png`);}
   }
