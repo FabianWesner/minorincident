@@ -1,9 +1,10 @@
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { catalogFlag } from './catalog-args';
 import { validateGateSelection } from './gate-arguments';
+import { childFailedUnexpectedly } from './gate-child';
 import { resultKey, sameWork } from './gate-identity';
 
 /** Shared batch runner for `npm run scene:gate` (curated list) and `npm run scene:matrix:nightly` (full matrix, sharded, resumable).
@@ -33,10 +34,18 @@ function toBatches(rows: Row[], max: number): Batch[] {
 
 function runBatch(b: Batch): { code: number | null; seconds: number; rows: CatalogRow[] } {
   const dir = `${out}/${b.id}`, t0 = Date.now();
-  const res = spawnSync('sh', ['tools/e2e-lock.sh', 'tsx', 'tools/scenelab/catalog.ts', '--matrix', '--backend', b.backend, '--tier', b.tier, '--out', dir, '--only', b.rows.map(r => r.name).join(',')],
-    { stdio: ['ignore', 'inherit', 'inherit'], env: { ...process.env, E2E_UNITS: process.env.E2E_UNITS ?? '2' } });
+  // A previous index must never be mistaken for output from this child.
+  rmSync(dir, { recursive: true, force: true });
+  const res = spawnSync('sh', ['tools/e2e-lock.sh', 'tsx', 'tools/scenelab/catalog.ts', '--matrix', '--jobs', '1', '--backend', b.backend, '--tier', b.tier, '--out', dir, '--only', b.rows.map(r => r.name).join(',')],
+    { stdio: ['ignore', 'inherit', 'inherit'], env: { ...process.env, E2E_UNITS: process.env.E2E_UNITS ?? '1' } });
   const index = `${dir}/index.json`;
-  return { code: res.status, seconds: (Date.now() - t0) / 1000, rows: existsSync(index) ? JSON.parse(readFileSync(index, 'utf8')).rows : [] };
+  let rows: CatalogRow[] = [];
+  try {
+    const value: unknown = existsSync(index) ? JSON.parse(readFileSync(index, 'utf8')) : null;
+    const candidate = (value as { rows?: unknown } | null)?.rows;
+    if (Array.isArray(candidate) && candidate.every(r => r && typeof r.name === 'string' && typeof r.pass === 'boolean' && Array.isArray(r.failed))) rows = candidate;
+  } catch { /* Malformed/incomplete output is rejected as a failed child below. */ }
+  return { code: res.status, seconds: (Date.now() - t0) / 1000, rows };
 }
 
 function selectRows(): { rows: Row[]; known: Map<string, string> } {
@@ -92,11 +101,16 @@ const done = new Map(Object.entries(state).flatMap(([id, s]) => s.rows.map(r => 
 const wanted = batches.flatMap(b => b.rows);
 const missing = wanted.filter(r => !done.has(resultKey(r.name, r.backend))), failed = wanted.filter(r => done.has(resultKey(r.name, r.backend)) && !done.get(resultKey(r.name, r.backend))!.pass);
 const unexpected = failed.filter(r => !known.has(r.name)), knownFailed = failed.filter(r => known.has(r.name));
+const badChildren = batches.filter(b => {
+  const child = state[b.id];
+  return !!child && childFailedUnexpectedly(child.code, b.rows.map(r => r.name), child.rows, new Set(known.keys()));
+});
 const lines = [`# scene-${mode}`, '', `${wanted.length - failed.length - missing.length}/${wanted.length} rows pass, ${knownFailed.length} known, ${missing.length} not run; ${((Date.now() - t0) / 60000).toFixed(1)} min this run (batch s: ${batches.map(b => `${b.id}=${(state[b.id]?.seconds ?? 0).toFixed(0)}`).join(' ')}).`, '',
   ...unexpected.map(r => `- **FAIL** ${r.name}: ${done.get(resultKey(r.name, r.backend))!.error ?? done.get(resultKey(r.name, r.backend))!.failed.join(', ')}`),
   ...knownFailed.map(r => `- known ${r.name}: ${known.get(r.name)} (${done.get(resultKey(r.name, r.backend))!.failed.join(', ')})`),
   ...missing.map(r => `- **NOT RUN** ${r.name} (batch timeout or crash; rerun with --resume)`)];
+lines.splice(3, 0, ...badChildren.map(b => `- **CHILD FAILED** ${b.id} (exit ${state[b.id]?.code ?? 'signal'})`));
 writeFileSync(`${out}/summary.md`, lines.join('\n') + '\n');
 console.log(lines.join('\n'));
 console.log(`sheets: ${out}/<batch>/<row>/sheet.jpg`);
-process.exit(unexpected.length || missing.length ? 1 : 0);
+process.exit(unexpected.length || missing.length || badChildren.length ? 1 : 0);

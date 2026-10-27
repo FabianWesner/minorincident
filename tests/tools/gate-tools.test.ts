@@ -86,6 +86,18 @@ test('scene gate resume requires identical rows, revision and backend identities
   expect(f.run([], { FAIL_BACKEND: 'webgpu' }).status, 'same name on different backends cannot mask a failure').toBe(1);
 });
 
+test('scene gate rejects stale, failed, malformed and incomplete child results', () => {
+  const f = gateFixture();
+  for (const mode of ['startup', 'timeout', 'signal', 'bad-exit', 'malformed', 'incomplete', 'wrong-types']) {
+    const dir = join(f.root, 'output/webgl2-high-1'); mkdirSync(dir, { recursive: true });
+    writeFileSync(join(dir, 'index.json'), JSON.stringify({ rows: ['alpha@high', 'beta@high'].map(name => ({ name, pass: true, failed: [] })) }));
+    expect(f.run([], { CHILD_BEHAVIOR: mode }).status, mode).not.toBe(0);
+  }
+  expect(f.run().status, 'fresh complete successful child').toBe(0);
+  f.select(['alpha', 'beta'], undefined, { 'alpha@high': 'fixture', 'beta@high': 'fixture' });
+  expect(f.run([], { CHILD_BEHAVIOR: 'known' }).status, 'fresh complete failures all explicitly triaged').toBe(0);
+});
+
 test('scene gate rejects invalid arguments and empty selections before running children', () => {
   const f = gateFixture();
   for (const args of [
