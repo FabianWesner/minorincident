@@ -51,6 +51,9 @@ export const megaAlpha = {
   /** An authored link reported blocked stays avoided this long; with no alternate the Mega breaches it after `breachS`. */
   blockedLinkS: 20,
   breachS: 4,
+  /** PO #101 vs Q-200: at full charge a boss farther than `farM` (beyond the ~143 s AC21 build-up, ≈293 m at full charge on the default route)
+   * is re-staged `stageM` from the player at a spot outside the camera frame with a straight walkable line to her, then walks in at cruise. */
+  rally: { farM: 400, stageM: [40, 46, 52] },
   /** E32 §5.5 proximity bands (audio and minimap ring read these; no bearing). */
   bands: { distantM: 200, nearM: 80 },
 } as const;

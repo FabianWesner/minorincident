@@ -140,6 +140,33 @@ export class MegaPursuit {
     return id;
   }
 
+  /**
+   * Finale join (PO #101) without a visible teleport (Q-200): only while it is far beyond the authored build-up, at the 2 Hz route
+   * cadence, and only from and to points outside the player's camera frame, it is moved to a walkable spot on its approach side.
+   */
+  rally(): boolean {
+    const e = this.entity(), tick = this.world.tick;
+    if (!e || !this.alive() || tick % megaAlpha.routeTicks || this.distance() <= megaAlpha.rally.farM) return false;
+    const director = this.world.infected!.director, ground = (x: number, z: number) => this.world.districts?.groundHeight(x, z) ?? 0;
+    if (!e.infected!.hidden && !director.offscreen(e.transform, ground(e.transform.x, e.transform.z))) return false;
+    const player = this.world.entities.get(1)!.transform, angle = Math.atan2(e.transform.z - player.z, e.transform.x - player.x);
+    for (const m of megaAlpha.rally.stageM) for (let turn = 0; turn <= 12; turn++) for (const side of turn ? [1, -1] : [1]) {
+      const a = angle + side * turn * Math.PI / 12, x = player.x + Math.cos(a) * m, z = player.z + Math.sin(a) * m, at = { x, z, y: .7 + ground(x, z) };
+      if (!this.resident(x, z) || !this.grid.clear(x, z, this.radius) || !director.offscreen(at, at.y - .7)
+        || !this.grid.visible(player, at, this.radius) || !this.world.solids.relocate(e, at, 'mega.rally', 0)) continue;
+      if (e.locomotion) e.locomotion.vx = e.locomotion.vz = 0;
+      e.transform.yaw = -Math.atan2(player.z - at.z, player.x - at.x);
+      this.world.spatial.set(e.id, e.transform.x, e.transform.z);
+      e.infected!.hidden = false; e.infected!.path.length = 0; e.infected!.goal = -1; e.infected!.pathIndex = 0;
+      if (this.state.audio?.last) { this.state.audio.last.x = e.transform.x; this.state.audio.last.z = e.transform.z; }
+      Object.assign(this.state, { x: e.transform.x, z: e.transform.z, mode: 'detailed', target: { x: player.x, z: player.z }, routeAt: -Infinity, route: [], passed: null, breach: null });
+      this.state.stuck = { level: 0, since: -1, sampleAt: tick, x: e.transform.x, z: e.transform.z, noPath: 0, goal: null };
+      this.path.path.length = 0; this.path.goal = -1;
+      return true;
+    }
+    return false;
+  }
+
   /** Per-tick bookkeeping before the AI phase: the introduction, death and the 2 Hz route refresh. */
   private tick(): void {
     const s = this.state, tick = this.world.tick;
