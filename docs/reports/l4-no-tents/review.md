@@ -1,0 +1,8 @@
+# L4 capture review — seed 3, headless Metal WebGL2
+
+- [Opening minute, zoom 1](captures/opening-minute-z1.png): the courier and corgi remain readable in the plaza; mixed infected and fallen bodies press from the west while soldiers fire. The HUD names the west breach.
+- [West breach, zoom 1](captures/west-breach-z1.png) / [1.5](captures/west-breach-z1.5.png): the broken entrance and dense mixed corpse field connect the exterior approach to the camp; the courier draws visibly through the pile. No tent doorway is an arrival source.
+- [High-tier breach](captures/high-west-breach-z1.png): the larger flood includes civilian, uniform, suit, riot, firefighter and hazmat silhouettes; the courier stays visible amid the bodies. Actual submitted infected models are recorded in capture-metrics.json.
+- [Alpha contact, zoom 1](captures/alpha-contact-z1.png) / [1.5](captures/alpha-contact-z1.5.png): actual movement stops 1.351 m from the retained Alpha; the entire courier remains visible. The adjacent eight suit corpses have connected torso, sleeve and leg surfaces.
+- [Walkable suit pile, zoom 1.5](captures/walkable-suit-pile-z1.5.png): the courier can occupy the small-body field and remains visible. Small corpses stay walkable; Alpha, Mega and all five zoo species block courier/corgi queries, and the corgi follows around an Alpha in the movement regression.
+- Six capture tests passed across low/high and zoom 1/1.5, with the shared browser error guard clear. The suit's six current deliveries match the existing skin-crowd-build receipts (suit-skin-proof.json); no asset rebuild was needed.
