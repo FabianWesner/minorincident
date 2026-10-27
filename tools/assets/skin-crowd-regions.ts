@@ -43,12 +43,19 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean): RegionRepo
   // 0 none, 1 head, 2 upper, 3 lower, 4 hand, 5 foot; skinTri marks triangles whose corners were all tagged as skin paint.
   const groups = ['none', 'head', 'upper', 'lower', 'hand', 'foot'] as const;
   const owner = new Uint8Array(w * h), skinSeed = new Uint8Array(w * h);
+  // Face band: below the brows and in front of the eyes, painted frames, pupils and beards are never hair.
+  const eyes = doc.getRoot().listNodes().find(n => n.getName() === 'skin_eyes')?.getMesh()?.listPrimitives()[0]?.getAttribute('POSITION');
+  const position = prim.getAttribute('POSITION')!, eye = [0, 0, 0];
+  if (eyes) { for (let i = 0; i < eyes.getCount(); i++) { const q = eyes.getElement(i, []); for (let c = 0; c < 3; c++) eye[c] += q[c] / eyes.getCount(); } }
+  const face = new Uint8Array(w * h);
   const p: number[][] = [[0, 0], [0, 0], [0, 0]];
   for (let t = 0; t < count; t += 3) {
     const v = [vertex(t), vertex(t + 1), vertex(t + 2)];
     const names = v.map(i => joints[part.getScalar(i)] ?? 'torso');
     const name = names[0] === names[1] || names[0] === names[2] ? names[0] : names[1];
     const g = groups.indexOf(GROUP[name] ?? 'upper') as number, skin = !!region && v.every(i => Math.abs(region.getScalar(i) - 1) < .01);
+    const centre = v.map(i => position.getElement(i, [])).reduce((a, q) => a.map((n, c) => n + q[c] / 3), [0, 0, 0]);
+    const inFace = !!eyes && g === 1 && centre[1] < eye[1] + .045 && centre[0] > eye[0] - .05;
     for (let k = 0; k < 3; k++) { p[k][0] = uv.getElement(v[k], [])[0] * w - .5; p[k][1] = uv.getElement(v[k], [])[1] * h - .5; }
     const x0 = Math.max(0, Math.floor(Math.min(p[0][0], p[1][0], p[2][0]))), x1 = Math.min(w - 1, Math.ceil(Math.max(p[0][0], p[1][0], p[2][0])));
     const y0 = Math.max(0, Math.floor(Math.min(p[0][1], p[1][1], p[2][1]))), y1 = Math.min(h - 1, Math.ceil(Math.max(p[0][1], p[1][1], p[2][1])));
@@ -58,7 +65,7 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean): RegionRepo
       // Conservative coverage (half-texel slack), so the bilinear footprint of every island edge is classified.
       const e = [0, 1, 2].map(k => { const a = p[k], b = p[(k + 1) % 3]; return ((b[0] - a[0]) * (y - a[1]) - (b[1] - a[1]) * (x - a[0])) / area; });
       const lengths = [0, 1, 2].map(k => Math.hypot(p[(k + 1) % 3][0] - p[k][0], p[(k + 1) % 3][1] - p[k][1]) / Math.abs(area));
-      if (e.every((s, k) => s >= -.75 * lengths[k])) { owner[y * w + x] = g; if (skin) skinSeed[y * w + x] = 1; }
+      if (e.every((s, k) => s >= -.75 * lengths[k])) { owner[y * w + x] = g; if (skin) skinSeed[y * w + x] = 1; if (inFace) face[y * w + x] = 1; }
     }
   }
   const labs = new Float32Array(w * h * 3);
@@ -102,7 +109,7 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean): RegionRepo
     };
     // Painted frames, brows and pupils are darker than the hair mass and stay authored.
     const hair = dominant(i => owner[i] === 1 && free(i));
-    if (hair && hair.share >= .3) assign('hair', crowdRegion.hair, i => owner[i] === 1 && labs[i * 3] > hair.colour[0] - 9, 15, .3);
+    if (hair && hair.share >= .3) assign('hair', crowdRegion.hair, i => owner[i] === 1 && !face[i] && labs[i * 3] > hair.colour[0] - 9, 15, .3);
     const shirt = assign('shirt', crowdRegion.shirt, i => owner[i] === 2, 18, .3);
     // A dress continues the shirt over the legs; otherwise the lower body's own dominant colour is the trousers.
     if (shirt) for (let i = 0; i < w * h; i++) if (owner[i] === 3 && free(i) && dE(at(i), shirt) < 14) cls[i] = crowdRegion.shirt;
