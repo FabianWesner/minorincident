@@ -1,3 +1,4 @@
+import { solidLargeCorpse } from '../sim/world/SolidRegistry';
 import { l6Doors, l6Entries } from '../data/l6';
 import { MilitaryPerimeter } from './MilitaryPerimeter';
 import { l3, l3AttackView } from '../data/l3';
@@ -788,11 +789,12 @@ export class GameView implements Lifecycle {
     }
     return false;
   }
-  /** Corpse piles can hide the courier even when their small bodies remain walkable. */
-  private nearCorpse(at: { x: number; z: number }): boolean {
+  /** Keep the courier's silhouette in front when an Alpha, Mega or zoo corpse overlaps her feet.
+   *  Small corpses don't trigger it: foreground mode also lifts her lower legs over low world geometry such as curbs (Q-208). */
+  private nearLargeCorpse(at: { x: number; z: number }): boolean {
     for (const e of this.world.entities.iterate()) {
       if (e.hidden || e.infected?.hidden) continue;
-      if ((e.corpse || e.infected && e.health.current <= 0) && Math.hypot(e.transform.x - at.x, e.transform.z - at.z) < 4) return true;
+      if (solidLargeCorpse(e) && Math.hypot(e.transform.x - at.x, e.transform.z - at.z) < 4) return true;
     }
     return false;
   }
@@ -1031,7 +1033,7 @@ export class GameView implements Lifecycle {
     // Reuse the foreground silhouette at the boss and in L7's close crowd. Building blockers no longer trigger it: their
     // placement cut already clears the whole subject disc, and the near-camera depth slice drew the courier over every
     // nearer person and prop (PO #9 L2 start: on top of firefighter "2"; #26 L1: in front of the closed bay leaf and the horde).
-    this.courierForeground = !!current && courierForegroundWanted(this.nearL7Crowd(current) || this.nearCorpse(current), this.megaDistance(current));
+    this.courierForeground = !!current && courierForegroundWanted(this.nearL7Crowd(current) || this.nearLargeCorpse(current), this.megaDistance(current));
     this.character?.setForeground(this.courierForeground);
     this.healthBars?.update(this.camera, this.view.viewportHeight * this.camera.aspect, this.view.viewportHeight, this.barOccluded, this.lighting?.preset === 'L6');
     if (this.world.missions?.state.l3) {
