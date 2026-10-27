@@ -70,7 +70,7 @@ export function look(): Eyes {
   const ringPrompt = shown(q('interaction-ring')) ? q('interaction-ring')!.textContent ?? 'ring' : '';
   const trackerPrompt = shown(objective) ? objective!.textContent ?? '' : shown(tracker) ? tracker!.textContent ?? '' : '';
   const markerEl = q('mission-marker');
-  const route = q('minimap-route');
+  const route = q('mission-route-pin');
   const panel = q('mission-panel'), button = q<HTMLButtonElement>('mission-button');
   const menu = [...document.querySelectorAll<HTMLElement>('[data-menu-screen]')].find(el => !el.hidden)?.dataset.menuScreen ?? null;
   const p = a.getEntity(1);
@@ -128,7 +128,7 @@ export function look(): Eyes {
     objective: shown(objective) ? objective!.textContent ?? '' : trackerText, tracker: trackerText,
     distance: shown(tracker) && tracker?.dataset.distance ? Number(tracker.dataset.distance) : distanceText ? Number(distanceText[1]) : null,
     marker: markerEl && Number.isFinite(left) ? { visible: shown(markerEl), offscreen: markerEl.dataset.offscreen === 'true', x: left, y: top, anchor: markerEl.dataset.anchor ?? null, guidance: markerEl.dataset.guidance } : null,
-    route: shown(route) ? { dx: (parseFloat(route!.style.left) - 50) * 30 / 44, dz: (parseFloat(route!.style.top) - 50) * 30 / 44 } : null,
+    route: shown(route) ? { dx: (parseFloat(route!.style.left) - 50) * 100 / 40, dz: (parseFloat(route!.style.top) - 50) * 100 / 40 } : null,
     panel: { visible: shown(panel), heading: q('mission-heading')?.textContent ?? '', button: button && shown(button) ? button.textContent : null },
     menu, loading: shown(q('menu-loading')) || shown(q('level-transition')),
     prompt: ringPrompt || (trackerPrompt.includes('Press E or tap the console action') ? trackerPrompt : ''),
