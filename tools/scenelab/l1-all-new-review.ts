@@ -1,6 +1,6 @@
 /** Native 120/400 px old/new figures through the game's lighting and camera. */
 import { execFileSync } from 'node:child_process';
-import { mkdirSync, readFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import type { AssetDef } from '../../src/assets/types';
 import type { Game } from '../../src/Game';
@@ -9,18 +9,24 @@ import { SceneSession, stopServer, writeJson } from './session';
 const out = resolve(process.env.L1_REVIEW_RAW ?? 'test-results/l1-all-new/figures');
 mkdirSync(out, { recursive: true });
 const current = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as AssetDef[];
-const old = JSON.parse(execFileSync('git', ['show', '0009f107d:src/assets/manifest.json'], { encoding: 'utf8' })) as AssetDef[];
+const old = JSON.parse(execFileSync('git', ['show', `${process.env.REVIEW_BASE ?? '0009f107d'}:src/assets/manifest.json`], { encoding: 'utf8' })) as AssetDef[];
 const ids = (process.env.FIGURES ?? 'npc.depot-clerk').split(',');
-const session = new SceneSession({ backend: 'webgl2', tier: 'high', viewport: { width: 800, height: 600 } });
+const tier = process.env.REVIEW_TIER === 'low' ? 'low' : 'high';
+const session = new SceneSession({ backend: 'webgl2', tier, viewport: { width: 800, height: 600 } });
 const receipts: unknown[] = [];
 try {
   await session.open();
   await session.page.addInitScript("window.__name = (fn, name) => Object.defineProperty(fn, 'name', { value: name, configurable: true });");
   await session.page.evaluate("window.__name = (fn, name) => Object.defineProperty(fn, 'name', { value: name, configurable: true });");
-  await session.load({ name: 'l1-figure-review', ground: 'asphalt', time: 'L1', size: 100, actors: [{ id: 'courier', kind: 'courier', at: [40, 40] }], camera: { mode: 'pose', position: [7, 6, 7], target: [0, .8, 0] } });
+  await session.load({ name: 'figure-review', ground: 'asphalt', time: process.env.REVIEW_TIME === 'L2' ? 'L2' : 'L1', size: 100, actors: [{ id: 'courier', kind: 'courier', at: [40, 40] }], camera: { mode: 'pose', position: [7, 6, 7], target: [0, .8, 0] } });
   for (const id of ids) for (const variant of ['old', 'new']) for (const pixels of [120, 400]) for (const yaw of [-45, 135]) {
     const coat = id.match(/\.(black|cream)$/)?.[1], base = coat ? id.replace(/\.(black|cream)$/, '') : id;
-    const def = (variant === 'old' ? old : current).find(d => d.id === base)!;
+    const def = structuredClone((variant === 'old' ? old : current).find(d => d.id === base)!);
+    if (tier === 'low' && def.crowdSkin) {
+      const lowPath = (path: string) => { const low = path.replace(/\.glb$/, '.low.glb'); return existsSync(low) ? low : path; };
+      def.glb = lowPath(def.glb!);
+      if (def.lods) for (const lod of ['lod1', 'lod2'] as const) if (def.lods[lod]) def.lods[lod] = lowPath(def.lods[lod]!);
+    }
     const framing = await session.page.evaluate(async ({ def, pixels, yaw, moving, coat, clip }) => {
       const modulePath = '/src/assets/registry.ts', threePath = '/node_modules/three/build/three.webgpu.js';
       const reviewMaterialPath = '/tools/scenelab/l1-all-new-review-material.ts';
@@ -77,7 +83,7 @@ try {
       return { bounds, targetPixels: pixels, actualPixels: bounds[3] - bounds[1], yaw, lod: pixels === 120 ? 'lod1' : 'lod0' };
     }, { def, pixels, yaw, moving: process.env.POSE === 'run', coat, clip: process.env.CLIP });
     const file = resolve(out, `${id}-${variant}-${pixels}-${yaw}.png`);
-    await session.screenshot(file); receipts.push({ id, variant, file, ...framing });
+    await session.screenshot(file); receipts.push({ id, variant, tier, file, ...framing });
     writeJson(resolve(out, 'receipts.json'), receipts);
     writeJson(resolve(out, `${id}-receipts.json`), receipts.filter(r => (r as { id: string }).id === id));
   }

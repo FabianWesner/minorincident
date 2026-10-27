@@ -1,10 +1,13 @@
 // Asset contract: every shipped GLB (all levels, all LODs) passes the one validator in tools/assets/validate.ts.
-// One test: the validator still rejects each contract violation, and the production manifest passes it.
+// Validator rejection cases and atlas identity details are shared across every figure build.
 import { Document } from '@gltf-transform/core';
 import { expect, test } from 'vitest';
 import manifest from '../../src/assets/manifest.json';
 import type { AssetDef } from '../../src/assets/types';
 import { validateAssets, validateDocument } from '../../tools/assets/validate';
+import { PNG } from 'pngjs';
+import { classifyCrowdAtlas } from '../../tools/assets/skin-crowd-regions';
+import { crowdRegion } from '../../src/render/characters/crowdRegionData';
 
 function fixture(): { doc: Document; def: AssetDef } {
   const doc = new Document(), buffer = doc.createBuffer();
@@ -16,6 +19,33 @@ function fixture(): { doc: Document; def: AssetDef } {
   const def: AssetDef = { id: 'prop.test', category: 'prop', status: 'modeled', tier: 'side', glb: 'test.glb', dimensions: { x: 1, y: 1, z: 1, tolerance: .05 }, forward: '+X', frontNodes: ['front'], requiredNodes: ['body'], animatedNodes: ['body'], sockets: ['front'], budget: { triangles: 2, materials: 2, fileKB: 1 } } as AssetDef;
   return { doc, def };
 }
+
+test('crowd atlas cleanup preserves enclosed eye paint and its authored alpha class', () => {
+  for (const garments of [false, true]) {
+    const doc = new Document(), buffer = doc.createBuffer(), png = new PNG({ width: 128, height: 128 });
+    for (let i = 0; i < png.data.length; i += 4) png.data.set([224, 168, 124, 255], i);
+    for (let y = 56; y < 64; y++) for (let x = 56; x < 64; x++) png.data.set([244, 244, 238, 255], (y * 128 + x) * 4);
+    for (let y = 59; y < 61; y++) for (let x = 59; x < 61; x++) png.data.set([35, 31, 29, 255], (y * 128 + x) * 4);
+    const attribute = (values: number[], type: 'VEC2' | 'VEC3' | 'SCALAR') => doc.createAccessor().setBuffer(buffer).setType(type).setArray(new Float32Array(values));
+    const material = doc.createMaterial().setBaseColorTexture(doc.createTexture().setImage(new Uint8Array(PNG.sync.write(png))).setMimeType('image/png'));
+    const prim = doc.createPrimitive().setMaterial(material)
+      .setAttribute('POSITION', attribute([1, 0, -1, 1, 1, -1, 1, 1, 1, 1, 0, 1], 'VEC3'))
+      .setAttribute('TEXCOORD_0', attribute([0, 0, 0, 1, 1, 1, 1, 0], 'VEC2'))
+      .setAttribute('_CROWD_PART', attribute([0, 0, 0, 0], 'SCALAR'))
+      .setAttribute('_CROWD_REGION', attribute([1, 1, 1, 1], 'SCALAR'))
+      .setIndices(doc.createAccessor().setBuffer(buffer).setType('SCALAR').setArray(new Uint16Array([0, 1, 2, 0, 2, 3])));
+    const scene = doc.createScene(), head = doc.createNode('head'); scene.addChild(head);
+    scene.addChild(doc.createNode('skin_body').setSkin(doc.createSkin().addJoint(head)).setMesh(doc.createMesh().addPrimitive(prim)));
+    scene.addChild(doc.createNode('skin_eyes').setMesh(doc.createMesh().addPrimitive(doc.createPrimitive().setAttribute('POSITION', attribute([1, .8, 0], 'VEC3')))));
+    classifyCrowdAtlas(doc, garments);
+    const result = PNG.sync.read(Buffer.from(material.getBaseColorTexture()!.getImage()!));
+    for (const [x, y, rgb] of [[60, 60, [35, 31, 29]], [57, 57, [244, 244, 238]]] as const) {
+      const offset = (y * 128 + x) * 4;
+      expect([...result.data.subarray(offset, offset + 3)], `eye RGB, garments=${garments}`).toEqual(rgb);
+      expect(result.data[offset + 3], `eye class, garments=${garments}`).toBe(Math.round((crowdRegion.authored + 1) * 255 / 7));
+    }
+  }
+});
 
 test('the asset validator rejects every contract violation, and every production asset passes it', async () => {
   const { doc, def } = fixture();

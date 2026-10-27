@@ -1,14 +1,12 @@
 # L2 all new figures
-
-Status: in progress; no rollout verdict yet.
-Source roster: `src/data/crowdAppearance.ts` supplies seven regular infected variants; `src/data/npcs.ts` supplies five recurring civilian models.
-L2 volume: 30 trapped civilians (20 low), 24 ambush infected, 13 bridge infected, four seated civilians, seven static corpses, six firefighters, four police, plus two child appearances.
-Batch 2 target (12): the seven regular infected variants and five recurring civilian models; batch 3 candidates: child, firefighter and police models.
-Already skinned at base: `inf.common-worker`, `npc.civilian-man-a/b`, `npc.civilian-woman-a/b`, `npc.civilian-elderly`.
-Build finding: passing `assets/inf.jogger` silently skinned old rigid geometry (38,661 triangles, 1 influence/vertex); that output was removed.
-Pipeline-cast rebuild from durable `cast/wave1/inf.jogger` reached Blender surface reconstruction, which exited 245; no new model was integrated.
-The build now refuses game asset directories without `source/manifest.json`; this guard was verified to reject `assets/inf.jogger` before writes.
-`npm test`: pass, 85 tests; `node --import tsx tools/assets/validate.ts`: pass, zero errors across the validated assets.
-Capture blocker: loopback bind/connect is denied (`EPERM`) for Scene Lab ports; no game-camera sheet is reviewable yet.
-Pending: old/new 120px and 400px low/high sheets, 30-figure crowd, scripted scenes, smoke, scene gate, L2 playthrough, perf and showcase image.
-L1 per-LOD triangle/file limits apply: 6k/2.5k/900 humans and 600/250/150 kB; infected archetypes use their manifest triangle budgets.
+- Scope: [production census](census.json) finds 10 IDs per run, 11 with alternate courier; turned residents keep civilian bodies. No remaining L2 rigid figures or batch-3 exclusions.
+- Converted child + police; retained the nine existing v2 figures. [31 decoded runtime files](coverage.json), [12 zero-manual deliveries](build-integrity.json); original skeletons, sockets and clips retained.
+- Sources: pipeline `lane/l2-all-new` commit `9c870fc`; saved child high reused, one officer reconstruction. Plain emission ray bake, closed whole bodies, no rigid cuts or nearest-surface colour repair.
+- Fixed atlas cleanup erasing pupils; restored rocket/backpack star and POLICE marks; applied automatic brim/fringe clearance. Uniforms keep authored colours.
+- Reviewed native low/high 120/400px [child](01-npc.civilian-kid.jpg) and [police](02-npc.police-officer.jpg): eyes/gear readable; fine edges remain softer than the old procedural figures.
+- Runtime: six low-tier scripted scenes and healthy/turned/frozen-corpse captures pass; high-tier scenes, final crowd sheet and playthrough pending.
+- Gates so far: validator 1262 rows/zero errors; `npm test` 86 pass; typecheck/lint and `verify E20` pass. Smoke and `scene:gate` pending.
+- Runtime LOD0/1/2 limits: 6000/2500/4000 triangles, 600/250/150 kB; maxima 5507/2295/2295 triangles and 401432/188860/142548 bytes. Far tier retains LOD1 anatomy as in L1.
+- Perf: final shared A/B draws/decoded-memory capture pending; native p95 and five cold loads pending the PO's quiet measurement window.
+- HF: one inference (36.22 s) + export (29.96 s); no additional compute purchases; Space response does not expose the credit debit. [Receipt](inference-receipt.json).
+- Showcase image and final gate receipts pending; no deploy or merge.

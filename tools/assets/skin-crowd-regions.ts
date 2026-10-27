@@ -55,7 +55,7 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean): RegionRepo
     const name = names[0] === names[1] || names[0] === names[2] ? names[0] : names[1];
     const g = groups.indexOf(GROUP[name] ?? 'upper') as number, skin = !!region && v.every(i => Math.abs(region.getScalar(i) - 1) < .01);
     const centre = v.map(i => position.getElement(i, [])).reduce((a, q) => a.map((n, c) => n + q[c] / 3), [0, 0, 0]);
-    const inFace = !!eyes && g === 1 && centre[1] < eye[1] + .045 && centre[0] > eye[0] - .05;
+    const inFace = !!eyes && g === 1 && centre[1] < eye[1] + .10 && centre[0] > eye[0] - .12;
     for (let k = 0; k < 3; k++) { p[k][0] = uv.getElement(v[k], [])[0] * w - .5; p[k][1] = uv.getElement(v[k], [])[1] * h - .5; }
     const x0 = Math.max(0, Math.floor(Math.min(p[0][0], p[1][0], p[2][0]))), x1 = Math.min(w - 1, Math.ceil(Math.max(p[0][0], p[1][0], p[2][0])));
     const y0 = Math.max(0, Math.floor(Math.min(p[0][1], p[1][1], p[2][1]))), y1 = Math.min(h - 1, Math.ceil(Math.max(p[0][1], p[1][1], p[2][1])));
@@ -120,7 +120,7 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean): RegionRepo
   for (let pass = 0; pass < 2; pass++) {
     const next = cls.slice();
     for (let y = 2; y < h - 2; y++) for (let x = 2; x < w - 2; x++) {
-      const i = y * w + x; if (!owner[i] || cls[i] !== crowdRegion.authored) continue;
+      const i = y * w + x; if (!owner[i] || face[i] || cls[i] !== crowdRegion.authored) continue;
       const counts = new Map<number, number>(); let n = 0;
       for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) { const j = i + dy * w + dx; if (!owner[j]) continue; n++; counts.set(cls[j], (counts.get(cls[j]) ?? 0) + 1); }
       let best: number = crowdRegion.authored, votes = 0; for (const [c, v] of counts) if (c !== crowdRegion.authored && v > votes) { best = c; votes = v; }
@@ -147,7 +147,9 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean): RegionRepo
         else if (cls[j] !== crowdRegion.authored) { edge++; border.set(cls[j], (border.get(cls[j]) ?? 0) + 1); }
       }
     }
-    if (!edge) continue;
+    // White sclera and dark pupils can average close to skin, even though each
+    // is an intentional high-contrast feature. Never fill a facial island.
+    if (!edge || members.some(i => face[i])) continue;
     const [surround, votes] = [...border].sort((a, b) => b[1] - a[1])[0], reference = regionColour(surround);
     if (!reference || votes < edge * .8 || members.length > 6000 * w * h / (1024 * 1024)) continue;
     const colour: Lab = [mean[0] / members.length, mean[1] / members.length, mean[2] / members.length];
@@ -177,7 +179,7 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean): RegionRepo
   {
     const next = cls.slice();
     for (let y = 1; y < h - 1; y++) for (let x = 1; x < w - 1; x++) {
-      const i = y * w + x; if (!owner[i]) continue;
+      const i = y * w + x; if (!owner[i] || face[i] && cls[i] === crowdRegion.authored) continue;
       const votes = new Map<number, number>();
       for (const j of [i - w - 1, i - w, i - w + 1, i - 1, i + 1, i + w - 1, i + w, i + w + 1]) if (owner[j]) votes.set(cls[j], (votes.get(cls[j]) ?? 0) + 1);
       for (const [c, v] of votes) if (c !== cls[i] && v >= 6) { next[i] = c; break; }
@@ -195,9 +197,9 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean): RegionRepo
   // ETC1S pays per distinct block pattern: classes are written per CELL x CELL cell (majority, ties to the tinted class).
   const cell = Number(process.env.CROWD_REGION_CELL ?? 4);
   for (let y = 0; y < h; y += cell) for (let x = 0; x < w; x += cell) {
-    const votes = new Map<number, number>();
-    for (let dy = 0; dy < cell; dy++) for (let dx = 0; dx < cell; dx++) { const c = out[(y + dy) * w + x + dx]; votes.set(c, (votes.get(c) ?? 0) + (owner[(y + dy) * w + x + dx] ? 4 : 1) + (c === crowdRegion.authored ? 0 : .5)); }
-    const value = [...votes].sort((a, b) => b[1] - a[1])[0][0];
+    const votes = new Map<number, number>(); let feature = false;
+    for (let dy = 0; dy < cell; dy++) for (let dx = 0; dx < cell; dx++) { const i = (y + dy) * w + x + dx, c = out[i]; feature ||= !!face[i] && cls[i] === crowdRegion.authored; votes.set(c, (votes.get(c) ?? 0) + (owner[i] ? 4 : 1) + (c === crowdRegion.authored ? 0 : .5)); }
+    const value = feature ? crowdRegion.authored : [...votes].sort((a, b) => b[1] - a[1])[0][0];
     for (let dy = 0; dy < cell; dy++) for (let dx = 0; dx < cell; dx++) data[((y + dy) * w + x + dx) * 4 + 3] = Math.round((value + 1) * 255 / 7);
   }
   // Gear (props) shares the body's atlas; every copy of the source image takes the classed one.

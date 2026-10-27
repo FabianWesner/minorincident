@@ -74,8 +74,8 @@ for (const lod of [0, 1, 2]) {
   if (metadata?.class === 'quadruped') args.push('--rig-kind', 'quadruped');
   if (unbound && existsSync(join(source, 'props.json'))) args.push('--props', join(source, `source/assembled-lod${sourceLod}.glb`), '--props-recipe', join(source, 'props.json'), '--props-lod', String(sourceLod));
   if (id === 'char.corgi') args.push('--retain-corgi-props');
-  if (unbound && ['npc.lab-guard', 'npc.firefighter-alive'].includes(id)) args.push('--clear-headwear', id === 'npc.lab-guard' ? 'navy' : 'red');
-  if (unbound && id === 'npc.lab-tech-a') args.push('--clear-headwear', 'brown');
+  if (unbound && ['npc.lab-guard', 'npc.police-officer', 'npc.firefighter-alive'].includes(id)) args.push('--clear-headwear', id === 'npc.firefighter-alive' ? 'red' : 'navy');
+  if (unbound && ['npc.lab-tech-a', 'npc.civilian-kid'].includes(id)) args.push('--clear-headwear', 'brown');
   if (id === 'char.corgi' || id === 'amb.dog') args.push('--no-eye-discs');
   const cheap = def.category === 'prop' && def.budget.triangles <= 12000;
   const triangleLimit = lod > 0 && def.authoredLodTriangles ? def.authoredLodTriangles[lod === 1 ? 'lod1' : 'lod2'] : lod > 0 && def.authoredLodRatios ? Math.ceil(def.budget.triangles * def.authoredLodRatios[lod === 1 ? 'lod1' : 'lod2']) : lod === 1 && def.tier === 'hero' ? Math.ceil(def.budget.triangles * .15) : lod === 2 && !cheap ? Math.min(4000, def.budget.triangles) : def.budget.triangles;
