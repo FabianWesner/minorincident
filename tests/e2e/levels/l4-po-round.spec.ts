@@ -54,17 +54,19 @@ async function run(page: Page, quality: 'high' | 'low', zoom: number, renderer: 
       const infected = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden);
       return {
         backend: a.perf().backend, tier: a.perf().quality.tier, t: s.turnAt ? +((a.tick() - s.turnAt) / 60).toFixed(1) : null, phase: s.phase,
+        foreground: a.getState().render.courierForeground,
         player: { x: +p.x.toFixed(1), z: +p.z.toFixed(1), insideRing: p.x > ring.x0 && p.x < ring.x1 && p.z > ring.z0 && p.z < ring.z1 },
         soldiers: soldiers.length, aiming: soldiers.filter(e => e.civilian!.story?.clip === 'shoot' || !!e.civilian!.ally?.targetId).length,
         engaged: soldiers.filter(e => e.civilian!.ally?.engaged).length,
         peds: peds.length, fleeing: peds.filter(e => e.civilian!.state === 'flee' || e.civilian!.state === 'hide' || e.civilian!.state === 'alarmed').length,
         infected: infected.length, alphas: infected.filter(e => e.archetype === 'infected.alpha').length,
         models: Object.fromEntries([...new Set(infected.map(e => e.infected!.model ?? e.infected!.variant))].map(model => [model, infected.filter(e => (e.infected!.model ?? e.infected!.variant) === model).length])),
-        drawnModels: [...new Set(a.crowdFigures().filter(f => f.drawn && f.appearance).map(f => f.appearance!.model))],
+        drawnModels: [...new Set(a.crowdFigures().filter(f => f.drawn && f.appearance && a.getEntity(f.id)?.infected).map(f => f.appearance!.model))],
       };
     });
     await page.screenshot({ path: `${output}/${name}-${label}.png` });
     expect(m.backend).toBe(renderer);
+    if (label === '8-west-breach-follow') expect(m.foreground, 'the corpse field must not hide the courier').toBe(true);
     report[label] = m;
   };
   // 1: the bus exit (the courier and the corgi step off), framed by the follow camera.

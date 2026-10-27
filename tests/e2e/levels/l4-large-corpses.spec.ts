@@ -33,4 +33,12 @@ for (const zoom of [1, 1.5]) test(`Q-193 Q-195 @E22 solid Alpha corpse and welde
   expect(proof.retained).toBe(8); expect(proof.suitsDrawn).toBe(8);
   await page.screenshot({ path: `${output}/alpha-contact-and-suit-pile-z${zoom}.png` });
   writeFileSync(`${output}/alpha-contact-z${zoom}.json`, JSON.stringify(proof, null, 2) + '\n');
+  // Small bodies remain walkable, but their accumulated meshes must not hide the courier either.
+  const pile = await page.evaluate(async () => {
+    const a = window.__SS__!; a.teleport('player', { x: 2.5, z: -3.5 }); await a.step(2); await a.screenshotReady();
+    return { foreground: a.getState().render.courierForeground, at: a.getEntity(1)!.transform };
+  });
+  expect(pile.foreground).toBe(true);
+  expect(Math.hypot(pile.at.x - 2.5, pile.at.z + 3.5)).toBeLessThan(.1);
+  await page.screenshot({ path: `${output}/walkable-suit-pile-z${zoom}.png` });
 });

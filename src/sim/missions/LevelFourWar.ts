@@ -812,7 +812,9 @@ export class LevelFourWar {
       const at = this.snap(spot, radius);
       if (!ai.nav.clear(at.x, at.z, radius)) continue;
       const id = ai.spawn('infected.alpha', at, { state: 'idle', yaw: -Math.atan2(l4.map.centre.z - at.z, l4.map.centre.x - at.x) });
-      const e = world.entities.get(id); if (e?.combat) e.combat.allyResist = l4.alphas.allyResist;
+      const e = world.entities.get(id)!;
+      if (!this.outsidePerimeter(e.transform) || !ok(e.transform)) { ai.release(e); continue; }
+      if (e.combat) e.combat.allyResist = l4.alphas.allyResist;
       s.alphaIds.push(id); s.alphaAnchors.push(entry.anchor); this.reserveSlots();
     }
   }
