@@ -1,9 +1,7 @@
 {
   "id": "house.porch-a",
   "triangles": {
-    "lod0": 9084,
-    "lod1": 1084,
-    "lod2": 264
+    "lod0": 9084
   },
   "dimensions_blender": [
     1.320361614227295,
@@ -28,42 +26,8 @@
     "col:body"
   ],
   "backface_culling": true,
-  "rounds": 4,
+  "rounds": 1,
   "webgpu_ok": false,
-  "webgl2_ok": true,
-  "gaps": [
-    "WebGPU manual check pending; manifest registration intentionally deferred."
-  ],
-  "delivery": {
-    "model.glb": {
-      "bytes": 178300,
-      "meshopt": true,
-      "quantized": true
-    },
-    "model.lod1.glb": {
-      "bytes": 39384,
-      "meshopt": true,
-      "quantized": true
-    },
-    "model.lod2.glb": {
-      "bytes": 21420,
-      "meshopt": true,
-      "quantized": true
-    }
-  },
-  "lod_ratios": {
-    "lod1": 0.11933069132540731,
-    "lod2": 0.02906208718626156
-  },
-  "within_budget": true,
-  "nodes_ok": true,
-  "determinism": {
-    "id": "house.porch-a",
-    "geometry_hash": "ea172672e28ef83f6bd4a9c83c29a479f03d63b787fd438a4efdeee50faae38c",
-    "second_geometry_hash": "ea172672e28ef83f6bd4a9c83c29a479f03d63b787fd438a4efdeee50faae38c",
-    "geometry_identical": true,
-    "raw_byte_identical": true
-  },
-  "matches_reference": true,
-  "done": true
+  "webgl2_ok": false,
+  "gaps": []
 }

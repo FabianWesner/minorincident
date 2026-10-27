@@ -21,42 +21,8 @@
     "col:body"
   ],
   "backface_culling": true,
-  "rounds": 3,
+  "rounds": 1,
   "webgpu_ok": false,
-  "webgl2_ok": true,
-  "gaps": [
-    "WebGPU manual check pending; manifest registration intentionally deferred."
-  ],
-  "delivery": {
-    "model.glb": {
-      "bytes": 61252,
-      "meshopt": false,
-      "quantized": false
-    },
-    "model.lod1.glb": {
-      "bytes": 61252,
-      "meshopt": false,
-      "quantized": false
-    },
-    "model.lod2.glb": {
-      "bytes": 61252,
-      "meshopt": false,
-      "quantized": false
-    }
-  },
-  "lod_ratios": {
-    "lod1": 1,
-    "lod2": 1
-  },
-  "within_budget": true,
-  "nodes_ok": true,
-  "determinism": {
-    "id": "prop.lawn-chair-a",
-    "geometry_hash": "6a6b2c2a3b2ac918daf0b328fe9b395df40607cbc18a4e78c7a8bec41fc92486",
-    "second_geometry_hash": "6a6b2c2a3b2ac918daf0b328fe9b395df40607cbc18a4e78c7a8bec41fc92486",
-    "geometry_identical": true,
-    "raw_byte_identical": true
-  },
-  "matches_reference": true,
-  "done": true
+  "webgl2_ok": false,
+  "gaps": []
 }

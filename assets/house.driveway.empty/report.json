@@ -1,9 +1,7 @@
 {
   "id": "house.driveway.empty",
   "triangles": {
-    "lod0": 3312,
-    "lod1": 246,
-    "lod2": 108
+    "lod0": 3312
   },
   "dimensions_blender": [
     3.034715175628662,
@@ -23,43 +21,8 @@
     "front"
   ],
   "backface_culling": true,
-  "rounds": 3,
+  "rounds": 1,
   "webgpu_ok": false,
-  "webgl2_ok": true,
-  "gaps": [
-    "WebGPU manual check pending; manifest registration intentionally deferred."
-  ],
-  "delivery": {
-    "model.glb": {
-      "bytes": 181240,
-      "meshopt": true,
-      "quantized": true
-    },
-    "model.lod1.glb": {
-      "bytes": 20692,
-      "meshopt": false,
-      "quantized": false
-    },
-    "model.lod2.glb": {
-      "bytes": 11640,
-      "meshopt": false,
-      "quantized": false
-    }
-  },
-  "lod_ratios": {
-    "lod1": 0.07427536231884058,
-    "lod2": 0.03260869565217391
-  },
-  "within_budget": true,
-  "nodes_ok": true,
-  "determinism": {
-    "id": "house.driveway.empty",
-    "geometry_hash": "f4f2898212a817235d050b9495e6e40b37e9d4a137fe3ba3a3fab9573f156356",
-    "second_geometry_hash": "f4f2898212a817235d050b9495e6e40b37e9d4a137fe3ba3a3fab9573f156356",
-    "geometry_identical": true,
-    "raw_byte_identical": true
-  },
-  "matches_reference": true,
-  "done": true,
-  "lod_note": "LOD1/LOD2 authored in build.py (--lod 1|2) from the LOD0 recipe; packed to public by npm run assets:pack"
+  "webgl2_ok": false,
+  "gaps": []
 }
