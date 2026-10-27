@@ -43,7 +43,25 @@ try {
     if (mode === 'checkpoint') {
       await session.page.evaluate(async () => { window.__SCENE__!.setCamera({ mode: 'close', target: 'hmg', radius: 6, azimuth: 45 }); await window.__SCENE__!.ready(); });
       await session.screenshot(resolve(out, spec.name!, 'close.png'));
+      await session.page.evaluate(async () => { window.__SCENE__!.setCamera({ mode: 'close', target: 'hmg', radius: 6, azimuth: 225 }); await window.__SCENE__!.ready(); });
+      await session.screenshot(resolve(out, spec.name!, 'close-front.png'));
     }
+  }
+  if (mode === 'l4-weapons') {
+    const spec: SceneSpec = { name: 'l4-shared-combat-weapons', ground: 'asphalt', time: 'L4', tier: 2, size: 100,
+      actors: [
+        { id: 'courier', kind: 'courier', at: [30, 30] },
+        ...(['rifle', 'hmg', 'hunting-rifle'] as const).map((weapon, i): ActorSpec => ({ id: weapon, kind: 'pedestrian', at: [i * 2 - 2, 0], yaw: 0,
+          look: { model: weapon === 'hunting-rifle' ? 'npc.civilian-man-a' : 'npc.national-guard', handProp: weapon === 'hmg' ? 'rifle' : weapon, role: weapon === 'hunting-rifle' ? 'civilian' : 'soldier' },
+          state: { ally: { role: weapon === 'hunting-rifle' ? 'civilian' : 'soldier', weapon } } })),
+      ], camera: { mode: 'close', target: 'hmg', radius: 8, azimuth: 135 }, frames: 90, shots: [3, 90], expect: { consoleErrors: 0 } };
+    const result = await runSpec(session, spec, { out, sheet: 15 });
+    receipts.push(result); assert.ok(result.pass, JSON.stringify(result.failed));
+    for (const azimuth of [45, 225]) {
+      await session.page.evaluate(async azimuth => { window.__SCENE__!.setCamera({ mode: 'close', target: 'hmg', radius: 8, azimuth }); await window.__SCENE__!.ready(); }, azimuth);
+      await session.screenshot(resolve(out, `close-${azimuth}.png`));
+    }
+    writeJson(resolve(out, 'receipts.json'), receipts);
   }
   if (mode === 'story') {
     await session.page.evaluate(async () => {

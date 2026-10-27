@@ -17,7 +17,15 @@ export const longGunHolds: Record<string, LongGunHold> = {
 /** The gunner on the L10 mounted minigun: right hand on the right spade grip, the support hand on the left one (axes of the support offset
  * are the right-hand socket's), body square to the aim. Tuned in the Scene Lab close-ups of `l10-minigun-gunner`. */
 export const mountedGunHold: LongGunHold = { scale: 1, support: [0, 0, -.34], stance: 0, reach: .5, drop: .12, lateral: .17 };
-export const crowdLongGunHold: LongGunHold = { scale: 1, support: [0, -.075, .30], stance: Math.PI / 2, reach: .6, drop: .08, lateral: .24 };
+/** Same authored grips as the courier, rotated from +X into crowd prop +Z. */
+export const crowdGunHolds: Record<string, LongGunHold> = Object.fromEntries(
+  Object.entries({ rifle: 'wpn.assault-rifle', hmg: 'wpn.machine-gun', shotgun: 'wpn.shotgun', 'hunting-rifle': 'wpn.hunting-rifle' }).map(([prop, asset]) => {
+    const hold = longGunHolds[asset];
+    return [prop, { ...hold, support: [-hold.support[2], hold.support[1], hold.support[0]] }];
+  }),
+);
+export const crowdLongGunHold = crowdGunHolds.rifle;
+
 /** Two-handed low ready keeps the barrel forward, clear of the road. */
 export const gunCarryElevation = (assetId: string): number => longGunHolds[assetId] ? -.18 : -.75;
 
@@ -175,7 +183,7 @@ export class CrowdGunAim {
       this.matrix.decompose(node.position, node.quaternion, node.scale);
     });
     this.armIK = new LimbIK(this.nodes[parts.indexOf('armR')], this.nodes[parts.indexOf('foreArmR')], this.nodes[parts.indexOf('handR')]);
-    this.aim = new GunAim(this.nodes[parts.indexOf('armR')], this.nodes[parts.indexOf('foreArmR')], this.nodes[parts.indexOf('handR')],this.nodes[parts.indexOf('torso')], ['armL', 'foreArmL', 'handL'].map(name => this.nodes[parts.indexOf(name)]) as [Object3D, Object3D, Object3D], [this.nodes[parts.indexOf('handR')], this.nodes[parts.indexOf('weaponSocketL')]], this.nodes[parts.indexOf('head')]);
+    this.aim = new GunAim(this.nodes[parts.indexOf('armR')], this.nodes[parts.indexOf('foreArmR')], this.nodes[parts.indexOf('handR')],this.nodes[parts.indexOf('torso')], ['armL', 'foreArmL', 'handL'].map(name => this.nodes[parts.indexOf(name)]) as [Object3D, Object3D, Object3D], [this.nodes[parts.indexOf('weaponSocketR')], this.nodes[parts.indexOf('weaponSocketL')]], this.nodes[parts.indexOf('head')]);
   }
   /** Small hand props (cup, phone): the right elbow is bent, the hand rests at chest height in front of the body (`sip` 0) and a
    * cup-sized offset raises it to the mouth (`sip` 1). Offsets are in torso axes (+X forward, +Y up, +Z the figure's right) and

@@ -72,5 +72,12 @@ for state in ['healthy','turned','corpse']:
 if len(states)==6:stack(states).save(OUT/'09-states-and-motion.jpg',quality=92,optimize=True)
 high_crowds=[ROOT/f'crowd-{variant}-high/shot-0003.png' for variant in ['old','new']]
 if all(p.exists() for p in high_crowds):stack([label(Image.open(p).convert('RGB'),f'L3 30-figure crowd | {variant} high | WebGL2') for p,variant in zip(high_crowds,['old','new'])]).save(OUT/'10-crowd-high.jpg',quality=92,optimize=True)
-checkpoint=[ROOT/f'checkpoint-new-{tier}/l3-army-inner-cover/close.png' for tier in ['low','high']]
-if all(p.exists() for p in checkpoint):stack([label(Image.open(p).convert('RGB'),f'L3 army inner cover | {tier} | production gun pose and backpack') for p,tier in zip(checkpoint,['low','high'])]).save(OUT/'11-army-close.jpg',quality=92,optimize=True)
+checkpoint=[]
+for tier in ['low','high']:
+    folder=ROOT/f'checkpoint-new-{tier}/l3-army-inner-cover'
+    for name,view in [('close.png','back / neck'),('close-front.png','front / both hand grips')]:
+        p=folder/name
+        if p.exists():checkpoint.append(label(Image.open(p).convert('RGB'),f'L3 army inner cover | {tier} | {view}'))
+if len(checkpoint)==4:stack(checkpoint).save(OUT/'11-army-close.jpg',quality=92,optimize=True)
+l4=[ROOT/f'l4-weapons-new-{tier}'/f'close-{azimuth}.png' for tier in ['low','high'] for azimuth in [45,225]]
+if all(p.exists() for p in l4):stack([label(Image.open(p).convert('RGB'),f'L4 shared combat path | {tier} | azimuth {azimuth} | real rifle, HMG, hunting rifle') for p,(tier,azimuth) in zip(l4,[(t,a) for t in ['low','high'] for a in [45,225]])]).save(OUT/'12-l4-weapons.jpg',quality=92,optimize=True)
