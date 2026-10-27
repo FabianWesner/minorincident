@@ -50,4 +50,4 @@ refused admission because GPU/browser reservations were active; sampled free
 physical RAM was also below 4 GiB. Admission was not bypassed. This implementation
 counts free physical pages only; counting reclaimable inactive memory would be
 a change to the documented admission policy. The merged cleanup report also
-records existing gate failures: [tests-cleanup.md](../qa/tests-cleanup.md).
+records existing gate failures in `main:docs/qa/tests-cleanup.md`.
