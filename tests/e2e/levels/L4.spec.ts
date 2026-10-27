@@ -98,7 +98,7 @@ function helpers(page: Page) {
       else if (fights >= 3) { if (++fights >= 8) fights = 0; if (fights === 4) await click(); }
       else if (i % 10 === 9) await click();
     }
-    const why = await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!; return { hp: p.health.current, deaths: a.missions.state()!.stats.deaths, near: a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 10).length }; });
+    const why = await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!; return { hp: p.health.current, deaths: a.missions.state()!.stats.deaths, near: a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 10).length, nearby: a.query({}).filter(e => e.id !== p.id && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 4).map(e => ({ id: e.id, kind: e.kind, archetype: e.archetype, hp: e.health?.current, at: e.transform })) }; });
     throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify((await player()).transform)} ${JSON.stringify(why)}`);
   };
   const interact = async () => { await page.keyboard.down('e'); await step(3); await page.keyboard.up('e'); await step(2); };
