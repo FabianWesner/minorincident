@@ -53,12 +53,14 @@ class SchedulerChecks(unittest.TestCase):
     def ticket(self): return slot.enqueue(os.getpid(), str(self.wt))
 
     def test_benchmark_requires_actual_receipt_overlap(self):
-        jobs = [{'backend': backend, 'executionMs': [start, end]} for backend, start, end in
+        jobs = [{'backend': backend, 'executionFilesMs': [[start, end]]} for backend, start, end in
                 [('remote', 1000, 4000), ('remote', 2000, 5000), ('remote', 2500, 6000), ('local', 3000, 7000)]]
         self.assertEqual(benchmark.receipt_overlap(jobs), 1)
-        jobs[3]['executionMs'] = [4100, 7000]
+        jobs[3]['executionFilesMs'] = [[4100, 7000]]
         self.assertEqual(benchmark.receipt_overlap(jobs), 0)
-        del jobs[3]['executionMs']
+        jobs[3]['executionFilesMs'] = [[1000, 2400], [4100, 7000]]
+        self.assertEqual(benchmark.receipt_overlap(jobs), 0)  # Yielded during remote overlap.
+        del jobs[3]['executionFilesMs']
         self.assertEqual(benchmark.receipt_overlap(jobs), 0)
         jobs[3]['backend'] = 'remote'
         self.assertEqual(benchmark.receipt_overlap(jobs), 0)

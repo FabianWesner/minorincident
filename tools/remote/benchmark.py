@@ -20,11 +20,19 @@ HERE = Path(__file__).resolve().parent
 
 
 def receipt_overlap(jobs):
-    """Overlap of actual test execution envelopes, excluding sync/pull/cleanup."""
+    """Concurrent test-file time; excludes sync, cleanup, and yielded gaps."""
     if sorted(j.get('backend', '') or '' for j in jobs) != ['local', 'remote', 'remote', 'remote']:
         return 0
-    if any('executionMs' not in j for j in jobs): return 0
-    return max(0, min(j['executionMs'][1] for j in jobs) - max(j['executionMs'][0] for j in jobs)) / 1000
+    if any('executionFilesMs' not in j for j in jobs): return 0
+    events = sorted((at, delta, index) for index, job in enumerate(jobs)
+                    for start, end in job['executionFilesMs'] if end > start
+                    for at, delta in ((start, 1), (end, -1)))
+    active, previous, overlap = [0] * 4, None, 0
+    for at, delta, index in events:
+        if previous is not None and all(active): overlap += at - previous
+        active[index] += delta
+        previous = at
+    return overlap / 1000
 
 
 def main():
@@ -81,7 +89,9 @@ def main():
             report = json.loads(receipt.read_text())
             result['tests'] = {k: report.get(k) for k in ('numTotalTests', 'numPassedTests', 'numFailedTests', 'numPendingTests', 'numTotalTestSuites')}
             files = [f for f in report.get('testResults', []) if f.get('endTime', 0) > f.get('startTime', 0)]
-            if files: result['executionMs'] = [min(f['startTime'] for f in files), max(f['endTime'] for f in files)]
+            if files:
+                result['executionMs'] = [min(f['startTime'] for f in files), max(f['endTime'] for f in files)]
+                result['executionFilesMs'] = [[f['startTime'], f['endTime']] for f in files]
             (out / f'{index}.json').write_bytes(receipt.read_bytes())
         return result
 
