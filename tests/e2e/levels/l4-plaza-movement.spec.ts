@@ -119,7 +119,10 @@ for (const renderer of ['webgl', 'webgpu'] as const) for (const quality of ['hig
       }, center);
       if (input === 'mouse') await clickTo(page, target, target.name === 'left' ? `${out}/left-walking.png` : undefined);
       if (input === 'keyboard') {
-        await page.keyboard.down(target.key); await step(page, 82); await page.keyboard.up(target.key); await step(page, 10);
+        await page.keyboard.down(target.key); await step(page, 82);
+        // Bodies, crates and soldiers may slow the walk (war plaza): keep holding the key up to 3x as long, it must still arrive.
+        for (let i = 0; i < 8 && distance(await position(page), target) >= .9; i++) await step(page, 20);
+        await page.keyboard.up(target.key); await step(page, 10);
         const at = await position(page);
         expect(distance(at, target), JSON.stringify({ input, target, at, me: await page.evaluate(() => { const p = window.__SS__!.getState().player as any; return { st: p.combat?.statuses, loco: p.locomotion, hp: p.health, v: p.velocity, ctl: p.controller }; }), near: await page.evaluate(({ x, z }) => window.__SS__!.query({}).filter(e => e.id !== 1 && Math.hypot(e.transform.x - x, e.transform.z - z) < 5).map(e => ({ id: e.id, kind: e.kind, a: e.archetype, hp: e.health?.current, x: +e.transform.x.toFixed(2), z: +e.transform.z.toFixed(2) })), at) })).toBeLessThan(1);
       }
