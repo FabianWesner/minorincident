@@ -35,7 +35,6 @@ export interface AudioEventHost {
     musicIntensity(input: MusicIntensity): void;
     stinger(kind: string, level: string): void;
     pickupFanfare(actionId: string): void;
-    update(): void;
 }
 
 /** E23 signs of life: each survivor's sound is an existing cue (knock, clang, radio, a soft voice, a flashlight click). */
@@ -49,13 +48,31 @@ const voicedInfected = new Set(humanInfected.map(d => d.id));
 const fleshLike: Record<string, string> = { knife: 'machete', katana: 'machete', 'fire-axe': 'machete', 'nail-bat': 'bat', shovel: 'crowbar', 'police-baton': 'bat' };
 /** Maps the real producer events and lab events through the same ordered cue path. */
 export class AudioEventMapper {
-    ambienceDuckUntil = 0;
-    readonly corgiWarnAt = new Map<string, number>();
-    attackMusicUntil = 0;
-    externalIntensity: MusicIntensity | null = null;
-    incident = false;
-    complete = false;
+    private ambienceDuckUntil = 0;
+    private readonly corgiWarnAt = new Map<string, number>();
+    private attackUntil = 0;
+    private external: MusicIntensity | null = null;
+    private incidentSeen = false;
+    private completed = false;
     constructor(private readonly host: AudioEventHost) {}
+    /** Music policy the service feeds the director: read-only views of what the events decided. */
+    get attackMusicUntil(): number { return this.attackUntil; }
+    get externalIntensity(): MusicIntensity | null { return this.external; }
+    get incident(): boolean { return this.incidentSeen; }
+    get complete(): boolean { return this.completed; }
+    /** The L1 arc left its calm phase. */
+    markIncident(): void { this.incidentSeen = true; }
+    /** A new level's events are bound: forget the previous level's rate-limit clocks. */
+    beginLevel(): void { this.corgiWarnAt.clear(); }
+    /** Level change or teardown: the music policy starts over (a pending ambience duck still expires in `advance`). */
+    reset(): void { this.external = null; this.incidentSeen = false; this.completed = false; this.attackUntil = 0; }
+    /** Per service update: the combat duck of the ambience bus lasts 0.5 s, then it recovers. */
+    advance(): void {
+        if (this.ambienceDuckUntil && this.host.context.currentTime > this.ambienceDuckUntil) {
+            this.ambienceDuckUntil = 0;
+            this.host.graph.buses.ambience.gain.setTargetAtTime(1, this.host.context.currentTime, 0.25); // combat ducks ambience 3 dB, then it recovers
+        }
+    }
     /** Event → cue adapter. Real producer events and lab tests go through this identical path. */
     event(event: GameEvent): void {
         if ((event.type === 'combat.hit' || event.type === 'combat.kill') && event.actionId === 'cure') return;
@@ -85,10 +102,6 @@ export class AudioEventMapper {
         }
         if (event.type === 'l2.cue') {
             this.host.play(event.cue, { position: event.position, gain: event.gain, lowpass: event.lowpass });
-            return;
-        }
-        if (event.type === 'sim.tick') {
-            this.host.update();
             return;
         }
         if (event.type === 'civilian.state') {
@@ -130,7 +143,7 @@ export class AudioEventMapper {
         }
         if (event.type === 'combat.attack') {
             if (source === 1) {
-                this.attackMusicUntil = t + 0.2;
+                this.attackUntil = t + 0.2;
                 this.host.musicIntensity({ alerted: 0, danger: true });
             }
             if (!['ranged', 'throwable'].includes(action(event.actionId).category))
@@ -269,7 +282,7 @@ export class AudioEventMapper {
             return;
         }
         if (event.type === 'music.intensity') {
-            this.externalIntensity = event;
+            this.external = event;
             this.host.musicIntensity(event);
             return;
         }
@@ -314,7 +327,7 @@ export class AudioEventMapper {
             }
         }
         if (event.type === 'level.completed') {
-            this.complete = true;
+            this.completed = true;
             this.host.musicIntensity({ alerted: 0 });
             this.host.stinger('extraction', event.id);
             return;
@@ -369,7 +382,7 @@ export class AudioEventMapper {
         }
         if (event.type === 'objective.started' && event.id !== 'breakfast') {
             // L1 v2 opens with a calm morning: its objectives are not an incident until the arc leaves calm.
-            if (!this.host.arc() || this.host.arc()?.phase !== 'calm') this.incident = true;
+            if (!this.host.arc() || this.host.arc()?.phase !== 'calm') this.incidentSeen = true;
             this.host.musicIntensity({ alerted: event.id === 'store-fight' ? 10 : 0 });
             if (event.id === 'escape') this.host.stinger('elite', this.host.level());
         }

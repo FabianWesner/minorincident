@@ -137,7 +137,7 @@ export class AudioService implements Lifecycle {
             stopLoop: key => this.stopLoop(key), caption: (text, position, duration) => this.caption(text, position, duration),
             ring: (position, radius) => this.ring(position, radius), haptic: kind => this.haptic(kind),
             musicIntensity: input => this.musicIntensity(input), stinger: (kind, level) => this.stinger(kind, level),
-            pickupFanfare: actionId => this.pickupFanfare(actionId), update: () => this.update(),
+            pickupFanfare: actionId => this.pickupFanfare(actionId),
         });
         try {
             const stored = localStorage.getItem('minor-incident.audio');
@@ -186,7 +186,7 @@ export class AudioService implements Lifecycle {
         this.music = new MusicDirector(this.level, this.musicEpoch);
         this.ambience = new AmbienceSchedule(this.tier, this.world.seed, this.musicEpoch);
         this.arc = this.level === 'L1' ? new L1ArcDirector(this.world.seed, this.musicEpoch) : null;
-        this.eventMapper.corgiWarnAt.clear();
+        this.eventMapper.beginLevel();
         for (const type of Object.keys(eventCues) as GameEvent['type'][])
             this.unsubscribers.push(this.world.events.on(type, e => this.event(e), 10));
         this.graph.setListener(this.world.entities.get(1)!.transform);
@@ -574,14 +574,14 @@ export class AudioService implements Lifecycle {
         if (voice) this.graph.duckMusic(this.context.currentTime, Math.max(0.4, audioCues[id].duration - 0.6));
     }
     /** Event → cue adapter shared by producer events and lab tests. */
-    event(event: GameEvent): void { this.eventMapper.event(event); }
+    event(event: GameEvent): void {
+        if (event.type === 'sim.tick') this.update();
+        else this.eventMapper.event(event);
+    }
     update(): void {
         if (!this.available())
             return;
-        if (this.eventMapper.ambienceDuckUntil && this.context.currentTime > this.eventMapper.ambienceDuckUntil) {
-            this.eventMapper.ambienceDuckUntil = 0;
-            this.graph.buses.ambience.gain.setTargetAtTime(1, this.context.currentTime, 0.25); // combat ducks ambience 3 dB, then it recovers
-        }
+        this.eventMapper.advance();
         this.startBedsAndMusic();
         this.alarm.update(this.context.currentTime);
         this.busRadio();
@@ -721,7 +721,7 @@ export class AudioService implements Lifecycle {
     private updateArc(listener: SoundPosition, t: number): void {
         const arc = this.arc!, zone = zoneAt(this.graph.map, listener);
         const frame = arc.update(t, this.points.length, zone.startsWith('interior') && arc.phase === 'chaos');
-        if (arc.phase !== 'calm') this.eventMapper.incident = true;
+        if (arc.phase !== 'calm') this.eventMapper.markIncident();
         const bedScale = frame.calmGain;
         this.loop('arc:chatter', 'l1.calm.chatter', { gain: bedScale });
         for (const bed of ambienceTiers[this.tier].beds) {
@@ -769,11 +769,9 @@ export class AudioService implements Lifecycle {
         this.starting = false;
         this.loaded = false;
         this.scheduledTransition = null;
-        this.eventMapper.externalIntensity = null;
-        this.eventMapper.incident = false;
-        this.eventMapper.complete = false;
+        this.eventMapper.reset();
         this.quietMusicUntil = 0;
-        this.eventMapper.attackMusicUntil = 0; this.lastPeakStinger = -Infinity;
+        this.lastPeakStinger = -Infinity;
         this.l5Music = false;
     }
     dispose(): void { this.disposed = true; this.reset(); this.score.dispose(); this.radio.dispose(); document.removeEventListener('pointerdown', this.gesture); document.removeEventListener('keydown', this.gesture); document.removeEventListener('visibilitychange', this.visibility); window.removeEventListener('blur', this.blur); window.removeEventListener('focus', this.focus); window.removeEventListener('pagehide', this.pagehide); window.removeEventListener('pageshow', this.pageshow); document.removeEventListener('freeze', this.freeze); document.removeEventListener('resume', this.thaw); this.context.removeEventListener('statechange', this.statechange); this.graph.dispose(); void this.context.close(); this.captionElement.remove(); this.captionStyle.remove(); this.ringElement.remove(); this.controls.remove(); this.pauseElement.remove(); }
