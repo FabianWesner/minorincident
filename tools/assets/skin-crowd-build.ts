@@ -17,6 +17,12 @@ import { Matrix4, Vector3 } from 'three';
 const source = resolve(process.argv[2] ?? ''), id = basename(source);
 const authored = existsSync(join(source, 'model.glb'));
 if (!process.argv[2] || !existsSync(join(source, authored ? 'model.glb' : 'lod0.glb'))) throw Error('Usage: skin-crowd-build.sh <cast/<id> directory>');
+// A game asset directory is not a new-pipeline cast. Without the durable,
+// pre-binding source manifest, --reconstruct-body would quietly skin the old
+// rigid geometry and make an incomplete migration look like a new figure.
+if (!source.includes('/cast/') && !existsSync(join(source, 'source/manifest.json'))) {
+  throw Error(`${id}: refusing legacy game geometry as a cast source; pass a pipeline cast directory or provide source/manifest.json`);
+}
 // Healthy and infected dogs retain one body, world scale and skeleton. Build the
 // canonical healthy body first, so a single inf.dog invocation is still sufficient.
 if (id === 'inf.dog' && !existsSync(join(source, 'rig.json')) && existsSync(join(source, 'source/manifest.json'))) execFileSync('sh', ['tools/assets/skin-crowd-build.sh', join(dirname(source), 'amb.dog')], { stdio: 'inherit' });
