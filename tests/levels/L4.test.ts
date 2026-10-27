@@ -1,6 +1,6 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { afterEach, describe, expect, test } from 'vitest';
-import { l4, l4Anchors, l4Edges, l4Emergence, l4Inside, l4TentEntrances, l4CollapseGroups, l4Route, l4ConvoyStations, l4OffscreenMouths, l4CellarDistance } from '../../src/data/l4';
+import { l4, l4Anchors, l4Edges, l4Emergence, l4BreachApproaches, l4CollapseGroups, l4Route, l4ConvoyStations, l4OffscreenMouths, l4CellarDistance } from '../../src/data/l4';
 import { l4AlphaEmergence, l4BreakableLine } from '../../src/levels/L4/layout';
 import { completeCampaignLevel } from '../../src/sim/progression/carryover';
 import { preset } from '../../src/sim/progression/Campaign';
@@ -250,18 +250,20 @@ describe('L4 The Safe City Falls', () => {
     step(w, 3 * 60); l.mission.completeObjective('quartermaster');
     const first: { tick: number; at: { x: number; z: number }; seen: boolean }[] = [];
     const known = new Set<number>(); const offscreenAudit: boolean[] = [];
-    // The first war stream leaves the nearby authored buildings inside the perimeter ("Do not leave a 28 s empty alarm"; PO 10-12 "When the alarm rings, actually nothing happens"); later waves use the street edges.
+    // Q-192: the alarm and recurring pressure now start outside the camp and reach the plaza through the wall.
     const doors = (l.mission.l4 as unknown as { doors(): { x: number; z: number }[] }).doors();
     while (s.phase !== 'war') w.update();
     const refugeDoors = Object.entries(l.mission.def.anchors).filter(([n]) => n.startsWith('refuge-door-')).map(([, a]) => a);
-    const points = [...l4Emergence.map(e => ({ x: e.at[0], z: e.at[1] })), ...l4TentEntrances.map(e => ({ x: e.at[0], z: e.at[1] })), ...l4Inside.map(p => ({ x: p[0], z: p[1] }))];
+    const points = [...l4Emergence.map(e => ({ x: e.at[0], z: e.at[1] })), ...l4BreachApproaches.map(e => ({ x: e.at[0], z: e.at[1] }))];
     for (let t = 0; t < 90 * 60; t++) {
       w.update();
       for (const id of s.emergedIds) if (!known.has(id)) { known.add(id); const e = w.entities.get(id)!; first.push({ tick: w.tick, at: { x: e.transform.x, z: e.transform.z }, seen: false }); offscreenAudit.push(points.some(q => dist(q, e.transform) < 6) || doors.some(d => dist(d, e.transform) < 6) || refugeDoors.some(d => dist(d, e.transform) < 6)); }
     }
     expect(first.length).toBeGreaterThan(10);
-    // Every wave infected first appears within 6 m of an authored emergence point (street mouths, side streets, building doors and, PO 10-13, the camp's tents and crates).
+    // Every wave first appears near an exterior street mouth, door or wire approach. Tent sources are superseded by Q-192.
     expect(offscreenAudit.filter(Boolean).length / offscreenAudit.length).toBeGreaterThan(.9);
+    const perimeter = l4.perimeter;
+    expect(first.every(({ at }) => at.x <= perimeter.x0 || at.x >= perimeter.x1 || at.z <= perimeter.z0 || at.z >= perimeter.z1), 'no authored infected may originate inside the camp').toBe(true);
     // PO 10-13 "from all directios": the first 90 s already bring infected from at least five of the six street edges (one may be too close to the courier).
     const used = new Set(first.map(f => { const k = points.findIndex(q => dist(q, f.at) < 6); return k >= 0 && k < l4Emergence.length ? l4Emergence[k].edge : -1; })); used.delete(-1);
     expect(used.size).toBeGreaterThanOrEqual(5);

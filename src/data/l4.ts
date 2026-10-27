@@ -326,14 +326,6 @@ export const l4Emergence: readonly { edge: number; at: P; door?: boolean }[] = [
   // the camp. SpawnDirector still applies its live frustum + 6 m guard.
   ...l4OffscreenMouths.map(({ edge, at }) => ({ edge, at })),
 ];
-/** Former internal-emergence staging anchors, retained for reception dressing/navigation checks; the L4 horde never spawns here. */
-export const l4Inside: readonly P[] = [
-  [-30.6, 10.4], [-26.8, 10.4], [-22.8, 10.4], [-31.8, 4], [-20.8, 2.2], [-26, -10.6], [-30.5, -10.6],
-  // Rear camp edge, out of the zoom-1.5 player frame from the quartermaster.
-  // These are opportunistic off-screen exits; the director still rejects them
-  // whenever the courier moves far enough to see them.
-  [-33, 19], [-29, 20], [-25, 21],
-];
 /** Follow-up groups approach the wall from the surrounding streets, then use
  * the physical breaches. Reception tent flaps are never infected sources. */
 export const l4BreachApproaches = [
