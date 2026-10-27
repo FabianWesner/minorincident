@@ -1,30 +1,16 @@
-import { worldTiers } from '../levels/districts/types';
-// Assembly/reference pattern adapted from folio-2025 World.js / References.js (Bruno Simon, MIT).
 import {
-  BoxGeometry,
-  PlaneGeometry,
-  Path,
-  Shape,
-  ShapeGeometry,
-  Sprite,
-  SpriteMaterial,
   Box3,
-  CanvasTexture,
-  ConeGeometry,
   Group,
   Frustum,
   Matrix4,
   Sphere,
   Raycaster,
   type PerspectiveCamera,
-  Vector2,
   Vector3,
   InstancedMesh,
   Mesh,
   MeshBasicNodeMaterial,
   Object3D,
-  SphereGeometry,
-  type BufferGeometry,
   type Material,
 } from "three/webgpu";
 import { attribute, luminance, uniform } from 'three/tsl';
@@ -34,32 +20,20 @@ import { ROOFED, type DistrictAssets } from "../assets/DistrictAssets";
 import { spinNodes } from "../data/spinNodes";
 import { buildingDoors, doorwayOf, doorZone, doorSwingS } from "../data/buildingDoors";
 import type { Materials } from "./Materials";
-import { anchorsFor, placedLightId } from '../data/placedLights';
 import { worldAssets } from "../assets/worldDefinitions";
 import { staticCollision } from "../assets/staticCollision";
 import manifest from "../assets/manifest.json" with { type: 'json' };
 import type { AssetDef } from "../assets/types";
 import { InstancedGroup } from "./InstancedGroup";
-import { Grass, windPhase } from "./Grass";
-import { resolvePosition } from "../levels/districts/validate";
-import type { CameraPose } from "./View";
+import type { Grass, windPhase } from "./Grass";
 import type { View } from './View';
-import { AmbientLife } from './AmbientLife';
-import { timeOfDay } from '../data/timeOfDay';
 import { Foliage } from './Foliage';
-import { GroundField } from './GroundField';
-import { pickLod, propLod, initialDistrictLods, lodPolicy, type Lod } from './lodPolicy';
+import { pickLod, propLod, lodPolicy, type Lod } from './lodPolicy';
 import { occluderMinHeight, projectReveal, seeThrough } from './SeeThrough';
-import { stripStrayDecorations } from './decorationFilter';
-import type { PaletteToken } from '../data/palette';
-import { layoutTerrainChunks, terrainPrefetchSeconds } from '../sim/world/TerrainChunks';
-import { TerrainView } from './TerrainView';
-import { heightSteps } from '../sim/world/HeightSteps';
-import { HeightStepEdges } from './HeightStepEdges';
-import { batchPerimeterPosts } from './PerimeterPosts';
-import { NightAccents, nightAccents } from './NightAccents';
+import { terrainPrefetchSeconds } from '../sim/world/TerrainChunks';
+import type { NightAccents } from './NightAccents';
+import { buildDistrict, DistrictParts, freezeBatch, type DressingEntry, type LodBatch } from './district/DistrictBuild';
 
-const crownTokens = new Map<string, [PaletteToken, PaletteToken]>(Object.values(worldAssets).flatMap(asset => asset.foliage ? [[asset.foliage.colors.join(':'), asset.foliage.tokens ?? ['foliageDark', 'foliageLight']]] : []));
 // Repeated fence panels dominated V1 (109k faces in each view/shadow pass).
 // Preserve the adjacent panels; farther boards need their silhouette, not fine bevels.
 const privacyFenceLodPolicy = { lod1From: 6, lod2From: 45, hysteresis: 2 };
@@ -67,16 +41,16 @@ const privacyFenceLodPolicy = { lod1From: 6, lod2From: 45, hysteresis: 2 };
  * even up close; the E20 rescue peak at the Grove Market otherwise spends ~100 k of the 500 k phone budget on one building. */
 const heavyOnLow = (id: string) => ((worldAssets[id] as { authoredLodTriangles?: { lod1?: number } }).authoredLodTriangles?.lod1 ?? 0) >= 50_000;
 
-interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; half: number; /** Local footprint of LOD0 (centre offset and half extents): occluder tests use the real oriented box, not the longest side squared. */ foot: { cx: number; cz: number; hx: number; hz: number }; id: string; decay?: string; lit: boolean; loaded: boolean; nearLoaded: boolean; farLoaded: boolean; heroShown: Lod; bands: (Lod | undefined)[] }
-interface DressingEntry { id: string; batch: InstancedGroup; refs: Object3D[]; origin: [number, number]; center: Vector3; radius: number; foot: LodBatch['foot']; height: number }
 /** Shared static instances; detailed prototypes stream only into the close view. */
 export class DistrictView extends Group {
-  readonly spots = new Map<string, CameraPose>();
-  readonly batches: InstancedGroup[] = [];
-  private readonly dressingBatches: InstancedGroup[] = [];
-  private readonly dressingEntries: DressingEntry[] = [];
-  readonly windows: Mesh[] = [];
-  private readonly machineGuns: { root: Object3D; gun: Object3D; muzzle: Object3D }[] = [];
+  /** Built by load() (see district/DistrictBuild); the fields below alias its collections. */
+  private readonly parts = new DistrictParts();
+  readonly spots = this.parts.spots;
+  readonly batches = this.parts.batches;
+  private readonly dressingBatches = this.parts.dressingBatches;
+  private readonly dressingEntries = this.parts.dressingEntries;
+  readonly windows = this.parts.windows;
+  private readonly machineGuns = this.parts.machineGuns;
   private readonly machineGunPoint = new Vector3();
   private readonly machineGunHeading = new Vector3();
   private readonly machineGunInverse = new Matrix4();
@@ -95,7 +69,7 @@ export class DistrictView extends Group {
     nest.gun.rotation.y = -Math.atan2(heading.z, heading.x);
     nest.root.updateWorldMatrix(true, true); return nest.muzzle.getWorldPosition(new Vector3());
   }
-  private readonly lodBatches: LodBatch[] = [];
+  private readonly lodBatches = this.parts.lodBatches;
   /** Scene Lab A/B baseline: submit interiors of closed buildings too. */
   interiorCullOff = false;
   private interiorCpuMs = 0;
@@ -116,31 +90,26 @@ export class DistrictView extends Group {
   private cameraHeight = 0;
   private cameraGameLod = false;
 
-  private readonly grass: Grass[] = [];
+  private readonly grass = this.parts.grass;
   private readonly foliage: Foliage;
-  private ambient?: AmbientLife;
   /** L9 night accents (studs, flares, lanterns, blinkers); render-only. */
-  accents?: NightAccents;
-  private readonly districtRoots: { root: Group; bounds: Box3 }[] = [];
+  get accents(): NightAccents | undefined { return this.parts.accents; }
+  private readonly districtRoots = this.parts.districtRoots;
   /** The drawn ground (baked roads, paving, lawns) for tyre contacts: see GroundField. */
-  readonly ground = new GroundField();
-  private terrain?: TerrainView;
-  private stepEdges?: HeightStepEdges;
-  private maxBarTerrainHeight = 0;
-  private terrainHorizon?: Group;
-  terrainState() { return this.terrain?.snapshot() ?? null; }
+  readonly ground = this.parts.ground;
+  terrainState() { return this.parts.terrain?.snapshot() ?? null; }
   /** Borrowed geometry/materials: the caller warms and detaches this copy. */
-  horizonForWarmup(): Group | null { return this.terrainHorizon?.clone(true) ?? null; }
-  private readonly mergedLayout: Mesh[] = [];
-  private readonly ownedGeometry: BufferGeometry[] = [];
-  private readonly perimeterPosts: InstancedMesh[] = [];
-  private readonly ownedMaterials: Material[] = [];
+  horizonForWarmup(): Group | null { return this.parts.terrainHorizon?.clone(true) ?? null; }
+  private readonly mergedLayout = this.parts.mergedLayout;
+  private readonly ownedGeometry = this.parts.ownedGeometry;
+  private readonly perimeterPosts = this.parts.perimeterPosts;
+  private readonly ownedMaterials = this.parts.ownedMaterials;
   private readonly windowMask = new MeshBasicNodeMaterial({ color: "#ffffff" });
   private readonly black = new MeshBasicNodeMaterial({ color: "#000000" });
   private readonly saved = new Map<Mesh, Material | Material[]>();
-  private readonly tags: { sprite: Sprite; entered: number | null; done: boolean }[] = [];
+  private readonly tags = this.parts.tags;
   private labelTime = 0;
-  private readonly textures: CanvasTexture[] = [];
+  private readonly textures = this.parts.textures;
   constructor(
     readonly world: DistrictWorld,
     private readonly materials: Materials,
@@ -158,336 +127,11 @@ export class DistrictView extends Group {
   }
   async load(seed: number, focus?: { x: number; z: number }, heroAtSpawn = false): Promise<void> {
     this.phase.value = 0;
-    if (this.world.composition.id === 'L7') {
-      this.maxBarTerrainHeight = Math.max(0, ...this.world.districts.flatMap(d => [...d.layout.surfaces.map(s => s.height ?? 0), ...d.decay.colliders.filter(c => c.walkable).map(c => c.aabb.max[1])]));
-    }
-    const steps = heightSteps(this.world);
-    if (steps.length) { this.stepEdges = new HeightStepEdges(steps, this.materials); this.add(this.stepEdges); }
-    const ambient = timeOfDay[this.world.composition.timeOfDay].ambient;
-    if (ambient) { this.ambient = new AmbientLife(this.materials, ambient); this.ambient.setQuality(this.low); this.add(this.ambient); }
-    const accents = nightAccents(this.world);
-    if (accents.points.length) { this.accents = new NightAccents(accents, this.materials.field); this.add(this.accents); }
-    // Backdrop reaches beyond the camera far plane; it is scenery outside the bounded town.
-    // D-CROSSING (L9-A2): the collapsed-road gully (x 508..524, z -90..90, floor 5.5 m down) must not be covered by it.
-    const gully = this.world.composition.districts.find(d => d.id === 'D-CROSSING');
-    let terrain: BufferGeometry = new PlaneGeometry(2400, 2400);
-    if (gully) {
-      const outer = new Shape([new Vector2(-1200, -1200), new Vector2(1200, -1200), new Vector2(1200, 1200), new Vector2(-1200, 1200)]);
-      const [x0, x1, z0, z1] = [508 + gully.origin[0], 524 + gully.origin[0], -90 + gully.origin[1], 90 + gully.origin[1]];
-      // The mesh is rotated -90 degrees about X, which maps shape y to world -z.
-      outer.holes.push(new Path([new Vector2(x0, -z1), new Vector2(x0, -z0), new Vector2(x1, -z0), new Vector2(x1, -z1)]));
-      terrain = new ShapeGeometry(outer);
-    }
-    this.ownedGeometry.push(terrain);
-    const backdrop = new Mesh(terrain, this.materials.get('grass'));
-    backdrop.rotation.x = -Math.PI / 2; backdrop.position.y = -.12; backdrop.receiveShadow = true;
-    this.add(backdrop);
-    // Bound the slice with a visible fence on the actual terrain perimeter.
-    // Every collider below has matching rails and posts; internal seams stay open.
-    const perimeter = new Group(); perimeter.name = 'slice-perimeter'; this.add(perimeter);
-    const lab = this.world.composition.scene;
-    if (lab && !lab.glb && lab.ground !== 'grass') {
-      // Scene Lab flat ground: one paved slab over the synthetic bounds (the backdrop stays grass).
-      for (const d of this.world.districts) {
-        const xs = d.layout.bounds.map(p => p[0]), zs = d.layout.bounds.map(p => p[1]);
-        const plane = new PlaneGeometry(Math.max(...xs) - Math.min(...xs), Math.max(...zs) - Math.min(...zs)); this.ownedGeometry.push(plane);
-        const slab = new Mesh(plane, this.materials.get(lab.ground)); slab.name = 'scene-ground'; slab.rotation.x = -Math.PI / 2; slab.receiveShadow = true;
-        slab.position.set(d.origin[0] + (Math.max(...xs) + Math.min(...xs)) / 2, .002, d.origin[1] + (Math.max(...zs) + Math.min(...zs)) / 2); this.add(slab);
-        slab.updateMatrixWorld(true); this.ground.add(slab);
-      }
-    }
-    const posts: [number, number, number][] = [];
-    for (const fence of lab && !lab.perimeter ? [] : this.world.boundaries) {
-      const x = (fence.min[0] + fence.max[0]) / 2, z = (fence.min[2] + fence.max[2]) / 2;
-      const width = fence.max[0] - fence.min[0], depth = fence.max[2] - fence.min[2];
-      for (const y of [.35, .8]) this.box(perimeter, 'picketWhite', [width, .15, depth], [x, y, z]);
-      const length = Math.max(width, depth), count = Math.ceil(length / 2);
-      for (let i = 0; i <= count; i++) posts.push([width > depth ? fence.min[0] + length * i / count : x, .525, depth > width ? fence.min[2] + length * i / count : z]);
-    }
-    if (posts.length) {
-      const geometry = new BoxGeometry(.16, 1.05, .16); this.ownedGeometry.push(geometry);
-      this.perimeterPosts.push(...batchPerimeterPosts(posts, geometry, this.materials.get('woodWarm')));
-      perimeter.add(...this.perimeterPosts);
-    }
-    // Placement asset ids are known from the layout JSON: start their downloads now instead of
-    // after each multi-megabyte layout GLB has arrived and been parsed.
-    const initialLods = new Map<string, Set<Lod>>();
-    for (const d of this.world.districts) for (const p of d.layout.placements) {
-      if (p.minTier > this.world.composition.tier || p.maxTier < this.world.composition.tier) continue;
-      const distance = focus ? Math.hypot(p.position[0] + d.origin[0] - focus.x, p.position[2] + d.origin[1] - focus.z) : 0;
-      const lods = initialLods.get(p.assetId) ?? new Set<Lod>();
-      for (const lod of initialDistrictLods(this.low, worldAssets[p.assetId]?.category === 'prop', distance, focus !== undefined)) lods.add(lod);
-      initialLods.set(p.assetId, lods);
-      // These tiers are required by prepare() before revealing phone/L6 play.
-      // Start their decode beside the layout GLB, rather than after it finishes.
-      if (this.low && worldAssets[p.assetId]?.category !== 'prop' && (this.world.composition.id !== 'L7' || distance <= 16)) this.registry.prefetch(p.assetId, 'lod1', p.decay);
-      if (this.world.composition.id === 'L6' && !this.low) {
-        this.registry.prefetch(p.assetId, 'lod0', p.decay);
-        this.registry.prefetch(p.assetId, 'lod1', p.decay);
-      }
-      if (heroAtSpawn && focus && distance <= lodPolicy.lod1From) this.registry.prefetch(p.assetId, 'lod0', p.decay);
-    }
-    if (heroAtSpawn && focus) for (const d of this.world.districts) for (const p of d.decay.placements) {
-      if (Math.hypot(p.position[0] + d.origin[0] - focus.x, p.position[2] + d.origin[1] - focus.z) <= lodPolicy.lod1From) this.registry.prefetch(p.assetId, 'lod0', p.decay);
-    }
-    for (const [id, lods] of initialLods) for (const lod of lods) this.registry.prefetch(id, lod);
-    await Promise.all(
-      this.world.districts.map(async (d) => {
-        const root = new Group();
-        root.name = d.id;
-        root.position.set(d.origin[0], 0, d.origin[1]); root.updateMatrix(); root.matrixAutoUpdate = false;
-        this.add(root); this.districtRoots.push({ root, bounds: new Box3(
-          new Vector3(d.origin[0] + Math.min(...d.layout.bounds.map(p => p[0])), -2, d.origin[1] + Math.min(...d.layout.bounds.map(p => p[1]))),
-          new Vector3(d.origin[0] + Math.max(...d.layout.bounds.map(p => p[0])), Math.max(0, ...d.layout.placements.map(p => p.visualAabb.max[1])) + 2, d.origin[1] + Math.max(...d.layout.bounds.map(p => p[1]))),
-        ) });
-        const scenes = lab && !lab.glb ? [] : await Promise.all(
-          // Preserve legacy W0–W5 loading; W6 geometry is opt-in by an authored layer.
-          worldTiers.filter(tier => tier <= this.world.composition.tier && tier <= Math.max(5, ...d.layout.layers.map(layer => layer.tier))).map(tier =>
-            this.registry.glb(
-              `/assets/layouts/${d.id}.${tier === 0 ? d.layout.terrainChunks?.length ? 'horizon' : 'base' : `w${tier}`}.glb`,
-            ),
-          ),
-        );
-        for (const scene of scenes) {
-          const clone = scene.clone(true);
-          // Baked layout nodes never move; avoid recomposing every hidden placement marker each frame.
-          clone.traverse(o => { o.updateMatrix(); o.matrixAutoUpdate = false; });
-          // PO 2026-10-12: the Grove back alleys were baked in the near-black UI token and read as a hole in the ground next to the
-          // fences (shadowed they went pure black). Draw that ground like asphalt; the baked GLB stays unchanged.
-          if (d.id === 'D-GROVE') {
-            const alley = this.materials.world('asphalt').seeThrough();
-            clone.traverse(o => { if (o instanceof Mesh && typeof o.userData.assetId !== 'string' && (o.material as { token?: string }).token === 'uiDark') o.material = alley; });
-          }
-          clone.traverse((o) => {
-            if (d.decay.removed.includes(o.name)) o.visible = false;
-          });
-          // PO 10-13 "Flowers growing on stone": baked daisies on paths/paving are dropped (shared soil rule with the sim).
-          stripStrayDecorations(clone, d.layout);
-          this.stripLayoutMarkers(clone);
-          root.add(clone);
-          if (d.layout.terrainChunks?.length) this.terrainHorizon = clone;
-        }
-        // Base paving (tier 0): roads top out at 5 cm, road paint and kerbs above them; decay-removed nodes are not ground.
-        root.updateMatrixWorld(true);
-        for (const groundLayer of root.children.slice(-scenes.length)) {
-          groundLayer.traverse(o => {
-            if (o instanceof Mesh && !(o instanceof InstancedMesh) && o.visible && typeof o.userData.assetId !== 'string') { this.ground.add(o); this.mergedLayout.push(o); }
-            // Baked ground and placement markers are static in every tier.
-            // Their world transforms were composed above; camera frames need no recomposition.
-            o.matrixWorldAutoUpdate = false;
-          });
-          this.freezeLayout(groundLayer);
-        }
-        if (d.layout.terrainChunks?.length && scenes.length) {
-          this.terrain = new TerrainView(layoutTerrainChunks(d.layout, d.origin), d.layout.terrainChunks[0].size, id => `/assets/layouts/${d.id}.chunks/${id}.glb`, this.registry, this.low ? 'low' : 'high');
-          this.add(this.terrain);
-          this.terrain.update(focus ? [focus.x, focus.z] : this.world.playerStart);
-          await this.terrain.ready();
-        }
-        const references = new Map<string, Object3D[]>();
-        const crowns = new Map<string, Object3D[]>();
-        const base = scenes[0];
-        base?.updateMatrixWorld(true);
-        base?.traverse((o) => {
-          if (o.userData.foliageColors && o.userData.minTier <= this.world.composition.tier && o.userData.maxTier >= this.world.composition.tier) {
-            const key = o.userData.foliageColors.join(":"), ref = new Object3D(); o.matrixWorld.decompose(ref.position, ref.quaternion, ref.scale);
-            if (!crowns.has(key)) crowns.set(key, []); crowns.get(key)!.push(ref);
-          }
-          if (
-            typeof o.userData.assetId !== "string" ||
-            o.userData.minTier > this.world.composition.tier ||
-            o.userData.maxTier < this.world.composition.tier
-          )
-            return;
-          const lit = d.decay.lights.includes(o.userData.lightGroup),
-            key = `${o.userData.assetId}:${lit}:`;
-          const reference = new Object3D();
-          const first = anchorsFor(o.userData.assetId)[0];
-          if (first) reference.userData.lightBase = this.materials.lamps.base(placedLightId(d.id, d.origin, o.userData.name ?? o.name, first.name), anchorsFor(o.userData.assetId));
-          o.matrixWorld.decompose(
-            reference.position,
-            reference.quaternion,
-            reference.scale,
-          );
-          if (typeof o.userData.tint === 'string') reference.userData.tint = o.userData.tint;
-          if (!references.has(key)) references.set(key, []);
-          references.get(key)!.push(reference);
-        });
-        // L2/L3 author their dressing (and L3 its per-placement decay variants) in the loaded layout copy. Their
-        // references must use those placements, rather than the unchanged baked GLB empties.
-        if (d.layout.terrainChunks?.length || this.world.composition.id === 'L7' || this.world.composition.id === 'L6' || this.world.composition.id === 'L5' || this.world.composition.id === 'L4' || this.world.composition.id === 'L3' || this.world.composition.id === 'L2' || lab) {
-          references.clear();
-          // Scene Lab and L2: crowns follow kept placements, including station canopy clearance.
-          if (d.layout.terrainChunks?.length || lab || this.world.composition.id === 'L2') {
-            crowns.clear();
-            for (const p of d.decay.placements) for (const crown of worldAssets[p.assetId]?.foliage?.crowns ?? []) {
-              const key = worldAssets[p.assetId].foliage!.colors.join(':'), ref = new Object3D();
-              const [cx, cy, cz] = crown.position.map((v, a) => v * p.scale[a]);
-              ref.position.set(p.position[0] + cx * Math.cos(p.yaw) + cz * Math.sin(p.yaw), p.position[1] + cy, p.position[2] - cx * Math.sin(p.yaw) + cz * Math.cos(p.yaw));
-              ref.scale.set(crown.radius[0] * p.scale[0], crown.radius[1] * p.scale[1], crown.radius[2] * p.scale[2]);
-              if (!crowns.has(key)) crowns.set(key, []); crowns.get(key)!.push(ref);
-            }
-          }
-          for (const p of d.decay.placements) {
-            const lit = d.decay.lights.includes(p.lightGroup), key = `${p.assetId}:${lit}:${p.decay ?? ''}`;
-            const reference = new Object3D(); reference.position.fromArray(p.position); reference.rotation.y = p.yaw; reference.scale.fromArray(p.scale);
-            const first = anchorsFor(p.assetId)[0];
-            if (first) reference.userData.lightBase = this.materials.lamps.base(placedLightId(d.id, d.origin, p.id, first.name), anchorsFor(p.assetId));
-            if (p.tint) reference.userData.tint = p.tint;
-            if (!references.has(key)) references.set(key, []);
-            references.get(key)!.push(reference);
-          }
-        }
-        // Static vehicles (parked cars, wrecks, the APC) are authored on the y = 0 plane: rest them on the drawn road or paving under their wheels.
-        for (const [key, refs] of references) if (/^veh\./.test(key)) for (const ref of refs) this.restOnGround(ref, key.split(':')[0], d.origin);
-        for (const [colors, refs] of crowns) this.foliage.addCrowns(refs, crownTokens.get(colors) ?? ['foliageDark', 'foliageLight'], d.origin);
-        await Promise.all(
-          [...references].map(async ([key, refs]) => {
-            const [id, power, variant] = key.split(":"), decay = variant || undefined;
-            if (id === 'prop.hmg-nest') {
-              const prototype = await this.registry.asset(id, power === 'true', this.low ? 'lod2' : 'lod0', decay);
-              for (const ref of refs) {
-                const nest = prototype.clone(true); nest.position.copy(ref.position); nest.quaternion.copy(ref.quaternion); nest.scale.copy(ref.scale); root.add(nest);
-                const gun = nest.getObjectByName('gun'), muzzle = nest.getObjectByName('muzzle');
-                if (gun && muzzle) this.machineGuns.push({ root: nest, gun, muzzle });
-              }
-              return;
-            }
-            if (!worldAssets[id]) {
-              // Non-world dressing (decals, kits, emergency vehicles) has no LOD bands: the low tier takes its LOD2 when authored.
-              const prototype = await this.registry.asset(id, power === 'true', this.low ? 'lod2' : 'lod0', decay);
-              const batch = new InstancedGroup(prototype, refs.slice(), this.instanceCapacity ?? refs.length);
-              if (this.low && ['L3', 'L7'].includes(this.world.composition.id)) batch.traverse(node => { if (node instanceof Mesh) node.castShadow = false; });
-              const box = new Box3().setFromObject(prototype), bounds = box.getBoundingSphere(new Sphere()), size = box.getSize(new Vector3());
-              this.dressingEntries.push({ id, batch, refs, origin: d.origin, center: bounds.center, radius: bounds.radius, foot: { cx: bounds.center.x, cz: bounds.center.z, hx: size.x / 2, hz: size.z / 2 }, height: size.y });
-              this.dressingBatches.push(batch); root.add(batch); this.freezeBatch(batch); return;
-            }
-            const nearLoaded = initialLods.get(id)?.has('lod1') ?? true;
-            const farLoaded = initialLods.get(id)?.has('lod2') ?? true;
-            const prototypes = await Promise.all([nearLoaded ? 'lod1' : 'lod2', farLoaded ? 'lod2' : 'lod1'].map(lod => this.registry.asset(id, power === 'true', lod as 'lod1' | 'lod2', decay)));
-            // L1 uses the shared vertex-attribute instancing path; live counts stay
-            // unchanged while shader code no longer depends on placement capacity.
-            const capacity = Math.max(refs.length, this.instanceCapacity ?? refs.length);
-            const hero = new InstancedGroup(prototypes[0], refs.slice(), capacity), near = new InstancedGroup(prototypes[0], refs.slice(), capacity), far = new InstancedGroup(prototypes[1], refs.slice(), capacity);
-            // Distant low-tier props keep their shaded production art without a shadow draw.
-            if (this.low) far.traverse(node => { if (node instanceof Mesh) node.castShadow = false; });
-            // Phone tier: a building heavier than 30k triangles per placement would be drawn twice (view + shadow) for little shade.
-            if (this.low) {
-              let triangles = 0; prototypes[0].traverse(node => { if (node instanceof Mesh) triangles += (node.geometry.index?.count ?? node.geometry.getAttribute('position').count) / 3; });
-              if (triangles > 30000) for (const batch of [hero, near]) batch.traverse(node => { if (node instanceof Mesh) node.castShadow = false; });
-            }
-            for (const batch of [hero, near, far]) {
-              batch.name = `inst:${id}`; this.batches.push(batch); root.add(batch); this.freezeBatch(batch);
-              batch.traverse(o => { if (o instanceof Mesh && o.name === 'window-light') this.windows.push(o); });
-            }
-            const footBox = new Box3().setFromObject(prototypes[0]), dimensions = footBox.getSize(new Vector3()), footCenter = footBox.getCenter(new Vector3());
-            this.lodBatches.push({ foot: { cx: footCenter.x, cz: footCenter.z, hx: dimensions.x / 2, hz: dimensions.z / 2 }, hero, near, far, refs, id, decay, lit: power === 'true', loaded: false, nearLoaded, farLoaded, heroShown: nearLoaded ? 'lod1' : 'lod2', bands: [], origin: d.origin, height: dimensions.y, radius: Math.hypot(dimensions.x, dimensions.y, dimensions.z) * .55, half: Math.max(dimensions.x, dimensions.z) / 2 });
-          }),
-        );
-        // Dynamic nav-blockers use the same positions/extents as their Rapier colliders.
-        for (const blocker of d.blockers) {
-          const s = blocker.max.map((v, i) => v - blocker.min[i]),
-            p = blocker.min.map((v, i) => (v + blocker.max[i]) / 2);
-          this.box(
-            root,
-            "woodWarm",
-            s as [number, number, number],
-            p as [number, number, number],
-          );
-        }
-        for (const grass of Grass.tiles(d.layout, this.grassMaterial, seed)) { this.grass.push(grass); root.add(grass); }
-        for (const b of d.layout.buildings) {
-          const p = d.layout.placements.find((p) => p.id === b.id)!;
-          this.tag(root, b.label, [p.position[0], 2.8, b.aabb.max[2] + .6]);
-        }
-        for (const spot of d.gameplay.photoSpots) {
-          const p = resolvePosition(spot.target, d.layout),
-            target: [number, number, number] = [
-              p[0] + d.origin[0],
-              0,
-              p[1] + d.origin[1],
-            ];
-          for (const tier of worldTiers)
-            this.spots.set(`${d.id}/W${tier}/${spot.name}`, {
-              target,
-              position: [
-                target[0] + spot.offset[0],
-                spot.offset[1],
-                target[2] + spot.offset[2],
-              ],
-            });
-        }
-      }),
-    );
-    this.tagInteriors();
-    // Runtime-only emitter placeholders; gameplay damage remains in the fixed-step sim.
-    for (const f of this.world.fires) {
-      for (let i = 0; i < 3; i++) {
-        const geometry = new ConeGeometry(0.55, 2.4 - i * 0.4, 7),
-          mesh = new Mesh(
-            geometry,
-            this.materials.get(
-              i === 0 ? "sirenRed" : "schoolBusYellow",
-              i === 0 ? 1.4 : 3,
-            ),
-          );
-        mesh.position.set(f.x + (i - 1) * 0.45, 1.2 - i * 0.2, f.z);
-        this.ownedGeometry.push(geometry);
-        this.add(mesh);
-      }
-      const geometry = new SphereGeometry(1.3, 8, 6),
-        material = new MeshBasicNodeMaterial({
-          color: "#443d54",
-          transparent: true,
-          opacity: 0.55,
-        });
-      this.ownedMaterials.push(material);
-      for (let i = 0; i < 3; i++) {
-        const mesh = new Mesh(geometry, material);
-        mesh.position.set(f.x + 0.5 * i, 3 + i * 1.2, f.z);
-        this.add(mesh);
-      }
-      this.ownedGeometry.push(geometry);
-    }
+    await buildDistrict(this.parts, { view: this, world: this.world, materials: this.materials, registry: this.registry, grassMaterial: this.grassMaterial, foliage: this.foliage, low: () => this.low, instanceCapacity: this.instanceCapacity }, seed, focus, heroAtSpawn);
   }
 
   /** Drawn ground at a world point (null outside the baked district ground). */
-  groundAt(x: number, z: number): number | null { return this.terrain?.height(x, z) ?? this.ground.height(x, z); }
-  private restOnGround(ref: Object3D, id: string, origin: [number, number]): void {
-    const size = (manifest as AssetDef[]).find(a => a.id === id)?.dimensions; if (!size || ref.position.y > .01 || /^veh\.(train|helicopter)/.test(id)) return;
-    const hx = size.x * ref.scale.x * .32, hz = size.z * ref.scale.z * .4, c = Math.cos(ref.rotation.y), s = Math.sin(ref.rotation.y);
-    const heights = [[hx, hz], [hx, -hz], [-hx, hz], [-hx, -hz]].map(([x, z]) => this.ground.height(origin[0] + ref.position.x + x * c + z * s, origin[1] + ref.position.z - x * s + z * c)).filter((h): h is number => h !== null).sort((a, b) => a - b);
-    if (heights.length < 2) return;
-    // Median of the four wheel spots: a lane stripe or a kerb under one wheel does not lift the whole car.
-    const middle = heights.length / 2, ground = heights.length % 2 ? heights[Math.floor(middle)] : (heights[middle - 1] + heights[middle]) / 2;
-    ref.position.y = Math.max(ref.position.y, ground);
-  }
-  private box(
-    root: Group,
-    token: import("../data/palette").PaletteToken,
-    size: [number, number, number],
-    p: [number, number, number],
-    shadow = true,
-  ): void {
-    const geometry = new BoxGeometry(...size);
-    this.ownedGeometry.push(geometry);
-    const mesh = new Mesh(geometry, this.materials.get(token));
-    mesh.position.fromArray(p);
-    mesh.castShadow = shadow;
-    mesh.receiveShadow = true;
-    root.add(mesh);
-  }
-  /** Small camera-facing location tags; show once on approach, then fade over one second. */
-  private tag(root: Group, text: string, p: [number, number, number]): void {
-    const canvas = document.createElement('canvas'); canvas.width = 320; canvas.height = 64;
-    const ctx = canvas.getContext('2d')!;
-    ctx.fillStyle = '#352c38dd'; ctx.roundRect(0, 0, 320, 64, 16); ctx.fill();
-    ctx.fillStyle = '#ffc773'; ctx.font = 'bold 28px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(text, 160, 32, 300);
-    const texture = new CanvasTexture(canvas); this.textures.push(texture);
-    const material = new SpriteMaterial({ map: texture, transparent: true, depthWrite: false }); this.ownedMaterials.push(material);
-    const sprite = new Sprite(material); sprite.name = text; sprite.position.fromArray(p); sprite.scale.set(1.8, .36, 1); sprite.visible = false; root.add(sprite);
-    this.tags.push({ sprite, entered: null, done: false });
-  }
+  groundAt(x: number, z: number): number | null { return this.parts.terrain?.height(x, z) ?? this.ground.height(x, z); }
   /** Whole-slab frustum culling avoids submitting invisible merged dressing on mobile. */
   cull(view: View, tier: 'high' | 'low'): void {
     this.frustum.setFromProjectionMatrix(this.projection.multiplyMatrices(view.camera.projectionMatrix, view.camera.matrixWorldInverse));
@@ -495,10 +139,10 @@ export class DistrictView extends Group {
   }
   setQuality(tier: 'high' | 'low'): void {
     if (this.low !== (tier === 'low')) { this.low = tier === 'low'; this.cameraPosition = [Infinity, Infinity, Infinity]; }
-    this.terrain?.setQuality(tier);
+    this.parts.terrain?.setQuality(tier);
     for (const grass of this.grass) grass.setQuality(tier === 'low', tier === 'low' ? this.materials.look.values.grassDensityLow : this.materials.look.values.grassDensity);
     this.foliage.setQuality(tier === 'low');
-    this.ambient?.setQuality(tier === 'low');
+    this.parts.ambient?.setQuality(tier === 'low');
     // L3's merged rail/fence slabs span the district. Keep their visible art, without a second low-tier shadow submission.
     if (this.world.composition.id === 'L3') for (const mesh of this.mergedLayout) {
       mesh.userData.qualityCastShadow ??= mesh.castShadow;
@@ -754,13 +398,13 @@ export class DistrictView extends Group {
     // Generated retaining faces enclose the L7 height field. Limit the filled-column
     // test to that terrain so overhanging decks still use their exact solid geometry.
     const ray = this.barRay.ray, horizontal = Math.hypot(ray.direction.x, ray.direction.z);
-    if (this.maxBarTerrainHeight > 0 && this.stepEdges && horizontal > 1e-6) for (let distance = this.barRay.far - .15 / horizontal; distance > 0; distance -= .2 / horizontal) {
+    if (this.parts.maxBarTerrainHeight > 0 && this.parts.stepEdges && horizontal > 1e-6) for (let distance = this.barRay.far - .15 / horizontal; distance > 0; distance -= .2 / horizontal) {
       const y = ray.origin.y + ray.direction.y * distance;
       const x = ray.origin.x + ray.direction.x * distance, z = ray.origin.z + ray.direction.z * distance;
       if (this.world.pavingHeight(x, z) > y + .05) return true;
       // All support tops are below the camera. Once above their maximum there
       // is no need to keep marching toward the lens.
-      if (y > this.maxBarTerrainHeight) break;
+      if (y > this.parts.maxBarTerrainHeight) break;
     }
     for (const entry of this.lodBatches) {
       if (entry.height < occluderMinHeight || worldAssets[entry.id].foliage || !worldAssets[entry.id].world.solid) continue;
@@ -901,11 +545,11 @@ export class DistrictView extends Group {
   /** Static matrices are repartitioned only when the camera moves; far props use LOD2. */
   updateLods(view: View, velocity: { x: number; z: number } = { x: 0, z: 0 }): void {
     this.lodPrefetchMetres = Math.hypot(velocity.x, velocity.z) * terrainPrefetchSeconds;
-    if (this.terrain) {
-      this.terrain.warm = this.warmHero; this.terrain.swap = this.swapSlot;
-      this.terrain.update([view.cameraTarget.x, view.cameraTarget.z], [velocity.x, velocity.z]);
+    if (this.parts.terrain) {
+      this.parts.terrain.warm = this.warmHero; this.parts.terrain.swap = this.swapSlot;
+      this.parts.terrain.update([view.cameraTarget.x, view.cameraTarget.z], [velocity.x, velocity.z]);
     }
-    this.ambient?.focus.value.set(view.focus.x, view.focus.z);
+    this.parts.ambient?.focus.value.set(view.focus.x, view.focus.z);
     for (const tag of this.tags) {
       const position = tag.sprite.getWorldPosition(this.bounds.center);
       if (!tag.done && tag.entered === null && Math.hypot(position.x - view.focus.x, position.z - view.focus.z) < 14) tag.entered = this.labelTime;
@@ -1070,28 +714,6 @@ export class DistrictView extends Group {
   warmHero: ((batch: InstancedGroup) => Promise<void>) | null = null;
   /** Set with warmHero: resolves when a warmed tier may swap through the load gate. */
   swapSlot: (() => Promise<void>) | null = null;
-  /** Baked layout transforms are immutable after attachment. Visibility and
-   * material cutaways remain live, but rendering need not revisit every child matrix. */
-  private freezeLayout(root: Object3D): void {
-    root.updateWorldMatrix(true, true);
-    root.traverse(node => { node.matrixAutoUpdate = false; node.matrixWorldAutoUpdate = false; });
-    root.updateMatrixWorld = () => {};
-  }
-  /** Batch placement matrices (doors, roofs, physics props) live in instance buffers.
-   * The batch's own transform stays fixed under the district's immutable origin. */
-  private freezeBatch(batch: InstancedGroup): void {
-    batch.visible = batch.references.length > 0;
-    batch.freezeWorld();
-  }
-  /** Placement/crown data is read from the source GLB below. Its cloned empty
-   * markers draw nothing, but otherwise enter every frame's matrix/shadow walk. */
-  private stripLayoutMarkers(root: Object3D): void {
-    const markers: Object3D[] = [];
-    root.traverse(node => {
-      if (!(node instanceof Mesh) && !node.children.length && (typeof node.userData.assetId === 'string' || node.userData.foliageColors)) markers.push(node);
-    });
-    for (const marker of markers) marker.removeFromParent();
-  }
   private async loadHero(entry: LodBatch, lod: Lod = 'lod0'): Promise<void> {
     const prototype = await this.registry.asset(entry.id, entry.lit, lod, entry.decay);
     if (this.disposed) return;
@@ -1114,7 +736,7 @@ export class DistrictView extends Group {
     for (const child of replacement.children) if (child instanceof InstancedMesh) child.count = replacement.references.length;
     if (replacement.references.length) replacement.update();
     old.parent!.add(replacement);
-    this.freezeBatch(replacement);
+    freezeBatch(replacement);
     old.traverse(node => { const index = this.windows.indexOf(node as Mesh); if (index !== -1) this.windows.splice(index, 1); });
     replacement.traverse(node => { if (node instanceof Mesh && node.name === 'window-light') this.windows.push(node); });
     this.batches[this.batches.indexOf(old)] = replacement;
@@ -1204,7 +826,7 @@ export class DistrictView extends Group {
     };
     await Promise.all(Array.from({ length: 4 }, worker));
   }
-  async ready(): Promise<void> { await Promise.all([...this.pending.values(), this.terrain?.ready()]); }
+  async ready(): Promise<void> { await Promise.all([...this.pending.values(), this.parts.terrain?.ready()]); }
   /** Probe-only mask; render normal view immediately afterwards so it cannot leak across frames. */
   mask(on: boolean): void {
     if (on) {
@@ -1272,17 +894,17 @@ export class DistrictView extends Group {
       foliage: this.foliage.getState(),
       seeThrough: { strength: seeThrough.strength.value, cover: seeThrough.cover.value, radius: seeThrough.radius.value, center: seeThrough.center.value.toArray() },
       movedProps: [...this.propLinks.values()].filter(Boolean).length,
-      ambient: this.ambient != null,
+      ambient: this.parts.ambient != null,
       photoSpots: [...this.spots.keys()],
       windowMeshes: this.windows.length,
     };
   }
   dispose(): void {
     this.disposed = true;
-    this.terrain?.dispose();
-    this.stepEdges?.dispose();
+    this.parts.terrain?.dispose();
+    this.parts.stepEdges?.dispose();
     for (const { material } of this.metroMaterials.values()) material.dispose(); this.metroMaterials.clear();
-    this.ambient?.dispose(); this.accents?.dispose();
+    this.parts.ambient?.dispose(); this.accents?.dispose();
     this.foliage.dispose();
     for (const b of this.batches) b.dispose();
     for (const b of this.dressingBatches) b.dispose(); this.dressingBatches.length = 0;
