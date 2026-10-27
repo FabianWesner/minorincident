@@ -1,0 +1,207 @@
+{
+  "revision": "b5d3e8285e68b7715ab023dff8e7b7952a1c62da",
+  "cloneIsolation": true,
+  "worktree": "/private/tmp/mi-infra-concurrent-40508",
+  "jobs": [
+    {
+      "name": "a-smoke",
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "node",
+        "node_modules/playwright/cli.js",
+        "test",
+        "tests/e2e/smoke.spec.ts",
+        "--grep",
+        "@smoke",
+        "--project=chromium",
+        "--workers=1",
+        "--repeat-each=3"
+      ],
+      "startedAt": 1793082938.0684748,
+      "finishedAt": 1793082957.964101,
+      "durationMs": 19896,
+      "code": 0
+    },
+    {
+      "name": "a-scene",
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "node",
+        "--import",
+        "tsx",
+        "tools/scenelab/catalog.ts",
+        "--dir",
+        "specs/scenes",
+        "--filter",
+        "courier-turns",
+        "--jobs",
+        "1",
+        "--size",
+        "800x600",
+        "--out",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/lane-infra/test-results/lane-infra/concurrency-green/a-scene"
+      ],
+      "startedAt": 1793082938.07056,
+      "finishedAt": 1793082955.068626,
+      "durationMs": 16998,
+      "code": 0
+    },
+    {
+      "name": "b-smoke",
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "node",
+        "node_modules/playwright/cli.js",
+        "test",
+        "tests/e2e/smoke.spec.ts",
+        "--grep",
+        "@smoke",
+        "--project=chromium",
+        "--workers=1",
+        "--repeat-each=3"
+      ],
+      "startedAt": 1793082938.0728052,
+      "finishedAt": 1793082959.4894552,
+      "durationMs": 21417,
+      "code": 0
+    },
+    {
+      "name": "b-scene",
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "node",
+        "--import",
+        "tsx",
+        "tools/scenelab/catalog.ts",
+        "--dir",
+        "specs/scenes",
+        "--filter",
+        "courier-turns",
+        "--jobs",
+        "1",
+        "--size",
+        "800x600",
+        "--out",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/lane-infra/test-results/lane-infra/concurrency-green/b-scene"
+      ],
+      "startedAt": 1793082938.0752692,
+      "finishedAt": 1793082955.327162,
+      "durationMs": 17252,
+      "code": 0
+    }
+  ],
+  "sampleCount": 80,
+  "peakGpuRoots": 1,
+  "peakContexts": 4,
+  "maxObservedQueueWaitMs": 1745,
+  "sampledPeak": {
+    "at": 1793082941.561005,
+    "limit": 4,
+    "gpuRoots": 1,
+    "leases": [
+      {
+        "id": "f96a6dc3-8d17-4198-818e-b9028d0035d5",
+        "backend": "gpu",
+        "context": "browser-context@688d3065b79c0e6252f16e406b70c766",
+        "heldMs": 39367,
+        "idle": 164,
+        "calls": 1,
+        "exclusive": false,
+        "job": ""
+      },
+      {
+        "id": "b0651c0b-05cb-4aa1-b6ce-e19ad371d1db",
+        "backend": "gpu",
+        "context": "browser-context@12add24eacc33d139a4bf4e72631a49b",
+        "heldMs": 1694,
+        "idle": 1133,
+        "calls": 1,
+        "exclusive": false,
+        "job": "infra-concurrent-a"
+      },
+      {
+        "id": "83f2bbed-aea2-4021-8a1f-053a63789aeb",
+        "backend": "gpu",
+        "context": "browser-context@9da1904085cfbb515cb61468ec8086bb",
+        "heldMs": 1283,
+        "idle": 554,
+        "calls": 1,
+        "exclusive": false,
+        "job": "infra-concurrent-b"
+      },
+      {
+        "id": "f6ec1d1c-4cd1-42c3-b104-8472c7981332",
+        "backend": "gpu",
+        "heldMs": 138,
+        "idle": 138,
+        "calls": 1,
+        "exclusive": false,
+        "job": "infra-concurrent-a"
+      }
+    ],
+    "waiters": [],
+    "starting": []
+  },
+  "smoke": {
+    "a": {
+      "startTime": "2026-10-27T06:35:39.161Z",
+      "duration": 18495.657,
+      "expected": 6,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "b": {
+      "startTime": "2026-10-27T06:35:39.572Z",
+      "duration": 19682.25,
+      "expected": 6,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  "scenes": {
+    "a": {
+      "seconds": 15.507,
+      "rows": [
+        {
+          "name": "courier-turns",
+          "file": "specs/scenes/courier-turns.json",
+          "pass": true,
+          "seconds": 14.264,
+          "frames": 540,
+          "errors": 0,
+          "requestedTier": "high",
+          "actualTier": "high",
+          "gates": "ok consoleErrors 0/0; ok canvas.f0.varianceMin 106.3/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f34.varianceMin 177.1/1; ok canvas.f34.variedTilesMin 64/8; ok canvas.f68.varianceMin 219.7/1; ok canvas.f68.variedTilesMin 64/8; ok canvas.f102.varianceMin 211.8/1; ok canvas.f102.variedTilesMin 64/8; ok canvas.f136.varianceMin 208.2/1; ok canvas.f136.variedTilesMin 64/8; ok canvas.f170.varianceMin 187.2/1; ok canvas.f170.variedTilesMin 64/8; ok canvas.f204.varianceMin 217.6/1; ok canvas.f204.variedTilesMin 64/8; ok canvas.f238.varianceMin 216.7/1; ok canvas.f238.variedTilesMin 64/8; ok canvas.f272.varianceMin 214.4/1; ok canvas.f272.variedTilesMin 64/8; ok canvas.f306.varianceMin 229.5/1; ok canvas.f306.variedTilesMin 64/8; ok canvas.f340.varianceMin 221.9/1; ok canvas.f340.variedTilesMin 64/8; ok canvas.f374.varianceMin 221.7/1; ok canvas.f374.variedTilesMin 64/8; ok canvas.f408.varianceMin 203.9/1; ok canvas.f408.variedTilesMin 64/8; ok canvas.f442.varianceMin 192.5/1; ok canvas.f442.variedTilesMin 64/8; ok canvas.f476.varianceMin 204.0/1; ok canvas.f476.variedTilesMin 64/8; ok canvas.f510.varianceMin 200.8/1; ok canvas.f510.variedTilesMin 64/8; ok canvas.f540.varianceMin 207.1/1; ok canvas.f540.variedTilesMin 64/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+          "failed": [],
+          "sheet": "courier-turns/sheet.jpg",
+          "sheetKb": 73
+        }
+      ]
+    },
+    "b": {
+      "seconds": 15.437,
+      "rows": [
+        {
+          "name": "courier-turns",
+          "file": "specs/scenes/courier-turns.json",
+          "pass": true,
+          "seconds": 14.129,
+          "frames": 540,
+          "errors": 0,
+          "requestedTier": "high",
+          "actualTier": "high",
+          "gates": "ok consoleErrors 0/0; ok canvas.f0.varianceMin 106.3/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f34.varianceMin 177.1/1; ok canvas.f34.variedTilesMin 64/8; ok canvas.f68.varianceMin 219.7/1; ok canvas.f68.variedTilesMin 64/8; ok canvas.f102.varianceMin 211.8/1; ok canvas.f102.variedTilesMin 64/8; ok canvas.f136.varianceMin 208.2/1; ok canvas.f136.variedTilesMin 64/8; ok canvas.f170.varianceMin 187.2/1; ok canvas.f170.variedTilesMin 64/8; ok canvas.f204.varianceMin 217.6/1; ok canvas.f204.variedTilesMin 64/8; ok canvas.f238.varianceMin 216.7/1; ok canvas.f238.variedTilesMin 64/8; ok canvas.f272.varianceMin 214.4/1; ok canvas.f272.variedTilesMin 64/8; ok canvas.f306.varianceMin 229.5/1; ok canvas.f306.variedTilesMin 64/8; ok canvas.f340.varianceMin 221.9/1; ok canvas.f340.variedTilesMin 64/8; ok canvas.f374.varianceMin 221.7/1; ok canvas.f374.variedTilesMin 64/8; ok canvas.f408.varianceMin 203.9/1; ok canvas.f408.variedTilesMin 64/8; ok canvas.f442.varianceMin 192.5/1; ok canvas.f442.variedTilesMin 64/8; ok canvas.f476.varianceMin 204.0/1; ok canvas.f476.variedTilesMin 64/8; ok canvas.f510.varianceMin 200.8/1; ok canvas.f510.variedTilesMin 64/8; ok canvas.f540.varianceMin 207.1/1; ok canvas.f540.variedTilesMin 64/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+          "failed": [],
+          "sheet": "courier-turns/sheet.jpg",
+          "sheetKb": 73
+        }
+      ]
+    }
+  }
+}
