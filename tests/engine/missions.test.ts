@@ -8,7 +8,8 @@ import { objectiveTypes, type MissionDef } from '../../src/sim/missions/types';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import type { EntitySnapshot } from '../../src/sim/world/types';
 import { isMissionInteraction } from '../../src/render/InteractionView';
-import { activeInteractions, isRingedInteraction } from '../../src/sim/missions/interaction';
+import { activeInteractions, isCurrentOpenL6Gate, isRingedInteraction } from '../../src/sim/missions/interaction';
+import { LevelSixSubway } from '../../src/sim/missions/LevelSixSubway';
 import { loadLevel, runnerLevels } from '../../tools/sim-runner/levels';
 import { missionSandbox } from '../fixtures/scenarios/mission-sandbox';
 
@@ -104,6 +105,22 @@ test('interactions: ring, input and view predicates agree for every interact ste
     } finally { levelWorld.dispose(); }
   }
 }, 240_000);
+
+// N11: the L6 service gates have their own predicate (the group's waypoint, else the next open gate ahead of the leader).
+test('interactions: only the open L6 gate the group is heading for offers its prompt', () => {
+  const gates = [{ id: 1, x: 10, closedAt: 0 }, { id: 2, x: 30, closedAt: 0 }, { id: 3, x: 50, closedAt: 0 }];
+  const state = (patch: Partial<NonNullable<Parameters<typeof isCurrentOpenL6Gate>[0]>> = {}) => ({ marker: 'l6-next', leaderX: 0, gates, ...patch });
+  const current = (s: Parameters<typeof isCurrentOpenL6Gate>[0]) => gates.map(g => isCurrentOpenL6Gate(s, g.id));
+  expect(current(undefined), 'no L6 state (other level / completed phase)').toEqual([false, false, false]);
+  expect(current(state({ marker: undefined })), 'marker absent').toEqual([false, false, false]);
+  expect(current(state({ marker: 'l6-done' })), 'another marker').toEqual([false, false, false]);
+  expect(current(state({ waypoint: LevelSixSubway.gateWait(30) })), 'waypoint at gate 2').toEqual([false, true, false]);
+  expect(current(state({ waypoint: LevelSixSubway.gateWait(30), gates: gates.map(g => g.id === 2 ? { ...g, closedAt: 99 } : g) })), 'waypoint gate closed').toEqual([false, false, false]);
+  expect(current(state({ waypoint: { x: 500, z: 500 } })), 'waypoint at no gate').toEqual([false, false, false]);
+  expect(current(state()), 'fallback: first open gate ahead').toEqual([true, false, false]);
+  expect(current(state({ leaderX: 40 })), 'fallback: gates behind the leader are skipped').toEqual([false, false, true]);
+  expect(current(state({ gates: gates.map(g => g.id === 1 ? { ...g, closedAt: 99 } : g) })), 'fallback: a closed gate is skipped').toEqual([false, true, false]);
+});
 
 test('checkpoints: death restores objectives, HP, charges and escorts; a boss killed before or after C stays dead', async () => {
   const def = missionSandbox('kill'); def.steps.push({ ...def.steps[0], id: 'reach', type: 'reach', start: { kind: 'objectives', ids: ['kill'], mode: 'all' }, complete: { kind: 'volume', anchor: 'goal', edge: 'inside' } }); def.finish = ['reach'];

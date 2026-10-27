@@ -7,6 +7,7 @@ import { Loadout } from '../../src/sim/combat/Loadout';
 import { beginRewards, finishRewards, gearTier, newCampaign, pickUpgrades, preset, revealCards, type CampaignSave, type Level } from '../../src/sim/progression/Campaign';
 import { campaignLoadout, restoreSelectedAction } from '../../src/sim/progression/apply';
 import { completeCampaignLevel } from '../../src/sim/progression/carryover';
+import { commitCrossingHandover } from '../../src/sim/progression/crossingHandover';
 import { decodeSave, SaveStore, validateSave } from '../../src/sim/progression/Save';
 
 const result = { time: 1, kills: 0, knockdowns: 0, damage: 0, deaths: 0, rescued: 0, optionalObjectives: [] };
@@ -91,6 +92,62 @@ test('save decoding: presets round-trip, v0 migrates, corrupt/unknown data and s
   const store = new SaveStore({ getItem: k => entries.get(k) ?? null, setItem: (k, v) => { entries.set(k, v); }, removeItem: k => { entries.delete(k); } });
   expect(store.write(save)).toBe(true);
   expect(store.load()).toEqual({ status: 'ok', save });
+});
+
+// N10: the destructive L9 -> L10 crossing commits once, after the crawl, and Continue resumes the committed save.
+test('crossing handover: needs the finished crawl, commits once, drops weapons and transport, keeps passengers and the corgi', () => {
+  const rack = (ids: string[]) => ({ rack: ids.map(id => ({ id })) });
+  const make = (finished: boolean) => {
+    const player = { id: 1, transform: { x: 3, y: .7, z: 4, yaw: 1 }, health: { current: 10, max: 100 }, weapons: { LEFT: rack(['weapon.bat']), RIGHT: rack(['weapon.shotgun']) } };
+    const pose = { x: 1, y: .7, z: 2, yaw: 0 };
+    const corgi = { id: 7, kind: 'companion', archetype: 'char.corgi', companion: { path: [], courage: 1, until: 0, barkAt: 0, hurtAt: 0 }, health: { current: 8, max: 8 }, transform: pose };
+    const rider = { id: 8, kind: 'civilian', health: { current: 40, max: 50 }, transform: pose }, dead = { id: 9, kind: 'civilian', health: { current: 0, max: 50 }, transform: pose };
+    const pickup = { id: 20, pickup: { actionId: 'weapon.shotgun' } }, crate = { id: 21, pickup: { kind: 'supply' } };
+    const entities = new Map<number, unknown>([[1, player], [7, corgi], [8, rider], [9, dead], [20, pickup], [21, crate]]);
+    const projectiles = [{}, {}], setLoadout = vi.fn(), removed: number[] = [];
+    const world = {
+      missions: { l9: { state: { finished, preCrashDurability: 55 } } },
+      entities: { get: (id: number) => entities.get(id), iterate: () => entities.values(), remove: (id: number) => { removed.push(id); entities.delete(id); } },
+      getEntity: (id: number) => entities.get(id), spatial: new Map<number, unknown>(),
+      combat: { projectiles, setLoadout }, progression: { pickups: [{}], campaign: undefined as unknown },
+    };
+    const save = preset('L8-default');
+    save.transport = { occupants: [{ id: 1 }, corgi, rider, dead] } as never;
+    return { save, world, player, projectiles, setLoadout, removed };
+  };
+  const early = make(false);
+  expect(() => commitCrossingHandover(early.save, early.world as never), 'premature commit').toThrow('completed crawl');
+  expect(early.save.crossingHandover).toBeUndefined();
+  expect(early.save.transport).toBeDefined();
+
+  const { save, world, player, projectiles, setLoadout, removed } = make(true);
+  const before = [...new Set([...save.ownedActions, 'weapon.bat', 'weapon.shotgun'])].filter(id => catalog[id].category !== 'ability' && id !== 'weapon.fire-axe');
+  commitCrossingHandover(save, world as never);
+  const handover = save.crossingHandover!;
+  expect(handover.applied && handover.checkpoint).toBe('cure-crash');
+  expect([...handover.lostWeapons].sort(), 'every combat weapon is lost').toEqual(before.sort());
+  expect(handover.preCrashDurability).toBe(55);
+  expect(handover.shelteredPassengers.map(e => e.id), 'living non-companion passengers shelter').toEqual([8]);
+  expect(handover.corgi?.id, 'the corgi comes along').toBe(7);
+  expect(save.racks).toEqual({ LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.fire-axe'] });
+  expect(save.selectedAction).toBe('weapon.fire-axe');
+  expect(save.ownedActions.filter(id => catalog[id].category !== 'ability')).toEqual(['weapon.fire-axe']);
+  expect([save.completedLevels, save.unlockedLevel]).toEqual([9, 10]);
+  expect([save.transport, save.pending, save.l9Crash], 'transport and L9 state are removed').toEqual([undefined, undefined, undefined]);
+  expect([projectiles.length, removed, world.progression.pickups], 'projectiles and weapon pickups are cleared (other pickups stay)').toEqual([0, [20], []]);
+  expect(setLoadout).toHaveBeenCalledWith(['weapon.fire-axe'], ['weapon.fire-axe']);
+  expect(player.health.current, 'healed').toBe(100);
+
+  const snapshot = structuredClone(save), healthAfter = player.health.current;
+  player.health.current = 5;
+  commitCrossingHandover(save, world as never);
+  expect(save, 'a repeated commit changes nothing').toEqual(snapshot);
+  expect(player.health.current).toBe(5); expect(healthAfter).toBe(100);
+
+  const continued = decodeSave(JSON.stringify(save));
+  expect(continued.status, 'Continue loads the committed save').toBe('ok');
+  expect((continued as { save: CampaignSave }).save.crossingHandover).toEqual(save.crossingHandover);
+  expect(validateSave(save)).toBe(true);
 });
 
 test('rewards: a saved reward screen round-trips at each phase and cannot be claimed twice; gear tiers follow the default path', () => {
