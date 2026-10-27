@@ -301,12 +301,12 @@ if (arg('--clear-headwear')) {
     }
     if (irisY.length) eyeY = Math.max(eyeY, percentile(irisY, .5));
   }
-  const crown = cap.filter(i => body.pos[i * 3 + 1] > eyeY + headHeight * (arg('--clear-headwear') === 'brown' ? .1 : .05)), brimY = Math.min(...crown.map(i => body.pos[i * 3 + 1]));
+  const crown = cap.filter(i => body.pos[i * 3 + 1] > eyeY + headHeight * (pickedEyes ? -.25 : arg('--clear-headwear') === 'brown' ? .1 : .05)), brimY = Math.min(...crown.map(i => body.pos[i * 3 + 1]));
   const key = (i: number) => body.pos.slice(i * 3, i * 3 + 3).map(x => Math.round(x / 1e-6)).join(','), lifts = new Map<string, number>();
   for (const i of crown) {
     const x = body.pos[i * 3], y = body.pos[i * 3 + 1];
-    if (arg('--clear-headwear') !== 'brown' && y > brimY + headHeight * .22 || x < eyeX - .02) continue;
-    const delta = Math.min(headHeight * (arg('--clear-headwear') === 'brown' ? .35 : .2), Math.max(0, eyeY + Math.tan(Math.PI * .2) * (x - eyeX) + .035 - y));
+    if (arg('--clear-headwear') !== 'brown' && y > brimY + headHeight * .3 || x < eyeX - .08) continue;
+    const delta = Math.min(headHeight * (arg('--clear-headwear') === 'brown' ? .5 : .3), Math.max(0, eyeY + Math.tan(Math.PI * .2) * (x - eyeX) + .07 - y));
     lifts.set(key(i), Math.max(lifts.get(key(i)) ?? 0, delta));
   }
   const changes = body.owner.map((_, i) => lifts.get(key(i)) ?? 0);
@@ -921,7 +921,7 @@ if (!eyes.length && !args.includes('--no-eye-discs')) {
     const lo = new Vector3(Infinity, Infinity, Infinity), hi = new Vector3(-Infinity, -Infinity, -Infinity);
     for (const p of local) { lo.min(p); hi.max(p); }
     const a = new Vector3(), b = new Vector3(), c = new Vector3(), hit = new Vector3();
-    const paintedEyes = arg('--eyes') ? JSON.parse(readFileSync(arg('--eyes')!, 'utf8')) as { eye_centers: number[][]; radius_extent: number } : undefined;
+    const paintedEyes = arg('--eyes') ? JSON.parse(readFileSync(arg('--eyes')!, 'utf8')) as { eye_centers: number[][]; radius_extent: number; game_radius?: number } : undefined;
     const authoredIrises = [new Box3(), new Box3()];
     if (!quadruped) {
       const anatomy = contract ?? rig, anatomyNodes = anatomy.getRoot().listNodes();
@@ -965,7 +965,7 @@ if (!eyes.length && !args.includes('--no-eye-discs')) {
         if (ray.intersectTriangle(a, b, c, false, hit)) x = Math.max(x, hit.x);
       }
       if (!Number.isFinite(x)) continue;
-      const pos: number[] = [], radius = paintedEyes ? Math.min(.02, paintedEyes.radius_extent * Number(arg('--body-scale', '1')) * .65) : anatomicalEyes ? Math.min(.024, Math.max(.018, authoredIrises[0].getSize(new Vector3()).y * .5)) : Math.min(.024, (hi.y - lo.y) * .05);
+      const pos: number[] = [], radius = paintedEyes ? paintedEyes.game_radius ?? Math.min(.02, paintedEyes.radius_extent * Number(arg('--body-scale', '1')) * .65) : anatomicalEyes ? Math.min(.024, Math.max(.018, authoredIrises[0].getSize(new Vector3()).y * .5)) : Math.min(.024, (hi.y - lo.y) * .05);
       for (const [dy, dz] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) new Vector3(x + .006, y + dy * radius, z + dz * radius).applyMatrix4(rest).toArray(pos, pos.length);
       eyes.push({ pos, uv: [0, 0, 0, 1, 1, 1, 1, 0], owner: head, tris: [0, 1, 2, 0, 2, 3] });
     }

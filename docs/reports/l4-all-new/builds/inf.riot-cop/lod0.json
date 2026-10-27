@@ -1,7 +1,7 @@
 {
   "rig": "/Users/wesner/Workspace/3dp-l4-all-new/cast/l4/inf.riot-cop/rig-template.glb",
   "out": "docs/reports/l4-all-new/builds/inf.riot-cop/lod0.raw.glb",
-  "bytes": 1627936,
+  "bytes": 1627924,
   "body": "/Users/wesner/Workspace/3dp-l4-all-new/cast/l4/inf.riot-cop/source/assembled-lod0.glb",
   "scale": 1.919029329186718,
   "yaw": 90,
@@ -14,9 +14,9 @@
   "headwearClearance": {
     "eyeX": 0.4340634509666693,
     "eyeY": 1.4091070009663798,
-    "brimY": 1.4443082634183277,
-    "vertices": 0,
-    "maxLift": 0
+    "brimY": 1.239653775265375,
+    "vertices": 37,
+    "maxLift": 0.20575553235381538
   },
   "propBindings": [
     {
@@ -61,7 +61,7 @@
     }
   ],
   "eyeLandmarks": "/Users/wesner/Workspace/3dp-l4-all-new/cast/l4/inf.riot-cop/eyes.json",
-  "vertices": 4691,
+  "vertices": 4687,
   "weldedVertices": 2304,
   "triangles": 4612,
   "bodyTriangleBudget": 4612,
@@ -169,7 +169,7 @@
     },
     "foreArmR/armR": {
       "seamVertices": 24,
-      "band": 0.054481592719366215,
+      "band": 0.05472819185860369,
       "blended": 25
     },
     "armR/torso": {
@@ -179,17 +179,17 @@
     },
     "handR/foreArmR": {
       "seamVertices": 38,
-      "band": 0.054481592719366215,
+      "band": 0.05472819185860369,
       "blended": 37
     },
     "footR/shinR": {
       "seamVertices": 53,
-      "band": 0.054481592719366215,
+      "band": 0.05472819185860369,
       "blended": 51
     },
     "footL/shinL": {
       "seamVertices": 49,
-      "band": 0.054481592719366215,
+      "band": 0.05472819185860369,
       "blended": 46
     },
     "legR/hip": {
@@ -199,12 +199,12 @@
     },
     "head/torso": {
       "seamVertices": 72,
-      "band": 0.054481592719366215,
+      "band": 0.05472819185860369,
       "blended": 74
     },
     "handL/foreArmL": {
       "seamVertices": 52,
-      "band": 0.054481592719366215,
+      "band": 0.05472819185860369,
       "blended": 51
     },
     "shinR/legR": {
@@ -214,7 +214,7 @@
     },
     "foreArmL/armL": {
       "seamVertices": 26,
-      "band": 0.054481592719366215,
+      "band": 0.05472819185860369,
       "blended": 26
     },
     "legL/hip": {

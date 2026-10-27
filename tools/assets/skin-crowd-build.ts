@@ -34,7 +34,7 @@ const output = 'public/assets/models/skinned', report = join(process.env.CROWD_R
 mkdirSync(output, { recursive: true }); mkdirSync(report, { recursive: true }); mkdirSync(assets, { recursive: true });
 const metadata = existsSync(join(source, 'rig.json')) ? JSON.parse(readFileSync(join(source, 'rig.json'), 'utf8')) as { class?: string; lods: { lod: number; uniform_scale?: number; world_scale?: number; rotation_y_degrees?: number }[] } : undefined;
 const unbound = existsSync(join(source, 'source/manifest.json')) && !metadata;
-const alignment = unbound ? JSON.parse(readFileSync(join(id === 'inf.dog' ? join(dirname(source), 'amb.dog') : source, 'source/manifest.json'), 'utf8')) as { initial_game_height_scale: number; game_alignment_rotation_y_degrees: number; triangle_budgets?: [number, number, number]; rig_class?: string; rig_source?: string } : undefined;
+const alignment = unbound ? JSON.parse(readFileSync(join(id === 'inf.dog' ? join(dirname(source), 'amb.dog') : source, 'source/manifest.json'), 'utf8')) as { initial_game_height_scale: number; game_alignment_rotation_y_degrees: number; triangle_budgets?: [number, number, number]; rig_class?: string; rig_source?: string; rig_fit_height?: boolean } : undefined;
 if (alignment?.triangle_budgets) {
   const [near, middle, far] = alignment.triangle_budgets;
   if (![near, middle, far].every(n => Number.isInteger(n) && n > 0) || middle > near || far > middle) throw Error(`${id}: invalid source triangle budgets`);
@@ -72,7 +72,7 @@ for (const lod of [0, 1, 2]) {
   else if (unbound && id.startsWith('inf.') && existsSync(join(source, 'eyes.json'))) args.push('--eyes', join(source, 'eyes.json'));
   else if (metadata) args.push('--reconstruct-body');
   if (id.startsWith('npc.')) args.push('--healthy');
-  if (unbound && !alignment?.rig_source && (id.startsWith('npc.') || alignment?.rig_class === 'humanoid' || alignment?.rig_class === 'alpha')) args.push('--fit-rig-height');
+  if (unbound && (!alignment?.rig_source || alignment.rig_fit_height) && (id.startsWith('npc.') || alignment?.rig_class === 'humanoid' || alignment?.rig_class === 'alpha')) args.push('--fit-rig-height');
   if (['npc.civilian-woman-b', 'npc.civilian-elderly'].includes(id)) args.push('--spectacles');
   if (lod > 0 && ['npc.civilian-woman-b', 'npc.civilian-elderly'].includes(id)) {
     const measured = JSON.parse(readFileSync(join(report, 'lod0.json'), 'utf8')) as { spectacleTop: number };
@@ -84,6 +84,8 @@ for (const lod of [0, 1, 2]) {
   if (unbound && ['npc.lab-guard', 'npc.police-officer', 'npc.firefighter-alive'].includes(id)) args.push('--clear-headwear', id === 'npc.firefighter-alive' ? 'red' : 'navy');
   if (unbound && ['npc.lab-tech-a', 'npc.civilian-kid'].includes(id)) args.push('--clear-headwear', 'brown');
   if (unbound && id === 'inf.alpha-worker') args.push('--clear-headwear', 'yellow');
+  if (unbound && id.startsWith('inf.alpha') && id !== 'inf.alpha-worker') args.push('--clear-headwear', 'brown');
+  if (unbound && id === 'inf.firefighter') args.push('--clear-headwear', 'red');
   if (unbound && id === 'inf.riot-cop') args.push('--clear-headwear', 'navy');
   if (unbound && id === 'inf.crawler') args.push('--clear-headwear', 'brown');
   if (id === 'char.corgi' || id === 'amb.dog') args.push('--no-eye-discs');

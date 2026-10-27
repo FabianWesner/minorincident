@@ -21,10 +21,12 @@ const model = (e: EntitySnapshot): string | undefined => {
   }
   return e.civilian?.model;
 };
-const runs = [];
+type Counts = Record<string, { peak: number; actorSeconds: number; infectedSeconds: number; corpseSeconds: number }>;
+const runs: { tier: 'high' | 'low'; report: ReturnType<typeof runL4>; counts: Counts; arrivalMix: { seconds: number; total: number; counts: Record<string, number>; maxShare: number }[] }[] = [];
 for (const tier of ['high', 'low'] as const) {
   const world = await loadLevel('L4', 1, tier);
-  const counts: Record<string, { peak: number; actorSeconds: number; infectedSeconds: number; corpseSeconds: number }> = {};
+  const counts: Counts = {};
+  const arrivalMix: typeof runs[number]['arrivalMix'] = [];
   const update = world.update.bind(world);
   world.update = () => {
     update(); if (world.tick % 30) return;
@@ -38,9 +40,15 @@ for (const tier of ['high', 'low'] as const) {
       if (e.corpse || e.health.current <= 0 || e.civilian?.state === 'finished') row.corpseSeconds += .5;
     }
     for (const [id, n] of Object.entries(live)) counts[id].peak = Math.max(counts[id].peak, n);
+    const state = world.mission && 'l4' in world.mission ? world.mission.l4 : undefined;
+    const arrivals = new Set([...(state?.emergedIds ?? []), ...(state?.collapseIds ?? []), ...(state?.alphaIds ?? [])]);
+    const mix: Record<string, number> = {};
+    for (const e of world.entities.iterate()) if (arrivals.has(e.id) && e.infected && !e.hidden && !e.infected.hidden && e.health.current > 0) mix[e.archetype!] = (mix[e.archetype!] ?? 0) + 1;
+    const total = Object.values(mix).reduce((a, b) => a + b, 0);
+    if (total >= 20) arrivalMix.push({ seconds: world.tick / 60, total, counts: mix, maxShare: Math.max(...Object.values(mix)) / total });
   };
   const report = runL4(world, world.missions!, 'complete', { seed: 1, maxSeconds: 600 });
-  runs.push({ tier, report, counts }); world.dispose();
+  runs.push({ tier, report, counts, arrivalMix }); world.dispose();
 }
 const authored = [...new Set([...l4InfectedLooks, ...l4InfectedArchetypes.filter(id => id !== 'infected.sprinter').map(id => infectedDef(id).asset), ...alphaLooks['inf.alpha'], 'char.courier-female', 'char.courier-male', 'char.corgi'])];
 const inherited = new Set(['inf.common-worker', 'npc.national-guard', 'npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'npc.civilian-elderly', 'char.courier-female', 'char.courier-male', 'char.corgi']);

@@ -52,7 +52,7 @@ try {
         if (!mesh.isMesh || !mesh.userData.crowdEye) return;
         mesh.visible = def.id.startsWith('inf.');
         if (!mesh.visible) return;
-        mesh.material = Array.isArray(mesh.material) ? mesh.material.map(reviewEyeMaterial) : reviewEyeMaterial(mesh.material);
+        mesh.material = Array.isArray(mesh.material) ? mesh.material.map(m => reviewEyeMaterial(m, view.materials)) : reviewEyeMaterial(mesh.material, view.materials);
       });
       if (def.crowdSkin && skinTone !== undefined) reviewSkinTone(root, skinTone, view.materials);
       if (def.id.startsWith('npc.')) {

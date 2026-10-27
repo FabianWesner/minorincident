@@ -1,7 +1,7 @@
 {
   "rig": "/Users/wesner/Workspace/3dp-l4-all-new/cast/l4/inf.firefighter/rig-template.glb",
   "out": "docs/reports/l4-all-new/builds/inf.firefighter/lod0.raw.glb",
-  "bytes": 1955004,
+  "bytes": 1955020,
   "body": "/Users/wesner/Workspace/3dp-l4-all-new/cast/l4/inf.firefighter/source/assembled-lod0.glb",
   "scale": 1.678326297437628,
   "yaw": 90,
@@ -11,6 +11,13 @@
     -0.00093686839454582
   ],
   "meanDistanceToRigidSurface": 0.014194088426333493,
+  "headwearClearance": {
+    "eyeX": 0.3452714414307977,
+    "eyeY": 1.3575500008539614,
+    "brimY": 1.1764542162621148,
+    "vertices": 30,
+    "maxLift": 0.21685331342167258
+  },
   "propBindings": [
     {
       "prop": "l4_handR_0",
@@ -127,17 +134,17 @@
   "seams": {
     "handR/armR": {
       "seamVertices": 32,
-      "band": 0.05358545037285078,
+      "band": 0.05368624102048022,
       "blended": 33
     },
     "head/torso": {
       "seamVertices": 169,
-      "band": 0.05358545037285078,
+      "band": 0.05368624102048022,
       "blended": 177
     },
     "handL/armL": {
       "seamVertices": 47,
-      "band": 0.05358545037285078,
+      "band": 0.05368624102048022,
       "blended": 49
     },
     "armR/torso": {
@@ -162,7 +169,7 @@
     },
     "footR/legR": {
       "seamVertices": 41,
-      "band": 0.05358545037285078,
+      "band": 0.05368624102048022,
       "blended": 44
     },
     "legL/hip": {
@@ -172,7 +179,7 @@
     },
     "footL/legL": {
       "seamVertices": 36,
-      "band": 0.05358545037285078,
+      "band": 0.05368624102048022,
       "blended": 35
     }
   }

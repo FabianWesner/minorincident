@@ -1,5 +1,5 @@
 import { BufferAttribute, MeshLambertNodeMaterial, type Material, type Mesh, type Object3D } from 'three/webgpu';
-import { mix, texture, uv } from 'three/tsl';
+import { float, mix, texture, uv, vec3 } from 'three/tsl';
 import { crowdRegionOf, crowdRegionTint } from '../../src/render/characters/crowdRegions';
 import { crowdRegion } from '../../src/render/characters/crowdRegionData';
 import type { Materials } from '../../src/render/Materials';
@@ -30,9 +30,12 @@ export function reviewSkinTone(root: Object3D, tone: number, shading: Materials)
 }
 
 /** The production crowd's infection-eye disc mask, for standalone review meshes. */
-export function reviewEyeMaterial(source: Material): MeshLambertNodeMaterial {
-  const material = new MeshLambertNodeMaterial().copy(source);
-  material.maskNode = uv().sub(.5).mul(2).length().lessThanEqual(1);
+export function reviewEyeMaterial(source: Material, shading: Materials): MeshLambertNodeMaterial {
+  const radius = uv().sub(.5).mul(2).length();
+  const strength = radius.smoothstep(1, .55).mul(3).add(3);
+  const material = shading.shaded(vec3(0), vec3(1, .04373, .02843).mul(strength), undefined, undefined, undefined, float(1));
+  material.side = source.side;
+  material.maskNode = radius.lessThanEqual(1);
   material.userData.reviewEyeMask = true;
   return material;
 }
