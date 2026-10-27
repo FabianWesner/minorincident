@@ -5,7 +5,9 @@ for (let i = 0; i < process.argv.length; i++) {
   const workers = arg === '--workers' ? process.argv[++i] : arg.startsWith('--workers=') ? arg.slice('--workers='.length) : undefined;
   if ((arg === '--workers' || workers !== undefined) && workers !== '1' && workers !== '2') throw new Error('Playwright is limited to 1 or 2 workers on this machine');
 }
-const endpoint = await poolEndpoint();
+// Playwright's --list path only needs test metadata. Keep gate collection passive:
+// importing the config must not start or admit a browser-pool job.
+const endpoint = process.argv.includes('--list') ? undefined : await poolEndpoint();
 if (endpoint) { process.env.MI_BROWSER_POOL_WS = endpoint; process.env.MI_BROWSER_POOL = '1'; }
 
 // Playwright forces color in child workers; avoid conflicting inherited NO_COLOR.
