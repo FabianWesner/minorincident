@@ -22,7 +22,7 @@ export interface InfectedState {
   /** Story-director walk (L4 collapse Alphas): path to this point (grid A*, not the courier flow field) and ignore targets until cleared. */
   scripted?: { x: number; z: number };
   /** L4 street group: finish the breach crossing before acquiring a defender. */
-  breachApproach?: 'outside' | 'inside';
+  breachApproach?: 'wire' | 'outside' | 'inside';
   /** L4: finish a defender flank when the courier's corpse field is saturated. */
   l4FlankTarget?: number;
   /** L4's bounded walk off the escape street; released after crossing its edge or the window ends. */

@@ -753,10 +753,20 @@ export class InfectedSystem {
     if (sent) this.world.entities.get(id)!.infected!.l1!.search.completeApproach = completeApproach;
     return sent;
   }
-  /** Director pressure: rush to a human and prefer it over nearer bystanders until `untilTick` (L4 alarm on the courier). */
+  /** Director pressure: direct an arrival at a human, retaining its archetype's movement and attacks. */
   press(id: number, targetId: number, untilTick: number, focusBiasM?: number): boolean {
-    const target = this.world.entities.get(targetId), brain = this.world.entities.get(id)?.infected?.l1;
-    if (!target || !brain) return false;
+    const target = this.world.entities.get(targetId), entity = this.world.entities.get(id), state = entity?.infected, brain = state?.l1;
+    if (!target || !entity || !state || entity.health.current <= 0) return false;
+    if (!brain) {
+      // The other humanoid archetypes use the native target/chase path rather
+      // than the pedestrian search brain. Without a target they wander at distant mouths.
+      if (state.state === 'attack' || state.specialAttack || state.grabUntil > this.world.tick) return false;
+      state.heardTargetId = targetId;
+      if (state.state === 'idle' || state.state === 'wander' || state.state === 'attracted') {
+        state.state = 'alerted'; state.until = this.world.tick + hearingReactionTicks;
+      }
+      return true;
+    }
     // An emerging resident may already have seen a defender on this tick.
     // Keep the pressure preference even when its live chase owns movement.
     brain.focusId = targetId; brain.focusUntil = untilTick;
@@ -1565,7 +1575,9 @@ export class InfectedSystem {
     const useFlow = this.active.length > 20 && !b.roar && !b.specialAttack && !b.scripted && !b.investigate && (b.heardTargetId ?? 1) <= 1;
     if (!nav.visible(e.transform, target, e.combat!.radius)) {
       // Clear paths steer directly; cell searches are needed only around cover.
-      const from = nav.nearestCell(e.transform.x, e.transform.z), to = nav.nearestCell(x, z);
+      // The nearest cell can lie across a thin doorway wall. Start on a
+      // cell reachable from the actual body, including after crowd separation.
+      const from = nav.nearestCell(e.transform.x, e.transform.z, e.combat!.radius), to = nav.nearestCell(x, z);
       let next = from;
       if (useFlow) next = nav.flowNext(from);
       else {

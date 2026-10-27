@@ -75,5 +75,9 @@ test('Mega and every zoo species retain a solid corpse for courier and companion
       expect(world.solids.clear(body.transform, .35, 1), body.archetype).toBe(false);
       expect(world.solids.clear({ ...body.transform, y: .3 }, .44, companion), `${body.archetype} / corgi`).toBe(false);
     }
+    // Healthy zoo deaths can retain the finished civilian lifecycle record.
+    const elephant = world.entities.get(ids[3])!;
+    elephant.civilian = { zooAnimal: 'elephant', state: 'finished' } as NonNullable<typeof elephant.civilian>;
+    expect(world.solids.clear(elephant.transform, .35, 1), 'finished zoo metadata must not erase the large body footprint').toBe(false);
   } finally { world.dispose(); }
 });

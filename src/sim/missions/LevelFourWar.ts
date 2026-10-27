@@ -466,16 +466,25 @@ export class LevelFourWar {
     // An attracted infected outside whose goal lies in the camp has no route while the wall stands: its goal becomes the wire in
     // front of it (the pile at the fence), where the E26 rule makes it claw at the segment in its way.
     for (const e of this.world.infected!.active) {
-      const l1 = e.infected!.l1; if (!l1 || l1.mode !== 'attracted' || !l1.hasGoal || e.infected!.scripted || e.health.current <= 0 || inside(e.transform) || !inside({ x: l1.goalX, z: l1.goalZ })) continue;
-      const t = e.transform, x = Math.max(r.x0 - 1.2, Math.min(r.x1 + 1.2, t.x)), z = Math.max(r.z0 - 1.2, Math.min(r.z1 + 1.2, t.z));
-      const wire = x > r.x0 && x < r.x1 && z > r.z0 && z < r.z1 ? { x: t.x < r.x0 ? r.x0 - 1.2 : r.x1 + 1.2, z } : { x, z };
-      l1.goalX = wire.x; l1.goalZ = wire.z;
+      const b = e.infected!, l1 = b.l1, nativeArrival = !l1 && this.s.origin[e.id] !== undefined;
+      if ((!nativeArrival && (!l1 || l1.mode !== 'attracted' || !l1.hasGoal || !inside({ x: l1.goalX, z: l1.goalZ }))) || b.scripted || e.health.current <= 0 || inside(e.transform)) continue;
+      // Native seeking stops at its attack clearance (~0.7 m), so its goal is
+      // closer to the wire than a pedestrian search goal. Both bodies stop outside it.
+      const margin = nativeArrival ? .6 : 1.2;
+      const t = e.transform, x = Math.max(r.x0 - margin, Math.min(r.x1 + margin, t.x)), z = Math.max(r.z0 - margin, Math.min(r.z1 + margin, t.z));
+      const wire = x > r.x0 && x < r.x1 && z > r.z0 && z < r.z1 ? { x: t.x < r.x0 ? r.x0 - margin : r.x1 + margin, z } : { x, z };
+      if (nativeArrival) { b.scripted = wire; b.breachApproach = 'wire'; }
+      else { l1!.goalX = wire.x; l1!.goalZ = wire.z; }
     }
     if (!open.length) return;
     const sites = open.map(side => { const { centre } = l4BreachSite(side), o = l4Breaches[side].out; return { outer: this.snap({ x: centre.x + o.x * 1.6, z: centre.z + o.z * 1.6 }, .45) }; });
     const player = this.world.entities.get(1)!.transform;
     for (const e of this.world.infected!.active) {
       const b = e.infected!; if (e.health.current <= 0 || e.hidden || e.archetype === 'infected.alpha' || b.specialAttack || b.vault) continue;
+      if (b.breachApproach === 'wire') {
+        b.scripted = sites.slice().sort((p, q) => dist(p.outer, e.transform) - dist(q.outer, e.transform))[0].outer;
+        b.breachApproach = 'outside';
+      }
       if (b.breachApproach && b.scripted) {
         if (b.breachApproach === 'outside' && (inside(e.transform) || dist(e.transform, b.scripted) < 1.4)) {
           // Fan out onto the courier's side of the plaza. A group must finish
@@ -492,7 +501,10 @@ export class LevelFourWar {
       if (inside(e.transform)) continue;
       if (b.scripted) continue;
       const t = e.transform, wire = Math.min(Math.abs(t.x - r.x0), Math.abs(t.x - r.x1), Math.abs(t.z - r.z0), Math.abs(t.z - r.z1));
-      if (wire > 4 || t.x < r.x0 - 4 || t.x > r.x1 + 4 || t.z < r.z0 - 4 || t.z > r.z1 + 4) continue;
+      // Native archetypes have no pedestrian complete-approach search. Once a
+      // gap opens, route their authored street arrivals all the way from the mouth.
+      const streetArrival = !b.l1 && this.s.origin[e.id] !== undefined;
+      if (!streetArrival && (wire > 4 || t.x < r.x0 - 4 || t.x > r.x1 + 4 || t.z < r.z0 - 4 || t.z > r.z1 + 4)) continue;
       b.scripted = sites.sort((p, q) => dist(p.outer, t) - dist(q.outer, t))[0].outer;
       b.breachApproach = 'outside';
     }
