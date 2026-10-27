@@ -1,6 +1,6 @@
 // Shared gate tools: browser/runner admission is used by every lane and gate. If it breaks, the Mac overloads
 // (WindowServer kills, see docs/process/lessons-learned.md) or remote runs lose their caches.
-import { execFile, execFileSync } from 'node:child_process';
+import { execFile, execFileSync, spawnSync } from 'node:child_process';
 import { chmodSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, utimesSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
@@ -37,6 +37,51 @@ test('browser pool admission backs off under WindowServer pressure, keeps a one-
   const quiet = new RegExp(readFileSync('tools/perf/quiet-run.sh', 'utf8').match(/! pgrep -f '([^']*node_modules[^']*)'/)![1]);
   for (const command of ['node node_modules/.bin/vitest run tests/engine', '/usr/bin/node node_modules/typescript/bin/tsc --noEmit']) expect(quiet.test(command), command).toBe(true);
   expect(quiet.test('node tools/qa/census.ts')).toBe(false);
+});
+
+// Exercise the real runner with a tiny catalog subprocess; no browser is launched.
+function gateFixture() {
+  const root = mkdtempSync(join(tmpdir(), 'mi-gate-runner-')); dirs.push(root);
+  for (const dir of ['tools/scenelab', 'specs/scenes/catalog']) mkdirSync(join(root, dir), { recursive: true });
+  writeFileSync(join(root, 'tools/scenelab/catalog.ts'), '// fixture catalog');
+  for (const scene of ['alpha', 'beta', 'gamma', 'delta']) writeFileSync(join(root, `specs/scenes/catalog/${scene}.json`), '{}');
+  const select = (scenes: string[], backends = scenes.map(() => 'webgl2'), known = {}) => writeFileSync(join(root, 'specs/scenes/gate-list.json'), JSON.stringify({ rows: scenes.map((scene, i) => ({ scene, backend: backends[i], tier: 'high', zoom: null })), known }));
+  select(['alpha', 'beta']);
+  writeFileSync(join(root, 'tools/e2e-lock.sh'), '#!/bin/sh\nexec node tools/child.mjs "$@"\n');
+  writeFileSync(join(root, 'tools/child.mjs'), `
+import { appendFileSync, mkdirSync, writeFileSync } from 'node:fs';
+const args = process.argv.slice(2), flag = name => args[args.lastIndexOf('--' + name) + 1];
+appendFileSync('calls.log', flag('backend') + '\\n');
+const mode = process.env.CHILD_BEHAVIOR;
+if (mode === 'startup') process.exit(2);
+if (mode === 'timeout') process.exit(124);
+if (mode === 'signal') process.kill(process.pid, 'SIGTERM');
+const out = flag('out'); mkdirSync(out, { recursive: true });
+let rows = flag('only').split(',').map(name => ({ name, pass: mode !== 'known' && flag('backend') !== process.env.FAIL_BACKEND, failed: ['fixture'] }));
+if (mode === 'incomplete') rows = rows.slice(0, 1);
+if (mode === 'wrong-types') rows = rows.map(row => ({ ...row, pass: 'false' }));
+writeFileSync(out + '/index.json', mode === 'malformed' ? '{' : JSON.stringify({ rows }));
+process.exit(mode === 'bad-exit' ? 2 : rows.some(r => !r.pass) ? 1 : 0);
+`);
+  const git = (...args: string[]) => execFileSync('git', ['-c', 'user.name=Gate fixture', '-c', 'user.email=gate@example.invalid', '-c', 'core.hooksPath=/dev/null', ...args], { cwd: root, encoding: 'utf8' });
+  git('init', '-q'); git('add', '.'); git('commit', '-qm', 'fixture');
+  const run = (args: string[] = [], env: Record<string, string> = {}, mode = 'gate') => spawnSync(process.execPath,
+    ['--import', resolve('node_modules/tsx/dist/loader.mjs'), process.env.MI_GATE_RUNNER ?? resolve('tools/scenelab/gate-run.ts'), mode, '--out', 'output', ...args],
+    { cwd: root, env: { ...process.env, ...env }, encoding: 'utf8', timeout: 10_000 });
+  const calls = () => existsSync(join(root, 'calls.log')) ? readFileSync(join(root, 'calls.log'), 'utf8').trim().split('\n').length : 0;
+  return { root, run, git, select, calls };
+}
+
+test('scene gate rejects invalid arguments and empty selections before running children', () => {
+  const f = gateFixture();
+  for (const args of [
+    ['--batch', 'NaN'], ['--batch', 'Infinity'], ['--batch', '0'], ['--batch', '-1'], ['--batch', '1.5'],
+    ['--shard', '0/2'], ['--shard', '3/2'], ['--shard', '1/0'], ['--shard', '1/NaN'], ['--shard', '2/2'],
+  ]) expect(f.run(args).status, args.join(' ')).not.toBe(0);
+  expect(f.run([], {}, 'other').status, 'unknown mode').not.toBe(0);
+  expect(f.calls(), 'invalid input must not launch work').toBe(0);
+  expect(f.run(['--batch', '1', '--shard', '1/2']).status, 'valid shard').toBe(0);
+  f.select([]); expect(f.run().status, 'empty selection').not.toBe(0);
 });
 
 test('remote runner cache GC removes inactive caches while keeping the current cache and live jobs', () => {

@@ -2,6 +2,7 @@ import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { catalogFlag } from './catalog-args';
+import { validateGateSelection } from './gate-arguments';
 
 /** Shared batch runner for `npm run scene:gate` (curated list) and `npm run scene:matrix:nightly` (full matrix, sharded, resumable).
  * Every batch is one `catalog.ts --matrix --only <rows>` command under tools/e2e-lock.sh, so each browser reservation stays well
@@ -13,6 +14,8 @@ interface CatalogRow { name: string; pass: boolean; error?: string; failed: stri
 const args = process.argv.slice(2), mode = args[0], flag = (n: string) => catalogFlag(args, n);
 const out = resolve(flag('out') ?? (mode === 'gate' ? 'test-results/scene-gate' : 'test-results/scene-nightly'));
 const maxRows = Number(flag('batch') ?? (mode === 'gate' ? 15 : 12));
+if (mode !== 'gate' && mode !== 'nightly') throw new Error(`Unknown scene gate mode: ${String(mode)}`);
+if (!Number.isSafeInteger(maxRows) || maxRows < 1) throw new Error('--batch must be a finite positive integer');
 
 /** Row name as catalog.ts --matrix writes it. */
 const rowName = (scene: string, tier: string, zoom: number | null) => `${scene}@${tier}${zoom === null ? '' : `-z${zoom}`}`;
@@ -47,9 +50,12 @@ function selectRows(): { rows: Row[]; known: Map<string, string> } {
 }
 
 const { rows, known } = selectRows();
+if (!rows.length) throw new Error('Scene gate selection is empty');
 let batches = toBatches(rows, maxRows);
 const shard = flag('shard')?.split('/').map(Number);
+if (validateGateSelection(mode, maxRows, flag('shard'), rows.length)) throw new Error('--shard must be i/n with 1 <= i <= n');
 if (shard) batches = batches.filter((_, i) => i % shard[1] === shard[0] - 1);
+if (!batches.length) throw new Error('Scene gate shard selected no work');
 mkdirSync(out, { recursive: true });
 const statePath = `${out}/state.json`;
 type State = Record<string, { code: number | null; seconds: number; rows: CatalogRow[] }>;
