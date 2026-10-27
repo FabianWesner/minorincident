@@ -26,6 +26,51 @@ test('boot: ready resolves, the canvas shows spatial detail, and three scenario 
   expect(resources).toEqual({ entities: 0, bodies: 0, colliders: 0, listeners: 0 });
 });
 
+// Q-208 guard (Opus QA, batch 20: "the courier's own skin and her held bat get their shaders rebuilt over and over during
+// play. The game freezes for 0.6 to 1.8 s each time"). Plays L1 through the lab handover and the outbreak with the bat,
+// then walks the courier on and off the corpse pile in real frames (the foreground depth slice toggles there). Any node
+// build after warm-up, or any frame over 200 ms (PO checklist Q-126), fails. WebGPU low at zoom 1.5, as reported.
+test('L1 handover + outbreak: no shader builds after warm-up and no frame over 200 ms @smoke', async ({ page }) => {
+  test.setTimeout(150_000);
+  await page.goto('/');
+  const adapter = await page.evaluate(async () => Boolean(await (navigator as Navigator & { gpu?: { requestAdapter(): Promise<unknown> } }).gpu?.requestAdapter()));
+  test.skip(!adapter && process.platform !== 'darwin', 'No WebGPU adapter in this headless browser');
+  await boot(page, testUrl.replace('renderer=webgl', 'renderer=webgpu').replace('quality=high', 'quality=low') + '&loadProfile=1');
+  const builds = (): Promise<Record<string, number>> => page.evaluate(() => ({ ...window.__SS__!.perf().nodeBuildMaterials }));
+  const corpses = await page.evaluate(async () => {
+    const a = window.__SS__!;
+    a.settings.set({ quality: 'low' }); await a.loadLevel('L1', { seed: 1 });
+    a.pause(); a.missions.begin(); a.cheats.god(true); a.camera.follow(); a.camera.zoom(1.5);
+    // Handover: the parcel is delivered, the technician walks in, the lab accident lets the infected out.
+    a.cheats.completeObjective('pickup'); a.cheats.completeObjective('deliver');
+    for (let i = 0; i < 40 && a.missions.state()!.steps.escape?.status !== 'active'; i++) await a.step(60);
+    a.cheats.completeObjective('escape'); a.cheats.completeObjective('weapon');
+    await a.step(120); a.cheats.killAll(); await a.step(30);
+    // The courier's foreground slice switches on within 4 m of a corpse (GameView.nearCorpse).
+    const dead = a.query({}).filter(e => !e.hidden && !e.infected?.hidden && (e.corpse || (e.infected && e.health.current <= 0))).slice(0, 4).map(e => ({ x: e.transform.x, z: e.transform.z }));
+    if (dead[0]) a.teleport(1, { x: dead[0].x + 7, z: dead[0].z });
+    return dead;
+  });
+  expect(corpses.length, 'outbreak corpses to walk over').toBeGreaterThan(0);
+  // Warm-up: the level's own prewarm plus a few real frames at the start position.
+  await page.evaluate(async () => { const a = window.__SS__!; a.resume(); await new Promise(r => setTimeout(r, 1500)); });
+  const warm = await builds();
+  const frames = await page.evaluate(async spots => {
+    const a = window.__SS__!, gaps: number[] = []; let previous = 0, stop = false;
+    const sample = (now: number): void => { if (previous) gaps.push(now - previous); previous = now; if (!stop) requestAnimationFrame(sample); };
+    requestAnimationFrame(sample);
+    for (let round = 0; round < 2; round++) for (const spot of spots) {
+      a.teleport(1, { x: spot.x + 1, z: spot.z }); await new Promise(r => setTimeout(r, 700));
+      a.teleport(1, { x: spot.x + 7, z: spot.z }); await new Promise(r => setTimeout(r, 700));
+    }
+    stop = true; a.pause();
+    return { max: Math.max(...gaps), over: gaps.filter(g => g > 200), count: gaps.length };
+  }, corpses);
+  const after = await builds(), rebuilt = Object.fromEntries(Object.entries(after).filter(([key, n]) => n !== warm[key]));
+  expect(rebuilt, 'node builds after warm-up (courier, bat, anything)').toEqual({});
+  expect(frames.over, `gameplay frames over 200 ms (max ${frames.max.toFixed(0)} ms in ${frames.count})`).toEqual([]);
+});
+
 // P0 guard (PROD "all other players are invisible"): each on-screen pedestrian's head/torso pixels must change when that
 // pedestrian is moved off screen, so hand props and shadows alone cannot pass.
 for (const renderer of ['webgl', 'webgpu'] as const) test(`L1 start: pedestrians are drawn on screen (${renderer}), not only their props @smoke`, async ({ page }) => {
