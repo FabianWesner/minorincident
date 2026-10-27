@@ -91,7 +91,7 @@ for (const lod of [0, 1, 2]) {
   }
   // Region classes in the atlas alpha: tinted, flattened hair/skin/garments for civilians; skin only for uniforms.
   if (id.startsWith('npc.')) {
-    const document = await io.read(raw), regions = classifyCrowdAtlas(document, id.startsWith('npc.civilian-'));
+    const document = await io.read(raw), regions = classifyCrowdAtlas(document, id.startsWith('npc.civilian-'), id === 'npc.national-guard');
     if (regions) { await io.write(raw, document); writeFileSync(join(report, `lod${lod}.regions.json`), JSON.stringify(regions, null, 2) + '\n'); }
   }
   const tiers = [];

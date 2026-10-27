@@ -7302,12 +7302,12 @@
     "category": "character",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/npc.national-guard.glb",
+    "glb": "public/assets/models/skinned/npc.national-guard.lod0.glb",
     "dimensions": {
-      "x": 0.7084,
-      "y": 1.8,
-      "z": 0.7929,
-      "tolerance": 0.1
+      "x": 0.5076742470264435,
+      "y": 1.4286228399723768,
+      "z": 0.8845464289188385,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -7360,18 +7360,27 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/npc.national-guard/model.glb",
+    "sourceGlb": "assets/npc.national-guard/model.skin.glb",
     "sourceForward": "+X",
     "sourceScale": 1.25995466,
     "lods": {
-      "lod1": "public/assets/models/npc.national-guard.lod1.glb",
-      "lod2": "public/assets/models/npc.national-guard.lod2.glb"
+      "lod1": "public/assets/models/skinned/npc.national-guard.lod1.glb",
+      "lod2": "public/assets/models/skinned/npc.national-guard.lod2.glb"
     },
     "script": "assets/npc.national-guard/build.py",
     "authoredLodTriangles": {
       "lod1": 16000,
       "lod2": 15000
-    }
+    },
+    "rigidBaseline": {
+      "glb": "public/assets/models/npc.national-guard.glb",
+      "lods": {
+        "lod1": "public/assets/models/npc.national-guard.lod1.glb",
+        "lod2": "public/assets/models/npc.national-guard.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "npc.survivor-group",

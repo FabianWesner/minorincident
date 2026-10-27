@@ -1,6 +1,7 @@
 // Asset contract: every shipped GLB (all levels, all LODs) passes the one validator in tools/assets/validate.ts.
 // Validator rejection cases and atlas identity details are shared across every figure build.
 import { Document } from '@gltf-transform/core';
+import { cloneDocument } from '@gltf-transform/functions';
 import { expect, test } from 'vitest';
 import manifest from '../../src/assets/manifest.json';
 import type { AssetDef } from '../../src/assets/types';
@@ -30,13 +31,16 @@ test('crowd atlas cleanup preserves enclosed eye paint and its authored alpha cl
     const material = doc.createMaterial().setBaseColorTexture(doc.createTexture().setImage(new Uint8Array(PNG.sync.write(png))).setMimeType('image/png'));
     const prim = doc.createPrimitive().setMaterial(material)
       .setAttribute('POSITION', attribute([1, 0, -1, 1, 1, -1, 1, 1, 1, 1, 0, 1], 'VEC3'))
-      .setAttribute('TEXCOORD_0', attribute([0, 0, 0, 1, 1, 1, 1, 0], 'VEC2'))
+      .setAttribute('TEXCOORD_0', attribute([0, 0, 0, 1, .75, 1, .75, 0], 'VEC2'))
       .setAttribute('_CROWD_PART', attribute([0, 0, 0, 0], 'SCALAR'))
       .setAttribute('_CROWD_REGION', attribute([1, 1, 1, 1], 'SCALAR'))
       .setIndices(doc.createAccessor().setBuffer(buffer).setType('SCALAR').setArray(new Uint16Array([0, 1, 2, 0, 2, 3])));
     const scene = doc.createScene(), head = doc.createNode('head'); scene.addChild(head);
     scene.addChild(doc.createNode('skin_body').setSkin(doc.createSkin().addJoint(head)).setMesh(doc.createMesh().addPrimitive(prim)));
     scene.addChild(doc.createNode('skin_eyes').setMesh(doc.createMesh().addPrimitive(doc.createPrimitive().setAttribute('POSITION', attribute([1, .8, 0], 'VEC3')))));
+    const graphic = doc.createPrimitive().setMaterial(material).setAttribute('POSITION', attribute([0, 0, 0, 0, 1, 0, 0, 0, 1], 'VEC3'))
+      .setAttribute('TEXCOORD_0', attribute([.85, .2, .95, .2, .85, .4], 'VEC2'));
+    scene.addChild(doc.createNode('shared_atlas_graphic').setMesh(doc.createMesh().addPrimitive(graphic)));
     classifyCrowdAtlas(doc, garments);
     const result = PNG.sync.read(Buffer.from(material.getBaseColorTexture()!.getImage()!));
     for (const [x, y, rgb] of [[60, 60, [35, 31, 29]], [57, 57, [244, 244, 238]]] as const) {
@@ -44,6 +48,8 @@ test('crowd atlas cleanup preserves enclosed eye paint and its authored alpha cl
       expect([...result.data.subarray(offset, offset + 3)], `eye RGB, garments=${garments}`).toEqual(rgb);
       expect(result.data[offset + 3], `eye class, garments=${garments}`).toBe(Math.round((crowdRegion.authored + 1) * 255 / 7));
     }
+    const graphicPixel = (38 * 128 + 115) * 4;
+    expect([...result.data.subarray(graphicPixel, graphicPixel + 4)], 'shared prop paint must not inherit skin gutters').toEqual([224, 168, 124, Math.round((crowdRegion.authored + 1) * 255 / 7)]);
   }
 });
 
@@ -53,6 +59,7 @@ test('uniform and civilian faces and yellow bare arms share the per-person skin 
     for (let y = 0; y < 128; y++) for (let x = 0; x < 128; x++) png.data.set(x < 64 ? [224, 168, 124, 255] : [247, 221, 147, 255], (y * 128 + x) * 4);
     // Navy gloves and warm gold uniform shoulder patches must not join the skin region.
     for (let y = 16; y < 40; y++) for (let x = 88; x < 112; x++) png.data.set(y < 28 ? [30, 40, 70, 255] : [247, 211, 147, 255], (y * 128 + x) * 4);
+    for (let y = 70; y < 90; y++) for (let x = 12; x < 24; x++) png.data.set([160, 108, 82, 255], (y * 128 + x) * 4);
     const attribute = (values: number[], type: 'VEC2' | 'VEC3' | 'SCALAR') => doc.createAccessor().setBuffer(buffer).setType(type).setArray(new Float32Array(values));
     const material = doc.createMaterial().setBaseColorTexture(doc.createTexture().setImage(new Uint8Array(PNG.sync.write(png))).setMimeType('image/png'));
     const prim = doc.createPrimitive().setMaterial(material)
@@ -64,6 +71,7 @@ test('uniform and civilian faces and yellow bare arms share the per-person skin 
     const scene = doc.createScene(), head = doc.createNode('head'), arm = doc.createNode('foreArmL'), shoulder = doc.createNode('armL'); scene.addChild(head).addChild(arm).addChild(shoulder);
     scene.addChild(doc.createNode('skin_body').setSkin(doc.createSkin().addJoint(head).addJoint(arm).addJoint(shoulder)).setMesh(doc.createMesh().addPrimitive(prim)));
     scene.addChild(doc.createNode('skin_eyes').setMesh(doc.createMesh().addPrimitive(doc.createPrimitive().setAttribute('POSITION', attribute([1, .8, 0], 'VEC3')))));
+    const covered = garments ? undefined : cloneDocument(doc);
     classifyCrowdAtlas(doc, garments);
     const result = PNG.sync.read(Buffer.from(material.getBaseColorTexture()!.getImage()!));
     const pixel = (x: number, y: number) => [...result.data.subarray((y * 128 + x) * 4, (y * 128 + x) * 4 + 4)];
@@ -72,6 +80,14 @@ test('uniform and civilian faces and yellow bare arms share the per-person skin 
     expect(Math.max(...face.slice(0, 3).map((v, c) => Math.abs(v - forearm[c])))).toBeLessThan(20);
     expect(pixel(96, 20)[3]).not.toBe(skinAlpha);
     if (!garments) expect(pixel(96, 32)[3], 'warm gold shoulder patch').not.toBe(skinAlpha);
+    if (covered) {
+      classifyCrowdAtlas(covered, false, true);
+      const fixed = PNG.sync.read(Buffer.from(covered.getRoot().listTextures()[0].getImage()!));
+      expect(fixed.data[(80 * 128 + 32) * 4 + 3], 'face still follows the person skin tone').toBe(skinAlpha);
+      expect(fixed.data[(80 * 128 + 16) * 4 + 3], 'shadowed ear and forehead paint follows the face tone').toBe(skinAlpha);
+      expect(fixed.data[(80 * 128 + 96) * 4 + 3], 'tan uniform sleeve is covered').not.toBe(skinAlpha);
+      expect([...fixed.data.subarray((80 * 128 + 96) * 4, (80 * 128 + 96) * 4 + 3)], 'camouflage paint stays authored').toEqual([247, 221, 147]);
+    }
   }
 });
 

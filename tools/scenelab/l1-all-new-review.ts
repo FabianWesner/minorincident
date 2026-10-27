@@ -21,7 +21,9 @@ try {
   await session.open();
   await session.page.addInitScript("window.__name = (fn, name) => Object.defineProperty(fn, 'name', { value: name, configurable: true });");
   await session.page.evaluate("window.__name = (fn, name) => Object.defineProperty(fn, 'name', { value: name, configurable: true });");
-  await session.load({ name: 'figure-review', ground: 'asphalt', time: process.env.REVIEW_TIME === 'L2' ? 'L2' : 'L1', size: 100, actors: [{ id: 'courier', kind: 'courier', at: [40, 40] }], camera: { mode: 'pose', position: [7, 6, 7], target: [0, .8, 0] } });
+  await session.load({ name: 'figure-review', ground: 'asphalt', time: process.env.REVIEW_TIME === 'L3' ? 'L3' : process.env.REVIEW_TIME === 'L2' ? 'L2' : 'L1', size: 100, actors: [{ id: 'courier', kind: 'courier', at: [40, 40] }], camera: { mode: 'pose', position: [7, 6, 7], target: [0, .8, 0] } });
+  const actual = await session.page.evaluate(() => window.__SS__!.getState().render);
+  if (actual.backend !== (backend === 'webgl2' ? 'webgl' : 'webgpu') || actual.quality !== tier) throw Error(`Review renderer mismatch: requested ${backend}/${tier}, got ${actual.backend}/${actual.quality}`);
   for (const id of ids) for (const variant of ['old', 'new']) for (const pixels of [120, 400]) for (const yaw of [-45, 135]) {
     const coat = id.match(/\.(black|cream)$/)?.[1], base = coat ? id.replace(/\.(black|cream)$/, '') : id;
     const def = structuredClone((variant === 'old' ? old : current).find(d => d.id === base)!);
@@ -87,7 +89,7 @@ try {
       return { bounds, targetPixels: pixels, actualPixels: bounds[3] - bounds[1], yaw, lod: pixels === 120 ? 'lod1' : 'lod0' };
     }, { def, pixels, yaw, moving: process.env.POSE === 'run', coat, clip: process.env.CLIP, skinTone });
     const file = resolve(out, `${id}-${variant}-${pixels}-${yaw}.png`);
-    await session.screenshot(file); receipts.push({ id, variant, tier, backend, skinTone, file, ...framing });
+    await session.screenshot(file); receipts.push({ id, variant, tier, backend, actualBackend: actual.backend, skinTone, file, ...framing });
     writeJson(resolve(out, 'receipts.json'), receipts);
     writeJson(resolve(out, `${id}-receipts.json`), receipts.filter(r => (r as { id: string }).id === id));
   }
