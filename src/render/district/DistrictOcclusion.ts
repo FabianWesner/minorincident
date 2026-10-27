@@ -143,17 +143,13 @@ export class DistrictOcclusion {
     return foot;
   }
   private static footFrame(entry: Pick<LodBatch, 'foot' | 'origin'>, ref: Object3D, cache = true): [number, number, number, number] {
-    if (!cache) {
-      const yaw = 2 * Math.atan2(ref.quaternion.y, ref.quaternion.w), c = Math.cos(yaw), s = Math.sin(yaw), { cx, cz } = entry.foot;
-      return [c, s, ref.position.x + entry.origin[0] + cx * ref.scale.x * c + cz * ref.scale.z * s, ref.position.z + entry.origin[1] - cx * ref.scale.x * s + cz * ref.scale.z * c];
-    }
-    const cached = this.footFrames.get(ref);
+    const cached = cache ? this.footFrames.get(ref) : undefined;
     // Placement geometry is static; pushed props invalidate by their actual transform.
     // Reuse the frame across the camera ray and all forty lens samples.
     if (cached && cached.entry === entry && cached.px === ref.position.x && cached.pz === ref.position.z && cached.qy === ref.quaternion.y && cached.qw === ref.quaternion.w && cached.sx === ref.scale.x && cached.sz === ref.scale.z) return cached.frame;
     const yaw = 2 * Math.atan2(ref.quaternion.y, ref.quaternion.w), c = Math.cos(yaw), s = Math.sin(yaw), { cx, cz } = entry.foot;
     const frame: [number, number, number, number] = [c, s, ref.position.x + entry.origin[0] + cx * ref.scale.x * c + cz * ref.scale.z * s, ref.position.z + entry.origin[1] - cx * ref.scale.x * s + cz * ref.scale.z * c];
-    this.footFrames.set(ref, { entry, px: ref.position.x, pz: ref.position.z, qy: ref.quaternion.y, qw: ref.quaternion.w, sx: ref.scale.x, sz: ref.scale.z, frame });
+    if (cache) this.footFrames.set(ref, { entry, px: ref.position.x, pz: ref.position.z, qy: ref.quaternion.y, qw: ref.quaternion.w, sx: ref.scale.x, sz: ref.scale.z, frame });
     return frame;
   }
   /** A tall solid placement sits right in front of the lens: points 1..hugDistance m along the centre and
