@@ -1,7 +1,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { afterEach, expect, test } from 'vitest';
 import { loadL6, runL6 } from '../../tools/sim-runner/l6Bots';
-import { isCurrentOpenL6Gate } from '../../src/render/InteractionView';
+import { isCurrentOpenL6Gate } from '../../src/sim/missions/interaction';
 import { l6, l6InjuryLines } from '../../src/data/l6';
 import { validateMission } from '../../src/sim/missions/schema';
 import type { SimWorld } from '../../src/sim/world/SimWorld';

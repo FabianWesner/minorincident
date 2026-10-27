@@ -7,6 +7,7 @@ import { l3Dressing } from '../../levels/L3/layout';
 import { Outbreak } from '../outbreak/Outbreak';
 import { allyState } from '../outbreak/Allies';
 import type { Mission } from './Mission';
+import { emitBlocker, setWall, snapToClear } from './missionHelpers';
 import type { L3State } from './types';
 import type { EntitySnapshot } from '../world/types';
 import type { CivilianActivity, Point } from '../npc/types';
@@ -50,11 +51,7 @@ export class LevelThreeCollapse {
   private readonly walls = new Map<string, number>();
   constructor(private readonly mission: Mission) {}
   /** Static collider + navigation blocker; recreated from state on checkpoint restore. */
-  private wall(id: string, blocked: boolean): void {
-    const handle = this.walls.get(id), w = L3_GATES[id], key = 900_400 + Object.keys(L3_GATES).indexOf(id);
-    if (blocked && handle === undefined) { this.walls.set(id, this.world.physics.addBlocker(w)); this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: key, blocked: true, wall: w }); }
-    if (!blocked && handle !== undefined) { this.world.physics.removeBlocker(handle); this.walls.delete(id); this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: key, blocked: false, wall: w }); }
-  }
+  private wall(id: string, blocked: boolean): void { setWall(this.world, this.walls, id, 900_400 + Object.keys(L3_GATES).indexOf(id), L3_GATES[id], blocked); }
   /**
    * Section 5.5: the station cannot be held, but the officers who stay buy the squad its head start. Once the courier and
    * the recruited squad are through the east gate, the yard gates shut behind them.
@@ -74,14 +71,7 @@ export class LevelThreeCollapse {
   private get world() { return this.mission.world; }
   private anchor(name: string) { return this.mission.def.anchors[name]; }
   private outbreak(): Outbreak { return this.world.npcs!.civilians.outbreak!; }
-  private snap(p: Point, r = .4): Point {
-    const nav = this.world.infected!.nav;
-    for (let d = 0; d <= 6; d += .5) for (let k = 0; k < (d ? 16 : 1); k++) {
-      const x = p.x + Math.cos(k * Math.PI / 8) * d, z = p.z + Math.sin(k * Math.PI / 8) * d;
-      if (nav.clear(x, z, Math.max(r, .36))) return { x, z };
-    }
-    return { x: p.x, z: p.z };
-  }
+  private snap(p: Point, r = .4): Point { return snapToClear(this.world, p, r); }
   private doors(): { name: string; x: number; z: number }[] {
     return Object.keys(this.mission.def.anchors).filter(n => n.startsWith('refuge-door-')).map(name => ({ name, ...this.anchor(name) })).filter(p => p.x < l3.map.zoneX);
   }
@@ -731,7 +721,7 @@ export class LevelThreeCollapse {
     this.barrier(!!s.barrierClosedAt);
     for (const id of Object.keys(L3_GATES)) {
       const handle = this.walls.get(id); if (handle !== undefined) { this.world.physics.removeBlocker(handle); this.walls.delete(id); }
-      if (s.gatesClosedAt) this.wall(id, true); else this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: 900_400 + Object.keys(L3_GATES).indexOf(id), blocked: false, wall: L3_GATES[id] });
+      if (s.gatesClosedAt) this.wall(id, true); else emitBlocker(this.world, 900_400 + Object.keys(L3_GATES).indexOf(id), false, L3_GATES[id]);
     }
   }
 }

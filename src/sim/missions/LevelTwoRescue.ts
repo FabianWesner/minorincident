@@ -6,6 +6,7 @@ import { seatAnchor } from '../npc/seats';
 import { l2Dressing } from '../../levels/L2/layout';
 import { clearOfL2Script } from '../../levels/continuity';
 import type { Mission } from './Mission';
+import { emitBlocker, relocatePlayer, setWall, snapToClear } from './missionHelpers';
 import type { L2State } from './types';
 import type { EntitySnapshot } from '../world/types';
 import type { CivilianActivity, Point } from '../npc/types';
@@ -82,14 +83,7 @@ export class LevelTwoRescue {
     this.reservedArrivals = 0;
   }
   /** Nearest point with `r` clearance (ring search, 0.5 m steps up to 6 m). */
-  private snap(p: Point, r = .4): Point {
-    const nav = this.world.infected!.nav;
-    for (let d = 0; d <= 6; d += .5) for (let k = 0; k < (d ? 16 : 1); k++) {
-      const x = p.x + Math.cos(k * Math.PI / 8) * d, z = p.z + Math.sin(k * Math.PI / 8) * d;
-      if (nav.clear(x, z, Math.max(r, .36))) return { x, z };
-    }
-    return { x: p.x, z: p.z };
-  }
+  private snap(p: Point, r = .4): Point { return snapToClear(this.world, p, r); }
   private outbreak(): Outbreak { return this.world.npcs!.civilians.outbreak!; }
 
   prepare(): void {
@@ -224,11 +218,7 @@ export class LevelTwoRescue {
     return ids;
   }
   /** Static collider + navigation blocker; recreated from state on checkpoint restore. */
-  private wall(id: string, blocked: boolean): void {
-    const handle = this.walls.get(id), w = WALLS[id], key = 900_300 + Object.keys(WALLS).indexOf(id);
-    if (blocked && handle === undefined) { this.walls.set(id, this.world.physics.addBlocker(w)); this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: key, blocked: true, wall: w }); }
-    if (!blocked && handle !== undefined) { this.world.physics.removeBlocker(handle); this.walls.delete(id); this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: key, blocked: false, wall: w }); }
-  }
+  private wall(id: string, blocked: boolean): void { setWall(this.world, this.walls, id, 900_300 + Object.keys(WALLS).indexOf(id), WALLS[id], blocked); }
 
   // ---------------------------------------------------------------------------------------------------------- beats
   /** Called by the mission when an objective completes (before its onComplete actions). */
@@ -323,10 +313,9 @@ export class LevelTwoRescue {
   }
   /** Seated player, crew and corgi ride with the truck (hidden, no input). */
   private carry(x: number, z: number): void {
-    const { world } = this.mission, player = world.entities.get(1)!;
+    const { world } = this.mission;
     if (this.s.seated) {
-      player.transform.x = x; player.transform.z = z; world.physics.playerBody!.setTranslation(player.transform, true); world.physics.playerBody!.setNextKinematicTranslation(player.transform);
-      Object.assign(world.previousPlayer!, player.transform); world.spatial.set(1, x, z);
+      relocatePlayer(world, x, z);
     }
     for (const e of world.entities.iterate()) if (e.companion || (e.hidden && this.s.crewIds.includes(e.id))) { e.hidden = true; e.transform.x = x; e.transform.z = z; world.spatial.delete(e.id); }
   }
@@ -772,7 +761,7 @@ export class LevelTwoRescue {
     for (const id of Object.keys(WALLS)) {
       const handle = this.walls.get(id); if (handle !== undefined) { this.world.physics.removeBlocker(handle); this.walls.delete(id); }
       const closed = id.startsWith('door') ? !s.doorsOpenAt : !!s.gateClosedAt;
-      if (closed) this.wall(id, true); else this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: 900_300 + Object.keys(WALLS).indexOf(id), blocked: false, wall: WALLS[id] });
+      if (closed) this.wall(id, true); else emitBlocker(this.world, 900_300 + Object.keys(WALLS).indexOf(id), false, WALLS[id]);
     }
     this.parkNav(s.phase !== 'ride');
     const player = this.world.entities.get(1)!;
