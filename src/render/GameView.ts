@@ -314,19 +314,30 @@ export class GameView implements Lifecycle {
     // after the full warm-up. Its white vertex-colour mesh then linked on first
     // camera entry (especially low WebGL). Include it in the same loading pass.
     await this.syncMountedGun(); this.mountedGunView?.update();
-    const restoreOccupants = await this.vehicles?.prewarmOccupants();
-    const restoreCrash = await this.vehicles?.prewarmCrash();
-    // Put the rigid prototype in front of the loading camera, clear of the
-    // boarding vehicle/ground that would otherwise hide its first fragments.
-    const corgiFocus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(12).add(this.camera.position);
-    const restoreCorgi = this.npcs?.prewarmCorgi(corgiFocus);
-    // Issued and racked weapons the courier is not holding yet: their held (courier-fill) materials.
-    const restoreHeld = this.actions?.prewarmHeld(this.camera.getWorldDirection(new Vector3()).multiplyScalar(10).add(this.camera.position));
-    const restoreMedkits = this.world.scenario === 'L5' ? await this.interactions?.prewarmMedkits(corgiFocus) : undefined;
-    const restoreGates = this.world.scenario === 'L6' ? await this.interactions?.prewarmServiceGates() : undefined;
+    // One loading scope owns every prewarm restoration: each runs once (a failed acquisition releases the earlier ones,
+    // warm-up setup errors and the foreground tail go through the same call).
+    const prewarmed: { occupants?: () => void; crash?: () => void; corgi?: () => void; held?: () => void; medkits?: () => void; gates?: () => void } = {};
+    const restorePrewarmed = (): void => {
+      const { gates, occupants, crash, corgi, held, medkits } = prewarmed;
+      for (const key of Object.keys(prewarmed) as (keyof typeof prewarmed)[]) delete prewarmed[key];
+      gates?.(); occupants?.(); crash?.(); corgi?.(); held?.(); medkits?.();
+    };
+    let corgiPrewarmed = false;
+    try {
+      prewarmed.occupants = await this.vehicles?.prewarmOccupants();
+      prewarmed.crash = await this.vehicles?.prewarmCrash();
+      // Put the rigid prototype in front of the loading camera, clear of the
+      // boarding vehicle/ground that would otherwise hide its first fragments.
+      const corgiFocus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(12).add(this.camera.position);
+      prewarmed.corgi = this.npcs?.prewarmCorgi(corgiFocus); corgiPrewarmed = !!prewarmed.corgi;
+      // Issued and racked weapons the courier is not holding yet: their held (courier-fill) materials.
+      prewarmed.held = this.actions?.prewarmHeld(this.camera.getWorldDirection(new Vector3()).multiplyScalar(10).add(this.camera.position));
+      prewarmed.medkits = this.world.scenario === 'L5' ? await this.interactions?.prewarmMedkits(corgiFocus) : undefined;
+      prewarmed.gates = this.world.scenario === 'L6' ? await this.interactions?.prewarmServiceGates() : undefined;
+    } catch (error) { restorePrewarmed(); throw error; }
     if (this.world.scenario === 'L6') this.districts?.metroPower(true, false);
     t = loadMeasure('view:lod-ready', t);
-    const warm = () => this.warmUp(cooperative, { occupants: restoreOccupants, crash: restoreCrash, corgi: restoreCorgi, held: restoreHeld, medkits: restoreMedkits, gates: restoreGates });
+    const warm = async (): Promise<void> => { try { await this.warmUp(cooperative, restorePrewarmed, corgiPrewarmed); } finally { restorePrewarmed(); } };
     const finish = (): void => {
       loadMeasure('view:warm-up', t);
       if (this.probes) this.probes.idPass = this.params.get('idpass') === '1';
@@ -350,14 +361,16 @@ export class GameView implements Lifecycle {
     }
     // Any scene with VFX takes the full warm-up on both backends (hidden blast/fireball/debris/puff/flame pools,
     // and the PostFx heat-haze graph compile behind the loading card, WebGL programs and WebGPU pipelines alike).
-    if (fullWarmUp) await warm();
-    else await (this.postFx ? this.postFx.compile() : this.renderer.compileAsync(this.scene, this.camera));
-    // The horizon's rocks enter the view well after departure. Warm every coarse
-    // material in the gameplay HDR context before control, rather than linking
-    // a cold WebGL sidewalk shader synchronously at the first crossing seam.
-    const horizon = this.districts?.horizonForWarmup();
-    if (horizon) await this.warmHidden(horizon);
-    restoreOccupants?.(); restoreCrash?.(); restoreCorgi?.(); restoreHeld?.(); finish();
+    try {
+      if (fullWarmUp) await warm();
+      else await (this.postFx ? this.postFx.compile() : this.renderer.compileAsync(this.scene, this.camera));
+      // The horizon's rocks enter the view well after departure. Warm every coarse
+      // material in the gameplay HDR context before control, rather than linking
+      // a cold WebGL sidewalk shader synchronously at the first crossing seam.
+      const horizon = this.districts?.horizonForWarmup();
+      if (horizon) await this.warmHidden(horizon);
+    } finally { restorePrewarmed(); }
+    finish();
   }
   /** Actor views are independent of each other and of the districts: create them and start their
    * loads concurrently (one network wave, not six); load() adds them in the established scene order. */
@@ -464,8 +477,7 @@ export class GameView implements Lifecycle {
   }
   /** Compile every hidden variant of the loaded scene (infected/LOD/VFX/decay, both reveal graphs, the fire branch, the
    * L10 shadow sources) in its real HDR/MSAA pass behind the loading card, then restore the prewarmed objects. */
-  private async warmUp(cooperative: boolean, prewarmed: { occupants?: () => void; crash?: () => void; corgi?: () => void; held?: () => void; medkits?: () => void; gates?: () => void }): Promise<void> {
-    const { occupants: restoreOccupants, crash: restoreCrash, corgi: restoreCorgi, held: restoreHeld, medkits: restoreMedkits, gates: restoreGates } = prewarmed;
+  private async warmUp(cooperative: boolean, restorePrewarmed: () => void, corgiPrewarmed: boolean): Promise<void> {
     await loadGate.foreground(); // node builds cannot be sliced: never during the menus
     this.lighting?.update(this.view);
     // Compile against the gameplay light list. In particular W6 low disables
@@ -509,12 +521,12 @@ export class GameView implements Lifecycle {
       // The temporary fire pulse above has now been removed. Execute the
       // daylight graph too, while the rigid prototype still covers pixels;
       // removing it first leaves a hiding corgi cold until its arrival.
-      if (restoreCorgi) {
+      if (corgiPrewarmed) {
         if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera);
         await this.renderer.finishWarmUp();
       }
     }
-    finally { restore?.(); unwarm?.(); restoreGates?.(); restoreOccupants?.(); restoreCrash?.(); restoreCorgi?.(); restoreHeld?.(); restoreMedkits?.(); if (this.world.scenario === 'L6') this.character?.showHeadlamp(!!this.world.missions?.state.l6?.flashlight); }
+    finally { restore?.(); unwarm?.(); restorePrewarmed(); if (this.world.scenario === 'L6') this.character?.showHeadlamp(!!this.world.missions?.state.l6?.flashlight); }
     if (this.healthBars) await preRender(this.renderer, this.barScene, this.camera, () => this.renderBars());
   }
   private startActors(character: Promise<unknown>): Promise<unknown> {
