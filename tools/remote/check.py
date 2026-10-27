@@ -21,6 +21,9 @@ HERE = Path(__file__).resolve().parent
 spec = importlib.util.spec_from_file_location('slot', HERE / 'local-slot.py')
 slot = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(slot)
+bench_spec = importlib.util.spec_from_file_location('benchmark', HERE / 'benchmark.py')
+benchmark = importlib.util.module_from_spec(bench_spec)
+bench_spec.loader.exec_module(benchmark)
 UNIT_ONLY = '--unit' in sys.argv
 
 
@@ -48,6 +51,17 @@ class SchedulerChecks(unittest.TestCase):
         self.tmp.cleanup()
 
     def ticket(self): return slot.enqueue(os.getpid(), str(self.wt))
+
+    def test_benchmark_requires_actual_receipt_overlap(self):
+        jobs = [{'backend': backend, 'executionMs': [start, end]} for backend, start, end in
+                [('remote', 1000, 4000), ('remote', 2000, 5000), ('remote', 2500, 6000), ('local', 3000, 7000)]]
+        self.assertEqual(benchmark.receipt_overlap(jobs), 1)
+        jobs[3]['executionMs'] = [4100, 7000]
+        self.assertEqual(benchmark.receipt_overlap(jobs), 0)
+        del jobs[3]['executionMs']
+        self.assertEqual(benchmark.receipt_overlap(jobs), 0)
+        jobs[3]['backend'] = 'remote'
+        self.assertEqual(benchmark.receipt_overlap(jobs), 0)
 
     def test_fifo_death_cleanup_and_receipt(self):
         a, b = self.ticket(), self.ticket()

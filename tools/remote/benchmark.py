@@ -19,6 +19,14 @@ import time
 HERE = Path(__file__).resolve().parent
 
 
+def receipt_overlap(jobs):
+    """Overlap of actual test execution envelopes, excluding sync/pull/cleanup."""
+    if sorted(j.get('backend', '') or '' for j in jobs) != ['local', 'remote', 'remote', 'remote']:
+        return 0
+    if any('executionMs' not in j for j in jobs): return 0
+    return max(0, min(j['executionMs'][1] for j in jobs) - max(j['executionMs'][0] for j in jobs)) / 1000
+
+
 def main():
     if len(sys.argv) != 4 or sys.argv[2] not in ('before', 'after'):
         raise SystemExit(__doc__)
@@ -71,6 +79,8 @@ def main():
             result['resultSha256'] = hashlib.sha256(receipt.read_bytes()).hexdigest()
             report = json.loads(receipt.read_text())
             result['tests'] = {k: report.get(k) for k in ('numTotalTests', 'numPassedTests', 'numFailedTests', 'numPendingTests', 'numTotalTestSuites')}
+            files = [f for f in report.get('testResults', []) if f.get('endTime', 0) > f.get('startTime', 0)]
+            if files: result['executionMs'] = [min(f['startTime'] for f in files), max(f['endTime'] for f in files)]
             (out / f'{index}.json').write_bytes(receipt.read_bytes())
         return result
 
@@ -81,15 +91,17 @@ def main():
         if event['event'] == 'admitted': running[event['job']] = event['backend']
         else: running.pop(event['job'], None)
         if list(running.values()).count('remote') == 3 and list(running.values()).count('local') == 1: proof = True
+    overlap = receipt_overlap(jobs)
     summary = {'phase': phase, 'startedAt': datetime.datetime.fromtimestamp(started, datetime.timezone.utc).isoformat(),
-               'wallS': time.time()-started, 'threeRemoteOneLocalOverlap': proof,
+               'wallS': time.time()-started, 'threeRemoteOneLocalOverlap': proof and overlap > 0,
+               'receiptOverlapS': overlap, 'cancelled': cancelled.is_set(),
                'worktree': str(wt), 'revision': subprocess.check_output(['git', '-C', str(wt), 'rev-parse', 'HEAD'], text=True).strip(),
                'packageSha256': hashlib.sha256(package).hexdigest(), 'jobs': jobs, 'events': sorted(events, key=lambda e: e['at'])}
     (out / 'summary.json').write_text(json.dumps(summary, indent=2)+'\n')
     print(json.dumps(summary, indent=2))
     if cancelled.is_set(): raise SystemExit(130)
     if any(job.get('exitCode') != 0 for job in jobs): raise SystemExit('One or more gate runs failed; retain receipts, do not treat this attempt as passing')
-    if phase == 'after' and not proof: raise SystemExit('Measured run did not prove the required concurrency; retain it as an unsuccessful attempt')
+    if phase == 'after' and not (proof and overlap > 0): raise SystemExit('Measured run did not prove the required concurrency; retain it as an unsuccessful attempt')
 
 
 if __name__ == '__main__': main()
