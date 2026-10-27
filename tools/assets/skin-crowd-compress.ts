@@ -24,6 +24,8 @@ interface Ktx {
 }
 interface Basis { initializeBasis(): void; BasisEncoder: new () => Encoder; KTX2File: new (data: Uint8Array) => Ktx }
 
+// Classed atlases must bypass CoreGraphics (premultiplied alpha); some opaque L1 sources only CoreGraphics can read.
+const readable = (image: Uint8Array) => { try { PNG.sync.read(Buffer.from(image)); return true; } catch { return false; } };
 /** Box-filter the colour and keep the top-left class of each 2x2 block, until the long side fits. */
 function halveClassed(image: PNG, maxSize: number): PNG {
   while (Math.max(image.width, image.height) > maxSize) {
@@ -67,7 +69,7 @@ export async function compressSkin(input: string, output: string, basisRoot: str
           if (!file.transcodeImage(rgba, 0, 0, 0, 13, 0, -1, -1)) throw Error('KTX2 RGBA transcode failed');
           png = PNG.sync.write({ width: file.getWidth(), height: file.getHeight(), data: Buffer.from(rgba) } as PNG);
         } finally { file.close(); file.delete(); }
-      } else if (texture.getMimeType() === 'image/png') png = Buffer.from(image);
+      } else if (texture.getMimeType() === 'image/png' && readable(image)) png = Buffer.from(image);
       else {
         const source = join(directory, 'source.' + texture.getMimeType().split('/')[1]), target = join(directory, 'source.png');
         writeFileSync(source, image);
@@ -95,7 +97,7 @@ export async function compressSkin(input: string, output: string, basisRoot: str
       try {
         encoder.setSliceSourceImage(0, decoded.data, decoded.width, decoded.height, false);
         encoder.setCreateKTX2File(true); encoder.setUASTC(false); encoder.setKTX2AndBasisSRGBTransferFunc(true);
-        encoder.setPerceptual(true); encoder.setMipGen(true); encoder.setMipSRGB(true); encoder.setQualityLevel(192);
+        encoder.setPerceptual(true); encoder.setMipGen(true); encoder.setMipSRGB(true); encoder.setQualityLevel(Number(process.env.CROWD_Q ?? 192));
         encoder.setYFlip(false); encoder.setCheckForAlpha(true);
         const dst = new Uint8Array(decoded.width * decoded.height * 8 + 65536), count = encoder.encode(dst);
         if (!count) throw Error('ETC1S encode failed');

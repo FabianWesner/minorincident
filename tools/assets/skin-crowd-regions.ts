@@ -4,6 +4,10 @@
  * replace the hue while keeping the paint's own shading. Uniforms keep their colours: only skin is tagged, for the
  * infection mask. Usage (diagnosis): node --import tsx tools/assets/skin-crowd-regions.ts <raw.glb> <out-prefix> [--garments] */
 import type { Document } from '@gltf-transform/core';
+import { execFileSync } from 'node:child_process';
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { PNG } from 'pngjs';
 import { crowdRegion, crowdRegionLuminance } from '../../src/render/characters/crowdRegionData';
 
@@ -35,7 +39,7 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean): RegionRepo
   const joints = body!.getSkin()!.listJoints().map(j => j.getName());
   const uv = prim.getAttribute('TEXCOORD_0')!, part = prim.getAttribute('_CROWD_PART')!, region = prim.getAttribute('_CROWD_REGION'), indices = prim.getIndices();
   const count = indices?.getCount() ?? uv.getCount(), vertex = (t: number) => indices ? indices.getScalar(t) : t;
-  const png = PNG.sync.read(Buffer.from(map.getImage()!)), { width: w, height: h, data } = png;
+  const png = decodePng(map.getImage()!), { width: w, height: h, data } = png;
   // 0 none, 1 head, 2 upper, 3 lower, 4 hand, 5 foot; skinTri marks triangles whose corners were all tagged as skin paint.
   const groups = ['none', 'head', 'upper', 'lower', 'hand', 'foot'] as const;
   const owner = new Uint8Array(w * h), skinSeed = new Uint8Array(w * h);
@@ -145,7 +149,7 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean): RegionRepo
     for (const i of members) cls[i] = surround;
     absorbed += members.length;
   }
-  // Flatten each region to its own hue, keeping half of the paint's lightness variation; garments move to the tint reference.
+  // Flatten each region to its own hue, keeping a third of the paint's lightness variation (toy masses, not TRELLIS noise); garments move to the tint reference.
   const shares: Record<string, number> = {}; let covered = 0;
   for (const [name, value] of Object.entries(crowdRegion)) {
     let n = 0, mean = 0;
@@ -156,16 +160,52 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean): RegionRepo
     mean /= n;
     const target = crowdRegionLuminance[name as keyof typeof crowdRegionLuminance];
     for (let i = 0; i < w * h; i++) if (owner[i] && cls[i] === value) {
-      const L = reference[0] + Math.max(-14, Math.min(14, (labs[i * 3] - mean) * .5));
+      const L = reference[0] + Math.max(-8, Math.min(8, (labs[i * 3] - mean) * .3));
       const rgb = labToSrgb([L, reference[1], reference[2]]);
       const scale = target && garments ? target / Math.max(1e-4, luminance(...labToSrgb(reference))) : 1;
       for (let c = 0; c < 3; c++) data[i * 4 + c] = toSrgb(LINEAR[rgb[c]] * scale);
     }
   }
-  for (let i = 0; i < w * h; i++) data[i * 4 + 3] = Math.round((cls[i] + 1) * 255 / 7);
-  map.setImage(new Uint8Array(PNG.sync.write(png)));
+  // Ragged single-texel class noise along region borders: a texel outvoted 6:2 by one neighbouring class joins it.
+  {
+    const next = cls.slice();
+    for (let y = 1; y < h - 1; y++) for (let x = 1; x < w - 1; x++) {
+      const i = y * w + x; if (!owner[i]) continue;
+      const votes = new Map<number, number>();
+      for (const j of [i - w - 1, i - w, i - w + 1, i - 1, i + 1, i + w - 1, i + w, i + w + 1]) if (owner[j]) votes.set(cls[j], (votes.get(cls[j]) ?? 0) + 1);
+      for (const [c, v] of votes) if (c !== cls[i] && v >= 6) { next[i] = c; break; }
+    }
+    cls.set(next);
+  }
+  // Gutters take their nearest island's class: whole 4x4 blocks then carry one value, which keeps the alpha slice small.
+  const out = cls.slice(), queue: number[] = [];
+  for (let i = 0; i < w * h; i++) if (owner[i]) queue.push(i);
+  const filled = owner.map(v => v ? 1 : 0);
+  for (let head = 0; head < queue.length; head++) {
+    const i = queue[head], x = i % w;
+    for (const j of [x > 0 ? i - 1 : -1, x < w - 1 ? i + 1 : -1, i - w, i + w]) if (j >= 0 && j < w * h && !filled[j]) { filled[j] = 1; out[j] = out[i]; queue.push(j); }
+  }
+  // ETC1S pays per distinct block pattern: classes are written per CELL x CELL cell (majority, ties to the tinted class).
+  const cell = Number(process.env.CROWD_REGION_CELL ?? 4);
+  for (let y = 0; y < h; y += cell) for (let x = 0; x < w; x += cell) {
+    const votes = new Map<number, number>();
+    for (let dy = 0; dy < cell; dy++) for (let dx = 0; dx < cell; dx++) { const c = out[(y + dy) * w + x + dx]; votes.set(c, (votes.get(c) ?? 0) + (owner[(y + dy) * w + x + dx] ? 4 : 1) + (c === crowdRegion.authored ? 0 : .5)); }
+    const value = [...votes].sort((a, b) => b[1] - a[1])[0][0];
+    for (let dy = 0; dy < cell; dy++) for (let dx = 0; dx < cell; dx++) data[((y + dy) * w + x + dx) * 4 + 3] = Math.round((value + 1) * 255 / 7);
+  }
+  // Gear (props) shares the body's atlas; every copy of the source image takes the classed one.
+  const original = Buffer.from(map.getImage()!), classed = new Uint8Array(PNG.sync.write(png));
+  for (const texture of doc.getRoot().listTextures()) if (texture === map || Buffer.from(texture.getImage() ?? []).equals(original)) texture.setImage(classed).setMimeType('image/png');
   const total = Object.values(shares).reduce((a, b) => a + b, 0) || 1;
   return { width: w, height: h, garments, absorbed, shares: Object.fromEntries(Object.entries(shares).map(([k, v]) => [k, +(v / total).toFixed(4)])), colours: Object.fromEntries(Object.entries(colours).map(([k, v]) => [k, v.map(n => +n.toFixed(1))])) };
+}
+/** Some L1 sources carry PNG bytes pngjs rejects; CoreGraphics reads them (opaque, so its premultiplication is harmless). */
+function decodePng(image: Uint8Array): PNG {
+  try { return PNG.sync.read(Buffer.from(image)); } catch {
+    const directory = mkdtempSync(join(tmpdir(), 'crowd-regions-')), path = join(directory, 'atlas.png');
+    try { writeFileSync(path, image); execFileSync('sips', ['-s', 'format', 'png', path, '--out', join(directory, 'out.png')], { stdio: 'ignore' }); return PNG.sync.read(readFileSync(join(directory, 'out.png'))); }
+    finally { rmSync(directory, { recursive: true, force: true }); }
+  }
 }
 function labToSrgb([L, A, B]: Lab): [number, number, number] {
   const fy = (L + 16) / 116, fx = fy + A / 500, fz = fy - B / 200;
@@ -177,7 +217,6 @@ function labToSrgb([L, A, B]: Lab): [number, number, number] {
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   const { assetIO } = await import('./io');
-  const { writeFileSync } = await import('node:fs');
   const [input, prefix] = process.argv.slice(2), doc = await (await assetIO()).read(input);
   const report = classifyCrowdAtlas(doc, process.argv.includes('--garments'));
   console.log(JSON.stringify(report));
