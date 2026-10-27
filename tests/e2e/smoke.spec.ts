@@ -33,15 +33,17 @@ test('boot: ready resolves, the canvas shows spatial detail, and three scenario 
 // render context: a program key that changed at runtime), or any frame over 200 ms (PO checklist Q-126). First builds of
 // other objects that only appear later are listed in the annotation. WebGPU low at zoom 1.5, as reported.
 test('L1 handover + outbreak: no shader builds after warm-up and no frame over 200 ms @smoke', async ({ page }) => {
-  test.setTimeout(150_000);
+  test.setTimeout(200_000);
   await page.goto('/');
   const adapter = await page.evaluate(async () => Boolean(await (navigator as Navigator & { gpu?: { requestAdapter(): Promise<unknown> } }).gpu?.requestAdapter()));
   test.skip(!adapter && process.platform !== 'darwin', 'No WebGPU adapter in this headless browser');
   await boot(page, testUrl.replace('renderer=webgl', 'renderer=webgpu').replace('quality=high', 'quality=low') + '&loadProfile=2');
   const builds = (): Promise<Record<string, number>> => page.evaluate(() => ({ ...window.__SS__!.perf().nodeBuildMaterials }));
-  const corpses = await page.evaluate(async () => {
+  const pile = await page.evaluate(async () => {
     const a = window.__SS__!;
     a.settings.set({ quality: 'low' }); await a.loadLevel('L1', { seed: 1 });
+    // Q-209: the level warm-up (prewarmHeld) must already have built the bat the courier picks up below.
+    const loaded = { ...a.perf().nodeBuildMaterials };
     a.pause(); a.missions.begin(); a.cheats.god(true); a.camera.follow(); a.camera.zoom(1.5);
     // Handover: the parcel is delivered, the technician walks in, the lab accident lets the infected out.
     a.cheats.completeObjective('pickup'); a.cheats.completeObjective('deliver');
@@ -51,8 +53,9 @@ test('L1 handover + outbreak: no shader builds after warm-up and no frame over 2
     // The courier's foreground slice switches on within 4 m of a corpse (GameView.nearCorpse).
     const dead = a.query({}).filter(e => !e.hidden && !e.infected?.hidden && (e.corpse || (e.infected && e.health.current <= 0))).slice(0, 4).map(e => ({ x: e.transform.x, z: e.transform.z }));
     if (dead[0]) a.teleport(1, { x: dead[0].x + 7, z: dead[0].z });
-    return dead;
+    return { dead, loaded };
   });
+  const { dead: corpses, loaded } = pile;
   expect(corpses.length, 'outbreak corpses to walk over').toBeGreaterThan(0);
   // Warm-up: the level's own prewarm plus a few real frames next to the pile.
   await page.evaluate(async () => { const a = window.__SS__!; a.resume(); await new Promise(r => setTimeout(r, 1500)); });
@@ -74,6 +77,17 @@ test('L1 handover + outbreak: no shader builds after warm-up and no frame over 2
   expect(built.filter(([key]) => /^(character:|action-held:)/.test(key)).map(([key]) => key), 'courier or carried-weapon builds after warm-up').toEqual([]);
   expect(built.filter(([key, n]) => n > 1 || warm[key]).map(([key]) => key), 'programs rebuilt during play').toEqual([]);
   expect(frames.over, `gameplay frames over 200 ms (max ${frames.max.toFixed(0)} ms in ${frames.count})`).toEqual([]);
+  // Q-209 (Opus QA: "the held weapon's shaders compile once, the first time she takes it out... bat at pickup on L1 (4 programs),
+  // fire axe at L2 start (7 programs)"): no carried-weapon program is built after the level's warm-up, pickup included.
+  const heldBuilds = (from: Record<string, number>, to: Record<string, number>) => Object.keys(to).filter(key => key.startsWith('action-held:') && to[key] !== from[key]);
+  expect(heldBuilds(loaded, after), 'L1 carried-weapon builds after the level warm-up (bat pickup)').toEqual([]);
+  const l2 = await page.evaluate(async () => {
+    const a = window.__SS__!;
+    await a.loadLevel('L2', { seed: 1 }); const loaded = { ...a.perf().nodeBuildMaterials };
+    a.missions.begin(); a.resume(); await new Promise(r => setTimeout(r, 2500)); a.pause();
+    return { loaded, after: { ...a.perf().nodeBuildMaterials } };
+  });
+  expect(heldBuilds(l2.loaded, l2.after), 'L2 carried-weapon builds after the level warm-up (fire axe at the start)').toEqual([]);
 });
 
 // P0 guard (PROD "all other players are invisible"): each on-screen pedestrian's head/torso pixels must change when that
