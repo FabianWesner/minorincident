@@ -44,7 +44,6 @@ export class DistrictView extends Group {
   private readonly parts = new DistrictParts();
   readonly spots = this.parts.spots;
   readonly batches = this.parts.batches;
-  private readonly dressingBatches = this.parts.dressingBatches;
   private readonly dressingEntries = this.parts.dressingEntries;
   readonly windows = this.parts.windows;
   private readonly machineGuns = this.parts.machineGuns;
@@ -90,15 +89,11 @@ export class DistrictView extends Group {
   /** Borrowed geometry/materials: the caller warms and detaches this copy. */
   horizonForWarmup(): Group | null { return this.parts.terrainHorizon?.clone(true) ?? null; }
   private readonly mergedLayout = this.parts.mergedLayout;
-  private readonly ownedGeometry = this.parts.ownedGeometry;
-  private readonly perimeterPosts = this.parts.perimeterPosts;
-  private readonly ownedMaterials = this.parts.ownedMaterials;
   private readonly windowMask = new MeshBasicNodeMaterial({ color: "#ffffff" });
   private readonly black = new MeshBasicNodeMaterial({ color: "#000000" });
   private readonly saved = new Map<Mesh, Material | Material[]>();
   private readonly tags = this.parts.tags;
   private labelTime = 0;
-  private readonly textures = this.parts.textures;
   /** Courier see-through, interiors, roofs and the bar line of sight (district/DistrictOcclusion). */
   readonly occlusion: DistrictOcclusion;
   constructor(
@@ -602,19 +597,9 @@ export class DistrictView extends Group {
   }
   dispose(): void {
     this.disposed = true;
-    this.parts.terrain?.dispose();
-    this.parts.stepEdges?.dispose();
     for (const { material } of this.metroMaterials.values()) material.dispose(); this.metroMaterials.clear();
-    this.parts.ambient?.dispose(); this.accents?.dispose();
     this.foliage.dispose();
-    for (const b of this.batches) b.dispose();
-    for (const b of this.dressingBatches) b.dispose(); this.dressingBatches.length = 0;
-    for (const g of this.grass) g.dispose();
-    for (const mesh of this.perimeterPosts) mesh.dispose(); this.perimeterPosts.length = 0;
-    for (const g of this.ownedGeometry) g.dispose();
-    for (const m of this.ownedMaterials) m.dispose();
-    for (const t of this.textures) t.dispose();
-    this.machineGuns.length = 0;
+    this.parts.dispose();
     this.windowMask.dispose();
     this.black.dispose();
     this.clear();

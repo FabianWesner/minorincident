@@ -57,6 +57,18 @@ export class DistrictParts {
   stepEdges?: HeightStepEdges;
   terrainHorizon?: Group;
   maxBarTerrainHeight = 0;
+  /** Releases exactly what the build created; the registry's shared assets are borrowed and never touched. */
+  dispose(): void {
+    this.terrain?.dispose(); this.stepEdges?.dispose(); this.ambient?.dispose(); this.accents?.dispose();
+    for (const b of this.batches) b.dispose();
+    for (const b of this.dressingBatches) b.dispose(); this.dressingBatches.length = 0;
+    for (const g of this.grass) g.dispose();
+    for (const mesh of this.perimeterPosts) mesh.dispose(); this.perimeterPosts.length = 0;
+    for (const g of this.ownedGeometry) g.dispose();
+    for (const m of this.ownedMaterials) m.dispose();
+    for (const t of this.textures) t.dispose();
+    this.machineGuns.length = 0;
+  }
 }
 
 export interface DistrictBuildDeps {

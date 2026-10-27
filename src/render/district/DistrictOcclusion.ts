@@ -13,7 +13,8 @@ import type { DistrictParts, DressingEntry, LodBatch } from './DistrictBuild';
  * and the health-bar line of sight. Reads the built parts; changed interiors are handed back for repartitioning. */
 export class DistrictOcclusion {
   constructor(
-    private readonly parts: DistrictParts,
+    /** Only what the policy reads, live (the build fills these after construction). */
+    private readonly parts: Pick<DistrictParts, 'lodBatches' | 'dressingEntries' | 'maxBarTerrainHeight' | 'stepEdges'>,
     private readonly world: DistrictWorld,
     /** Re-select the LOD partition of a batch whose interior placements changed. */
     private readonly repartition: (entry: LodBatch, view: View) => void,
