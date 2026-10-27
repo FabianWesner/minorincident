@@ -1,0 +1,101 @@
+{
+  "mode": "campaign",
+  "quality": "low",
+  "heroine": "female",
+  "zoom": 1.5,
+  "levels": [
+    "L3"
+  ],
+  "runs": [
+    {
+      "level": "L3",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 216,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 15.163,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.handgun": 174
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "ability.corgi-lure",
+        "weapon.molotov"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.handgun",
+        "ability.corgi-lure",
+        "weapon.molotov"
+      ],
+      "steps": [
+        {
+          "id": "armory",
+          "text": "Take a handgun from the armory · 19 m",
+          "tick": 10,
+          "marker": {
+            "anchor": "l3-armory",
+            "ring": {
+              "x": -139.2,
+              "y": 0,
+              "z": -8.4
+            },
+            "drawn": [
+              -139.2,
+              0.05,
+              -8.4
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "defend",
+          "text": "Help defend the station",
+          "tick": 678,
+          "marker": {
+            "anchor": "l3-armory",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "checkpoint",
+          "text": "Get inside the army checkpoint · 364 m",
+          "tick": 1520,
+          "marker": {
+            "anchor": "l3-route",
+            "ring": {
+              "x": 225,
+              "y": 0,
+              "z": 0
+            },
+            "drawn": [
+              225,
+              0.05,
+              0
+            ],
+            "playerY": 0.7200000286102295,
+            "pinVisible": true
+          }
+        }
+      ]
+    }
+  ],
+  "issues": 0,
+  "bySeverity": {
+    "P0": 0,
+    "P1": 0,
+    "P2": 0,
+    "P3": 0
+  }
+}

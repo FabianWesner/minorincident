@@ -2,9 +2,9 @@ import { BufferAttribute, BufferGeometry, Color, Matrix4, Mesh, Vector3, type Ob
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import type { CivilianProp } from '../../sim/npc/types';
 
-export const crowdWeaponAssets = { rifle: 'wpn.assault-rifle', pistol: 'wpn.pistol', shotgun: 'wpn.shotgun', 'hunting-rifle': 'wpn.hunting-rifle' } as const;
+export const crowdWeaponAssets = { hmg: 'wpn.machine-gun', rifle: 'wpn.assault-rifle', pistol: 'wpn.pistol', shotgun: 'wpn.shotgun', 'hunting-rifle': 'wpn.hunting-rifle' } as const;
 export type CrowdGun = keyof typeof crowdWeaponAssets;
-export function isCrowdGun(prop: CivilianProp): prop is CrowdGun { return prop in crowdWeaponAssets; }
+export function isCrowdGun(prop: CivilianProp | 'hmg'): prop is CrowdGun { return prop in crowdWeaponAssets; }
 /** Reuse the shipped weapon, with its authored grip at the palm socket. The
  * civilian pose uses +Z down the barrel; weapon assets use +X. One vertex-colour
  * batch per gun keeps the existing crowd draw count and owns its copied buffers. */

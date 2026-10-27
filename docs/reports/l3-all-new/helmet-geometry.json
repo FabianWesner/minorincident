@@ -1,0 +1,360 @@
+{
+  "reference": "/Users/wesner/Workspace/3dp-l3-all-new/cache/l3/npc.national-guard/calibrated.glb",
+  "reference_sha256": "58f64de62439b641f58395723a7154b6937097fd3919a09b86122a644e6337e0",
+  "raster_resolution": 1024,
+  "views": [
+    [
+      "front",
+      0,
+      0
+    ],
+    [
+      "right",
+      90,
+      0
+    ],
+    [
+      "back",
+      180,
+      0
+    ],
+    [
+      "left",
+      270,
+      0
+    ],
+    [
+      "game-45",
+      45,
+      36
+    ],
+    [
+      "game-135",
+      135,
+      36
+    ],
+    [
+      "game-225",
+      225,
+      36
+    ],
+    [
+      "game-315",
+      315,
+      36
+    ]
+  ],
+  "aspect_definition": "longest edge / its altitude",
+  "sliver_definition": "aspect >10 OR minimum angle <5 degrees",
+  "candidates": {
+    "lod0": {
+      "geometry": {
+        "triangles": 5236,
+        "watertight": true,
+        "manifold": true,
+        "winding_consistent": true,
+        "components": 1,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "nonmanifold_vertices": 0,
+        "sliver_percent": 0.5920550038197097,
+        "min_angle_p01_degrees": 10.517850180000405,
+        "aspect_p99": 7.332962956194474,
+        "surface_area": 1.3161017343992762,
+        "volume_signed": 0.04506909524036268
+      },
+      "views": {
+        "front": {
+          "pixels": 255668,
+          "area": 0.29858401471209245,
+          "boundary_length": 5.2284662395900385,
+          "boundary_length_px": 4838.148770684389,
+          "normalized_perimeter": 9.568437655540396,
+          "iou": 0.940694549136953,
+          "high_boundary_length": 5.90482288239024,
+          "boundary_length_ratio": 0.8854569127183682
+        },
+        "right": {
+          "pixels": 174271,
+          "area": 0.20352384666008677,
+          "boundary_length": 3.328132535457647,
+          "boundary_length_px": 3079.679507763578,
+          "normalized_perimeter": 7.377223849609429,
+          "iou": 0.924257572594733,
+          "high_boundary_length": 3.7088186918536064,
+          "boundary_length_ratio": 0.8973564932596642
+        },
+        "back": {
+          "pixels": 255668,
+          "area": 0.29858401471209245,
+          "boundary_length": 5.2284662395900385,
+          "boundary_length_px": 4838.148770684389,
+          "normalized_perimeter": 9.568437655540396,
+          "iou": 0.940694549136953,
+          "high_boundary_length": 5.90482288239024,
+          "boundary_length_ratio": 0.8854569127183682
+        },
+        "left": {
+          "pixels": 174271,
+          "area": 0.20352384666008677,
+          "boundary_length": 3.328132535457647,
+          "boundary_length_px": 3079.679507763578,
+          "normalized_perimeter": 7.377223849609429,
+          "iou": 0.924257572594733,
+          "high_boundary_length": 3.7088186918536055,
+          "boundary_length_ratio": 0.8973564932596644
+        },
+        "game-45": {
+          "pixels": 261275,
+          "area": 0.2838606245520942,
+          "boundary_length": 3.9565828899546123,
+          "boundary_length_px": 3795.916231265037,
+          "normalized_perimeter": 7.4262179590243536,
+          "iou": 0.9656547684118865,
+          "high_boundary_length": 4.335639397069412,
+          "boundary_length_ratio": 0.9125719478951559
+        },
+        "game-135": {
+          "pixels": 256854,
+          "area": 0.27509404773589974,
+          "boundary_length": 3.8491013590990426,
+          "boundary_length_px": 3719.30605820977,
+          "normalized_perimeter": 7.338693517121105,
+          "iou": 0.9643773983372803,
+          "high_boundary_length": 4.083845581129645,
+          "boundary_length_ratio": 0.942518830017645
+        },
+        "game-225": {
+          "pixels": 264633,
+          "area": 0.2810616516971707,
+          "boundary_length": 3.951752353731722,
+          "boundary_length_px": 3834.5192616453664,
+          "normalized_perimeter": 7.453992021716442,
+          "iou": 0.9631938073181513,
+          "high_boundary_length": 4.170630388346954,
+          "boundary_length_ratio": 0.9475191963241832
+        },
+        "game-315": {
+          "pixels": 256930,
+          "area": 0.278168368927421,
+          "boundary_length": 3.81173376141654,
+          "boundary_length_px": 3663.33044482741,
+          "normalized_perimeter": 7.227176928659603,
+          "iou": 0.966669860677258,
+          "high_boundary_length": 4.217435708529412,
+          "boundary_length_ratio": 0.9038036439316968
+        }
+      },
+      "silhouette_iou_mean": 0.9487250097759935,
+      "silhouette_iou_min": 0.924257572594733
+    },
+    "lod1": {
+      "geometry": {
+        "triangles": 2146,
+        "watertight": true,
+        "manifold": true,
+        "winding_consistent": true,
+        "components": 1,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "nonmanifold_vertices": 0,
+        "sliver_percent": 0.6057781919850885,
+        "min_angle_p01_degrees": 9.023267732393299,
+        "aspect_p99": 8.506579553402736,
+        "surface_area": 1.3015716440958245,
+        "volume_signed": 0.04453101513134319
+      },
+      "views": {
+        "front": {
+          "pixels": 254605,
+          "area": 0.2973425812607456,
+          "boundary_length": 5.187175645507584,
+          "boundary_length_px": 4799.940617882676,
+          "normalized_perimeter": 9.512669329490809,
+          "iou": 0.9371934501142422,
+          "high_boundary_length": 5.90482288239024,
+          "boundary_length_ratio": 0.8784642230298098
+        },
+        "right": {
+          "pixels": 173865,
+          "area": 0.20304969616032492,
+          "boundary_length": 3.2891196235150124,
+          "boundary_length_px": 3043.5790027001894,
+          "normalized_perimeter": 7.299254341566146,
+          "iou": 0.9230836878497071,
+          "high_boundary_length": 3.7088186918536064,
+          "boundary_length_ratio": 0.8868375342098928
+        },
+        "back": {
+          "pixels": 254605,
+          "area": 0.2973425812607456,
+          "boundary_length": 5.187175645507584,
+          "boundary_length_px": 4799.940617882676,
+          "normalized_perimeter": 9.512669329490809,
+          "iou": 0.9371934501142422,
+          "high_boundary_length": 5.90482288239024,
+          "boundary_length_ratio": 0.8784642230298098
+        },
+        "left": {
+          "pixels": 173865,
+          "area": 0.20304969616032492,
+          "boundary_length": 3.2891196235150124,
+          "boundary_length_px": 3043.5790027001894,
+          "normalized_perimeter": 7.299254341566146,
+          "iou": 0.9230836878497071,
+          "high_boundary_length": 3.7088186918536055,
+          "boundary_length_ratio": 0.886837534209893
+        },
+        "game-45": {
+          "pixels": 260856,
+          "area": 0.2834054045666868,
+          "boundary_length": 3.9016845624617593,
+          "boundary_length_px": 3743.2471837067246,
+          "normalized_perimeter": 7.3290568641174305,
+          "iou": 0.9604835887614153,
+          "high_boundary_length": 4.335639397069412,
+          "boundary_length_ratio": 0.8999098414639891
+        },
+        "game-135": {
+          "pixels": 255359,
+          "area": 0.27349288286649853,
+          "boundary_length": 3.8378088778140333,
+          "boundary_length_px": 3708.3943699643387,
+          "normalized_perimeter": 7.338551200013085,
+          "iou": 0.9605554406684895,
+          "high_boundary_length": 4.083845581129645,
+          "boundary_length_ratio": 0.939753671281676
+        },
+        "game-225": {
+          "pixels": 263873,
+          "area": 0.28025447022210953,
+          "boundary_length": 3.901138128545327,
+          "boundary_length_px": 3785.4065632731586,
+          "normalized_perimeter": 7.369110239365159,
+          "iou": 0.9576004629045779,
+          "high_boundary_length": 4.170630388346954,
+          "boundary_length_ratio": 0.9353833270494053
+        },
+        "game-315": {
+          "pixels": 256589,
+          "area": 0.27779918115719465,
+          "boundary_length": 3.8847607064591134,
+          "boundary_length_px": 3733.5142110114834,
+          "normalized_perimeter": 7.370531246052856,
+          "iou": 0.9608610193343123,
+          "high_boundary_length": 4.217435708529412,
+          "boundary_length_ratio": 0.9211191290011864
+        }
+      },
+      "silhouette_iou_mean": 0.9450068484495866,
+      "silhouette_iou_min": 0.9230836878497071
+    },
+    "lod2": {
+      "geometry": {
+        "triangles": 2146,
+        "watertight": true,
+        "manifold": true,
+        "winding_consistent": true,
+        "components": 1,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "nonmanifold_vertices": 0,
+        "sliver_percent": 0.6057781919850885,
+        "min_angle_p01_degrees": 9.023267732393299,
+        "aspect_p99": 8.506579553402736,
+        "surface_area": 1.3015716440958245,
+        "volume_signed": 0.04453101513134319
+      },
+      "views": {
+        "front": {
+          "pixels": 254605,
+          "area": 0.2973425812607456,
+          "boundary_length": 5.187175645507584,
+          "boundary_length_px": 4799.940617882676,
+          "normalized_perimeter": 9.512669329490809,
+          "iou": 0.9371934501142422,
+          "high_boundary_length": 5.90482288239024,
+          "boundary_length_ratio": 0.8784642230298098
+        },
+        "right": {
+          "pixels": 173865,
+          "area": 0.20304969616032492,
+          "boundary_length": 3.2891196235150124,
+          "boundary_length_px": 3043.5790027001894,
+          "normalized_perimeter": 7.299254341566146,
+          "iou": 0.9230836878497071,
+          "high_boundary_length": 3.7088186918536064,
+          "boundary_length_ratio": 0.8868375342098928
+        },
+        "back": {
+          "pixels": 254605,
+          "area": 0.2973425812607456,
+          "boundary_length": 5.187175645507584,
+          "boundary_length_px": 4799.940617882676,
+          "normalized_perimeter": 9.512669329490809,
+          "iou": 0.9371934501142422,
+          "high_boundary_length": 5.90482288239024,
+          "boundary_length_ratio": 0.8784642230298098
+        },
+        "left": {
+          "pixels": 173865,
+          "area": 0.20304969616032492,
+          "boundary_length": 3.2891196235150124,
+          "boundary_length_px": 3043.5790027001894,
+          "normalized_perimeter": 7.299254341566146,
+          "iou": 0.9230836878497071,
+          "high_boundary_length": 3.7088186918536055,
+          "boundary_length_ratio": 0.886837534209893
+        },
+        "game-45": {
+          "pixels": 260856,
+          "area": 0.2834054045666868,
+          "boundary_length": 3.9016845624617593,
+          "boundary_length_px": 3743.2471837067246,
+          "normalized_perimeter": 7.3290568641174305,
+          "iou": 0.9604835887614153,
+          "high_boundary_length": 4.335639397069412,
+          "boundary_length_ratio": 0.8999098414639891
+        },
+        "game-135": {
+          "pixels": 255359,
+          "area": 0.27349288286649853,
+          "boundary_length": 3.8378088778140333,
+          "boundary_length_px": 3708.3943699643387,
+          "normalized_perimeter": 7.338551200013085,
+          "iou": 0.9605554406684895,
+          "high_boundary_length": 4.083845581129645,
+          "boundary_length_ratio": 0.939753671281676
+        },
+        "game-225": {
+          "pixels": 263873,
+          "area": 0.28025447022210953,
+          "boundary_length": 3.901138128545327,
+          "boundary_length_px": 3785.4065632731586,
+          "normalized_perimeter": 7.369110239365159,
+          "iou": 0.9576004629045779,
+          "high_boundary_length": 4.170630388346954,
+          "boundary_length_ratio": 0.9353833270494053
+        },
+        "game-315": {
+          "pixels": 256589,
+          "area": 0.27779918115719465,
+          "boundary_length": 3.8847607064591134,
+          "boundary_length_px": 3733.5142110114834,
+          "normalized_perimeter": 7.370531246052856,
+          "iou": 0.9608610193343123,
+          "high_boundary_length": 4.217435708529412,
+          "boundary_length_ratio": 0.9211191290011864
+        }
+      },
+      "silhouette_iou_mean": 0.9450068484495866,
+      "silhouette_iou_min": 0.9230836878497071
+    }
+  },
+  "candidate_sha256": {
+    "lod0": "32e414370d7bbc18f079dae001f9353917be2e0b69025a283b2e60d6dd2a8748",
+    "lod1": "025398eaca353cc957b61f554db2cf488b7b643412f2f894142c74c7c7e00a6f",
+    "lod2": "025398eaca353cc957b61f554db2cf488b7b643412f2f894142c74c7c7e00a6f"
+  },
+  "correctionNote": "Final source body after deliberate dome flattening and rear-neck taper. Unchanged source-high reference is retained for disclosure: this intentional silhouette edit lowers minimum IoU to 0.923, versus 0.9598 before the requested fit correction; geometry remains one closed manifold component, <1% slivers. No gate threshold was changed."
+}

@@ -1,0 +1,873 @@
+{
+  "ids": [
+    "char.corgi",
+    "char.courier-female",
+    "char.courier-male",
+    "npc.civilian-elderly",
+    "npc.civilian-man-a",
+    "npc.civilian-man-b",
+    "npc.civilian-woman-a",
+    "npc.civilian-woman-b",
+    "npc.national-guard",
+    "npc.police-officer"
+  ],
+  "courierRoute": "CharacterView selects .skin.glb/.skin.low.glb; rigid courier manifest entries are fallback only.",
+  "files": [
+    {
+      "id": "char.corgi",
+      "kind": "body",
+      "path": "public/assets/models/skinned/char.corgi.lod0.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 369412,
+      "sha256": "eae5d5eb84c02afefcd1ab66086b02b7eb792c0c15aef04ed8750eb34de207e5",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "char.corgi",
+      "kind": "body",
+      "path": "public/assets/models/skinned/char.corgi.lod0.low.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 323496,
+      "sha256": "91ea5797375deb968fc67c5b5de89be2eaf2b899ea4a555aeb7d3a64de1ba9ab",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "char.corgi",
+      "kind": "body",
+      "path": "public/assets/models/skinned/char.corgi.lod1.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 104244,
+      "sha256": "b29868de589dac0f81746223a423845efe6684075381679b0818e130401ff685",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "char.corgi",
+      "kind": "body",
+      "path": "public/assets/models/skinned/char.corgi.lod1.low.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 104244,
+      "sha256": "b29868de589dac0f81746223a423845efe6684075381679b0818e130401ff685",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "char.corgi",
+      "kind": "body",
+      "path": "public/assets/models/skinned/char.corgi.lod2.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 79592,
+      "sha256": "61845e291c8d4ed07bbafaa418ec5ef7a9c7810151a14316fd0fb2b5f7a2b28e",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "char.corgi",
+      "kind": "body",
+      "path": "public/assets/models/skinned/char.corgi.lod2.low.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 79592,
+      "sha256": "61845e291c8d4ed07bbafaa418ec5ef7a9c7810151a14316fd0fb2b5f7a2b28e",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "char.courier-female",
+      "kind": "body",
+      "path": "public/assets/models/char.courier-female.skin.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 404044,
+      "sha256": "b5b7849edde3ff20220cb271ce64d5034862154f42e6bfd1a608c3866c055678",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "char.courier-female",
+      "kind": "body",
+      "path": "public/assets/models/char.courier-female.skin.low.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 404044,
+      "sha256": "b5b7849edde3ff20220cb271ce64d5034862154f42e6bfd1a608c3866c055678",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "char.courier-male",
+      "kind": "body",
+      "path": "public/assets/models/char.courier-male.skin.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 411984,
+      "sha256": "e799f98ff4965fc7000d93e02fba638deff17ff04407b1c5aa37e3e438580b7a",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "char.courier-male",
+      "kind": "body",
+      "path": "public/assets/models/char.courier-male.skin.low.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 411984,
+      "sha256": "e799f98ff4965fc7000d93e02fba638deff17ff04407b1c5aa37e3e438580b7a",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-elderly",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-elderly.lod0.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 362392,
+      "sha256": "a64390edb87678f3f764b26be21b637a7e9479054571789e66b6ba07ec8e4553",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-elderly",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-elderly.lod0.low.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 290092,
+      "sha256": "cfd628b28621ba7818880ce2c3b5d2eb5fdd9e5c166a3862d5814a0ab64eec3c",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-elderly",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-elderly.lod1.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 172128,
+      "sha256": "7966f643cb1d84c4988dc0b3d04f399aaba054a05897ea39b974c13379126b49",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-elderly",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-elderly.lod1.low.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 172128,
+      "sha256": "7966f643cb1d84c4988dc0b3d04f399aaba054a05897ea39b974c13379126b49",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-elderly",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-elderly.lod2.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 141712,
+      "sha256": "b9c847cebb9cc1de371c59b38bb58950c7288b1e93039f7ced9a82bbdfd25163",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-elderly",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-elderly.lod2.low.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 141712,
+      "sha256": "b9c847cebb9cc1de371c59b38bb58950c7288b1e93039f7ced9a82bbdfd25163",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-elderly",
+      "kind": "healthy/corpse",
+      "path": "public/assets/civilians/npc.civilian-elderly.lod0.7aa9b537ff41dd9f.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 8089,
+      "sha256": "7aa9b537ff41dd9f40ba9b4b18427247b31a43bcb5f8e47734a4c353be72602d"
+    },
+    {
+      "id": "npc.civilian-elderly",
+      "kind": "infected/corpse",
+      "path": "public/assets/civilians/npc.civilian-elderly.lod0.infected.1f3c36d1e996c3de.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 8089,
+      "sha256": "1f3c36d1e996c3de598c5844dcdb5f0eea0d496dcab766c8742a1688e44a996d"
+    },
+    {
+      "id": "npc.civilian-elderly",
+      "kind": "healthy/corpse",
+      "path": "public/assets/civilians/npc.civilian-elderly.lod1.8cc690508ec862cc.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 3839,
+      "sha256": "8cc690508ec862cc8383174407f88cd500d50e08475b60e1afca1bbef3196609"
+    },
+    {
+      "id": "npc.civilian-elderly",
+      "kind": "infected/corpse",
+      "path": "public/assets/civilians/npc.civilian-elderly.lod1.infected.241dedcd5a38c863.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 3839,
+      "sha256": "241dedcd5a38c863109f129c6f6edc3e84076ccefd0d4576fcdfc80544d94540"
+    },
+    {
+      "id": "npc.civilian-elderly",
+      "kind": "healthy/corpse",
+      "path": "public/assets/civilians/npc.civilian-elderly.lod2.8cc690508ec862cc.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 3839,
+      "sha256": "8cc690508ec862cc8383174407f88cd500d50e08475b60e1afca1bbef3196609"
+    },
+    {
+      "id": "npc.civilian-elderly",
+      "kind": "infected/corpse",
+      "path": "public/assets/civilians/npc.civilian-elderly.lod2.infected.241dedcd5a38c863.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 3839,
+      "sha256": "241dedcd5a38c863109f129c6f6edc3e84076ccefd0d4576fcdfc80544d94540"
+    },
+    {
+      "id": "npc.civilian-man-a",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-man-a.lod0.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 331608,
+      "sha256": "8ec6f1058db18c1cddc9b7d87f2d5966c1836493bf1a1ed73b9f435aa992a9ee",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-man-a",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-man-a.lod0.low.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 233568,
+      "sha256": "3734c84c21b8fac4b1fac9b5b3f794edf94c25d62fae4ac6cbc9857e062d5894",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-man-a",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-man-a.lod1.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 166600,
+      "sha256": "880e08ff9a146e8788a530228a0588cfd5dec7ebab2f4f7c3e4555e746fcec66",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-man-a",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-man-a.lod1.low.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 166600,
+      "sha256": "880e08ff9a146e8788a530228a0588cfd5dec7ebab2f4f7c3e4555e746fcec66",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-man-a",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-man-a.lod2.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 115932,
+      "sha256": "e579c50887bcbdd0b3e8a2898ba82e41d225dd197fda9710e6cd0519d2b2c310",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-man-a",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-man-a.lod2.low.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 115932,
+      "sha256": "e579c50887bcbdd0b3e8a2898ba82e41d225dd197fda9710e6cd0519d2b2c310",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-man-a",
+      "kind": "healthy/corpse",
+      "path": "public/assets/civilians/npc.civilian-man-a.lod0.d37e53c6e2fffe1e.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 5582,
+      "sha256": "d37e53c6e2fffe1ebbfcb83dfa53da83f445998c8a6c3171fb0c39f17abb904a"
+    },
+    {
+      "id": "npc.civilian-man-a",
+      "kind": "infected/corpse",
+      "path": "public/assets/civilians/npc.civilian-man-a.lod0.infected.fe6b9179bcb65fba.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 5582,
+      "sha256": "fe6b9179bcb65fba8ecf83e1e81ba012eafe22a495edf6dbfcf35a1d52f0e489"
+    },
+    {
+      "id": "npc.civilian-man-a",
+      "kind": "healthy/corpse",
+      "path": "public/assets/civilians/npc.civilian-man-a.lod1.d792299b25e5371c.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 2788,
+      "sha256": "d792299b25e5371c6a96eeea2c7ddfcaa1ce7178226993c33a5bd519fc6ea8b5"
+    },
+    {
+      "id": "npc.civilian-man-a",
+      "kind": "infected/corpse",
+      "path": "public/assets/civilians/npc.civilian-man-a.lod1.infected.e81db34a2cdda201.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 2788,
+      "sha256": "e81db34a2cdda20112853f5214e64ac39d7b0e927d5197f0109d9a79ba0771d7"
+    },
+    {
+      "id": "npc.civilian-man-a",
+      "kind": "healthy/corpse",
+      "path": "public/assets/civilians/npc.civilian-man-a.lod2.9e5706d0c6ac003a.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 1141,
+      "sha256": "9e5706d0c6ac003a8a673597dbb9faade7b0777066c509405fc679c0b466f09b"
+    },
+    {
+      "id": "npc.civilian-man-a",
+      "kind": "infected/corpse",
+      "path": "public/assets/civilians/npc.civilian-man-a.lod2.infected.40a360086bb01251.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 1141,
+      "sha256": "40a360086bb012513c2b19ae5fe8d0cad55006ce610dd480b34c19adf755ecca"
+    },
+    {
+      "id": "npc.civilian-man-b",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-man-b.lod0.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 318748,
+      "sha256": "1039385239e99865ee972f3b0834005d8d8c4faae8f4f2f898e5e816903f9f1e",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-man-b",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-man-b.lod0.low.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 233352,
+      "sha256": "11c38021ee015fadaf12ebe1e8d18cecfecbac650979ef6e5de685c723dcc9f1",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-man-b",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-man-b.lod1.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 162736,
+      "sha256": "29718b320e9e9d52f0d0f60feb2dde7116d7eff2c2a9ff13c7ebe93987b81090",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-man-b",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-man-b.lod1.low.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 162736,
+      "sha256": "29718b320e9e9d52f0d0f60feb2dde7116d7eff2c2a9ff13c7ebe93987b81090",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-man-b",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-man-b.lod2.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 119392,
+      "sha256": "aa06019df77d10c1b69e9376750883f2af4210bb5a8a705e5105d5bcf2e5d33f",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-man-b",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-man-b.lod2.low.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 119392,
+      "sha256": "aa06019df77d10c1b69e9376750883f2af4210bb5a8a705e5105d5bcf2e5d33f",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-man-b",
+      "kind": "healthy/corpse",
+      "path": "public/assets/civilians/npc.civilian-man-b.lod0.3bebdc04282ba8a1.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 5905,
+      "sha256": "3bebdc04282ba8a1fc03b21b83180caed7deb08e1b6dc4aadac3c83c2401c233"
+    },
+    {
+      "id": "npc.civilian-man-b",
+      "kind": "infected/corpse",
+      "path": "public/assets/civilians/npc.civilian-man-b.lod0.infected.86e0d5f6f25d9083.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 5905,
+      "sha256": "86e0d5f6f25d9083e87346c780b9edb2abc1ef4bea0b6677810e631a618ceda5"
+    },
+    {
+      "id": "npc.civilian-man-b",
+      "kind": "healthy/corpse",
+      "path": "public/assets/civilians/npc.civilian-man-b.lod1.d1f287df17223781.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 2985,
+      "sha256": "d1f287df17223781c17b96565ac6f77a7d8550005762ae6c54fb1a6efa305b90"
+    },
+    {
+      "id": "npc.civilian-man-b",
+      "kind": "infected/corpse",
+      "path": "public/assets/civilians/npc.civilian-man-b.lod1.infected.c4b430d3e85f3849.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 2985,
+      "sha256": "c4b430d3e85f384919ccada20ef04ca5b3c9478ee487e4632f70bd74b4c92e01"
+    },
+    {
+      "id": "npc.civilian-man-b",
+      "kind": "healthy/corpse",
+      "path": "public/assets/civilians/npc.civilian-man-b.lod2.23c7c97c8db26306.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 1331,
+      "sha256": "23c7c97c8db26306c1df4c335742bed69ce40c178384a89eecec2d2d012032f9"
+    },
+    {
+      "id": "npc.civilian-man-b",
+      "kind": "infected/corpse",
+      "path": "public/assets/civilians/npc.civilian-man-b.lod2.infected.e8161a6f43c0f119.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 1331,
+      "sha256": "e8161a6f43c0f119c89ddb3b145830f420f70181d331e8022b5619dacb4bf7bc"
+    },
+    {
+      "id": "npc.civilian-woman-a",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-woman-a.lod0.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 443796,
+      "sha256": "16d2dcbd56171f7a5ae046f1d8830baae1fe0ab2cee9d4158bec4c7e6ed9e4b9",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-woman-a",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-woman-a.lod0.low.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 306136,
+      "sha256": "7b12063566fefd8aaf5ceee9f6bb38b811a7d8cb5f9e82f740c3f53f2de9cc19",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-woman-a",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-woman-a.lod1.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 216376,
+      "sha256": "2580f29f0a23ce01015ec104b510a20b9c4ef6c4298fd416f9ace376ce56eb02",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-woman-a",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-woman-a.lod1.low.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 216376,
+      "sha256": "2580f29f0a23ce01015ec104b510a20b9c4ef6c4298fd416f9ace376ce56eb02",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-woman-a",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-woman-a.lod2.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 144232,
+      "sha256": "632550d3b9afde868f9504ae2f507d7a2f8978e610bb256267aae352d12289d4",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-woman-a",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-woman-a.lod2.low.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 144232,
+      "sha256": "632550d3b9afde868f9504ae2f507d7a2f8978e610bb256267aae352d12289d4",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-woman-a",
+      "kind": "healthy/corpse",
+      "path": "public/assets/civilians/npc.civilian-woman-a.lod0.92ed54a7fdc51898.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 8379,
+      "sha256": "92ed54a7fdc51898011b1e69647ed42151cbb5bbbd3c00b1d36c4bc92e8b9041"
+    },
+    {
+      "id": "npc.civilian-woman-a",
+      "kind": "infected/corpse",
+      "path": "public/assets/civilians/npc.civilian-woman-a.lod0.infected.718b16f8cf743226.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 8379,
+      "sha256": "718b16f8cf74322694d2516c1ea48811af2e1d7e3875849b3a0156f9e0a994fb"
+    },
+    {
+      "id": "npc.civilian-woman-a",
+      "kind": "healthy/corpse",
+      "path": "public/assets/civilians/npc.civilian-woman-a.lod1.4937cf8acf06aa4e.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 4393,
+      "sha256": "4937cf8acf06aa4eedbde049b019abe7df965fc83f033ca914de7708e8bc9dc8"
+    },
+    {
+      "id": "npc.civilian-woman-a",
+      "kind": "infected/corpse",
+      "path": "public/assets/civilians/npc.civilian-woman-a.lod1.infected.e2a72a562a391a78.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 4393,
+      "sha256": "e2a72a562a391a784dda73a33c93deab6bca78ddda7bce66daf8b0778a518d61"
+    },
+    {
+      "id": "npc.civilian-woman-a",
+      "kind": "healthy/corpse",
+      "path": "public/assets/civilians/npc.civilian-woman-a.lod2.f7e3f0c77fa262af.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 1583,
+      "sha256": "f7e3f0c77fa262af04d031c3b50f084d81a52a457ee7cbd06ee1888fa6fcb162"
+    },
+    {
+      "id": "npc.civilian-woman-a",
+      "kind": "infected/corpse",
+      "path": "public/assets/civilians/npc.civilian-woman-a.lod2.infected.67fe129250869155.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 1583,
+      "sha256": "67fe129250869155e8ab007066d05845b82410293c58e3384025c27c1eb30216"
+    },
+    {
+      "id": "npc.civilian-woman-b",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-woman-b.lod0.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 355148,
+      "sha256": "ffb8c2c14f0406cd9184b4c531a16b0f880718f151b3bff98a3652cb853a3993",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-woman-b",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-woman-b.lod0.low.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 251812,
+      "sha256": "6d10345ee2baa2964f766a1cf33afee4ff2602a192c2ed9c14d7169c8441a859",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-woman-b",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-woman-b.lod1.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 172064,
+      "sha256": "41f7d6d925163e845596729f633cf7be9be0bdf5ad28649b51679564f5367dbf",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-woman-b",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-woman-b.lod1.low.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 172064,
+      "sha256": "41f7d6d925163e845596729f633cf7be9be0bdf5ad28649b51679564f5367dbf",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-woman-b",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-woman-b.lod2.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 126144,
+      "sha256": "e5a9bac567923bd56809ed7fc5c2eabd404c882f60bc496d72da9875d4c541e0",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-woman-b",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.civilian-woman-b.lod2.low.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 126144,
+      "sha256": "e5a9bac567923bd56809ed7fc5c2eabd404c882f60bc496d72da9875d4c541e0",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.civilian-woman-b",
+      "kind": "healthy/corpse",
+      "path": "public/assets/civilians/npc.civilian-woman-b.lod0.af9f97ef5bf09791.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 6457,
+      "sha256": "af9f97ef5bf09791c6a5c03f26bf15366c609b77d3c1be7fa34e10301b13cd32"
+    },
+    {
+      "id": "npc.civilian-woman-b",
+      "kind": "infected/corpse",
+      "path": "public/assets/civilians/npc.civilian-woman-b.lod0.infected.cb0b1aee908ebff5.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 6457,
+      "sha256": "cb0b1aee908ebff5ebdd192bfe04189ba4397d25fb221b9b905a893924a5f3df"
+    },
+    {
+      "id": "npc.civilian-woman-b",
+      "kind": "healthy/corpse",
+      "path": "public/assets/civilians/npc.civilian-woman-b.lod1.95e19a99460aecbb.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 3127,
+      "sha256": "95e19a99460aecbb9b701c532b724bb5db7b247ecf4b139d95f55d8f841085cc"
+    },
+    {
+      "id": "npc.civilian-woman-b",
+      "kind": "infected/corpse",
+      "path": "public/assets/civilians/npc.civilian-woman-b.lod1.infected.db267f41ac40fd49.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 3127,
+      "sha256": "db267f41ac40fd49507cfea6b6fbc78ddc384ea43295c0faebd62de230265141"
+    },
+    {
+      "id": "npc.civilian-woman-b",
+      "kind": "healthy/corpse",
+      "path": "public/assets/civilians/npc.civilian-woman-b.lod2.15f4cb368969ac63.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 1358,
+      "sha256": "15f4cb368969ac63ac3903d6cc1f84c123747fa0c8222b6d2e5efc17f2fd492e"
+    },
+    {
+      "id": "npc.civilian-woman-b",
+      "kind": "infected/corpse",
+      "path": "public/assets/civilians/npc.civilian-woman-b.lod2.infected.92a0771a15b2c2b9.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 1358,
+      "sha256": "92a0771a15b2c2b9eceb13e46451d5b41bff6b26b6002c0661f3137179633a29"
+    },
+    {
+      "id": "npc.national-guard",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.national-guard.lod0.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 369608,
+      "sha256": "d71edde91a3072f0644ccc1aa539700628ff3ce9d768596ed52a8dbd95511846",
+      "inheritedV2HashMatch": false
+    },
+    {
+      "id": "npc.national-guard",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.national-guard.lod0.low.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 269104,
+      "sha256": "133b5e04c712b4733adc1ad78be2bd977d93c9892ea4021a8ce971ea2bc20dcf",
+      "inheritedV2HashMatch": false
+    },
+    {
+      "id": "npc.national-guard",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.national-guard.lod1.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 191872,
+      "sha256": "8506c27032ed175b2574931f442ca8ce9115c899c885569b5326320b91d4c37a",
+      "inheritedV2HashMatch": false
+    },
+    {
+      "id": "npc.national-guard",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.national-guard.lod1.low.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 191872,
+      "sha256": "8506c27032ed175b2574931f442ca8ce9115c899c885569b5326320b91d4c37a",
+      "inheritedV2HashMatch": false
+    },
+    {
+      "id": "npc.national-guard",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.national-guard.lod2.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 149620,
+      "sha256": "a5f993e0e79352dff9ea1f2d40fefbfdb40424be1cfed28af8a3435066ac7a80",
+      "inheritedV2HashMatch": false
+    },
+    {
+      "id": "npc.national-guard",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.national-guard.lod2.low.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 149620,
+      "sha256": "a5f993e0e79352dff9ea1f2d40fefbfdb40424be1cfed28af8a3435066ac7a80",
+      "inheritedV2HashMatch": false
+    },
+    {
+      "id": "npc.national-guard",
+      "kind": "healthy/corpse",
+      "path": "public/assets/civilians/npc.national-guard.lod0.f82bd603bd3ae7a4.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 6380,
+      "sha256": "f82bd603bd3ae7a4c6069f6fa1569d320502b4296557b8795961f88d961abdc2"
+    },
+    {
+      "id": "npc.national-guard",
+      "kind": "infected/corpse",
+      "path": "public/assets/civilians/npc.national-guard.lod0.infected.06a28da2acc18d84.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 6380,
+      "sha256": "06a28da2acc18d84bff57d5f73745ac0b5fa5358e931c7d1b8a6b5f801a898b1"
+    },
+    {
+      "id": "npc.national-guard",
+      "kind": "healthy/corpse",
+      "path": "public/assets/civilians/npc.national-guard.lod1.69ceb057638c9442.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 3231,
+      "sha256": "69ceb057638c94425dce7f128caae6db7254745460e10d1f826a39237ecfe381"
+    },
+    {
+      "id": "npc.national-guard",
+      "kind": "infected/corpse",
+      "path": "public/assets/civilians/npc.national-guard.lod1.infected.0fdb32f8540077b0.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 3231,
+      "sha256": "0fdb32f8540077b01ae7982bf4bd927aa0e393ceee47c9db7200c25472ef05ca"
+    },
+    {
+      "id": "npc.national-guard",
+      "kind": "healthy/corpse",
+      "path": "public/assets/civilians/npc.national-guard.lod2.69ceb057638c9442.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 3231,
+      "sha256": "69ceb057638c94425dce7f128caae6db7254745460e10d1f826a39237ecfe381"
+    },
+    {
+      "id": "npc.national-guard",
+      "kind": "infected/corpse",
+      "path": "public/assets/civilians/npc.national-guard.lod2.infected.0fdb32f8540077b0.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 3231,
+      "sha256": "0fdb32f8540077b01ae7982bf4bd927aa0e393ceee47c9db7200c25472ef05ca"
+    },
+    {
+      "id": "npc.police-officer",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.police-officer.lod0.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 308536,
+      "sha256": "d7a74ace1c949180ef77f38b88b00e15a845c99b333020d8412c6f66a103d7d2",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.police-officer",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.police-officer.lod0.low.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 233044,
+      "sha256": "24b74ce6995000498e82487b83009624618246f7ee943bbc5254f59d8dcd0ca6",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.police-officer",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.police-officer.lod1.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 153172,
+      "sha256": "492e65f5d9434efcf7c44370c7c1da06647140c2fa6197cb778853c1f8fbe05e",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.police-officer",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.police-officer.lod1.low.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 153172,
+      "sha256": "492e65f5d9434efcf7c44370c7c1da06647140c2fa6197cb778853c1f8fbe05e",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.police-officer",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.police-officer.lod2.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 122956,
+      "sha256": "bd8efab31ac8667f769f8c02079f5db0c2da4e9337ba166e492dd976970be452",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.police-officer",
+      "kind": "body",
+      "path": "public/assets/models/skinned/npc.police-officer.lod2.low.glb",
+      "skins": 1,
+      "textures": 1,
+      "bytes": 122956,
+      "sha256": "bd8efab31ac8667f769f8c02079f5db0c2da4e9337ba166e492dd976970be452",
+      "inheritedV2HashMatch": true
+    },
+    {
+      "id": "npc.police-officer",
+      "kind": "healthy/corpse",
+      "path": "public/assets/civilians/npc.police-officer.lod0.5a44e0ffd0393a3d.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 5670,
+      "sha256": "5a44e0ffd0393a3d0604850663f699ac4f497d5903dd78b5973b688ad48a0461"
+    },
+    {
+      "id": "npc.police-officer",
+      "kind": "infected/corpse",
+      "path": "public/assets/civilians/npc.police-officer.lod0.infected.30c5ee21f4d1e305.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 5670,
+      "sha256": "30c5ee21f4d1e30560e29ecae0673f6b7ad5aa930607b76d1c6688acd139d5bb"
+    },
+    {
+      "id": "npc.police-officer",
+      "kind": "healthy/corpse",
+      "path": "public/assets/civilians/npc.police-officer.lod1.e45037c45f0077c0.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 2712,
+      "sha256": "e45037c45f0077c0391228f518eb85bf2db673775fc1e8811fc5bd7329c64841"
+    },
+    {
+      "id": "npc.police-officer",
+      "kind": "infected/corpse",
+      "path": "public/assets/civilians/npc.police-officer.lod1.infected.47914ace9c33205b.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 2712,
+      "sha256": "47914ace9c33205b2a2fae0c4e21f998f3640d645caae1bd44ffdb965f65d2a5"
+    },
+    {
+      "id": "npc.police-officer",
+      "kind": "healthy/corpse",
+      "path": "public/assets/civilians/npc.police-officer.lod2.e45037c45f0077c0.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 2712,
+      "sha256": "e45037c45f0077c0391228f518eb85bf2db673775fc1e8811fc5bd7329c64841"
+    },
+    {
+      "id": "npc.police-officer",
+      "kind": "infected/corpse",
+      "path": "public/assets/civilians/npc.police-officer.lod2.infected.47914ace9c33205b.bin.gz",
+      "inverseBinds": 19,
+      "vertices": 2712,
+      "sha256": "47914ace9c33205b2a2fae0c4e21f998f3640d645caae1bd44ffdb965f65d2a5"
+    }
+  ]
+}

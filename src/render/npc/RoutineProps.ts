@@ -1,9 +1,9 @@
 import { Box3, BoxGeometry, BufferAttribute, Color, CylinderGeometry, Group, InstancedMesh, Matrix4, MeshLambertNodeMaterial, Vector3, type BufferGeometry } from 'three/webgpu';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { attribute } from 'three/tsl';
-import type { Materials } from '../Materials';
-import { AssetRegistry } from '../../assets/registry';
+import type { AssetRegistry } from '../../assets/registry';
 import { longGunHolds } from '../characters/GunAim';
+import type { Materials } from '../Materials';
 import { crowdWeaponAssets, crowdWeaponGeometry, isCrowdGun, type CrowdGun } from './crowdWeapons';
 import type { CivilianProp } from '../../sim/npc/types';
 
@@ -19,7 +19,7 @@ export class RoutineProps extends Group {
   readonly spouts = new Map<number, Vector3>();
   readonly aiming = new Map<number, { until: number; direction: { x: number; y?: number; z: number } }>();
   private readonly weaponMuzzles = new Map<CrowdGun, Vector3>();
-  private readonly meshes = new Map<CivilianProp, InstancedMesh>();
+  private readonly meshes = new Map<CivilianProp | 'hmg', InstancedMesh>();
   private readonly gripMatrix = new Matrix4();
   private readonly droppedMatrix = new Matrix4();
   private readonly droppedTilt = new Matrix4().makeRotationZ(-Math.PI / 2);
@@ -28,7 +28,7 @@ export class RoutineProps extends Group {
   private readonly contactPool: RoutineProps['contacts'] = [];
   private readonly gunPool: (RoutineProps['guns'][number] & { muzzle: Vector3 })[] = [];
   private readonly probeHands = __QA_HOOKS__ && typeof location !== 'undefined' && new URLSearchParams(location.search).has('test');
-  constructor(shading?: Materials) {
+  constructor(private readonly shading?: Materials) {
     super(); this.name = 'morning-props';
     const part = (geometry: BufferGeometry, color: string, x = 0, y = 0, z = 0) => {
       geometry.translate(x, y, z); const rgb = new Color(color), count = geometry.getAttribute('position').count;
@@ -62,38 +62,37 @@ export class RoutineProps extends Group {
       this.meshes.set(name as CivilianProp, mesh); this.add(mesh);
     }
   }
-  async init(shading?: Materials): Promise<void> {
-    const registry = new AssetRegistry(() => {}, { materials: shading });
-    try {
-      await Promise.all(Object.entries(crowdWeaponAssets).map(async ([prop, id]) => {
-        const root = await registry.loadAsset(id, 'lod1');
-        const { geometry, muzzle } = crowdWeaponGeometry(root, longGunHolds[id]?.scale ?? .8);
-        const material = shading?.shaded(attribute('color', 'vec3')) ?? new MeshLambertNodeMaterial({ vertexColors: true });
-        const mesh = new InstancedMesh(geometry, material, 128); mesh.name = id; mesh.count = 0; mesh.frustumCulled = false; mesh.castShadow = true;
-        this.meshes.set(prop as CrowdGun, mesh); this.weaponMuzzles.set(prop as CrowdGun, muzzle); this.add(mesh);
-      }));
-    } finally { await registry.dispose(); }
+  /** Shared registry and one owned vertex-colour batch per authored weapon. */
+  async init(registry: Pick<AssetRegistry, 'loadAsset'>): Promise<void> {
+    for (const [prop, id] of Object.entries(crowdWeaponAssets)) {
+      const root = await registry.loadAsset(id, 'lod1');
+      const { geometry, muzzle } = crowdWeaponGeometry(root, longGunHolds[id]?.scale ?? .8);
+      const material = this.shading?.shaded(attribute('color', 'vec3')) ?? new MeshLambertNodeMaterial({ vertexColors: true });
+      const mesh = new InstancedMesh(geometry, material, 128); mesh.name = id; mesh.count = 0; mesh.frustumCulled = false; mesh.castShadow = true;
+      this.meshes.set(prop as CrowdGun, mesh); this.weaponMuzzles.set(prop as CrowdGun, muzzle); this.add(mesh);
+    }
   }
   begin(): void { this.contacts.length = 0; this.guns.length = 0; this.muzzles.clear(); for (const mesh of this.meshes.values()) mesh.count = 0; }
-  held(prop: CivilianProp, matrix: Matrix4, entity: number, hand?: Float32Array, reach = .07): void {
+  held(prop: CivilianProp, matrix: Matrix4, entity: number, hand?: Float32Array, reach = .07, machineGun = false): void {
+    const key = machineGun ? 'hmg' : prop;
     this.gripMatrix.makeTranslation(prop === 'phone' ? reach - .07 : 0, 0, 0).premultiply(matrix);
-    this.place(prop, this.gripMatrix);
-    const muzzle = isCrowdGun(prop) ? this.weaponMuzzles.get(prop) : undefined;
+    this.place(key, this.gripMatrix);
+    const muzzle = isCrowdGun(key) ? this.weaponMuzzles.get(key) : undefined;
     if (muzzle) {
-      const gun = this.gunPool[this.guns.length] ??= { entity, geometry: this.meshes.get(prop)!.geometry, matrix: new Matrix4(), muzzle: new Vector3() };
-      gun.entity = entity; gun.geometry = this.meshes.get(prop)!.geometry; gun.matrix.copy(this.gripMatrix);
+      const gun = this.gunPool[this.guns.length] ??= { entity, geometry: this.meshes.get(key)!.geometry, matrix: new Matrix4(), muzzle: new Vector3() };
+      gun.entity = entity; gun.geometry = this.meshes.get(key)!.geometry; gun.matrix.copy(this.gripMatrix);
       gun.muzzle.copy(muzzle).applyMatrix4(this.gripMatrix);
       this.muzzles.set(entity, gun.muzzle); this.guns.push(gun);
     }
     if (__QA_HOOKS__ && hand && this.probeHands) {
-      const contact = this.contactPool[this.contacts.length] ??= { entity, prop, hand: new Float32Array(hand.length), geometry: this.meshes.get(prop)!.geometry, matrix: new Matrix4() };
+      const contact = this.contactPool[this.contacts.length] ??= { entity, prop, hand: new Float32Array(hand.length), geometry: this.meshes.get(key)!.geometry, matrix: new Matrix4() };
       if (contact.hand.length !== hand.length) contact.hand = new Float32Array(hand.length);
       for (let i = 0; i < hand.length; i += 3) this.point.fromArray(hand, i).applyMatrix4(matrix).toArray(contact.hand, i);
-      contact.entity = entity; contact.prop = prop; contact.geometry = this.meshes.get(prop)!.geometry; contact.matrix.copy(this.gripMatrix);
+      contact.entity = entity; contact.prop = prop; contact.geometry = this.meshes.get(key)!.geometry; contact.matrix.copy(this.gripMatrix);
       this.contacts.push(contact);
     }
   }
-  place(prop: CivilianProp, matrix: Matrix4): void {
+  place(prop: CivilianProp | 'hmg', matrix: Matrix4): void {
     let mesh = this.meshes.get(prop)!;
     if (mesh.count === mesh.instanceMatrix.count) {
       const grown = new InstancedMesh(mesh.geometry, mesh.material, mesh.count * 2);

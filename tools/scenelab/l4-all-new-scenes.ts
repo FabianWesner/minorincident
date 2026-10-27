@@ -89,9 +89,9 @@ try {
     assert.ok(result.pass, `${spec.name}: ${JSON.stringify(result.failed)}`);
   }
   if (mode === 'guns') {
-    for (const [model, prop] of [['npc.national-guard', 'rifle'], ['npc.civilian-man-a', 'hunting-rifle'], ['npc.civilian-woman-a', 'pistol'], ['npc.civilian-man-b', 'shotgun']] as const) for (const yaw of [-45, 45, 135, 225]) {
+    for (const [model, prop] of [['npc.national-guard', 'hmg'], ['npc.national-guard', 'rifle'], ['npc.civilian-man-a', 'hunting-rifle'], ['npc.civilian-woman-a', 'pistol'], ['npc.civilian-man-b', 'shotgun']] as const) for (const yaw of [-45, 45, 135, 225]) {
       const fixture: SceneSpec = { name: `gun-${prop}-${yaw}`, time: 'L4', ground: 'asphalt', size: 100,
-        actors: [{ id: 'courier', kind: 'courier', at: [30, 30] }, { id: 'holder', kind: 'pedestrian', at: [0, 0], yaw, look: { model, handProp: prop }, state: 'idle' }],
+        actors: [{ id: 'courier', kind: 'courier', at: [30, 30] }, { id: 'holder', kind: 'pedestrian', at: [0, 0], yaw, look: { model, handProp: prop === 'hmg' ? 'rifle' : prop }, state: prop === 'hmg' ? { ally: { role: 'soldier', weapon: 'hmg' } } : 'idle' }],
         camera: { mode: 'game', target: [0, .9, 0], zoom: .55 }, frames: 3, shots: [3], expect: { consoleErrors: 0 } };
       const result = await runSpec(session, fixture, { out: `${out}/${prop}-${yaw}`, sheet: 0 });
       assert.ok(result.pass, JSON.stringify(result.failed)); receipts.push({ model, prop, yaw, result }); writeJson(`${out}/receipts.json`, receipts);

@@ -17,7 +17,15 @@ export const longGunHolds: Record<string, LongGunHold> = {
 /** The gunner on the L10 mounted minigun: right hand on the right spade grip, the support hand on the left one (axes of the support offset
  * are the right-hand socket's), body square to the aim. Tuned in the Scene Lab close-ups of `l10-minigun-gunner`. */
 export const mountedGunHold: LongGunHold = { scale: 1, support: [0, 0, -.34], stance: 0, reach: .5, drop: .12, lateral: .17 };
-export const crowdLongGunHolds: Record<string, LongGunHold> = Object.fromEntries(Object.entries(longGunHolds).map(([id, hold]) => [id, { ...hold, support: [-hold.support[2], hold.support[1], hold.support[0]] }]));
+/** Same authored grips as the courier, rotated from +X into crowd prop +Z. */
+export const crowdGunHolds: Record<string, LongGunHold> = Object.fromEntries(
+  Object.entries({ rifle: 'wpn.assault-rifle', hmg: 'wpn.machine-gun', shotgun: 'wpn.shotgun', 'hunting-rifle': 'wpn.hunting-rifle' }).map(([prop, asset]) => {
+    const hold = longGunHolds[asset];
+    return [prop, { ...hold, support: [-hold.support[2], hold.support[1], hold.support[0]] }];
+  }),
+);
+export const crowdLongGunHold = crowdGunHolds.rifle;
+
 /** Two-handed low ready keeps the barrel forward, clear of the road. */
 export const gunCarryElevation = (assetId: string): number => longGunHolds[assetId] ? -.18 : -.75;
 
