@@ -36,8 +36,9 @@ if [ ! -d "$cache/node_modules" ]; then
   printf '%s\n' "$lock_hash" > "$cache/.lock-hash"
 fi
 if [ -L "$wt/node_modules" ]; then rm "$wt/node_modules"; elif [ -e "$wt/node_modules" ]; then rm -rf "$wt/node_modules"; fi
-if ! cp -cR "$cache/node_modules" "$wt/node_modules" 2>/dev/null; then rm -rf "$wt/node_modules"; cp -R "$cache/node_modules" "$wt/node_modules"; fi
+clone_method=apfs
+if ! cp -cR "$cache/node_modules" "$wt/node_modules" 2>/dev/null; then clone_method=copy; rm -rf "$wt/node_modules"; cp -R "$cache/node_modules" "$wt/node_modules"; fi
 printf '%s\n' "$lock_hash" > "$wt/node_modules/.mi-lock-hash"
 size_after=$(du -sk "$wt" 2>/dev/null | awk '{print $1}')
 elapsed=$(( $(node -p 'Date.now()') - start ))
-printf 'worktree=%s lock=%s cache=%s disk_before_kb=%s disk_after_kb=%s setup_ms=%s\n' "$wt" "$lock_hash" "$cache" "$size_before" "$size_after" "$elapsed"
+printf 'worktree=%s lock=%s cache=%s disk_before_kb=%s disk_after_kb=%s setup_ms=%s clone_method=%s\n' "$wt" "$lock_hash" "$cache" "$size_before" "$size_after" "$elapsed" "$clone_method"

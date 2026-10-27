@@ -128,14 +128,14 @@ async function browserFor(backend: Backend, options: { args?: string[]; channel?
     ? ['--use-angle=metal', '--enable-gpu', '--enable-unsafe-webgpu', '--ignore-gpu-blocklist']
     : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
   const server = await chromium.launchServer({ headless: true, args: [...args, ...extra, ...flags], ...(channel ? { channel } : {}) });
-  browsers.set(backend, { server, signature });
+  browsers.set(backend, { server, signature }); lastUse = Date.now();
   server.on('close', () => { if (browsers.get(backend)?.server === server) browsers.delete(backend); });
   event('browser-start', { backend, pid: server.process().pid, channel: channel ?? 'headless-shell' });
   return server;
 }
 function proxy(client: WebSocket, upstream: WebSocket, backend: Backend, token?: string, job?: string) {
   const c: Connection = { client, upstream, backend, token, parents: new Map(), types: new Map(), pending: new Map(), leases: new Set(), closed: false, job };
-  connections.add(c);
+  connections.add(c); lastUse = Date.now();
   upstream.on('message', (raw: RawData) => {
     const text = raw.toString();
     let m: Wire; try { m = JSON.parse(text) as Wire; } catch { client.close(1003, 'Invalid protocol JSON'); return; }
@@ -206,10 +206,12 @@ const http = createServer((req, res) => { void (async () => {
     const e = exclusives[i]; e.last = Date.now();
     if (exclusivePath[2] === '/external' && req.method === 'POST') {
       if (!e.granted || leases.size) return json(409, { error: 'Exclusive reservation has not drained yet' });
+      const externalAt = Date.now();
       e.external = true;
       await closeBrowsers('external-exclusive', true);
       if (!releaseSlots) releaseSlots = await reserveLegacySlots();
       if (!exclusives.includes(e)) { const release = releaseSlots; releaseSlots = undefined; await release(); return json(409, { error: 'Reservation expired' }); }
+      recordWait(e.job, 'browser-external', Date.now() - externalAt);
       return json(200, { prepared: true });
     }
     if (exclusivePath[2] === '/release' && req.method === 'POST') {
@@ -266,7 +268,7 @@ const timer = setInterval(() => {
   pump();
   for (const lease of leases.values()) if (Date.now() - lease.acquiredAt >= 600_000) closeLease(lease, '10-minute browser reservation cap reached; split the batch');
   for (const lease of leases.values()) if (!lease.closing && lease.calls === 0 && Date.now() - lease.last >= idleMs) closeLease(lease, 'Idle browser lease released');
-  if (!leases.size && !waiters.length && !exclusives.length && browsers.size && Date.now() - lastUse >= browserIdleMs) {
+  if (!leases.size && !waiters.length && !starting.size && !exclusives.length && browsers.size && Date.now() - lastUse >= browserIdleMs) {
     lastUse = Date.now(); launchChain = launchChain.then(() => closeBrowsers('idle')).catch(error => event('idle-error', { error: String(error) }));
   }
   if (sampling || Date.now() - previousAt < 10_000) return;

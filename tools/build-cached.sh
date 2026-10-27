@@ -34,10 +34,14 @@ if [ "${MI_CACHE_LOCK_HELD:-}" != "$lock" ]; then
 fi
 if [ -d "$cache" ]; then
   rm -rf "$root/dist"
-  if ! cp -cR "$cache" "$root/dist" 2>/dev/null; then rm -rf "$root/dist"; cp -R "$cache" "$root/dist"; fi
-  echo "Reused production dist for tree $tree"
+  clone_method=apfs
+  if ! cp -cR "$cache" "$root/dist" 2>/dev/null; then clone_method=copy; rm -rf "$root/dist"; cp -R "$cache" "$root/dist"; fi
+  echo "Reused production dist for tree $tree ($clone_method clone)"
 else
   NODE_ENV=production "$root/node_modules/.bin/vite" build --configLoader runner "$@"
   if ! cp -cR "$root/dist" "$cache" 2>/dev/null; then rm -rf "$cache"; cp -R "$root/dist" "$cache"; fi
   echo "Cached production dist for tree $tree"
 fi
+
+touch "$cache"
+python3 "$root/tools/qa/prune-build-cache.py" "$store" "$key"
