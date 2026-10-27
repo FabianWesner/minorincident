@@ -595,6 +595,7 @@ Retained report text and selected linked proof follow the [evidence retention po
 - [survivors-ai/report.md](survivors-ai/report.md)
 - [survivors-ai/visual-review.md](survivors-ai/visual-review.md)
 - [telegraph-vfx/report.md](telegraph-vfx/report.md)
+- [test-rewrite/README.md](test-rewrite/README.md)
 - [tex-infected/README.md](tex-infected/README.md)
 - [tex-zebra/README.md](tex-zebra/README.md)
 - [texts-credits/README.md](texts-credits/README.md)
