@@ -44,6 +44,7 @@ A living record, updated after every lane or experiment. Short entries with evid
   - L8 load 24 s → 4 s: the cold menu entry used the handover pacing, and the crowd prep did excess work;
   - L6 reload memory 10.6–12 % → 4–6 %: two leaked references;
   - L10 cold-shader freezes 3.7–4.5 s → < 45 ms: light-variant prewarm.
+- **Didn't work (10-27, Q-208):** switching a presentation effect by swapping `material.depthNode` (or any node) plus `needsUpdate` at runtime. Every flip rebuilds every program of that object; widening the trigger (courier foreground from large corpses to every corpse) turned it into 0.6–1.8 s freezes on the player. Install the node once before warm-up and switch it with a uniform (`render/characters/courierDepth.ts`). three copies `depthNode` into the shadow-pass material too: branch on `builder.material.isShadowPassMaterial`. Find these fast with `?loadProfile=2` (`perf().nodeBuildMaterials` keys material:object:m/c/o ids; a key whose count grows after warm-up is a runtime rebuild); the smoke guard does exactly that on L1.
 - **Didn't work without a time box:** sub-millisecond p95 chasing. One lane spent hours on 0.2–0.4 ms. Set an acceptance margin up front.
 
 ## Orchestration
