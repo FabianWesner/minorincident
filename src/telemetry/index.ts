@@ -9,9 +9,9 @@ import { browserTransport } from './transport';
  */
 export function telemetryMode(params: URLSearchParams, host: string, webdriver: boolean): TelemetryMode | null {
   // Explicit overrides for verification: `record` keeps the log in memory only, `live` sends even from localhost/automation.
-  const forced = params.get('telemetry');
+  const forced = __QA_HOOKS__ ? params.get('telemetry') : null;
   if (forced === 'record' || forced === 'live') return forced;
-  if (['test', 'testApi', 'scenelab', 'inspect', 'motionlab', 'perf', 'lookdev'].some(key => params.has(key))) return null;
+  if (__QA_HOOKS__ && ['test', 'testApi', 'scenelab', 'inspect', 'motionlab', 'perf', 'lookdev'].some(key => params.has(key))) return null;
   if (webdriver) return null;
   if (host === 'localhost' || host === '[::1]' || host.startsWith('127.') || host === '0.0.0.0' || host.endsWith('.local')) return null;
   return 'live';

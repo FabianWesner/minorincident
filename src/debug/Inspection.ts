@@ -62,7 +62,7 @@ export class Inspection {
   }
   private button(label: string, action: () => void): void { const button = document.createElement('button'); button.textContent = label; button.onclick = action; this.panel.append(button); }
   enable(on = true, options?: { courier?: CourierMode }): void {
-    if (on && !(import.meta.env.DEV || this.game.params.get('debug') === 'true')) throw new Error('Inspection requires debug=true in production');
+    if (on && !(__QA_HOOKS__ && (import.meta.env.DEV || this.game.params.get('debug') === 'true'))) throw new Error('Inspection requires QA hooks');
     if (on && !this.enabled) { this.target.copy(this.game.view.view.cameraTarget); this.radius = this.game.view.camera.position.distanceTo(this.target); }
     this.enabled = on; this.keys.clear(); this.game.input.release();
     if (!this.game.driver || on && options?.courier === 'ghost') this.game.world.clearInput();
@@ -140,7 +140,7 @@ export class Inspection {
   private pan(x: number, z: number): void { this.target.x += Math.cos(this.yaw) * x + Math.sin(this.yaw) * z; this.target.z += -Math.sin(this.yaw) * x + Math.cos(this.yaw) * z; }
   private readonly key = (event: KeyboardEvent): void => {
     if ((event.target as HTMLElement)?.closest('input,select,textarea,button,[contenteditable]')) return;
-    if (event.type === 'keydown' && !event.repeat && ['KeyF', 'Backquote'].includes(event.code) && this.game.params.get('debug') === 'true') { event.preventDefault(); event.stopImmediatePropagation(); this.enable(!this.enabled, { courier: this.game.params.get('bot') === 'complete' ? 'bot' : 'ghost' }); return; }
+    if (__QA_HOOKS__ && event.type === 'keydown' && !event.repeat && ['KeyF', 'Backquote'].includes(event.code) && this.game.params.get('debug') === 'true') { event.preventDefault(); event.stopImmediatePropagation(); this.enable(!this.enabled, { courier: this.game.params.get('bot') === 'complete' ? 'bot' : 'ghost' }); return; }
     if (!this.enabled) return;
     if (event.type === 'keydown' && event.code === 'KeyH' && !event.repeat) { this.shown = !this.shown; this.panel.hidden = !this.shown; }
     if (/^(Key[WASDQEH]|Arrow|Shift)/.test(event.code)) { event.preventDefault(); event.stopImmediatePropagation(); if (event.type === 'keydown') this.keys.add(event.code); else this.keys.delete(event.code); }

@@ -18,7 +18,7 @@ import { isMusicThreat } from './MusicThreat';
 import { l1v2 } from '../data/l1v2';
 import { l5 } from '../data/l5';
 import { humanInfected } from '../data/infected';
-import { L1ArcDirector, type ArcFrame } from './L1Arc';
+import { L1ArcDirector } from './L1Arc';
 import { BaseAlarm } from './BaseAlarm';
 import { BusRadio } from './BusRadio';
 import { l4 } from '../data/l4';
@@ -97,7 +97,6 @@ export class AudioService implements Lifecycle {
     private readonly pointPool: HordePoint[] = [];
     private ambience = new AmbienceSchedule(0, 1);
     arc: L1ArcDirector | null = null;
-    private arcFrame: ArcFrame | null = null;
     private generation = 0;
     private ambienceDuckUntil = 0;
     private readonly corgiWarnAt = new Map<string, number>();
@@ -117,11 +116,8 @@ export class AudioService implements Lifecycle {
     private quietMusicUntil = 0;
     private attackMusicUntil = 0;
     private lastPeakStinger = -Infinity;
-    private lastDamageTick = -1000;
-    private lastDamage = 0;
     private scheduledTransition: MusicTransition | null = null;
     private externalIntensity: MusicIntensity | null = null;
-    private vehicleSpeed = 0;
     private incident = false;
     /** E23: ambience until the first survivor is found, then the existing calm recording. */
     private l5Music = false;
@@ -194,7 +190,6 @@ export class AudioService implements Lifecycle {
         this.music = new MusicDirector(this.level, this.musicEpoch);
         this.ambience = new AmbienceSchedule(this.tier, this.world.seed, this.musicEpoch);
         this.arc = this.level === 'L1' ? new L1ArcDirector(this.world.seed, this.musicEpoch) : null;
-        this.arcFrame = null;
         this.corgiWarnAt.clear();
         for (const type of Object.keys(eventCues) as GameEvent['type'][])
             this.unsubscribers.push(this.world.events.on(type, e => this.event(e), 10));
@@ -228,21 +223,24 @@ export class AudioService implements Lifecycle {
         document.head.append(this.captionStyle);
         this.ringElement.dataset.noiseRings = '';
         this.ringElement.style.cssText = 'position:fixed;inset:0;pointer-events:none;overflow:hidden';
-        this.controls.hidden = !new URLSearchParams(location.search).has('debug');
-        this.controls.dataset.audioControls = '';
-        this.controls.style.cssText = 'position:fixed;top:96px;left:12px;background:#182333;color:white;padding:8px;font:14px sans-serif;max-width:250px';
-        const summary = document.createElement('summary');
-        summary.textContent = 'Sound';
-        this.controls.append(summary);
-        for (const [key, label] of [['muted', 'Mute'], ['captions', 'Sound captions'], ['noiseRings', 'Noise rings'], ['mono', 'Mono audio'], ['haptics', 'Haptics'], ['tinnitus', 'Tinnitus effect']] as const) {
-            const row = document.createElement('label'), input = document.createElement('input');
-            row.style.display = 'block';
-            input.type = 'checkbox';
-            input.name = key;
-            input.checked = this.settings[key];
-            input.addEventListener('change', () => this.set({ [key]: input.checked }));
-            row.append(input, label);
-            this.controls.append(row);
+        if (__QA_HOOKS__) {
+            this.controls.hidden = !new URLSearchParams(location.search).has('debug');
+            this.controls.dataset.audioControls = '';
+            this.controls.style.cssText = 'position:fixed;top:96px;left:12px;background:#182333;color:white;padding:8px;font:14px sans-serif;max-width:250px';
+            const summary = document.createElement('summary');
+            summary.textContent = 'Sound';
+            this.controls.append(summary);
+            for (const [key, label] of [['muted', 'Mute'], ['captions', 'Sound captions'], ['noiseRings', 'Noise rings'], ['mono', 'Mono audio'], ['haptics', 'Haptics'], ['tinnitus', 'Tinnitus effect']] as const) {
+                const row = document.createElement('label'), input = document.createElement('input');
+                row.style.display = 'block';
+                input.type = 'checkbox';
+                input.name = key;
+                input.checked = this.settings[key];
+                input.addEventListener('change', () => this.set({ [key]: input.checked }));
+                row.append(input, label);
+                this.controls.append(row);
+            }
+            document.body.append(this.controls);
         }
         this.pauseElement.dataset.audioPause = '';
         this.pauseElement.hidden = true;
@@ -258,7 +256,7 @@ export class AudioService implements Lifecycle {
             }
         });
         this.pauseElement.append(text, button);
-        document.body.append(this.ringElement, this.captionElement, this.controls, this.pauseElement);
+        document.body.append(this.ringElement, this.captionElement, this.pauseElement);
     }
     set(patch: Partial<AudioSettings>, persist = true): void {
         const accepted:Partial<AudioSettings>={};
@@ -726,14 +724,12 @@ export class AudioService implements Lifecycle {
         }
         if (event.type === 'vehicle.sound') {
             if (event.phase === 'stop') {
-                this.vehicleSpeed = 0;
                 for (const suffix of ['low', 'high', 'sputter', 'fire', 'tires'])
                     this.stopLoop(`vehicle:${source}:${suffix}`);
                 this.stopLoop(`siren:${source}`);
                 return;
             }
             if (event.phase === 'engine') {
-                this.vehicleSpeed = event.speed;
                 const rpm = Math.max(0, Math.min(1, event.rpm / 7000));
                 // The player's own cab: a muffled, quieter engine and road noise (also see the in-bus radio).
                 const cab = event.inCar ? { lowpass: 700, gain: 0.55 } : { gain: 1, lowpass: 20000 };
@@ -825,8 +821,6 @@ export class AudioService implements Lifecycle {
             return;
         }
         if (event.type === 'player.damaged') {
-            this.lastDamageTick = event.tick;
-            this.lastDamage = event.amount;
             const p = this.world.entities.get(event.id);
             this.play(`bark.${p?.survivor?.variant ?? 'female'}.hurt`);
             if (event.amount >= 20)
@@ -1059,7 +1053,7 @@ export class AudioService implements Lifecycle {
     /** L1 v2 sound arc: calm beds fade (-12 dB in 3 s) after the blast, chaos layer follows the infected count. */
     private updateArc(listener: SoundPosition, t: number): void {
         const arc = this.arc!, zone = zoneAt(this.graph.map, listener);
-        const frame = this.arcFrame = arc.update(t, this.points.length, zone.startsWith('interior') && arc.phase === 'chaos');
+        const frame = arc.update(t, this.points.length, zone.startsWith('interior') && arc.phase === 'chaos');
         if (arc.phase !== 'calm') this.incident = true;
         const bedScale = frame.calmGain;
         this.loop('arc:chatter', 'l1.calm.chatter', { gain: bedScale });
@@ -1109,7 +1103,6 @@ export class AudioService implements Lifecycle {
         this.loaded = false;
         this.scheduledTransition = null;
         this.externalIntensity = null;
-        this.vehicleSpeed = 0;
         this.incident = false;
         this.complete = false;
         this.quietMusicUntil = 0;

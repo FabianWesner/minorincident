@@ -46,7 +46,7 @@ export class HealthBars extends Group {
   private readonly definitions = new Map(infectedDefinitions.map(def => [def.id, { ...def }]));
   private readonly probes: { id: number; fraction: number; x: number; y: number; width: number; height: number; gap: number; anchor: number[] }[] = [];
   private readonly hurt: number[] = [];
-  private readonly probing = typeof location !== 'undefined' && new URLSearchParams(location.search).has('test');
+  private readonly probing = __QA_HOOKS__ && typeof location !== 'undefined' && new URLSearchParams(location.search).has('test');
   constructor(private readonly world: SimWorld) {
     super(); this.name = 'infected-health-bars'; this.unoccluded.needsUpdate = true;
     this.meshes = [healthBarColors.outline, healthBarColors.background, healthBarColors.fill].map((color, i) => {
@@ -64,7 +64,7 @@ export class HealthBars extends Group {
   update(camera: PerspectiveCamera, width: number, height: number, occluded?: (target: Vector3) => boolean, cityNight = false): void {
     this.outlineGain.value = cityNight ? nightHealthBarGains.outline : 1;
     this.fillGain.value = cityNight ? nightHealthBarGains.fill : 1;
-    this.probes.length = 0;
+    if (__QA_HOOKS__) this.probes.length = 0;
     for (const layer of this.meshes) layer.count = 0;
     const player = this.world.entities.get(1); if (!player) return;
     // Follower bars: every follower in a small group, else the most hurt few (no per-frame allocation: the fraction list is reused).
@@ -115,7 +115,7 @@ export class HealthBars extends Group {
         this.barMatrix.compose(this.point, camera.quaternion, this.barScale.set(w * unit, h * unit, 1));
         this.meshes[i].setMatrixAt(index, this.barMatrix); this.meshes[i].count++;
       }
-      if (this.probing) this.probes.push({ id: e.id, fraction, x, y, width: size.width, height: size.height, gap: 2, anchor: this.center.toArray() });
+      if (__QA_HOOKS__ && this.probing) this.probes.push({ id: e.id, fraction, x, y, width: size.width, height: size.height, gap: 2, anchor: this.center.toArray() });
     }
     for (const layer of this.meshes) {
       layer.visible = layer.count > 0;

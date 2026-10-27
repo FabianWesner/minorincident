@@ -41,11 +41,12 @@ console.error(`replay ${bundle.id}: level ${meta.level}, seed ${meta.seed}, ${lo
 // --- server and browser ---
 const port = Number(process.env.REPLAY_PORT ?? 3342);
 if (port === 3300) throw new Error('Replay must not use the shared dev-server port 3300');
-/** REPLAY_ORIGIN: replay against a deployed build (e.g. a PROD snapshot) instead of a private server. */
+/** REPLAY_ORIGIN: replay against a deployed build (e.g. a QA build of the recorded commit) instead of a private server. */
 const origin = process.env.REPLAY_ORIGIN ?? `http://127.0.0.1:${port}`;
 let server: ChildProcess | null = null;
 const up = async () => { try { return (await fetch(origin)).ok; } catch { return false; } };
 if (!(await up())) {
+  // Preview replay requires `npm run build:qa`; the default DEV server enables hooks directly.
   const preview = process.env.REPLAY_SERVER === 'preview';
   server = spawn(process.execPath, [resolve('node_modules/vite/bin/vite.js'), ...(preview ? ['preview'] : []), '--host', '127.0.0.1', '--port', String(port), '--strictPort', '--configLoader', 'runner'], { stdio: 'ignore' });
   for (let i = 0; i < 120 && !(await up()); i++) await new Promise(r => setTimeout(r, 500));

@@ -98,7 +98,7 @@ test('catalog routing honors the last backend and copies the requested result di
 
 test('browser scripts default to local admission and expose remote runs only by opt-in', () => {
   const { scripts } = JSON.parse(readFileSync('package.json', 'utf8'));
-  expect(scripts['test:e2e']).toBe('node tools/test-lane.mjs e2e sh tools/e2e-lock.sh playwright test --project=chromium');
+  expect(scripts['test:e2e']).toBe('npm run build:qa && node tools/test-lane.mjs e2e sh tools/e2e-lock.sh playwright test --project=chromium');
   expect(scripts['scene:catalog']).toBe('sh tools/e2e-lock.sh tsx tools/scenelab/catalog.ts');
   expect(scripts['scene:matrix']).toContain('E2E_UNITS=2 sh tools/e2e-lock.sh');
   expect(scripts['scene:matrix']).toContain('--backend webgpu');

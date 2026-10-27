@@ -155,7 +155,7 @@ export class Renderer extends WebGPURenderer {
     const nodes = (this as unknown as { _nodes: { getForRender(object: unknown): unknown; getForRenderAsync(object: unknown): Promise<unknown> } })._nodes;
     const asynchronous = nodes.getForRenderAsync;
     nodes.getForRenderAsync = object => this.foregroundCompile ? Promise.resolve(nodes.getForRender(object)) : asynchronous.call(nodes, object);
-    if (!this.profile) return this;
+    if (!__QA_HOOKS__ || !this.profile) return this;
     const backend = this.backend as unknown as { draw(object: { object: Object3D; camera: Camera }, info: Renderer['info']): void };
     const draw = backend.draw.bind(backend);
     backend.draw = (renderObject, info) => {
@@ -184,11 +184,11 @@ export class Renderer extends WebGPURenderer {
     return this;
   }
   private profileCamera: Camera | null = null;
-  beginProfile(camera: Camera): void { if (this.profile) { this.profile = {}; this.profileAssets = {}; this.profileCamera = camera; } }
+  beginProfile(camera: Camera): void { if (__QA_HOOKS__ && this.profile) { this.profile = {}; this.profileAssets = {}; this.profileCamera = camera; } }
   constructor(params: URLSearchParams, canvas?: HTMLCanvasElement) {
-    super({ antialias: true, forceWebGL: params.get('renderer') === 'webgl', ...(canvas ? { canvas } : {}) });
-    if (params.get('test') === '1' && params.has('tone')) this.toneMapping = params.get('tone') === 'agx' ? AgXToneMapping : ACESFilmicToneMapping;
-    if (params.has('profile')) { this.profile = {}; this.profileAssets = {}; }
+    super({ antialias: true, forceWebGL: __QA_HOOKS__ && params.get('renderer') === 'webgl', ...(canvas ? { canvas } : {}) });
+    if (__QA_HOOKS__ && params.get('test') === '1' && params.has('tone')) this.toneMapping = params.get('tone') === 'agx' ? AgXToneMapping : ACESFilmicToneMapping;
+    if (__QA_HOOKS__ && params.has('profile')) { this.profile = {}; this.profileAssets = {}; }
     // Game owns recovery and pauses before another draw can reach the lost backend.
     // WebGPU has no 'contextlost' DOM event: three only sets _isDeviceLost and skips every later render, so the
     // view froze while the sim, HUD and radar kept running (Q-197, L4 on PROD). Forward the loss to the canvas
@@ -214,7 +214,7 @@ export class Renderer extends WebGPURenderer {
     // Its module cache then keys bindings by the persistent renderer and pins old levels.
     this.debug.onNodeBuilderCreated = (builder, object) => {
       this.nodeBuilds++;
-      if (params.has('loadProfile')) {
+      if (__QA_HOOKS__ && params.has('loadProfile')) {
         const draw = object as { material: { name: string; type: string; id: number }; object: { name: string; type: string; id: number; parent?: { name: string }; userData: Record<string, unknown> } };
         // loadProfile=2 separates the builds of one material by material instance, render context and object, which
         // tells per-object (InstancedMesh uuid) and per-context rebuilds from genuinely different graphs.

@@ -142,7 +142,7 @@ export class InfectedSystem {
     // Active director pressure already owns this actor's attack move and target.
     if (b.l1 && !(b.l1.focusId && this.world.tick < (b.l1.focusUntil ?? 0))) this.rush(target.id, source.transform, b.provoked.until);
   }
-  private provoker(e: EntitySnapshot, b: InfectedState): EntitySnapshot | undefined {
+  private provoker(b: InfectedState): EntitySnapshot | undefined {
     const p = b.provoked; if (!p) return undefined;
     const source = this.world.entities.get(p.id);
     if (this.world.tick >= p.until || !source || source.health.current <= 0 || source.hidden) { delete b.provoked; return undefined; }
@@ -299,7 +299,7 @@ export class InfectedSystem {
         if (!Status.stunned(e, this.world.tick) && Math.hypot(e.transform.x - b.scripted.x, e.transform.z - b.scripted.z) > .6) this.seek(e, b.scripted, breachSpeed);
         e.combat!.attacking = false; this.world.spatial.set(e.id, e.transform.x, e.transform.z); continue;
       }
-      const provoker = this.provoker(e, b);
+      const provoker = this.provoker(b);
       if (provoker && !b.l1 && !b.pursuit && !b.specialAttack && !e.emerging && !Status.stunned(e, this.world.tick)) {
         b.heardTargetId = provoker.id; delete b.investigate;
         if (b.state === 'idle' || b.state === 'wander' || b.state === 'alerted' || b.state === 'attracted') { b.state = 'chase'; e.combat!.attacking = false; b.grabUntil = 0; }
@@ -833,7 +833,7 @@ export class InfectedSystem {
     if (brain.mode === 'chase') this.chaseL1(e, b, brain);
     else if (brain.mode === 'attracted') this.attractedL1(e, b, brain);
     else if (brain.mode === 'search') this.searchL1(e, b, brain);
-    else this.wanderL1(e, b, brain);
+    else this.wanderL1(e, brain);
     this.world.spatial.set(e.id, e.transform.x, e.transform.z);
   }
   /** PO 10-15 #4b: while the courier is at the garage (bat pickup) only the nearest `maxPursuers` infected may pursue her.
@@ -1099,7 +1099,7 @@ export class InfectedSystem {
     brain.goalX = this.infectedNav.x(cell); brain.goalZ = this.infectedNav.z(cell); brain.hasGoal = true;
     return true;
   }
-  private wanderL1(e: EntitySnapshot, b: InfectedState, brain: L1Brain): void {
+  private wanderL1(e: EntitySnapshot, brain: L1Brain): void {
     const tick = this.world.tick, rng = this.l1Rng!;
     if (tick < brain.pauseUntil) { this.look(e, brain); return; }
     brain.looking = false;

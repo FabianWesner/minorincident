@@ -93,4 +93,3 @@ export const l1v2 = {
   checkpoints: ["accident", "bat"] as const,
   perf: { civiliansAtMorning: 60, hordeInfected: 30 },
 } as const;
-export type L1v2Tuning = typeof l1v2;

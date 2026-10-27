@@ -1,7 +1,10 @@
 #!/bin/bash
 # Run through tools/remote/run.sh; hold the other runner slot for Vitest's initial timing project.
 # Example: sh tools/remote/run.sh "$PWD" -- bash tools/remote/timing-isolated.sh npx vitest run tests/unit tests/levels tests/sim --maxWorkers=4
+# --all keeps both slots for the full command, including CPU-heavy invariant suites.
 set -euo pipefail
+hold_all=false
+if [ "${1:-}" = --all ]; then hold_all=true; shift; fi
 own=$(readlink /proc/self/fd/9)
 case "$own" in
   /srv/mi/locks/slot.0) release=11 ;;
@@ -16,12 +19,13 @@ exec 11>/srv/mi/locks/slot.1
 echo '[runner] waiting for both slots to isolate wall-clock timing'
 flock 10
 flock 11
-echo '[runner] both slots held for the timing project'
+if $hold_all; then echo '[runner] both slots held for the complete command'
+else echo '[runner] both slots held for the timing project'; fi
 "$@" 2>&1 | {
   released=false
   while IFS= read -r line || [ -n "$line" ]; do
     printf '%s\n' "$line"
-    if ! $released && [[ "$line" == *' functional '* ]]; then
+    if ! $hold_all && ! $released && [[ "$line" == *' functional '* ]]; then
       flock -u "$release"
       released=true
       echo '[runner] functional phase reached; extra slot released'

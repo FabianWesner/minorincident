@@ -30,9 +30,9 @@ const aftermathVisualPattern = target === 'E24' ? l6VisualPattern : l5VisualPatt
 const l7VisualPattern = 'S-01|S-02|T-E13-05|T-E07-crowd-drawn|20 infected corpses remain drawn|T-E22-boot';
 const l7GpuSelectionPattern = `^(?=.*(?:${selection.pattern}))(?=.*(?:${l7VisualPattern}))`;
 const buildCommand = process.env.MI_VERIFY_REMOTE_SIM === '1'
-  ? ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', 'dist', '--', 'npm', 'run', 'build']
+  ? ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', 'dist', '--', 'npm', 'run', 'build:qa']
   : target === 'E07' || ['E31', 'E32', 'E30', 'E18', 'E23', 'E25', 'E26', 'E27', 'E28'].includes(target)
-    ? ['sh', 'tools/e2e-lock.sh', 'npm', 'run', 'build'] : ['npm', 'run', 'build'];
+    ? ['sh', 'tools/e2e-lock.sh', 'npm', 'run', 'build:qa'] : ['npm', 'run', 'build:qa'];
 const simBeforeBuild = ['E22', 'E23', 'E24'].includes(target);
 const commands: string[][] = [
   ...(process.env.MI_VERIFY_REMOTE_SIM === '1'
@@ -58,7 +58,7 @@ const commands: string[][] = [
   // Keep E07 visual/counter probes on the Mac; offload its remaining browser checks.
   ...(target === 'E07' && process.env.MI_VERIFY_REMOTE_BROWSER === '1'
     ? [
-      ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', 'test-results/playwright/results.json', '--env', `E2E_PORT=${process.env.E2E_PORT ?? 3400 + process.pid % 1000}`, '--', 'sh', '-c', 'npm run build && npx playwright test --grep "$1" --grep-invert "$2" --workers=1', 'sh', selection.pattern, infectedGpuPattern],
+      ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', 'test-results/playwright/results.json', '--env', `E2E_PORT=${process.env.E2E_PORT ?? 3400 + process.pid % 1000}`, '--', 'sh', '-c', 'npm run build:qa && npx playwright test --grep "$1" --grep-invert "$2" --workers=1', 'sh', selection.pattern, infectedGpuPattern],
       ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', gpuSelectionPattern, '--grep-invert', '@perf', '--workers=1'],
       ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', '--grep', `^(?=.*(?:${selection.pattern}|T-E07-physical-budget))(?=.*@perf)`, '--project=chromium', '--workers=1'],
     ]
@@ -82,7 +82,7 @@ const commands: string[][] = [
     : target === 'E18'
       ? [
         ...(process.env.MI_VERIFY_REMOTE_BROWSER === '1' ? [
-          ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/playwright-remote.json`, '--env', `E2E_PORT=${process.env.E2E_PORT ?? 33793}`, '--', 'sh', '-c', `npm run build && npx playwright test --grep '${selection.pattern}' --grep-invert '${e18GpuPattern}|@E18-AC08|@E18-AC09|[Ww]eb[Gg][Pp][Uu]' --project=chromium --workers=1; status=$?; cp test-results/playwright/results.json ${output}/playwright-remote.json; exit $status`],
+          ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/playwright-remote.json`, '--env', `E2E_PORT=${process.env.E2E_PORT ?? 33793}`, '--', 'sh', '-c', `npm run build:qa && npx playwright test --grep '${selection.pattern}' --grep-invert '${e18GpuPattern}|@E18-AC08|@E18-AC09|[Ww]eb[Gg][Pp][Uu]' --project=chromium --workers=1; status=$?; cp test-results/playwright/results.json ${output}/playwright-remote.json; exit $status`],
           ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', '--grep', `^(?=.*(?:${selection.pattern}))(?=.*(?:${e18GpuPattern}))`, '--grep-invert', '@E18-AC08|@E18-AC09|[Ww]eb[Gg][Pp][Uu]|@phone-base', '--workers=1'],
         ] : [['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@E18-AC08|@E18-AC09|[Ww]eb[Gg][Pp][Uu]|@phone-base', '--workers=1']]),
         // Frame budgets and CPU-throttled profiles use native GPU headless Chrome, one worker.
@@ -105,7 +105,7 @@ const commands: string[][] = [
         ? [
           ...(process.env.MI_VERIFY_REMOTE_E2E === '1'
             ? [
-              ['sh', 'tools/remote/run.sh', process.cwd(), '--env', `E2E_PORT=${process.env.E2E_PORT ?? 3388}`, '--env', 'E2E_UNITS=1', '--env', 'E2E_ADMISSION_TIMEOUT_SECONDS=3600', '--pull', `${output}/playwright-remote.json`, '--', 'sh', '-c', `mkdir -p ${output} && npm run build && sh tools/e2e-lock.sh npx playwright test --grep '${selection.pattern}' --grep-invert '@perf|${l4VisualPattern}' --project=chromium --workers=1; status=$?; cp test-results/playwright/results.json ${output}/playwright-remote.json; exit $status`],
+              ['sh', 'tools/remote/run.sh', process.cwd(), '--env', `E2E_PORT=${process.env.E2E_PORT ?? 3388}`, '--env', 'E2E_UNITS=1', '--env', 'E2E_ADMISSION_TIMEOUT_SECONDS=3600', '--pull', `${output}/playwright-remote.json`, '--', 'sh', '-c', `mkdir -p ${output} && npm run build:qa && sh tools/e2e-lock.sh npx playwright test --grep '${selection.pattern}' --grep-invert '@perf|${l4VisualPattern}' --project=chromium --workers=1; status=$?; cp test-results/playwright/results.json ${output}/playwright-remote.json; exit $status`],
               ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', `^(?=.*(?:${selection.pattern}))(?=.*(?:${l4VisualPattern}))`, '--project=chromium', '--workers=1'],
             ]
             : [['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@perf', '--project=chromium', '--workers=1']]),
@@ -116,7 +116,7 @@ const commands: string[][] = [
         ? [
           ...(process.env.MI_VERIFY_REMOTE_E2E === '1'
             ? [
-              ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/playwright-remote.json`, '--env', `E2E_PORT=${process.env.E2E_PORT ?? 3388}`, '--env', 'E2E_UNITS=1', '--env', 'E2E_ADMISSION_TIMEOUT_SECONDS=3600', '--', 'sh', '-c', `mkdir -p ${output} && npm run build && sh tools/e2e-lock.sh npx playwright test --grep '${selection.pattern}' --grep-invert '@perf|${aftermathVisualPattern}' --workers=1; status=$?; cp test-results/playwright/results.json ${output}/playwright-remote.json; exit $status`],
+              ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/playwright-remote.json`, '--env', `E2E_PORT=${process.env.E2E_PORT ?? 3388}`, '--env', 'E2E_UNITS=1', '--env', 'E2E_ADMISSION_TIMEOUT_SECONDS=3600', '--', 'sh', '-c', `mkdir -p ${output} && npm run build:qa && sh tools/e2e-lock.sh npx playwright test --grep '${selection.pattern}' --grep-invert '@perf|${aftermathVisualPattern}' --workers=1; status=$?; cp test-results/playwright/results.json ${output}/playwright-remote.json; exit $status`],
               ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', aftermathVisualPattern, '--workers=1'],
             ]
             : [['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@perf', '--workers=1']]),
@@ -156,7 +156,7 @@ const commands: string[][] = [
           ? [
             ...(process.env.MI_VERIFY_REMOTE_E2E === '1'
               ? [
-                ['sh', 'tools/remote/run.sh', process.cwd(), '--env', `E2E_PORT=${process.env.E2E_PORT ?? 3400 + process.pid % 1000}`, '--pull', 'test-results/playwright/results.json', '--', 'sh', '-c', `npm run build && npx playwright test --grep '${selection.pattern}' --grep-invert '@perf|${l7VisualPattern}' --workers=1`],
+                ['sh', 'tools/remote/run.sh', process.cwd(), '--env', `E2E_PORT=${process.env.E2E_PORT ?? 3400 + process.pid % 1000}`, '--pull', 'test-results/playwright/results.json', '--', 'sh', '-c', `npm run build:qa && npx playwright test --grep '${selection.pattern}' --grep-invert '@perf|${l7VisualPattern}' --workers=1`],
                 ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', l7GpuSelectionPattern, '--workers=1'],
               ]
               : [['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@perf', '--workers=1']]),

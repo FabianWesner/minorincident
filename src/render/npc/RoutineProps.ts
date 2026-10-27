@@ -23,7 +23,7 @@ export class RoutineProps extends Group {
   private readonly point = new Vector3();
   private readonly contactPool: RoutineProps['contacts'] = [];
   private readonly gunPool: (RoutineProps['guns'][number] & { muzzle: Vector3 })[] = [];
-  private readonly probeHands = typeof location !== 'undefined' && new URLSearchParams(location.search).has('test');
+  private readonly probeHands = __QA_HOOKS__ && typeof location !== 'undefined' && new URLSearchParams(location.search).has('test');
   constructor(shading?: Materials) {
     super(); this.name = 'morning-props';
     const part = (geometry: BufferGeometry, color: string, x = 0, y = 0, z = 0) => {
@@ -71,7 +71,7 @@ export class RoutineProps extends Group {
       gun.muzzle.set(muzzle[0], muzzle[1], muzzle[2]).applyMatrix4(this.gripMatrix);
       this.muzzles.set(entity, gun.muzzle); this.guns.push(gun);
     }
-    if (hand && this.probeHands) {
+    if (__QA_HOOKS__ && hand && this.probeHands) {
       const contact = this.contactPool[this.contacts.length] ??= { entity, prop, hand: new Float32Array(hand.length), geometry: this.meshes.get(prop)!.geometry, matrix: new Matrix4() };
       if (contact.hand.length !== hand.length) contact.hand = new Float32Array(hand.length);
       for (let i = 0; i < hand.length; i += 3) this.point.fromArray(hand, i).applyMatrix4(matrix).toArray(contact.hand, i);

@@ -20,9 +20,13 @@ const timingFiles = [
   'tests/sim/weather.test.ts',
   'tests/sim/weapons.test.ts',
   'tests/unit/progression/perf.test.ts',
+  // Full-inventory decoding and L9 navigation rebakes exceed their budgets when sharing CPU.
+  'tests/unit/assets/validate.test.ts',
+  'tests/unit/levels/campaign-nav-preparation.test.ts',
 ];
 
 export default defineConfig({
+  define: { __QA_HOOKS__: 'true' },
   test: {
     environment: 'node',
     pool: 'threads',

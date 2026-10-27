@@ -3,7 +3,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { l5Survivors } from '../../src/data/l5';
 import { SceneSession, stopServer } from '../scenelab/session';
 
-/** Native A/B of identical loaded levels/cameras; run through quiet-run after a production build. */
+/** Native A/B of identical loaded levels/cameras; run through quiet-run after a QA build. */
 const baseline = process.env.INTERIOR_BASELINE === '1';
 const out = process.env.INTERIOR_OUT ?? 'test-results/interior-cull/perf';
 mkdirSync(out, { recursive: true });

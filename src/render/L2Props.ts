@@ -19,7 +19,6 @@ export class L2Props extends Group {
   private readonly m4 = new Matrix4();
   private readonly at = new Vector3();
   private readonly scaleV = new Vector3();
-  private readonly yAxis = new Vector3(0, 1, 0);
   private readonly turn = new Quaternion();
   /** Alarm beacons on the station front (station-local x 1.7, see l2Beacons): housing, red dome with a bright lens, rotating flare fan. */
   private readonly beacons: { root: Group; dome: Mesh; fan: Group }[] = [];
