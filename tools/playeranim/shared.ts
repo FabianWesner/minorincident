@@ -15,16 +15,19 @@ export function encodeWebm(frames: Buffer[], file: string, o: { fps?: number; bi
  * `variant` selects the survivor and frames the review camera on it; without it the follow camera is kept. */
 export async function openL1(skin: string, at: { x: number; z: number }, variant?: 'female' | 'male', loadout?: [string[], string[]]) {
   const { page, close } = await open(); const guard = attachErrorGuard(page);
-  await page.goto(`${origin}/?test=1&renderer=webgl&dpr=1&quality=high&audio=muted&seed=1&skin=${skin}`);
-  await page.waitForFunction(() => !!window.__SS__, null, { timeout: 120_000 });
-  await page.evaluate(async ({ variant, at, loadout, polar, radius }) => {
-    const a = window.__SS__!; await a.ready; await a.loadLevel('L1', { seed: 1 });
-    document.querySelector<HTMLButtonElement>('[data-testid=mission-button]')?.click();
-    a.pause(); a.cheats.god(true); if (variant) a.survivor.select(variant); a.settings.set({ cameraShake: false });
-    a.survivor.present({ carrying: '' }); a.teleport('player', at);
-    if (loadout) a.setLoadout(loadout[0], loadout[1]);
-    if (variant) { const p = a.getState().player!.transform; a.camera.cinematic({ target: [p.x, .7, p.z], position: [p.x + radius * Math.sin(polar) / Math.SQRT2, .7 + radius * Math.cos(polar), p.z + radius * Math.sin(polar) / Math.SQRT2] }); }
-  }, { variant, at, loadout, polar, radius });
+  // The caller only receives `close` after setup succeeded, so setup failures release the session here.
+  try {
+    await page.goto(`${origin}/?test=1&renderer=webgl&dpr=1&quality=high&audio=muted&seed=1&skin=${skin}`);
+    await page.waitForFunction(() => !!window.__SS__, null, { timeout: 120_000 });
+    await page.evaluate(async ({ variant, at, loadout, polar, radius }) => {
+      const a = window.__SS__!; await a.ready; await a.loadLevel('L1', { seed: 1 });
+      document.querySelector<HTMLButtonElement>('[data-testid=mission-button]')?.click();
+      a.pause(); a.cheats.god(true); if (variant) a.survivor.select(variant); a.settings.set({ cameraShake: false });
+      a.survivor.present({ carrying: '' }); a.teleport('player', at);
+      if (loadout) a.setLoadout(loadout[0], loadout[1]);
+      if (variant) { const p = a.getState().player!.transform; a.camera.cinematic({ target: [p.x, .7, p.z], position: [p.x + radius * Math.sin(polar) / Math.SQRT2, .7 + radius * Math.cos(polar), p.z + radius * Math.sin(polar) / Math.SQRT2] }); }
+    }, { variant, at, loadout, polar, radius });
+  } catch (error) { await close().catch(() => undefined); throw error; }
   return { page, guard, close };
 }
 
