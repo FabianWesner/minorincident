@@ -40,7 +40,6 @@ export class LabAccidentFx {
   private sparkAt = 0;
   private focus: Vec2 = { x: 0, z: 0 };
   private fightFade = 1;
-  private broken = false;
   private glowFrom = -1;
   private sparked = false;
   /** Opaque smoke puffs and hard shards/debris; add to the scene. `facing` = camera quaternion for billboards. */
@@ -81,7 +80,6 @@ export class LabAccidentFx {
   }
   private blast(p: Vec2): void {
     this.blastAt = this.time;
-    this.broken = false;
     this.glowFrom = this.time;
     const v = this.anchor('lab-smoke-vent') ?? this.anchor('lab-smoke-window') ?? p;
     this.focus = v;
@@ -158,7 +156,7 @@ export class LabAccidentFx {
       // Orange interior fire glow for ~1.7 s, then the windows stay dark and broken.
       const t = this.time - this.glowFrom;
       if (t >= 0.15 && t < 1.8) this.targets.windowFire?.(this.flashReduction ? 0.6 : 0.9 + 0.35 * Math.sin(t * 28));
-      else if (t >= 1.8) { this.glowFrom = -1; this.broken = true; this.targets.windowGlass?.('shatter', 1); }
+      else if (t >= 1.8) { this.glowFrom = -1; this.targets.windowGlass?.('shatter', 1); }
     }
     if (this.blastAt >= 0) {
       const t = this.time - this.blastAt;
