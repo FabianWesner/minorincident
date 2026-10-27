@@ -18,7 +18,8 @@ export async function poolHealth(): Promise<Health | null> {
   }
 }
 export async function poolEndpoint(): Promise<string | undefined> {
-  if (process.env.E2E_LEGACY === '1' || process.env.BROWSER_POOL === 'off' || process.env.MI_REMOTE === '1') return undefined;
+  if (process.env.E2E_LEGACY === '1' || process.env.MI_REMOTE === '1' || process.env.MI_BROWSER_POOL_EXTERNAL === '1') return undefined;
+  if (process.env.BROWSER_POOL === 'off') throw new Error('Legacy browser launches require E2E_LEGACY=1');
   if (process.env.MI_BROWSER_POOL !== '1') await ensurePool();
   const health = await poolHealth();
   if (!health) throw new Error('Pool disappeared after admission; refusing an unguarded browser launch');

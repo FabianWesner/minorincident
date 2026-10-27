@@ -82,11 +82,11 @@ try {
   const external = await (await fetch(`${process.env.BROWSER_POOL_URL}/exclusive`, { method: 'POST' })).json() as { id: string };
   await fetch(`${process.env.BROWSER_POOL_URL}/exclusive/${external.id}/external`, { method: 'POST' });
   assert.equal((await state()).browsers.length, 0, 'opaque exclusive retires pooled Chrome');
-  process.env.BROWSER_POOL = 'off'; process.env.MI_E2E_LOCK_HELD = '1';
+  process.env.BROWSER_POOL = 'off'; process.env.MI_E2E_LOCK_HELD = '1'; process.env.MI_BROWSER_POOL_EXTERNAL = '1';
   const legacyProfile = await launchProfile(profile, { args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
   assert.equal((await legacyProfile.cookies())[0].value, 'shared-save', 'pool storage resumes on legacy path');
   await legacyProfile.addCookies([{ name: 'campaign', value: 'legacy-save', url: 'http://example.test' }]); await legacyProfile.close();
-  delete process.env.BROWSER_POOL; delete process.env.MI_E2E_LOCK_HELD;
+  delete process.env.BROWSER_POOL; delete process.env.MI_E2E_LOCK_HELD; delete process.env.MI_BROWSER_POOL_EXTERNAL;
   await fetch(`${process.env.BROWSER_POOL_URL}/exclusive/${external.id}/release`, { method: 'POST' });
   const resumedProfile = await launchProfile(profile, {});
   assert.equal((await resumedProfile.cookies())[0].value, 'legacy-save', 'legacy storage resumes in pool'); await resumedProfile.close();
