@@ -487,9 +487,10 @@ export class LevelFourWar {
       }
       if (b.breachApproach && b.scripted) {
         const target = this.low && !b.l4FlankTarget ? player : this.world.entities.get(b.l4FlankTarget ?? b.l1?.focusId ?? 1)?.transform ?? player;
+        const followsHold = this.s.phase === 'war' && this.s.origin[e.id] >= l4Emergence.length && !b.l4FlankTarget && (!b.l1?.focusId || b.l1.focusId === 1);
         // Follow a moving hold position while crossing the plaza. A cached
         // inside waypoint otherwise strands a slow cohort at the previous post.
-        if (b.breachApproach === 'outside' && (inside(e.transform) || dist(e.transform, b.scripted) < 1.4) || b.breachApproach === 'inside' && dist(b.scripted, target) > 10) {
+        if (b.breachApproach === 'outside' && (inside(e.transform) || dist(e.transform, b.scripted) < 1.4) || followsHold && b.breachApproach === 'inside' && dist(b.scripted, target) > 10) {
           // Fan out onto the courier's side of the plaza. A group must finish
           // crossing rather than stop to fight the first guard at the gap.
           const dx = e.transform.x - target.x, dz = e.transform.z - target.z, d = Math.hypot(dx, dz) || 1, lane = (e.id % 5 - 2) * 1.1;
@@ -701,7 +702,10 @@ export class LevelFourWar {
           // them on their alarm target made most of the flood ignore its survivors.
           const targets = soldiers.slice().sort((a, q) => dist(a.transform, e.transform) - dist(q.transform, e.transform));
           const current = soldiers.find(soldier => soldier.id === (b.l4FlankTarget ?? b.heardTargetId));
-          const target = (!current || (assigned.get(current.id) ?? 0) > 12 ? targets.find(soldier => (assigned.get(soldier.id) ?? 0) < 8) : undefined) ?? current ?? targets[0];
+          // A marching cohort fights a defender it actually reaches. Retaining
+          // a remote assignment made native bodies pass a soldier at arm's reach.
+          const contact = targets.find(soldier => dist(e.transform, soldier.transform) <= 3.5 && world.combat!.query.visible(e.transform, soldier.transform));
+          const target = contact ?? (!current || (assigned.get(current.id) ?? 0) > 12 ? targets.find(soldier => (assigned.get(soldier.id) ?? 0) < 8) : undefined) ?? current ?? targets[0];
           if (target !== current) {
             if (current) assigned.set(current.id, (assigned.get(current.id) ?? 0) - 1);
             assigned.set(target.id, (assigned.get(target.id) ?? 0) + 1);

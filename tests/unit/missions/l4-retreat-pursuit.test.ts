@@ -52,10 +52,24 @@ test('a breach crossing follows the courier after she moves to another hold post
   const body = { id: 60, archetype: 'infected.crawler', transform: { x: -28, z: -6 }, health: { current: 100 }, infected: { breachApproach: 'inside', scripted: { x: -26, z: -6 } } } as EntitySnapshot;
   const world = { entities: { get: () => player }, infected: { active: [body], director: { tier: 'high' } } };
   const war = Object.assign(Object.create(LevelFourWar.prototype), {
-    mission: { world, state: { l4: { origin: { 60: 1000 } } } },
+    mission: { world, state: { l4: { phase: 'war', origin: { 60: 1000 } } } },
     breachOpen: (side: string) => side === 'west', snap: (p: unknown) => p,
   }) as { funnel(): void };
   war.funnel();
   expect(body.infected!.breachApproach).toBe('inside');
   expect(Math.hypot(body.infected!.scripted!.x - player.transform.x, body.infected!.scripted!.z - player.transform.z)).toBeLessThan(9);
+});
+
+test('native retreat cohorts fight a visible defender they reach before their remote assignment', () => {
+  const player = { id: 1, transform: { x: 0, z: 0 } } as EntitySnapshot;
+  const soldiers = [11, 12].map((id, i) => ({ id, transform: { x: i ? 31 : 60, z: 0 } } as EntitySnapshot));
+  const body = { id: 60, archetype: 'infected.riot', transform: { x: 30, z: 0 }, health: { current: 100 }, infected: { state: 'chase', heardTargetId: 11, l4FlankTarget: 11, scripted: { x: 60, z: 0 }, grabUntil: 0 } } as EntitySnapshot;
+  const press = vi.fn(), world = { tick: 60, entities: { get: () => player }, combat: { query: { visible: () => true } }, infected: { active: [body], press, director: { tier: 'high' } } };
+  const war = Object.assign(Object.create(LevelFourWar.prototype), {
+    mission: { world, state: { l4: { phase: 'collapse' } } }, liveSoldiers: () => soldiers, snap: (p: unknown) => p,
+  }) as { followBreachHorde(): void };
+  war.followBreachHorde();
+  expect(body.infected!.heardTargetId).toBe(12);
+  expect(body.infected!.scripted).toBeUndefined();
+  expect(press).toHaveBeenCalledWith(60, 12, expect.any(Number));
 });
