@@ -74,7 +74,7 @@ export function civilianMaterial(shading: Materials | undefined, doubleSided: bo
     material.normalNode = options.skinned ? varying(normal, 'civilianSkinNormal') : normal;
     if (options.atlas) {
       const eyeDisc = parts.z.greaterThan(1.5), radius = attribute('uv', 'vec2').sub(.5).mul(2).length();
-      material.maskNode = eyeDisc.not().or(radius.lessThanEqual(1).and(options.skinned ? true : eyeGlow.greaterThan(.01)));
+      material.maskNode = eyeDisc.not().or(options.toyEyes ? radius.lessThanEqual(1) : eyeGlow.greaterThan(.01).and(radius.lessThanEqual(1)));
       material.userData.frozenSurfaceMask = eyeDisc.not();
     }
     if (options.skinned) {
