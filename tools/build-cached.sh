@@ -12,7 +12,8 @@ common=$(git -C "$root" rev-parse --path-format=absolute --git-common-dir)
 repo=$(cd "$(dirname "$common")" && pwd -P)
 store="${MI_WORKTREE_CACHE:-$repo/.mi-worktree-cache}"
 if [ "${MI_BUILD_CACHE:-on}" = off ] || [ -n "$(git -C "$root" status --porcelain --untracked-files=all)" ] || [ -n "$(git -C "$root" ls-files --others --ignored --exclude-standard -- public src)" ]; then
-  exec "$root/node_modules/.bin/vite" build --configLoader runner "$@"
+  "$root/node_modules/.bin/vite" build --configLoader runner "$@"
+  exit $?
 fi
 tree=$(git -C "$root" rev-parse 'HEAD^{tree}')
 lock_hash=$(shasum -a 256 "$root/package-lock.json" | awk '{print $1}')
@@ -38,16 +39,19 @@ lock="$store/locks/dist-$key"
 if [ "${MI_CACHE_LOCK_HELD:-}" != "$lock" ]; then
   exec python3 "$root/tools/qa/cache-lock.py" "$lock" -- sh "$0" "$@"
 fi
-if [ -d "$cache" ]; then
+if [ -d "$cache" ] && [ -f "$cache/.complete" ] && [ -f "$cache/index.html" ]; then
   rm -rf "$root/dist"
   clone_method=apfs
   if ! cp -cR "$cache" "$root/dist" 2>/dev/null; then clone_method=copy; rm -rf "$root/dist"; cp -R "$cache" "$root/dist"; fi
+  rm -f "$root/dist/.complete"
   echo "Reused production dist for tree $tree ($clone_method clone)"
 else
+  rm -rf "$cache"
   "$root/node_modules/.bin/vite" build --configLoader runner "$@"
-  if ! cp -cR "$root/dist" "$cache" 2>/dev/null; then rm -rf "$cache"; cp -R "$root/dist" "$cache"; fi
+  sh "$root/tools/qa/cache-publish.sh" "$root/dist" "$cache"
   echo "Cached production dist for tree $tree"
 fi
+
 
 touch "$cache"
 python3 "$root/tools/qa/prune-build-cache.py" "$store" "$key"

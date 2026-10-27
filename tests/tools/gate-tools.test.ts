@@ -1,7 +1,7 @@
 // Shared gate tools: browser/runner admission is used by every lane and gate. If it breaks, the Mac overloads
 // (WindowServer kills, see docs/process/lessons-learned.md) or remote runs lose their caches.
 import { execFile, execFileSync, spawnSync } from 'node:child_process';
-import { chmodSync, copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, utimesSync, writeFileSync } from 'node:fs';
+import { chmodSync, copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, symlinkSync, utimesSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { promisify } from 'node:util';
@@ -114,7 +114,7 @@ function buildCacheFixture() {
   const root = mkdtempSync(join(tmpdir(), 'mi-build-cache-')); dirs.push(root);
   for (const dir of ['tools/qa', 'node_modules/.bin', 'dist']) mkdirSync(join(root, dir), { recursive: true });
   copyFileSync(process.env.MI_CACHE_WRAPPER ?? 'tools/build-cached.sh', join(root, 'tools/build-cached.sh'));
-  for (const file of ['cache-lock.py', 'prune-build-cache.py']) copyFileSync(`tools/qa/${file}`, join(root, `tools/qa/${file}`));
+  for (const file of ['cache-lock.py', 'prune-build-cache.py', 'cache-publish.sh']) copyFileSync(`tools/qa/${file}`, join(root, `tools/qa/${file}`));
   writeFileSync(join(root, '.gitignore'), 'node_modules/\ndist/\ncache/\ncustom-dist/\nbuilds.log\n');
   writeFileSync(join(root, 'package-lock.json'), '{}');
   writeFileSync(join(root, 'node_modules/.bin/vite'), `#!/bin/sh
@@ -148,6 +148,28 @@ test('build-cache honors custom output arguments on repeated clean invocations',
   expect(readFileSync(join(f.root, 'custom-dist/index.html'), 'utf8')).toBe('fresh');
   expect(readFileSync(join(f.root, 'dist/index.html'), 'utf8')).toBe('stale default');
 });
+
+test('build-cache publication never leaves an interrupted copy looking complete', async () => {
+  const f = buildCacheFixture(); f.run();
+  const entry = readdirSync(join(f.root, 'cache/dist')).find(name => !name.startsWith('.'))!;
+  rmSync(join(f.root, 'cache/dist', entry, '.complete'), { force: true });
+  rmSync(join(f.root, 'cache/dist', entry, 'asset.js'));
+  expect(f.run(), 'preexisting partial cache must rebuild').not.toContain('Reused production dist');
+  expect(existsSync(join(f.root, 'dist/asset.js'))).toBe(true);
+  const root = mkdtempSync(join(tmpdir(), 'mi-cache-publish-')); dirs.push(root);
+  const source = join(root, 'source'), cache = join(root, 'cache'), bin = join(root, 'bin');
+  mkdirSync(source); mkdirSync(bin); writeFileSync(join(source, 'index.html'), 'complete artifact');
+  const legacy = join(root, 'legacy-cache'); mkdirSync(legacy); writeFileSync(join(legacy, 'index.html'), 'half copied');
+  expect(existsSync(legacy)).toBe(true); // old directory-exists cache test treated this incomplete copy as a hit
+  writeFileSync(join(bin, 'cp'), '#!/bin/sh\nmkdir -p "$3"\nprintf partial > "$3/index.html"\nexit 1\n'); chmodSync(join(bin, 'cp'), 0o755);
+  await expect(exec('sh', ['tools/qa/cache-publish.sh', source, cache], { env: { ...process.env, PATH: `${bin}:${process.env.PATH}` } })).rejects.toBeTruthy();
+  expect(existsSync(cache)).toBe(false); // interrupted copy never becomes a cache hit (N15)
+  expect(readdirSync(root).some(name => name.startsWith('.cache.tmp.'))).toBe(false);
+  const result = await exec('sh', ['tools/qa/cache-publish.sh', source, cache]);
+  expect(result.stderr).toBe('');
+  expect(readFileSync(join(cache, 'index.html'), 'utf8')).toBe('complete artifact');
+  expect(existsSync(join(cache, '.complete'))).toBe(true);
+}, 15_000);
 
 test('remote runner cache GC removes inactive caches while keeping the current cache and live jobs', () => {
   const root = mkdtempSync(join(tmpdir(), 'mi-cache-gc-')); dirs.push(root);
