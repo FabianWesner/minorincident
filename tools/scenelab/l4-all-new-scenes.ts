@@ -12,6 +12,7 @@ const tier = process.env.REVIEW_TIER === 'high' ? 'high' : 'low';
 const backend = process.env.REVIEW_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
 const mode = process.env.L4_CAPTURE ?? 'crowd', variant = process.env.REVIEW_VARIANT ?? 'new';
 const base = process.env.REVIEW_BASE ?? '83503eb18';
+const revision = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
 const out = resolve(`test-results/l4-all-new/${mode}-${variant}-${tier}-${backend}`);
 const converted = ['inf.crawler', 'inf.riot-cop', 'inf.firefighter', 'inf.hazmat', 'inf.alpha', 'inf.alpha-worker', 'inf.alpha-hoodie', 'inf.alpha-fire', 'inf.alpha-suit'];
 const civilians = ['npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'npc.civilian-elderly'];
@@ -56,7 +57,8 @@ function resourceSnapshot() {
         decodedBytes += mips.reduce((n, mip) => n + (mip.data?.byteLength ?? 0), 0) || image.data?.byteLength || Math.ceil(image.width * image.height * 4 * (texture.generateMipmaps ? 4 / 3 : 1));
         rgbaUpperBoundBytes += image.data?.byteLength ?? Math.ceil(image.width * image.height * 4 * (texture.generateMipmaps || mips.length > 1 ? 4 / 3 : 1));
       }
-      return { textureCount: textures.size, decodedBytes, rgbaUpperBoundBytes, render: window.__SS__!.getState().render };
+      const render = window.__SS__!.getState().render;
+      return { textureCount: textures.size, decodedBytes, rgbaUpperBoundBytes, render: { crowd: render.crowd ? { batches: render.crowd.batches.map(({ id, instances, lod, source }) => ({ id, instances, lod, source })) } : null } };
 }
 const session = new SceneSession({ backend, tier, viewport: { width: 1600, height: 900 }, query: { crowdProbe: 'full' } });
 const receipts: unknown[] = [];
@@ -117,7 +119,7 @@ try {
         api.pause(); frames.sort((a, b) => a - b);
         return { count: frames.length, p95: frames[Math.ceil(frames.length * .95) - 1], max: frames.at(-1), over200: frames.filter(t => t > 200).length, builds: Object.entries(api.perf().nodeBuildMaterials).filter(([key, count]) => count !== (warm[key] ?? 0)), perf: api.perf() };
       });
-      writeJson(`${out}/cadence.json`, { variant, tier, backend, hostLoad, cadence, timingStatus: 'Shared-host diagnostic; quiet p95/main and PROD five-cold-load comparison pending' });
+      writeJson(`${out}/cadence.json`, { revision, variant, tier, backend, hostLoad, cadence, timingStatus: 'Shared-host diagnostic; quiet p95/main and PROD five-cold-load comparison pending' });
       assert.equal(cadence.over200, 0); assert.deepEqual(cadence.builds, []);
     }
   }
@@ -133,7 +135,7 @@ try {
       const active = new Set(resources.render.crowd?.batches.filter(b => b.instances > 0).map(b => b.id));
       for (const id of converted) assert.ok(active.has(id === 'inf.riot-cop' ? 'infected.riot' : id), `${id}: distinct model batch submitted`);
     }
-    writeJson(`${out}/receipt.json`, { base, variant, tier, backend, result, metrics, resources, errors: session.errors });
+    writeJson(`${out}/receipt.json`, { revision, base, variant, tier, backend, result, metrics, resources, errors: session.errors });
     if (mode === 'perf') {
       const hostLoad = loadavg(), pool = await fetch('http://127.0.0.1:4329/status').then(r => r.json());
       const cadence = await session.page.evaluate(async () => {
@@ -142,7 +144,7 @@ try {
         api.pause(); frames.sort((a, b) => a - b);
         return { count: frames.length, p95: frames[Math.ceil(frames.length * .95) - 1], max: frames.at(-1), over200: frames.filter(t => t > 200).length, builds: Object.entries(api.perf().nodeBuildMaterials).filter(([key, count]) => count !== (warm[key] ?? 0)) };
       });
-      writeJson(`${out}/cadence.json`, { variant, tier, backend, hostLoad, pool, cadence, timingStatus: 'shared-pool diagnostic; final quiet p95 and PROD five-cold-load comparison pending' });
+      writeJson(`${out}/cadence.json`, { revision, variant, tier, backend, hostLoad, pool, cadence, timingStatus: 'shared-pool diagnostic; final quiet p95 and PROD five-cold-load comparison pending' });
       assert.equal(cadence.over200, 0); assert.deepEqual(cadence.builds, []);
     }
     for (const zoom of [1, 1.5]) { await session.page.evaluate(({ zoom, corpses }) => window.__SCENE__!.setCamera({ mode: 'game', target: corpses ? [0, .4, 0] : [-19, .6, 1], zoom }), { zoom, corpses: mode === 'corpses' }); await session.ready(); await session.screenshot(`${out}/zoom-${zoom}.png`); }
@@ -174,4 +176,4 @@ try {
   }
   assert.equal(session.errors.length, 0);
 } finally { await session.close(); stopServer(); }
-console.log(JSON.stringify(receipts));
+console.log(JSON.stringify({ revision, mode, variant, tier, backend, completedFixtures: receipts.length }));
