@@ -5,7 +5,7 @@ import type { SimWorld } from '../../../src/sim/world/SimWorld';
 let world: SimWorld | undefined;
 afterEach(() => { world?.dispose(); world = undefined; });
 
-test('@E20 required axe: 120 s idle stays calm; pickup equips and rings the alarm in the same tick', async () => {
+test('@E20 @nightly required axe: 120 s idle stays calm; pickup equips and rings the alarm in the same tick', async () => {
   const l = await loadL2(1); world = l.world;
   const alarms: number[] = [], pickups: number[] = [];
   world.events.on('l2.alarm', e => alarms.push(e.tick));
@@ -31,7 +31,7 @@ test('@E20 required axe: 120 s idle stays calm; pickup equips and rings the alar
 }, 120_000);
 
 
-test('@E20 after the alarm every playing tick has objective text and destinations have markers, including the doors checkpoint', async () => {
+test('@E20 @nightly after the alarm every playing tick has objective text and destinations have markers, including the doors checkpoint', async () => {
   const l = await loadL2(1); world = l.world;
   let checked = 0, doorsBeforeRadio = 0, restored = false;
   const report = runL2(world, l.mission, 'complete', { maxSeconds: 600, stopWhen: m => {

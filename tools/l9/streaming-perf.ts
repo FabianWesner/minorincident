@@ -1,5 +1,5 @@
 /** S3/S4 full-route real-physics APC probe, including the on-main S6 forced crash.
- * Run SCENE_SERVER=preview under tools/perf/quiet-run.sh after npm run build.
+ * Run SCENE_SERVER=preview under tools/perf/quiet-run.sh after npm run build:qa.
  * All three profiles use headless native Metal, one browser at a time. */
 import { crossing } from '../../src/levels/L9/district';
 import { SceneSession, stopServer, writeJson } from '../scenelab/session';
@@ -11,7 +11,7 @@ import { writeFileSync } from 'node:fs';
 const output = process.env.L9_OUTPUT ?? 'test-results/epics/E31/l9-stream';
 const requestedBackend = process.env.L9_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
 // The quiet gate can queue behind other jobs: build the current sources after admission.
-execFileSync('npm', ['run', 'build'], { stdio: 'inherit' });
+execFileSync('npm', ['run', 'build:qa'], { stdio: 'inherit' });
 const results: unknown[] = [];
 try {
   for (const profile of (['high', 'low', 'phone'] as const).filter(p => !process.env.L9_PROFILE || p === process.env.L9_PROFILE)) {

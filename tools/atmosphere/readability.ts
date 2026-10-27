@@ -1,4 +1,4 @@
-/** Bounded L6/L7 campaign capture batch. Use e2e-lock after a fresh production build. */
+/** Bounded L6/L7 campaign capture batch. Use e2e-lock after a fresh QA build. */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { SceneSession, stopServer, type Backend } from '../scenelab/session';
 import { courierClipping } from '../../tests/visual/courier-clipping';

@@ -39,7 +39,7 @@ export class InputLogEncoder {
   private readonly buffer: Uint8Array; private readonly view: DataView; private pos = 0;
   private readonly cur = new Float64Array(SLOTS); private readonly prev = new Float64Array(SLOTS);
   private fresh = true; private sample = 0; private startSample = 0; private lastRecord = 0;
-  private pendingMeta: Uint8Array | null = null; private chunkHasMeta = false; private headerEnd = 0;
+  private pendingMeta: Uint8Array | null = null; private chunkHasMeta = false;
   /** `chunkBytes` is the raw size at which a chunk is cut; gzip then keeps it far below the 256 KB upload cap. */
   constructor(private readonly onChunk: (bytes: Uint8Array, info: LogChunkInfo) => void, private readonly chunkBytes = 160 * 1024) {
     this.buffer = new Uint8Array(chunkBytes + 1024); this.view = new DataView(this.buffer.buffer);
@@ -56,7 +56,7 @@ export class InputLogEncoder {
     this.chunkHasMeta = this.pendingMeta !== null; this.buffer[4] = this.chunkHasMeta ? 1 : 0;
     this.view.setUint32(5, this.sample, true); this.view.setUint32(9, 0, true); this.pos = HEADER;
     if (this.pendingMeta) { this.view.setUint32(this.pos, this.pendingMeta.length, true); this.pos += 4; this.buffer.set(this.pendingMeta, this.pos); this.pos += this.pendingMeta.length; this.pendingMeta = null; }
-    this.headerEnd = this.pos; this.startSample = this.lastRecord = this.sample; this.fresh = true;
+    this.startSample = this.lastRecord = this.sample; this.fresh = true;
   }
   private varint(value: number): void { while (value >= 0x80) { this.buffer[this.pos++] = value % 0x80 | 0x80; value = Math.floor(value / 0x80); } this.buffer[this.pos++] = value; }
   private optional(value: number): void { this.varint(value !== value ? 0 : 1 + (value >= 0 ? value * 2 : -value * 2 - 1)); }

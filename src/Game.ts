@@ -117,7 +117,7 @@ export class Game {
     const requested = params.get('quality') ?? 'auto';
     if (!['auto', 'high', 'low'].includes(requested)) throw new RangeError('Invalid quality setting');
     this.quality = new Quality(requested as QualitySetting, { userAgent: navigator.userAgent, touchPoints: navigator.maxTouchPoints, coarsePointer: matchMedia('(pointer: coarse)').matches, memoryGB: (navigator as Navigator & { deviceMemory?: number }).deviceMemory });
-    this.clock = new Clock(params.get('test') === '1' ? 20 : 5, SIM_FRAME_BUDGET_MS);
+    this.clock = new Clock(__QA_HOOKS__ && params.get('test') === '1' ? 20 : 5, SIM_FRAME_BUDGET_MS);
     this.view = this.services.add(new GameView(this.world, params, this.quality.tier));
     this.view.onMissionChange = () => {
       // Begin/retry is a UI handoff. Its synchronous work is not elapsed play
@@ -157,7 +157,8 @@ export class Game {
     await this.services.init();
     this.campaignUI = new CampaignUI(this);
     // The title backdrop does not wait for sound banks: they stream while the player reads the menu.
-    await this.loadScenario(this.params.get('test') === '1' ? 'empty' : 'survivor', Number(this.params.get('seed') ?? 1), this.params.get('test') !== '1');
+    const testMode = __QA_HOOKS__ && this.params.get('test') === '1';
+    await this.loadScenario(testMode ? 'empty' : 'survivor', Number(this.params.get('seed') ?? 1), !testMode);
     this.world.player?.select(this.params.get('survivor') === 'male' ? 'male' : 'female', 0);
     this.view.update(1);
     this.ui.init();
@@ -195,13 +196,13 @@ export class Game {
       this.ui.update();
       this.overlay?.update(seconds);
     });
-    if (this.params.has('perf')) this.overlay = new PerfOverlay(this);
+    if (__QA_HOOKS__ && this.params.has('perf')) this.overlay = new PerfOverlay(this);
     this.ticker.init();
     // While the player reads the menus, warm the HTTP cache with the level they will most likely start.
     // While the player reads the menus, load the level they will most likely start (L1 for a new or
     // L1 campaign) behind the title; other levels only warm the HTTP cache.
     const next = `L${saved.status === 'ok' ? saved.save.unlockedLevel : 1}`;
-    if (this.params.get('test') !== '1') void this.audioLoad.then(() => this.preloadForeground ? undefined : next === 'L1' && this.params.get('preload') !== '0' ? (this.speculativeRunning = true, this.loadLevel('L1', { seed: Number(this.params.get('seed') ?? 1) }, undefined, true).catch(error => console.warn('Speculative L1 load failed', error)).finally(() => { this.speculativeRunning = false; })) : prefetchLevel(next, 4, this.quality.tier));
+    if (!(__QA_HOOKS__ && this.params.get('test') === '1')) void this.audioLoad.then(() => this.preloadForeground ? undefined : next === 'L1' && (!__QA_HOOKS__ || this.params.get('preload') !== '0') ? (this.speculativeRunning = true, this.loadLevel('L1', { seed: Number(this.params.get('seed') ?? 1) }, undefined, true).catch(error => console.warn('Speculative L1 load failed', error)).finally(() => { this.speculativeRunning = false; })) : prefetchLevel(next, 4, this.quality.tier));
   }
   /** Serialize native-world changes so overlapping API loads cannot leak resources. */
   loadScenario(name: string | null, seed = 1, deferAudio = false): Promise<void> {
@@ -355,7 +356,7 @@ export class Game {
     this.campaign=structuredClone(save);
     if(save.pending){completePending(this.campaign);this.saveCampaign();}
     // ?debug=1 starts locked levels from the level list (PO #76); the save's progress is not changed by it.
-    if(level&&level>save.unlockedLevel&&!['1','true'].includes(this.params.get('debug')??''))throw new Error('Level is locked');
+    if(level&&level>save.unlockedLevel&&!(__QA_HOOKS__&&['1','true'].includes(this.params.get('debug')??'')))throw new Error('Level is locked');
     const settings = { ...save.settings, quality: save.settings.quality === 'auto' ? matchMedia('(pointer:coarse)').matches ? 'low' as const : 'high' as const : save.settings.quality };
     this.view.settings(settings);this.audio.set(save.settings);
     // Settings can save the previous live world: clear its resume only after those updates.

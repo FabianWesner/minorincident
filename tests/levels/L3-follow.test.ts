@@ -156,7 +156,7 @@ describe('L3 squad and checkpoint', () => {
       expect(w.infected!.active.filter(e => e.health.current > 0 && e.transform.x >= l3.map.zoneX)).toEqual([]);
     } finally { w.dispose(); }
   }, 120_000);
-  for (const condition of ['stalled officer', 'dead officer', 'turning officer', 'occupied boom'] as const) test(`@E21 @E21-AC17 arrival finishes with ${condition}`, async () => {
+  for (const condition of ['stalled officer', 'dead officer', 'turning officer', 'occupied boom'] as const) test(`@E21 @nightly @E21-AC17 arrival finishes with ${condition}`, async () => {
     const { world: w, mission: m } = await loadL3(1);
     try {
       m.completeObjective('armory'); m.completeObjective('defend');

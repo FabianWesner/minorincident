@@ -1,0 +1,582 @@
+{
+  "sourceCommit": "110da3b6f",
+  "baselineCommit": "ea20915a2",
+  "localUnit": {
+    "passed": 2331,
+    "files": 408,
+    "exitCode": 0,
+    "codeSha256": "0fc83736c4e152bb578b2fe05ee7e474b0127a22795f552a7c1c170537392c10"
+  },
+  "toolingVerification": {
+    "passed": 18,
+    "exitCode": 0
+  },
+  "typecheck": {
+    "exitCode": 0,
+    "finalSourceExitCode": 0
+  },
+  "lint": {
+    "exitCode": 0,
+    "finalSourceExitCode": 0
+  },
+  "bundle": {
+    "unit": "raw bytes across every .js and .css in dist",
+    "before": 11515417,
+    "after": 11088094,
+    "reductionBytes": 427323,
+    "beforeTotalDist": 423909708,
+    "afterTotalDist": 422911901
+  },
+  "productionRuntime": {
+    "query": "?quality=low&audio=muted&debug=true&test=1&testApi=1&scenelab=1&motionlab=1&lookdev=1&renderer=webgl&profile=1&idpass=1&workerCpu=0&doors=0&skin=0&preload=0&telemetry=live",
+    "hooks": {
+      "__SS__": false,
+      "__SCENE__": false,
+      "__MOTIONLAB__": false,
+      "__ASSET__": false,
+      "__LIGHT_SPIKE__": false
+    },
+    "webgpu": true,
+    "debugControls": 0,
+    "debugClass": false,
+    "bundle": "/build/index-BWjzbhYE.js",
+    "lockedL10": "true",
+    "telemetryRequests": [],
+    "canvasColors": 6823,
+    "errors": [],
+    "unsafeWebgpuFlag": false,
+    "pass": true
+  },
+  "qaBranchBuild": {
+    "BRANCH": "qa",
+    "VITE_QA_HOOKS": "unset",
+    "globalsRetained": [
+      "__SS__",
+      "__SCENE__",
+      "__MOTIONLAB__",
+      "__ASSET__"
+    ],
+    "previewRetained": true,
+    "motionlabAssetsRetained": true,
+    "exitCode": 0
+  },
+  "playtest": {
+    "mode": "campaign",
+    "quality": "low",
+    "heroine": "female",
+    "zoom": 1.5,
+    "levels": [
+      "L1"
+    ],
+    "runs": [
+      {
+        "level": "L1",
+        "entry": "new",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 139,
+        "simSeconds": 136,
+        "maxNoProgressSeconds": 13.85,
+        "deaths": 0,
+        "assists": 0,
+        "attacks": {},
+        "weaponsStart": [],
+        "weaponsEnd": [
+          "weapon.bat",
+          "weapon.fists"
+        ],
+        "steps": [
+          {
+            "id": "pickup",
+            "text": "Pick up the package at the courier depot \u00b7 55\u00a0m",
+            "tick": 11,
+            "marker": {
+              "anchor": "parcel-counter",
+              "ring": {
+                "x": -37.8,
+                "y": 0,
+                "z": -37.5
+              },
+              "drawn": [
+                -37.8,
+                0.05,
+                -37.5
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "deliver",
+            "text": "Deliver the package to the Medical Annex \u00b7 107\u00a0m",
+            "tick": 1010,
+            "marker": {
+              "anchor": "lab-door",
+              "ring": {
+                "x": 66,
+                "y": 0,
+                "z": -12.3
+              },
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "weapon",
+            "text": "Find something to defend yourself \u00b7 63\u00a0m",
+            "tick": 4247,
+            "marker": {
+              "anchor": "garage-door",
+              "ring": {
+                "x": 22.8,
+                "y": 0,
+                "z": 36.699999999999996
+              },
+              "drawn": [
+                22.8,
+                0.24,
+                36.7
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "firestation",
+            "text": "Get inside the fire station \u00b7 99\u00a0m",
+            "tick": 6121,
+            "marker": {
+              "anchor": "fire-bay-trigger",
+              "ring": {
+                "x": -76.6,
+                "y": 0.53,
+                "z": 41.27
+              },
+              "drawn": null,
+              "playerY": 0.9649999737739563,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "issues": 0,
+    "bySeverity": {
+      "P0": 0,
+      "P1": 0,
+      "P2": 0,
+      "P3": 0
+    }
+  },
+  "pending": [],
+  "productionScan": {
+    "jsCssBytes": 11088094,
+    "totalDistBytes": 422911901,
+    "tokens": [
+      "__SS__",
+      "__SCENE__",
+      "__MOTIONLAB__",
+      "__ASSET__",
+      "__LIGHT_SPIKE__",
+      "downAll",
+      "testApi",
+      "SceneLab",
+      "MotionLab",
+      "lookdev",
+      "motionlab",
+      "workerCpu",
+      "crowdProbe",
+      "loadProfile",
+      "aimcone",
+      "idpass",
+      "audioControls",
+      "inputControls",
+      "get(\"preload\")",
+      "get(\"telemetry\")"
+    ],
+    "hits": [],
+    "caseInsensitiveTokens": [
+      "__SS__",
+      "__SCENE__",
+      "__MOTIONLAB__",
+      "__ASSET__",
+      "__LIGHT_SPIKE__",
+      "SceneLab",
+      "MotionLab",
+      "downAll",
+      "testApi",
+      "lookdev"
+    ],
+    "caseInsensitiveHits": []
+  },
+  "smoke": {
+    "simulationPassed": 6,
+    "browserPassed": 35,
+    "exitCode": 0,
+    "unflaggedWebgpuPipelineCases": 4,
+    "finalCodeCommit": "110da3b6f"
+  },
+  "qaInvariantsFirstAttempt": {
+    "simulationPassed": 27,
+    "simulationFailed": 1,
+    "browserPassed": 12,
+    "failure": "480 s seated-actor timeout during shared-runner execution; original limits unchanged; complete isolated retry passed"
+  },
+  "runtimeSourceCommit": "6788d6543",
+  "runnerIsolation": {
+    "commit": "1a679dea4",
+    "mode": "--all",
+    "invariantTimeoutSeconds": 840,
+    "seatTestTimeoutMilliseconds": 480000,
+    "testLimitsUnchanged": true
+  },
+  "remoteAllSnapshot": {
+    "sha256": "c2210eae7b1f11d81fe4973bf0e5fb44eb2df9019288054336f1a5e5d871bc55",
+    "checkedFiles": 3001,
+    "differences": [],
+    "status": "completed"
+  },
+  "remoteSharedAttempt": {
+    "cancelledAfterFailures": true,
+    "failedCases": [
+      {
+        "name": "L8 seed 1 systemic zoo outbreak",
+        "durationMilliseconds": 147151,
+        "limitMilliseconds": 120000
+      },
+      {
+        "name": "production asset contracts",
+        "durationMilliseconds": 300766,
+        "limitMilliseconds": 300000
+      }
+    ],
+    "replacement": "complete tests/unit + tests/levels suite with --all runner reservation; no filters or skipped cases added"
+  },
+  "qaInvariants": {
+    "simulationPassed": 28,
+    "simulationFailed": 0,
+    "seatDurationMilliseconds": 247069.486031,
+    "seatLimitMilliseconds": 480000,
+    "browserStats": {
+      "startTime": "2026-10-27T05:12:26.290Z",
+      "duration": 197947.522,
+      "expected": 12,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "stages": [
+      {
+        "stage": "remote-sim",
+        "code": 0,
+        "seconds": 568.317,
+        "revision": "f333d571fae64befea27a777b056e7d91e6332e0",
+        "log": "test-results/qa-invariants/remote-sim.log"
+      },
+      {
+        "stage": "build",
+        "code": 0,
+        "seconds": 16.739,
+        "revision": "f333d571fae64befea27a777b056e7d91e6332e0",
+        "log": "test-results/qa-invariants/build.log"
+      },
+      {
+        "stage": "Mac-WebGPU-low",
+        "code": 0,
+        "seconds": 269.288,
+        "revision": "f333d571fae64befea27a777b056e7d91e6332e0",
+        "log": "test-results/qa-invariants/Mac-WebGPU-low.log",
+        "quietAdmission": true
+      }
+    ],
+    "exitCode": 0,
+    "finalCodeCommit": "110da3b6f"
+  },
+  "qaSpikeBuild": {
+    "BUILD_SPIKES": "1",
+    "VITE_QA_HOOKS": "1",
+    "retained": [
+      "__SS__",
+      "__SCENE__",
+      "__MOTIONLAB__",
+      "__ASSET__",
+      "__LIGHT_SPIKE__",
+      "downAll",
+      "SceneLab",
+      "MotionLab"
+    ],
+    "previewPagesRetained": true,
+    "exitCode": 0
+  },
+  "commitPerFinding": {
+    "D01": "ddb5a056a",
+    "D02": "ecb796735",
+    "D03": "522695f78",
+    "D04": "0e6520368",
+    "D05": "0a8041c62",
+    "D06": "1733cf660",
+    "D07": "2687455b5",
+    "D08": "864c232ee",
+    "D09": "859b43806",
+    "D10": "54ed2b4ed",
+    "D11": "c78dda996",
+    "D12": "1c675f128",
+    "D13": "1defdc834",
+    "D14": "2215c5090",
+    "D15": "253e112a8",
+    "D16": "24bba7282",
+    "S06": "933638b0e",
+    "P11": "6788d6543",
+    "runner": "1a679dea4",
+    "capture": "02b9512b5"
+  },
+  "historyReassembly": {
+    "previousHead": "3d54f79feaecb2c9ab13e9411484647daecd0c1f",
+    "implementationTreeUnchanged": true,
+    "sourceSha256": "c2210eae7b1f11d81fe4973bf0e5fb44eb2df9019288054336f1a5e5d871bc55",
+    "checkedFiles": 3001
+  },
+  "remoteUnitSnapshot": {
+    "sha256": "c2210eae7b1f11d81fe4973bf0e5fb44eb2df9019288054336f1a5e5d871bc55",
+    "checkedFiles": 3001,
+    "differences": [],
+    "host": "88.99.168.213",
+    "status": "cancelled after same two CPU timeouts",
+    "reservation": "both runner slots held for entire complete tests/unit command"
+  },
+  "remoteCapacity": {
+    "expansionAttempt": "mi-runner-4",
+    "result": "Primary IP limit exceeded in all three regions; no VM created",
+    "unitQueueMovedFrom": "2.31.10.108",
+    "unitQueueMovedTo": "88.99.168.213",
+    "cancelledAttemptStartedTests": false,
+    "duplicateCachedReservation": {
+      "host": "2.31.10.108",
+      "cancelledBeforeAnyTests": true,
+      "reason": "runner 3 began first"
+    }
+  },
+  "remoteLevels": {
+    "files": 88,
+    "passed": 483,
+    "failed": 0,
+    "skipped": 2,
+    "skips": "Existing opt-in L4-botprobe and L4-probe measurements",
+    "source": "test-results/code-batch1/remote-all-final.json",
+    "coverageComplete": true,
+    "subsequentSourceChanges": [
+      "src/levels/loader.ts",
+      "tests/unit/tooling/scenario-loader.test.ts",
+      "vitest.config.ts"
+    ],
+    "retainedCoverageProof": "Only simulation-source change is the equivalent loader guard under Vitest define __QA_HOOKS__=true; undefined/true/false Node truth table passes and every QA/PROD browser output file is byte-identical.",
+    "reportSha256": "8bb9f91706453b55a0ed4127ea9d489d9818dcf1e9ff5966765d202fda7e3427"
+  },
+  "remoteCombined": {
+    "exitCode": 1,
+    "passed": 2804,
+    "failed": 2,
+    "skipped": 9,
+    "failedCases": [
+      {
+        "file": "unit/assets/validate.test.ts",
+        "name": "T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts",
+        "durationMilliseconds": 300131.733091,
+        "messages": [
+          "Error: Test timed out in 300000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\n    at task (file:///srv/mi/jobs/code-batch1-e6e918-22708-1793068496/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2681:43)\n    at Object.<anonymous> (file:///srv/mi/jobs/code-batch1-e6e918-22708-1793068496/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2698:16)\n    at Object.<anonymous> (file:///srv/mi/jobs/code-batch1-e6e918-22708-1793068496/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2471:28)\n    at chain (file:///srv/mi/jobs/code-batch1-e6e918-22708-1793068496/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:1859:14)\n    at /srv/mi/jobs/code-batch1-e6e918-22708-1793068496/tests/unit/assets/validate.test.ts:83:1\n    at VitestModuleEvaluator._runInlinedModule (file:///srv/mi/jobs/code-batch1-e6e918-22708-1793068496/node_modules/vitest/dist/module-evaluator.js:261:4)\n    at VitestModuleRunner.directRequest (file:///srv/mi/jobs/code-batch1-e6e918-22708-1793068496/node_modules/vite/dist/node/module-runner.js:1284:61)\n    at VitestModuleRunner.cachedRequest (file:///srv/mi/jobs/code-batch1-e6e918-22708-1793068496/node_modules/vite/dist/node/module-runner.js:1180:76)\n    at VitestModuleRunner.import (file:///srv/mi/jobs/code-batch1-e6e918-22708-1793068496/node_modules/vite/dist/node/module-runner.js:1117:12)\n    at file:///srv/mi/jobs/code-batch1-e6e918-22708-1793068496/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3448:5"
+        ]
+      },
+      {
+        "file": "unit/levels/campaign-nav-preparation.test.ts",
+        "name": "L9: one campaign navigation bake matches the previous mask/rebake path",
+        "durationMilliseconds": 129606.66743900022,
+        "messages": [
+          "Error: Test timed out in 120000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\n    at task (file:///srv/mi/jobs/code-batch1-e6e918-22708-1793068496/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2681:43)\n    at Object.<anonymous> (file:///srv/mi/jobs/code-batch1-e6e918-22708-1793068496/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2698:16)\n    at Object.<anonymous> (file:///srv/mi/jobs/code-batch1-e6e918-22708-1793068496/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2471:28)\n    at chain (file:///srv/mi/jobs/code-batch1-e6e918-22708-1793068496/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:1859:14)\n    at /srv/mi/jobs/code-batch1-e6e918-22708-1793068496/tests/unit/levels/campaign-nav-preparation.test.ts:30:30\n    at VitestModuleEvaluator._runInlinedModule (file:///srv/mi/jobs/code-batch1-e6e918-22708-1793068496/node_modules/vitest/dist/module-evaluator.js:261:4)\n    at VitestModuleRunner.directRequest (file:///srv/mi/jobs/code-batch1-e6e918-22708-1793068496/node_modules/vite/dist/node/module-runner.js:1284:61)\n    at VitestModuleRunner.cachedRequest (file:///srv/mi/jobs/code-batch1-e6e918-22708-1793068496/node_modules/vite/dist/node/module-runner.js:1180:76)\n    at VitestModuleRunner.import (file:///srv/mi/jobs/code-batch1-e6e918-22708-1793068496/node_modules/vite/dist/node/module-runner.js:1117:12)\n    at file:///srv/mi/jobs/code-batch1-e6e918-22708-1793068496/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3448:5"
+        ]
+      }
+    ]
+  },
+  "timeBox": {
+    "originalHours": 4,
+    "approvedExtensionHours": 1.5,
+    "extensionPurpose": "remote unit retry and campaign",
+    "latestDeadlineLocal": "2026-10-27 06:51 Europe/Berlin"
+  },
+  "remoteSerialSnapshot": {
+    "sha256": "c2210eae7b1f11d81fe4973bf0e5fb44eb2df9019288054336f1a5e5d871bc55",
+    "checkedFiles": 3001,
+    "differences": [],
+    "host": "88.99.168.213",
+    "maxWorkers": 1,
+    "status": "cancelled after both prior cases passed; superseded by final source and permanent timing grouping"
+  },
+  "remoteUnitFourWorkerAttempt": {
+    "cancelledAfterFailures": true,
+    "failedCases": [
+      "\u00d7 T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts 302801ms",
+      "\u00d7 L9: one campaign navigation bake matches the previous mask/rebake path 121379ms"
+    ],
+    "replacement": "complete tests/unit with --maxWorkers=1 and exclusive runner; no assertions, timeouts, or skips changed"
+  },
+  "productionDeliveryBuild": {
+    "commit": "5ccf53d7b54bf504bb30b8a31d389721efdd8664",
+    "branchEnvironment": "main",
+    "NODE_ENV": "production",
+    "VITE_QA_HOOKS": "unset",
+    "exitCode": 0,
+    "jsCssBytes": 11088094,
+    "totalDistBytes": 422911901,
+    "hookHits": [],
+    "html": [
+      "index.html"
+    ],
+    "motionlabAssetsPresent": false
+  },
+  "remoteSerialRecoveryProgress": {
+    "inventoryValidationFileMilliseconds": 254426,
+    "inventoryTestLimitMilliseconds": 300000,
+    "maxWorkers": 1,
+    "assertionsAndLimitsUnchanged": true,
+    "fullFolderPending": false,
+    "inventoryCaseMilliseconds": 240223,
+    "navigationFileMilliseconds": 142577,
+    "L9NavigationCaseMilliseconds": 101041,
+    "L9NavigationLimitMilliseconds": 120000,
+    "bothPriorCasesPassed": true,
+    "fullFolderCompletedBy": "remoteUnitFinal"
+  },
+  "nodeScenarioCompatibility": {
+    "commit": "d28fdc12a",
+    "reproducedBefore": "ReferenceError: __QA_HOOKS__ is not defined from direct Node loadScenarioDefinition(civ-street)",
+    "regressionPassed": 1,
+    "macroCases": [
+      "undefined",
+      "true",
+      "false"
+    ],
+    "simCli": {
+      "civ-street": {
+        "ticks": 60,
+        "exitCode": 0
+      },
+      "lookdev": {
+        "ticks": 60,
+        "exitCode": 0
+      }
+    },
+    "buildParity": {
+      "prod": {
+        "files": 2520,
+        "differences": [],
+        "identicalBytes": true
+      },
+      "qa": {
+        "files": 2552,
+        "differences": [],
+        "identicalBytes": true
+      }
+    },
+    "runtimeProof": "Every QA/PROD output file is byte-identical before/after the Node-only fallback; prior runtime gates and remote levels retain identical compiled behavior."
+  },
+  "unitTimingIsolation": {
+    "commit": "110da3b6f",
+    "addedToExistingTimingGroup": [
+      "tests/unit/assets/validate.test.ts",
+      "tests/unit/levels/campaign-nav-preparation.test.ts"
+    ],
+    "maxWorkers": 4,
+    "fileParallelismDuringTiming": false,
+    "assertionsAndLimitsUnchanged": true
+  },
+  "remoteFinalSnapshot": {
+    "commit": "110da3b6f",
+    "sha256": "0fc83736c4e152bb578b2fe05ee7e474b0127a22795f552a7c1c170537392c10",
+    "checkedFiles": 3002,
+    "differences": [],
+    "maxWorkers": 4,
+    "timingFilesSequential": true,
+    "status": "completed"
+  },
+  "remoteUnitFinal": {
+    "exitCode": 0,
+    "files": 408,
+    "passed": 2324,
+    "skipped": 7,
+    "skips": "Existing macOS-only browser capacity cases; all seven passed in the local unit run",
+    "maxWorkers": 4,
+    "timingFilesSequential": true,
+    "coverageComplete": true,
+    "report": "test-results/code-batch1/remote-units-final.json",
+    "reportSha256": "cbb25c70c212b3940000bd88ea19d44a7b1b226d1078b3c4abe20a961ae78cb8"
+  },
+  "qaInvariantsReschedule": {
+    "fromHost": "2.31.10.108",
+    "toHost": "88.99.168.213",
+    "reason": "runner 2 occupied by long nightly suite; runner 3 follows our completed unit gate",
+    "priorAttemptCancelledBeforeTests": true,
+    "priorOwnedProcessGroupStopped": 227140
+  },
+  "gatedHooks": {
+    "globals": [
+      "__SS__",
+      "__SCENE__",
+      "__MOTIONLAB__",
+      "__ASSET__",
+      "__LIGHT_SPIKE__"
+    ],
+    "labs": [
+      "SceneLab",
+      "MotionLab",
+      "Inspection",
+      "Lookdev"
+    ],
+    "cheats": [
+      "downAll"
+    ],
+    "controls": [
+      "debug controls",
+      "level unlocks",
+      "audioControls",
+      "inputControls"
+    ],
+    "probes": [
+      "render",
+      "hand",
+      "foot",
+      "corpse",
+      "profiling",
+      "ID masks"
+    ],
+    "urlFlags": [
+      "debug",
+      "test",
+      "testApi",
+      "scenelab",
+      "inspect",
+      "motionlab",
+      "perf",
+      "lookdev",
+      "renderer",
+      "idpass",
+      "loadProfile",
+      "workerCpu",
+      "crowdProbe",
+      "aimcone",
+      "doors",
+      "skin",
+      "dpr",
+      "tone",
+      "preload",
+      "telemetry"
+    ]
+  },
+  "complete": true,
+  "verifiedFinalSource": {
+    "codeCommit": "110da3b6f",
+    "sha256": "0fc83736c4e152bb578b2fe05ee7e474b0127a22795f552a7c1c170537392c10",
+    "checkedFiles": 3002,
+    "changedSinceFinalUnitSnapshot": []
+  }
+}

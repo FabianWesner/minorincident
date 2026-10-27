@@ -4,7 +4,7 @@ import { missionIds } from '../../src/levels/missions';
 import { loadLevel } from '../../tools/sim-runner/levels';
 
 // Production PO seed and refuge-door-13, plus every campaign level using refuge-door-*.
-test('@E22 PO15 closed refuge doors keep the entire fleeing group visibly in the world, across L1–L10', async () => {
+test('@E22 @nightly PO15 closed refuge doors keep the entire fleeing group visibly in the world, across L1–L10', async () => {
   for (const level of new Set([...missionIds, 'L7'] as const)) {
     const w = level === 'L4' ? (await loadL4(1)).world : await loadLevel(level, 1);
     try {

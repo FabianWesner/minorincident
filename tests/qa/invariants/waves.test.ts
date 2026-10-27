@@ -36,7 +36,7 @@ async function withWorld(id: Parameters<typeof loadLevel>[0], tier: 'high' | 'lo
 
 // Finite authored waves/alarms, including late mission controllers. Resident wandering populations are not waves.
 // Counts are read from authoring data or the explicit controller batch contract, never inferred from the event count.
-for (const tier of ['high', 'low'] as const) test(`5 authored wave census ${tier}: L1, L2, L3, L6, L7, L8 and L10`, async () => {
+for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave census ${tier}: L1, L2, L3, L6, L7, L8 and L10`, async () => {
   const errors: string[] = [], receipt: Record<string, { authored: number; spawned: number; admitted: number; reached?: number }> = {};
   const record = (key: string, authored: number, ids: number[], w: SimWorld, movement?: { admitted: number; reached: number }) => {
     receipt[key] = { authored, spawned: ids.filter(id => id > 0).length, admitted: movement?.admitted ?? observed(w, ids).length, ...(movement ? { reached: movement.reached } : {}) };
@@ -183,7 +183,7 @@ for (const tier of ['high', 'low'] as const) test(`5 authored wave census ${tier
 }, 240_000);
 
 // A reachability receipt must follow actual moving infected, not just a spawn event or a valid nav path.
-for (const tier of ['high', 'low'] as const) test(`5 L4 alarm ${tier}: every authored identity is admitted and reaches the hold area`, async () => {
+for (const tier of ['high', 'low'] as const) test(`5 @nightly L4 alarm ${tier}: every authored identity is admitted and reaches the hold area`, async () => {
   const w = await loadLevel('L4', 1, tier);
   try {
     const m = w.missions!, s = m.state.l4!;

@@ -79,7 +79,7 @@ test('T-E24-11-siege @E24 @E24-AC11 five real infected break the closed service 
   const start=w.tick;for(let i=0;i<900&&leaf.barricade!.intact;i++)w.update();const seconds=(w.tick-start)/60;save('gate-siege',{seconds,hp:leaf.health.max,remaining:leaf.health.current,player:p.transform,attackers:w.infected!.active.map(e=>({at:e.transform,brain:e.infected}))});expect(leaf.barricade!.intact).toBe(false);expect(seconds).toBeGreaterThanOrEqual(8);expect(seconds).toBeLessThanOrEqual(12);
 });
 
-test('T-E24-03 @E24 @E24-AC03 single-seed newbie protects injured survivors within the original band',async()=>{
+test('T-E24-03 @nightly @E24 @E24-AC03 single-seed newbie protects injured survivors within the original band',async()=>{
   const l=await loadL6(1);world=l.world;const result=runL6(world,'newbie');save('newbie-seed-1',result);
   expect(result.outcome).toBe('complete');expect(result.simSeconds).toBeGreaterThanOrEqual(195);expect(result.simSeconds).toBeLessThanOrEqual(300);expect(result.deaths).toBeLessThanOrEqual(2);// PO 10-20 #63 walkway fix: seed 1 re-pinned to the measured 8/29 (seeds 1-3 median 8/29 misses .4; 5-seed spread 8,15,5,11,16 equals main 14,18,8,5,14).
   expect(result.rescued/result.total).toBeGreaterThanOrEqual(8/29);

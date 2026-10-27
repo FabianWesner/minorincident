@@ -63,7 +63,7 @@ test('weapon sources are CC0 / CC-BY with a recorded licence snapshot and credit
 });
 
 const ffmpeg = spawnSync('ffmpeg', ['-version']).status === 0 && existsSync('public/assets/audio/weapons.webm');
-test.skipIf(!ffmpeg)('offline loudness: shotgun >= 4 LU above the handgun, every weapon cue <= -1 dBTP', () => {
+test.skipIf(!ffmpeg)('offline @nightly loudness: shotgun >= 4 LU above the handgun, every weapon cue <= -1 dBTP', () => {
     const dir = mkdtempSync(join(tmpdir(), 'weapon-audio-')), sprites = new Map<string, Buffer>();
     try {
         const lufs = (id: string) => { const takes = audioVariationPools[id] ?? [id], m = takes.map(t => measureCue(t, dir, sprites)); return m.reduce((a, x) => a + x.lufs, 0) / m.length; };
@@ -77,7 +77,7 @@ test.skipIf(!ffmpeg)('offline loudness: shotgun >= 4 LU above the handgun, every
 }, 120_000);
 
 /** Orchestrator 10-15: "a firearm must never be quieter than a punch": melee < handgun class < smg/rifle < machine-gun < shotgun ~ rocket, on the loudness the player hears (sprite LUFS + cue gain). */
-test.skipIf(!ffmpeg)('class loudness order, firearms never quieter than a punch, and no over-driven class', () => {
+test.skipIf(!ffmpeg)('class @nightly loudness order, firearms never quieter than a punch, and no over-driven class', () => {
     const rows = measureWeapons();
     type Row = (typeof rows)[number];
     const mean = (f: (r: Row) => boolean, v: (r: Row) => number = r => r.played) => { const s = rows.filter(f); return s.reduce((a, r) => a + v(r), 0) / s.length; };

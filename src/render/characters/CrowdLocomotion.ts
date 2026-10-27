@@ -87,7 +87,7 @@ export class CrowdLocomotion {
   /** Rest ankle height in foot-local units (sole contact offset for probes). */
   readonly sole: number;
   private readonly solePoints?: Vector3[][];
-  constructor(private readonly model: Object3D, private readonly clip: CrowdClip, readonly footwork = new CrowdFootwork()) {
+  constructor(private readonly model: Object3D, clip: CrowdClip, readonly footwork = new CrowdFootwork()) {
     this.animal = !!model.getObjectByName('legFL');
     this.groundedAnimal = this.animal && model.getObjectByName('root')?.userData.groundedAnimal === true;
     this.preserveAnimalJoints = model.getObjectByName('root')?.userData.ss_preserveAnimalJoints === true;

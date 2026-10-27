@@ -3,6 +3,7 @@ import { l5, l5Survivors } from '../../data/l5';
 import { emptyInput, type InputFrame } from '../../input/InputFrame';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import type { EntitySnapshot } from '../../sim/world/types';
+import { dist, heldKit, jammed, nearestKit, newStuck, strikeAt, visibleThreats, walkTo, type P } from './helpers';
 import { Walker } from './Walker';
 
 /**
@@ -11,8 +12,6 @@ import { Walker } from './Walker';
  * `evade-only` escorts but never attacks (it only walks away from infected); `idle` unbars the door and stays where it stands.
  */
 export type L5Profile = 'complete' | 'newbie' | 'evade-only' | 'idle';
-type P = { x: number; z: number };
-const dist = (a: P, b: P) => Math.hypot(a.x - b.x, a.z - b.z);
 
 /** The tour of the five rings (and the Metro at the end) of minimum length: 120 permutations. */
 export function cheapestTour(from: P, rings: Record<string, P>, keys: string[], end: P): string[] {
@@ -33,16 +32,12 @@ export class LevelFiveBot {
   private frame: InputFrame = emptyInput();
   private order: string[] | null = null;
   private detour: (P & { until: number }) | null = null;
-  private stuck = { at: null as P | null, n: 0, next: 0 };
+  private stuck = newStuck();
   private medkit = 0;
   private lag = 0;
   constructor(private readonly world: SimWorld, readonly profile: L5Profile = 'complete') { this.rng = new Rng(world.seed, `l5-bot-${profile}`); }
   debug() { return { order: this.order, detour: this.detour, medkit: this.medkit, stuck: this.stuck.n }; }
-  private threats(p: P, radius: number): EntitySnapshot[] {
-    const w = this.world;
-    return (w.infected?.active ?? []).filter(e => e.health.current > 0 && !e.hidden && !e.infected?.hidden && !e.infectionRise && dist(e.transform, p) <= radius && w.infected!.nav.visible(p, e.transform, 0))
-      .sort((a, b) => dist(a.transform, p) - dist(b.transform, p));
-  }
+  private threats(p: P, radius: number): EntitySnapshot[] { return visibleThreats(this.world, p, radius); }
   private chasing(e: EntitySnapshot): boolean {
     const state = e.infected!, b = state.l1;
     if (e.archetype === 'infected.alpha') return ['alerted', 'chase', 'attack'].includes(state.state) && (state.heardTargetId === 1 || !!this.world.entities.get(state.heardTargetId ?? 0)?.civilian?.survivor);
@@ -66,11 +61,8 @@ export class LevelFiveBot {
     // The inexperienced courier walks cautiously through the silent city.
     frame.walk = newbie;
     if (player.health.current <= 0) return frame;
-    const go = (target: P, stop: number, key: string) => { const dir = this.walker.step(w, target, stop, key); if (dir) frame.move = dir; return !dir; };
-    const strike = (target: EntitySnapshot, side: 'LEFT' | 'RIGHT') => {
-      frame.attackTarget = { id: target.id, side }; frame.move = { x: 0, z: 0 };
-      if (side === 'LEFT') frame.left.held = true; else frame.right.held = true;
-    };
+    const go = walkTo(this.walker, w, frame);
+    const strike = (target: EntitySnapshot, side: 'LEFT' | 'RIGHT') => strikeAt(frame, target, side);
     // ---------------------------------------------------------------- the cellar: unbar the door
     if (s.phase === 'cellar') { if (go(a['l5-brace'], .4, 'brace')) frame.interact = !newbie || this.rng.next() < .6; return frame; }
     if (this.profile === 'idle') return frame;
@@ -91,13 +83,12 @@ export class LevelFiveBot {
     if (fight(newbie ? 12 : 18)) return frame;
     const hp = player.health.current / player.health.max;
     if (!this.medkit && hp <= (newbie ? .8 : .55)) {
-      const kit = s.medkitIds.map(id => w.entities.get(id)).filter((e): e is EntitySnapshot => !!e?.pickup && 'kind' in e.pickup && !e.pickup.collected)
-        .filter(e => dist(e.transform, p) < (newbie ? 30 : 20)).sort((x, y) => dist(x.transform, p) - dist(y.transform, p))[0];
+      const kit = nearestKit(w, s.medkitIds, p, e => dist(e.transform, p) < (newbie ? 30 : 20));
       if (kit) this.medkit = kit.id;
     }
     if (this.medkit) {
-      const kit = w.entities.get(this.medkit);
-      if (!kit?.pickup || !('kind' in kit.pickup) || kit.pickup.collected || hp > (newbie ? .99 : .95)) this.medkit = 0;
+      const kit = heldKit(w, this.medkit, hp, newbie);
+      if (!kit) this.medkit = 0;
       else { go(kit.transform, .2, `kit-${this.medkit}`); return frame; }
     }
     // A follower crouching in cover has an infected close by: go back to the group and deal with it (the complete bot never walks off on them).
@@ -113,12 +104,7 @@ export class LevelFiveBot {
       if (hot) { strike(hot, dist(p, hot.transform) <= 2.4 ? 'LEFT' : 'RIGHT'); return frame; }
     }
     // A jammed walker steps aside along a connected route.
-    if (w.tick >= this.stuck.next) {
-      this.stuck.next = w.tick + 60;
-      if (this.stuck.at && dist(this.stuck.at, p) < .6 && !near.length && !frame.attackTarget) this.stuck.n++; else this.stuck.n = 0;
-      this.stuck.at = { x: p.x, z: p.z };
-      if (this.stuck.n >= 3) { const at = this.walker.detour(w, { x: p.x + 8, z: p.z }); this.detour = at ? { ...at, until: w.tick + 150 } : null; this.stuck.n = 0; }
-    }
+    if (jammed(this.stuck, w.tick, p, near.length > 0 || !!frame.attackTarget)) { const at = this.walker.detour(w, { x: p.x + 8, z: p.z }); this.detour = at ? { ...at, until: w.tick + 150 } : null; }
     if (this.detour && (w.tick > this.detour.until || dist(p, this.detour) < 1)) { this.detour = null; this.walker.reset(); }
     // Evade-only walks away from what is close instead of fighting it.
     const crowd = this.threats(p, 4.5);

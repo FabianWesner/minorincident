@@ -3,7 +3,6 @@ export type { L1Profile, L1Report } from '../../src/debug/bot/LevelOneBot';
 export { Walker } from '../../src/debug/bot/Walker';
 import { readFileSync } from 'node:fs';
 import { Rng } from '../../src/core/Rng';
-import { l1v2 } from '../../src/data/l1v2';
 import { compositions } from '../../src/levels/compositions';
 import { resolveCampaignMission } from '../../src/levels/missions';
 import type { Mission } from '../../src/sim/missions/Mission';
@@ -29,7 +28,6 @@ export function runL1(...args: Parameters<typeof l1Frames>): L1Report {
   while (!next.done) { args[0].update(); next = frames.next(); }
   return next.value;
 }
-export const l1BotConfig = l1v2.bots;
 
 export interface DuelReport { seed: number; count: number; weapon: 'unarmed' | 'bat'; skill: 'newbie' | 'standing'; playerDied: boolean; diedAtS: number | null; killed: number; seconds: number }
 /**

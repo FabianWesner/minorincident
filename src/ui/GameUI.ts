@@ -39,8 +39,8 @@ export class GameUI {
   /** HUD Home button (PO 10-12): one tap back to the initial menu; progress stays at the last checkpoint. */
   private readonly homeButton = homeButton('home-button', () => this.show('title'));
   constructor(private readonly game: Game) {
-    this.debugEnabled = ['true', '1'].includes(game.params.get('debug') ?? '');
-    this.enabled = game.params.get('test') !== '1' || game.params.get('ui') === '1';
+    this.debugEnabled = __QA_HOOKS__ && ['true', '1'].includes(game.params.get('debug') ?? '');
+    this.enabled = !__QA_HOOKS__ || game.params.get('test') !== '1' || game.params.get('ui') === '1';
     let storage: Storage | undefined;
     try { storage = localStorage; } catch { /* Storage may be disabled. */ }
     this.settings = new Settings(storage);
@@ -50,7 +50,7 @@ export class GameUI {
     if (this.started) return;
     if (force) this.enabled = true;
     if (!this.enabled) return;
-    document.body.classList.add('full-ui');document.body.classList.toggle('debug-ui',this.game.params.has('debug'));
+    document.body.classList.add('full-ui');document.body.classList.toggle('debug-ui',__QA_HOOKS__ && this.game.params.has('debug'));
     document.body.classList.toggle('touch-ui', navigator.maxTouchPoints > 0 || matchMedia('(pointer:coarse)').matches); this.root.className = 'menus'; this.root.prepend(homeArt());
     this.pauseButton.setAttribute('aria-label', 'Pause');
     const pauseLabel = node('span', 'pause-label', 'Pause');
@@ -96,7 +96,7 @@ export class GameUI {
       const b = button(`level-L${i}`, `L${i} · ${levelTitles[i - 1]}`, () => {
         // Locked levels stay focusable (aria-disabled) so a tap or keyboard focus can explain why; activation is blocked.
         // Debug builds (?debug=1) keep the lock styling but let a click start the level anyway (PO 10-20 #76).
-        if (b.getAttribute('aria-disabled') === 'true' && !this.debugEnabled) { lockHint.textContent = `Complete Level ${i - 1} first`; lockHint.hidden = false; return; }
+        if (b.getAttribute('aria-disabled') === 'true' && (!__QA_HOOKS__ || !this.debugEnabled)) { lockHint.textContent = `Complete Level ${i - 1} first`; lockHint.hidden = false; return; }
         void this.load(`L${i}`, false, resumeLevel(this.game.campaign) === i);
       });
       b.addEventListener('focus', () => { if (b.getAttribute('aria-disabled') === 'true') { lockHint.textContent = `Complete Level ${i - 1} first`; lockHint.hidden = false; } else lockHint.hidden = true; });
@@ -115,7 +115,7 @@ export class GameUI {
       button('pause-restart', 'Restart level', () => this.askRestart()),
       button('pause-hide-ui', 'Hide UI (H)', () => this.hideUi(true)),
       homeButton('pause-title', () => this.show('title'), true));
-    if (this.debugEnabled) {
+    if (__QA_HOOKS__ && this.debugEnabled) {
       const debug = node('section', 'pause-debug'); debug.className = 'pause-debug'; debug.dataset.testid = 'pause-debug';
       const heading = node('h2', 'pause-debug-heading', 'Debug info');
       this.debugText = node('pre', 'pause-debug-text'); this.debugText.setAttribute('aria-label', 'Copyable debug information');
@@ -239,7 +239,7 @@ export class GameUI {
     }
     this.show('loading');
     try {
-      if (this.debugEnabled && !resume) this.game.campaign = debugCampaign(Number(id.slice(1)) as Level, this.game.campaign);
+      if (__QA_HOOKS__ && this.debugEnabled && !resume) this.game.campaign = debugCampaign(Number(id.slice(1)) as Level, this.game.campaign);
       if (this.game.campaign) await this.game.continueCampaign(this.game.campaign, resume ? undefined : Number(id.slice(1)) as Level);
       else { await this.game.loadLevel(id); this.game.world.player?.select(this.variant, 0); }
       if (racks && left.length && right.length) this.game.world.combat?.setLoadout(left, right);
@@ -353,7 +353,7 @@ export class GameUI {
     setHidden(this.pauseButton, !this.game.campaignUI.root.hidden || this.screen !== null || (!!mission && !['playing', 'cinematic'].includes(mission.state.phase)));
     // Home is hidden during cutscenes, briefings, results and loading (only live play), and via CSS while the UI is hidden (H).
     setHidden(this.homeButton, !this.game.campaignUI.root.hidden || this.screen !== null || (!!mission && mission.state.phase !== 'playing'));
-    if (this.debugEnabled && this.screen === 'pause') this.updateDebugInfo();
+    if (__QA_HOOKS__ && this.debugEnabled && this.screen === 'pause') this.updateDebugInfo();
     this.updateMs = performance.now() - start;
   }
   private updateDebugInfo(): void {

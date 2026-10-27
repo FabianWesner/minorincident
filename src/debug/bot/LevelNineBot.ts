@@ -12,7 +12,17 @@ export class LevelNineBot {
   constructor(private readonly w: SimWorld, routeId = 'road', detour = false, private readonly throttle = .7, readonly profile = 'complete') {
     const route = crossing.routes.find(r => r.id === routeId);
     if (!route) throw new Error(`Unknown L9 route ${routeId}`);
-    this.path = detour ? route.detour : route.points; this.length = crossingRouteLength(this.path);
+    // A long straight aimed only at its far end can retain a corner-cutting offset
+    // for hundreds of metres. Guide the risky route through its authored encounter
+    // anchors; the explicitly safe detour keeps its existing trace.
+    this.path = detour ? route.detour : route.points.flatMap((a, i, points) => {
+      const b = points[i + 1]; if (!b) return [a];
+      const dx = b[0] - a[0], dz = b[1] - a[1], length = Math.hypot(dx, dz);
+      const along = (p: Point) => ((p[0] - a[0]) * dx + (p[1] - a[1]) * dz) / length;
+      return [a, ...route.risks.filter(p => along(p) > 0 && along(p) < length
+        && Math.abs((p[0] - a[0]) * dz - (p[1] - a[1]) * dx) / length < 1).sort((p, q) => along(p) - along(q))];
+    });
+    this.length = crossingRouteLength(this.path);
   }
   get finished(): boolean { return this.w.missions?.l9?.state.finished ?? false; }
   /** Share of the route length passed (0..1): finished segments plus the car's projection on the current one. */

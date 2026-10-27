@@ -8,7 +8,7 @@ import { look, type Body, type Eyes } from './eyes';
 /**
  * Live control server: one headless game session that an agent plays unscripted by real input.
  *
- *   npm run build && E2E_PORT=4101 LIVE_PORT=4102 sh tools/e2e-lock.sh npx tsx tools/playtest/live.ts [--heroine male] [--quality low]
+ *   npm run build:qa && E2E_PORT=4761 LIVE_PORT=4762 sh tools/e2e-lock.sh npx tsx tools/playtest/live.ts [--heroine male] [--quality low]
  *
  * GET  /look          → compact text of what the player sees (objective, ring, prompts, health, visible bodies).
  * GET  /shot          → saves a JPEG of the screen and returns its path.
@@ -31,7 +31,7 @@ const step = process.argv.includes('--step');
 const autofight = process.argv.includes('--autofight');
 const port = Number(process.env.E2E_PORT ?? 4101), livePort = Number(process.env.LIVE_PORT ?? 4102);
 if (port === 3300 || livePort === 3300) throw new Error('never port 3300');
-if (!existsSync('dist/index.html')) throw new Error('npm run build first');
+if (!existsSync('dist/index.html')) throw new Error('npm run build:qa first');
 const origin = `http://127.0.0.1:${port}`;
 const up = async () => { try { return (await fetch(origin)).ok; } catch { return false; } };
 let server: ChildProcess | null = null;

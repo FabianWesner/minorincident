@@ -6,7 +6,7 @@ import { LevelSixBot } from '../../../src/debug/bot/LevelSixBot';
 import { missionControls } from '../../../src/sim/missions/controls';
 import { emptyInput } from '../../../src/input/InputFrame';
 
-for (const tier of ['high', 'low'] as const) test(`T-E24-19-population @E24-AC19 stress fixture has 25 moving adults and ${tier === 'high' ? 40 : 30} infected on ${tier}`, async () => {
+for (const tier of ['high', 'low'] as const) test(`T-E24-19-population @nightly @E24-AC19 stress fixture has 25 moving adults and ${tier === 'high' ? 40 : 30} infected on ${tier}`, async () => {
   const { world: w, mission } = await loadL6(1, tier);
   try {
     const controls = missionControls(w), step = (n: number) => { for (let i = 0; i < n; i++) w.update(); };

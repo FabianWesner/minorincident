@@ -54,7 +54,7 @@ describe('L3 The Police Collapse', () => {
     expect(t).toBeGreaterThanOrEqual(l3.bots.completeMedianS[0]); expect(t).toBeLessThanOrEqual(l3.bots.completeMedianS[1]);
   }, HEAVY);
 
-  test('T-E21-03 @E21 @E21-AC03 newbie single seed, median in band, median deaths <= 2', async () => {
+  test('T-E21-03 @nightly @E21 @E21-AC03 newbie single seed, median in band, median deaths <= 2', async () => {
     const runs = await battery('newbie');
     expect(runs.filter(r => r.outcome === 'complete').length).toBeGreaterThanOrEqual(l3.bots.newbieMinSeeds);
     expect(median(runs.map(r => r.deaths))).toBeLessThanOrEqual(l3.bots.newbieMaxMedianDeaths);
@@ -62,7 +62,7 @@ describe('L3 The Police Collapse', () => {
     expect(t).toBeGreaterThanOrEqual(l3.bots.newbieMedianS[0]); expect(t).toBeLessThanOrEqual(l3.bots.newbieMedianS[1]);
   }, HEAVY);
 
-  test('T-E21-04 @E21 @E21-AC04 handgun: only at the armory (complete bot within 40 s), one target per shot, two hits per 40 HP, 22 m, no ammunition', async () => {
+  test('T-E21-04 @E21 @nightly @E21-AC04 handgun: only at the armory (complete bot within 40 s), one target per shot, two hits per 40 HP, 22 m, no ammunition', async () => {
     const def = action('weapon.handgun');
     expect([def.damage, def.range, def.fireRate, def.maxTargets, def.magazine, def.reloadTime]).toEqual([20, 22, 3, 1, 0, 0]);
     const l = await loadL3(2); world = l.world; const w = l.world, m = l.mission, ai = w.infected!;
@@ -150,7 +150,7 @@ describe('L3 The Police Collapse', () => {
     for (const r of await complete()) { expect(r.audit.sightViolations).toBe(0); expect(r.audit.nonSightAlerts).toBe(0); expect(r.audit.emerged).toBeGreaterThan(0); expect(r.audit.emergeSeen).toBe(0); }
   }, HEAVY);
 
-  test('T-E21-07 @E21 @E21-AC07 station attack: 8-10 officers, three directions >= 60 degrees apart, an officer turns on single seed, first-of fallback, idle still falls back', async () => {
+  test('T-E21-07 @nightly @E21 @E21-AC07 station attack: 8-10 officers, three directions >= 60 degrees apart, an officer turns on single seed, first-of fallback, idle still falls back', async () => {
     const l = await loadL3(1); world = l.world;
     const s = l.mission.state.l3!;
     expect(s.officerIds.length).toBeGreaterThanOrEqual(8); expect(s.officerIds.length).toBeLessThanOrEqual(10);
@@ -173,7 +173,7 @@ describe('L3 The Police Collapse', () => {
     expect(idleRuns.every(r => r.attack && r.attack.fallbackCause !== '')).toBe(true);
   }, HEAVY);
 
-  test('T-E21-07d @E21 @E21-AC07 PO 10-12 the police lose without the courier: 50 % police guns, spread streams, police zombies from the station', async () => {
+  test('T-E21-07d @nightly @E21 @E21-AC07 PO 10-12 the police lose without the courier: 50 % police guns, spread streams, police zombies from the station', async () => {
     // PO 2026-10-12 (verbatim): "Ideally the Zombies will win against police when the player isn#t doing anything. Let's try this:
     // reduce the power of the gun by 50% for the police (not for the player). And don't cluster Zombies, let they come from all
     // directions and also spawn them in the policestation (as police Zombies), so they are overwhelming for the police so the user
@@ -239,7 +239,7 @@ describe('L3 The Police Collapse', () => {
     for (const r of runs) expect(r.density.maxConcurrent).toBeLessThanOrEqual(r.density.cap);
   }, HEAVY);
 
-  test('T-E21-13 @E21 @E21-AC13 forward pressure: idling 20 s behind the furthest line starts emergences 15-35 m behind it, advancing stops them', async () => {
+  test('T-E21-13 @nightly @E21 @E21-AC13 forward pressure: idling 20 s behind the furthest line starts emergences 15-35 m behind it, advancing stops them', async () => {
     const l = await loadL3(4); world = l.world; const w = l.world, m = l.mission;
     // The complete bot plays to segment 2, then the courier stands still (god mode keeps the observer alive).
     runL3(w, m, 'complete', { stopWhen: mm => (mm.state.l3!.segment ?? -1) >= 1 && w.entities.get(1)!.transform.x > -30 });
@@ -267,7 +267,7 @@ describe('L3 The Police Collapse', () => {
     expect(early).toBe(0);
   }, HEAVY);
 
-  test('T-E21-14 @E21 @E21-AC14 medkits: >= 2 per street, >= 7 total, +40 HP capped and consumed; newbie picks >= 2, < 10 % time below 20 % HP', async () => {
+  test('T-E21-14 @E21 @nightly @E21-AC14 medkits: >= 2 per street, >= 7 total, +40 HP capped and consumed; newbie picks >= 2, < 10 % time below 20 % HP', async () => {
     const byStreet = { blvd: 0, commerce: 0, oak: 0 }; for (const [, z] of l3.medkits.positions.slice(1)) byStreet[l3Street(z)]++;
     expect(Math.min(...Object.values(byStreet))).toBeGreaterThanOrEqual(2); expect(l3.medkits.positions.length).toBeGreaterThanOrEqual(7);
     const l = await loadL3(1); world = l.world; const w = l.world, s = l.mission.state.l3!;
@@ -282,7 +282,7 @@ describe('L3 The Police Collapse', () => {
     expect(median(newbie.map(r => r.lowHpShare))).toBeLessThanOrEqual(.1);
   }, HEAVY);
 
-  test('T-E21-17 @E21 @E21-AC17 army checkpoint: >= 8 soldiers, the rendezvous ends the level straight into progression', async () => {
+  test('T-E21-17 @E21 @nightly @E21-AC17 army checkpoint: >= 8 soldiers, the rendezvous ends the level straight into progression', async () => {
     const l = await loadL3(5); world = l.world; const s = l.mission.state.l3!;
     expect(s.soldierIds.length).toBeGreaterThanOrEqual(8);
     for (const id of s.soldierIds) { const e = l.world.entities.get(id)!; expect(e.appearance!.asset).toBe('npc.national-guard'); expect(e.transform.x).toBeGreaterThan(l3.map.zoneX - 4); }
@@ -293,7 +293,7 @@ describe('L3 The Police Collapse', () => {
     expect(events.indexOf('l3.crossed')).toBeLessThan(events.lastIndexOf('level.completed'));
   }, HEAVY);
 
-  test('T-E21-18 @E21 @E21-AC18 checkpoints armory, fallback, segment-2, segment-3 restore squad, outbreak layer and picked medkits', async () => {
+  test('T-E21-18 @E21 @nightly @E21-AC18 checkpoints armory, fallback, segment-2, segment-3 restore squad, outbreak layer and picked medkits', async () => {
     const l = await loadL3(2); world = l.world; const m = l.mission, w = l.world;
     for (const id of l3.checkpoints) {
       runL3(w, m, 'complete', { stopWhen: mm => mm.state.checkpoint === id });
@@ -317,7 +317,7 @@ describe('L3 The Police Collapse', () => {
     }
   }, HEAVY);
 
-  test('T-E21-bots @E21 evade-only never attacks and still reaches the army zone', async () => {
+  test('T-E21-bots @E21 @nightly evade-only never attacks and still reaches the army zone', async () => {
     const runs: L3Report[] = [];
     for (const seed of [1, 2, 3]) { const l = await loadL3(seed); runs.push(runL3(l.world, l.mission, 'evade-only', { seed, maxSeconds: 600 })); l.world.dispose(); }
     record('bots-evade-only', runs);

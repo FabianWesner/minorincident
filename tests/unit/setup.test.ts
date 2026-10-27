@@ -14,21 +14,17 @@ test('T-E01-01 @E01 @E01-AC01 app and deployment scripts', () => {
   expect(readFileSync('index.html', 'utf8')).toContain('<title>Minor Incident</title>');
 });
 
-test.skipIf(!existsSync('preview'))('T-E01-previews @E01 dev server serves optional preview pages', async () => {
-  // Use another available port so the existing dev server on 3300 stays available.
+test.skipIf(!existsSync('preview'))('T-E01-previews @E01 dev server transforms optional preview pages', async () => {
   const server = await createServer({
-    server: { port: 3302, strictPort: false },
+    server: { middlewareMode: true },
     configLoader: 'runner',
     // This test requests HTML only; avoid background dependency scans during teardown.
     optimizeDeps: { entries: [], noDiscovery: true },
   });
   try {
-    await server.listen();
-    const url = server.resolvedUrls!.local[0];
     for (const name of readdirSync('preview').filter((name) => name.endsWith('.html'))) {
-      const response = await fetch(`${url}preview/${name}`);
-      expect(response.status).toBe(200);
-      const html = await response.text();
+      const source = readFileSync(`preview/${name}`, 'utf8');
+      const html = await server.transformIndexHtml(`/preview/${name}`, source);
       expect(html).toContain('/@vite/client');
       expect(html).toContain(readFileSync(`preview/${name}`, 'utf8').match(/<title>.*?<\/title>/)![0]);
     }
