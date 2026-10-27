@@ -1,6 +1,6 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { afterEach, describe, expect, test } from 'vitest';
-import { l4, l4Emergence, l4BreachApproaches, l4TentEntrances, l4Line, l4Posts } from '../../src/data/l4';
+import { l4, l4Emergence, l4BreachApproaches, l4Line, l4Posts } from '../../src/data/l4';
 import { l4AlphaEmergence } from '../../src/levels/L4/layout';
 import { emptyInput } from '../../src/input/InputFrame';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
@@ -134,9 +134,9 @@ describe('L4 PO round 10-13', () => {
     expect(s.lineCause).toBe('beats');
   }, HEAVY);
 
-  test('T-E22-po-3 @E22 @E22-AC10 @E22-AC12 infected come spread from all sides (and from inside the camp); six to eight Alphas reach the lines and nests; the beats hold', async () => {
+  test('T-E22-po-3 @E22 @E22-AC10 @E22-AC12 exterior infected spread from all sides through breaches; six to eight Alphas reach the lines and nests; the beats hold', async () => {
     const l = await loadL4(2); world = l.world; const w = l.world, m = l.mission, s = m.state.l4!;
-    const points = [...l4Emergence.map(e => ({ x: e.at[0], z: e.at[1] })), ...l4TentEntrances.map(e => ({ x: e.at[0], z: e.at[1] })), ...l4BreachApproaches.map(e => ({ x: e.at[0], z: e.at[1] }))];
+    const points = [...l4Emergence.map(e => ({ x: e.at[0], z: e.at[1] })), ...l4BreachApproaches.map(e => ({ x: e.at[0], z: e.at[1] }))];
     const reached = new Set<number>(), reachSectors = new Set<number>(), alphaReached = new Set<number>(), beats: string[] = [];
     const nests = l4Posts.filter(p => p.role === 'hmg').map(p => ({ x: p.at[0], z: p.at[1] })), pallets = l4Line.map(p => ({ x: p.x, z: p.z }));
     const soldierIds = () => s.soldierIds.filter(id => human(w.entities.get(id)));
@@ -163,8 +163,8 @@ describe('L4 PO round 10-13', () => {
     const byTick = new Map<string, number>();
     for (const id of s.emergedIds) { const e = s.origin[id]; if (e === undefined) continue; const k = `${e}`; byTick.set(k, (byTick.get(k) ?? 0) + 1); }
     const total = [...byTick.values()].reduce((a, b) => a + b, 0);
-    // The opening alarm uses real tent flaps. Later cohorts use the breached
-    // street approaches, with small groups spread across many source points.
+    // Q-192 supersedes the old interior-building request: both the alarm and
+    // later wire pressure use exterior sources, never army tent flaps.
     const streetCounts = [...byTick].filter(([origin]) => Number(origin) < l4Emergence.length).map(([, count]) => count);
     const share = Math.max(...streetCounts) / streetCounts.reduce((a, b) => a + b, 0);
     const inside = s.emergedIds.filter(id => (s.origin[id] ?? -1) >= l4Emergence.length).length;
@@ -179,7 +179,9 @@ describe('L4 PO round 10-13', () => {
     expect(streetCounts.length, 'the street flood retains at least twelve distinct source points').toBeGreaterThanOrEqual(12);
     expect(maxGroup, 'groups of 2-5, not a stream').toBeLessThanOrEqual(l4.war.group[1]);
     expect(new Set(Object.keys(out.perPoint)).size).toBeGreaterThanOrEqual(12);
-    expect(inside, 'infected also come from inside the camp').toBeGreaterThanOrEqual(1);
+    expect(inside, 'wire-pressure cohorts enter through the breaches').toBeGreaterThanOrEqual(1);
+    const ring = l4.perimeter;
+    expect(points.every(p => p.x <= ring.x0 || p.x >= ring.x1 || p.z <= ring.z0 || p.z >= ring.z1), 'Q-192: every source is outside the military wire').toBe(true);
     expect(reachSectors.size, 'infected reach soldiers from >= 4 directions').toBeGreaterThanOrEqual(4);
     expect(s.alphaIds.length).toBe(l4.alphas.count.high); expect(l4AlphaEmergence.length).toBe(l4.alphas.count.high);
     expect(alphaReached.size, '>= 3 Alphas reach a line or a nest').toBeGreaterThanOrEqual(3);

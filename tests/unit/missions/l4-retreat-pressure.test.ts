@@ -16,3 +16,19 @@ for (const kind of ['crawler', 'riot', 'firefighter', 'hazmat']) test(`L4 retrea
     expect(e.archetype).toBe(`infected.${kind}`);
   } finally { world.dispose(); }
 });
+
+for (const kind of ['runner', 'crawler', 'riot', 'firefighter', 'hazmat']) test(`L4 retreat preserves the authored street ${kind} encounter`, async () => {
+  const { world, mission } = await loadL4(2);
+  try {
+    const ai = world.infected!, state = mission.state.l4!;
+    for (const e of [...ai.active]) ai.release(e);
+    const id = ai.spawn(`infected.${kind}`, { x: -84, z: -39.5 });
+    const e = world.entities.get(id)!;
+    state.pendingDoor.push({ id, door: 'l4-street-edge-3', home: { x: -84, z: -39.5 }, reserved: false });
+    state.phase = 'collapse'; world.tick = 60 + id % 60;
+    (mission.l4 as unknown as { followBreachHorde(): void }).followBreachHorde();
+    expect(e.infected!.heardTargetId).toBe(0);
+    expect(e.infected!.l1?.focusId ?? 0).toBe(0);
+    expect(e.infected!.scripted).toBeUndefined();
+  } finally { world.dispose(); }
+});

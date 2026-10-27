@@ -667,12 +667,16 @@ export class LevelFourWar {
     if (this.s.phase === 'collapse' || !this.low && this.s.director.lines[2].brokeAt) {
       const soldiers = this.liveSoldiers();
       if (!soldiers.length) return;
+      // Street encounters keep their sight-driven courier job. The retreating
+      // army must not pull the cellar approach group back into the camp.
+      const streetArrivals = new Set(this.s.pendingDoor.filter(q => q.id > 0).map(q => q.id));
       const assigned = new Map<number, number>();
       if (!this.low) for (const e of ai.active) {
         const id = e.infected?.l1?.focusId ?? e.infected?.l4FlankTarget ?? e.infected?.heardTargetId;
         if (id && e.health.current > 0 && !e.hidden) assigned.set(id, (assigned.get(id) ?? 0) + 1);
       }
       for (const e of ai.active) {
+        if (streetArrivals.has(e.id)) continue;
         if (e.archetype === 'infected.alpha' && e.health.current > 0 && !e.hidden && !e.infected?.specialAttack && dist(e.transform, player.transform) > l4.director.escape.nearM && tick % 60 === e.id % 60) {
           // Surviving Alphas finish the battle with the retreating army rather
           // than retaining their now-silent tank staging point forever.

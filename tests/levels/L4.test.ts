@@ -287,11 +287,11 @@ describe('L4 The Safe City Falls', () => {
       w.update();
       const h = w.entities.get(s.heliId); if (h && s.heliPhase !== 'gone') { heliAlt = Math.max(heliAlt, h.transform.y); if (h.transform.y < 8) heliGrounded = true; }
     }
+    record('spectacle', { bursts: bursts.size, tank, heliPasses, heliAlt });
     expect(bursts.size).toBeGreaterThanOrEqual(2);
     expect(tank.length).toBeGreaterThanOrEqual(2);
     for (const [i, t] of tank.entries()) { if (i) { const gap = (t.tick - tank[i - 1].tick) / 60; expect(gap).toBeGreaterThanOrEqual(7.9); expect(gap).toBeLessThanOrEqual(12.8); } expect(dist(t.to, t.player)).toBeGreaterThanOrEqual(l4.tank.minDistM); expect(t.closestAlly).toBeGreaterThanOrEqual(l4.tank.minDistM - .5); }
     expect(heliPasses).toBeGreaterThanOrEqual(2); expect(heliGrounded).toBe(false); expect(heliAlt).toBeGreaterThan(14);
-    record('spectacle', { bursts: bursts.size, tank, heliPasses, heliAlt });
   }, HEAVY);
 
   test('T-E22-13 @E22 @E22-AC13 the line breaks after the third lost line ("Fall back!", also with the idle bot): fuel-truck mega chain, objective "Run to the cellar", the helicopter withdraws', async () => {
