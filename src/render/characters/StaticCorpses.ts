@@ -1,7 +1,7 @@
 import { premultiplyRow, skinnedVertexMatrix, skinnedWoundNormal } from './skinnedCrowd';
-import { interleaveTexturedCrowd, crowdSurfaceBindings } from './crowdTexture';
+import { interleaveCrowdSurface, crowdSurfaceBindings } from './crowdTexture';
 import { writeCrowdAppearance, renderedCrowdLook, resolveCrowdAppearance } from './CrowdAppearance';
-import { BufferAttribute, BufferGeometry, Color, Group, InstancedBufferAttribute, InstancedMesh, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, Sphere, type Frustum, Vector3, Uint16BufferAttribute, Uint32BufferAttribute, MeshLambertNodeMaterial } from 'three/webgpu';
+import { BufferAttribute, BufferGeometry, Color, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Sphere, type Frustum, Vector3, Uint16BufferAttribute, Uint32BufferAttribute, MeshLambertNodeMaterial } from 'three/webgpu';
 import { normalViewGeometry } from 'three/tsl';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import type { CrowdClip } from '../../assets/crowd';
@@ -17,6 +17,7 @@ const CELL = 40;
 // graph too: copies per pool rebuilt identical shaders as new blast victims
 // settled. Pages still own their geometry and per-instance appearance buffers.
 const sharedFrozenMaterials = new WeakMap<PaletteMaterial, { material: PaletteMaterial; users: number }>();
+const interleavedSurfaces = new WeakMap<BufferGeometry, Record<string, BufferGeometry['attributes'][string]>>();
 interface Chunk { mesh: InstancedMesh; tint: InstancedBufferAttribute; overlay: InstancedBufferAttribute; probe: CrowdFigureProbe; keys: string[]; spheres: Sphere[] }
 interface CorpseSurface { source: BufferGeometry; material: MeshLambertNodeMaterial; clip: CrowdClip; frame: number }
 interface DetailBody {
@@ -327,22 +328,13 @@ export class StaticCorpses extends Group {
     // Static vertex buffers and shader are shared; only instance attributes differ per spatial page.
     const geometry = new BufferGeometry();
     for (const name of ['position', 'normal', 'color', '_parts', ...(frozen.geometry.hasAttribute('uv') ? ['uv'] : [])]) geometry.setAttribute(name, frozen.geometry.getAttribute(name));
-    if (geometry.hasAttribute('uv')) {
-      // Frozen texture pages also bind placement, tint and feedback. Keep their
-      // immutable surface in one buffer so the UV path stays within WebGPU's eight.
-      const names = ['position', 'normal', 'color', '_parts', 'uv'];
-      const attributes = names.map(name => geometry.getAttribute(name));
-      const stride = attributes.reduce((sum, attribute) => sum + attribute.itemSize, 0);
-      const data = new InterleavedBuffer(new Float32Array(attributes[0].count * stride), stride);
-      let offset = 0;
-      attributes.forEach((attribute, a) => {
-        for (let i = 0; i < attribute.count; i++) for (let c = 0; c < attribute.itemSize; c++) data.array[i * stride + offset + c] = attribute.getComponent(i, c);
-        geometry.setAttribute(names[a], new InterleavedBufferAttribute(data, attribute.itemSize, offset)); offset += attribute.itemSize;
-      });
-    }
     geometry.setIndex(frozen.geometry.getIndex());
     geometry.boundingSphere = frozen.geometry.boundingSphere!.clone();
-    interleaveTexturedCrowd(geometry);
+    // Frozen pages also bind placement, colour and three instance channels: keep the immutable surface (textured or
+    // not) in one buffer so every page stays within WebGPU's eight with headroom (Q-201). Pages of one pose share it.
+    const shared = interleavedSurfaces.get(frozen.geometry);
+    if (shared) for (const [name, attribute] of Object.entries(shared)) geometry.setAttribute(name, attribute);
+    else { interleaveCrowdSurface(geometry); interleavedSurfaces.set(frozen.geometry, { ...geometry.attributes }); }
     const state = new InstancedBufferAttribute(new Float32Array(128 * 4), 4);
     const colors = new InstancedBufferAttribute(new Float32Array(128 * 4), 4);
     const stains = new InstancedBufferAttribute(new Float32Array(128 * 4), 4); // crowd overlay layout (w: pose row, unused when frozen)

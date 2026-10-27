@@ -1,6 +1,6 @@
 import { paintedSkinMask } from '../characters/paintedSkin';
 import { crowdRegionOf, crowdRegionSkin, crowdRegionTint } from '../characters/crowdRegions';
-import { crowdAppearanceColor, crowdSkinColor, crowdHeadwearVisibility, crowdCoveredScalpColor } from '../characters/CrowdAppearance';
+import { crowdAppearanceColor, crowdSkinColor, crowdHeadwearVisibility, crowdCoveredScalp } from '../characters/CrowdAppearance';
 import { type Node, DoubleSide, FrontSide, MeshLambertNodeMaterial, type DataTexture, type Texture } from 'three/webgpu';
 import { attribute, mat4, mix, normalGeometry, positionGeometry, vec3, vec4, cameraViewMatrix, luminance, time, sin, cos, texture as sampleTexture, varying, float } from 'three/tsl';
 import { crowdBlendedMatrix, poseTexture } from '../../assets/crowd';
@@ -23,11 +23,11 @@ export function civilianMaterial(shading: Materials | undefined, doubleSided: bo
     const overlay = attribute('_overlay', 'vec4'), grip = overlay.z.lessThan(0).select(1, 0), dirt = overlay.z.max(0), turning = overlay.y.greaterThan(1.5).select(1, 0), eyeGlow = overlay.y.sub(turning.mul(2)), eye = parts.z.min(1), mark = options.skinned ? float(0) : parts.w.mod(4), vein = mark.equal(1).select(1, 0), blood = mark.equal(2).select(1, 0), socket = mark.equal(3).select(1, 0), decay = overlay.x;
     // parts.y > 0: tinted garment, value = the shade's brightness relative to the main garment colour.
     const atlas = options.atlas ? sampleTexture(options.atlas, attribute('uv', 'vec2')) : undefined;
-    const covered = variant.x.div(512).floor().mod(2).equal(1), scalp = options.skinned ? varying(parts.x.equal(3).and(parts.z.lessThan(.5)).and(parts.y.notEqual(-6)).and(parts.w.lessThan(4)).select(parts.w.div(3).mul(covered.select(1, 0)), 0), 'coveredScalp') : float(0);
+    const covered = variant.x.div(512).floor().mod(2).equal(1), coveredScalp = options.skinned ? crowdCoveredScalp(parts.x.equal(3).and(parts.z.lessThan(.5)).and(parts.y.notEqual(-6)).and(parts.w.lessThan(4)).select(parts.w.div(3).mul(covered.select(1, 0)), 0)) : undefined, scalp = coveredScalp ? coveredScalp.w : float(0);
     // crowd-texture-quality: classed atlas regions take the person's tones (as the rigid crowd did), shading kept.
     const region = atlas ? crowdRegionOf(atlas, attribute('uv', 'vec2')) : undefined;
     const authoredClothing = atlas ? mix(crowdAppearanceColor(), crowdRegionTint(atlas.rgb, region!), parts.y.equal(-4).or(parts.y.equal(-5)).or(parts.y.lessThanEqual(-10)).select(0, 1)) : crowdAppearanceColor();
-    const clothing = options.skinned ? mix(authoredClothing, crowdCoveredScalpColor().mul(.8), scalp) : authoredClothing;
+    const clothing = options.skinned ? mix(authoredClothing, coveredScalp!.xyz.mul(.8), scalp) : authoredClothing;
     // Eye discs sample the atlas at their own disc UVs; their texel class is meaningless, so they never count as skin.
     // Same clothes and body: only the skin blends toward ash-green, blood darkens mouth and bite, eyes ignite.
     // Skin only: drained grey-green (desaturated, darker), at up to 70 % for the 40 % sim blend so it reads at distance.
