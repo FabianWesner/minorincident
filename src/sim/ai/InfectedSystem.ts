@@ -242,6 +242,8 @@ export class InfectedSystem {
     }
   }
   alert(entity: EntitySnapshot): void { if (entity.infected!.state === 'idle' || entity.infected!.state === 'wander') { entity.infected!.state = 'alerted'; entity.infected!.until = this.world.tick + 6; } }
+  /** One brain tick per active infected, in `active` order: pre-brain gates, pursuit/vault, far-crowd slot, script, perception,
+   * special moves, roar/pin holds, then the L1 or archetype brain. Every phase returns true when it consumed the actor's tick. */
   update(): void {
     if (this.world.progression?.campaign?.world?.infectionCleared && this.world.scenario !== 'L10' && this.world.missions?.state.id !== 'L10') for (const e of this.active) this.world.combat?.damage.cure(e);
     const courier = this.world.entities.get(1)!; this.budget = 2000; this.routes = 0; this.director.update();
@@ -252,234 +254,267 @@ export class InfectedSystem {
     for (const e of this.active) {
       if (e.pendingAdmission && e.health.current > 0) continue;
       this.world.solids.wrote(e, 'infected.update');
-      if (this.world.npcs?.civilians.holds(e.id)) { e.combat!.attacking = false; continue; }
-      const b = e.infected!; if (e.health.current <= 0) { this.dead(e); continue; }
-      if (e.infectionRise && this.world.tick < e.infectionRise.until) { e.combat!.attacking = false; continue; }
-      if (e.attachedTo !== undefined) { e.combat!.attacking = false; continue; }
-      if (this.world.missions?.state.states['cure-released']) {
-        this.cancelSpecial(e.id); if (b.special === 'pin') this.releasePin(e);
-        e.combat!.attacking = false; b.grabUntil = 0; b.state = 'chase';
-        this.seek(e, courier.transform); this.world.spatial.set(e.id, e.transform.x, e.transform.z); continue;
-      }
-      // PO 10-16: Mega notices nearby humans too, while its E32 global target stays the courier.
-      if (b.pursuit && !b.specialAttack && b.state !== 'attack' && b.state !== 'stagger' && b.grabUntil <= this.world.tick && this.world.tick >= (b.specialRecoveryUntil ?? 0) && !Status.stunned(e, this.world.tick)) {
-        const heard = this.hearing.closestHeard(e);
-        if (!heard) delete b.proximityNotice;
-        else {
-          if (!b.proximityNotice) {
-            b.proximityNotice = { id: heard.id, until: this.world.tick + 36 };
-            this.world.events.emit({ type: 'ai.alerted', tick: this.world.tick, sourceId: heard.id, targetId: e.id, cause: 'hearing', position: { ...e.transform } });
-            this.world.events.emit({ type: 'telegraph', tick: this.world.tick, sourceId: e.id, attackId: this.nextAttackId(), special: 'alpha.roar', duration: .6 });
-          }
-          if (heard.id !== 1 && this.world.tick < b.proximityNotice.until) {
-            const yaw = -Math.atan2(heard.position.z - e.transform.z, heard.position.x - e.transform.x);
-            const delta = Math.atan2(Math.sin(yaw - e.transform.yaw), Math.cos(yaw - e.transform.yaw));
-            e.transform.yaw += Math.max(-hearingTurnRadS / 60, Math.min(hearingTurnRadS / 60, delta));
-            if (e.locomotion) resetResponse(e.locomotion);
-            e.combat!.attacking = false; continue;
-          }
-        }
-      }
-      // E32 Mega Alpha: global pursuit owns its movement; close range and recovery hand the tick to the Alpha brain below.
-      if (b.pursuit && this.world.megaPursuit?.drive(e)) continue;
-      if (this.world.barricades?.vault(e)) continue;
-      // E18: far L3 crowds keep swept motion every tick, with decision work spread over six stable slots.
-      // Nearby humans, reactions and the rescue fight retain the full-rate brain.
-      if (this.world.scenario === 'L3' && !this.world.missions?.state.l3?.finaleAt && b.l1 && e.locomotion && !b.specialAttack && !e.emerging &&
-          this.world.tick % 6 !== e.id % 6 && Math.hypot(e.transform.x-courier.transform.x,e.transform.z-courier.transform.z)>35 &&
-          (!e.combat?.reaction || this.world.tick >= e.combat.reaction.until) && this.director.offscreen(e.transform,e.transform.y-.7) &&
-          this.hearing.humans.within(e.transform,18).length===0) {
-        if (!b.l1.looking) moveAgent(e,e.locomotion.vx,e.locomotion.vz,this.infectedNav,this.world.tick,e.combat!.radius,true);
-        e.transform.y=(this.world.districts?.groundHeight(e.transform.x,e.transform.z)??0)+.7;
-        this.world.spatial.set(e.id,e.transform.x,e.transform.z); continue;
-      }
+      const b = e.infected!;
+      if (this.heldOrDead(e, b, courier)) continue;
+      if (this.pursuitOrVault(e, b)) continue;
+      if (this.farCrowdSlot(e, b, courier)) continue;
       if (!b.specialAttack && (this.world.tick + e.id) % 3 === 0 && !e.emerging && !b.perched && !b.hidden && b.grabUntil <= this.world.tick) this.depenetrate(e);
-      if (b.scripted && !b.specialAttack) {
-        const breachSpeed = b.breachApproach ? b.l1?.runSpeed : undefined;
-        if (!Status.stunned(e, this.world.tick) && Math.hypot(e.transform.x - b.scripted.x, e.transform.z - b.scripted.z) > .6) this.seek(e, b.scripted, breachSpeed);
-        e.combat!.attacking = false; this.world.spatial.set(e.id, e.transform.x, e.transform.z); continue;
-      }
-      const provoker = this.provoker(e, b);
-      if (provoker && !b.l1 && !b.pursuit && !b.specialAttack && !e.emerging && !Status.stunned(e, this.world.tick)) {
-        b.heardTargetId = provoker.id; delete b.investigate;
-        if (b.state === 'idle' || b.state === 'wander' || b.state === 'alerted' || b.state === 'attracted') { b.state = 'chase'; e.combat!.attacking = false; b.grabUntil = 0; }
-      }
-      if (e.archetype === 'infected.alpha' && !b.specialAttack && !b.pursuit && !(provoker && !b.l1)) {
-        const authoredSight = this.world.scenario === 'L4' || this.world.scenario === 'L5';
-        const seen = authoredSight ? this.hearing.closest(e, b.heardTargetId ?? 0) : this.hearing.closestHeard(e);
-        if (seen) {
-          const newHeard = this.world.scenario !== 'L5' && (b.heardTargetId || (b.state === 'chase' ? 1 : 0)) !== seen.id && !this.hearing.sees(e, seen.position);
-          delete b.investigate; b.heardTargetId = seen.id;
-          if (b.state === 'attracted') b.state = 'idle';
-          if (b.state === 'idle' || b.state === 'wander' || newHeard && b.state === 'chase') {
-            const heard = !this.hearing.sees(e, seen.position);
-            this.alert(e);
-            if (newHeard) b.state = 'alerted';
-            if (heard) {
-              b.until = this.world.tick + 36;
-              this.world.events.emit({ type: 'telegraph', tick: this.world.tick, sourceId: e.id, attackId: this.nextAttackId(), special: 'alpha.roar', duration: .6 });
-            }
-            this.world.events.emit({ type: 'ai.alerted', tick: this.world.tick, sourceId: seen.id, targetId: e.id, cause: heard ? 'hearing' : 'sight', position: { ...e.transform } });
-          }
-        } else if (authoredSight) {
-          b.heardTargetId = 0; e.combat!.attacking = false;
-          if (b.investigate && this.world.tick < b.until) {
-            if (!Status.stunned(e, this.world.tick) && Math.hypot(e.transform.x - b.investigate.x, e.transform.z - b.investigate.z) > 1.5) this.seek(e, b.investigate);
-            this.world.spatial.set(e.id, e.transform.x, e.transform.z); continue;
-          }
-          delete b.investigate; b.state = 'idle';
-        }
-      }
-      const territory = provoker ? undefined : b.territory;
-      if (territory) {
-        const target = b.specialAttack?.target ?? b.investigate ?? (b.heardTargetId ? this.world.entities.get(b.heardTargetId)?.transform : undefined);
-        if (target && Math.hypot(target.x - territory.x, target.z - territory.z) > territory.radius) {
-          this.cancelSpecial(e.id); delete b.investigate; b.heardTargetId = 0; b.state = 'idle'; e.combat!.attacking = false;
-          if (!Status.stunned(e, this.world.tick) && Math.hypot(e.transform.x - territory.x, e.transform.z - territory.z) > 1) this.seek(e, territory);
-          this.world.spatial.set(e.id, e.transform.x, e.transform.z); continue;
-        }
-      }
+      if (this.followScript(e, b)) continue;
+      if (this.perceiveTargets(e, b)) continue;
       if (this.updateSpecial(e)) continue;
-      if (b.roar) {
-        const roar = b.roar;
-        if (this.world.tick >= roar.until) {
-          this.world.events.emit({ type: 'infected.roar-buff', tick: this.world.tick, sourceId: roar.sourceId, targetId: e.id, attackId: roar.attackId, stage: 'expiry', until: roar.until });
-          delete b.roar; b.path.length = 0; b.goal = -1;
-        } else if (!Status.stunned(e, this.world.tick)) {
-          e.combat!.attacking = false;
-          if (b.l1) this.steerL1(e, b.l1, roar, b.l1.runSpeed * (roar.speedUntil === undefined || this.world.tick < roar.speedUntil ? roar.speedScale ?? 1.25 : 1));
-          else this.seek(e, roar);
-          this.world.spatial.set(e.id, e.transform.x, e.transform.z); continue;
+      if (this.roarOrPinHold(e, b)) continue;
+      if (b.l1) this.updateL1(e, b, b.l1); else this.updateArchetype(e, b);
+    }
+    this.settleBodies();
+    // The player consumes borrowed transform references, never renderer state.
+    for (const e of this.active) if (e.health.current > 0) this.crowd.push(this.obstacle(e));
+    if (this.world.player) this.world.player.locomotion.crowd = this.crowd;
+  }
+  /** Phase 1: civilian holds, death, rising, attachment and the L10 cure release leave no brain tick. */
+  private heldOrDead(e: EntitySnapshot, b: InfectedState, courier: EntitySnapshot): boolean {
+    if (this.world.npcs?.civilians.holds(e.id)) { e.combat!.attacking = false; return true; }
+    if (e.health.current <= 0) { this.dead(e); return true; }
+    if (e.infectionRise && this.world.tick < e.infectionRise.until) { e.combat!.attacking = false; return true; }
+    if (e.attachedTo !== undefined) { e.combat!.attacking = false; return true; }
+    if (this.world.missions?.state.states['cure-released']) {
+      this.cancelSpecial(e.id); if (b.special === 'pin') this.releasePin(e);
+      e.combat!.attacking = false; b.grabUntil = 0; b.state = 'chase';
+      this.seek(e, courier.transform); this.place(e); return true;
+    }
+    return false;
+  }
+  /** Phase 2: the Mega Alpha's proximity notice and global pursuit, then barricade vaults for everyone. */
+  private pursuitOrVault(e: EntitySnapshot, b: InfectedState): boolean {
+    // PO 10-16: Mega notices nearby humans too, while its E32 global target stays the courier.
+    if (b.pursuit && !b.specialAttack && b.state !== 'attack' && b.state !== 'stagger' && b.grabUntil <= this.world.tick && this.world.tick >= (b.specialRecoveryUntil ?? 0) && !Status.stunned(e, this.world.tick)) {
+      const heard = this.hearing.closestHeard(e);
+      if (!heard) delete b.proximityNotice;
+      else {
+        if (!b.proximityNotice) {
+          b.proximityNotice = { id: heard.id, until: this.world.tick + 36 };
+          this.alerted(e, heard.id, 'hearing'); this.roarTelegraph(e);
         }
-      }
-      if (b.special === 'pin' && b.grabHits >= 2) this.releasePin(e);
-      if (b.special === 'pin' && b.grabUntil > this.world.tick) {
-        const held = this.world.entities.get(b.heardTargetId || 1);
-        if (!held || held.health.current <= 0 || held.hidden || this.world.inspectionGhost) this.releasePin(e);
-        else { e.combat!.attacking = false; continue; }
-      }
-      if (b.l1) { this.updateL1(e, b, b.l1); continue; }
-      if (b.heardTargetId && !this.hearing.humans.get(b.heardTargetId)) { b.heardTargetId = 0; b.grabUntil = 0; b.state = 'idle'; e.combat!.attacking = false; }
-      const player = this.victim(e);
-      // Smoke also cancels a windup or hearing reaction already in progress.
-      const smoked = !b.pursuit && this.world.combat!.effects.smokeBlocks(e.transform, player.transform);
-      if (smoked && (b.state === 'chase' || b.state === 'attack' || b.state === 'alerted')) {
-        b.state = 'wander'; b.until = this.world.tick + 90; e.combat!.attacking = false; b.grabUntil = 0;
-        const angle = this.rng.next() * Math.PI * 2; b.dx = Math.cos(angle); b.dz = Math.sin(angle);
-        this.world.events.emit({ type: 'ai.lostTarget', tick: this.world.tick, sourceId: e.id, targetId: player.id, cause: 'smoke' });
-      }
-      if (!smoked && (b.state === 'idle' || b.state === 'wander') && !Status.stunned(e, this.world.tick) && !e.emerging) {
-        const heard = this.hearing.closestHeard(e);
-        if (heard && !(heard.id === 1 && this.seesPlayer(e, player))) {
-          b.heardTargetId = heard.id; b.state = 'alerted'; b.until = this.world.tick + (e.archetype === 'infected.alpha' ? 36 : hearingReactionTicks);
-          if (e.archetype === 'infected.alpha') this.world.events.emit({ type: 'telegraph', tick: this.world.tick, sourceId: e.id, attackId: this.nextAttackId(), special: 'alpha.roar', duration: .6 });
-          this.world.events.emit({ type: 'ai.alerted', tick: this.world.tick, sourceId: heard.id, targetId: e.id, cause: 'hearing', position: { ...e.transform } });
+        if (heard.id !== 1 && this.world.tick < b.proximityNotice.until) {
+          this.turnToward(e, heard.position);
+          if (e.locomotion) resetResponse(e.locomotion);
+          e.combat!.attacking = false; return true;
         }
-      }
-      if (this.world.inspectionGhost && b.targetId <= 1 && !['idle', 'wander', 'migration'].includes(b.state)) {
-        b.state = 'idle'; b.grabUntil = 0; e.combat!.attacking = false;
-      }
-      const lure = e.noiseTarget && this.world.tick < e.noiseTarget.until ? this.world.entities.get(e.noiseTarget.id) : undefined;
-      if (lure && b.state !== 'migration' && !Status.stunned(e, this.world.tick)) {
-        b.state = 'chase'; e.combat!.attacking = false;
-        const dx = e.transform.x - lure.transform.x, dz = e.transform.z - lure.transform.z, distance = Math.hypot(dx, dz);
-        const stop = (lure.combat?.radius ?? .6) + this.infectedNav.clearance + this.infectedNav.cellSize;
-        if (distance > stop + .5) {
-          this.lureTarget.x = lure.transform.x + dx / distance * stop; this.lureTarget.z = lure.transform.z + dz / distance * stop;
-          this.seek(e, this.lureTarget);
-        }
-        this.world.spatial.set(e.id, e.transform.x, e.transform.z); continue;
-      }
-      if (b.grabUntil > this.world.tick && ((b.special === 'grab' && b.grabHits >= 3) || (b.special === 'cling' && Math.hypot(player.transform.x - b.grabX, player.transform.z - b.grabZ) >= 3))) b.grabUntil = 0;
-      if (b.special === 'dive' && !this.world.inspectionGhost) {
-        updateFlock(e, this.world.tick, player.transform);
-        if (this.world.tick < b.scatterUntil) { b.state = 'scatter'; continue; }
-        if (b.state === 'scatter') b.state = 'chase';
-      }
-      const dx = player.transform.x - e.transform.x, dz = player.transform.z - e.transform.z, distance = Math.hypot(dx, dz);
-      if (b.special === 'cling' && b.hidden) {
-        if (distance > 5 || this.world.inspectionGhost) continue;
-        b.hidden = false; b.perched = false; if (!b.heardTargetId) b.state = 'chase'; e.transform.y = 0.7;
-      }
-      if (b.grabUntil > this.world.tick && b.special === 'cling') {
-        if (this.world.tick >= b.grabNextTick) { this.attackVictim(e, 3); b.grabNextTick += 60; }
-        e.transform.x = player.transform.x; e.transform.y = player.transform.y + 0.3; e.transform.z = player.transform.z; this.world.spatial.set(e.id, e.transform.x, e.transform.z); continue;
-      }
-      if (b.state === 'idle' || b.state === 'wander') {
-        if (!this.world.inspectionGhost && this.seesPlayer(e, player)) this.alert(e);
-        if (b.state === 'wander') {
-          moveAgent(e, b.dx * b.speed / 2, b.dz * b.speed / 2, this.infectedNav, this.world.tick); this.world.spatial.set(e.id, e.transform.x, e.transform.z);
-          if (this.world.tick >= b.until) b.state = 'idle';
-        } else if (this.world.tick >= 240 && this.world.tick % 240 === e.id % 240) { b.state = 'wander'; b.until = this.world.tick + 120; const angle = this.rng.next() * Math.PI * 2; b.dx = Math.cos(angle); b.dz = Math.sin(angle); }
-        continue;
-      }
-      if (b.state === 'migration') continue;
-      if (b.state === 'alerted') {
-        if (b.heardTargetId) {
-          const target = this.victim(e).transform, yaw = -Math.atan2(target.z - e.transform.z, target.x - e.transform.x);
-          const delta = Math.atan2(Math.sin(yaw - e.transform.yaw), Math.cos(yaw - e.transform.yaw));
-          e.transform.yaw += Math.max(-hearingTurnRadS / 60, Math.min(hearingTurnRadS / 60, delta));
-        }
-        if (this.world.tick >= b.until) b.state = 'chase'; else continue;
-      }
-      if (Status.stunned(e, this.world.tick)) { b.state = 'stagger'; continue; }
-      if (b.state === 'stagger') b.state = 'chase';
-      if (b.state === 'attack') {
-        if (this.world.tick >= b.until && this.resolve(e)) {
-          if (b.special === 'combo-grab' && b.combo < 2) { b.combo++; this.windup(e); continue; }
-          const def = infectedDef(e.archetype);
-          b.state = 'chase';
-          b.cooldown = this.world.tick + (def.attackInterval === undefined ? b.special === 'scream' ? 300 : 60 : Math.round((def.attackInterval - def.windup) * 60));
-          e.combat!.attacking = false;
-        }
-        continue;
-      }
-      if (b.state === 'chase') {
-        if (!this.world.inspectionGhost && (this.alphaSupport.tryStart(e, player) || this.tryZooSpecial(e, player))) continue;
-        if (e.archetype === 'infected.alpha' && !this.world.inspectionGhost && this.world.tick >= b.cooldown && this.world.tick >= (b.specialRecoveryUntil ?? 0)) {
-          const move = b.pursuit && distance <= 2 ? 'alpha.grab-throw' : distance <= 4 ? 'alpha.ground-slam' : distance <= 12 ? 'alpha.charge' : undefined;
-          if (move && this.world.tick + infectedSpecialMoves[move].windup >= (b.specialCooldowns?.[move] ?? 0) && this.world.combat!.query.visible(e.transform, player.transform) && this.startSpecial(e.id, move, { id: player.id, x: player.transform.x, z: player.transform.z }, { x: e.transform.x, z: e.transform.z, radius: move === 'alpha.charge' ? 1 : 4, dx: dx / Math.max(.001, distance), dz: dz / Math.max(.001, distance) })) continue;
-        }
-        let obstacle = this.world.barricades?.attackTarget(e, player.transform);
-        for (const target of this.barricades) if (!obstacle && !target.barricade && target.health.current > 0 && Math.hypot(e.transform.x - target.transform.x, e.transform.z - target.transform.z) <= 2) { obstacle = target; break; }
-        // Hold at an obstructing brace during cooldown. Seeking an unreachable goal here
-        // makes the nearest-cell fallback pull attackers away between their hits.
-        if (obstacle) {
-          if (this.world.barricades!.vault(e, obstacle)) continue;
-          if (!this.world.barricades!.withinReach(e, obstacle)) { this.seek(e, this.world.barricades!.approach(e, obstacle)); this.world.spatial.set(e.id, e.transform.x, e.transform.z); }
-          else if (this.world.tick >= b.cooldown) { this.windup(e); b.targetId = obstacle.id; }
-          continue;
-        }
-        let range = this.strikeRange(e, player);
-        if (b.special === 'lunge') range = 2.5;
-        if (b.special === 'aura') range = 3;
-        if (b.special === 'charge') range = 8;
-        if (b.special === 'pin' && e.archetype !== 'infected.lion') range = 10;
-        if (b.special === 'cling') range = 6;
-        if (b.special === 'pounce') range = 4;
-        if (b.special === 'dive') range = 6;
-        if (b.special === 'scream') range = 20;
-        if (b.special === 'revive' && this.revivable(e)) range = 20;
-        const packAngle = b.packIndex * Math.PI / 2;
-        const packReady = !b.pack || b.special !== 'pounce' || (-dx * Math.cos(packAngle) - dz * Math.sin(packAngle)) / Math.max(0.01, distance) >= 0.85;
-        if (packReady && distance <= range && this.world.tick >= b.cooldown && this.world.combat!.query.visible(e.transform, player.transform)) { b.combo = 0; this.windup(e); continue; }
-        if (b.special === 'pounce' && b.pack && (!packReady || distance > 4)) {
-          const angle = b.packIndex * Math.PI / 2; this.waypoint.x = player.transform.x + Math.cos(angle) * 3; this.waypoint.z = player.transform.z + Math.sin(angle) * 3;
-          this.seek(e, this.waypoint);
-        } else this.seek(e, player.transform); this.world.spatial.set(e.id, e.transform.x, e.transform.z);
       }
     }
-    // Once the death/explosion animation settles, keep a static identity record
-    // and return the costly brain to the warm pool. Bodies live until level unload.
+    // E32 Mega Alpha: global pursuit owns its movement; close range and recovery hand the tick to the Alpha brain below.
+    if (b.pursuit && this.world.megaPursuit?.drive(e)) return true;
+    return this.world.barricades?.vault(e) ?? false;
+  }
+  /** Phase 3 (E18): far L3 crowds keep swept motion every tick, with decision work spread over six stable slots.
+   * Nearby humans, reactions and the rescue fight retain the full-rate brain. */
+  private farCrowdSlot(e: EntitySnapshot, b: InfectedState, courier: EntitySnapshot): boolean {
+    if (this.world.scenario !== 'L3' || this.world.missions?.state.l3?.finaleAt || !b.l1 || !e.locomotion || b.specialAttack || e.emerging ||
+        this.world.tick % 6 === e.id % 6 || Math.hypot(e.transform.x - courier.transform.x, e.transform.z - courier.transform.z) <= 35 ||
+        (e.combat?.reaction && this.world.tick < e.combat.reaction.until) || !this.director.offscreen(e.transform, e.transform.y - .7) ||
+        this.hearing.humans.within(e.transform, 18).length !== 0) return false;
+    if (!b.l1.looking) moveAgent(e, e.locomotion.vx, e.locomotion.vz, this.infectedNav, this.world.tick, e.combat!.radius, true);
+    e.transform.y = (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .7;
+    this.place(e); return true;
+  }
+  /** Phase 4: a scripted walker (L4 breach, tent residents) only seeks its authored point. */
+  private followScript(e: EntitySnapshot, b: InfectedState): boolean {
+    if (!b.scripted || b.specialAttack) return false;
+    const breachSpeed = b.breachApproach ? b.l1?.runSpeed : undefined;
+    if (!Status.stunned(e, this.world.tick) && Math.hypot(e.transform.x - b.scripted.x, e.transform.z - b.scripted.z) > .6) this.seek(e, b.scripted, breachSpeed);
+    e.combat!.attacking = false; this.place(e); return true;
+  }
+  /** Phase 5: provocation by hits, the Alpha's sight/hearing acquisition and its territory leash. */
+  private perceiveTargets(e: EntitySnapshot, b: InfectedState): boolean {
+    const provoker = this.provoker(e, b);
+    if (provoker && !b.l1 && !b.pursuit && !b.specialAttack && !e.emerging && !Status.stunned(e, this.world.tick)) {
+      b.heardTargetId = provoker.id; delete b.investigate;
+      if (b.state === 'idle' || b.state === 'wander' || b.state === 'alerted' || b.state === 'attracted') { b.state = 'chase'; e.combat!.attacking = false; b.grabUntil = 0; }
+    }
+    if (e.archetype === 'infected.alpha' && !b.specialAttack && !b.pursuit && !(provoker && !b.l1)) {
+      const authoredSight = this.world.scenario === 'L4' || this.world.scenario === 'L5';
+      const seen = authoredSight ? this.hearing.closest(e, b.heardTargetId ?? 0) : this.hearing.closestHeard(e);
+      if (seen) {
+        const newHeard = this.world.scenario !== 'L5' && (b.heardTargetId || (b.state === 'chase' ? 1 : 0)) !== seen.id && !this.hearing.sees(e, seen.position);
+        delete b.investigate; b.heardTargetId = seen.id;
+        if (b.state === 'attracted') b.state = 'idle';
+        if (b.state === 'idle' || b.state === 'wander' || newHeard && b.state === 'chase') {
+          const heard = !this.hearing.sees(e, seen.position);
+          this.alert(e);
+          if (newHeard) b.state = 'alerted';
+          if (heard) { b.until = this.world.tick + 36; this.roarTelegraph(e); }
+          this.alerted(e, seen.id, heard ? 'hearing' : 'sight');
+        }
+      } else if (authoredSight) {
+        b.heardTargetId = 0; e.combat!.attacking = false;
+        if (b.investigate && this.world.tick < b.until) {
+          if (!Status.stunned(e, this.world.tick) && Math.hypot(e.transform.x - b.investigate.x, e.transform.z - b.investigate.z) > 1.5) this.seek(e, b.investigate);
+          this.place(e); return true;
+        }
+        delete b.investigate; b.state = 'idle';
+      }
+    }
+    const territory = provoker ? undefined : b.territory;
+    if (territory) {
+      const target = b.specialAttack?.target ?? b.investigate ?? (b.heardTargetId ? this.world.entities.get(b.heardTargetId)?.transform : undefined);
+      if (target && Math.hypot(target.x - territory.x, target.z - territory.z) > territory.radius) {
+        this.cancelSpecial(e.id); delete b.investigate; b.heardTargetId = 0; b.state = 'idle'; e.combat!.attacking = false;
+        if (!Status.stunned(e, this.world.tick) && Math.hypot(e.transform.x - territory.x, e.transform.z - territory.z) > 1) this.seek(e, territory);
+        this.place(e); return true;
+      }
+    }
+    return false;
+  }
+  /** Phase 6: a roar buff drives its follower to the roarer; a pin holds its victim (or releases a lost one). */
+  private roarOrPinHold(e: EntitySnapshot, b: InfectedState): boolean {
+    if (b.roar) {
+      const roar = b.roar;
+      if (this.world.tick >= roar.until) {
+        this.world.events.emit({ type: 'infected.roar-buff', tick: this.world.tick, sourceId: roar.sourceId, targetId: e.id, attackId: roar.attackId, stage: 'expiry', until: roar.until });
+        delete b.roar; b.path.length = 0; b.goal = -1;
+      } else if (!Status.stunned(e, this.world.tick)) {
+        e.combat!.attacking = false;
+        if (b.l1) this.steerL1(e, b.l1, roar, b.l1.runSpeed * (roar.speedUntil === undefined || this.world.tick < roar.speedUntil ? roar.speedScale ?? 1.25 : 1));
+        else this.seek(e, roar);
+        this.place(e); return true;
+      }
+    }
+    if (b.special === 'pin' && b.grabHits >= 2) this.releasePin(e);
+    if (b.special === 'pin' && b.grabUntil > this.world.tick) {
+      const held = this.world.entities.get(b.heardTargetId || 1);
+      if (!held || held.health.current <= 0 || held.hidden || this.world.inspectionGhost) this.releasePin(e);
+      else { e.combat!.attacking = false; return true; }
+    }
+    return false;
+  }
+  /** Phase 7 (archetype brains): hearing, smoke, lures, clings, then the idle/wander → alerted → chase/attack state machine. */
+  private updateArchetype(e: EntitySnapshot, b: InfectedState): void {
+    if (b.heardTargetId && !this.hearing.humans.get(b.heardTargetId)) { b.heardTargetId = 0; b.grabUntil = 0; b.state = 'idle'; e.combat!.attacking = false; }
+    const player = this.victim(e);
+    // Smoke also cancels a windup or hearing reaction already in progress.
+    const smoked = !b.pursuit && this.world.combat!.effects.smokeBlocks(e.transform, player.transform);
+    if (smoked && (b.state === 'chase' || b.state === 'attack' || b.state === 'alerted')) {
+      b.state = 'wander'; b.until = this.world.tick + 90; e.combat!.attacking = false; b.grabUntil = 0;
+      this.wanderDirection(b);
+      this.world.events.emit({ type: 'ai.lostTarget', tick: this.world.tick, sourceId: e.id, targetId: player.id, cause: 'smoke' });
+    }
+    if (!smoked && (b.state === 'idle' || b.state === 'wander') && !Status.stunned(e, this.world.tick) && !e.emerging) {
+      const heard = this.hearing.closestHeard(e);
+      if (heard && !(heard.id === 1 && this.seesPlayer(e, player))) {
+        b.heardTargetId = heard.id; b.state = 'alerted'; b.until = this.world.tick + (e.archetype === 'infected.alpha' ? 36 : hearingReactionTicks);
+        if (e.archetype === 'infected.alpha') this.roarTelegraph(e);
+        this.alerted(e, heard.id, 'hearing');
+      }
+    }
+    if (this.world.inspectionGhost && b.targetId <= 1 && !['idle', 'wander', 'migration'].includes(b.state)) {
+      b.state = 'idle'; b.grabUntil = 0; e.combat!.attacking = false;
+    }
+    const lure = e.noiseTarget && this.world.tick < e.noiseTarget.until ? this.world.entities.get(e.noiseTarget.id) : undefined;
+    if (lure && b.state !== 'migration' && !Status.stunned(e, this.world.tick)) {
+      b.state = 'chase'; e.combat!.attacking = false;
+      const dx = e.transform.x - lure.transform.x, dz = e.transform.z - lure.transform.z, distance = Math.hypot(dx, dz);
+      const stop = (lure.combat?.radius ?? .6) + this.infectedNav.clearance + this.infectedNav.cellSize;
+      if (distance > stop + .5) {
+        this.lureTarget.x = lure.transform.x + dx / distance * stop; this.lureTarget.z = lure.transform.z + dz / distance * stop;
+        this.seek(e, this.lureTarget);
+      }
+      this.place(e); return;
+    }
+    if (b.grabUntil > this.world.tick && ((b.special === 'grab' && b.grabHits >= 3) || (b.special === 'cling' && Math.hypot(player.transform.x - b.grabX, player.transform.z - b.grabZ) >= 3))) b.grabUntil = 0;
+    if (b.special === 'dive' && !this.world.inspectionGhost) {
+      updateFlock(e, this.world.tick, player.transform);
+      if (this.world.tick < b.scatterUntil) { b.state = 'scatter'; return; }
+      if (b.state === 'scatter') b.state = 'chase';
+    }
+    const dx = player.transform.x - e.transform.x, dz = player.transform.z - e.transform.z, distance = Math.hypot(dx, dz);
+    if (b.special === 'cling' && b.hidden) {
+      if (distance > 5 || this.world.inspectionGhost) return;
+      b.hidden = false; b.perched = false; if (!b.heardTargetId) b.state = 'chase'; e.transform.y = 0.7;
+    }
+    if (b.grabUntil > this.world.tick && b.special === 'cling') {
+      if (this.world.tick >= b.grabNextTick) { this.attackVictim(e, 3); b.grabNextTick += 60; }
+      e.transform.x = player.transform.x; e.transform.y = player.transform.y + 0.3; e.transform.z = player.transform.z; this.place(e); return;
+    }
+    if (b.state === 'idle' || b.state === 'wander') {
+      if (!this.world.inspectionGhost && this.seesPlayer(e, player)) this.alert(e);
+      if (b.state === 'wander') {
+        moveAgent(e, b.dx * b.speed / 2, b.dz * b.speed / 2, this.infectedNav, this.world.tick); this.place(e);
+        if (this.world.tick >= b.until) b.state = 'idle';
+      } else if (this.world.tick >= 240 && this.world.tick % 240 === e.id % 240) { b.state = 'wander'; b.until = this.world.tick + 120; this.wanderDirection(b); }
+      return;
+    }
+    if (b.state === 'migration') return;
+    if (b.state === 'alerted') {
+      if (b.heardTargetId) this.turnToward(e, this.victim(e).transform);
+      if (this.world.tick >= b.until) b.state = 'chase'; else return;
+    }
+    if (Status.stunned(e, this.world.tick)) { b.state = 'stagger'; return; }
+    if (b.state === 'stagger') b.state = 'chase';
+    if (b.state === 'attack') {
+      if (this.world.tick >= b.until && this.resolve(e)) {
+        if (b.special === 'combo-grab' && b.combo < 2) { b.combo++; this.windup(e); return; }
+        const def = infectedDef(e.archetype);
+        b.state = 'chase';
+        b.cooldown = this.world.tick + (def.attackInterval === undefined ? b.special === 'scream' ? 300 : 60 : Math.round((def.attackInterval - def.windup) * 60));
+        e.combat!.attacking = false;
+      }
+      return;
+    }
+    if (b.state === 'chase') this.chase(e, b, player, dx, dz, distance);
+  }
+  /** Chase: Alpha/zoo specials, barricade obstacles, then the strike window or the approach (pack pounces flank first). */
+  private chase(e: EntitySnapshot, b: InfectedState, player: EntitySnapshot, dx: number, dz: number, distance: number): void {
+    if (!this.world.inspectionGhost && (this.alphaSupport.tryStart(e, player) || this.tryZooSpecial(e, player))) return;
+    if (e.archetype === 'infected.alpha' && !this.world.inspectionGhost && this.world.tick >= b.cooldown && this.world.tick >= (b.specialRecoveryUntil ?? 0)) {
+      const move = b.pursuit && distance <= 2 ? 'alpha.grab-throw' : distance <= 4 ? 'alpha.ground-slam' : distance <= 12 ? 'alpha.charge' : undefined;
+      if (move && this.world.tick + infectedSpecialMoves[move].windup >= (b.specialCooldowns?.[move] ?? 0) && this.world.combat!.query.visible(e.transform, player.transform) && this.startSpecial(e.id, move, { id: player.id, x: player.transform.x, z: player.transform.z }, { x: e.transform.x, z: e.transform.z, radius: move === 'alpha.charge' ? 1 : 4, dx: dx / Math.max(.001, distance), dz: dz / Math.max(.001, distance) })) return;
+    }
+    let obstacle = this.world.barricades?.attackTarget(e, player.transform);
+    for (const target of this.barricades) if (!obstacle && !target.barricade && target.health.current > 0 && Math.hypot(e.transform.x - target.transform.x, e.transform.z - target.transform.z) <= 2) { obstacle = target; break; }
+    // Hold at an obstructing brace during cooldown. Seeking an unreachable goal here
+    // makes the nearest-cell fallback pull attackers away between their hits.
+    if (obstacle) {
+      if (this.world.barricades!.vault(e, obstacle)) return;
+      if (!this.world.barricades!.withinReach(e, obstacle)) { this.seek(e, this.world.barricades!.approach(e, obstacle)); this.place(e); }
+      else if (this.world.tick >= b.cooldown) { this.windup(e); b.targetId = obstacle.id; }
+      return;
+    }
+    let range = this.strikeRange(e, player);
+    if (b.special === 'lunge') range = 2.5;
+    if (b.special === 'aura') range = 3;
+    if (b.special === 'charge') range = 8;
+    if (b.special === 'pin' && e.archetype !== 'infected.lion') range = 10;
+    if (b.special === 'cling') range = 6;
+    if (b.special === 'pounce') range = 4;
+    if (b.special === 'dive') range = 6;
+    if (b.special === 'scream') range = 20;
+    if (b.special === 'revive' && this.revivable(e)) range = 20;
+    const packAngle = b.packIndex * Math.PI / 2;
+    const packReady = !b.pack || b.special !== 'pounce' || (-dx * Math.cos(packAngle) - dz * Math.sin(packAngle)) / Math.max(0.01, distance) >= 0.85;
+    if (packReady && distance <= range && this.world.tick >= b.cooldown && this.world.combat!.query.visible(e.transform, player.transform)) { b.combo = 0; this.windup(e); return; }
+    if (b.special === 'pounce' && b.pack && (!packReady || distance > 4)) {
+      this.waypoint.x = player.transform.x + Math.cos(packAngle) * 3; this.waypoint.z = player.transform.z + Math.sin(packAngle) * 3;
+      this.seek(e, this.waypoint);
+    } else this.seek(e, player.transform); this.place(e);
+  }
+  /** Once the death/explosion animation settles, keep a static identity record
+   * and return the costly brain to the warm pool. Bodies live until level unload. */
+  private settleBodies(): void {
     for (let i = this.active.length - 1; i >= 0; i--) {
       const e = this.active[i];
       if (e.health.current > 0 || e.infected!.recoverAt >= 0 || this.world.tick - e.infected!.deadAt < 120) continue;
       this.settle(e);
     }
-    // The player consumes borrowed transform references, never renderer state.
-    for (const e of this.active) if (e.health.current > 0) this.crowd.push(this.obstacle(e));
-    if (this.world.player) this.world.player.locomotion.crowd = this.crowd;
   }
+  private place(e: EntitySnapshot): void { this.world.spatial.set(e.id, e.transform.x, e.transform.z); }
+  private wanderDirection(b: InfectedState): void { const angle = this.rng.next() * Math.PI * 2; b.dx = Math.cos(angle); b.dz = Math.sin(angle); }
+  /** Hearing reactions turn the body toward the source at a capped rate. */
+  private turnToward(e: EntitySnapshot, target: { x: number; z: number }): void {
+    const yaw = -Math.atan2(target.z - e.transform.z, target.x - e.transform.x);
+    const delta = Math.atan2(Math.sin(yaw - e.transform.yaw), Math.cos(yaw - e.transform.yaw));
+    e.transform.yaw += Math.max(-hearingTurnRadS / 60, Math.min(hearingTurnRadS / 60, delta));
+  }
+  private roarTelegraph(e: EntitySnapshot): void { this.world.events.emit({ type: 'telegraph', tick: this.world.tick, sourceId: e.id, attackId: this.nextAttackId(), special: 'alpha.roar', duration: .6 }); }
+  private alerted(e: EntitySnapshot, sourceId: number, cause: 'hearing' | 'sight' | 'noise'): void { this.world.events.emit({ type: 'ai.alerted', tick: this.world.tick, sourceId, targetId: e.id, cause, position: { ...e.transform } }); }
   /**
    * A body inside a collider or nav blocker (a parked truck's footprint switched on around it, a closed gate) can never move:
    * every swept step starts blocked. Walk it out toward the nearest free spot (up to 3 m, ~4 m/s), ignoring the solid it
