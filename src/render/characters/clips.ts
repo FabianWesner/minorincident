@@ -1,5 +1,4 @@
 import { AnimationClip, AnimationMixer, Box3, Mesh, SkinnedMesh, Quaternion, QuaternionKeyframeTrack, VectorKeyframeTrack, Vector3, LoopOnce, type Object3D } from 'three';
-import type { AnimationState } from '../../data/survivor';
 import library from './library.json';
 import skinLibrary from './library.skin.json';
 import type { CharacterRig } from './rig';
@@ -380,5 +379,3 @@ export function sampleClip(root: Object3D, name: string, seconds: number): void 
   if (groundClips.test(name) || name === 'animal-death') settleGroundPose(root, /^(die|death-|animal-death)/.test(name) && seconds >= clip.duration * .95);
 }
 export type Clip = (rig: CharacterRig, seconds: number) => void;
-/** Complete sim-state contract; every evaluation uses authored glTF keyframes. */
-export const clips: Record<AnimationState, Clip> = Object.fromEntries(['idle','walk','run','hurt','die','knockdown','get-up','swing','shoot','throw','kick','interact','enter-car'].map(name => [name, (rig: CharacterRig, seconds: number) => sampleClip(rig.root, name, seconds)])) as Record<AnimationState, Clip>;

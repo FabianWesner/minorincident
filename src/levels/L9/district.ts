@@ -11,10 +11,3 @@ export const crossing = authored as {
 };
 export const crossingRouteLength = (points: readonly Point[]): number =>
   points.slice(1).reduce((sum, b, i) => sum + Math.hypot(b[0] - points[i][0], b[1] - points[i][1]), 0);
-/** 96 global 100 m cells. Local origin is the southwest corner, never the town origin.
- * S3/S4 own residency; these bounds do not imply resident terrain or simulation. */
-export const crossingChunks = Array.from({ length: 96 }, (_, i) => {
-  const x = i % 12, z = Math.floor(i / 12);
-  const origin: Point = [-600 + x * 100, -400 + z * 100];
-  return { id: `crossing-${x}-${z}`, origin, max: [origin[0] + 100, origin[1] + 100] as Point };
-});

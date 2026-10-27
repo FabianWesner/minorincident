@@ -29,8 +29,6 @@ export function zooStaffLook(index: number): ZooStaffLook {
   };
 }
 
-/** True when a pedestrian look is a staff look (uniform tint). */
-export const isZooStaffTint = (tint: string): boolean => (zooStaff.uniforms as readonly string[]).includes(tint.toLowerCase());
 
 /** Every staff base model is a shipped civilian model. */
 export const zooStaffModelsAreCivilianBases = (): boolean => zooStaff.models.every(m => (l1Pedestrians.models as readonly string[]).includes(m));

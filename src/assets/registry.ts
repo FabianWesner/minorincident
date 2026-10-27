@@ -14,8 +14,6 @@ import { applyVehicleDecay, vehicleDecayFallback } from './vehicleDecay';
 
 export type PlaceholderLog = { type: 'asset.placeholder'; id: string; reason: string };
 type Loader = (url: string) => Promise<Object3D>;
-/** LOD selection is based on projected height; callers update only when the tier changes. */
-export function lodForScreenHeight(pixels: number): 'lod0' | 'lod1' | 'lod2' { return pixels >= 160 ? 'lod0' : pixels >= 40 ? 'lod1' : 'lod2'; }
 export class AssetRegistry {
   private readonly definitions: Map<string, AssetDef>;
   private readonly cache = new Map<string, Promise<Object3D>>();

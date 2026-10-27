@@ -85,8 +85,8 @@ in scene extras. E07 can supply its clip evaluator to `bakeCrowd`.
 
 The registry returns independent clones of cached prototypes and logs
 `asset.placeholder` for unavailable or pre-integrated art. Use
-`loadAsset(id, 'lod0'|'lod1'|'lod2', decay?)`; `lodForScreenHeight` selects
-tiers at 160 and 40 pixels. Palette replacement preserves named gameplay
+`loadAsset(id, 'lod0'|'lod1'|'lod2', decay?)`; the live LOD policy is in
+`src/render/lodPolicy.ts`. Palette replacement preserves named gameplay
 nodes, light/collider extras and sockets.
 
 `/preview/?asset=<id>` provides orbit, wireframe, explode, node, LOD and decay

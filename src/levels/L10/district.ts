@@ -9,7 +9,6 @@ export const cure = authored as unknown as {
   threatDepth: { region: string; routeStart: number; routeEnd: number; resident: { high: [number, number]; low: [number, number] }; dogs?: [number, number]; alphas: [number, number]; alphasLow?: [number, number]; groupSize?: [number, number] }[];
   detours: { id: string; region: string; route: Point[] }[];
 };
-export const cureRouteLength = (points: readonly Point[]): number => points.slice(1).reduce((sum, b, i) => sum + Math.hypot(b[0] - points[i][0], b[1] - points[i][1]), 0);
 /** Global coarse pursuit follows the same reachable turn anchors as the detailed route. */
 const pursuitPoints = cure.regions.flatMap((r, i) => i ? r.route.slice(1) : r.route);
 const pursuitNodeId = ([x, z]: Point) => `cure-route-${pursuitPoints.findIndex(p => p[0] === x && p[1] === z)}`;
@@ -32,5 +31,3 @@ export const curePursuitRoute = {
   ],
 };
 
-/** Encounter lanes consume route depth, independently of inventory. Counts include mixed threats. */
-export const cureThreatAtDepth = (metres: number) => cure.threatDepth.find(row => metres < row.routeEnd) ?? cure.threatDepth.at(-1)!;

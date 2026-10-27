@@ -6,9 +6,6 @@ import type { QualityTier } from '../../core/Quality';
 export interface TerrainChunk { id: string; origin: Point; max: Point }
 export const terrainChunkBudgets = { high: 25, low: 9 } as const;
 export const terrainPrefetchSeconds = 2;
-export function localTerrainPoint(chunk: TerrainChunk, global: Point): Point {
-  return [global[0] - chunk.origin[0], global[1] - chunk.origin[1]];
-}
 /** A square neighbourhood shifted towards two seconds of maximum-speed travel.
  * With 100 m cells and 18 m/s, both the current and predicted cell remain covered. */
 export function selectTerrainChunks(chunks: readonly TerrainChunk[], size: number, focus: Point, velocity: Point, tier: QualityTier, maxSpeed = 18): TerrainChunk[] {

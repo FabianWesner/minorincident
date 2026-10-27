@@ -43,7 +43,6 @@ import { loadCivilianBake } from '../../assets/civilianBake';
 import { keepsLook } from '../../sim/outbreak/appearance';
 import type { EntitySnapshot } from '../../sim/world/types';
 import { prepareCivilianGeometry, prepareCivilianRig, type PreparedCivilian } from './prepareCivilianGeometry';
-export { restoreStanding } from './prepareCivilianGeometry';
 // Cache prepared CPU geometry, including LOD simplification; each scene owns a clone.
 const preparedCrowds = new Map<string, PreparedCivilian>();
 // Retain at most the twelve core models' two common tiers. Different campaign casts
@@ -80,8 +79,6 @@ export function infectedClip(state: string, speed: number, tier: 'frail' | 'aver
   if (speed > .1) return slowGait[tier];
   return state === 'search' ? infectedSearch : infectedIdle;
 }
-/** Locomotion clips (their phase is driven by distance travelled). */
-export const locomotionClips = new Set<string>(['infected-frail', 'infected-lurch', 'infected-sprint', 'infected-run', 'shamble', 'run', 'walk', 'npc-walk', 'npc-walk-relaxed', 'npc-carry', 'npc-cane', 'civ-flee']);
 /** Wandering infected never jog upright: below run speed every tier lurches (frail shuffles), arms forward. */
 const slowGait = { frail: clipOr('infected-frail', 'shamble'), average: clipOr('infected-lurch', 'shamble'), athletic: clipOr('infected-lurch', 'shamble') } as const;
 const infectedIdle = clipOr('infected-idle', 'idle'), infectedSearch = clipOr('infected-search', 'idle');

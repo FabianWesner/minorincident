@@ -235,9 +235,6 @@ cue('l1.chaos.fall', 'props', 'shot', 0.5, 150, { ...arc, gain: 0.4, antiSpam: 0
 cue('l1.chaos.distant', 'ambience', 'vocal', 1, 420, { ...arc, gain: 0.25, antiSpam: 1, caption: 'Distant panic' });
 cue('l1.interior.hush', 'ambience', 'bed', 2, 70, { ...arc, loop: true, gain: 0.25, antiSpam: 0 });
 cue('l1.outro.sting', 'music', 'music', 2.5, 196, { ...arc, gain: 0.5, antiSpam: 0, rateSpread: 0 });
-export const l1CalmCues = ['l1.calm.chatter', 'l1.calm.talk', 'l1.calm.traffic', 'l1.calm.bike-tick', 'l1.calm.birds'] as const;
-export const l1AccidentCues = ['l1.flicker.buzz', 'l1.blast', 'l1.glass.rattle', 'l1.ringing', 'l1.scream', 'l1.crash', 'l1.bell'] as const;
-export const l1ChaosCues = ['l1.chaos.panic', 'l1.chaos.infected', 'l1.chaos.run', 'l1.chaos.car-alarm', 'l1.chaos.fall', 'l1.chaos.distant'] as const;
 /** Explicit coverage includes silent control events; these still resolve to a decodable cue. */
 export const eventCues = {
     'mega.cue': 'telegraph.brute', // AudioService applies the processed recipe by cue kind.

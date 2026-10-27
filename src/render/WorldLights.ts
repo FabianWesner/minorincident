@@ -1,6 +1,6 @@
 import { placedLights } from '../data/placedLights';
 import { visibilityPolygon } from './lighting/visibility';
-export { anchorsFor, placeAnchor } from '../data/placedLights';
+export { anchorsFor } from '../data/placedLights';
 import { footprint, type FieldLight } from './LightField';
 import type { DistrictWorld } from '../sim/world/DistrictWorld';
 import { accentLights } from './NightAccents';

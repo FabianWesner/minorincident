@@ -33,7 +33,6 @@ export interface L1Aftermath {
   bike: { x: number; z: number; yaw: number } | null;
 }
 export const MAX_BODIES = 12;
-export const emptyAftermath = (): L1Aftermath => ({ version: 1, props: [], dumpsters: [], gatesClosed: [], bodies: [], bike: null });
 
 /** The L1 scripted destructions and their L2 aftermath (the audit of specs/epic-19 section 3 beats; see the lane report). */
 export const l1Canon = {
@@ -131,9 +130,3 @@ export function clearOfL2Script(p: { x: number; z: number }, margin = 3): boolea
   return true;
 }
 
-/** Audit sites for tests and captures: every carried-over spot in L2 with its source event; `stand` = a walkable spot in view. */
-export const carryoverSites = [
-  { id: 'annex', event: 'L1 beat 5: lab pressure blast in the Medical Annex', kind: 'scripted', at: { x: 65.5, z: -14.5 }, stand: { x: 66, z: -11.6 } },
-  { id: 'annex-forecourt', event: 'L1 beat 5: debris blown over the forecourt', kind: 'scripted', at: { x: 64.5, z: -12.4 }, stand: { x: 65.2, z: -9.4 } },
-  { id: 'outbreak-house', event: 'L1 beat 9: residents break out of the outbreak house', kind: 'scripted', at: { x: 5.05, z: 25 }, stand: { x: 5.4, z: 27.6 } },
-] as const;

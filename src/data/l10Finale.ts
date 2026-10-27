@@ -3,7 +3,7 @@
  * Local frame in metres, ground plane [x, z] like every layout and scene spec; the console is the origin and the whole hold
  * zone is the 25 m disc around it. D4 maps the frame to the world with one offset (console world position). `yaw` is the
  * placement yaw in degrees (scene-spec convention, 0 = the asset's +X front towards +x); only 0 and 180 are used so the
- * footprint stays an exact axis-aligned box (`propBox`) even for the off-centre assets (platform stair, tank outlets).
+ * footprint stays an exact axis-aligned box even for the off-centre assets (platform stair, tank outlets).
  * Orchestrator defaults, changeable after measurement. tests/unit/data/l10-finale-anchors.test.ts and the arena Scene Lab
  * specs (specs/scenes/catalog/asset-l10-dispersal-arena*.json, generated from this file) validate the geometry.
  */
@@ -11,29 +11,6 @@ export type FinaleRole = 'console' | 'platform' | 'cover' | 'backdrop' | 'pipe-r
 export interface FinaleProp { id: string; role: FinaleRole; asset: string; at: [number, number]; yaw: 0 | 180 }
 export interface FinaleLane { id: string; /** Dodge/run polyline, ground plane. */ points: [number, number][]; /** Free corridor half width the nav must keep clear. */ halfWidth: number; note: string }
 export interface Box { min: [number, number]; max: [number, number] }
-
-/** Exact GLB extents on the ground plane, asset frame [x0, x1, z0, z1] (game axes: x forward, z = -Blender Y). */
-export const assetExtent: Record<string, [number, number, number, number]> = {
-  'kit.dispersal-console': [-.8, .82, -1.65, 1.65],
-  'kit.dispersal-platform': [-4.05, 8.26, -2.2, 2.2],
-  'kit.dispersal-tank-bullet': [-5.75, 6.08, -5.3, 5.3],
-  'kit.dispersal-tank-sphere': [-4.39, 6.08, -4.4, 4.4],
-  'kit.dispersal-filtration-tower': [-4.3, 7.6, -4.3, 4.3],
-  'kit.dispersal-fan-housing': [-3.6, 3.6, -5.1, 5.1],
-  'kit.dispersal-turbine-hall': [-8.4, 8.4, -5.6, 6.6],
-  'kit.dispersal-pipe-straight': [-4.04, 4.04, -1.3, 1.3],
-  'kit.dispersal-pipe-tee': [-4.04, 4.04, -4.04, 1.3],
-  'kit.dispersal-pipe-elbow': [-4.5, 1.3, -4.5, 1.3],
-  'wpn.minigun-mounted': [-1.35, 1.45, -1.35, 1.35],
-};
-
-/** World-plane box of a placement (yaw 0 or 180). */
-export function propBox(asset: string, at: [number, number], yaw: 0 | 180): Box {
-  const [x0, x1, z0, z1] = assetExtent[asset];
-  return yaw === 0
-    ? { min: [at[0] + x0, at[1] + z0], max: [at[0] + x1, at[1] + z1] }
-    : { min: [at[0] - x1, at[1] - z1], max: [at[0] - x0, at[1] - z0] };
-}
 
 export const finale = {
   /** E32 §5.7: charge only advances while the player is within this planar distance of the console. */
