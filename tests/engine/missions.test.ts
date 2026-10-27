@@ -6,6 +6,10 @@ import { missionControls } from '../../src/sim/missions/controls';
 import { validateMission } from '../../src/sim/missions/schema';
 import { objectiveTypes, type MissionDef } from '../../src/sim/missions/types';
 import { SimWorld } from '../../src/sim/world/SimWorld';
+import type { EntitySnapshot } from '../../src/sim/world/types';
+import { isMissionInteraction } from '../../src/render/InteractionView';
+import { activeInteractions, isRingedInteraction } from '../../src/sim/missions/interaction';
+import { loadLevel, runnerLevels } from '../../tools/sim-runner/levels';
 import { missionSandbox } from '../fixtures/scenarios/mission-sandbox';
 
 let world: SimWorld | undefined;
@@ -71,6 +75,35 @@ test('graph timing: parallel tasks join in any order; a timeout fires exactly at
   api.retry(); expect(api.state()!.steps.reach.started).toBe(7200); step(7199); expect(api.state()!.phase).toBe('playing');
   api.retry(); teleport(1); step(1); expect(api.state()!.phase).toBe('result'); step(7201); expect(api.state()!.phase).toBe('result');
 });
+
+// P09: the ground ring (render), the `E` press (input) and the view read one mission interaction descriptor in every level.
+test('interactions: ring, input and view predicates agree for every interact step of every level', async () => {
+  for (const level of runnerLevels) {
+    const levelWorld = await loadLevel(level, 1);
+    try {
+      const mission = levelWorld.missions!, player = levelWorld.entities.get(1)!;
+      mission.state.phase = 'playing';
+      let checked = 0;
+      for (const step of mission.def.steps) {
+        for (const other of mission.def.steps) mission.state.steps[other.id].status = other.id === step.id ? 'active' : 'pending';
+        if (level === 'L10') mission.state.states['charge-active'] = false;
+        const [interaction] = activeInteractions(mission).filter(i => i.step.id === step.id);
+        if (!interaction) continue;
+        const anchor = mission.def.anchors[interaction.trigger.anchor];
+        Object.assign(player.transform, { x: anchor.x, z: anchor.z });
+        expect(mission.interactStepInRange()?.id, `${level} ${step.id} input`).toBe(step.id);
+        const entity = { archetype: 'prop', transform: { x: anchor.x, z: anchor.z } } as EntitySnapshot;
+        expect(isRingedInteraction(mission, entity.transform), `${level} ${step.id} ring`).toBe(interaction.ring);
+        expect(isMissionInteraction(levelWorld, entity), `${level} ${step.id} view`).toBe(interaction.ring);
+        Object.assign(player.transform, { x: anchor.x + 500, z: anchor.z + 500 });
+        expect(mission.interactStepInRange()?.id === step.id, `${level} ${step.id} far input`).toBe(false);
+        expect(isRingedInteraction(mission, { x: anchor.x + 500, z: anchor.z + 500 })).toBe(false);
+        checked++;
+      }
+      if (['L2', 'L3', 'L4', 'L5'].includes(level)) expect(checked, level).toBeGreaterThan(0);
+    } finally { levelWorld.dispose(); }
+  }
+}, 240_000);
 
 test('checkpoints: death restores objectives, HP, charges and escorts; a boss killed before or after C stays dead', async () => {
   const def = missionSandbox('kill'); def.steps.push({ ...def.steps[0], id: 'reach', type: 'reach', start: { kind: 'objectives', ids: ['kill'], mode: 'all' }, complete: { kind: 'volume', anchor: 'goal', edge: 'inside' } }); def.finish = ['reach'];
