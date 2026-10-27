@@ -10,6 +10,7 @@ import { assetIO } from './io';
 import { validateAssets } from './validate';
 import { compressSkin } from './skin-crowd-compress';
 import { skinCrowdBakes } from './skin-crowd-bakes';
+import { classifyCrowdAtlas } from './skin-crowd-regions';
 import { Matrix4, Vector3 } from 'three';
 
 // A cast directory is the complete input; no hand-prepared files or placement numbers.
@@ -81,6 +82,11 @@ for (const lod of [0, 1, 2]) {
     const info = JSON.parse(readFileSync(join(report, `lod${lod}.json`), 'utf8')) as { triangles: number };
     bodyBudget = info.triangles - (total - triangleLimit) - 8;
     if (attempt === 3 || bodyBudget <= 0) throw Error(`${id}: fitted caps exceed triangle budget ${triangleLimit}`);
+  }
+  // Region classes in the atlas alpha: tinted, flattened hair/skin/garments for civilians; skin only for uniforms.
+  if (id.startsWith('npc.')) {
+    const document = await io.read(raw), regions = classifyCrowdAtlas(document, id.startsWith('npc.civilian-'));
+    if (regions) { await io.write(raw, document); writeFileSync(join(report, `lod${lod}.regions.json`), JSON.stringify(regions, null, 2) + '\n'); }
   }
   const tiers = [];
   for (const low of [false, true]) {

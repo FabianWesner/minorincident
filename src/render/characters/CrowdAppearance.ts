@@ -60,6 +60,13 @@ export function crowdAppearanceColor(infected = false) {
   return varying(parts.y.equal(-1).select(skin.mul(shade.div(infected ? .35 : .45).clamp(.65, 1.2)),
     parts.y.equal(-4).select(source.mul(accessory), parts.y.equal(-5).select(source.mul(hair), parts.y.equal(-2).select(hair.mul(shade.div(.12).clamp(.65, 1.3)), parts.y.equal(-3).select(trousers.mul(shade.div(.1).clamp(.65, 1.25)), garment))))), 'crowdAppearanceColor');
 }
+/** Per-person tones for the classed regions of textured figures (hair, skin, shirt, trousers), picked per vertex. */
+export function crowdRegionColours(infected = false) {
+  const variant = attribute('_variant', 'vec4');
+  return { hair: varying(pickColor(colors.hair, variant.x.div(2).floor().mod(8)), 'crowdRegionHair'),
+    skin: varying(pickColor(infected ? colors.infected : colors.skin, variant.y.div(2).floor().mod(6)), 'crowdRegionSkin'),
+    trousers: varying(pickColor(colors.trousers, variant.z.div(2).floor().mod(8)), 'crowdRegionTrousers'), shirt: variant.xyz.mod(2) };
+}
 const tokenColors = Object.fromEntries(Object.entries(palette).map(([name, hex]) => [name, new Color(hex)])) as Record<keyof typeof palette, Color>;
 const headwearColors = Object.entries(palette).filter(([name]) => /^cap/.test(name)).map(([, hex]) => new Color(hex));
 const swatches = Object.entries(palette).filter(([name]) => /^(hair|denim|trouser|khaki|navy|skin|infectedSkin)/.test(name)).map(([name, hex]) => ({ name, color: new Color(hex) }));

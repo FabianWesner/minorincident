@@ -24,6 +24,21 @@ interface Ktx {
 }
 interface Basis { initializeBasis(): void; BasisEncoder: new () => Encoder; KTX2File: new (data: Uint8Array) => Ktx }
 
+/** Box-filter the colour and keep the top-left class of each 2x2 block, until the long side fits. */
+function halveClassed(image: PNG, maxSize: number): PNG {
+  while (Math.max(image.width, image.height) > maxSize) {
+    if (image.width % 2 || image.height % 2) throw Error(`Classed atlas ${image.width}x${image.height} cannot be halved exactly`);
+    const half = new PNG({ width: image.width / 2, height: image.height / 2 });
+    for (let y = 0; y < half.height; y++) for (let x = 0; x < half.width; x++) {
+      const o = (y * half.width + x) * 4, at = (dx: number, dy: number) => ((2 * y + dy) * image.width + 2 * x + dx) * 4;
+      for (let c = 0; c < 3; c++) half.data[o + c] = Math.round((image.data[at(0, 0) + c] + image.data[at(1, 0) + c] + image.data[at(0, 1) + c] + image.data[at(1, 1) + c]) / 4);
+      half.data[o + 3] = image.data[at(0, 0) + 3];
+    }
+    image = half;
+  }
+  return image;
+}
+
 /** Pipeline Apache-2.0 Basis encoder: ETC1S q192, full sRGB mip chain (PLAYBOOK §5). */
 export async function compressSkin(input: string, output: string, basisRoot: string, maxSize = 1024, coat?: string, coatSource?: string, coatBaseHalf = false): Promise<void> {
   const require = createRequire(import.meta.url);
@@ -52,13 +67,18 @@ export async function compressSkin(input: string, output: string, basisRoot: str
           if (!file.transcodeImage(rgba, 0, 0, 0, 13, 0, -1, -1)) throw Error('KTX2 RGBA transcode failed');
           png = PNG.sync.write({ width: file.getWidth(), height: file.getHeight(), data: Buffer.from(rgba) } as PNG);
         } finally { file.close(); file.delete(); }
-      } else {
+      } else if (texture.getMimeType() === 'image/png') png = Buffer.from(image);
+      else {
         const source = join(directory, 'source.' + texture.getMimeType().split('/')[1]), target = join(directory, 'source.png');
         writeFileSync(source, image);
         execFileSync('sips', ['-s', 'format', 'png', source, '--out', target], { stdio: 'ignore' }); png = readFileSync(target);
       }
-      const path = join(directory, 'image.png'); writeFileSync(path, png);
-      execFileSync('sips', ['-Z', String(maxSize), path], { stdio: 'ignore' });
+      const path = join(directory, 'image.png');
+      // Region classes live in the alpha (skin-crowd-regions.ts). CoreGraphics premultiplies, which erases the
+      // colour of class 0, and any filter would average two classes into a third: halve in JS instead.
+      const classed = PNG.sync.read(png);
+      if (classed.data.some((v, i) => i % 4 === 3 && v < 255)) writeFileSync(path, PNG.sync.write(halveClassed(classed, maxSize)));
+      else { writeFileSync(path, png); execFileSync('sips', ['-Z', String(maxSize), path], { stdio: 'ignore' }); }
       const resized = PNG.sync.read(readFileSync(path));
       // WebGPU requires the base extent of block-compressed textures to align
       // to the 4x4 block, including rectangular atlases (512x341 was invalid).

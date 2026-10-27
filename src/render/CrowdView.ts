@@ -1,4 +1,5 @@
 import { paintedSkinMask } from './characters/paintedSkin';
+import { crowdRegionOf, crowdRegionSkin, crowdRegionTint } from './characters/crowdRegions';
 import { crowdLimbParts } from '../assets/crowdParts';
 import { crowdTexture, interleaveTexturedCrowd } from './characters/crowdTexture';
 import { shareDogCoatPalette } from './characters/shareDogCoatPalette';
@@ -352,11 +353,12 @@ export class CrowdView extends Group {
       // Read channels off the vec4 sample, never off its .rgb view: Tint (Dawn/Metal) fails to
       // lower a chained swizzle (`sample.xyz.x`) and the whole pipeline is dropped (hotfix-16).
       const texelSample = infectedAtlas && baked.texture ? sampleTexture(baked.texture, uv()) : undefined;
-      const texel = texelSample?.rgb;
+      const region = texelSample ? crowdRegionOf(texelSample, uv()) : undefined;
+      const texel = texelSample ? crowdRegionTint(texelSample.rgb, region!, true) : undefined;
       const capSurface = parts.w.greaterThanEqual(1024);
       const painted = texel ? mix(sourceColor, texel.pow(.85).mul(mix(vec3(1), sourceColor, .08)), parts.y.equal(-4).or(parts.y.equal(-5)).or(parts.y.lessThanEqual(-10)).select(0, parts.w.mod(128).lessThan(8).select(1, 0))) : sourceColor;
       const sick = vec3(luminance(painted)).mul(vec3(.62, .75, .51));
-      const surface = skinned && asset.startsWith('npc.') ? mix(painted, sick, texelSample ? parts.y.equal(-11).select(1, paintedSkinMask(texelSample)).mul(.85) : parts.y.equal(-1).select(.85, 0)) : painted;
+      const surface = skinned && asset.startsWith('npc.') ? mix(painted, sick, texelSample ? parts.y.equal(-11).select(1, crowdRegionSkin(region!, () => paintedSkinMask(texelSample))).mul(.85) : parts.y.equal(-1).select(.85, 0)) : painted;
       // The approved atlas has bright orange/red eye paint. Restrict the mask to the head,
       // so the red tie and blood never emit. White teeth and pale skin fail the saturation gate.
       const albedo = capSurface.select(vec3(.4508, .006, .0137), surface);

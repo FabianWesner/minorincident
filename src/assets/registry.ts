@@ -118,7 +118,8 @@ export class AssetRegistry {
           if (!(node instanceof Mesh)) return;
           for (const material of Array.isArray(node.material) ? node.material : [node.material]) {
             const map = (material as import('three').MeshStandardMaterial).map;
-            if (map) { this.figureTextures.add(map); maps.add(map); }
+            // crowd-texture-quality: the oblique game camera minifies faces along one axis; isotropic mips smeared them.
+            if (map) { map.anisotropy = Math.max(map.anisotropy, 8); this.figureTextures.add(map); maps.add(map); }
           }
         });
         if (def.textureAtlasLow) await Promise.all([...maps].map(map => this.prepareAtlasTiers(map, def)));
