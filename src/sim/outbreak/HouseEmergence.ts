@@ -3,6 +3,7 @@ import type { DistrictLayout } from '../../levels/districts/types';
 import { buildingDoors, doorwayOf } from '../../data/buildingDoors';
 import type { PedestrianOptions } from './Outbreak';
 import { actorRadius } from '../world/SolidRegistry';
+import type { EntitySnapshot } from '../world/types';
 
 /**
  * Residents coming out of a house's front door (L1 beat 9, PO rule 2026-10-07: "10 ... come out of the house ... No
@@ -207,6 +208,7 @@ export function walkResidents(world: SimWorld, house: HouseEmergence, tick: numb
     const outside = (p.x - house.x) * house.nx + (p.z - house.z) * house.nz > 0;
     if (w.leg >= house.route.length || (!house.strictRoute && outside && tick >= w.until)) {
       if (house.strictRoute && !world.solids.admit(e, 'house.exit', 0, false)) continue;
+      if (!e.pendingAdmission && !house.strictRoute) clearDoorWall(world, house, e, w.leg < 0 ? end : -Infinity);
       if (e.pendingAdmission) {
         const radius = actorRadius(e);
         // A queued resident has finished walking. Body congestion at this one
@@ -221,4 +223,20 @@ export function walkResidents(world: SimWorld, house: HouseEmergence, tick: numb
     }
   }
   return done;
+}
+
+/**
+ * A timed-out resident pushed back into the aperture by a body on the doorstep only cleared the door wall through its
+ * scripted lane exemption. Before that exemption ends, return it to the doorstep line (`end`, door-normal metres) and take
+ * the nearest clear spot on the outside; with none, keep the existing release.
+ */
+function clearDoorWall(world: SimWorld, house: HouseEmergence, e: EntitySnapshot, end: number): void {
+  const p = e.transform, radius = actorRadius(e), lane = e.doorLane;
+  delete e.doorLane;
+  if (!world.solids.clear(p, radius, e.id, false)) {
+    const before = { ...p }, s = (p.x - house.x) * house.nx + (p.z - house.z) * house.nz;
+    if (s < end) place(world, house, e, end, (p.z - house.z) * house.nx - (p.x - house.x) * house.nz);
+    if (!world.solids.clear(p, radius, e.id, false) || !world.solids.relocate(e, { ...p }, 'house.exit', 4, false)) { Object.assign(p, before); world.spatial.set(e.id, p.x, p.z); }
+  }
+  if (lane) e.doorLane = lane;
 }

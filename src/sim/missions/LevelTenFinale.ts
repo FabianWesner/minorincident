@@ -47,6 +47,7 @@ export class LevelTenFinale {
       }
     }
     if (state.steps.mega.status === 'active' && boss?.alive()) {
+      boss.rally();
       const at = boss.entity()!.transform;
       this.mission.def.anchors['cure-mega'] = { x: at.x, z: at.z, y: at.y, radius: 2 };
     }

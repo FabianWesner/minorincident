@@ -191,20 +191,25 @@ test('@E32 charge completion gives the live Mega Alpha a distinct objective mark
   } finally { w.dispose(); }
 });
 
-test('@E32 #101 a remote living boss joins the finale within 15 seconds at full fight-start health @E32-AC22', async () => {
+test('@E32 #101 a remote living boss joins the finale within 15 seconds at full fight-start health, never jumping in view (Q-200) @E32-AC22', async () => {
   const { w, m, boss, press, step } = await finale();
   try {
     w.combat!.damage.god = true; press(); press();
-    const e = w.entities.get(boss.state.id)!;
+    const e = w.entities.get(boss.state.id)!, director = w.infected!.director;
     e.transform.x = -3000; e.health.current = 1280;
     boss.state.x = -3000; boss.state.routeAt = -Infinity;
     m.state.counters['charge-ticks'] = 3599;
-    step(3);
+    let joined = -1;
+    for (let i = 0; i < 15 * 60 && joined < 0; i++) {
+      const before = { ...e.transform }, seenBefore = !e.infected!.hidden && !director.offscreen(before);
+      step();
+      const jump = Math.hypot(e.transform.x - before.x, e.transform.z - before.z);
+      // Any jump beyond a charge step leaves and lands outside the camera frame, never close to the courier.
+      if (jump > .5) { expect(seenBefore).toBe(false); expect(director.offscreen(e.transform)).toBe(true); expect(boss.distance()).toBeGreaterThanOrEqual(30); }
+      if (boss.distance() <= 12) joined = i;
+    }
     expect(m.state.steps.mega.status).toBe('active');
-    expect(boss.distance()).toBeLessThan(30);
-    expect(e.health.current).toBe(e.health.max);
-    step(15 * 60);
-    expect(boss.distance()).toBeLessThanOrEqual(12);
+    expect(joined).toBeGreaterThanOrEqual(0);
     expect(e.health.current).toBe(e.health.max);
   } finally { w.dispose(); }
 });
