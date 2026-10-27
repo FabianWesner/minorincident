@@ -1,7 +1,9 @@
 {
   "id": "prop.flower-box",
   "triangles": {
-    "lod0": 6100
+    "lod0": 6100,
+    "lod1": 422,
+    "lod2": 152
   },
   "dimensions_blender": [
     0.5617841482162476,
@@ -26,8 +28,43 @@
     "col:body"
   ],
   "backface_culling": true,
-  "rounds": 1,
+  "rounds": 4,
   "webgpu_ok": false,
-  "webgl2_ok": false,
-  "gaps": []
+  "webgl2_ok": true,
+  "gaps": [
+    "WebGPU manual check pending; manifest registration intentionally deferred."
+  ],
+  "delivery": {
+    "model.glb": {
+      "bytes": 125244,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod1.glb": {
+      "bytes": 33808,
+      "meshopt": false,
+      "quantized": false
+    },
+    "model.lod2.glb": {
+      "bytes": 18604,
+      "meshopt": false,
+      "quantized": false
+    }
+  },
+  "lod_ratios": {
+    "lod1": 0.06918032786885246,
+    "lod2": 0.024918032786885248
+  },
+  "within_budget": true,
+  "nodes_ok": true,
+  "determinism": {
+    "id": "prop.flower-box",
+    "geometry_hash": "150bc6e1e6c007ee76b1eb2818fcb1ed62ec38e18a84b532e53fff5764d6d9b7",
+    "second_geometry_hash": "150bc6e1e6c007ee76b1eb2818fcb1ed62ec38e18a84b532e53fff5764d6d9b7",
+    "geometry_identical": true,
+    "raw_byte_identical": true
+  },
+  "matches_reference": true,
+  "done": true,
+  "lod_note": "LOD1/LOD2 authored in build.py (--lod 1|2) from the LOD0 recipe; packed to public by npm run assets:pack"
 }

@@ -1,7 +1,9 @@
 {
   "id": "house.garage.half",
   "triangles": {
-    "lod0": 6188
+    "lod0": 6188,
+    "lod1": 726,
+    "lod2": 170
   },
   "dimensions_blender": [
     1.287731647491455,
@@ -35,8 +37,42 @@
     "front"
   ],
   "backface_culling": true,
-  "rounds": 1,
+  "rounds": 4,
   "webgpu_ok": false,
-  "webgl2_ok": false,
-  "gaps": []
+  "webgl2_ok": true,
+  "gaps": [
+    "WebGPU manual check pending; manifest registration intentionally deferred."
+  ],
+  "delivery": {
+    "model.glb": {
+      "bytes": 203004,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod1.glb": {
+      "bytes": 40776,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod2.glb": {
+      "bytes": 25400,
+      "meshopt": true,
+      "quantized": true
+    }
+  },
+  "lod_ratios": {
+    "lod1": 0.11732385261797026,
+    "lod2": 0.027472527472527472
+  },
+  "within_budget": true,
+  "nodes_ok": true,
+  "determinism": {
+    "id": "house.garage.half",
+    "geometry_hash": "9581592dd5c9899ef35078300bb41d39d4fd468e57e8ca3945edc96068f8c5eb",
+    "second_geometry_hash": "9581592dd5c9899ef35078300bb41d39d4fd468e57e8ca3945edc96068f8c5eb",
+    "geometry_identical": true,
+    "raw_byte_identical": true
+  },
+  "matches_reference": true,
+  "done": true
 }

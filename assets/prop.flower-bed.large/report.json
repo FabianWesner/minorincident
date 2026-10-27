@@ -1,7 +1,9 @@
 {
   "id": "prop.flower-bed.large",
   "triangles": {
-    "lod0": 9748
+    "lod0": 9748,
+    "lod1": 726,
+    "lod2": 200
   },
   "dimensions_blender": [
     0.9789250493049622,
@@ -26,8 +28,43 @@
     "col:body"
   ],
   "backface_culling": true,
-  "rounds": 1,
+  "rounds": 4,
   "webgpu_ok": false,
-  "webgl2_ok": false,
-  "gaps": []
+  "webgl2_ok": true,
+  "gaps": [
+    "WebGPU manual check pending; manifest registration intentionally deferred."
+  ],
+  "delivery": {
+    "model.glb": {
+      "bytes": 179440,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod1.glb": {
+      "bytes": 50140,
+      "meshopt": false,
+      "quantized": false
+    },
+    "model.lod2.glb": {
+      "bytes": 21176,
+      "meshopt": false,
+      "quantized": false
+    }
+  },
+  "lod_ratios": {
+    "lod1": 0.07447681575707837,
+    "lod2": 0.02051702913418137
+  },
+  "within_budget": true,
+  "nodes_ok": true,
+  "determinism": {
+    "id": "prop.flower-bed.large",
+    "geometry_hash": "b13ffa2d49465f07f33d84f61633e0a1933e8315f4429b730be23f944108254a",
+    "second_geometry_hash": "b13ffa2d49465f07f33d84f61633e0a1933e8315f4429b730be23f944108254a",
+    "geometry_identical": true,
+    "raw_byte_identical": true
+  },
+  "matches_reference": true,
+  "done": true,
+  "lod_note": "LOD1/LOD2 authored in build.py (--lod 1|2) from the LOD0 recipe; packed to public by npm run assets:pack"
 }

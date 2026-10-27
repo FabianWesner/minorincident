@@ -1,7 +1,9 @@
 {
   "id": "prop.sprinkler",
   "triangles": {
-    "lod0": 2708
+    "lod0": 2708,
+    "lod1": 478,
+    "lod2": 196
   },
   "dimensions_blender": [
     1.2049999237060547,
@@ -23,8 +25,44 @@
     "col:body"
   ],
   "backface_culling": true,
-  "rounds": 1,
+  "rounds": 3,
   "webgpu_ok": false,
-  "webgl2_ok": false,
-  "gaps": []
+  "webgl2_ok": true,
+  "gaps": [
+    "WebGPU manual check pending; manifest registration intentionally deferred.",
+    "Water arcs are runtime VFX; the opaque sprinkler model is complete."
+  ],
+  "delivery": {
+    "model.glb": {
+      "bytes": 63780,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod1.glb": {
+      "bytes": 22684,
+      "meshopt": false,
+      "quantized": false
+    },
+    "model.lod2.glb": {
+      "bytes": 14900,
+      "meshopt": false,
+      "quantized": false
+    }
+  },
+  "lod_ratios": {
+    "lod1": 0.17651403249630723,
+    "lod2": 0.0723781388478582
+  },
+  "within_budget": true,
+  "nodes_ok": true,
+  "determinism": {
+    "id": "prop.sprinkler",
+    "geometry_hash": "80e79f654df4162f70e0dee9f99e0908a40191f119a151df39e0387c3c5857bb",
+    "second_geometry_hash": "80e79f654df4162f70e0dee9f99e0908a40191f119a151df39e0387c3c5857bb",
+    "geometry_identical": true,
+    "raw_byte_identical": true
+  },
+  "matches_reference": true,
+  "done": true,
+  "lod_note": "LOD1/LOD2 authored in build.py (--lod 1|2) from the LOD0 recipe; packed to public by npm run assets:pack"
 }

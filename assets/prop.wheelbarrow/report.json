@@ -1,7 +1,9 @@
 {
   "id": "prop.wheelbarrow",
   "triangles": {
-    "lod0": 1812
+    "lod0": 1812,
+    "lod1": 208,
+    "lod2": 48
   },
   "dimensions_blender": [
     1.3846983909606934,
@@ -24,8 +26,42 @@
     "col:body"
   ],
   "backface_culling": true,
-  "rounds": 1,
+  "rounds": 3,
   "webgpu_ok": false,
-  "webgl2_ok": false,
-  "gaps": []
+  "webgl2_ok": true,
+  "gaps": [
+    "WebGPU manual check pending; manifest registration intentionally deferred."
+  ],
+  "delivery": {
+    "model.glb": {
+      "bytes": 77412,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod1.glb": {
+      "bytes": 19680,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod2.glb": {
+      "bytes": 13872,
+      "meshopt": true,
+      "quantized": true
+    }
+  },
+  "lod_ratios": {
+    "lod1": 0.11479028697571744,
+    "lod2": 0.026490066225165563
+  },
+  "within_budget": true,
+  "nodes_ok": true,
+  "determinism": {
+    "id": "prop.wheelbarrow",
+    "geometry_hash": "c6a9cbc59b67db53d1a3b247545bc41f0195500b3269eae22826f9e0cecd30ee",
+    "second_geometry_hash": "c6a9cbc59b67db53d1a3b247545bc41f0195500b3269eae22826f9e0cecd30ee",
+    "geometry_identical": true,
+    "raw_byte_identical": true
+  },
+  "matches_reference": true,
+  "done": true
 }
