@@ -11,7 +11,7 @@ Branch: `lane/mac-runner`. Implementation and usage are documented in
 | `npm run lint` | Pass; focused ESLint rerun after the pool adapter correction also passed |
 | Shell syntax, Python compilation, Node syntax, `git diff --check` | Pass |
 | `python3 -I tools/remote/check.py --unit` on macOS | 15 checks, 12 passed and 3 worker checks intentionally skipped |
-| Full focused checks on Linux runner `88.99.168.213` | 13 checks, 12 passed and the macOS-only CLI lock check skipped |
+| Full focused checks on Linux runner `88.99.168.213` | 15 checks, 14 passed and the macOS-only CLI lock check skipped (final rerun: 12.731 s) |
 | Actual Linux slot-lock probe | Pass: reported 2, 1, 0 occupied slots as two fixture locks were released |
 | Vitest `@smoke`, two workers | 6 passed, 4,097 skipped; 479.38 s on the loaded remote host |
 | Production build on that runner | Pass, 46.09 s |
@@ -42,22 +42,40 @@ before and after, with receipt-confirmed overlap of three remote jobs and one
 local job. The harness is `tools/remote/benchmark.py`; it rejects cancelled,
 failing, or unproven comparison attempts while retaining their evidence.
 
-Setup attempts were cancelled while queued, when an older client joined the
-runner, or when the Mac admission window changed. None is a completed throughput
-measurement. Their raw evidence remains under `test-results/mac-runner-demo*/`.
-The harness now uses the existing `timing-isolated.sh --whole-run` wrapper to
-hold both remote slots for each command; Mac fallback expands that known wrapper
-to its validated CPU command. One detached worktree at `e925a6232` contains
-cleanup's gate/nightly partition. Current evidence is written outside that
-worktree under `test-results/mac-runner-demo-window3/`. The enabled configuration
-is measured first to use the Mac window, followed by the remote-only baseline
-against the same revision and package. Comparison proof must use overlapping
-test-file intervals; a local job paused throughout remote execution does not count.
-The worktree must be removed as soon as its needed measurements are recorded;
-at most one benchmark worktree may exist.
+**BLOCKED: the required throughput comparison has not been completed.**
 
-At 08:12 CET the Mac passed admission (load 2.04, 4.22 GiB free physical RAM).
-GPU work resumed before a local job could start. Admission was not bypassed.
-This implementation counts free physical pages only; counting reclaimable
-inactive memory would change the documented admission policy. The merged cleanup
-report records existing gate failures in `main:docs/qa/tests-cleanup.md`.
+Setup attempts were cancelled while queued, when an older client joined the
+runner, or when the Mac admission window changed. The final enabled attempt
+used whole-run remote isolation and the frozen revision `e925a6232`; it completed
+three remote gates and never admitted a local gate. Its fourth command was
+cancelled while waiting for both remote slots near the three-hour task limit.
+Raw evidence is retained under `test-results/mac-runner-demo-window3/after/`.
+
+| Completed command | Passed | Failed | Skipped | Queue/sync/command wall s |
+| --- | ---: | ---: | ---: | ---: |
+| 1 (remote) | 3689 | 7 | 401 | 2673.71 |
+| 3 (remote) | 3693 | 3 | 401 | 2993.20 |
+| 4 (remote) | 3684 | 12 | 401 | 2522.97 |
+
+Each completed receipt contains 4,097 tests. These failed runs are diagnostic
+evidence, not a passing gate or a complete before/after measurement. No throughput
+improvement is claimed. The frozen cleanup revision already documents gate
+failures in `main:docs/qa/tests-cleanup.md`; additional timing failures differed
+between hosts. Repository test and product source files were not changed.
+
+Two focused CLI canaries each passed six tests, but both correctly selected free
+remote slots. The final complete scheduler regression also passed after the
+worktree-specific Vitest resolution change. The Mac was observed eligible at
+08:12 and 09:03 CET; GPU work or unavailable remote/queue timing prevented a local
+canary during those windows. Near cleanup it reported only 3.00 GiB free physical
+RAM, below the 4 GiB threshold. Admission was never bypassed.
+
+All owned checks were stopped or completed. The single 2.3 GB benchmark worktree
+was removed, and all three hosts were checked for remaining processes with that
+benchmark working directory. Completed receipts remain outside the removed tree.
+
+To finish acceptance, schedule three remote hosts and an eligible Mac together,
+then run both benchmark configurations against the same frozen revision/package.
+The measured remote gate spans suggest allowing at least 70 minutes plus setup
+for the eight-command comparison. A new coordinated time window is needed after
+the task's three-hour limit. The broader native browser gate also remains unverified.
