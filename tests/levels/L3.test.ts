@@ -267,7 +267,7 @@ describe('L3 The Police Collapse', () => {
     expect(early).toBe(0);
   }, HEAVY);
 
-  test('T-E21-14 @E21 @E21-AC14 medkits: >= 2 per street, >= 7 total, +40 HP capped and consumed; newbie picks >= 2, < 10 % time below 20 % HP', async () => {
+  test('T-E21-14 @E21 @nightly @E21-AC14 medkits: >= 2 per street, >= 7 total, +40 HP capped and consumed; newbie picks >= 2, < 10 % time below 20 % HP', async () => {
     const byStreet = { blvd: 0, commerce: 0, oak: 0 }; for (const [, z] of l3.medkits.positions.slice(1)) byStreet[l3Street(z)]++;
     expect(Math.min(...Object.values(byStreet))).toBeGreaterThanOrEqual(2); expect(l3.medkits.positions.length).toBeGreaterThanOrEqual(7);
     const l = await loadL3(1); world = l.world; const w = l.world, s = l.mission.state.l3!;

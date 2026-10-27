@@ -69,7 +69,7 @@ test('PO #17 @E22 @nightly the collapse walk has steady sight-driven action and 
     expect(r.bins15s.filter(n => n > 0).length).toBeGreaterThanOrEqual(Math.ceil(r.bins15s.length * .7));
   }
 }, 1_800_000);
-test('PO #17b @E22 the route to the farther cellar lasts two to three minutes through Fairhaven', async () => {
+test('PO #17b @E22 @nightly the route to the farther cellar lasts two to three minutes through Fairhaven', async () => {
   const results = [];
   for (const tier of ['high', 'low'] as const) results.push(await measured(tier));
   for (const r of results) {

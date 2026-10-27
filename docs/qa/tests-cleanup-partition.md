@@ -116,3 +116,9 @@ This appendix records the additional scheduling decisions; the original >60 s ca
 | `tests/sim/vehicles/l9-terrain-speed.test.ts` | T-E31-09-terrain-road-1000 @E31-AC09 L9 road uses its healthy cap and a single 60% floor | 8.695 |
 
 The all-level start/checkpoint clearance and navigation-mask parity sweeps move as whole families. The L4/all-level census in `tests/qa/invariants/{war-waves,waves}.test.ts` and the shared 20-world 90 s seating/cast census in `contract.test.ts` belong nightly. The short real L2 `escape-waves` checks, contract vehicle/objective/ground checks, oracle controls, accessory geometry, late scripted-presence and vehicle-pose invariant checks remain in the gate. These QA cases were outside the original baseline inventory; final layer timings include them.
+
+## Shared fixture correction after the first expanded gate
+
+- `levels/L4-finale-pressure.test.ts`: both PO #17 and #17b use the identical memoized seed-1 high/low newbie traces. Keep them together nightly; the apparent 0.001 s baseline cost of #17b hid 245.710 s of replay when #17 was excluded.
+- `levels/L3.test.ts`: `T-E21-14` reads the same newbie battery as nightly `T-E21-03`; keep that family together. The standalone gate cost was 53.877 s, rather than the cached 1.269 s baseline. Ordinary complete-policy completion and its omniscience checks stay in the gate.
+- `levels/L4-collapse.test.ts`: low-tier beat/cap replay (56.501 s) follows the high-tier collapse family nightly. The seed-3 low-tier corpse-cap guard stays in the gate. No casualty assertion changes, including the `<10` guard owned by `l4-no-tents`.

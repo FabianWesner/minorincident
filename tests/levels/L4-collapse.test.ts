@@ -150,7 +150,7 @@ describe('L4 collapse director', () => {
     beatsOnTime(tr);
   }, HEAVY);
 
-  test('T-E22-13-collapse-low @E22 @E22-AC13 the low tier keeps the beats inside its caps', async () => {
+  test('T-E22-13-collapse-low @E22 @nightly @E22-AC13 the low tier keeps the beats inside its caps', async () => {
     const l = await loadL4(2, 'low'); world = l.world;
     const tr = war(l.world, l.mission, 2, 'low', false);
     beatsOnTime(tr);
