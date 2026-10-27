@@ -1,5 +1,5 @@
 {
-  "completedAt": "2026-10-27T16:26:53.730475+00:00",
+  "completedAt": "2026-10-27T17:09:24.850122+00:00",
   "commands": [
     {
       "command": "node --import tsx tools/assets/validate.ts",
@@ -33,7 +33,7 @@
   },
   "unit": {
     "files": 22,
-    "tests": 86
+    "tests": 87
   },
   "smoke": {
     "tests": 7,
@@ -60,7 +60,8 @@
     "pass": 42,
     "existingKnown": 6,
     "newFailures": 0,
-    "notRun": 0
+    "notRun": 0,
+    "assetRevision": "90441a416, before skin correction; not rerun in this follow-up"
   },
   "l2Story": {
     "low": 6,
@@ -80,7 +81,29 @@
     "deaths": 1,
     "navigationAssist": "physical WASD route, no objective/world writes",
     "gameplayFramesOver200ms": 0,
-    "loadingOutliersExcluded": true
+    "loadingOutliersExcluded": true,
+    "assetRevision": "90441a416, before skin correction; not rerun in this follow-up"
   },
-  "browser": "headless shared pool, one job/context at a time; unique ports 4323\u20134326"
+  "browser": "headless shared pool, one job/context at a time; unique ports 4323\u20134326",
+  "skinCorrection": {
+    "validatorRows": 1262,
+    "validatorErrors": 0,
+    "unitTests": 87,
+    "smokeTests": 7,
+    "freezeGuard": "PASS",
+    "gpuLimits": "PASS",
+    "states": 4,
+    "reviewedSheets": [
+      "01-npc.civilian-kid.jpg",
+      "02-npc.police-officer.jpg",
+      "03-l2-crowd-old-new.jpg",
+      "10-states-and-motion.jpg"
+    ],
+    "skinPaletteIndicesChecked": [
+      0,
+      5
+    ],
+    "sourcePipelineUnchanged": true,
+    "manualSteps": []
+  }
 }

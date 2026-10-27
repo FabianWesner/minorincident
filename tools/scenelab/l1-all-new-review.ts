@@ -13,6 +13,8 @@ const old = JSON.parse(execFileSync('git', ['show', `${process.env.REVIEW_BASE ?
 const ids = (process.env.FIGURES ?? 'npc.depot-clerk').split(',');
 const tier = process.env.REVIEW_TIER === 'low' ? 'low' : 'high';
 const backend = process.env.REVIEW_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
+const skinTone = process.env.REVIEW_SKIN_TONE === undefined ? undefined : Number(process.env.REVIEW_SKIN_TONE);
+if (skinTone !== undefined && (!Number.isInteger(skinTone) || skinTone < 0 || skinTone > 5)) throw Error('REVIEW_SKIN_TONE must be 0–5');
 const session = new SceneSession({ backend, tier, viewport: { width: 800, height: 600 } });
 const receipts: unknown[] = [];
 try {
@@ -28,10 +30,10 @@ try {
       def.glb = lowPath(def.glb!);
       if (def.lods) for (const lod of ['lod1', 'lod2'] as const) if (def.lods[lod]) def.lods[lod] = lowPath(def.lods[lod]!);
     }
-    const framing = await session.page.evaluate(async ({ def, pixels, yaw, moving, coat, clip }) => {
+    const framing = await session.page.evaluate(async ({ def, pixels, yaw, moving, coat, clip, skinTone }) => {
       const modulePath = '/src/assets/registry.ts', threePath = '/node_modules/three/build/three.webgpu.js';
       const reviewMaterialPath = '/tools/scenelab/l1-all-new-review-material.ts';
-      const { AssetRegistry } = await import(modulePath), { Box3, Vector3 } = await import(threePath), { reviewEyeMaterial } = await import(reviewMaterialPath);
+      const { AssetRegistry } = await import(modulePath), { Box3, Vector3 } = await import(threePath), { reviewEyeMaterial, reviewSkinTone } = await import(reviewMaterialPath);
       const game = (window.__SCENE__ as unknown as { game: Game }).game;
       const view = game.view as unknown as { scene: import('three').Scene; camera: import('three').PerspectiveCamera; renderer: import('three/webgpu').WebGPURenderer; materials: import('../../src/render/Materials').Materials };
       const state = window as unknown as { reviewRoot?: import('three').Object3D; reviewRegistry?: import('../../src/assets/registry').AssetRegistry };
@@ -52,6 +54,7 @@ try {
         if (!mesh.visible) return;
         mesh.material = Array.isArray(mesh.material) ? mesh.material.map(reviewEyeMaterial) : reviewEyeMaterial(mesh.material);
       });
+      if (def.crowdSkin && skinTone !== undefined) reviewSkinTone(root, skinTone, view.materials);
       if (def.id.startsWith('npc.')) {
         const box = new Box3().setFromObject(root.getObjectByName('skin_body') ?? root); root.scale.multiplyScalar(1.8 / (box.max.y - box.min.y));
       }
@@ -82,9 +85,9 @@ try {
         distance *= (bounds[3] - bounds[1]) / pixels;
       }
       return { bounds, targetPixels: pixels, actualPixels: bounds[3] - bounds[1], yaw, lod: pixels === 120 ? 'lod1' : 'lod0' };
-    }, { def, pixels, yaw, moving: process.env.POSE === 'run', coat, clip: process.env.CLIP });
+    }, { def, pixels, yaw, moving: process.env.POSE === 'run', coat, clip: process.env.CLIP, skinTone });
     const file = resolve(out, `${id}-${variant}-${pixels}-${yaw}.png`);
-    await session.screenshot(file); receipts.push({ id, variant, tier, backend, file, ...framing });
+    await session.screenshot(file); receipts.push({ id, variant, tier, backend, skinTone, file, ...framing });
     writeJson(resolve(out, 'receipts.json'), receipts);
     writeJson(resolve(out, `${id}-receipts.json`), receipts.filter(r => (r as { id: string }).id === id));
   }

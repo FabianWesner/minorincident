@@ -20,7 +20,7 @@ for n,ident in enumerate(['npc.civilian-kid','npc.police-officer'],1):
     row=Image.new('RGB',(cw*4,ch),'#24242c');d=ImageDraw.Draw(row)
     for k,(im,label) in enumerate(cells):row.paste(im,(k*cw+(cw-im.width)//2,30));d.text((k*cw+5,5),label,font=font,fill='white')
     rows.append(row)
- width=max(im.width for im in rows);sheet=Image.new('RGB',(width,sum(im.height for im in rows)+35),'#181820');d=ImageDraw.Draw(sheet);d.text((9,8),ident+' | game camera, L2 midday',font=font,fill='white');y=35
+ width=max(im.width for im in rows);sheet=Image.new('RGB',(width,sum(im.height for im in rows)+35),'#181820');d=ImageDraw.Draw(sheet);d.text((9,8),ident+' | L2 game camera | new skin: production tint, tone 0',font=font,fill='white');y=35
  for im in rows:sheet.paste(im,((width-im.width)//2,y));y+=im.height
  sheet.save(out/f'{n:02}-{ident}.jpg',quality=92,optimize=True)
 

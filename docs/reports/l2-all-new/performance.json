@@ -133,16 +133,16 @@
         "max": 120713
       },
       "stepMs": {
-        "p50": 7.6,
-        "p95": 7.6,
-        "max": 9.7
+        "p50": 8.6,
+        "p95": 8.6,
+        "max": 12
       },
       "lastFrame": {
         "drawCalls": 99,
         "triangles": 227236,
         "shadowDrawCalls": 42,
         "shadowTriangles": 120617,
-        "stepMs": 5.90000057220459,
+        "stepMs": 6.5,
         "categories": {
           "other": 60,
           "shadows": 42,
@@ -443,5 +443,7 @@
     "gate": "PASS",
     "method": "Five isolated empty contexts per build, native Metal WebGPU low, real menu click \u2192 loading card closed, 1600\u00d7900 DPR1. Remote PROD versus local QA preview; browser/device cache and network differ, so final quiet matched-host timing is pending."
   },
-  "discardedColdAttempt": "Initial webgl2-labelled PROD probe observed WebGPU (production ignores debug renderer query); excluded from matched comparison. Files retained under test-results, including one PROD HTTP 502; not selected into the five WebGPU samples."
+  "discardedColdAttempt": "Initial webgl2-labelled PROD probe observed WebGPU (production ignores debug renderer query); excluded from matched comparison. Files retained under test-results, including one PROD HTTP 502; not selected into the five WebGPU samples.",
+  "timingAssetRevision": "90441a416 before the skin-region correction; timing not rerun in this follow-up",
+  "resourceAssetRevision": "current skin-region correction, all 30 actors rendered"
 }

@@ -20,7 +20,7 @@ dist/build/basis_transcoder-o4Hde_L7.js            57.53 kB
 dist/build/three.module-CwjGdtFU.js               206.12 kB
 dist/build/civilianSource-DGKWAZR0.js             423.64 kB
 dist/build/basis_transcoder-VXdx5NbI.wasm         527.33 kB │ gzip:   244.57 kB
-dist/build/prefetch.worker-BW9ED7Ki.js          1,086.53 kB
+dist/build/prefetch.worker-DO-omrA2.js          1,086.53 kB
 dist/build/prepareCivilianGeometry-DYcfAAgH.js  2,028.73 kB
 dist/build/rapier-C6GCbKVJ.wasm                 3,082.10 kB │ gzip: 1,171.17 kB
 dist/build/index-CUk1QJun.css                      41.64 kB │ gzip:     8.85 kB
@@ -35,45 +35,44 @@ dist/build/crowd-BVtzsHj2.js                        3.01 kB │ gzip:     1.56 k
 dist/build/lookPatch-BJ2Iw5hk.js                    5.68 kB │ gzip:     2.83 kB
 dist/build/probe-DC6G_q6a.js                        7.51 kB │ gzip:     3.05 kB
 dist/build/meleeCombos-CXpE_8Lh.js                  9.60 kB │ gzip:     3.09 kB
-dist/build/index-DfifOepc.js                       12.43 kB │ gzip:     4.50 kB
+dist/build/index-BlyY3ype.js                       12.43 kB │ gzip:     4.50 kB
 dist/build/Inspection-go6B6wvS.js                  12.86 kB │ gzip:     4.41 kB
 dist/build/MotionLab-DUvgWxIS.js                   20.11 kB │ gzip:     8.47 kB
 dist/build/LevelFiveBot-Cm6UCn_M.js                22.90 kB │ gzip:     6.65 kB
 dist/build/survivor-JATdyqv7.js                    23.85 kB │ gzip:     9.68 kB
 dist/build/LevelSixSubway-C1Pm_fDI.js              26.65 kB │ gzip:    10.23 kB
 dist/build/index-ZmwU4wuD.js                       28.31 kB │ gzip:     7.74 kB
-dist/build/testApi-X3yHvrtt.js                     35.68 kB │ gzip:    13.02 kB
+dist/build/testApi-CtxKAC3B.js                     35.68 kB │ gzip:    13.02 kB
 dist/build/Physics-CEGzB9Zz.js                     80.55 kB │ gzip:    27.96 kB
-dist/build/Pickups-DutvvTTd.js                     85.81 kB │ gzip:    27.79 kB
+dist/build/Pickups-BWU1H_0o.js                     85.81 kB │ gzip:    27.79 kB
 dist/build/light-anchors-DQGCSUUw.js               90.38 kB │ gzip:     6.79 kB
-dist/build/SceneLab-DvJ8_wYU.js                   103.77 kB │ gzip:    35.70 kB
-dist/build/PropSystem-DntBBx2t.js                 132.77 kB │ gzip:    45.11 kB
+dist/build/SceneLab-vpOgnBLN.js                   103.77 kB │ gzip:    35.70 kB
+dist/build/PropSystem-DwT7Ekbh.js                 132.77 kB │ gzip:    45.11 kB
 dist/build/Debug-C5mqunPp.js                      155.77 kB │ gzip:    33.00 kB
 dist/build/registry-CZyx8mst.js                   207.84 kB │ gzip:    70.72 kB
 dist/build/rapier-ykuY6d4E.js                     212.13 kB │ gzip:    36.15 kB
 dist/build/l6-DKlywkva.js                         268.41 kB │ gzip:    81.99 kB
 dist/build/three-core-CZlmsIZ_.js                 307.37 kB │ gzip:    82.33 kB
 dist/build/WeatherView-ChoNOe8R.js                377.91 kB │ gzip:    42.33 kB
-dist/build/install-ple3HlgV.js                    617.73 kB │ gzip:   158.34 kB
+dist/build/install-zCitvN7k.js                    617.73 kB │ gzip:   158.35 kB
 dist/build/three-webgpu-CAPdUbxp.js               688.67 kB │ gzip:   192.05 kB
 dist/build/wreck-roofs-GAckelu8.js                755.61 kB │ gzip:   253.19 kB
-dist/build/index-B2KN6Gkg.js                    1,363.09 kB │ gzip:   428.38 kB
+dist/build/index-WW-n6cK8.js                    1,363.09 kB │ gzip:   428.37 kB
 dist/build/character-clips-CGKWtM3S.js          1,939.70 kB │ gzip:   341.80 kB
-✓ built in 5.22s
-Cached production dist for tree 66c614bfcbd0b4b2bea789dcc2d44825980d4733
-[test-budget] 126/150 test cases ({"vitest":105,"e2e":9,"invariantsBrowser":12}), 38/45 files
+✓ built in 6.83s
+[test-budget] 127/150 test cases ({"vitest":106,"e2e":9,"invariantsBrowser":12}), 38/45 files
 
 Running 7 tests using 1 worker
 
 [gpu-limits] webgl: 499 programs, 93 crowd; crowd max attributes 13, varyings 14, buffers 0; all max attributes 13, varyings 14, buffers 0
-  ✓  1 [chromium] › tests/e2e/crowd-gpu-limits.spec.ts:19:52 › every crowd, corpse and accessory program compiles within the portable GPU limits on webgl @smoke (37.7s)
+  ✓  1 [chromium] › tests/e2e/crowd-gpu-limits.spec.ts:19:52 › every crowd, corpse and accessory program compiles within the portable GPU limits on webgl @smoke (38.3s)
 [gpu-limits] webgpu: 713 programs, 98 crowd; crowd max attributes 13, varyings 14, buffers 6; all max attributes 13, varyings 14, buffers 8
-  ✓  2 [chromium] › tests/e2e/crowd-gpu-limits.spec.ts:19:52 › every crowd, corpse and accessory program compiles within the portable GPU limits on webgpu @smoke (35.7s)
-  ✓  3 [chromium] › tests/e2e/smoke.spec.ts:13:1 › boot: ready resolves, the canvas shows spatial detail, and three scenario reloads leave no entities or bodies @smoke (792ms)
-  ✓  4 [chromium] › tests/e2e/smoke.spec.ts:35:1 › L1 handover + outbreak: no shader builds after warm-up and no frame over 200 ms @smoke (21.9s)
-  ✓  5 [chromium] › tests/e2e/smoke.spec.ts:95:54 › L1 start: pedestrians are drawn on screen (webgl), not only their props @smoke (24.4s)
-  ✓  6 [chromium] › tests/e2e/smoke.spec.ts:95:54 › L1 start: pedestrians are drawn on screen (webgpu), not only their props @smoke (24.3s)
-  ✓  7 [chromium] › tests/e2e/webgpu-unflagged.spec.ts:12:1 › menu → L1 start on unflagged WebGPU compiles every render pipeline with suit zombies drawn (low tier) @smoke (6.2s)
+  ✓  2 [chromium] › tests/e2e/crowd-gpu-limits.spec.ts:19:52 › every crowd, corpse and accessory program compiles within the portable GPU limits on webgpu @smoke (35.9s)
+  ✓  3 [chromium] › tests/e2e/smoke.spec.ts:13:1 › boot: ready resolves, the canvas shows spatial detail, and three scenario reloads leave no entities or bodies @smoke (793ms)
+  ✓  4 [chromium] › tests/e2e/smoke.spec.ts:35:1 › L1 handover + outbreak: no shader builds after warm-up and no frame over 200 ms @smoke (22.1s)
+  ✓  5 [chromium] › tests/e2e/smoke.spec.ts:95:54 › L1 start: pedestrians are drawn on screen (webgl), not only their props @smoke (23.3s)
+  ✓  6 [chromium] › tests/e2e/smoke.spec.ts:95:54 › L1 start: pedestrians are drawn on screen (webgpu), not only their props @smoke (24.6s)
+  ✓  7 [chromium] › tests/e2e/webgpu-unflagged.spec.ts:12:1 › menu → L1 start on unflagged WebGPU compiles every render pipeline with suit zombies drawn (low tier) @smoke (6.1s)
 
   7 passed (2.5m)
-[test-budget] smoke: 153.0 s (budget 240 s)
+[test-budget] smoke: 153.8 s (budget 240 s)

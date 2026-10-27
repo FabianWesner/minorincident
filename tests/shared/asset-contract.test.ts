@@ -47,6 +47,34 @@ test('crowd atlas cleanup preserves enclosed eye paint and its authored alpha cl
   }
 });
 
+test('uniform and civilian faces and yellow bare arms share the per-person skin class', () => {
+  for (const garments of [false, true]) {
+    const doc = new Document(), buffer = doc.createBuffer(), png = new PNG({ width: 128, height: 128 });
+    for (let y = 0; y < 128; y++) for (let x = 0; x < 128; x++) png.data.set(x < 64 ? [224, 168, 124, 255] : [247, 221, 147, 255], (y * 128 + x) * 4);
+    // Navy gloves and warm gold uniform shoulder patches must not join the skin region.
+    for (let y = 16; y < 40; y++) for (let x = 88; x < 112; x++) png.data.set(y < 28 ? [30, 40, 70, 255] : [247, 211, 147, 255], (y * 128 + x) * 4);
+    const attribute = (values: number[], type: 'VEC2' | 'VEC3' | 'SCALAR') => doc.createAccessor().setBuffer(buffer).setType(type).setArray(new Float32Array(values));
+    const material = doc.createMaterial().setBaseColorTexture(doc.createTexture().setImage(new Uint8Array(PNG.sync.write(png))).setMimeType('image/png'));
+    const prim = doc.createPrimitive().setMaterial(material)
+      .setAttribute('POSITION', attribute([1, 0, -1, 1, 1, -1, 1, 1, 1, 1, 0, 1, 0, 0, -1, 0, 1, -1, 0, 1, 1, 0, 0, 1, 0, .9, -.5, 0, 1, -.5, 0, 1, .5, 0, .9, .5], 'VEC3'))
+      .setAttribute('TEXCOORD_0', attribute([0, 0, 0, 1, .5, 1, .5, 0, .5, 0, .5, 1, 1, 1, 1, 0, 88 / 128, 28 / 128, 88 / 128, 40 / 128, 112 / 128, 40 / 128, 112 / 128, 28 / 128], 'VEC2'))
+      .setAttribute('_CROWD_PART', attribute([0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2], 'SCALAR'))
+      .setAttribute('_CROWD_REGION', attribute([1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1], 'SCALAR'))
+      .setIndices(doc.createAccessor().setBuffer(buffer).setType('SCALAR').setArray(new Uint16Array([0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7, 8, 9, 10, 8, 10, 11])));
+    const scene = doc.createScene(), head = doc.createNode('head'), arm = doc.createNode('foreArmL'), shoulder = doc.createNode('armL'); scene.addChild(head).addChild(arm).addChild(shoulder);
+    scene.addChild(doc.createNode('skin_body').setSkin(doc.createSkin().addJoint(head).addJoint(arm).addJoint(shoulder)).setMesh(doc.createMesh().addPrimitive(prim)));
+    scene.addChild(doc.createNode('skin_eyes').setMesh(doc.createMesh().addPrimitive(doc.createPrimitive().setAttribute('POSITION', attribute([1, .8, 0], 'VEC3')))));
+    classifyCrowdAtlas(doc, garments);
+    const result = PNG.sync.read(Buffer.from(material.getBaseColorTexture()!.getImage()!));
+    const pixel = (x: number, y: number) => [...result.data.subarray((y * 128 + x) * 4, (y * 128 + x) * 4 + 4)];
+    const face = pixel(32, 80), forearm = pixel(96, 80), skinAlpha = Math.round((crowdRegion.skin + 1) * 255 / 7);
+    expect(face[3]).toBe(skinAlpha); expect(forearm[3]).toBe(skinAlpha);
+    expect(Math.max(...face.slice(0, 3).map((v, c) => Math.abs(v - forearm[c])))).toBeLessThan(20);
+    expect(pixel(96, 20)[3]).not.toBe(skinAlpha);
+    if (!garments) expect(pixel(96, 32)[3], 'warm gold shoulder patch').not.toBe(skinAlpha);
+  }
+});
+
 test('the asset validator rejects every contract violation, and every production asset passes it', async () => {
   const { doc, def } = fixture();
   expect(validateDocument(doc, def, 1024).errors).toEqual([]);

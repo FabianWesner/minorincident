@@ -189,7 +189,7 @@
           "materials": 2,
           "drawCalls": 9,
           "animatedDrawCalls": 7,
-          "fileKB": 392.0234375,
+          "fileKB": 391.9765625,
           "dimensions": [
             0.571837306022644,
             1.4744024276733398,
@@ -204,7 +204,7 @@
           "materials": 2,
           "drawCalls": 9,
           "animatedDrawCalls": 7,
-          "fileKB": 184.43359375,
+          "fileKB": 184.73046875,
           "dimensions": [
             0.574265256524086,
             1.4744024276733398,
@@ -219,7 +219,7 @@
           "materials": 2,
           "drawCalls": 9,
           "animatedDrawCalls": 7,
-          "fileKB": 139.20703125,
+          "fileKB": 139.18359375,
           "dimensions": [
             0.574265256524086,
             1.4744024276733398,
@@ -235,7 +235,7 @@
           "bodySha256": "b8ba6dc1919e704d8d39354040b31a394d146e079cd89e9ed1b26f4b17bdee5c",
           "fit": {
             "rig": "assets/npc.civilian-kid/model.glb",
-            "out": "test-results/l2-all-new/builds/npc.civilian-kid/lod0.raw.glb",
+            "out": "test-results/l2-officer-skin/builds/npc.civilian-kid/lod0.raw.glb",
             "bytes": 1412424,
             "body": "/Users/wesner/Workspace/3dp-l2-all-new/cast/l2/npc.civilian-kid/source/assembled-lod0.glb",
             "scale": 1.386361468422803,
@@ -449,24 +449,56 @@
               }
             }
           },
+          "regions": {
+            "width": 1024,
+            "height": 1024,
+            "garments": true,
+            "absorbed": 34581,
+            "shares": {
+              "hair": 0.2433,
+              "skin": 0.2203,
+              "shirt": 0.1447,
+              "trousers": 0.0904,
+              "skinMask": 0,
+              "authored": 0.3012
+            },
+            "colours": {
+              "skin": [
+                82.2,
+                17.6,
+                30.3
+              ],
+              "hair": [
+                37.7,
+                18.3,
+                18.5
+              ],
+              "shirt": [
+                46.9,
+                -5.1,
+                -23.2
+              ],
+              "trousers": [
+                49.3,
+                -7.4,
+                16.8
+              ]
+            }
+          },
           "tiers": [
             {
               "low": false,
               "path": "public/assets/models/skinned/npc.civilian-kid.lod0.glb",
-              "bytes": 401432,
-              "sha256": "27c515d4a286615992f9899a07a49094b9eb25b2a29789bdead978fd216f0d2f",
-              "errors": [],
-              "currentSha256": "27c515d4a286615992f9899a07a49094b9eb25b2a29789bdead978fd216f0d2f",
-              "hashMatches": true
+              "bytes": 401384,
+              "sha256": "d867f865119f781dee42503cbf145d1ec8319fd02fd511fccae8d247e4711ea0",
+              "errors": []
             },
             {
               "low": true,
               "path": "public/assets/models/skinned/npc.civilian-kid.lod0.low.glb",
-              "bytes": 284412,
-              "sha256": "f632f74be5454330fdafb5f49e45be02959ee3bb1b4b6150a1befc126ad9f6c1",
-              "errors": [],
-              "currentSha256": "f632f74be5454330fdafb5f49e45be02959ee3bb1b4b6150a1befc126ad9f6c1",
-              "hashMatches": true
+              "bytes": 284380,
+              "sha256": "af731b27ab30c4faaa12a72dc9ea2b9153ddc270b0abcbd0bddf553a494ad09a",
+              "errors": []
             }
           ]
         },
@@ -476,7 +508,7 @@
           "bodySha256": "3118d918b688c10e95d580c60eef6f87b0a477a3f5a1b35e6f6d4c763b92a178",
           "fit": {
             "rig": "assets/npc.civilian-kid/model.glb",
-            "out": "test-results/l2-all-new/builds/npc.civilian-kid/lod1.raw.glb",
+            "out": "test-results/l2-officer-skin/builds/npc.civilian-kid/lod1.raw.glb",
             "bytes": 576888,
             "body": "/Users/wesner/Workspace/3dp-l2-all-new/cast/l2/npc.civilian-kid/source/assembled-lod1.glb",
             "scale": 1.3782111491032234,
@@ -690,24 +722,56 @@
               }
             }
           },
+          "regions": {
+            "width": 512,
+            "height": 512,
+            "garments": true,
+            "absorbed": 7495,
+            "shares": {
+              "hair": 0.2438,
+              "skin": 0.1853,
+              "shirt": 0.1481,
+              "trousers": 0.0875,
+              "skinMask": 0,
+              "authored": 0.3352
+            },
+            "colours": {
+              "skin": [
+                82.2,
+                17.8,
+                30.3
+              ],
+              "hair": [
+                37.6,
+                18.3,
+                18.5
+              ],
+              "shirt": [
+                46.9,
+                -5.1,
+                -23.2
+              ],
+              "trousers": [
+                49.3,
+                -7.4,
+                16.8
+              ]
+            }
+          },
           "tiers": [
             {
               "low": false,
               "path": "public/assets/models/skinned/npc.civilian-kid.lod1.glb",
-              "bytes": 188860,
-              "sha256": "abbad6226d9029bdb66485da4e31cef2d2c6c9d03edbc34c6ef0134c6387b061",
-              "errors": [],
-              "currentSha256": "abbad6226d9029bdb66485da4e31cef2d2c6c9d03edbc34c6ef0134c6387b061",
-              "hashMatches": true
+              "bytes": 189164,
+              "sha256": "e3ddb15f69d7fa7b65809cfb4eb80a92b30b2ccea6a4715ca30ac97773d27092",
+              "errors": []
             },
             {
               "low": true,
               "path": "public/assets/models/skinned/npc.civilian-kid.lod1.low.glb",
-              "bytes": 188860,
-              "sha256": "abbad6226d9029bdb66485da4e31cef2d2c6c9d03edbc34c6ef0134c6387b061",
-              "errors": [],
-              "currentSha256": "abbad6226d9029bdb66485da4e31cef2d2c6c9d03edbc34c6ef0134c6387b061",
-              "hashMatches": true
+              "bytes": 189164,
+              "sha256": "e3ddb15f69d7fa7b65809cfb4eb80a92b30b2ccea6a4715ca30ac97773d27092",
+              "errors": []
             }
           ]
         },
@@ -717,7 +781,7 @@
           "bodySha256": "3118d918b688c10e95d580c60eef6f87b0a477a3f5a1b35e6f6d4c763b92a178",
           "fit": {
             "rig": "assets/npc.civilian-kid/model.glb",
-            "out": "test-results/l2-all-new/builds/npc.civilian-kid/lod2.raw.glb",
+            "out": "test-results/l2-officer-skin/builds/npc.civilian-kid/lod2.raw.glb",
             "bytes": 576888,
             "body": "/Users/wesner/Workspace/3dp-l2-all-new/cast/l2/npc.civilian-kid/source/assembled-lod1.glb",
             "scale": 1.3782111491032234,
@@ -931,24 +995,56 @@
               }
             }
           },
+          "regions": {
+            "width": 512,
+            "height": 512,
+            "garments": true,
+            "absorbed": 7495,
+            "shares": {
+              "hair": 0.2438,
+              "skin": 0.1853,
+              "shirt": 0.1481,
+              "trousers": 0.0875,
+              "skinMask": 0,
+              "authored": 0.3352
+            },
+            "colours": {
+              "skin": [
+                82.2,
+                17.8,
+                30.3
+              ],
+              "hair": [
+                37.6,
+                18.3,
+                18.5
+              ],
+              "shirt": [
+                46.9,
+                -5.1,
+                -23.2
+              ],
+              "trousers": [
+                49.3,
+                -7.4,
+                16.8
+              ]
+            }
+          },
           "tiers": [
             {
               "low": false,
               "path": "public/assets/models/skinned/npc.civilian-kid.lod2.glb",
-              "bytes": 142548,
-              "sha256": "6de8f652d12b081968299eb4104c7110e78e46ef5efc8c788acdded1d35ed2e3",
-              "errors": [],
-              "currentSha256": "6de8f652d12b081968299eb4104c7110e78e46ef5efc8c788acdded1d35ed2e3",
-              "hashMatches": true
+              "bytes": 142524,
+              "sha256": "75c25481c3e885e52cb99864b7ad14bfa1cf402cc7aa4f08b14402dd670c30f8",
+              "errors": []
             },
             {
               "low": true,
               "path": "public/assets/models/skinned/npc.civilian-kid.lod2.low.glb",
-              "bytes": 142548,
-              "sha256": "6de8f652d12b081968299eb4104c7110e78e46ef5efc8c788acdded1d35ed2e3",
-              "errors": [],
-              "currentSha256": "6de8f652d12b081968299eb4104c7110e78e46ef5efc8c788acdded1d35ed2e3",
-              "hashMatches": true
+              "bytes": 142524,
+              "sha256": "75c25481c3e885e52cb99864b7ad14bfa1cf402cc7aa4f08b14402dd670c30f8",
+              "errors": []
             }
           ]
         }
@@ -966,7 +1062,7 @@
           "materials": 2,
           "drawCalls": 9,
           "animatedDrawCalls": 7,
-          "fileKB": 292.4609375,
+          "fileKB": 301.3046875,
           "dimensions": [
             0.4764045774936676,
             1.4179394245147705,
@@ -981,7 +1077,7 @@
           "materials": 2,
           "drawCalls": 9,
           "animatedDrawCalls": 7,
-          "fileKB": 146.1171875,
+          "fileKB": 149.58203125,
           "dimensions": [
             0.4747132956981659,
             1.4179394245147705,
@@ -996,7 +1092,7 @@
           "materials": 2,
           "drawCalls": 9,
           "animatedDrawCalls": 7,
-          "fileKB": 118.8046875,
+          "fileKB": 120.07421875,
           "dimensions": [
             0.4747132956981659,
             1.4179394245147705,
@@ -1012,7 +1108,7 @@
           "bodySha256": "676caa0cdecc847e58c2475ad67babb6291c30294a6157181348ad5e99047519",
           "fit": {
             "rig": "assets/npc.police-officer/model.glb",
-            "out": "test-results/l2-all-new/builds/npc.police-officer/lod0.raw.glb",
+            "out": "test-results/l2-officer-skin/builds/npc.police-officer/lod0.raw.glb",
             "bytes": 1308436,
             "body": "/Users/wesner/Workspace/3dp-l2-all-new/cast/l2/npc.police-officer/source/assembled-lod0.glb",
             "scale": 1.5241175503538922,
@@ -1230,24 +1326,41 @@
               }
             }
           },
+          "regions": {
+            "width": 1024,
+            "height": 1024,
+            "garments": false,
+            "absorbed": 398,
+            "shares": {
+              "hair": 0,
+              "skin": 0.0868,
+              "shirt": 0,
+              "trousers": 0,
+              "skinMask": 0,
+              "authored": 0.9132
+            },
+            "colours": {
+              "skin": [
+                84.6,
+                11.9,
+                35.5
+              ]
+            }
+          },
           "tiers": [
             {
               "low": false,
               "path": "public/assets/models/skinned/npc.police-officer.lod0.glb",
-              "bytes": 299480,
-              "sha256": "6b01e051bb693825c92b42b1a6cec376f701952a368c5b29c2df03aeb1ac511c",
-              "errors": [],
-              "currentSha256": "6b01e051bb693825c92b42b1a6cec376f701952a368c5b29c2df03aeb1ac511c",
-              "hashMatches": true
+              "bytes": 308536,
+              "sha256": "d7a74ace1c949180ef77f38b88b00e15a845c99b333020d8412c6f66a103d7d2",
+              "errors": []
             },
             {
               "low": true,
               "path": "public/assets/models/skinned/npc.police-officer.lod0.low.glb",
-              "bytes": 229124,
-              "sha256": "4870e385b6f8e503449d0be16ec86b2fd8e85866c388a1ee646c9db7902d314a",
-              "errors": [],
-              "currentSha256": "4870e385b6f8e503449d0be16ec86b2fd8e85866c388a1ee646c9db7902d314a",
-              "hashMatches": true
+              "bytes": 233044,
+              "sha256": "24b74ce6995000498e82487b83009624618246f7ee943bbc5254f59d8dcd0ca6",
+              "errors": []
             }
           ]
         },
@@ -1257,7 +1370,7 @@
           "bodySha256": "ffa611a8b0abe1fd7f6cab49637041d9540e073148fdaec5bc83115dfc3c4781",
           "fit": {
             "rig": "assets/npc.police-officer/model.glb",
-            "out": "test-results/l2-all-new/builds/npc.police-officer/lod1.raw.glb",
+            "out": "test-results/l2-officer-skin/builds/npc.police-officer/lod1.raw.glb",
             "bytes": 541096,
             "body": "/Users/wesner/Workspace/3dp-l2-all-new/cast/l2/npc.police-officer/source/assembled-lod1.glb",
             "scale": 1.5223781481422345,
@@ -1475,24 +1588,41 @@
               }
             }
           },
+          "regions": {
+            "width": 512,
+            "height": 512,
+            "garments": false,
+            "absorbed": 881,
+            "shares": {
+              "hair": 0,
+              "skin": 0.0919,
+              "shirt": 0,
+              "trousers": 0,
+              "skinMask": 0,
+              "authored": 0.9081
+            },
+            "colours": {
+              "skin": [
+                85.1,
+                11.3,
+                34.9
+              ]
+            }
+          },
           "tiers": [
             {
               "low": false,
               "path": "public/assets/models/skinned/npc.police-officer.lod1.glb",
-              "bytes": 149624,
-              "sha256": "4999b6aa72a570df519b3d3ac9b5d5fdde3481834776df2bd89651cc883a98e5",
-              "errors": [],
-              "currentSha256": "4999b6aa72a570df519b3d3ac9b5d5fdde3481834776df2bd89651cc883a98e5",
-              "hashMatches": true
+              "bytes": 153172,
+              "sha256": "492e65f5d9434efcf7c44370c7c1da06647140c2fa6197cb778853c1f8fbe05e",
+              "errors": []
             },
             {
               "low": true,
               "path": "public/assets/models/skinned/npc.police-officer.lod1.low.glb",
-              "bytes": 149624,
-              "sha256": "4999b6aa72a570df519b3d3ac9b5d5fdde3481834776df2bd89651cc883a98e5",
-              "errors": [],
-              "currentSha256": "4999b6aa72a570df519b3d3ac9b5d5fdde3481834776df2bd89651cc883a98e5",
-              "hashMatches": true
+              "bytes": 153172,
+              "sha256": "492e65f5d9434efcf7c44370c7c1da06647140c2fa6197cb778853c1f8fbe05e",
+              "errors": []
             }
           ]
         },
@@ -1502,7 +1632,7 @@
           "bodySha256": "ffa611a8b0abe1fd7f6cab49637041d9540e073148fdaec5bc83115dfc3c4781",
           "fit": {
             "rig": "assets/npc.police-officer/model.glb",
-            "out": "test-results/l2-all-new/builds/npc.police-officer/lod2.raw.glb",
+            "out": "test-results/l2-officer-skin/builds/npc.police-officer/lod2.raw.glb",
             "bytes": 541096,
             "body": "/Users/wesner/Workspace/3dp-l2-all-new/cast/l2/npc.police-officer/source/assembled-lod1.glb",
             "scale": 1.5223781481422345,
@@ -1720,24 +1850,41 @@
               }
             }
           },
+          "regions": {
+            "width": 512,
+            "height": 512,
+            "garments": false,
+            "absorbed": 881,
+            "shares": {
+              "hair": 0,
+              "skin": 0.0919,
+              "shirt": 0,
+              "trousers": 0,
+              "skinMask": 0,
+              "authored": 0.9081
+            },
+            "colours": {
+              "skin": [
+                85.1,
+                11.3,
+                34.9
+              ]
+            }
+          },
           "tiers": [
             {
               "low": false,
               "path": "public/assets/models/skinned/npc.police-officer.lod2.glb",
-              "bytes": 121656,
-              "sha256": "81e8a25621d495042a8f9764b31b66dcb7db6c5ead9604e49aea18a051087d29",
-              "errors": [],
-              "currentSha256": "81e8a25621d495042a8f9764b31b66dcb7db6c5ead9604e49aea18a051087d29",
-              "hashMatches": true
+              "bytes": 122956,
+              "sha256": "bd8efab31ac8667f769f8c02079f5db0c2da4e9337ba166e492dd976970be452",
+              "errors": []
             },
             {
               "low": true,
               "path": "public/assets/models/skinned/npc.police-officer.lod2.low.glb",
-              "bytes": 121656,
-              "sha256": "81e8a25621d495042a8f9764b31b66dcb7db6c5ead9604e49aea18a051087d29",
-              "errors": [],
-              "currentSha256": "81e8a25621d495042a8f9764b31b66dcb7db6c5ead9604e49aea18a051087d29",
-              "hashMatches": true
+              "bytes": 122956,
+              "sha256": "bd8efab31ac8667f769f8c02079f5db0c2da4e9337ba166e492dd976970be452",
+              "errors": []
             }
           ]
         }
