@@ -33,8 +33,8 @@ const crowd30: SceneSpec = {
 const corpses: SceneSpec = {
   name: 'l4-converted-corpses', ground: 'asphalt', time: 'L4', size: 100,
   actors: [{ id: 'courier', kind: 'courier', at: [-14, 8] }, ...converted.flatMap((model, i): ActorSpec[] => [
-    { id: `live-${i}`, kind: 'infected', archetype: archetype(model), at: [-12 + i * 3, -4], yaw: -45, look: { model }, state: 'idle' },
-    { id: `dead-${i}`, kind: 'infected', archetype: archetype(model), at: [-12 + i * 3, 3], yaw: -45, look: { model }, state: 'idle' },
+    { id: `live-${i}`, kind: 'infected', archetype: archetype(model), at: [-4 + i % 3 * 4, -9 + Math.floor(i / 3) * 8], yaw: -45, look: { model }, state: 'idle' },
+    { id: `dead-${i}`, kind: 'infected', archetype: archetype(model), at: [-4 + i % 3 * 4, -5 + Math.floor(i / 3) * 8], yaw: -45, look: { model }, state: 'idle' },
   ])],
   script: converted.map((_, i) => ({ frame: 3, actor: `dead-${i}`, do: { corpse: true as const } })),
   camera: { mode: 'game', target: [0, .4, 0], zoom: 1.5 }, frames: 120, shots: [120], trace: true,
@@ -65,6 +65,15 @@ try {
     const result = await runSpec(session, spec, { file, out: resolve(out, spec.name!), sheet: Math.max(60, Math.ceil((spec.frames ?? 180) / 12)) });
     receipts.push({ file, ...result }); writeJson(`${out}/receipts.json`, receipts);
     assert.ok(result.pass, `${spec.name}: ${JSON.stringify(result.failed)}`);
+  }
+  if (mode === 'guns') {
+    for (const [model, prop] of [['npc.national-guard', 'rifle'], ['npc.civilian-man-a', 'hunting-rifle'], ['npc.civilian-woman-a', 'pistol'], ['npc.civilian-man-b', 'shotgun']] as const) for (const yaw of [-45, 45, 135, 225]) {
+      const fixture: SceneSpec = { name: `gun-${prop}-${yaw}`, time: 'L4', ground: 'asphalt', size: 100,
+        actors: [{ id: 'courier', kind: 'courier', at: [30, 30] }, { id: 'holder', kind: 'pedestrian', at: [0, 0], yaw, look: { model, handProp: prop }, state: 'idle' }],
+        camera: { mode: 'game', target: [0, .9, 0], zoom: .55 }, frames: 3, shots: [3], expect: { consoleErrors: 0 } };
+      const result = await runSpec(session, fixture, { out: `${out}/${prop}-${yaw}`, sheet: 0 });
+      assert.ok(result.pass, JSON.stringify(result.failed)); receipts.push({ model, prop, yaw, result }); writeJson(`${out}/receipts.json`, receipts);
+    }
   }
   if (mode === 'battle') {
     await session.page.evaluate(async () => {
@@ -125,6 +134,10 @@ try {
     }
     for (const zoom of [1, 1.5]) { await session.page.evaluate(({ zoom, corpses }) => window.__SCENE__!.setCamera({ mode: 'game', target: corpses ? [0, .4, 0] : [-19, .6, 1], zoom }), { zoom, corpses: mode === 'corpses' }); await session.ready(); await session.screenshot(`${out}/zoom-${zoom}.png`); }
     if (mode === 'corpses') {
+      for (let group = 0; group < 3; group++) {
+        await session.page.evaluate(group => window.__SCENE__!.setCamera({ mode: 'game', target: [0, .6, -7 + group * 8], zoom: 1 }), group);
+        await session.ready(); await session.screenshot(`${out}/group-${group}.png`);
+      }
       const proof = await session.page.evaluate(async () => {
         const game = (window.__SCENE__ as unknown as { game: Game }).game;
         const path = '/src/sim/world/SolidRegistry.ts', { solidLargeCorpse, actorRadius } = await import(path);
