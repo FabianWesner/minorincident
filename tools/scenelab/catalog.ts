@@ -6,7 +6,7 @@ import type { SceneSpec } from '../../src/debug/scenelab/spec';
 import { catalogFlag } from './catalog-args';
 import { zoomLimits } from '../../src/render/View';
 
-/** npm run scene:catalog [-- --filter <glob>] [--dir <scene directory>] [--jobs 2] [--backend webgl2|webgpu] [--tier high|low] [--matrix] [--throttle 4] [--query key=value] [--size 960x540] [--out dir] [--list]
+/** npm run scene:catalog [-- --filter <glob>] [--dir <scene directory>] [--jobs 2] [--backend webgl2|webgpu] [--tier high|low] [--matrix] [--only scene@tier-zoom,...] [--throttle 4] [--query key=value] [--size 960x540] [--out dir] [--list]
  * Runs the ready-made QA scenes in specs/scenes/catalog/ and tests/scenes/catalog/ (own specs, or `extends` of specs/scenes/*.json) headless with
  * at most `jobs` browsers (default 2, under tools/e2e-lock.sh), and writes <out>/index.md: one row per scene with the
  * gate results and the contact sheet (<out>/<scene>/sheet.jpg). The filter is a glob on the scene name, comma separated
@@ -36,6 +36,13 @@ const entries: Entry[] = dirs.flatMap(dir => readdirSync(dir).filter(f => f.ends
   const zooms = zoomed(e.spec) ? [zoomLimits[1], 1, zoomLimits[0]] : [null];
   return zooms.map(zoom => ({ ...e, tier, name: `${e.name}@${tier}${zoom === null ? '' : `-z${zoom}`}`, spec: zoom === null ? e.spec : { ...e.spec, camera: { ...e.spec.camera!, zoom } as SceneSpec['camera'] } }));
 }));
+// --only <row,row>: exact row names (`scene@tier[-zoom]`, the scene:gate list); a name that matches no row is an error.
+const only = flag('only')?.split(',').map(n => n.trim()).filter(Boolean);
+if (only) {
+  const have = new Set(entries.map(e => e.name)), missing = only.filter(n => !have.has(n));
+  if (missing.length) { console.error(`--only rows not found (need --matrix and an existing scene): ${missing.join(' ')}`); process.exit(2); }
+  for (let i = entries.length - 1; i >= 0; i--) if (!only.includes(entries[i].name)) entries.splice(i, 1);
+}
 if (!entries.length) { console.error(`no catalog scene matches ${flag('filter')}; names: ${dirs.flatMap(dir => readdirSync(dir).filter(f => f.endsWith('.json')).map(f => basename(f, '.json'))).join(' ')}`); process.exit(2); }
 if (args.includes('--list')) { console.log(entries.map(e => e.name).join('\n')); process.exit(0); }
 
