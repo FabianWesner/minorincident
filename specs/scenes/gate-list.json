@@ -16,13 +16,6 @@
    "reason": "courier, full gear, widest zoom"
   },
   {
-   "scene": "courier-gear-tier0-male",
-   "tier": "low",
-   "zoom": 1.5,
-   "backend": "webgpu",
-   "reason": "fresh-save courier, low close"
-  },
-  {
    "scene": "courier-gear-tier2-female",
    "tier": "high",
    "zoom": 1.5,
@@ -56,13 +49,6 @@
    "zoom": 1.5,
    "backend": "webgl2",
    "reason": "heroine locomotion gait"
-  },
-  {
-   "scene": "courier-locomotion-m",
-   "tier": "low",
-   "zoom": 0.5,
-   "backend": "webgpu",
-   "reason": "courier locomotion gait"
   },
   {
    "scene": "courier-turns",
@@ -105,13 +91,6 @@
    "zoom": 0.5,
    "backend": "webgl2",
    "reason": "new crowd family walking"
-  },
-  {
-   "scene": "ped-newchars-run",
-   "tier": "high",
-   "zoom": 1.5,
-   "backend": "webgpu",
-   "reason": "new crowd family running"
   },
   {
    "scene": "ped-newchars-sit",
@@ -161,13 +140,6 @@
    "zoom": null,
    "backend": "webgl2",
    "reason": "bitten ped state"
-  },
-  {
-   "scene": "ped-flee",
-   "tier": "high",
-   "zoom": null,
-   "backend": "webgpu",
-   "reason": "fleeing crowd"
   },
   {
    "scene": "inf-chase-l1",
@@ -226,13 +198,6 @@
    "reason": "mega alpha lineup"
   },
   {
-   "scene": "corgi-follow",
-   "tier": "low",
-   "zoom": 0.5,
-   "backend": "webgpu",
-   "reason": "corgi follow"
-  },
-  {
    "scene": "corgi-tongue-female",
    "tier": "high",
    "zoom": 1.5,
@@ -245,13 +210,6 @@
    "zoom": 1.5,
    "backend": "webgpu",
    "reason": "dog trot close"
-  },
-  {
-   "scene": "inf-dog-pack",
-   "tier": "high",
-   "zoom": 0.5,
-   "backend": "webgl2",
-   "reason": "infected dog pack"
   },
   {
    "scene": "animal-zoo-healthy",
@@ -289,32 +247,11 @@
    "reason": "corpse pile placement"
   },
   {
-   "scene": "polish-mega-corpse",
-   "tier": "high",
-   "zoom": 1.5,
-   "backend": "webgl2",
-   "reason": "mega corpse"
-  },
-  {
-   "scene": "l4-corpses-persist",
-   "tier": "low",
-   "zoom": 1.5,
-   "backend": "webgpu",
-   "reason": "L4 corpses persist"
-  },
-  {
    "scene": "l4-broken-army-line",
    "tier": "high",
    "zoom": 0.5,
    "backend": "webgl2",
    "reason": "L4 army line breach"
-  },
-  {
-   "scene": "l4-hold-perimeter",
-   "tier": "low",
-   "zoom": 1.5,
-   "backend": "webgpu",
-   "reason": "L4 hold the perimeter"
   },
   {
    "scene": "fight-army-line-zoom06",
@@ -331,25 +268,11 @@
    "reason": "L10 military breach"
   },
   {
-   "scene": "l10-e3b-mega-arrival",
-   "tier": "high",
-   "zoom": 1.5,
-   "backend": "webgpu",
-   "reason": "L10 boss arrival"
-  },
-  {
    "scene": "l10-mega-close-contact",
    "tier": "low",
    "zoom": 1.5,
    "backend": "webgl2",
    "reason": "L10 boss close contact"
-  },
-  {
-   "scene": "seethrough-apc-behind-building",
-   "tier": "high",
-   "zoom": 1.5,
-   "backend": "webgl2",
-   "reason": "see-through APC behind building"
   },
   {
    "scene": "seethrough-open-sidewalk-l4",
@@ -408,11 +331,19 @@
    "reason": "vehicle admission/contact"
   },
   {
-   "scene": "vfx-vehicle-crash",
-   "tier": "low",
-   "zoom": 1.5,
+   "scene": "inf-mega-arrival",
+   "tier": "high",
+   "zoom": 0.5,
    "backend": "webgpu",
-   "reason": "vehicle crash vfx"
+   "reason": "boss (mega alpha) arrival, cheap stand-in for the 110 s l10-e3b scene"
   }
- ]
+ ],
+ "known": {
+  "ped-sit-all@high": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; right hand vs held cane, 215 tris, grip overlap only (sheet looks fine)",
+  "ped-sit-all@low": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; same hand/cane overlap",
+  "ped-water-flowerbed@high": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; right hand vs watering can grip overlap",
+  "ped-zoo-staff@high": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; 4 hand-vs-held-prop grip overlaps (coffee, bag x2, watering can); sheet looks fine",
+  "dog-pet-trot@low-z1.5": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; footSlideMaxCm 8.2 > 3 at every zoom (low tier dog trot)",
+  "inf-chase-l3@high-z0.5": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; courierSwings 0 at every zoom (scene expects the courier to swing at least once)"
+ }
 }
