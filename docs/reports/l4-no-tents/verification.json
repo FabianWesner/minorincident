@@ -91,7 +91,7 @@
     "explanation": "Main is also over budget. Branch simulation and frame p95 are lower; no >15% CPU regression. No CPU optimization authorized or needed from this comparison."
   },
   "pending": [
-    "remaining93 native functional/smoke cases incl fixed six roof-band cases"
+    "real-input playthrough and final focused native corrections"
   ],
   "noSkipBot": {
     "source": "e7b3c98ee",
@@ -132,8 +132,8 @@
   },
   "sourceChecks": {
     "source": "39323d31f QA build /758cca67f tests",
-    "typecheck": "rerunning",
-    "lint": "rerunning",
+    "typecheck": "passed",
+    "lint": "passed",
     "receipt": "checks/final-source.log",
     "applicationBuild": "249580fc1"
   },
