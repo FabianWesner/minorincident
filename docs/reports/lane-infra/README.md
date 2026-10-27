@@ -1,5 +1,7 @@
 # Lane infrastructure — 2026-10-27
 
+Main integration and build-mode cache verification: [merge report](merge-main.md).
+
 Implemented and committed on `lane/lane-infra`. Production code was verified through `d5a2e7764`; worktree timing uses `e89ba8941`, concurrency uses `b5d3e8285`. No test fixtures or `tools/remote/*` changed in this lane. No deployment.
 
 ## Operation

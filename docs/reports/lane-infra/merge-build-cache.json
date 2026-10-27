@@ -1,0 +1,95 @@
+{
+  "revision": "38ece0ef5c2cf1592de0247b8502c675f5547288",
+  "results": [
+    {
+      "label": "prod-first",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "nodeEnv": "production",
+      "branch": "production",
+      "qaHooks": false,
+      "cacheHit": false,
+      "durationMs": 11617
+    },
+    {
+      "label": "qa",
+      "command": [
+        "npm",
+        "run",
+        "build:qa"
+      ],
+      "nodeEnv": "production",
+      "branch": "production",
+      "qaHooks": true,
+      "cacheHit": false,
+      "durationMs": 17687
+    },
+    {
+      "label": "prod-restored",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "nodeEnv": "production",
+      "branch": "production",
+      "qaHooks": false,
+      "cacheHit": true,
+      "durationMs": 2891
+    },
+    {
+      "label": "branch-qa",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "nodeEnv": "production",
+      "branch": "qa",
+      "qaHooks": true,
+      "cacheHit": false,
+      "durationMs": 14283
+    },
+    {
+      "label": "prod-after-branch",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "nodeEnv": "production",
+      "branch": "production",
+      "qaHooks": false,
+      "cacheHit": true,
+      "durationMs": 2033
+    },
+    {
+      "label": "development-env",
+      "command": [
+        "sh",
+        "tools/build-cached.sh"
+      ],
+      "nodeEnv": "development",
+      "branch": "production",
+      "qaHooks": true,
+      "cacheHit": false,
+      "durationMs": 11339
+    },
+    {
+      "label": "prod-after-development",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "nodeEnv": "production",
+      "branch": "production",
+      "qaHooks": false,
+      "cacheHit": true,
+      "durationMs": 1739
+    }
+  ]
+}
