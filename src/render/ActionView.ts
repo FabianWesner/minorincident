@@ -100,6 +100,8 @@ export class ActionView extends Group {
     // perf-w6: the L4 quartermaster issues the machine gun on the alarm tick (no pickup entity). Loading it on first
     // equip compiled its six held materials inside the alarm frame (92 ms render at low/4x CPU).
     if (this.world.missions?.l4) needed.add(l4.machineGun.id);
+    // Q-211: weapons a level hands over later (L2 fire axe, L3 handgun, L5 shotgun) must be loaded and warmed up too.
+    for (const id of this.world.combat?.withheld ?? []) needed.add(id);
     const defs = Object.values(catalog);
     await Promise.all(defs.filter(def => needed.has(def.id)).map(def => this.load(def)));
   }
