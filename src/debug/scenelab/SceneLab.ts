@@ -223,7 +223,6 @@ export class SceneLab {
   private boom: ArmyCheckpointBoom | null = null;
   private boomClosedAt = 0;
   private setup(world: SimWorld, spec: SceneSpec): void {
-    const combat = world.requireCombat();
     const fixtureHost = { tier: this.game.quality.tier, actors: this.actors, vehicles: this.vehicles, teleport: (entity: EntitySnapshot, position: { x: number; z: number }) => this.teleport(entity, position) };
     if (spec.weather) world.weather?.setOverride(spec.weather);
     if (spec.weatherTimeline) world.weather?.setTimeline(spec.weatherTimeline);
@@ -243,6 +242,7 @@ export class SceneLab {
     if (spec.layout?.level === 'L2') world.infectedMeleeHits = l2.infectedMeleeHits;
     // Hand-overs move in the missions phase, like the L1 story beats, so AgentMotion publishes their walking speed.
     world.events.on('sim.tick', () => this.driveHandovers(), SimPhase.missions);
+    const combat = world.requireCombat();
     combat.damage.god = true;
     combat.assist.setting = spec.aimAssist ?? 'Default';
     // Q-196 keyboard aim: each courier gun shot against the autoAim intent, and whether it struck a living infected.
