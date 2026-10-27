@@ -1,0 +1,16 @@
+{
+  "exitCode": 0,
+  "command": [
+    "sh",
+    "tools/e2e-lock.sh",
+    "npx",
+    "playwright",
+    "test",
+    "--config=tests/qa/invariants/playwright.config.ts",
+    "--grep",
+    "load time L(?:9|10):|Scene Lab: scripted cast",
+    "--project=chromium",
+    "--workers=1",
+    "--trace=off"
+  ]
+}

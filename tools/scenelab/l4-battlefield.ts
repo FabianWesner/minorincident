@@ -13,7 +13,7 @@ try {
       const ids = await session.page.evaluate(async tier => {
         const api = window.__SS__!; await api.loadLevel('L4', { seed: 1 }); api.missions.begin(); api.pause(); api.cheats.god(true);
         const game = (window.__SCENE__ as unknown as { game: Game }).game, w = game.world, ai = w.infected!, s = w.missions!.state.l4!;
-        ai.director.setTier(tier); s.phase = 'war'; s.turnAt = 1; s.warAt = 1; s.waveAt = 1e9; s.insideAt = 1e9;
+        ai.director.setTier(tier); s.phase = 'war'; s.turnAt = 1; s.warAt = 1; s.waveAt = 1e9; s.perimeterAt = 1e9;
         const p = w.entities.get(1)!; p.hidden = false; w.storyLock = null;
         const cell = ai.nav.nearestCell(-12, 27), x = ai.nav.x(cell), z = ai.nav.z(cell);
         api.teleport('player', { x: x + 3, z: z + 3 });

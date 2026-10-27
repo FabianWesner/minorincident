@@ -1,0 +1,254 @@
+{
+  "low": {
+    "seed": 3,
+    "source": "72454dbd7",
+    "contactDefinition": "Sampled war seconds with at least one active infected within 12 m of the courier; census uses the existing invulnerable observation bot and stops after the hold; the no-skip survival bot runs separately",
+    "contactSeconds": 147,
+    "holdSeconds": 191,
+    "contactPercent": 76.96,
+    "inWallEntriesPerMinute": {
+      "0": 63,
+      "1": 93,
+      "2": 100,
+      "3": 14
+    },
+    "uniqueInWallEntrantsPerMinute": {
+      "0": 61,
+      "1": 91,
+      "2": 100
+    },
+    "spawnSources": {
+      "tent": 0,
+      "illegal-internal": 0,
+      "street-mouth": 71,
+      "street-door": 16,
+      "wire/breach": 260,
+      "alpha-street": 6,
+      "exterior-flank": 4,
+      "bite-conversion": 6
+    },
+    "newInViewAdmissions": 0,
+    "corpseCountsAt150": {
+      "6m": 2,
+      "8m": 4,
+      "10m": 19,
+      "14m": 37
+    },
+    "archetypes": {
+      "60": {
+        "infected.hazmat": {
+          "count": 4,
+          "percent": 19.05
+        },
+        "infected.crawler": {
+          "count": 4,
+          "percent": 19.05
+        },
+        "infected.sprinter": {
+          "count": 3,
+          "percent": 14.29
+        },
+        "infected.firefighter": {
+          "count": 3,
+          "percent": 14.29
+        },
+        "infected.riot": {
+          "count": 4,
+          "percent": 19.05
+        },
+        "infected.runner": {
+          "count": 3,
+          "percent": 14.29
+        }
+      },
+      "150": {
+        "infected.riot": {
+          "count": 5,
+          "percent": 15.15
+        },
+        "infected.crawler": {
+          "count": 5,
+          "percent": 15.15
+        },
+        "infected.hazmat": {
+          "count": 5,
+          "percent": 15.15
+        },
+        "infected.runner": {
+          "count": 5,
+          "percent": 15.15
+        },
+        "infected.sprinter": {
+          "count": 6,
+          "percent": 18.18
+        },
+        "infected.alpha": {
+          "count": 2,
+          "percent": 6.06
+        },
+        "infected.firefighter": {
+          "count": 5,
+          "percent": 15.15
+        }
+      }
+    },
+    "models": {
+      "60": {
+        "infected.hazmat": 4,
+        "infected.crawler": 4,
+        "npc.national-guard": 1,
+        "infected.firefighter": 3,
+        "infected.riot": 4,
+        "npc.civilian-man-b": 1,
+        "npc.civilian-woman-b": 1,
+        "npc.civilian-man-a": 1,
+        "npc.civilian-woman-a": 1,
+        "inf.common-worker": 1
+      },
+      "150": {
+        "infected.riot": 5,
+        "infected.crawler": 5,
+        "infected.hazmat": 5,
+        "inf.common-worker": 2,
+        "npc.civilian-man-b": 2,
+        "infected.alpha": 2,
+        "npc.civilian-man-a": 2,
+        "infected.firefighter": 5,
+        "npc.national-guard": 2,
+        "npc.civilian-woman-a": 1,
+        "npc.civilian-elderly": 1,
+        "npc.civilian-woman-b": 1
+      }
+    }
+  },
+  "high": {
+    "seed": 3,
+    "source": "72454dbd7",
+    "contactDefinition": "Sampled war seconds with at least one active infected within 12 m of the courier; census uses the existing invulnerable observation bot and stops after the hold; the no-skip survival bot runs separately",
+    "contactSeconds": 108,
+    "holdSeconds": 179,
+    "contactPercent": 60.34,
+    "inWallEntriesPerMinute": {
+      "0": 73,
+      "1": 157,
+      "2": 87,
+      "3": 0
+    },
+    "uniqueInWallEntrantsPerMinute": {
+      "0": 68,
+      "1": 125
+    },
+    "spawnSources": {
+      "tent": 0,
+      "illegal-internal": 0,
+      "street-mouth": 91,
+      "street-door": 19,
+      "wire/breach": 240,
+      "alpha-street": 8,
+      "exterior-flank": 51,
+      "bite-conversion": 20
+    },
+    "newInViewAdmissions": 0,
+    "corpseCountsAt150": {
+      "6m": 6,
+      "8m": 9,
+      "10m": 19,
+      "14m": 50
+    },
+    "archetypes": {
+      "60": {
+        "infected.firefighter": {
+          "count": 10,
+          "percent": 15.62
+        },
+        "infected.riot": {
+          "count": 12,
+          "percent": 18.75
+        },
+        "infected.crawler": {
+          "count": 10,
+          "percent": 15.62
+        },
+        "infected.runner": {
+          "count": 10,
+          "percent": 15.62
+        },
+        "infected.hazmat": {
+          "count": 10,
+          "percent": 15.62
+        },
+        "infected.sprinter": {
+          "count": 11,
+          "percent": 17.19
+        },
+        "infected.alpha": {
+          "count": 1,
+          "percent": 1.56
+        }
+      },
+      "150": {
+        "infected.riot": {
+          "count": 13,
+          "percent": 16.25
+        },
+        "infected.hazmat": {
+          "count": 14,
+          "percent": 17.5
+        },
+        "infected.crawler": {
+          "count": 12,
+          "percent": 15.0
+        },
+        "infected.firefighter": {
+          "count": 13,
+          "percent": 16.25
+        },
+        "infected.sprinter": {
+          "count": 13,
+          "percent": 16.25
+        },
+        "infected.runner": {
+          "count": 12,
+          "percent": 15.0
+        },
+        "infected.alpha": {
+          "count": 3,
+          "percent": 3.75
+        }
+      }
+    },
+    "models": {
+      "60": {
+        "infected.firefighter": 10,
+        "infected.riot": 12,
+        "infected.crawler": 10,
+        "npc.civilian-elderly": 2,
+        "infected.hazmat": 10,
+        "npc.civilian-man-b": 3,
+        "inf.bathrobe-neighbor": 2,
+        "inf.cashier": 1,
+        "inf.suburban-mom": 1,
+        "npc.civilian-woman-b": 3,
+        "infected.alpha": 1,
+        "npc.national-guard": 2,
+        "inf.common-worker": 3,
+        "npc.civilian-man-a": 2,
+        "npc.civilian-woman-a": 2
+      },
+      "150": {
+        "infected.riot": 13,
+        "infected.hazmat": 14,
+        "infected.crawler": 12,
+        "infected.firefighter": 13,
+        "npc.civilian-elderly": 3,
+        "inf.common-worker": 4,
+        "npc.civilian-woman-b": 4,
+        "npc.national-guard": 4,
+        "npc.civilian-woman-a": 3,
+        "npc.civilian-man-b": 4,
+        "npc.civilian-man-a": 3,
+        "infected.alpha": 3
+      }
+    }
+  }
+}

@@ -48,7 +48,8 @@ import { loadMeasure } from './assets/loadTiming';
 import { assetUrl } from './assets/assetUrl';
 import { prefetchLevel } from './assets/prefetch';
 import { compositions } from './levels/compositions';
-import { civilianBakeStats } from './assets/civilianBake';
+import { civilianBakeStats, prefetchSkinnedCrowdBakes } from './assets/civilianBake';
+import { l4InfectedLooks } from './data/l4';
 import { loadGate } from './assets/loadGate';
 
 /** Injected composition root, with staged initialization adapted from Bruno Game.js. */
@@ -256,6 +257,7 @@ export class Game {
       this.speculative = null;
       if (!speculative && id === 'L8') this.view.freeze(this.world.scenario === 'L7');
       this.loading=true; this.restoredWhilePaused = false;
+      const releaseSkins = id === 'L4' ? prefetchSkinnedCrowdBakes(l4InfectedLooks) : undefined;
       try{
         const prepared = id === 'L8' && !opts?.source && !opts?.tier && (opts?.seed ?? 1) === 1 ? this.preparedL8 : null;
         this.preparedL8 = null;
@@ -321,7 +323,7 @@ export class Game {
         if (id === 'L10' && this.campaign) { this.watchCampaign(); this.saveCampaign(); }
         if (!speculative) { this.view.unfreeze(); this.view.update(1); await this.view.renderer.finishWarmUp(); await transitionPaint(); loadMeasure(`transition:${id}:first-frame`, start); this.firstLevelFrame(id); }
       }catch(error){ console.error("Level load failed", error); if (!speculative) this.transition.fail(); this.view.unfreeze(); this.view.missionHidden = false; throw error; }
-      finally{this.loading=false;this.ticker.reset();}
+      finally{releaseSkins?.();this.loading=false;this.ticker.reset();}
     });this.levelQueue=load.catch(()=>{});return load;
   }
   private firstLevelFrame(id: string): void {

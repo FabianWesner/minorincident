@@ -1,0 +1,1014 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/node_modules/.bin/playwright",
+      "test",
+      "tests/e2e/levels/l4-cellar-guidance.spec.ts",
+      "tests/e2e/levels/l4-weapons.spec.ts",
+      "tests/e2e/levels/l4-plaza-movement.spec.ts",
+      "--grep",
+      "line-broken cellar guidance|T-E22-20|L4 war: mouse WASD stick.*zoom 0.5",
+      "--project=chromium",
+      "--workers=2",
+      "--trace=off"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 2,
+    "webServer": {
+      "command": "npx vite preview --outDir 'dist' --host 127.0.0.1 --port 4721 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:4721",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/levels/l4-cellar-guidance.spec.ts",
+      "file": "e2e/levels/l4-cellar-guidance.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "@E22 line-broken cellar guidance webgl high zoom 1",
+          "ok": false,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6589,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.01\u001b[39m\nReceived:   \u001b[31m0.0421961335822485\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.01\u001b[39m\nReceived:   \u001b[31m0.0421961335822485\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts:47:124",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts",
+                      "column": 124,
+                      "line": 47
+                    },
+                    "snippet": "  45 |     expect(proof.marker.visible).toBe(true);\n  46 |     expect(proof.marker.position[0]).toBe(proof.anchor.position[0]); expect(proof.marker.position[2]).toBe(proof.anchor.position[2]);\n> 47 |     expect(Math.abs(Math.atan2(Math.sin(proof.angle - proof.expectedAngle), Math.cos(proof.angle - proof.expectedAngle)))).toBeLessThan(.01);\n     |                                                                                                                            ^\n  48 |     expect(proof.rect.x).toBeGreaterThanOrEqual(0); expect(proof.rect.y).toBeGreaterThanOrEqual(0);\n  49 |     expect(proof.rect.x + proof.rect.width).toBeLessThanOrEqual(1280); expect(proof.rect.y + proof.rect.height).toBeLessThanOrEqual(720);\n  50 |     const out = `test-results/l4-walk-left/guidance-${renderer}-${quality}-z${zoom}`;"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts",
+                        "column": 124,
+                        "line": 47
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.01\u001b[39m\nReceived:   \u001b[31m0.0421961335822485\u001b[39m\n\n  45 |     expect(proof.marker.visible).toBe(true);\n  46 |     expect(proof.marker.position[0]).toBe(proof.anchor.position[0]); expect(proof.marker.position[2]).toBe(proof.anchor.position[2]);\n> 47 |     expect(Math.abs(Math.atan2(Math.sin(proof.angle - proof.expectedAngle), Math.cos(proof.angle - proof.expectedAngle)))).toBeLessThan(.01);\n     |                                                                                                                            ^\n  48 |     expect(proof.rect.x).toBeGreaterThanOrEqual(0); expect(proof.rect.y).toBeGreaterThanOrEqual(0);\n  49 |     expect(proof.rect.x + proof.rect.width).toBeLessThanOrEqual(1280); expect(proof.rect.y + proof.rect.height).toBeLessThanOrEqual(720);\n  50 |     const out = `test-results/l4-walk-left/guidance-${renderer}-${quality}-z${zoom}`;\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts:47:124"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T07:01:47.543Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721/e2e-levels-l4-cellar-guida-6ed30--guidance-webgl-high-zoom-1-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts",
+                    "column": 124,
+                    "line": 47
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "551b00c4962d9b8887a0-db019ae46a8f07f6f867",
+          "file": "e2e/levels/l4-cellar-guidance.spec.ts",
+          "line": 10,
+          "column": 3
+        },
+        {
+          "title": "@E22 line-broken cellar guidance webgl high zoom 0.5",
+          "ok": false,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 6921,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.01\u001b[39m\nReceived:   \u001b[31m0.04744552283702097\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.01\u001b[39m\nReceived:   \u001b[31m0.04744552283702097\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts:47:124",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts",
+                      "column": 124,
+                      "line": 47
+                    },
+                    "snippet": "  45 |     expect(proof.marker.visible).toBe(true);\n  46 |     expect(proof.marker.position[0]).toBe(proof.anchor.position[0]); expect(proof.marker.position[2]).toBe(proof.anchor.position[2]);\n> 47 |     expect(Math.abs(Math.atan2(Math.sin(proof.angle - proof.expectedAngle), Math.cos(proof.angle - proof.expectedAngle)))).toBeLessThan(.01);\n     |                                                                                                                            ^\n  48 |     expect(proof.rect.x).toBeGreaterThanOrEqual(0); expect(proof.rect.y).toBeGreaterThanOrEqual(0);\n  49 |     expect(proof.rect.x + proof.rect.width).toBeLessThanOrEqual(1280); expect(proof.rect.y + proof.rect.height).toBeLessThanOrEqual(720);\n  50 |     const out = `test-results/l4-walk-left/guidance-${renderer}-${quality}-z${zoom}`;"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts",
+                        "column": 124,
+                        "line": 47
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.01\u001b[39m\nReceived:   \u001b[31m0.04744552283702097\u001b[39m\n\n  45 |     expect(proof.marker.visible).toBe(true);\n  46 |     expect(proof.marker.position[0]).toBe(proof.anchor.position[0]); expect(proof.marker.position[2]).toBe(proof.anchor.position[2]);\n> 47 |     expect(Math.abs(Math.atan2(Math.sin(proof.angle - proof.expectedAngle), Math.cos(proof.angle - proof.expectedAngle)))).toBeLessThan(.01);\n     |                                                                                                                            ^\n  48 |     expect(proof.rect.x).toBeGreaterThanOrEqual(0); expect(proof.rect.y).toBeGreaterThanOrEqual(0);\n  49 |     expect(proof.rect.x + proof.rect.width).toBeLessThanOrEqual(1280); expect(proof.rect.y + proof.rect.height).toBeLessThanOrEqual(720);\n  50 |     const out = `test-results/l4-walk-left/guidance-${renderer}-${quality}-z${zoom}`;\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts:47:124"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T07:01:47.548Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721/e2e-levels-l4-cellar-guida-bd3e4-uidance-webgl-high-zoom-0-5-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts",
+                    "column": 124,
+                    "line": 47
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "551b00c4962d9b8887a0-43903697937cf6d44756",
+          "file": "e2e/levels/l4-cellar-guidance.spec.ts",
+          "line": 10,
+          "column": 3
+        },
+        {
+          "title": "@E22 line-broken cellar guidance webgl low zoom 1",
+          "ok": false,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5676,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.01\u001b[39m\nReceived:   \u001b[31m0.0421961335822485\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.01\u001b[39m\nReceived:   \u001b[31m0.0421961335822485\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts:47:124",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts",
+                      "column": 124,
+                      "line": 47
+                    },
+                    "snippet": "  45 |     expect(proof.marker.visible).toBe(true);\n  46 |     expect(proof.marker.position[0]).toBe(proof.anchor.position[0]); expect(proof.marker.position[2]).toBe(proof.anchor.position[2]);\n> 47 |     expect(Math.abs(Math.atan2(Math.sin(proof.angle - proof.expectedAngle), Math.cos(proof.angle - proof.expectedAngle)))).toBeLessThan(.01);\n     |                                                                                                                            ^\n  48 |     expect(proof.rect.x).toBeGreaterThanOrEqual(0); expect(proof.rect.y).toBeGreaterThanOrEqual(0);\n  49 |     expect(proof.rect.x + proof.rect.width).toBeLessThanOrEqual(1280); expect(proof.rect.y + proof.rect.height).toBeLessThanOrEqual(720);\n  50 |     const out = `test-results/l4-walk-left/guidance-${renderer}-${quality}-z${zoom}`;"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts",
+                        "column": 124,
+                        "line": 47
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.01\u001b[39m\nReceived:   \u001b[31m0.0421961335822485\u001b[39m\n\n  45 |     expect(proof.marker.visible).toBe(true);\n  46 |     expect(proof.marker.position[0]).toBe(proof.anchor.position[0]); expect(proof.marker.position[2]).toBe(proof.anchor.position[2]);\n> 47 |     expect(Math.abs(Math.atan2(Math.sin(proof.angle - proof.expectedAngle), Math.cos(proof.angle - proof.expectedAngle)))).toBeLessThan(.01);\n     |                                                                                                                            ^\n  48 |     expect(proof.rect.x).toBeGreaterThanOrEqual(0); expect(proof.rect.y).toBeGreaterThanOrEqual(0);\n  49 |     expect(proof.rect.x + proof.rect.width).toBeLessThanOrEqual(1280); expect(proof.rect.y + proof.rect.height).toBeLessThanOrEqual(720);\n  50 |     const out = `test-results/l4-walk-left/guidance-${renderer}-${quality}-z${zoom}`;\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts:47:124"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T07:01:54.540Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721/e2e-levels-l4-cellar-guida-108bb-r-guidance-webgl-low-zoom-1-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts",
+                    "column": 124,
+                    "line": 47
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "551b00c4962d9b8887a0-46461272b3e5e4c7acb5",
+          "file": "e2e/levels/l4-cellar-guidance.spec.ts",
+          "line": 10,
+          "column": 3
+        },
+        {
+          "title": "@E22 line-broken cellar guidance webgl low zoom 0.5",
+          "ok": false,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 6020,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.01\u001b[39m\nReceived:   \u001b[31m0.04744552283702097\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.01\u001b[39m\nReceived:   \u001b[31m0.04744552283702097\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts:47:124",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts",
+                      "column": 124,
+                      "line": 47
+                    },
+                    "snippet": "  45 |     expect(proof.marker.visible).toBe(true);\n  46 |     expect(proof.marker.position[0]).toBe(proof.anchor.position[0]); expect(proof.marker.position[2]).toBe(proof.anchor.position[2]);\n> 47 |     expect(Math.abs(Math.atan2(Math.sin(proof.angle - proof.expectedAngle), Math.cos(proof.angle - proof.expectedAngle)))).toBeLessThan(.01);\n     |                                                                                                                            ^\n  48 |     expect(proof.rect.x).toBeGreaterThanOrEqual(0); expect(proof.rect.y).toBeGreaterThanOrEqual(0);\n  49 |     expect(proof.rect.x + proof.rect.width).toBeLessThanOrEqual(1280); expect(proof.rect.y + proof.rect.height).toBeLessThanOrEqual(720);\n  50 |     const out = `test-results/l4-walk-left/guidance-${renderer}-${quality}-z${zoom}`;"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts",
+                        "column": 124,
+                        "line": 47
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.01\u001b[39m\nReceived:   \u001b[31m0.04744552283702097\u001b[39m\n\n  45 |     expect(proof.marker.visible).toBe(true);\n  46 |     expect(proof.marker.position[0]).toBe(proof.anchor.position[0]); expect(proof.marker.position[2]).toBe(proof.anchor.position[2]);\n> 47 |     expect(Math.abs(Math.atan2(Math.sin(proof.angle - proof.expectedAngle), Math.cos(proof.angle - proof.expectedAngle)))).toBeLessThan(.01);\n     |                                                                                                                            ^\n  48 |     expect(proof.rect.x).toBeGreaterThanOrEqual(0); expect(proof.rect.y).toBeGreaterThanOrEqual(0);\n  49 |     expect(proof.rect.x + proof.rect.width).toBeLessThanOrEqual(1280); expect(proof.rect.y + proof.rect.height).toBeLessThanOrEqual(720);\n  50 |     const out = `test-results/l4-walk-left/guidance-${renderer}-${quality}-z${zoom}`;\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts:47:124"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T07:01:54.895Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721/e2e-levels-l4-cellar-guida-67ea1-guidance-webgl-low-zoom-0-5-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts",
+                    "column": 124,
+                    "line": 47
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "551b00c4962d9b8887a0-44f043032df6617debac",
+          "file": "e2e/levels/l4-cellar-guidance.spec.ts",
+          "line": 10,
+          "column": 3
+        },
+        {
+          "title": "@E22 line-broken cellar guidance webgpu high zoom 1",
+          "ok": false,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5839,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.01\u001b[39m\nReceived:   \u001b[31m0.0421961335822485\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.01\u001b[39m\nReceived:   \u001b[31m0.0421961335822485\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts:47:124",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts",
+                      "column": 124,
+                      "line": 47
+                    },
+                    "snippet": "  45 |     expect(proof.marker.visible).toBe(true);\n  46 |     expect(proof.marker.position[0]).toBe(proof.anchor.position[0]); expect(proof.marker.position[2]).toBe(proof.anchor.position[2]);\n> 47 |     expect(Math.abs(Math.atan2(Math.sin(proof.angle - proof.expectedAngle), Math.cos(proof.angle - proof.expectedAngle)))).toBeLessThan(.01);\n     |                                                                                                                            ^\n  48 |     expect(proof.rect.x).toBeGreaterThanOrEqual(0); expect(proof.rect.y).toBeGreaterThanOrEqual(0);\n  49 |     expect(proof.rect.x + proof.rect.width).toBeLessThanOrEqual(1280); expect(proof.rect.y + proof.rect.height).toBeLessThanOrEqual(720);\n  50 |     const out = `test-results/l4-walk-left/guidance-${renderer}-${quality}-z${zoom}`;"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts",
+                        "column": 124,
+                        "line": 47
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.01\u001b[39m\nReceived:   \u001b[31m0.0421961335822485\u001b[39m\n\n  45 |     expect(proof.marker.visible).toBe(true);\n  46 |     expect(proof.marker.position[0]).toBe(proof.anchor.position[0]); expect(proof.marker.position[2]).toBe(proof.anchor.position[2]);\n> 47 |     expect(Math.abs(Math.atan2(Math.sin(proof.angle - proof.expectedAngle), Math.cos(proof.angle - proof.expectedAngle)))).toBeLessThan(.01);\n     |                                                                                                                            ^\n  48 |     expect(proof.rect.x).toBeGreaterThanOrEqual(0); expect(proof.rect.y).toBeGreaterThanOrEqual(0);\n  49 |     expect(proof.rect.x + proof.rect.width).toBeLessThanOrEqual(1280); expect(proof.rect.y + proof.rect.height).toBeLessThanOrEqual(720);\n  50 |     const out = `test-results/l4-walk-left/guidance-${renderer}-${quality}-z${zoom}`;\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts:47:124"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T07:02:00.640Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721/e2e-levels-l4-cellar-guida-1a4a8-guidance-webgpu-high-zoom-1-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts",
+                    "column": 124,
+                    "line": 47
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "551b00c4962d9b8887a0-f7ad39781ab23bb13410",
+          "file": "e2e/levels/l4-cellar-guidance.spec.ts",
+          "line": 10,
+          "column": 3
+        },
+        {
+          "title": "@E22 line-broken cellar guidance webgpu high zoom 0.5",
+          "ok": false,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 6328,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.01\u001b[39m\nReceived:   \u001b[31m0.04744552283702097\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.01\u001b[39m\nReceived:   \u001b[31m0.04744552283702097\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts:47:124",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts",
+                      "column": 124,
+                      "line": 47
+                    },
+                    "snippet": "  45 |     expect(proof.marker.visible).toBe(true);\n  46 |     expect(proof.marker.position[0]).toBe(proof.anchor.position[0]); expect(proof.marker.position[2]).toBe(proof.anchor.position[2]);\n> 47 |     expect(Math.abs(Math.atan2(Math.sin(proof.angle - proof.expectedAngle), Math.cos(proof.angle - proof.expectedAngle)))).toBeLessThan(.01);\n     |                                                                                                                            ^\n  48 |     expect(proof.rect.x).toBeGreaterThanOrEqual(0); expect(proof.rect.y).toBeGreaterThanOrEqual(0);\n  49 |     expect(proof.rect.x + proof.rect.width).toBeLessThanOrEqual(1280); expect(proof.rect.y + proof.rect.height).toBeLessThanOrEqual(720);\n  50 |     const out = `test-results/l4-walk-left/guidance-${renderer}-${quality}-z${zoom}`;"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts",
+                        "column": 124,
+                        "line": 47
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.01\u001b[39m\nReceived:   \u001b[31m0.04744552283702097\u001b[39m\n\n  45 |     expect(proof.marker.visible).toBe(true);\n  46 |     expect(proof.marker.position[0]).toBe(proof.anchor.position[0]); expect(proof.marker.position[2]).toBe(proof.anchor.position[2]);\n> 47 |     expect(Math.abs(Math.atan2(Math.sin(proof.angle - proof.expectedAngle), Math.cos(proof.angle - proof.expectedAngle)))).toBeLessThan(.01);\n     |                                                                                                                            ^\n  48 |     expect(proof.rect.x).toBeGreaterThanOrEqual(0); expect(proof.rect.y).toBeGreaterThanOrEqual(0);\n  49 |     expect(proof.rect.x + proof.rect.width).toBeLessThanOrEqual(1280); expect(proof.rect.y + proof.rect.height).toBeLessThanOrEqual(720);\n  50 |     const out = `test-results/l4-walk-left/guidance-${renderer}-${quality}-z${zoom}`;\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts:47:124"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T07:02:01.448Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721/e2e-levels-l4-cellar-guida-69e5a-idance-webgpu-high-zoom-0-5-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts",
+                    "column": 124,
+                    "line": 47
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "551b00c4962d9b8887a0-fa9c4ddb3f4607063a09",
+          "file": "e2e/levels/l4-cellar-guidance.spec.ts",
+          "line": 10,
+          "column": 3
+        },
+        {
+          "title": "@E22 line-broken cellar guidance webgpu low zoom 1",
+          "ok": false,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5423,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.01\u001b[39m\nReceived:   \u001b[31m0.0421961335822485\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.01\u001b[39m\nReceived:   \u001b[31m0.0421961335822485\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts:47:124",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts",
+                      "column": 124,
+                      "line": 47
+                    },
+                    "snippet": "  45 |     expect(proof.marker.visible).toBe(true);\n  46 |     expect(proof.marker.position[0]).toBe(proof.anchor.position[0]); expect(proof.marker.position[2]).toBe(proof.anchor.position[2]);\n> 47 |     expect(Math.abs(Math.atan2(Math.sin(proof.angle - proof.expectedAngle), Math.cos(proof.angle - proof.expectedAngle)))).toBeLessThan(.01);\n     |                                                                                                                            ^\n  48 |     expect(proof.rect.x).toBeGreaterThanOrEqual(0); expect(proof.rect.y).toBeGreaterThanOrEqual(0);\n  49 |     expect(proof.rect.x + proof.rect.width).toBeLessThanOrEqual(1280); expect(proof.rect.y + proof.rect.height).toBeLessThanOrEqual(720);\n  50 |     const out = `test-results/l4-walk-left/guidance-${renderer}-${quality}-z${zoom}`;"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts",
+                        "column": 124,
+                        "line": 47
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.01\u001b[39m\nReceived:   \u001b[31m0.0421961335822485\u001b[39m\n\n  45 |     expect(proof.marker.visible).toBe(true);\n  46 |     expect(proof.marker.position[0]).toBe(proof.anchor.position[0]); expect(proof.marker.position[2]).toBe(proof.anchor.position[2]);\n> 47 |     expect(Math.abs(Math.atan2(Math.sin(proof.angle - proof.expectedAngle), Math.cos(proof.angle - proof.expectedAngle)))).toBeLessThan(.01);\n     |                                                                                                                            ^\n  48 |     expect(proof.rect.x).toBeGreaterThanOrEqual(0); expect(proof.rect.y).toBeGreaterThanOrEqual(0);\n  49 |     expect(proof.rect.x + proof.rect.width).toBeLessThanOrEqual(1280); expect(proof.rect.y + proof.rect.height).toBeLessThanOrEqual(720);\n  50 |     const out = `test-results/l4-walk-left/guidance-${renderer}-${quality}-z${zoom}`;\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts:47:124"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T07:02:07.027Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721/e2e-levels-l4-cellar-guida-d782e--guidance-webgpu-low-zoom-1-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts",
+                    "column": 124,
+                    "line": 47
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "551b00c4962d9b8887a0-4dff67c43e99d7e5c153",
+          "file": "e2e/levels/l4-cellar-guidance.spec.ts",
+          "line": 10,
+          "column": 3
+        },
+        {
+          "title": "@E22 line-broken cellar guidance webgpu low zoom 0.5",
+          "ok": false,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 5721,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.01\u001b[39m\nReceived:   \u001b[31m0.04744552283702097\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.01\u001b[39m\nReceived:   \u001b[31m0.04744552283702097\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts:47:124",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts",
+                      "column": 124,
+                      "line": 47
+                    },
+                    "snippet": "  45 |     expect(proof.marker.visible).toBe(true);\n  46 |     expect(proof.marker.position[0]).toBe(proof.anchor.position[0]); expect(proof.marker.position[2]).toBe(proof.anchor.position[2]);\n> 47 |     expect(Math.abs(Math.atan2(Math.sin(proof.angle - proof.expectedAngle), Math.cos(proof.angle - proof.expectedAngle)))).toBeLessThan(.01);\n     |                                                                                                                            ^\n  48 |     expect(proof.rect.x).toBeGreaterThanOrEqual(0); expect(proof.rect.y).toBeGreaterThanOrEqual(0);\n  49 |     expect(proof.rect.x + proof.rect.width).toBeLessThanOrEqual(1280); expect(proof.rect.y + proof.rect.height).toBeLessThanOrEqual(720);\n  50 |     const out = `test-results/l4-walk-left/guidance-${renderer}-${quality}-z${zoom}`;"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts",
+                        "column": 124,
+                        "line": 47
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.01\u001b[39m\nReceived:   \u001b[31m0.04744552283702097\u001b[39m\n\n  45 |     expect(proof.marker.visible).toBe(true);\n  46 |     expect(proof.marker.position[0]).toBe(proof.anchor.position[0]); expect(proof.marker.position[2]).toBe(proof.anchor.position[2]);\n> 47 |     expect(Math.abs(Math.atan2(Math.sin(proof.angle - proof.expectedAngle), Math.cos(proof.angle - proof.expectedAngle)))).toBeLessThan(.01);\n     |                                                                                                                            ^\n  48 |     expect(proof.rect.x).toBeGreaterThanOrEqual(0); expect(proof.rect.y).toBeGreaterThanOrEqual(0);\n  49 |     expect(proof.rect.x + proof.rect.width).toBeLessThanOrEqual(1280); expect(proof.rect.y + proof.rect.height).toBeLessThanOrEqual(720);\n  50 |     const out = `test-results/l4-walk-left/guidance-${renderer}-${quality}-z${zoom}`;\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts:47:124"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T07:02:08.349Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721/e2e-levels-l4-cellar-guida-960f7-uidance-webgpu-low-zoom-0-5-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts",
+                    "column": 124,
+                    "line": 47
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "551b00c4962d9b8887a0-941645184bcff7043d72",
+          "file": "e2e/levels/l4-cellar-guidance.spec.ts",
+          "line": 10,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/l4-plaza-movement.spec.ts",
+      "file": "e2e/levels/l4-plaza-movement.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "@E22 L4 war: mouse WASD stick webgl high zoom 0.5",
+          "ok": false,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 27173,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1\u001b[39m\nReceived:   \u001b[31m1.4981433118643834\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1\u001b[39m\nReceived:   \u001b[31m1.4981433118643834\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:111:56",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts",
+                      "column": 56,
+                      "line": 111
+                    },
+                    "snippet": "  109 |       if (input === 'keyboard') {\n  110 |         await page.keyboard.down(target.key); await step(page, 82); await page.keyboard.up(target.key); await step(page, 10);\n> 111 |         expect(distance(await position(page), target)).toBeLessThan(1);\n      |                                                        ^\n  112 |       }\n  113 |       if (input === 'stick') await stickTo(page, cdp, target);\n  114 |       const perf = await page.evaluate(() => { const p = window.__SS__!.perf(); return { backend: p.backend, tier: p.quality.tier, draws: p.drawCalls, triangles: p.triangles }; });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts",
+                        "column": 56,
+                        "line": 111
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1\u001b[39m\nReceived:   \u001b[31m1.4981433118643834\u001b[39m\n\n  109 |       if (input === 'keyboard') {\n  110 |         await page.keyboard.down(target.key); await step(page, 82); await page.keyboard.up(target.key); await step(page, 10);\n> 111 |         expect(distance(await position(page), target)).toBeLessThan(1);\n      |                                                        ^\n  112 |       }\n  113 |       if (input === 'stick') await stickTo(page, cdp, target);\n  114 |       const perf = await page.evaluate(() => { const p = window.__SS__!.perf(); return { backend: p.backend, tier: p.quality.tier, draws: p.drawCalls, triangles: p.triangles }; });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:111:56"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T07:02:12.745Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721/e2e-levels-l4-plaza-moveme-5b036-D-stick-webgl-high-zoom-0-5-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts",
+                    "column": 56,
+                    "line": 111
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-bfd7359afc21b83a0908",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 55,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 war: mouse WASD stick webgl low zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 15112,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T07:02:14.361Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-0590a5986effb13037a9",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 55,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 war: mouse WASD stick webgpu high zoom 0.5",
+          "ok": false,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 26638,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1\u001b[39m\nReceived:   \u001b[31m1.4981433118643834\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1\u001b[39m\nReceived:   \u001b[31m1.4981433118643834\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:111:56",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts",
+                      "column": 56,
+                      "line": 111
+                    },
+                    "snippet": "  109 |       if (input === 'keyboard') {\n  110 |         await page.keyboard.down(target.key); await step(page, 82); await page.keyboard.up(target.key); await step(page, 10);\n> 111 |         expect(distance(await position(page), target)).toBeLessThan(1);\n      |                                                        ^\n  112 |       }\n  113 |       if (input === 'stick') await stickTo(page, cdp, target);\n  114 |       const perf = await page.evaluate(() => { const p = window.__SS__!.perf(); return { backend: p.backend, tier: p.quality.tier, draws: p.drawCalls, triangles: p.triangles }; });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts",
+                        "column": 56,
+                        "line": 111
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1\u001b[39m\nReceived:   \u001b[31m1.4981433118643834\u001b[39m\n\n  109 |       if (input === 'keyboard') {\n  110 |         await page.keyboard.down(target.key); await step(page, 82); await page.keyboard.up(target.key); await step(page, 10);\n> 111 |         expect(distance(await position(page), target)).toBeLessThan(1);\n      |                                                        ^\n  112 |       }\n  113 |       if (input === 'stick') await stickTo(page, cdp, target);\n  114 |       const perf = await page.evaluate(() => { const p = window.__SS__!.perf(); return { backend: p.backend, tier: p.quality.tier, draws: p.drawCalls, triangles: p.triangles }; });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:111:56"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T07:02:29.515Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721/e2e-levels-l4-plaza-moveme-ff597--stick-webgpu-high-zoom-0-5-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts",
+                    "column": 56,
+                    "line": 111
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-05c5f36965cab31fec8f",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 55,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 war: mouse WASD stick webgpu low zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14091,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T07:02:40.243Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-da6acae3330565af54a5",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 55,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/l4-weapons.spec.ts",
+      "file": "e2e/levels/l4-weapons.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E22-20 @E22 L4 starts with melee and the handgun, no SMG or machine gun; the quartermaster issues the \"Machine gun\" (own name and icon) and civilians at the table hold guns",
+          "ok": false,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 8670,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-weapons.spec.ts:61:17",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-weapons.spec.ts",
+                      "column": 17,
+                      "line": 61
+                    },
+                    "snippet": "  59 |   // The army arms the civilians at the table: at least three of them hold a gun in hand within 14 m of the quartermaster.\n  60 |   const armed = await page.evaluate(q => window.__SS__!.getState().entities.filter(e => e.civilian && e.civilian.ally?.role !== 'soldier' && ['pistol', 'hunting-rifle'].includes(String(e.appearance?.handProp)) && Math.hypot(e.transform.x - q.x, e.transform.z - q.z) < 14).length, target);\n> 61 |   expect(armed).toBeGreaterThanOrEqual(3);\n     |                 ^\n  62 | });\n  63 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-weapons.spec.ts",
+                        "column": 17,
+                        "line": 61
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  59 |   // The army arms the civilians at the table: at least three of them hold a gun in hand within 14 m of the quartermaster.\n  60 |   const armed = await page.evaluate(q => window.__SS__!.getState().entities.filter(e => e.civilian && e.civilian.ally?.role !== 'soldier' && ['pistol', 'hunting-rifle'].includes(String(e.appearance?.handProp)) && Math.hypot(e.transform.x - q.x, e.transform.z - q.z) < 14).length, target);\n> 61 |   expect(armed).toBeGreaterThanOrEqual(3);\n     |                 ^\n  62 | });\n  63 |\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-weapons.spec.ts:61:17"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T07:02:54.639Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721/e2e-levels-l4-weapons-T-E2-24bc1-ians-at-the-table-hold-guns-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-weapons.spec.ts",
+                    "column": 17,
+                    "line": 61
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d6c81bdd6b53aa3bd7ba-aa9f4191ef8e40286165",
+          "file": "e2e/levels/l4-weapons.spec.ts",
+          "line": 8,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-27T07:01:46.638Z",
+    "duration": 76733.56999999999,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 11,
+    "flaky": 0
+  }
+}

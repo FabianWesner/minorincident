@@ -1,0 +1,1759 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/node_modules/.bin/playwright",
+      "test",
+      "tests/e2e/levels/camera-hotfix.spec.ts",
+      "tests/e2e/levels/L4.spec.ts",
+      "tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+      "tests/e2e/levels/l4-plaza-movement.spec.ts",
+      "--grep",
+      "@camera-hotfix|T-E22-alarm|T-E22-18|T-E22-ride-smooth-.*-low|mouse WASD stick",
+      "--project=chromium",
+      "--workers=2",
+      "--trace=off"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 2,
+    "webServer": {
+      "command": "npx vite preview --outDir 'dist' --host 127.0.0.1 --port 4721 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:4721",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/levels/camera-hotfix.spec.ts",
+      "file": "e2e/levels/camera-hotfix.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "@E22 @camera-hotfix L4 refuge framing and debug HUD webgl high",
+          "ok": true,
+          "tags": [
+            "E22",
+            "camera-hotfix"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 25369,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:53:27.311Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cfd72ea2e51328ba0088-e2e6ec50f886bb0ce1e8",
+          "file": "e2e/levels/camera-hotfix.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "@E22 @camera-hotfix L4 refuge framing and debug HUD webgl low",
+          "ok": true,
+          "tags": [
+            "E22",
+            "camera-hotfix"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 10676,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:53:27.311Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cfd72ea2e51328ba0088-97bad57b616c38efcfab",
+          "file": "e2e/levels/camera-hotfix.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "@E22 @camera-hotfix L4 refuge framing and debug HUD webgpu high",
+          "ok": true,
+          "tags": [
+            "E22",
+            "camera-hotfix"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 25951,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:53:38.044Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cfd72ea2e51328ba0088-62d05e1f99e2e43f867f",
+          "file": "e2e/levels/camera-hotfix.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "@E22 @camera-hotfix L4 refuge framing and debug HUD webgpu low",
+          "ok": true,
+          "tags": [
+            "E22",
+            "camera-hotfix"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11367,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:53:52.740Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cfd72ea2e51328ba0088-a0b4f90056c4b429710e",
+          "file": "e2e/levels/camera-hotfix.spec.ts",
+          "line": 7,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+      "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E22-ride-smooth-60hz-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz-webgl-low)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 16086,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:54:04.405Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9fd57db25b74ef3955be-48dd17e388014d920856",
+          "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+          "line": 34,
+          "column": 3
+        },
+        {
+          "title": "T-E22-ride-smooth-uneven-120hz-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz-webgl-low)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 25594,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:54:04.441Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9fd57db25b74ef3955be-f1abf24ec893e00b555e",
+          "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+          "line": 34,
+          "column": 3
+        },
+        {
+          "title": "T-E22-ride-smooth-30hz-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz-webgl-low)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 10530,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:54:20.546Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9fd57db25b74ef3955be-4ddeb255d44b0cc2f9d3",
+          "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+          "line": 34,
+          "column": 3
+        },
+        {
+          "title": "T-E22-ride-smooth-uneven-phone-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone-webgl-low)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10890,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:54:30.092Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9fd57db25b74ef3955be-eef0522503a8f5f7d67e",
+          "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+          "line": 34,
+          "column": 3
+        },
+        {
+          "title": "T-E22-ride-smooth-60hz-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz-webgpu-low)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 14907,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:54:31.089Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9fd57db25b74ef3955be-e57335488444cc08b95e",
+          "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+          "line": 34,
+          "column": 3
+        },
+        {
+          "title": "T-E22-ride-smooth-uneven-120hz-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz-webgpu-low)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 24229,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:54:40.992Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9fd57db25b74ef3955be-a5fe710df348c8638578",
+          "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+          "line": 34,
+          "column": 3
+        },
+        {
+          "title": "T-E22-ride-smooth-30hz-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz-webgpu-low)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 9900,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:54:46.008Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9fd57db25b74ef3955be-2a1d7014f7cb36ec4047",
+          "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+          "line": 34,
+          "column": 3
+        },
+        {
+          "title": "T-E22-ride-smooth-uneven-phone-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone-webgpu-low)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 10396,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:54:55.920Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9fd57db25b74ef3955be-7c00ec1d0f9b162cfbd4",
+          "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+          "line": 34,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/l4-plaza-movement.spec.ts",
+      "file": "e2e/levels/l4-plaza-movement.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "@E22 L4 plaza: mouse WASD stick webgl high zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 23554,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:55:05.483Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-14dd18597e3e3bfe2d71",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 55,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 war: mouse WASD stick webgl high zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 27285,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:55:06.647Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-e33ab80947a35365a973",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 55,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 respawn: mouse WASD stick webgl high zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 26856,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:55:29.084Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-03309d9940f4d6a89a1a",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 55,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 plaza: mouse WASD stick webgl high zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 23305,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:55:34.003Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-6604fe0a0d3860de6b80",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 55,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 war: mouse WASD stick webgl high zoom 0.5",
+          "ok": false,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 23081,
+                  "error": {
+                    "message": "Error: {\"point\":{\"x\":-14.458852208288915,\"z\":7.741147604747674},\"screen\":{\"x\":860.1912245204727,\"y\":1734.8075398258761},\"input\":{\"move\":{\"x\":0,\"z\":0},\"aim\":{\"x\":-0.7856306764536295,\"z\":-0.6186957573921226},\"aimSource\":\"pointer\",\"left\":{\"down\":false,\"held\":false,\"up\":false},\"right\":{\"down\":false,\"held\":false,\"up\":false},\"selector\":0,\"interact\":false,\"pause\":false,\"cancelMove\":false,\"brake\":false,\"aimPoint\":{\"x\":-27.646348702068927,\"z\":-2.6463501382605443},\"pointerGround\":true},\"picks\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeDefined\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mundefined\u001b[39m",
+                    "stack": "Error: {\"point\":{\"x\":-14.458852208288915,\"z\":7.741147604747674},\"screen\":{\"x\":860.1912245204727,\"y\":1734.8075398258761},\"input\":{\"move\":{\"x\":0,\"z\":0},\"aim\":{\"x\":-0.7856306764536295,\"z\":-0.6186957573921226},\"aimSource\":\"pointer\",\"left\":{\"down\":false,\"held\":false,\"up\":false},\"right\":{\"down\":false,\"held\":false,\"up\":false},\"selector\":0,\"interact\":false,\"pause\":false,\"cancelMove\":false,\"brake\":false,\"aimPoint\":{\"x\":-27.646348702068927,\"z\":-2.6463501382605443},\"pointerGround\":true},\"picks\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeDefined\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mundefined\u001b[39m\n    at clickTo (/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:28:139)\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:105:30",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts",
+                      "column": 139,
+                      "line": 28
+                    },
+                    "snippet": "  26 |     await page.mouse.click(screen.x, screen.y); await step(page, 1);\n  27 |     const input = await page.evaluate(() => window.__SS__!.getState().input.frame);\n> 28 |     expect(input.moveTarget, JSON.stringify({ point, screen, input, picks: await page.evaluate(() => window.__SS__!.input.lastPick()) })).toBeDefined();\n     |                                                                                                                                           ^\n  29 |     expect(distance(input.moveTarget!, point)).toBeLessThan(.05);\n  30 |     await step(page, 60);\n  31 |     if (capture && i === 0) { await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: capture }); }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts",
+                        "column": 139,
+                        "line": 28
+                      },
+                      "message": "Error: {\"point\":{\"x\":-14.458852208288915,\"z\":7.741147604747674},\"screen\":{\"x\":860.1912245204727,\"y\":1734.8075398258761},\"input\":{\"move\":{\"x\":0,\"z\":0},\"aim\":{\"x\":-0.7856306764536295,\"z\":-0.6186957573921226},\"aimSource\":\"pointer\",\"left\":{\"down\":false,\"held\":false,\"up\":false},\"right\":{\"down\":false,\"held\":false,\"up\":false},\"selector\":0,\"interact\":false,\"pause\":false,\"cancelMove\":false,\"brake\":false,\"aimPoint\":{\"x\":-27.646348702068927,\"z\":-2.6463501382605443},\"pointerGround\":true},\"picks\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeDefined\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mundefined\u001b[39m\n\n  26 |     await page.mouse.click(screen.x, screen.y); await step(page, 1);\n  27 |     const input = await page.evaluate(() => window.__SS__!.getState().input.frame);\n> 28 |     expect(input.moveTarget, JSON.stringify({ point, screen, input, picks: await page.evaluate(() => window.__SS__!.input.lastPick()) })).toBeDefined();\n     |                                                                                                                                           ^\n  29 |     expect(distance(input.moveTarget!, point)).toBeLessThan(.05);\n  30 |     await step(page, 60);\n  31 |     if (capture && i === 0) { await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: capture }); }\n    at clickTo (/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:28:139)\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:105:30"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:55:55.953Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721/e2e-levels-l4-plaza-moveme-5b036-D-stick-webgl-high-zoom-0-5-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts",
+                    "column": 139,
+                    "line": 28
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-bfd7359afc21b83a0908",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 55,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 respawn: mouse WASD stick webgl high zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 28702,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:55:57.318Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-c25a0d32e9117eb879bc",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 55,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 plaza: mouse WASD stick webgl low zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11065,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:56:19.331Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-7fe0b553acf3ee90f252",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 55,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 war: mouse WASD stick webgl low zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 12700,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:56:26.030Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-1c46d25ad70c86d6e460",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 55,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 respawn: mouse WASD stick webgl low zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12603,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:56:30.443Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-89112f77eaa24cdcf211",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 55,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 plaza: mouse WASD stick webgl low zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 11066,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:56:38.738Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-5f3960857760048aeea8",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 55,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 war: mouse WASD stick webgl low zoom 0.5",
+          "ok": false,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 9542,
+                  "error": {
+                    "message": "Error: {\"point\":{\"x\":-14.459109282980169,\"z\":7.740890997464949},\"screen\":{\"x\":860.1871076080013,\"y\":1734.7551137780063},\"input\":{\"move\":{\"x\":0,\"z\":0},\"aim\":{\"x\":-0.7856322775708926,\"z\":-0.6186937242600511},\"aimSource\":\"pointer\",\"left\":{\"down\":false,\"held\":false,\"up\":false},\"right\":{\"down\":false,\"held\":false,\"up\":false},\"selector\":0,\"interact\":false,\"pause\":false,\"cancelMove\":false,\"brake\":false,\"aimPoint\":{\"x\":-27.646348702068927,\"z\":-2.6463501382605443},\"pointerGround\":true},\"picks\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeDefined\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mundefined\u001b[39m",
+                    "stack": "Error: {\"point\":{\"x\":-14.459109282980169,\"z\":7.740890997464949},\"screen\":{\"x\":860.1871076080013,\"y\":1734.7551137780063},\"input\":{\"move\":{\"x\":0,\"z\":0},\"aim\":{\"x\":-0.7856322775708926,\"z\":-0.6186937242600511},\"aimSource\":\"pointer\",\"left\":{\"down\":false,\"held\":false,\"up\":false},\"right\":{\"down\":false,\"held\":false,\"up\":false},\"selector\":0,\"interact\":false,\"pause\":false,\"cancelMove\":false,\"brake\":false,\"aimPoint\":{\"x\":-27.646348702068927,\"z\":-2.6463501382605443},\"pointerGround\":true},\"picks\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeDefined\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mundefined\u001b[39m\n    at clickTo (/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:28:139)\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:105:30",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts",
+                      "column": 139,
+                      "line": 28
+                    },
+                    "snippet": "  26 |     await page.mouse.click(screen.x, screen.y); await step(page, 1);\n  27 |     const input = await page.evaluate(() => window.__SS__!.getState().input.frame);\n> 28 |     expect(input.moveTarget, JSON.stringify({ point, screen, input, picks: await page.evaluate(() => window.__SS__!.input.lastPick()) })).toBeDefined();\n     |                                                                                                                                           ^\n  29 |     expect(distance(input.moveTarget!, point)).toBeLessThan(.05);\n  30 |     await step(page, 60);\n  31 |     if (capture && i === 0) { await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: capture }); }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts",
+                        "column": 139,
+                        "line": 28
+                      },
+                      "message": "Error: {\"point\":{\"x\":-14.459109282980169,\"z\":7.740890997464949},\"screen\":{\"x\":860.1871076080013,\"y\":1734.7551137780063},\"input\":{\"move\":{\"x\":0,\"z\":0},\"aim\":{\"x\":-0.7856322775708926,\"z\":-0.6186937242600511},\"aimSource\":\"pointer\",\"left\":{\"down\":false,\"held\":false,\"up\":false},\"right\":{\"down\":false,\"held\":false,\"up\":false},\"selector\":0,\"interact\":false,\"pause\":false,\"cancelMove\":false,\"brake\":false,\"aimPoint\":{\"x\":-27.646348702068927,\"z\":-2.6463501382605443},\"pointerGround\":true},\"picks\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeDefined\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mundefined\u001b[39m\n\n  26 |     await page.mouse.click(screen.x, screen.y); await step(page, 1);\n  27 |     const input = await page.evaluate(() => window.__SS__!.getState().input.frame);\n> 28 |     expect(input.moveTarget, JSON.stringify({ point, screen, input, picks: await page.evaluate(() => window.__SS__!.input.lastPick()) })).toBeDefined();\n     |                                                                                                                                           ^\n  29 |     expect(distance(input.moveTarget!, point)).toBeLessThan(.05);\n  30 |     await step(page, 60);\n  31 |     if (capture && i === 0) { await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: capture }); }\n    at clickTo (/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:28:139)\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:105:30"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:56:43.051Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721/e2e-levels-l4-plaza-moveme-bdaaa-SD-stick-webgl-low-zoom-0-5-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts",
+                    "column": 139,
+                    "line": 28
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-0590a5986effb13037a9",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 55,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 respawn: mouse WASD stick webgl low zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 13233,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:56:49.812Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-bb1c5603f7150d25ea7c",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 55,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 plaza: mouse WASD stick webgpu high zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 23339,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:56:52.887Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-4622dabedbb5ea291793",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 55,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 war: mouse WASD stick webgpu high zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 26676,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:57:03.052Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-338226589d5282a3a07e",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 55,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 respawn: mouse WASD stick webgpu high zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 27076,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:57:16.282Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-11a553bc95e251cd5e6a",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 55,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 plaza: mouse WASD stick webgpu high zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 23898,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:57:29.736Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-f1d9ff0a0a160b9e4269",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 55,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 war: mouse WASD stick webgpu high zoom 0.5",
+          "ok": false,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 22710,
+                  "error": {
+                    "message": "Error: {\"point\":{\"x\":-14.458852208288915,\"z\":7.741147604747674},\"screen\":{\"x\":860.1912245204727,\"y\":1734.8075398258761},\"input\":{\"move\":{\"x\":0,\"z\":0},\"aim\":{\"x\":-0.7856306764536308,\"z\":-0.618695757392121},\"aimSource\":\"pointer\",\"left\":{\"down\":false,\"held\":false,\"up\":false},\"right\":{\"down\":false,\"held\":false,\"up\":false},\"selector\":0,\"interact\":false,\"pause\":false,\"cancelMove\":false,\"brake\":false,\"aimPoint\":{\"x\":-27.646348702068813,\"z\":-2.6463501382604093},\"pointerGround\":true},\"picks\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeDefined\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mundefined\u001b[39m",
+                    "stack": "Error: {\"point\":{\"x\":-14.458852208288915,\"z\":7.741147604747674},\"screen\":{\"x\":860.1912245204727,\"y\":1734.8075398258761},\"input\":{\"move\":{\"x\":0,\"z\":0},\"aim\":{\"x\":-0.7856306764536308,\"z\":-0.618695757392121},\"aimSource\":\"pointer\",\"left\":{\"down\":false,\"held\":false,\"up\":false},\"right\":{\"down\":false,\"held\":false,\"up\":false},\"selector\":0,\"interact\":false,\"pause\":false,\"cancelMove\":false,\"brake\":false,\"aimPoint\":{\"x\":-27.646348702068813,\"z\":-2.6463501382604093},\"pointerGround\":true},\"picks\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeDefined\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mundefined\u001b[39m\n    at clickTo (/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:28:139)\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:105:30",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts",
+                      "column": 139,
+                      "line": 28
+                    },
+                    "snippet": "  26 |     await page.mouse.click(screen.x, screen.y); await step(page, 1);\n  27 |     const input = await page.evaluate(() => window.__SS__!.getState().input.frame);\n> 28 |     expect(input.moveTarget, JSON.stringify({ point, screen, input, picks: await page.evaluate(() => window.__SS__!.input.lastPick()) })).toBeDefined();\n     |                                                                                                                                           ^\n  29 |     expect(distance(input.moveTarget!, point)).toBeLessThan(.05);\n  30 |     await step(page, 60);\n  31 |     if (capture && i === 0) { await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: capture }); }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts",
+                        "column": 139,
+                        "line": 28
+                      },
+                      "message": "Error: {\"point\":{\"x\":-14.458852208288915,\"z\":7.741147604747674},\"screen\":{\"x\":860.1912245204727,\"y\":1734.8075398258761},\"input\":{\"move\":{\"x\":0,\"z\":0},\"aim\":{\"x\":-0.7856306764536308,\"z\":-0.618695757392121},\"aimSource\":\"pointer\",\"left\":{\"down\":false,\"held\":false,\"up\":false},\"right\":{\"down\":false,\"held\":false,\"up\":false},\"selector\":0,\"interact\":false,\"pause\":false,\"cancelMove\":false,\"brake\":false,\"aimPoint\":{\"x\":-27.646348702068813,\"z\":-2.6463501382604093},\"pointerGround\":true},\"picks\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeDefined\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mundefined\u001b[39m\n\n  26 |     await page.mouse.click(screen.x, screen.y); await step(page, 1);\n  27 |     const input = await page.evaluate(() => window.__SS__!.getState().input.frame);\n> 28 |     expect(input.moveTarget, JSON.stringify({ point, screen, input, picks: await page.evaluate(() => window.__SS__!.input.lastPick()) })).toBeDefined();\n     |                                                                                                                                           ^\n  29 |     expect(distance(input.moveTarget!, point)).toBeLessThan(.05);\n  30 |     await step(page, 60);\n  31 |     if (capture && i === 0) { await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: capture }); }\n    at clickTo (/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:28:139)\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:105:30"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:57:43.363Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721/e2e-levels-l4-plaza-moveme-ff597--stick-webgpu-high-zoom-0-5-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts",
+                    "column": 139,
+                    "line": 28
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-05c5f36965cab31fec8f",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 55,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 respawn: mouse WASD stick webgpu high zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 28034,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:57:53.640Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-b6900cff7cc881d7f086",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 55,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 plaza: mouse WASD stick webgpu low zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10060,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:58:06.313Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-d769ebc4877243018705",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 55,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 war: mouse WASD stick webgpu low zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11769,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:58:16.420Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-8e786d7aab98a56e0f1b",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 55,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 respawn: mouse WASD stick webgpu low zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 11799,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:58:21.681Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-b1c998155b6528ca1c7e",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 55,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 plaza: mouse WASD stick webgpu low zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10465,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:58:28.201Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-236b59a724258562b80a",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 55,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 war: mouse WASD stick webgpu low zoom 0.5",
+          "ok": false,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 8946,
+                  "error": {
+                    "message": "Error: {\"point\":{\"x\":-14.459109282980169,\"z\":7.740890997464949},\"screen\":{\"x\":860.1871076080013,\"y\":1734.7551137780063},\"input\":{\"move\":{\"x\":0,\"z\":0},\"aim\":{\"x\":-0.7856322775708938,\"z\":-0.6186937242600494},\"aimSource\":\"pointer\",\"left\":{\"down\":false,\"held\":false,\"up\":false},\"right\":{\"down\":false,\"held\":false,\"up\":false},\"selector\":0,\"interact\":false,\"pause\":false,\"cancelMove\":false,\"brake\":false,\"aimPoint\":{\"x\":-27.646348702068813,\"z\":-2.6463501382604093},\"pointerGround\":true},\"picks\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeDefined\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mundefined\u001b[39m",
+                    "stack": "Error: {\"point\":{\"x\":-14.459109282980169,\"z\":7.740890997464949},\"screen\":{\"x\":860.1871076080013,\"y\":1734.7551137780063},\"input\":{\"move\":{\"x\":0,\"z\":0},\"aim\":{\"x\":-0.7856322775708938,\"z\":-0.6186937242600494},\"aimSource\":\"pointer\",\"left\":{\"down\":false,\"held\":false,\"up\":false},\"right\":{\"down\":false,\"held\":false,\"up\":false},\"selector\":0,\"interact\":false,\"pause\":false,\"cancelMove\":false,\"brake\":false,\"aimPoint\":{\"x\":-27.646348702068813,\"z\":-2.6463501382604093},\"pointerGround\":true},\"picks\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeDefined\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mundefined\u001b[39m\n    at clickTo (/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:28:139)\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:105:30",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts",
+                      "column": 139,
+                      "line": 28
+                    },
+                    "snippet": "  26 |     await page.mouse.click(screen.x, screen.y); await step(page, 1);\n  27 |     const input = await page.evaluate(() => window.__SS__!.getState().input.frame);\n> 28 |     expect(input.moveTarget, JSON.stringify({ point, screen, input, picks: await page.evaluate(() => window.__SS__!.input.lastPick()) })).toBeDefined();\n     |                                                                                                                                           ^\n  29 |     expect(distance(input.moveTarget!, point)).toBeLessThan(.05);\n  30 |     await step(page, 60);\n  31 |     if (capture && i === 0) { await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: capture }); }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts",
+                        "column": 139,
+                        "line": 28
+                      },
+                      "message": "Error: {\"point\":{\"x\":-14.459109282980169,\"z\":7.740890997464949},\"screen\":{\"x\":860.1871076080013,\"y\":1734.7551137780063},\"input\":{\"move\":{\"x\":0,\"z\":0},\"aim\":{\"x\":-0.7856322775708938,\"z\":-0.6186937242600494},\"aimSource\":\"pointer\",\"left\":{\"down\":false,\"held\":false,\"up\":false},\"right\":{\"down\":false,\"held\":false,\"up\":false},\"selector\":0,\"interact\":false,\"pause\":false,\"cancelMove\":false,\"brake\":false,\"aimPoint\":{\"x\":-27.646348702068813,\"z\":-2.6463501382604093},\"pointerGround\":true},\"picks\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeDefined\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mundefined\u001b[39m\n\n  26 |     await page.mouse.click(screen.x, screen.y); await step(page, 1);\n  27 |     const input = await page.evaluate(() => window.__SS__!.getState().input.frame);\n> 28 |     expect(input.moveTarget, JSON.stringify({ point, screen, input, picks: await page.evaluate(() => window.__SS__!.input.lastPick()) })).toBeDefined();\n     |                                                                                                                                           ^\n  29 |     expect(distance(input.moveTarget!, point)).toBeLessThan(.05);\n  30 |     await step(page, 60);\n  31 |     if (capture && i === 0) { await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: capture }); }\n    at clickTo (/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:28:139)\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:105:30"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:58:33.489Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721/e2e-levels-l4-plaza-moveme-1f9ac-D-stick-webgpu-low-zoom-0-5-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts",
+                    "column": 139,
+                    "line": 28
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-da6acae3330565af54a5",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 55,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 respawn: mouse WASD stick webgpu low zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12624,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T06:58:38.672Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-1c062692f20d1d6a4152",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 55,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/L4.spec.ts",
+      "file": "e2e/levels/L4.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "L4 The Safe City Falls in the browser",
+          "file": "e2e/levels/L4.spec.ts",
+          "line": 115,
+          "column": 6,
+          "specs": [
+            {
+              "title": "T-E22-alarm @E22 @E22-AC07 real-input alarm announces the exterior breach within 10 seconds and shows living attackers in minute one",
+              "ok": true,
+              "tags": [
+                "E22",
+                "E22-AC07"
+              ],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 19656,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-27T06:58:42.861Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "11636df655d4ad9939dc-06800b84fd691a01ce82",
+              "file": "e2e/levels/L4.spec.ts",
+              "line": 116,
+              "column": 3
+            },
+            {
+              "title": "T-E22-18 @E22 @E22-AC18 @E22-AC19 real-input playthrough: convoy, quartermaster, the turn, the war, the line break, Kessler Lane, the barred cellar door; photo spots and pair cameras",
+              "ok": false,
+              "tags": [
+                "E22",
+                "E22-AC18",
+                "E22-AC19"
+              ],
+              "tests": [
+                {
+                  "timeout": 2400000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 171118,
+                      "error": {
+                        "message": "Error: Could not travel to {\"x\":20,\"z\":-37.4} from {\"x\":21.382057189941406,\"y\":0.8500000238418579,\"z\":41.666316986083984,\"yaw\":0.09330520343593154} {\"hp\":100,\"deaths\":5,\"near\":0,\"nearby\":[{\"id\":29,\"kind\":\"companion\",\"archetype\":\"char.corgi\",\"hp\":100,\"at\":{\"x\":19.3199416630017,\"z\":41.836611001681185,\"y\":0.43,\"yaw\":0.1533710115913524}},{\"id\":252,\"kind\":\"dropped-prop\",\"archetype\":\"prop.hunting-rifle\",\"hp\":1,\"at\":{\"x\":22.77848793700543,\"z\":41.550000000000004,\"y\":0.13,\"yaw\":37.69912323306527}},{\"id\":822,\"kind\":\"infected\",\"archetype\":\"infected.runner\",\"hp\":0,\"at\":{\"x\":17.783425841377632,\"z\":41.06688031948109,\"y\":0.83,\"yaw\":2.6999999999999993}}]}",
+                        "stack": "Error: Could not travel to {\"x\":20,\"z\":-37.4} from {\"x\":21.382057189941406,\"y\":0.8500000238418579,\"z\":41.666316986083984,\"yaw\":0.09330520343593154} {\"hp\":100,\"deaths\":5,\"near\":0,\"nearby\":[{\"id\":29,\"kind\":\"companion\",\"archetype\":\"char.corgi\",\"hp\":100,\"at\":{\"x\":19.3199416630017,\"z\":41.836611001681185,\"y\":0.43,\"yaw\":0.1533710115913524}},{\"id\":252,\"kind\":\"dropped-prop\",\"archetype\":\"prop.hunting-rifle\",\"hp\":1,\"at\":{\"x\":22.77848793700543,\"z\":41.550000000000004,\"y\":0.13,\"yaw\":37.69912323306527}},{\"id\":822,\"kind\":\"infected\",\"archetype\":\"infected.runner\",\"hp\":0,\"at\":{\"x\":17.783425841377632,\"z\":41.06688031948109,\"y\":0.83,\"yaw\":2.6999999999999993}}]}\n    at go (/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/L4.spec.ts:102:11)\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/L4.spec.ts:205:31",
+                        "location": {
+                          "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/L4.spec.ts",
+                          "column": 11,
+                          "line": 102
+                        },
+                        "snippet": "  100 |     }\n  101 |     const why = await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!; return { hp: p.health.current, deaths: a.missions.state()!.stats.deaths, near: a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 10).length, nearby: a.query({}).filter(e => e.id !== p.id && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 4).map(e => ({ id: e.id, kind: e.kind, archetype: e.archetype, hp: e.health?.current, at: e.transform })) }; });\n> 102 |     throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify((await player()).transform)} ${JSON.stringify(why)}`);\n      |           ^\n  103 |   };\n  104 |   const interact = async () => { await page.keyboard.down('e'); await step(3); await page.keyboard.up('e'); await step(2); };\n  105 |   return { step, mission, player, snap, shots, go, fightNearby, interact };"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/L4.spec.ts",
+                            "column": 11,
+                            "line": 102
+                          },
+                          "message": "Error: Could not travel to {\"x\":20,\"z\":-37.4} from {\"x\":21.382057189941406,\"y\":0.8500000238418579,\"z\":41.666316986083984,\"yaw\":0.09330520343593154} {\"hp\":100,\"deaths\":5,\"near\":0,\"nearby\":[{\"id\":29,\"kind\":\"companion\",\"archetype\":\"char.corgi\",\"hp\":100,\"at\":{\"x\":19.3199416630017,\"z\":41.836611001681185,\"y\":0.43,\"yaw\":0.1533710115913524}},{\"id\":252,\"kind\":\"dropped-prop\",\"archetype\":\"prop.hunting-rifle\",\"hp\":1,\"at\":{\"x\":22.77848793700543,\"z\":41.550000000000004,\"y\":0.13,\"yaw\":37.69912323306527}},{\"id\":822,\"kind\":\"infected\",\"archetype\":\"infected.runner\",\"hp\":0,\"at\":{\"x\":17.783425841377632,\"z\":41.06688031948109,\"y\":0.83,\"yaw\":2.6999999999999993}}]}\n\n  100 |     }\n  101 |     const why = await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!; return { hp: p.health.current, deaths: a.missions.state()!.stats.deaths, near: a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 10).length, nearby: a.query({}).filter(e => e.id !== p.id && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 4).map(e => ({ id: e.id, kind: e.kind, archetype: e.archetype, hp: e.health?.current, at: e.transform })) }; });\n> 102 |     throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify((await player()).transform)} ${JSON.stringify(why)}`);\n      |           ^\n  103 |   };\n  104 |   const interact = async () => { await page.keyboard.down('e'); await step(3); await page.keyboard.up('e'); await step(2); };\n  105 |   return { step, mission, player, snap, shots, go, fightNearby, interact };\n    at go (/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/L4.spec.ts:102:11)\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/L4.spec.ts:205:31"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-27T06:58:51.741Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721/e2e-levels-L4-L4-The-Safe--c8249-hoto-spots-and-pair-cameras-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/L4.spec.ts",
+                        "column": 11,
+                        "line": 102
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "11636df655d4ad9939dc-a772483a81f93398a9a0",
+              "file": "e2e/levels/L4.spec.ts",
+              "line": 149,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-27T06:53:25.851Z",
+    "duration": 497069.674,
+    "expected": 33,
+    "skipped": 0,
+    "unexpected": 5,
+    "flaky": 0
+  }
+}

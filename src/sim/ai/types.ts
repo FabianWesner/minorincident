@@ -22,7 +22,7 @@ export interface InfectedState {
   /** Story-director walk (L4 collapse Alphas): path to this point (grid A*, not the courier flow field) and ignore targets until cleared. */
   scripted?: { x: number; z: number };
   /** L4 street group: finish the breach crossing before acquiring a defender. */
-  breachApproach?: 'outside' | 'inside';
+  breachApproach?: 'wire' | 'outside' | 'inside';
   /** L4: finish a defender flank when the courier's corpse field is saturated. */
   l4FlankTarget?: number;
   /** L4's bounded walk off the escape street; released after crossing its edge or the window ends. */
@@ -50,7 +50,7 @@ export interface InfectedState {
   birdDeadMask?: number;
   /** Scheduled civilians retain their exact silhouette and clothes after turning. */
   model?: string;
-  variant: string; path: number[]; pathIndex: number; goal: number; dx: number; dz: number;
+  variant: string; path: number[]; pathIndex: number; pathRetryAt?: number; l4ArmyApproach?: boolean; goal: number; dx: number; dz: number;
   grabHits: number; grabUntil: number; grabX: number; grabZ: number; perched: boolean;
   /** L1 v2 vision/search brain (specs/epic-19 sections 5.2-5.4); absent outside L1. */
   l1?: import('./Search').L1Brain;

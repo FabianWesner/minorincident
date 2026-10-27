@@ -1,0 +1,27 @@
+
+Running 1 test using 1 worker
+
+{"renderer":"webgl","tier":"high","seed":2,"sharedDiagnostic":true,"beatTicks":{"turnAt":1969,"tankShots":13,"lineBreakAt":12650},"counts":{"infected":98,"alphas":3,"alphasArrived":6,"turnS":124,"soldiersAtTurn":20,"soldiers":19,"civilians":40},"firingSoldiers":15,"warAwakeProps":0,"collapseAwakeProps":2,"warDrawCalls":332,"warTriangles":1366052,"collapseDrawCalls":276,"collapseTriangles":566562,"warP50":16.69999999999709,"warP95":16.799999999995634,"warMax":16.80000000000291,"turnMaxMs":16.80000000000109,"turnBuilds":0,"tankMaxMs":16.80000000000291,"breakMaxMs":16.80000000000291,"collapseP50":16.69999999999709,"collapseP95":16.70000000001164,"simP95":4.399999618530273,"simFrameP95":7.399999618530273,"updateP95":0,"renderP95":0,"lineBroke":true}
+  ✘  1 [chromium] › tests/perf/l4-budgets.spec.ts:20:3 › high › T-E22-20 @E22 @E22-AC20 @perf L4 turn, war peak, tank shot, fuel-truck chain and line break high (1.7m)
+
+
+  1) [chromium] › tests/perf/l4-budgets.spec.ts:20:3 › high › T-E22-20 @E22 @E22-AC20 @perf L4 turn, war peak, tank shot, fuel-truck chain and line break high 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 4
+    Received:    4.399999618530273
+
+      149 |     // E18's sim budget measures one fixed step; low rAFs can advance several ticks.
+      150 |     // Retain the total per-frame CPU cost separately, while frame/hitch bounds stay unchanged.
+    > 151 |     expect(proof.simP95).toBeLessThanOrEqual(tier === 'high' ? 4 : 6);
+          |                          ^
+      152 |     for (const [draws, tris] of [[proof.warDrawCalls, proof.warTriangles], [proof.collapseDrawCalls, proof.collapseTriangles]]) { expect(draws).toBeLessThanOrEqual(tier === 'high' ? 600 : 300); expect(tris).toBeLessThanOrEqual(tier === 'high' ? 1_500_000 : 500_000); }
+      153 |     for (const awake of [proof.warAwakeProps, proof.collapseAwakeProps]) expect(awake).toBeLessThanOrEqual(tier === 'high' ? 150 : 60);
+      154 |     // E18 frame targets: desktop high p95 within the 60 fps budget (14 ms incl. headroom); phone low >= 30 fps p50 at 4x CPU throttle.
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/perf/l4-budgets.spec.ts:151:26
+
+    Error Context: test-results/playwright/run-4721/perf-l4-budgets-high-T-E22-6f5b1-k-chain-and-line-break-high-chromium/error-context.md
+
+  1 failed
+    [chromium] › tests/perf/l4-budgets.spec.ts:20:3 › high › T-E22-20 @E22 @E22-AC20 @perf L4 turn, war peak, tank shot, fuel-truck chain and line break high 

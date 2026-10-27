@@ -1,0 +1,90 @@
+{
+  "status": "perf pending, orchestrator measures in a quiet window",
+  "decision": "Main is also over budget. Branch simulation and frame p95 are lower; no >15% CPU regression. No CPU optimization authorized or needed from this comparison.",
+  "command": [
+    "sh",
+    "tools/e2e-lock.sh",
+    "npx",
+    "playwright",
+    "test",
+    "tests/perf/l4-budgets.spec.ts",
+    "--grep",
+    "line break high",
+    "--project=chromium",
+    "--workers=1",
+    "--trace=off"
+  ],
+  "environment": {
+    "E2E_PORT": 4721,
+    "SCENE_PORT": 4722,
+    "E2E_UNITS": 1,
+    "L4_SHARED_AB": 1,
+    "MI_PERF_SHARED_BROWSER": 1,
+    "PHONE_PERF": 0,
+    "backend": "pooled headless ANGLE Metal WebGL2",
+    "cpuThrottle": 1,
+    "qaHooks": true,
+    "framePacing": "shared browser capped; diagnostic comparison, not uncapped budget gate"
+  },
+  "sources": {
+    "main": "190574c78",
+    "branchApplication": "249580fc1",
+    "branchHarness": "ba56a0798"
+  },
+  "comparison": {
+    "simP95": {
+      "main": 7.199999809265137,
+      "branch": 4.399999618530273,
+      "branchOverMain": 0.6111110743181195
+    },
+    "warP95": {
+      "main": 33.400000000001455,
+      "branch": 16.799999999995634,
+      "branchOverMain": 0.5029940119758953
+    },
+    "collapseP95": {
+      "main": 16.79999999998836,
+      "branch": 16.70000000001164,
+      "branchOverMain": 0.9940476190490009
+    },
+    "simFrameP95": {
+      "main": 10.700000762939453,
+      "branch": 7.399999618530273,
+      "branchOverMain": 0.6915887000831746
+    },
+    "turnMaxMs": {
+      "main": 33.29999999999927,
+      "branch": 16.80000000000109,
+      "branchOverMain": 0.5045045045045483
+    },
+    "tankMaxMs": {
+      "main": 33.400000000001455,
+      "branch": 16.80000000000291,
+      "branchOverMain": 0.5029940119761132
+    },
+    "breakMaxMs": {
+      "main": 16.80000000000291,
+      "branch": 16.80000000000291,
+      "branchOverMain": 1.0
+    },
+    "warTriangles": {
+      "main": 916400,
+      "branch": 1366052,
+      "branchOverMain": 1.4906721955477957
+    },
+    "collapseTriangles": {
+      "main": 549439,
+      "branch": 566562,
+      "branchOverMain": 1.031164515078107
+    }
+  },
+  "conditions": [
+    "main/conditions.json",
+    "branch/conditions.json"
+  ],
+  "receipts": [
+    "main/receipt.json",
+    "branch/receipt.json"
+  ],
+  "invalidAttempt": "Initial main build omitted QA hooks and yielded no measurement; corrected QA build reran both back to back. Initial PHONE_PERF flag removed for desktop high."
+}

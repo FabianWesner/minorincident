@@ -1,0 +1,228 @@
+
+Running 13 tests using 2 workers
+
+  ✘   1 [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:10:3 › @E22 line-broken cellar guidance webgl high zoom 1 (6.6s)
+  ✘   2 [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:10:3 › @E22 line-broken cellar guidance webgl high zoom 0.5 (6.9s)
+  ✘   3 [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:10:3 › @E22 line-broken cellar guidance webgl low zoom 1 (5.7s)
+  ✘   4 [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:10:3 › @E22 line-broken cellar guidance webgl low zoom 0.5 (6.0s)
+  ✘   5 [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:10:3 › @E22 line-broken cellar guidance webgpu high zoom 1 (5.8s)
+  ✘   6 [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:10:3 › @E22 line-broken cellar guidance webgpu high zoom 0.5 (6.3s)
+  ✘   7 [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:10:3 › @E22 line-broken cellar guidance webgpu low zoom 1 (5.4s)
+  ✘   8 [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:10:3 › @E22 line-broken cellar guidance webgpu low zoom 0.5 (5.7s)
+  ✓  10 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 war: mouse WASD stick webgl low zoom 0.5 (15.1s)
+  ✘   9 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 war: mouse WASD stick webgl high zoom 0.5 (27.2s)
+  ✓  12 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 war: mouse WASD stick webgpu low zoom 0.5 (14.1s)
+  ✘  11 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 war: mouse WASD stick webgpu high zoom 0.5 (26.6s)
+  ✘  13 [chromium] › tests/e2e/levels/l4-weapons.spec.ts:8:1 › T-E22-20 @E22 L4 starts with melee and the handgun, no SMG or machine gun; the quartermaster issues the "Machine gun" (own name and icon) and civilians at the table hold guns (8.7s)
+
+
+  1) [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:10:3 › @E22 line-broken cellar guidance webgl high zoom 1 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 0.01
+    Received:   0.0421961335822485
+
+      45 |     expect(proof.marker.visible).toBe(true);
+      46 |     expect(proof.marker.position[0]).toBe(proof.anchor.position[0]); expect(proof.marker.position[2]).toBe(proof.anchor.position[2]);
+    > 47 |     expect(Math.abs(Math.atan2(Math.sin(proof.angle - proof.expectedAngle), Math.cos(proof.angle - proof.expectedAngle)))).toBeLessThan(.01);
+         |                                                                                                                            ^
+      48 |     expect(proof.rect.x).toBeGreaterThanOrEqual(0); expect(proof.rect.y).toBeGreaterThanOrEqual(0);
+      49 |     expect(proof.rect.x + proof.rect.width).toBeLessThanOrEqual(1280); expect(proof.rect.y + proof.rect.height).toBeLessThanOrEqual(720);
+      50 |     const out = `test-results/l4-walk-left/guidance-${renderer}-${quality}-z${zoom}`;
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts:47:124
+
+    Error Context: test-results/playwright/run-4721/e2e-levels-l4-cellar-guida-6ed30--guidance-webgl-high-zoom-1-chromium/error-context.md
+
+  2) [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:10:3 › @E22 line-broken cellar guidance webgl high zoom 0.5 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 0.01
+    Received:   0.04744552283702097
+
+      45 |     expect(proof.marker.visible).toBe(true);
+      46 |     expect(proof.marker.position[0]).toBe(proof.anchor.position[0]); expect(proof.marker.position[2]).toBe(proof.anchor.position[2]);
+    > 47 |     expect(Math.abs(Math.atan2(Math.sin(proof.angle - proof.expectedAngle), Math.cos(proof.angle - proof.expectedAngle)))).toBeLessThan(.01);
+         |                                                                                                                            ^
+      48 |     expect(proof.rect.x).toBeGreaterThanOrEqual(0); expect(proof.rect.y).toBeGreaterThanOrEqual(0);
+      49 |     expect(proof.rect.x + proof.rect.width).toBeLessThanOrEqual(1280); expect(proof.rect.y + proof.rect.height).toBeLessThanOrEqual(720);
+      50 |     const out = `test-results/l4-walk-left/guidance-${renderer}-${quality}-z${zoom}`;
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts:47:124
+
+    Error Context: test-results/playwright/run-4721/e2e-levels-l4-cellar-guida-bd3e4-uidance-webgl-high-zoom-0-5-chromium/error-context.md
+
+  3) [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:10:3 › @E22 line-broken cellar guidance webgl low zoom 1 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 0.01
+    Received:   0.0421961335822485
+
+      45 |     expect(proof.marker.visible).toBe(true);
+      46 |     expect(proof.marker.position[0]).toBe(proof.anchor.position[0]); expect(proof.marker.position[2]).toBe(proof.anchor.position[2]);
+    > 47 |     expect(Math.abs(Math.atan2(Math.sin(proof.angle - proof.expectedAngle), Math.cos(proof.angle - proof.expectedAngle)))).toBeLessThan(.01);
+         |                                                                                                                            ^
+      48 |     expect(proof.rect.x).toBeGreaterThanOrEqual(0); expect(proof.rect.y).toBeGreaterThanOrEqual(0);
+      49 |     expect(proof.rect.x + proof.rect.width).toBeLessThanOrEqual(1280); expect(proof.rect.y + proof.rect.height).toBeLessThanOrEqual(720);
+      50 |     const out = `test-results/l4-walk-left/guidance-${renderer}-${quality}-z${zoom}`;
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts:47:124
+
+    Error Context: test-results/playwright/run-4721/e2e-levels-l4-cellar-guida-108bb-r-guidance-webgl-low-zoom-1-chromium/error-context.md
+
+  4) [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:10:3 › @E22 line-broken cellar guidance webgl low zoom 0.5 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 0.01
+    Received:   0.04744552283702097
+
+      45 |     expect(proof.marker.visible).toBe(true);
+      46 |     expect(proof.marker.position[0]).toBe(proof.anchor.position[0]); expect(proof.marker.position[2]).toBe(proof.anchor.position[2]);
+    > 47 |     expect(Math.abs(Math.atan2(Math.sin(proof.angle - proof.expectedAngle), Math.cos(proof.angle - proof.expectedAngle)))).toBeLessThan(.01);
+         |                                                                                                                            ^
+      48 |     expect(proof.rect.x).toBeGreaterThanOrEqual(0); expect(proof.rect.y).toBeGreaterThanOrEqual(0);
+      49 |     expect(proof.rect.x + proof.rect.width).toBeLessThanOrEqual(1280); expect(proof.rect.y + proof.rect.height).toBeLessThanOrEqual(720);
+      50 |     const out = `test-results/l4-walk-left/guidance-${renderer}-${quality}-z${zoom}`;
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts:47:124
+
+    Error Context: test-results/playwright/run-4721/e2e-levels-l4-cellar-guida-67ea1-guidance-webgl-low-zoom-0-5-chromium/error-context.md
+
+  5) [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:10:3 › @E22 line-broken cellar guidance webgpu high zoom 1 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 0.01
+    Received:   0.0421961335822485
+
+      45 |     expect(proof.marker.visible).toBe(true);
+      46 |     expect(proof.marker.position[0]).toBe(proof.anchor.position[0]); expect(proof.marker.position[2]).toBe(proof.anchor.position[2]);
+    > 47 |     expect(Math.abs(Math.atan2(Math.sin(proof.angle - proof.expectedAngle), Math.cos(proof.angle - proof.expectedAngle)))).toBeLessThan(.01);
+         |                                                                                                                            ^
+      48 |     expect(proof.rect.x).toBeGreaterThanOrEqual(0); expect(proof.rect.y).toBeGreaterThanOrEqual(0);
+      49 |     expect(proof.rect.x + proof.rect.width).toBeLessThanOrEqual(1280); expect(proof.rect.y + proof.rect.height).toBeLessThanOrEqual(720);
+      50 |     const out = `test-results/l4-walk-left/guidance-${renderer}-${quality}-z${zoom}`;
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts:47:124
+
+    Error Context: test-results/playwright/run-4721/e2e-levels-l4-cellar-guida-1a4a8-guidance-webgpu-high-zoom-1-chromium/error-context.md
+
+  6) [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:10:3 › @E22 line-broken cellar guidance webgpu high zoom 0.5 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 0.01
+    Received:   0.04744552283702097
+
+      45 |     expect(proof.marker.visible).toBe(true);
+      46 |     expect(proof.marker.position[0]).toBe(proof.anchor.position[0]); expect(proof.marker.position[2]).toBe(proof.anchor.position[2]);
+    > 47 |     expect(Math.abs(Math.atan2(Math.sin(proof.angle - proof.expectedAngle), Math.cos(proof.angle - proof.expectedAngle)))).toBeLessThan(.01);
+         |                                                                                                                            ^
+      48 |     expect(proof.rect.x).toBeGreaterThanOrEqual(0); expect(proof.rect.y).toBeGreaterThanOrEqual(0);
+      49 |     expect(proof.rect.x + proof.rect.width).toBeLessThanOrEqual(1280); expect(proof.rect.y + proof.rect.height).toBeLessThanOrEqual(720);
+      50 |     const out = `test-results/l4-walk-left/guidance-${renderer}-${quality}-z${zoom}`;
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts:47:124
+
+    Error Context: test-results/playwright/run-4721/e2e-levels-l4-cellar-guida-69e5a-idance-webgpu-high-zoom-0-5-chromium/error-context.md
+
+  7) [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:10:3 › @E22 line-broken cellar guidance webgpu low zoom 1 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 0.01
+    Received:   0.0421961335822485
+
+      45 |     expect(proof.marker.visible).toBe(true);
+      46 |     expect(proof.marker.position[0]).toBe(proof.anchor.position[0]); expect(proof.marker.position[2]).toBe(proof.anchor.position[2]);
+    > 47 |     expect(Math.abs(Math.atan2(Math.sin(proof.angle - proof.expectedAngle), Math.cos(proof.angle - proof.expectedAngle)))).toBeLessThan(.01);
+         |                                                                                                                            ^
+      48 |     expect(proof.rect.x).toBeGreaterThanOrEqual(0); expect(proof.rect.y).toBeGreaterThanOrEqual(0);
+      49 |     expect(proof.rect.x + proof.rect.width).toBeLessThanOrEqual(1280); expect(proof.rect.y + proof.rect.height).toBeLessThanOrEqual(720);
+      50 |     const out = `test-results/l4-walk-left/guidance-${renderer}-${quality}-z${zoom}`;
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts:47:124
+
+    Error Context: test-results/playwright/run-4721/e2e-levels-l4-cellar-guida-d782e--guidance-webgpu-low-zoom-1-chromium/error-context.md
+
+  8) [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:10:3 › @E22 line-broken cellar guidance webgpu low zoom 0.5 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 0.01
+    Received:   0.04744552283702097
+
+      45 |     expect(proof.marker.visible).toBe(true);
+      46 |     expect(proof.marker.position[0]).toBe(proof.anchor.position[0]); expect(proof.marker.position[2]).toBe(proof.anchor.position[2]);
+    > 47 |     expect(Math.abs(Math.atan2(Math.sin(proof.angle - proof.expectedAngle), Math.cos(proof.angle - proof.expectedAngle)))).toBeLessThan(.01);
+         |                                                                                                                            ^
+      48 |     expect(proof.rect.x).toBeGreaterThanOrEqual(0); expect(proof.rect.y).toBeGreaterThanOrEqual(0);
+      49 |     expect(proof.rect.x + proof.rect.width).toBeLessThanOrEqual(1280); expect(proof.rect.y + proof.rect.height).toBeLessThanOrEqual(720);
+      50 |     const out = `test-results/l4-walk-left/guidance-${renderer}-${quality}-z${zoom}`;
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-cellar-guidance.spec.ts:47:124
+
+    Error Context: test-results/playwright/run-4721/e2e-levels-l4-cellar-guida-960f7-uidance-webgpu-low-zoom-0-5-chromium/error-context.md
+
+  9) [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 war: mouse WASD stick webgl high zoom 0.5 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 1
+    Received:   1.4981433118643834
+
+      109 |       if (input === 'keyboard') {
+      110 |         await page.keyboard.down(target.key); await step(page, 82); await page.keyboard.up(target.key); await step(page, 10);
+    > 111 |         expect(distance(await position(page), target)).toBeLessThan(1);
+          |                                                        ^
+      112 |       }
+      113 |       if (input === 'stick') await stickTo(page, cdp, target);
+      114 |       const perf = await page.evaluate(() => { const p = window.__SS__!.perf(); return { backend: p.backend, tier: p.quality.tier, draws: p.drawCalls, triangles: p.triangles }; });
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:111:56
+
+    Error Context: test-results/playwright/run-4721/e2e-levels-l4-plaza-moveme-5b036-D-stick-webgl-high-zoom-0-5-chromium/error-context.md
+
+  10) [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 war: mouse WASD stick webgpu high zoom 0.5 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 1
+    Received:   1.4981433118643834
+
+      109 |       if (input === 'keyboard') {
+      110 |         await page.keyboard.down(target.key); await step(page, 82); await page.keyboard.up(target.key); await step(page, 10);
+    > 111 |         expect(distance(await position(page), target)).toBeLessThan(1);
+          |                                                        ^
+      112 |       }
+      113 |       if (input === 'stick') await stickTo(page, cdp, target);
+      114 |       const perf = await page.evaluate(() => { const p = window.__SS__!.perf(); return { backend: p.backend, tier: p.quality.tier, draws: p.drawCalls, triangles: p.triangles }; });
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:111:56
+
+    Error Context: test-results/playwright/run-4721/e2e-levels-l4-plaza-moveme-ff597--stick-webgpu-high-zoom-0-5-chromium/error-context.md
+
+  11) [chromium] › tests/e2e/levels/l4-weapons.spec.ts:8:1 › T-E22-20 @E22 L4 starts with melee and the handgun, no SMG or machine gun; the quartermaster issues the "Machine gun" (own name and icon) and civilians at the table hold guns 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 3
+    Received:    0
+
+      59 |   // The army arms the civilians at the table: at least three of them hold a gun in hand within 14 m of the quartermaster.
+      60 |   const armed = await page.evaluate(q => window.__SS__!.getState().entities.filter(e => e.civilian && e.civilian.ally?.role !== 'soldier' && ['pistol', 'hunting-rifle'].includes(String(e.appearance?.handProp)) && Math.hypot(e.transform.x - q.x, e.transform.z - q.z) < 14).length, target);
+    > 61 |   expect(armed).toBeGreaterThanOrEqual(3);
+         |                 ^
+      62 | });
+      63 |
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-weapons.spec.ts:61:17
+
+    Error Context: test-results/playwright/run-4721/e2e-levels-l4-weapons-T-E2-24bc1-ians-at-the-table-hold-guns-chromium/error-context.md
+
+  11 failed
+    [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:10:3 › @E22 line-broken cellar guidance webgl high zoom 1 
+    [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:10:3 › @E22 line-broken cellar guidance webgl high zoom 0.5 
+    [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:10:3 › @E22 line-broken cellar guidance webgl low zoom 1 
+    [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:10:3 › @E22 line-broken cellar guidance webgl low zoom 0.5 
+    [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:10:3 › @E22 line-broken cellar guidance webgpu high zoom 1 
+    [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:10:3 › @E22 line-broken cellar guidance webgpu high zoom 0.5 
+    [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:10:3 › @E22 line-broken cellar guidance webgpu low zoom 1 
+    [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:10:3 › @E22 line-broken cellar guidance webgpu low zoom 0.5 
+    [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 war: mouse WASD stick webgl high zoom 0.5 
+    [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 war: mouse WASD stick webgpu high zoom 0.5 
+    [chromium] › tests/e2e/levels/l4-weapons.spec.ts:8:1 › T-E22-20 @E22 L4 starts with melee and the handgun, no SMG or machine gun; the quartermaster issues the "Machine gun" (own name and icon) and civilians at the table hold guns 
+  2 passed (1.3m)

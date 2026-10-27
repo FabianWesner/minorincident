@@ -8,6 +8,7 @@ import { l7Encounters } from '../../../src/data/l7';
 import { cureEncounters, cureEncounterSlots } from '../../../src/levels/L10/encounters';
 import { followFrustum } from '../../../tools/sim-runner/l3Bots';
 import { l4, l4Route, l4RoutePose, l4ConvoyStations } from '../../../src/data/l4';
+import { l4BreachSite } from '../../../src/data/l4Perimeter';
 
 const failure = (authored: number, ids: number[]) => ids.length !== authored || ids.some(id => id <= 0);
 function observed(world: SimWorld, ids: number[]) { return ids.filter(id => { const e = world.entities.get(id); return e && !e.hidden && !e.pendingAdmission && e.infected && !e.infected.hidden; }); }
@@ -197,8 +198,24 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly L4 alarm ${tier}: 
     let ids: number[] = [];
     w.events.on('l4.firstTurn', e => { if (e.type === 'l4.firstTurn') ids = [...e.ids]; });
     c.turn();
+    // Q-192 moves the whole alarm cohort from interior tents to distant streets.
+    // Isolate its route from unrelated waves and exterior human interceptions,
+    // as in war-waves: an immortal arrival must not be pinned by gunfire stagger.
+    s.waveAt = s.perimeterAt = Infinity;
+    const humans = w.infected!.l1!.humans, all = humans.all.bind(humans), get = humans.get.bind(humans), within = humans.within.bind(humans);
+    const inCamp = (id: number) => { const t = w.entities.get(id)?.transform, r = l4.perimeter; return !!t && t.x >= r.x0 && t.x <= r.x1 && t.z >= r.z0 && t.z <= r.z1; };
+    vi.spyOn(humans, 'all').mockImplementation(() => all().filter(h => inCamp(h.id)));
+    vi.spyOn(humans, 'get').mockImplementation(id => inCamp(id) ? get(id) : undefined);
+    vi.spyOn(humans, 'within').mockImplementation((p, r) => within(p, r).filter(h => inCamp(h.id)));
+    const apply = w.combat!.damage.apply.bind(w.combat!.damage);
+    vi.spyOn(w.combat!.damage, 'apply').mockImplementation(hit => ids.includes(hit.targetId) ? 0 : apply(hit));
+    // Two walking legs allow the street detour to the first gap; include the
+    // announced wall attack and admission margin, rather than the old tent's 60 s.
+    const gap = l4BreachSite('west').centre;
+    const approach = Math.max(...ids.map(id => { const t = w.entities.get(id)!.transform; return Math.abs(t.x - gap.x) + Math.abs(t.z - gap.z); }));
+    const deadline = s.turnAt + Math.ceil((45 + 2 * approach / 1.6) * 60);
     const reached = new Set<number>(), admitted = new Set<number>();
-    for (let i = 0; i < 60 * 60; i++) {
+    while (w.tick < deadline && reached.size < ids.length) {
       for (const id of ids) { const e = w.entities.get(id); if (e) e.health.current = e.health.max = 1_000_000; }
       followFrustum(w); w.update();
       for (const id of ids) {
@@ -212,5 +229,5 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly L4 alarm ${tier}: 
     expect(ids.length, `L4/${tier}: authored alarm count`).toBe(expected);
     expect(admitted.size, `L4/${tier}: visible admitted alarm identities`).toBe(expected);
     expect(reached.size, `L4/${tier}: alarm identities reaching the military hold area; missing ${JSON.stringify(ids.filter(id => !reached.has(id)).map(id => { const e=w.entities.get(id); return {id,at:e?.transform,scripted:e?.infected?.scripted,vault:e?.infected?.vault,mode:e?.infected?.l1?.mode,goal:e?.infected?.l1&&[e.infected.l1.goalX,e.infected.l1.goalZ]}; }))}; phase ${s.phase}`).toBe(expected);
-  } finally { w.dispose(); }
+  } finally { vi.restoreAllMocks(); w.dispose(); }
 }, 240_000);

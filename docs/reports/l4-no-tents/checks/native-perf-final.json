@@ -1,0 +1,358 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/node_modules/.bin/playwright",
+      "test",
+      "tests/perf/l4-budgets.spec.ts",
+      "--project=chromium",
+      "--workers=1",
+      "--trace=off"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/perf/*.spec.ts",
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --outDir 'dist' --host 127.0.0.1 --port 4721 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:4721",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "perf/l4-budgets.spec.ts",
+      "file": "perf/l4-budgets.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "high",
+          "file": "perf/l4-budgets.spec.ts",
+          "line": 15,
+          "column": 51,
+          "specs": [
+            {
+              "title": "T-E22-20 @E22 @E22-AC20 @perf L4 turn, war peak, tank shot, fuel-truck chain and line break high",
+              "ok": false,
+              "tags": [
+                "E22",
+                "E22-AC20",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 1200000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 279007,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m4\u001b[39m\nReceived:    \u001b[31m15.600000381469727\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m4\u001b[39m\nReceived:    \u001b[31m15.600000381469727\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/perf/l4-budgets.spec.ts:148:26",
+                        "location": {
+                          "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/perf/l4-budgets.spec.ts",
+                          "column": 26,
+                          "line": 148
+                        },
+                        "snippet": "  146 |     // E18's sim budget measures one fixed step; low rAFs can advance several ticks.\n  147 |     // Retain the total per-frame CPU cost separately, while frame/hitch bounds stay unchanged.\n> 148 |     expect(proof.simP95).toBeLessThanOrEqual(tier === 'high' ? 4 : 6);\n      |                          ^\n  149 |     for (const [draws, tris] of [[proof.warDrawCalls, proof.warTriangles], [proof.collapseDrawCalls, proof.collapseTriangles]]) { expect(draws).toBeLessThanOrEqual(tier === 'high' ? 600 : 300); expect(tris).toBeLessThanOrEqual(tier === 'high' ? 1_500_000 : 500_000); }\n  150 |     for (const awake of [proof.warAwakeProps, proof.collapseAwakeProps]) expect(awake).toBeLessThanOrEqual(tier === 'high' ? 150 : 60);\n  151 |     // E18 frame targets: desktop high p95 within the 60 fps budget (14 ms incl. headroom); phone low >= 30 fps p50 at 4x CPU throttle."
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/perf/l4-budgets.spec.ts",
+                            "column": 26,
+                            "line": 148
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m4\u001b[39m\nReceived:    \u001b[31m15.600000381469727\u001b[39m\n\n  146 |     // E18's sim budget measures one fixed step; low rAFs can advance several ticks.\n  147 |     // Retain the total per-frame CPU cost separately, while frame/hitch bounds stay unchanged.\n> 148 |     expect(proof.simP95).toBeLessThanOrEqual(tier === 'high' ? 4 : 6);\n      |                          ^\n  149 |     for (const [draws, tris] of [[proof.warDrawCalls, proof.warTriangles], [proof.collapseDrawCalls, proof.collapseTriangles]]) { expect(draws).toBeLessThanOrEqual(tier === 'high' ? 600 : 300); expect(tris).toBeLessThanOrEqual(tier === 'high' ? 1_500_000 : 500_000); }\n  150 |     for (const awake of [proof.warAwakeProps, proof.collapseAwakeProps]) expect(awake).toBeLessThanOrEqual(tier === 'high' ? 150 : 60);\n  151 |     // E18 frame targets: desktop high p95 within the 60 fps budget (14 ms incl. headroom); phone low >= 30 fps p50 at 4x CPU throttle.\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/perf/l4-budgets.spec.ts:148:26"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "{\"renderer\":\"webgl\",\"tier\":\"high\",\"seed\":2,\"beatTicks\":{\"turnAt\":1969,\"tankShots\":14,\"lineBreakAt\":12650},\"counts\":{\"infected\":100,\"alphas\":3,\"alphasArrived\":5,\"turnS\":119.26666666666667,\"soldiersAtTurn\":20,\"soldiers\":19,\"civilians\":40},\"firingSoldiers\":17,\"warAwakeProps\":1,\"collapseAwakeProps\":0,\"warDrawCalls\":348,\"warTriangles\":1443035,\"collapseDrawCalls\":266,\"collapseTriangles\":639416,\"warP50\":49.20000000001164,\"warP95\":69.70000000001164,\"warMax\":91.60000000000582,\"turnMaxMs\":81.5,\"turnBuilds\":0,\"tankMaxMs\":69.20000000001164,\"breakMaxMs\":102.5,\"collapseP50\":48.699999999953434,\"collapseP95\":68.70000000001164,\"simP95\":15.600000381469727,\"simFrameP95\":30.40000057220459,\"updateP95\":0,\"renderP95\":0,\"lineBroke\":true}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-27T06:03:23.675Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721/perf-l4-budgets-high-T-E22-6f5b1-k-chain-and-line-break-high-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/perf/l4-budgets.spec.ts",
+                        "column": 26,
+                        "line": 148
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d28036ff337e68a7d230-42c898189b52048cc908",
+              "file": "perf/l4-budgets.spec.ts",
+              "line": 17,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "low",
+          "file": "perf/l4-budgets.spec.ts",
+          "line": 15,
+          "column": 51,
+          "specs": [
+            {
+              "title": "T-E22-20 @E22 @E22-AC20 @perf L4 turn, war peak, tank shot, fuel-truck chain and line break low",
+              "ok": false,
+              "tags": [
+                "E22",
+                "E22-AC20",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 1200000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 135573,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m6\u001b[39m\nReceived:    \u001b[31m10.399999618530273\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m6\u001b[39m\nReceived:    \u001b[31m10.399999618530273\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/perf/l4-budgets.spec.ts:148:26",
+                        "location": {
+                          "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/perf/l4-budgets.spec.ts",
+                          "column": 26,
+                          "line": 148
+                        },
+                        "snippet": "  146 |     // E18's sim budget measures one fixed step; low rAFs can advance several ticks.\n  147 |     // Retain the total per-frame CPU cost separately, while frame/hitch bounds stay unchanged.\n> 148 |     expect(proof.simP95).toBeLessThanOrEqual(tier === 'high' ? 4 : 6);\n      |                          ^\n  149 |     for (const [draws, tris] of [[proof.warDrawCalls, proof.warTriangles], [proof.collapseDrawCalls, proof.collapseTriangles]]) { expect(draws).toBeLessThanOrEqual(tier === 'high' ? 600 : 300); expect(tris).toBeLessThanOrEqual(tier === 'high' ? 1_500_000 : 500_000); }\n  150 |     for (const awake of [proof.warAwakeProps, proof.collapseAwakeProps]) expect(awake).toBeLessThanOrEqual(tier === 'high' ? 150 : 60);\n  151 |     // E18 frame targets: desktop high p95 within the 60 fps budget (14 ms incl. headroom); phone low >= 30 fps p50 at 4x CPU throttle."
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/perf/l4-budgets.spec.ts",
+                            "column": 26,
+                            "line": 148
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m6\u001b[39m\nReceived:    \u001b[31m10.399999618530273\u001b[39m\n\n  146 |     // E18's sim budget measures one fixed step; low rAFs can advance several ticks.\n  147 |     // Retain the total per-frame CPU cost separately, while frame/hitch bounds stay unchanged.\n> 148 |     expect(proof.simP95).toBeLessThanOrEqual(tier === 'high' ? 4 : 6);\n      |                          ^\n  149 |     for (const [draws, tris] of [[proof.warDrawCalls, proof.warTriangles], [proof.collapseDrawCalls, proof.collapseTriangles]]) { expect(draws).toBeLessThanOrEqual(tier === 'high' ? 600 : 300); expect(tris).toBeLessThanOrEqual(tier === 'high' ? 1_500_000 : 500_000); }\n  150 |     for (const awake of [proof.warAwakeProps, proof.collapseAwakeProps]) expect(awake).toBeLessThanOrEqual(tier === 'high' ? 150 : 60);\n  151 |     // E18 frame targets: desktop high p95 within the 60 fps budget (14 ms incl. headroom); phone low >= 30 fps p50 at 4x CPU throttle.\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/perf/l4-budgets.spec.ts:148:26"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "{\"renderer\":\"webgl\",\"tier\":\"low\",\"seed\":2,\"beatTicks\":{\"turnAt\":1979,\"tankShots\":16,\"lineBreakAt\":13380},\"counts\":{\"infected\":53,\"alphas\":2,\"alphasArrived\":6,\"turnS\":161.01666666666668,\"soldiersAtTurn\":10,\"soldiers\":9,\"civilians\":20},\"firingSoldiers\":9,\"warAwakeProps\":0,\"collapseAwakeProps\":0,\"warDrawCalls\":254,\"warTriangles\":1019159,\"collapseDrawCalls\":192,\"collapseTriangles\":225216,\"warP50\":35,\"warP95\":51.60000000000582,\"warMax\":66.79999999998836,\"turnMaxMs\":71.39999999999782,\"turnBuilds\":0,\"tankMaxMs\":54,\"breakMaxMs\":175,\"collapseP50\":35.40000000002328,\"collapseP95\":50.79999999998836,\"simP95\":10.399999618530273,\"simFrameP95\":23.699999809265137,\"updateP95\":0,\"renderP95\":0,\"lineBroke\":true}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-27T06:08:17.910Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/test-results/playwright/run-4721/perf-l4-budgets-low-T-E22--92ab6-ck-chain-and-line-break-low-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/perf/l4-budgets.spec.ts",
+                        "column": 26,
+                        "line": 148
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d28036ff337e68a7d230-81e59d30aafd40784017",
+              "file": "perf/l4-budgets.spec.ts",
+              "line": 17,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-27T06:03:23.073Z",
+    "duration": 430466.18500000006,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

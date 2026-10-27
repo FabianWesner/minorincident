@@ -1,4 +1,10 @@
 import { l3 } from './l3';
+import { l1Pedestrians } from './npcs';
+
+/** Exterior horde roster, shared with render preloading so every combat archetype keeps its silhouette. */
+export const l4InfectedArchetypes = ['infected.runner', 'infected.crawler', 'infected.sprinter', 'infected.riot', 'infected.firefighter', 'infected.hazmat'] as const;
+/** Already-infected arrivals: suit, fatigues and the five skinned civilian bodies with the infected material. */
+export const l4InfectedLooks = ['inf.common-worker', 'npc.national-guard', ...l1Pedestrians.models] as const;
 
 /**
  * Level 4 "The Safe City Falls" tuning table (specs/epic-22-level-4-the-safe-city-falls.md, sections 4 and 5). Data only.
@@ -88,10 +94,10 @@ export const l4 = {
     /**
      * PO 10-13: "Let them come from all directios, not in bulk." Each wave adds to every street edge; an edge releases a small group
      * (`group`, seeded) from one of its emergence points (`l4Emergence`, in turn) every `groupEveryS` (seeded), so the infected arrive spread
-     * and staggered. `inside`: during the war grouped arrivals come from separated, concealed camp exits (`l4Inside`)
-     * each `insideEveryS`, only when an exit is out of view or hidden behind a building and at least `minM` from the courier.
+     * and staggered. `perimeterPressure`: during the war grouped arrivals come from open breach approaches outside the wire,
+     * only when a source is out of view or occluded and at least `minM` from the courier.
      */
-    group: [2, 5] as P, groupEveryS: [2, 4] as P, inside: { everyS: 1, group: [12, 14] as P, minM: 6, bodyField: { radiusM: 6, count: 40, activeFloor: 8, outerCount: 115 } },
+    group: [2, 5] as P, groupEveryS: [2, 4] as P, perimeterPressure: { everyS: 1, group: [14, 16] as P, minM: 6, bodyField: { radiusM: 6, count: 40, activeFloor: 8, outerCount: 115 } },
     /** Infected hit like L3's (the PO found earlier levels too hard: a sensible player finishes with few deaths). */
     infectedDamage: l3.infectedDamage,
     emergeLeashM: 26,
@@ -243,7 +249,7 @@ export const l4Anchors: Record<string, P> = {
   'l4-cellar-door': [0, 0],            // replaced by the layout's kessler-cellar-door at load (see levelFourLayouts)
   'l4-brace': [0, 0],                  // replaced from the cellar placement
   'l4-fuel': [l4.fuelTruck.x, l4.fuelTruck.z],
-  'l4-hmg-1': [-32.4, -14.1], 'l4-hmg-2': [-14.6, 17.3],
+  'l4-hmg-1': [-33.5, -6], 'l4-hmg-2': [-14.6, 17.3],
   'l4-tank-stop': [-20, 27.5],
   'photo-l4-convoy-arrival': [-6, 3], 'photo-l4-plaza-safe': [-20, 4], 'photo-l4-harbor-street-safe': [-12, -38], 'photo-l4-metro-entrance-safe': [57, -42],
   'photo-l4-first-turn': [-26, -4], 'photo-l4-war-line': [-22, 4], 'photo-l4-tank': [-18, 22], 'photo-l4-collapse': [4, -6], 'photo-l4-basement': [75, -4],
@@ -268,7 +274,8 @@ export const l4Posts: readonly { name: string; at: P; face: P; role: 'qm' | 'lin
   { name: 'n1', at: [-27, -15.8], face: [-27, -30], role: 'line' }, { name: 'n2', at: [-22, -15.8], face: [-22, -30], role: 'line' }, { name: 'n3', at: [-17, -15.8], face: [-17, -30], role: 'line' },
   { name: 'w1', at: [-31.8, -10.6], face: [-50, -10.6], role: 'line' }, { name: 'w2', at: [-33.6, -3], face: [-50, -3], role: 'line' }, { name: 'w3', at: [-31.8, 9.4], face: [-50, 9.4], role: 'line' },
   { name: 's1', at: [-27, 19.4], face: [-27, 34], role: 'line' }, { name: 's2', at: [-22, 19.4], face: [-22, 34], role: 'line' }, { name: 's3', at: [-17, 19.4], face: [-17, 34], role: 'line' },
-  { name: 'hmg-1', at: [-32.4, -14.1], face: [-40, -26], role: 'hmg' }, { name: 'hmg-2', at: [-14.6, 17.3], face: [-4, 30], role: 'hmg' },
+  // The west nest clears the reception kit to cover the exterior breach flood.
+  { name: 'hmg-1', at: [-33, -4], face: [-45, 0], role: 'hmg' }, { name: 'hmg-2', at: [-14.6, 17.3], face: [-4, 30], role: 'hmg' },
   // These posts clear the parked hulls as well as the moving lane; alarm orders
   // must never send a guard back into a bus after he has stepped aside.
   { name: 'e1', at: [-7.6, -12], face: [4, -12], role: 'truck' }, { name: 'e2', at: [-8.6, 12], face: [4, 12], role: 'truck' },
@@ -320,22 +327,14 @@ export const l4Emergence: readonly { edge: number; at: P; door?: boolean }[] = [
   // the camp. SpawnDirector still applies its live frustum + 6 m guard.
   ...l4OffscreenMouths.map(({ edge, at }) => ({ edge, at })),
 ];
-/** Inside the perimeter (PO 10-13: "ALso from within buildings inside the army area"): behind the tents, the supply crates and the registration kit. */
-export const l4Inside: readonly P[] = [
-  [-30.6, 10.4], [-26.8, 10.4], [-22.8, 10.4], [-31.8, 4], [-20.8, 2.2], [-26, -10.6], [-30.5, -10.6],
-  // Rear camp edge, out of the zoom-1.5 player frame from the quartermaster.
-  // These are opportunistic off-screen exits; the director still rejects them
-  // whenever the courier moves far enough to see them.
-  [-33, 19], [-29, 20], [-25, 21],
-];
 /** Follow-up groups approach the wall from the surrounding streets, then use
- * the physical breaches. The tents release only their opening alarm group. */
+ * the physical breaches. Reception tent flaps are never infected sources. */
 export const l4BreachApproaches = [
   ...[-12, -4, 8, 16].map(z => ({ side: 'west' as const, at: [l4.perimeter.x0 - 3, z] as P })),
   ...[-32, -24, -16].map(x => ({ side: 'north' as const, at: [x, l4.perimeter.z0 - 3] as P })),
   ...[-32, -24, -16].map(x => ({ side: 'south' as const, at: [x, l4.perimeter.z1 + 3] as P })),
 ];
-/** Usable flaps of the three freestanding tents. The furnished reception kit has no connected exit aisle. */
+/** Tent flap geometry retained for level dressing and nav checks only; no infected emergence uses these points. */
 export const l4TentEntrances: readonly { at: P; out: P; step: P; route: readonly P[]; floor: number }[] = [
   ...[-30.65, -26.8, -22.8].map(x => ({ at: [x, 11.15] as P, out: [0, -1] as P, step: [x, 9.55] as P, route: [], floor: 0 })),
 ];

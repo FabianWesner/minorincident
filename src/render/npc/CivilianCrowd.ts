@@ -121,7 +121,7 @@ class CivilianBatch extends Group {
   source = 'placeholder';
   /** lod2 = the far band; lod1 = the near band; lod0 = the few closest figures (CrowdVisibility heroes). */
   get distant(): boolean { return this.lod === 'lod2'; }
-  constructor(readonly world: SimWorld, readonly model: string, readonly lod: 'lod0' | 'lod1' | 'lod2', private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps, private readonly gait = new GaitPhase(), private readonly footwork = new CrowdFootwork(), private readonly moves = new InfectedMoves(), private readonly presentation = new MotionPresentation(crowdTurnRate), private readonly accessories?: CrowdAccessories) { super();
+  constructor(readonly world: SimWorld, readonly model: string, readonly lod: 'lod0' | 'lod1' | 'lod2', private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps, private readonly gait = new GaitPhase(), private readonly footwork = new CrowdFootwork(), private readonly moves = new InfectedMoves(), private readonly presentation = new MotionPresentation(crowdTurnRate), private readonly accessories?: CrowdAccessories, private readonly sharedRegistry?: AssetRegistry) { super(); this.registry = sharedRegistry;
     if (world.scenario === 'L4') { this.matrixAutoUpdate = this.matrixWorldAutoUpdate = false; this.corpses.matrixAutoUpdate = this.corpses.matrixWorldAutoUpdate = false; }
     // L7 has a strict infected pool plus at most 35 incoming survivors. Size
     // every model's mutable pose rows for that population instead of 350.
@@ -397,7 +397,7 @@ class CivilianBatch extends Group {
     return true;
   }
   snapshot() { return { instances: (this.mesh?.count ?? 0) + this.corpses.snapshot().instances, draws: (this.mesh?.count ? 1 : 0) + this.corpses.snapshot().draws, source: this.source, layout: this.mesh ? crowdVertexLayout(this.mesh.geometry) : null, figures: [...this.probe.figures, ...this.corpses.snapshot().figures] }; }
-  dispose(): void { this.corpses.dispose(); if (this.mesh) { this.mesh.geometry.dispose(); this.releaseMaterial?.(); this.mesh.dispose(); this.texture.dispose(); } void this.registry?.dispose(); this.clear(); }
+  dispose(): void { this.corpses.dispose(); if (this.mesh) { this.mesh.geometry.dispose(); this.releaseMaterial?.(); this.mesh.dispose(); this.texture.dispose(); } if (!this.sharedRegistry) void this.registry?.dispose(); this.clear(); }
 }
 
 /** Five civilian silhouettes share rigid-part LOD batches and the E07 clip path. */
@@ -435,7 +435,7 @@ export class CivilianCrowd extends Group {
     this.ranked.sort((a, b) => b.score - a.score || a.id - b.id);
     for (let i = CivilianCrowd.lowNearBudget; i < this.ranked.length; i++) demoted.add(this.ranked[i].id);
   }
-  constructor(private readonly world: SimWorld, shading?: Materials, private readonly accessories?: CrowdAccessories, private readonly warm?: (batch: Group) => Promise<void>) {
+  constructor(private readonly world: SimWorld, shading?: Materials, private readonly accessories?: CrowdAccessories, private readonly warm?: (batch: Group) => Promise<void>, private readonly registry?: AssetRegistry) {
     super(); this.props = new RoutineProps(shading); this.add(this.props); this.shading=shading;
     if (world.scenario === 'L4') this.matrixAutoUpdate = false;
     // The L6 cast is fixed: bake it while briefing, before Mission.begin creates the people.
@@ -456,7 +456,7 @@ export class CivilianCrowd extends Group {
     }))];
   }
   private readonly shading?: Materials;
-  private batch(model: string, lod: 'lod0' | 'lod1' | 'lod2'): CivilianBatch { return new CivilianBatch(this.world, model, lod, this.visibility, this.shading, this.props, this.gait, this.footwork, this.moves, this.presentation, this.accessories); }
+  private batch(model: string, lod: 'lod0' | 'lod1' | 'lod2'): CivilianBatch { return new CivilianBatch(this.world, model, lod, this.visibility, this.shading, this.props, this.gait, this.footwork, this.moves, this.presentation, this.accessories, this.registry); }
   /** PO P1 10-08 ("her mesh looks shredded/faceted up close"): the near band is the ~7k-triangle LOD1, so the few
    * figures that fill the screen (the CrowdView infected hero rule: > 196 px tall, 164 px to leave, at most 4, nearest
    * to the camera) draw the full LOD0 model. Its batch per model is loaded on first use (desktop tier only). */

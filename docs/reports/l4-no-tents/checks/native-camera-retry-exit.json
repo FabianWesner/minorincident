@@ -1,0 +1,19 @@
+{
+  "exitCode": 1,
+  "command": [
+    "sh",
+    "tools/e2e-lock.sh",
+    "npx",
+    "playwright",
+    "test",
+    "tests/e2e/levels/camera-hotfix.spec.ts",
+    "tests/e2e/levels/L4.spec.ts",
+    "tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+    "tests/e2e/levels/l4-plaza-movement.spec.ts",
+    "--grep",
+    "@camera-hotfix|T-E22-alarm|T-E22-18|T-E22-ride-smooth-.*-low|mouse WASD stick",
+    "--project=chromium",
+    "--workers=2",
+    "--trace=off"
+  ]
+}

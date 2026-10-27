@@ -1,0 +1,146 @@
+
+Running 38 tests using 2 workers
+
+  ✓   2 [chromium] › tests/e2e/levels/camera-hotfix.spec.ts:7:3 › @E22 @camera-hotfix L4 refuge framing and debug HUD webgl low (10.7s)
+  ✓   1 [chromium] › tests/e2e/levels/camera-hotfix.spec.ts:7:3 › @E22 @camera-hotfix L4 refuge framing and debug HUD webgl high (25.4s)
+  ✓   3 [chromium] › tests/e2e/levels/camera-hotfix.spec.ts:7:3 › @E22 @camera-hotfix L4 refuge framing and debug HUD webgpu high (26.0s)
+  ✓   4 [chromium] › tests/e2e/levels/camera-hotfix.spec.ts:7:3 › @E22 @camera-hotfix L4 refuge framing and debug HUD webgpu low (11.4s)
+  ✓   5 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-60hz-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz-webgl-low) (16.1s)
+  ✓   6 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-120hz-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz-webgl-low) (25.6s)
+  ✓   7 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-30hz-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz-webgl-low) (10.5s)
+  ✓   8 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-phone-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone-webgl-low) (10.9s)
+  ✓   9 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-60hz-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz-webgpu-low) (14.9s)
+  ✓  11 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-30hz-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz-webgpu-low) (9.9s)
+  ✓  10 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-120hz-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz-webgpu-low) (24.2s)
+  ✓  12 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-phone-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone-webgpu-low) (10.4s)
+  ✓  13 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 plaza: mouse WASD stick webgl high zoom 1 (23.6s)
+  ✓  14 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 war: mouse WASD stick webgl high zoom 1 (27.3s)
+  ✓  15 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 respawn: mouse WASD stick webgl high zoom 1 (26.9s)
+  ✓  16 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 plaza: mouse WASD stick webgl high zoom 0.5 (23.3s)
+  ✘  17 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 war: mouse WASD stick webgl high zoom 0.5 (23.1s)
+  ✓  18 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 respawn: mouse WASD stick webgl high zoom 0.5 (28.7s)
+  ✓  19 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 plaza: mouse WASD stick webgl low zoom 1 (11.1s)
+  ✓  20 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 war: mouse WASD stick webgl low zoom 1 (12.7s)
+  ✓  21 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 respawn: mouse WASD stick webgl low zoom 1 (12.6s)
+  ✓  22 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 plaza: mouse WASD stick webgl low zoom 0.5 (11.1s)
+  ✘  23 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 war: mouse WASD stick webgl low zoom 0.5 (9.5s)
+  ✓  24 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 respawn: mouse WASD stick webgl low zoom 0.5 (13.2s)
+  ✓  25 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 plaza: mouse WASD stick webgpu high zoom 1 (23.3s)
+  ✓  26 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 war: mouse WASD stick webgpu high zoom 1 (26.7s)
+  ✓  27 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 respawn: mouse WASD stick webgpu high zoom 1 (27.1s)
+  ✓  28 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 plaza: mouse WASD stick webgpu high zoom 0.5 (23.9s)
+  ✘  29 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 war: mouse WASD stick webgpu high zoom 0.5 (22.7s)
+  ✓  31 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 plaza: mouse WASD stick webgpu low zoom 1 (10.1s)
+  ✓  30 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 respawn: mouse WASD stick webgpu high zoom 0.5 (28.0s)
+  ✓  32 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 war: mouse WASD stick webgpu low zoom 1 (11.8s)
+  ✓  33 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 respawn: mouse WASD stick webgpu low zoom 1 (11.8s)
+  ✓  34 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 plaza: mouse WASD stick webgpu low zoom 0.5 (10.5s)
+  ✘  35 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 war: mouse WASD stick webgpu low zoom 0.5 (8.9s)
+  ✓  36 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 respawn: mouse WASD stick webgpu low zoom 0.5 (12.6s)
+  ✓  37 [chromium] › tests/e2e/levels/L4.spec.ts:116:3 › L4 The Safe City Falls in the browser › T-E22-alarm @E22 @E22-AC07 real-input alarm announces the exterior breach within 10 seconds and shows living attackers in minute one (19.7s)
+  ✘  38 [chromium] › tests/e2e/levels/L4.spec.ts:149:3 › L4 The Safe City Falls in the browser › T-E22-18 @E22 @E22-AC18 @E22-AC19 real-input playthrough: convoy, quartermaster, the turn, the war, the line break, Kessler Lane, the barred cellar door; photo spots and pair cameras (2.9m)
+
+
+  1) [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 war: mouse WASD stick webgl high zoom 0.5 
+
+    Error: {"point":{"x":-14.458852208288915,"z":7.741147604747674},"screen":{"x":860.1912245204727,"y":1734.8075398258761},"input":{"move":{"x":0,"z":0},"aim":{"x":-0.7856306764536295,"z":-0.6186957573921226},"aimSource":"pointer","left":{"down":false,"held":false,"up":false},"right":{"down":false,"held":false,"up":false},"selector":0,"interact":false,"pause":false,"cancelMove":false,"brake":false,"aimPoint":{"x":-27.646348702068927,"z":-2.6463501382605443},"pointerGround":true},"picks":[]}
+
+    expect(received).toBeDefined()
+
+    Received: undefined
+
+      26 |     await page.mouse.click(screen.x, screen.y); await step(page, 1);
+      27 |     const input = await page.evaluate(() => window.__SS__!.getState().input.frame);
+    > 28 |     expect(input.moveTarget, JSON.stringify({ point, screen, input, picks: await page.evaluate(() => window.__SS__!.input.lastPick()) })).toBeDefined();
+         |                                                                                                                                           ^
+      29 |     expect(distance(input.moveTarget!, point)).toBeLessThan(.05);
+      30 |     await step(page, 60);
+      31 |     if (capture && i === 0) { await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: capture }); }
+        at clickTo (/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:28:139)
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:105:30
+
+    Error Context: test-results/playwright/run-4721/e2e-levels-l4-plaza-moveme-5b036-D-stick-webgl-high-zoom-0-5-chromium/error-context.md
+
+  2) [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 war: mouse WASD stick webgl low zoom 0.5 
+
+    Error: {"point":{"x":-14.459109282980169,"z":7.740890997464949},"screen":{"x":860.1871076080013,"y":1734.7551137780063},"input":{"move":{"x":0,"z":0},"aim":{"x":-0.7856322775708926,"z":-0.6186937242600511},"aimSource":"pointer","left":{"down":false,"held":false,"up":false},"right":{"down":false,"held":false,"up":false},"selector":0,"interact":false,"pause":false,"cancelMove":false,"brake":false,"aimPoint":{"x":-27.646348702068927,"z":-2.6463501382605443},"pointerGround":true},"picks":[]}
+
+    expect(received).toBeDefined()
+
+    Received: undefined
+
+      26 |     await page.mouse.click(screen.x, screen.y); await step(page, 1);
+      27 |     const input = await page.evaluate(() => window.__SS__!.getState().input.frame);
+    > 28 |     expect(input.moveTarget, JSON.stringify({ point, screen, input, picks: await page.evaluate(() => window.__SS__!.input.lastPick()) })).toBeDefined();
+         |                                                                                                                                           ^
+      29 |     expect(distance(input.moveTarget!, point)).toBeLessThan(.05);
+      30 |     await step(page, 60);
+      31 |     if (capture && i === 0) { await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: capture }); }
+        at clickTo (/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:28:139)
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:105:30
+
+    Error Context: test-results/playwright/run-4721/e2e-levels-l4-plaza-moveme-bdaaa-SD-stick-webgl-low-zoom-0-5-chromium/error-context.md
+
+  3) [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 war: mouse WASD stick webgpu high zoom 0.5 
+
+    Error: {"point":{"x":-14.458852208288915,"z":7.741147604747674},"screen":{"x":860.1912245204727,"y":1734.8075398258761},"input":{"move":{"x":0,"z":0},"aim":{"x":-0.7856306764536308,"z":-0.618695757392121},"aimSource":"pointer","left":{"down":false,"held":false,"up":false},"right":{"down":false,"held":false,"up":false},"selector":0,"interact":false,"pause":false,"cancelMove":false,"brake":false,"aimPoint":{"x":-27.646348702068813,"z":-2.6463501382604093},"pointerGround":true},"picks":[]}
+
+    expect(received).toBeDefined()
+
+    Received: undefined
+
+      26 |     await page.mouse.click(screen.x, screen.y); await step(page, 1);
+      27 |     const input = await page.evaluate(() => window.__SS__!.getState().input.frame);
+    > 28 |     expect(input.moveTarget, JSON.stringify({ point, screen, input, picks: await page.evaluate(() => window.__SS__!.input.lastPick()) })).toBeDefined();
+         |                                                                                                                                           ^
+      29 |     expect(distance(input.moveTarget!, point)).toBeLessThan(.05);
+      30 |     await step(page, 60);
+      31 |     if (capture && i === 0) { await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: capture }); }
+        at clickTo (/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:28:139)
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:105:30
+
+    Error Context: test-results/playwright/run-4721/e2e-levels-l4-plaza-moveme-ff597--stick-webgpu-high-zoom-0-5-chromium/error-context.md
+
+  4) [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 war: mouse WASD stick webgpu low zoom 0.5 
+
+    Error: {"point":{"x":-14.459109282980169,"z":7.740890997464949},"screen":{"x":860.1871076080013,"y":1734.7551137780063},"input":{"move":{"x":0,"z":0},"aim":{"x":-0.7856322775708938,"z":-0.6186937242600494},"aimSource":"pointer","left":{"down":false,"held":false,"up":false},"right":{"down":false,"held":false,"up":false},"selector":0,"interact":false,"pause":false,"cancelMove":false,"brake":false,"aimPoint":{"x":-27.646348702068813,"z":-2.6463501382604093},"pointerGround":true},"picks":[]}
+
+    expect(received).toBeDefined()
+
+    Received: undefined
+
+      26 |     await page.mouse.click(screen.x, screen.y); await step(page, 1);
+      27 |     const input = await page.evaluate(() => window.__SS__!.getState().input.frame);
+    > 28 |     expect(input.moveTarget, JSON.stringify({ point, screen, input, picks: await page.evaluate(() => window.__SS__!.input.lastPick()) })).toBeDefined();
+         |                                                                                                                                           ^
+      29 |     expect(distance(input.moveTarget!, point)).toBeLessThan(.05);
+      30 |     await step(page, 60);
+      31 |     if (capture && i === 0) { await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: capture }); }
+        at clickTo (/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:28:139)
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/l4-plaza-movement.spec.ts:105:30
+
+    Error Context: test-results/playwright/run-4721/e2e-levels-l4-plaza-moveme-1f9ac-D-stick-webgpu-low-zoom-0-5-chromium/error-context.md
+
+  5) [chromium] › tests/e2e/levels/L4.spec.ts:149:3 › L4 The Safe City Falls in the browser › T-E22-18 @E22 @E22-AC18 @E22-AC19 real-input playthrough: convoy, quartermaster, the turn, the war, the line break, Kessler Lane, the barred cellar door; photo spots and pair cameras 
+
+    Error: Could not travel to {"x":20,"z":-37.4} from {"x":21.382057189941406,"y":0.8500000238418579,"z":41.666316986083984,"yaw":0.09330520343593154} {"hp":100,"deaths":5,"near":0,"nearby":[{"id":29,"kind":"companion","archetype":"char.corgi","hp":100,"at":{"x":19.3199416630017,"z":41.836611001681185,"y":0.43,"yaw":0.1533710115913524}},{"id":252,"kind":"dropped-prop","archetype":"prop.hunting-rifle","hp":1,"at":{"x":22.77848793700543,"z":41.550000000000004,"y":0.13,"yaw":37.69912323306527}},{"id":822,"kind":"infected","archetype":"infected.runner","hp":0,"at":{"x":17.783425841377632,"z":41.06688031948109,"y":0.83,"yaw":2.6999999999999993}}]}
+
+      100 |     }
+      101 |     const why = await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!; return { hp: p.health.current, deaths: a.missions.state()!.stats.deaths, near: a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 10).length, nearby: a.query({}).filter(e => e.id !== p.id && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 4).map(e => ({ id: e.id, kind: e.kind, archetype: e.archetype, hp: e.health?.current, at: e.transform })) }; });
+    > 102 |     throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify((await player()).transform)} ${JSON.stringify(why)}`);
+          |           ^
+      103 |   };
+      104 |   const interact = async () => { await page.keyboard.down('e'); await step(3); await page.keyboard.up('e'); await step(2); };
+      105 |   return { step, mission, player, snap, shots, go, fightNearby, interact };
+        at go (/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/L4.spec.ts:102:11)
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-no-tents/tests/e2e/levels/L4.spec.ts:205:31
+
+    Error Context: test-results/playwright/run-4721/e2e-levels-L4-L4-The-Safe--c8249-hoto-spots-and-pair-cameras-chromium/error-context.md
+
+  5 failed
+    [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 war: mouse WASD stick webgl high zoom 0.5 
+    [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 war: mouse WASD stick webgl low zoom 0.5 
+    [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 war: mouse WASD stick webgpu high zoom 0.5 
+    [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 war: mouse WASD stick webgpu low zoom 0.5 
+    [chromium] › tests/e2e/levels/L4.spec.ts:149:3 › L4 The Safe City Falls in the browser › T-E22-18 @E22 @E22-AC18 @E22-AC19 real-input playthrough: convoy, quartermaster, the turn, the war, the line break, Kessler Lane, the barred cellar door; photo spots and pair cameras 
+  33 passed (8.3m)

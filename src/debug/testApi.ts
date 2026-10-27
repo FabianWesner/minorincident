@@ -180,7 +180,8 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       project: (pos, plane = 'destination') => {
         game.view.camera.updateMatrixWorld();
         const floor = plane === 'player' ? game.world.entities.get(1)?.transform ?? pos : pos;
-        const point = new Vector3(pos.x, game.world.districts?.groundHeight(floor.x,floor.z)??0, pos.z).project(game.view.camera);
+        // Match RayCursor's walkable paving surface, including raised camp paving.
+        const point = new Vector3(pos.x, game.world.districts?.pavingHeight(floor.x,floor.z)??0, pos.z).project(game.view.camera);
         const rect = game.view.renderer.domElement.getBoundingClientRect();
         return { x: rect.left + (point.x + 1) / 2 * rect.width, y: rect.top + (1 - point.y) / 2 * rect.height };
       },

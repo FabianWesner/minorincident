@@ -1,0 +1,216 @@
+{
+  "codeSource": "249580fc1 (application);39323d31f (QA projection and native harness corrections)",
+  "warCensus": {
+    "source": "72454dbd7",
+    "scope": "Seed3, both tiers, observation bot with god mode; ends after Fall back. Later soldier-rescue change applies only in collapse; cower cleanup changes a stale pose.",
+    "receipt": "metrics.json"
+  },
+  "suit": "suit-skin-proof.json",
+  "captures": {
+    "source": "67e4e3f6f",
+    "receipt": "capture-metrics.json",
+    "tests": {
+      "source": "5c9a092a6",
+      "receipt": "checks/l4-no-tents-contact-captures.json",
+      "passed": null,
+      "failed": null,
+      "skipped": null,
+      "success": null
+    }
+  },
+  "remoteUnits": {
+    "source": "5c9a092a6",
+    "receipt": "checks/l4-no-tents-contact-units.json",
+    "passed": 2349,
+    "failed": 1,
+    "skipped": 7,
+    "success": false
+  },
+  "remoteUnitsCorrection": {
+    "source": "67e4e3f6f",
+    "explanation": "Only failure was the new HMG prop overlap. Exact prop/gunner clearance corrected; all-level placement and focused Mac checks passed.",
+    "receipt": "checks/l4-no-tents-nest-gunner-mac.json"
+  },
+  "remoteL4AndRender": {
+    "source": "67e4e3f6f",
+    "passed": 814,
+    "failed": 1,
+    "skipped": 2,
+    "receipt": "checks/l4-no-tents-clear-linux.log",
+    "explanation": "Only failure was stale civilian cower after the last nearby threat died. Current correction passes on Mac and Linux."
+  },
+  "remoteCowerAndRescueCorrection": {
+    "source": "249580fc1",
+    "receipt": "checks/l4-no-tents-cower-linux.json",
+    "passed": 11,
+    "failed": 0,
+    "skipped": 0,
+    "success": true
+  },
+  "macCollapse": {
+    "source": "e7b3c98ee",
+    "threshold": "<10 and <half initial soldiers after90s; unchanged seed2",
+    "soldiersAt0_30_60_90": [
+      16,
+      1,
+      0,
+      0
+    ],
+    "receipt": "checks/l4-no-tents-rescue-mac.json"
+  },
+  "remoteThreeTimeoutRetries": {
+    "bicycleAndBoarding": {
+      "source": "5c9a092a6",
+      "receipt": "checks/l4-no-tents-level-timeout-retries.json",
+      "passed": 10,
+      "failed": 0,
+      "skipped": 1,
+      "success": true
+    },
+    "continuousCampaign": {
+      "source": "5c9a092a6",
+      "receipt": "checks/l4-no-tents-campaign-timeout-retry.json",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "success": true
+    }
+  },
+  "nativeFunctionalInterrupted": {
+    "source": "d645e3f01",
+    "passed": 18,
+    "failedBeforeCancellation": 1,
+    "receipt": "checks/l4-close-native/functional.log",
+    "reason": "Stopped for requested disk cleanup. Roof-band screenshot RPC skipped spatial samples; test now pauses between real keyboard movement checkpoints with the original >=3 and pixel thresholds."
+  },
+  "nativePerformance": {
+    "source": "249580fc1",
+    "status": "perf pending, orchestrator measures in a quiet window",
+    "receipt": "checks/native-perf-final.json",
+    "comparison": "perf/ab/comparison.json",
+    "explanation": "Main is also over budget. Branch simulation and frame p95 are lower; no >15% CPU regression. No CPU optimization authorized or needed from this comparison."
+  },
+  "pending": [
+    "resolve12 native cases in checks/native-unresolved.json",
+    "perf pending, orchestrator measures in a quiet window (authorized A/B deferral)"
+  ],
+  "noSkipBot": {
+    "source": "e7b3c98ee",
+    "outcome": "complete",
+    "deaths": 0,
+    "simSeconds": 311.7,
+    "receipt": "bot-probe-3.json"
+  },
+  "remoteLevels": {
+    "source": "5c9a092a6",
+    "receipt": "checks/remote-levels-5c9.json",
+    "passed": 482,
+    "failed": 1,
+    "skipped": 2,
+    "explanation": "Only failure is HMG prop ride-grid clearance; corrected at67e4e3f6f and verified with placement/perimeter Mac and Linux checks."
+  },
+  "linuxCollapseFinaleAndInvariants": {
+    "source": "e7b3c98ee",
+    "receipt": "checks/l4-no-tents-rescue-gates.json",
+    "passed": 45,
+    "failed": 1,
+    "explanation": "Original strict collapse, both finale pressure targets, native rescue and28 simulation invariants pass. Only stale cower failure corrected at249580fc1;11 focused Linux checks pass.",
+    "traces": [
+      "checks/rescue-collapse/collapse-high-audit.json",
+      "checks/rescue-collapse/collapse-high-idle.json",
+      "checks/rescue-collapse/collapse-low-idle.json",
+      "checks/rescue-collapse/collapse-high-shooter.json",
+      "checks/rescue-finale/l4-high.json",
+      "checks/rescue-finale/l4-low.json"
+    ]
+  },
+  "nativeInvariants": {
+    "currentQuietRun": "checks/invariants-final.log",
+    "currentL4Load": "checks/load-L4.json",
+    "priorOther11": "checks/invariants-render.json",
+    "status": "all12 covered: current first9 pass incl L4; current remaining3 pass",
+    "remaining3": "checks/native-invariants-remainder.json"
+  },
+  "sourceChecks": {
+    "source": "39323d31f QA build /758cca67f tests",
+    "typecheck": "passed",
+    "lint": "passed",
+    "receipt": "checks/final-source.log",
+    "applicationBuild": "249580fc1"
+  },
+  "nativeTestCorrections": {
+    "camera": {
+      "source": "68ed9e1c1",
+      "reason": "10-19 commit67201663f3 deliberately hides floating hint in debug-tools; assert hidden hint and visible Controls row with original viewport/overlay clearance checks."
+    },
+    "alarm": {
+      "source": "ed249d02b",
+      "reason": "Q-192 removes immediate tent bodies. Same ten-second exterior breach announcement and minute-one visible body criterion as the previously corrected physical-input regression."
+    },
+    "rideQuality": {
+      "source": "b0e685462",
+      "reason": "Full UI reapplies campaign settings. Set requested tier through settings before loading; retains runtime tier assertion and every jitter/frame/wheel threshold."
+    },
+    "realInputRoute": {
+      "source": "dfffc2a6e",
+      "reason": "Add real mouse-input perpendicular detours after four stationary movement samples. Solid corpses stay enabled; no cheats or mission skips added."
+    },
+    "movementProjection": {
+      "source": "39323d31f",
+      "reason": "QA input.project used terrain groundHeight while RayCursor uses pavingHeight; align both surfaces. Original<0.05m projection and<1m movement assertions remain unchanged."
+    },
+    "guidance": {
+      "source": "05731483b",
+      "reason": "Mission.cellarDistance steers to reachable intermediate points around furniture; compare the unchanged0.01rad arrow threshold with the reachable turn displayed on the minimap. Existing simulation test covers path reachability."
+    },
+    "armedCivilians": {
+      "source": "05731483b",
+      "reason": "Pickup starts war and armed civilians become civilian allies immediately. Exclude soldier allies only; preserve>=3 gun-holding civilians within14m."
+    },
+    "warCameraTiming": {
+      "source": "758cca67f",
+      "reason": "Earlier exterior breach at20s includes an authored wall camera. Run free movement in war after that beat (same camera/input/distance/draw/triangle assertions), rather than clicking courier-adjacent ground outside its viewport."
+    }
+  },
+  "nativeFunctionalRemainder": {
+    "source": "ba56a0798",
+    "receipt": "checks/native-functional-remainder.json",
+    "passed": 46,
+    "failed": 47,
+    "failedGroups": {
+      "camera": 4,
+      "rideTier": 8,
+      "guidance": 8,
+      "movementProjection": 24,
+      "weapons": 1,
+      "alarmAndRealInputRoute": 2
+    },
+    "status": "all47 focused corrections rerunning; original assertion thresholds retained except tent opening revised to exterior cue10s/body60s per Q-192"
+  },
+  "status": "incomplete: native gates unresolved at the authorized timebox",
+  "nativeFocusedRetry": {
+    "source": "39323d31f QA build + corrected native harness",
+    "receipt": "checks/native-camera-retry.json",
+    "passed": 33,
+    "failed": 5
+  },
+  "nativeLastRetry": {
+    "source": "05731483b /758cca67f tests",
+    "receipt": "checks/native-guidance-weapons.json",
+    "passed": 2,
+    "failed": 11
+  },
+  "nativeCoverage": {
+    "passedAcrossRuns": 99,
+    "total": 111,
+    "remaining": 12,
+    "remainingGroups": {
+      "cellarGuidanceAngle": 8,
+      "armedCivilianCensus": 1,
+      "highCloseZoomWarMovement": 2,
+      "realInputEscapeDriver": 1
+    },
+    "diagnostics": "checks/native-unresolved.json",
+    "note": "All checks have finished. No normal no-skip bot regression: seed3 remains complete0deaths. Original collapse<10 unchanged and passes on Mac/Linux."
+  }
+}

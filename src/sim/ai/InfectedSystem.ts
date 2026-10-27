@@ -1,4 +1,5 @@
 import { cloneData } from '../../core/clone';
+import { solidLargeCorpse } from '../world/SolidRegistry';
 import { catalog as actionCatalog, mountedActions } from '../../data/actions/catalog';
 import { l3BaseCollision } from '../../levels/L3/collision';
 import { dogModel } from '../../data/dogAppearance';
@@ -14,6 +15,7 @@ import { noise } from '../../data/noise';
 import { INFECTED_TOUGHNESS, infectedSpecialMoves, infectedSpecialRecoveryTicks, type InfectedSpecialMove, infectedDef, infectedRecovery, l1ReactionS, l1SpeedTier, l1TierSpeed, validateInfected, type InfectedSpeedTier } from '../../data/infected';
 import { l1v2 } from '../../data/l1v2';
 import { l3 } from '../../data/l3';
+import { l4InfectedArchetypes } from '../../data/l4';
 import { isOutbreakDistrict } from '../../levels/districts/types';
 import type { DistractionEvent, HumanTarget, HumanTargetQuery } from '../outbreak/types';
 import { Perception, WorldHumans } from './Perception';
@@ -189,7 +191,7 @@ export class InfectedSystem {
     entity.archetype = id; entity.health.current = entity.health.max = def.hp * INFECTED_TOUGHNESS;
     Object.assign(entity.transform, position); entity.transform.y = perch?.y ?? .7 + (this.world.districts?.pavingHeight(position.x, position.z) ?? 0); entity.transform.yaw = opts.yaw ?? 0;
     Object.assign(entity.combat!, { radius: def.radius, armor: 0, shield: def.special === 'shield', staggerUntil: 0, attacking: false, damageMultiplier: 1 }); entity.combat!.statuses.length = 0; delete entity.combat!.reaction;
-    Object.assign(entity.infected!, { state: opts.state ?? 'idle', heardTargetId: 0, pathGrid: -1, grabNextTick: 0, combo: 0, targetId: 0, activeUntil: 0, speed: def.speed, until: 0, cooldown: 0, attackId: 0, special: def.special, hidden: id === 'infected.cat', deadAt: -1, recoverAt: -1, downs: 0, revived: false, reviveUsed: false, legLost: false, detached: false, pack: opts.pack ?? 0, packIndex: opts.packIndex ?? 0, birds: id === 'infected.crow' ? opts.birds ?? 20 : 0, scatterUntil: 0, variant: opts.variant ?? id, pathIndex: 0, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: opts.perched ?? id === 'infected.cat' }); entity.infected!.path.length = 0; if (entity.infected!.l1) entity.infected!.l1.directTick = -1; delete entity.infected!.birdMotion; delete entity.infected!.birdVertical;
+    Object.assign(entity.infected!, { state: opts.state ?? 'idle', heardTargetId: 0, pathGrid: -1, grabNextTick: 0, combo: 0, targetId: 0, activeUntil: 0, speed: def.speed, until: 0, cooldown: 0, attackId: 0, special: def.special, hidden: id === 'infected.cat', deadAt: -1, recoverAt: -1, downs: 0, revived: false, reviveUsed: false, legLost: false, detached: false, pack: opts.pack ?? 0, packIndex: opts.packIndex ?? 0, birds: id === 'infected.crow' ? opts.birds ?? 20 : 0, scatterUntil: 0, variant: opts.variant ?? id, pathIndex: 0, pathRetryAt: 0, l4ArmyApproach: false, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: opts.perched ?? id === 'infected.cat' }); entity.infected!.path.length = 0; if (entity.infected!.l1) entity.infected!.l1.directTick = -1; delete entity.infected!.birdMotion; delete entity.infected!.birdVertical;
     for (let bird = 0; bird < 20; bird++) { entity.infected!.birdAlive[bird] = Number(bird < entity.infected!.birds); entity.infected!.birdPositions[bird * 3] = position.x + Math.cos(bird * 2.399963) * 2; entity.infected!.birdPositions[bird * 3 + 1] = 3; entity.infected!.birdPositions[bird * 3 + 2] = position.z + Math.sin(bird * 2.399963) * 2; }
     if (id === 'infected.crow') entity.health.current = entity.health.max = entity.infected!.birds * INFECTED_TOUGHNESS;
     if (this.l1 && def.special === 'lunge') this.initL1(entity, opts.tier ?? l1SpeedTier(entity.infected!.variant)); else delete entity.infected!.l1;
@@ -230,6 +232,11 @@ export class InfectedSystem {
     delete body.locomotion; delete body.motion; delete body.combat!.reaction;
     delete body.infected!.l1; body.infected!.path.length = 0;
     this.release(entity); this.world.entities.replace(body);
+    // Only the explicitly solid large bodies enter actor occupancy queries;
+    // small human corpses remain visual debris and walkable as before.
+    if (solidLargeCorpse(body)) {
+      this.world.spatial.set(body.id, body.transform.x, body.transform.z);
+    }
   }
   /** Hearing ignores facing; sight uses a 110° cone and collider line of sight. */
   noise(position: { x: number; z: number }, radius: number, loud = false, sourceId?: number): void {
@@ -319,8 +326,9 @@ export class InfectedSystem {
   /** Phase 4: a scripted walker (L4 breach, tent residents) only seeks its authored point. */
   private followScript(e: EntitySnapshot, b: InfectedState): boolean {
     if (!b.scripted || b.specialAttack) return false;
-    const breachSpeed = b.breachApproach ? b.l1?.runSpeed : undefined;
-    if (!Status.stunned(e, this.world.tick) && Math.hypot(e.transform.x - b.scripted.x, e.transform.z - b.scripted.z) > .6) this.seek(e, b.scripted, breachSpeed);
+    const retreatRun = b.clearingStreet || b.l4ArmyApproach && this.world.missions?.state.l4?.phase === 'collapse';
+    const scriptedSpeed = retreatRun ? b.l1?.runSpeed ?? Math.max(b.speed, b.clearingStreet ? 4.8 : 3.4) : b.breachApproach ? b.l1?.runSpeed : undefined;
+    if (!Status.stunned(e, this.world.tick) && Math.hypot(e.transform.x - b.scripted.x, e.transform.z - b.scripted.z) > .6) this.seek(e, b.scripted, scriptedSpeed);
     e.combat!.attacking = false; this.place(e); return true;
   }
   /** Phase 5: provocation by hits, the Alpha's sight/hearing acquisition and its territory leash. */
@@ -463,6 +471,7 @@ export class InfectedSystem {
   }
   /** Chase: Alpha/zoo specials, barricade obstacles, then the strike window or the approach (pack pounces flank first). */
   private chase(e: EntitySnapshot, b: InfectedState, player: EntitySnapshot, dx: number, dz: number, distance: number): void {
+    if (this.nativeCivilianContact(e, player, distance)) return;
     if (!this.world.inspectionGhost && (this.alphaSupport.tryStart(e, player) || this.tryZooSpecial(e, player))) return;
     if (e.archetype === 'infected.alpha' && !this.world.inspectionGhost && this.world.tick >= b.cooldown && this.world.tick >= (b.specialRecoveryUntil ?? 0)) {
       const move = b.pursuit && distance <= 2 ? 'alpha.grab-throw' : distance <= 4 ? 'alpha.ground-slam' : distance <= 12 ? 'alpha.charge' : undefined;
@@ -652,8 +661,25 @@ export class InfectedSystem {
   private struck = 0;
   private attackVictim(e: EntitySnapshot, damage: number): void {
     const b = e.infected!, targetId = this.victim(e).id; this.struck = e.id;
+    const target = this.victim(e);
+    if (this.nativeCivilianContact(e, target, Math.hypot(target.transform.x - e.transform.x, target.transform.z - e.transform.z))) {
+      this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, targetId, special: b.special, amount: 0 });
+      return;
+    }
     const amount = this.world.combat!.damage.apply({ attackId: b.attackId, actionId: e.archetype, sourceId: e.id, targetId, origin: e.transform, direction: { x: b.dx, z: b.dz }, base: damage, multiplier: e.combat!.damageMultiplier, type: 'melee', knockback: b.special === 'charge' ? 3.2 : 0, stagger: 0 });
     this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, targetId, special: b.special, amount });
+  }
+  /** Native L4 humans share the outbreak contact hold, rescue and turning rules. */
+  private nativeCivilianContact(e: EntitySnapshot, target: EntitySnapshot, distance: number): boolean {
+    const c = target.civilian;
+    if (this.world.scenario !== 'L4' || e.infected!.l1 || !(l4InfectedArchetypes as readonly string[]).includes(e.archetype)
+      || !c?.l1 || target.health.current <= 0 || target.infection) return false;
+    // A neighbour's attack must not invoke the generic civilian hit reaction:
+    // that reaction releases an existing grab as though the player rescued it.
+    if (c.state === 'grabbed') return true;
+    if (this.world.tick < (c.l1.graceUntil ?? 0) || !['calm', 'alarmed', 'flee'].includes(c.state) || distance > this.strikeRange(e, target) || !this.world.combat!.query.visible(e.transform, target.transform)) return false;
+    this.world.npcs?.civilians.outbreak?.grab(target, e);
+    return true;
   }
   /** PO "Infected recover" is on by default; a level whose scripted encounters still need kills (L3 defense waves) turns it off. */
   recovery = true;
@@ -782,10 +808,21 @@ export class InfectedSystem {
     if (sent) this.world.entities.get(id)!.infected!.l1!.search.completeApproach = completeApproach;
     return sent;
   }
-  /** Director pressure: rush to a human and prefer it over nearer bystanders until `untilTick` (L4 alarm on the courier). */
+  /** Director pressure: direct an arrival at a human, retaining its archetype's movement and attacks. */
   press(id: number, targetId: number, untilTick: number, focusBiasM?: number): boolean {
-    const target = this.world.entities.get(targetId), brain = this.world.entities.get(id)?.infected?.l1;
-    if (!target || !brain) return false;
+    const target = this.world.entities.get(targetId), entity = this.world.entities.get(id), state = entity?.infected, brain = state?.l1;
+    if (!target || !entity || !state || entity.health.current <= 0) return false;
+    if (!brain) {
+      // The other humanoid archetypes use the native target/chase path rather
+      // than the pedestrian search brain. Without a target they wander at distant mouths.
+      if (state.state === 'attack' || state.specialAttack || state.grabUntil > this.world.tick) return false;
+      state.heardTargetId = targetId;
+      if (this.world.scenario === 'L4') state.l4ArmyApproach = targetId !== 1;
+      if (state.state === 'idle' || state.state === 'wander' || state.state === 'attracted') {
+        state.state = 'alerted'; state.until = this.world.tick + hearingReactionTicks;
+      }
+      return true;
+    }
     // An emerging resident may already have seen a defender on this tick.
     // Keep the pressure preference even when its live chase owns movement.
     brain.focusId = targetId; brain.focusUntil = untilTick;
@@ -1587,6 +1624,7 @@ export class InfectedSystem {
   }
   private seek(e: EntitySnapshot, target: { x: number; z: number }, specialSpeed?: number): void {
     const grid = this.navigation.district(e.transform), b = e.infected!;
+    const armyApproach = !!b.l4ArmyApproach;
     if (b.pathGrid !== grid) { b.pathGrid = grid; b.goal = -1; b.path.length = 0; }
     const nav = this.navigation.grid(e.transform); target = this.navigation.target(e.transform, target);
     let x = target.x, z = target.z;
@@ -1594,12 +1632,23 @@ export class InfectedSystem {
     const useFlow = this.active.length > 20 && !b.roar && !b.specialAttack && !b.scripted && !b.investigate && (b.heardTargetId ?? 1) <= 1;
     if (!nav.visible(e.transform, target, e.combat!.radius)) {
       // Clear paths steer directly; cell searches are needed only around cover.
-      const from = nav.nearestCell(e.transform.x, e.transform.z), to = nav.nearestCell(x, z);
+      // The nearest cell can lie across a thin doorway wall. Start on a
+      // cell reachable from the actual body, including after crowd separation.
+      const from = nav.nearestCell(e.transform.x, e.transform.z, e.combat!.radius), to = nav.nearestCell(x, z, armyApproach ? e.combat!.radius : undefined);
+      if (armyApproach && !useFlow && b.pathIndex < b.path.length) {
+        const cell = b.path[b.pathIndex]; this.waypoint.x = nav.x(cell); this.waypoint.z = nav.z(cell);
+        // Separation can carry a body past a doorway while its cached route
+        // still starts on the other side. Rebuild from the reachable side.
+        if (!nav.visible(e.transform, this.waypoint, e.combat!.radius)) { b.path.length = 0; b.goal = -1; }
+      }
       let next = from;
       if (useFlow) next = nav.flowNext(from);
       else {
-        if ((b.goal !== to || b.pathIndex >= b.path.length) && this.budget > 0) {
-          nav.path(from, to, b.path, this.budget); this.budget -= nav.expansions; b.pathIndex = 0; b.goal = to;
+        if ((b.goal !== to || b.pathIndex >= b.path.length) && this.budget > 0 && (!armyApproach || this.world.tick >= (b.pathRetryAt ?? 0))) {
+          const found = nav.path(from, to, b.path, this.budget); this.budget -= nav.expansions; b.pathIndex = 0; b.goal = to;
+          // A distant failed request must yield the shared search budget to
+          // later native archetypes, just as pedestrian searches already do.
+          if (!found && armyApproach) b.pathRetryAt = this.world.tick + 15;
         }
         if (b.pathIndex < b.path.length) {
           while (b.pathIndex + 1 < b.path.length) {
@@ -1614,7 +1663,9 @@ export class InfectedSystem {
       x = nav.x(next); z = nav.z(next);
     }
     const dx = x - e.transform.x, dz = z - e.transform.z, distance = Math.hypot(dx, dz);
-    const remaining = x === target.x && z === target.z ? distance - e.combat!.radius - 0.36 : distance;
+    // Scripted staging is a walking waypoint, not a melee target. Applying
+    // attack clearance left Alphas outside the director's 1.2 m charge gate.
+    const remaining = !(this.world.scenario === 'L4' && b.scripted) && x === target.x && z === target.z ? distance - e.combat!.radius - 0.36 : distance;
     if (remaining < 0.02) return;
     const speed = Math.min((specialSpeed ?? b.speed) * (b.roar && this.world.tick < b.roar.until ? (b.roar.speedUntil === undefined || this.world.tick < b.roar.speedUntil ? b.roar.speedScale ?? 1.25 : 1) : 1), remaining * (specialSpeed === undefined ? 2 : 60)); moveAgent(e, dx / distance * speed, dz / distance * speed, this.infectedNav, this.world.tick, e.combat!.radius, specialSpeed !== undefined);
   }

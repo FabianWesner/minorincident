@@ -1,0 +1,38 @@
+[
+  {
+    "label": "main",
+    "exitCode": 1,
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "npx",
+      "playwright",
+      "test",
+      "tests/perf/l4-budgets.spec.ts",
+      "--grep",
+      "line break high",
+      "--project=chromium",
+      "--workers=1",
+      "--trace=off"
+    ],
+    "source": "190574c78"
+  },
+  {
+    "label": "branch",
+    "exitCode": 1,
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "npx",
+      "playwright",
+      "test",
+      "tests/perf/l4-budgets.spec.ts",
+      "--grep",
+      "line break high",
+      "--project=chromium",
+      "--workers=1",
+      "--trace=off"
+    ],
+    "source": "249580fc1"
+  }
+]
