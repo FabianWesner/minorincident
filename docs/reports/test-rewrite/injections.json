@@ -1,0 +1,93 @@
+[
+  {
+    "id": "determinism",
+    "what": "RNG state leaks across worlds (a module counter shifts every 97th draw)",
+    "file": "src/core/Rng.ts",
+    "caught": true,
+    "failed": [
+      "tests/engine/core.test.ts › rng streams are seeded per name; services init/update in order and reset/dispose in reverse",
+      "tests/engine/determinism.test.ts › real levels replay deterministically: same seed and script give the same hash on L1, L4 and L10",
+      "tests/engine/infected-ai.test.ts › melee knocks down for a seeded 10-20 s (a ground hit restarts it) then up at full HP; explosives and burns kill for good"
+    ],
+    "round1": {
+      "what": "RNG state leaks across worlds (a module counter nudges every 1000th draw)",
+      "caught": false
+    }
+  },
+  {
+    "id": "save-carry",
+    "what": "the handover rack cap cuts carried weapons to three per side (P1 10-20 \"I lost the shotgun\" mechanism)",
+    "file": "src/sim/progression/carryover.ts",
+    "caught": true,
+    "failed": [
+      "tests/engine/save-progression.test.ts › every handover L1→L9 keeps every carried weapon (plus a picked-up firearm) and the selected action, and the save reloads"
+    ],
+    "round1": {
+      "what": "the L5 → L6 handover drops the carried racks (P1 10-20 \"I lost the shotgun\")",
+      "caught": false
+    }
+  },
+  {
+    "id": "aim",
+    "what": "keyboard aim assist mirrors the cross-track sign (Q-196 class)",
+    "file": "src/sim/combat/AimAssist.ts",
+    "caught": true,
+    "failed": [
+      "tests/engine/aim-assist.test.ts › keyboard fire at all eight facings: Off shoots along the facing, Default lands on the zombie in front",
+      "tests/engine/aim-assist.test.ts › an idle burst keeps its starting facing, moving fire aims along the walk, and the rocket leads a walking zombie"
+    ]
+  },
+  {
+    "id": "collision",
+    "what": "nav clearance ignores half of the body radius against walls",
+    "file": "src/sim/ai/NavGrid.ts",
+    "caught": true,
+    "failed": [
+      "tests/engine/navigation.test.ts › capsule moves: a body inside the wall margin slides out and never moves deeper or crosses the solid"
+    ]
+  },
+  {
+    "id": "spawn-admission",
+    "what": "the director no longer keeps 18 m from the courier",
+    "file": "src/sim/ai/SpawnDirector.ts",
+    "caught": true,
+    "failed": [
+      "tests/engine/spawn-director.test.ts › placement: never inside the courier radius, the expanded camera volume (also at max zoom) or a collider"
+    ],
+    "round1": {
+      "what": "the director no longer keeps 18 m from the courier",
+      "caught": false
+    }
+  },
+  {
+    "id": "gpu-limits",
+    "what": "frozen corpse pages stop interleaving their surface (one vertex buffer per attribute, Q-201 class)",
+    "file": "src/render/characters/StaticCorpses.ts",
+    "caught": true,
+    "failed": [
+      "tests/shared/render-contracts.test.ts › GPU limits: crowd layouts bind matrix columns or instanceMatrix (never both); frozen corpse pages stay within buffer headroom"
+    ]
+  },
+  {
+    "id": "asset-contract",
+    "what": "a shipped prop points one LOD at a missing file (pick.medkit)",
+    "file": "src/assets/manifest.json",
+    "caught": true,
+    "failed": [
+      "tests/shared/asset-contract.test.ts › the asset validator rejects every contract violation, and every production asset passes it"
+    ],
+    "round1": {
+      "what": "a shipped prop points one LOD at a missing file (pick.medkit)",
+      "caught": false
+    }
+  },
+  {
+    "id": "skinned",
+    "what": "skinned crowd packing normalizes the extra influences without the dominant weight",
+    "file": "src/render/characters/skinnedCrowd.ts",
+    "caught": true,
+    "failed": [
+      "tests/shared/render-contracts.test.ts › skinned crowd: four-influence packing, joint·bind⁻¹ atlas rows, and corpse freezing with the shader blend"
+    ]
+  }
+]
