@@ -669,7 +669,7 @@ export class LevelFourWar {
       if (!soldiers.length) return;
       // Street encounters keep their sight-driven courier job. The retreating
       // army must not pull the cellar approach group back into the camp.
-      const streetArrivals = new Set(this.s.pendingDoor.filter(q => q.id > 0).map(q => q.id));
+      const streetArrivals = new Set(this.s.pendingDoor?.filter(q => q.id > 0).map(q => q.id));
       const assigned = new Map<number, number>();
       if (!this.low) for (const e of ai.active) {
         const id = e.infected?.l1?.focusId ?? e.infected?.l4FlankTarget ?? e.infected?.heardTargetId;

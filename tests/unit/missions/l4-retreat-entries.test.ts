@@ -2,7 +2,7 @@ import { expect, test, vi } from 'vitest';
 import { LevelFourWar } from '../../../src/sim/missions/LevelFourWar';
 import type { EntitySnapshot } from '../../../src/sim/world/types';
 
-test('L4 high retreat cohorts reach authored street mouths beside distant surviving posts', () => {
+test('L4 high retreat cohorts use exterior street mouths and retain courier pressure', () => {
   const player = { id: 1, transform: { x: -23, z: 0 } } as EntitySnapshot;
   const soldiers = [{ id: 11, transform: { x: 28, z: -37 } }, { id: 12, transform: { x: -70, z: 45 } }] as EntitySnapshot[];
   const bodies = new Map<number, EntitySnapshot>();
@@ -19,7 +19,9 @@ test('L4 high retreat cohorts reach authored street mouths beside distant surviv
   const points = emerge.mock.calls as unknown as [{ x: number; z: number }][];
   expect(points.some(([p]) => p.x > 20 && p.z < -40)).toBe(true);
   expect(points.some(([p]) => p.x < -70 && p.z > 50)).toBe(true);
-  expect(ai.press.mock.calls.some(c => c[1] === 11)).toBe(true);
-  expect(ai.press.mock.calls.some(c => c[1] === 12)).toBe(true);
+  // Breach cohorts keep contact with the courier; separate street waves and
+  // surviving Alphas pursue the retreating army.
+  expect(ai.press).toHaveBeenCalled();
+  expect(ai.press.mock.calls.every(c => c[1] === 1)).toBe(true);
   expect(state.perimeterPending).toBe(0);
 });
