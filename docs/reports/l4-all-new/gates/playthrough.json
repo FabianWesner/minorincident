@@ -1,0 +1,187 @@
+{
+  "command": "PLAYTEST_GOD=0 E2E_PORT=3486 npx tsx tools/playtest/play.ts --levels L4 --quality low --mode campaign --no-skip --level-minutes 25",
+  "exitCode": 0,
+  "report": {
+    "mode": "campaign",
+    "quality": "low",
+    "heroine": "female",
+    "zoom": 1.5,
+    "levels": [
+      "L4"
+    ],
+    "runs": [
+      {
+        "level": "L4",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 281,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 19.728,
+        "deaths": 1,
+        "assists": 1,
+        "attacks": {
+          "weapon.army-mg": 1464,
+          "weapon.fire-axe": 54
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.handgun",
+          "ability.corgi-lure",
+          "weapon.molotov"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "steps": [
+          {
+            "id": "ride",
+            "text": "Ride into Fairhaven with the convoy \u00b7 57\u00a0m",
+            "tick": 12,
+            "marker": {
+              "anchor": "l4-plaza",
+              "ring": {
+                "x": -17,
+                "y": 0,
+                "z": 3
+              },
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "quartermaster",
+            "text": "Report to the quartermaster \u00b7 10\u00a0m",
+            "tick": 1832,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": {
+                "x": -23.2,
+                "y": 0,
+                "z": 0.6
+              },
+              "drawn": [
+                -23.2,
+                0.05,
+                0.6
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "hold",
+            "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+            "tick": 2028,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7200000286102295,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "hide",
+            "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 89\u00a0m",
+            "tick": 12710,
+            "marker": {
+              "anchor": "l4-cellar-door",
+              "ring": {
+                "x": -79.29999999999998,
+                "y": 0,
+                "z": -45.2801
+              },
+              "drawn": [
+                -79.3,
+                0.13,
+                -45.28
+              ],
+              "playerY": 0.7200000286102295,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "bar",
+            "text": "Bar the cellar door \u00b7 5\u00a0m",
+            "tick": 15906,
+            "marker": {
+              "anchor": "l4-brace",
+              "ring": {
+                "x": 74.6,
+                "y": 0,
+                "z": -1.4
+              },
+              "drawn": [
+                74.6,
+                0.05,
+                -1.4
+              ],
+              "playerY": 0.8500000238418579,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "wait",
+            "text": "Stay down \u00b7 0:07 remaining",
+            "tick": 16058,
+            "marker": {
+              "anchor": "l4-brace",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          }
+        ]
+      }
+    ],
+    "issues": 2,
+    "bySeverity": {
+      "P0": 0,
+      "P1": 0,
+      "P2": 2,
+      "P3": 0
+    }
+  },
+  "observations": [
+    {
+      "level": "L4",
+      "tick": 4060,
+      "x": -26.9,
+      "z": -0.6,
+      "severity": "P2",
+      "kind": "enemy-frozen",
+      "text": "Infected #215 in state chase 9.0 m away has not moved for ~5 s",
+      "captures": [
+        "captures/campaign-L4-4060-enemy-frozen.jpg"
+      ],
+      "step": "hold",
+      "objective": "Hold the west breach \u00b7 2:37 remaining \u00b7 9\u00a0m"
+    },
+    {
+      "level": "L4",
+      "tick": 6712,
+      "x": -21.8,
+      "z": -5.1,
+      "severity": "P2",
+      "kind": "enemy-frozen",
+      "text": "Infected #270 in state chase 8.0 m away has not moved for ~5 s",
+      "captures": [
+        "captures/campaign-L4-6712-enemy-frozen.jpg"
+      ],
+      "step": "hold",
+      "objective": "Hold the west breach \u00b7 1:52 remaining \u00b7 16\u00a0m"
+    }
+  ],
+  "interruptedAttempt": "test-results/l4-all-new/playthrough-before-route-fix; obsolete minimap-route selector; fixed to mission-route-pin in 064cc1635, physical input preserved"
+}

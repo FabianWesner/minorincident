@@ -37,4 +37,38 @@ def grid(cells,dest,width=800,cols=2):
   im=Image.open(file).convert('RGB');im.thumbnail((width,height-30));x=i%cols*width;y=i//cols*height
   sheet.paste(im,(x+(width-im.width)//2,y+30));draw.text((x+8,y+7),label,font=FONT,fill='white')
  sheet.save(dest,quality=91,optimize=True)
-if __name__=='__main__':figures()
+
+def runtime():
+ configs=['high-webgl2','high-webgpu','low-webgl2','low-webgpu']
+ sheets={
+  '10-crowd-old-new.jpg':[(ROOT/f'crowd-{v}-{c}/zoom-1.5.png',f'{v} {c} | 30 submitted figures') for c in configs for v in ['old','new']],
+  '11-corpses-old-new.jpg':[(ROOT/f'corpses-{v}-high-webgl2/group-{i}.png',f'{v} corpse group {i} | high WebGL2') for i in range(3) for v in ['old','new']]+[(ROOT/f'corpses-{v}-low-webgpu/courier-cut.png',f'{v} | courier see-through, low WebGPU') for v in ['old','new']],
+  '12-story-plaza-war.jpg':[(ROOT/f'story-new-high-webgl2/{n}/shot-{f:04}.png',n) for n,f in [('qa-l4-plaza-safe',239),('qa-l4-gate-convoy',119),('qa-l4-war-line',120),('qa-l4-fuel-chain',150)]],
+  '13-story-tank-cellar.jpg':[(ROOT/f'story-new-high-webgl2/{n}/shot-{f:04}.png',n) for n,f in [('qa-l4-tank-heli',170),('qa-l4-kessler-cellar',20),('qa-l4-kessler-cellar',150),('l4-finale-cellar',0)]],
+  '14-breach-old-new.jpg':[(ROOT/f'battle-{v}-high-webgl2/{t}s.png',f'{v} | {t}s after turn | zoom 1') for t in [30,60,120,180] for v in ['old','new']],
+ }
+ for name,cells in sheets.items():grid(cells,OUT/name)
+ import hashlib
+ index=[]
+ for p in sorted(OUT.glob('*.jpg')):
+  im=Image.open(p);index.append({'file':p.name,'size':list(im.size),'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'sources':[str(source) for source,_ in sheets.get(p.name,[])]})
+ assert len(index)==14
+ (OUT/'capture-index.json').write_text(json.dumps(index,indent=2)+'\n')
+
+def showcase():
+ import hashlib,subprocess
+ folder=Path('/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/showcase/img')
+ folder.mkdir(parents=True,exist_ok=True);sources=[];width=1430;height=820
+ sheet=Image.new('RGB',(width,(height+32)*2),BG);draw=ImageDraw.Draw(sheet)
+ for i,variant in enumerate(['old','new']):
+  p=ROOT/f'crowd-{variant}-high-webgpu/zoom-1.5.png';sources.append(str(p));im=Image.open(p).convert('RGB').crop((100,70,1530,890))
+  sheet.paste(im,(0,i*(height+32)+32));draw.text((14,i*(height+32)+8),f'L4 | {"OLD" if variant=="old" else "V2 COMBAT FIGURES"} | 30 figures | high WebGPU',font=FONT,fill='white')
+ sheet.thumbnail((1600,1600),Image.Resampling.LANCZOS);dest=folder/'l4-crowd-old-new.jpg';sheet.save(dest,quality=93,optimize=True)
+ (OUT/'showcase.json').write_text(json.dumps({'file':str(dest),'size':list(sheet.size),'sha256':hashlib.sha256(dest.read_bytes()).hexdigest(),'sources':sources,'revision':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'bestCaptures':['10-crowd-old-new.jpg','14-breach-old-new.jpg','02-inf.riot-cop.jpg','05-inf.alpha.jpg']},indent=2)+'\n')
+
+if __name__=='__main__':
+ import argparse
+ parser=argparse.ArgumentParser();parser.add_argument('--runtime',action='store_true');parser.add_argument('--showcase',action='store_true');parser.add_argument('--figures',action='store_true');args=parser.parse_args()
+ if args.figures or not(args.runtime or args.showcase):figures()
+ if args.runtime:runtime()
+ if args.showcase:showcase()

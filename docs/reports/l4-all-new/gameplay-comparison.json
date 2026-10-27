@@ -1,0 +1,121 @@
+{
+  "scope": "Matched production L4 fixture, old/new asset manifests; all mission snapshots identical at each tick. CorpseLayout is render-only: high-tier overlap counts change with the new silhouettes, with no mission or low-tier layout change. Full physical-state hashes will be recorded after final integration.",
+  "comparisons": [
+    {
+      "config": "high-webgl2",
+      "frames": [
+        {
+          "seconds": 30,
+          "sameTick": true,
+          "sameMission": true,
+          "sameCorpseLayout": true
+        },
+        {
+          "seconds": 60,
+          "sameTick": true,
+          "sameMission": true,
+          "sameCorpseLayout": false
+        },
+        {
+          "seconds": 120,
+          "sameTick": true,
+          "sameMission": true,
+          "sameCorpseLayout": false
+        },
+        {
+          "seconds": 180,
+          "sameTick": true,
+          "sameMission": true,
+          "sameCorpseLayout": false
+        }
+      ]
+    },
+    {
+      "config": "high-webgpu",
+      "frames": [
+        {
+          "seconds": 30,
+          "sameTick": true,
+          "sameMission": true,
+          "sameCorpseLayout": true
+        },
+        {
+          "seconds": 60,
+          "sameTick": true,
+          "sameMission": true,
+          "sameCorpseLayout": false
+        },
+        {
+          "seconds": 120,
+          "sameTick": true,
+          "sameMission": true,
+          "sameCorpseLayout": false
+        },
+        {
+          "seconds": 180,
+          "sameTick": true,
+          "sameMission": true,
+          "sameCorpseLayout": false
+        }
+      ]
+    },
+    {
+      "config": "low-webgl2",
+      "frames": [
+        {
+          "seconds": 30,
+          "sameTick": true,
+          "sameMission": true,
+          "sameCorpseLayout": true
+        },
+        {
+          "seconds": 60,
+          "sameTick": true,
+          "sameMission": true,
+          "sameCorpseLayout": true
+        },
+        {
+          "seconds": 120,
+          "sameTick": true,
+          "sameMission": true,
+          "sameCorpseLayout": true
+        },
+        {
+          "seconds": 180,
+          "sameTick": true,
+          "sameMission": true,
+          "sameCorpseLayout": true
+        }
+      ]
+    },
+    {
+      "config": "low-webgpu",
+      "frames": [
+        {
+          "seconds": 30,
+          "sameTick": true,
+          "sameMission": true,
+          "sameCorpseLayout": true
+        },
+        {
+          "seconds": 60,
+          "sameTick": true,
+          "sameMission": true,
+          "sameCorpseLayout": true
+        },
+        {
+          "seconds": 120,
+          "sameTick": true,
+          "sameMission": true,
+          "sameCorpseLayout": true
+        },
+        {
+          "seconds": 180,
+          "sameTick": true,
+          "sameMission": true,
+          "sameCorpseLayout": true
+        }
+      ]
+    }
+  ]
+}

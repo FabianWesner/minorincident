@@ -1,6 +1,7 @@
 /** L4 rollout evidence through the production crowd renderer, one pooled job. */
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { resolve } from 'node:path';
 import { loadavg } from 'node:os';
 import { SceneSession, readSpec, stopServer, writeJson } from './session';
@@ -27,6 +28,7 @@ const crowd30: SceneSpec = {
     if (i < 5) return { id: `guard-${i}`, kind: 'pedestrian', at, yaw: -45, look: { model: 'npc.national-guard', role: 'soldier', handProp: 'rifle' }, state: 'idle' };
     if (i < 13) return { id: `civilian-${i}`, kind: 'pedestrian', at, yaw: -45, look: { model: civilians[(i - 5) % 5], handProp: i < 8 ? ['pistol', 'hunting-rifle', 'bat'][i - 5] : null }, state: 'idle' };
     const model = i < 22 ? converted[i - 13] : ['inf.common-worker', 'npc.national-guard', ...civilians][(i - 22) % 7];
+    if (model.startsWith('npc.')) return { id: `infected-${i}`, kind: 'pedestrian', at, yaw: -45, look: { model }, state: { infect: { instant: true } } };
     return { id: `infected-${i}`, kind: 'infected', at, yaw: -45, archetype: archetype(model), look: { model }, state: 'idle' };
   }),
   camera: { mode: 'game', target: [-19, .6, 1], zoom: 1.5 }, frames: 3, shots: [3], expect: { consoleErrors: 0 },
@@ -106,9 +108,15 @@ try {
         while (api.tick() < target) { api.teleport('player', { x: -29, z: 4 }); await api.step(Math.min(60, target - api.tick())); }
         await api.screenshotReady();
       }, seconds);
-      const state = await session.page.evaluate(() => ({ tick: window.__SS__!.tick(), mission: window.__SS__!.missions.state(), layout: window.__SS__!.debug.corpseLayout(), render: window.__SS__!.getState().render, figures: window.__SS__!.crowdFigures() }));
+      const state = await session.page.evaluate(() => {
+        const game = (window.__SCENE__ as unknown as { game: Game }).game, snapshot = game.world.getState();
+        return { tick: snapshot.tick, mission: window.__SS__!.missions.state(), layout: window.__SS__!.debug.corpseLayout(), figures: window.__SS__!.crowdFigures(),
+          gameplay: { tick: snapshot.tick, entities: snapshot.entities, collision: snapshot.collision, mission: snapshot.mission, rng: snapshot.rng } };
+      });
+      const { gameplay, ...capture } = state;
+      const gameplaySha256 = createHash('sha256').update(JSON.stringify(gameplay)).digest('hex');
       const resources = await session.page.evaluate(resourceSnapshot);
-      receipts.push({ seconds, state, resources }); writeJson(`${out}/receipts.json`, receipts); await session.screenshot(`${out}/${seconds}s.png`);
+      receipts.push({ revision, seconds, state: capture, gameplaySha256, resources }); writeJson(`${out}/receipts.json`, receipts); await session.screenshot(`${out}/${seconds}s.png`);
     }
     await session.page.evaluate(() => window.__SS__!.camera.zoom(1.5)); await session.ready(); await session.screenshot(`${out}/180s-zoom1.5.png`);
     if (process.env.L4_TIMING === '1') {

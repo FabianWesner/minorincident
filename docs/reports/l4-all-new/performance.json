@@ -162,5 +162,132 @@
       },
       "deltaDecodedBytes": 3318088
     }
-  ]
+  ],
+  "productionBattleDiagnostic": [
+    {
+      "config": "high-webgl2",
+      "old": {
+        "hostLoad": [
+          3.18994140625,
+          4.1806640625,
+          4.37548828125
+        ],
+        "p95Ms": 16.799999999995634,
+        "maxMs": 133.40000000000146,
+        "lateShaderBuilds": [],
+        "framesOver200ms": 0,
+        "decodedTextureBytes": 241490664,
+        "frameCount": 600,
+        "scope": "Production L4 turn checkpoint, seed3, 180s after turn, zoom1.5, real mission/horde/solid corpses; god and camera-position fixture only, separate from required input playthrough"
+      },
+      "new": {
+        "hostLoad": [
+          4.69384765625,
+          4.51708984375,
+          4.49072265625
+        ],
+        "p95Ms": 16.700000000004366,
+        "maxMs": 16.80000000000291,
+        "lateShaderBuilds": [],
+        "framesOver200ms": 0,
+        "decodedTextureBytes": 249639696,
+        "frameCount": 600,
+        "scope": "Production L4 turn checkpoint, seed3, 180s after turn, zoom1.5, real mission/horde/solid corpses; god and camera-position fixture only, separate from required input playthrough"
+      }
+    },
+    {
+      "config": "high-webgpu",
+      "old": {
+        "hostLoad": [
+          3.55517578125,
+          4.1923828125,
+          4.36767578125
+        ],
+        "p95Ms": 16.700000000004366,
+        "maxMs": 33.200000000004366,
+        "lateShaderBuilds": [],
+        "framesOver200ms": 0,
+        "decodedTextureBytes": 241490664,
+        "frameCount": 600,
+        "scope": "Production L4 turn checkpoint, seed3, 180s after turn, zoom1.5, real mission/horde/solid corpses; god and camera-position fixture only, separate from required input playthrough"
+      },
+      "new": {
+        "hostLoad": [
+          4.21826171875,
+          4.3466796875,
+          4.4169921875
+        ],
+        "p95Ms": 16.799999999995634,
+        "maxMs": 16.80000000000291,
+        "lateShaderBuilds": [],
+        "framesOver200ms": 0,
+        "decodedTextureBytes": 249639696,
+        "frameCount": 600,
+        "scope": "Production L4 turn checkpoint, seed3, 180s after turn, zoom1.5, real mission/horde/solid corpses; god and camera-position fixture only, separate from required input playthrough"
+      }
+    },
+    {
+      "config": "low-webgl2",
+      "old": {
+        "hostLoad": [
+          5.61962890625,
+          4.634765625,
+          4.515625
+        ],
+        "p95Ms": 16.700000000000728,
+        "maxMs": 50,
+        "lateShaderBuilds": [],
+        "framesOver200ms": 0,
+        "decodedTextureBytes": 149302288,
+        "frameCount": 600,
+        "scope": "Production L4 turn checkpoint, seed3, 180s after turn, zoom1.5, real mission/horde/solid corpses; god and camera-position fixture only, separate from required input playthrough"
+      },
+      "new": {
+        "hostLoad": [
+          7.03955078125,
+          5.068359375,
+          4.67529296875
+        ],
+        "p95Ms": 16.799999999999272,
+        "maxMs": 50,
+        "lateShaderBuilds": [],
+        "framesOver200ms": 0,
+        "decodedTextureBytes": 152620376,
+        "frameCount": 600,
+        "scope": "Production L4 turn checkpoint, seed3, 180s after turn, zoom1.5, real mission/horde/solid corpses; god and camera-position fixture only, separate from required input playthrough"
+      }
+    },
+    {
+      "config": "low-webgpu",
+      "old": {
+        "hostLoad": [
+          6.57861328125,
+          5.169921875,
+          4.7265625
+        ],
+        "p95Ms": 16.799999999999272,
+        "maxMs": 50,
+        "lateShaderBuilds": [],
+        "framesOver200ms": 0,
+        "decodedTextureBytes": 149302288,
+        "frameCount": 600,
+        "scope": "Production L4 turn checkpoint, seed3, 180s after turn, zoom1.5, real mission/horde/solid corpses; god and camera-position fixture only, separate from required input playthrough"
+      },
+      "new": {
+        "hostLoad": [
+          5.22998046875,
+          4.9775390625,
+          4.6708984375
+        ],
+        "p95Ms": 16.799999999999272,
+        "maxMs": 50,
+        "lateShaderBuilds": [],
+        "framesOver200ms": 0,
+        "decodedTextureBytes": 152620376,
+        "frameCount": 600,
+        "scope": "Production L4 turn checkpoint, seed3, 180s after turn, zoom1.5, real mission/horde/solid corpses; god and camera-position fixture only, separate from required input playthrough"
+      }
+    }
+  ],
+  "productionDiagnosticRevision": "bdb1662b4"
 }
