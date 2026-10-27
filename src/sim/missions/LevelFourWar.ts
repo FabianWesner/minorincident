@@ -629,8 +629,9 @@ export class LevelFourWar {
   private engageAll(): void {
     const { world } = this.mission, tick = world.tick;
     for (const id of this.s.soldierIds) { const a = world.entities.get(id)?.civilian?.ally; if (a) a.engaged = true; }
-    // Civilians first panic with the crowd, then armed survivors rally after the initial alarm.
-    if (tick <= this.s.turnAt + ticks(5)) return;
+    // Register issued weapons before the same-tick alarm panics the crowd.
+    // Otherwise these armed civilians are still ordinary pedestrians and drop
+    // their new guns before the delayed rally can turn them into fighters.
     const c = l4.civilians;
     for (const entry of this.s.armed) {
       const e = world.entities.get(entry.id); if (!this.human(e) || e!.civilian!.ally || e!.civilian!.state === 'grabbed') continue;
