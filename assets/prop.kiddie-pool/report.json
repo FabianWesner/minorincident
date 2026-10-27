@@ -1,13 +1,11 @@
 {
   "id": "prop.kiddie-pool",
   "triangles": {
-    "lod0": 4648,
-    "lod1": 514,
-    "lod2": 214
+    "lod0": 4648
   },
   "dimensions_blender": [
     2.013000011444092,
-    2,
+    2.0,
     0.35629165172576904
   ],
   "draw_calls": 8,
@@ -27,44 +25,8 @@
     "col:body"
   ],
   "backface_culling": true,
-  "rounds": 3,
+  "rounds": 1,
   "webgpu_ok": false,
-  "webgl2_ok": true,
-  "gaps": [
-    "WebGPU manual check pending; manifest registration intentionally deferred.",
-    "Opaque palette water; refraction and animation are runtime work."
-  ],
-  "delivery": {
-    "model.glb": {
-      "bytes": 69268,
-      "meshopt": true,
-      "quantized": true
-    },
-    "model.lod1.glb": {
-      "bytes": 22428,
-      "meshopt": false,
-      "quantized": false
-    },
-    "model.lod2.glb": {
-      "bytes": 12740,
-      "meshopt": false,
-      "quantized": false
-    }
-  },
-  "lod_ratios": {
-    "lod1": 0.11058519793459552,
-    "lod2": 0.04604130808950086
-  },
-  "within_budget": true,
-  "nodes_ok": true,
-  "determinism": {
-    "id": "prop.kiddie-pool",
-    "geometry_hash": "6e00c3c7cebaf5e84cecc03cca3e7460ce374ba0c22b09448f792aa33fe7e213",
-    "second_geometry_hash": "6e00c3c7cebaf5e84cecc03cca3e7460ce374ba0c22b09448f792aa33fe7e213",
-    "geometry_identical": true,
-    "raw_byte_identical": false
-  },
-  "matches_reference": true,
-  "done": true,
-  "lod_note": "LOD1/LOD2 authored in build.py (--lod 1|2) from the LOD0 recipe; packed to public by npm run assets:pack"
+  "webgl2_ok": false,
+  "gaps": []
 }
