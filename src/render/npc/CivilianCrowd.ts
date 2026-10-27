@@ -253,9 +253,12 @@ class CivilianBatch extends Group {
         this.transform.setPosition(presented.x + (activity.seat.x - presented.x) * seatBlend, presented.y - .7 + (activity.seatLift ?? 0) * seatBlend, presented.z + (activity.seat.z - presented.z) * seatBlend);
       }
       let frame = civilianClips.indexOf(clip) * framesPerClip + (storyFrame ?? phase) * (framesPerClip - 1);
-      const carried = e.appearance?.handProp;
+      // Okafor's v2 body is cane-free; the shared held-prop path replaces the
+      // rigid cane baked into his original hand, with the same visible identity.
+      const authoredCane = this.model === 'npc.mr-okafor.aftermath' && !!this.bakedClip.binds;
+      const carried = e.appearance?.handProp ?? (authoredCane ? 'cane' : undefined);
       const handProp = (c.story ? c.story.prop : activity?.prop) ?? (carried ? carried as CivilianProp : c.ally?.role === 'officer' ? 'pistol' : c.ally?.gun ? 'rifle' : undefined);
-      const holding = !!handProp && (c.state === 'calm' || c.state === 'flee' && !!c.ally?.gun || c.state === 'grabbed' && (c.ally?.role === 'officer' || !!c.ally?.gun)) && !!this.props && !!(c.story || c.ally?.gun || c.ally?.role === 'officer' || e.appearance?.handProp !== null);
+      const holding = !!handProp && (c.state === 'calm' || c.state === 'flee' && (!!c.ally?.gun || authoredCane) || c.state === 'grabbed' && (c.ally?.role === 'officer' || !!c.ally?.gun)) && !!this.props && !!(c.story || c.ally?.gun || c.ally?.role === 'officer' || authoredCane || e.appearance?.handProp !== null);
       const sourceFrame = frame;
       const player = this.world.entities.get(1)!.transform;
       const baked = low && !handProp && useBakedCivilianPose(e, true, this.distant, this.visibility.renderPixels(e.transform.x, e.transform.y, e.transform.z, e.civilian?.adult === false ? 1.3 : 1.8), Math.hypot(presented.x - player.x, presented.z - player.z), clip);
@@ -430,7 +433,7 @@ class CivilianBatch extends Group {
 
 /** Five civilian silhouettes share rigid-part LOD batches and the E07 clip path. */
 /** Spectacled textured figures whose painted eyes do not read at game size (crowd-texture-quality). */
-const toyEyeModels = new Set(['npc.civilian-woman-b', 'npc.civilian-elderly']);
+const toyEyeModels = new Set(['npc.civilian-woman-b', 'npc.civilian-elderly', 'npc.civilian-woman-b.aftermath', 'npc.mr-okafor.aftermath']);
 export class CivilianCrowd extends Group {
   private readonly batches: CivilianBatch[];
   private readonly props: RoutineProps;

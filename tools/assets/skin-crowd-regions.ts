@@ -32,7 +32,7 @@ const GROUP: Record<string, 'head' | 'upper' | 'lower' | 'hand' | 'foot'> = {
 export interface RegionReport { width: number; height: number; garments: boolean; shares: Record<string, number>; absorbed: number; colours: Record<string, number[]> }
 
 /** Classify and flatten the body atlas of a raw crowd figure in place (PNG source atlas expected). */
-export function classifyCrowdAtlas(doc: Document, garments: boolean, coveredUniform = false): RegionReport | undefined {
+export function classifyCrowdAtlas(doc: Document, garments: boolean, coveredUniform = false, authoredSkin?: true | string, coveredLegs = false): RegionReport | undefined {
   const body = doc.getRoot().listNodes().find(n => n.getName() === 'skin_body'), prim = body?.getMesh()?.listPrimitives()[0];
   const map = prim?.getMaterial()?.getBaseColorTexture();
   if (!prim || !map || map.getMimeType() !== 'image/png') return undefined;
@@ -40,6 +40,7 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean, coveredUnif
   const uv = prim.getAttribute('TEXCOORD_0')!, part = prim.getAttribute('_CROWD_PART')!, region = prim.getAttribute('_CROWD_REGION'), indices = prim.getIndices();
   const count = indices?.getCount() ?? uv.getCount(), vertex = (t: number) => indices ? indices.getScalar(t) : t;
   const png = decodePng(map.getImage()!), { width: w, height: h, data } = png;
+  const originalRgb = authoredSkin ? data.slice() : undefined;
   // 0 none, 1 head, 2 upper, 3 lower, 4 hand, 5 foot; skinTri marks triangles whose corners were all tagged as skin paint.
   const groups = ['none', 'head', 'upper', 'lower', 'hand', 'foot'] as const;
   const owner = new Uint8Array(w * h), skinSeed = new Uint8Array(w * h), limb = new Uint8Array(w * h);
@@ -59,7 +60,7 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean, coveredUnif
     const centre = v.map(i => position.getElement(i, [])).reduce((a, q) => a.map((n, c) => n + q[c] / 3), [0, 0, 0]);
     // The soldier's tan camouflage is close to peach skin in Lab. Its sleeves
     // and trousers are closed; only the narrow wrist gaps can expose limb skin.
-    const exposedLimb = coveredUniform ? g === 4 || wrists.some(wrist => Math.hypot(...centre.map((n, c) => n - wrist[c])) < .065) : /^(foreArm|hand|leg|shin)[LR]$/.test(name) || garments && /^arm[LR]$/.test(name);
+    const exposedLimb = coveredUniform ? g === 4 || wrists.some(wrist => Math.hypot(...centre.map((n, c) => n - wrist[c])) < .065) : /^(foreArm|hand|leg|shin)[LR]$/.test(name) && !(coveredLegs && /^(leg|shin)[LR]$/.test(name)) || garments && /^arm[LR]$/.test(name);
     const inFace = !!eyes && g === 1 && centre[1] < eye[1] + .10 && centre[0] > eye[0] - .12;
     const eligible = exposedLimb || !!eyes && g === 1 && centre[1] < eye[1] + .075;
     for (let k = 0; k < 3; k++) { p[k][0] = uv.getElement(v[k], [])[0] * w - .5; p[k][1] = uv.getElement(v[k], [])[1] * h - .5; }
@@ -174,6 +175,11 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean, coveredUnif
     absorbed += members.length;
   }
   if (coveredUniform) for (let i = 0; i < cls.length; i++) if (!skinEligible[i] && cls[i] === crowdRegion.skin) cls[i] = crowdRegion.authored;
+  // Named story people retain their authored complexion rather than the per-person crowd palette.
+  if (authoredSkin) {
+    for (let i = 0; i < cls.length; i++) if (cls[i] === crowdRegion.skin) cls[i] = crowdRegion.skinMask;
+    if (typeof authoredSkin === 'string') colours.skin = lab(...[1, 3, 5].map(offset => parseInt(authoredSkin.slice(offset, offset + 2), 16)) as [number, number, number]);
+  }
   // Flatten each region to its own hue, keeping a third of the paint's lightness variation (toy masses, not TRELLIS noise); garments move to the tint reference.
   const shares: Record<string, number> = {};
   for (const [name, value] of Object.entries(crowdRegion)) {
@@ -209,7 +215,13 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean, coveredUnif
   const filled = owner.map(v => v ? 1 : 0);
   for (let head = 0; head < queue.length; head++) {
     const i = queue[head], x = i % w;
-    for (const j of [x > 0 ? i - 1 : -1, x < w - 1 ? i + 1 : -1, i - w, i + w]) if (j >= 0 && j < w * h && !filled[j]) { filled[j] = 1; out[j] = out[i]; queue.push(j); }
+    for (const j of [x > 0 ? i - 1 : -1, x < w - 1 ? i + 1 : -1, i - w, i + w]) if (j >= 0 && j < w * h && !filled[j]) {
+      filled[j] = 1; out[j] = out[i];
+      // Fixed dark complexions need matching RGB gutters as well as classes:
+      // leaving the old peach padding creates a bright line at every UV seam.
+      if (originalRgb) for (let c = 0; c < 3; c++) data[j * 4 + c] = data[i * 4 + c];
+      queue.push(j);
+    }
   }
   // A named prop can share the atlas while occupying UVs outside the body.
   // Those graphics are authored paint, rather than gutters to extend skin into.
@@ -221,7 +233,10 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean, coveredUnif
     for (let i = 0; i < otherUv.getCount(); i++) { const at = otherUv.getElement(i, []); xs.push(at[0] * w); ys.push(at[1] * h); }
     const x0 = Math.max(0, Math.floor(Math.min(...xs)) - 2), x1 = Math.min(w - 1, Math.ceil(Math.max(...xs)) + 2);
     const y0 = Math.max(0, Math.floor(Math.min(...ys)) - 2), y1 = Math.min(h - 1, Math.ceil(Math.max(...ys)) + 2);
-    for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) out[y * w + x] = crowdRegion.authored;
+    for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) {
+      const i = y * w + x; out[i] = crowdRegion.authored;
+      if (originalRgb) for (let c = 0; c < 3; c++) data[i * 4 + c] = originalRgb[i * 4 + c];
+    }
   }
   // ETC1S pays per distinct block pattern: classes are written per CELL x CELL cell (majority, ties to the tinted class).
   const cell = Number(process.env.CROWD_REGION_CELL ?? 4);

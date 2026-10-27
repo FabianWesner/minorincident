@@ -1,0 +1,85 @@
+{
+  "id": "npc.sam.aftermath",
+  "source": "/Users/wesner/Workspace/3dp-l5-all-new/cast/l5/npc.sam.aftermath",
+  "elapsedSeconds": 11.22,
+  "manualSteps": [],
+  "receipts": [
+    {
+      "lod": 0,
+      "source": "assets/npc.sam.aftermath/model.glb",
+      "sourceSha256": "02f5bfb810871aafa8e6a488bb9b4cf272344c179c6c15d3e1d26bace073c3d3",
+      "bodySource": "/Users/wesner/Workspace/3dp-l5-all-new/cast/l5/npc.sam.aftermath/source/assembled-lod0.glb",
+      "bodySha256": "d9260c11ccf0f13daad7a9e2f471ca3ac3eb2522ab000f1a5dd9da55438d748a",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/npc.sam.aftermath.lod0.glb",
+          "bytes": 327136,
+          "sha256": "f1cbc67349df111db7d8fffd7096fca67126627bf33e5760317cd6711fca0ccc",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/npc.sam.aftermath.lod0.low.glb",
+          "bytes": 244444,
+          "sha256": "7614ccade013240c4e17969d604af36c8059e9ad86216204c2129caed7cd22cf",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 1,
+      "source": "assets/npc.sam.aftermath/model.glb",
+      "sourceSha256": "02f5bfb810871aafa8e6a488bb9b4cf272344c179c6c15d3e1d26bace073c3d3",
+      "bodySource": "/Users/wesner/Workspace/3dp-l5-all-new/cast/l5/npc.sam.aftermath/source/assembled-lod1.glb",
+      "bodySha256": "c314931bcbd61195d3b42fdc03303ca3fff026adba5a828b6960959785ca043c",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/npc.sam.aftermath.lod1.glb",
+          "bytes": 158764,
+          "sha256": "5c64d968029536175a5e6bbca58f52068a72ffc052fad13959d4e0f092227439",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/npc.sam.aftermath.lod1.low.glb",
+          "bytes": 158764,
+          "sha256": "5c64d968029536175a5e6bbca58f52068a72ffc052fad13959d4e0f092227439",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 2,
+      "source": "assets/npc.sam.aftermath/model.glb",
+      "sourceSha256": "02f5bfb810871aafa8e6a488bb9b4cf272344c179c6c15d3e1d26bace073c3d3",
+      "bodySource": "/Users/wesner/Workspace/3dp-l5-all-new/cast/l5/npc.sam.aftermath/source/assembled-lod1.glb",
+      "bodySha256": "c314931bcbd61195d3b42fdc03303ca3fff026adba5a828b6960959785ca043c",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/npc.sam.aftermath.lod2.glb",
+          "bytes": 124632,
+          "sha256": "5e1347f02d5f5d648fe665924e14ff4f8066b600cc21fa1bc9b1400577d2b7b1",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/npc.sam.aftermath.lod2.low.glb",
+          "bytes": 124632,
+          "sha256": "5e1347f02d5f5d648fe665924e14ff4f8066b600cc21fa1bc9b1400577d2b7b1",
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "preparedBakes": {
+    "npc.sam.aftermath:lod0:infected": "/assets/civilians/npc.sam.aftermath.lod0.infected.4876f5a6401376b3.bin.gz",
+    "npc.sam.aftermath:lod0": "/assets/civilians/npc.sam.aftermath.lod0.cf4f5b39569bb94d.bin.gz",
+    "npc.sam.aftermath:lod1:infected": "/assets/civilians/npc.sam.aftermath.lod1.infected.5336033b60a4ce87.bin.gz",
+    "npc.sam.aftermath:lod1": "/assets/civilians/npc.sam.aftermath.lod1.9d98a83cdb1fbe67.bin.gz",
+    "npc.sam.aftermath:lod2:infected": "/assets/civilians/npc.sam.aftermath.lod2.infected.5336033b60a4ce87.bin.gz",
+    "npc.sam.aftermath:lod2": "/assets/civilians/npc.sam.aftermath.lod2.9d98a83cdb1fbe67.bin.gz"
+  }
+}

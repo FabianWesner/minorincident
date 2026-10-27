@@ -1,0 +1,68 @@
+{
+  "new_inferences": 3,
+  "inference_limit": 3,
+  "strictly_sequential": true,
+  "reused_v2_bases": 5,
+  "hf_credit_debit_eur": 0,
+  "hf_credit_evidence": "ZeroGPU overquotaUsed=0 after all three calls; included PRO allowance",
+  "quota_after": {
+    "base": 2400,
+    "current": 2046.0571730000001,
+    "resetsAt": "2026-10-28T15:27:27.790Z",
+    "overquotaUsed": 0
+  },
+  "quota_endpoint": "https://huggingface.co/api/spaces/zero-gpu/quota",
+  "runs": [
+    {
+      "asset": "l5-dale-aftermath",
+      "status": "downloaded",
+      "session": "f6a001a55b454cfd869b670e7eb31273",
+      "startedAt": "2026-10-27T22:32:56.478848+00:00",
+      "completedAt": null,
+      "inferenceSeconds": 22.870803117752075,
+      "extractSeconds": null,
+      "outputBytes": 12279180,
+      "outputSha256": "51d65b2fd9c3d08f6324306128f4bee43e3bd97b27ec4053c1e0cbd3d97c3903",
+      "inputSha256": "d52c415cac30f0b1e59354fef6712be208d90f938db83428c60af2ee0d53ebbc",
+      "allowBackgroundRemoval": true,
+      "game_asset": "npc.dale.aftermath",
+      "high_path": "/Users/wesner/Workspace/trellis-highs/l5-npc.dale.aftermath/raw.glb",
+      "high_sha256": "51d65b2fd9c3d08f6324306128f4bee43e3bd97b27ec4053c1e0cbd3d97c3903",
+      "event_id": "8c0476a2817c4d47b96c793af4906037"
+    },
+    {
+      "asset": "l5-rosa-aftermath",
+      "status": "downloaded",
+      "session": "bc1a5e92de59476e941f6054d83f87d7",
+      "startedAt": "2026-10-27T22:34:33.788110+00:00",
+      "completedAt": null,
+      "inferenceSeconds": 23.29847478866577,
+      "extractSeconds": null,
+      "outputBytes": 11228408,
+      "outputSha256": "9da7fae8d615787a31469243ceead6a124b011268fb09ebd4ac98e3c7d25f1c9",
+      "inputSha256": "e94afe5315715df743873ce230660cbab4da32333d3717710bd4a3614e43956a",
+      "allowBackgroundRemoval": true,
+      "game_asset": "npc.rosa.aftermath",
+      "high_path": "/Users/wesner/Workspace/trellis-highs/l5-npc.rosa.aftermath/raw.glb",
+      "high_sha256": "9da7fae8d615787a31469243ceead6a124b011268fb09ebd4ac98e3c7d25f1c9",
+      "event_id": "0b44c3f5ccf441558363b1fd79b7d3a5"
+    },
+    {
+      "asset": "l5-sam-aftermath",
+      "status": "downloaded",
+      "session": "c715ed67b1f2465280ed46dab7c8743c",
+      "startedAt": "2026-10-27T22:39:12.541703+00:00",
+      "completedAt": null,
+      "inferenceSeconds": 27.980793714523315,
+      "extractSeconds": null,
+      "outputBytes": 13037060,
+      "outputSha256": "aa6d3d5dabea412e8e789744d01a9570a8e1a5d419fb25118a8a538ab0cdd484",
+      "inputSha256": "10bde2f2b87af000b116f78f21b1fc3f7bbfc6d9bdd9b4b4db9c6aa916d4272b",
+      "allowBackgroundRemoval": true,
+      "game_asset": "npc.sam.aftermath",
+      "high_path": "/Users/wesner/Workspace/trellis-highs/l5-npc.sam.aftermath/raw.glb",
+      "high_sha256": "aa6d3d5dabea412e8e789744d01a9570a8e1a5d419fb25118a8a538ab0cdd484",
+      "event_id": "52d7d7c5b0b5453592c22d0cf5372bb3"
+    }
+  ]
+}

@@ -71,7 +71,7 @@ test('uniform and civilian faces and yellow bare arms share the per-person skin 
     const scene = doc.createScene(), head = doc.createNode('head'), arm = doc.createNode('foreArmL'), shoulder = doc.createNode('armL'); scene.addChild(head).addChild(arm).addChild(shoulder);
     scene.addChild(doc.createNode('skin_body').setSkin(doc.createSkin().addJoint(head).addJoint(arm).addJoint(shoulder)).setMesh(doc.createMesh().addPrimitive(prim)));
     scene.addChild(doc.createNode('skin_eyes').setMesh(doc.createMesh().addPrimitive(doc.createPrimitive().setAttribute('POSITION', attribute([1, .8, 0], 'VEC3')))));
-    const covered = garments ? undefined : cloneDocument(doc);
+    const covered = garments ? undefined : cloneDocument(doc), named = cloneDocument(doc);
     classifyCrowdAtlas(doc, garments);
     const result = PNG.sync.read(Buffer.from(material.getBaseColorTexture()!.getImage()!));
     const pixel = (x: number, y: number) => [...result.data.subarray((y * 128 + x) * 4, (y * 128 + x) * 4 + 4)];
@@ -79,6 +79,13 @@ test('uniform and civilian faces and yellow bare arms share the per-person skin 
     expect(face[3]).toBe(skinAlpha); expect(forearm[3]).toBe(skinAlpha);
     expect(Math.max(...face.slice(0, 3).map((v, c) => Math.abs(v - forearm[c])))).toBeLessThan(20);
     expect(pixel(96, 20)[3]).not.toBe(skinAlpha);
+    classifyCrowdAtlas(named, false, false, '#704431');
+    const authored = PNG.sync.read(Buffer.from(named.getRoot().listTextures()[0].getImage()!));
+    const namedFace = [...authored.data.subarray((80 * 128 + 32) * 4, (80 * 128 + 32) * 4 + 4)];
+    const namedArm = [...authored.data.subarray((80 * 128 + 96) * 4, (80 * 128 + 96) * 4 + 4)];
+    expect(namedFace[3], 'named complexion stays authored and remains an infection skin mask').toBe(Math.round((crowdRegion.skinMask + 1) * 255 / 7));
+    expect(namedFace[0], 'dark named complexion is not normalised to the crowd reference luminance').toBeLessThan(150);
+    expect(Math.max(...namedFace.slice(0, 3).map((value, c) => Math.abs(value - namedArm[c])))).toBeLessThan(20);
     if (!garments) expect(pixel(96, 32)[3], 'warm gold shoulder patch').not.toBe(skinAlpha);
     if (covered) {
       classifyCrowdAtlas(covered, false, true);
