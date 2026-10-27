@@ -15,6 +15,7 @@ import { noise } from '../../data/noise';
 import { INFECTED_TOUGHNESS, infectedSpecialMoves, infectedSpecialRecoveryTicks, type InfectedSpecialMove, infectedDef, infectedRecovery, l1ReactionS, l1SpeedTier, l1TierSpeed, validateInfected, type InfectedSpeedTier } from '../../data/infected';
 import { l1v2 } from '../../data/l1v2';
 import { l3 } from '../../data/l3';
+import { l4InfectedArchetypes } from '../../data/l4';
 import { isOutbreakDistrict } from '../../levels/districts/types';
 import type { DistractionEvent, HumanTarget, HumanTargetQuery } from '../outbreak/types';
 import { Perception, WorldHumans } from './Perception';
@@ -442,6 +443,7 @@ export class InfectedSystem {
         continue;
       }
       if (b.state === 'chase') {
+        if (this.nativeCivilianContact(e, player, distance)) continue;
         if (!this.world.inspectionGhost && (this.alphaSupport.tryStart(e, player) || this.tryZooSpecial(e, player))) continue;
         if (e.archetype === 'infected.alpha' && !this.world.inspectionGhost && this.world.tick >= b.cooldown && this.world.tick >= (b.specialRecoveryUntil ?? 0)) {
           const move = b.pursuit && distance <= 2 ? 'alpha.grab-throw' : distance <= 4 ? 'alpha.ground-slam' : distance <= 12 ? 'alpha.charge' : undefined;
@@ -624,8 +626,25 @@ export class InfectedSystem {
   private struck = 0;
   private attackVictim(e: EntitySnapshot, damage: number): void {
     const b = e.infected!, targetId = this.victim(e).id; this.struck = e.id;
+    const target = this.victim(e);
+    if (this.nativeCivilianContact(e, target, Math.hypot(target.transform.x - e.transform.x, target.transform.z - e.transform.z))) {
+      this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, targetId, special: b.special, amount: 0 });
+      return;
+    }
     const amount = this.world.combat!.damage.apply({ attackId: b.attackId, actionId: e.archetype, sourceId: e.id, targetId, origin: e.transform, direction: { x: b.dx, z: b.dz }, base: damage, multiplier: e.combat!.damageMultiplier, type: 'melee', knockback: b.special === 'charge' ? 3.2 : 0, stagger: 0 });
     this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, targetId, special: b.special, amount });
+  }
+  /** Native L4 humans share the outbreak contact hold, rescue and turning rules. */
+  private nativeCivilianContact(e: EntitySnapshot, target: EntitySnapshot, distance: number): boolean {
+    const c = target.civilian;
+    if (this.world.scenario !== 'L4' || e.infected!.l1 || !(l4InfectedArchetypes as readonly string[]).includes(e.archetype)
+      || !c?.l1 || target.health.current <= 0 || target.infection) return false;
+    // A neighbour's attack must not invoke the generic civilian hit reaction:
+    // that reaction releases an existing grab as though the player rescued it.
+    if (c.state === 'grabbed') return true;
+    if (this.world.tick < (c.l1.graceUntil ?? 0) || !['calm', 'alarmed', 'flee'].includes(c.state) || distance > this.strikeRange(e, target) || !this.world.combat!.query.visible(e.transform, target.transform)) return false;
+    this.world.npcs?.civilians.outbreak?.grab(target, e);
+    return true;
   }
   /** PO "Infected recover" is on by default; a level whose scripted encounters still need kills (L3 defense waves) turns it off. */
   recovery = true;

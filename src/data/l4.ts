@@ -249,7 +249,7 @@ export const l4Anchors: Record<string, P> = {
   'l4-cellar-door': [0, 0],            // replaced by the layout's kessler-cellar-door at load (see levelFourLayouts)
   'l4-brace': [0, 0],                  // replaced from the cellar placement
   'l4-fuel': [l4.fuelTruck.x, l4.fuelTruck.z],
-  'l4-hmg-1': [-32.4, -14.1], 'l4-hmg-2': [-14.6, 17.3],
+  'l4-hmg-1': [-33, -6], 'l4-hmg-2': [-14.6, 17.3],
   'l4-tank-stop': [-20, 27.5],
   'photo-l4-convoy-arrival': [-6, 3], 'photo-l4-plaza-safe': [-20, 4], 'photo-l4-harbor-street-safe': [-12, -38], 'photo-l4-metro-entrance-safe': [57, -42],
   'photo-l4-first-turn': [-26, -4], 'photo-l4-war-line': [-22, 4], 'photo-l4-tank': [-18, 22], 'photo-l4-collapse': [4, -6], 'photo-l4-basement': [75, -4],
@@ -274,7 +274,8 @@ export const l4Posts: readonly { name: string; at: P; face: P; role: 'qm' | 'lin
   { name: 'n1', at: [-27, -15.8], face: [-27, -30], role: 'line' }, { name: 'n2', at: [-22, -15.8], face: [-22, -30], role: 'line' }, { name: 'n3', at: [-17, -15.8], face: [-17, -30], role: 'line' },
   { name: 'w1', at: [-31.8, -10.6], face: [-50, -10.6], role: 'line' }, { name: 'w2', at: [-33.6, -3], face: [-50, -3], role: 'line' }, { name: 'w3', at: [-31.8, 9.4], face: [-50, 9.4], role: 'line' },
   { name: 's1', at: [-27, 19.4], face: [-27, 34], role: 'line' }, { name: 's2', at: [-22, 19.4], face: [-22, 34], role: 'line' }, { name: 's3', at: [-17, 19.4], face: [-17, 34], role: 'line' },
-  { name: 'hmg-1', at: [-32.4, -14.1], face: [-40, -26], role: 'hmg' }, { name: 'hmg-2', at: [-14.6, 17.3], face: [-4, 30], role: 'hmg' },
+  // The west nest clears the reception kit to cover the exterior breach flood.
+  { name: 'hmg-1', at: [-33, -6], face: [-45, 0], role: 'hmg' }, { name: 'hmg-2', at: [-14.6, 17.3], face: [-4, 30], role: 'hmg' },
   // These posts clear the parked hulls as well as the moving lane; alarm orders
   // must never send a guard back into a bus after he has stepped aside.
   { name: 'e1', at: [-7.6, -12], face: [4, -12], role: 'truck' }, { name: 'e2', at: [-8.6, 12], face: [4, 12], role: 'truck' },
