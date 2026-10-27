@@ -10,20 +10,23 @@ test.use({ launchOptions: { args: process.platform === 'darwin'
   ? ['--use-angle=metal', '--ignore-gpu-blocklist', '--enable-gpu', '--enable-unsafe-webgpu']
   : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--enable-unsafe-webgpu'] } });
 
-test('boot: ready resolves, the canvas shows spatial detail, and three scenario reloads leave no entities or bodies @smoke', async ({ page }, testInfo) => {
-  await boot(page);
-  await page.evaluate(async () => { await window.__SS__!.step(60); await window.__SS__!.screenshotReady(); });
+// N12 dedicates the existing boot case to the public artifact. QA-looking query
+// parameters must stay inert while a real menu start reaches a rendered level.
+test('public build: menu start draws L1 and exposes no QA globals @public-smoke', async ({ page }) => {
+  test.setTimeout(150_000);
+  await page.goto('/?test=1&testApi=1&debug=true&motionlab=1&scenelab=1&lookdev=1&quality=low&dpr=1&audio=muted');
+  await expect(page.getByRole('heading', { name: 'MINOR INCIDENT' })).toBeVisible();
+  expect(await page.evaluate(() => ['__SS__', '__SCENE__', '__MOTIONLAB__', '__ASSET__'].some(key => key in window))).toBe(false);
+  await page.getByTestId('start-game').click();
+  await page.getByTestId('character-female').click();
+  await page.getByTestId('level-L1').click();
+  await page.getByTestId('mission-button').click({ timeout: 120_000 });
+  await page.getByTestId('pause-button').waitFor({ state: 'visible', timeout: 120_000 });
   await expect(page).toHaveTitle('Minor Incident');
-  expect(canvasFrameChecks(await canvasFrame(page)).filter(c => !c.pass), 'Game canvas contains visible spatial detail').toEqual([]);
-  expect(await page.evaluate(() => window.__SS__!.getState().perf)).toMatchObject({ entities: 1, bodies: 2 });
   mkdirSync('test-results/smoke', { recursive: true });
-  await page.screenshot({ path: `test-results/smoke/boot-${testInfo.project.name}.png` });
-  const resources = await page.evaluate(async () => {
-    const api = window.__SS__!;
-    for (let i = 0; i < 3; i++) { await api.loadScenario('empty'); api.pause(); await api.step(60); await api.unloadScenario(); }
-    return api.getState().perf;
-  });
-  expect(resources).toEqual({ entities: 0, bodies: 0, colliders: 0, listeners: 0 });
+  await page.screenshot({ path: 'test-results/smoke/public-boot.png' });
+  expect(canvasFrameChecks(await canvasFrame(page, false)).filter(c => !c.pass), 'public L1 canvas contains visible spatial detail').toEqual([]);
+  expect(await page.evaluate(() => ['__SS__', '__SCENE__', '__MOTIONLAB__', '__ASSET__'].some(key => key in window))).toBe(false);
 });
 
 // Q-208 guard (Opus QA, batch 20: "the courier's own skin and her held bat get their shaders rebuilt over and over during

@@ -8,11 +8,15 @@ root=$(cd "$(dirname "$0")/.." && pwd -P)
 if [ "$#" -gt 0 ]; then
   exec "$root/node_modules/.bin/vite" build --configLoader runner "$@"
 fi
+build_default() {
+  "$root/node_modules/.bin/vite" build --configLoader runner "$@"
+  if [ "$NODE_ENV" = production ] && [ "${BRANCH:-}" != qa ] && [ "${VITE_QA_HOOKS:-0}" != 1 ]; then node "$root/tools/qa/assert-public-build.mjs"; fi
+}
 common=$(git -C "$root" rev-parse --path-format=absolute --git-common-dir)
 repo=$(cd "$(dirname "$common")" && pwd -P)
 store="${MI_WORKTREE_CACHE:-$repo/.mi-worktree-cache}"
 if [ "${MI_BUILD_CACHE:-on}" = off ] || [ -n "$(git -C "$root" status --porcelain --untracked-files=all)" ] || [ -n "$(git -C "$root" ls-files --others --ignored --exclude-standard -- public src)" ]; then
-  "$root/node_modules/.bin/vite" build --configLoader runner "$@"
+  build_default "$@"
   exit $?
 fi
 tree=$(git -C "$root" rev-parse 'HEAD^{tree}')
@@ -47,11 +51,12 @@ if [ -d "$cache" ] && [ -f "$cache/.complete" ] && [ -f "$cache/index.html" ]; t
   echo "Reused production dist for tree $tree ($clone_method clone)"
 else
   rm -rf "$cache"
-  "$root/node_modules/.bin/vite" build --configLoader runner "$@"
+  build_default "$@"
   sh "$root/tools/qa/cache-publish.sh" "$root/dist" "$cache"
   echo "Cached production dist for tree $tree"
 fi
 
+if [ "$NODE_ENV" = production ] && [ "${BRANCH:-}" != qa ] && [ "${VITE_QA_HOOKS:-0}" != 1 ]; then node "$root/tools/qa/assert-public-build.mjs"; fi
 
 touch "$cache"
 python3 "$root/tools/qa/prune-build-cache.py" "$store" "$key"
