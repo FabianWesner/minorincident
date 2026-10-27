@@ -1,6 +1,6 @@
 /** Retainer/pixel evidence for heap-budgets. Run via quiet-run.sh -> e2e-lock.sh.
  * E2E_PORT=3931 HEAP_AUDIT_OUT=... HEAP_AUDIT_SNAPSHOT=1 npx tsx tools/perf/heap-audit.ts
- * Uses one headless browser, serial contexts, production build, fixed sim ticks.
+ * Uses one headless browser, serial contexts, QA build, fixed sim ticks.
  */
 import { spawn } from 'node:child_process';
 import { closeSync, mkdirSync, openSync, writeFileSync, writeSync } from 'node:fs';

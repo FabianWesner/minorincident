@@ -6,7 +6,7 @@ import { attachErrorGuard } from '../../tests/e2e/fixtures';
 
 /** Bat roundhouse evidence (00 §6.2): the real L1 renderer at the game camera, the skinned courier surrounded by 5
  * infected on a sidewalk, real released Shift+LMB clicks at 8 Hz. Writes a <= 10 s WebM and 3 stills (coil, mid-spin,
- * follow-through). Run after `npm run build`, through tools/e2e-lock.sh, on a dedicated preview port (E2E_PORT). */
+ * follow-through). Run after `npm run build:qa`, through tools/e2e-lock.sh, on a dedicated preview port (E2E_PORT). */
 const out = process.argv[2] ?? 'test-results/bat-roundhouse';
 const ffmpeg = process.env.FFMPEG_BIN ?? `${homedir()}/Library/Caches/ms-playwright/ffmpeg-1011/ffmpeg-mac`;
 mkdirSync(out, { recursive: true });

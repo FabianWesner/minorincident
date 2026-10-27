@@ -1,5 +1,5 @@
 /**
- * skinned-crowd prototype: 200-AI low-tier A/B on one production build (adapted from batch15's tex-infected-performance).
+ * skinned-crowd prototype: 200-AI low-tier A/B on one QA build (adapted from batch15's tex-infected-performance).
  *   npm run build:qa && SCENE_SERVER=preview SCENE_PORT=4622 sh tools/perf/quiet-run.sh npx tsx tools/scenelab/skinned-crowd-performance.ts
  * Variants (same dist, URL flag only):
  *   main-mix    perf-horde-200 as shipped (main's rigid crowd, mixed models)
