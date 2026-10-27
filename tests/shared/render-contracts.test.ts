@@ -1,7 +1,7 @@
 // Shared render contracts: every crowd figure, corpse and prop in all levels goes through these paths. The compiled-program
 // GPU-limit ground truth is tests/e2e/crowd-gpu-limits.spec.ts; these node tests pin the CPU-side layouts and math it relies on.
 import { BufferAttribute, BufferGeometry, Color, DataTexture, FloatType, Frustum, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBufferAttribute, Matrix4, OrthographicCamera, Quaternion, RGBAFormat, Vector3 } from 'three';
-import { MeshLambertNodeMaterial, Scene, type InstancedMesh } from 'three/webgpu';
+import { BoxGeometry, Group, Mesh, MeshLambertNodeMaterial, Object3D, Scene, type InstancedMesh } from 'three/webgpu';
 import { float, vec3 } from 'three/tsl';
 import { expect, test, vi } from 'vitest';
 import { packCrowdParts } from '../../src/assets/crowd';
@@ -16,6 +16,9 @@ import { Materials } from '../../src/render/Materials';
 import { installTextureRanges } from '../../src/render/TextureRanges';
 import { uploadFloatTexture, type FloatUploadDevice } from '../../src/render/TextureUpload';
 import { weatherMaterialFlags } from '../../src/render/WeatherView';
+import { civilianMaterial } from '../../src/render/npc/CivilianMaterial';
+import { RoutineProps } from '../../src/render/npc/RoutineProps';
+import { crowdGunHolds, longGunHolds } from '../../src/render/characters/GunAim';
 import type { EntitySnapshot } from '../../src/sim/world/types';
 
 /** Crowd headroom below the portable hard limits (16 attributes, 8 WebGPU vertex buffers). */
@@ -158,4 +161,35 @@ test('texture route: lossless 256-byte-aligned float uploads; cold WebGPU atlase
   backend.updateTexture(texture, {}); expect(original).toHaveBeenCalledOnce();
   texture.addUpdateRange(96, 32); backend.updateTexture(texture, {}); expect(write).toHaveBeenCalledOnce();
   texture.dispose();
+});
+
+// Soldiers and armed civilians in L3/L4 share the courier's real gun contracts.
+test('crowd long guns use asset grip/muzzle sockets and the courier support-hand offsets', async () => {
+  const shading = new Materials(new Lighting(new Scene())), pose = new DataTexture(), a = new DataTexture(), b = new DataTexture();
+  const one = civilianMaterial(shading, false, 2, pose, { bindRow: 0, skinned: true, atlas: a });
+  const same = civilianMaterial(shading, false, 2, pose, { bindRow: 0, skinned: true, atlas: a });
+  const other = civilianMaterial(shading, false, 2, pose, { bindRow: 0, skinned: true, atlas: b });
+  expect(one.material).toBe(same.material); expect(one.material).not.toBe(other.material);
+  one.release(); same.release(); other.release(); shading.dispose();
+  const props = new RoutineProps();
+  const loadAsset = vi.fn(async (id: string) => {
+    const model = new Group(); model.name = id; const material = new MeshLambertNodeMaterial({ color: '#789abc' });
+    model.add(new Mesh(new BoxGeometry(.8, .1, .05), material));
+    const grip = new Object3D(); grip.name = 'grip'; grip.position.set(-.2, -.1, 0); model.add(grip);
+    const muzzle = new Object3D(); muzzle.name = 'muzzle'; muzzle.position.set(.4, 0, 0); model.add(muzzle);
+    return model;
+  });
+  await props.init({ loadAsset });
+  expect(loadAsset.mock.calls).toHaveLength(4);
+  for (const [prop, asset] of [['rifle', 'wpn.assault-rifle'], ['hmg', 'wpn.machine-gun'], ['hunting-rifle', 'wpn.hunting-rifle'], ['shotgun', 'wpn.shotgun']]) {
+    const hold = longGunHolds[asset], crowd = crowdGunHolds[prop];
+    expect(crowd.support).toEqual([-hold.support[2], hold.support[1], hold.support[0]]);
+    props.begin();
+    props.held(prop === 'hmg' ? 'rifle' : prop as 'rifle' | 'hunting-rifle' | 'shotgun', new Matrix4().makeTranslation(2, 3, 4), 7, undefined, .07, prop === 'hmg');
+    const muzzle = props.muzzles.get(7)!;
+    expect(muzzle.x).toBeCloseTo(2); expect(muzzle.y).toBeCloseTo(3 + .1 * hold.scale); expect(muzzle.z).toBeCloseTo(4 + .6 * hold.scale);
+    expect(props.guns[0].geometry.getAttribute('color').getY(0)).toBeGreaterThan(0);
+    expect(props.guns[0].geometry.boundingBox!.max.z).toBeCloseTo(.6 * hold.scale);
+  }
+  props.dispose();
 });

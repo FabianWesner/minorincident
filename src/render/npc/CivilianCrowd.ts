@@ -33,7 +33,7 @@ const weaponProps = new Set<string>(['rifle', 'pistol', 'shotgun', 'hunting-rifl
 import type { CrowdClip } from '../../assets/crowd';
 import { CrowdPosePalette } from '../characters/CrowdPosePalette';
 import { MotionPresentation, crowdTurnRate } from '../characters/MotionPresentation';
-import { CrowdGunAim, crowdLongGunHold } from '../characters/GunAim';
+import { CrowdGunAim, crowdGunHolds } from '../characters/GunAim';
 import { MotionPhase } from '../characters/MotionPhase';
 import { authoredClips, strides } from '../characters/clips';
 import { disposeCharacter } from '../characters/rig';
@@ -289,7 +289,7 @@ class CivilianBatch extends Group {
         if (target) this.gunDirection.set(target.transform.x - e.transform.x,target.transform.y - e.transform.y - (target.health.current <= 0 ? 1.1 : 0),target.transform.z - e.transform.z).transformDirection(this.hand.copy(this.transform).invert());
         else if (firing && firing.until >= this.world.tick) this.gunDirection.set(firing.direction.x,firing.direction.y ?? 0,firing.direction.z).transformDirection(this.hand.copy(this.transform).invert());
         else this.gunDirection.set(1,0,0);
-        const hold = handProp === 'pistol' ? undefined : crowdLongGunHold;
+        const hold = handProp === 'pistol' ? undefined : crowdGunHolds[c.ally?.weapon === 'hmg' ? 'hmg' : handProp!];
         const aiming = c.story?.clip === 'shoot' || !!firing && firing.until >= this.world.tick;
         const age = firing ? this.world.tick - (firing.until - 24) : Infinity;
         const recoil = hold && age > 0 && age < 8 ? Math.sin(Math.PI * age / 8) * .025 : 0;
@@ -301,13 +301,13 @@ class CivilianBatch extends Group {
       this.probe.add(e.id, clip, phase, this.transform, this.poses, frame, ...blend, this.mesh.geometry);
       this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, sourceFrame); this.overlay.setW(index, frame);
       if (holding) {
-        const part = this.bakedClip.parts.indexOf('handR');
+        const part = this.bakedClip.parts.indexOf(crowdGunHolds[handProp!] ? 'weaponSocketR' : 'handR');
         this.poses.part(frame, ...blend, part, this.hand).premultiply(this.transform);
         // Gardener: while the pour runs the can tips its spout down towards the flowers (eased in over 0.33 s); the spout feeds the water stream.
         const pour = handProp === 'watering-can' && c.state === 'calm' && activity?.activity === 'water' && !!activity.facing && !!c.activityUntil ? Math.min(1, Math.max(0, (this.world.tick - (c.activityStarted ?? 0) - 20) / 20)) : 0;
         if (pour > 0) { this.hand.multiply(this.tilt.makeRotationZ(-.75 * pour)); this.props!.spouts.set(e.id, this.spoutPoint.set(.36, -.13, 0).applyMatrix4(this.hand).clone()); }
         else this.props!.spouts.delete(e.id);
-        this.props!.held(handProp!, this.hand, e.id, weaponProps.has(handProp!) ? undefined : this.gripTriangles, this.gripReach);
+        this.props!.held(handProp!, this.hand, e.id, weaponProps.has(handProp!) ? undefined : this.gripTriangles, this.gripReach, c.ally?.weapon === 'hmg');
       }
       this.tintOf(e, index, blend[0] * 2 + blend[1]);
       const glow = c.eyesGlow ? e.infection ? Math.min(1, (this.world.tick - (e.infection.endsTick - 78)) / 30) : Math.min(1, Math.max(0, (c.veins - .12) / .65)) : 0;
@@ -433,6 +433,7 @@ const toyEyeModels = new Set(['npc.civilian-woman-b', 'npc.civilian-elderly']);
 export class CivilianCrowd extends Group {
   private readonly batches: CivilianBatch[];
   private readonly props: RoutineProps;
+  private propRegistry?: AssetRegistry;
   private readonly visibility = new CrowdVisibility();
   private readonly gait = new GaitPhase();
   /** Fully solved footwork figures per frame: every close pedestrian on desktop, the closest few on phones. */
@@ -580,6 +581,7 @@ export class CivilianCrowd extends Group {
   async ready(): Promise<void> { await Promise.all(this.heroLoads.values()); }
   async init(camera?: import('three').Camera): Promise<void> {
     const started = performance.now();
+    await this.props.init(this.registry ?? (this.propRegistry ??= new AssetRegistry(() => {}, { materials: this.shading })));
     if (this.staged && camera) {
       this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900);
       this.selectHeroes(camera); this.stageInitial();
@@ -632,5 +634,5 @@ export class CivilianCrowd extends Group {
   gunMeshes() { return this.props.guns.filter(g => (this.props.aiming.get(g.entity)?.until ?? -1) >= this.world.tick); }
   heldProps() { return this.props.contacts; }
   drawnCorpses() { return this.batches.flatMap(b => b.drawnCorpses()); }
-  dispose(): void { this.disposed = true; this.props.dispose(); this.batches.forEach(b=>b.dispose());this.clear(); }
+  dispose(): void { this.disposed = true; this.props.dispose(); void this.propRegistry?.dispose(); this.batches.forEach(b=>b.dispose());this.clear(); }
 }

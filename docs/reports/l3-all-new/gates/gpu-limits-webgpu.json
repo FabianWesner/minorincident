@@ -1,0 +1,1561 @@
+[
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_pal_picketWhite_46225",
+  "attributes": 12,
+  "varyings": 14,
+  "buffers": 5,
+  "names": [
+   "position",
+   "_placement0",
+   "_placement1",
+   "_placement2",
+   "_placement3",
+   "normal",
+   "_placementColor",
+   "_parts",
+   "uv",
+   "_variant",
+   "color",
+   "_state"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>",
+   "v_positionWorld:vec3<f32>",
+   "crowdAppearanceColor:vec3<f32>",
+   "crowdRegionHairSkin:vec4<f32>",
+   "crowdRegionTrousersSkin:vec4<f32>",
+   "v_positionViewDirection:vec3<f32>",
+   "vInstanceColor:vec3<f32>",
+   "nodeVarying11:vec4<f32>",
+   "nodeVarying12:vec2<f32>",
+   "nodeVarying13:vec3<f32>",
+   "nodeVarying14:vec4<f32>",
+   "nodeVarying15:vec3<f32>",
+   "nodeVarying16:vec4<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_pal_picketWhite_46297",
+  "attributes": 12,
+  "varyings": 14,
+  "buffers": 3,
+  "names": [
+   "position",
+   "_crowd0",
+   "_crowd1",
+   "_crowd2",
+   "_crowd3",
+   "_parts",
+   "_state",
+   "_variant",
+   "_skin",
+   "uv",
+   "normal",
+   "color"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "crowdTriangleCut:u32",
+   "skinnedCrowdNormal:vec3<f32>",
+   "crowdAppearanceColor:vec3<f32>",
+   "crowdRegionHairSkin:vec4<f32>",
+   "crowdRegionTrousersSkin:vec4<f32>",
+   "v_positionWorld:vec3<f32>",
+   "v_positionViewDirection:vec3<f32>",
+   "nodeVarying11:vec4<f32>",
+   "nodeVarying12:vec4<f32>",
+   "nodeVarying13:vec2<f32>",
+   "nodeVarying14:vec4<f32>",
+   "nodeVarying15:vec3<f32>",
+   "nodeVarying16:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_pal_picketWhite_47071",
+  "attributes": 12,
+  "varyings": 14,
+  "buffers": 5,
+  "names": [
+   "position",
+   "_placement0",
+   "_placement1",
+   "_placement2",
+   "_placement3",
+   "normal",
+   "_placementColor",
+   "_parts",
+   "_variant",
+   "color",
+   "uv",
+   "_overlay"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>",
+   "v_positionWorld:vec3<f32>",
+   "crowdAppearanceColor:vec3<f32>",
+   "crowdRegionHairSkin:vec4<f32>",
+   "crowdRegionTrousersSkin:vec4<f32>",
+   "crowdCoveredScalp:vec4<f32>",
+   "v_positionViewDirection:vec3<f32>",
+   "vInstanceColor:vec3<f32>",
+   "nodeVarying12:vec4<f32>",
+   "nodeVarying13:vec2<f32>",
+   "nodeVarying14:vec4<f32>",
+   "nodeVarying15:vec4<f32>",
+   "nodeVarying16:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_pal_picketWhite_46431",
+  "attributes": 13,
+  "varyings": 13,
+  "buffers": 3,
+  "names": [
+   "position",
+   "_crowd0",
+   "_crowd1",
+   "_crowd2",
+   "_crowd3",
+   "_parts",
+   "_overlay",
+   "_variant",
+   "_skin",
+   "_gripPosition",
+   "uv",
+   "normal",
+   "color"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "civilianSkinNormal:vec3<f32>",
+   "v_positionWorld:vec3<f32>",
+   "crowdAppearanceColor:vec3<f32>",
+   "crowdRegionHairSkin:vec4<f32>",
+   "crowdRegionTrousersSkin:vec4<f32>",
+   "crowdCoveredScalp:vec4<f32>",
+   "v_positionViewDirection:vec3<f32>",
+   "nodeVarying11:vec4<f32>",
+   "nodeVarying12:vec4<f32>",
+   "nodeVarying13:vec2<f32>",
+   "nodeVarying14:vec4<f32>",
+   "nodeVarying15:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_pal_picketWhite_46657",
+  "attributes": 13,
+  "varyings": 13,
+  "buffers": 3,
+  "names": [
+   "position",
+   "_crowd0",
+   "_crowd1",
+   "_crowd2",
+   "_crowd3",
+   "_parts",
+   "_overlay",
+   "_variant",
+   "_skin",
+   "_gripPosition",
+   "uv",
+   "normal",
+   "color"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "civilianSkinNormal:vec3<f32>",
+   "v_positionWorld:vec3<f32>",
+   "crowdAppearanceColor:vec3<f32>",
+   "crowdRegionHairSkin:vec4<f32>",
+   "crowdRegionTrousersSkin:vec4<f32>",
+   "crowdCoveredScalp:vec4<f32>",
+   "v_positionViewDirection:vec3<f32>",
+   "nodeVarying11:vec4<f32>",
+   "nodeVarying12:vec2<f32>",
+   "nodeVarying13:vec4<f32>",
+   "nodeVarying14:vec4<f32>",
+   "nodeVarying15:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_pal_picketWhite_43948",
+  "attributes": 10,
+  "varyings": 13,
+  "buffers": 6,
+  "names": [
+   "position",
+   "_crowd0",
+   "_crowd1",
+   "_crowd2",
+   "_crowd3",
+   "_parts",
+   "_state",
+   "_variant",
+   "normal",
+   "color"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "crowdAppearanceColor:vec3<f32>",
+   "v_positionWorld:vec3<f32>",
+   "v_positionViewDirection:vec3<f32>",
+   "nodeVarying7:vec4<f32>",
+   "nodeVarying8:vec4<f32>",
+   "nodeVarying9:vec4<f32>",
+   "nodeVarying10:vec4<f32>",
+   "nodeVarying11:vec4<f32>",
+   "nodeVarying12:vec4<f32>",
+   "nodeVarying13:vec4<f32>",
+   "nodeVarying14:vec3<f32>",
+   "nodeVarying15:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_pal_picketWhite_40791",
+  "attributes": 10,
+  "varyings": 13,
+  "buffers": 6,
+  "names": [
+   "position",
+   "_crowd0",
+   "_crowd1",
+   "_crowd2",
+   "_crowd3",
+   "_parts",
+   "_state",
+   "_variant",
+   "normal",
+   "color"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_positionWorld:vec3<f32>",
+   "v_positionViewDirection:vec3<f32>",
+   "nodeVarying6:vec4<f32>",
+   "nodeVarying7:vec4<f32>",
+   "nodeVarying8:vec4<f32>",
+   "nodeVarying9:vec4<f32>",
+   "nodeVarying10:vec4<f32>",
+   "nodeVarying11:vec4<f32>",
+   "nodeVarying12:vec4<f32>",
+   "nodeVarying13:vec3<f32>",
+   "nodeVarying14:vec3<f32>",
+   "nodeVarying15:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_pal_picketWhite_45680",
+  "attributes": 10,
+  "varyings": 13,
+  "buffers": 6,
+  "names": [
+   "position",
+   "_crowd0",
+   "_crowd1",
+   "_crowd2",
+   "_crowd3",
+   "_parts",
+   "_state",
+   "_variant",
+   "normal",
+   "color"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_positionWorld:vec3<f32>",
+   "crowdAppearanceColor:vec3<f32>",
+   "v_positionViewDirection:vec3<f32>",
+   "nodeVarying7:vec4<f32>",
+   "nodeVarying8:vec4<f32>",
+   "nodeVarying9:vec4<f32>",
+   "nodeVarying10:vec4<f32>",
+   "nodeVarying11:vec4<f32>",
+   "nodeVarying12:vec4<f32>",
+   "nodeVarying13:vec4<f32>",
+   "nodeVarying14:vec3<f32>",
+   "nodeVarying15:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_pal_picketWhite_46325",
+  "attributes": 12,
+  "varyings": 12,
+  "buffers": 3,
+  "names": [
+   "position",
+   "_crowd0",
+   "_crowd1",
+   "_crowd2",
+   "_crowd3",
+   "_parts",
+   "_state",
+   "_variant",
+   "_skin",
+   "uv",
+   "normal",
+   "color"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "crowdTriangleCut:u32",
+   "skinnedCrowdNormal:vec3<f32>",
+   "crowdAppearanceColor:vec3<f32>",
+   "v_positionWorld:vec3<f32>",
+   "v_positionViewDirection:vec3<f32>",
+   "nodeVarying9:vec4<f32>",
+   "nodeVarying10:vec4<f32>",
+   "nodeVarying11:vec2<f32>",
+   "nodeVarying12:vec4<f32>",
+   "nodeVarying13:vec3<f32>",
+   "nodeVarying14:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_pal_picketWhite_46343",
+  "attributes": 12,
+  "varyings": 11,
+  "buffers": 5,
+  "names": [
+   "position",
+   "_placement0",
+   "_placement1",
+   "_placement2",
+   "_placement3",
+   "normal",
+   "_placementColor",
+   "_parts",
+   "uv",
+   "_variant",
+   "color",
+   "_state"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>",
+   "v_positionWorld:vec3<f32>",
+   "crowdAppearanceColor:vec3<f32>",
+   "v_positionViewDirection:vec3<f32>",
+   "vInstanceColor:vec3<f32>",
+   "nodeVarying9:vec4<f32>",
+   "nodeVarying10:vec2<f32>",
+   "nodeVarying11:vec3<f32>",
+   "nodeVarying12:vec3<f32>",
+   "nodeVarying13:vec4<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_pal_picketWhite_45682",
+  "attributes": 11,
+  "varyings": 9,
+  "buffers": 5,
+  "names": [
+   "position",
+   "_placement0",
+   "_placement1",
+   "_placement2",
+   "_placement3",
+   "normal",
+   "_placementColor",
+   "_parts",
+   "_variant",
+   "color",
+   "_state"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_positionWorld:vec3<f32>",
+   "crowdAppearanceColor:vec3<f32>",
+   "v_positionViewDirection:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>",
+   "vInstanceColor:vec3<f32>",
+   "nodeVarying9:vec4<f32>",
+   "nodeVarying10:vec3<f32>",
+   "nodeVarying11:vec4<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_pal_picketWhite_40535",
+  "attributes": 10,
+  "varyings": 9,
+  "buffers": 4,
+  "names": [
+   "position",
+   "_placement0",
+   "_placement1",
+   "_placement2",
+   "_placement3",
+   "normal",
+   "_placementColor",
+   "_parts",
+   "color",
+   "_state"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_positionWorld:vec3<f32>",
+   "v_positionViewDirection:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>",
+   "vInstanceColor:vec3<f32>",
+   "nodeVarying8:vec4<f32>",
+   "nodeVarying9:vec3<f32>",
+   "nodeVarying10:vec3<f32>",
+   "nodeVarying11:vec4<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_MeshBasicNodeMaterial_46993",
+  "attributes": 12,
+  "varyings": 8,
+  "buffers": 8,
+  "names": [
+   "position",
+   "normal",
+   "fxOrigin",
+   "fxStyle",
+   "fxMotion",
+   "uv",
+   "fxColor",
+   "fxVisibility",
+   "nodeAttribute0",
+   "nodeAttribute1",
+   "nodeAttribute2",
+   "nodeAttribute3"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>",
+   "nodeVarying5:vec4<f32>",
+   "nodeVarying6:vec2<f32>",
+   "nodeVarying7:vec3<f32>",
+   "nodeVarying8:vec4<f32>",
+   "nodeVarying9:vec4<f32>",
+   "nodeVarying10:f32"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_MeshBasicNodeMaterial_46995",
+  "attributes": 12,
+  "varyings": 8,
+  "buffers": 8,
+  "names": [
+   "position",
+   "normal",
+   "fxOrigin",
+   "fxStyle",
+   "fxMotion",
+   "fxColor",
+   "uv",
+   "fxVisibility",
+   "nodeAttribute0",
+   "nodeAttribute1",
+   "nodeAttribute2",
+   "nodeAttribute3"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>",
+   "nodeVarying5:vec3<f32>",
+   "nodeVarying6:vec4<f32>",
+   "nodeVarying7:vec2<f32>",
+   "nodeVarying8:vec4<f32>",
+   "nodeVarying9:vec4<f32>",
+   "nodeVarying10:f32"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_MeshBasicNodeMaterial_46991",
+  "attributes": 12,
+  "varyings": 8,
+  "buffers": 8,
+  "names": [
+   "position",
+   "normal",
+   "fxStyle",
+   "fxOrigin",
+   "fxMotion",
+   "fxColor",
+   "uv",
+   "fxVisibility",
+   "nodeAttribute0",
+   "nodeAttribute1",
+   "nodeAttribute2",
+   "nodeAttribute3"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>",
+   "nodeVarying5:vec4<f32>",
+   "nodeVarying6:vec3<f32>",
+   "nodeVarying7:vec2<f32>",
+   "nodeVarying8:vec4<f32>",
+   "nodeVarying9:vec4<f32>",
+   "nodeVarying10:f32"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_MeshBasicNodeMaterial_46998",
+  "attributes": 9,
+  "varyings": 7,
+  "buffers": 6,
+  "names": [
+   "position",
+   "normal",
+   "fbOrigin",
+   "fbStyle",
+   "fbParams",
+   "nodeAttribute0",
+   "nodeAttribute1",
+   "nodeAttribute2",
+   "nodeAttribute3"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>",
+   "v_positionWorld:vec3<f32>",
+   "nodeVarying6:vec3<f32>",
+   "nodeVarying7:vec4<f32>",
+   "nodeVarying8:vec4<f32>",
+   "nodeVarying9:vec4<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_pal_picketWhite_37882",
+  "attributes": 8,
+  "varyings": 7,
+  "buffers": 5,
+  "names": [
+   "position",
+   "normal",
+   "color",
+   "nodeAttribute0",
+   "nodeAttribute1",
+   "nodeAttribute2",
+   "nodeAttribute3",
+   "nodeAttribute4"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_positionWorld:vec3<f32>",
+   "v_positionViewDirection:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>",
+   "vInstanceColor:vec3<f32>",
+   "nodeVarying8:vec3<f32>",
+   "nodeVarying9:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_MeshBasicNodeMaterial_46999",
+  "attributes": 9,
+  "varyings": 6,
+  "buffers": 6,
+  "names": [
+   "position",
+   "normal",
+   "pOrigin",
+   "pMotion",
+   "pStyle",
+   "nodeAttribute0",
+   "nodeAttribute1",
+   "nodeAttribute2",
+   "nodeAttribute3"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>",
+   "v_positionWorld:vec3<f32>",
+   "nodeVarying6:vec4<f32>",
+   "nodeVarying7:vec4<f32>",
+   "nodeVarying8:vec4<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_pal_picketWhite_46083",
+  "attributes": 7,
+  "varyings": 6,
+  "buffers": 4,
+  "names": [
+   "position",
+   "normal",
+   "color",
+   "nodeAttribute0",
+   "nodeAttribute1",
+   "nodeAttribute2",
+   "nodeAttribute3"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_positionWorld:vec3<f32>",
+   "v_positionViewDirection:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>",
+   "nodeVarying7:vec3<f32>",
+   "nodeVarying8:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_tex_baseColor_46863",
+  "attributes": 5,
+  "varyings": 6,
+  "buffers": 5,
+  "names": [
+   "skinIndex",
+   "position",
+   "skinWeight",
+   "normal",
+   "uv"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_positionWorld:vec3<f32>",
+   "v_positionViewDirection:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>",
+   "nodeVarying7:vec2<f32>",
+   "nodeVarying8:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_character:female_38052",
+  "attributes": 5,
+  "varyings": 6,
+  "buffers": 5,
+  "names": [
+   "skinIndex",
+   "position",
+   "skinWeight",
+   "normal",
+   "color"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_positionWorld:vec3<f32>",
+   "v_positionViewDirection:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>",
+   "nodeVarying7:vec3<f32>",
+   "nodeVarying8:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_tex_baseColor_46863",
+  "attributes": 3,
+  "varyings": 6,
+  "buffers": 3,
+  "names": [
+   "uv",
+   "normal",
+   "position"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_positionWorld:vec3<f32>",
+   "v_positionViewDirection:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>",
+   "nodeVarying7:vec2<f32>",
+   "nodeVarying8:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_keep_lightField_37840",
+  "attributes": 10,
+  "varyings": 5,
+  "buffers": 7,
+  "names": [
+   "position",
+   "normal",
+   "uv",
+   "facadeClip",
+   "visibilitySource",
+   "nodeAttribute0",
+   "nodeAttribute1",
+   "nodeAttribute2",
+   "nodeAttribute3",
+   "nodeAttribute4"
+  ],
+  "outputs": [
+   "v_positionWorld:vec3<f32>",
+   "vInstanceColor:vec3<f32>",
+   "nodeVarying6:vec2<f32>",
+   "nodeVarying7:vec3<f32>",
+   "nodeVarying8:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_MeshBasicNodeMaterial_47000",
+  "attributes": 9,
+  "varyings": 5,
+  "buffers": 6,
+  "names": [
+   "position",
+   "normal",
+   "fOrigin",
+   "fStyle",
+   "uv",
+   "nodeAttribute0",
+   "nodeAttribute1",
+   "nodeAttribute2",
+   "nodeAttribute3"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>",
+   "nodeVarying5:vec2<f32>",
+   "nodeVarying6:vec4<f32>",
+   "nodeVarying7:vec4<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_MeshBasicNodeMaterial_37843",
+  "attributes": 7,
+  "varyings": 5,
+  "buffers": 4,
+  "names": [
+   "position",
+   "normal",
+   "uv",
+   "nodeAttribute0",
+   "nodeAttribute1",
+   "nodeAttribute2",
+   "nodeAttribute3"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>",
+   "v_positionViewDirection:vec3<f32>",
+   "v_positionWorld:vec3<f32>",
+   "nodeVarying7:vec2<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_pal_survivorRed_37863",
+  "attributes": 6,
+  "varyings": 5,
+  "buffers": 3,
+  "names": [
+   "position",
+   "normal",
+   "nodeAttribute0",
+   "nodeAttribute1",
+   "nodeAttribute2",
+   "nodeAttribute3"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_positionWorld:vec3<f32>",
+   "v_positionViewDirection:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>",
+   "nodeVarying7:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_npc:pal_corgiTongue:2_46985",
+  "attributes": 2,
+  "varyings": 5,
+  "buffers": 2,
+  "names": [
+   "normal",
+   "position"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_positionWorld:vec3<f32>",
+   "v_positionViewDirection:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>",
+   "nodeVarying7:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_action-held:wpn.pistol:pal_sidewalk_46818",
+  "attributes": 2,
+  "varyings": 5,
+  "buffers": 2,
+  "names": [
+   "position",
+   "normal"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_positionWorld:vec3<f32>",
+   "v_positionViewDirection:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>",
+   "nodeVarying7:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_pal_picketWhite_9528",
+  "attributes": 2,
+  "varyings": 5,
+  "buffers": 2,
+  "names": [
+   "position",
+   "tip"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_positionWorld:vec3<f32>",
+   "v_positionViewDirection:vec3<f32>",
+   "nodeVarying6:f32",
+   "nodeVarying7:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_MeshLambertNodeMaterial_47002",
+  "attributes": 11,
+  "varyings": 4,
+  "buffers": 8,
+  "names": [
+   "position",
+   "normal",
+   "dOrigin",
+   "dVelocity",
+   "dParams",
+   "dSpin",
+   "dColor",
+   "nodeAttribute0",
+   "nodeAttribute1",
+   "nodeAttribute2",
+   "nodeAttribute3"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "nodeVarying4:vec3<f32>",
+   "nodeVarying5:vec4<f32>",
+   "nodeVarying6:vec4<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_ShadowMaterial_47041",
+  "attributes": 11,
+  "varyings": 4,
+  "buffers": 3,
+  "names": [
+   "position",
+   "_crowd0",
+   "_crowd1",
+   "_crowd2",
+   "_crowd3",
+   "_parts",
+   "_overlay",
+   "_variant",
+   "_skin",
+   "_gripPosition",
+   "uv"
+  ],
+  "outputs": [
+   "nodeVarying4:vec4<f32>",
+   "nodeVarying5:vec4<f32>",
+   "nodeVarying6:vec2<f32>",
+   "nodeVarying7:vec4<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_ShadowMaterial_37619",
+  "attributes": 11,
+  "varyings": 4,
+  "buffers": 3,
+  "names": [
+   "position",
+   "_crowd0",
+   "_crowd1",
+   "_crowd2",
+   "_crowd3",
+   "_parts",
+   "_overlay",
+   "_variant",
+   "_skin",
+   "_gripPosition",
+   "uv"
+  ],
+  "outputs": [
+   "nodeVarying4:vec4<f32>",
+   "nodeVarying5:vec2<f32>",
+   "nodeVarying6:vec4<f32>",
+   "nodeVarying7:vec4<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_MeshBasicNodeMaterial_47001",
+  "attributes": 9,
+  "varyings": 4,
+  "buffers": 6,
+  "names": [
+   "position",
+   "normal",
+   "gOrigin",
+   "gColor",
+   "uv",
+   "nodeAttribute0",
+   "nodeAttribute1",
+   "nodeAttribute2",
+   "nodeAttribute3"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>",
+   "nodeVarying5:vec4<f32>",
+   "nodeVarying6:vec2<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_MeshBasicNodeMaterial_37844",
+  "attributes": 7,
+  "varyings": 4,
+  "buffers": 4,
+  "names": [
+   "position",
+   "normal",
+   "uv",
+   "nodeAttribute0",
+   "nodeAttribute1",
+   "nodeAttribute2",
+   "nodeAttribute3"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_positionWorld:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>",
+   "nodeVarying6:vec2<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_MeshBasicNodeMaterial_47072",
+  "attributes": 7,
+  "varyings": 4,
+  "buffers": 4,
+  "names": [
+   "position",
+   "normal",
+   "uv",
+   "nodeAttribute0",
+   "nodeAttribute1",
+   "nodeAttribute2",
+   "nodeAttribute3"
+  ],
+  "outputs": [
+   "v_normalViewGeometry:vec3<f32>",
+   "v_positionViewDirection:vec3<f32>",
+   "v_positionWorld:vec3<f32>",
+   "nodeVarying7:vec2<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_MeshBasicNodeMaterial_47011",
+  "attributes": 4,
+  "varyings": 4,
+  "buffers": 4,
+  "names": [
+   "position",
+   "seed",
+   "uv",
+   "normal"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>",
+   "nodeVarying5:vec2<f32>",
+   "nodeVarying6:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_MeshBasicNodeMaterial_47010",
+  "attributes": 4,
+  "varyings": 4,
+  "buffers": 4,
+  "names": [
+   "position",
+   "seed",
+   "uv",
+   "normal"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_positionWorld:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>",
+   "nodeVarying6:vec2<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_keep_contactShadow_46740",
+  "attributes": 7,
+  "varyings": 3,
+  "buffers": 4,
+  "names": [
+   "position",
+   "normal",
+   "uv",
+   "nodeAttribute0",
+   "nodeAttribute1",
+   "nodeAttribute2",
+   "nodeAttribute3"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>",
+   "nodeVarying5:vec2<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_MeshBasicNodeMaterial_47073",
+  "attributes": 7,
+  "varyings": 3,
+  "buffers": 4,
+  "names": [
+   "position",
+   "normal",
+   "uv",
+   "nodeAttribute0",
+   "nodeAttribute1",
+   "nodeAttribute2",
+   "nodeAttribute3"
+  ],
+  "outputs": [
+   "v_positionWorld:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>",
+   "nodeVarying6:vec2<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_MeshBasicNodeMaterial_47007",
+  "attributes": 3,
+  "varyings": 3,
+  "buffers": 3,
+  "names": [
+   "uv",
+   "normal",
+   "position"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>",
+   "nodeVarying5:vec2<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_MeshBasicNodeMaterial_18880",
+  "attributes": 2,
+  "varyings": 3,
+  "buffers": 2,
+  "names": [
+   "normal",
+   "position"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>",
+   "v_positionWorld:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_keep_idBackground_19",
+  "attributes": 7,
+  "varyings": 2,
+  "buffers": 4,
+  "names": [
+   "position",
+   "normal",
+   "nodeAttribute0",
+   "nodeAttribute1",
+   "nodeAttribute2",
+   "nodeAttribute3",
+   "nodeAttribute4"
+  ],
+  "outputs": [
+   "v_normalViewGeometry:vec3<f32>",
+   "vInstanceColor:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_MeshBasicNodeMaterial_47155",
+  "attributes": 7,
+  "varyings": 2,
+  "buffers": 3,
+  "names": [
+   "position",
+   "_placement0",
+   "_placement1",
+   "_placement2",
+   "_placement3",
+   "normal",
+   "_placementColor"
+  ],
+  "outputs": [
+   "v_normalViewGeometry:vec3<f32>",
+   "vInstanceColor:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_MeshLambertNodeMaterial_47003",
+  "attributes": 6,
+  "varyings": 2,
+  "buffers": 3,
+  "names": [
+   "position",
+   "normal",
+   "nodeAttribute0",
+   "nodeAttribute1",
+   "nodeAttribute2",
+   "nodeAttribute3"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_ShadowMaterial_47041",
+  "attributes": 5,
+  "varyings": 2,
+  "buffers": 5,
+  "names": [
+   "skinIndex",
+   "position",
+   "skinWeight",
+   "normal",
+   "uv"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "nodeVarying4:vec2<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_keep_idPlayer_20",
+  "attributes": 4,
+  "varyings": 2,
+  "buffers": 4,
+  "names": [
+   "skinIndex",
+   "position",
+   "skinWeight",
+   "normal"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_MeshBasicNodeMaterial_37949",
+  "attributes": 3,
+  "varyings": 2,
+  "buffers": 3,
+  "names": [
+   "position",
+   "_drift",
+   "_petal"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "nodeVarying4:f32"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_MeshBasicNodeMaterial_47008",
+  "attributes": 2,
+  "varyings": 2,
+  "buffers": 2,
+  "names": [
+   "normal",
+   "position"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_keep_beamMotes_37842",
+  "attributes": 2,
+  "varyings": 2,
+  "buffers": 2,
+  "names": [
+   "position",
+   "_mote"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "nodeVarying4:vec4<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_MeshBasicNodeMaterial_37841",
+  "attributes": 2,
+  "varyings": 2,
+  "buffers": 2,
+  "names": [
+   "position",
+   "_insect"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "nodeVarying4:f32"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_keep_idPlayer_20",
+  "attributes": 2,
+  "varyings": 2,
+  "buffers": 2,
+  "names": [
+   "position",
+   "normal"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>",
+   "v_normalViewGeometry:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "mipmap-rgba8unorm-srgb-2d-array",
+  "attributes": 0,
+  "varyings": 2,
+  "buffers": 0,
+  "names": [],
+  "outputs": [
+   "vTex:vec2f",
+   "vBaseArrayLayer:u32"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_MeshBasicNodeMaterial_28334",
+  "attributes": 11,
+  "varyings": 1,
+  "buffers": 3,
+  "names": [
+   "position",
+   "_crowd0",
+   "_crowd1",
+   "_crowd2",
+   "_crowd3",
+   "_parts",
+   "_overlay",
+   "_variant",
+   "_skin",
+   "_gripPosition",
+   "normal"
+  ],
+  "outputs": [
+   "v_normalViewGeometry:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_MeshBasicNodeMaterial_47244",
+  "attributes": 10,
+  "varyings": 1,
+  "buffers": 3,
+  "names": [
+   "position",
+   "_crowd0",
+   "_crowd1",
+   "_crowd2",
+   "_crowd3",
+   "_parts",
+   "_state",
+   "_variant",
+   "_skin",
+   "normal"
+  ],
+  "outputs": [
+   "v_normalViewGeometry:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_MeshBasicNodeMaterial_37768",
+  "attributes": 9,
+  "varyings": 1,
+  "buffers": 5,
+  "names": [
+   "position",
+   "_crowd0",
+   "_crowd1",
+   "_crowd2",
+   "_crowd3",
+   "_parts",
+   "_state",
+   "_variant",
+   "normal"
+  ],
+  "outputs": [
+   "v_normalViewGeometry:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_MeshBasicNodeMaterial_47261",
+  "attributes": 9,
+  "varyings": 1,
+  "buffers": 6,
+  "names": [
+   "position",
+   "normal",
+   "fxOrigin",
+   "fxStyle",
+   "fxMotion",
+   "nodeAttribute0",
+   "nodeAttribute1",
+   "nodeAttribute2",
+   "nodeAttribute3"
+  ],
+  "outputs": [
+   "v_normalViewGeometry:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_keep_idBackground_19",
+  "attributes": 6,
+  "varyings": 1,
+  "buffers": 3,
+  "names": [
+   "position",
+   "normal",
+   "nodeAttribute0",
+   "nodeAttribute1",
+   "nodeAttribute2",
+   "nodeAttribute3"
+  ],
+  "outputs": [
+   "v_normalViewGeometry:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_ShadowMaterial_47041",
+  "attributes": 5,
+  "varyings": 1,
+  "buffers": 5,
+  "names": [
+   "skinIndex",
+   "position",
+   "skinWeight",
+   "normal",
+   "uv"
+  ],
+  "outputs": [
+   "nodeVarying4:vec2<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_ShadowMaterial_47041",
+  "attributes": 4,
+  "varyings": 1,
+  "buffers": 4,
+  "names": [
+   "skinIndex",
+   "position",
+   "skinWeight",
+   "normal"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_keep_idBackground_19",
+  "attributes": 4,
+  "varyings": 1,
+  "buffers": 4,
+  "names": [
+   "skinIndex",
+   "position",
+   "skinWeight",
+   "normal"
+  ],
+  "outputs": [
+   "v_normalViewGeometry:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_MeshBasicNodeMaterial_18888",
+  "attributes": 3,
+  "varyings": 1,
+  "buffers": 3,
+  "names": [
+   "position",
+   "tip",
+   "normal"
+  ],
+  "outputs": [
+   "v_normalViewGeometry:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_PMREM_ggx_139",
+  "attributes": 2,
+  "varyings": 1,
+  "buffers": 2,
+  "names": [
+   "outputDirection",
+   "position"
+  ],
+  "outputs": [
+   "nodeVarying4:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_ShadowMaterial_47041",
+  "attributes": 2,
+  "varyings": 1,
+  "buffers": 2,
+  "names": [
+   "uv",
+   "position"
+  ],
+  "outputs": [
+   "nodeVarying4:vec2<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_MeshBasicNodeMaterial_47077",
+  "attributes": 2,
+  "varyings": 1,
+  "buffers": 2,
+  "names": [
+   "position",
+   "_drift"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_keep_idBackground_19",
+  "attributes": 2,
+  "varyings": 1,
+  "buffers": 2,
+  "names": [
+   "normal",
+   "position"
+  ],
+  "outputs": [
+   "v_normalViewGeometry:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_MeshBasicNodeMaterial_27",
+  "attributes": 1,
+  "varyings": 1,
+  "buffers": 1,
+  "names": [
+   "position"
+  ],
+  "outputs": [
+   "v_positionWorld:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_keep_idBackground_19",
+  "attributes": 1,
+  "varyings": 1,
+  "buffers": 1,
+  "names": [
+   "position"
+  ],
+  "outputs": [
+   "v_positionView:vec3<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_RenderPipeline_46739",
+  "attributes": 1,
+  "varyings": 1,
+  "buffers": 1,
+  "names": [
+   "uv"
+  ],
+  "outputs": [
+   "nodeVarying0:vec2<f32>"
+  ]
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_MeshBasicNodeMaterial_37872",
+  "attributes": 6,
+  "varyings": 0,
+  "buffers": 3,
+  "names": [
+   "position",
+   "normal",
+   "nodeAttribute0",
+   "nodeAttribute1",
+   "nodeAttribute2",
+   "nodeAttribute3"
+  ],
+  "outputs": []
+ },
+ {
+  "backend": "webgpu",
+  "label": "renderPipeline_outputColorTransform_21",
+  "attributes": 1,
+  "varyings": 0,
+  "buffers": 1,
+  "names": [
+   "position"
+  ],
+  "outputs": []
+ }
+]

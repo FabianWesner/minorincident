@@ -1,0 +1,434 @@
+{
+  "sourcePipelineCommit": "f2a4d0c54a96dba3080bd5f40c1a3ee1cc608b48",
+  "sourceContract": {
+    "id": "npc.national-guard",
+    "source_high": "/Users/wesner/Workspace/trellis-highs/l3-npc.national-guard/tris300000_tex2048.glb",
+    "source_high_sha256": "4b0ca5da1bb883bc5a1a10531c6f9f6baa499a28f81dec832eb939d642ada9d3",
+    "calibrated_high_sha256": "58f64de62439b641f58395723a7154b6937097fd3919a09b86122a644e6337e0",
+    "initial_game_height_scale": 1.7464444814178737,
+    "game_alignment_rotation_y_degrees": 90,
+    "bake": "plain emission ray, no surface repair",
+    "lod2": "LOD1 anatomy retained, reduced runtime atlas",
+    "files": {
+      "assembled-lod0.glb": "80cd70bc19c6a7142847618175bf27ca5c02c56abc24819795684bc4f760a4d6",
+      "assembled-lod1.glb": "796fc0c384f5e393317f054c1b4c8f32420a7cd6bf718b05639920da6341f81d",
+      "assembled-lod2.glb": "796fc0c384f5e393317f054c1b4c8f32420a7cd6bf718b05639920da6341f81d",
+      "body-lod0.glb": "7ebdd1873779adcc43f655085ffe369cbad430f283f78894ff5fb79d45b864be",
+      "body-lod1.glb": "25b733d8876e7999678b552a0547f7f8f093e386a599bdcb73be8e2700193066",
+      "body-lod2.glb": "25b733d8876e7999678b552a0547f7f8f093e386a599bdcb73be8e2700193066",
+      "flat-lod0.glb": "6b6d7b6bba07b87c111d10fffc1fed67e52d72b384924ee79f97c2fa969c64e2",
+      "flat-lod1.glb": "a6283aa0e958b28b2e6ad5719084519129460d95f45233cfa34a17da6f6ed82d",
+      "flat-lod2.glb": "a6283aa0e958b28b2e6ad5719084519129460d95f45233cfa34a17da6f6ed82d"
+    }
+  },
+  "build": {
+    "id": "npc.national-guard",
+    "source": "/Users/wesner/Workspace/3dp-l3-all-new/cast/l3/npc.national-guard",
+    "elapsedSeconds": 20.758,
+    "manualSteps": [],
+    "receipts": [
+      {
+        "lod": 0,
+        "source": "assets/npc.national-guard/model.glb",
+        "sourceSha256": "49ab394a833762bcc8e5462c262a1b519fa8e1c6939740e673213256892dc91f",
+        "bodySource": "/Users/wesner/Workspace/3dp-l3-all-new/cast/l3/npc.national-guard/source/assembled-lod0.glb",
+        "bodySha256": "80cd70bc19c6a7142847618175bf27ca5c02c56abc24819795684bc4f760a4d6",
+        "tiers": [
+          {
+            "low": false,
+            "path": "public/assets/models/skinned/npc.national-guard.lod0.glb",
+            "bytes": 369608,
+            "sha256": "d71edde91a3072f0644ccc1aa539700628ff3ce9d768596ed52a8dbd95511846",
+            "errors": []
+          },
+          {
+            "low": true,
+            "path": "public/assets/models/skinned/npc.national-guard.lod0.low.glb",
+            "bytes": 269104,
+            "sha256": "133b5e04c712b4733adc1ad78be2bd977d93c9892ea4021a8ce971ea2bc20dcf",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "lod": 1,
+        "source": "assets/npc.national-guard/model.glb",
+        "sourceSha256": "49ab394a833762bcc8e5462c262a1b519fa8e1c6939740e673213256892dc91f",
+        "bodySource": "/Users/wesner/Workspace/3dp-l3-all-new/cast/l3/npc.national-guard/source/assembled-lod1.glb",
+        "bodySha256": "796fc0c384f5e393317f054c1b4c8f32420a7cd6bf718b05639920da6341f81d",
+        "tiers": [
+          {
+            "low": false,
+            "path": "public/assets/models/skinned/npc.national-guard.lod1.glb",
+            "bytes": 191872,
+            "sha256": "8506c27032ed175b2574931f442ca8ce9115c899c885569b5326320b91d4c37a",
+            "errors": []
+          },
+          {
+            "low": true,
+            "path": "public/assets/models/skinned/npc.national-guard.lod1.low.glb",
+            "bytes": 191872,
+            "sha256": "8506c27032ed175b2574931f442ca8ce9115c899c885569b5326320b91d4c37a",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "lod": 2,
+        "source": "assets/npc.national-guard/model.glb",
+        "sourceSha256": "49ab394a833762bcc8e5462c262a1b519fa8e1c6939740e673213256892dc91f",
+        "bodySource": "/Users/wesner/Workspace/3dp-l3-all-new/cast/l3/npc.national-guard/source/assembled-lod1.glb",
+        "bodySha256": "796fc0c384f5e393317f054c1b4c8f32420a7cd6bf718b05639920da6341f81d",
+        "tiers": [
+          {
+            "low": false,
+            "path": "public/assets/models/skinned/npc.national-guard.lod2.glb",
+            "bytes": 149620,
+            "sha256": "a5f993e0e79352dff9ea1f2d40fefbfdb40424be1cfed28af8a3435066ac7a80",
+            "errors": []
+          },
+          {
+            "low": true,
+            "path": "public/assets/models/skinned/npc.national-guard.lod2.low.glb",
+            "bytes": 149620,
+            "sha256": "a5f993e0e79352dff9ea1f2d40fefbfdb40424be1cfed28af8a3435066ac7a80",
+            "errors": []
+          }
+        ]
+      }
+    ],
+    "preparedBakes": {
+      "npc.national-guard:lod0:infected": "/assets/civilians/npc.national-guard.lod0.infected.06a28da2acc18d84.bin.gz",
+      "npc.national-guard:lod0": "/assets/civilians/npc.national-guard.lod0.f82bd603bd3ae7a4.bin.gz",
+      "npc.national-guard:lod1:infected": "/assets/civilians/npc.national-guard.lod1.infected.0fdb32f8540077b0.bin.gz",
+      "npc.national-guard:lod1": "/assets/civilians/npc.national-guard.lod1.69ceb057638c9442.bin.gz",
+      "npc.national-guard:lod2:infected": "/assets/civilians/npc.national-guard.lod2.infected.0fdb32f8540077b0.bin.gz",
+      "npc.national-guard:lod2": "/assets/civilians/npc.national-guard.lod2.69ceb057638c9442.bin.gz"
+    }
+  },
+  "lods": [
+    {
+      "lod": 0,
+      "triangles": 5519,
+      "bodyTriangles": 5236,
+      "components": 1,
+      "openEdges": 0,
+      "maxInfluences": 4,
+      "unrelatedSeams": 14,
+      "propBindings": [
+        {
+          "prop": "guard-backpack",
+          "intended": "torso",
+          "owner": "torso"
+        },
+        {
+          "prop": "guard-pack-label",
+          "intended": "torso",
+          "owner": "torso"
+        },
+        {
+          "prop": "guard-pack-flap",
+          "intended": "torso",
+          "owner": "torso"
+        },
+        {
+          "prop": "guard-pack-seam",
+          "intended": "torso",
+          "owner": "torso"
+        },
+        {
+          "prop": "guard-pack-side--1",
+          "intended": "torso",
+          "owner": "torso"
+        },
+        {
+          "prop": "guard-pack-side-1",
+          "intended": "torso",
+          "owner": "torso"
+        },
+        {
+          "prop": "guard-pack-radio",
+          "intended": "torso",
+          "owner": "torso"
+        },
+        {
+          "prop": "guard-pack-antenna",
+          "intended": "torso",
+          "owner": "torso"
+        },
+        {
+          "prop": "guard-thigh-holster",
+          "intended": "legR",
+          "owner": "legR"
+        },
+        {
+          "prop": "guard-holster-retention",
+          "intended": "legR",
+          "owner": "legR"
+        },
+        {
+          "prop": "guard-flag-armL",
+          "intended": "armL",
+          "owner": "armL"
+        },
+        {
+          "prop": "guard-flag-armR",
+          "intended": "armR",
+          "owner": "armR"
+        }
+      ],
+      "regions": {
+        "width": 1024,
+        "height": 1024,
+        "garments": false,
+        "absorbed": 6215,
+        "shares": {
+          "hair": 0,
+          "skin": 0.092,
+          "shirt": 0,
+          "trousers": 0,
+          "skinMask": 0,
+          "authored": 0.908
+        },
+        "colours": {
+          "skin": [
+            82.1,
+            17.3,
+            32.1
+          ]
+        }
+      }
+    },
+    {
+      "lod": 1,
+      "triangles": 2344,
+      "bodyTriangles": 2144,
+      "components": 1,
+      "openEdges": 0,
+      "maxInfluences": 4,
+      "unrelatedSeams": 6,
+      "propBindings": [
+        {
+          "prop": "guard-backpack",
+          "intended": "torso",
+          "owner": "torso"
+        },
+        {
+          "prop": "guard-pack-label",
+          "intended": "torso",
+          "owner": "torso"
+        },
+        {
+          "prop": "guard-pack-flap",
+          "intended": "torso",
+          "owner": "torso"
+        },
+        {
+          "prop": "guard-pack-seam",
+          "intended": "torso",
+          "owner": "torso"
+        },
+        {
+          "prop": "guard-pack-side--1",
+          "intended": "torso",
+          "owner": "torso"
+        },
+        {
+          "prop": "guard-pack-side-1",
+          "intended": "torso",
+          "owner": "torso"
+        },
+        {
+          "prop": "guard-pack-radio",
+          "intended": "torso",
+          "owner": "torso"
+        },
+        {
+          "prop": "guard-pack-antenna",
+          "intended": "torso",
+          "owner": "torso"
+        },
+        {
+          "prop": "guard-thigh-holster",
+          "intended": "legR",
+          "owner": "legR"
+        },
+        {
+          "prop": "guard-flag-armL",
+          "intended": "armL",
+          "owner": "armL"
+        },
+        {
+          "prop": "guard-flag-armR",
+          "intended": "armR",
+          "owner": "armR"
+        }
+      ],
+      "regions": {
+        "width": 1024,
+        "height": 1024,
+        "garments": false,
+        "absorbed": 12518,
+        "shares": {
+          "hair": 0,
+          "skin": 0.0978,
+          "shirt": 0,
+          "trousers": 0,
+          "skinMask": 0,
+          "authored": 0.9022
+        },
+        "colours": {
+          "skin": [
+            82.5,
+            16.4,
+            31.9
+          ]
+        }
+      }
+    },
+    {
+      "lod": 2,
+      "triangles": 2344,
+      "bodyTriangles": 2144,
+      "components": 1,
+      "openEdges": 0,
+      "maxInfluences": 4,
+      "unrelatedSeams": 6,
+      "propBindings": [
+        {
+          "prop": "guard-backpack",
+          "intended": "torso",
+          "owner": "torso"
+        },
+        {
+          "prop": "guard-pack-label",
+          "intended": "torso",
+          "owner": "torso"
+        },
+        {
+          "prop": "guard-pack-flap",
+          "intended": "torso",
+          "owner": "torso"
+        },
+        {
+          "prop": "guard-pack-seam",
+          "intended": "torso",
+          "owner": "torso"
+        },
+        {
+          "prop": "guard-pack-side--1",
+          "intended": "torso",
+          "owner": "torso"
+        },
+        {
+          "prop": "guard-pack-side-1",
+          "intended": "torso",
+          "owner": "torso"
+        },
+        {
+          "prop": "guard-pack-radio",
+          "intended": "torso",
+          "owner": "torso"
+        },
+        {
+          "prop": "guard-pack-antenna",
+          "intended": "torso",
+          "owner": "torso"
+        },
+        {
+          "prop": "guard-thigh-holster",
+          "intended": "legR",
+          "owner": "legR"
+        },
+        {
+          "prop": "guard-flag-armL",
+          "intended": "armL",
+          "owner": "armL"
+        },
+        {
+          "prop": "guard-flag-armR",
+          "intended": "armR",
+          "owner": "armR"
+        }
+      ],
+      "regions": {
+        "width": 1024,
+        "height": 1024,
+        "garments": false,
+        "absorbed": 12518,
+        "shares": {
+          "hair": 0,
+          "skin": 0.0978,
+          "shirt": 0,
+          "trousers": 0,
+          "skinMask": 0,
+          "authored": 0.9022
+        },
+        "colours": {
+          "skin": [
+            82.5,
+            16.4,
+            31.9
+          ]
+        }
+      }
+    }
+  ],
+  "validation": [
+    {
+      "id": "npc.national-guard:lod0",
+      "errors": [],
+      "triangles": 5519,
+      "materials": 3,
+      "drawCalls": 21,
+      "animatedDrawCalls": 19,
+      "fileKB": 360.9453125,
+      "dimensions": [
+        0.5889230636071476,
+        1.4286228399723768,
+        0.9128534495830536
+      ],
+      "hash": "dc2decddb146b8fcbaa3cf02ded147bd427a16cd9d14500d2fd36a5538f1c008"
+    },
+    {
+      "id": "npc.national-guard:lod1",
+      "errors": [],
+      "triangles": 2344,
+      "materials": 3,
+      "drawCalls": 20,
+      "animatedDrawCalls": 18,
+      "fileKB": 187.375,
+      "dimensions": [
+        0.5864105922875086,
+        1.4286228399723768,
+        0.9075681865215302
+      ],
+      "hash": "7dab23925074e327f8c910f7eedb444e55927f6363d27aa841b6ce70d6310374"
+    },
+    {
+      "id": "npc.national-guard:lod2",
+      "errors": [],
+      "triangles": 2344,
+      "materials": 3,
+      "drawCalls": 20,
+      "animatedDrawCalls": 18,
+      "fileKB": 146.11328125,
+      "dimensions": [
+        0.5864105922875086,
+        1.4286228399723768,
+        0.9075681865215302
+      ],
+      "hash": "7dab23925074e327f8c910f7eedb444e55927f6363d27aa841b6ce70d6310374"
+    }
+  ],
+  "triangleCaps": [
+    6000,
+    2500,
+    4000
+  ],
+  "byteCaps": [
+    600000,
+    250000,
+    150000
+  ]
+}
