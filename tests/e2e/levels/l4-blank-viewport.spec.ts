@@ -57,19 +57,20 @@ for (const walk of walks) for (const renderer of ['webgl', 'webgpu'] as const) t
   // Real input, real time: D+S is world east (+x) for the isometric follow camera; the courier runs
   // along the store's north side toward the cellar door.
   await page.evaluate(() => window.__SS__!.resume()); await page.waitForTimeout(400);
-  // Stop at the authored sample endpoint in the browser. A slow screenshot RPC
-  // otherwise lets held keys carry her several metres past the roof band before
-  // the driver can release them, measuring unrelated flat road beyond the walk.
-  await page.evaluate(west => {
-    const stopAtEnd = () => {
-      const a = window.__SS__!, x = a.getState().player!.transform.x;
-      if (west ? x < -79 : x > 66) a.pause();
-      else requestAnimationFrame(stopAtEnd);
-    };
-    requestAnimationFrame(stopAtEnd);
-  }, west);
+  // Real keyboard movement advances to spatial checkpoints in the browser.
+  // Pause before each screenshot RPC so CPU contention cannot skip the roof band.
   for (const key of keys) await page.keyboard.down(key);
   for (let i = 0; i < 40; i++) {
+    await page.evaluate(west => new Promise<void>(resolve => {
+      const a = window.__SS__!, from = a.getState().player!.transform.x;
+      a.resume();
+      const sample = () => {
+        const x = a.getState().player!.transform.x;
+        if (Math.abs(x - from) >= 1 || (west ? x < -79 : x > 66)) { a.pause(); resolve(); }
+        else requestAnimationFrame(sample);
+      };
+      requestAnimationFrame(sample);
+    }), west);
     const buf = await page.locator('canvas').first().screenshot();
     const state = await page.evaluate(() => {
       const a = window.__SS__!, s = a.getState(), probe = a.debug.renderProbe() as { hits: ({ path: string } | null)[] };
@@ -84,7 +85,7 @@ for (const walk of walks) for (const renderer of ['webgl', 'webgpu'] as const) t
   writeFileSync(`${output}/${tag}.json`, JSON.stringify(frames, null, 1) + '\n');
   // The walk crossed the band where the roof hugged the lens (z 26-28.5 with the default zoom).
   // Before the fix the roof filled the frame for courier x 58-63 (camera 2.5-5 m above the pitched roof). The camera now follows the
-  // player's y and the cutaway scales to the group, so the hugging span is wider and a real-time sample lands every ~1.7 m: count x 56-65 (>= 3 samples).
+  // player's y and the cutaway scales to the group, so the hugging span is wider; spatial checkpoints keep real-input samples about 1 m apart: count x 56-65 (>= 3 samples).
   expect(frames.filter(f => west ? f.x < -68 && f.x > -78 : f.x > 56 && f.x < 65).length, 'sampled the roof band').toBeGreaterThanOrEqual(3);
   if (west) expect(frames.at(-1)!.x, 'walked west toward the relocated door').toBeLessThan(-79);
   else expect(frames.at(-1)!.x, 'walked east toward the original roof band').toBeGreaterThan(66);
