@@ -396,5 +396,130 @@
     "scope": "experiment/tools in this worktree and the main checkout (read-only)",
     "deletedApiConsumers": 0,
     "appHookConsumers": 0
+  },
+  "finalImplementationRecheck": {
+    "commit": "23bee9e079e771fd55ed624d7736a5939b9cc19a",
+    "knipVersion": "6.43.0",
+    "knipExitCode": 1,
+    "exitMeaning": "Unrelated existing findings remain; requested candidates absent",
+    "evidence": "test-results/code-batch1/audit/knip-final.json",
+    "items": [
+      {
+        "id": "D01",
+        "ownerPattern": "\\b(?:CombatView)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D02",
+        "ownerPattern": "\\b(?:dinerCustomer)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D03",
+        "ownerPattern": "\\b(?:l4Edge)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D04",
+        "ownerPattern": "\\b(?:meleeChoices)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D05",
+        "ownerPattern": "\\b(?:GLASS_GAP_M)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D06",
+        "ownerPattern": "\\b(?:isSkinnedCrowd)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D07",
+        "ownerPattern": "\\b(?:clamp)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D08",
+        "ownerPattern": "\\b(?:l1BotConfig)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D09",
+        "ownerPattern": "\\b(?:L1v2Tuning)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D10",
+        "ownerPattern": "\\b(?:l1AccidentEvents)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D11",
+        "ownerPattern": "\\b(?:arcFrame|lastDamageTick|lastDamage|vehicleSpeed)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D12",
+        "ownerPattern": "\\b(?:facingTarget)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D13",
+        "ownerPattern": "\\b(?:hipRest)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D14",
+        "ownerPattern": "\\b(?:yAxis)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D15",
+        "ownerPattern": "\\b(?:private\\s+broken|this\\.broken)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      },
+      {
+        "id": "D16",
+        "ownerPattern": "\\b(?:BlastFxPreset)\\b",
+        "ownerGrepHits": [],
+        "candidateKnipFindings": []
+      }
+    ],
+    "S06AbsentPatterns": {
+      "src/input/InputSystem.ts": [
+        "private readonly canvas:"
+      ],
+      "src/render/characters/CrowdLocomotion.ts": [
+        "private readonly clip:"
+      ],
+      "src/sim/ai/InfectedSystem.ts": [
+        "provoker(e:",
+        "this.provoker(e, b)",
+        "wanderL1(e: EntitySnapshot, b:",
+        "this.wanderL1(e, b, brain)"
+      ],
+      "src/telemetry/codec.ts": [
+        "headerEnd"
+      ],
+      "tools/scenelab/trapped-glass.ts": [
+        "roles.forEach((role, i)"
+      ]
+    }
   }
 }
