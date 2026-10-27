@@ -1212,21 +1212,6 @@
  },
  {
   "backend": "webgl",
-  "label": "position,_insect",
-  "attributes": 2,
-  "varyings": 2,
-  "buffers": 0,
-  "names": [
-   "position",
-   "_insect"
-  ],
-  "outputs": [
-   "vec3 v_positionView",
-   "float nodeVarying4"
-  ]
- },
- {
-  "backend": "webgl",
   "label": "position,_mote",
   "attributes": 2,
   "varyings": 2,
@@ -1238,6 +1223,21 @@
   "outputs": [
    "vec3 v_positionView",
    "vec4 nodeVarying4"
+  ]
+ },
+ {
+  "backend": "webgl",
+  "label": "position,_insect",
+  "attributes": 2,
+  "varyings": 2,
+  "buffers": 0,
+  "names": [
+   "position",
+   "_insect"
+  ],
+  "outputs": [
+   "vec3 v_positionView",
+   "float nodeVarying4"
   ]
  },
  {

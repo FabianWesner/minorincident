@@ -1,5 +1,5 @@
 {
-  "assetRevision": "f3046139c",
+  "assetRevision": "b8c0520e7",
   "baseline": "83503eb18",
   "nativeViews": 32,
   "maxNativePixelError": 1.1368683772161603e-13,
@@ -10,9 +10,9 @@
         1320,
         2590
       ],
-      "sha256": "456240804ec391209ca4217c7a210bd6bb29884e268c3f8d9858b9022303bb2f",
+      "sha256": "6718a474bb13559a917ad10f6f01b1bb9f53889be07873fa773629cf85ec9f97",
       "reviewed": true,
-      "verdict": "Reviewed all 32 native 120/400px front/back views, low/high and WebGL2/WebGPU. Eye whites and pupils read at 120px; helmet, gloves, boots, sleeve flags and US backpack remain recognizable. Fine tailoring/camouflage remains softer than the rigid baseline. The source no longer contains the old fused slung rifle; production rifle is attached separately. Thigh holster restored, both retention bands painted on the weighted surface; tiny separate clip is close-tier only."
+      "verdict": "Reviewed all 32 native 120/400px front/back views, low/high WebGL2/WebGPU. Rear head now has a dark hairline/rim, narrower visible nape and flatter cap; face/eyes remain readable. This is a body/rig inspection, with real held guns proven separately in 11/12. Fine camouflage/tailoring remains softer than old. Thigh holster restored, both retention bands painted on the weighted surface; tiny separate clip is close-tier only."
     },
     {
       "file": "02-skin-tones.jpg",
@@ -20,7 +20,7 @@
         990,
         664
       ],
-      "sha256": "e49a0e53c264e0062ad86c19555e45a6e0324597d940b5076150910ac139c1a4",
+      "sha256": "638019b4ef104a1bb1be73fbe7e390c4cab7fca38835b0b070666e5cf817f727",
       "reviewed": true,
       "verdict": "Reviewed light, medium and dark (0/3/5) tones at 120/400px. Face, ear/forehead shadows and exposed wrist gaps follow the same person tone. Camouflage, black gloves, flags and pack graphics stay authored."
     },
@@ -30,9 +30,9 @@
         1600,
         1868
       ],
-      "sha256": "65a7ab9e08bf8da2840f449a8733c6b804793498905e14d65e04f2cda4c7d365",
+      "sha256": "d6969839279f42a65da6b144763f8671cc5624fbdffd9e7d6bdae4c855b8c71a",
       "reviewed": true,
-      "verdict": "Reviewed matched 30-figure L3 street crowd, low. Nine replacement soldiers retain separate guns and readable helmet/face silhouettes. Five civilian bases, police, corgi and courier remain unchanged. Buildings occlude some actors; renderer receipts confirm all 30 are submitted."
+      "verdict": "Reviewed matched old/new 30-figure L3 low street crowd: nine guards hold real assault rifles with readable barrels/stocks and both arms posed; no shoulder planks. Other cast keeps its own clothing/skin/eyes. All 30 submitted; buildings occlude some."
     },
     {
       "file": "04-l3-station-ready.jpg",
@@ -50,7 +50,7 @@
         1600,
         1868
       ],
-      "sha256": "ae2a89a7187834f5ce85086847acde2e33321fc59dd28e23e028a57a9ee4bbe1",
+      "sha256": "ea8960fcf36d80ed284464c7757a15ee0e75ee33cb4131bebe794b21c648f8d8",
       "reviewed": true,
       "verdict": "Reviewed both tiers, three frames each. Uniforms, human/turned identities and bodies remain readable amid the station attack."
     },
@@ -60,7 +60,7 @@
         1600,
         1868
       ],
-      "sha256": "a488ca0d8635afcab50a846c6bd73394058abc84548d92a9cfcb76f2cc4e1e9d",
+      "sha256": "f8821c686dc5bd444a549619592aac2c2b6c77adef80d85f9d98f388503f10a5",
       "reviewed": true,
       "verdict": "Reviewed both tiers, three frames each. Officers follow and fire, turned civilian hair/clothes retain their colours."
     },
@@ -70,7 +70,7 @@
         1600,
         1868
       ],
-      "sha256": "9634430797804413c79c4d117c6b2d44dda2923ab7994105ae9c57923a98d98c",
+      "sha256": "218d70219cd03ea872218289c3cd6bdff20aa90edf22c8ce31e9082c97f0c837",
       "reviewed": true,
       "verdict": "Reviewed both tiers, three frames each. Squad, living/turned civilians and fallen bodies retain distinct silhouettes."
     },
@@ -80,9 +80,9 @@
         1600,
         1868
       ],
-      "sha256": "17b37a2c86ee79ccff7bd96e8797ba25fb1556ef9608af7d84c5e6e09422831c",
+      "sha256": "ae808d039dd97c1cfd6ccaab9aa685784685fcaeff1eb9c7fe8136ba4fc49619",
       "reviewed": true,
-      "verdict": "Reviewed both tiers, three frames each. Nine soldiers hold the compound, rifles remain separate in firing/guard poses; checkpoint arrival and pursuit show no detached equipment."
+      "verdict": "Reviewed low/high production army arrival at three frames each. Soldiers retain the real weapons in the live checkpoint formation and firing sequence; helmet silhouettes and scene composition remain readable."
     },
     {
       "file": "09-states-and-motion.jpg",
@@ -90,7 +90,7 @@
         1286,
         1300
       ],
-      "sha256": "bd4ede058d26d6dc0a738c51f26b8e96306b8f8215c9a5d442eb5c86a50edf4a",
+      "sha256": "0c106c40cff2e162621323a7ddaaaeda28454534a0b286e1732afee0ab3c22af",
       "reviewed": true,
       "verdict": "Reviewed healthy, turned and corpse rows in both tiers at frames 0/60/120/180. Skin turns green while camo remains authored; rifle disappears on conversion; pack/flags follow the body and corpse without floating accessories or open cuts."
     },
@@ -100,22 +100,36 @@
         1600,
         1868
       ],
-      "sha256": "0d62250d31bf0ca8a1f00e34d7f2f971d4b5208b42839d23e4a7acbf62054eb9",
+      "sha256": "fae3f8efa22d084307b1187d94afff2fd477e6d07dfa487149b333469b6966af",
       "reviewed": true,
-      "verdict": "Reviewed the matched high-tier crowd. Skin/eyes/gear remain legible; no new garment tint bleed or detached props."
+      "verdict": "Reviewed matched old/new high 30-figure crowd. Real assault rifles replace the black plank; guard/civilian/police atlases stay distinct. Same street camera and inherited cast as low."
     },
     {
       "file": "11-army-close.jpg",
       "size": [
         1600,
-        1868
+        3744
       ],
-      "sha256": "ebf0efd5b57b3fe4ab57eb5979ce1fef55709e37b10282cf1055023d6000775c",
+      "sha256": "375e8d05dea5b1f01b8df43e709353d0f12e84bd27118481b71bd06f0fb7e0be",
       "reviewed": true,
-      "verdict": "Reviewed the current army inner-cover fixture close-up in both tiers. Backpack, radio/antenna and correctly oriented small US label remain attached through the production heavy-weapon pose."
+      "verdict": "Reviewed low/high rear and front combat angles. Detailed HMG stock, receiver, ammunition belt/box, shroud and muzzle replace the shoulder plank. Trigger grip follows weaponSocketR; support hand sits beneath the fore-end. Dark rear hair/rim above an exposed narrower nape; cap dome flattened. Pack/US/radio and thigh holster stay attached."
+    },
+    {
+      "file": "12-l4-weapons.jpg",
+      "reviewed": true,
+      "verdict": "Reviewed low/high front/back L4 shared combat fixture: distinct real assault rifle, HMG and hunting rifle held at the hands. Guards share the corrected helmet/hair/nape. Civilian keeps yellow shirt/blue trousers after camera/LOD change; the initial high-back view exposed cross-atlas sampling, fixed by atlas identity in the material cache.",
+      "sha256": "7fac3a008bd00f2a5f3338126910c6358d606dd5b3991d5e23842d90a4dd5b90",
+      "size": [
+        1600,
+        3744
+      ]
     }
   ],
   "verdict": "PASS: no blocking mud, exposed-skin mismatch, garment bleed, missing eyes or detached accessory found in the reviewed views. Fine camouflage/tailoring is softer than the old rigid model.",
   "unchangedBodies": "46 inherited v2 body GLB hashes match approved L2 evidence; see coverage.json.",
-  "reviewedAt": "2026-10-27 final frozen model f3046139c"
+  "reviewedAt": "2026-10-27 guard correction b8c0520e7",
+  "supersedes": {
+    "assetRevision": "f3046139c",
+    "reason": "Orchestrator rejected the placeholder held rifle and orange rear-head band; earlier visual approval did not catch them."
+  }
 }

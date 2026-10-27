@@ -1,5 +1,5 @@
 {
-  "sourcePipelineCommit": "bb5ac82b4233de0c2c82496bfafb82f2707680f9",
+  "sourcePipelineCommit": "f2a4d0c54a96dba3080bd5f40c1a3ee1cc608b48",
   "sourceContract": {
     "id": "npc.national-guard",
     "source_high": "/Users/wesner/Workspace/trellis-highs/l3-npc.national-guard/tris300000_tex2048.glb",
@@ -10,9 +10,9 @@
     "bake": "plain emission ray, no surface repair",
     "lod2": "LOD1 anatomy retained, reduced runtime atlas",
     "files": {
-      "assembled-lod0.glb": "061c7864feb5b5a22c9b211b18d960ee7a47b88d2d0010857aa747e5f779ff90",
-      "assembled-lod1.glb": "95c0f86ccdbd1a12d8ce2f082f7bbbb45535a03972013fe5c9a81b7d88e6be44",
-      "assembled-lod2.glb": "95c0f86ccdbd1a12d8ce2f082f7bbbb45535a03972013fe5c9a81b7d88e6be44",
+      "assembled-lod0.glb": "80cd70bc19c6a7142847618175bf27ca5c02c56abc24819795684bc4f760a4d6",
+      "assembled-lod1.glb": "796fc0c384f5e393317f054c1b4c8f32420a7cd6bf718b05639920da6341f81d",
+      "assembled-lod2.glb": "796fc0c384f5e393317f054c1b4c8f32420a7cd6bf718b05639920da6341f81d",
       "body-lod0.glb": "7ebdd1873779adcc43f655085ffe369cbad430f283f78894ff5fb79d45b864be",
       "body-lod1.glb": "25b733d8876e7999678b552a0547f7f8f093e386a599bdcb73be8e2700193066",
       "body-lod2.glb": "25b733d8876e7999678b552a0547f7f8f093e386a599bdcb73be8e2700193066",
@@ -24,7 +24,7 @@
   "build": {
     "id": "npc.national-guard",
     "source": "/Users/wesner/Workspace/3dp-l3-all-new/cast/l3/npc.national-guard",
-    "elapsedSeconds": 18.005,
+    "elapsedSeconds": 20.758,
     "manualSteps": [],
     "receipts": [
       {
@@ -32,20 +32,20 @@
         "source": "assets/npc.national-guard/model.glb",
         "sourceSha256": "49ab394a833762bcc8e5462c262a1b519fa8e1c6939740e673213256892dc91f",
         "bodySource": "/Users/wesner/Workspace/3dp-l3-all-new/cast/l3/npc.national-guard/source/assembled-lod0.glb",
-        "bodySha256": "061c7864feb5b5a22c9b211b18d960ee7a47b88d2d0010857aa747e5f779ff90",
+        "bodySha256": "80cd70bc19c6a7142847618175bf27ca5c02c56abc24819795684bc4f760a4d6",
         "tiers": [
           {
             "low": false,
             "path": "public/assets/models/skinned/npc.national-guard.lod0.glb",
-            "bytes": 369020,
-            "sha256": "19c7ce59222dbb6362d8ff634624bfd45e5b366b0cffb696b1740e83ac6792dc",
+            "bytes": 369608,
+            "sha256": "d71edde91a3072f0644ccc1aa539700628ff3ce9d768596ed52a8dbd95511846",
             "errors": []
           },
           {
             "low": true,
             "path": "public/assets/models/skinned/npc.national-guard.lod0.low.glb",
-            "bytes": 269524,
-            "sha256": "ac60e799180f3ed709ec650b7b7e3636dfee6c38641c97c700ca24a644f2b208",
+            "bytes": 269104,
+            "sha256": "133b5e04c712b4733adc1ad78be2bd977d93c9892ea4021a8ce971ea2bc20dcf",
             "errors": []
           }
         ]
@@ -55,20 +55,20 @@
         "source": "assets/npc.national-guard/model.glb",
         "sourceSha256": "49ab394a833762bcc8e5462c262a1b519fa8e1c6939740e673213256892dc91f",
         "bodySource": "/Users/wesner/Workspace/3dp-l3-all-new/cast/l3/npc.national-guard/source/assembled-lod1.glb",
-        "bodySha256": "95c0f86ccdbd1a12d8ce2f082f7bbbb45535a03972013fe5c9a81b7d88e6be44",
+        "bodySha256": "796fc0c384f5e393317f054c1b4c8f32420a7cd6bf718b05639920da6341f81d",
         "tiers": [
           {
             "low": false,
             "path": "public/assets/models/skinned/npc.national-guard.lod1.glb",
-            "bytes": 190212,
-            "sha256": "fd61550ca601103b33b041f0c63063ab8bbd9a66dd10d4bbe06dac07e6b110a5",
+            "bytes": 191872,
+            "sha256": "8506c27032ed175b2574931f442ca8ce9115c899c885569b5326320b91d4c37a",
             "errors": []
           },
           {
             "low": true,
             "path": "public/assets/models/skinned/npc.national-guard.lod1.low.glb",
-            "bytes": 190212,
-            "sha256": "fd61550ca601103b33b041f0c63063ab8bbd9a66dd10d4bbe06dac07e6b110a5",
+            "bytes": 191872,
+            "sha256": "8506c27032ed175b2574931f442ca8ce9115c899c885569b5326320b91d4c37a",
             "errors": []
           }
         ]
@@ -78,43 +78,43 @@
         "source": "assets/npc.national-guard/model.glb",
         "sourceSha256": "49ab394a833762bcc8e5462c262a1b519fa8e1c6939740e673213256892dc91f",
         "bodySource": "/Users/wesner/Workspace/3dp-l3-all-new/cast/l3/npc.national-guard/source/assembled-lod1.glb",
-        "bodySha256": "95c0f86ccdbd1a12d8ce2f082f7bbbb45535a03972013fe5c9a81b7d88e6be44",
+        "bodySha256": "796fc0c384f5e393317f054c1b4c8f32420a7cd6bf718b05639920da6341f81d",
         "tiers": [
           {
             "low": false,
             "path": "public/assets/models/skinned/npc.national-guard.lod2.glb",
-            "bytes": 148392,
-            "sha256": "b160193d03864a2613a6516fde1d6bed69ce62e4a685b062fcfb8ac6d0930328",
+            "bytes": 149620,
+            "sha256": "a5f993e0e79352dff9ea1f2d40fefbfdb40424be1cfed28af8a3435066ac7a80",
             "errors": []
           },
           {
             "low": true,
             "path": "public/assets/models/skinned/npc.national-guard.lod2.low.glb",
-            "bytes": 148392,
-            "sha256": "b160193d03864a2613a6516fde1d6bed69ce62e4a685b062fcfb8ac6d0930328",
+            "bytes": 149620,
+            "sha256": "a5f993e0e79352dff9ea1f2d40fefbfdb40424be1cfed28af8a3435066ac7a80",
             "errors": []
           }
         ]
       }
     ],
     "preparedBakes": {
-      "npc.national-guard:lod0:infected": "/assets/civilians/npc.national-guard.lod0.infected.7849e64b81dc0284.bin.gz",
-      "npc.national-guard:lod0": "/assets/civilians/npc.national-guard.lod0.e5f9c3282b94ade6.bin.gz",
-      "npc.national-guard:lod1:infected": "/assets/civilians/npc.national-guard.lod1.infected.2d3b5886a55ac822.bin.gz",
-      "npc.national-guard:lod1": "/assets/civilians/npc.national-guard.lod1.b2df7b49a0276f67.bin.gz",
-      "npc.national-guard:lod2:infected": "/assets/civilians/npc.national-guard.lod2.infected.2d3b5886a55ac822.bin.gz",
-      "npc.national-guard:lod2": "/assets/civilians/npc.national-guard.lod2.b2df7b49a0276f67.bin.gz"
+      "npc.national-guard:lod0:infected": "/assets/civilians/npc.national-guard.lod0.infected.06a28da2acc18d84.bin.gz",
+      "npc.national-guard:lod0": "/assets/civilians/npc.national-guard.lod0.f82bd603bd3ae7a4.bin.gz",
+      "npc.national-guard:lod1:infected": "/assets/civilians/npc.national-guard.lod1.infected.0fdb32f8540077b0.bin.gz",
+      "npc.national-guard:lod1": "/assets/civilians/npc.national-guard.lod1.69ceb057638c9442.bin.gz",
+      "npc.national-guard:lod2:infected": "/assets/civilians/npc.national-guard.lod2.infected.0fdb32f8540077b0.bin.gz",
+      "npc.national-guard:lod2": "/assets/civilians/npc.national-guard.lod2.69ceb057638c9442.bin.gz"
     }
   },
   "lods": [
     {
       "lod": 0,
-      "triangles": 5493,
-      "bodyTriangles": 5230,
+      "triangles": 5519,
+      "bodyTriangles": 5236,
       "components": 1,
       "openEdges": 0,
       "maxInfluences": 4,
-      "unrelatedSeams": 10,
+      "unrelatedSeams": 14,
       "propBindings": [
         {
           "prop": "guard-backpack",
@@ -181,32 +181,32 @@
         "width": 1024,
         "height": 1024,
         "garments": false,
-        "absorbed": 17374,
+        "absorbed": 6215,
         "shares": {
           "hair": 0,
-          "skin": 0.1558,
+          "skin": 0.092,
           "shirt": 0,
           "trousers": 0,
           "skinMask": 0,
-          "authored": 0.8442
+          "authored": 0.908
         },
         "colours": {
           "skin": [
-            80.6,
-            6,
-            29
+            82.1,
+            17.3,
+            32.1
           ]
         }
       }
     },
     {
       "lod": 1,
-      "triangles": 2357,
+      "triangles": 2344,
       "bodyTriangles": 2144,
       "components": 1,
       "openEdges": 0,
       "maxInfluences": 4,
-      "unrelatedSeams": 16,
+      "unrelatedSeams": 6,
       "propBindings": [
         {
           "prop": "guard-backpack",
@@ -268,32 +268,32 @@
         "width": 1024,
         "height": 1024,
         "garments": false,
-        "absorbed": 8845,
+        "absorbed": 12518,
         "shares": {
           "hair": 0,
-          "skin": 0.1504,
+          "skin": 0.0978,
           "shirt": 0,
           "trousers": 0,
           "skinMask": 0,
-          "authored": 0.8496
+          "authored": 0.9022
         },
         "colours": {
           "skin": [
-            82.6,
-            16.3,
-            31.5
+            82.5,
+            16.4,
+            31.9
           ]
         }
       }
     },
     {
       "lod": 2,
-      "triangles": 2357,
+      "triangles": 2344,
       "bodyTriangles": 2144,
       "components": 1,
       "openEdges": 0,
       "maxInfluences": 4,
-      "unrelatedSeams": 16,
+      "unrelatedSeams": 6,
       "propBindings": [
         {
           "prop": "guard-backpack",
@@ -355,20 +355,20 @@
         "width": 1024,
         "height": 1024,
         "garments": false,
-        "absorbed": 8845,
+        "absorbed": 12518,
         "shares": {
           "hair": 0,
-          "skin": 0.1504,
+          "skin": 0.0978,
           "shirt": 0,
           "trousers": 0,
           "skinMask": 0,
-          "authored": 0.8496
+          "authored": 0.9022
         },
         "colours": {
           "skin": [
-            82.6,
-            16.3,
-            31.5
+            82.5,
+            16.4,
+            31.9
           ]
         }
       }
@@ -378,47 +378,47 @@
     {
       "id": "npc.national-guard:lod0",
       "errors": [],
-      "triangles": 5493,
+      "triangles": 5519,
       "materials": 3,
       "drawCalls": 21,
       "animatedDrawCalls": 19,
-      "fileKB": 360.37109375,
+      "fileKB": 360.9453125,
       "dimensions": [
-        0.5770330238159808,
+        0.5889230636071476,
         1.4286228399723768,
-        0.8845464289188385
+        0.9128534495830536
       ],
-      "hash": "16da0f4566d9892134a0442a9249dbd6e542346deb083325ba5a12e0f4703c96"
+      "hash": "dc2decddb146b8fcbaa3cf02ded147bd427a16cd9d14500d2fd36a5538f1c008"
     },
     {
       "id": "npc.national-guard:lod1",
       "errors": [],
-      "triangles": 2357,
+      "triangles": 2344,
       "materials": 3,
       "drawCalls": 20,
       "animatedDrawCalls": 18,
-      "fileKB": 185.75390625,
+      "fileKB": 187.375,
       "dimensions": [
-        0.5760676078363731,
+        0.5864105922875086,
         1.4286228399723768,
-        0.8790328204631805
+        0.9075681865215302
       ],
-      "hash": "9b0d8ddc2416e115e594a18e1a7e6f20355dbacf6e4934002b0d2396b320985f"
+      "hash": "7dab23925074e327f8c910f7eedb444e55927f6363d27aa841b6ce70d6310374"
     },
     {
       "id": "npc.national-guard:lod2",
       "errors": [],
-      "triangles": 2357,
+      "triangles": 2344,
       "materials": 3,
       "drawCalls": 20,
       "animatedDrawCalls": 18,
-      "fileKB": 144.9140625,
+      "fileKB": 146.11328125,
       "dimensions": [
-        0.5760676078363731,
+        0.5864105922875086,
         1.4286228399723768,
-        0.8790328204631805
+        0.9075681865215302
       ],
-      "hash": "9b0d8ddc2416e115e594a18e1a7e6f20355dbacf6e4934002b0d2396b320985f"
+      "hash": "7dab23925074e327f8c910f7eedb444e55927f6363d27aa841b6ce70d6310374"
     }
   ],
   "triangleCaps": [

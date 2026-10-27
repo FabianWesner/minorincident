@@ -17,6 +17,7 @@ assert.equal(sha(contract.source_high), contract.source_high_sha256);
 for (const [file, digest] of Object.entries(contract.files)) assert.equal(sha(`${source}/${file}`), digest, file);
 const lods = [0, 1, 2].map(lod => {
   const rig = json(`${report}/lod${lod}.json`), result = validation[lod];
+  assert.equal(sha(build.receipts[lod].bodySource), build.receipts[lod].bodySha256, 'Game build uses current assembled source');
   assert.deepEqual(result.errors, []);
   assert.ok(result.triangles <= [6000, 2500, 4000][lod]);
   assert.equal(rig.components, 1); assert.equal(rig.openEdges, 0);

@@ -33,7 +33,7 @@ for backend in ['webgl2','webgpu']:
                     cells.append((figure(r),f'{"GL2" if backend=="webgl2" else "GPU"} {tier} | {variant} {pixels}px {"front" if yaw==-45 else "back"}'))
             rows.append(row(cells))
 if len(rows)>=2:label(stack(rows[:2]),'L3 pilot | low WebGL2 | native old/new, front/back').save(ROOT/'pilot-guard-low.jpg',quality=92,optimize=True)
-if len(rows)==8:label(stack(rows),'npc.national-guard | L3 game camera | old: main 83503eb18 | new: production tone 0').save(OUT/'01-national-guard.jpg',quality=92,optimize=True)
+if len(rows)==8:label(stack(rows),'Guard body/rig | L3 game camera | old main 83503eb18 | real held guns: sheets 11/12').save(OUT/'01-national-guard.jpg',quality=92,optimize=True)
 tone_rows=[]
 for pixels in [120,400]:
     cells=[]
