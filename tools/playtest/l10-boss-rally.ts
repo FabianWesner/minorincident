@@ -1,5 +1,6 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { chromium } from '@playwright/test';
+import { launchBrowser } from '../browser-pool/client';
+import { chargeL10Console, l10LaunchArgs } from './l10-charge';
 import { cure } from '../../src/levels/L10/district';
 import type { Game } from '../../src/Game';
 
@@ -12,29 +13,12 @@ import type { Game } from '../../src/Game';
 const [origin, out] = process.argv.slice(2);
 if (!origin || !out) throw new Error('Usage: l10-boss-rally.ts <origin> <outDir>');
 mkdirSync(out, { recursive: true });
-const args = process.platform === 'darwin'
-  ? ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist']
-  : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'];
 const quality = process.env.QUALITY ?? 'low';
-const browser = await chromium.launch({ headless: true, args });
+const browser = await launchBrowser({ headless: true, args: l10LaunchArgs });
 try {
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
-  await page.goto(`${origin}/?test=poses&testApi=1&scenelab=1&renderer=webgl&dpr=1&audio=muted&quality=${quality}`);
-  await page.waitForFunction(() => !!window.__SS__);
-  await page.evaluate(async () => {
-    const a = window.__SS__!;
-    await a.ready;
-    await a.loadLevel('L10', { seed: 327, checkpoint: 'cure-complex', progression: 'L10-default' });
-    a.pause(); a.cheats.god(true); a.camera.follow();
-    (window.__SCENE__ as unknown as { game: Game }).game.world.megaPursuit!.introduce();
-  });
-  const [ix, iz] = cure.anchors['cure-install'], [cx, cz] = cure.anchors['cure-console'];
-  await page.evaluate(({ x, z }) => window.__SS__!.teleport('player', { x, z }), { x: ix, z: iz });
-  await page.keyboard.down('e'); await page.evaluate(() => window.__SS__!.step(36)); await page.keyboard.up('e');
-  await page.evaluate(() => window.__SS__!.step(1));
-  await page.evaluate(({ x, z }) => window.__SS__!.teleport('player', { x, z }), { x: cx, z: cz });
-  await page.keyboard.down('e'); await page.evaluate(() => window.__SS__!.step(1)); await page.keyboard.up('e');
-  await page.evaluate(() => window.__SS__!.step(3590));
+  await chargeL10Console(origin, page, quality, 3590);
+  const [cx, cz] = cure.anchors['cure-console'];
   const shots: { tick: number; file: string; distance: number; inFrame: boolean }[] = [];
   const rows: { tick: number; x: number; z: number; d: number; seen: boolean; hidden: boolean; mode: string; hp: number; maxHp: number }[] = [];
   const sample = () => page.evaluate(() => {

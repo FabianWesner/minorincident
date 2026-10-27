@@ -1,7 +1,7 @@
 import { launchBrowser } from '../browser-pool/client';
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { cure } from '../../src/levels/L10/district';
 import type { Game } from '../../src/Game';
+import { chargeL10Console, l10LaunchArgs } from './l10-charge';
 
 /**
  * Q-120/Q-121 real-input regression probe. Run against the production preview under e2e-lock:
@@ -12,30 +12,10 @@ import type { Game } from '../../src/Game';
 const [origin, out] = process.argv.slice(2);
 if (!origin || !out) throw new Error('Usage: fixes-13j-l10-retry.ts <origin> <outDir>');
 mkdirSync(out, { recursive: true });
-const args = process.platform === 'darwin'
-  ? ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist']
-  : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'];
-const browser = await launchBrowser({ headless: true, args });
+const browser = await launchBrowser({ headless: true, args: l10LaunchArgs });
 try {
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
-  await page.goto(`${origin}/?test=poses&testApi=1&scenelab=1&renderer=webgl&dpr=1&audio=muted&quality=low`);
-  await page.waitForFunction(() => !!window.__SS__);
-  await page.evaluate(async () => {
-    const a = window.__SS__!;
-    await a.ready;
-    await a.loadLevel('L10', { seed: 327, checkpoint: 'cure-complex', progression: 'L10-default' });
-    a.pause(); a.cheats.god(true); a.camera.follow();
-    // The fixture skips the route's first 90 seconds, when this same boss is normally introduced.
-    (window.__SCENE__ as unknown as { game: Game }).game.world.megaPursuit!.introduce();
-  });
-  const [ix, iz] = cure.anchors['cure-install'];
-  const [cx, cz] = cure.anchors['cure-console'];
-  await page.evaluate(({ x, z }) => window.__SS__!.teleport('player', { x, z }), { x: ix, z: iz });
-  await page.keyboard.down('e'); await page.evaluate(() => window.__SS__!.step(36)); await page.keyboard.up('e');
-  await page.evaluate(() => window.__SS__!.step(1));
-  await page.evaluate(({ x, z }) => window.__SS__!.teleport('player', { x, z }), { x: cx, z: cz });
-  await page.keyboard.down('e'); await page.evaluate(() => window.__SS__!.step(1)); await page.keyboard.up('e');
-  await page.evaluate(() => window.__SS__!.step(3600));
+  await chargeL10Console(origin, page, 'low', 3600);
   const before = await page.evaluate(() => {
     const a = window.__SS__!, m = a.missions.state()!, boss = a.query({ kind: 'infected' }).find(e => e.infected?.pursuit)!;
     return { tick: a.tick(), checkpoint: m.checkpoint, charge: m.counters['charge-ticks'], ready: m.states['charge-ready'], megaStep: m.steps.mega.status, hp: boss.health.current, maxHp: boss.health.max, bar: a.getState().render.healthBars?.bars.find(b => b.id === boss.id)?.fraction ?? null };
