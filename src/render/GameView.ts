@@ -261,50 +261,7 @@ export class GameView implements Lifecycle {
     this.view.reset(player?.transform ?? { x: 0, z: 0 }, true);
     let actors: Promise<unknown> | null = null;
     if (this.world.districts) {
-      this.renderer.shadowMap.enabled=true;
-      if(!this.districtResources){
-        const lighting=new Lighting(this.scene, this.look, this.renderer, this.environment ??= new Environment(this.renderer), this.world.scenario === 'L7'),materials=new Materials(lighting, this.renderer),registry=new DistrictAssets(materials,this.renderer),phase=materials.wind;
-        this.districtResources={lighting,materials,registry,phase,grassMaterial:Grass.material(materials,phase)};
-      }
-      const shared=this.districtResources;this.lighting=shared.lighting;this.materials=shared.materials;this.scene.add(this.lighting.sun,this.lighting.sun.target,this.lighting.hemisphere,this.lighting.spot,this.lighting.spot.target,this.lighting.practicalEffects);this.lighting.set(this.world.districts.composition.timeOfDay); this.lighting.lamps.state = this.world.lightPower; this.lighting.lamps.update();
-      // L1 and L2 share D-GROVE (E20), L3 plays the same outbreak town style on D-CORRIDOR (E21): the same instancing
-      // path, spawn focus and close-view warm-up.
-      const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6' || this.world.scenario === 'L7';
-      const instanceCapacity = grove ? this.renderer.attributeInstanceCapacity() : undefined;
-      const t=performance.now();
-      this.districts=new DistrictView(this.world.districts,this.materials,shared.registry,shared.phase,shared.grassMaterial,this.quality === 'low', instanceCapacity);
-      this.character=new CharacterView();
-      // L1 objective transitions swap to prepared decay variants without a hitch (M1-22): they load
-      // with the level (sharing its prototypes) and are warmed below; their LOD0 streams later.
-      const variants = this.world.scenario === 'L1' ? [...this.world.preparedDistricts.values()].filter(prepared => prepared !== this.world.districts).map(prepared => new DistrictView(prepared, this.materials!, shared.registry, shared.phase, shared.grassMaterial, this.quality === 'low', instanceCapacity)) : [];
-      // E19: Level 1 is played as the courier (white cap, orange tee, teal bag); same rig/animations.
-      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', ['L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8', 'L9', 'L10'].includes(this.world.districts.composition.id) || this.world.districts.composition.scene?.courier ? 'courier' : 'survivor', useSkinnedCourier(this.params), this.world.missions?.state?.id === 'L10', this.world.scenario === 'L1' ? this.missionHidden ? null : player?.survivor?.variant : undefined, this.world.scenario === 'L6');
-      // Actor models download and bake while the district loads (they do not depend on it).
-      actors = this.startActors(character); actors.catch(() => {}); // a district failure must not leave it unhandled
-      const initialFocus = grove || this.world.districts.districts.some(d => !!d.layout.terrainChunks?.length) ? this.view.cameraTarget : undefined;
-      const heroAtSpawn = this.quality === 'high' && this.renderer.selectedBackend === 'webgl';
-      await Promise.all([this.districts.load(1, initialFocus, heroAtSpawn), character, ...variants.map(variant => variant.load(1, initialFocus, heroAtSpawn))]);
-      if (this.districts.terrainState()) { this.districts.warmHero = batch => this.warmHidden(batch); this.districts.swapSlot = () => this.swapSlot(); }
-      loadMeasure('view:districts+character',t);
-      if (grove) {
-        this.preparedDistrictViews.set(this.world.districts, this.districts);
-        for (const variant of variants) { variant.visible = false; this.preparedDistrictViews.set(variant.world, variant); this.scene.add(variant); }
-        // WebGL warms the spawn's close-view LOD0 before play (ANGLE specializes first draws).
-        // The rest of the route and its unused LOD1 tier stream after the mission begins.
-        if (this.world.scenario === 'L6' || this.quality === 'low') {
-          // Phone node builds exceed the frame budget even when compiled asynchronously.
-          // Keep its smaller LODs resident and warm them while loading, like the L6 route.
-          const route = performance.now();
-          await Promise.all([this.districts, ...variants].map(view => view.prepare(this.view.cameraTarget, () => false, this.world.scenario === 'L7' ? 16 : Infinity)));
-          loadMeasure('view:route-lods', route);
-        } else {
-          if (this.quality === 'high' && this.renderer.selectedBackend === 'webgl') { const p = performance.now(); await Promise.all([this.districts, ...variants].map(view => view.prepare(this.view.cameraTarget, () => false, lodPolicy.lod1From))); loadMeasure('view:hero-lod0', p); }
-          this.pendingPreparation = { shared, instanceCapacity };
-        }
-      }
-      this.scene.add(this.districts);this.lighting.field.setStatic(layoutLights(this.world.districts));this.lighting.practicalEffects.install(this.world.districts);this.postFx=new PostFx(this.renderer,this.scene,this.camera,this.quality,this.look);
-      this.dofEnabled = this.world.districts.composition.id === 'L1'; this.postFx.setDof(this.dofEnabled);
-      this.scene.add(this.character);
+      ({ actors } = await this.loadDistrictScene(player));
     } else if (this.world.player) {
       this.renderer.shadowMap.enabled = true;
       this.lighting = new Lighting(this.scene, this.look, this.renderer, this.environment ??= new Environment(this.renderer), this.world.scenario === 'L7'); this.materials = new Materials(this.lighting, this.renderer);
@@ -348,48 +305,7 @@ export class GameView implements Lifecycle {
     if (this.world.scenario === 'L2' && this.materials) { this.l2Props = new L2Props(this.world, this.materials); this.scene.add(this.l2Props); }
     if (this.world.scenario === 'L3' && this.materials) { this.l3Props = new L3Props(this.world, this.materials); this.scene.add(this.l3Props); }
     t = loadMeasure('view:actors', t);
-    if (this.world.combat && this.materials) {
-      this.vehicleFeedback = new VehicleFeedback(this.materials); this.scene.add(this.vehicleFeedback);
-      this.vfx = new Vfx(this.world, {
-        muzzle: (id, direction) => {
-          const e = this.world.entities.get(id);
-          if (id === 1 && this.world.mountedGun?.mounted) return this.mountedGunView?.muzzle(direction) ?? this.world.mountedGun.muzzle();
-          if (id === 1 && e?.survivor && this.character && this.actions) {
-            // Events precede the survivor action state; evaluate gait at this tick, then aim.
-            this.character.position.set(e.transform.x, e.transform.y - .7, e.transform.z);
-            this.character.update(e.survivor, this.world.tick, 1);
-            this.actions.aimGun(direction); this.actions.update();
-            return this.actions.muzzle(new Vector3());
-          }
-          if (e?.civilian && this.npcs) {
-            if (e.civilian.ally?.weapon === 'hmg') {
-              const mounted = this.districts?.aimMachineGun(e.transform, direction);
-              if (mounted) { this.npcs.aimGun(id, direction); return mounted; }
-            }
-            return this.npcs.shotMuzzle(id, direction);
-          }
-          return null; // Vehicle weapons carry their own authored event origin.
-        },
-        spout: id => this.npcs?.spout(id) ?? null,
-        flash: (id, strength) => { this.crowd?.flash(id, strength); },
-        detach: (id, limb) => this.crowd?.detach(id, limb),
-        blood: coverage => { this.character?.setBlood(coverage); this.actions?.setBlood(coverage); },
-        vehicle: (event, enabled) => { if (this.world.vehicles?.cars.has(event.id)) this.vehicles?.feedback(event, enabled); else this.vehicleFeedback?.update(event, enabled); },
-        vehicleBloodEnabled: enabled => { this.vehicles?.setBloodEnabled(enabled); this.vehicleFeedback?.setBloodEnabled(enabled); },
-        clearGore: () => { this.crowd?.clearGore(); },
-        shake: strength => this.view.shake(strength),
-        camera: () => this.camera, roll: strength => this.view.roll(strength), focus: () => this.view.focus,
-        light: (x, z, hex, intensity, radius, ttl, flicker) => this.lightField?.addTransient({ x, z }, hex, intensity, radius, ttl, flicker) ?? null,
-        field: this.lightField ?? undefined,
-        ambient: this.lighting?.intensity,
-        sunDirection: () => this.lighting!.direction.value,
-      });
-      this.vfx.set({ ...this.vfxSettings, quality: this.quality }); this.scene.add(this.vfx);
-      if (this.world.scenario === 'L1') { const targets = labAccidentTargets(this.scene, s => this.view.shake(s), (x, z, w) => this.view.pull(x, z, w)); this.labWindows = targets; this.labAccident = new LabAccidentFx(this.world, this.vfx, targets, anchorLookup(this.world)); this.labAccident.flashReduction = !!this.vfxSettings.flashReduction; this.labAccident.facing = this.camera.quaternion; this.labAccident.column.camera = this.camera; this.scene.add(this.labAccident.column); }
-      this.crowd?.setGoreEnabled(this.vfx.snapshot().enabled && this.vfx.snapshot().gore === 'Full');
-      const survivor = this.world.entities.get(1)?.survivor;
-      this.frozenPose = survivor ? structuredClone(survivor) : null;
-    }
+    if (this.world.combat && this.materials) this.createVfx(this.materials);
     if (this.world.scenario === 'drive-course') this.postFx = new PostFx(this.renderer, this.scene, this.camera, this.quality, this.look);
     if (__QA_HOOKS__ && this.params.get('debug') === 'physics') {
       this.wireframe = new PhysicsWireframe(this.world.physics); this.scene.add(this.wireframe.lines);
@@ -422,58 +338,7 @@ export class GameView implements Lifecycle {
     const restoreGates = this.world.scenario === 'L6' ? await this.interactions?.prewarmServiceGates() : undefined;
     if (this.world.scenario === 'L6') this.districts?.metroPower(true, false);
     t = loadMeasure('view:lod-ready', t);
-    const warm = async (): Promise<void> => {
-      await loadGate.foreground(); // node builds cannot be sliced: never during the menus
-      this.lighting?.update(this.view);
-      // Compile against the gameplay light list. In particular W6 low disables
-      // its city-wide moon pass here; warming with that sun still visible left
-      // hidden blast pools cold until the first rocket.
-      this.updateLights();
-      // PO 10-20 #62: the worn headlamp (and its emissive lens) first draws at the shelter pickup. Compile it here.
-      if (this.world.scenario === 'L6') this.character?.showHeadlamp(true);
-      // Include hidden infected/LOD/VFX/decay variants, and warm their actual HDR/MSAA pass.
-      const focus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(this.camera.position);
-      const unwarm = this.labWindows?.prewarmWindows();
-      const restore = this.vfx?.prewarm(focus.x, focus.z); this.labAccident?.prewarm();
-      const prepareVariant = () => preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); })), this.background ? () => loadGate.wait() : () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0))), this.loadProgress, this.background, this.world.scenario === 'L3' || this.world.scenario === 'L6' || this.world.scenario === 'L8', cooperative);
-      const prepare = async (): Promise<void> => {
-        // L4's moving set pieces reveal the courier during combat. Warm both
-        // graphs against every loading light/weather variant, before LOD swaps.
-        if (this.world.scenario === 'L4' && this.entityAssets) {
-          for (const enabled of [false, true]) {
-            const restoreReveal = this.entityAssets.prewarmReveal(focus, enabled);
-            try { await prepareVariant(); } finally { restoreReveal(); }
-          }
-        } else await prepareVariant();
-      };
-      try {
-        // Execute the shared shader's fire branch and its HDR field pass while
-        // loading. The final full-size draw also executes the daylight branch.
-        if (this.lighting && this.lighting.field.strength.value === 0) {
-          const field = this.lighting.field, pulse = field.addTransient({ x: focus.x, z: focus.z }, 'light_fire', 0, 1, Infinity);
-          try {
-            this.lighting.applyLook(); field.update(focus.x, focus.z, this.world.tick / 60); field.render(this.renderer);
-            await prepare();
-          } finally { pulse.remove(); this.lighting.applyLook(); }
-        } else await prepare();
-        if (this.lighting?.preset === 'L10-night') {
-          const lighting = this.lighting, spot = !lighting.spot.visible;
-          this.shadowWarmup = incrementalPreRender(this.renderer, this.scene, this.camera,
-            () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera),
-            root => this.postFx ? this.postFx.compile(undefined, root) : this.renderer.compileAsync(root, this.camera, this.scene),
-            run => lighting.withShadowSource(spot, run));
-        }
-        // The temporary fire pulse above has now been removed. Execute the
-        // daylight graph too, while the rigid prototype still covers pixels;
-        // removing it first leaves a hiding corgi cold until its arrival.
-        if (restoreCorgi) {
-          if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera);
-          await this.renderer.finishWarmUp();
-        }
-      }
-      finally { restore?.(); unwarm?.(); restoreGates?.(); restoreOccupants?.(); restoreCrash?.(); restoreCorgi?.(); restoreHeld?.(); restoreMedkits?.(); if (this.world.scenario === 'L6') this.character?.showHeadlamp(!!this.world.missions?.state.l6?.flashlight); }
-      if (this.healthBars) await preRender(this.renderer, this.barScene, this.camera, () => this.renderBars());
-    };
+    const warm = () => this.warmUp(cooperative, { occupants: restoreOccupants, crash: restoreCrash, corgi: restoreCorgi, held: restoreHeld, medkits: restoreMedkits, gates: restoreGates });
     const finish = (): void => {
       loadMeasure('view:warm-up', t);
       if (this.probes) this.probes.idPass = this.params.get('idpass') === '1';
@@ -517,6 +382,153 @@ export class GameView implements Lifecycle {
     if (!this.mountedGunView && this.materials) { this.mountedGunView = new MountedGunView(this.world, this.quality === 'low', this.materials, this.renderer, model => this.warmHidden(model)); this.scene.add(this.mountedGunView); }
     this.mountedGunView?.update();
     return this.mountedGunView?.ready();
+  }
+  /** District levels: shared lighting/materials/assets, the district views (with L1 decay variants), the courier and
+   * the actor loads, which start concurrently; the caller awaits the actors later, in the established scene order. */
+  private async loadDistrictScene(player: ReturnType<SimWorld['entities']['get']>): Promise<{ actors: Promise<unknown> }> {
+    this.renderer.shadowMap.enabled=true;
+    if(!this.districtResources){
+      const lighting=new Lighting(this.scene, this.look, this.renderer, this.environment ??= new Environment(this.renderer), this.world.scenario === 'L7'),materials=new Materials(lighting, this.renderer),registry=new DistrictAssets(materials,this.renderer),phase=materials.wind;
+      this.districtResources={lighting,materials,registry,phase,grassMaterial:Grass.material(materials,phase)};
+    }
+    const shared=this.districtResources;this.lighting=shared.lighting;this.materials=shared.materials;this.scene.add(this.lighting.sun,this.lighting.sun.target,this.lighting.hemisphere,this.lighting.spot,this.lighting.spot.target,this.lighting.practicalEffects);this.lighting.set(this.world.districts!.composition.timeOfDay); this.lighting.lamps.state = this.world.lightPower; this.lighting.lamps.update();
+    // L1 and L2 share D-GROVE (E20), L3 plays the same outbreak town style on D-CORRIDOR (E21): the same instancing
+    // path, spawn focus and close-view warm-up.
+    const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6' || this.world.scenario === 'L7';
+    const instanceCapacity = grove ? this.renderer.attributeInstanceCapacity() : undefined;
+    const t=performance.now();
+    this.districts=new DistrictView(this.world.districts!,this.materials,shared.registry,shared.phase,shared.grassMaterial,this.quality === 'low', instanceCapacity);
+    this.character=new CharacterView();
+    // L1 objective transitions swap to prepared decay variants without a hitch (M1-22): they load
+    // with the level (sharing its prototypes) and are warmed below; their LOD0 streams later.
+    const variants = this.world.scenario === 'L1' ? [...this.world.preparedDistricts.values()].filter(prepared => prepared !== this.world.districts!).map(prepared => new DistrictView(prepared, this.materials!, shared.registry, shared.phase, shared.grassMaterial, this.quality === 'low', instanceCapacity)) : [];
+    // E19: Level 1 is played as the courier (white cap, orange tee, teal bag); same rig/animations.
+    const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', ['L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8', 'L9', 'L10'].includes(this.world.districts!.composition.id) || this.world.districts!.composition.scene?.courier ? 'courier' : 'survivor', useSkinnedCourier(this.params), this.world.missions?.state?.id === 'L10', this.world.scenario === 'L1' ? this.missionHidden ? null : player?.survivor?.variant : undefined, this.world.scenario === 'L6');
+    // Actor models download and bake while the district loads (they do not depend on it).
+    const actors = this.startActors(character); actors.catch(() => {}); // a district failure must not leave it unhandled
+    const initialFocus = grove || this.world.districts!.districts.some(d => !!d.layout.terrainChunks?.length) ? this.view.cameraTarget : undefined;
+    const heroAtSpawn = this.quality === 'high' && this.renderer.selectedBackend === 'webgl';
+    await Promise.all([this.districts.load(1, initialFocus, heroAtSpawn), character, ...variants.map(variant => variant.load(1, initialFocus, heroAtSpawn))]);
+    if (this.districts.terrainState()) { this.districts.warmHero = batch => this.warmHidden(batch); this.districts.swapSlot = () => this.swapSlot(); }
+    loadMeasure('view:districts+character',t);
+    if (grove) {
+      this.preparedDistrictViews.set(this.world.districts!, this.districts);
+      for (const variant of variants) { variant.visible = false; this.preparedDistrictViews.set(variant.world, variant); this.scene.add(variant); }
+      // WebGL warms the spawn's close-view LOD0 before play (ANGLE specializes first draws).
+      // The rest of the route and its unused LOD1 tier stream after the mission begins.
+      if (this.world.scenario === 'L6' || this.quality === 'low') {
+        // Phone node builds exceed the frame budget even when compiled asynchronously.
+        // Keep its smaller LODs resident and warm them while loading, like the L6 route.
+        const route = performance.now();
+        await Promise.all([this.districts, ...variants].map(view => view.prepare(this.view.cameraTarget, () => false, this.world.scenario === 'L7' ? 16 : Infinity)));
+        loadMeasure('view:route-lods', route);
+      } else {
+        if (this.quality === 'high' && this.renderer.selectedBackend === 'webgl') { const p = performance.now(); await Promise.all([this.districts, ...variants].map(view => view.prepare(this.view.cameraTarget, () => false, lodPolicy.lod1From))); loadMeasure('view:hero-lod0', p); }
+        this.pendingPreparation = { shared, instanceCapacity };
+      }
+    }
+    this.scene.add(this.districts);this.lighting.field.setStatic(layoutLights(this.world.districts!));this.lighting.practicalEffects.install(this.world.districts!);this.postFx=new PostFx(this.renderer,this.scene,this.camera,this.quality,this.look);
+    this.dofEnabled = this.world.districts!.composition.id === 'L1'; this.postFx.setDof(this.dofEnabled);
+    this.scene.add(this.character);
+    return { actors };
+  }
+  /** Combat scenes: vehicle feedback, the effect system with its presentation hooks and the L1 lab accident. */
+  private createVfx(materials: Materials): void {
+    this.vehicleFeedback = new VehicleFeedback(materials); this.scene.add(this.vehicleFeedback);
+    this.vfx = new Vfx(this.world, {
+      muzzle: (id, direction) => {
+        const e = this.world.entities.get(id);
+        if (id === 1 && this.world.mountedGun?.mounted) return this.mountedGunView?.muzzle(direction) ?? this.world.mountedGun.muzzle();
+        if (id === 1 && e?.survivor && this.character && this.actions) {
+          // Events precede the survivor action state; evaluate gait at this tick, then aim.
+          this.character.position.set(e.transform.x, e.transform.y - .7, e.transform.z);
+          this.character.update(e.survivor, this.world.tick, 1);
+          this.actions.aimGun(direction); this.actions.update();
+          return this.actions.muzzle(new Vector3());
+        }
+        if (e?.civilian && this.npcs) {
+          if (e.civilian.ally?.weapon === 'hmg') {
+            const mounted = this.districts?.aimMachineGun(e.transform, direction);
+            if (mounted) { this.npcs.aimGun(id, direction); return mounted; }
+          }
+          return this.npcs.shotMuzzle(id, direction);
+        }
+        return null; // Vehicle weapons carry their own authored event origin.
+      },
+      spout: id => this.npcs?.spout(id) ?? null,
+      flash: (id, strength) => { this.crowd?.flash(id, strength); },
+      detach: (id, limb) => this.crowd?.detach(id, limb),
+      blood: coverage => { this.character?.setBlood(coverage); this.actions?.setBlood(coverage); },
+      vehicle: (event, enabled) => { if (this.world.vehicles?.cars.has(event.id)) this.vehicles?.feedback(event, enabled); else this.vehicleFeedback?.update(event, enabled); },
+      vehicleBloodEnabled: enabled => { this.vehicles?.setBloodEnabled(enabled); this.vehicleFeedback?.setBloodEnabled(enabled); },
+      clearGore: () => { this.crowd?.clearGore(); },
+      shake: strength => this.view.shake(strength),
+      camera: () => this.camera, roll: strength => this.view.roll(strength), focus: () => this.view.focus,
+      light: (x, z, hex, intensity, radius, ttl, flicker) => this.lightField?.addTransient({ x, z }, hex, intensity, radius, ttl, flicker) ?? null,
+      field: this.lightField ?? undefined,
+      ambient: this.lighting?.intensity,
+      sunDirection: () => this.lighting!.direction.value,
+    });
+    this.vfx.set({ ...this.vfxSettings, quality: this.quality }); this.scene.add(this.vfx);
+    if (this.world.scenario === 'L1') { const targets = labAccidentTargets(this.scene, s => this.view.shake(s), (x, z, w) => this.view.pull(x, z, w)); this.labWindows = targets; this.labAccident = new LabAccidentFx(this.world, this.vfx, targets, anchorLookup(this.world)); this.labAccident.flashReduction = !!this.vfxSettings.flashReduction; this.labAccident.facing = this.camera.quaternion; this.labAccident.column.camera = this.camera; this.scene.add(this.labAccident.column); }
+    this.crowd?.setGoreEnabled(this.vfx.snapshot().enabled && this.vfx.snapshot().gore === 'Full');
+    const survivor = this.world.entities.get(1)?.survivor;
+    this.frozenPose = survivor ? structuredClone(survivor) : null;
+  }
+  /** Compile every hidden variant of the loaded scene (infected/LOD/VFX/decay, both reveal graphs, the fire branch, the
+   * L10 shadow sources) in its real HDR/MSAA pass behind the loading card, then restore the prewarmed objects. */
+  private async warmUp(cooperative: boolean, prewarmed: { occupants?: () => void; crash?: () => void; corgi?: () => void; held?: () => void; medkits?: () => void; gates?: () => void }): Promise<void> {
+    const { occupants: restoreOccupants, crash: restoreCrash, corgi: restoreCorgi, held: restoreHeld, medkits: restoreMedkits, gates: restoreGates } = prewarmed;
+    await loadGate.foreground(); // node builds cannot be sliced: never during the menus
+    this.lighting?.update(this.view);
+    // Compile against the gameplay light list. In particular W6 low disables
+    // its city-wide moon pass here; warming with that sun still visible left
+    // hidden blast pools cold until the first rocket.
+    this.updateLights();
+    // PO 10-20 #62: the worn headlamp (and its emissive lens) first draws at the shelter pickup. Compile it here.
+    if (this.world.scenario === 'L6') this.character?.showHeadlamp(true);
+    // Include hidden infected/LOD/VFX/decay variants, and warm their actual HDR/MSAA pass.
+    const focus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(this.camera.position);
+    const unwarm = this.labWindows?.prewarmWindows();
+    const restore = this.vfx?.prewarm(focus.x, focus.z); this.labAccident?.prewarm();
+    const prepareVariant = () => preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); })), this.background ? () => loadGate.wait() : () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0))), this.loadProgress, this.background, this.world.scenario === 'L3' || this.world.scenario === 'L6' || this.world.scenario === 'L8', cooperative);
+    const prepare = async (): Promise<void> => {
+      // L4's moving set pieces reveal the courier during combat. Warm both
+      // graphs against every loading light/weather variant, before LOD swaps.
+      if (this.world.scenario === 'L4' && this.entityAssets) {
+        for (const enabled of [false, true]) {
+          const restoreReveal = this.entityAssets.prewarmReveal(focus, enabled);
+          try { await prepareVariant(); } finally { restoreReveal(); }
+        }
+      } else await prepareVariant();
+    };
+    try {
+      // Execute the shared shader's fire branch and its HDR field pass while
+      // loading. The final full-size draw also executes the daylight branch.
+      if (this.lighting && this.lighting.field.strength.value === 0) {
+        const field = this.lighting.field, pulse = field.addTransient({ x: focus.x, z: focus.z }, 'light_fire', 0, 1, Infinity);
+        try {
+          this.lighting.applyLook(); field.update(focus.x, focus.z, this.world.tick / 60); field.render(this.renderer);
+          await prepare();
+        } finally { pulse.remove(); this.lighting.applyLook(); }
+      } else await prepare();
+      if (this.lighting?.preset === 'L10-night') {
+        const lighting = this.lighting, spot = !lighting.spot.visible;
+        this.shadowWarmup = incrementalPreRender(this.renderer, this.scene, this.camera,
+          () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera),
+          root => this.postFx ? this.postFx.compile(undefined, root) : this.renderer.compileAsync(root, this.camera, this.scene),
+          run => lighting.withShadowSource(spot, run));
+      }
+      // The temporary fire pulse above has now been removed. Execute the
+      // daylight graph too, while the rigid prototype still covers pixels;
+      // removing it first leaves a hiding corgi cold until its arrival.
+      if (restoreCorgi) {
+        if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera);
+        await this.renderer.finishWarmUp();
+      }
+    }
+    finally { restore?.(); unwarm?.(); restoreGates?.(); restoreOccupants?.(); restoreCrash?.(); restoreCorgi?.(); restoreHeld?.(); restoreMedkits?.(); if (this.world.scenario === 'L6') this.character?.showHeadlamp(!!this.world.missions?.state.l6?.flashlight); }
+    if (this.healthBars) await preRender(this.renderer, this.barScene, this.camera, () => this.renderBars());
   }
   private startActors(character: Promise<unknown>): Promise<unknown> {
     // L4 draws these same skinned people healthy and infected. Parse each exact
