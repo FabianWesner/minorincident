@@ -1,7 +1,7 @@
 import { expect, test, vi } from 'vitest';
-import { NavGrid } from '../../../src/sim/ai/NavGrid';
-import { infectedDef } from '../../../src/data/infected';
-import { SimWorld } from '../../../src/sim/world/SimWorld';
+import { NavGrid } from '../../src/sim/ai/NavGrid';
+import { infectedDef } from '../../src/data/infected';
+import { SimWorld } from '../../src/sim/world/SimWorld';
 
 for (const kind of ['crawler', 'riot', 'firefighter', 'hazmat']) test(`director pressure brings a native ${kind} to its assigned human without replacing its combat role`, async () => {
   const world = new SimWorld(); await world.init(); world.loadScenario('horde-arena', 3);
