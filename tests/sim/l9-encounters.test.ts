@@ -127,16 +127,18 @@ async function drive(route: string, opts: { detour?: boolean; zeroAt?: number; t
 const route = (id: string) => crossing.routes.find(r => r.id === id)!;
 const crash = ['driving', 'approach', 'fall', 'impact', 'crawl', 'done'];
 
-for (const r of crossing.routes) test(`T-E31-11-${r.id} @E31-AC01 @E31-AC10 @E31-AC11 @E31-AC15 preserved-HP detour keeps full durability and reaches the forced crash`, async () => {
-  const run = await drive(r.id, { detour: true });
-  expect(run.hp).toBe(1000); expect(run.contacts).toBe(0); expect(run.exploded).toBe(1); expect(run.phases).toEqual(crash);
-  expect(run.maxCount).toBeLessThanOrEqual(200); expect(run.maxResident).toBeLessThanOrEqual(25);
-}, 300_000);
-
-for (const r of crossing.routes) test(`T-E31-11-risk-${r.id} @E31-AC11 driving through the groups costs durability and still reaches the same crash`, async () => {
-  const run = await drive(r.id);
-  expect(run.contacts).toBeGreaterThan(0); expect(run.hp).toBeLessThan(1000); expect(run.exploded).toBe(1); expect(run.phases).toEqual(crash);
-  expect(run.maxCount).toBeLessThanOrEqual(200);
+// Each seed-31 fixture runs once. The shortcut comparison used to replay both
+// of these identical safe/risky drives in a separate case.
+for (const r of crossing.routes) test(`T-E31-11-${r.id} T-E31-11-risk-${r.id} ${r.id === 'dry-shortcut' ? 'T-E31-11-compare ' : ''}@E31-AC01 @E31-AC10 @E31-AC11 @E31-AC15 detour preserves durability; the risky route takes contact damage; both finish the forced crash`, async () => {
+  const safe = await drive(r.id, { detour: true }), risky = await drive(r.id);
+  expect(safe.hp).toBe(1000); expect(safe.contacts).toBe(0); expect(safe.exploded).toBe(1); expect(safe.phases).toEqual(crash);
+  expect(safe.maxCount).toBeLessThanOrEqual(200); expect(safe.maxResident).toBeLessThanOrEqual(25);
+  expect(risky.contacts).toBeGreaterThan(0); expect(risky.hp).toBeLessThan(1000); expect(risky.exploded).toBe(1); expect(risky.phases).toEqual(crash);
+  expect(risky.maxCount).toBeLessThanOrEqual(200);
+  if (r.id === 'dry-shortcut') {
+    expect(safe.hp).toBeGreaterThan(risky.hp);
+    expect(r.risks.length).toBeGreaterThanOrEqual(2 * route('road').risks.length);
+  }
 }, 300_000);
 
 for (const [name, at] of [['early', l9Encounters.fixtures.earlyZero], ['late', l9Encounters.fixtures.lateZero]] as const) {
@@ -150,12 +152,6 @@ for (const [name, at] of [['early', l9Encounters.fixtures.earlyZero], ['late', l
     expect(run.speedAtZero).toBeGreaterThan(3); expect(run.speedAtZero).toBeLessThanOrEqual(18 * .6 * 1.02 + .3);
   }, 300_000);
 }
-
-test('T-E31-11-compare @E31-AC11 the risky dry shortcut ends with less durability than the safe detour of the same route', async () => {
-  const safe = await drive('dry-shortcut', { detour: true }), risky = await drive('dry-shortcut');
-  expect(safe.hp).toBeGreaterThan(risky.hp);
-  expect(route('dry-shortcut').risks.length).toBeGreaterThanOrEqual(2 * route('road').risks.length);
-}, 300_000);
 
 test('T-E31-12-low @E31-AC12 low tier keeps the shortcut inside the 100-infected and 9-chunk budgets', async () => {
   const run = await drive('dry-shortcut', { tier: 'low' });

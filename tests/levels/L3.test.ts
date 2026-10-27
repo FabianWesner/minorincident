@@ -54,7 +54,7 @@ describe('L3 The Police Collapse', () => {
     expect(t).toBeGreaterThanOrEqual(l3.bots.completeMedianS[0]); expect(t).toBeLessThanOrEqual(l3.bots.completeMedianS[1]);
   }, HEAVY);
 
-  test('T-E21-03 @E21 @E21-AC03 newbie single seed, median in band, median deaths <= 2', async () => {
+  test('@nightly T-E21-03 @E21 @E21-AC03 newbie single seed, median in band, median deaths <= 2', async () => {
     const runs = await battery('newbie');
     expect(runs.filter(r => r.outcome === 'complete').length).toBeGreaterThanOrEqual(l3.bots.newbieMinSeeds);
     expect(median(runs.map(r => r.deaths))).toBeLessThanOrEqual(l3.bots.newbieMaxMedianDeaths);
@@ -150,7 +150,7 @@ describe('L3 The Police Collapse', () => {
     for (const r of await complete()) { expect(r.audit.sightViolations).toBe(0); expect(r.audit.nonSightAlerts).toBe(0); expect(r.audit.emerged).toBeGreaterThan(0); expect(r.audit.emergeSeen).toBe(0); }
   }, HEAVY);
 
-  test('T-E21-07 @E21 @E21-AC07 station attack: 8-10 officers, three directions >= 60 degrees apart, an officer turns on single seed, first-of fallback, idle still falls back', async () => {
+  test('@nightly T-E21-07 @E21 @E21-AC07 station attack: 8-10 officers, three directions >= 60 degrees apart, an officer turns on single seed, first-of fallback, idle still falls back', async () => {
     const l = await loadL3(1); world = l.world;
     const s = l.mission.state.l3!;
     expect(s.officerIds.length).toBeGreaterThanOrEqual(8); expect(s.officerIds.length).toBeLessThanOrEqual(10);
@@ -173,7 +173,7 @@ describe('L3 The Police Collapse', () => {
     expect(idleRuns.every(r => r.attack && r.attack.fallbackCause !== '')).toBe(true);
   }, HEAVY);
 
-  test('T-E21-07d @E21 @E21-AC07 PO 10-12 the police lose without the courier: 50 % police guns, spread streams, police zombies from the station', async () => {
+  test('@nightly T-E21-07d @E21 @E21-AC07 PO 10-12 the police lose without the courier: 50 % police guns, spread streams, police zombies from the station', async () => {
     // PO 2026-10-12 (verbatim): "Ideally the Zombies will win against police when the player isn#t doing anything. Let's try this:
     // reduce the power of the gun by 50% for the police (not for the player). And don't cluster Zombies, let they come from all
     // directions and also spawn them in the policestation (as police Zombies), so they are overwhelming for the police so the user
@@ -239,7 +239,7 @@ describe('L3 The Police Collapse', () => {
     for (const r of runs) expect(r.density.maxConcurrent).toBeLessThanOrEqual(r.density.cap);
   }, HEAVY);
 
-  test('T-E21-13 @E21 @E21-AC13 forward pressure: idling 20 s behind the furthest line starts emergences 15-35 m behind it, advancing stops them', async () => {
+  test('@nightly T-E21-13 @E21 @E21-AC13 forward pressure: idling 20 s behind the furthest line starts emergences 15-35 m behind it, advancing stops them', async () => {
     const l = await loadL3(4); world = l.world; const w = l.world, m = l.mission;
     // The complete bot plays to segment 2, then the courier stands still (god mode keeps the observer alive).
     runL3(w, m, 'complete', { stopWhen: mm => (mm.state.l3!.segment ?? -1) >= 1 && w.entities.get(1)!.transform.x > -30 });

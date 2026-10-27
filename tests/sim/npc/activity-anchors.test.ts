@@ -59,7 +59,7 @@ describe('civilian activity anchors', () => {
     w.dispose();
   }, 120_000);
 
-  test('L1 D-GROVE morning: gardeners stand at real flower beds facing them; every activity faces its target', async () => {
+  test('@nightly L1 D-GROVE morning: gardeners stand at real flower beds facing them; every activity faces its target', async () => {
     const { w } = await groveWorld(1);
     const gardeners = [...w.entities.iterate()].filter(e => e.civilian?.schedule?.some(s => s.activity === 'water'));
     expect(gardeners.length).toBeGreaterThanOrEqual(1);
@@ -70,7 +70,7 @@ describe('civilian activity anchors', () => {
 
   // Fairhaven (L4 plaza gardener beside the baked wooden flower boxes) and the L5 twin: every performing civilian faces its target.
   // L7 reuses the Fairhaven district without a population layer and L8 zoo staff only walk with a prop (no prop-targeted activity).
-  test('L4 Fairhaven: the plaza gardener stands at a real flower box and faces it', async () => {
+  test('@nightly L4 Fairhaven: the plaza gardener stands at a real flower box and faces it', async () => {
     const { world: w } = await loadL4(1);
     const gardeners = [...w.entities.iterate()].filter(e => e.civilian?.schedule?.some(s => s.activity === 'water'));
     expect(gardeners.length).toBeGreaterThanOrEqual(1);

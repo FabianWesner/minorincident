@@ -37,7 +37,7 @@ test('Q-130 riding into the L1 depot-corner hydrant never leaves it inside the b
 });
 
 const CLASSES = ['fire-hydrant', 'trash-bin', 'recycling-bin', 'street-lamp', 'street-sign', 'mailbox-blue', 'bench', 'bike-rack', 'traffic-cone'];
-test('Q-130 riding head-on at every small street prop class from four sides never leaves it inside the bike frame', async () => {
+test('@nightly Q-130 riding head-on at every small street prop class from four sides never leaves it inside the bike frame', async () => {
   const layout = JSON.parse(readFileSync('public/assets/layouts/D-GROVE.layout.json', 'utf8')) as { placements: { id: string; position: number[] }[] };
   const { w, bike } = await mountedBike(), failures: string[] = []; let rides = 0;
   for (const cls of CLASSES) {

@@ -27,7 +27,7 @@ test('@E08 campaign steering mask preserves polygon edges, offsets, winding and 
     }
   } finally { w.dispose(); }
 });
-for (const tier of ['high', 'low'] as const) test(`T-E08-11-${tier} @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity`, async () => {
+for (const tier of ['high', 'low'] as const) test(`@nightly T-E08-11-${tier} @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity`, async () => {
   const w = new SimWorld(); await w.init();
   for (let level = 1; level <= 5; level++) {
     const composition = compositions[`L${level}`]; w.loadComposition(composition, composition.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), 42);

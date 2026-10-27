@@ -5,7 +5,7 @@ import { measureL2Route } from '../../tools/sim-runner/l2Route';
 import { loadL2, runL2 } from '../../tools/sim-runner/l2Bots';
 import { followFrustum } from '../../tools/sim-runner/l3Bots';
 
-test('PO 10-23 @E20 the first pocket exists before a courier waiting at the truck starts walking', async () => {
+test('@nightly PO 10-23 @E20 the first pocket exists before a courier waiting at the truck starts walking', async () => {
   const { world, mission } = await loadL2(1, 'low');
   try {
     runL2(world, mission, 'idle', { maxSeconds: 90, stopWhen: () => {
@@ -20,7 +20,7 @@ test('PO 10-23 @E20 the first pocket exists before a courier waiting at the truc
   } finally { world.dispose(); }
 }, 120_000);
 
-for (const tier of ['high', 'low'] as const) test(`PO 10-23 @E20 ${tier}: market-to-bridge singles/pairs every 25–40 m, no three within 8 m, finish without skipping`, async () => {
+for (const tier of ['high', 'low'] as const) test(`@nightly PO 10-23 @E20 ${tier}: market-to-bridge singles/pairs every 25–40 m, no three within 8 m, finish without skipping`, async () => {
   const r = await measureL2Route(tier);
   mkdirSync('test-results/l2-route-infected/route-test', { recursive: true });
   writeFileSync(`test-results/l2-route-infected/route-test/${tier}.json`, JSON.stringify(r, null, 2) + '\n');

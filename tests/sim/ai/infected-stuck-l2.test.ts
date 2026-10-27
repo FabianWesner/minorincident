@@ -8,7 +8,7 @@ import { loadL2, runL2 } from '../../../tools/sim-runner/l2Bots';
  * wanderers wedged in yard-fence gaps (no nav cell at the 0.65 m clearance, A* from a 3-cell pocket) and route starvation
  * by goals with no route re-requested every tick.
  */
-test('L2: infected never stand frozen (single seed, 150 s)', async () => {
+test('@nightly L2: infected never stand frozen (single seed, 150 s)', async () => {
   const { world: w, mission } = await loadL2(1);
   const track = new Map<number, { x: number; z: number; since: number }>();
   let stuck = 0, samples = 0, worst = 0, worstAt = '';

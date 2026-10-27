@@ -5,7 +5,7 @@ import { loadLevel } from '../../tools/sim-runner/levels';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import { emptyInput } from '../../src/input/InputFrame';
 
-for (const hp of [730, 0]) test(`T-E31-02 @E31-AC02 actual L9 start restores the same APC, arsenal and living occupants at ${hp} HP`, async () => {
+for (const hp of [730, 0]) test(`@nightly T-E31-02 @E31-AC02 actual L9 start restores the same APC, arsenal and living occupants at ${hp} HP`, async () => {
   const source = new SimWorld(); await source.init(); source.loadScenario('horde-arena', 1);
   let destination: SimWorld | undefined;
   try {

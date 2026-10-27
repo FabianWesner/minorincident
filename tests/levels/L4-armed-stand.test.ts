@@ -3,7 +3,7 @@ import { loadL4 } from '../../tools/sim-runner/l4Bots';
 
 // PO #115 (10-22): "What are they doing?" Armed civilians crouched with the gun in hand at the plaza steps: a sheltered civilian kept the
 // 'npc-cower' story after the army rallied it. An armed survivor must never carry a cower story.
-test('L4 armed civilians never keep the cower story once they rally', async () => {
+test('@nightly L4 armed civilians never keep the cower story once they rally', async () => {
   const { world: w, mission: m } = await loadL4(1);
   try {
     w.combat!.damage.god = true;

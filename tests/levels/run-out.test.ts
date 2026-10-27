@@ -57,7 +57,7 @@ describe('run-out after the final objective', () => {
       expect(requested.length).toBeLessThanOrEqual(1);
     }, 300_000);
 
-    test(`${level}: with action the world runs ${runOutRule.seconds} s, invulnerable, then the transition happens once`, async () => {
+    test(`@nightly ${level}: with action the world runs ${runOutRule.seconds} s, invulnerable, then the transition happens once`, async () => {
       const { w, m, p, requested, completed } = await finishLevel(level, true);
       const t0 = w.tick;
       expect(m.state.phase, 'still playing during the run-out').toBe('playing');

@@ -13,7 +13,7 @@ let world: SimWorld | undefined;
 afterEach(() => { world?.dispose(); world = undefined; });
 const distance = (a: { x: number; z: number }, b: { x: number; z: number }) => Math.hypot(a.x - b.x, a.z - b.z);
 
-test('PO #21 @E23 @E23-AC08 @E23-AC09 survivor-2 restore: walking to the sound reveals survivors 3, 4 and 5, then reaches the ending', async () => {
+test('@nightly PO #21 @E23 @E23-AC08 @E23-AC09 survivor-2 restore: walking to the sound reveals survivors 3, 4 and 5, then reaches the ending', async () => {
   const loaded = await loadL5(1); world = loaded.world;
   const { mission } = loaded, w = world;
   runL5(w, mission, 'complete', { stopWhen: m => m.state.l5!.phase === 'search' });
@@ -130,7 +130,7 @@ test('PO #20b @E23 @E23-AC09 survivor-1 restore: Alpha at 15 m engages, follower
   expect(follower.civilian!.survivor!.mode).toBe('follow'); expect(maxJump).toBeLessThan(1);
 }, 300_000);
 
-test('PO #19c @E23 @E23-AC14 music follows the first find and survivor checkpoint restores, never elapsed time', async () => {
+test('@nightly PO #19c @E23 @E23-AC14 music follows the first find and survivor checkpoint restores, never elapsed time', async () => {
   const loaded = await loadL5(1); world = loaded.world;
   const { mission } = loaded, w = world;
   mission.completeObjective('emerge'); mission.l5!.advance(); mission.checkpoint('outside');

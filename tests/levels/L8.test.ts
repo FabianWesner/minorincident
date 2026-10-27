@@ -17,7 +17,7 @@ async function load(tier: 'high' | 'low' = 'high', carried?: EntitySnapshot[]) {
   return w;
 }
 const advance = (w: SimWorld, ticks: number) => { for (let i = 0; i < ticks; i++) w.update(); };
-for (const tier of ['high', 'low'] as const) test(`T-E30-04 T-E30-05 T-E30-07 @E30-AC04 @E30-AC05 @E30-AC07 ${tier} active-time calm and simultaneous inside emergence`, async () => {
+for (const tier of ['high', 'low'] as const) test(`@nightly T-E30-04 T-E30-05 T-E30-07 @E30-AC04 @E30-AC05 @E30-AC07 ${tier} active-time calm and simultaneous inside emergence`, async () => {
   const w = await load(tier);
   try {
     const zoo = w.missions!.l8!, s = zoo.state;
@@ -46,7 +46,7 @@ for (const tier of ['high', 'low'] as const) test(`T-E30-04 T-E30-05 T-E30-07 @E
   } finally { w.dispose(); }
 }, 120_000);
 
-test('T-E30-08 T-E30-09 T-E30-11 @E30-AC08 @E30-AC09 @E30-AC11 seed 1 systemic zoo outbreak converts animals and humans', async () => {
+test('@nightly T-E30-08 T-E30-09 T-E30-11 @E30-AC08 @E30-AC09 @E30-AC11 seed 1 systemic zoo outbreak converts animals and humans', async () => {
   const w = await load();
   try {
     w.inspectionGhost = true; // Observe the unprotected zoo without the courier's death restoring the breach.
@@ -61,7 +61,7 @@ test('T-E30-08 T-E30-09 T-E30-11 @E30-AC08 @E30-AC09 @E30-AC11 seed 1 systemic z
   } finally { w.dispose(); }
 }, 120_000);
 
-test('T-E30-17 @E30-AC17 sanctuary and breach restore preserve remaining time, tunnel walks and animal identities', async () => {
+test('@nightly T-E30-17 @E30-AC17 sanctuary and breach restore preserve remaining time, tunnel walks and animal identities', async () => {
   const w = await load();
   try {
     const m = w.missions!, zoo = m.l8!;
@@ -106,7 +106,7 @@ for (const count of [0, 12, 35]) test(`T-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-
   } finally { w.dispose(); }
 }, 120_000);
 
-test('T-E30-13-losses @E30-AC13 finished civilians and released former survivors cannot block an all-lost escape', async () => {
+test('@nightly T-E30-13-losses @E30-AC13 finished civilians and released former survivors cannot block an all-lost escape', async () => {
   const w = await load();
   try {
     const zoo = w.missions!.l8!, ids = [...zoo.state.roster];
@@ -120,7 +120,7 @@ test('T-E30-13-losses @E30-AC13 finished civilians and released former survivors
   } finally { w.dispose(); }
 }, 120_000);
 
-for (const tier of ['high', 'low'] as const) test(`T-E30-06-calm-${tier} @E30-AC06 exterior attackers cannot cross or hurt any occupant for all 60 seconds; routines face their task`, async () => {
+for (const tier of ['high', 'low'] as const) test(`@nightly T-E30-06-calm-${tier} @E30-AC06 exterior attackers cannot cross or hurt any occupant for all 60 seconds; routines face their task`, async () => {
   const w = await load(tier);
   try {
     const occupants = w.entities.values().filter(e => e.civilian || e.id === 1);

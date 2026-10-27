@@ -42,7 +42,7 @@ test.each([[1], [2], [3], [4], [5]])('E19 @E19 QA1-02 click-to-move from the bik
   expect(Math.hypot(p().x - anchor.x, p().z - anchor.z)).toBeLessThanOrEqual(2.5);
 });
 
-test.each([['lab-gate'], ['garage-door'], ['fire-bay-door'], ['carwash-start']])('E19 @E19 QA1-02 click-to-move on the bicycle reaches %s around fences', async (name) => {
+test.each([['lab-gate'], ['garage-door'], ['fire-bay-door'], ['carwash-start']])('@nightly E19 @E19 QA1-02 click-to-move on the bicycle reaches %s around fences', async (name) => {
   const { world: w, mission } = await mounted();
   const anchor = mission.def.anchors[name] ?? (w.districts as unknown as { anchors?: Record<string, { x: number; z: number }> }).anchors?.[name];
   if (!anchor) return;

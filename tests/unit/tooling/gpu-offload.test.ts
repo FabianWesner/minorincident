@@ -70,7 +70,7 @@ test('quiet-run bounds its owned batch and remote browser setup only marks succe
   expect(setup).toContain('set -euo pipefail');
 });
 
-test('owned browser batches enforce their timeout and preserve the child exit code', () => {
+test('@nightly owned browser batches enforce their timeout and preserve the child exit code', () => {
   expect(execFileSync('python3', ['tools/browser-job.py', '--', 'python3', '-c', 'print("owned")'], { encoding: 'utf8' }).trim()).toBe('owned');
   const result = spawnSync('python3', ['tools/browser-job.py', '--seconds', '1', '--', 'python3', '-c', 'import subprocess,sys,time; p=subprocess.Popen([sys.executable,"-c","import signal,time; signal.signal(signal.SIGTERM,signal.SIG_IGN); time.sleep(60)"],start_new_session=True); print(p.pid,flush=True); time.sleep(60)'], { timeout: 8000, encoding: 'utf8' });
   expect(result.status).toBe(124);

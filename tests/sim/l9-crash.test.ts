@@ -18,7 +18,7 @@ async function load(hp = 1000, z = 0, x = 470) {
   return w;
 }
 function advance(w: SimWorld, n: number) { for (let i = 0; i < n; i++) w.update(); }
-for (const hp of [1000, 0]) test(`T-E31-15-crash @E31-AC01 @E31-AC10 @E31-AC15 one forced crash at ${hp} durability`, async () => {
+for (const hp of [1000, 0]) test(`@nightly T-E31-15-crash @E31-AC01 @E31-AC10 @E31-AC15 one forced crash at ${hp} durability`, async () => {
   const w = await load(hp); const events: string[] = [];
   try {
     for (const type of ['vehicle.exploded', 'level.completed', 'mission.signal', 'vehicle.sound'] as const) w.events.on(type, e => { events.push(e.type === 'mission.signal' ? e.name : e.type === 'vehicle.sound' ? `vehicle.sound:${e.phase}` : e.type); });
@@ -38,12 +38,12 @@ for (const hp of [1000, 0]) test(`T-E31-15-crash @E31-AC01 @E31-AC10 @E31-AC15 o
     advance(w, 120); expect(events.filter(e => e === 'vehicle.exploded')).toHaveLength(1);
   } finally { w.dispose(); }
 });
-for (const [x, z] of [[470, 100], [550, 0], [550, -100], [470, -390], [470, 390]]) test(`T-E31-10-bypass @E31-AC10 outskirts bypass ${x},${z} still crashes`, async () => {
+for (const [x, z] of [[470, 100], [550, 0], [550, -100], [470, -390], [470, 390]]) test(`@nightly T-E31-10-bypass @E31-AC10 outskirts bypass ${x},${z} still crashes`, async () => {
   const w = await load(1000, z, x);
   try { advance(w, 1); expect(w.missions!.l9!.state.phase).toBe('approach'); expect(w.missions!.state.steps['reach-outskirts'].status).not.toBe('completed'); advance(w, 841); expect(w.missions!.l9!.state.finished).toBe(true); }
   finally { w.dispose(); }
 });
-for (const tick of [60, 240, 330, 600]) test(`T-E31-14-crash @E31-AC14 checkpoint restore at crash tick ${tick} resumes without another explosion`, async () => {
+for (const tick of [60, 240, 330, 600]) test(`@nightly T-E31-14-crash @E31-AC14 checkpoint restore at crash tick ${tick} resumes without another explosion`, async () => {
   const w = await load(); let explosions = 0;
   try {
     w.events.on('vehicle.exploded', () => explosions++); advance(w, tick);
@@ -54,7 +54,7 @@ for (const tick of [60, 240, 330, 600]) test(`T-E31-14-crash @E31-AC14 checkpoin
     expect(w.entities.get(m.l9!.state.carId)!.vehicle!.damage).toBe('exploded');
   } finally { w.dispose(); }
 });
-test('T-E31-10-fallback @E31-AC10 blocked primary crawl anchor uses authored fallback', async () => {
+test('@nightly T-E31-10-fallback @E31-AC10 blocked primary crawl anchor uses authored fallback', async () => {
   const w = await load();
   try {
     w.physics.addBlocker({ x: 527.5, y: 1, z: 2.6, halfX: .8, halfY: 1, halfZ: .8 });
@@ -62,7 +62,7 @@ test('T-E31-10-fallback @E31-AC10 blocked primary crawl anchor uses authored fal
   } finally { w.dispose(); }
 });
 
-for (const tick of [60, 240, 330, 600, 841]) test(`T-E31-14-load @E31-AC14 serialized campaign resumes crash at tick ${tick}`, async () => {
+for (const tick of [60, 240, 330, 600, 841]) test(`@nightly T-E31-14-load @E31-AC14 serialized campaign resumes crash at tick ${tick}`, async () => {
   const w = await load(0), restored = new SimWorld();
   try {
     advance(w, tick);
@@ -79,7 +79,7 @@ for (const tick of [60, 240, 330, 600, 841]) test(`T-E31-14-load @E31-AC14 seria
   } finally { w.dispose(); restored.dispose(); }
 });
 
-test('T-E31-16-dress @E31-AC16 L9 uses dry light wind with clear moonlit sightlines', async () => {
+test('@nightly T-E31-16-dress @E31-AC16 L9 uses dry light wind with clear moonlit sightlines', async () => {
   const w = await load(1000, 0, -550);
   try {
     advance(w, 300);

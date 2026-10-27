@@ -35,7 +35,7 @@ test('T-E23-12-stand @E23 @E23-AC12 standing over the shotgun for 0.6 seconds co
   expect(w.combat!.runner.loadout.activeEntries().map(e => e.id)).toEqual(expect.arrayContaining(before));
 });
 
-test('T-E23-12-kill PO #37 @E23 @E23-AC12 @E07-AC14 one shell kills regular infected through 8 m permanently; two close shells stop an Alpha', async () => {
+test('@nightly T-E23-12-kill PO #37 @E23 @E23-AC12 @E07-AC14 one shell kills regular infected through 8 m permanently; two close shells stop an Alpha', async () => {
   const l = await loadL5(1, 'high', false);
   try {
     const w = l.world, p = w.entities.get(1)!;

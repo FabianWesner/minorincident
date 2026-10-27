@@ -99,7 +99,7 @@ test('T-E32-27b @E32 @E32-AC27 live progress reload retains the prior retry snap
   m.restore(); expect(m.state.states['terminal-read']).toBe(false);
 });
 
-for (const quality of ['high','low'] as const) test(`T-E32-27-chunks-${quality} @E32 @E32-AC27 @E32-AC28 region retry and fresh reload restore inactive chunks and the same Mega`, () => {
+for (const quality of ['high','low'] as const) test(`@nightly T-E32-27-chunks-${quality} @E32 @E32-AC27 @E32-AC28 region retry and fresh reload restore inactive chunks and the same Mega`, () => {
   world.reset();
   const layout = JSON.parse(readFileSync('public/assets/layouts/D-CROSSING.layout.json', 'utf8'));
   // This shared-streamer fixture deliberately uses Crossing geometry, under the L10 mission.

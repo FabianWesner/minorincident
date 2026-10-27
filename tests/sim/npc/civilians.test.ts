@@ -81,7 +81,7 @@ test('T-E08-14 @E08 @E08-AC14 full cap postpones rising; mass turning never exce
   for (let i = 0; i < 1800; i++) { mass.update(); expect(mass.infected!.director.count).toBeLessThanOrEqual(15); }
   expect(mass.npcs!.civilians.turns).toBe(npcs.turnChainLimit[0]); mass.dispose();
 });
-test('T-E08-01 @E08 @E08-AC01 W0 civ-street 30 routines never stuck over five minutes', async () => {
+test('@nightly T-E08-01 @E08 @E08-AC01 W0 civ-street 30 routines never stuck over five minutes', async () => {
   const w = await world(); w.loadScenario('civ-street'); const crowd = [...w.entities.iterate()].filter(e => e.kind === 'civilian'); expect(crowd).toHaveLength(30);
   // Moving paths loop; displacement is measured throughout each 20s window, not only matching loop endpoints.
   const starts = crowd.map(e => ({ x: e.transform.x, z: e.transform.z })), maxDistance = new Float64Array(30);

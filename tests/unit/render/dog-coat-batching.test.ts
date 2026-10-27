@@ -12,7 +12,7 @@ import { infectedDefinitions } from '../../../src/data/infected';
 import { shareDogCoatPalette } from '../../../src/render/characters/shareDogCoatPalette';
 import { CrowdView } from '../../../src/render/CrowdView';
 import { SimWorld } from '../../../src/sim/world/SimWorld';
-test('T-E07-12-dog-coats @E07 identical authored LOD1 coat surfaces share a palette while incompatible LOD2 is rejected', async () => {
+test('@nightly T-E07-12-dog-coats @E07 identical authored LOD1 coat surfaces share a palette while incompatible LOD2 is rejected', async () => {
   const world = new SimWorld(), crowd = new CrowdView(world), def = infectedDefinitions.find(d => d.id === 'infected.dog')!;
   world.scenario = 'horde-arena';
   async function load(id: string, lod: string, decay?: string, corpse = false) {

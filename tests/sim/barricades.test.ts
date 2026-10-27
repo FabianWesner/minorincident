@@ -214,7 +214,7 @@ test('T-E26-15 @E26 @E26-AC15 60s push/kick/explosion tape has identical repeat 
   expect(a.tick).toBe(3600); expect(stateHash(a.getState())).toBe(stateHash(b.getState()));
 });
 
-test('T-E26-14 @E26 @E26-AC14 complete bot fills/braces two slots and defense reduces core arrivals >=40%', async () => {
+test('@nightly T-E26-14 @E26 @E26-AC14 complete bot fills/braces two slots and defense reduces core arrivals >=40%', async () => {
   const { BarricadeBot } = await import('../../src/debug/bot/BarricadeBot');
   // AC14 requires the A/B comparison on all ten seeds in the normal epic gate.
   const seeds = 10;

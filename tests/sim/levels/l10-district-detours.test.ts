@@ -5,7 +5,7 @@ import { compositions } from '../../../src/levels/compositions';
 import { cure } from '../../../src/levels/L10/district';
 import type { DistrictLayout } from '../../../src/levels/districts/types';
 const layout = JSON.parse(readFileSync('public/assets/layouts/D-CURE.layout.json', 'utf8')) as DistrictLayout;
-for (const tier of ['high', 'low'] as const) test(`T-E32-03-D2-detours-${tier} @E32-AC03 @E32-AC28 service road and motor pool alternatives retain collision/nav support`, async () => {
+for (const tier of ['high', 'low'] as const) test(`@nightly T-E32-03-D2-detours-${tier} @E32-AC03 @E32-AC28 service road and motor pool alternatives retain collision/nav support`, async () => {
   const w = new SimWorld(); await w.init();
   try {
     w.loadComposition(compositions.L10, [layout], 32); w.chunks!.setQuality(tier);

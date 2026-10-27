@@ -4,7 +4,7 @@ import { loadL5 } from '../../tools/sim-runner/l5Bots';
 
 // The full browser playthrough covers protection and handover. Isolate the
 // ordinary persistent click at its audited Sam-to-Mia stop here.
-test('T-E23-17-travel @E23 @E23-AC17 one ground click routes from the Sam corner to Mia without repeated cancellation', async () => {
+test('@nightly T-E23-17-travel @E23 @E23-AC17 one ground click routes from the Sam corner to Mia without repeated cancellation', async () => {
   const { world, mission } = await loadL5(1);
   try {
     mission.completeObjective('emerge');

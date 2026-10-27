@@ -2,7 +2,7 @@ import { expect, test } from 'vitest';
 import { l4 } from '../../src/data/l4';
 import { loadL4, runL4 } from '../../tools/sim-runner/l4Bots';
 
-test('T-E22-20-refuge @E22-AC20 tent-door allocation keeps alarm identities, looks, targets, events and seeded outcomes', async () => {
+test('@nightly T-E22-20-refuge @E22-AC20 tent-door allocation keeps alarm identities, looks, targets, events and seeded outcomes', async () => {
   const run = async () => {
     const { world, mission } = await loadL4(2, 'low');
     try {

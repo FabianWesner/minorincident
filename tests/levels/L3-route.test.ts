@@ -4,7 +4,7 @@ import { l3Roadblocks } from '../../src/levels/L3/layout';
 import { emptyInput } from '../../src/input/InputFrame';
 import { followFrustum, loadL3 } from '../../tools/sim-runner/l3Bots';
 
-test('@E21 @E21-route L3 wreck lines close both sidewalks for player and NPCs; the connected detour crosses Oak, Boulevard and the elevated highway', async () => {
+test('@nightly @E21 @E21-route L3 wreck lines close both sidewalks for player and NPCs; the connected detour crosses Oak, Boulevard and the elevated highway', async () => {
   const {world:w,mission:m} = await loadL3(1);
   try {
     const nav=w.infected!.nav, path:number[]=[];

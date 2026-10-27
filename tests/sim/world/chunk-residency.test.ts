@@ -45,7 +45,7 @@ for (const tier of ['high', 'low'] as const) {
       expect(w.entities.get(car)!.transform.y).toBeGreaterThan(0);
     } finally { w.dispose(); }
   });
-  test(`T-E31-12-S4-${tier} @E31-AC12 @E31-AC13 predictive support remains loaded on forward/reverse seams`, async () => {
+  test(`@nightly T-E31-12-S4-${tier} @E31-AC12 @E31-AC13 predictive support remains loaded on forward/reverse seams`, async () => {
     const w = await crossing();
     try {
       w.chunks!.setQuality(tier);
@@ -120,7 +120,7 @@ test('T-E31-19-quality-S4 @E31-AC12 @E31-AC13 @E31-AC19 low cap serializes exces
 });
 
 
-test('T-E31-14-clock-S4 @E31-AC13 @E31-AC14 inactive recovery survives loading into a fresh tick-zero world', async () => {
+test('@nightly T-E31-14-clock-S4 @E31-AC13 @E31-AC14 inactive recovery survives loading into a fresh tick-zero world', async () => {
   const w = await crossing(), restored = await crossing();
   try {
     w.tick = 900; focus(w, 0, -330);

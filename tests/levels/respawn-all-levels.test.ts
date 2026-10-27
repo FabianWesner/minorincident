@@ -27,7 +27,7 @@ describe('death respawns exactly on the last reached checkpoint, every level', (
   for (const level of missionIds) for (const reach of ['start', 'checkpoint'] as const) {
     // L4 starts as a passenger in a moving bus: its start checkpoint is a seat, covered by the 'arrival' checkpoint case.
     if (level === 'L4' && reach === 'start') continue;
-    test(`${level} (${reach}): back on the anchor, nothing within 9 m, grace, loadout kept`, async () => {
+    test(`@nightly ${level} (${reach}): back on the anchor, nothing within 9 m, grace, loadout kept`, async () => {
       const w = world = await loadLevel(level as MissionId, 1), m = w.missions!, p = w.entities.get(1)!;
       for (let i = 0; i < 300; i++) w.update();
       if (reach === 'checkpoint') m.checkpoint(m.def.checkpoints[0]);

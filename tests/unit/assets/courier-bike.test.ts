@@ -123,7 +123,7 @@ test('courier bike riding retracts the stand and aligns the saddle with the ride
 // QA 10-08 (PO, verbatim): "wheels are still sunken". The earlier test compared the tyres with the layout paving height,
 // which is 0 on asphalt, while the baked road boxes top out at 5.15 cm: on plain road both tyres were 5 cm inside the
 // asphalt. This one rides the real D-GROVE ground (layout GLB) and measures the drawn tyre against the drawn surface.
-test('@regression courier bike tyres touch the drawn D-GROVE road, paving, kerbs and road paint (-0.5..+1 cm)', async () => {
+test('@nightly @regression courier bike tyres touch the drawn D-GROVE road, paving, kerbs and road paint (-0.5..+1 cm)', async () => {
   const load = async (path: string) => { const bytes = readFileSync(path); return (await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '')).scene; };
   const [model, district] = await Promise.all([load('public/assets/models/veh.courier-bike.glb'), load('public/assets/layouts/D-GROVE.base.glb')]);
   district.updateMatrixWorld(true);

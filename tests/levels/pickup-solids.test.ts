@@ -5,7 +5,7 @@ import { loadL4 } from '../../tools/sim-runner/l4Bots';
 import { pickupPlacementClear } from '../../src/sim/interact/PickupPlacement';
 import { l4, l4Route, l4RoutePose, l4ConvoyStations } from '../../src/data/l4';
 
-test('@pickup-solids PO13 every campaign ground pickup clears walls, props, vehicle hulls and convoy stop poses', async () => {
+test('@nightly @pickup-solids PO13 every campaign ground pickup clears walls, props, vehicle hulls and convoy stop poses', async () => {
   const failures: string[] = [];
   for (const level of new Set([...missionIds, 'L7'] as const)) {
     const w = level === 'L4' ? (await loadL4(1)).world : await loadLevel(level, 1);

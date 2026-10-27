@@ -104,7 +104,7 @@ test('T-E28-07 @E28 @E28-AC07 moving player/infected record tracks and snow/ash 
   expect(weatherKinds).toContain('snow');
 });
 
-test('T-E28-08 @E28 @E28-AC08 every override preserves all registered mission graph walks', async () => {
+test('@nightly T-E28-08 @E28 @E28-AC08 every override preserves all registered mission graph walks', async () => {
   const { readFileSync } = await import('node:fs');
   const { compositions } = await import('../../src/levels/compositions');
   const { missionIds, resolveCampaignMission } = await import('../../src/levels/missions');

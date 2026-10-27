@@ -4,7 +4,7 @@ import { crossing } from '../../../src/levels/L9/district';
 import { LevelNineBot } from '../../../src/debug/bot/LevelNineBot';
 import { loadLevel } from '../../qa/invariants/world';
 
-test('Q-131 APC drives forward through the reported off-lane tree/pole wedge without reversing', async () => {
+test('@nightly Q-131 APC drives forward through the reported off-lane tree/pole wedge without reversing', async () => {
   const world = await loadLevel('L9', 31, 'low');
   try {
     const car = world.vehicles!.cars.get(world.missions!.l9!.state.carId)!;
@@ -16,7 +16,7 @@ test('Q-131 APC drives forward through the reported off-lane tree/pole wedge wit
   } finally { world.dispose(); }
 }, 120_000);
 
-for (const route of crossing.routes) test(`Q-131 ${route.id} APC drive tolerates small alternating steering offsets`, async () => {
+for (const route of crossing.routes) test(`@nightly Q-131 ${route.id} APC drive tolerates small alternating steering offsets`, async () => {
   const world = await loadLevel('L9', 31, 'low');
   try {
     const mission = world.missions!.l9!, bot = new LevelNineBot(world, route.id);
@@ -34,7 +34,7 @@ for (const route of crossing.routes) test(`Q-131 ${route.id} APC drive tolerates
   } finally { world.dispose(); }
 }, 300_000);
 
-test('Q-139 debug-entry APC drives forward from the reported 402,-16.8 wedge', async () => {
+test('@nightly Q-139 debug-entry APC drives forward from the reported 402,-16.8 wedge', async () => {
   const world = await loadLevel('L9', 1, 'low');
   try {
     const car = world.vehicles!.cars.get(world.missions!.l9!.state.carId)!;

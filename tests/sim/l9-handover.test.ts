@@ -11,7 +11,7 @@ import type { DistrictLayout } from '../../src/levels/districts/types';
 const cureLayout = JSON.parse(readFileSync('public/assets/layouts/D-CURE.layout.json', 'utf8')) as DistrictLayout;
 const layout = JSON.parse(readFileSync('public/assets/layouts/D-CROSSING.layout.json', 'utf8')) as DistrictLayout;
 for (const character of ['female', 'male'] as const)
-for (const hp of [1000, 0]) test(`T-E31-15-handover @E31-AC14 @E31-AC15 ${character} ${hp} HP crash commits axe-only L10, save and retry`, async () => {
+for (const hp of [1000, 0]) test(`@nightly T-E31-15-handover @E31-AC14 @E31-AC15 ${character} ${hp} HP crash commits axe-only L10, save and retry`, async () => {
   const w = new SimWorld(), next = new SimWorld(); await w.init(); await next.init();
   const save = preset('L8-default'); save.character = character; save.completedLevels = 8; save.unlockedLevel = 9; if (!save.ownedActions.includes('ability.corgi-lure')) save.ownedActions.push('ability.corgi-lure');
   try {
@@ -65,7 +65,7 @@ for (const hp of [1000, 0]) test(`T-E31-15-handover @E31-AC14 @E31-AC15 ${charac
     expect(validateSave({ ...save, crossingHandover: undefined })).toBe(false);
   } finally { w.dispose(); next.dispose(); }
 });
-test('T-E31-14-legacy @E31-AC14 broken pre-finale save migrates at its saved location to the driveable floor', async () => {
+test('@nightly T-E31-14-legacy @E31-AC14 broken pre-finale save migrates at its saved location to the driveable floor', async () => {
   const w = new SimWorld(); await w.init();
   try {
     w.loadComposition(compositions.L9, [layout], 31); const m = w.loadMission(resolveCampaignMission('L9', w.districts!)); m.begin();

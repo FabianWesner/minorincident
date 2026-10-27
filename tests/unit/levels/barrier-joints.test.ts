@@ -21,7 +21,7 @@ test('continuous fence chains close their nominal-versus-physical panel seams to
   expect(layouts[0].placements.find(p => p.id === original[0].id)!.scale).toEqual(original[0].scale);
 });
 
-test('all shipped district privacy-fence chains meet the same 2 cm joint limit', () => {
+test('@nightly all shipped district privacy-fence chains meet the same 2 cm joint limit', () => {
   const ids = ['D-GROVE', 'D-CORRIDOR', 'D-FAIR', 'D-RES', 'D-MAIN', 'D-SHOP', 'D-SCHOOL', 'D-CIVIC', 'D-PARK', 'D-ZOO', 'D-EDGE', 'D-CROSSING', 'D-CURE'] as const;
   let joints = 0;
   for (const id of ids) {

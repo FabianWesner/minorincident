@@ -49,7 +49,7 @@ test('look-l10 dressing solids keep every gameplay clearance', () => {
   expect(bad).toEqual([]);
 }, 180_000);
 
-test('look-l10 dressing adds no placement-vs-solid pair', () => {
+test('@nightly look-l10 dressing adds no placement-vs-solid pair', () => {
   const moving = (p: Placement) => /^(prop|kit|decay|haz|veh)\./.test(p.assetId) && !/^prop\.(tree|street-tree|bush|garden-bush|hedge|flower|grass|privacy-fence|picket-fence)/.test(p.assetId);
   const pairs = new Set<string>();
   for (const tier of [0, 6] as const) for (const o of solidOverlaps(layout, tier, moving)) pairs.add(`${o.placement} x ${o.collider}`);

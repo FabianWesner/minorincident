@@ -3,7 +3,7 @@ import { l4 } from '../../src/data/l4';
 import { regularInfectedModels } from '../../src/data/crowdAppearance';
 import { loadL4, runL4 } from '../../tools/sim-runner/l4Bots';
 
-for (const tier of ['high', 'low'] as const) test(`T-E22-20-alarm @E22-AC20 ${tier} alarm actors walk out of tent doors with their original IDs and full population`, async () => {
+for (const tier of ['high', 'low'] as const) test(`@nightly T-E22-20-alarm @E22-AC20 ${tier} alarm actors walk out of tent doors with their original IDs and full population`, async () => {
   const { world, mission } = await loadL4(2, tier);
   try {
     const admit = vi.spyOn(world.solids, 'admit'); let ids: number[] = [];

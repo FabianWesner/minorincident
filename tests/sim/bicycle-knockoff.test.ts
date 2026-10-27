@@ -67,7 +67,9 @@ test('an infected bump at speed knocks the courier off; the bike tips over besid
     w.setInput({ interact: true }); step(w, 1); w.setInput({ interact: false });
     expect(b.riding).toBe(true); expect(b.entity!.bicycle!.fallen).toBeUndefined();
     expect(Math.hypot(p.transform.x - lying.x, p.transform.z - lying.z)).toBeLessThan(3.5);
-    const from = { ...p.transform }; w.setInput({ move: { x: 1, z: 0 } }); step(w, 90); w.setInput({ move: { x: 0, z: 0 } });
+    // The authored pallet at (-65, -46.8) blocks the full frame to the east.
+    // Reverse along the clear street she just used, with normal S input.
+    const from = { ...p.transform }; w.setInput({ drive: { throttle: -1, steer: 0 } }); step(w, 90); w.clearInput();
     const travel = { from, at: p.transform, heading: b.entity!.bicycle!.heading, lying, infected: w.infected!.active.length };
     expect(b.riding, JSON.stringify(travel)).toBe(true); expect(Math.hypot(p.transform.x - from.x, p.transform.z - from.z), JSON.stringify(travel)).toBeGreaterThan(3);
   } finally { w.dispose(); }

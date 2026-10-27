@@ -4,7 +4,7 @@ import { preset } from '../../src/sim/progression/Campaign';
 import { emptyAftermath } from '../../src/levels/continuity';
 import { LevelTwoBot } from '../../src/debug/bot/LevelTwoBot';
 
-test('T-E31-20-L1-prop @E31-AC20 @E20-AC04 L1 carried bin cannot strand the seated L2 truck on its station apron', async () => {
+test('@nightly T-E31-20-L1-prop @E31-AC20 @E20-AC04 L1 carried bin cannot strand the seated L2 truck on its station apron', async () => {
   const save = preset('L2-default'), aftermath = emptyAftermath();
   aftermath.props = [{ id: 'D-GROVE/prop.trash-bin:1291', p: [-68.2162, 0, 42.2979], q: [0, .7071, 0, .7071] }];
   save.world = { L1: aftermath };

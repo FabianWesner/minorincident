@@ -11,7 +11,7 @@ import { emptyInput } from '../../../src/input/InputFrame';
 import { missionSandbox } from '../../fixtures/scenarios/mission-sandbox';
 let world: SimWorld;
 afterEach(() => world?.dispose());
-for (const id of missionIds) test(`T-E12-07-${id}${id === 'L7' ? ' @E29-AC01' : ''} @E12 @E12-AC07 every cheat advances exactly one ${id} step to level.completed`, async () => {
+for (const id of missionIds) test(`@nightly T-E12-07-${id}${id === 'L7' ? ' @E29-AC01' : ''} @E12 @E12-AC07 every cheat advances exactly one ${id} step to level.completed`, async () => {
   world = new SimWorld(); await world.init(); const composition = compositions[id];
   world.loadComposition(composition, composition.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`,'utf8'))),1);
   if (id === 'L10') applyCampaign(world, preset('L10-default'));

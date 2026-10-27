@@ -10,7 +10,7 @@ import { triangleCount } from '../../../tools/assets/delivery';
 
 vi.mock('node:child_process', () => ({ spawnSync: vi.fn() }));
 
-test('T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal', async () => {
+test('@nightly T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal', async () => {
   const original = manifest.find((a) => a.id === 'veh.fire-engine')! as AssetDef;
   mkdirSync('.cache/assets',{recursive:true});
   const directory = mkdtempSync('.cache/assets/unit-');
@@ -91,7 +91,7 @@ test('@E17-AC01 decay build rejects the stricter draw budget before publishing',
   }
 });
 
-test('@E17-AC02 commerce decay caps are enforced independently of the integrated base', async () => {
+test('@nightly @E17-AC02 commerce decay caps are enforced independently of the integrated base', async () => {
   const original = manifest.find(a => a.id === 'bld.mainstreet-brick')! as AssetDef;
   const reports = await validateAssets([{ ...original, decayBudget: { triangles: 1, materials: 0, drawCalls: 0, fileKB: 1 } }]);
   expect(reports.filter(r => /^bld\.mainstreet-brick:/.test(r.id)).flatMap(r => r.errors)).toEqual([]);

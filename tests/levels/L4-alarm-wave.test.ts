@@ -6,7 +6,7 @@ import { followFrustum } from '../../tools/sim-runner/l3Bots';
 // PO #118 (10-22): "The alarm was ringing already, but so far only one alpha entered. Zero Zombies." The alarm wave must spawn its authored
 // count at the turn, and the army re-downing every infected that gets up must not pin the war cap: waves keep emerging during the hold.
 for (const tier of ['high', 'low'] as const) {
-  test(`L4 alarm wave spawns its authored count and the hold keeps getting infected (${tier})`, async () => {
+  test(`@nightly L4 alarm wave spawns its authored count and the hold keeps getting infected (${tier})`, async () => {
     const { world: w, mission: m } = await loadL4(1, tier);
     try {
       w.combat!.damage.god = true;
@@ -30,7 +30,7 @@ for (const tier of ['high', 'low'] as const) {
   }, 300_000);
 }
 
-test('L4 queues the full authored street population while capacity is full, then admits it without dropping the backlog', async () => {
+test('@nightly L4 queues the full authored street population while capacity is full, then admits it without dropping the backlog', async () => {
   const { world, mission } = await loadL4(3, 'high');
   try {
     while (mission.state.l4!.phase === 'convoy') { followFrustum(world, 1.5); world.update(); }
