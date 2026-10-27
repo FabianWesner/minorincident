@@ -15,9 +15,13 @@ import { resolvePosition } from '../../levels/districts/validate';
 import type { CameraPose } from '../View';
 import { AmbientLife } from '../AmbientLife';
 import { timeOfDay } from '../../data/timeOfDay';
+// Evaluate Foliage and SeeThrough at their former place in the DistrictView import order: TSL node ids follow module
+// evaluation, and a different order changed a few WebGPU-low pixels (code-render-seams A/B).
+import '../Foliage';
 import type { Foliage } from '../Foliage';
 import { GroundField } from '../GroundField';
 import { initialDistrictLods, lodPolicy, type Lod } from '../lodPolicy';
+import '../SeeThrough';
 import { stripStrayDecorations } from '../decorationFilter';
 import { layoutTerrainChunks } from '../../sim/world/TerrainChunks';
 import { TerrainView } from '../TerrainView';

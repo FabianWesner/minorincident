@@ -20,6 +20,8 @@ import { spinNodes } from "../data/spinNodes";
 import { buildingDoors, doorwayOf, doorZone, doorSwingS } from "../data/buildingDoors";
 import type { Materials } from "./Materials";
 import { worldAssets } from "../assets/worldDefinitions";
+import { buildDistrict, DistrictParts, freezeBatch, type DressingEntry, type LodBatch } from './district/DistrictBuild';
+import { DistrictOcclusion } from './district/DistrictOcclusion';
 import { InstancedGroup } from "./InstancedGroup";
 import type { Grass, windPhase } from "./Grass";
 import type { View } from './View';
@@ -28,8 +30,6 @@ import { pickLod, propLod, lodPolicy, type Lod } from './lodPolicy';
 import { seeThrough } from './SeeThrough';
 import { terrainPrefetchSeconds } from '../sim/world/TerrainChunks';
 import type { NightAccents } from './NightAccents';
-import { buildDistrict, DistrictParts, freezeBatch, type DressingEntry, type LodBatch } from './district/DistrictBuild';
-import { DistrictOcclusion } from './district/DistrictOcclusion';
 
 // Repeated fence panels dominated V1 (109k faces in each view/shadow pass).
 // Preserve the adjacent panels; farther boards need their silhouette, not fine bevels.
