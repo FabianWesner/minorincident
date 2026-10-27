@@ -2,14 +2,13 @@ import { Rng } from '../../core/Rng';
 import { emptyInput, type InputFrame } from '../../input/InputFrame';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import type { EntitySnapshot } from '../../sim/world/types';
+import { dist, jammed, newStuck, visibleThreats, walkTo, type P } from './helpers';
 import { Walker } from './Walker';
 
 /** E20 section 8 bot profiles. `aggressive` stays at the rescue and fights; `idle` stands by the truck after arrival. */
 export type L2Profile = 'complete' | 'newbie' | 'no-axe' | 'aggressive' | 'idle';
 /** Escape route through the town and the way past the bridge cluster (forced-choice runs, AC13). */
 export type L2Opening = 'side' | 'alarm' | 'direct';
-type P = { x: number; z: number };
-const dist = (a: P, b: P) => Math.hypot(a.x - b.x, a.z - b.z);
 export const l2Routes: Record<L2Opening, readonly P[]> = {
   // PO #7 seed 1: the ordinary supermarket → Juniper → Elm → bridge walk, with no alarm detour.
   direct: [{ x: -30.6, z: -31 }, { x: -30.6, z: 0 }, { x: -30.6, z: 30 }, { x: 10, z: 30 }, { x: 40, z: 30 }, { x: 60, z: 30 }, { x: 71, z: 31.5 }, { x: 78.6, z: 30 }],
@@ -37,7 +36,7 @@ export class LevelTwoBot {
   private frame: InputFrame = emptyInput();
   private waypoint = 0;
   private detour: (P & { until: number }) | null = null;
-  private stuck = { at: null as P | null, n: 0, next: 0 };
+  private stuck = newStuck();
   private retreatAt = 0;
   private alarmed = false;
   private last: P | null = null;
@@ -47,11 +46,7 @@ export class LevelTwoBot {
     // The short approach and stand-to-interact take about 0.65 s; only the pickup starts the alarm.
     this.axeApproachAt = world.tick + Math.round((20 + new Rng(world.seed, 'l2-story').next() * 10 - .65) * 60);
   }
-  private threats(p: P, radius: number): EntitySnapshot[] {
-    const w = this.world;
-    return (w.infected?.active ?? []).filter(e => e.health.current > 0 && !e.hidden && !e.infected?.hidden && !e.infectionRise && dist(e.transform, p) <= radius && w.infected!.nav.visible(p, e.transform, 0))
-      .sort((a, b) => dist(a.transform, p) - dist(b.transform, p));
-  }
+  private threats(p: P, radius: number): EntitySnapshot[] { return visibleThreats(this.world, p, radius); }
   sample(): InputFrame {
     const w = this.world, m = w.missions!, s = m.state.l2;
     this.finished = m.state.phase === 'result' || m.state.phase === 'progression';
@@ -63,7 +58,7 @@ export class LevelTwoBot {
     if (newbie && w.tick % 15 !== 0) { this.frame.interact = false; return this.frame; }
     const frame = this.frame = emptyInput(), player = w.entities.get(1)!, p = player.transform, a = m.def.anchors;
     if (player.health.current <= 0 || s.seated) return frame;
-    const go = (target: P, stop: number, key: string) => { const dir = this.walker.step(w, target, stop, key); if (dir) frame.move = dir; return !dir; };
+    const go = walkTo(this.walker, w, frame);
     const aimStrike = (target: EntitySnapshot) => {
       const dx = target.transform.x - p.x, dz = target.transform.z - p.z, d = Math.hypot(dx, dz) || 1;
       frame.aimSource = 'keyboard'; frame.aim = { x: dx / d, z: dz / d };
@@ -129,12 +124,7 @@ export class LevelTwoBot {
       frame.interact = true; this.alarmed = true; this.waypoint = ALARM_AT + 1; return frame;
     }
     // A jammed walker (crowd or corner) steps aside along a connected route.
-    if (w.tick >= this.stuck.next) {
-      this.stuck.next = w.tick + 60;
-      if (this.stuck.at && dist(this.stuck.at, p) < .6 && !near.length) this.stuck.n++; else this.stuck.n = 0;
-      this.stuck.at = { x: p.x, z: p.z };
-      if (this.stuck.n >= 3) { const at = this.walker.detour(w, route[this.waypoint]); this.detour = at ? { ...at, until: w.tick + 180 } : null; this.stuck.n = 0; }
-    }
+    if (jammed(this.stuck, w.tick, p, near.length > 0)) { const at = this.walker.detour(w, route[this.waypoint]); this.detour = at ? { ...at, until: w.tick + 180 } : null; }
     if (this.detour && (w.tick > this.detour.until || dist(p, this.detour) < 1)) { this.detour = null; this.walker.reset(); }
     const crowd = this.threats(p, 4);
     // Losing a fight against three or more: break away along a connected route instead of standing.
