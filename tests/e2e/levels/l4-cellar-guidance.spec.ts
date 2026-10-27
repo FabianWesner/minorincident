@@ -1,5 +1,4 @@
 import { levelFourLayouts } from '../../../src/levels/L4/layout';
-import { l4CellarDistance } from '../../../src/data/l4';
 import type { DistrictLayout } from '../../../src/levels/districts/types';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { boot, expect, test } from '../fixtures';
@@ -30,14 +29,18 @@ for (const renderer of ['webgl', 'webgpu'] as const) for (const quality of ['hig
     await expect(arrow).toBeVisible(); await expect(arrow).toHaveAttribute('data-anchor', 'l4-cellar-door');
     await expect(arrow).toHaveAttribute('data-guidance', 'street-route');
     await expect(arrow).toHaveAttribute('data-offscreen', 'true'); await expect(arrow).toHaveText('➜');
-    const next = { x: 0, z: 0 }; l4CellarDistance(await page.evaluate(() => window.__SS__!.getState().player!.transform), next);
-    const proof = await page.evaluate(({ position, next }) => {
+    const proof = await page.evaluate(({ position }) => {
       const a = window.__SS__!, anchor = { id: 'l4-cellar-door', position }, marker = a.getState().render.missionMarker!;
+      // The sim steers the first turn around reception furniture. The screen
+      // arrow must agree with that reachable turn shown by the minimap pin,
+      // rather than the unsteered authored vertex (L4-movement tests its path).
+      const pin = document.querySelector<HTMLElement>('[data-testid=minimap-route]')!, p = a.getState().player!.transform;
+      const next = { x: p.x + (parseFloat(pin.style.left) - 50) * 100 / 40, z: p.z + (parseFloat(pin.style.top) - 50) * 100 / 40 };
       const ndc = a.camera.project(next.x, 1.8, next.z), flip = ndc[2] > 1 ? -1 : 1;
       const expectedAngle = Math.atan2(-ndc[1] * innerHeight * flip, ndc[0] * innerWidth * flip);
       const arrow = document.querySelector<HTMLElement>('[data-testid=mission-marker]')!, rect = arrow.getBoundingClientRect();
       return { anchor, marker, angle: parseFloat(arrow.style.getPropertyValue('--direction')), expectedAngle, rect: { x: rect.x, y: rect.y, width: rect.width, height: rect.height }, backend: a.perf().backend, tier: a.perf().quality.tier };
-    }, { position: cellar, next });
+    }, { position: cellar });
     expect(proof.backend).toBe(renderer); expect(proof.tier).toBe(quality);
     expect(proof.marker.visible).toBe(true);
     expect(proof.marker.position[0]).toBe(proof.anchor.position[0]); expect(proof.marker.position[2]).toBe(proof.anchor.position[2]);

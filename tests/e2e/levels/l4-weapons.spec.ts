@@ -55,7 +55,8 @@ test('T-E22-20 @E22 L4 starts with melee and the handgun, no SMG or machine gun;
   expect(after.name).toBe('Machine gun');
   expect(after.icon).not.toBe(before.icon);
   await page.screenshot({ path: `${output}/l4-weapons-after.png` });
+  // Armed civilians rally as allies when pickup starts war; only soldiers are excluded.
   // The army arms the civilians at the table: at least three of them hold a gun in hand within 14 m of the quartermaster.
-  const armed = await page.evaluate(q => window.__SS__!.getState().entities.filter(e => e.civilian && !e.civilian.ally && ['pistol', 'hunting-rifle'].includes(String(e.appearance?.handProp)) && Math.hypot(e.transform.x - q.x, e.transform.z - q.z) < 14).length, target);
+  const armed = await page.evaluate(q => window.__SS__!.getState().entities.filter(e => e.civilian && e.civilian.ally?.role !== 'soldier' && ['pistol', 'hunting-rifle'].includes(String(e.appearance?.handProp)) && Math.hypot(e.transform.x - q.x, e.transform.z - q.z) < 14).length, target);
   expect(armed).toBeGreaterThanOrEqual(3);
 });
