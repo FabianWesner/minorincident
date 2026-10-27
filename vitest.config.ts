@@ -4,6 +4,7 @@ import { defineConfig } from 'vitest/config';
 // default: engine logic and code shared across levels (npm test, every change).
 // nightly: the full-campaign bot, perf budgets and the QA invariants (npm run test:nightly).
 export default defineConfig({
+  define: { __QA_HOOKS__: 'true' },
   test: {
     environment: 'node',
     pool: 'threads',

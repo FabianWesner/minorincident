@@ -1,0 +1,161 @@
+// Shared render contracts: every crowd figure, corpse and prop in all levels goes through these paths. The compiled-program
+// GPU-limit ground truth is tests/e2e/gpu-limits.spec.ts; these node tests pin the CPU-side layouts and math it relies on.
+import { BufferAttribute, BufferGeometry, Color, DataTexture, FloatType, Frustum, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBufferAttribute, Matrix4, OrthographicCamera, Quaternion, RGBAFormat, Vector3 } from 'three';
+import { MeshLambertNodeMaterial, Scene, type InstancedMesh } from 'three/webgpu';
+import { float, vec3 } from 'three/tsl';
+import { expect, test, vi } from 'vitest';
+import { packCrowdParts } from '../../src/assets/crowd';
+import { bakeInfected, framesPerClip, infectedClips } from '../../src/render/characters/bakeInfected';
+import { crowdVertexLayout } from '../../src/render/characters/CrowdAppearance';
+import { createInfectedPlaceholder } from '../../src/render/characters/infectedPlaceholder';
+import { packSkin, premultiplyRow, restInverses, skinnedVertexMatrix } from '../../src/render/characters/skinnedCrowd';
+import { StaticCorpses } from '../../src/render/characters/StaticCorpses';
+import { Lighting } from '../../src/render/Lighting';
+import { corpseLod, crowdLod, pickLod, propLod } from '../../src/render/lodPolicy';
+import { Materials } from '../../src/render/Materials';
+import { installTextureRanges } from '../../src/render/TextureRanges';
+import { uploadFloatTexture, type FloatUploadDevice } from '../../src/render/TextureUpload';
+import { weatherMaterialFlags } from '../../src/render/WeatherView';
+import type { EntitySnapshot } from '../../src/sim/world/types';
+
+/** Crowd headroom below the portable hard limits (16 attributes, 8 WebGPU vertex buffers). */
+const CROWD = { attributes: 14, buffers: 7 };
+const deathFrame = () => infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1;
+
+test('GPU limits: crowd layouts bind matrix columns or instanceMatrix (never both); frozen corpse pages stay within buffer headroom', () => {
+  const geometry = new BufferGeometry();
+  for (const [name, size] of [['position', 3], ['normal', 3], ['color', 3], ['_parts', 4], ['_dogCream', 3]] as const) geometry.setAttribute(name, new BufferAttribute(new Float32Array(size * 3), size));
+  const instance = new InstancedInterleavedBuffer(new Float32Array(8), 8, 1);
+  geometry.setAttribute('_state', new InterleavedBufferAttribute(instance, 4, 0)); geometry.setAttribute('_variant', new InterleavedBufferAttribute(instance, 4, 4));
+  const columns = new InstancedInterleavedBuffer(new Float32Array(16), 16, 1);
+  for (let c = 0; c < 4; c++) geometry.setAttribute(`_crowd${c}`, new InterleavedBufferAttribute(columns, 4, c * 4));
+  const layout = crowdVertexLayout(geometry, new InstancedBufferAttribute(new Float32Array(16), 16));
+  expect(layout).toEqual({ buffers: 7, locations: 11, webgpu: true, webgl2: true });
+
+  const baked = bakeInfected(createInfectedPlaceholder('runner'), [], false); packCrowdParts(baked.geometry);
+  const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial();
+  pool.prepare('plain', baked.geometry, material, baked.clip, deathFrame());
+  for (const id of [1, 2]) pool.place({ id } as EntitySnapshot, 'plain', baked.geometry, material, baked.clip, deathFrame(), new Matrix4(), new Color(1, 1, 1), [0, 0, 0]);
+  const page = pool.children[0] as InstancedMesh, pageLayout = crowdVertexLayout(page.geometry, page.instanceMatrix);
+  const surface = ['position', 'normal', 'color', '_parts'].map(name => page.geometry.getAttribute(name) as InterleavedBufferAttribute);
+  expect(surface.every(a => a.isInterleavedBufferAttribute && a.data === surface[0].data)).toBe(true);
+  expect(pageLayout.buffers + 1).toBeLessThanOrEqual(CROWD.buffers); // + placement colour
+  expect(pageLayout.locations + 1).toBeLessThanOrEqual(CROWD.attributes);
+  pool.dispose(); baked.geometry.dispose(); material.dispose();
+});
+
+test('skinned crowd: four-influence packing, joint·bind⁻¹ atlas rows, and corpse freezing with the shader blend', () => {
+  const pose = (x: number, angle: number) => new Matrix4().compose(new Vector3(x, 1, 0), new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), angle), new Vector3(1, 1, 1));
+  const { dominant, skin } = packSkin([3, 7, 12, 0], [.2, .5, .3, 0], 1, false);
+  expect(dominant[0]).toBe(7);
+  expect(skin[0] % 32).toBe(12); expect(Math.floor(skin[0] / 32) % 32).toBe(3);
+  expect(1 - skin[1] - skin[2] - skin[3]).toBeCloseTo(.5);
+  const rest = [pose(0, 0), pose(.5, .3)], frame = [pose(.1, .2), pose(.7, -.4)];
+  const binds = restInverses(rest.map(m => ({ matrixWorld: m })));
+  const rows = new Float32Array(32); frame.forEach((m, i) => m.toArray(rows, i * 16));
+  const gpu = new Float32Array(32); premultiplyRow(rows, gpu, binds, 0, 2);
+  const local = new Vector3(.1, .2, .3), world = local.clone().applyMatrix4(rest[1]);
+  expect(world.applyMatrix4(new Matrix4().fromArray(gpu, 16)).distanceTo(local.applyMatrix4(frame[1]))).toBeLessThan(1e-5);
+  const clip = { parts: ['a', 'b'], frames: 1, duration: 1, matrices: rows, binds };
+  const out = skinnedVertexMatrix(clip, 0, new BufferAttribute(new Float32Array([0, 0, 0, 0]), 4), new BufferAttribute(new Float32Array([1, .25, 0, 0]), 4), 0, new Float32Array(16));
+  const a = new Matrix4().multiplyMatrices(frame[0], rest[0].clone().invert()), b = new Matrix4().multiplyMatrices(frame[1], rest[1].clone().invert());
+  expect([...out].map(v => +v.toFixed(5))).toEqual(a.toArray().map((v, i) => +(v * .75 + b.elements[i] * .25).toFixed(5)));
+});
+
+test('corpse pages: bodies persist past the old cap, bounds stay conservative, culling restores identity/pose/tint, normals survive vec4 padding', () => {
+  const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
+  const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial(), records = new Map<number, EntitySnapshot>();
+  try {
+    for (let id = 1; id <= 260; id++) {
+      const e = { id, corpse: true } as EntitySnapshot; records.set(id, e);
+      pool.place(e, 'runner', baked.geometry, material, baked.clip, deathFrame(), new Matrix4().makeTranslation(id * .01, 0, 0), new Color('white'), [0, 0, 0]);
+    }
+    pool.begin(id => records.get(id)); expect(pool.snapshot().instances).toBe(260);
+    for (const child of pool.children) {
+      const mesh = child as InstancedMesh, local = mesh.geometry.boundingSphere!, matrix = new Matrix4();
+      for (let index = 0; index < mesh.count; index++) {
+        mesh.getMatrixAt(index, matrix);
+        expect(mesh.boundingSphere!.center.distanceTo(local.center.clone().applyMatrix4(matrix)) + local.radius).toBeLessThanOrEqual(mesh.boundingSphere!.radius + 1e-5);
+      }
+    }
+    records.delete(1); pool.begin(id => records.get(id)); expect(pool.snapshot().instances).toBe(259);
+  } finally { pool.dispose(); }
+
+  const culled = new StaticCorpses(), live = new Map<number, EntitySnapshot>();
+  const add = (id: number, x: number, tint: string) => { const e = { id, corpse: true, transform: { x, y: .7, z: 0 } } as EntitySnapshot; live.set(id, e); culled.place(e, 'runner', baked.geometry, material, baked.clip, 0, new Matrix4().makeTranslation(x, 0, 0), new Color(tint), [id / 10, 0, 0]); };
+  add(2, 9.5, '#3070b0'); add(1, 0, '#e03020');
+  const page = culled.children[0] as InstancedMesh, initial = culled.drawn().sort((p, q) => p.id - q.id);
+  const camera = new OrthographicCamera(-2, 2, 2, -2, .1, 30), frustum = new Frustum();
+  const aim = (x: number) => { camera.position.set(x, 10, 0); camera.lookAt(x, 0, 0); camera.updateMatrixWorld(true); frustum.setFromProjectionMatrix(new Matrix4().multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse)); culled.begin(id => live.get(id)); culled.cull?.(frustum); (page.onAfterRender as () => void)(); };
+  try {
+    aim(0); expect(page.count).toBe(1); expect(culled.snapshot().instances).toBe(2);
+    expect(page.geometry.getAttribute('_variant').getX(0) % 2).toBeCloseTo(new Color('#e03020').r);
+    aim(9.5); expect(culled.snapshot().figures.filter(f => f.drawn).map(f => f.id)).toEqual([2]);
+    expect(page.geometry.getAttribute('_variant').getX(0) % 2).toBeCloseTo(new Color('#3070b0').r);
+    expect(culled.drawn().sort((p, q) => p.id - q.id)).toEqual(initial);
+  } finally { culled.dispose(); }
+
+  const source = baked.geometry.getAttribute('normal'), padded = new Float32Array(source.count * 4);
+  for (let i = 0; i < source.count; i++) { padded[i * 4] = source.getX(i); padded[i * 4 + 1] = source.getY(i); padded[i * 4 + 2] = source.getZ(i); }
+  const paddedGeometry = baked.geometry.clone(); paddedGeometry.setAttribute('normal', new BufferAttribute(padded, 4));
+  const expected = new Float32Array(source.count * 3), matrix = new Matrix4(), point = new Vector3(), parts = baked.geometry.getAttribute('_parts');
+  for (let i = 0; i < source.count; i++) { matrix.fromArray(baked.clip.matrices, parts.getX(i) * 16); point.set(source.getX(i), source.getY(i), source.getZ(i)).transformDirection(matrix).toArray(expected, i * 3); }
+  const frozen = new StaticCorpses();
+  try {
+    frozen.place({ id: 1 } as EntitySnapshot, 'runner', paddedGeometry, material, baked.clip, 0, new Matrix4(), new Color('white'), [0, 0, 0]);
+    const normal = (frozen.children[0] as InstancedMesh).geometry.getAttribute('normal');
+    expect(normal.itemSize).toBe(3);
+    expect(Float32Array.from({ length: normal.count * 3 }, (_, i) => normal.getComponent(Math.floor(i / 3), i % 3))).toEqual(expected);
+  } finally { frozen.dispose(); baked.geometry.dispose(); paddedGeometry.dispose(); material.dispose(); }
+});
+
+test('LOD selection: authored distance bands with hysteresis; game-camera-size crowd figures never take the far silhouette', () => {
+  expect([0, 7, 9, 25].map(d => pickLod(d))).toEqual(['lod0', 'lod0', 'lod1', 'lod2']);
+  expect(pickLod(9, 'lod0')).toBe('lod0'); expect(pickLod(10.5, 'lod0')).toBe('lod1');
+  expect(pickLod(7, 'lod1')).toBe('lod1'); expect(pickLod(5.5, 'lod1')).toBe('lod0');
+  expect(pickLod(120, 'lod0')).toBe('lod2'); expect(pickLod(4, 'lod2')).toBe('lod0');
+  expect(corpseLod(7.9)).toBe('lod1'); expect(corpseLod(9, 'lod1')).toBe('lod1'); expect(corpseLod(10, 'lod1')).toBe('lod2');
+  expect(crowdLod(89, 'lod1')).toBe('lod1'); expect(crowdLod(87, 'lod1')).toBe('lod2'); expect(crowdLod(103, 'lod2')).toBe('lod2');
+  for (const pixels of [105, 160, 300]) for (const previous of [undefined, 'lod1', 'lod2'] as const) expect(crowdLod(pixels, previous)).toBe('lod1');
+  expect(propLod(129)).toBe('lod0'); expect(propLod(111, 'lod0')).toBe('lod1'); expect(propLod(145, 'lod1')).toBe('lod0');
+});
+
+test('materials: palette program keys match Three through weather and node changes; uniforms share a render group per material only', () => {
+  const lighting = new Lighting(new Scene()), materials = new Materials(lighting);
+  try {
+    const material = materials.get('sidewalk'), reference = MeshLambertNodeMaterial.prototype.customProgramCacheKey;
+    const check = () => expect(material.customProgramCacheKey()).toBe(reference.call(material));
+    check(); material.fade.value = .3; check();
+    material.setWeatherMode(weatherMaterialFlags.fog | weatherMaterialFlags.wet); check();
+    material.positionNode = vec3(1, 2, 3); check(); material.positionNode = null; check();
+    Object.defineProperty(material, 'extraNode', { value: float(.5), configurable: true }); check();
+    const copy = material.frozenCopy(); expect(copy.customProgramCacheKey()).toBe(reference.call(copy)); copy.dispose();
+    const first = materials.get('asphalt'), second = materials.get('grass'), group = first.fade.groupNode;
+    expect(group.shared).toBe(true); expect(group.updateType).toBe('render');
+    for (const node of [first.emissivePower, first.hitFlash, first.figureRim]) expect(node.groupNode).toBe(group);
+    expect(second.fade.groupNode).not.toBe(group);
+    first.fade.value = .2; expect(second.fade.value).toBe(1);
+  } finally { materials.dispose(); lighting.dispose(); }
+});
+
+test('texture route: lossless 256-byte-aligned float uploads; cold WebGPU atlases map, warm ones reuse Three, ranges write rows', () => {
+  let bytes = new ArrayBuffer(0);
+  const buffer = { getMappedRange: () => bytes, unmap: vi.fn(), destroy: vi.fn() };
+  const command = {}, encoder = { copyBufferToTexture: vi.fn(), finish: () => command };
+  const gpu = { createBuffer: vi.fn(({ size }: { size: number }) => { bytes = new ArrayBuffer(size); return buffer; }), createCommandEncoder: vi.fn(() => encoder), queue: { submit: vi.fn() } };
+  const width = 76, backing = Float32Array.from({ length: width * 8 + 4 }, (_, i) => i * .12345), pixels = backing.subarray(4);
+  uploadFloatTexture(gpu, {}, pixels, width, 2);
+  const stride = Math.ceil(width * 16 / 256) * 256, source = new Uint8Array(pixels.buffer, pixels.byteOffset, pixels.byteLength), mapped = new Uint8Array(bytes);
+  for (let row = 0; row < 2; row++) expect(mapped.slice(row * stride, row * stride + width * 16)).toEqual(source.slice(row * width * 16, (row + 1) * width * 16));
+  expect(buffer.unmap.mock.invocationCallOrder[0]).toBeLessThan(encoder.copyBufferToTexture.mock.invocationCallOrder[0]);
+
+  gpu.queue.submit.mockClear();
+  const original = vi.fn(), write = vi.fn(), data = { texture: {}, glTextureType: 0, glFormat: 0, glType: 0 };
+  const backend = { ...gpu, device: { ...gpu, queue: { ...gpu.queue, writeTexture: write } } as FloatUploadDevice, get: () => data, updateTexture: original };
+  const texture = new DataTexture(new Float32Array(128), 4, 8, RGBAFormat, FloatType);
+  installTextureRanges(backend); backend.updateTexture(texture, {});
+  expect(original).not.toHaveBeenCalled(); expect(gpu.queue.submit).toHaveBeenCalledOnce();
+  backend.updateTexture(texture, {}); expect(original).toHaveBeenCalledOnce();
+  texture.addUpdateRange(96, 32); backend.updateTexture(texture, {}); expect(write).toHaveBeenCalledOnce();
+  texture.dispose();
+});
