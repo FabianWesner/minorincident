@@ -72,7 +72,7 @@ describe('L2 one-attempt interactions', () => {
     console.log('board ticks', times.join(','));
   }, 600_000);
 
-  test('@nightly standing anywhere in a ring counts: hold at the edge, and E from the edge', async () => {
+  test('standing @nightly anywhere in a ring counts: hold at the edge, and E from the edge', async () => {
     for (const seed of [1, 2, 3]) for (const name of ['l2-board', 'l2-axe-rack']) for (const press of [false, true]) {
       const l = await atStart(seed), a = l.mission.def.anchors[name], p = l.world.entities.get(1)!.transform;
       if (name === 'l2-board') clickAndWait(l.world, l.mission.def.anchors['l2-axe-rack'], () => l.mission.state.l2!.axe);

@@ -13,7 +13,7 @@ test('T-E29-02-preset @E29-AC02 L7-default retains the five prior weapons and le
   expect(save.ownedActions).not.toContain('weapon.rocket-launcher');
 });
 
-test('@nightly T-E29-02-cli @E29-AC02 explicit and all-level CLI registration include L7 in campaign order', () => {
+test('T-E29-02-cli @nightly @E29-AC02 explicit and all-level CLI registration include L7 in campaign order', () => {
   expect(runnerLevels).toEqual(Array.from({ length: 10 }, (_, i) => `L${i + 1}`));
   const out = 'test-results/spec-audit-c/l7-cli.json';
   execFileSync(process.execPath, ['--import', 'tsx', 'tools/sim-runner/index.ts', '--level', 'L7', '--ticks', '0', '--out', out], { stdio: 'pipe' });

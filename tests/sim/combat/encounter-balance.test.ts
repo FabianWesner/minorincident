@@ -7,7 +7,7 @@ const median = (values: number[]) => { const s = [...values].sort((a, b) => a - 
 // PO rule "fight a few, flee from many" (PO 10-08: "I killed a single zombie efficiently but already down to 84. That's
 // too tough."): an efficient clicker standing its ground loses <= 5 HP (median) to one L1 runner, ~5-15 to two, ~15-30
 // to three, and six kill a courier that does not retreat.
-test('@nightly T-E05-encounter @E05 @E19 efficient clicker HP lost per encounter: one infected <= 5 HP (bat and unarmed), two/three with the bat <= 15/30', async () => {
+test('T-E05-encounter @nightly @E05 @E19 efficient clicker HP lost per encounter: one infected <= 5 HP (bat and unarmed), two/three with the bat <= 15/30', async () => {
   const rows: EncounterResult[] = [];
   const table: Record<string, { median: number; p80: number; died: number; seeds: number }> = {};
   for (const policy of ['hold', 'engage', 'misses'] as const) for (const weapon of ['weapon.bat', 'weapon.fists']) for (const count of [1, 2, 3, 6]) {

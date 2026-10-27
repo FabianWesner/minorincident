@@ -10,7 +10,7 @@ import { preset } from '../../../src/sim/progression/Campaign';
 import type { DistrictLayout } from '../../../src/levels/districts/types';
 const layout = JSON.parse(readFileSync('public/assets/layouts/D-CURE.layout.json', 'utf8')) as DistrictLayout;
 
-for (const tier of ['high', 'low'] as const) test(`@nightly T-E32-21-E3-${tier} @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets`, async () => {
+for (const tier of ['high', 'low'] as const) test(`T-E32-21-E3-${tier} @nightly @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets`, async () => {
   const w = new SimWorld(); await w.init();
   try {
     w.loadComposition(compositions.L10, [layout], 32); applyCampaign(w, preset('L10-default')); w.chunks!.setQuality(tier);
@@ -61,7 +61,7 @@ for (const tier of ['high', 'low'] as const) test(`@nightly T-E32-21-E3-${tier} 
   } finally { w.dispose(); }
 });
 
-for (const tier of ['high', 'low'] as const) test(`@nightly T-E32-21-E3-overlap-${tier} @E32-AC06 @E32-AC21 full cap defers assault, dead bodies survive replenishment and revisit`, async () => {
+for (const tier of ['high', 'low'] as const) test(`T-E32-21-E3-overlap-${tier} @nightly @E32-AC06 @E32-AC21 full cap defers assault, dead bodies survive replenishment and revisit`, async () => {
   const w = new SimWorld(); await w.init();
   try {
     w.loadComposition(compositions.L10, [layout], 32); applyCampaign(w, preset('L10-default')); w.chunks!.setQuality(tier);
@@ -88,7 +88,7 @@ for (const tier of ['high', 'low'] as const) test(`@nightly T-E32-21-E3-overlap-
   } finally { w.dispose(); }
 });
 
-test('@nightly T-E32-10-E3 @E32-AC10 production composition introduces one reserved pursuer behind R1', async () => {
+test('T-E32-10-E3 @nightly @E32-AC10 production composition introduces one reserved pursuer behind R1', async () => {
   const w = new SimWorld(); await w.init();
   try {
     w.loadComposition(compositions.L10, [layout], 32); applyCampaign(w, preset('L10-default'));

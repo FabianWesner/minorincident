@@ -58,7 +58,7 @@ describe('L1 v2 mission', () => {
     expect(t).toBeGreaterThanOrEqual(l1v2.bots.completeMedianS[0]);
   }, HEAVY);
 
-  test('@nightly T-E19-03 @E19 @E19-AC03 newbie bot finishes single seed, median 1:30-3:30, deaths <= 1', async () => {
+  test('T-E19-03 @nightly @E19 @E19-AC03 newbie bot finishes single seed, median 1:30-3:30, deaths <= 1', async () => {
     const runs: L1Report[] = [];
     for (const seed of seeds) { const { world: w, mission } = await loadL1(seed); runs.push(runL1(w, mission, 'newbie', { seed })); w.dispose(); }
     record('newbie-bots', runs);
@@ -69,7 +69,7 @@ describe('L1 v2 mission', () => {
     expect(t).toBeGreaterThanOrEqual(l1v2.bots.newbieMedianS[0]);
   }, HEAVY);
 
-  test('@nightly T-E19-10 @E19 the weapon objective and its garage-door marker are live right after the exits, zombies keep acting', async () => {
+  test('T-E19-10 @nightly @E19 the weapon objective and its garage-door marker are live right after the exits, zombies keep acting', async () => {
     const { world: w, mission } = await load(2); w.combat!.damage.god = true;
     runL1(w, mission, 'complete', { seed: 2, stopWhen: m => m.state.l1!.exitIds.length > 0 });
     for (let i = 0; i < 5; i++) w.update();
@@ -79,7 +79,7 @@ describe('L1 v2 mission', () => {
     expect(w.infected!.active.filter(e => e.health.current > 0).map(e => `${e.transform.x.toFixed(1)},${e.transform.z.toFixed(1)}`).join('|')).not.toBe(before);
   }, HEAVY);
 
-  test('@nightly T-106 @E19 death during Find something to defend yourself respawns near the garage bat on a cleared approach', async () => {
+  test('T-106 @nightly @E19 death during Find something to defend yourself respawns near the garage bat on a cleared approach', async () => {
     const { world: w, mission } = await load(2);
     runL1(w, mission, 'complete', { seed: 2, stopWhen: m => m.state.steps.weapon.status === 'active' });
     w.update();
@@ -101,7 +101,7 @@ describe('L1 v2 mission', () => {
     expect(approachThreats).toHaveLength(0);
   }, HEAVY);
 
-  test('@nightly T-E19-evade @E19 @E19-AC03 evade-only bot never attacks and still finishes', async () => {
+  test('T-E19-evade @nightly @E19 @E19-AC03 evade-only bot never attacks and still finishes', async () => {
     const { world: w, mission } = await load(3); let attacks = 0;
     w.events.on('combat.attack', e => { if (e.type === 'combat.attack' && e.sourceId === 1) attacks++; });
     const run = runL1(w, mission, 'evade-only', { seed: 3 });
@@ -109,7 +109,7 @@ describe('L1 v2 mission', () => {
     expect(run.outcome).toBe('complete'); expect(attacks).toBe(0);
   }, HEAVY);
 
-  test.each([false, true])('@nightly T-E19-06 @E19 @E19-AC06 systemic spread, unopposed observer=%s', async (unopposed) => {
+  test.each([false, true])('T-E19-06 @nightly @E19 @E19-AC06 systemic spread, unopposed observer=%s', async (unopposed) => {
     // The full single seed quantitative proof is unopposed; seed 7 retains the genuine forecourt regression.
     const runs: L1Report[] = [];
     for (const seed of unopposed ? seeds : [7]) {
@@ -135,7 +135,7 @@ describe('L1 v2 mission', () => {
     expect(at(120).filter(n => n >= l1v2.bots.idleSpread.floorAt120s).length).toBeGreaterThanOrEqual(l1v2.bots.idleSpread.floorSeeds);
   }, HEAVY);
 
-  test('@nightly T-E19-07 @E19 @E19-AC07 accident releases exactly 5 infected, >= 3 headings, technician entity', async () => {
+  test('T-E19-07 @nightly @E19 @E19-AC07 accident releases exactly 5 infected, >= 3 headings, technician entity', async () => {
     for (const seed of seeds) {
       const { world: w, mission } = await loadL1(seed); world = w;
       const tech = w.entities.get(mission.state.l1!.techId)!, variant = tech.civilian!.variant, id = tech.id;
@@ -171,7 +171,7 @@ describe('L1 v2 mission', () => {
     for (const r of runs) expect(r.bites, `seed ${r.seed}, exit victim ${r.victim}`).toBeGreaterThan(0);
   }, HEAVY);
 
-  test('@nightly T-E19-15 @E19 @E19-AC15 bat only via the garage interaction, empty starting loadout', async () => {
+  test('T-E19-15 @nightly @E19 @E19-AC15 bat only via the garage interaction, empty starting loadout', async () => {
     const { world: w, mission } = await load();
     expect(w.entities.get(1)!.weapons).toBeUndefined();
     expect([...w.entities.iterate()].filter(e => e.pickup && !('kind' in e.pickup && e.pickup.kind === 'medkit'))).toHaveLength(0);
@@ -195,7 +195,7 @@ describe('L1 v2 mission', () => {
     }
   }, HEAVY);
 
-  test('@nightly T-E19-respawn @E19 death at the door after the exits respawns on the checkpoint anchor with 2 s invulnerability and no infected within 9 m', async () => {
+  test('T-E19-respawn @nightly @E19 death at the door after the exits respawns on the checkpoint anchor with 2 s invulnerability and no infected within 9 m', async () => {
     for (const seed of [1, 2, 3]) {
       const { world: w, mission } = await loadL1(seed); world = w;
       runL1(w, mission, 'idle', { seed, stopWhen: m => m.state.l1!.exitIds.length > 0 });
@@ -215,7 +215,7 @@ describe('L1 v2 mission', () => {
     }
   }, HEAVY);
 
-  test('@nightly T-E19-house @E19 @E19-AC25 beat 9: ten residents come out of ONE house front door near the garage, one by one, 1.5-4 s apart', async () => {
+  test('T-E19-house @nightly @E19 @E19-AC25 beat 9: ten residents come out of ONE house front door near the garage, one by one, 1.5-4 s apart', async () => {
     const { world: w, mission } = await load(2);
     const doors: { id: string; tick: number }[] = [], appear = new Map<number, { tick: number; x: number; z: number }>(), path = new Map<number, number[]>();
     w.events.on('gate.changed', e => { if (e.type === 'gate.changed' && e.id.startsWith('door-')) doors.push({ id: e.id, tick: e.tick }); });
@@ -267,7 +267,7 @@ describe('L1 v2 mission', () => {
     expect(nearMax).toBeGreaterThanOrEqual(l1v2.director.hordeMinInfectedNearGarage);
   }, HEAVY);
 
-  test('@nightly T-E19-provenance @E19 PO 10-10: infected provenance is lab exits, house residents, authored street groups or bitten pedestrians', async () => {
+  test('T-E19-provenance @nightly @E19 PO 10-10: infected provenance is lab exits, house residents, authored street groups or bitten pedestrians', async () => {
     const report: { seed: number; profile: string; exits: number; house: number; bitten: number; deaths: number }[] = [];
     for (const [seed, profile] of [[1, 'complete'], [2, 'complete'], [3, 'newbie']] as const) {
       const { world: w, mission } = await loadL1(seed); world = w;
@@ -296,7 +296,7 @@ describe('L1 v2 mission', () => {
     record('provenance', report);
   }, HEAVY);
 
-  test('@nightly T-E19-05 @E19 fair accident: the blast pushes a player at the door back, front-door infected wait 2.5 s, staff are varied', async () => {
+  test('T-E19-05 @nightly @E19 fair accident: the blast pushes a player at the door back, front-door infected wait 2.5 s, staff are varied', async () => {
     const { world: w, mission } = await load(3); w.combat!.damage.god = true;
     runL1(w, mission, 'idle', { seed: 3, stopWhen: m => m.state.l1!.exitIds.length > 0 });
     const door = mission.def.anchors['lab-door'], p = w.entities.get(1)!.transform;
@@ -306,7 +306,7 @@ describe('L1 v2 mission', () => {
     const tints = ids.map(i => w.entities.get(i)!.appearance!.tint); expect(new Set(tints).size).toBe(tints.length);
   }, HEAVY);
 
-  test('@nightly T-E19-19 @E19 @E19-AC19 accident beat order flicker -> blast -> ringing -> smoke -> screams within 8 s after a 4-6 s calm', async () => {
+  test('T-E19-19 @nightly @E19 @E19-AC19 accident beat order flicker -> blast -> ringing -> smoke -> screams within 8 s after a 4-6 s calm', async () => {
     for (const seed of [1, 2, 3, 4, 5, 6]) {
       const { world: w, mission } = await loadL1(seed); world = w;
       const log: { type: string; tick: number }[] = [];
@@ -325,7 +325,7 @@ describe('L1 v2 mission', () => {
     }
   }, HEAVY);
 
-  test('@nightly T-E19-respawn-world @E19 PO rule: a death after the bat keeps the world (corpses, infected, pedestrians, props, objectives, bat)', async () => {
+  test('T-E19-respawn-world @nightly @E19 PO rule: a death after the bat keeps the world (corpses, infected, pedestrians, props, objectives, bat)', async () => {
     const { world: w, mission } = await load(4);
     runL1(w, mission, 'complete', { seed: 4, stopWhen: m => m.state.checkpoint === 'bat' && (m.state.l1!.house?.ids.length ?? 0) >= 3 });
     expect(mission.state.checkpoint).toBe('bat');
@@ -369,7 +369,7 @@ describe('L1 v2 mission', () => {
     expect(runL1(w, mission, 'complete', { seed: 4 }).outcome).toBe('complete');
   }, HEAVY);
 
-  test('@nightly T-E19-end @E19 fire station: shutter closes, caption, result fields (delivered, infected, turned, escaped)', async () => {
+  test('T-E19-end @nightly @E19 fire station: shutter closes, caption, result fields (delivered, infected, turned, escaped)', async () => {
     const { world: w, mission } = await load(5);
     const run = runL1(w, mission, 'complete', { seed: 5 });
     expect(run.outcome).toBe('complete');

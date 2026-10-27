@@ -7,7 +7,7 @@ import { groveWorld, step } from './l1-grove';
  * 0.3 m. At 0.3 the moving dog was drawn 40 cm into the pavement: its legs vanished, the paws lay as separate blobs and the buried
  * legs' sun shadow smeared out from under the body.
  */
-test('@nightly @E08 a moving pet dog stays at the civilian height above the ground', async () => {
+test('@E08 @nightly a moving pet dog stays at the civilian height above the ground', async () => {
   const { w } = await groveWorld(1);
   let moving = 0;
   for (let t = 0; t < 30 * 60; t++) {

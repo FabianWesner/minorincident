@@ -16,7 +16,7 @@ afterEach(() => { world?.dispose(); world = undefined; });
 const HEAVY = 1_800_000;
 const per = l4.perimeter, inside = (p: { x: number; z: number }) => p.x > per.x0 && p.x < per.x1 && p.z > per.z0 && p.z < per.z1;
 
-test('@nightly T-E22-wall @E22 @E22-AC13 the west wall falls to an announced Alpha by logged E26 damage and the horde comes through the gap (low)', async () => {
+test('T-E22-wall @nightly @E22 @E22-AC13 the west wall falls to an announced Alpha by logged E26 damage and the horde comes through the gap (low)', async () => {
   const l = await loadL4(3, 'low'); world = l.world; const w = l.world, m = l.mission;
   const damage: { slot: string; source: string; amount: number }[] = [], broken: string[] = [];
   w.events.on('barricade.damaged', e => { if (e.type === 'barricade.damaged' && e.groupId === 'l4-wall') damage.push({ slot: e.slotId, source: w.entities.get(e.sourceId)?.archetype ?? '?', amount: e.amount }); });

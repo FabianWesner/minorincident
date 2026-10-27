@@ -5,7 +5,7 @@ import type { SimWorld } from '../../../src/sim/world/SimWorld';
 let world: SimWorld | undefined;
 afterEach(() => { world?.dispose(); world = undefined; });
 
-test('@nightly @E20 truck brakes smoothly and holds for a stationary sedan in its lane', async () => {
+test('@E20 @nightly truck brakes smoothly and holds for a stationary sedan in its lane', async () => {
   const l = await loadL2(1); world = l.world; const w = world;
   let sedan = 0, held = false, previousV = 0, overlap = false, brakeMax = 0;
   runL2(w, l.mission, 'complete', { maxSeconds: 90, stopWhen: m => {
@@ -32,7 +32,7 @@ test('@nightly @E20 truck brakes smoothly and holds for a stationary sedan in it
   expect(truckBodyOverlap(after, 7.4, 2.1, w.entities.get(sedan)!, w)).toBe(false);
 }, 120_000);
 
-test('@nightly @E20 crossing traffic yields outside the truck sweep and lets the ride finish', async () => {
+test('@E20 @nightly crossing traffic yields outside the truck sweep and lets the ride finish', async () => {
   const l = await loadL2(1); world = l.world; const w = world;
   let traffic = 0, yielded = false, overlap = false;
   runL2(w, l.mission, 'complete', { maxSeconds: 100, stopWhen: m => {

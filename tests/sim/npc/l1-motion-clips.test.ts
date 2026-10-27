@@ -10,7 +10,7 @@ function legacyClip(state: string, speed: number, tier: 'frail' | 'average' | 'a
   if (speed > .06) return infectedClip('chase', 1, tier, false);
   return 'infected-idle';
 }
-test('@nightly @E19 @E19-AC18 infected clip follows ground speed over a 60 s outbreak (no skating)', async () => {
+test('@E19 @nightly @E19-AC18 infected clip follows ground speed over a 60 s outbreak (no skating)', async () => {
   const counts = { samples: 0, before: 0, after: 0 };
   for (const seed of [1, 2]) {
     const { w } = await groveWorld(seed); step(w, 120); releaseFive(w);

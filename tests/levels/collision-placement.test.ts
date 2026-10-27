@@ -11,7 +11,7 @@ import { levelThreeLayouts } from '../../src/levels/L3/layout';
 import { highwayColliders, highwayPoint } from '../../src/levels/L3/highway';
 
 // PO 10-19: every kind uses the same perimeter, including direct scripted displacement.
-test('@nightly L4 perimeter rejects placement and swept passage for every actor kind', async () => {
+test('L4 @nightly perimeter rejects placement and swept passage for every actor kind', async () => {
   const { world: w, mission: m } = await loadL4(1);
   try {
     w.combat!.damage.god = true;

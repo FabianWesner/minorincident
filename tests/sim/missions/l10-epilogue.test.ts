@@ -87,7 +87,7 @@ test('T-E32-26-resume-S9 @E32-AC26 fresh-clock save/load at mid-pull, title, cre
   } finally { w.dispose(); }
 });
 
-test('@nightly T-E32-25-cast-S9 @E32-AC25 @E32-AC31 production safe anchors emerge and bounded approaches collapse on both E18 tiers', async () => {
+test('T-E32-25-cast-S9 @nightly @E32-AC25 @E32-AC31 production safe anchors emerge and bounded approaches collapse on both E18 tiers', async () => {
   const { loadLevel } = await import('../../../tools/sim-runner/levels');
   for (const tier of ['high', 'low'] as const) {
     const w = await loadLevel('L10', 32);

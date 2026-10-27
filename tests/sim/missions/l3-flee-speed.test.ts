@@ -3,7 +3,7 @@ import { l3 } from '../../../src/data/l3';
 import { emptyInput } from '../../../src/input/InputFrame';
 import { followFrustum, loadL3 } from '../../../tools/sim-runner/l3Bots';
 
-test('@nightly T-E21-flee-speed @E21 regulars stay below courier speed, sprinters are at most 5% of successful spawns', async () => {
+test('T-E21-flee-speed @nightly @E21 regulars stay below courier speed, sprinters are at most 5% of successful spawns', async () => {
   const { world: w } = await loadL3(1);
   try {
     const ai = w.infected!, at = { x: 32, z: .5 };

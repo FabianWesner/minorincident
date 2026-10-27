@@ -4,7 +4,7 @@ import { loadL4 } from '../../tools/sim-runner/l4Bots';
 
 let world: SimWorld | undefined;
 afterEach(() => { world?.dispose(); world = undefined; });
-test('@nightly @E22 broken army lines stay destructible cover without a player rebuild interaction in war and collapse', async () => {
+test('@E22 @nightly broken army lines stay destructible cover without a player rebuild interaction in war and collapse', async () => {
   const loaded = await loadL4(2); world = loaded.world;
   const w = world, m = loaded.mission;
   m.completeObjective('ride'); m.completeObjective('quartermaster'); w.combat!.damage.god = true;

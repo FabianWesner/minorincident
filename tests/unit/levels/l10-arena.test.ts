@@ -7,7 +7,7 @@ import type { DistrictLayout, Point } from '../../../src/levels/districts/types'
 import { DistrictWorld } from '../../../src/sim/world/DistrictWorld';
 const layout = JSON.parse(readFileSync('public/assets/layouts/D-CURE.layout.json', 'utf8')) as DistrictLayout;
 
-test('@nightly T-E32-17-D4 @E32-AC03 @E32-AC17 R7 route, installation and three dodge lanes connect to the console', () => {
+test('T-E32-17-D4 @nightly @E32-AC03 @E32-AC17 R7 route, installation and three dodge lanes connect to the console', () => {
   const w = new DistrictWorld(compositions.L10, [layout], 32);
   const [ox, oz] = cure.anchors['dispersal-origin'];
   const worldPoint = ([x, z]: Point): Point => [ox + x, oz + z];

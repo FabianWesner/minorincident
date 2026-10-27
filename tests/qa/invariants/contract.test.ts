@@ -76,12 +76,12 @@ function morningSweep() {
 }
 
 describe('automatic regression invariants', () => {
-  test('2 seated actors: every active sit/bench pose across L1–L10 and both quality tiers has seat support', async () => {
+  test('2 @nightly seated actors: every active sit/bench pose across L1–L10 and both quality tiers has seat support', async () => {
     const result = await morningSweep();
     expect(result.seats.slice(0, 20), `${result.seats.length} seat failures; P1-112`).toEqual([]);
   }, 480_000);
 
-  test('3 scripted actors: all initial cast, depot clerk and lab technician persist until their scripted exits', async () => {
+  test('3 @nightly scripted actors: all initial cast, depot clerk and lab technician persist until their scripted exits', async () => {
     const morning = await morningSweep();
     const world = await loadLevel('L1', 1), mission = world.missions!;
     // Run the same L1 story controller used by the depot trigger; it stays private in production.

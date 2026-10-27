@@ -21,7 +21,7 @@ const skins = (manifest as AssetDef[]).filter(d => /^(npc|inf)\./.test(d.id) && 
 // Upright size, independently of crouch/death/flight poses. Check the actual merged vertices transformed by the
 // baked rigid-part matrices, rather than trusting manifest dimensions or the instance-matrix scale alone.
 for (const quality of ['high', 'low']) for (const lod of ['lod0', 'lod1', 'lod2'] as const) {
-  test(`@nightly every civilian, ally and infected skin has its age/species height in ${quality} ${lod} @E08 @E18`, async () => {
+  test(`every @nightly civilian, ally and infected skin has its age/species height in ${quality} ${lod} @E08 @E18`, async () => {
     for (const skin of skins) {
       const file = readFileSync(lod === 'lod0' ? skin.glb : skin.lods?.[lod] ?? skin.glb);
       const model = (await loader.parseAsync(stripGlbTextures(file), '')).scene;

@@ -27,7 +27,7 @@ const record = (name: string, value: unknown) => { mkdirSync('test-results/epics
 const sector = (p: P) => Math.floor((Math.atan2(p.z - l4.map.centre.z, p.x - l4.map.centre.x) + Math.PI) / (Math.PI / 4)) % 8;
 
 describe('L4 PO round 10-13', () => {
-  test('@nightly T-E22-po-1 @E22 @E22-AC04 the courier gets off the first bus inside the military area and cannot walk out before the line breaks', async () => {
+  test('T-E22-po-1 @nightly @E22 @E22-AC04 the courier gets off the first bus inside the military area and cannot walk out before the line breaks', async () => {
     const l = await loadL4(1); world = l.world; const w = l.world, m = l.mission, s = m.state.l4!;
     const lines: string[] = []; w.events.on('dialogue.line', e => { if (e.type === 'dialogue.line') lines.push(e.id); });
     while (s.phase === 'convoy') w.update();
@@ -67,7 +67,7 @@ describe('L4 PO round 10-13', () => {
     record('po-round-perimeter', { exit: p0, bus, out });
   }, HEAVY);
 
-  test('@nightly T-E22-po-2 @E22 @E22-AC05 @E22-AC07 soldiers relaxed before the alarm and at their posts within 10 s of it; people in routines, then fleeing and hiding', async () => {
+  test('T-E22-po-2 @nightly @E22 @E22-AC05 @E22-AC07 soldiers relaxed before the alarm and at their posts within 10 s of it; people in routines, then fleeing and hiding', async () => {
     const l = await loadL4(2); world = l.world; const w = l.world, m = l.mission, s = m.state.l4!;
     w.combat!.damage.god = true;
     while (s.phase === 'convoy') w.update();

@@ -3,7 +3,7 @@ import { cloneData } from '../../src/core/clone';
 import { loadL4, runL4 } from '../../tools/sim-runner/l4Bots';
 import { sameClone } from '../fixtures/sameClone';
 
-test('@nightly T-E22-20-clone-l4 @E22-AC20 L4 turn and line-break checkpoints equal the structuredClone snapshot, sharing included', async () => {
+test('T-E22-20-clone-l4 @nightly @E22-AC20 L4 turn and line-break checkpoints equal the structuredClone snapshot, sharing included', async () => {
   const { world, mission } = await loadL4(2, 'low');
   try {
     const checked: string[] = [];

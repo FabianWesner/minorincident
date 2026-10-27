@@ -58,7 +58,7 @@ async function trace(tier: 'high' | 'low', opening: 'direct' | 'side') {
     return report;
   } finally { w.dispose(); }
 }
-test('@nightly PO #7 @E20 supermarket to bridge has steady sight-driven action, an open escape and unchanged newbie survival', async () => {
+test('PO @nightly #7 @E20 supermarket to bridge has steady sight-driven action, an open escape and unchanged newbie survival', async () => {
   const results = [];
   for (const tier of ['high', 'low'] as const) results.push(await measured(tier));
   for (const r of results) {

@@ -5,7 +5,7 @@ import { compositions } from '../../src/levels/compositions';
 import { crossing } from '../../src/levels/L9/district';
 import type { DistrictLayout } from '../../src/levels/districts/types';
 const layout = JSON.parse(readFileSync('public/assets/layouts/D-CROSSING.layout.json','utf8')) as DistrictLayout;
-for (const route of crossing.routes) test(`@nightly T-E31-05-${route.id} @E31-AC05 existing E09 physics completes ${route.id} and its off-road detour`, async () => {
+for (const route of crossing.routes) test(`T-E31-05-${route.id} @nightly @E31-AC05 existing E09 physics completes ${route.id} and its off-road detour`, async () => {
   const w = new SimWorld(); await w.init();
   try {
     for (const path of [route.points, route.detour]) {

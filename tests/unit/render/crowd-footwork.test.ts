@@ -5,7 +5,7 @@ import type { EntitySnapshot } from '../../../src/sim/world/types';
 import { drive, metrics, scenarios } from '../../../tools/crowdfoot/harness';
 
 /** Crowd footwork regression: planted feet must not slide (≤ 3 cm per contact) or yaw (≤ 8°) near the camera. */
-test('@nightly pedestrian footwork: planted feet ≤ 3 cm slide, ≤ 8° yaw drift, steps through turns @E07', { timeout: 120_000 }, async () => {
+test('pedestrian @nightly footwork: planted feet ≤ 3 cm slide, ≤ 8° yaw drift, steps through turns @E07', { timeout: 120_000 }, async () => {
   const results: Record<string, unknown>[] = [];
   for (const [asset, scale] of [['npc.civilian-man-a', 1], ['npc.civilian-woman-a', 1], ['npc.civilian-man-a', .7]] as const) {
     for (const [name, plan] of Object.entries(scenarios.civilian)) {

@@ -8,7 +8,7 @@ function files(dir: string): string[] {
   return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => entry.isDirectory() ? files(`${dir}/${entry.name}`) : entry.name.endsWith('.ts') ? [`${dir}/${entry.name}`] : []);
 }
 
-test('@nightly T-E01-03 @E01 @E01-AC03 sim transitive import graph has no renderer or DOM dependencies', () => {
+test('T-E01-03 @nightly @E01 @E01-AC03 sim transitive import graph has no renderer or DOM dependencies', () => {
   const seen = new Set<string>();
   const mathClasses = new Set(['Vector2', 'Vector3', 'Quaternion', 'Euler', 'Matrix3', 'Matrix4', 'Box3', 'Sphere', 'Ray', 'MathUtils']);
   function visit(file: string): void {

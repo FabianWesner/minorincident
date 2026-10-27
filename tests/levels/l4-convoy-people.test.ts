@@ -19,7 +19,7 @@ function overlaps(v: EntitySnapshot, i: number, e: EntitySnapshot): boolean {
 }
 
 for (const tier of ['high', 'low'] as const) for (const seed of [1, 2, 3]) {
-  test(`@nightly T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, ${tier}, seed ${seed}`, async () => {
+  test(`T-E22-04g @nightly @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, ${tier}, seed ${seed}`, async () => {
     const { world: w, mission } = await loadL4(seed, tier), state = mission.state.l4!;
     // Low-tier population may omit pets: retain a real pet in every seed audit.
     const nav = w.infected!.nav, cell = nav.nearestCell(-24, 4, .4);

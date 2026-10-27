@@ -7,7 +7,7 @@ import type { SimWorld } from '../../src/sim/world/SimWorld';
 let world: SimWorld | undefined;
 afterEach(() => { world?.dispose(); world = undefined; });
 const distance = (a: { x: number; z: number }, b: { x: number; z: number }) => Math.hypot(a.x - b.x, a.z - b.z);
-for (const tier of ['high', 'low'] as const) for (const seed of [1, 2, 3]) test(`@nightly L4 war tank Alphas resume combat and bodies persist (${tier}, seed ${seed}) @E22-AC12 @E22-AC14`, async () => {
+for (const tier of ['high', 'low'] as const) for (const seed of [1, 2, 3]) test(`L4 @nightly war tank Alphas resume combat and bodies persist (${tier}, seed ${seed}) @E22-AC12 @E22-AC14`, async () => {
   const { world: w, mission: m } = await loadL4(seed, tier); world = w;
   const s = m.state.l4!, ai = w.infected!, p = w.entities.get(1)!;
   // Start at the reported battle state, leaving production controller/AI/cleanup active.

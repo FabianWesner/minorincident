@@ -5,7 +5,7 @@ import { preset } from '../../../src/sim/progression/Campaign';
 import { applyCampaign } from '../../../src/sim/progression/apply';
 
 for (const tier of ['high', 'low'] as const) {
-  test(`@nightly T-E32-02-minute-${tier} @E32-AC02 @E32-AC05 first minute remains axe-only despite historical unlocks`, async () => {
+  test(`T-E32-02-minute-${tier} @nightly @E32-AC02 @E32-AC05 first minute remains axe-only despite historical unlocks`, async () => {
     const w = await loadLevel('L10', 32);
     try {
       w.chunks!.setQuality(tier);
@@ -28,7 +28,7 @@ for (const tier of ['high', 'low'] as const) {
     } finally { w.dispose(); }
   });
 
-  test(`@nightly T-E32-28-cure-${tier} @E32-AC28 D-CURE prefetch reversal and five revisits retain corpse/pickup/boss state`, async () => {
+  test(`T-E32-28-cure-${tier} @nightly @E32-AC28 D-CURE prefetch reversal and five revisits retain corpse/pickup/boss state`, async () => {
     const w = await loadLevel('L10', 32);
     try {
       w.chunks!.setQuality(tier);
@@ -71,7 +71,7 @@ for (const tier of ['high', 'low'] as const) {
   });
 }
 
-for (const tier of ['high', 'low'] as const) test(`@nightly T-E32-28-seam-input-${tier} @E32-AC28 every D-CURE region seam supports live reversal, nav and persistent identities`, async () => {
+for (const tier of ['high', 'low'] as const) test(`T-E32-28-seam-input-${tier} @nightly @E32-AC28 every D-CURE region seam supports live reversal, nav and persistent identities`, async () => {
   const w = await loadLevel('L10', 32);
   try {
     w.chunks!.setQuality(tier); w.combat!.damage.god = true;

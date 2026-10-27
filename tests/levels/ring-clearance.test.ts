@@ -26,7 +26,7 @@ function blockers(layout: DistrictLayout, ring: [string, number, number, number]
 }
 
 describe('interaction rings are prop-free', () => {
-  test('@nightly L2 (all rings, 1.2 m around each ring)', async () => {
+  test('L2 @nightly (all rings, 1.2 m around each ring)', async () => {
     const l = await loadL2(1); world = l.world;
     const layout = levelTwoLayouts([grove()]).find(d => d.district === 'D-GROVE')!;
     expect(layout.placements.some(p => p.id === 'prop.fire-hydrant:857')).toBe(false); // the hydrant by the boarding approach

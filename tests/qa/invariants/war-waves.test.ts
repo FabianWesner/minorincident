@@ -3,7 +3,7 @@ import { loadLevel } from './world';
 import { l4, l4Edges, l4Emergence, l4Route, l4RoutePose, l4ConvoyStations } from '../../../src/data/l4';
 import { followFrustum } from '../../../tools/sim-runner/l3Bots';
 
-for (const tier of ['high', 'low'] as const) test(`@nightly 5 L4 ${tier}: every authored war wave and collapse batch spawns and reaches its goal area`, async () => {
+for (const tier of ['high', 'low'] as const) test(`5 @nightly L4 ${tier}: every authored war wave and collapse batch spawns and reaches its goal area`, async () => {
   const errors: string[] = [];
   // Each finite wave starts from the same authored camp. Reusing a 15-minute immortal battlefield let earlier
   // bites, retreat orders and director beats contaminate later route measurements.

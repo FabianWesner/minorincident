@@ -136,7 +136,7 @@ describe('L4 static', () => {
     expect(l4Convoy.endX).toBe(-11);
   });
 
-  test('@nightly T-E22-04b @E22 @E22-AC04 convoy vehicles never overlap each other, and never touch a static collider (any height), over the whole scripted ride and when parked', () => {
+  test('T-E22-04b @nightly @E22 @E22-AC04 convoy vehicles never overlap each other, and never touch a static collider (any height), over the whole scripted ride and when parked', () => {
     const route = l4Route(), stations = l4ConvoyStations(route.length), veh = l4.convoy.vehicles, bad: string[] = [];
     type Obb = { x: number; z: number; yaw: number; hl: number; hw: number };
     const obb = (s: number, v: { len: number; wid: number }): Obb => { const p = l4RoutePose(route, s); return { x: p.x, z: p.z, yaw: p.yaw, hl: v.len / 2, hw: v.wid / 2 }; };

@@ -27,7 +27,7 @@ function die(w: SimWorld, m: Mission, id: string): void {
 }
 
 describe('L2 escape death loop', () => {
-  test('@nightly the escape checkpoint waits for a calm moment (nothing within 10 m, health >= 70 %)', async () => {
+  test('the @nightly escape checkpoint waits for a calm moment (nothing within 10 m, health >= 70 %)', async () => {
     const l = await loadL2(2); world = l.world; const w = l.world, m = l.mission;
     runL2(w, m, 'complete', { stopWhen: mm => mm.state.l2!.radioAt > 0 });
     expect(m.state.l2!.radioAt).toBeGreaterThan(0);
@@ -56,7 +56,7 @@ describe('L2 escape death loop', () => {
     expect(m.state.checkpoint).toBe('escape');
   }, 600_000);
 
-  test('@nightly a courier who dies twice at the same checkpoint respawns with fewer infected within 25 m (the shared respawn already pushes them out of 9 m)', async () => {
+  test('a @nightly courier who dies twice at the same checkpoint respawns with fewer infected within 25 m (the shared respawn already pushes them out of 9 m)', async () => {
     const { w, m } = await atRadio();
     const n = scrum(w, 12); expect(n).toBeGreaterThanOrEqual(8);
     m.state.l2!.cpWait = []; m.requestCheckpoint('escape'); w.update(); w.update();

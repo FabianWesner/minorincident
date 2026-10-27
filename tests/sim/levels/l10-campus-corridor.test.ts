@@ -9,7 +9,7 @@ import { applyCampaign } from '../../../src/sim/progression/apply';
 import { preset } from '../../../src/sim/progression/Campaign';
 import type { DistrictLayout } from '../../../src/levels/districts/types';
 const layout = JSON.parse(readFileSync('public/assets/layouts/D-CURE.layout.json', 'utf8')) as DistrictLayout;
-for (const tier of ['high','low'] as const) test(`@nightly T-E32-03-D3-${tier} @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex`, async () => {
+for (const tier of ['high','low'] as const) test(`T-E32-03-D3-${tier} @nightly @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex`, async () => {
   const w = new SimWorld(); await w.init();
   try {
     w.loadComposition(compositions.L10, [layout], 32); applyCampaign(w, preset('L10-default')); w.chunks!.setQuality(tier);

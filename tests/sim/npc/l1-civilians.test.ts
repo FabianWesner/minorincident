@@ -9,7 +9,7 @@ const civilians = (w: Awaited<ReturnType<typeof groveWorld>>['w']) => [...w.enti
 const park = (w: Awaited<ReturnType<typeof groveWorld>>['w']) => { const p = w.entities.get(1)!; p.transform.x = -82; p.transform.z = -52; w.spatial.set(1, -82, -52); };
 
 describe('L1 v2 civilians and infection', () => {
-  test('@nightly T-E19-05 @E19 @E19-AC05 50-60 civilians, no idling, startle 0.3-0.8 s, flee slower than infected', async () => {
+  test('T-E19-05 @nightly @E19 @E19-AC05 50-60 civilians, no idling, startle 0.3-0.8 s, flee slower than infected', async () => {
     for (let seed = 1; seed <= 1; seed++) {
       const { w } = await groveWorld(seed);
       const people = civilians(w);
@@ -52,7 +52,7 @@ describe('L1 v2 civilians and infection', () => {
     }
   }, 240_000);
 
-  test('@nightly T-E19-06 @E19 @E19-AC06 every new infected is caused by a bite event (idle player, systemic spread, lane C AI)', async () => {
+  test('T-E19-06 @nightly @E19 @E19-AC06 every new infected is caused by a bite event (idle player, systemic spread, lane C AI)', async () => {
     const at120: number[] = [], at240: number[] = [];
     for (let seed = 1; seed <= 1; seed++) {
       const { w, outbreak } = await groveWorld(seed); park(w); expect(outbreak.aiBites()).toBe(true);
@@ -74,7 +74,7 @@ describe('L1 v2 civilians and infection', () => {
     expect(at120.filter(n => n >= l1v2.bots.idleSpread.floorAt120s).length).toBeGreaterThanOrEqual(l1v2.bots.idleSpread.floorSeeds);
   }, 1_800_000);
 
-  test('@nightly T-E19-18 @E19 @E19-AC18 infection continuity: id, asset, tint, accessories, 2.5-3.5 s, phases, speed tier', async () => {
+  test('T-E19-18 @nightly @E19 @E19-AC18 infection continuity: id, asset, tint, accessories, 2.5-3.5 s, phases, speed tier', async () => {
     const durations: number[] = [];
     for (let seed = 1; seed <= 20; seed++) {
       const { w, outbreak } = await groveWorld(seed, { civilians: 50 }); park(w);

@@ -11,7 +11,7 @@ vi.mock('node:fs', async importOriginal => {
 
 const actualFs = await vi.importActual<typeof import('node:fs')>('node:fs');
 
-test('@nightly T-E10-12 @E10 @E10-AC12 layout exports cache by authoring input; gameplay edits do not invalidate; exporter failures are fatal', () => {
+test('T-E10-12 @nightly @E10 @E10-AC12 layout exports cache by authoring input; gameplay edits do not invalidate; exporter failures are fatal', () => {
   // Unit tests exercise the build/cache contract from committed exports, without Blender.
   const cache=new Map(districts.map(id=>{const path=`.cache/layouts/${id}.json`;return [path,existsSync(path)?readFileSync(path):null] as const;}));
   vi.mocked(spawnSync).mockReturnValue({status:0} as ReturnType<typeof spawnSync>);

@@ -3,7 +3,7 @@ import { loadLevel } from './world';
 import { l2 } from '../../../src/data/l2';
 import { followFrustum } from '../../../tools/sim-runner/l3Bots';
 
-for (const tier of ['high', 'low'] as const) test(`@nightly 5 L2 escape ${tier}: every street batch and bridge cluster admits its quota and reaches its authored home`, async () => {
+for (const tier of ['high', 'low'] as const) test(`5 L2 escape ${tier}: every street batch and bridge cluster admits its quota and reaches its authored home`, async () => {
   const w = await loadLevel('L2', 1, tier);
   try {
     const s = w.missions!.state.l2!, c = w.missions!.l2! as unknown as { spawnRoute(): void; spawnEscape(): void; emergePending(all?: boolean): void };

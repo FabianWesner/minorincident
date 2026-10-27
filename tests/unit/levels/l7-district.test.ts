@@ -79,7 +79,7 @@ test('T-E29-10-fires @E29-AC10 production district installs persistent fires and
   } finally { world.dispose(); }
 });
 
-test('@nightly T-E29-09-assets @E29-AC09 W6 deliveries satisfy the existing geometry and LOD contracts', async () => {
+test('T-E29-09-assets @nightly @E29-AC09 W6 deliveries satisfy the existing geometry and LOD contracts', async () => {
   const { validateAssets } = await import('../../../tools/assets/validate');
   const manifest = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as import('../../../src/assets/types').AssetDef[];
   const reports = await validateAssets(manifest.filter(a => l5ShellAssets.includes(a.id)));

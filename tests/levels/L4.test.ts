@@ -48,7 +48,7 @@ describe('L4 The Safe City Falls', () => {
     }
   });
 
-  test('@nightly T-E22-01 @E22 @E22-AC01 mission graph ride -> quartermaster -> hold -> hide -> bar is completable, no fail timer', async () => {
+  test('T-E22-01 @nightly @E22 @E22-AC01 mission graph ride -> quartermaster -> hold -> hide -> bar is completable, no fail timer', async () => {
     const l = await loadL4(1); world = l.world; const m = l.mission;
     expect(validateMission(m.def)).toEqual([]);
     expect(m.def.steps.map(s => s.id)).toEqual(['ride', 'quartermaster', 'hold', 'hide', 'bar', 'wait']);
@@ -70,7 +70,7 @@ describe('L4 The Safe City Falls', () => {
     expect(r.maxConcurrent).toBeLessThanOrEqual(l4.war.caps.infected.high); expect(r.maxCharacters).toBeLessThanOrEqual(l4.war.caps.characters.high);
   }, HEAVY);
 
-  test('@nightly T-E22-04 @E22 @E22-AC04 convoy: five vehicles, the courier a seated passenger of a bus, 20-35 s ride, control back <= 0.5 s after the stop', async () => {
+  test('T-E22-04 @nightly @E22 @E22-AC04 convoy: five vehicles, the courier a seated passenger of a bus, 20-35 s ride, control back <= 0.5 s after the stop', async () => {
     const l = await loadL4(1); world = l.world; const w = l.world, m = l.mission, s = m.state.l4!;
     expect(l4.convoy.vehicles.map(v => v.asset).sort()).toEqual(['veh.evac-bus', 'veh.evac-bus', 'veh.military-apc', 'veh.military-truck', 'veh.military-truck']);
     expect(s.convoyIds).toHaveLength(5); expect(w.entities.get(1)!.hidden).toBe(true);
@@ -91,7 +91,7 @@ describe('L4 The Safe City Falls', () => {
     expect(stations.travel).toBeGreaterThan(150);
   }, HEAVY);
 
-  test('@nightly T-E22-05 @E22 @E22-AC05 false safety until the first turn: zero infected, zero combat events, >= 40 civilians in routines, >= 16 soldiers on posts', async () => {
+  test('T-E22-05 @nightly @E22 @E22-AC05 false safety until the first turn: zero infected, zero combat events, >= 40 civilians in routines, >= 16 soldiers on posts', async () => {
     const l = await loadL4(2); world = l.world; const w = l.world, m = l.mission, s = m.state.l4!;
     const bad: string[] = []; for (const type of ['combat.hit', 'combat.kill', 'combat.attack', 'outbreak.infection', 'player.damaged', 'ally.attack'] as const) w.events.on(type, e => bad.push(e.type));
     const idle: Record<number, number> = {}, civilians = humans(w).filter(e => !e.civilian!.ally);
@@ -206,7 +206,7 @@ describe('L4 The Safe City Falls', () => {
     expect(l.world.infected!.director.cap).toBe(l4.war.caps.infected.high);
   }, HEAVY);
 
-  test('@nightly T-E22-09 @E22 @E22-AC09 allied fighters: shots from soldiers, armed civilians fight, everyone can turn (same id, look kept, weapon dropped), nobody is immune', async () => {
+  test('T-E22-09 @nightly @E22 @E22-AC09 allied fighters: shots from soldiers, armed civilians fight, everyone can turn (same id, look kept, weapon dropped), nobody is immune', async () => {
     const l = await loadL4(2); world = l.world; const w = l.world, s = l.mission.state.l4!;
     for (const id of [...s.soldierIds, ...s.armed.map(a => a.id)]) { const e = w.entities.get(id)!; expect(e.survivor).toBeUndefined(); expect(e.companion).toBeUndefined(); expect(e.civilian!.l1!.graceUntil ?? 0).toBeLessThanOrEqual(w.tick); }
     while (s.phase === 'convoy') w.update();
@@ -246,7 +246,7 @@ describe('L4 The Safe City Falls', () => {
     expect([...w.entities.iterate()].some(e => e.droppedProp === 'rifle')).toBe(true);
   }, HEAVY);
 
-  test('@nightly T-E22-10 @E22 @E22-AC10 from all sides: six street and alley mouths (>= 3 mutually >= 60 degrees apart around the plaza), emergence out of view', async () => {
+  test('T-E22-10 @nightly @E22 @E22-AC10 from all sides: six street and alley mouths (>= 3 mutually >= 60 degrees apart around the plaza), emergence out of view', async () => {
     const c = l4.map.centre, angles = l4Edges.slice(0, 6).map(e => Math.atan2(e.at[1] - c.z, e.at[0] - c.x));
     let apart = 0; for (let i = 0; i < 6; i++) for (let j = i + 1; j < 6; j++) { const d = Math.abs(Math.atan2(Math.sin(angles[i] - angles[j]), Math.cos(angles[i] - angles[j]))) * 180 / Math.PI; if (d >= 60) apart++; }
     expect(apart).toBeGreaterThanOrEqual(8);
@@ -272,7 +272,7 @@ describe('L4 The Safe City Falls', () => {
     expect(used.size).toBeGreaterThanOrEqual(5);
   }, HEAVY);
 
-  test('@nightly T-E22-11 @E22 @E22-AC11 military spectacle: two HMG positions fire, trucks and an armoured vehicle stand in the plaza, the tank fires every 8-12 s away from the player and allies, the helicopter orbits and withdraws without landing', async () => {
+  test('T-E22-11 @nightly @E22 @E22-AC11 military spectacle: two HMG positions fire, trucks and an armoured vehicle stand in the plaza, the tank fires every 8-12 s away from the player and allies, the helicopter orbits and withdraws without landing', async () => {
     const l = await loadL4(1); world = l.world; const w = l.world, s = l.mission.state.l4!;
     const bursts = new Set<number>(); w.events.on('hmg.burst', e => { if (e.type === 'hmg.burst') bursts.add(e.sourceId); });
     const tank: { tick: number; to: { x: number; z: number }; player: { x: number; z: number }; closestAlly: number }[] = [];
@@ -329,7 +329,7 @@ describe('L4 The Safe City Falls', () => {
     expect(burning.length).toBeGreaterThanOrEqual(2);
   }, HEAVY);
 
-  test('@nightly T-E22-15 @E22 @E22-AC15 cellar: only the courier (and the corgi) go down, nobody can path in, the door bars, battle events go on >= 6 s, then level.completed', async () => {
+  test('T-E22-15 @nightly @E22 @E22-AC15 cellar: only the courier (and the corgi) go down, nobody can path in, the door bars, battle events go on >= 6 s, then level.completed', async () => {
     const l = await loadL4(1); world = l.world; const w = l.world, m = l.mission, s = m.state.l4!;
     while (s.phase === 'convoy') w.update();
     step(w, 3 * 60); m.completeObjective('quartermaster'); m.completeObjective('hold'); // the turn comes first (gap), then the break
@@ -352,7 +352,7 @@ describe('L4 The Safe City Falls', () => {
     expect(m.state.phase).toBe('progression');
   }, HEAVY);
 
-  test('@nightly T-E22-16 @E22 @E22-AC16 light: L4 polar 1.15-1.30 rad, fog far >= L3 + 20 m; no smoke column before the first turn, >= 3 at the line break', async () => {
+  test('T-E22-16 @nightly @E22 @E22-AC16 light: L4 polar 1.15-1.30 rad, fog far >= L3 + 20 m; no smoke column before the first turn, >= 3 at the line break', async () => {
     expect(timeOfDay.L4.polar).toBeGreaterThanOrEqual(1.15); expect(timeOfDay.L4.polar).toBeLessThanOrEqual(1.3);
     expect(timeOfDay.L4.fogFar).toBeGreaterThanOrEqual(timeOfDay.L3.fogFar + 20);
     const l = await loadL4(1); world = l.world; const w = l.world, s = l.mission.state.l4!;
@@ -488,7 +488,7 @@ describe('L4 The Safe City Falls', () => {
     expect(w.infected!.nav.clear(center.x, center.z, .35)).toBe(true);
   }, HEAVY);
 
-  test('@nightly T-E22-15-carry @E22 @E22-AC15 solitary basement completion carries the actual arsenal to L5 without pending rewards', async () => {
+  test('T-E22-15-carry @nightly @E22 @E22-AC15 solitary basement completion carries the actual arsenal to L5 without pending rewards', async () => {
     const l = await loadL4(2); world = l.world; const w = l.world, m = l.mission;
     for (let i = 0; i < 12 && m.state.phase === 'playing'; i++) { m.completeObjective(); if (m.state.l4!.phase === 'cellar') step(w, 8 * 60); }
     const inside = m.def.anchors['l4-cellar-in'];

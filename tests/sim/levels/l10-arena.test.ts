@@ -6,7 +6,7 @@ import type { DistrictLayout, Point } from '../../../src/levels/districts/types'
 import { arena, step } from '../combat/helpers';
 const layout = JSON.parse(readFileSync('public/assets/layouts/D-CURE.layout.json', 'utf8')) as DistrictLayout;
 
-test('@nightly T-E32-17-D4-play @E32-AC17 @E32-AC18 walk from the R7 checkpoint to console, climb stairs and mount the shipped gun', async () => {
+test('T-E32-17-D4-play @nightly @E32-AC17 @E32-AC18 walk from the R7 checkpoint to console, climb stairs and mount the shipped gun', async () => {
   const w = await arena(); w.loadComposition(compositions.L10, [layout], 32);
   const p = w.entities.get(1)!;
   // Fixture starts at the existing region checkpoint; every subsequent metre uses player movement and streamed physics.

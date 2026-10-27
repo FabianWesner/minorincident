@@ -12,7 +12,7 @@ function place(w: SimWorld, at: { x: number; z: number }): void {
   const p = w.entities.get(1)!.transform;
   Object.assign(p, at, { y: .72 }); w.physics.playerBody!.setTranslation(p, true); w.physics.playerBody!.setNextKinematicTranslation(p); w.spatial.set(1, p.x, p.z);
 }
-for (const phase of ['plaza', 'war', 'respawn']) test(`@nightly @E22 L4 ${phase} permits mouse and direct movement on open plaza tiles`, async () => {
+for (const phase of ['plaza', 'war', 'respawn']) test(`@E22 @nightly L4 ${phase} permits mouse and direct movement on open plaza tiles`, async () => {
   const loaded = await loadL4(2); world = loaded.world;
   const w = world, m = loaded.mission;
   while (m.state.l4!.phase === 'convoy') w.update();
@@ -43,7 +43,7 @@ for (const phase of ['plaza', 'war', 'respawn']) test(`@nightly @E22 L4 ${phase}
   }
 }, 120_000);
 
-test('@nightly @E22 a real L4 armory-table corner cannot trap an outward click', async () => {
+test('@E22 @nightly a real L4 armory-table corner cannot trap an outward click', async () => {
   const loaded = await loadL4(2); world = loaded.world;
   const w = world;
   while (loaded.mission.state.l4!.phase === 'convoy') w.update();

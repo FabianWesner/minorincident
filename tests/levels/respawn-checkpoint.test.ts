@@ -17,7 +17,7 @@ function dieAndRespawn(w: SimWorld) {
 }
 
 describe('respawn at the last reached checkpoint', () => {
-  for (const seed of [1, 2, 3, 4]) test(`@nightly L1 seed ${seed}: bat pickup, walk far away, die: back at the bat spot with the bat`, async () => {
+  for (const seed of [1, 2, 3, 4]) test(`L1 @nightly seed ${seed}: bat pickup, walk far away, die: back at the bat spot with the bat`, async () => {
     const { world: w, mission } = await loadL1(seed); world = w;
     runL1(w, mission, 'complete', { seed, stopWhen: m => m.state.checkpoint === 'bat' });
     const p = w.entities.get(1)!, pickup = mission.checkpointPositions().find(c => c.id === 'bat')!.position;
