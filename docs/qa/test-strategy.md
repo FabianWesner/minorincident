@@ -45,7 +45,7 @@ Helpers that tools import (not tests) live in `tests/helpers`, `tests/e2e/{fixtu
 - test files under `tests/` exceed **45**,
 - the default run (`npm test`) takes longer than **4 min** (smoke: 4 min, nightly: 20 min).
 
-At the rewrite (2026-10-27) the suite had 118 cases in 37 files; `npm test` took ~65 s on the Mac with four workers.
+At the rewrite (2026-10-27) the suite had 119 collected (132 run) cases in 37 files; `npm test` took 15 s on the Mac and 45 s on a runner.
 
 ## How to add a test
 

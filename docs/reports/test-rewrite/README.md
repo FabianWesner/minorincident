@@ -9,12 +9,24 @@ Rule and layout: [test strategy](../../qa/test-strategy.md). Budget check: `tool
 | | Before (main 190574c78) | After |
 |---|---|---|
 | Test/spec files | 980 | 37 |
-| Collected test cases | 3,797 (Vitest 2,402 incl. 229 `@nightly`; Playwright chromium 1,383; invariant browser 12) | 118 (3.1 %) — Vitest 98 (default 77, nightly 21), e2e 6, perf 2, invariant browser 12 |
-| Per-change Vitest run | `test:gate` ≈ 16 min remote | `npm test` 65 s on the Mac, 4 workers |
+| Test cases run | 5,492 (Vitest 4,097 at runtime; Playwright chromium 1,383; invariant browser 12) | 132 (2.4 %): Vitest 112 (default 77, nightly 35), e2e 6, perf 2, invariant browser 12 |
+| Per-change Vitest run | full suite 71 min of test time on a runner (`test:gate` ≈ 16 min) | `npm test` 15 s on the Mac, 44.5 s on a runner (4 workers) |
 | Smoke | 22 browser tests + Node `@smoke` | 6 browser tests, 2.2 min (133 s incl. budget check) |
-| Nightly | `test:nightly` (expanded, not completed green) | `test:nightly` — see below |
+| Nightly | `test:nightly` (expanded, not completed green) | campaign L1 → credits + content ratchets + invariants + sim budget |
 
-BASELINE_AND_NIGHTLY
+The budget counts collected cases (`vitest list`: 99 Vitest); the QA invariants add a few per-tier cases at runtime (28 run vs. 21 collected), so the runtime total is 132.
+
+### Baseline: the old suite on main once (runner, 2026-10-27)
+
+`vitest run` over tests/unit, sim, levels, qa/invariants: 4,097 tests, 3 failed, 9 skipped, 4,265 s of test time (6,994 s wall with queueing on loaded runners). The three failures and whether the new suite would have caught them:
+
+| Old failure | Kind | New suite |
+|---|---|---|
+| `sim/performance/zoo-s2` 200 mixed zoo specials p95 5.07 ms > 4 ms | wall-clock micro-budget under a loaded runner | missed by design (perf is the nightly horde budget, run isolated) |
+| `sim/world/solid-admission` queued house resident leaves the doorstep, 12.3407 < 12.349 | 1 cm pinned position in one scripted case | missed (collision core is covered by wall-crossing invariants, not this pin) |
+| `sim/missions/l10-finale` #101 remote living boss joins within 15 s | level-specific scripted scene | missed per change; the nightly campaign did not trip it either: it belongs in Scene Lab / the PO checklist |
+
+NIGHTLY_RESULT
 
 ## Coverage map (engine module → old tests → new test)
 
