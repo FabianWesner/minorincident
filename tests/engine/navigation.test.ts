@@ -2,6 +2,8 @@
 import { afterEach, expect, test } from 'vitest';
 import { NavGrid } from '../../src/sim/ai/NavGrid';
 import { SimWorld } from '../../src/sim/world/SimWorld';
+import { loadL4 } from '../../tools/sim-runner/l4Bots';
+import { survivor } from '../../src/data/survivor';
 
 const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds) w.dispose(); worlds.length = 0; });
@@ -41,6 +43,27 @@ test('A*: budgeted search resumes across ticks within its expansion budget; conn
   expect(reachable[from]).toBe(1); expect(reachable[grid.cell(0, 0)]).toBe(0);
   expect(grid.pending(from, goal)).toBe(true);
   expect(grid.path(from, goal, path, Infinity)).toBe(true);
+
+  // A live HUD route query must not restart click-to-move's incremental flood.
+  // L4's parked-car bend reproduces the shared-workspace starvation after a
+  // collapse respawn: the destination is connected, yet neither query finishes.
+  const { world, mission } = await loadL4(1, 'low'); worlds.push(world);
+  mission.l4!.completed('ride'); world.update(); world.update();
+  mission.l4!.completed('quartermaster'); mission.l4!.completed('hold');
+  for (let tick = 0; tick < 40; tick++) world.update();
+  const position = { x: 30, z: 41.5 }, destination = { x: -79, z: -40 };
+  Object.assign(world.entities.get(1)!.transform, position);
+  const playerNav = world.infected!.nav.forPlayer(survivor.radius + .02, .25);
+  const route = { path: [] as number[], goal: -1, pathIndex: 0 }, waypoint = { x: 0, z: 0 }, hint = { x: 0, z: 0 };
+  let routed = false;
+  mission.l4!.cellarDistance(hint);
+  for (let tick = 0; tick < 120 && !routed; tick++) {
+    routed = playerNav.steer(position, destination, route, survivor.radius + .02, waypoint, 3000, true);
+    mission.l4!.cellarDistance(hint);
+  }
+  expect(routed, 'HUD hint must leave the movement flood resumable').toBe(true);
+  const end = route.path.at(-1)!;
+  expect(Math.hypot(playerNav.x(end) - destination.x, playerNav.z(end) - destination.z)).toBeLessThan(1);
 });
 
 test('dynamic blockers: a prepared rebake equals a full rebake after doors and carts open and close', () => {

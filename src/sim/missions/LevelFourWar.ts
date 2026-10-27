@@ -57,7 +57,10 @@ export class LevelFourWar {
   cellarDistance(next: Point): number {
     const p = this.world.entities.get(1)!.transform, distance = l4CellarDistance(p, next);
     const nav = this.world.infected!.nav.forPlayer(survivor.radius + .02, .25);
-    if (!nav.visible(p, next, survivor.radius)) nav.steer(p, next, this.cellarGuide, survivor.radius, next, 3000, true);
+    // Hints must use A*: click-to-move owns the resumable nearest-reachable
+    // flood. A second flood to the hint cancels the player's pending route
+    // every frame at obstructed corners, including after a collapse respawn.
+    if (!nav.visible(p, next, survivor.radius)) nav.steer(p, next, this.cellarGuide, survivor.radius, next, 3000);
     return distance;
   }
   private anchor(name: string) { return this.mission.def.anchors[name]; }
@@ -629,8 +632,9 @@ export class LevelFourWar {
   private engageAll(): void {
     const { world } = this.mission, tick = world.tick;
     for (const id of this.s.soldierIds) { const a = world.entities.get(id)?.civilian?.ally; if (a) a.engaged = true; }
-    // Civilians first panic with the crowd, then armed survivors rally after the initial alarm.
-    if (tick <= this.s.turnAt + ticks(5)) return;
+    // Register issued weapons before the same-tick alarm panics the crowd.
+    // Otherwise these armed civilians are still ordinary pedestrians and drop
+    // their new guns before the delayed rally can turn them into fighters.
     const c = l4.civilians;
     for (const entry of this.s.armed) {
       const e = world.entities.get(entry.id); if (!this.human(e) || e!.civilian!.ally || e!.civilian!.state === 'grabbed') continue;
