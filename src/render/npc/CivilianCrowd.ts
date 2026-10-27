@@ -23,6 +23,7 @@ import { l1Pedestrians, coreCivilianModels, l3CivilianModels, l1CivilianModels }
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { framesPerClip, civilianClips } from '../characters/bakeInfected';
 import { loadGate } from '../../assets/loadGate';
+import { crowdWeaponAssets, type CrowdGun } from './crowdWeapons';
 import { RoutineProps, cupSocket } from './RoutineProps';
 import { uprightHand } from './civilianGrip';
 import type { CivilianProp } from '../../sim/npc/types';
@@ -33,7 +34,7 @@ const weaponProps = new Set<string>(['rifle', 'pistol', 'shotgun', 'hunting-rifl
 import type { CrowdClip } from '../../assets/crowd';
 import { CrowdPosePalette } from '../characters/CrowdPosePalette';
 import { MotionPresentation, crowdTurnRate } from '../characters/MotionPresentation';
-import { CrowdGunAim, crowdLongGunHold } from '../characters/GunAim';
+import { CrowdGunAim, crowdLongGunHolds } from '../characters/GunAim';
 import { MotionPhase } from '../characters/MotionPhase';
 import { authoredClips, strides } from '../characters/clips';
 import { disposeCharacter } from '../characters/rig';
@@ -289,7 +290,7 @@ class CivilianBatch extends Group {
         if (target) this.gunDirection.set(target.transform.x - e.transform.x,target.transform.y - e.transform.y - (target.health.current <= 0 ? 1.1 : 0),target.transform.z - e.transform.z).transformDirection(this.hand.copy(this.transform).invert());
         else if (firing && firing.until >= this.world.tick) this.gunDirection.set(firing.direction.x,firing.direction.y ?? 0,firing.direction.z).transformDirection(this.hand.copy(this.transform).invert());
         else this.gunDirection.set(1,0,0);
-        const hold = handProp === 'pistol' ? undefined : crowdLongGunHold;
+        const hold = handProp === 'pistol' ? undefined : crowdLongGunHolds[crowdWeaponAssets[handProp as CrowdGun]];
         const aiming = c.story?.clip === 'shoot' || !!firing && firing.until >= this.world.tick;
         const age = firing ? this.world.tick - (firing.until - 24) : Infinity;
         const recoil = hold && age > 0 && age < 8 ? Math.sin(Math.PI * age / 8) * .025 : 0;
@@ -301,7 +302,7 @@ class CivilianBatch extends Group {
       this.probe.add(e.id, clip, phase, this.transform, this.poses, frame, ...blend, this.mesh.geometry);
       this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, sourceFrame); this.overlay.setW(index, frame);
       if (holding) {
-        const part = this.bakedClip.parts.indexOf('handR');
+        const part = this.bakedClip.parts.indexOf(weaponProps.has(handProp!) && ['rifle', 'pistol', 'shotgun', 'hunting-rifle'].includes(handProp!) ? 'weaponSocketR' : 'handR');
         this.poses.part(frame, ...blend, part, this.hand).premultiply(this.transform);
         // Gardener: while the pour runs the can tips its spout down towards the flowers (eased in over 0.33 s); the spout feeds the water stream.
         const pour = handProp === 'watering-can' && c.state === 'calm' && activity?.activity === 'water' && !!activity.facing && !!c.activityUntil ? Math.min(1, Math.max(0, (this.world.tick - (c.activityStarted ?? 0) - 20) / 20)) : 0;
@@ -580,6 +581,7 @@ export class CivilianCrowd extends Group {
   async ready(): Promise<void> { await Promise.all(this.heroLoads.values()); }
   async init(camera?: import('three').Camera): Promise<void> {
     const started = performance.now();
+    await this.props.init(this.shading);
     if (this.staged && camera) {
       this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900);
       this.selectHeroes(camera); this.stageInitial();

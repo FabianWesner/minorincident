@@ -2,6 +2,9 @@ import { Box3, BoxGeometry, BufferAttribute, Color, CylinderGeometry, Group, Ins
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { attribute } from 'three/tsl';
 import type { Materials } from '../Materials';
+import { AssetRegistry } from '../../assets/registry';
+import { longGunHolds } from '../characters/GunAim';
+import { crowdWeaponAssets, crowdWeaponGeometry, isCrowdGun, type CrowdGun } from './crowdWeapons';
 import type { CivilianProp } from '../../sim/npc/types';
 
 /** Mug body centre in the upright right-hand frame (+X forward, +Y up, +Z the figure's right): inboard of the hand. */
@@ -15,6 +18,7 @@ export class RoutineProps extends Group {
   /** World position of a tilted watering can's spout while its holder pours (kept between frames; removed when the pour ends). */
   readonly spouts = new Map<number, Vector3>();
   readonly aiming = new Map<number, { until: number; direction: { x: number; y?: number; z: number } }>();
+  private readonly weaponMuzzles = new Map<CrowdGun, Vector3>();
   private readonly meshes = new Map<CivilianProp, InstancedMesh>();
   private readonly gripMatrix = new Matrix4();
   private readonly droppedMatrix = new Matrix4();
@@ -44,31 +48,41 @@ export class RoutineProps extends Group {
       // E19 story beats: the courier parcel (cardboard, teal Sunset Grove tape), held at the hands.
       parcel: [part(new BoxGeometry(.3, .24, .26), '#b98a55', .035, -.32), part(new BoxGeometry(.31, .045, .08), '#2aa198', .035, -.195), part(new BoxGeometry(.12, .006, .09), '#f3efe2', .035, -.198, .08), bar(.16, .035, -.045, 0, '#2aa198'), ...[-.08, .08].map(z => part(new CylinderGeometry(.01, .01, .16, 8), '#2aa198', .035, -.125, z))],
       // E22 weapons (code art, held at the right hand): long guns point along the forearm's forward axis, bats and pipes hang along the hand.
-      rifle: [part(new BoxGeometry(.07, .09, .95), '#3b3f33', 0, -.02, .38), part(new BoxGeometry(.06, .14, .26), '#2b2d27', 0, -.06, -.1), part(new BoxGeometry(.045, .045, .3), '#1f2120', 0, .02, .75)],
-      pistol: [part(new BoxGeometry(.045, .1, .06), '#2d2f33', 0, -.04, 0), part(new BoxGeometry(.05, .06, .2), '#3a3d42', 0, .02, .1)],
-      shotgun: [part(new BoxGeometry(.07, .09, .65), '#71513e', 0, -.025, .22), part(new BoxGeometry(.055, .055, .58), '#292537', 0, .025, .61), part(new BoxGeometry(.09, .08, .22), '#8e6742', 0, -.04, .46)],
-      'hunting-rifle': [part(new BoxGeometry(.06, .08, .8), '#7a5535', 0, -.02, .3), part(new BoxGeometry(.04, .045, .5), '#2d2f33', 0, .01, .72), part(new BoxGeometry(.05, .05, .24), '#5f4328', 0, -.05, -.12)],
+      rifle: [], pistol: [], shotgun: [], 'hunting-rifle': [],
       pipe: [part(new CylinderGeometry(.028, .028, .85, 8), '#79808a', 0, -.3)],
       bat: [part(new CylinderGeometry(.045, .025, .85, 10), '#b98a55', 0, -.32), part(new CylinderGeometry(.03, .03, .08, 8), '#493d34', 0, .12)],
       crowbar: [part(new CylinderGeometry(.022, .022, .7, 8), '#5b5f66', 0, -.25), part(new BoxGeometry(.06, .06, .16), '#5b5f66', 0, -.62, .06)],
       'watering-can': [part(new CylinderGeometry(.13, .13, .22, 12), '#68a093', .035, -.29), bar(.18, .035, -.045, 0, '#426b60'), ...[-.09, .09].map(z => part(new CylinderGeometry(.01, .01, .14, 8), '#426b60', .035, -.11, z)), part(new CylinderGeometry(.033, .045, .3, 8).rotateZ(-.85), '#68a093', .225, -.22), part(new CylinderGeometry(.065, .025, .05, 10).rotateZ(-.85), '#bec9ba', .335, -.13)],
     };
     for (const [name, parts] of Object.entries(shapes)) {
+      if (!parts.length) continue;
       const geometry = mergeGeometries(parts)!; parts.forEach(p => p.dispose()); geometry.computeBoundingBox();
       const material = shading?.shaded(attribute('color', 'vec3')) ?? new MeshLambertNodeMaterial({ vertexColors: true });
       const mesh = new InstancedMesh(geometry, material, 128); mesh.count = 0; mesh.frustumCulled = false; mesh.castShadow = true;
       this.meshes.set(name as CivilianProp, mesh); this.add(mesh);
     }
   }
+  async init(shading?: Materials): Promise<void> {
+    const registry = new AssetRegistry(() => {}, { materials: shading });
+    try {
+      await Promise.all(Object.entries(crowdWeaponAssets).map(async ([prop, id]) => {
+        const root = await registry.loadAsset(id, 'lod1');
+        const { geometry, muzzle } = crowdWeaponGeometry(root, longGunHolds[id]?.scale ?? .8);
+        const material = shading?.shaded(attribute('color', 'vec3')) ?? new MeshLambertNodeMaterial({ vertexColors: true });
+        const mesh = new InstancedMesh(geometry, material, 128); mesh.name = id; mesh.count = 0; mesh.frustumCulled = false; mesh.castShadow = true;
+        this.meshes.set(prop as CrowdGun, mesh); this.weaponMuzzles.set(prop as CrowdGun, muzzle); this.add(mesh);
+      }));
+    } finally { await registry.dispose(); }
+  }
   begin(): void { this.contacts.length = 0; this.guns.length = 0; this.muzzles.clear(); for (const mesh of this.meshes.values()) mesh.count = 0; }
   held(prop: CivilianProp, matrix: Matrix4, entity: number, hand?: Float32Array, reach = .07): void {
     this.gripMatrix.makeTranslation(prop === 'phone' ? reach - .07 : 0, 0, 0).premultiply(matrix);
     this.place(prop, this.gripMatrix);
-    const muzzle = prop === 'pistol' ? [0, .02, .2] : prop === 'rifle' ? [0, .02, .9] : prop === 'shotgun' ? [0, .025, .9] : prop === 'hunting-rifle' ? [0, .01, .97] : null;
+    const muzzle = isCrowdGun(prop) ? this.weaponMuzzles.get(prop) : undefined;
     if (muzzle) {
       const gun = this.gunPool[this.guns.length] ??= { entity, geometry: this.meshes.get(prop)!.geometry, matrix: new Matrix4(), muzzle: new Vector3() };
       gun.entity = entity; gun.geometry = this.meshes.get(prop)!.geometry; gun.matrix.copy(this.gripMatrix);
-      gun.muzzle.set(muzzle[0], muzzle[1], muzzle[2]).applyMatrix4(this.gripMatrix);
+      gun.muzzle.copy(muzzle).applyMatrix4(this.gripMatrix);
       this.muzzles.set(entity, gun.muzzle); this.guns.push(gun);
     }
     if (__QA_HOOKS__ && hand && this.probeHands) {

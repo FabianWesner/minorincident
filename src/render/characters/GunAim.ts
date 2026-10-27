@@ -4,7 +4,7 @@ import { LimbIK } from './LimbIK';
 /** Stock/tube clearance at the courier's dominant shoulder (world metres). */
 export const gunHoldOffset = (assetId: string): number => assetId === 'wpn.rocket-launcher' ? .32 : assetId === 'wpn.machine-gun' ? .14 : assetId === 'wpn.assault-rifle' ? .1 : assetId === 'wpn.pistol' ? 0 : .06;
 /** Fitted to the chibi arm span: fore-end contact relative to the trigger grip,
- * +X barrel, +Y up. Crowd code-art weapons use their own +Z contact below. */
+ * +X barrel, +Y up. Crowd weapons rotate this contact into their +Z barrel frame below. */
 export interface LongGunHold { scale: number; support: [number, number, number]; stance: number; reach: number; drop: number; lateral: number; protract?: number }
 export const longGunHolds: Record<string, LongGunHold> = {
   'wpn.assault-rifle': { scale: .65, support: [.30, .085, -.04], stance: .3, protract: 1.2, reach: .55, drop: .06, lateral: .05 },
@@ -17,7 +17,7 @@ export const longGunHolds: Record<string, LongGunHold> = {
 /** The gunner on the L10 mounted minigun: right hand on the right spade grip, the support hand on the left one (axes of the support offset
  * are the right-hand socket's), body square to the aim. Tuned in the Scene Lab close-ups of `l10-minigun-gunner`. */
 export const mountedGunHold: LongGunHold = { scale: 1, support: [0, 0, -.34], stance: 0, reach: .5, drop: .12, lateral: .17 };
-export const crowdLongGunHold: LongGunHold = { scale: 1, support: [0, -.075, .30], stance: Math.PI / 2, reach: .6, drop: .08, lateral: .24 };
+export const crowdLongGunHolds: Record<string, LongGunHold> = Object.fromEntries(Object.entries(longGunHolds).map(([id, hold]) => [id, { ...hold, support: [-hold.support[2], hold.support[1], hold.support[0]] }]));
 /** Two-handed low ready keeps the barrel forward, clear of the road. */
 export const gunCarryElevation = (assetId: string): number => longGunHolds[assetId] ? -.18 : -.75;
 
@@ -175,7 +175,7 @@ export class CrowdGunAim {
       this.matrix.decompose(node.position, node.quaternion, node.scale);
     });
     this.armIK = new LimbIK(this.nodes[parts.indexOf('armR')], this.nodes[parts.indexOf('foreArmR')], this.nodes[parts.indexOf('handR')]);
-    this.aim = new GunAim(this.nodes[parts.indexOf('armR')], this.nodes[parts.indexOf('foreArmR')], this.nodes[parts.indexOf('handR')],this.nodes[parts.indexOf('torso')], ['armL', 'foreArmL', 'handL'].map(name => this.nodes[parts.indexOf(name)]) as [Object3D, Object3D, Object3D], [this.nodes[parts.indexOf('handR')], this.nodes[parts.indexOf('weaponSocketL')]], this.nodes[parts.indexOf('head')]);
+    this.aim = new GunAim(this.nodes[parts.indexOf('armR')], this.nodes[parts.indexOf('foreArmR')], this.nodes[parts.indexOf('handR')],this.nodes[parts.indexOf('torso')], ['armL', 'foreArmL', 'handL'].map(name => this.nodes[parts.indexOf(name)]) as [Object3D, Object3D, Object3D], [this.nodes[parts.indexOf('weaponSocketR')], this.nodes[parts.indexOf('weaponSocketL')]], this.nodes[parts.indexOf('head')]);
   }
   /** Small hand props (cup, phone): the right elbow is bent, the hand rests at chest height in front of the body (`sip` 0) and a
    * cup-sized offset raises it to the mouth (`sip` 1). Offsets are in torso axes (+X forward, +Y up, +Z the figure's right) and

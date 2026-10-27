@@ -1,6 +1,6 @@
 // Shared render contracts: every crowd figure, corpse and prop in all levels goes through these paths. The compiled-program
 // GPU-limit ground truth is tests/e2e/crowd-gpu-limits.spec.ts; these node tests pin the CPU-side layouts and math it relies on.
-import { BufferAttribute, BufferGeometry, Color, DataTexture, FloatType, Frustum, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBufferAttribute, Matrix4, OrthographicCamera, Quaternion, RGBAFormat, Vector3 } from 'three';
+import { BufferAttribute, BufferGeometry, BoxGeometry, Group, Mesh, MeshBasicMaterial, Object3D, Color, DataTexture, FloatType, Frustum, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBufferAttribute, Matrix4, OrthographicCamera, Quaternion, RGBAFormat, Vector3 } from 'three';
 import { MeshLambertNodeMaterial, Scene, type InstancedMesh } from 'three/webgpu';
 import { float, vec3 } from 'three/tsl';
 import { expect, test, vi } from 'vitest';
@@ -17,6 +17,8 @@ import { installTextureRanges } from '../../src/render/TextureRanges';
 import { uploadFloatTexture, type FloatUploadDevice } from '../../src/render/TextureUpload';
 import { weatherMaterialFlags } from '../../src/render/WeatherView';
 import type { EntitySnapshot } from '../../src/sim/world/types';
+import { crowdWeaponGeometry } from '../../src/render/npc/crowdWeapons';
+import { crowdLongGunHolds, longGunHolds } from '../../src/render/characters/GunAim';
 import { isCrowdVariant, registerCrowdModel } from '../../src/render/crowdModels';
 
 /** Crowd headroom below the portable hard limits (16 attributes, 8 WebGPU vertex buffers). */
@@ -33,6 +35,19 @@ test('crowd registration retains converted textured variants with their own mode
   expect(isCrowdVariant({ ...variant, id: 'inf.corpse-poses', crowdSkin: true }, native)).toBe(false);
   expect(registerCrowdModel(aliases, { id: variant.id, asset: variant.id })).toBe(variant.id);
   expect(aliases.get(variant.id)).toBe(variant.id);
+});
+
+test('crowd weapons preserve the authored grip, rotate +X barrel into +Z, and own their geometry', () => {
+  const root = new Group(), grip = new Object3D(), muzzle = new Object3D();
+  grip.name = 'grip'; grip.position.set(-.2, .1, .03); muzzle.name = 'muzzle'; muzzle.position.set(.7, .1, .03);
+  const source = new BoxGeometry(.9, .03, .03), mesh = new Mesh(source, new MeshBasicMaterial({ color: '#804020' }));
+  root.add(mesh, grip, muzzle); const original = source.getAttribute('position').array.slice();
+  const result = crowdWeaponGeometry(root, .65);
+  expect(result.muzzle.x).toBeCloseTo(0); expect(result.muzzle.y).toBeCloseTo(0); expect(result.muzzle.z).toBeCloseTo(.585);
+  expect(Object.keys(result.geometry.attributes)).toEqual(['position', 'normal', 'color']);
+  expect(result.geometry.groups).toHaveLength(0); expect(source.getAttribute('position').array).toEqual(original);
+  for (const [id, hold] of Object.entries(crowdLongGunHolds)) expect(hold.support).toEqual([-longGunHolds[id].support[2], longGunHolds[id].support[1], longGunHolds[id].support[0]]);
+  result.geometry.dispose(); source.dispose(); mesh.material.dispose();
 });
 
 test('GPU limits: crowd layouts bind matrix columns or instanceMatrix (never both); frozen corpse pages stay within buffer headroom', () => {
