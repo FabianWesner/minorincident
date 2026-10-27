@@ -11,10 +11,10 @@ type Entry = { material: MeshLambertNodeMaterial; pose: ReturnType<typeof poseTe
 const caches = new WeakMap<Materials, Map<string, Entry>>();
 /** One graph per side/hand layout. Each draw binds its own immutable geometry,
  * current pose texture, transforms, tint and infection attributes. */
-export function civilianMaterial(shading: Materials | undefined, doubleSided: boolean, handIndex: number, initialTexture: DataTexture, options: { bindRow: number; skinned: boolean; atlas?: Texture } = { bindRow: 0, skinned: false }) {
+export function civilianMaterial(shading: Materials | undefined, doubleSided: boolean, handIndex: number, initialTexture: DataTexture, options: { bindRow: number; skinned: boolean; atlas?: Texture; toyEyes?: boolean } = { bindRow: 0, skinned: false }) {
   let cache = shading && caches.get(shading);
   if (!cache) { cache = new Map(); if (shading) caches.set(shading, cache); }
-  const key = `${doubleSided}:${handIndex}:${options.skinned}:${options.bindRow}:${!!options.atlas}`;
+  const key = `${doubleSided}:${handIndex}:${options.skinned}:${options.bindRow}:${!!options.atlas}:${!!options.toyEyes}`;
   let entry = cache.get(key);
   if (!entry) {
     const pose = poseTexture(initialTexture);
@@ -28,21 +28,22 @@ export function civilianMaterial(shading: Materials | undefined, doubleSided: bo
     const region = atlas ? crowdRegionOf(atlas, attribute('uv', 'vec2')) : undefined;
     const authoredClothing = atlas ? mix(crowdAppearanceColor(), crowdRegionTint(atlas.rgb, region!), parts.y.equal(-4).or(parts.y.equal(-5)).or(parts.y.lessThanEqual(-10)).select(0, 1)) : crowdAppearanceColor();
     const clothing = options.skinned ? mix(authoredClothing, crowdCoveredScalpColor().mul(.8), scalp) : authoredClothing;
+    // Eye discs sample the atlas at their own disc UVs; their texel class is meaningless, so they never count as skin.
     // Same clothes and body: only the skin blends toward ash-green, blood darkens mouth and bite, eyes ignite.
     // Skin only: drained grey-green (desaturated, darker), at up to 70 % for the 40 % sim blend so it reads at distance.
     // QA1-10: the infected must read at the default zoom - clearly ash-green skin (full shift at the 40 % sim blend),
     // dark sockets, grimy clothes (same colours, 25 % darker) and blood; hair, clothes and body stay the person's own.
-    const skinMask = options.skinned && atlas ? parts.y.equal(-11).select(1, crowdRegionSkin(region!, () => paintedSkinMask(atlas)).mul(scalp.oneMinus())) : parts.y.equal(-1).select(1, 0);
+    const skinMask = options.skinned && atlas ? parts.y.equal(-11).select(1, crowdRegionSkin(region!, () => paintedSkinMask(atlas)).mul(scalp.oneMinus()).mul(parts.z.lessThan(1.5).select(1, 0))) : parts.y.equal(-1).select(1, 0);
     const sick = mix(vec3(luminance(clothing)).mul(.6), options.atlas ? vec3(.42, .49, .35).mul(luminance(clothing).max(.2)) : crowdSkinColor(true), .8), skinShift = skinMask.mul(decay.mul(2.5).min(1));
     const sunken = mix(sick, vec3(.18, .02, .03), socket.mul(.9));
     const grimy = parts.y.lessThan(-3).select(clothing, clothing.mul(dirt.mul(-.42).add(1)));
     const skin = mix(grimy, sunken, skinShift);
     const bloody = mix(skin, vec3(.36, .02, .03), blood.mul(dirt).mul(.9));
     const glowing = mix(bloody, options.skinned ? vec3(0) : mix(vec3(.02), vec3(1, .015, .025), eyeGlow), options.atlas ? eye.mul(eyeGlow) : eye);
-    // crowd-texture-quality: healthy textured faces show their fitted eye discs as the toy eyes of the rigid crowd
-    // (white with a dark pupil); painted eyes alone vanish at game size, worst on darker skin tones.
+    // crowd-texture-quality: spectacled faces show their fitted eye discs as the toy eyes of the rigid crowd (white,
+    // dark pupil): their small painted eyes vanish behind painted frames at game size, worst on darker skin tones.
     const discUV = attribute('uv', 'vec2').sub(.5).mul(2).length();
-    const base = options.atlas && options.skinned ? mix(glowing, discUV.lessThan(.62).select(vec3(.015), vec3(.85)), parts.z.greaterThan(1.5).and(eyeGlow.lessThan(.01)).select(1, 0)) : glowing;
+    const base = options.atlas && options.toyEyes ? mix(glowing, discUV.lessThan(.62).select(vec3(.015), vec3(.85)), parts.z.greaterThan(1.5).and(eyeGlow.lessThan(.01)).select(1, 0)) : glowing;
     const eyeColor = options.skinned ? vec3(1, .04373, .02843) : vec3(1, .25 / 3, .22 / 3);
     const eyeStrength = options.skinned ? attribute('uv', 'vec2').sub(.5).mul(2).length().smoothstep(1, .55).mul(3).add(3) : float(3);
     // Red glowing eyes in dark sockets. Kept below the bloom whiteout point: the emissive is a pure red (no luminance

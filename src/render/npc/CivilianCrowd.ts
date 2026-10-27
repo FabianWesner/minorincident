@@ -180,7 +180,7 @@ class CivilianBatch extends Group {
     baked.geometry.setAttribute('_clip_frame', this.frame); baked.geometry.setAttribute('_variant', this.tint); baked.geometry.setAttribute('_overlay', this.overlay);
     this.bakedClip = baked.clip;
     this.poses = new CrowdPosePalette(baked.clip, this.capacity); this.texture = this.poses.texture;
-    const shared = civilianMaterial(this.shading, baked.doubleSided, this.bakedClip.parts.indexOf('handR'), this.texture, { bindRow: this.poses.bindRow, skinned: !!baked.clip.binds, atlas: baked.texture });
+    const shared = civilianMaterial(this.shading, baked.doubleSided, this.bakedClip.parts.indexOf('handR'), this.texture, { bindRow: this.poses.bindRow, skinned: !!baked.clip.binds, atlas: baked.texture, toyEyes: !!baked.clip.binds && !!baked.texture && toyEyeModels.has(this.model) });
     const material = shared.material; this.releaseMaterial = shared.release;
     const surface = this.surface = { bind: () => shared.bindTexture(this.texture, baked.texture), textures: baked.texture ? [baked.texture] : [] };
     crowdSurfaceBindings.set(baked.geometry, surface);
@@ -401,6 +401,8 @@ class CivilianBatch extends Group {
 }
 
 /** Five civilian silhouettes share rigid-part LOD batches and the E07 clip path. */
+/** Spectacled textured figures whose painted eyes do not read at game size (crowd-texture-quality). */
+const toyEyeModels = new Set(['npc.civilian-woman-b', 'npc.civilian-elderly']);
 export class CivilianCrowd extends Group {
   private readonly batches: CivilianBatch[];
   private readonly props: RoutineProps;
