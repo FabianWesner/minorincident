@@ -5,7 +5,7 @@ delete process.env.NO_COLOR;
 
 // Parallel worktrees each set their own E2E_PORT so they never reuse another lane's server.
 const port = Number(process.env.E2E_PORT ?? 3301);
-const phonePerfSpecs = process.env.PHONE_PERF === '1' ? ['**/perf/*.spec.ts'] : [];
+const phonePerfSpecs = process.env.PHONE_PERF === '1' ? ['**/nightly/*.spec.ts'] : [];
 // Browser tests are ALWAYS headless (the user works on this Mac; windows must never appear).
 // macOS: headless Chromium renders WebGL2 on the real GPU via ANGLE/Metal (low CPU load);
 // elsewhere (CI) SwiftShader. Headless WebGPU availability depends on the pinned browser and GPU;
@@ -34,15 +34,16 @@ export default defineConfig({
     launchOptions: { args: gpuArgs },
     ...(process.env.MI_BROWSER_POOL_WS ? { connectOptions: { wsEndpoint: process.env.MI_BROWSER_POOL_WS } } : {}),
   },
+  // Test strategy (docs/qa/test-strategy.md): the per-change browser suite is tests/e2e (smoke + GPU limits, <= 6 tests);
+  // tests/nightly/*.spec.ts are nightly performance budgets (project "perf", run through tools/perf/quiet-run.sh).
   projects: [
-    { name: 'chromium', ...(process.env.MI_REMOTE === '1' ? { testMatch: '**/e2e/**/*.spec.ts' } : {}), testIgnore: '**/webgpu.spec.ts', use: { browserName: 'chromium' } },
-    { name: 'pixel-7', testMatch: [...phonePerfSpecs, '**/smoke.spec.ts', '**/input-touch.spec.ts', '**/hud-touch.spec.ts', '**/mobile-hud-layout.spec.ts', '**/home-button.spec.ts', '**/menu-10-levels.spec.ts', '**/apc-floor.spec.ts', '**/l9-browser-input.spec.ts'], use: { ...devices['Pixel 7'], browserName: 'chromium', viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 } },
-    { name: 'pixel-7-landscape', testMatch: ['**/smoke.spec.ts', '**/input-touch.spec.ts', '**/hud-touch.spec.ts', '**/mobile-hud-layout.spec.ts', '**/home-button.spec.ts', '**/menu-10-levels.spec.ts', '**/apc-floor.spec.ts', '**/l9-browser-input.spec.ts'], use: { ...devices['Pixel 7 landscape'], browserName: 'chromium', viewport: { width: 844, height: 390 }, deviceScaleFactor: 1 } },
-    { name: 'iphone-14', testMatch: ['**/smoke.spec.ts', '**/input-touch.spec.ts', '**/hud-touch.spec.ts', '**/mobile-hud-layout.spec.ts'], use: { ...devices['iPhone 14'], browserName: 'chromium', viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 } },
-    { name: 'iphone-14-landscape', testMatch: ['**/smoke.spec.ts', '**/input-touch.spec.ts', '**/hud-touch.spec.ts', '**/mobile-hud-layout.spec.ts'], use: { ...devices['iPhone 14 landscape'], browserName: 'chromium', viewport: { width: 844, height: 390 }, deviceScaleFactor: 1 } },
-    ...(process.env.E2E_WEBGPU === '1' ? [{ name: 'webgpu', testMatch: '**/webgpu.spec.ts', use: { browserName: 'chromium' as const, headless: true, launchOptions: { args: ['--enable-unsafe-webgpu', '--ignore-gpu-blocklist', '--use-angle=metal'] } } }] : []),
-    ...(process.env.E2E_WEBGPU_HEADLESS === '1' ? [{ name: 'webgpu-headless', testMatch: '**/webgpu.spec.ts', use: { browserName: 'chromium' as const, headless: true, launchOptions: { args: ['--enable-gpu', '--enable-unsafe-webgpu', '--ignore-gpu-blocklist'] } } }] : []),
-    { name: 'webkit', testMatch: '**/smoke.spec.ts', use: { browserName: 'webkit', launchOptions: { args: [] }, connectOptions: undefined } },
+    { name: 'chromium', testMatch: '**/e2e/**/*.spec.ts', use: { browserName: 'chromium' } },
+    { name: 'perf', testMatch: '**/nightly/*.spec.ts', use: { browserName: 'chromium' } },
+    { name: 'pixel-7', testMatch: [...phonePerfSpecs, '**/e2e/smoke.spec.ts'], use: { ...devices['Pixel 7'], browserName: 'chromium', viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 } },
+    { name: 'pixel-7-landscape', testMatch: '**/e2e/smoke.spec.ts', use: { ...devices['Pixel 7 landscape'], browserName: 'chromium', viewport: { width: 844, height: 390 }, deviceScaleFactor: 1 } },
+    { name: 'iphone-14', testMatch: '**/e2e/smoke.spec.ts', use: { ...devices['iPhone 14'], browserName: 'chromium', viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 } },
+    { name: 'iphone-14-landscape', testMatch: '**/e2e/smoke.spec.ts', use: { ...devices['iPhone 14 landscape'], browserName: 'chromium', viewport: { width: 844, height: 390 }, deviceScaleFactor: 1 } },
+    { name: 'webkit', testMatch: '**/e2e/smoke.spec.ts', use: { browserName: 'webkit', launchOptions: { args: [] }, connectOptions: undefined } },
   ],
   // Test the optimized QA output, including the query-gated API chunk.
   webServer: { command: `npx vite preview${process.env.E2E_DIST ? ` --outDir '${process.env.E2E_DIST.replaceAll("'", "'\\''")}'` : ''} --host 127.0.0.1 --port ${port} --strictPort --configLoader runner`, url: `http://127.0.0.1:${port}`, reuseExistingServer: !process.env.CI && !process.env.E2E_PORT, timeout: 30_000 },
