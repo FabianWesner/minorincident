@@ -1,9 +1,9 @@
-/** Real menu click -> closed loading card, with a new Chromium profile for every sample.
- * Run through quiet-run.sh (one browser). Optional LOAD_TRACE=1 captures diagnostic traces/profiles;
+/** Real menu click -> closed loading card, with an isolated, empty browser context for every sample.
+ * Run through tools/e2e-lock.sh (one shared-pool browser). Optional LOAD_TRACE=1 captures diagnostic traces/profiles;
  * keep those samples separate from the unprofiled acceptance distributions.
  * Usage: tsx tools/perf/cold-load-time.ts <origin> <webgpu|webgl2> <low|high> [runs=20] [level=L1] [menuWait=0]
  */
-import { chromium } from '@playwright/test';
+import { launchBrowser } from '../browser-pool/client';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import assert from 'node:assert/strict';
 import { gzipSync } from 'node:zlib';
@@ -24,7 +24,7 @@ for (let run = 0; run < Number(count); run++) {
   const wait = waits[run % waits.length];
   const sampleGameplayMs = !lastGameplayOnly || run === Number(count) - 1 ? gameplayMs : 0;
   const label = `${level}-${backend}-${quality}-${run}`;
-  const browser = await chromium.launch({ headless: true, args: [
+  const browser = await launchBrowser({ headless: true, args: [
     '--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist',
     ...(backend === 'webgpu' ? ['--enable-unsafe-webgpu'] : []),
   ] });
@@ -94,7 +94,7 @@ for (let run = 0; run < Number(count); run++) {
       wrap(window.GPUQueue, ['writeTexture', 'writeBuffer', 'submit', 'onSubmittedWorkDone']);
       wrap(window.WebGL2RenderingContext, ['getProgramParameter', 'texImage2D', 'texSubImage2D', 'clientWaitSync', 'linkProgram']);
     })();`);
-    // Later levels use an unlocked campaign in a fresh browser profile. This avoids
+    // Later levels use an unlocked campaign in a fresh browser context. This avoids
     // an unrelated speculative L1 load in front of the selected level.
     if (level !== 'L1') {
       const save = preset(`${level}-default` as Parameters<typeof preset>[0]);
@@ -140,6 +140,8 @@ for (let run = 0; run < Number(count); run++) {
         resources: performance.getEntriesByType('resource').filter(e => e.startTime + e.duration >= p.start).map(e => ({ name: new URL(e.name).pathname, at: e.startTime, ms: e.duration, bytes: e.transferSize })) };
     })()`);
     const record = { sampledAt: new Date().toISOString(), origin, backend, quality, level, run, menuWait: wait, diagnostic, gameplayMs: sampleGameplayMs, load: loadavg(), errors, ...result };
+    const contexts = result.contexts as string[];
+    assert.ok(backend === 'webgpu' ? contexts.includes('webgpu') && !contexts.includes('webgl2') : contexts.includes('webgl2'), `Requested ${backend}, observed ${contexts.join(', ')}`);
     results.push(record);
     writeFileSync(`${out}/${label}.json`, JSON.stringify(record));
     console.log(JSON.stringify({ ...record, frames: undefined, resources: undefined, tasks: undefined }));

@@ -1,0 +1,314 @@
+{
+  "reviewedAt": "2026-10-27T17:07:30.830955+00:00",
+  "nativeFigures": [
+    {
+      "id": "npc.civilian-kid",
+      "backend": "webgl2",
+      "tier": "low",
+      "views": 8,
+      "pixels": [
+        120,
+        400
+      ],
+      "skinTone": 0,
+      "skinShading": "production crowdRegionTint, canonical garment/hair paint",
+      "oldNew": true,
+      "frontBack": true,
+      "maxPixelError": 3.410605131648481e-13
+    },
+    {
+      "id": "npc.police-officer",
+      "backend": "webgl2",
+      "tier": "low",
+      "views": 8,
+      "pixels": [
+        120,
+        400
+      ],
+      "skinTone": 0,
+      "skinShading": "production crowdRegionTint, canonical garment/hair paint",
+      "oldNew": true,
+      "frontBack": true,
+      "maxPixelError": 1.3642420526593924e-12
+    },
+    {
+      "id": "npc.civilian-kid",
+      "backend": "webgl2",
+      "tier": "high",
+      "views": 8,
+      "pixels": [
+        120,
+        400
+      ],
+      "skinTone": 0,
+      "skinShading": "production crowdRegionTint, canonical garment/hair paint",
+      "oldNew": true,
+      "frontBack": true,
+      "maxPixelError": 3.410605131648481e-13
+    },
+    {
+      "id": "npc.police-officer",
+      "backend": "webgl2",
+      "tier": "high",
+      "views": 8,
+      "pixels": [
+        120,
+        400
+      ],
+      "skinTone": 0,
+      "skinShading": "production crowdRegionTint, canonical garment/hair paint",
+      "oldNew": true,
+      "frontBack": true,
+      "maxPixelError": 1.3642420526593924e-12
+    },
+    {
+      "id": "npc.civilian-kid",
+      "backend": "webgpu",
+      "tier": "low",
+      "views": 8,
+      "pixels": [
+        120,
+        400
+      ],
+      "skinTone": 0,
+      "skinShading": "production crowdRegionTint, canonical garment/hair paint",
+      "oldNew": true,
+      "frontBack": true,
+      "maxPixelError": 3.410605131648481e-13
+    },
+    {
+      "id": "npc.police-officer",
+      "backend": "webgpu",
+      "tier": "low",
+      "views": 8,
+      "pixels": [
+        120,
+        400
+      ],
+      "skinTone": 0,
+      "skinShading": "production crowdRegionTint, canonical garment/hair paint",
+      "oldNew": true,
+      "frontBack": true,
+      "maxPixelError": 1.3642420526593924e-12
+    },
+    {
+      "id": "npc.civilian-kid",
+      "backend": "webgpu",
+      "tier": "high",
+      "views": 8,
+      "pixels": [
+        120,
+        400
+      ],
+      "skinTone": 0,
+      "skinShading": "production crowdRegionTint, canonical garment/hair paint",
+      "oldNew": true,
+      "frontBack": true,
+      "maxPixelError": 3.410605131648481e-13
+    },
+    {
+      "id": "npc.police-officer",
+      "backend": "webgpu",
+      "tier": "high",
+      "views": 8,
+      "pixels": [
+        120,
+        400
+      ],
+      "skinTone": 0,
+      "skinShading": "production crowdRegionTint, canonical garment/hair paint",
+      "oldNew": true,
+      "frontBack": true,
+      "maxPixelError": 1.3642420526593924e-12
+    }
+  ],
+  "captures": [
+    {
+      "file": "01-npc.civilian-kid.jpg",
+      "review": "Regenerated and inspected all GL2/GPU low/high 120/400px front/back cells. Face, bare arms, hands and legs use the same peach tone; no cream/yellow limb mismatch. Eyes, rocket, backpack star and gold watch remain readable. Existing fine texture/edge softness remains.",
+      "verdict": "accepted",
+      "sha256": "a91149b915731bab7300e209aa83d301d07cb84b386a292c898d0d1c750fa327",
+      "reviewedAt": "2026-10-27T17:07:30.830955+00:00"
+    },
+    {
+      "file": "02-npc.police-officer.jpg",
+      "review": "Regenerated and inspected all GL2/GPU low/high 120/400px front/back cells. Forearms and exposed fingers now match the face hue; brim shadow naturally darkens the face. Navy gloves/uniform and gold shoulder/cap/chest marks stay separate. Tone-5 diagnostic confirms face and limbs darken together while cap/uniform/shoulder gold retain their colours.",
+      "verdict": "accepted",
+      "sha256": "7d724c46fcff9642eae5d22b9588baf7979a888f5cda23170388b71a206fad3a",
+      "reviewedAt": "2026-10-27T17:07:30.830955+00:00"
+    },
+    {
+      "file": "03-l2-crowd-old-new.jpg",
+      "review": "Regenerated matched 30-figure production crowd and inspected both children plus all four officers: person-dependent skin tones remain distinct, with matching faces and limbs. All 30 actors drawn; no new cream/yellow bare arms. Existing firefighters and other v2 figures retained.",
+      "verdict": "accepted",
+      "sha256": "fa556c66b25ada8ae0d6db0a801f34eddf85e9e9de2c450b057e91fafdab8e45",
+      "reviewedAt": "2026-10-27T17:07:30.830955+00:00"
+    },
+    {
+      "file": "04-fix-p1-l2-start-courier-crew.jpg",
+      "review": "Low/high station sequence keeps all six firefighters readable and separated from the courier. The bench/calm composition and bright station remain organized.",
+      "verdict": "accepted"
+    },
+    {
+      "file": "05-qa-l2-truck-drive-full.jpg",
+      "review": "Low/high full authored truck route: actors stay seated/hidden during transport; vehicle clears corners, ends at market. No visible floating crew or accessory trails.",
+      "verdict": "accepted"
+    },
+    {
+      "file": "06-collision-l2-release.jpg",
+      "review": "Low/high release through both open market doors; child/adult size difference visible, silhouettes stay attached through running/panic. Higher tier has the authored larger population. No new trapped or invisible figures.",
+      "verdict": "accepted"
+    },
+    {
+      "file": "07-l2-finale-streets.jpg",
+      "review": "Low/high street pursuit remains spread out and readable. Existing blood trail/telegraphs are unchanged. Courier and pursuing civilian skins stay intact during movement.",
+      "verdict": "accepted"
+    },
+    {
+      "file": "08-l2-finale-bridge.jpg",
+      "review": "New officers occupy the authored police line in low/high. Navy uniforms, caps and held weapons remain readable among vehicles/gates. No body/weapon separation or floating hats observed.",
+      "verdict": "accepted"
+    },
+    {
+      "file": "09-l2-market-doors.jpg",
+      "review": "Low/high door opening still shows visible leaves and clear doorways. No figure pipeline change to the building choreography.",
+      "verdict": "accepted"
+    },
+    {
+      "file": "10-states-and-motion.jpg",
+      "review": "Regenerated and inspected child healthy plus officer healthy/turned/frozen-corpse production clips. Healthy face and limbs share each person tone; infection turns face and bare arms green together while uniform, gloves and shoulder badges keep their colours. Limbs remain attached.",
+      "verdict": "accepted",
+      "sha256": "299383f3806c04516fd16e680e464cab70cc527925066b92a92bc2b4589bedcb",
+      "reviewedAt": "2026-10-27T17:07:30.830955+00:00"
+    }
+  ],
+  "captureCount": 10,
+  "p0": 0,
+  "p1": 0,
+  "residual": "The old procedural figures retain crisper tiny tailoring/details at 400px; the PO removed must-beat-old as the rollout gate. Missing eyes and identity marks were fixed before acceptance.",
+  "perPersonSkinCheck": {
+    "paletteIndices": [
+      0,
+      5
+    ],
+    "samples": {
+      "cheek": {
+        "xy": [
+          404,
+          226
+        ],
+        "tone0": [
+          113,
+          92,
+          106
+        ],
+        "tone5": [
+          33,
+          25,
+          34
+        ]
+      },
+      "left forearm": {
+        "xy": [
+          292,
+          300
+        ],
+        "tone0": [
+          255,
+          210,
+          158
+        ],
+        "tone5": [
+          92,
+          68,
+          70
+        ]
+      },
+      "right forearm": {
+        "xy": [
+          505,
+          300
+        ],
+        "tone0": [
+          210,
+          155,
+          129
+        ],
+        "tone5": [
+          63,
+          47,
+          53
+        ]
+      },
+      "exposed finger": {
+        "xy": [
+          296,
+          353
+        ],
+        "tone0": [
+          255,
+          193,
+          143
+        ],
+        "tone5": [
+          84,
+          61,
+          63
+        ]
+      },
+      "navy cap": {
+        "xy": [
+          390,
+          130
+        ],
+        "tone0": [
+          52,
+          65,
+          130
+        ],
+        "tone5": [
+          52,
+          65,
+          130
+        ]
+      },
+      "navy uniform": {
+        "xy": [
+          370,
+          275
+        ],
+        "tone0": [
+          51,
+          64,
+          128
+        ],
+        "tone5": [
+          51,
+          64,
+          128
+        ]
+      },
+      "gold shoulder patch": {
+        "xy": [
+          310,
+          242
+        ],
+        "tone0": [
+          217,
+          159,
+          110
+        ],
+        "tone5": [
+          217,
+          159,
+          110
+        ]
+      }
+    },
+    "verdict": "face, forearms and exposed fingers change together; uniform and gold patch samples unchanged",
+    "captureHashes": {
+      "tone0": "db90fc5baf90cfe5b2e6e4d8dc4ceed5479944a15f0b602eec7c7f2c374d02d9",
+      "tone5": "d86138f7fb719ad4a9149d6ecfa2ff54cb777f24dee787cea156acfedc8bf5d5"
+    }
+  }
+}

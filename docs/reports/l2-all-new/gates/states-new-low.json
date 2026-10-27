@@ -1,0 +1,482 @@
+[
+  {
+    "model": "npc.civilian-kid",
+    "state": "healthy",
+    "name": "npc.civilian-kid-healthy",
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "canvas.f0.varianceMin",
+        "pass": true,
+        "value": 589.6436673945773,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f0.variedTilesMin",
+        "pass": true,
+        "value": 61,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f3.varianceMin",
+        "pass": true,
+        "value": 597.1099346976625,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f3.variedTilesMin",
+        "pass": true,
+        "value": 61,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f60.varianceMin",
+        "pass": true,
+        "value": 600.3280375201721,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f60.variedTilesMin",
+        "pass": true,
+        "value": 57,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f90.varianceMin",
+        "pass": true,
+        "value": 594.2111494846904,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f90.variedTilesMin",
+        "pass": true,
+        "value": 57,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f120.varianceMin",
+        "pass": true,
+        "value": 604.7816921551785,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f120.variedTilesMin",
+        "pass": true,
+        "value": 57,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f180.varianceMin",
+        "pass": true,
+        "value": 606.725033667879,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f180.variedTilesMin",
+        "pass": true,
+        "value": 58,
+        "limit": 8
+      },
+      {
+        "name": "requestedBackend",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      },
+      {
+        "name": "requestedQuality",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      }
+    ],
+    "backend": "webgl",
+    "actualTier": "low",
+    "frames": 180,
+    "seconds": 8.068,
+    "failed": [],
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l2-all-new/test-results/l2-all-new/states-new-low/npc.civilian-kid-healthy/sheet.jpg",
+    "sheetKb": 15,
+    "files": [
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/l2-all-new/test-results/l2-all-new/states-new-low/npc.civilian-kid-healthy/shot-0003.png",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/l2-all-new/test-results/l2-all-new/states-new-low/npc.civilian-kid-healthy/shot-0090.png",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/l2-all-new/test-results/l2-all-new/states-new-low/npc.civilian-kid-healthy/shot-0180.png",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/l2-all-new/test-results/l2-all-new/states-new-low/npc.civilian-kid-healthy/sheet.jpg",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/l2-all-new/test-results/l2-all-new/states-new-low/npc.civilian-kid-healthy/metrics.json"
+    ],
+    "consoleErrors": []
+  },
+  {
+    "model": "npc.police-officer",
+    "state": "healthy",
+    "name": "npc.police-officer-healthy",
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "canvas.f0.varianceMin",
+        "pass": true,
+        "value": 805.612771075439,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f0.variedTilesMin",
+        "pass": true,
+        "value": 61,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f3.varianceMin",
+        "pass": true,
+        "value": 799.7657078958309,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f3.variedTilesMin",
+        "pass": true,
+        "value": 61,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f60.varianceMin",
+        "pass": true,
+        "value": 861.4032597685182,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f60.variedTilesMin",
+        "pass": true,
+        "value": 57,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f90.varianceMin",
+        "pass": true,
+        "value": 862.2000382472161,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f90.variedTilesMin",
+        "pass": true,
+        "value": 57,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f120.varianceMin",
+        "pass": true,
+        "value": 858.7662513816431,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f120.variedTilesMin",
+        "pass": true,
+        "value": 57,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f180.varianceMin",
+        "pass": true,
+        "value": 848.359629750832,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f180.variedTilesMin",
+        "pass": true,
+        "value": 58,
+        "limit": 8
+      },
+      {
+        "name": "requestedBackend",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      },
+      {
+        "name": "requestedQuality",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      }
+    ],
+    "backend": "webgl",
+    "actualTier": "low",
+    "frames": 180,
+    "seconds": 8.85,
+    "failed": [],
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l2-all-new/test-results/l2-all-new/states-new-low/npc.police-officer-healthy/sheet.jpg",
+    "sheetKb": 17,
+    "files": [
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/l2-all-new/test-results/l2-all-new/states-new-low/npc.police-officer-healthy/shot-0003.png",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/l2-all-new/test-results/l2-all-new/states-new-low/npc.police-officer-healthy/shot-0090.png",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/l2-all-new/test-results/l2-all-new/states-new-low/npc.police-officer-healthy/shot-0180.png",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/l2-all-new/test-results/l2-all-new/states-new-low/npc.police-officer-healthy/sheet.jpg",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/l2-all-new/test-results/l2-all-new/states-new-low/npc.police-officer-healthy/metrics.json"
+    ],
+    "consoleErrors": []
+  },
+  {
+    "model": "npc.police-officer",
+    "state": "turned",
+    "name": "npc.police-officer-turned",
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "canvas.f0.varianceMin",
+        "pass": true,
+        "value": 805.612771075439,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f0.variedTilesMin",
+        "pass": true,
+        "value": 61,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f3.varianceMin",
+        "pass": true,
+        "value": 819.5806989328394,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f3.variedTilesMin",
+        "pass": true,
+        "value": 61,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f60.varianceMin",
+        "pass": true,
+        "value": 840.4722231654978,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f60.variedTilesMin",
+        "pass": true,
+        "value": 57,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f90.varianceMin",
+        "pass": true,
+        "value": 893.4305832583304,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f90.variedTilesMin",
+        "pass": true,
+        "value": 57,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f120.varianceMin",
+        "pass": true,
+        "value": 932.8130705776603,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f120.variedTilesMin",
+        "pass": true,
+        "value": 57,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f180.varianceMin",
+        "pass": true,
+        "value": 920.6283984409565,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f180.variedTilesMin",
+        "pass": true,
+        "value": 59,
+        "limit": 8
+      },
+      {
+        "name": "requestedBackend",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      },
+      {
+        "name": "requestedQuality",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      }
+    ],
+    "backend": "webgl",
+    "actualTier": "low",
+    "frames": 180,
+    "seconds": 9.195,
+    "failed": [],
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l2-all-new/test-results/l2-all-new/states-new-low/npc.police-officer-turned/sheet.jpg",
+    "sheetKb": 16,
+    "files": [
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/l2-all-new/test-results/l2-all-new/states-new-low/npc.police-officer-turned/shot-0003.png",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/l2-all-new/test-results/l2-all-new/states-new-low/npc.police-officer-turned/shot-0090.png",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/l2-all-new/test-results/l2-all-new/states-new-low/npc.police-officer-turned/shot-0180.png",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/l2-all-new/test-results/l2-all-new/states-new-low/npc.police-officer-turned/sheet.jpg",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/l2-all-new/test-results/l2-all-new/states-new-low/npc.police-officer-turned/metrics.json"
+    ],
+    "consoleErrors": []
+  },
+  {
+    "model": "npc.police-officer",
+    "state": "corpse",
+    "name": "npc.police-officer-corpse",
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "canvas.f0.varianceMin",
+        "pass": true,
+        "value": 805.612771075439,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f0.variedTilesMin",
+        "pass": true,
+        "value": 61,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f3.varianceMin",
+        "pass": true,
+        "value": 832.1951399459667,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f3.variedTilesMin",
+        "pass": true,
+        "value": 61,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f60.varianceMin",
+        "pass": true,
+        "value": 905.5719984063635,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f60.variedTilesMin",
+        "pass": true,
+        "value": 57,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f90.varianceMin",
+        "pass": true,
+        "value": 911.3966053027707,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f90.variedTilesMin",
+        "pass": true,
+        "value": 57,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f120.varianceMin",
+        "pass": true,
+        "value": 912.2469080524679,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f120.variedTilesMin",
+        "pass": true,
+        "value": 57,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f180.varianceMin",
+        "pass": true,
+        "value": 893.3488882146903,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f180.variedTilesMin",
+        "pass": true,
+        "value": 58,
+        "limit": 8
+      },
+      {
+        "name": "requestedBackend",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      },
+      {
+        "name": "requestedQuality",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      }
+    ],
+    "backend": "webgl",
+    "actualTier": "low",
+    "frames": 180,
+    "seconds": 8.861,
+    "failed": [],
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l2-all-new/test-results/l2-all-new/states-new-low/npc.police-officer-corpse/sheet.jpg",
+    "sheetKb": 16,
+    "files": [
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/l2-all-new/test-results/l2-all-new/states-new-low/npc.police-officer-corpse/shot-0003.png",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/l2-all-new/test-results/l2-all-new/states-new-low/npc.police-officer-corpse/shot-0090.png",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/l2-all-new/test-results/l2-all-new/states-new-low/npc.police-officer-corpse/shot-0180.png",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/l2-all-new/test-results/l2-all-new/states-new-low/npc.police-officer-corpse/sheet.jpg",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/l2-all-new/test-results/l2-all-new/states-new-low/npc.police-officer-corpse/metrics.json"
+    ],
+    "consoleErrors": []
+  }
+]

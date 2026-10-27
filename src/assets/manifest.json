@@ -6580,12 +6580,12 @@
     "category": "character",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/npc.civilian-kid.glb",
+    "glb": "public/assets/models/skinned/npc.civilian-kid.lod0.glb",
     "dimensions": {
-      "x": 0.5572,
-      "y": 1.4744,
-      "z": 0.6619,
-      "tolerance": 0.1
+      "x": 0.571837306022644,
+      "y": 1.4744024276733398,
+      "z": 0.795772910118103,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -6638,13 +6638,22 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/npc.civilian-kid/model.glb",
+    "sourceGlb": "assets/npc.civilian-kid/model.skin.glb",
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/npc.civilian-kid.lod1.glb",
-      "lod2": "public/assets/models/npc.civilian-kid.lod2.glb"
+      "lod1": "public/assets/models/skinned/npc.civilian-kid.lod1.glb",
+      "lod2": "public/assets/models/skinned/npc.civilian-kid.lod2.glb"
     },
-    "script": "assets/npc.civilian-kid/build.py"
+    "script": "assets/npc.civilian-kid/build.py",
+    "rigidBaseline": {
+      "glb": "public/assets/models/npc.civilian-kid.glb",
+      "lods": {
+        "lod1": "public/assets/models/npc.civilian-kid.lod1.glb",
+        "lod2": "public/assets/models/npc.civilian-kid.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "npc.civilian-elderly",
@@ -7051,12 +7060,12 @@
     "category": "character",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/npc.police-officer.glb",
+    "glb": "public/assets/models/skinned/npc.police-officer.lod0.glb",
     "dimensions": {
-      "x": 0.5824,
-      "y": 1.8,
-      "z": 0.8587,
-      "tolerance": 0.1
+      "x": 0.4764045774936676,
+      "y": 1.4179394245147705,
+      "z": 0.9326343536376953,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -7109,10 +7118,10 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/npc.police-officer/model.glb",
+    "sourceGlb": "assets/npc.police-officer/model.skin.glb",
     "lods": {
-      "lod1": "public/assets/models/npc.police-officer.lod1.glb",
-      "lod2": "public/assets/models/npc.police-officer.lod2.glb"
+      "lod1": "public/assets/models/skinned/npc.police-officer.lod1.glb",
+      "lod2": "public/assets/models/skinned/npc.police-officer.lod2.glb"
     },
     "sourceForward": "+X",
     "sourceScale": 1.2694477414759615,
@@ -7120,7 +7129,16 @@
     "authoredLodTriangles": {
       "lod1": 8000,
       "lod2": 5000
-    }
+    },
+    "rigidBaseline": {
+      "glb": "public/assets/models/npc.police-officer.glb",
+      "lods": {
+        "lod1": "public/assets/models/npc.police-officer.lod1.glb",
+        "lod2": "public/assets/models/npc.police-officer.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "npc.paramedic",

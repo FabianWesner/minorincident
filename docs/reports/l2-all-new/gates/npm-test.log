@@ -1,0 +1,15 @@
+
+> test
+> node tools/qa/test-budget.mjs --name test --max-seconds 240 -- npx vitest run --project default --configLoader runner
+
+[test-budget] 127/150 test cases ({"vitest":106,"e2e":9,"invariantsBrowser":12}), 38/45 files
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/l2-all-new
+
+
+ Test Files  22 passed (22)
+      Tests  87 passed (87)
+   Start at  18:04:35
+   Duration  18.84s (tests 85%, transform 8%, import 6%, setup 1%)
+
+[test-budget] test: 19.4 s (budget 240 s)

@@ -1,0 +1,109 @@
+{
+  "completedAt": "2026-10-27T17:09:24.850122+00:00",
+  "commands": [
+    {
+      "command": "node --import tsx tools/assets/validate.ts",
+      "exitCode": 0,
+      "evidence": "validator.json"
+    },
+    {
+      "command": "npm run verify -- E20",
+      "exitCode": 0,
+      "evidence": "verify-e20.json"
+    },
+    {
+      "command": "npm run test:smoke",
+      "exitCode": 0,
+      "evidence": "smoke.log"
+    },
+    {
+      "command": "npm run scene:gate -- --jobs 1 --out test-results/l2-all-new/scene-gate",
+      "exitCode": 0,
+      "evidence": "scene-gate.md"
+    },
+    {
+      "command": "PLAYTEST_FRAME_GATE=1 npm run playtest -- --levels L2 --entry debug --quality low --mode campaign --no-skip --level-minutes 8 --out test-results/l2-all-new/playthrough",
+      "exitCode": 0,
+      "evidence": "playthrough-summary.json"
+    }
+  ],
+  "assetValidator": {
+    "rows": 1262,
+    "errors": 0
+  },
+  "unit": {
+    "files": 22,
+    "tests": 87
+  },
+  "smoke": {
+    "tests": 7,
+    "workers": 1,
+    "lateShaderBuilds": 0,
+    "gameplayFramesOver200ms": 0,
+    "webgl": {
+      "programs": 499,
+      "crowdPrograms": 93,
+      "maxAttributes": 13,
+      "maxVaryings": 14
+    },
+    "webgpu": {
+      "programs": 713,
+      "crowdPrograms": 98,
+      "maxAttributes": 13,
+      "maxVaryings": 14,
+      "crowdVertexBuffers": 6,
+      "allVertexBuffers": 8
+    }
+  },
+  "sceneGate": {
+    "rows": 48,
+    "pass": 42,
+    "existingKnown": 6,
+    "newFailures": 0,
+    "notRun": 0,
+    "assetRevision": "90441a416, before skin correction; not rerun in this follow-up"
+  },
+  "l2Story": {
+    "low": 6,
+    "high": 6,
+    "allPass": true
+  },
+  "states": {
+    "pass": 4
+  },
+  "playthrough": {
+    "finished": true,
+    "wallSeconds": 133,
+    "skipped": [],
+    "issues": 0,
+    "p0": 0,
+    "p1": 0,
+    "deaths": 1,
+    "navigationAssist": "physical WASD route, no objective/world writes",
+    "gameplayFramesOver200ms": 0,
+    "loadingOutliersExcluded": true,
+    "assetRevision": "90441a416, before skin correction; not rerun in this follow-up"
+  },
+  "browser": "headless shared pool, one job/context at a time; unique ports 4323\u20134326",
+  "skinCorrection": {
+    "validatorRows": 1262,
+    "validatorErrors": 0,
+    "unitTests": 87,
+    "smokeTests": 7,
+    "freezeGuard": "PASS",
+    "gpuLimits": "PASS",
+    "states": 4,
+    "reviewedSheets": [
+      "01-npc.civilian-kid.jpg",
+      "02-npc.police-officer.jpg",
+      "03-l2-crowd-old-new.jpg",
+      "10-states-and-motion.jpg"
+    ],
+    "skinPaletteIndicesChecked": [
+      0,
+      5
+    ],
+    "sourcePipelineUnchanged": true,
+    "manualSteps": []
+  }
+}

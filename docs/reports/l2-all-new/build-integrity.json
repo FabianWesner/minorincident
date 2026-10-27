@@ -1,0 +1,1894 @@
+{
+  "base": "0cc2f1d95",
+  "pipelineCommit": "9c870fc",
+  "triangleBudgets": {
+    "lod0": 6000,
+    "lod1": 2500,
+    "lod2": 4000
+  },
+  "fileBudgets": [
+    600000,
+    250000,
+    150000
+  ],
+  "coverage": [
+    {
+      "id": "char.courier-female",
+      "skinned": true,
+      "glb": "public/assets/models/char.courier-female.glb",
+      "lods": {
+        "lod1": "public/assets/models/char.courier-female.lod1.glb",
+        "lod2": "public/assets/models/char.courier-female.lod2.glb"
+      },
+      "runtimeRoute": "CharacterView default skinned courier route",
+      "runtimePaths": [
+        "public/assets/models/char.courier-female.skin.glb",
+        "public/assets/models/char.courier-female.skin.low.glb"
+      ]
+    },
+    {
+      "id": "char.courier-male",
+      "skinned": true,
+      "glb": "public/assets/models/char.courier-male.glb",
+      "lods": {
+        "lod1": "public/assets/models/char.courier-male.lod1.glb",
+        "lod2": "public/assets/models/char.courier-male.lod2.glb"
+      },
+      "runtimeRoute": "CharacterView default skinned courier route",
+      "runtimePaths": [
+        "public/assets/models/char.courier-male.skin.glb",
+        "public/assets/models/char.courier-male.skin.low.glb"
+      ]
+    },
+    {
+      "id": "char.corgi",
+      "skinned": true,
+      "glb": "public/assets/models/skinned/char.corgi.lod0.glb",
+      "lods": {
+        "lod1": "public/assets/models/skinned/char.corgi.lod1.glb",
+        "lod2": "public/assets/models/skinned/char.corgi.lod2.glb"
+      },
+      "runtimeRoute": "manifest crowdSkin",
+      "runtimePaths": [
+        "public/assets/models/skinned/char.corgi.lod0.glb",
+        "public/assets/models/skinned/char.corgi.lod1.glb",
+        "public/assets/models/skinned/char.corgi.lod2.glb"
+      ]
+    },
+    {
+      "id": "npc.civilian-man-a",
+      "skinned": true,
+      "glb": "public/assets/models/skinned/npc.civilian-man-a.lod0.glb",
+      "lods": {
+        "lod1": "public/assets/models/skinned/npc.civilian-man-a.lod1.glb",
+        "lod2": "public/assets/models/skinned/npc.civilian-man-a.lod2.glb"
+      },
+      "runtimeRoute": "manifest crowdSkin",
+      "runtimePaths": [
+        "public/assets/models/skinned/npc.civilian-man-a.lod0.glb",
+        "public/assets/models/skinned/npc.civilian-man-a.lod1.glb",
+        "public/assets/models/skinned/npc.civilian-man-a.lod2.glb"
+      ]
+    },
+    {
+      "id": "npc.civilian-man-b",
+      "skinned": true,
+      "glb": "public/assets/models/skinned/npc.civilian-man-b.lod0.glb",
+      "lods": {
+        "lod1": "public/assets/models/skinned/npc.civilian-man-b.lod1.glb",
+        "lod2": "public/assets/models/skinned/npc.civilian-man-b.lod2.glb"
+      },
+      "runtimeRoute": "manifest crowdSkin",
+      "runtimePaths": [
+        "public/assets/models/skinned/npc.civilian-man-b.lod0.glb",
+        "public/assets/models/skinned/npc.civilian-man-b.lod1.glb",
+        "public/assets/models/skinned/npc.civilian-man-b.lod2.glb"
+      ]
+    },
+    {
+      "id": "npc.civilian-woman-a",
+      "skinned": true,
+      "glb": "public/assets/models/skinned/npc.civilian-woman-a.lod0.glb",
+      "lods": {
+        "lod1": "public/assets/models/skinned/npc.civilian-woman-a.lod1.glb",
+        "lod2": "public/assets/models/skinned/npc.civilian-woman-a.lod2.glb"
+      },
+      "runtimeRoute": "manifest crowdSkin",
+      "runtimePaths": [
+        "public/assets/models/skinned/npc.civilian-woman-a.lod0.glb",
+        "public/assets/models/skinned/npc.civilian-woman-a.lod1.glb",
+        "public/assets/models/skinned/npc.civilian-woman-a.lod2.glb"
+      ]
+    },
+    {
+      "id": "npc.civilian-woman-b",
+      "skinned": true,
+      "glb": "public/assets/models/skinned/npc.civilian-woman-b.lod0.glb",
+      "lods": {
+        "lod1": "public/assets/models/skinned/npc.civilian-woman-b.lod1.glb",
+        "lod2": "public/assets/models/skinned/npc.civilian-woman-b.lod2.glb"
+      },
+      "runtimeRoute": "manifest crowdSkin",
+      "runtimePaths": [
+        "public/assets/models/skinned/npc.civilian-woman-b.lod0.glb",
+        "public/assets/models/skinned/npc.civilian-woman-b.lod1.glb",
+        "public/assets/models/skinned/npc.civilian-woman-b.lod2.glb"
+      ]
+    },
+    {
+      "id": "npc.civilian-elderly",
+      "skinned": true,
+      "glb": "public/assets/models/skinned/npc.civilian-elderly.lod0.glb",
+      "lods": {
+        "lod1": "public/assets/models/skinned/npc.civilian-elderly.lod1.glb",
+        "lod2": "public/assets/models/skinned/npc.civilian-elderly.lod2.glb"
+      },
+      "runtimeRoute": "manifest crowdSkin",
+      "runtimePaths": [
+        "public/assets/models/skinned/npc.civilian-elderly.lod0.glb",
+        "public/assets/models/skinned/npc.civilian-elderly.lod1.glb",
+        "public/assets/models/skinned/npc.civilian-elderly.lod2.glb"
+      ]
+    },
+    {
+      "id": "npc.civilian-kid",
+      "skinned": true,
+      "glb": "public/assets/models/skinned/npc.civilian-kid.lod0.glb",
+      "lods": {
+        "lod1": "public/assets/models/skinned/npc.civilian-kid.lod1.glb",
+        "lod2": "public/assets/models/skinned/npc.civilian-kid.lod2.glb"
+      },
+      "runtimeRoute": "manifest crowdSkin",
+      "runtimePaths": [
+        "public/assets/models/skinned/npc.civilian-kid.lod0.glb",
+        "public/assets/models/skinned/npc.civilian-kid.lod1.glb",
+        "public/assets/models/skinned/npc.civilian-kid.lod2.glb"
+      ]
+    },
+    {
+      "id": "npc.firefighter-alive",
+      "skinned": true,
+      "glb": "public/assets/models/skinned/npc.firefighter-alive.lod0.glb",
+      "lods": {
+        "lod1": "public/assets/models/skinned/npc.firefighter-alive.lod1.glb",
+        "lod2": "public/assets/models/skinned/npc.firefighter-alive.lod2.glb"
+      },
+      "runtimeRoute": "manifest crowdSkin",
+      "runtimePaths": [
+        "public/assets/models/skinned/npc.firefighter-alive.lod0.glb",
+        "public/assets/models/skinned/npc.firefighter-alive.lod1.glb",
+        "public/assets/models/skinned/npc.firefighter-alive.lod2.glb"
+      ]
+    },
+    {
+      "id": "npc.police-officer",
+      "skinned": true,
+      "glb": "public/assets/models/skinned/npc.police-officer.lod0.glb",
+      "lods": {
+        "lod1": "public/assets/models/skinned/npc.police-officer.lod1.glb",
+        "lod2": "public/assets/models/skinned/npc.police-officer.lod2.glb"
+      },
+      "runtimeRoute": "manifest crowdSkin",
+      "runtimePaths": [
+        "public/assets/models/skinned/npc.police-officer.lod0.glb",
+        "public/assets/models/skinned/npc.police-officer.lod1.glb",
+        "public/assets/models/skinned/npc.police-officer.lod2.glb"
+      ]
+    }
+  ],
+  "figures": [
+    {
+      "id": "npc.civilian-kid",
+      "source": "/Users/wesner/Workspace/3dp-l2-all-new/cast/l2/npc.civilian-kid",
+      "manualSteps": [],
+      "validation": [
+        {
+          "id": "npc.civilian-kid:lod0",
+          "errors": [],
+          "triangles": 5507,
+          "materials": 2,
+          "drawCalls": 9,
+          "animatedDrawCalls": 7,
+          "fileKB": 391.9765625,
+          "dimensions": [
+            0.571837306022644,
+            1.4744024276733398,
+            0.795772910118103
+          ],
+          "hash": "7a30a967e7a08e9a1db99199915befba40169645b31c2c83dceb01e69612000a"
+        },
+        {
+          "id": "npc.civilian-kid:lod1",
+          "errors": [],
+          "triangles": 2295,
+          "materials": 2,
+          "drawCalls": 9,
+          "animatedDrawCalls": 7,
+          "fileKB": 184.73046875,
+          "dimensions": [
+            0.574265256524086,
+            1.4744024276733398,
+            0.7894490361213684
+          ],
+          "hash": "ff1555ed0f69cdc0166d2dae09396ceb95a1f1f7e7be84a35a264a5eda44768c"
+        },
+        {
+          "id": "npc.civilian-kid:lod2",
+          "errors": [],
+          "triangles": 2295,
+          "materials": 2,
+          "drawCalls": 9,
+          "animatedDrawCalls": 7,
+          "fileKB": 139.18359375,
+          "dimensions": [
+            0.574265256524086,
+            1.4744024276733398,
+            0.7894490361213684
+          ],
+          "hash": "ff1555ed0f69cdc0166d2dae09396ceb95a1f1f7e7be84a35a264a5eda44768c"
+        }
+      ],
+      "deliveries": [
+        {
+          "lod": 0,
+          "sourceSha256": "6f03fa98c5bd6a85776a89d1ee3ea6f51963b2b2ed1a45a5383e44dbee47fbb5",
+          "bodySha256": "b8ba6dc1919e704d8d39354040b31a394d146e079cd89e9ed1b26f4b17bdee5c",
+          "fit": {
+            "rig": "assets/npc.civilian-kid/model.glb",
+            "out": "test-results/l2-officer-skin/builds/npc.civilian-kid/lod0.raw.glb",
+            "bytes": 1412424,
+            "body": "/Users/wesner/Workspace/3dp-l2-all-new/cast/l2/npc.civilian-kid/source/assembled-lod0.glb",
+            "scale": 1.386361468422803,
+            "yaw": 90,
+            "translation": [
+              -0.1022089436743602,
+              0.7001910368465417,
+              -0.0009086801938719413
+            ],
+            "meanDistanceToRigidSurface": 0.039258635557565674,
+            "anatomyMaterials": [
+              "pal_skinWarm",
+              "pal_teeLavender",
+              "pal_teeSeam"
+            ],
+            "headwearClearance": {
+              "eyeX": 0.09833226745123139,
+              "eyeY": 1.2022204399108887,
+              "brimY": 1.261092551374522,
+              "vertices": 31,
+              "maxLift": 0.03906181644414941
+            },
+            "contactRepair": {
+              "removedTriangles": 52,
+              "closedBoundaries": 3,
+              "removedScrapTriangles": 0
+            },
+            "weightRelaxationPasses": 2,
+            "skinPaint": {
+              "samples": 140,
+              "ratios": [
+                0.7490196078431373,
+                0.5843137254901961
+              ]
+            },
+            "eyeLandmarks": {
+              "source": "authored PROD irises projected onto the retained face",
+              "centres": [
+                [
+                  0.14364000409841537,
+                  0.17013007402420044,
+                  -0.06728000193834305
+                ],
+                [
+                  0.14364000409841537,
+                  0.17013007402420044,
+                  0.06727999821305275
+                ]
+              ]
+            },
+            "vertices": 5779,
+            "weldedVertices": 2618,
+            "triangles": 5284,
+            "bodyTriangleBudget": null,
+            "components": 1,
+            "openEdges": 0,
+            "unrelatedSeams": 52,
+            "maxInfluences": 4,
+            "zeroNormals": 0,
+            "jointNames": [
+              "root",
+              "hip",
+              "torso",
+              "head",
+              "armL",
+              "armR",
+              "foreArmL",
+              "foreArmR",
+              "handL",
+              "handR",
+              "legL",
+              "legR",
+              "shinL",
+              "shinR",
+              "footL",
+              "footR"
+            ],
+            "rigKind": "humanoid",
+            "capFits": [
+              {
+                "part": "head",
+                "rim": 71,
+                "triangles": 67,
+                "loops": 2,
+                "distance": 0.11639115985812716,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "armL",
+                "rim": 41,
+                "triangles": 37,
+                "loops": 2,
+                "distance": 0.09295281034539846,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "armR",
+                "rim": 32,
+                "triangles": 30,
+                "loops": 1,
+                "distance": 0.12461341150900862,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "foreArmL",
+                "rim": 20,
+                "triangles": 18,
+                "loops": 1,
+                "distance": 0.08931527761342839,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "foreArmR",
+                "rim": 19,
+                "triangles": 17,
+                "loops": 1,
+                "distance": 0.07971653834849378,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "legL",
+                "rim": 27,
+                "triangles": 25,
+                "loops": 1,
+                "distance": 0.06954269949644697,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "legR",
+                "rim": 27,
+                "triangles": 25,
+                "loops": 1,
+                "distance": 0.06272188579476094,
+                "method": "cut-boundary"
+              }
+            ],
+            "removedClosureTriangles": 0,
+            "removedDegenerateTriangles": 640,
+            "joints": 16,
+            "eyes": 2,
+            "seams": {
+              "foreArmR/armR": {
+                "seamVertices": 20,
+                "band": 0.11140420707714077,
+                "blended": 57
+              },
+              "armR/torso": {
+                "seamVertices": 30,
+                "band": 0.11673803898460584,
+                "blended": 118
+              },
+              "handR/foreArmR": {
+                "seamVertices": 19,
+                "band": 0.10677337803293474,
+                "blended": 59
+              },
+              "armL/torso": {
+                "seamVertices": 43,
+                "band": 0.17692829132080076,
+                "blended": 200
+              },
+              "footR/shinR": {
+                "seamVertices": 46,
+                "band": 0.13530658697936632,
+                "blended": 151
+              },
+              "head/torso": {
+                "seamVertices": 133,
+                "band": 0.15512925599495672,
+                "blended": 501
+              },
+              "torso/hip": {
+                "seamVertices": 74,
+                "band": 0.17692829132080076,
+                "blended": 321
+              },
+              "legL/hip": {
+                "seamVertices": 47,
+                "band": 0.17692829132080076,
+                "blended": 151
+              },
+              "legR/hip": {
+                "seamVertices": 48,
+                "band": 0.17692829132080076,
+                "blended": 167
+              },
+              "foreArmL/armL": {
+                "seamVertices": 19,
+                "band": 0.10807401906034125,
+                "blended": 43
+              },
+              "footL/shinL": {
+                "seamVertices": 46,
+                "band": 0.15652347704248412,
+                "blended": 168
+              },
+              "shinR/legR": {
+                "seamVertices": 33,
+                "band": 0.10855447252323062,
+                "blended": 97
+              },
+              "shinL/legL": {
+                "seamVertices": 31,
+                "band": 0.11202149794987658,
+                "blended": 94
+              },
+              "handL/foreArmL": {
+                "seamVertices": 21,
+                "band": 0.16791004101318674,
+                "blended": 110
+              }
+            }
+          },
+          "regions": {
+            "width": 1024,
+            "height": 1024,
+            "garments": true,
+            "absorbed": 34581,
+            "shares": {
+              "hair": 0.2433,
+              "skin": 0.2203,
+              "shirt": 0.1447,
+              "trousers": 0.0904,
+              "skinMask": 0,
+              "authored": 0.3012
+            },
+            "colours": {
+              "skin": [
+                82.2,
+                17.6,
+                30.3
+              ],
+              "hair": [
+                37.7,
+                18.3,
+                18.5
+              ],
+              "shirt": [
+                46.9,
+                -5.1,
+                -23.2
+              ],
+              "trousers": [
+                49.3,
+                -7.4,
+                16.8
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.civilian-kid.lod0.glb",
+              "bytes": 401384,
+              "sha256": "d867f865119f781dee42503cbf145d1ec8319fd02fd511fccae8d247e4711ea0",
+              "errors": []
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.civilian-kid.lod0.low.glb",
+              "bytes": 284380,
+              "sha256": "af731b27ab30c4faaa12a72dc9ea2b9153ddc270b0abcbd0bddf553a494ad09a",
+              "errors": []
+            }
+          ]
+        },
+        {
+          "lod": 1,
+          "sourceSha256": "6f03fa98c5bd6a85776a89d1ee3ea6f51963b2b2ed1a45a5383e44dbee47fbb5",
+          "bodySha256": "3118d918b688c10e95d580c60eef6f87b0a477a3f5a1b35e6f6d4c763b92a178",
+          "fit": {
+            "rig": "assets/npc.civilian-kid/model.glb",
+            "out": "test-results/l2-officer-skin/builds/npc.civilian-kid/lod1.raw.glb",
+            "bytes": 576888,
+            "body": "/Users/wesner/Workspace/3dp-l2-all-new/cast/l2/npc.civilian-kid/source/assembled-lod1.glb",
+            "scale": 1.3782111491032234,
+            "yaw": 90,
+            "translation": [
+              -0.10209649459065379,
+              0.697340068617022,
+              -0.004570805495979768
+            ],
+            "meanDistanceToRigidSurface": 0.04014870384651834,
+            "anatomyMaterials": [
+              "pal_skinWarm",
+              "pal_teeLavender",
+              "pal_teeSeam"
+            ],
+            "headwearClearance": {
+              "eyeX": 0.09679674693729515,
+              "eyeY": 1.2022204399108887,
+              "brimY": 1.2568496246170069,
+              "vertices": 11,
+              "maxLift": 0.026622686658989814
+            },
+            "contactRepair": {
+              "removedTriangles": 38,
+              "closedBoundaries": 2,
+              "removedScrapTriangles": 0
+            },
+            "weightRelaxationPasses": 4,
+            "skinPaint": {
+              "samples": 72,
+              "ratios": [
+                0.7529411764705882,
+                0.5843137254901961
+              ]
+            },
+            "eyeLandmarks": {
+              "source": "authored PROD irises projected onto the retained face",
+              "centres": [
+                [
+                  0.14364000409841537,
+                  0.17013007402420044,
+                  -0.06728000193834305
+                ],
+                [
+                  0.14364000409841537,
+                  0.17013007402420044,
+                  0.06727999821305275
+                ]
+              ]
+            },
+            "vertices": 2846,
+            "weldedVertices": 1077,
+            "triangles": 2202,
+            "bodyTriangleBudget": null,
+            "components": 1,
+            "openEdges": 0,
+            "unrelatedSeams": 30,
+            "maxInfluences": 4,
+            "zeroNormals": 0,
+            "jointNames": [
+              "root",
+              "hip",
+              "torso",
+              "head",
+              "armL",
+              "armR",
+              "foreArmL",
+              "foreArmR",
+              "handL",
+              "handR",
+              "legL",
+              "legR",
+              "shinL",
+              "shinR",
+              "footL",
+              "footR"
+            ],
+            "rigKind": "humanoid",
+            "capFits": [
+              {
+                "part": "head",
+                "rim": 36,
+                "triangles": 32,
+                "loops": 2,
+                "distance": 0.09601493637140063,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "armL",
+                "rim": 11,
+                "triangles": 9,
+                "loops": 1,
+                "distance": 0.1952221156072045,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "armR",
+                "rim": 4,
+                "triangles": 2,
+                "loops": 1,
+                "distance": 0.15403211254621166,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "foreArmL",
+                "rim": 11,
+                "triangles": 9,
+                "loops": 1,
+                "distance": 0.09236582731359515,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "foreArmR",
+                "rim": 4,
+                "triangles": 2,
+                "loops": 1,
+                "distance": 0.08236929398806223,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "legL",
+                "rim": 24,
+                "triangles": 22,
+                "loops": 1,
+                "distance": 0.0834084599009042,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "legR",
+                "rim": 15,
+                "triangles": 13,
+                "loops": 1,
+                "distance": 0.05858179677309566,
+                "method": "cut-boundary"
+              }
+            ],
+            "removedClosureTriangles": 0,
+            "removedDegenerateTriangles": 640,
+            "joints": 16,
+            "eyes": 2,
+            "seams": {
+              "shinR/legR": {
+                "seamVertices": 21,
+                "band": 0.14481599755384114,
+                "blended": 53
+              },
+              "handR/foreArmR": {
+                "seamVertices": 11,
+                "band": 0.17692829132080076,
+                "blended": 36
+              },
+              "legL/hip": {
+                "seamVertices": 26,
+                "band": 0.17692829132080076,
+                "blended": 70
+              },
+              "legR/hip": {
+                "seamVertices": 21,
+                "band": 0.17692829132080076,
+                "blended": 61
+              },
+              "head/torso": {
+                "seamVertices": 79,
+                "band": 0.17692829132080076,
+                "blended": 227
+              },
+              "torso/hip": {
+                "seamVertices": 40,
+                "band": 0.17692829132080076,
+                "blended": 156
+              },
+              "foreArmL/armL": {
+                "seamVertices": 9,
+                "band": 0.13894770340527085,
+                "blended": 20
+              },
+              "armL/torso": {
+                "seamVertices": 29,
+                "band": 0.17692829132080076,
+                "blended": 96
+              },
+              "foreArmR/armR": {
+                "seamVertices": 10,
+                "band": 0.17692829132080076,
+                "blended": 21
+              },
+              "handL/foreArmL": {
+                "seamVertices": 14,
+                "band": 0.16617242743878594,
+                "blended": 48
+              },
+              "shinL/legL": {
+                "seamVertices": 17,
+                "band": 0.16276418682482488,
+                "blended": 59
+              },
+              "footR/shinR": {
+                "seamVertices": 27,
+                "band": 0.17692829132080076,
+                "blended": 76
+              },
+              "footL/shinL": {
+                "seamVertices": 29,
+                "band": 0.17692829132080076,
+                "blended": 80
+              },
+              "armR/torso": {
+                "seamVertices": 19,
+                "band": 0.17692829132080076,
+                "blended": 75
+              }
+            }
+          },
+          "regions": {
+            "width": 512,
+            "height": 512,
+            "garments": true,
+            "absorbed": 7495,
+            "shares": {
+              "hair": 0.2438,
+              "skin": 0.1853,
+              "shirt": 0.1481,
+              "trousers": 0.0875,
+              "skinMask": 0,
+              "authored": 0.3352
+            },
+            "colours": {
+              "skin": [
+                82.2,
+                17.8,
+                30.3
+              ],
+              "hair": [
+                37.6,
+                18.3,
+                18.5
+              ],
+              "shirt": [
+                46.9,
+                -5.1,
+                -23.2
+              ],
+              "trousers": [
+                49.3,
+                -7.4,
+                16.8
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.civilian-kid.lod1.glb",
+              "bytes": 189164,
+              "sha256": "e3ddb15f69d7fa7b65809cfb4eb80a92b30b2ccea6a4715ca30ac97773d27092",
+              "errors": []
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.civilian-kid.lod1.low.glb",
+              "bytes": 189164,
+              "sha256": "e3ddb15f69d7fa7b65809cfb4eb80a92b30b2ccea6a4715ca30ac97773d27092",
+              "errors": []
+            }
+          ]
+        },
+        {
+          "lod": 2,
+          "sourceSha256": "6f03fa98c5bd6a85776a89d1ee3ea6f51963b2b2ed1a45a5383e44dbee47fbb5",
+          "bodySha256": "3118d918b688c10e95d580c60eef6f87b0a477a3f5a1b35e6f6d4c763b92a178",
+          "fit": {
+            "rig": "assets/npc.civilian-kid/model.glb",
+            "out": "test-results/l2-officer-skin/builds/npc.civilian-kid/lod2.raw.glb",
+            "bytes": 576888,
+            "body": "/Users/wesner/Workspace/3dp-l2-all-new/cast/l2/npc.civilian-kid/source/assembled-lod1.glb",
+            "scale": 1.3782111491032234,
+            "yaw": 90,
+            "translation": [
+              -0.10209649459065379,
+              0.697340068617022,
+              -0.004570805495979768
+            ],
+            "meanDistanceToRigidSurface": 0.04014870384651834,
+            "anatomyMaterials": [
+              "pal_skinWarm",
+              "pal_teeLavender",
+              "pal_teeSeam"
+            ],
+            "headwearClearance": {
+              "eyeX": 0.09679674693729515,
+              "eyeY": 1.2022204399108887,
+              "brimY": 1.2568496246170069,
+              "vertices": 11,
+              "maxLift": 0.026622686658989814
+            },
+            "contactRepair": {
+              "removedTriangles": 38,
+              "closedBoundaries": 2,
+              "removedScrapTriangles": 0
+            },
+            "weightRelaxationPasses": 4,
+            "skinPaint": {
+              "samples": 72,
+              "ratios": [
+                0.7529411764705882,
+                0.5843137254901961
+              ]
+            },
+            "eyeLandmarks": {
+              "source": "authored PROD irises projected onto the retained face",
+              "centres": [
+                [
+                  0.14364000409841537,
+                  0.17013007402420044,
+                  -0.06728000193834305
+                ],
+                [
+                  0.14364000409841537,
+                  0.17013007402420044,
+                  0.06727999821305275
+                ]
+              ]
+            },
+            "vertices": 2846,
+            "weldedVertices": 1077,
+            "triangles": 2202,
+            "bodyTriangleBudget": null,
+            "components": 1,
+            "openEdges": 0,
+            "unrelatedSeams": 30,
+            "maxInfluences": 4,
+            "zeroNormals": 0,
+            "jointNames": [
+              "root",
+              "hip",
+              "torso",
+              "head",
+              "armL",
+              "armR",
+              "foreArmL",
+              "foreArmR",
+              "handL",
+              "handR",
+              "legL",
+              "legR",
+              "shinL",
+              "shinR",
+              "footL",
+              "footR"
+            ],
+            "rigKind": "humanoid",
+            "capFits": [
+              {
+                "part": "head",
+                "rim": 36,
+                "triangles": 32,
+                "loops": 2,
+                "distance": 0.09601493637140063,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "armL",
+                "rim": 11,
+                "triangles": 9,
+                "loops": 1,
+                "distance": 0.1952221156072045,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "armR",
+                "rim": 4,
+                "triangles": 2,
+                "loops": 1,
+                "distance": 0.15403211254621166,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "foreArmL",
+                "rim": 11,
+                "triangles": 9,
+                "loops": 1,
+                "distance": 0.09236582731359515,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "foreArmR",
+                "rim": 4,
+                "triangles": 2,
+                "loops": 1,
+                "distance": 0.08236929398806223,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "legL",
+                "rim": 24,
+                "triangles": 22,
+                "loops": 1,
+                "distance": 0.0834084599009042,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "legR",
+                "rim": 15,
+                "triangles": 13,
+                "loops": 1,
+                "distance": 0.05858179677309566,
+                "method": "cut-boundary"
+              }
+            ],
+            "removedClosureTriangles": 0,
+            "removedDegenerateTriangles": 640,
+            "joints": 16,
+            "eyes": 2,
+            "seams": {
+              "shinR/legR": {
+                "seamVertices": 21,
+                "band": 0.14481599755384114,
+                "blended": 53
+              },
+              "handR/foreArmR": {
+                "seamVertices": 11,
+                "band": 0.17692829132080076,
+                "blended": 36
+              },
+              "legL/hip": {
+                "seamVertices": 26,
+                "band": 0.17692829132080076,
+                "blended": 70
+              },
+              "legR/hip": {
+                "seamVertices": 21,
+                "band": 0.17692829132080076,
+                "blended": 61
+              },
+              "head/torso": {
+                "seamVertices": 79,
+                "band": 0.17692829132080076,
+                "blended": 227
+              },
+              "torso/hip": {
+                "seamVertices": 40,
+                "band": 0.17692829132080076,
+                "blended": 156
+              },
+              "foreArmL/armL": {
+                "seamVertices": 9,
+                "band": 0.13894770340527085,
+                "blended": 20
+              },
+              "armL/torso": {
+                "seamVertices": 29,
+                "band": 0.17692829132080076,
+                "blended": 96
+              },
+              "foreArmR/armR": {
+                "seamVertices": 10,
+                "band": 0.17692829132080076,
+                "blended": 21
+              },
+              "handL/foreArmL": {
+                "seamVertices": 14,
+                "band": 0.16617242743878594,
+                "blended": 48
+              },
+              "shinL/legL": {
+                "seamVertices": 17,
+                "band": 0.16276418682482488,
+                "blended": 59
+              },
+              "footR/shinR": {
+                "seamVertices": 27,
+                "band": 0.17692829132080076,
+                "blended": 76
+              },
+              "footL/shinL": {
+                "seamVertices": 29,
+                "band": 0.17692829132080076,
+                "blended": 80
+              },
+              "armR/torso": {
+                "seamVertices": 19,
+                "band": 0.17692829132080076,
+                "blended": 75
+              }
+            }
+          },
+          "regions": {
+            "width": 512,
+            "height": 512,
+            "garments": true,
+            "absorbed": 7495,
+            "shares": {
+              "hair": 0.2438,
+              "skin": 0.1853,
+              "shirt": 0.1481,
+              "trousers": 0.0875,
+              "skinMask": 0,
+              "authored": 0.3352
+            },
+            "colours": {
+              "skin": [
+                82.2,
+                17.8,
+                30.3
+              ],
+              "hair": [
+                37.6,
+                18.3,
+                18.5
+              ],
+              "shirt": [
+                46.9,
+                -5.1,
+                -23.2
+              ],
+              "trousers": [
+                49.3,
+                -7.4,
+                16.8
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.civilian-kid.lod2.glb",
+              "bytes": 142524,
+              "sha256": "75c25481c3e885e52cb99864b7ad14bfa1cf402cc7aa4f08b14402dd670c30f8",
+              "errors": []
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.civilian-kid.lod2.low.glb",
+              "bytes": 142524,
+              "sha256": "75c25481c3e885e52cb99864b7ad14bfa1cf402cc7aa4f08b14402dd670c30f8",
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "npc.police-officer",
+      "source": "/Users/wesner/Workspace/3dp-l2-all-new/cast/l2/npc.police-officer",
+      "manualSteps": [],
+      "validation": [
+        {
+          "id": "npc.police-officer:lod0",
+          "errors": [],
+          "triangles": 5435,
+          "materials": 2,
+          "drawCalls": 9,
+          "animatedDrawCalls": 7,
+          "fileKB": 301.3046875,
+          "dimensions": [
+            0.4764045774936676,
+            1.4179394245147705,
+            0.9326343536376953
+          ],
+          "hash": "2d5feff7d6ed659b788856bf1dbb98b83efd93dff61a48784392329851a6fd24"
+        },
+        {
+          "id": "npc.police-officer:lod1",
+          "errors": [],
+          "triangles": 2274,
+          "materials": 2,
+          "drawCalls": 9,
+          "animatedDrawCalls": 7,
+          "fileKB": 149.58203125,
+          "dimensions": [
+            0.4747132956981659,
+            1.4179394245147705,
+            0.9326494932174683
+          ],
+          "hash": "fc96dd23e0ea72ef6ddc63debb53423338ab0203185cb970f7d247a6471a7f6c"
+        },
+        {
+          "id": "npc.police-officer:lod2",
+          "errors": [],
+          "triangles": 2274,
+          "materials": 2,
+          "drawCalls": 9,
+          "animatedDrawCalls": 7,
+          "fileKB": 120.07421875,
+          "dimensions": [
+            0.4747132956981659,
+            1.4179394245147705,
+            0.9326494932174683
+          ],
+          "hash": "fc96dd23e0ea72ef6ddc63debb53423338ab0203185cb970f7d247a6471a7f6c"
+        }
+      ],
+      "deliveries": [
+        {
+          "lod": 0,
+          "sourceSha256": "f09f6605131d8207680a31a0ddf85b7f15cf9a40300827f3564d7a9d12caccb3",
+          "bodySha256": "676caa0cdecc847e58c2475ad67babb6291c30294a6157181348ad5e99047519",
+          "fit": {
+            "rig": "assets/npc.police-officer/model.glb",
+            "out": "test-results/l2-officer-skin/builds/npc.police-officer/lod0.raw.glb",
+            "bytes": 1308436,
+            "body": "/Users/wesner/Workspace/3dp-l2-all-new/cast/l2/npc.police-officer/source/assembled-lod0.glb",
+            "scale": 1.5241175503538922,
+            "yaw": 90,
+            "translation": [
+              -0.003565906816225886,
+              0.771670121709496,
+              0.00026519776337566303
+            ],
+            "meanDistanceToRigidSurface": 0.03338570110628471,
+            "anatomyMaterials": [
+              "pal_brass",
+              "pal_capNavy",
+              "pal_denimBlue",
+              "pal_policeBlue",
+              "pal_skinWarm",
+              "pal_navySeam",
+              "pal_uiDark"
+            ],
+            "headwearClearance": {
+              "eyeX": 0.09767261827433714,
+              "eyeY": 1.1624209139243205,
+              "brimY": 1.1839265743243566,
+              "vertices": 54,
+              "maxLift": 0.07637083293389316
+            },
+            "contactRepair": {
+              "removedTriangles": 62,
+              "closedBoundaries": 5,
+              "removedScrapTriangles": 0
+            },
+            "weightRelaxationPasses": 2,
+            "skinPaint": {
+              "samples": 62,
+              "ratios": [
+                0.7843137254901961,
+                0.5686274509803921
+              ]
+            },
+            "eyeLandmarks": {
+              "source": "authored PROD irises projected onto the retained face",
+              "centres": [
+                [
+                  0.14082910193589127,
+                  0.15400004386901855,
+                  -0.06667000827514444
+                ],
+                [
+                  0.14082911398255576,
+                  0.15400004386901855,
+                  0.06667000297192946
+                ]
+              ]
+            },
+            "vertices": 5089,
+            "weldedVertices": 2634,
+            "triangles": 5278,
+            "bodyTriangleBudget": null,
+            "components": 1,
+            "openEdges": 0,
+            "unrelatedSeams": 14,
+            "maxInfluences": 4,
+            "zeroNormals": 0,
+            "jointNames": [
+              "root",
+              "hip",
+              "torso",
+              "head",
+              "armL",
+              "armR",
+              "foreArmL",
+              "foreArmR",
+              "handL",
+              "handR",
+              "legL",
+              "legR",
+              "shinL",
+              "shinR",
+              "footL",
+              "footR"
+            ],
+            "rigKind": "humanoid",
+            "capFits": [
+              {
+                "part": "head",
+                "rim": 23,
+                "triangles": 21,
+                "loops": 1,
+                "distance": 0.028200842277140464,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "armL",
+                "rim": 35,
+                "triangles": 31,
+                "loops": 2,
+                "distance": 0.1789000997342854,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "armR",
+                "rim": 21,
+                "triangles": 19,
+                "loops": 1,
+                "distance": 0.07654229005359099,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "foreArmL",
+                "rim": 27,
+                "triangles": 23,
+                "loops": 2,
+                "distance": 0.03534781343778065,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "foreArmR",
+                "rim": 15,
+                "triangles": 13,
+                "loops": 1,
+                "distance": 0.048936481137353945,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "legL",
+                "rim": 27,
+                "triangles": 25,
+                "loops": 1,
+                "distance": 0.04968158135248616,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "legR",
+                "rim": 23,
+                "triangles": 21,
+                "loops": 1,
+                "distance": 0.02041386747988434,
+                "method": "cut-boundary"
+              }
+            ],
+            "removedClosureTriangles": 0,
+            "removedDegenerateTriangles": 0,
+            "joints": 16,
+            "eyes": 2,
+            "seams": {
+              "legL/hip": {
+                "seamVertices": 44,
+                "band": 0.17015273094177247,
+                "blended": 182
+              },
+              "torso/hip": {
+                "seamVertices": 101,
+                "band": 0.17015273094177247,
+                "blended": 338
+              },
+              "head/torso": {
+                "seamVertices": 47,
+                "band": 0.10643570284665864,
+                "blended": 164
+              },
+              "armL/torso": {
+                "seamVertices": 41,
+                "band": 0.11327881558440131,
+                "blended": 147
+              },
+              "armR/torso": {
+                "seamVertices": 50,
+                "band": 0.1274686905649362,
+                "blended": 208
+              },
+              "shinL/legL": {
+                "seamVertices": 46,
+                "band": 0.10424701237227799,
+                "blended": 126
+              },
+              "footL/shinL": {
+                "seamVertices": 39,
+                "band": 0.12589355090448137,
+                "blended": 147
+              },
+              "shinR/legR": {
+                "seamVertices": 44,
+                "band": 0.10172622053662311,
+                "blended": 125
+              },
+              "handR/foreArmR": {
+                "seamVertices": 32,
+                "band": 0.11855893954465882,
+                "blended": 103
+              },
+              "legR/hip": {
+                "seamVertices": 55,
+                "band": 0.17015273094177247,
+                "blended": 203
+              },
+              "foreArmR/armR": {
+                "seamVertices": 22,
+                "band": 0.10887420765750269,
+                "blended": 80
+              },
+              "foreArmL/armL": {
+                "seamVertices": 26,
+                "band": 0.1103097723293822,
+                "blended": 89
+              },
+              "handL/foreArmL": {
+                "seamVertices": 30,
+                "band": 0.12180597217857463,
+                "blended": 98
+              },
+              "footR/shinR": {
+                "seamVertices": 35,
+                "band": 0.17015273094177247,
+                "blended": 212
+              }
+            }
+          },
+          "regions": {
+            "width": 1024,
+            "height": 1024,
+            "garments": false,
+            "absorbed": 398,
+            "shares": {
+              "hair": 0,
+              "skin": 0.0868,
+              "shirt": 0,
+              "trousers": 0,
+              "skinMask": 0,
+              "authored": 0.9132
+            },
+            "colours": {
+              "skin": [
+                84.6,
+                11.9,
+                35.5
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.police-officer.lod0.glb",
+              "bytes": 308536,
+              "sha256": "d7a74ace1c949180ef77f38b88b00e15a845c99b333020d8412c6f66a103d7d2",
+              "errors": []
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.police-officer.lod0.low.glb",
+              "bytes": 233044,
+              "sha256": "24b74ce6995000498e82487b83009624618246f7ee943bbc5254f59d8dcd0ca6",
+              "errors": []
+            }
+          ]
+        },
+        {
+          "lod": 1,
+          "sourceSha256": "f09f6605131d8207680a31a0ddf85b7f15cf9a40300827f3564d7a9d12caccb3",
+          "bodySha256": "ffa611a8b0abe1fd7f6cab49637041d9540e073148fdaec5bc83115dfc3c4781",
+          "fit": {
+            "rig": "assets/npc.police-officer/model.glb",
+            "out": "test-results/l2-officer-skin/builds/npc.police-officer/lod1.raw.glb",
+            "bytes": 541096,
+            "body": "/Users/wesner/Workspace/3dp-l2-all-new/cast/l2/npc.police-officer/source/assembled-lod1.glb",
+            "scale": 1.5223781481422345,
+            "yaw": 90,
+            "translation": [
+              -0.006336626952201163,
+              0.7723192509296007,
+              -0.00012143388728808047
+            ],
+            "meanDistanceToRigidSurface": 0.034518176516282216,
+            "anatomyMaterials": [
+              "pal_brass",
+              "pal_capNavy",
+              "pal_denimBlue",
+              "pal_policeBlue",
+              "pal_skinWarm",
+              "pal_navySeam",
+              "pal_uiDark"
+            ],
+            "headwearClearance": {
+              "eyeX": 0.08226656652248752,
+              "eyeY": 1.1265549441401113,
+              "brimY": 1.1877396566531615,
+              "vertices": 16,
+              "maxLift": 0.06415484000259242
+            },
+            "contactRepair": {
+              "removedTriangles": 47,
+              "closedBoundaries": 3,
+              "removedScrapTriangles": 0
+            },
+            "weightRelaxationPasses": 4,
+            "skinPaint": {
+              "samples": 24,
+              "ratios": [
+                0.796078431372549,
+                0.5764705882352941
+              ]
+            },
+            "eyeLandmarks": {
+              "source": "authored PROD irises projected onto the retained face",
+              "centres": [
+                [
+                  0.14082910193589127,
+                  0.15400004386901855,
+                  -0.06667000827514444
+                ],
+                [
+                  0.14082911398255576,
+                  0.15400004386901855,
+                  0.06667000297192946
+                ]
+              ]
+            },
+            "vertices": 2428,
+            "weldedVertices": 1093,
+            "triangles": 2200,
+            "bodyTriangleBudget": null,
+            "components": 1,
+            "openEdges": 0,
+            "unrelatedSeams": 14,
+            "maxInfluences": 4,
+            "zeroNormals": 0,
+            "jointNames": [
+              "root",
+              "hip",
+              "torso",
+              "head",
+              "armL",
+              "armR",
+              "foreArmL",
+              "foreArmR",
+              "handL",
+              "handR",
+              "legL",
+              "legR",
+              "shinL",
+              "shinR",
+              "footL",
+              "footR"
+            ],
+            "rigKind": "humanoid",
+            "capFits": [
+              {
+                "part": "head",
+                "rim": 12,
+                "triangles": 10,
+                "loops": 1,
+                "distance": 0.0642889548270203,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "armL",
+                "rim": 12,
+                "triangles": 10,
+                "loops": 1,
+                "distance": 0.08842687943698621,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "armR",
+                "rim": 16,
+                "triangles": 14,
+                "loops": 1,
+                "distance": 0.09413208117078747,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "foreArmL",
+                "rim": 9,
+                "triangles": 7,
+                "loops": 1,
+                "distance": 0.04041267968224867,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "foreArmR",
+                "rim": 7,
+                "triangles": 5,
+                "loops": 1,
+                "distance": 0.03501349337370266,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "legL",
+                "rim": 13,
+                "triangles": 11,
+                "loops": 1,
+                "distance": 0.05193915168710119,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "legR",
+                "rim": 15,
+                "triangles": 13,
+                "loops": 1,
+                "distance": 0.05747626676921736,
+                "method": "cut-boundary"
+              }
+            ],
+            "removedClosureTriangles": 0,
+            "removedDegenerateTriangles": 0,
+            "joints": 16,
+            "eyes": 2,
+            "seams": {
+              "armR/torso": {
+                "seamVertices": 28,
+                "band": 0.17015273094177247,
+                "blended": 109
+              },
+              "shinL/legL": {
+                "seamVertices": 29,
+                "band": 0.17015273094177247,
+                "blended": 79
+              },
+              "head/torso": {
+                "seamVertices": 27,
+                "band": 0.17015273094177247,
+                "blended": 109
+              },
+              "torso/hip": {
+                "seamVertices": 63,
+                "band": 0.17015273094177247,
+                "blended": 144
+              },
+              "handR/foreArmR": {
+                "seamVertices": 20,
+                "band": 0.16556091415999738,
+                "blended": 49
+              },
+              "legR/hip": {
+                "seamVertices": 29,
+                "band": 0.17015273094177247,
+                "blended": 77
+              },
+              "shinR/legR": {
+                "seamVertices": 22,
+                "band": 0.17015273094177247,
+                "blended": 75
+              },
+              "foreArmR/armR": {
+                "seamVertices": 17,
+                "band": 0.17015273094177247,
+                "blended": 41
+              },
+              "armL/torso": {
+                "seamVertices": 25,
+                "band": 0.17015273094177247,
+                "blended": 84
+              },
+              "handL/foreArmL": {
+                "seamVertices": 21,
+                "band": 0.16932971670384217,
+                "blended": 63
+              },
+              "footL/shinL": {
+                "seamVertices": 20,
+                "band": 0.17015273094177247,
+                "blended": 87
+              },
+              "footR/shinR": {
+                "seamVertices": 22,
+                "band": 0.17015273094177247,
+                "blended": 87
+              },
+              "foreArmL/armL": {
+                "seamVertices": 14,
+                "band": 0.16685982954837517,
+                "blended": 47
+              },
+              "legL/hip": {
+                "seamVertices": 25,
+                "band": 0.17015273094177247,
+                "blended": 73
+              }
+            }
+          },
+          "regions": {
+            "width": 512,
+            "height": 512,
+            "garments": false,
+            "absorbed": 881,
+            "shares": {
+              "hair": 0,
+              "skin": 0.0919,
+              "shirt": 0,
+              "trousers": 0,
+              "skinMask": 0,
+              "authored": 0.9081
+            },
+            "colours": {
+              "skin": [
+                85.1,
+                11.3,
+                34.9
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.police-officer.lod1.glb",
+              "bytes": 153172,
+              "sha256": "492e65f5d9434efcf7c44370c7c1da06647140c2fa6197cb778853c1f8fbe05e",
+              "errors": []
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.police-officer.lod1.low.glb",
+              "bytes": 153172,
+              "sha256": "492e65f5d9434efcf7c44370c7c1da06647140c2fa6197cb778853c1f8fbe05e",
+              "errors": []
+            }
+          ]
+        },
+        {
+          "lod": 2,
+          "sourceSha256": "f09f6605131d8207680a31a0ddf85b7f15cf9a40300827f3564d7a9d12caccb3",
+          "bodySha256": "ffa611a8b0abe1fd7f6cab49637041d9540e073148fdaec5bc83115dfc3c4781",
+          "fit": {
+            "rig": "assets/npc.police-officer/model.glb",
+            "out": "test-results/l2-officer-skin/builds/npc.police-officer/lod2.raw.glb",
+            "bytes": 541096,
+            "body": "/Users/wesner/Workspace/3dp-l2-all-new/cast/l2/npc.police-officer/source/assembled-lod1.glb",
+            "scale": 1.5223781481422345,
+            "yaw": 90,
+            "translation": [
+              -0.006336626952201163,
+              0.7723192509296007,
+              -0.00012143388728808047
+            ],
+            "meanDistanceToRigidSurface": 0.034518176516282216,
+            "anatomyMaterials": [
+              "pal_brass",
+              "pal_capNavy",
+              "pal_denimBlue",
+              "pal_policeBlue",
+              "pal_skinWarm",
+              "pal_navySeam",
+              "pal_uiDark"
+            ],
+            "headwearClearance": {
+              "eyeX": 0.08226656652248752,
+              "eyeY": 1.1265549441401113,
+              "brimY": 1.1877396566531615,
+              "vertices": 16,
+              "maxLift": 0.06415484000259242
+            },
+            "contactRepair": {
+              "removedTriangles": 47,
+              "closedBoundaries": 3,
+              "removedScrapTriangles": 0
+            },
+            "weightRelaxationPasses": 4,
+            "skinPaint": {
+              "samples": 24,
+              "ratios": [
+                0.796078431372549,
+                0.5764705882352941
+              ]
+            },
+            "eyeLandmarks": {
+              "source": "authored PROD irises projected onto the retained face",
+              "centres": [
+                [
+                  0.14082910193589127,
+                  0.15400004386901855,
+                  -0.06667000827514444
+                ],
+                [
+                  0.14082911398255576,
+                  0.15400004386901855,
+                  0.06667000297192946
+                ]
+              ]
+            },
+            "vertices": 2428,
+            "weldedVertices": 1093,
+            "triangles": 2200,
+            "bodyTriangleBudget": null,
+            "components": 1,
+            "openEdges": 0,
+            "unrelatedSeams": 14,
+            "maxInfluences": 4,
+            "zeroNormals": 0,
+            "jointNames": [
+              "root",
+              "hip",
+              "torso",
+              "head",
+              "armL",
+              "armR",
+              "foreArmL",
+              "foreArmR",
+              "handL",
+              "handR",
+              "legL",
+              "legR",
+              "shinL",
+              "shinR",
+              "footL",
+              "footR"
+            ],
+            "rigKind": "humanoid",
+            "capFits": [
+              {
+                "part": "head",
+                "rim": 12,
+                "triangles": 10,
+                "loops": 1,
+                "distance": 0.0642889548270203,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "armL",
+                "rim": 12,
+                "triangles": 10,
+                "loops": 1,
+                "distance": 0.08842687943698621,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "armR",
+                "rim": 16,
+                "triangles": 14,
+                "loops": 1,
+                "distance": 0.09413208117078747,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "foreArmL",
+                "rim": 9,
+                "triangles": 7,
+                "loops": 1,
+                "distance": 0.04041267968224867,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "foreArmR",
+                "rim": 7,
+                "triangles": 5,
+                "loops": 1,
+                "distance": 0.03501349337370266,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "legL",
+                "rim": 13,
+                "triangles": 11,
+                "loops": 1,
+                "distance": 0.05193915168710119,
+                "method": "cut-boundary"
+              },
+              {
+                "part": "legR",
+                "rim": 15,
+                "triangles": 13,
+                "loops": 1,
+                "distance": 0.05747626676921736,
+                "method": "cut-boundary"
+              }
+            ],
+            "removedClosureTriangles": 0,
+            "removedDegenerateTriangles": 0,
+            "joints": 16,
+            "eyes": 2,
+            "seams": {
+              "armR/torso": {
+                "seamVertices": 28,
+                "band": 0.17015273094177247,
+                "blended": 109
+              },
+              "shinL/legL": {
+                "seamVertices": 29,
+                "band": 0.17015273094177247,
+                "blended": 79
+              },
+              "head/torso": {
+                "seamVertices": 27,
+                "band": 0.17015273094177247,
+                "blended": 109
+              },
+              "torso/hip": {
+                "seamVertices": 63,
+                "band": 0.17015273094177247,
+                "blended": 144
+              },
+              "handR/foreArmR": {
+                "seamVertices": 20,
+                "band": 0.16556091415999738,
+                "blended": 49
+              },
+              "legR/hip": {
+                "seamVertices": 29,
+                "band": 0.17015273094177247,
+                "blended": 77
+              },
+              "shinR/legR": {
+                "seamVertices": 22,
+                "band": 0.17015273094177247,
+                "blended": 75
+              },
+              "foreArmR/armR": {
+                "seamVertices": 17,
+                "band": 0.17015273094177247,
+                "blended": 41
+              },
+              "armL/torso": {
+                "seamVertices": 25,
+                "band": 0.17015273094177247,
+                "blended": 84
+              },
+              "handL/foreArmL": {
+                "seamVertices": 21,
+                "band": 0.16932971670384217,
+                "blended": 63
+              },
+              "footL/shinL": {
+                "seamVertices": 20,
+                "band": 0.17015273094177247,
+                "blended": 87
+              },
+              "footR/shinR": {
+                "seamVertices": 22,
+                "band": 0.17015273094177247,
+                "blended": 87
+              },
+              "foreArmL/armL": {
+                "seamVertices": 14,
+                "band": 0.16685982954837517,
+                "blended": 47
+              },
+              "legL/hip": {
+                "seamVertices": 25,
+                "band": 0.17015273094177247,
+                "blended": 73
+              }
+            }
+          },
+          "regions": {
+            "width": 512,
+            "height": 512,
+            "garments": false,
+            "absorbed": 881,
+            "shares": {
+              "hair": 0,
+              "skin": 0.0919,
+              "shirt": 0,
+              "trousers": 0,
+              "skinMask": 0,
+              "authored": 0.9081
+            },
+            "colours": {
+              "skin": [
+                85.1,
+                11.3,
+                34.9
+              ]
+            }
+          },
+          "tiers": [
+            {
+              "low": false,
+              "path": "public/assets/models/skinned/npc.police-officer.lod2.glb",
+              "bytes": 122956,
+              "sha256": "bd8efab31ac8667f769f8c02079f5db0c2da4e9337ba166e492dd976970be452",
+              "errors": []
+            },
+            {
+              "low": true,
+              "path": "public/assets/models/skinned/npc.police-officer.lod2.low.glb",
+              "bytes": 122956,
+              "sha256": "bd8efab31ac8667f769f8c02079f5db0c2da4e9337ba166e492dd976970be452",
+              "errors": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

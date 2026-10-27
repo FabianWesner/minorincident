@@ -1,0 +1,449 @@
+{
+  "old": {
+    "resources": {
+      "textureCount": 184,
+      "decodedBytes": 301245672,
+      "rgbaUpperBoundBytes": 338566593
+    },
+    "cadence": {
+      "variant": "old",
+      "tier": "low",
+      "cadence": {
+        "count": 600,
+        "p50": 16.69999999999891,
+        "p95": 16.799999999999272,
+        "max": 16.80000000000291,
+        "over200": 0,
+        "builds": []
+      },
+      "peakLeases": 1,
+      "hostLoad": [
+        3.63916015625,
+        4.6982421875,
+        3.8916015625
+      ],
+      "protocol": "shared native Metal WebGL2, 60 Hz cap, 120 warm-up frames + 600 sampled frames, live L2 30-figure cast",
+      "errors": []
+    },
+    "drawsAndTriangles": {
+      "drawCalls": {
+        "p50": 99,
+        "p95": 99,
+        "max": 99
+      },
+      "triangles": {
+        "p50": 237964,
+        "p95": 237964,
+        "max": 238060
+      },
+      "shadowDrawCalls": {
+        "p50": 42,
+        "p95": 42,
+        "max": 42
+      },
+      "shadowTriangles": {
+        "p50": 120617,
+        "p95": 120617,
+        "max": 120713
+      },
+      "stepMs": {
+        "p50": 7.2,
+        "p95": 7.2,
+        "max": 9.2
+      },
+      "lastFrame": {
+        "drawCalls": 99,
+        "triangles": 237964,
+        "shadowDrawCalls": 42,
+        "shadowTriangles": 120617,
+        "stepMs": 6.300000190734863,
+        "categories": {
+          "other": 60,
+          "shadows": 42,
+          "buildings": 8,
+          "props": 20,
+          "crowd": 11
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "visibility": {
+      "frame": 3,
+      "sim": {
+        "corgi": 1,
+        "pedestrian": 28,
+        "infected": 6,
+        "courier": 1,
+        "actors": 30
+      },
+      "drawn": {
+        "vehicle": 0,
+        "infected": 6,
+        "pedestrian": 28,
+        "courier": 1,
+        "corgi": 1
+      }
+    }
+  },
+  "new": {
+    "resources": {
+      "textureCount": 192,
+      "decodedBytes": 303003240,
+      "rgbaUpperBoundBytes": 345566833
+    },
+    "cadence": {
+      "variant": "new",
+      "tier": "low",
+      "cadence": {
+        "count": 600,
+        "p50": 16.69999999999891,
+        "p95": 16.700000000000728,
+        "max": 16.80000000000291,
+        "over200": 0,
+        "builds": []
+      },
+      "peakLeases": 1,
+      "hostLoad": [
+        3.7333984375,
+        4.57958984375,
+        3.8837890625
+      ],
+      "protocol": "shared native Metal WebGL2, 60 Hz cap, 120 warm-up frames + 600 sampled frames, live L2 30-figure cast",
+      "errors": []
+    },
+    "drawsAndTriangles": {
+      "drawCalls": {
+        "p50": 99,
+        "p95": 99,
+        "max": 99
+      },
+      "triangles": {
+        "p50": 227236,
+        "p95": 227236,
+        "max": 227332
+      },
+      "shadowDrawCalls": {
+        "p50": 42,
+        "p95": 42,
+        "max": 42
+      },
+      "shadowTriangles": {
+        "p50": 120617,
+        "p95": 120617,
+        "max": 120713
+      },
+      "stepMs": {
+        "p50": 8.6,
+        "p95": 8.6,
+        "max": 12
+      },
+      "lastFrame": {
+        "drawCalls": 99,
+        "triangles": 227236,
+        "shadowDrawCalls": 42,
+        "shadowTriangles": 120617,
+        "stepMs": 6.5,
+        "categories": {
+          "other": 60,
+          "shadows": 42,
+          "buildings": 8,
+          "props": 20,
+          "crowd": 11
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "visibility": {
+      "frame": 3,
+      "sim": {
+        "corgi": 1,
+        "pedestrian": 28,
+        "infected": 6,
+        "courier": 1,
+        "actors": 30
+      },
+      "drawn": {
+        "vehicle": 0,
+        "infected": 6,
+        "pedestrian": 28,
+        "courier": 1,
+        "corgi": 1
+      }
+    }
+  },
+  "cadenceGate": "PASS (refresh-capped, not uncapped GPU cost)",
+  "quietUncapped": "pending PO quiet window",
+  "baseline": "main 0cc2f1d95",
+  "resourceProtocol": "Matched L2 street game camera; all 30 figures drawn. Texture bytes sum decoded resident texture payloads and pose textures; excludes driver padding.",
+  "coldLoads": {
+    "prod": {
+      "summary": {
+        "origin": "https://minor-incident.pages.dev",
+        "backend": "webgpu",
+        "quality": "low",
+        "level": "L2",
+        "diagnostic": false,
+        "gameplaySamples": 0,
+        "menuWaits": [
+          0
+        ],
+        "n": 5,
+        "median": 3323.800000190735,
+        "p90": 3541.7999992370605,
+        "max": 3541.7999992370605,
+        "maxFrameMs": 16.800000000000182,
+        "errors": []
+      },
+      "samples": [
+        {
+          "sampledAt": "2026-10-27T16:23:49.786Z",
+          "run": 0,
+          "ms": 3541.7999992370605,
+          "contexts": [
+            "webgpu",
+            "2d"
+          ],
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "bundle": "https://minor-incident.pages.dev/build/index-C_4LdCDC.js",
+          "load": [
+            3.3525390625,
+            3.99560546875,
+            3.7294921875
+          ],
+          "errors": []
+        },
+        {
+          "sampledAt": "2026-10-27T16:23:54.300Z",
+          "run": 1,
+          "ms": 3205.6000003814697,
+          "contexts": [
+            "webgpu",
+            "2d"
+          ],
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "bundle": "https://minor-incident.pages.dev/build/index-C_4LdCDC.js",
+          "load": [
+            3.484375,
+            4.01220703125,
+            3.73681640625
+          ],
+          "errors": []
+        },
+        {
+          "sampledAt": "2026-10-27T16:23:58.911Z",
+          "run": 2,
+          "ms": 3323.800000190735,
+          "contexts": [
+            "webgpu",
+            "2d"
+          ],
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "bundle": "https://minor-incident.pages.dev/build/index-C_4LdCDC.js",
+          "load": [
+            3.60546875,
+            4.0283203125,
+            3.744140625
+          ],
+          "errors": []
+        },
+        {
+          "sampledAt": "2026-10-27T16:24:03.420Z",
+          "run": 3,
+          "ms": 3218.8999996185303,
+          "contexts": [
+            "webgpu",
+            "2d"
+          ],
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "bundle": "https://minor-incident.pages.dev/build/index-C_4LdCDC.js",
+          "load": [
+            4.27734375,
+            4.16064453125,
+            3.79248046875
+          ],
+          "errors": []
+        },
+        {
+          "sampledAt": "2026-10-27T16:24:08.073Z",
+          "run": 4,
+          "ms": 3324.9000005722046,
+          "contexts": [
+            "webgpu",
+            "2d"
+          ],
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "bundle": "https://minor-incident.pages.dev/build/index-C_4LdCDC.js",
+          "load": [
+            5.5361328125,
+            4.42333984375,
+            3.88720703125
+          ],
+          "errors": []
+        }
+      ]
+    },
+    "new": {
+      "summary": {
+        "origin": "http://127.0.0.1:4326",
+        "backend": "webgpu",
+        "quality": "low",
+        "level": "L2",
+        "diagnostic": false,
+        "gameplaySamples": 0,
+        "menuWaits": [
+          0
+        ],
+        "n": 5,
+        "median": 2854.2000007629395,
+        "p90": 2907.199999809265,
+        "max": 2907.199999809265,
+        "maxFrameMs": 16.700000000000273,
+        "errors": []
+      },
+      "samples": [
+        {
+          "sampledAt": "2026-10-27T16:24:24.096Z",
+          "run": 0,
+          "ms": 2854.2000007629395,
+          "contexts": [
+            "webgpu",
+            "2d"
+          ],
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "bundle": "http://127.0.0.1:4326/build/index-B2KN6Gkg.js",
+          "load": [
+            4.7587890625,
+            4.3037109375,
+            3.853515625
+          ],
+          "errors": []
+        },
+        {
+          "sampledAt": "2026-10-27T16:24:28.130Z",
+          "run": 1,
+          "ms": 2842,
+          "contexts": [
+            "webgpu",
+            "2d"
+          ],
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "bundle": "http://127.0.0.1:4326/build/index-B2KN6Gkg.js",
+          "load": [
+            4.93798828125,
+            4.34814453125,
+            3.87158203125
+          ],
+          "errors": []
+        },
+        {
+          "sampledAt": "2026-10-27T16:24:32.113Z",
+          "run": 2,
+          "ms": 2844,
+          "contexts": [
+            "webgpu",
+            "2d"
+          ],
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "bundle": "http://127.0.0.1:4326/build/index-B2KN6Gkg.js",
+          "load": [
+            4.94287109375,
+            4.35888671875,
+            3.8779296875
+          ],
+          "errors": []
+        },
+        {
+          "sampledAt": "2026-10-27T16:24:36.141Z",
+          "run": 3,
+          "ms": 2868.699999809265,
+          "contexts": [
+            "webgpu",
+            "2d"
+          ],
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "bundle": "http://127.0.0.1:4326/build/index-B2KN6Gkg.js",
+          "load": [
+            4.947265625,
+            4.369140625,
+            3.88427734375
+          ],
+          "errors": []
+        },
+        {
+          "sampledAt": "2026-10-27T16:24:40.204Z",
+          "run": 4,
+          "ms": 2907.199999809265,
+          "contexts": [
+            "webgpu",
+            "2d"
+          ],
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "bundle": "http://127.0.0.1:4326/build/index-B2KN6Gkg.js",
+          "load": [
+            4.947265625,
+            4.369140625,
+            3.88427734375
+          ],
+          "errors": []
+        }
+      ]
+    },
+    "limitMs": 3895.979999160767,
+    "ratio": 0.8208255690427199,
+    "gate": "PASS",
+    "method": "Five isolated empty contexts per build, native Metal WebGPU low, real menu click \u2192 loading card closed, 1600\u00d7900 DPR1. Remote PROD versus local QA preview; browser/device cache and network differ, so final quiet matched-host timing is pending."
+  },
+  "discardedColdAttempt": "Initial webgl2-labelled PROD probe observed WebGPU (production ignores debug renderer query); excluded from matched comparison. Files retained under test-results, including one PROD HTTP 502; not selected into the five WebGPU samples.",
+  "timingAssetRevision": "90441a416 before the skin-region correction; timing not rerun in this follow-up",
+  "resourceAssetRevision": "current skin-region correction, all 30 actors rendered"
+}

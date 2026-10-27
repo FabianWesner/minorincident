@@ -1,0 +1,527 @@
+{
+  "source": "production L2 complete-bot input simulation; world presence, not screen visibility",
+  "receipts": [
+    {
+      "tier": "high",
+      "seed": 1,
+      "report": {
+        "profile": "complete",
+        "opening": "side",
+        "seed": 1,
+        "outcome": "complete",
+        "simSeconds": 148.26666666666668,
+        "deaths": 0,
+        "kills": 0,
+        "knockdowns": 12,
+        "damage": 108,
+        "axe": true,
+        "timeline": [
+          {
+            "type": "l2.alarm",
+            "t": 23.1
+          },
+          {
+            "type": "objective:axe",
+            "t": 23.1
+          },
+          {
+            "type": "objective:calm",
+            "t": 23.1
+          },
+          {
+            "type": "objective:board",
+            "t": 26.216666666666665
+          },
+          {
+            "type": "l2.truckDeparted",
+            "t": 26.233333333333334
+          },
+          {
+            "type": "l2.truckArrived",
+            "t": 50.55
+          },
+          {
+            "type": "objective:ride",
+            "t": 50.55
+          },
+          {
+            "type": "l2.crewExit",
+            "t": 51.35
+          },
+          {
+            "type": "l2.firefightersAtDoors",
+            "t": 56.1
+          },
+          {
+            "type": "l2.doorsOpen",
+            "t": 60.1
+          },
+          {
+            "type": "objective:doors",
+            "t": 60.1
+          },
+          {
+            "type": "l2.radio",
+            "t": 72.65
+          },
+          {
+            "type": "l2.gateClosed",
+            "t": 146.26666666666668
+          },
+          {
+            "type": "objective:bridge",
+            "t": 148.26666666666668
+          }
+        ],
+        "infectedAt": {
+          "0": {
+            "all": 4,
+            "rescue": 0
+          },
+          "10": {
+            "all": 27,
+            "rescue": 23
+          },
+          "60": {
+            "all": 59,
+            "rescue": 31
+          }
+        },
+        "firefighterHits": 17,
+        "firefightersTurnedBy90": 1,
+        "firstDeathS": null,
+        "killsNearDoors": 0,
+        "clusterKilled": 0,
+        "clusterSize": 13,
+        "minHp": 45.733333333332325,
+        "deathsAt": [],
+        "calm": {
+          "infectedMax": 0,
+          "combatEvents": 0,
+          "alarmS": 23.1,
+          "crewAtTruckS": 3.1333333333333333,
+          "axeActive": true
+        },
+        "ride": {
+          "passenger": true,
+          "seconds": 24.316666666666666,
+          "seatedEveryTick": true,
+          "crewExitS": 0.8,
+          "controlS": 0
+        },
+        "doors": {
+          "order": [
+            "l2.alarm",
+            "l2.truckDeparted",
+            "l2.truckArrived",
+            "l2.crewExit",
+            "l2.firefightersAtDoors",
+            "l2.doorsOpen",
+            "l2.radio",
+            "l2.gateClosed"
+          ],
+          "nearBefore": 0,
+          "firstCivOutS": 0,
+          "firstAmbushVisibleS": 0.05,
+          "emerged3s": 21,
+          "doors3s": [
+            "refuge-door-1",
+            "refuge-door-17",
+            "refuge-door-8"
+          ],
+          "allOutS": 10.633333333333333,
+          "nonBiteNearRescue": 0
+        },
+        "crewTurns": [
+          {
+            "id": 124,
+            "seconds": 2.5166666666666666,
+            "sameAsset": true
+          }
+        ],
+        "audit": {
+          "sightViolations": 0,
+          "nonSightAlerts": 0,
+          "emergeFar": 0,
+          "emergeSeen": 0,
+          "emerged": 29
+        },
+        "radio": {
+          "infected": 59,
+          "escapeArea": 29,
+          "groupsOf4": 3,
+          "chasingPlayer": 3
+        },
+        "cluster": {
+          "atApproach": 13,
+          "size": 13
+        },
+        "gate": {
+          "closeS": 0.6,
+          "infectedInsideAfter": 0
+        },
+        "diedBy120": false
+      },
+      "counts": {
+        "char.corgi": {
+          "distinct": 1,
+          "initial": 1,
+          "peak": 1,
+          "infected": 0,
+          "corpses": 0,
+          "entitySeconds": 124,
+          "skinned": true
+        },
+        "char.courier-female": {
+          "distinct": 1,
+          "initial": 1,
+          "peak": 1,
+          "infected": 0,
+          "corpses": 0,
+          "entitySeconds": 124,
+          "skinned": true
+        },
+        "npc.civilian-elderly": {
+          "distinct": 20,
+          "initial": 5,
+          "peak": 20,
+          "infected": 11,
+          "corpses": 15,
+          "entitySeconds": 2149,
+          "skinned": true
+        },
+        "npc.civilian-kid": {
+          "distinct": 2,
+          "initial": 2,
+          "peak": 2,
+          "infected": 0,
+          "corpses": 0,
+          "entitySeconds": 297,
+          "skinned": true
+        },
+        "npc.civilian-man-a": {
+          "distinct": 17,
+          "initial": 8,
+          "peak": 16,
+          "infected": 3,
+          "corpses": 13,
+          "entitySeconds": 1962,
+          "skinned": true
+        },
+        "npc.civilian-man-b": {
+          "distinct": 30,
+          "initial": 6,
+          "peak": 30,
+          "infected": 21,
+          "corpses": 17,
+          "entitySeconds": 2919,
+          "skinned": true
+        },
+        "npc.civilian-woman-a": {
+          "distinct": 25,
+          "initial": 7,
+          "peak": 23,
+          "infected": 13,
+          "corpses": 11,
+          "entitySeconds": 2381,
+          "skinned": true
+        },
+        "npc.civilian-woman-b": {
+          "distinct": 21,
+          "initial": 7,
+          "peak": 21,
+          "infected": 11,
+          "corpses": 11,
+          "entitySeconds": 2118,
+          "skinned": true
+        },
+        "npc.firefighter-alive": {
+          "distinct": 6,
+          "initial": 6,
+          "peak": 6,
+          "infected": 1,
+          "corpses": 5,
+          "entitySeconds": 738,
+          "skinned": true
+        },
+        "npc.police-officer": {
+          "distinct": 4,
+          "initial": 4,
+          "peak": 4,
+          "infected": 0,
+          "corpses": 0,
+          "entitySeconds": 593,
+          "skinned": true
+        }
+      }
+    },
+    {
+      "tier": "low",
+      "seed": 1,
+      "report": {
+        "profile": "complete",
+        "opening": "side",
+        "seed": 1,
+        "outcome": "complete",
+        "simSeconds": 173.68333333333334,
+        "deaths": 1,
+        "kills": 0,
+        "knockdowns": 15,
+        "damage": 187.0666666666658,
+        "axe": true,
+        "timeline": [
+          {
+            "type": "l2.alarm",
+            "t": 23.1
+          },
+          {
+            "type": "objective:axe",
+            "t": 23.1
+          },
+          {
+            "type": "objective:calm",
+            "t": 23.1
+          },
+          {
+            "type": "objective:board",
+            "t": 26.216666666666665
+          },
+          {
+            "type": "l2.truckDeparted",
+            "t": 26.233333333333334
+          },
+          {
+            "type": "l2.truckArrived",
+            "t": 50.55
+          },
+          {
+            "type": "objective:ride",
+            "t": 50.55
+          },
+          {
+            "type": "l2.crewExit",
+            "t": 51.35
+          },
+          {
+            "type": "l2.firefightersAtDoors",
+            "t": 56.1
+          },
+          {
+            "type": "l2.doorsOpen",
+            "t": 60.1
+          },
+          {
+            "type": "objective:doors",
+            "t": 60.1
+          },
+          {
+            "type": "l2.radio",
+            "t": 72.65
+          },
+          {
+            "type": "l2.radio",
+            "t": 98.3
+          },
+          {
+            "type": "l2.gateClosed",
+            "t": 171.68333333333334
+          },
+          {
+            "type": "objective:bridge",
+            "t": 173.68333333333334
+          }
+        ],
+        "infectedAt": {
+          "0": {
+            "all": 3,
+            "rescue": 0
+          },
+          "10": {
+            "all": 15,
+            "rescue": 12
+          },
+          "60": {
+            "all": 25,
+            "rescue": 10
+          }
+        },
+        "firefighterHits": 87,
+        "firefightersTurnedBy90": 0,
+        "firstDeathS": 89.75,
+        "killsNearDoors": 0,
+        "clusterKilled": 0,
+        "clusterSize": 7,
+        "minHp": 0,
+        "deathsAt": [
+          "90s@-63,31/escape"
+        ],
+        "calm": {
+          "infectedMax": 0,
+          "combatEvents": 0,
+          "alarmS": 23.1,
+          "crewAtTruckS": 3.1333333333333333,
+          "axeActive": true
+        },
+        "ride": {
+          "passenger": true,
+          "seconds": 24.316666666666666,
+          "seatedEveryTick": true,
+          "crewExitS": 0.8,
+          "controlS": 0
+        },
+        "doors": {
+          "order": [
+            "l2.alarm",
+            "l2.truckDeparted",
+            "l2.truckArrived",
+            "l2.crewExit",
+            "l2.firefightersAtDoors",
+            "l2.doorsOpen",
+            "l2.radio",
+            "l2.radio",
+            "l2.gateClosed"
+          ],
+          "nearBefore": 0,
+          "firstCivOutS": 0,
+          "firstAmbushVisibleS": 0.05,
+          "emerged3s": 12,
+          "doors3s": [
+            "refuge-door-1",
+            "refuge-door-17",
+            "refuge-door-8"
+          ],
+          "allOutS": 10.45,
+          "nonBiteNearRescue": 0
+        },
+        "crewTurns": [],
+        "audit": {
+          "sightViolations": 0,
+          "nonSightAlerts": 0,
+          "emergeFar": 0,
+          "emergeSeen": 0,
+          "emerged": 17
+        },
+        "radio": {
+          "infected": 30,
+          "escapeArea": 13,
+          "groupsOf4": 1,
+          "chasingPlayer": 2
+        },
+        "cluster": {
+          "atApproach": 7,
+          "size": 7
+        },
+        "gate": {
+          "closeS": 0.6,
+          "infectedInsideAfter": 0
+        },
+        "diedBy120": true
+      },
+      "counts": {
+        "char.corgi": {
+          "distinct": 1,
+          "initial": 1,
+          "peak": 1,
+          "infected": 0,
+          "corpses": 0,
+          "entitySeconds": 149,
+          "skinned": true
+        },
+        "char.courier-female": {
+          "distinct": 1,
+          "initial": 1,
+          "peak": 1,
+          "infected": 0,
+          "corpses": 1,
+          "entitySeconds": 149,
+          "skinned": true
+        },
+        "npc.civilian-elderly": {
+          "distinct": 19,
+          "initial": 5,
+          "peak": 16,
+          "infected": 12,
+          "corpses": 11,
+          "entitySeconds": 1989,
+          "skinned": true
+        },
+        "npc.civilian-kid": {
+          "distinct": 2,
+          "initial": 2,
+          "peak": 2,
+          "infected": 0,
+          "corpses": 0,
+          "entitySeconds": 347,
+          "skinned": true
+        },
+        "npc.civilian-man-a": {
+          "distinct": 19,
+          "initial": 8,
+          "peak": 15,
+          "infected": 8,
+          "corpses": 10,
+          "entitySeconds": 2151,
+          "skinned": true
+        },
+        "npc.civilian-man-b": {
+          "distinct": 29,
+          "initial": 6,
+          "peak": 20,
+          "infected": 23,
+          "corpses": 17,
+          "entitySeconds": 2486,
+          "skinned": true
+        },
+        "npc.civilian-woman-a": {
+          "distinct": 17,
+          "initial": 7,
+          "peak": 16,
+          "infected": 7,
+          "corpses": 11,
+          "entitySeconds": 2040,
+          "skinned": true
+        },
+        "npc.civilian-woman-b": {
+          "distinct": 15,
+          "initial": 7,
+          "peak": 12,
+          "infected": 4,
+          "corpses": 8,
+          "entitySeconds": 1750,
+          "skinned": true
+        },
+        "npc.firefighter-alive": {
+          "distinct": 6,
+          "initial": 6,
+          "peak": 6,
+          "infected": 0,
+          "corpses": 6,
+          "entitySeconds": 890,
+          "skinned": true
+        },
+        "npc.police-officer": {
+          "distinct": 4,
+          "initial": 4,
+          "peak": 4,
+          "infected": 0,
+          "corpses": 0,
+          "entitySeconds": 695,
+          "skinned": true
+        }
+      }
+    }
+  ],
+  "invariant": "LevelTwoRescue.emerge -> spawnPedestrian -> turnNow keeps appearance; CrowdView/NpcView render appearance.asset rather than civilian.variant.",
+  "additionalPotential": [
+    "char.courier-male",
+    "char.corgi",
+    "amb.dog",
+    "inf.dog",
+    "npc.depot-clerk",
+    "npc.lab-tech-a",
+    "npc.lab-tech-b",
+    "npc.lab-guard",
+    "inf.common-worker"
+  ],
+  "additionalReason": "Courier choice, companion and L1 campaign corpse carryover; all already v2 at base. No healthy pets are authored in standalone L2."
+}

@@ -1,8 +1,8 @@
 /** Crowd texture regions (crowd-texture-quality): per-texel classes in the atlas alpha plus build-time flattening.
  * Hair, skin, shirt and trousers are found per body part from the TRELLIS paint, cleaned of mottling, and their mean
  * luminance is moved to the shader's reference so a per-person tint (src/render/characters/crowdRegions.ts) can
- * replace the hue while keeping the paint's own shading. Uniforms keep their colours: only skin is tagged, for the
- * infection mask. Usage (diagnosis): node --import tsx tools/assets/skin-crowd-regions.ts <raw.glb> <out-prefix> [--garments] */
+ * replace the hue while keeping the paint's own shading. Uniforms keep their garment colours; exposed skin takes
+ * the same per-person tone as the face. Usage: node --import tsx tools/assets/skin-crowd-regions.ts <raw.glb> <out-prefix> [--garments] */
 import type { Document } from '@gltf-transform/core';
 import { execFileSync } from 'node:child_process';
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
@@ -42,7 +42,7 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean): RegionRepo
   const png = decodePng(map.getImage()!), { width: w, height: h, data } = png;
   // 0 none, 1 head, 2 upper, 3 lower, 4 hand, 5 foot; skinTri marks triangles whose corners were all tagged as skin paint.
   const groups = ['none', 'head', 'upper', 'lower', 'hand', 'foot'] as const;
-  const owner = new Uint8Array(w * h), skinSeed = new Uint8Array(w * h);
+  const owner = new Uint8Array(w * h), skinSeed = new Uint8Array(w * h), limb = new Uint8Array(w * h);
   // Face band: below the brows and in front of the eyes, painted frames, pupils and beards are never hair.
   const eyes = doc.getRoot().listNodes().find(n => n.getName() === 'skin_eyes')?.getMesh()?.listPrimitives()[0]?.getAttribute('POSITION');
   const position = prim.getAttribute('POSITION')!, eye = [0, 0, 0];
@@ -54,8 +54,10 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean): RegionRepo
     const names = v.map(i => joints[part.getScalar(i)] ?? 'torso');
     const name = names[0] === names[1] || names[0] === names[2] ? names[0] : names[1];
     const g = groups.indexOf(GROUP[name] ?? 'upper') as number, skin = !!region && v.every(i => Math.abs(region.getScalar(i) - 1) < .01);
+    // Uniform upper arms carry warm gold shoulder patches, not exposed skin.
+    const exposedLimb = /^(foreArm|hand|leg|shin)[LR]$/.test(name) || garments && /^arm[LR]$/.test(name);
     const centre = v.map(i => position.getElement(i, [])).reduce((a, q) => a.map((n, c) => n + q[c] / 3), [0, 0, 0]);
-    const inFace = !!eyes && g === 1 && centre[1] < eye[1] + .045 && centre[0] > eye[0] - .05;
+    const inFace = !!eyes && g === 1 && centre[1] < eye[1] + .10 && centre[0] > eye[0] - .12;
     for (let k = 0; k < 3; k++) { p[k][0] = uv.getElement(v[k], [])[0] * w - .5; p[k][1] = uv.getElement(v[k], [])[1] * h - .5; }
     const x0 = Math.max(0, Math.floor(Math.min(p[0][0], p[1][0], p[2][0]))), x1 = Math.min(w - 1, Math.ceil(Math.max(p[0][0], p[1][0], p[2][0])));
     const y0 = Math.max(0, Math.floor(Math.min(p[0][1], p[1][1], p[2][1]))), y1 = Math.min(h - 1, Math.ceil(Math.max(p[0][1], p[1][1], p[2][1])));
@@ -65,7 +67,7 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean): RegionRepo
       // Conservative coverage (half-texel slack), so the bilinear footprint of every island edge is classified.
       const e = [0, 1, 2].map(k => { const a = p[k], b = p[(k + 1) % 3]; return ((b[0] - a[0]) * (y - a[1]) - (b[1] - a[1]) * (x - a[0])) / area; });
       const lengths = [0, 1, 2].map(k => Math.hypot(p[(k + 1) % 3][0] - p[k][0], p[(k + 1) % 3][1] - p[k][1]) / Math.abs(area));
-      if (e.every((s, k) => s >= -.75 * lengths[k])) { owner[y * w + x] = g; if (skin) skinSeed[y * w + x] = 1; if (inFace) face[y * w + x] = 1; }
+      if (e.every((s, k) => s >= -.75 * lengths[k])) { owner[y * w + x] = g; if (skin) skinSeed[y * w + x] = 1; if (inFace) face[y * w + x] = 1; limb[y * w + x] = Number(exposedLimb); }
     }
   }
   const labs = new Float32Array(w * h * 3);
@@ -93,11 +95,19 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean): RegionRepo
     return { colour, share: near / total };
   };
   const cls = new Uint8Array(w * h).fill(crowdRegion.authored);
-  const skin = dominant(i => skinSeed[i] === 1) ?? dominant(i => owner[i] === 4);
+  // Reconstruction can paint bare arms yellow while the face is peach. The face
+  // owns the reference; area-majority voting must not give the arms another hue.
+  const skin = dominant(i => face[i] === 1 && skinSeed[i] === 1) ?? dominant(i => owner[i] === 1 && skinSeed[i] === 1) ?? dominant(i => skinSeed[i] === 1) ?? dominant(i => owner[i] === 4);
   const colours: Record<string, Lab> = {};
   if (skin) {
     colours.skin = skin.colour;
-    for (let i = 0; i < w * h; i++) if (owner[i] && dE(at(i), skin.colour) < (owner[i] === 1 || owner[i] === 4 ? 14 : 10)) cls[i] = garments ? crowdRegion.skin : crowdRegion.skinMask;
+    for (let i = 0; i < w * h; i++) if (owner[i]) {
+      const r = data[i * 4], g = data[i * 4 + 1], b = data[i * 4 + 2];
+      // Only warm, bright exposed-limb paint may bridge the hue mismatch. Navy
+      // gloves, white sleeves, dark watches and gold hardware remain authored.
+      const bare = (limb[i] || face[i]) && r > g && g > r * .5 && g < r * .96 && b > r * .35 && b < r * .95 && labs[i * 3] > skin.colour[0] - 20 && dE(at(i), skin.colour) < 32;
+      if (bare || (face[i] || owner[i] === 1 && skinSeed[i] || limb[i]) && dE(at(i), skin.colour) < (owner[i] === 1 || owner[i] === 4 ? 14 : 10)) cls[i] = crowdRegion.skin;
+    }
   }
   if (garments) {
     const free = (i: number) => cls[i] === crowdRegion.authored;
@@ -120,7 +130,7 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean): RegionRepo
   for (let pass = 0; pass < 2; pass++) {
     const next = cls.slice();
     for (let y = 2; y < h - 2; y++) for (let x = 2; x < w - 2; x++) {
-      const i = y * w + x; if (!owner[i] || cls[i] !== crowdRegion.authored) continue;
+      const i = y * w + x; if (!owner[i] || face[i] || cls[i] !== crowdRegion.authored) continue;
       const counts = new Map<number, number>(); let n = 0;
       for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) { const j = i + dy * w + dx; if (!owner[j]) continue; n++; counts.set(cls[j], (counts.get(cls[j]) ?? 0) + 1); }
       let best: number = crowdRegion.authored, votes = 0; for (const [c, v] of counts) if (c !== crowdRegion.authored && v > votes) { best = c; votes = v; }
@@ -147,7 +157,9 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean): RegionRepo
         else if (cls[j] !== crowdRegion.authored) { edge++; border.set(cls[j], (border.get(cls[j]) ?? 0) + 1); }
       }
     }
-    if (!edge) continue;
+    // White sclera and dark pupils can average close to skin, even though each
+    // is an intentional high-contrast feature. Never fill a facial island.
+    if (!edge || members.some(i => face[i])) continue;
     const [surround, votes] = [...border].sort((a, b) => b[1] - a[1])[0], reference = regionColour(surround);
     if (!reference || votes < edge * .8 || members.length > 6000 * w * h / (1024 * 1024)) continue;
     const colour: Lab = [mean[0] / members.length, mean[1] / members.length, mean[2] / members.length];
@@ -169,7 +181,7 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean): RegionRepo
     for (let i = 0; i < w * h; i++) if (owner[i] && cls[i] === value) {
       const L = reference[0] + Math.max(-8, Math.min(8, (labs[i * 3] - mean) * .3));
       const rgb = labToSrgb([L, reference[1], reference[2]]);
-      const scale = target && garments ? target / Math.max(1e-4, luminance(...labToSrgb(reference))) : 1;
+      const scale = target && (garments || value === crowdRegion.skin) ? target / Math.max(1e-4, luminance(...labToSrgb(reference))) : 1;
       for (let c = 0; c < 3; c++) data[i * 4 + c] = toSrgb(LINEAR[rgb[c]] * scale);
     }
   }
@@ -177,7 +189,7 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean): RegionRepo
   {
     const next = cls.slice();
     for (let y = 1; y < h - 1; y++) for (let x = 1; x < w - 1; x++) {
-      const i = y * w + x; if (!owner[i]) continue;
+      const i = y * w + x; if (!owner[i] || face[i] && cls[i] === crowdRegion.authored) continue;
       const votes = new Map<number, number>();
       for (const j of [i - w - 1, i - w, i - w + 1, i - 1, i + 1, i + w - 1, i + w, i + w + 1]) if (owner[j]) votes.set(cls[j], (votes.get(cls[j]) ?? 0) + 1);
       for (const [c, v] of votes) if (c !== cls[i] && v >= 6) { next[i] = c; break; }
@@ -195,10 +207,12 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean): RegionRepo
   // ETC1S pays per distinct block pattern: classes are written per CELL x CELL cell (majority, ties to the tinted class).
   const cell = Number(process.env.CROWD_REGION_CELL ?? 4);
   for (let y = 0; y < h; y += cell) for (let x = 0; x < w; x += cell) {
-    const votes = new Map<number, number>();
-    for (let dy = 0; dy < cell; dy++) for (let dx = 0; dx < cell; dx++) { const c = out[(y + dy) * w + x + dx]; votes.set(c, (votes.get(c) ?? 0) + (owner[(y + dy) * w + x + dx] ? 4 : 1) + (c === crowdRegion.authored ? 0 : .5)); }
+    const votes = new Map<number, number>(); let feature = false;
+    for (let dy = 0; dy < cell; dy++) for (let dx = 0; dx < cell; dx++) { const i = (y + dy) * w + x + dx, c = out[i]; feature ||= !!face[i] && cls[i] === crowdRegion.authored; votes.set(c, (votes.get(c) ?? 0) + (owner[i] ? 4 : 1) + (c === crowdRegion.authored ? 0 : .5)); }
     const value = [...votes].sort((a, b) => b[1] - a[1])[0][0];
-    for (let dy = 0; dy < cell; dy++) for (let dx = 0; dx < cell; dx++) data[((y + dy) * w + x + dx) * 4 + 3] = Math.round((value + 1) * 255 / 7);
+    // At eyes and brows retain individual classes: forcing the whole block to
+    // authored leaves normalised skin pixels untinted, making yellow face tiles.
+    for (let dy = 0; dy < cell; dy++) for (let dx = 0; dx < cell; dx++) { const i = (y + dy) * w + x + dx; data[i * 4 + 3] = Math.round(((feature ? out[i] : value) + 1) * 255 / 7); }
   }
   // Gear (props) shares the body's atlas; every copy of the source image takes the classed one.
   const original = Buffer.from(map.getImage()!), classed = new Uint8Array(PNG.sync.write(png));
