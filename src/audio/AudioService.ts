@@ -223,21 +223,24 @@ export class AudioService implements Lifecycle {
         document.head.append(this.captionStyle);
         this.ringElement.dataset.noiseRings = '';
         this.ringElement.style.cssText = 'position:fixed;inset:0;pointer-events:none;overflow:hidden';
-        this.controls.hidden = !new URLSearchParams(location.search).has('debug');
-        this.controls.dataset.audioControls = '';
-        this.controls.style.cssText = 'position:fixed;top:96px;left:12px;background:#182333;color:white;padding:8px;font:14px sans-serif;max-width:250px';
-        const summary = document.createElement('summary');
-        summary.textContent = 'Sound';
-        this.controls.append(summary);
-        for (const [key, label] of [['muted', 'Mute'], ['captions', 'Sound captions'], ['noiseRings', 'Noise rings'], ['mono', 'Mono audio'], ['haptics', 'Haptics'], ['tinnitus', 'Tinnitus effect']] as const) {
-            const row = document.createElement('label'), input = document.createElement('input');
-            row.style.display = 'block';
-            input.type = 'checkbox';
-            input.name = key;
-            input.checked = this.settings[key];
-            input.addEventListener('change', () => this.set({ [key]: input.checked }));
-            row.append(input, label);
-            this.controls.append(row);
+        if (__QA_HOOKS__) {
+            this.controls.hidden = !new URLSearchParams(location.search).has('debug');
+            this.controls.dataset.audioControls = '';
+            this.controls.style.cssText = 'position:fixed;top:96px;left:12px;background:#182333;color:white;padding:8px;font:14px sans-serif;max-width:250px';
+            const summary = document.createElement('summary');
+            summary.textContent = 'Sound';
+            this.controls.append(summary);
+            for (const [key, label] of [['muted', 'Mute'], ['captions', 'Sound captions'], ['noiseRings', 'Noise rings'], ['mono', 'Mono audio'], ['haptics', 'Haptics'], ['tinnitus', 'Tinnitus effect']] as const) {
+                const row = document.createElement('label'), input = document.createElement('input');
+                row.style.display = 'block';
+                input.type = 'checkbox';
+                input.name = key;
+                input.checked = this.settings[key];
+                input.addEventListener('change', () => this.set({ [key]: input.checked }));
+                row.append(input, label);
+                this.controls.append(row);
+            }
+            document.body.append(this.controls);
         }
         this.pauseElement.dataset.audioPause = '';
         this.pauseElement.hidden = true;
@@ -253,7 +256,7 @@ export class AudioService implements Lifecycle {
             }
         });
         this.pauseElement.append(text, button);
-        document.body.append(this.ringElement, this.captionElement, this.controls, this.pauseElement);
+        document.body.append(this.ringElement, this.captionElement, this.pauseElement);
     }
     set(patch: Partial<AudioSettings>, persist = true): void {
         const accepted:Partial<AudioSettings>={};

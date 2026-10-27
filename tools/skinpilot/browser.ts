@@ -13,7 +13,7 @@ export async function open(viewport = { width: 1600, height: 900 }, mobile = fal
     server = spawn('npx', ['vite', 'preview', '--host', '127.0.0.1', '--port', String(port), '--strictPort', '--configLoader', 'runner'], { stdio: 'ignore', detached: false });
     for (let i = 0; i < 120 && !(await up()); i++) await new Promise(r => setTimeout(r, 500));
   }
-  if (!(await up())) { server?.kill(); throw new Error(`Preview server did not start on ${port}; run npm run build first`); }
+  if (!(await up())) { server?.kill(); throw new Error(`Preview server did not start on ${port}; run npm run build:qa first`); }
   const browser = await chromium.launch({ headless: true, args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] });
   const context = await browser.newContext({ viewport, deviceScaleFactor: 1, isMobile: mobile, hasTouch: mobile });
   const page = await context.newPage();

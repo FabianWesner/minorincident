@@ -98,21 +98,24 @@ export class InputSystem implements Lifecycle {
     window.addEventListener('blur', this.release); window.addEventListener('pagehide', this.release);
     document.addEventListener('visibilitychange', this.visibility);
     this.hint.dataset.inputHint = ''; this.hint.setAttribute('role', 'note'); this.hint.style.cssText = 'position:fixed;bottom:12px;left:50%;transform:translateX(-50%);max-width:calc(100vw - 32px);box-sizing:border-box;color:white;background:#182333;padding:8px;font:14px sans-serif;pointer-events:none;z-index:21';
-    this.controls.dataset.inputControls = '';
-    this.controls.style.cssText = 'position:fixed;top:54px;left:12px;background:#182333;color:white;padding:8px;font:14px sans-serif;max-width:260px';
-    document.body.classList.toggle('debug-tools', new URLSearchParams(location.search).has('debug'));
-    this.controls.dataset.inputControls = '';
-    this.controls.hidden = !new URLSearchParams(location.search).has('debug');
-    this.controls.innerHTML = '<summary>Controls</summary><form><label>Action <select name="action"></select></label><label>Key code <input name="code" placeholder="KeyZ" required></label><button>Bind</button></form>';
-    const select = this.controls.querySelector('select')!;
-    for (const action of Object.keys(defaultBindings)) { const option = document.createElement('option'); option.value = action; option.textContent = action; select.append(option); }
-    this.message.setAttribute('role', 'status'); this.controls.append(this.message);
-    this.controls.querySelector('form')!.addEventListener('submit', this.submit);
+    if (__QA_HOOKS__) {
+      this.controls.dataset.inputControls = '';
+      this.controls.style.cssText = 'position:fixed;top:54px;left:12px;background:#182333;color:white;padding:8px;font:14px sans-serif;max-width:260px';
+      document.body.classList.toggle('debug-tools', new URLSearchParams(location.search).has('debug'));
+      this.controls.dataset.inputControls = '';
+      this.controls.hidden = !new URLSearchParams(location.search).has('debug');
+      this.controls.innerHTML = '<summary>Controls</summary><form><label>Action <select name="action"></select></label><label>Key code <input name="code" placeholder="KeyZ" required></label><button>Bind</button></form>';
+      const select = this.controls.querySelector('select')!;
+      for (const action of Object.keys(defaultBindings)) { const option = document.createElement('option'); option.value = action; option.textContent = action; select.append(option); }
+      this.message.setAttribute('role', 'status'); this.controls.append(this.message);
+      this.controls.querySelector('form')!.addEventListener('submit', this.submit);
+      document.body.append(this.controls);
+    }
     this.walkHint.dataset.testid = 'walk-hint'; this.walkHint.setAttribute('role', 'note'); this.walkHint.hidden = true;
     this.walkHint.style.cssText = 'position:fixed;left:50%;bottom:120px;transform:translateX(-50%);color:white;background:#182333e6;padding:8px 14px;border-radius:10px;font:600 15px system-ui,sans-serif;pointer-events:none;z-index:5';
     // Automated browsers keep their reference screenshots clean unless a test opts in ('force').
     try { const state = localStorage.getItem(walkHintKey); this.walkHintDone = state === '1' || (navigator.webdriver && state !== 'force'); } catch { /* Shown once per session without storage. */ }
-    document.body.append(this.hint, this.controls, this.walkHint); this.setScheme(this.scheme);
+    document.body.append(this.hint, this.walkHint); this.setScheme(this.scheme);
   }
   private readonly submit = (event: Event): void => {
     event.preventDefault(); const form = this.controls.querySelector('form')!;

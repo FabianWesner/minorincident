@@ -14,8 +14,8 @@ let browser: Awaited<ReturnType<typeof chromium.launch>> | undefined;
 try {
   if (!process.env.LOOK_URL) {
     if (process.env.LOOK_SKIP_BUILD !== '1') {
-      const build = spawnSync('npm', ['run', 'build'], { stdio: 'inherit' });
-      if (build.status !== 0) throw new Error('Production build failed');
+      const build = spawnSync('npm', ['run', 'build:qa'], { stdio: 'inherit' });
+      if (build.status !== 0) throw new Error('QA build failed');
     }
     const occupied = await fetch(baseURL).then(() => true, () => false);
     if (occupied) throw new Error(`Port ${port} is occupied; set E2E_PORT or LOOK_URL explicitly.`);

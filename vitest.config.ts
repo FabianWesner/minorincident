@@ -23,6 +23,7 @@ const timingFiles = [
 ];
 
 export default defineConfig({
+  define: { __QA_HOOKS__: 'true' },
   test: {
     environment: 'node',
     pool: 'threads',
