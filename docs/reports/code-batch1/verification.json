@@ -1,20 +1,23 @@
 {
-  "sourceCommit": "02b9512b581227d9e336d9e1ffdb94e5fc4ed9b4",
+  "sourceCommit": "110da3b6f",
   "baselineCommit": "ea20915a2",
   "localUnit": {
-    "passed": 2330,
-    "files": 407,
-    "exitCode": 0
+    "passed": 2331,
+    "files": 408,
+    "exitCode": 0,
+    "codeSha256": "0fc83736c4e152bb578b2fe05ee7e474b0127a22795f552a7c1c170537392c10"
   },
   "toolingVerification": {
     "passed": 18,
     "exitCode": 0
   },
   "typecheck": {
-    "exitCode": 0
+    "exitCode": 0,
+    "finalSourceExitCode": 0
   },
   "lint": {
-    "exitCode": 0
+    "exitCode": 0,
+    "finalSourceExitCode": 0
   },
   "bundle": {
     "unit": "raw bytes across every .js and .css in dist",
@@ -168,7 +171,9 @@
     }
   },
   "pending": [
-    "remote-unit-serial"
+    "final-remote-units",
+    "final-smoke",
+    "final-invariants"
   ],
   "productionScan": {
     "jsCssBytes": 11088094,
@@ -387,7 +392,7 @@
     "differences": [],
     "host": "88.99.168.213",
     "maxWorkers": 1,
-    "status": "running"
+    "status": "cancelled after both prior cases passed; superseded by final source and permanent timing grouping"
   },
   "remoteUnitFourWorkerAttempt": {
     "cancelledAfterFailures": true,
@@ -417,5 +422,57 @@
     "L9NavigationCaseMilliseconds": 101041,
     "L9NavigationLimitMilliseconds": 120000,
     "bothPriorCasesPassed": true
+  },
+  "nodeScenarioCompatibility": {
+    "commit": "d28fdc12a",
+    "reproducedBefore": "ReferenceError: __QA_HOOKS__ is not defined from direct Node loadScenarioDefinition(civ-street)",
+    "regressionPassed": 1,
+    "macroCases": [
+      "undefined",
+      "true",
+      "false"
+    ],
+    "simCli": {
+      "civ-street": {
+        "ticks": 60,
+        "exitCode": 0
+      },
+      "lookdev": {
+        "ticks": 60,
+        "exitCode": 0
+      }
+    },
+    "buildParity": {
+      "prod": {
+        "files": 2520,
+        "differences": [],
+        "identicalBytes": true
+      },
+      "qa": {
+        "files": 2552,
+        "differences": [],
+        "identicalBytes": true
+      }
+    },
+    "runtimeProof": "Every QA/PROD output file is byte-identical before/after the Node-only fallback; prior runtime gates and remote levels retain identical compiled behavior."
+  },
+  "unitTimingIsolation": {
+    "commit": "110da3b6f",
+    "addedToExistingTimingGroup": [
+      "tests/unit/assets/validate.test.ts",
+      "tests/unit/levels/campaign-nav-preparation.test.ts"
+    ],
+    "maxWorkers": 4,
+    "fileParallelismDuringTiming": false,
+    "assertionsAndLimitsUnchanged": true
+  },
+  "remoteFinalSnapshot": {
+    "commit": "110da3b6f",
+    "sha256": "0fc83736c4e152bb578b2fe05ee7e474b0127a22795f552a7c1c170537392c10",
+    "checkedFiles": 3002,
+    "differences": [],
+    "maxWorkers": 4,
+    "timingFilesSequential": true,
+    "status": "running"
   }
 }
