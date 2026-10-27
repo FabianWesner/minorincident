@@ -48,8 +48,9 @@ export const l4Dressing: readonly L4Dressing[] = [
  */
 export const l4AlphaEmergence: readonly { anchor: string; edgeId?: string; at?: readonly [number, number]; job: 'line' | 'west' | 'north' | 'south' | 'armor'; afterTurnS: number; high?: boolean }[] = [
   // Line 1: one Alpha through the west slot; the next (high tier) goes for the line that holds after the first break.
-  { anchor: 'l4-alpha-west-slot', at: [-46, 21], job: 'west', afterTurnS: 32 },
-  { anchor: 'l4-alpha-nw', edgeId: 'nw-alley', job: 'line', afterTurnS: 56, high: true },
+  // Q-192: start the announced wall attack during the alarm; the first minute no longer has an internal tent wave.
+  { anchor: 'l4-alpha-west-slot', at: [-46, 21], job: 'west', afterTurnS: 6 },
+  { anchor: 'l4-alpha-nw', edgeId: 'nw-alley', job: 'line', afterTurnS: 32, high: true },
   // The two gun-nest Alphas (south-east, north), staggered, then two more at the nests line (the first of them high tier only).
   { anchor: 'l4-alpha-south', edgeId: 'south-east', job: 'south', afterTurnS: 84 },
   { anchor: 'l4-alpha-north', edgeId: 'north', job: 'north', afterTurnS: 92 },

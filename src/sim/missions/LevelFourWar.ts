@@ -899,10 +899,7 @@ export class LevelFourWar {
       }
     }
   }
-  /**
-   * PO 10-13 ("ALso from within buildings inside the army area"): every `inside.everyS` during the war one or two infected come out from
-   * at breached wire sections outside the military perimeter and go for the nearest soldier.
-   */
+  /** Replenish pressure from exterior approaches to the open physical breaches (Q-192). */
   private emergePerimeterPressure(): void {
     const { world } = this.mission, s = this.s, ai = world.infected!, p = world.entities.get(1)!.transform, tick = world.tick, w = l4.war.perimeterPressure;
     // Supplemental pressure waits once this part of the plaza is saturated
@@ -976,7 +973,7 @@ export class LevelFourWar {
     s.perimeterCursor = (s.perimeterCursor + admitted) % exits;
     if (!s.perimeterPending) s.perimeterAt = tick + ticks(w.everyS);
     // No eligible hidden exit or no capacity this tick: retain the authored
-    // demand and retry rather than silently consuming this interior wave.
+    // demand and retry rather than silently consuming this perimeter wave.
   }
   private flushEdges(): void {
     const { world } = this.mission, s = this.s, ai = world.infected!, p = world.entities.get(1)!.transform, centre = l4.map.centre;
