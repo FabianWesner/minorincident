@@ -18,7 +18,8 @@ The PO found 14 issues in L1–L4 on PROD 13h that every bot and the Opus QA had
 3. **PO-style QA.** The Opus QA plays L1–L4 at least, at close zoom, low quality and with a progressed save. It works through the PO checklist (docs/qa/po-checklist.md), which gets every PO finding added.
 4. **Process:**
    - cross-cutting render/crowd/corpse/prewarm changes need the all-level A/B before they merge;
-   - no PROD deploy without green 1 + 2 and a GO from 3.
+   - no PROD deploy without green 1 + 2 and a GO from 3;
+   - a PO finding becomes a checklist line, a Scene Lab spec or an invariant here, not a new unit test, unless it exposed broken engine logic or shared code ([test strategy](test-strategy.md), budget-enforced).
 
 Run `npm run qa:invariants`. The headless sim suite is also available as `npm run qa:invariants:sim` for local diagnosis; it is not a substitute for the remote gate. Browser admission is serialized through `tools/perf/quiet-run.sh` at port 4191, with Scene Lab reserved at 4192.
 

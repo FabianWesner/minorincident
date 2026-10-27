@@ -748,8 +748,8 @@ Default Knip unused-file inventory (before entry calibration). Every src/tools f
 | [tools/perf/compact-crowd-audit.ts](../../../tools/perf/compact-crowd-audit.ts) | Retain independent tool/browser entry; calibrated graph plus invocation audit required. |
 | [tools/perf/corpse-scans.ts](../../../tools/perf/corpse-scans.ts) | Retain independent tool/browser entry; calibrated graph plus invocation audit required. |
 | [tools/perf/cpuprofile-summary.mjs](../../../tools/perf/cpuprofile-summary.mjs) | Retain independent tool/browser entry; calibrated graph plus invocation audit required. |
-| [tools/perf/handover-remote.mjs](../../../tools/perf/handover-remote.mjs) | Retain independent tool/browser entry; calibrated graph plus invocation audit required. |
-| [tools/perf/handover-report.mjs](../../../tools/perf/handover-report.mjs) | Retain independent tool/browser entry; calibrated graph plus invocation audit required. |
+| `tools/perf/handover-remote.mjs` (removed in the test rewrite) | Retain independent tool/browser entry; calibrated graph plus invocation audit required. |
+| `tools/perf/handover-report.mjs` (removed in the test rewrite) | Retain independent tool/browser entry; calibrated graph plus invocation audit required. |
 | [tools/perf/heap-audit.ts](../../../tools/perf/heap-audit.ts) | Retain independent tool/browser entry; calibrated graph plus invocation audit required. |
 | [tools/perf/heap-bake-equivalence.ts](../../../tools/perf/heap-bake-equivalence.ts) | Retain independent tool/browser entry; calibrated graph plus invocation audit required. |
 | [tools/perf/heap-pixel-diff.ts](../../../tools/perf/heap-pixel-diff.ts) | Retain independent tool/browser entry; calibrated graph plus invocation audit required. |
@@ -759,7 +759,7 @@ Default Knip unused-file inventory (before entry calibration). Every src/tools f
 | [tools/perf/l10-click.ts](../../../tools/perf/l10-click.ts) | Retain independent tool/browser entry; calibrated graph plus invocation audit required. |
 | [tools/perf/l10-entry.ts](../../../tools/perf/l10-entry.ts) | Retain independent tool/browser entry; calibrated graph plus invocation audit required. |
 | [tools/perf/l10-playtest.ts](../../../tools/perf/l10-playtest.ts) | Retain independent tool/browser entry; calibrated graph plus invocation audit required. |
-| [tools/perf/l2-headroom.ts](../../../tools/perf/l2-headroom.ts) | Retain independent tool/browser entry; calibrated graph plus invocation audit required. |
+| `tools/perf/l2-headroom.ts` (removed in the test rewrite) | Retain independent tool/browser entry; calibrated graph plus invocation audit required. |
 | [tools/perf/l4-alarm-cpu-profile.ts](../../../tools/perf/l4-alarm-cpu-profile.ts) | Retain independent tool/browser entry; calibrated graph plus invocation audit required. |
 | [tools/perf/l4-beat-cpu.ts](../../../tools/perf/l4-beat-cpu.ts) | Retain independent tool/browser entry; calibrated graph plus invocation audit required. |
 | [tools/perf/l4-cold-graphs.ts](../../../tools/perf/l4-cold-graphs.ts) | Retain independent tool/browser entry; calibrated graph plus invocation audit required. |
@@ -2265,7 +2265,7 @@ Exact source expressions are the default specification. ?? / || / ternaries show
 | env E2E_PORT | [tools/motionlab/measure-stage1.ts:8](../../../tools/motionlab/measure-stage1.ts#L8) | <code>process.env.E2E_PORT ?? '3352'</code> |
 | env E2E_PORT | [tools/motionlab/measure.ts:7](../../../tools/motionlab/measure.ts#L7) | <code>process.env.E2E_PORT ?? '3352'</code> |
 | env E2E_PORT | [tools/perf/civilian-startup.ts:11](../../../tools/perf/civilian-startup.ts#L11) | <code>Number(process.env.E2E_PORT ?? 35974)</code> |
-| env E2E_PORT | [tools/perf/handover-remote.mjs:7](../../../tools/perf/handover-remote.mjs#L7) | <code>process.env.E2E_PORT ?? String(3400 + (process.pid % 500))</code> |
+| env E2E_PORT | tools/perf/handover-remote.mjs:7 (`tools/perf/handover-remote.mjs`, removed in the test rewrite) | <code>process.env.E2E_PORT ?? String(3400 + (process.pid % 500))</code> |
 | env E2E_PORT | [tools/perf/heap-audit.ts:13](../../../tools/perf/heap-audit.ts#L13) | <code>Number(process.env.E2E_PORT ?? 3931)</code> |
 | env E2E_PORT | [tools/perf/l4-storyline.ts:19](../../../tools/perf/l4-storyline.ts#L19) | <code>Number(process.env.E2E_PORT ?? 4431)</code> |
 | env E2E_PORT | [tools/perf/l6-retention-profile.ts:16](../../../tools/perf/l6-retention-profile.ts#L16) | <code>Number(process.env.E2E_PORT ?? 4121)</code> |
@@ -2643,8 +2643,8 @@ Exact source expressions are the default specification. ?? / || / ternaries show
 | env-shell E2E_SLOTS | [tools/e2e-lock.sh:7](../../../tools/e2e-lock.sh#L7) | <code>${E2E_SLOTS:-2}</code> |
 | env-shell E2E_SLOTS | [tools/perf/quiet-run.sh:29](../../../tools/perf/quiet-run.sh#L29) | <code>${E2E_SLOTS:-2}</code> |
 | env-shell E2E_UNITS | [tools/e2e-lock.sh:44](../../../tools/e2e-lock.sh#L44) | <code>${E2E_UNITS:-${workers:-1}</code> |
-| env-shell HEAP_BASELINE_DIST | [tools/perf/heap-budgets-final.sh:6](../../../tools/perf/heap-budgets-final.sh#L6) | <code>${HEAP_BASELINE_DIST:?Set HEAP_BASELINE_DIST to the preserved baseline build}</code> |
-| env-shell HEAP_FINAL_OUT | [tools/perf/heap-budgets-final.sh:5](../../../tools/perf/heap-budgets-final.sh#L5) | <code>${HEAP_FINAL_OUT:-docs/reports/heap-budgets/evidence/final}</code> |
+| env-shell HEAP_BASELINE_DIST | tools/perf/heap-budgets-final.sh:6 (`tools/perf/heap-budgets-final.sh`, removed in the test rewrite) | <code>${HEAP_BASELINE_DIST:?Set HEAP_BASELINE_DIST to the preserved baseline build}</code> |
+| env-shell HEAP_FINAL_OUT | tools/perf/heap-budgets-final.sh:5 (`tools/perf/heap-budgets-final.sh`, removed in the test rewrite) | <code>${HEAP_FINAL_OUT:-docs/reports/heap-budgets/evidence/final}</code> |
 | env-shell MI_BROWSER_POOL_EXCLUSIVE | [tools/perf/quiet-run.sh:14](../../../tools/perf/quiet-run.sh#L14) | <code>${MI_BROWSER_POOL_EXCLUSIVE:-}</code> |
 | env-shell MI_E2E_JOB_HELD | [tools/e2e-lock.sh:21](../../../tools/e2e-lock.sh#L21) | <code>${MI_E2E_JOB_HELD:-}</code> |
 | env-shell MI_E2E_LOCK_HELD | [tools/e2e-lock.sh:51](../../../tools/e2e-lock.sh#L51) | <code>${MI_E2E_LOCK_HELD:-}</code> |
@@ -2652,7 +2652,7 @@ Exact source expressions are the default specification. ?? / || / ternaries show
 | env-shell MI_E2E_UNITS_HELD | [tools/e2e-lock.sh:52](../../../tools/e2e-lock.sh#L52) | <code>${MI_E2E_UNITS_HELD:-}</code> |
 | env-shell MI_GC_DRY | [tools/remote/run.sh:111](../../../tools/remote/run.sh#L111) | <code>${MI_GC_DRY:-0}</code> |
 | env-shell MI_PERF_JOB_HELD | [tools/perf/quiet-run.sh:17](../../../tools/perf/quiet-run.sh#L17) | <code>${MI_PERF_JOB_HELD:-}</code> |
-| env-shell MI_PERF_LOCK_HELD | [tools/perf/heap-budgets-final.sh:4](../../../tools/perf/heap-budgets-final.sh#L4) | <code>${MI_PERF_LOCK_HELD:-}</code> |
+| env-shell MI_PERF_LOCK_HELD | tools/perf/heap-budgets-final.sh:4 (`tools/perf/heap-budgets-final.sh`, removed in the test rewrite) | <code>${MI_PERF_LOCK_HELD:-}</code> |
 | env-shell MI_PERF_LOCK_HELD | [tools/perf/quiet-run.sh:8](../../../tools/perf/quiet-run.sh#L8) | <code>${MI_PERF_LOCK_HELD:-}</code> |
 | env-shell MI_PERF_LOCK_HELD | [tools/perf/quiet-run.sh:21](../../../tools/perf/quiet-run.sh#L21) | <code>${MI_PERF_LOCK_HELD:-}</code> |
 | env-shell MI_PERF_SHARED_BROWSER | [tools/perf/quiet-run.sh:8](../../../tools/perf/quiet-run.sh#L8) | <code>${MI_PERF_SHARED_BROWSER:-}</code> |

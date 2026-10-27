@@ -1,5 +1,7 @@
 # Extended test scheduling
 
+> Superseded on 2026-10-27 by the test rewrite: see [test strategy](test-strategy.md). Most files named below were deleted; this page is history.
+
 The requested unpartitioned remote baseline is the timing reference. In addition to the >60 s tests, the fast gate moves extended scenario replays and geometry sweeps with a measured case above 5 s to nightly. Parameterized fixture families stay together. Ordinary completion of every level, core collision/admission/support guards, reference combat balance, existing smoke guards and short performance fixtures stay in the gate. The original assertions, seeds and timeouts remain unchanged.
 
 This appendix records the additional scheduling decisions; the original >60 s campaign/soak split is described in [the main report](tests-cleanup.md). All nightly cases still run in the required nightly check. The final remote JSON union audit verifies that scheduling omits no retained case.

@@ -1,5 +1,7 @@
 # Test suite cleanup
 
+> Superseded on 2026-10-27 by the test rewrite: see [test strategy](test-strategy.md). Most files named below were deleted; this page is history.
+
 Branch: `lane/tests-cleanup`. Baseline: `ea20915a2` (2026-10-27).
 
 **Status: PO-directed handoff, 2026-10-27.** The PO requested a full rewrite to 3–5% of the tests in another lane and instructed this lane to stop further refactoring and wrap within 30 minutes. Keep the Q-200 no-teleport fix and verified game/fixture corrections. The original final-green and ≤15-minute requirements are **not achieved**: the completed expanded gate took 16m 05.71s and failed three assertions; the later expanded nightly was stopped after exposing additional failures. Scripts and the coverage matrix below are a measured checkpoint for the rewrite lane, not a green release claim.

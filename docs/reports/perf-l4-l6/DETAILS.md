@@ -35,17 +35,17 @@ Handoff before numbers: L4 WebGPU high turn48.5/tank15.3/break204.7 ms and four 
 
 | Fix | Guard | Baseline red / candidate green |
 | --- | --- | --- |
-| Retired L1 window owner | [lab-window-retention.test.ts](../../../tests/unit/render/lab-window-retention.test.ts) | `lab-owner-guard-red.log.gz` / `lab-owner-focused-green.log.gz` |
-| Cached MaterialNode reference | [level-geometry-retention.test.ts](../../../tests/unit/render/level-geometry-retention.test.ts) | `material-reference-guard-red.log.gz` / `material-reference-focused-green.log.gz` |
-| Interaction LOD feature graph | [interaction-lod-materials.test.ts](../../../tests/unit/render/interaction-lod-materials.test.ts) | `interaction-guard-red.log.gz` / `interaction-focused-green.log.gz` |
-| Rigid actor/collapse feature graph | [entity-assets-lod-materials.test.ts](../../../tests/unit/render/entity-assets-lod-materials.test.ts) | `collapse-guard-red.log.gz` / `graph-caches-focused-green.log.gz` |
-| Static placement graph identity | [static-instance-attributes.test.ts](../../../tests/unit/render/static-instance-attributes.test.ts) | `placement-guard-red.log.gz` / `placement-focused-green.log.gz` |
-| Numeric A* queue | [nav-heap-allocation.test.ts](../../../tests/unit/performance/nav-heap-allocation.test.ts) | `nav-heap-guard-red.log.gz` / `nav-heap-green-build.log.gz` |
-| Cached expansion coordinates | [nav-grid-expansion.test.ts](../../../tests/unit/performance/nav-grid-expansion.test.ts) | `cpu-guards-red.log.gz` / `cpu-ready-green-build.log.gz` |
-| Independent fast event copies | [world-event-copy.test.ts](../../../tests/unit/performance/world-event-copy.test.ts) | `cpu-guards-red.log.gz` / `cpu-ready-green-build.log.gz` |
-| Hidden actor reveal prewarm | [entity-assets-lod-materials.test.ts](../../../tests/unit/render/entity-assets-lod-materials.test.ts) | `warm-guards-red.log.gz` / `warm-green-build.log.gz` |
-| Private alarm CPU warm-up | [l4-alarm-jit-warmup.test.ts](../../../tests/unit/performance/l4-alarm-jit-warmup.test.ts) | `warm-guards-red.log.gz` / `warm-green-build.log.gz` |
-| Gun aiming world matrix reads | [gun-aim-matrix-reuse.test.ts](../../../tests/unit/render/gun-aim-matrix-reuse.test.ts) | `aim-guard-red.log.gz` / `aim-guard-green-build.log.gz`; numerical oracle preserves full poses |
+| Retired L1 window owner | lab-window-retention.test.ts (`tests/unit/render/lab-window-retention.test.ts`, removed in the test rewrite) | `lab-owner-guard-red.log.gz` / `lab-owner-focused-green.log.gz` |
+| Cached MaterialNode reference | level-geometry-retention.test.ts (`tests/unit/render/level-geometry-retention.test.ts`, removed in the test rewrite) | `material-reference-guard-red.log.gz` / `material-reference-focused-green.log.gz` |
+| Interaction LOD feature graph | interaction-lod-materials.test.ts (`tests/unit/render/interaction-lod-materials.test.ts`, removed in the test rewrite) | `interaction-guard-red.log.gz` / `interaction-focused-green.log.gz` |
+| Rigid actor/collapse feature graph | entity-assets-lod-materials.test.ts (`tests/unit/render/entity-assets-lod-materials.test.ts`, removed in the test rewrite) | `collapse-guard-red.log.gz` / `graph-caches-focused-green.log.gz` |
+| Static placement graph identity | static-instance-attributes.test.ts (`tests/unit/render/static-instance-attributes.test.ts`, removed in the test rewrite) | `placement-guard-red.log.gz` / `placement-focused-green.log.gz` |
+| Numeric A* queue | nav-heap-allocation.test.ts (`tests/unit/performance/nav-heap-allocation.test.ts`, removed in the test rewrite) | `nav-heap-guard-red.log.gz` / `nav-heap-green-build.log.gz` |
+| Cached expansion coordinates | nav-grid-expansion.test.ts (`tests/unit/performance/nav-grid-expansion.test.ts`, removed in the test rewrite) | `cpu-guards-red.log.gz` / `cpu-ready-green-build.log.gz` |
+| Independent fast event copies | world-event-copy.test.ts (`tests/unit/performance/world-event-copy.test.ts`, removed in the test rewrite) | `cpu-guards-red.log.gz` / `cpu-ready-green-build.log.gz` |
+| Hidden actor reveal prewarm | entity-assets-lod-materials.test.ts (`tests/unit/render/entity-assets-lod-materials.test.ts`, removed in the test rewrite) | `warm-guards-red.log.gz` / `warm-green-build.log.gz` |
+| Private alarm CPU warm-up | l4-alarm-jit-warmup.test.ts (`tests/unit/performance/l4-alarm-jit-warmup.test.ts`, removed in the test rewrite) | `warm-guards-red.log.gz` / `warm-green-build.log.gz` |
+| Gun aiming world matrix reads | gun-aim-matrix-reuse.test.ts (`tests/unit/render/gun-aim-matrix-reuse.test.ts`, removed in the test rewrite) | `aim-guard-red.log.gz` / `aim-guard-green-build.log.gz`; numerical oracle preserves full poses |
 
 Receipts above are in `evidence/`. The first five guards also pass in `candidate-full-remote-95796.log.gz` (439 files / 2,411 tests passed). These initial runtime fixes add no warm-up calls or passes; crowd, corpse, quality and fixture thresholds are unchanged.
 

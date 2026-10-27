@@ -1,27 +1,14 @@
 # Deploy gate (PROD batches)
 
-The orchestrator runs this on `main` before every PROD deploy (PO rules 10-07 / 10-09; long bot batteries are not part of it).
+The orchestrator runs this on `main` before every PROD deploy (PO rules 10-07 / 10-09; long bot batteries are not part of it). Which test lives where: [test strategy](test-strategy.md) (PO 10-27 rewrite, budget-enforced).
 
 1. `npm run typecheck`, `npm run lint`
-2. `npm run test:gate` (Hetzner: `sh tools/remote/run.sh "$PWD" -- bash tools/remote/timing-isolated.sh --whole-run npm run test:gate`, target ≤15 minutes of test command wall time). It runs unit, sim, per-level completion and headless QA invariant suites with at most four Vitest workers. This includes the static QA guards:
-   - `tests/unit/assets/lod-fidelity.test.ts`: every static prop/building/vehicle LOD against LOD0 (extent, silhouettes, vanished materials; backlog in `lod-fidelity.baseline.json`).
-   - `tests/unit/levels/decoration-surface.test.ts`: drawn decorations only on soil, every district and tier.
-   - `tests/sim/world/support-seams.test.ts`: no seam in raised walkable supports, every district.
-3. `npm run build`, `npm run test:smoke`
+2. `npm test`: engine and shared-code tests (`tests/engine`, `tests/shared`, `tests/tools`), at most four Vitest workers, ≤ 4 min including the test budget check (about 65 s on the Mac). Lanes run it too; it is cheap enough to run locally.
+3. `npm run test:smoke` (builds `build:qa`, then 6 browser tests in `tests/e2e`: boot, L1 pedestrians drawn on WebGL2 and WebGPU, unflagged WebGPU menu → L1 pipelines, compiled-program GPU limits on both backends).
 4. Scene Lab for the touched areas, **both quality tiers and both zooms**: `npm run scene:matrix` (props, seats, hand props, peds, corgi, Grove areas) plus `npm run scene:catalog -- --matrix --filter '<area>*'` for other touched areas (L9 crash site: `--filter 'l9-crash-*'`; L9 drive/damage/handover QA: `--filter 'qa-l9-*,l9-enc-*,veh-apc-*,area-l9-*'`, on both `--backend webgl2` and `webgpu`; night route read E31-AC16 / L10 R1-R6: `--matrix --filter 'night-read-*'`, nav contrast gate (typical >= 2.5, floor 2.0), see scene-lab.md "Night navigation contrast"). Open the sheets of both tiers. L10 cure-* scenes also gate `lodPlaceholderFramesMax: 0` (no placement drawn from a coarser stand-in mesh than its LOD band); `--throttle 4` slows the CPU to expose load-dependent races, and `tools/qa/lod-pop-probe.ts --walk` samples `placeholderDraws` while walking a streamed level.
-5. Browser e2e (`--project=chromium --workers=2 --retries=1`, Playwright path filters are regexes on the full path, so level specs need `levels/`): `levels/L1.spec levels/L2.spec levels/L4.spec l4-po-round l4-cellar-guidance l4-plaza-movement l4-barricade-prompts cellar-position l4-blank-viewport webgpu-canvas respawn-bat input-mouse crowd-visible-outbreak menu-10-levels` (10-14: 90 tests); for vehicle/ride changes `tests/e2e/levels/l4-bus-ride-smooth.spec.ts` (all 17 configs: both tiers, both backends, 60/120 Hz, uneven 120 Hz, 30 Hz, uneven phone cadence).
+5. Once per merged batch (not per lane): `npm run test:nightly:remote` (≤ 20 min): the seed-1 L1 → credits campaign bot with real handovers, the content ratchets (LOD fidelity of every static asset, decoration surfaces, support seams, placement vs solids; backlogs in `tests/nightly/*.baseline.json`), the Node sim budget and the headless QA invariants. Plus the regression gate (`docs/qa/regression-gate.md`: `npm run qa:invariants`, visual A/B, PO-style QA). Native frame budgets: `npm run test:perf` in a quiet window.
 
 Details and the reasoning behind each guard: `docs/tools/scene-lab.md`, section "Quality x zoom matrix".
-
-## Cleanup checkpoint (2026-10-27)
-
-The PO has assigned a subsequent full test-suite rewrite. The scripts below are the current partition, **not a verified green release gate**: the last completed expanded gate took 16m 05.71s and failed three cases; two asset setup failures were corrected afterward, and the boss-staging expectation is superseded by Q-200. The expanded nightly was interrupted under the wrap directive. See the [failure list and measurements](tests-cleanup.md) before using this checkpoint for release approval.
-
-## Nightly simulation layer
-
-Run `sh tools/remote/run.sh "$PWD" -- bash tools/remote/timing-isolated.sh --whole-run npm run test:nightly` once nightly and before a release. Tests tagged `@nightly` are excluded from `test:gate`; the two scripts partition the same unit/sim/levels/headless-invariants inventory. Both retain Vitest's isolated timing project before functional tests. The nightly layer retains one seed-1 complete L1→L10 continuity run, including the L1→L9 axe reset and L5→L6 racks/roster checks, and the distinct newbie L1→L6 timing regression. Slow soak/diagnostic tests also belong here. Per-level ordinary-input completion remains in the gate, including a standalone L9 crossing/crash run.
-
-Passing the simulation gate does not replace build, browser smoke, Scene Lab, render invariants or native performance checks above. See [test cleanup evidence and coverage](tests-cleanup.md) for the assertion ownership matrix and measured before/after results.
 
 
 ## Browser admission (2026-10-23)

@@ -12,7 +12,7 @@ The incoming controls lane updates criteria for the explicit PO decisions (bicyc
 
 [L4 camera samples](game-camera/summary.json): hide objective active at `(-56.23, 32.11)`, both backends and both quality tiers, all three zooms. All twelve measurements give **54°** polar; radii are **9.5 / 19 / 28.5 m** at zoom **0.5 / 1 / 1.5**. The camera test steps another 120 ticks after each sample to check for a snap back. Full framing records and PNGs are retained under [game-camera](game-camera).
 
-The existing [same-tick pickup regression](../../../tests/levels/controls-content.test.ts) asserts, for both tiers, that `pickup.collected`, `l4.firstTurn` and the first `l4.wave` all use the pickup tick; `gunAt === turnAt`, `warAt === world.tick`, and checkpoint `turn` survives the objective completion. Full remote sweep results below establish execution of this regression.
+The existing same-tick pickup regression (`tests/levels/controls-content.test.ts`, removed in the test rewrite) asserts, for both tiers, that `pickup.collected`, `l4.firstTurn` and the first `l4.wave` all use the pickup tick; `gunAt === turnAt`, `warAt === world.tick`, and checkpoint `turn` survives the objective completion. Full remote sweep results below establish execution of this regression.
 
 [Opened images and descriptions](visual-review.md) include the requested tier-4 female sheet, attached dog legs, the real hide camera capture and the L3 evacuation sheet. Numeric sample summaries accompany the final scene results.
 
