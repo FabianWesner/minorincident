@@ -20,6 +20,10 @@ test('placement: never inside the courier radius, the expanded camera volume (al
   const e = w.infected!.active[0];
   expect(Math.hypot(e.transform.x, e.transform.z)).toBeGreaterThanOrEqual(18); expect(d.visible(e.transform)).toBe(false);
   expect(w.infected!.nav.clear(e.transform.x, e.transform.z, e.combat!.radius)).toBe(true);
+  // With a narrow camera, an offscreen clear cell still needs 18 m from the courier.
+  const narrow = await arena(), nd = narrow.infected!.director; nd.camera.halfWidth = 5; nd.camera.halfDepth = 5;
+  expect(nd.offscreen({ x: 0, z: 12 })).toBe(true);
+  expect(nd.safe('infected.runner', { x: 0, z: 12 })).toBe(false); expect(nd.safe('infected.runner', { x: 0, z: 19 })).toBe(true);
 
   const ortho = new Matrix4().makeOrthographic(-20, 20, 20, -20, 0.1, 100).multiply(new Matrix4().makeRotationX(Math.PI / 2)).multiply(new Matrix4().makeTranslation(0, -50, 0));
   d.setFrustum(ortho.elements); expect(d.visible({ x: 21.9, z: 0 })).toBe(true); expect(d.visible({ x: 22.1, z: 0 })).toBe(false);

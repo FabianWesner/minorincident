@@ -37,6 +37,7 @@ test('the asset validator rejects every contract violation, and every production
   expect(new Set(manifest.map(a => a.id)).size).toBe(manifest.length);
   const reports = await validateAssets(manifest as AssetDef[], true);
   expect(reports.length).toBeGreaterThan(20);
-  const findings = reports.flatMap(r => r.errors.map(e => `${r.id}: ${e}`)).filter(e => e.includes('stump_') || e.endsWith('missing LOD') || e.includes(': forward ') || e.includes('material: unknown pal_') || e.includes('degenerate triangle'));
-  expect(findings).toEqual([]);
+  // The production inventory is clean (1,262 reports on 2026-10-27): any validator error is a regression, including a
+  // missing GLB/LOD file (the old @nightly filter only looked at five error kinds and let a missing file through).
+  expect(reports.flatMap(r => r.errors.map(e => `${r.id}: ${e}`))).toEqual([]);
 }, 300_000);
