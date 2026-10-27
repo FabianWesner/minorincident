@@ -112,7 +112,7 @@ describe('L4 The Safe City Falls', () => {
     expect([...w.entities.iterate()].filter(e => e.civilian?.state === 'finished')).toHaveLength(0);
   }, HEAVY);
 
-  test('T-E22-06 @E22 @E22-AC06 machine gun: 14 per round, 10/s, 4 degrees, 26 m, pierce 1, no ammunition; 5 infected at 10 m fall in <= 3 s (handgun >= 2x slower)', async () => {
+  test('T-E22-06 @E22 @nightly @E22-AC06 machine gun: 14 per round, 10/s, 4 degrees, 26 m, pierce 1, no ammunition; 5 infected at 10 m fall in <= 3 s (handgun >= 2x slower)', async () => {
     const def = action('weapon.army-mg');
     expect([def.damage, def.range, def.fireRate, def.spread, def.magazine, def.reloadTime, def.maxTargets, def.projectile!.pierce]).toEqual([14, 26, 10, 4, 0, 0, 2, 1]);
     const l = await loadL4(4); world = l.world; const w = l.world, m = l.mission;
@@ -157,7 +157,7 @@ describe('L4 The Safe City Falls', () => {
     expect(shots).toBeGreaterThanOrEqual(2000); expect(reloads).toBe(0);
   }, HEAVY);
 
-  test('T-E22-07 @E22 @E22-AC07 the alarm: exactly on the gun pickup tick, 15-25 new infected enter from camp buildings or street mouths with >= 10 humans near the alarm', async () => {
+  test('T-E22-07 @E22 @nightly @E22-AC07 the alarm: exactly on the gun pickup tick, 15-25 new infected enter from camp buildings or street mouths with >= 10 humans near the alarm', async () => {
     for (const seed of [1, 2, 3]) {
       const l = await loadL4(seed); const w = l.world, s = l.mission.state.l4!;
       while (s.phase === 'convoy') w.update();
@@ -297,7 +297,7 @@ describe('L4 The Safe City Falls', () => {
     record('spectacle', { bursts: bursts.size, tank, heliPasses, heliAlt });
   }, HEAVY);
 
-  test('T-E22-13 @E22 @E22-AC13 the line breaks after the third lost line ("Fall back!", also with the idle bot): fuel-truck mega chain, objective "Run to the cellar", the helicopter withdraws', async () => {
+  test('T-E22-13 @E22 @nightly @E22-AC13 the line breaks after the third lost line ("Fall back!", also with the idle bot): fuel-truck mega chain, objective "Run to the cellar", the helicopter withdraws', async () => {
     const l = await loadL4(2); world = l.world; const w = l.world, s = l.mission.state.l4!;
     const r = runL4(w, l.mission, 'idle', { seed: 2, god: true, maxSeconds: 400, stopWhen: m => m.state.l4!.lineBreakAt > 0 && m.world.tick - m.state.l4!.lineBreakAt > 12 * 60 });
     const armor = l4.director.lines[2];
@@ -319,7 +319,7 @@ describe('L4 The Safe City Falls', () => {
     step(f.world, 11 * 60); expect(fs.director.lines[0].cause).toBe('overrun'); expect((fs.director.lines[0].brokeAt - fs.turnAt) / 60).toBeCloseTo(l4.director.lines[0].earliestS, 0); f.world.dispose();
   }, HEAVY);
 
-  test('T-E22-14 @E22 @E22-AC14 live damage at the cellar: >= 4 fires, >= 2 burning vehicles, >= 10 broken windows, >= 6 blast scorches, all traceable to explosion/fire events of the run', async () => {
+  test('T-E22-14 @E22 @nightly @E22-AC14 live damage at the cellar: >= 4 fires, >= 2 burning vehicles, >= 10 broken windows, >= 6 blast scorches, all traceable to explosion/fire events of the run', async () => {
     const l = await loadL4(1); world = l.world;
     const r = runL4(l.world, l.mission, 'complete', { seed: 1, maxSeconds: 700 });
     expect(r.outcome).toBe('complete');
@@ -365,7 +365,7 @@ describe('L4 The Safe City Falls', () => {
     l.mission.completeObjective('hold'); step(w, 90); expect(fires()).toBeGreaterThanOrEqual(3);
   }, HEAVY);
 
-  test('T-E22-17 @E22 @E22-AC17 checkpoints preserve the live battlefield across deaths, with only live infection losses', async () => {
+  test('T-E22-17 @E22 @nightly @E22-AC17 checkpoints preserve the live battlefield across deaths, with only live infection losses', async () => {
     // PO 10-13: checkpoints keep progress; "Keep the civilians like usually, just let Zombies flood in".
     const l = await loadL4(2); world = l.world; const m = l.mission, w = l.world;
     while (m.state.l4!.phase === 'convoy') w.update();
@@ -418,7 +418,7 @@ describe('L4 The Safe City Falls', () => {
     record('checkpoints', snaps);
   }, HEAVY);
 
-  test('T-E22-bots @E22 evade-only never attacks and still reaches the cellar; the low tier finishes too', async () => {
+  test('T-E22-bots @E22 @nightly evade-only never attacks and still reaches the cellar; the low tier finishes too', async () => {
     const l = await loadL4(2); world = l.world;
     const r = runL4(l.world, l.mission, 'evade-only', { seed: 2, maxSeconds: 700 });
     record('bot-evade-only', r);
@@ -429,21 +429,21 @@ describe('L4 The Safe City Falls', () => {
     expect(rl.outcome).toBe('complete'); expect(rl.maxConcurrent).toBeLessThanOrEqual(l4.war.caps.infected.low); expect(rl.maxCharacters).toBeLessThanOrEqual(l4.war.caps.characters.low);
   }, HEAVY);
 
-  test('T-E22-03 @E22 @E22-AC03 the newbie bot finishes (single seed; the 20-seed battery is dropped as a gate, PO 10-09) with few deaths', async () => {
+  test('T-E22-03 @E22 @nightly @E22-AC03 the newbie bot finishes (single seed; the 20-seed battery is dropped as a gate, PO 10-09) with few deaths', async () => {
     const l = await loadL4(4); world = l.world;
     const r = runL4(l.world, l.mission, 'newbie', { seed: 4, maxSeconds: 700 });
     record('bot-newbie', r);
     expect(r.outcome).toBe('complete'); expect(r.deaths).toBeLessThanOrEqual(2);
   }, HEAVY);
 
-  test('T-E22-12 @E22 @E22-AC12 still not enough: soldiers thin out and the infected outgrow the kills by the line break (single seed)', async () => {
+  test('T-E22-12 @E22 @nightly @E22-AC12 still not enough: soldiers thin out and the infected outgrow the kills by the line break (single seed)', async () => {
     const l = await loadL4(2); world = l.world;
     const r = runL4(l.world, l.mission, 'complete', { seed: 2, maxSeconds: 700 });
     expect(r.soldiersAtBreak).toBeLessThanOrEqual(r.soldiersAtTurn); expect(r.soldiersAtCellar).toBeGreaterThanOrEqual(0);
     expect(r.killsAtBreak).toBeGreaterThanOrEqual(60);
   }, HEAVY);
 
-  for (const tier of ['high', 'low'] as const) test(`T-E22-12-alphas-${tier} @E22 @E22-AC12 first Alphas use the district mouths after the internal turn, inside both caps`, async () => {
+  for (const tier of ['high', 'low'] as const) test(`T-E22-12-alphas-${tier} @E22 @nightly @E22-AC12 first Alphas use the district mouths after the internal turn, inside both caps`, async () => {
     const l = await loadL4(2, tier); world = l.world; const w = l.world, m = l.mission, s = m.state.l4!;
     w.combat!.damage.god = true;
     expect(s.alphaIds).toEqual([]);

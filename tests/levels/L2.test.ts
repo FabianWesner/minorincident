@@ -55,7 +55,7 @@ describe('L2 The Failed Rescue', () => {
     expect(t).toBeGreaterThanOrEqual(l2.bots.completeMedianS[0]); expect(t).toBeLessThanOrEqual(l2.bots.completeMedianS[1]);
   }, HEAVY);
 
-  test('T-E20-03 @E20 @E20-AC03 newbie single seed, median in band, median deaths <= 1; bat escape single seed', async () => {
+  test('T-E20-03 @E20 @nightly @E20-AC03 newbie single seed, median in band, median deaths <= 1; bat escape single seed', async () => {
     const newbie = await battery('newbie'), noAxe = await battery('no-axe');
     expect(newbie.filter(r => r.outcome === 'complete').length).toBeGreaterThanOrEqual(l2.bots.newbieMinSeeds);
     expect(median(newbie.map(r => r.deaths))).toBeLessThanOrEqual(l2.bots.newbieMaxMedianDeaths);
@@ -198,7 +198,7 @@ describe('L2 The Failed Rescue', () => {
     expect(l.mission.state.phase).toBe('progression'); expect(l.mission.state.result).not.toBeNull();
   }, HEAVY);
 
-  test('T-E20-21 @E20 rescued people never despawn: they flee for the checkpoint and end behind the line, at the gate, turned or down', async () => {
+  test('T-E20-21 @E20 @nightly rescued people never despawn: they flee for the checkpoint and end behind the line, at the gate, turned or down', async () => {
     // PO 10-08: "The crowd ... runs away and then just disappears." Every released person stays an entity for the whole level.
     for (const seed of [1, 2, 3]) {
       const l = await loadL2(seed); world = l.world; const m = l.mission, w = l.world;

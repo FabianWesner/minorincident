@@ -26,7 +26,9 @@ test('T-E32-01 @E32 @E32-AC01 ordered graph prevents skipping arsenal, cure and 
   expect(cureRegions.reduce((n, r) => n + r.routeMetres, 0)).toBe(4300);
   while (m.state.steps.hold.status !== 'active') m.completeObjective();
   m.state.counters['charge-ticks'] = 3600; m.setState('charge-active', true);
-  m.setState('mega-dead', false); world.update(); expect(m.state.steps.hold.status).toBe('active');
+  m.setState('mega-dead', false); world.update();
+  expect(m.state.steps.hold.status).toBe('completed'); expect(m.state.steps.mega.status).toBe('active');
+  expect(m.state.steps.release.status).toBe('pending');
   m.setState('mega-dead', true); world.update(); expect(m.state.steps.release.status).toBe('active');
   expect(m.state.steps.epilogue.status).toBe('pending');
   world.setInput({ interact: true }); world.update(); world.clearInput(); expect(m.state.steps.epilogue.status).toBe('active');

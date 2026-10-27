@@ -68,7 +68,8 @@ test('an infected bump at speed knocks the courier off; the bike tips over besid
     expect(b.riding).toBe(true); expect(b.entity!.bicycle!.fallen).toBeUndefined();
     expect(Math.hypot(p.transform.x - lying.x, p.transform.z - lying.z)).toBeLessThan(3.5);
     const from = { ...p.transform }; w.setInput({ move: { x: 1, z: 0 } }); step(w, 90); w.setInput({ move: { x: 0, z: 0 } });
-    expect(b.riding, JSON.stringify({ from, at: p.transform, infected: w.infected!.active.length })).toBe(true); expect(Math.hypot(p.transform.x - from.x, p.transform.z - from.z)).toBeGreaterThan(3);
+    const travel = { from, at: p.transform, heading: b.entity!.bicycle!.heading, lying, infected: w.infected!.active.length };
+    expect(b.riding, JSON.stringify(travel)).toBe(true); expect(Math.hypot(p.transform.x - from.x, p.transform.z - from.z), JSON.stringify(travel)).toBeGreaterThan(3);
   } finally { w.dispose(); }
 }, 60_000);
 

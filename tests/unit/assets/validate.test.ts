@@ -80,7 +80,7 @@ test('T-E17-06 @E17-AC06 current manifest status meets every inventory snapshot 
   for (const [id, status] of inventory) expect(atLeast(manifest.find((a) => a.id === id)!.status as AssetDef['status'], status), id).toBe(true);
   expect(new Set(manifest.map((a) => a.id)).size).toBe(manifest.length);
 });
-test('T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts', async () => {
+test('T-E17-02b @E17-AC02 @nightly production outputs satisfy orientation, palette, LOD, stump and geometry contracts', async () => {
   const assets = manifest as AssetDef[];
   const reports = await validateAssets(assets, true);
   expect(reports.length).toBeGreaterThan(20);

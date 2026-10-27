@@ -3,7 +3,7 @@ import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { basename } from 'node:path';
 import { expect, test } from 'vitest';
 
-test('T-E01-01b @E01 @E01-AC01 typecheck, lint and build exit zero without warnings', () => {
+test('T-E01-01b @E01 @nightly @E01-AC01 typecheck, lint and build exit zero without warnings', () => {
   mkdirSync('test-results/epics/E01/logs', { recursive: true });
   for (const command of ['typecheck', 'lint', 'build']) {
     const result = spawnSync('npm', ['run', command], { encoding: 'utf8' });

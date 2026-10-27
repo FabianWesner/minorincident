@@ -155,7 +155,7 @@ describe('L1 v2 mission', () => {
     }
   }, HEAVY);
 
-  test('T-E19-07b @E19 @E19-AC07 robust start: each of the five exit victims leaves a bite within 60 s on single seed', async () => {
+  test('T-E19-07b @E19 @nightly @E19-AC07 robust start: each of the five exit victims leaves a bite within 60 s on single seed', async () => {
     const runs: { seed: number; victim: number; bites: number }[] = [];
     for (const seed of seeds) for (let victim = 0; victim < 5; victim++) {
       const { world: w, mission } = await loadL1(seed); world = w; w.combat!.damage.god = true; let bites = 0;
@@ -186,7 +186,7 @@ describe('L1 v2 mission', () => {
     expect(m2.state.items).toContain('bat'); w2.dispose();
   }, HEAVY);
 
-  test('T-E19-05b @E19 grace: a newbie standing still at the door keeps >= 60 HP for 8 s after the infected exit', async () => {
+  test('T-E19-05b @E19 @nightly grace: a newbie standing still at the door keeps >= 60 HP for 8 s after the infected exit', async () => {
     for (const seed of [1, 2, 3, 4, 5, 6]) {
       const { world: w, mission } = await loadL1(seed); world = w; let from = 0;
       runL1(w, mission, 'idle', { seed, stopWhen: m => { if (m.state.l1!.exitIds.length && !from) from = w.tick; return from > 0 && w.tick - from >= 8 * 60; } });

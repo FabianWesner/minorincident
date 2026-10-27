@@ -55,7 +55,8 @@ test('T-E08-13 @E08 @E08-AC13 finishing eyes only; 100 real crowd shots pass thr
   for (let i = 0; i < 10; i++) w.npcs!.civilians.spawn('jogger', { x: i + 1, z: (i + 1) * .2 });
   w.spawnDummy('infected.dummy', { x: 15, z: 3 }, { hp: 100000 });
   w.combat!.setLoadout(['weapon.pistol'], ['weapon.grenade']); w.combat!.runner.infiniteCharges = true;
-  w.setInput({ left: { down: true, held: true, up: false }, aim: { x: 1, z: .2 } });
+  // Hold automatic fire through reloads; repeated down edges invoke Q-161's empty-trigger fallback.
+  w.setInput({ left: { down: false, held: true, up: false }, aim: { x: 1, z: .2 } });
   step(w, 3600); expect(w.events.events().filter(e => e.type === 'combat.attack').length).toBeGreaterThanOrEqual(100);
   expect(w.events.events().filter(e => e.type === 'combat.hit' && w.entities.get(e.targetId)?.civilian)).toHaveLength(0);
   expect(w.events.events().filter(e => e.type === 'combat.hit' && e.actionId === 'weapon.pistol').length).toBeGreaterThanOrEqual(100);

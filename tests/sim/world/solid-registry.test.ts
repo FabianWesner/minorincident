@@ -41,7 +41,7 @@ test('collision admission: eight coincident Alphas keep all eight encounters wit
     }
   } finally { w.dispose(); }
 });
-test('collision natural L4: tank excludes every living Alpha through audit tick 15662', async () => {
+test('collision natural L4: tank @nightly excludes every living Alpha through audit tick 15662', async () => {
   const w = await loadLevel('L4', 1);
   try {
     const bot = new LevelFourBot(w, 'idle'); let samples = 0;

@@ -1,7 +1,9 @@
 #!/bin/bash
-# Run through tools/remote/run.sh; hold the other runner slot for Vitest's initial timing project.
+# Run through tools/remote/run.sh; hold both slots for timing, or the entire measured command with --whole-run.
 # Example: sh tools/remote/run.sh "$PWD" -- bash tools/remote/timing-isolated.sh npx vitest run tests/unit tests/levels tests/sim --maxWorkers=4
 set -euo pipefail
+whole_run=false
+if [ "${1:-}" = --whole-run ]; then whole_run=true; shift; fi
 own=$(readlink /proc/self/fd/9)
 case "$own" in
   /srv/mi/locks/slot.0) release=11 ;;
@@ -16,12 +18,12 @@ exec 11>/srv/mi/locks/slot.1
 echo '[runner] waiting for both slots to isolate wall-clock timing'
 flock 10
 flock 11
-echo '[runner] both slots held for the timing project'
+if $whole_run; then echo '[runner] both slots held for the whole command'; else echo '[runner] both slots held for the timing project'; fi
 "$@" 2>&1 | {
   released=false
   while IFS= read -r line || [ -n "$line" ]; do
     printf '%s\n' "$line"
-    if ! $released && [[ "$line" == *' functional '* ]]; then
+    if ! $whole_run && ! $released && [[ "$line" == *' functional '* ]]; then
       flock -u "$release"
       released=true
       echo '[runner] functional phase reached; extra slot released'

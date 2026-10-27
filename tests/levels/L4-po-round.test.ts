@@ -101,7 +101,7 @@ describe('L4 PO round 10-13', () => {
     expect(fled.length / peds.length, '>= 70 % of the unarmed people flee or hide within 10 s').toBeGreaterThanOrEqual(.7);
   }, HEAVY);
 
-  for (const tier of ['high', 'low'] as const) test(`T-E22-civilians-stay-${tier} @E22 @E22-AC07 pre-alarm camp civilians remain human and panic/hide; incoming infected are new entities`, async () => {
+  for (const tier of ['high', 'low'] as const) test(`T-E22-civilians-stay-${tier} @E22 @nightly @E22-AC07 pre-alarm camp civilians remain human and panic/hide; incoming infected are new entities`, async () => {
     const l = await loadL4(2, tier); world = l.world; const w = l.world, m = l.mission, s = m.state.l4!;
     w.combat!.damage.god = true;
     while (s.phase === 'convoy') w.update();
@@ -134,7 +134,7 @@ describe('L4 PO round 10-13', () => {
     expect(s.lineCause).toBe('beats');
   }, HEAVY);
 
-  test('T-E22-po-3 @E22 @E22-AC10 @E22-AC12 infected come spread from all sides (and from inside the camp); six to eight Alphas reach the lines and nests; the beats hold', async () => {
+  test('T-E22-po-3 @E22 @nightly @E22-AC10 @E22-AC12 infected come spread from all sides (and from inside the camp); six to eight Alphas reach the lines and nests; the beats hold', async () => {
     const l = await loadL4(2); world = l.world; const w = l.world, m = l.mission, s = m.state.l4!;
     const points = [...l4Emergence.map(e => ({ x: e.at[0], z: e.at[1] })), ...l4TentEntrances.map(e => ({ x: e.at[0], z: e.at[1] })), ...l4BreachApproaches.map(e => ({ x: e.at[0], z: e.at[1] }))];
     const reached = new Set<number>(), reachSectors = new Set<number>(), alphaReached = new Set<number>(), beats: string[] = [];

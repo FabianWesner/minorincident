@@ -70,7 +70,7 @@ test('PO #7 @E20 supermarket to bridge has steady sight-driven action, an open e
     expect(r.bins15s.filter(n => n > 0).length).toBeGreaterThanOrEqual(Math.ceil(r.bins15s.length * .7));
   }
 }, 1_800_000);
-test('PO #7b @E20 the arriving player sees police firing on a horde at the bridge', async () => {
+test('PO #7b @E20 @nightly the arriving player sees police firing on a horde at the bridge', async () => {
   const results = [];
   for (const tier of ['high', 'low'] as const) results.push(await measured(tier, 'side'));
   for (const r of results) expect(r.policeTargets).toBeGreaterThanOrEqual(4);

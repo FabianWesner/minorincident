@@ -10,7 +10,7 @@ Baseline: `sh tools/remote/run.sh "$PWD" -- npx vitest run tests/unit tests/sim 
 
 `npm run test:gate` selects every untagged unit/sim/level/headless QA invariant assertion; `npm run test:nightly` selects `@nightly` assertions from that same inventory. Worker limit: four. Timing files retain serial execution ahead of functional tests. Browser smoke remains a separate headless, at most two-worker check, with `E2E_PORT=4701 SCENE_PORT=4702`.
 
-Measurements and failure decisions will be filled from the completed remote runs before this lane is declared complete.
+The baseline completed all assertions: **659 files, 4,073 cases, 4,048 passed, 16 failed, 9 skipped; 4,419.21 s** on a shared remote runner. Its launcher returned exit 2 after writing the complete JSON because an in-flight launcher edit was reverted; this is separate from the 16 recorded assertion failures. Launcher files are now unchanged and frozen during runs. Final gate/nightly measurements remain pending.
 
 ## Redundancy decisions
 
@@ -43,4 +43,21 @@ Paths are relative to `tests/`. All rows retain their existing assertion thresho
 
 ## Failure triage and measurements
 
-Pending completed baseline and reruns. No green or duration claim is made from the interrupted local run or from the older review's 23-failure sandbox run.
+The initial inventory is **977 test/spec files**: 407 unit, 164 sim, 88 level, 218 E2E, 63 perf, 9 QA and 28 visual. The requested baseline runs the 659 unit/sim/level files. The new gate also includes the eight headless QA invariant files; the QA rendering spec remains a separate browser layer.
+
+| Failure / classification | Root cause and action | Current evidence |
+| --- | --- | --- |
+| `T-E05-14` / `T-E06-10`, changed fixture (b) | Empty throwable triggers invoked Q-161's usable-weapon fallback. Twenty-two throwable/archetype rows measured fallback fist damage. Wait for charges and require every player attack to use the reference action. No TTK bands changed. | Corrected full reference table passed in the first focused remote batch. |
+| Two house-resident cases, regression (a) and obsolete setup assumption (b) | The scripted aperture exemption survived exit admission, then disappeared when AI took control. Validate ordinary geometry without that exemption, retain queued identity, and keep walking a wider footprint out. Initial pending state is no longer required when the aperture admits the walk; actual clear exit, no pending/hidden actor, same identity/counts and no exemption are required. | Both cases passed twice remotely after the fix. |
+| `T-E32-21-E3b` high/low, regression (a) plus changed driver fixture (b) | `stageNear` relocated the living boss at full charge: baseline jumps 274.77/280.58 m. Removed that forbidden teleport and its now-unused API/test. The calibration driver also followed the new moving `mega` marker away from the console; it now defends the console through both hold and boss objectives. | Removing teleport reduced approach steps to 0.0525 m. Corrected driver passed high/low twice remotely. Arrival band 135–145 s, stable boss ID, no teleport, no deaths and release checks remain. |
+| Two `T-E32-20-perf` cases and `T-E32-01`, obsolete phase assertion (b) | Full charge completes `hold` and activates the separately authored `mega` objective. Require that exact transition and keep release pending while the boss lives. Charge remains exactly 3,600 ticks. | Functional graph passed; both finale performance cases passed in each of two isolated runs. |
+| `T-E19-16c`, obsolete approach fixture (b) | The west facility boundary is a closed wire fence; the full bicycle footprint stops before the rider reaches the no-bike boundary. Exercise the mechanic through the actual lab gate and retain all dismount/parking/remount prohibitions. | Rerun pending. |
+| `T-E22-09-shot-block-pistol`, fixture outside its valid range (b) | The civilian pistol was asked to acquire an Alpha 18 m away, outside its 8 m defence zone and 12 m gun range. Put that threat inside the defence zone and the crossing human between shooter/target. Preserve pending-shot suppression, zero friendly damage and firing after clearance. | Passed twice remotely. |
+| `T-E08-13`, changed input fixture (b) | A new trigger-down edge on every tick invoked Q-161 after the pistol emptied. Hold automatic fire through reloads with no repeated down edge. Keep the 100 actual shots/hits and friendly-fire/finishing checks. | Passed twice remotely. |
+| `T-E31-19-S4-200`, performance regression under investigation (a) | Serial Vitest files can still share a four-vCPU runner with another four-worker job. Extend the existing `timing-isolated.sh` with `--whole-run` for final gate/nightly measurements. No p95 budget or warmup/sample window changes. | Baseline 4.058 ms against 4 ms; isolated repeats still fail at 6.725 and 5.653 ms. Profiling pending; the 4 ms budget remains unchanged. |
+
+The baseline's L3 file took **801.409 s**, including **344.604 s** for evade-only. Its ordinary complete case stays in the gate; slow diagnostics move nightly. L4's broad 25-case file took **1,667.322 s**; >60 s combat/collapse/checkpoint/newbie diagnostics move nightly while the 129.142 s ordinary completion case stays in the gate. The paired Alpha tier matrix is scheduled together. These are observed shared-runner times, not final gate measurements.
+
+The completed baseline, remaining failure decisions, partition audit and final measurements are pending. No green claim is made from the interrupted local run or from the older review's 23-failure sandbox run.
+
+Remaining baseline failures tracked explicitly: bicycle fence-side parking (two of 528 placements; extra valid orientations now searched before the overlapping fallback), post-remount riding distance (pose diagnostics added; threshold unchanged), risky road contact (driver missed the horde by 0.555 m; authored encounter waypoints now included), and Space with an empty SMG (Q-161 fallback fixture corrected to separate trigger edges). Updated focused verification is queued remotely. The review's historical L4 collapse boundary failure did not reproduce in the complete remote baseline; its original count/90-tick guard remains, with isolated repeats underway.

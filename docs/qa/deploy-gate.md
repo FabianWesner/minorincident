@@ -3,7 +3,7 @@
 The orchestrator runs this on `main` before every PROD deploy (PO rules 10-07 / 10-09; long bot batteries are not part of it).
 
 1. `npm run typecheck`, `npm run lint`
-2. `npm run test:gate` (Hetzner: `sh tools/remote/run.sh "$PWD" -- npm run test:gate`, target ≤15 minutes of test command wall time). It runs unit, sim, per-level completion and headless QA invariant suites with at most four Vitest workers. This includes the static QA guards:
+2. `npm run test:gate` (Hetzner: `sh tools/remote/run.sh "$PWD" -- bash tools/remote/timing-isolated.sh --whole-run npm run test:gate`, target ≤15 minutes of test command wall time). It runs unit, sim, per-level completion and headless QA invariant suites with at most four Vitest workers. This includes the static QA guards:
    - `tests/unit/assets/lod-fidelity.test.ts`: every static prop/building/vehicle LOD against LOD0 (extent, silhouettes, vanished materials; backlog in `lod-fidelity.baseline.json`).
    - `tests/unit/levels/decoration-surface.test.ts`: drawn decorations only on soil, every district and tier.
    - `tests/sim/world/support-seams.test.ts`: no seam in raised walkable supports, every district.
@@ -15,7 +15,7 @@ Details and the reasoning behind each guard: `docs/tools/scene-lab.md`, section 
 
 ## Nightly simulation layer
 
-Run `sh tools/remote/run.sh "$PWD" -- npm run test:nightly` once nightly and before a release. Tests tagged `@nightly` are excluded from `test:gate`; the two scripts partition the same unit/sim/levels/headless-invariants inventory. Both retain Vitest's isolated timing project before functional tests. The nightly layer retains one seed-1 complete L1→L10 continuity run, including the L1→L9 axe reset and L5→L6 racks/roster checks, and the distinct newbie L1→L6 timing regression. Slow soak/diagnostic tests also belong here. Per-level ordinary-input completion remains in the gate, including a standalone L9 crossing/crash run.
+Run `sh tools/remote/run.sh "$PWD" -- bash tools/remote/timing-isolated.sh --whole-run npm run test:nightly` once nightly and before a release. Tests tagged `@nightly` are excluded from `test:gate`; the two scripts partition the same unit/sim/levels/headless-invariants inventory. Both retain Vitest's isolated timing project before functional tests. The nightly layer retains one seed-1 complete L1→L10 continuity run, including the L1→L9 axe reset and L5→L6 racks/roster checks, and the distinct newbie L1→L6 timing regression. Slow soak/diagnostic tests also belong here. Per-level ordinary-input completion remains in the gate, including a standalone L9 crossing/crash run.
 
 Passing the simulation gate does not replace build, browser smoke, Scene Lab, render invariants or native performance checks above. See [test cleanup evidence and coverage](tests-cleanup.md) for the assertion ownership matrix and measured before/after results.
 
