@@ -78,6 +78,9 @@ for (const renderer of ['webgl', 'webgpu'] as const) for (const quality of ['hig
       // beside the courier while the authored wall camera is looking elsewhere.
       await step(page, phase === 'war' ? 1800 : 180);
       expect(await page.evaluate(() => window.__SS__!.missions.state()!.l4!.phase)).toBe('war');
+      // By now the breach waves fight on the plaza; living or downed infected beside a route
+      // are click/keyboard obstacles by design. Settle them into corpses like the respawn phase does.
+      if (phase === 'war') { await page.evaluate(() => window.__SS__!.cheats.killAll()); await step(page, 150); }
     }
     if (phase === 'respawn') {
       await page.evaluate(() => { const a = window.__SS__!; a.cheats.god(false); a.survivor.damage(1000); });
@@ -105,10 +108,20 @@ for (const renderer of ['webgl', 'webgpu'] as const) for (const quality of ['hig
     expect(await page.evaluate(() => window.__SS__!.missions.state()!.l4!.phase)).toBe(phase === 'plaza' ? 'plaza' : 'war');
     for (const input of ['mouse', 'keyboard', 'stick']) for (const target of targets) {
       await reset(page, center);
+      // The war plaza is full of bystanders and soldiers (solid by design). They are not under test here:
+      // park the ones standing inside the route so the controls are measured, not the crowd.
+      if (phase === 'war') await page.evaluate(({ x, z }) => {
+        const a = window.__SS__!; let n = 0;
+        // teleport() silently refuses an occupied or solid spot, so try spaced candidates in the open south lot until the body has moved.
+        for (const e of a.query({ kind: 'civilian' })) if (Math.hypot(e.transform.x - x, e.transform.z - z) < 8) {
+          for (let k = 0; k < 40; k++, n++) { a.teleport(e.id, { x: 12 + (n % 8) * 2, z: 38 + Math.floor(n / 8) % 6 * 2 }); const t = a.query({}).find(q => q.id === e.id)!.transform; if (Math.hypot(t.x - x, t.z - z) > 12) break; }
+        }
+      }, center);
       if (input === 'mouse') await clickTo(page, target, target.name === 'left' ? `${out}/left-walking.png` : undefined);
       if (input === 'keyboard') {
         await page.keyboard.down(target.key); await step(page, 82); await page.keyboard.up(target.key); await step(page, 10);
-        expect(distance(await position(page), target)).toBeLessThan(1);
+        const at = await position(page);
+        expect(distance(at, target), JSON.stringify({ input, target, at, me: await page.evaluate(() => { const p = window.__SS__!.getState().player as any; return { st: p.combat?.statuses, loco: p.locomotion, hp: p.health, v: p.velocity, ctl: p.controller }; }), near: await page.evaluate(({ x, z }) => window.__SS__!.query({}).filter(e => e.id !== 1 && Math.hypot(e.transform.x - x, e.transform.z - z) < 5).map(e => ({ id: e.id, kind: e.kind, a: e.archetype, hp: e.health?.current, x: +e.transform.x.toFixed(2), z: +e.transform.z.toFixed(2) })), at) })).toBeLessThan(1);
       }
       if (input === 'stick') await stickTo(page, cdp, target);
       const perf = await page.evaluate(() => { const p = window.__SS__!.perf(); return { backend: p.backend, tier: p.quality.tier, draws: p.drawCalls, triangles: p.triangles }; });
