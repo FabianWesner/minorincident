@@ -26,6 +26,70 @@ test('boot: ready resolves, the canvas shows spatial detail, and three scenario 
   expect(resources).toEqual({ entities: 0, bodies: 0, colliders: 0, listeners: 0 });
 });
 
+// Q-208 guard (Opus QA, batch 20: "the courier's own skin and her held bat get their shaders rebuilt over and over during
+// play. The game freezes for 0.6 to 1.8 s each time"). Plays L1 through the lab handover and the outbreak with the bat,
+// then walks the courier on and off the corpse pile in real frames (the foreground depth slice toggles there). Fails on any
+// courier/carried-weapon build after warm-up, any rebuild of a program that was already built (same material, object and
+// render context: a program key that changed at runtime), or any frame over 200 ms (PO checklist Q-126). First builds of
+// other objects that only appear later are listed in the annotation. WebGPU low at zoom 1.5, as reported.
+test('L1 handover + outbreak: no shader builds after warm-up and no frame over 200 ms @smoke', async ({ page }) => {
+  test.setTimeout(200_000);
+  await page.goto('/');
+  const adapter = await page.evaluate(async () => Boolean(await (navigator as Navigator & { gpu?: { requestAdapter(): Promise<unknown> } }).gpu?.requestAdapter()));
+  test.skip(!adapter && process.platform !== 'darwin', 'No WebGPU adapter in this headless browser');
+  await boot(page, testUrl.replace('renderer=webgl', 'renderer=webgpu').replace('quality=high', 'quality=low') + '&loadProfile=2');
+  const builds = (): Promise<Record<string, number>> => page.evaluate(() => ({ ...window.__SS__!.perf().nodeBuildMaterials }));
+  const pile = await page.evaluate(async () => {
+    const a = window.__SS__!;
+    a.settings.set({ quality: 'low' }); await a.loadLevel('L1', { seed: 1 });
+    // Q-209: the level warm-up (prewarmHeld) must already have built the bat the courier picks up below.
+    const loaded = { ...a.perf().nodeBuildMaterials };
+    a.pause(); a.missions.begin(); a.cheats.god(true); a.camera.follow(); a.camera.zoom(1.5);
+    // Handover: the parcel is delivered, the technician walks in, the lab accident lets the infected out.
+    a.cheats.completeObjective('pickup'); a.cheats.completeObjective('deliver');
+    for (let i = 0; i < 40 && a.missions.state()!.steps.escape?.status !== 'active'; i++) await a.step(60);
+    a.cheats.completeObjective('escape'); a.cheats.completeObjective('weapon');
+    await a.step(120); a.cheats.killAll(); await a.step(30);
+    // The courier's foreground slice switches on within 4 m of a corpse (GameView.nearCorpse).
+    const dead = a.query({}).filter(e => !e.hidden && !e.infected?.hidden && (e.corpse || (e.infected && e.health.current <= 0))).slice(0, 4).map(e => ({ x: e.transform.x, z: e.transform.z }));
+    if (dead[0]) a.teleport(1, { x: dead[0].x + 7, z: dead[0].z });
+    return { dead, loaded };
+  });
+  const { dead: corpses, loaded } = pile;
+  expect(corpses.length, 'outbreak corpses to walk over').toBeGreaterThan(0);
+  // Warm-up: the level's own prewarm plus a few real frames next to the pile.
+  await page.evaluate(async () => { const a = window.__SS__!; a.resume(); await new Promise(r => setTimeout(r, 1500)); });
+  const warm = await builds();
+  const frames = await page.evaluate(async spots => {
+    const a = window.__SS__!, gaps: number[] = []; let previous = 0, stop = false;
+    const sample = (now: number): void => { if (previous) gaps.push(now - previous); previous = now; if (!stop) requestAnimationFrame(sample); };
+    requestAnimationFrame(sample);
+    for (let round = 0; round < 2; round++) for (const spot of spots) {
+      a.teleport(1, { x: spot.x + 1, z: spot.z }); await new Promise(r => setTimeout(r, 700));
+      a.teleport(1, { x: spot.x + 7, z: spot.z }); await new Promise(r => setTimeout(r, 700));
+    }
+    stop = true; a.pause();
+    return { max: Math.max(...gaps), over: gaps.filter(g => g > 200), count: gaps.length };
+  }, corpses);
+  const after = await builds(), built = Object.entries(after).filter(([key, n]) => n !== warm[key]);
+  test.info().annotations.push({ type: 'builds after warm-up', description: JSON.stringify(Object.fromEntries(built)) }, { type: 'frames', description: `max ${frames.max.toFixed(0)} ms in ${frames.count}` });
+  // Keys are material:object:m<material id>:c<render context>:o<object id> (Renderer loadProfile=2).
+  expect(built.filter(([key]) => /^(character:|action-held:)/.test(key)).map(([key]) => key), 'courier or carried-weapon builds after warm-up').toEqual([]);
+  expect(built.filter(([key, n]) => n > 1 || warm[key]).map(([key]) => key), 'programs rebuilt during play').toEqual([]);
+  expect(frames.over, `gameplay frames over 200 ms (max ${frames.max.toFixed(0)} ms in ${frames.count})`).toEqual([]);
+  // Q-209 (Opus QA: "the held weapon's shaders compile once, the first time she takes it out... bat at pickup on L1 (4 programs),
+  // fire axe at L2 start (7 programs)"): no carried-weapon program is built after the level's warm-up, pickup included.
+  const heldBuilds = (from: Record<string, number>, to: Record<string, number>) => Object.keys(to).filter(key => key.startsWith('action-held:') && to[key] !== from[key]);
+  expect(heldBuilds(loaded, after), 'L1 carried-weapon builds after the level warm-up (bat pickup)').toEqual([]);
+  const l2 = await page.evaluate(async () => {
+    const a = window.__SS__!;
+    await a.loadLevel('L2', { seed: 1 }); const loaded = { ...a.perf().nodeBuildMaterials };
+    a.missions.begin(); a.resume(); await new Promise(r => setTimeout(r, 2500)); a.pause();
+    return { loaded, after: { ...a.perf().nodeBuildMaterials } };
+  });
+  expect(heldBuilds(l2.loaded, l2.after), 'L2 carried-weapon builds after the level warm-up (fire axe at the start)').toEqual([]);
+});
+
 // P0 guard (PROD "all other players are invisible"): each on-screen pedestrian's head/torso pixels must change when that
 // pedestrian is moved off screen, so hand props and shadows alone cannot pass.
 for (const renderer of ['webgl', 'webgpu'] as const) test(`L1 start: pedestrians are drawn on screen (${renderer}), not only their props @smoke`, async ({ page }) => {

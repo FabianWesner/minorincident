@@ -109,6 +109,16 @@ export class SimWorld implements Lifecycle {
   megaPursuit: import('../ai/MegaPursuit').MegaPursuit | null = null;
   /** E32 L10-S6 the manned rotary minigun of the finale deck; null elsewhere. See `installMountedGun`. */
   mountedGun: MountedGun | null = null;
+  /** Scenario setup boundary for systems that are required by a fixture. */
+  requireCombat(): Combat {
+    if (!this.combat) throw new Error('This scenario needs combat');
+    return this.combat;
+  }
+  /** Scenario setup boundary for fixtures that tune the infected director. */
+  requireInfected(): InfectedSystem {
+    if (!this.infected) throw new Error('This scenario needs infected');
+    return this.infected;
+  }
   /** Places the mounted rotary minigun (needs combat); a second call replaces the first and keeps nothing of its heat. */
   installMountedGun(placement: GunPlacement): MountedGun {
     if (!this.combat) throw new Error('The mounted gun needs combat');

@@ -1,11 +1,10 @@
-import { megaBands, cureRecordingText, isMega } from '../data/megaPresentation';
-import { apcEngineStages, apcDamageCaptions } from './apcEngine';
-import { action } from '../data/actions/catalog';
+import { AudioEventMapper } from './AudioEventMapper';
+import { isMega } from '../data/megaPresentation';
 import type { Lifecycle } from '../core/Lifecycle';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { GameEvent } from '../sim/world/types';
 import type { SoundPosition } from '../data/audioEvents';
-import { audioCues, noiseCues, eventCues, telegraphCues, ambienceTiers, musicLayers, pickupFanfare, megaCueRates, stemBank } from '../data/audioCues';
+import { audioCues, eventCues, ambienceTiers, musicLayers, pickupFanfare, stemBank } from '../data/audioCues';
 import { AudioGraph, type GraphVoice, type PlayOptions } from './AudioGraph';
 import { AudioRegistry } from './AudioRegistry';
 import { fromDistricts, surfaceAt, zoneAt, dbGain } from './acoustics';
@@ -15,22 +14,11 @@ import { AmbienceSchedule } from './AmbienceSchedule';
 import { StreamedMusic, scoredLevels } from './StreamedMusic';
 import { l5MusicReady, storyMusic } from '../data/musicBeats';
 import { isMusicThreat } from './MusicThreat';
-import { l1v2 } from '../data/l1v2';
 import { l5 } from '../data/l5';
-import { humanInfected } from '../data/infected';
 import { L1ArcDirector } from './L1Arc';
 import { BaseAlarm } from './BaseAlarm';
 import { BusRadio } from './BusRadio';
 import { l4 } from '../data/l4';
-/** E23 signs of life: each survivor's sound is an existing cue (knock, clang, radio, a soft voice, a flashlight click). */
-const l5CueSounds: Record<string, { cue: string; gain: number; rate: number }> = {
-    dale: { cue: 'impact.body.metal', gain: 1.2, rate: 0.8 }, rosa: { cue: 'door.wood', gain: 1.1, rate: 0.9 }, okafor: { cue: 'bark.male.effort', gain: 0.7, rate: 0.7 },
-    mia: { cue: 'dialogue.radio', gain: 0.45, rate: 1 }, sam: { cue: 'ui.switch', gain: 2.5, rate: 0.8 },
-};
-/** Recorded infected voice cues (alert, hurt, death) are human performances: animals keep their own telegraphs. */
-const voicedInfected = new Set(humanInfected.map(d => d.id));
-/** Melee weapons without their own recorded hit take reuse the nearest existing one (blades like the machete, blunt tools like the bat or crowbar). */
-const fleshLike: Record<string, string> = { knife: 'machete', katana: 'machete', 'fire-axe': 'machete', 'nail-bat': 'bat', shovel: 'crowbar', 'police-baton': 'bat' };
 export interface AudioSettings {
     muted: boolean;
     captions: boolean;
@@ -68,6 +56,7 @@ interface AudioHost {
  * Background behavior ports Bruno setMute, extending it to suspend/pagehide/freeze/interrupted. */
 export class AudioService implements Lifecycle {
     readonly settings: AudioSettings = { muted: false, captions: false, noiseRings: false, mono: false, haptics: true, tinnitus: true, gore: 'Full' };
+    private readonly eventMapper: AudioEventMapper;
     readonly context: AudioContext;
     readonly graph: AudioGraph;
     readonly registry: AudioRegistry;
@@ -98,8 +87,6 @@ export class AudioService implements Lifecycle {
     private ambience = new AmbienceSchedule(0, 1);
     arc: L1ArcDirector | null = null;
     private generation = 0;
-    private ambienceDuckUntil = 0;
-    private readonly corgiWarnAt = new Map<string, number>();
     private level = 'L1';
     private tier = 0;
     private loaded = false;
@@ -114,14 +101,10 @@ export class AudioService implements Lifecycle {
     private started = false;
     private starting = false;
     private quietMusicUntil = 0;
-    private attackMusicUntil = 0;
     private lastPeakStinger = -Infinity;
     private scheduledTransition: MusicTransition | null = null;
-    private externalIntensity: MusicIntensity | null = null;
-    private incident = false;
     /** E23: ambience until the first survivor is found, then the existing calm recording. */
     private l5Music = false;
-    private complete = false;
     private readonly captionElement = document.createElement('output');
     private readonly captionStyle = document.createElement('style');
     private readonly ringElement = document.createElement('div');
@@ -143,6 +126,19 @@ export class AudioService implements Lifecycle {
         const scoreTrim = this.context.createGain(); let trimTarget = 1; scoreTrim.connect(this.graph.buses.music);
         this.score = new StreamedMusic(this.context, scoreTrim);
         this.radio = new BusRadio(this.context, this.graph.buses.vehicles, (factor, time) => { if (factor !== trimTarget) { trimTarget = factor; scoreTrim.gain.setTargetAtTime(factor, time, 0.5); } });
+        this.eventMapper = new AudioEventMapper({
+            world, context: this.context, graph: this.graph, alarm: this.alarm, settings: this.settings,
+            arc: () => this.arc,
+            level: () => this.level,
+            l5Music: () => this.l5Music,
+            available: () => this.available(), offscreen: position => host.offscreen(position),
+            play: (id, options, sourceId) => this.play(id, options, sourceId),
+            loop: (key, id, options, sourceId) => this.loop(key, id, options, sourceId),
+            stopLoop: key => this.stopLoop(key), caption: (text, position, duration) => this.caption(text, position, duration),
+            ring: (position, radius) => this.ring(position, radius), haptic: kind => this.haptic(kind),
+            musicIntensity: input => this.musicIntensity(input), stinger: (kind, level) => this.stinger(kind, level),
+            pickupFanfare: actionId => this.pickupFanfare(actionId), update: () => this.update(),
+        });
         try {
             const stored = localStorage.getItem('minor-incident.audio');
             if (stored)
@@ -190,7 +186,7 @@ export class AudioService implements Lifecycle {
         this.music = new MusicDirector(this.level, this.musicEpoch);
         this.ambience = new AmbienceSchedule(this.tier, this.world.seed, this.musicEpoch);
         this.arc = this.level === 'L1' ? new L1ArcDirector(this.world.seed, this.musicEpoch) : null;
-        this.corgiWarnAt.clear();
+        this.eventMapper.corgiWarnAt.clear();
         for (const type of Object.keys(eventCues) as GameEvent['type'][])
             this.unsubscribers.push(this.world.events.on(type, e => this.event(e), 10));
         this.graph.setListener(this.world.entities.get(1)!.transform);
@@ -539,7 +535,7 @@ export class AudioService implements Lifecycle {
         const story = storyMusic(this.level, this.world.missions?.state);
         const band = this.world.megaPursuit?.band();
         const minimum = Math.max(story.minimum, input.minimum ?? 0, band === 'near' ? .5 : band ? .25 : 0, input.phase === 'boss' ? .5 : input.phase === 'defend' || input.phase === 'timer' ? .25 : 0);
-        this.music.update(t, { ...input, ...(input.danger !== undefined || story.minimum > 0 || band ? { minimum } : {}), incident: this.incident, complete: this.complete || input.complete || this.world.l7Departure?.cinematic || !!this.world.missions?.state.states['cure-released'] });
+        this.music.update(t, { ...input, ...(input.danger !== undefined || story.minimum > 0 || band ? { minimum } : {}), incident: this.eventMapper.incident, complete: this.eventMapper.complete || input.complete || this.world.l7Departure?.cinematic || !!this.world.missions?.state.states['cure-released'] });
         // A dense fight escalates within the combat state (also when a story floor already holds it there).
         if (this.music.peak !== this.score.peak) {
             this.score.setPeak(this.music.peak);
@@ -577,342 +573,13 @@ export class AudioService implements Lifecycle {
         const id = `pickup.fanfare.${pickupFanfare(actionId)}`, voice = this.play(id, {}, 0);
         if (voice) this.graph.duckMusic(this.context.currentTime, Math.max(0.4, audioCues[id].duration - 0.6));
     }
-    /** Event → cue adapter. Real producer events and lab tests go through this identical path. */
-    event(event: GameEvent): void {
-        if ((event.type === 'combat.hit' || event.type === 'combat.kill') && event.actionId === 'cure') return;
-        if (event.type === 'weather.lightning') return; // Thunder follows the sim distance delay.
-        if (!this.available())
-            return;
-        const t = this.context.currentTime;
-        const source = 'sourceId' in event ? event.sourceId : 'id' in event && typeof event.id === 'number' ? event.id : undefined;
-        const entity = source === undefined ? undefined : this.world.entities.get(source);
-        const position = 'position' in event ? event.position : entity?.transform;
-        if (event.type.startsWith('l1.')) {
-            this.arc?.event(event.type, t);
-            return;
-        }
-        if (this.alarm.onEvent(event, t)) return;
-        if (event.type === 'l6.bang') { this.play('door.wood', { position: event.position, gain: 1, lowpass: 1800 }); return; }
-        if (event.type === 'l5.wait') {
-            this.play('civilian.hey', { position, gain: 0.7, rate: 0.9 }, source);
-            return;
-        }
-        if (event.type === 'l5.cue') {
-            // A sign of life: the knock, the clang, the radio, the voice or the flashlight click of that survivor, positional, with its caption.
-            const sound = l5CueSounds[event.key] ?? { cue: 'door.wood', gain: 0.8, rate: 1 };
-            this.play(sound.cue, { position: event.position, gain: sound.gain, rate: sound.rate });
-            this.caption(event.text, event.position, 4);
-            return;
-        }
-        if (event.type === 'l2.cue') {
-            this.play(event.cue, { position: event.position, gain: event.gain, lowpass: event.lowpass });
-            return;
-        }
-        if (event.type === 'sim.tick') {
-            this.update();
-            return;
-        }
-        if (event.type === 'civilian.state') {
-            if (event.state === 'bitten') this.play('civilian.scream', { position, gain: .4 }, source);
-            if (event.state === 'down') this.play('bark.female.hurt', { position, gain: .4 }, source);
-            if (event.state === 'rising') this.play('civilian.transform', { position, gain: .45 }, source);
-            return; // One-shots only: keep the collapse quiet between state reactions.
-        }
-        if (event.type === 'barricade.damaged') return; // The paired barricade.sound event owns the impact cue.
-        if (event.type === 'mega.cue') {
-            const cue = `mega.${event.kind}`;
-            this.play(cue, { gain: megaBands[event.band].gain, rate: megaCueRates[cue], lowpass: 900, dry: true }, event.sourceId);
-            return;
-        }
-        if (event.type === 'telegraph') {
-            if (isMega(entity) && 'special' in event) {
-                const cue = event.special === 'alpha.charge' ? 'mega.charge' : event.special === 'alpha.ground-slam' ? 'mega.slam' : event.special === 'alpha.grab-throw' ? 'mega.grab' : 'mega.roar';
-                this.play(cue, { gain: 1, rate: megaCueRates[cue], priority: 150, dry: true }, source);
-                return;
-            }
-            const special = 'special' in event ? event.special : event.kind;
-            const id = telegraphCues[special] ?? telegraphCues[entity?.archetype ?? ''] ?? telegraphCues[`infected.${special}`] ?? eventCues.telegraph;
-            if ('duration' in event && (special === 'alpha.charge' || special === 'alpha.ground-slam')) this.caption(special === 'alpha.charge' ? 'Alpha charging: clear the marked path' : 'Alpha ground slam: leave the marked circle', position, event.duration);
-            this.play(id, { position, offscreen: position ? this.host.offscreen(position) : false }, source);
-            return;
-        }
-        if (event.type === 'noise') {
-            const id = audioCues[`action.${event.actionId}`] ? `action.${event.actionId}` : noiseCues[event.kind as keyof typeof noiseCues] ?? `action.${event.actionId}`;
-            this.play(id, { position: event.position, gain: event.loudness, offscreen: audioCues[id]?.bus === 'telegraph' && this.host.offscreen(event.position) }, source);
-            const zone = zoneAt(this.graph.map, event.position);
-            // Shotgun: the pump racks the next shell 0.45 s behind the blast (PO 10-15).
-            if (event.actionId === 'weapon.shotgun')
-                this.play('weapon.pump', { position: event.position, time: this.context.currentTime + 0.45 }, source);
-            if (event.kind === 'ranged')
-                this.play(`tail.${zone.startsWith('interior') || zone === 'tunnel' ? 'interior' : zone === 'park' || zone === 'suburb-open' ? 'open' : 'street'}`, { position: event.position }, source);
-            if (source === 1)
-                this.ring(event.position, event.radius);
-            return;
-        }
-        if (event.type === 'combat.attack') {
-            if (source === 1) {
-                this.attackMusicUntil = t + 0.2;
-                this.musicIntensity({ alerted: 0, danger: true });
-            }
-            if (!['ranged', 'throwable'].includes(action(event.actionId).category))
-                this.play(`action.${event.actionId}`, { position, rate: event.style === 'roundhouse' ? .62 : event.actionId === 'weapon.bat' ? .8 : event.actionId === 'weapon.crowbar' ? .95 : event.actionId === 'weapon.machete' ? 1.3 : event.actionId === 'weapon.kick' ? .72 : 1.15 }, source);
-            return;
-        }
-        if (event.type === 'footstep') {
-            if (event.actor === 'infected')
-                return;
-            const surface = event.surface ?? surfaceAt(this.graph.map, event.position);
-            const weatherStep = this.world.weather?.kind === 'snow' ? 'weather.footstep.snow' : this.world.weather?.rain ? 'weather.footstep.wet' : `footstep.${event.actor}.${surface}`;
-            this.play(weatherStep, { position: event.position }, source);
-            return;
-        }
-        if (event.type === 'light.generator') {
-            if (event.phase === 'stop')
-                this.stopLoop(`generator:${source}`);
-            else if (event.phase === 'idle')
-                this.loop(`generator:${source}`, 'generator.idle', { position }, source);
-            else
-                this.play(`generator.${event.phase}`, { position }, source);
-            return;
-        }
-        if (event.type === 'light.lamp') {
-            if (event.phase === 'off' || event.phase === 'break')
-                this.stopLoop(`lamp:${source}`);
-            if (event.phase === 'hum')
-                this.loop(`lamp:${source}`, 'lamp.hum', { position }, source);
-            else if (event.phase !== 'off')
-                this.play(`lamp.${event.phase}`, { position }, source);
-            return;
-        }
-        if (event.type === 'light.power') {
-            this.play(`lamp.power-${event.on ? 'on' : 'off'}`, { position }, source);
-            return;
-        }
-        if (event.type === 'prop.impact') {
-            this.play(`prop.${event.material}`, { position, gain: Math.min(2, Math.max(0.08, event.impulse / 20)) }, source);
-            return;
-        }
-        if (event.type === 'prop.motion') {
-            if (event.mode === 'stop') {
-                this.stopLoop(`prop:${source}`);
-            }
-            else
-                this.loop(`prop:${source}`, `prop.${event.mode}`, { position, gain: Math.min(1, event.speed / 3), rate: 0.7 + Math.min(1, event.speed / 8) }, source);
-            return;
-        }
-        if (event.type === 'barricade.sound') {
-            this.play(`prop.${event.phase === 'hit' ? 'creak' : event.phase}`, { position, rate: event.phase === 'hit' ? 1 + Math.max(0, 1 - event.hp / Math.max(1, event.maxHp)) * 0.7 : 1 }, source);
-            return;
-        }
-        if (event.type === 'explosion.beat') {
-            this.play(`explosion.${event.beat}`, { position, gain: { small: 0.5, medium: 0.75, large: 1, mega: 1.4 }[event.size] }, source);
-            if (event.beat === 'crack') {
-                this.haptic('explosion');
-                if (event.size === 'mega' || event.size === 'large')
-                    this.graph.duck('mega', t, 0.8);
-                if (this.settings.tinnitus && position && Math.hypot(position.x - this.graph.listener.x, position.z - this.graph.listener.z) < 4) {
-                    this.graph.tinnitus(t);
-                    this.play('tinnitus');
-                }
-            }
-            return;
-        }
-        if (event.type === 'vehicle.damage-stage') {
-            this.play('vehicle.sputter', { position, loop: false, gain: .35, rate: apcEngineStages[event.stage]?.roughRate ?? 1 }, source);
-            this.caption(apcDamageCaptions[event.stage as 1 | 2 | 3 | 4] ?? 'Vehicle damaged', position, 3);
-            return;
-        }
-        if (event.type === 'vehicle.sound') {
-            if (event.phase === 'stop') {
-                for (const suffix of ['low', 'high', 'sputter', 'fire', 'tires'])
-                    this.stopLoop(`vehicle:${source}:${suffix}`);
-                this.stopLoop(`siren:${source}`);
-                return;
-            }
-            if (event.phase === 'engine') {
-                const rpm = Math.max(0, Math.min(1, event.rpm / 7000));
-                // The player's own cab: a muffled, quieter engine and road noise (also see the in-bus radio).
-                const cab = event.inCar ? { lowpass: 700, gain: 0.55 } : { gain: 1, lowpass: 20000 };
-                const floor = entity?.vehicle?.floor;
-                const stage = floor ? Math.max(0, Math.min(4, entity.vehicle!.stage ?? 0)) : 0;
-                const engine = apcEngineStages[stage];
-                const lowpass = Math.min(cab.lowpass, engine.lowpass);
-                this.loop(`vehicle:${source}:low`, 'vehicle.engine-low', { position, velocity: event.velocity, rate: (0.6 + rpm) * engine.rate, gain: (1 - rpm) * cab.gain, lowpass }, source);
-                this.loop(`vehicle:${source}:high`, 'vehicle.engine-high', { position, velocity: event.velocity, rate: (0.6 + rpm) * engine.rate, gain: rpm * cab.gain, lowpass }, source);
-                if (floor ? stage > 0 : event.health < 0.4)
-                    this.loop(`vehicle:${source}:sputter`, 'vehicle.sputter', { position, gain: floor ? engine.roughness * cab.gain : 1, rate: floor ? engine.roughRate : 1, lowpass: floor ? lowpass : 20000 }, source);
-                else
-                    this.stopLoop(`vehicle:${source}:sputter`);
-                if (!floor && event.health < 0.15)
-                    this.loop(`vehicle:${source}:fire`, 'vehicle.fire', { position }, source);
-                else
-                    this.stopLoop(`vehicle:${source}:fire`);
-                if (event.speed > 0.2)
-                    this.loop(`vehicle:${source}:tires`, `footstep.tires.${event.surface ?? surfaceAt(this.graph.map, event.position)}`, { position, gain: Math.min(1, event.speed / 15) * (event.inCar ? 0.5 : 1), lowpass: event.inCar ? 900 : undefined }, source);
-                else
-                    this.stopLoop(`vehicle:${source}:tires`);
-            }
-            else if (event.phase === 'siren')
-                this.loop(`siren:${source}`, 'vehicle.siren', { position }, source);
-            else {
-                this.play(`vehicle.${event.phase}`, { position, gain: event.phase === 'crash' ? Math.min(2, (event.impulse ?? 20) / 20) : 1 }, source);
-                if (event.phase === 'crash')
-                    this.haptic('crash');
-            }
-            return;
-        }
-        if (event.type === 'diegetic') {
-            const key = `diegetic:${source}`;
-            if (event.stop) {
-                this.stopLoop(key);
-                return;
-            }
-            if (event.kind === 'emergency') {
-                this.graph.duck('radio', t, 3);
-                this.play('dialogue.radio', { position, lowpass: event.inCar ? 2400 : 20000 }, source);
-                return;
-            }
-            const warped = event.level === 'L6' && ['jukebox', 'ice-cream'].includes(event.kind);
-            this.loop(key, `diegetic.${event.kind}${warped ? '.warped' : ''}`, { position, lowpass: event.inCar ? 2400 : 20000, rate: warped ? 0.92 : 1 }, source);
-            return;
-        }
-        if (event.type === 'dialogue' || event.type === 'dialogue.line') {
-            if (event.type === 'dialogue' && event.recording === 'cure' || event.type === 'dialogue.line' && event.id === 'L10.research') {
-                this.graph.duck('radio', t, 14);
-                this.play('cure.recording', { gain: .3, lowpass: 2400, dry: true });
-                this.caption(event.text || cureRecordingText, undefined, 14);
-                return;
-            }
-            const duration = 'duration' in event ? event.duration ?? 3 : 3;
-            this.graph.duck('radio', t, duration);
-            this.play('dialogue.radio', { position, gain: this.level === 'L5' ? dbGain(l5.audio.quietDb) : 1 });
-            this.caption(event.text, position, duration);
-            return;
-        }
-        if (event.type === 'music.intensity') {
-            this.externalIntensity = event;
-            this.musicIntensity(event);
-            return;
-        }
-        if (event.type === 'music.stinger') {
-            this.stinger(event.kind, event.level);
-            return;
-        }
-        if (event.type === 'corgi.warn') {
-            // Stages come rate-limited from the sim (bark every l1v2.corgi.barkIntervalS); keep a matching audio-side floor.
-            const stage = event.stage, gap = stage === 'bark' ? l1v2.corgi.barkIntervalS - 0.2 : 1, last = this.corgiWarnAt.get(stage) ?? -Infinity;
-            if (t - last < gap)
-                return;
-            this.corgiWarnAt.set(stage, t);
-            const [cue, gain, rate] = stage === 'bark' ? ['corgi.warning', 1, 1] : stage === 'growl' ? ['corgi.warning', 0.7, 0.62] : stage === 'stiffen' ? ['corgi.pant', 0.6, 0.8] : ['corgi.pant', 0.5, 1] as const;
-            this.play(cue, { position, gain, rate }, source);
-            return;
-        }
-        if (event.type === 'corgi.sound') {
-            this.play(`corgi.${event.kind}`, { position }, source);
-            return;
-        }
-        if (event.type === 'survivor.bark') {
-            this.play(`bark.${event.variant}.${event.kind}`, { position }, source);
-            return;
-        }
-        if (event.type === 'gore.sound') {
-            this.play(`gore.${event.kind}`, { position });
-            return;
-        }
-        if (event.type === 'player.damaged') {
-            const p = this.world.entities.get(event.id);
-            this.play(`bark.${p?.survivor?.variant ?? 'female'}.hurt`);
-            if (event.amount >= 20)
-                this.haptic('hit');
-            return;
-        }
-        if (event.type === 'combat.exploded') {
-            this.haptic('explosion');
-            if (this.settings.tinnitus && position && Math.hypot(position.x - this.graph.listener.x, position.z - this.graph.listener.z) < 4) {
-                this.play('tinnitus');
-                this.graph.tinnitus();
-            }
-        }
-        if (event.type === 'level.completed') {
-            this.complete = true;
-            this.musicIntensity({ alerted: 0 });
-            this.stinger('extraction', event.id);
-            return;
-        }
-        if (event.type === 'combat.hit' || event.type === 'combat.kill') {
-            const target = this.world.entities.get(event.targetId);
-            if (target?.faction === 'environment' || target?.vehicle) return;
-            if (target?.infected && voicedInfected.has(target.archetype)) {
-                if (event.type === 'combat.kill')
-                    this.play('infected.death', { position: target.transform }, target.id);
-                else if (event.amount > 0 && target.health.current > 0)
-                    this.play('infected.hurt', { position: target.transform }, target.id);
-            }
-            if (event.type === 'combat.hit' && event.amount > 0 && event.damageType === 'melee') {
-                const weapon = event.actionId.split('.').at(-1)!;
-                const targetPosition = target?.transform ?? position;
-                const flesh = fleshLike[weapon] ?? weapon;
-                this.play(audioCues[`flesh.${flesh}`] ? `flesh.${flesh}` : 'flesh.fists', { position: targetPosition }, source);
-                // Layered hit: transient (flesh) + body of the weapon + low thump, each with its own variation.
-                const body = /bat|baton/.test(weapon) ? 'wood' : /crowbar|machete|knife|katana|axe|shovel/.test(weapon) ? 'metal' : 'punch', heavy = weapon === 'kick' || weapon === 'bat' || weapon === 'fire-axe' || event.amount >= 20;
-                this.play(`impact.body.${body}`, { position: targetPosition, gain: heavy ? 1 : 0.8 }, source);
-                this.play('impact.thump', { position: targetPosition, gain: heavy ? 1 : 0.6 }, source);
-                this.graph.buses.ambience.gain.setTargetAtTime(0.7, this.context.currentTime, 0.02);
-                this.ambienceDuckUntil = this.context.currentTime + 0.5;
-            }
-        }
-        if (event.type === 'infected.attack') {
-            // Close individual vocals are bounded by the horde manager; a landed melee attack adds only the bite.
-            if (event.amount > 0 && !['barricade', 'prop-throw', 'explode'].includes(event.special))
-                this.play('infected.bite', { position: this.world.entities.get(event.targetId)?.transform ?? position }, source);
-            return;
-        }
-        if (event.type === 'ally.attack' && event.from) {
-            // An armed officer, soldier or civilian (allied fighters v2/v3): a gunshot at the shooter, not a fist swing. The HMG and the door gun are
-            // machine guns, the soldiers' rifles assault rifles; the tank's round has its own explosion beats.
-            if (event.role === 'tank') return;
-            const machine = event.weapon === 'hmg' || event.weapon === 'door-gun';
-            this.play(machine ? 'weapon.hmg' : event.weapon === 'shotgun' ? 'action.weapon.shotgun' : event.weapon === 'rifle' ? 'action.weapon.assault-rifle' : event.weapon === 'hunting-rifle' ? 'action.weapon.hunting-rifle' : 'action.weapon.pistol', { position: event.from, gain: machine ? 0.85 : 0.8 }, source);
-            return;
-        }
-        if (event.type === 'infected.groan' || event.type === 'infected.recovered') {
-            const body = this.world.entities.get(event.sourceId);
-            if (body && !isMega(body) && voicedInfected.has(body.archetype))
-                this.play(eventCues[event.type], { position: body.transform, gain: event.type === 'infected.groan' ? 0.7 : 1 }, body.id);
-            return;
-        }
-        if (event.type === 'ai.alerted') {
-            // One shared anti-spam key: a gunshot that alerts a whole street yields a few snarls, not a wall.
-            if (voicedInfected.has(this.world.entities.get(event.targetId)?.archetype ?? ''))
-                this.play('infected.alert', { position: event.position });
-            return;
-        }
-        if (event.type === 'objective.started' && event.id !== 'breakfast') {
-            // L1 v2 opens with a calm morning: its objectives are not an incident until the arc leaves calm.
-            if (!this.arc || this.arc.phase !== 'calm') this.incident = true;
-            this.musicIntensity({ alerted: event.id === 'store-fight' ? 10 : 0 });
-            if (event.id === 'escape') this.stinger('elite', this.level);
-        }
-        if (event.type === 'pickup.collected' && 'actionId' in event) {
-            // A weapon or ability: its own fanfare replaces the generic pickup tick and the old L1 score stinger (they never stack). The silent L5 city keeps the quiet tick.
-            this.pickupFanfare(event.actionId);
-            return;
-        }
-        const id = eventCues[event.type];
-        if (this.level === 'L5' && id.startsWith('stinger.') && !this.l5Music)
-            return;
-        if (id !== 'ui.tick')
-            this.play(id, { position }, source);
-        // l4-collapse: each lost line escalates the score (the elite stinger over the combat bed).
-        if (event.type === 'l4.beat')
-            this.stinger('elite', this.level);
-    }
+    /** Event → cue adapter shared by producer events and lab tests. */
+    event(event: GameEvent): void { this.eventMapper.event(event); }
     update(): void {
         if (!this.available())
             return;
-        if (this.ambienceDuckUntil && this.context.currentTime > this.ambienceDuckUntil) {
-            this.ambienceDuckUntil = 0;
+        if (this.eventMapper.ambienceDuckUntil && this.context.currentTime > this.eventMapper.ambienceDuckUntil) {
+            this.eventMapper.ambienceDuckUntil = 0;
             this.graph.buses.ambience.gain.setTargetAtTime(1, this.context.currentTime, 0.25); // combat ducks ambience 3 dB, then it recovers
         }
         this.startBedsAndMusic();
@@ -966,7 +633,7 @@ export class AudioService implements Lifecycle {
                 if (key.startsWith('rocket:') && !this.world.combat?.projectiles.some(p => key === `rocket:${p.attack.id}`))
                     this.stopLoop(key);
         }
-        let alerted = 0, danger = t < this.attackMusicUntil;
+        let alerted = 0, danger = t < this.eventMapper.attackMusicUntil;
         if (this.world.tick % 12 === 0) {
             this.points.length = 0;
             let index = 0;
@@ -1006,7 +673,7 @@ export class AudioService implements Lifecycle {
                     if (v)
                         this.individualVocals.set(p.id, v);
                 }
-            this.musicIntensity(this.externalIntensity ? { ...this.externalIntensity, ...(danger ? { danger: true } : {}) } : { alerted, danger });
+            this.musicIntensity(this.eventMapper.externalIntensity ? { ...this.eventMapper.externalIntensity, ...(danger ? { danger: true } : {}) } : { alerted, danger });
         }
         for (const e of this.world.entities.iterate())
             if (e.survivor && e.health.current > 0) {
@@ -1054,7 +721,7 @@ export class AudioService implements Lifecycle {
     private updateArc(listener: SoundPosition, t: number): void {
         const arc = this.arc!, zone = zoneAt(this.graph.map, listener);
         const frame = arc.update(t, this.points.length, zone.startsWith('interior') && arc.phase === 'chaos');
-        if (arc.phase !== 'calm') this.incident = true;
+        if (arc.phase !== 'calm') this.eventMapper.incident = true;
         const bedScale = frame.calmGain;
         this.loop('arc:chatter', 'l1.calm.chatter', { gain: bedScale });
         for (const bed of ambienceTiers[this.tier].beds) {
@@ -1102,11 +769,11 @@ export class AudioService implements Lifecycle {
         this.starting = false;
         this.loaded = false;
         this.scheduledTransition = null;
-        this.externalIntensity = null;
-        this.incident = false;
-        this.complete = false;
+        this.eventMapper.externalIntensity = null;
+        this.eventMapper.incident = false;
+        this.eventMapper.complete = false;
         this.quietMusicUntil = 0;
-        this.attackMusicUntil = 0; this.lastPeakStinger = -Infinity;
+        this.eventMapper.attackMusicUntil = 0; this.lastPeakStinger = -Infinity;
         this.l5Music = false;
     }
     dispose(): void { this.disposed = true; this.reset(); this.score.dispose(); this.radio.dispose(); document.removeEventListener('pointerdown', this.gesture); document.removeEventListener('keydown', this.gesture); document.removeEventListener('visibilitychange', this.visibility); window.removeEventListener('blur', this.blur); window.removeEventListener('focus', this.focus); window.removeEventListener('pagehide', this.pagehide); window.removeEventListener('pageshow', this.pageshow); document.removeEventListener('freeze', this.freeze); document.removeEventListener('resume', this.thaw); this.context.removeEventListener('statechange', this.statechange); this.graph.dispose(); void this.context.close(); this.captionElement.remove(); this.captionStyle.remove(); this.ringElement.remove(); this.controls.remove(); this.pauseElement.remove(); }

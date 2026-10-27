@@ -19,6 +19,9 @@ export const seeThrough = {
   /** Share of an occluder that survives inside the clear disc. 0 for the courier and her corgi (PO #45: no dither dots over the figures; the disc is cut clean),
    * .35 while the player drives or rides a vehicle so a faded car or bus still reads as one. */
   retain: uniform(0).setGroup(renderGroup),
+  /** Frozen corpses (StaticCorpses) dissolve inside the subject disc while the courier is on foot (Q-209): a small-corpse pile
+   * at her feet buried her (L4 west breach). A uniform switch: the corpse programs compile once with the cut. */
+  corpse: uniform(0).setGroup(renderGroup),
   /** Legacy boss-mask diagnostic: the current Alpha-sized Mega stays opaque. */
   bossStrength: uniform(0).setGroup(renderGroup),
   /** Boss hole radius in screen heights (the boss hole is about a courier wide, not a survivor group). */
@@ -68,6 +71,15 @@ export const seeThroughKeepBoss = () => {
   const noise = fract(fract(dot(screenCoordinate.xy.floor(), vec2(.06711056, .00583715))).mul(52.9829189));
   return hole.greaterThan(noise);
 };
+
+/** Q-209 corpse cut: corpse fragments nearer the lens than the courier's far body point and inside the solid subject disc are
+ * dropped, with no kept floor band (bodies lie below it) and a clean disc (PO #45: no dither dots over her). Bodies elsewhere keep every pixel. */
+let corpseKeep: Node<'bool'> | undefined;
+export const seeThroughKeepCorpse = (): Node<'bool'> => corpseKeep ??= (() => {
+  const hole = mix(1, seeThroughHole(1, seeThrough.solidRadius, .85), seeThrough.corpse);
+  const noise = fract(fract(dot(screenCoordinate.xy.floor(), vec2(.06711056, .00583715))).mul(52.9829189));
+  return hole.greaterThan(noise);
+})();
 
 const revealCorner = new Vector3();
 /** Project the subject (courier or whole player vehicle) into the shared hole uniforms: the fully clear inner disc encloses every corner, depth is its nearest point.

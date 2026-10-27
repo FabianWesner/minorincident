@@ -1,0 +1,349 @@
+{
+ "comment": "Curated Scene Lab deploy-gate rows (npm run scene:gate). Add a row when a PO finding needs a visual check; one-line reason each. zoom null = scene has its own camera.",
+ "rows": [
+  {
+   "scene": "courier-gear-tier4-female",
+   "tier": "low",
+   "zoom": 1.5,
+   "backend": "webgl2",
+   "reason": "heroine, full gear, closest zoom, low tier"
+  },
+  {
+   "scene": "courier-gear-tier4-male",
+   "tier": "high",
+   "zoom": 0.5,
+   "backend": "webgpu",
+   "reason": "courier, full gear, widest zoom"
+  },
+  {
+   "scene": "courier-gear-tier2-female",
+   "tier": "high",
+   "zoom": 1.5,
+   "backend": "webgl2",
+   "reason": "mid gear tier (placeholder boxes lived here)"
+  },
+  {
+   "scene": "courier-gear-tier4-swing-female",
+   "tier": "low",
+   "zoom": 0.5,
+   "backend": "webgpu",
+   "reason": "heroine attack swing with the heaviest kit"
+  },
+  {
+   "scene": "e18-courier-armed-male",
+   "tier": "high",
+   "zoom": 1.5,
+   "backend": "webgl2",
+   "reason": "armed courier walking"
+  },
+  {
+   "scene": "e18-courier-armed-female",
+   "tier": "low",
+   "zoom": 0.5,
+   "backend": "webgpu",
+   "reason": "armed heroine walking, widest zoom"
+  },
+  {
+   "scene": "courier-locomotion-f",
+   "tier": "high",
+   "zoom": 1.5,
+   "backend": "webgl2",
+   "reason": "heroine locomotion gait"
+  },
+  {
+   "scene": "courier-turns",
+   "tier": "high",
+   "zoom": 1.5,
+   "backend": "webgl2",
+   "reason": "turn-in-place ground contact"
+  },
+  {
+   "scene": "ped-walk-all",
+   "tier": "high",
+   "zoom": null,
+   "backend": "webgl2",
+   "reason": "all crowd figures walking (high)"
+  },
+  {
+   "scene": "ped-walk-all",
+   "tier": "low",
+   "zoom": null,
+   "backend": "webgpu",
+   "reason": "all crowd figures walking (low)"
+  },
+  {
+   "scene": "ped-sit-all",
+   "tier": "high",
+   "zoom": null,
+   "backend": "webgl2",
+   "reason": "all crowd figures seated (triaged clipping)"
+  },
+  {
+   "scene": "ped-sit-all",
+   "tier": "low",
+   "zoom": null,
+   "backend": "webgpu",
+   "reason": "all crowd figures seated (low)"
+  },
+  {
+   "scene": "ped-newchars-walk-1",
+   "tier": "low",
+   "zoom": 0.5,
+   "backend": "webgl2",
+   "reason": "new crowd family walking"
+  },
+  {
+   "scene": "ped-newchars-sit",
+   "tier": "low",
+   "zoom": null,
+   "backend": "webgl2",
+   "reason": "new crowd family sitting"
+  },
+  {
+   "scene": "ped-hats-glasses",
+   "tier": "low",
+   "zoom": 1.5,
+   "backend": "webgpu",
+   "reason": "accessories close (hats/glasses sizing)"
+  },
+  {
+   "scene": "ped-hats-spots-l1",
+   "tier": "high",
+   "zoom": 0.5,
+   "backend": "webgl2",
+   "reason": "L1 headwear spots, widest zoom"
+  },
+  {
+   "scene": "ped-l1-staged-cast",
+   "tier": "low",
+   "zoom": 1.5,
+   "backend": "webgpu",
+   "reason": "L1 scripted NPC cast (depot/lab)"
+  },
+  {
+   "scene": "ped-water-flowerbed",
+   "tier": "high",
+   "zoom": null,
+   "backend": "webgl2",
+   "reason": "ped vs flowerbed placement (triaged clipping)"
+  },
+  {
+   "scene": "ped-zoo-staff",
+   "tier": "high",
+   "zoom": null,
+   "backend": "webgpu",
+   "reason": "zoo staff figures (triaged clipping)"
+  },
+  {
+   "scene": "ped-bitten",
+   "tier": "low",
+   "zoom": null,
+   "backend": "webgl2",
+   "reason": "bitten ped state"
+  },
+  {
+   "scene": "inf-chase-l1",
+   "tier": "low",
+   "zoom": 1.5,
+   "backend": "webgl2",
+   "reason": "infected chase in L1"
+  },
+  {
+   "scene": "inf-chase-l3",
+   "tier": "high",
+   "zoom": 0.5,
+   "backend": "webgpu",
+   "reason": "infected chase in L3, widest zoom"
+  },
+  {
+   "scene": "inf-looks",
+   "tier": "low",
+   "zoom": null,
+   "backend": "webgpu",
+   "reason": "infected look lineup"
+  },
+  {
+   "scene": "inf-horde-headwear",
+   "tier": "high",
+   "zoom": 1.5,
+   "backend": "webgl2",
+   "reason": "horde with headwear"
+  },
+  {
+   "scene": "inf-attack-knockdown",
+   "tier": "low",
+   "zoom": null,
+   "backend": "webgl2",
+   "reason": "infected attack and knockdown"
+  },
+  {
+   "scene": "alpha-variants-close",
+   "tier": "low",
+   "zoom": 1.5,
+   "backend": "webgpu",
+   "reason": "alpha variants incl. suit, close"
+  },
+  {
+   "scene": "alpha-hit-corpse-suit",
+   "tier": "high",
+   "zoom": 1.5,
+   "backend": "webgl2",
+   "reason": "suit alpha hit then corpse"
+  },
+  {
+   "scene": "mega-alpha-variants-lineup",
+   "tier": "low",
+   "zoom": 0.5,
+   "backend": "webgl2",
+   "reason": "mega alpha lineup"
+  },
+  {
+   "scene": "corgi-tongue-female",
+   "tier": "high",
+   "zoom": 1.5,
+   "backend": "webgl2",
+   "reason": "corgi tongue/idle close next to heroine"
+  },
+  {
+   "scene": "dog-pet-trot",
+   "tier": "low",
+   "zoom": 1.5,
+   "backend": "webgpu",
+   "reason": "dog trot close"
+  },
+  {
+   "scene": "animal-zoo-healthy",
+   "tier": "low",
+   "zoom": 0.5,
+   "backend": "webgpu",
+   "reason": "zoo animals"
+  },
+  {
+   "scene": "wave3-zoo-routines",
+   "tier": "high",
+   "zoom": 1.5,
+   "backend": "webgpu",
+   "reason": "zoo staff and animals routines"
+  },
+  {
+   "scene": "corpse-look-close",
+   "tier": "low",
+   "zoom": 1.5,
+   "backend": "webgl2",
+   "reason": "corpses at closest zoom"
+  },
+  {
+   "scene": "corpse-look-alpha",
+   "tier": "high",
+   "zoom": 0.5,
+   "backend": "webgpu",
+   "reason": "large corpses (alpha)"
+  },
+  {
+   "scene": "corpse-placement-pile",
+   "tier": "low",
+   "zoom": 0.5,
+   "backend": "webgpu",
+   "reason": "corpse pile placement"
+  },
+  {
+   "scene": "l4-broken-army-line",
+   "tier": "high",
+   "zoom": 0.5,
+   "backend": "webgl2",
+   "reason": "L4 army line breach"
+  },
+  {
+   "scene": "fight-army-line-zoom06",
+   "tier": "high",
+   "zoom": 1.5,
+   "backend": "webgpu",
+   "reason": "L4-style army line fight"
+  },
+  {
+   "scene": "l10-d2-military-breach",
+   "tier": "low",
+   "zoom": 0.5,
+   "backend": "webgl2",
+   "reason": "L10 military breach"
+  },
+  {
+   "scene": "l10-mega-close-contact",
+   "tier": "low",
+   "zoom": 1.5,
+   "backend": "webgl2",
+   "reason": "L10 boss close contact"
+  },
+  {
+   "scene": "seethrough-open-sidewalk-l4",
+   "tier": "low",
+   "zoom": 0.5,
+   "backend": "webgpu",
+   "reason": "see-through on L4 sidewalk"
+  },
+  {
+   "scene": "seethrough-gear-four",
+   "tier": "low",
+   "zoom": 1.5,
+   "backend": "webgl2",
+   "reason": "see-through with four gear figures"
+  },
+  {
+   "scene": "seat-bench-l1-start",
+   "tier": "high",
+   "zoom": 1.5,
+   "backend": "webgpu",
+   "reason": "bench seating at L1 start"
+  },
+  {
+   "scene": "seat-bench-tipped",
+   "tier": "low",
+   "zoom": null,
+   "backend": "webgl2",
+   "reason": "tipped bench"
+  },
+  {
+   "scene": "seat-grip-coffee-game",
+   "tier": "low",
+   "zoom": 1.5,
+   "backend": "webgpu",
+   "reason": "seated hand prop (coffee)"
+  },
+  {
+   "scene": "veh-bus-hero",
+   "tier": "high",
+   "zoom": 0.5,
+   "backend": "webgl2",
+   "reason": "bus"
+  },
+  {
+   "scene": "veh-apc-damage-250",
+   "tier": "low",
+   "zoom": 1.5,
+   "backend": "webgpu",
+   "reason": "APC damage stage"
+  },
+  {
+   "scene": "collision-vehicle-admission",
+   "tier": "high",
+   "zoom": 0.5,
+   "backend": "webgl2",
+   "reason": "vehicle admission/contact"
+  },
+  {
+   "scene": "inf-mega-arrival",
+   "tier": "high",
+   "zoom": 0.5,
+   "backend": "webgpu",
+   "reason": "boss (mega alpha) arrival, cheap stand-in for the 110 s l10-e3b scene"
+  }
+ ],
+ "known": {
+  "ped-sit-all@high": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; right hand vs held cane, 215 tris, grip overlap only (sheet looks fine)",
+  "ped-sit-all@low": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; same hand/cane overlap",
+  "ped-water-flowerbed@high": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; right hand vs watering can grip overlap",
+  "ped-zoo-staff@high": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; 4 hand-vs-held-prop grip overlaps (coffee, bag x2, watering can); sheet looks fine",
+  "dog-pet-trot@low-z1.5": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; footSlideMaxCm 8.2 > 3 at every zoom (low tier dog trot)",
+  "inf-chase-l3@high-z0.5": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; courierSwings 0 at every zoom (scene expects the courier to swing at least once)"
+ }
+}

@@ -1,5 +1,4 @@
 import { BoxGeometry, Color, Group, Mesh, Quaternion, SkinnedMesh, Uint16BufferAttribute, Vector3, type Material } from 'three/webgpu';
-import { positionView } from 'three/tsl';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import manifest from '../../assets/manifest.json' with { type: 'json' };
@@ -18,28 +17,21 @@ import { GunAim, type LongGunHold } from './GunAim';
 import { LimbIK } from './LimbIK';
 import { RiderContacts } from './RiderContacts';
 import { CourierLiving } from './CourierRig';
+import { courierForegroundOn, useCourierDepth } from './courierDepth';
 
 type LoadedCharacter = Awaited<ReturnType<typeof loadCharacter>> & { assetId: string; animator: KeyframeAnimator; living?: CourierLiving; gear: Group[]; tierGear?: { mesh: SkinnedMesh; tierTris: number[] }; body: Set<Mesh>; headlamp?: Group; cure?: Group; aim: GunAim; sockets: Record<'LEFT' | 'RIGHT', { socket: import('three').Object3D; hand: import('three').Object3D }> };
 /** Hero hierarchy presentation. Cosmetic variants share identical sim state and attachment rules. */
-// Compress depth into a near-camera slice: the courier clears world blockers,
-// while her own face, cap, hair and limbs still occlude one another correctly.
-const foregroundDepth = positionView.z.negate().mul(.001).clamp(.001, .1);
-
 export class CharacterView extends Group {
-  private foregroundActive: boolean | undefined;
   /** The same presentation silhouette used through faded buildings: keep the
-   * courier readable at boss contact without dissolving the boss's body. */
+   * courier readable at boss contact without dissolving the boss's body. Called every frame: the near-camera depth
+   * slice is a uniform switch (courierDepth, Q-208: no shader rebuild); later attachments get the shared depth node. */
   setForeground(active: boolean): void {
-    if (!active && this.foregroundActive === false) return;
-    this.foregroundActive = active;
+    courierForegroundOn.value = active ? 1 : 0;
+    const order = active ? 20 : 0;
     this.traverse(node => {
       if (!(node instanceof Mesh)) return;
-      for (const material of Array.isArray(node.material) ? node.material : [node.material]) {
-        material.depthTest = true;
-        const nodeMaterial = material as import('three/webgpu').NodeMaterial, depth = active ? foregroundDepth : null;
-        if (nodeMaterial.depthNode !== depth) { nodeMaterial.depthNode = depth; nodeMaterial.needsUpdate = true; }
-      }
-      node.renderOrder = active ? 20 : 0;
+      for (const material of Array.isArray(node.material) ? node.material : [node.material]) useCourierDepth(material);
+      node.renderOrder = order;
     });
   }
   private readonly characters = new Map<SurvivorVariant, LoadedCharacter>();
@@ -223,6 +215,8 @@ export class CharacterView extends Group {
       const animator = new KeyframeAnimator(character.rig, pilot ? skinClips : undefined);
       const living = animator.bones ? new CourierLiving(character.rig, animator.bones, variant === 'female' ? 1 : 2) : undefined;
       this.characters.set(variant, { ...character, assetId: isSkin ? `${id}.skin` : id, animator, living, gear, tierGear, body, headlamp, cure: canister, aim: new GunAim(character.rig.armR, character.rig.foreArmR, character.rig.handR, character.rig.torso, [character.rig.armL, character.rig.foreArmL, character.rig.handL], [character.rig.weaponSocketR, character.rig.weaponSocketL], character.rig.head), sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
+      // Before the first compile (warm-up), so the foreground slice never rebuilds her programs during play (Q-208).
+      character.model.traverse(node => { if (node instanceof Mesh) for (const m of Array.isArray(node.material) ? node.material : [node.material]) useCourierDepth(m); });
     }
     if (!this.parcel) this.makeParcel(materials);
   }

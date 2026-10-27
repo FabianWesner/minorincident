@@ -1,0 +1,1061 @@
+{
+  "smoke": {
+    "name": "smoke",
+    "cases": 124,
+    "counts": {
+      "vitest": 104,
+      "e2e": 8,
+      "invariantsBrowser": 12
+    },
+    "files": 38,
+    "limits": {
+      "cases": 150,
+      "files": 45,
+      "seconds": 240
+    },
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "npx",
+      "playwright",
+      "test",
+      "--project=chromium",
+      "--grep",
+      "@smoke",
+      "--workers=1"
+    ],
+    "seconds": 125.046206917,
+    "exitCode": 0,
+    "signal": null,
+    "failures": [],
+    "at": "2026-10-27T11:31:23.304Z"
+  },
+  "smokeReceipt": {
+    "command": "npm run test:smoke",
+    "status": 0,
+    "pooled": true,
+    "exclusiveFunctionalWindow": true,
+    "seconds": 498.402
+  },
+  "additionalRoutes": [
+    {
+      "from": {
+        "x": -4,
+        "z": 16
+      },
+      "next": {
+        "x": -4,
+        "z": 28
+      },
+      "nextVisible": true,
+      "checks": [
+        {
+          "guidance": false,
+          "done": true,
+          "calls": 48,
+          "out": {
+            "x": -13.125,
+            "z": 15.375
+          },
+          "nodes": 521
+        },
+        {
+          "guidance": true,
+          "done": true,
+          "calls": 48,
+          "out": {
+            "x": -13.125,
+            "z": 15.375
+          },
+          "nodes": 521
+        }
+      ]
+    },
+    {
+      "from": {
+        "x": -1.2,
+        "z": 41.8
+      },
+      "next": {
+        "x": -0.625,
+        "z": 42.875
+      },
+      "nextVisible": true,
+      "checks": [
+        {
+          "guidance": false,
+          "done": true,
+          "calls": 49,
+          "out": {
+            "x": -11.375,
+            "z": 41.875
+          },
+          "nodes": 635
+        },
+        {
+          "guidance": true,
+          "done": true,
+          "calls": 49,
+          "out": {
+            "x": -11.375,
+            "z": 41.875
+          },
+          "nodes": 635
+        }
+      ]
+    },
+    {
+      "from": {
+        "x": 30,
+        "z": 41.5
+      },
+      "next": {
+        "x": 33.875,
+        "z": 41.125
+      },
+      "nextVisible": true,
+      "checks": [
+        {
+          "guidance": false,
+          "done": true,
+          "calls": 49,
+          "out": {
+            "x": 20.125,
+            "z": 41.625
+          },
+          "nodes": 759
+        },
+        {
+          "guidance": true,
+          "done": true,
+          "calls": 49,
+          "out": {
+            "x": 20.125,
+            "z": 41.625
+          },
+          "nodes": 759
+        }
+      ]
+    },
+    {
+      "from": {
+        "x": 48.5,
+        "z": 20
+      },
+      "next": {
+        "x": 48.5,
+        "z": -15
+      },
+      "nextVisible": true,
+      "checks": [
+        {
+          "guidance": false,
+          "done": true,
+          "calls": 49,
+          "out": {
+            "x": 45.625,
+            "z": 13.125
+          },
+          "nodes": 747
+        },
+        {
+          "guidance": true,
+          "done": true,
+          "calls": 49,
+          "out": {
+            "x": 45.625,
+            "z": 13.125
+          },
+          "nodes": 747
+        }
+      ]
+    },
+    {
+      "from": {
+        "x": 48.5,
+        "z": -15
+      },
+      "next": {
+        "x": 48.5,
+        "z": -37.4
+      },
+      "nextVisible": true,
+      "checks": [
+        {
+          "guidance": false,
+          "done": true,
+          "calls": 41,
+          "out": {
+            "x": 45.625,
+            "z": -21.875
+          },
+          "nodes": 607
+        },
+        {
+          "guidance": true,
+          "done": true,
+          "calls": 41,
+          "out": {
+            "x": 45.625,
+            "z": -21.875
+          },
+          "nodes": 607
+        }
+      ]
+    }
+  ],
+  "captures": {
+    "reviewed": true,
+    "respawn": {
+      "file": "respawn-close.jpg",
+      "at": {
+        "x": -4,
+        "y": 0.7049999833106995,
+        "z": 16,
+        "yaw": 0.3205919885488634
+      },
+      "hp": 100,
+      "checkpoint": "line-break",
+      "phase": "collapse"
+    },
+    "route": {
+      "file": "route-overview.jpg",
+      "review": "Open paving and street/sidewalk space around the frontage and parked vehicles; the convoy/battle remains behind the courier."
+    }
+  },
+  "diagnosticDriverHigh": {
+    "finished": false,
+    "issues": {
+      "P0": 1,
+      "P1": 0,
+      "P2": 3,
+      "P3": 0
+    },
+    "limitation": "The stock driver bypasses its later recovery while firing at shielded/blocked targets. This attempt was not used as high completion evidence; the restored local physical-input tool completed high."
+  },
+  "date": "2026-10-27T11:33:26.551Z",
+  "branch": "lane/q203-l4-respawn",
+  "gameCommits": [
+    "1f74cbf6d",
+    "58f9a5b13"
+  ],
+  "cause": "Cellar HUD hint and click-to-move restarted one another's resumable nearest-reachable flood; move hints to the independent A* workspace.",
+  "regression": {
+    "unfixed": {
+      "searchCompleted": false,
+      "calls": 120
+    },
+    "fixed": {
+      "searchCompleted": true,
+      "calls": 49
+    },
+    "position": {
+      "x": 30,
+      "z": 41.5
+    },
+    "destination": {
+      "x": -79,
+      "z": -40
+    }
+  },
+  "play": [
+    {
+      "tier": "low",
+      "method": "Current tools/playtest driver; --no-skip",
+      "backend": "webgl",
+      "buildCommit": "58f9a5b13",
+      "run": {
+        "level": "L4",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 374,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 38.7,
+        "deaths": 1,
+        "assists": 0,
+        "attacks": {
+          "weapon.army-mg": 1895,
+          "weapon.fire-axe": 105
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.handgun",
+          "ability.corgi-lure",
+          "weapon.molotov"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "steps": [
+          {
+            "id": "ride",
+            "text": "Ride into Fairhaven with the convoy · 57 m",
+            "tick": 12,
+            "marker": {
+              "anchor": "l4-plaza",
+              "ring": {
+                "x": -17,
+                "y": 0,
+                "z": 3
+              },
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "quartermaster",
+            "text": "Report to the quartermaster · 10 m",
+            "tick": 1854,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": {
+                "x": -23.2,
+                "y": 0,
+                "z": 0.6
+              },
+              "drawn": [
+                -23.2,
+                0.05,
+                0.6
+              ],
+              "playerY": 0.7200000286102295,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "hold",
+            "text": "Hold the plaza with the army · 3:10 remaining",
+            "tick": 2057,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.718999981880188,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "hide",
+            "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street · 304 m",
+            "tick": 12743,
+            "marker": {
+              "anchor": "l4-cellar-door",
+              "ring": {
+                "x": -79.29999999999998,
+                "y": 0,
+                "z": -45.2801
+              },
+              "drawn": [
+                -79.3,
+                0.13,
+                -45.28
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "bar",
+            "text": "Bar the cellar door · 5 m",
+            "tick": 21195,
+            "marker": {
+              "anchor": "l4-brace",
+              "ring": {
+                "x": 74.6,
+                "y": 0,
+                "z": -1.4
+              },
+              "drawn": [
+                74.6,
+                0.05,
+                -1.4
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "wait",
+            "text": "Stay down · 0:07 remaining",
+            "tick": 21358,
+            "marker": {
+              "anchor": "l4-brace",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          }
+        ]
+      },
+      "result": {
+        "time": 362.8666666666667,
+        "kills": 0,
+        "knockdowns": 109,
+        "damage": 279.7666666666653,
+        "deaths": 1,
+        "rescued": 15,
+        "optionalObjectives": []
+      },
+      "steps": [
+        {
+          "id": "ride",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "quartermaster",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "hold",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "hide",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "bar",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "wait",
+          "optional": false,
+          "status": "completed"
+        }
+      ],
+      "deaths": [
+        {
+          "tick": 12459,
+          "step": "hold",
+          "at": {
+            "x": -22.450119018554688,
+            "y": 0.7100008130073547,
+            "z": -5.230081081390381,
+            "yaw": 0.7853981633974483
+          },
+          "source": "infected.sprinter",
+          "actionId": "infected.sprinter",
+          "damageType": "melee",
+          "amount": 7.766666666665316
+        }
+      ],
+      "issues": [
+        {
+          "level": "L4",
+          "tick": 14940,
+          "x": -17.9,
+          "z": 2.5,
+          "severity": "P2",
+          "kind": "stuck-navigating",
+          "text": "20 s without objective progress (distance 316.0 m, no marker: false); HUD: \"Run to the cellar via Lakeshore, Metro Road and Harbor Street · 316 m\"",
+          "captures": [
+            "captures/continue-L4-L4-14940-stuck-navigating.jpg"
+          ],
+          "step": "hide",
+          "objective": "Run to the cellar via Lakeshore, Metro Road and Harbor Street · 316 m"
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "method": "T-E22-18 restored as a local tool; physical WASD + mouse aim + K + E, visible medkits; no injected InputFrame, god mode, teleport, forced objective, or tuning change",
+      "backend": "webgl",
+      "buildCommit": "58f9a5b13",
+      "finished": true,
+      "handover": "L5",
+      "result": {
+        "time": 299.6166666666667,
+        "kills": 0,
+        "knockdowns": 127,
+        "damage": 184,
+        "deaths": 1,
+        "rescued": 26,
+        "optionalObjectives": []
+      },
+      "statsCapturedAt": "cellar barred, before the final wait; L5 handover separately proved by final mission state",
+      "shots": [
+        "l4-convoy-arrival",
+        "l4-plaza-safe",
+        "l4-harbor-street-safe",
+        "l4-metro-entrance-safe",
+        "pair-plaza",
+        "pair-harbor-street",
+        "pair-metro-entrance",
+        "pair-kessler-lane",
+        "l4-first-turn",
+        "l4-war-line",
+        "l4-tank",
+        "l4-collapse",
+        "l4-basement"
+      ],
+      "deaths": [
+        {
+          "tick": 9217,
+          "step": "line-1",
+          "at": {
+            "x": -30.115150451660156,
+            "y": 0.7049999833106995,
+            "z": -1.7700212001800537,
+            "yaw": -0.6965895411671315
+          },
+          "source": "infected.runner",
+          "actionId": "infected.runner",
+          "damageType": "melee",
+          "amount": 1
+        }
+      ],
+      "arming70": [
+        {
+          "id": 43,
+          "prop": "pistol",
+          "hp": 100,
+          "ally": true
+        },
+        {
+          "id": 53,
+          "prop": "pistol",
+          "hp": 100,
+          "ally": true
+        },
+        {
+          "id": 39,
+          "prop": "pistol",
+          "hp": 100,
+          "ally": true
+        }
+      ],
+      "playwright": {
+        "expected": 1,
+        "unexpected": 0
+      }
+    }
+  ],
+  "respawnRoutes": [
+    {
+      "tier": "low",
+      "age": 0,
+      "tick": 10949,
+      "phase": "collapse",
+      "checkpoint": "line-break",
+      "anchor": {
+        "x": -4,
+        "y": 0.7049999833106995,
+        "z": 16,
+        "yaw": 0.3205919885488634
+      },
+      "at": {
+        "x": -4,
+        "y": 0.7049999833106995,
+        "z": 16,
+        "yaw": 0.3205919885488634
+      },
+      "hp": 100,
+      "reachable": true,
+      "nodes": 524,
+      "expansions": 4958,
+      "near": [
+        {
+          "id": 29,
+          "kind": "companion",
+          "archetype": "char.corgi",
+          "hp": 100
+        }
+      ]
+    },
+    {
+      "tier": "low",
+      "age": 40,
+      "tick": 13270,
+      "phase": "collapse",
+      "checkpoint": "line-break",
+      "anchor": {
+        "x": -4,
+        "y": 0.7049999833106995,
+        "z": 16,
+        "yaw": 0.3205919885488634
+      },
+      "at": {
+        "x": -4,
+        "y": 0.7049999833106995,
+        "z": 16,
+        "yaw": 0.3205919885488634
+      },
+      "hp": 100,
+      "reachable": true,
+      "nodes": 524,
+      "expansions": 4958,
+      "near": [
+        {
+          "id": 29,
+          "kind": "companion",
+          "archetype": "char.corgi",
+          "hp": 100
+        }
+      ]
+    },
+    {
+      "tier": "low",
+      "age": 120,
+      "tick": 18070,
+      "phase": "collapse",
+      "checkpoint": "line-break",
+      "anchor": {
+        "x": -4,
+        "y": 0.7049999833106995,
+        "z": 16,
+        "yaw": 0.3205919885488634
+      },
+      "at": {
+        "x": -4,
+        "y": 0.7049999833106995,
+        "z": 16,
+        "yaw": 0.3205919885488634
+      },
+      "hp": 100,
+      "reachable": true,
+      "nodes": 524,
+      "expansions": 4958,
+      "near": [
+        {
+          "id": 29,
+          "kind": "companion",
+          "archetype": "char.corgi",
+          "hp": 100
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "age": 0,
+      "tick": 10949,
+      "phase": "collapse",
+      "checkpoint": "line-break",
+      "anchor": {
+        "x": -4,
+        "y": 0.7049999833106995,
+        "z": 16,
+        "yaw": 0.3205919885488634
+      },
+      "at": {
+        "x": -4,
+        "y": 0.7049999833106995,
+        "z": 16,
+        "yaw": 0.3205919885488634
+      },
+      "hp": 100,
+      "reachable": true,
+      "nodes": 524,
+      "expansions": 5010,
+      "near": [
+        {
+          "id": 29,
+          "kind": "companion",
+          "archetype": "char.corgi",
+          "hp": 100
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "age": 40,
+      "tick": 13210,
+      "phase": "collapse",
+      "checkpoint": "line-break",
+      "anchor": {
+        "x": -4,
+        "y": 0.7049999833106995,
+        "z": 16,
+        "yaw": 0.3205919885488634
+      },
+      "at": {
+        "x": -4,
+        "y": 0.7049999833106995,
+        "z": 16,
+        "yaw": 0.3205919885488634
+      },
+      "hp": 100,
+      "reachable": true,
+      "nodes": 524,
+      "expansions": 4966,
+      "near": [
+        {
+          "id": 29,
+          "kind": "companion",
+          "archetype": "char.corgi",
+          "hp": 100
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "age": 120,
+      "tick": 18010,
+      "phase": "collapse",
+      "checkpoint": "line-break",
+      "anchor": {
+        "x": -4,
+        "y": 0.7049999833106995,
+        "z": 16,
+        "yaw": 0.3205919885488634
+      },
+      "at": {
+        "x": -4,
+        "y": 0.7049999833106995,
+        "z": 16,
+        "yaw": 0.3205919885488634
+      },
+      "hp": 100,
+      "reachable": true,
+      "nodes": 524,
+      "expansions": 4986,
+      "near": [
+        {
+          "id": 29,
+          "kind": "companion",
+          "archetype": "char.corgi",
+          "hp": 100
+        }
+      ]
+    }
+  ],
+  "armed": [
+    {
+      "tier": "low",
+      "tick": 71,
+      "gunAt": 1,
+      "ticksSinceGun": 70,
+      "armed70": [
+        {
+          "id": 63,
+          "prop": "pistol",
+          "ally": true,
+          "hp": 100
+        },
+        {
+          "id": 62,
+          "prop": "pistol",
+          "ally": true,
+          "hp": 100
+        },
+        {
+          "id": 64,
+          "prop": "hunting-rifle",
+          "ally": true,
+          "hp": 100
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "tick": 71,
+      "gunAt": 1,
+      "ticksSinceGun": 70,
+      "armed70": [
+        {
+          "id": 90,
+          "prop": "pistol",
+          "ally": true,
+          "hp": 100
+        },
+        {
+          "id": 89,
+          "prop": "pistol",
+          "ally": true,
+          "hp": 100
+        },
+        {
+          "id": 91,
+          "prop": "pistol",
+          "ally": true,
+          "hp": 100
+        }
+      ]
+    }
+  ],
+  "sim": {
+    "completed": 1,
+    "runs": 1,
+    "time": 313.01666666666665,
+    "deaths": 0,
+    "failures": {},
+    "reports": [
+      {
+        "level": "L4",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 313.01666666666665,
+        "deaths": 0,
+        "kills": 0,
+        "damageTaken": 39,
+        "failures": {},
+        "objectiveTimeline": [
+          {
+            "id": "ride",
+            "t": 30.483333333333334
+          },
+          {
+            "id": "quartermaster",
+            "t": 32.81666666666667
+          },
+          {
+            "id": "hold",
+            "t": 222.83333333333334
+          },
+          {
+            "id": "hide",
+            "t": 304.76666666666665
+          },
+          {
+            "id": "bar",
+            "t": 306.01666666666665
+          },
+          {
+            "id": "wait",
+            "t": 313.01666666666665
+          }
+        ],
+        "furthestObjective": "wait",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 497,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      }
+    ]
+  },
+  "verify": {
+    "target": "E22",
+    "epics": [
+      "E22"
+    ],
+    "checks": [
+      {
+        "command": "npm run typecheck",
+        "status": 0,
+        "seconds": 12.239
+      },
+      {
+        "command": "npm run lint",
+        "status": 0,
+        "seconds": 7.436
+      },
+      {
+        "command": "npm test",
+        "status": 0,
+        "seconds": 28.963
+      }
+    ]
+  },
+  "legacyHelper": {
+    "deaths": [
+      {
+        "tick": 7709,
+        "at": {
+          "x": -18.584749221801758,
+          "y": 0.7200000286102295,
+          "z": 1.2695337533950806,
+          "yaw": 0.21656910667047852
+        },
+        "source": "infected.hazmat",
+        "damageType": "melee"
+      },
+      {
+        "tick": 16673,
+        "at": {
+          "x": 48.770599365234375,
+          "y": 0.7049999833106995,
+          "z": 20.025365829467773,
+          "yaw": 2.9135264378378776
+        },
+        "source": "infected.runner",
+        "damageType": "melee"
+      },
+      {
+        "tick": 19278,
+        "at": {
+          "x": 51.34357452392578,
+          "y": 0.7200000286102295,
+          "z": -5.492117404937744,
+          "yaw": 8.144591710122162
+        },
+        "source": "infected.sprinter",
+        "damageType": "melee"
+      },
+      {
+        "tick": 21664,
+        "at": {
+          "x": 48.50107192993164,
+          "y": 0.7049999833106995,
+          "z": -13.796713829040527,
+          "yaw": 1.5716304068814906
+        },
+        "source": "infected.hazmat",
+        "damageType": "status"
+      },
+      {
+        "tick": 23942,
+        "at": {
+          "x": 48.50785827636719,
+          "y": 0.7200000286102295,
+          "z": -5.730782508850098,
+          "yaw": 7.854831022465702
+        },
+        "source": "infected.runner",
+        "damageType": "melee"
+      },
+      {
+        "tick": 26175,
+        "at": {
+          "x": 48.50965881347656,
+          "y": 0.7200000286102295,
+          "z": -1.5553394556045532,
+          "yaw": 1.5715167345120369
+        },
+        "source": "infected.sprinter",
+        "damageType": "melee"
+      },
+      {
+        "tick": 28427,
+        "at": {
+          "x": 48.516056060791016,
+          "y": 0.7200000286102295,
+          "z": 7.059322357177734,
+          "yaw": 1.5715231199149107
+        },
+        "source": "infected.hazmat",
+        "damageType": "melee"
+      }
+    ],
+    "respawns": [
+      {
+        "tick": 7829,
+        "at": {
+          "x": -20,
+          "y": 0.7049999833106995,
+          "z": -2,
+          "yaw": 5.322510404684797
+        },
+        "anchor": {
+          "x": -20,
+          "y": 0.7049999833106995,
+          "z": -2,
+          "yaw": 5.322510404684797
+        }
+      },
+      {
+        "tick": 16793,
+        "at": {
+          "x": -4,
+          "y": 0.7200000286102295,
+          "z": 16,
+          "yaw": -2.6885600875512656
+        },
+        "anchor": {
+          "x": -4,
+          "y": 0.7200000286102295,
+          "z": 16,
+          "yaw": -2.6885600875512656
+        }
+      },
+      {
+        "tick": 19398,
+        "at": {
+          "x": -4,
+          "y": 0.7200000286102295,
+          "z": 16,
+          "yaw": -2.6885600875512656
+        },
+        "anchor": {
+          "x": -4,
+          "y": 0.7200000286102295,
+          "z": 16,
+          "yaw": -2.6885600875512656
+        }
+      },
+      {
+        "tick": 21784,
+        "at": {
+          "x": -4,
+          "y": 0.7200000286102295,
+          "z": 16,
+          "yaw": -2.6885600875512656
+        },
+        "anchor": {
+          "x": -4,
+          "y": 0.7200000286102295,
+          "z": 16,
+          "yaw": -2.6885600875512656
+        }
+      },
+      {
+        "tick": 24062,
+        "at": {
+          "x": -4,
+          "y": 0.7200000286102295,
+          "z": 16,
+          "yaw": -2.6885600875512656
+        },
+        "anchor": {
+          "x": -4,
+          "y": 0.7200000286102295,
+          "z": 16,
+          "yaw": -2.6885600875512656
+        }
+      },
+      {
+        "tick": 26295,
+        "at": {
+          "x": -4,
+          "y": 0.7200000286102295,
+          "z": 16,
+          "yaw": -2.6885600875512656
+        },
+        "anchor": {
+          "x": -4,
+          "y": 0.7200000286102295,
+          "z": 16,
+          "yaw": -2.6885600875512656
+        }
+      },
+      {
+        "tick": 28547,
+        "at": {
+          "x": -4,
+          "y": 0.7200000286102295,
+          "z": 16,
+          "yaw": -2.6885600875512656
+        },
+        "anchor": {
+          "x": -4,
+          "y": 0.7200000286102295,
+          "z": 16,
+          "yaw": -2.6885600875512656
+        }
+      }
+    ],
+    "notes": "The keyboard-only adaptation reproduced seven deaths. Hazmat aura/toxic status slowed the courier, followed by regular melee hits; a direction-only firing policy did not suppress pursuers. Earlier historical-helper runs also exhausted the fixed 600-iteration travel budget after repeated deaths. The successful high run used real WASD, mouse aim toward visible pursuers and visible medkits. No enemy/weapon/wave tuning values were changed."
+  }
+}

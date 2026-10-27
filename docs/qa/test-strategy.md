@@ -17,7 +17,7 @@ Everything else is covered elsewhere and gets no test:
 | Content ratchets over all assets/districts (LOD fidelity, decorations, seams, placement) | `tests/nightly/content-invariants.test.ts` |
 | Waves, scripted scenes, accessories, load times | `tests/qa/invariants` (`npm run qa:invariants`) |
 | Performance | `tests/nightly/sim-budget.test.ts`, `tests/nightly/render-budget.spec.ts` (`npm run test:perf`, quiet window) |
-| Level tuning, look, feel, one scripted scene | Scene Lab (`npm run scene:catalog`, `scene:matrix`), the Opus visual QA and the PO-style QA (`docs/qa/regression-gate.md`) |
+| Level tuning, look, feel, one scripted scene | Scene Lab (`npm run scene:catalog`; deploy gate `npm run scene:gate`; full matrix nightly: `npm run scene:matrix:nightly`), the Opus visual QA and the PO-style QA (`docs/qa/regression-gate.md`) |
 
 Not allowed as tests: level-specific tuning checks, numbers or pixels pinned without an engine reason, lane receipts ("AC-xx passed once"), a second test for behaviour another test already covers, perf micro-assertions, visual goldens, tests of one-off scripted scenes.
 

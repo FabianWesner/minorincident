@@ -263,7 +263,22 @@ class CivilianBatch extends Group {
       const baked = low && !handProp && useBakedCivilianPose(e, true, this.distant, this.visibility.renderPixels(e.transform.x, e.transform.y, e.transform.z, e.civilian?.adult === false ? 1.3 : 1.8), Math.hypot(presented.x - player.x, presented.z - player.z), clip);
       const blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
       // The near batch is the pixel band: the courier's footwork there, stance plants or the baked clip further out.
-      frame = this.locomotion.present(e.id, this.poses, frame, blend, clip, phase, this.transform, this.strideScale, speed, renderTick / 60, !this.distant, undefined, undefined, !baked);
+      { const pose = this.locomotion.presentation;
+        pose.frame = frame;
+        pose.blend = blend;
+        pose.clip = clip;
+        pose.phase = phase;
+        pose.instance = this.transform;
+        pose.scale = this.strideScale;
+        pose.speed = speed;
+        pose.time = renderTick / 60;
+        pose.near = !this.distant;
+        pose.layers = undefined;
+        pose.style = undefined;
+        pose.procedural = !baked;
+        pose.cadence = undefined;
+        pose.holdDistanceM = undefined;
+        frame = this.locomotion.present(e.id, this.poses, pose); }
       if (holding && !weaponProps.has(handProp!)) {
         // Mug and phone: elbow bent, hand at chest height; a standing or seated drinker raises the mug to the mouth every ~8 s.
         const bent = handProp === 'coffee' || handProp === 'phone', still = speed < .06 && !down && !rising;
@@ -369,7 +384,22 @@ class CivilianBatch extends Group {
     let frame = civilianClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
     const sourceFrame = frame;
     const blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
-    if (!e.corpse) frame = this.locomotion.present(e.id, this.poses, frame, blend, clip, phase, this.transform, this.strideScale, motion.speed, renderTick / 60, near, layers.lean || layers.lunge || layers.flinch || layers.lurch ? layers : undefined, style, true, low && canHoldCrowdPose(e, tick) ? 2 : 1);
+    if (!e.corpse) { const pose = this.locomotion.presentation;
+        pose.frame = frame;
+        pose.blend = blend;
+        pose.clip = clip;
+        pose.phase = phase;
+        pose.instance = this.transform;
+        pose.scale = this.strideScale;
+        pose.speed = motion.speed;
+        pose.time = renderTick / 60;
+        pose.near = near;
+        pose.layers = layers.lean || layers.lunge || layers.flinch || layers.lurch ? layers : undefined;
+        pose.style = style;
+        pose.procedural = true;
+        pose.cadence = low && canHoldCrowdPose(e, tick) ? 2 : 1;
+        pose.holdDistanceM = undefined;
+        frame = this.locomotion.present(e.id, this.poses, pose); }
     if (this.bakedClip.binds && !e.corpse && !heavy) {
       // A narrow painted forehead hides tiny eyes when the rigid infected clip pitches the whole head down.
       // Keep the gaze forward over the torso hunch; rigid PROD figures retain their authored poses.

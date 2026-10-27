@@ -1,3 +1,4 @@
+import { useCourierDepth } from './characters/courierDepth';
 import { gunCarryElevation, gunHoldOffset, longGunHolds, mountedGunHold } from './characters/GunAim';
 import { meleeChains } from '../data/meleeCombos';
 import { AdditiveBlending, Box3, BufferAttribute, BufferGeometry, DoubleSide, Group, Mesh, MeshBasicNodeMaterial, RingGeometry, SphereGeometry, Vector3, type Object3D, type WebGPURenderer, type Material } from 'three/webgpu';
@@ -137,6 +138,9 @@ export class ActionView extends Group {
           const heldMaterial = this.materials.fromColor(`action-held:${def.viewAssetId}:${source.name}`, (source as import('three').MeshStandardMaterial).color);
           heldMaterial.movingFigure.value = 1; heldMaterial.heroFigure.value = 1;
           heldMaterial.userData.sharedPalette = true;
+          // Q-209: the courier's switchable depth before the loading warm-up compiles the held copy; applying it on attach
+          // (CharacterView.setForeground) rebuilt the bat at the L1 pickup (4 programs) and the fire axe at the L2 start (7).
+          useCourierDepth(heldMaterial);
           this.heldMaterials.set(material, heldMaterial);
           if (!this.bloodMaterials.includes(heldMaterial)) this.bloodMaterials.push(heldMaterial);
           material.userData.sharedPalette = true;
