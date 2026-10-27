@@ -57,7 +57,10 @@ export class LevelFourWar {
   cellarDistance(next: Point): number {
     const p = this.world.entities.get(1)!.transform, distance = l4CellarDistance(p, next);
     const nav = this.world.infected!.nav.forPlayer(survivor.radius + .02, .25);
-    if (!nav.visible(p, next, survivor.radius)) nav.steer(p, next, this.cellarGuide, survivor.radius, next, 3000, true);
+    // Hints must use A*: click-to-move owns the resumable nearest-reachable
+    // flood. A second flood to the hint cancels the player's pending route
+    // every frame at obstructed corners, including after a collapse respawn.
+    if (!nav.visible(p, next, survivor.radius)) nav.steer(p, next, this.cellarGuide, survivor.radius, next, 3000);
     return distance;
   }
   private anchor(name: string) { return this.mission.def.anchors[name]; }
