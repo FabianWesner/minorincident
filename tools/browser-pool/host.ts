@@ -50,7 +50,7 @@ export async function quietConditions(owned: Set<number>) {
   while (ours.size !== count) { count = ours.size; for (const p of processes) if (ours.has(p.parent)) ours.add(p.pid); }
   const busy = processes.filter(p => !ours.has(p.pid) && (
     (/^\/.*(?:chrome-headless-shell|headless_shell|Google Chrome|Chromium)/.test(p.command) && !p.command.includes('--type=') && /headless/.test(p.command)) ||
-    /^(?:\/[^ ]*\/)?(?:node|Blender|blender)(?: |$)/.test(p.command) && /(?:vitest|vite (?:build)|blender|Blender)/.test(p.command)
+    /^(?:\/[^ ]*\/)?(?:node|Blender|blender)(?: |$)/.test(p.command) && /(?:vitest|vite(?:[.]js)? (?:build)|(?:[/ ])tsc(?: |$)|blender|Blender)/.test(p.command)
   ));
   return { quiet: loadavg()[0] < 3 && busy.length === 0, load: loadavg(), busy: busy.map(p => ({ pid: p.pid, command: p.command.slice(0, 180) })) };
 }
