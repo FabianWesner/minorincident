@@ -44,7 +44,9 @@ export async function launchBrowser(options: LaunchOptions = {}): Promise<Browse
       catch (error) {
         // No page has been created yet. A native exclusive run may have retired the
         // old server while this context was queued; reconnect at this safe point.
-        if (browser.isConnected()) throw error;
+        const retired = error instanceof Error && error.message.includes('exclusive-finished');
+        if (browser.isConnected() && !retired) throw error;
+        if (retired) console.error('[browser-pool] Queued context retired by exclusive run; reconnecting through the pool');
         const next = await launchBrowser(options); replacements.add(next);
         try { return await next.newContext(contextOptions); }
         catch (retryError) { replacements.delete(next); await next.close(); throw retryError; }
