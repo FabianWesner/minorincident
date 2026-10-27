@@ -283,7 +283,7 @@ if (arg('--clear-headwear')) {
     const x = Math.max(0, Math.min(png.width - 1, Math.floor(body.uv[i * 2] * png.width))), y = Math.max(0, Math.min(png.height - 1, Math.floor(body.uv[i * 2 + 1] * png.height))), offset = (y * png.width + x) * 4;
     const [r, g, b] = png.data.subarray(offset, offset + 3);
     if (body.pos[i * 3] > centreX && Math.abs(body.pos[i * 3 + 2] - centreZ) < headWidth * .3 && r > 140 && g > r * .45 && g < r * .85 && b > r * .25 && b < r * .8) face.push(i);
-    if (arg('--clear-headwear') === 'brown' ? r >= 80 && r < 170 && r > g * 1.1 && g > b * 1.05 : arg('--clear-headwear') === 'red' ? r > g * 1.6 && r > b * 1.4 : arg('--clear-headwear') === 'yellow' ? r > 130 && g > 100 && b < Math.min(r, g) * .7 : b > r * 1.1 && b >= g * .9) cap.push(i);
+    if (arg('--clear-headwear') === 'brown' ? r >= 80 && r < 170 && r > g * 1.1 && g > b * 1.05 : arg('--clear-headwear') === 'red' ? r > g * 1.6 && r > b * 1.4 : arg('--clear-headwear') === 'green' ? g > r * 1.1 && g > b * .75 : arg('--clear-headwear') === 'yellow' ? r > 130 && g > 100 && b < Math.min(r, g) * .7 : b > r * 1.1 && b >= g * .9) cap.push(i);
   }
   const pickedEyes = arg('--eyes') ? (JSON.parse(readFileSync(arg('--eyes')!, 'utf8')) as { eye_centers: number[][] }).eye_centers.map(p => new Vector3().fromArray(p).applyMatrix4(bodyTransform)) : undefined;
   if ((!pickedEyes && face.length < 4) || cap.length < 4) throw Error('Cannot measure face/headwear clearance from the source atlas');

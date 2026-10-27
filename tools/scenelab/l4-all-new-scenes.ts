@@ -18,9 +18,9 @@ const civilians = ['npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-wom
 const archetype = (model: string) => model.startsWith('inf.alpha') ? 'infected.alpha' : model === 'inf.crawler' ? 'infected.crawler' : model === 'inf.riot-cop' ? 'infected.riot' : model === 'inf.firefighter' ? 'infected.firefighter' : model === 'inf.hazmat' ? 'infected.hazmat' : 'infected.runner';
 const crowd30: SceneSpec = {
   name: 'l4-street-crowd30', ground: 'district', time: 'L4', size: 100,
-  layout: { district: 'D-FAIR', level: 'L4', bbox: [[-16, -13], [16, 12]] },
+  layout: { district: 'D-FAIR', level: 'L4', bbox: [[-34, -13], [-6, 12]] },
   actors: Array.from({ length: 30 }, (_, i): ActorSpec => {
-    const at: [number, number] = [-11 + i % 10 * 2.4, -4 + Math.floor(i / 10) * 4];
+    const at: [number, number] = [-28.1 + i % 10 * 1.8, -3.5 + Math.floor(i / 10) * 3.5];
     if (i === 0) return { id: 'courier', kind: 'courier', at, yaw: -45 };
     if (i === 1) return { id: 'corgi', kind: 'corgi', at, yaw: -45 };
     if (i < 5) return { id: `guard-${i}`, kind: 'pedestrian', at, yaw: -45, look: { model: 'npc.national-guard', role: 'soldier', handProp: 'rifle' }, state: 'idle' };
@@ -28,7 +28,7 @@ const crowd30: SceneSpec = {
     const model = i < 22 ? converted[i - 13] : ['inf.common-worker', 'npc.national-guard', ...civilians][(i - 22) % 7];
     return { id: `infected-${i}`, kind: 'infected', at, yaw: -45, archetype: archetype(model), look: { model }, state: 'idle' };
   }),
-  camera: { mode: 'game', target: [0, .6, 0], zoom: 1.5 }, frames: 3, shots: [3], expect: { consoleErrors: 0 },
+  camera: { mode: 'game', target: [-20, .6, 0], zoom: 1.5 }, frames: 3, shots: [3], expect: { consoleErrors: 0 },
 };
 const corpses: SceneSpec = {
   name: 'l4-converted-corpses', ground: 'asphalt', time: 'L4', size: 100,
@@ -100,7 +100,7 @@ try {
         const image = texture.image as { width?: number; height?: number; data?: { byteLength: number } };
         if (!image?.width || !image.height) continue;
         const mips = texture.mipmaps as { data?: { byteLength: number } }[];
-        decodedBytes += mips.reduce((n, mip) => n + (mip.data?.byteLength ?? 0), 0) || image.data?.byteLength || image.width * image.height * 4;
+        decodedBytes += mips.reduce((n, mip) => n + (mip.data?.byteLength ?? 0), 0) || image.data?.byteLength || Math.ceil(image.width * image.height * 4 * (texture.generateMipmaps ? 4 / 3 : 1));
         rgbaUpperBoundBytes += image.data?.byteLength ?? Math.ceil(image.width * image.height * 4 * (texture.generateMipmaps || mips.length > 1 ? 4 / 3 : 1));
       }
       return { textureCount: textures.size, decodedBytes, rgbaUpperBoundBytes, render: window.__SS__!.getState().render };
@@ -117,7 +117,7 @@ try {
       writeJson(`${out}/cadence.json`, { variant, tier, backend, hostLoad, pool, cadence, timingStatus: 'shared-pool diagnostic; final quiet p95 and PROD five-cold-load comparison pending' });
       assert.equal(cadence.over200, 0); assert.deepEqual(cadence.builds, []);
     }
-    for (const zoom of [1, 1.5]) { await session.page.evaluate(zoom => window.__SS__!.camera.zoom(zoom), zoom); await session.ready(); await session.screenshot(`${out}/zoom-${zoom}.png`); }
+    for (const zoom of [1, 1.5]) { await session.page.evaluate(({ zoom, corpses }) => window.__SCENE__!.setCamera({ mode: 'game', target: corpses ? [0, .4, 0] : [-20, .6, 0], zoom }), { zoom, corpses: mode === 'corpses' }); await session.ready(); await session.screenshot(`${out}/zoom-${zoom}.png`); }
     if (mode === 'corpses') {
       const proof = await session.page.evaluate(async () => {
         const game = (window.__SCENE__ as unknown as { game: Game }).game;

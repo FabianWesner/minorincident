@@ -84,7 +84,7 @@ for (const lod of [0, 1, 2]) {
   if (unbound && ['npc.lab-guard', 'npc.police-officer', 'npc.firefighter-alive'].includes(id)) args.push('--clear-headwear', id === 'npc.firefighter-alive' ? 'red' : 'navy');
   if (unbound && ['npc.lab-tech-a', 'npc.civilian-kid'].includes(id)) args.push('--clear-headwear', 'brown');
   if (unbound && id === 'inf.alpha-worker') args.push('--clear-headwear', 'yellow');
-  if (unbound && id.startsWith('inf.alpha') && id !== 'inf.alpha-worker') args.push('--clear-headwear', 'brown');
+  if (unbound && id.startsWith('inf.alpha') && id !== 'inf.alpha-worker') args.push('--clear-headwear', id === 'inf.alpha-hoodie' ? 'green' : id === 'inf.alpha-fire' ? 'yellow' : id === 'inf.alpha-suit' ? 'navy' : 'brown');
   if (unbound && id === 'inf.firefighter') args.push('--clear-headwear', 'red');
   if (unbound && id === 'inf.riot-cop') args.push('--clear-headwear', 'navy');
   if (unbound && id === 'inf.crawler') args.push('--clear-headwear', 'brown');

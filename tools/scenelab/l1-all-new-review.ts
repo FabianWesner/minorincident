@@ -16,7 +16,8 @@ const backend = process.env.REVIEW_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
 const skinTone = process.env.REVIEW_SKIN_TONE === undefined ? undefined : Number(process.env.REVIEW_SKIN_TONE);
 if (skinTone !== undefined && (!Number.isInteger(skinTone) || skinTone < 0 || skinTone > 5)) throw Error('REVIEW_SKIN_TONE must be 0–5');
 const session = new SceneSession({ backend, tier, viewport: { width: 800, height: 600 } });
-const receipts: unknown[] = [];
+const receiptPath = resolve(out, 'receipts.json');
+const receipts: unknown[] = existsSync(receiptPath) ? (JSON.parse(readFileSync(receiptPath, 'utf8')) as { id: string }[]).filter(r => !ids.includes(r.id)) : [];
 try {
   await session.open();
   await session.page.addInitScript("window.__name = (fn, name) => Object.defineProperty(fn, 'name', { value: name, configurable: true });");
