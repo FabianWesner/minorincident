@@ -120,7 +120,7 @@ class SchedulerChecks(unittest.TestCase):
         ticket = self.ticket()
         with patch.object(slot.sys, 'platform', 'darwin'), patch.object(slot, 'remote_pick', return_value=''), patch.object(slot, 'processes', return_value=[]), patch.object(slot.os, 'getloadavg', return_value=(1, 1, 1)), patch.object(slot, 'free_gb', return_value=8):
             self.assertEqual(slot.choose(ticket, self.wt, ['npm', 'run', 'test:gate']), 'local')
-            lock = subprocess.Popen([sys.executable, '-c', 'import fcntl,sys,time; f=open(sys.argv[1],"a+"); fcntl.lockf(f,fcntl.LOCK_EX); print("held",flush=True); time.sleep(60)', str(self.root / 'gpu.0')], stdout=subprocess.PIPE, text=True)
+            lock = subprocess.Popen([sys.executable, '-c', 'import fcntl,sys,time; f=open(sys.argv[1],"a+"); fcntl.flock(f,fcntl.LOCK_EX); print("held",flush=True); time.sleep(60)', str(self.root / 'gpu.0')], stdout=subprocess.PIPE, text=True)
             try:
                 self.assertEqual(lock.stdout.readline().strip(), 'held')
                 self.assertIsNone(slot.choose(ticket, self.wt, ['npm', 'run', 'test:gate']))
@@ -130,6 +130,24 @@ class SchedulerChecks(unittest.TestCase):
             finally: f.close()
             with patch.object(slot, 'remote_pick', return_value='192.0.2.1'):
                 self.assertEqual(slot.choose(ticket, self.wt, ['npm', 'run', 'test:gate']), '192.0.2.1')
+
+    @unittest.skipUnless(sys.platform == 'darwin', 'macOS lockf(1) contract')
+    def test_actual_macos_browser_lock(self):
+        child = subprocess.Popen(['lockf', '-s', '-k', '-t', '0', str(self.root / 'gpu.0'),
+                                  sys.executable, '-c', 'import sys; print("held",flush=True); sys.stdin.read()'],
+                                 stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
+        try:
+            self.assertEqual(child.stdout.readline().strip(), 'held')
+            with patch.object(slot, 'processes', return_value=[]):
+                self.assertTrue(slot.browser_busy())
+            child.stdin.close()
+            self.assertEqual(child.wait(timeout=5), 0)
+            with patch.object(slot, 'processes', return_value=[]):
+                self.assertFalse(slot.browser_busy())
+        finally:
+            if child.poll() is None: child.terminate(); child.wait(timeout=5)
+            if not child.stdin.closed: child.stdin.close()
+            child.stdout.close()
 
     def fixture(self, count=3, fail=False, sequential=False):
         (self.wt / 'node_modules').symlink_to(HERE.parent.parent / 'node_modules', target_is_directory=True)
@@ -168,13 +186,13 @@ class SchedulerChecks(unittest.TestCase):
                 time.sleep(.05)
         try:
             until(lambda: len(rows()) >= 1)
-            fcntl.lockf(gpu, fcntl.LOCK_EX)
+            fcntl.flock(gpu, fcntl.LOCK_EX)
             until(lambda: any(r['phase'] == 'end' for r in rows()))
             time.sleep(1)
             self.assertEqual([r['phase'] for r in rows()], ['start', 'end'])
             command = subprocess.check_output(['ps', '-p', str(child.pid), '-o', 'command='], text=True)
             self.assertIn('mi-local-cpu-yielded', command)
-            fcntl.lockf(gpu, fcntl.LOCK_UN)
+            fcntl.flock(gpu, fcntl.LOCK_UN)
             self.assertEqual(child.wait(timeout=30), 0, (self.root / 'worker.log').read_text())
             self.assertEqual(len(rows()), 6)
             self.assertEqual(len({r['id'] for r in rows() if r['phase'] == 'end'}), 3)

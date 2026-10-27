@@ -64,12 +64,13 @@ def browser_busy():
         if subprocess.run(['sh', str(shared)], stdout=subprocess.DEVNULL).returncode != 1:
             return True
     else:
-        # lockf files survive release; only the actual advisory lock is meaningful.
+        # macOS lockf(1) uses BSD flock(2), not POSIX fcntl.lockf().
+        # Files survive release; only the actual advisory lock is meaningful.
         for i in range(4):
             with open(f'{BASE_LOCK}.{i}', 'a+') as f:
                 try:
-                    fcntl.lockf(f, fcntl.LOCK_EX | fcntl.LOCK_NB)
-                    fcntl.lockf(f, fcntl.LOCK_UN)
+                    fcntl.flock(f, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                    fcntl.flock(f, fcntl.LOCK_UN)
                 except BlockingIOError:
                     return True
     try:
