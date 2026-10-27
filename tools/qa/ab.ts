@@ -11,7 +11,7 @@ import { cure } from '../../src/levels/L10/district';
 import { prepareStop, readyFrame, tour, type Finding, type TourStop } from './ab-tour';
 import { perceptualDiff } from './ab-metrics';
 
-const {values}=parseArgs({options:{baseline:{type:'string',default:'https://minor-incident.com'},candidate:{type:'string'},'dist-dir':{type:'string',default:'dist'},inject:{type:'string'},levels:{type:'string',default:'L1-L10'},threshold:{type:'string',default:'.02'},out:{type:'string'},seed:{type:'string',default:'1'},survivor:{type:'string',default:'female'},stops:{type:'string'},help:{type:'boolean'}}});
+const {values}=parseArgs({options:{baseline:{type:'string',default:'https://qa.minor-incident.pages.dev'},candidate:{type:'string'},'dist-dir':{type:'string',default:'dist'},inject:{type:'string'},levels:{type:'string',default:'L1-L10'},threshold:{type:'string',default:'.02'},out:{type:'string'},seed:{type:'string',default:'1'},survivor:{type:'string',default:'female'},stops:{type:'string'},help:{type:'boolean'}}});
 if(values.help){console.log('npm run qa:ab -- --candidate <url|dist> [--baseline <url>] [--levels L1-L4] [--threshold .02] [--out test-results/qa-ab/<date>-<label>] [--seed 1] [--survivor female|male] [--stops substring[,substring]] [--dist-dir dist] [--inject hide-npc|hats|tank|bench|all]');process.exit(0);}
 if(!values.candidate)throw new Error('--candidate <url|dist> is required');
 if(values.inject&&(!['hide-npc','hats','tank','bench','all'].includes(values.inject)||values.candidate!=='dist'))throw new Error('--inject requires candidate dist and hide-npc|hats|tank|bench|all');
@@ -37,7 +37,7 @@ type Row={id:string;stop:TourStop;zoom:number;score:number;globalChanged:number;
 const rows:Row[]=[];
 let server:Awaited<ReturnType<typeof preview>>|undefined;
 if(Object.values(sources).includes('dist')){
-  if(!existsSync(resolve(values['dist-dir']!,'index.html')))throw new Error('Build the local candidate first: npm run build');
+  if(!existsSync(resolve(values['dist-dir']!,'index.html')))throw new Error('Build the local candidate first: npm run build:qa');
   server=await preview({configFile:false,build:{outDir:resolve(values['dist-dir']!)},preview:{host:'127.0.0.1',port:Number(process.env.E2E_PORT??4323),strictPort:true}});
 }
 

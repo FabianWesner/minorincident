@@ -32,7 +32,7 @@ function search(w: SimWorld) { const m = w.missions!; m.completeObjective('emerg
 const status = (w: SimWorld) => Object.fromEntries(w.missions!.state.l5!.survivors.map(r => [r.key, r.status]));
 
 describe('L5 Aftermath', () => {
-  test('T-E23-01 @E23 @E23-AC01 mission graph emerge -> look -> metro is completable for every find order, with no fail timer and no fail on a survivor\'s death', async () => {
+  test('T-E23-01 @nightly @E23 @E23-AC01 mission graph emerge -> look -> metro is completable for every find order, with no fail timer and no fail on a survivor\'s death', async () => {
     const l = await loadL5(1); world = l.world; const m = l.mission;
     expect(validateMission(m.def)).toEqual([]);
     expect(m.def.steps.map(s => s.id)).toEqual(['emerge', 'look', 'metro']);
@@ -82,7 +82,7 @@ describe('L5 Aftermath', () => {
     expect(r.timeline.map(t => t.type)).toEqual(expect.arrayContaining(['l5.emerged', 'l5.searching', 'l5.accounted', 'l5.shutter', 'l5.sheltered']));
   }, HEAVY);
 
-  test('T-E23-03 @E23 @E23-AC03 the newbie bot finishes a single seed with at most one death, rescuing at least 3', async () => {
+  test('T-E23-03 @nightly @E23 @E23-AC03 the newbie bot finishes a single seed with at most one death, rescuing at least 3', async () => {
     const l = await loadL5(2); world = l.world;
     const r = runL5(l.world, l.mission, 'newbie', { seed: 2, maxSeconds: 600 });
     record('bot-newbie-seed2', r);
@@ -91,7 +91,7 @@ describe('L5 Aftermath', () => {
     expect(r.rescued).toBeGreaterThanOrEqual(3);
   }, HEAVY);
 
-  test('T-E23-04 @E23 @E23-AC04 the opening is empty: no allied fighter, no living civilian but the five survivors (hidden) and the lookout, no helicopter or moving vehicle, no gunfire but the courier\'s; 12-27 infected in ones and twos', async () => {
+  test('T-E23-04 @nightly @E23 @E23-AC04 the opening is empty: no allied fighter, no living civilian but the five survivors (hidden) and the lookout, no helicopter or moving vehicle, no gunfire but the courier\'s; 12-27 infected in ones and twos', async () => {
     for (const tier of ['high', 'low'] as const) {
       const l = await loadL5(3, tier); const w = l.world, ai = w.infected!;
       const shots: string[] = []; w.events.on('ally.attack', () => shots.push('ally')); w.events.on('l4.heliPass', () => shots.push('heli')); w.events.on('hmg.burst', () => shots.push('hmg'));
@@ -113,7 +113,7 @@ describe('L5 Aftermath', () => {
     }
   }, HEAVY);
 
-  test('T-E23-07 @E23 @E23-AC07 sparse and never omniscient: no director spawn or emergence, at most 30 at once, sight-only alerts; a machine-gun burst pulls non-chasing infected within 30 m to the shot', async () => {
+  test('T-E23-07 @nightly @E23 @E23-AC07 sparse and never omniscient: no director spawn or emergence, at most 30 at once, sight-only alerts; a machine-gun burst pulls non-chasing infected within 30 m to the shot', async () => {
     const l = await loadL5(1); world = l.world; const w = l.world, ai = w.infected!;
     const r = runL5(w, l.mission, 'complete', { seed: 1, maxSeconds: 130 });
     record('audit', r.audit);
@@ -165,7 +165,7 @@ describe('L5 Aftermath', () => {
     expect(m.def.steps.find(s => s.id === 'look')!.anchor).toBe('l5-plaza'); expect(m.state.marker).toBeNull();
   }, HEAVY);
 
-  test('T-E23-09 @E23 @E23-AC09 the group grows and follows: stand-to-interact 1.0 s, the counter steps 0 to 5, followers within 8 m, no jump above 1 m per tick, slower than the courier\'s run', async () => {
+  test('T-E23-09 @nightly @E23 @E23-AC09 the group grows and follows: stand-to-interact 1.0 s, the counter steps 0 to 5, followers within 8 m, no jump above 1 m per tick, slower than the courier\'s run', async () => {
     const l = await loadL5(1); world = l.world; const w = l.world, m = l.mission, s = m.state.l5!;
     m.completeObjective('emerge'); w.combat!.damage.god = true; step(w, 11 * 60);
     expect(s.found).toBe(0);
@@ -200,7 +200,7 @@ describe('L5 Aftermath', () => {
     expect(r.followShare).toBeGreaterThanOrEqual(.8); expect(r.maxFollowerJump).toBeLessThan(1);
   }, HEAVY);
 
-  test('T-E23-10 @E23 @E23-AC10 protection matters: an infected that reaches an unprotected survivor grabs and bites within 1.5 s, a hit during the grab saves them, a bitten survivor turns in 2.5-3.5 s as the same person', async () => {
+  test('T-E23-10 @nightly @E23 @E23-AC10 protection matters: an infected that reaches an unprotected survivor grabs and bites within 1.5 s, a hit during the grab saves them, a bitten survivor turns in 2.5-3.5 s as the same person', async () => {
     const run = async (protect: boolean) => {
       const l = await loadL5(5); const w = l.world, m = l.mission, s = m.state.l5!, ai = w.infected!;
       w.combat!.damage.god = true; m.completeObjective('emerge'); step(w, 11 * 60); for (const e of [...ai.active]) ai.release(e);
@@ -235,7 +235,7 @@ describe('L5 Aftermath', () => {
     expect(er.rescued).toBeLessThanOrEqual(2); expect(cr.rescued).toBeGreaterThanOrEqual(4); expect(er.kills).toBe(0);
   }, HEAVY);
 
-  test('T-E23-11 @E23 @E23-AC11 losses do not stop the level: killing 1, 3 or all 5 survivors at random points still lets the complete bot finish; the result reports the rescued count', async () => {
+  test('T-E23-11 @nightly @E23 @E23-AC11 losses do not stop the level: killing 1, 3 or all 5 survivors at random points still lets the complete bot finish; the result reports the rescued count', async () => {
     const plan = [{ kill: 1, seed: 1 }, { kill: 3, seed: 2 }, { kill: 5, seed: 3 }];
     for (const { kill, seed } of plan) {
       const l = await loadL5(seed); const w = l.world, s = l.mission.state.l5!, picks = [...l5Survivors.map(x => x.key)].sort((a, b) => (a < b ? -1 : 1)).slice(0, kill);
@@ -289,7 +289,7 @@ describe('L5 Aftermath', () => {
     }
   });
 
-  test('T-E23-13 @E23 @E23-AC13 sunset and gloom: the sun intensity falls monotonically over the level and is at least 30 % lower at the Metro than at the basement exit', async () => {
+  test('T-E23-13 @nightly @E23 @E23-AC13 sunset and gloom: the sun intensity falls monotonically over the level and is at least 30 % lower at the Metro than at the basement exit', async () => {
     expect(timeOfDay.L5.intensity).toBeLessThanOrEqual(timeOfDay.L4.intensity * .7);
     const l = await loadL5(1); world = l.world; const s = l.mission.state.l5!; const samples: number[] = []; let atExit = -1, atMetro = -1;
     expect(s.gloom).toBe(1);
@@ -331,7 +331,7 @@ describe('L5 Aftermath', () => {
     expect(m.state.result!.stationOccupants!.every(e => e.civilian!.state === 'calm')).toBe(true);
   }, HEAVY);
 
-  test('T-E23-16 @E23 @E23-AC16 checkpoints: dying right after outside and each survivor-n restores the snapshot (followers, lost survivors stay lost, infected)', async () => {
+  test('T-E23-16 @nightly @E23 @E23-AC16 checkpoints: dying right after outside and each survivor-n restores the snapshot (followers, lost survivors stay lost, infected)', async () => {
     const l = await loadL5(2); world = l.world; const w = l.world, m = l.mission; w.combat!.damage.god = false;
     const snaps: Record<string, unknown> = {};
     const bot = { stop: (id: string) => (mm: typeof m) => mm.state.checkpoint === id };
@@ -360,7 +360,7 @@ describe('L5 Aftermath', () => {
     record('checkpoints', snaps);
   }, HEAVY);
 
-  test('T-E23-bots @E23 the idle bot unbars the door and waits (the level never fails, nobody dies of the level); the low tier finishes too', async () => {
+  test('T-E23-bots @nightly @E23 the idle bot unbars the door and waits (the level never fails, nobody dies of the level); the low tier finishes too', async () => {
     const l = await loadL5(1); world = l.world;
     const r = runL5(l.world, l.mission, 'idle', { seed: 1, maxSeconds: 120 });
     expect(r.outcome).toBe('timeout'); expect(r.deaths).toBe(0); expect(l.mission.state.phase).toBe('playing'); expect(l.mission.state.l5!.found).toBe(0);

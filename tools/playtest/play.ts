@@ -5,9 +5,9 @@ import { parseArgs } from 'node:util';
 import type { Issue, LevelRun, SessionOptions } from './session';
 
 /**
- * Playtest driver: plays the campaign by real keyboard/mouse input on the production preview build, headless.
+ * Playtest driver: plays the campaign by real keyboard/mouse input on the QA preview build, headless.
  *
- *   npm run build && npm run playtest -- --levels L1-L10 --quality low [--mode campaign|continue] [--heroine female|male]
+ *   E2E_PORT=4761 npm run playtest -- --levels L1-L10 --quality low [--mode campaign|continue] [--heroine female|male]
  *                                       [--zoom 1.5] [--level-minutes 25] [--out test-results/playtest/<name>]
  *
  * campaign: one browser session from a new game through every real handover.
@@ -34,7 +34,7 @@ mkdirSync(out, { recursive: true });
 const port = Number(process.env.E2E_PORT ?? 3821);
 if (port === 3300) throw new Error('The playtest must not use the shared dev-server port 3300');
 const origin = `http://127.0.0.1:${port}`;
-if (!existsSync('dist/index.html')) throw new Error('Run npm run build first: the playtest plays the production preview build');
+if (!existsSync('dist/index.html')) throw new Error('Run npm run build:qa first: the playtest requires QA hooks');
 
 const up = async () => { try { return (await fetch(origin)).ok; } catch { return false; } };
 let server: ChildProcess | null = null;

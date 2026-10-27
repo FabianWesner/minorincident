@@ -1,8 +1,8 @@
+import { launchBrowser } from '../browser-pool/client';
 import { spawn, execFileSync, type ChildProcess } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { parseArgs } from 'node:util';
-import { chromium } from '@playwright/test';
 import { decodeLog } from '../../src/telemetry/codec';
 import { gunzip } from '../../src/telemetry/gzip';
 import { downloadBundle, defaultBase, type ReplayBundle } from './api';
@@ -41,18 +41,19 @@ console.error(`replay ${bundle.id}: level ${meta.level}, seed ${meta.seed}, ${lo
 // --- server and browser ---
 const port = Number(process.env.REPLAY_PORT ?? 3342);
 if (port === 3300) throw new Error('Replay must not use the shared dev-server port 3300');
-/** REPLAY_ORIGIN: replay against a deployed build (e.g. a PROD snapshot) instead of a private server. */
+/** REPLAY_ORIGIN: replay against a deployed build (e.g. a QA build of the recorded commit) instead of a private server. */
 const origin = process.env.REPLAY_ORIGIN ?? `http://127.0.0.1:${port}`;
 let server: ChildProcess | null = null;
 const up = async () => { try { return (await fetch(origin)).ok; } catch { return false; } };
 if (!(await up())) {
+  // Preview replay requires `npm run build:qa`; the default DEV server enables hooks directly.
   const preview = process.env.REPLAY_SERVER === 'preview';
   server = spawn(process.execPath, [resolve('node_modules/vite/bin/vite.js'), ...(preview ? ['preview'] : []), '--host', '127.0.0.1', '--port', String(port), '--strictPort', '--configLoader', 'runner'], { stdio: 'ignore' });
   for (let i = 0; i < 120 && !(await up()); i++) await new Promise(r => setTimeout(r, 500));
   if (!(await up())) { server.kill(); throw new Error(`replay server did not start on ${port}`); }
 }
 const args = values.backend === 'webgpu' ? ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=metal'] : process.platform === 'darwin' ? ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
-const browser = await chromium.launch({ headless: true, args });
+const browser = await launchBrowser({ headless: true, args });
 const files: string[] = [];
 let code = 0;
 try {

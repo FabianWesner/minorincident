@@ -1,4 +1,4 @@
-import { expect, test, vi } from 'vitest';
+import { beforeEach, expect, test, vi } from 'vitest';
 import { spawnSync } from 'node:child_process';
 import { existsSync, readFileSync, writeFileSync, mkdirSync, mkdtempSync, rmSync } from 'node:fs';
 import manifest from '../../../src/assets/manifest.json';
@@ -9,10 +9,10 @@ import { assetIO } from '../../../tools/assets/io';
 import { triangleCount } from '../../../tools/assets/delivery';
 
 vi.mock('node:child_process', () => ({ spawnSync: vi.fn() }));
+beforeEach(() => mkdirSync('.cache/assets', { recursive: true }));
 
-test('T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal', async () => {
+test('T-E17-01 @nightly @E17-AC01 staged exports are deterministic and exporter errors are fatal', async () => {
   const original = manifest.find((a) => a.id === 'veh.fire-engine')! as AssetDef;
-  mkdirSync('.cache/assets',{recursive:true});
   const directory = mkdtempSync('.cache/assets/unit-');
   const def: AssetDef = { ...original, glb: `${directory}/veh.fire-engine.glb`, lods: { lod1: `${directory}/veh.fire-engine.lod1.glb`, lod2: `${directory}/veh.fire-engine.lod2.glb` } };
   // Exercise the real optimizer/staging pipeline from the committed export, without rebuilding art.
@@ -91,7 +91,7 @@ test('@E17-AC01 decay build rejects the stricter draw budget before publishing',
   }
 });
 
-test('@E17-AC02 commerce decay caps are enforced independently of the integrated base', async () => {
+test('@E17-AC02 @nightly commerce decay caps are enforced independently of the integrated base', async () => {
   const original = manifest.find(a => a.id === 'bld.mainstreet-brick')! as AssetDef;
   const reports = await validateAssets([{ ...original, decayBudget: { triangles: 1, materials: 0, drawCalls: 0, fileKB: 1 } }]);
   expect(reports.filter(r => /^bld\.mainstreet-brick:/.test(r.id)).flatMap(r => r.errors)).toEqual([]);

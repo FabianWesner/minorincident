@@ -27,7 +27,7 @@ const layouts = Object.fromEntries(
     ) as DistrictLayout,
   ]),
 );
-test("T-E10-02 @E10 @E10-AC02 deterministic nav connects every composition objective from player start at every tier", () => {
+test("T-E10-02 @E10 @nightly @E10-AC02 deterministic nav connects every composition objective from player start at every tier", () => {
   // Aliased compositions and tiers with unchanged collision share exactly the same pure bake inputs.
   // Keep all composition/tier/seed reachability checks and replay checks, without rebuilding identical grids.
   const bakes = new Map<string, ReturnType<typeof bakeNav>>();

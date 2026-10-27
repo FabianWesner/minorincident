@@ -289,7 +289,10 @@ export class Bicycle {
     return [.35, .9].every(h => !physics.castRay(new RAPIER.Ray({ x: px, y: ground + h, z: pz }, dir), d, true, flags, undefined, this.world.physics.playerCollider ?? undefined));
   }
   private parkingSpot(x: number, z: number, heading: number, radii: readonly number[] = [.9, 1.2, 1.4, 2, 3, 4, 5, 6, 8], pavement = true): (Vec2 & { heading: number }) | null {
-    for (const radius of radii) for (const direction of [heading, heading + Math.PI / 2]) {
+    // Try the same orientations as the final fallback while still searching
+    // beside the rider. Two diagonal-only headings can miss the narrow clear
+    // strip along a fence and force the fallback frame onto the courier.
+    for (const radius of radii) for (const direction of [heading, heading + Math.PI / 2, heading + Math.PI / 4, heading - Math.PI / 4]) {
       const fx = Math.cos(direction), fz = Math.sin(direction), margin = survivor.radius + .1;
       // Every candidate on the ring is tried: rejecting the ring on its first clear spot pushed the search outward,
       // past the nearest clear spots on the rider's side, until it reached ground behind a fence.

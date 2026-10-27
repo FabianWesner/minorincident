@@ -5,6 +5,8 @@ import argparse, math, sys, json, random
 from pathlib import Path
 import bpy, bmesh
 from mathutils import Vector, Matrix
+import sys, pathlib; sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2] / 'tools' / 'assets'))
+from blender_prims import tube_radii_geometry
 P=Path(__file__).resolve().parent
 ap=argparse.ArgumentParser()
 ap.add_argument('--render'); ap.add_argument('--glb'); ap.add_argument('--view',default='hero')
@@ -56,17 +58,7 @@ def mesh(n,v,f,m,par,sub=1):
     me=bpy.data.meshes.new(n);me.from_pydata(v,[],f);me.update();o=bpy.data.objects.new(n,me);S.collection.objects.link(o)
     return finish(o,n,m,par,sub)
 def tube(n,points,radii,m,par,N=10,sub=1):
-    v=[];f=[]
-    for j,p in enumerate(points):
-        tangent=Vector(points[min(j+1,len(points)-1)])-Vector(points[max(j-1,0)])
-        tangent.normalize();u=tangent.cross(Vector((1,0,0)))
-        if u.length<.1:u=tangent.cross(Vector((0,1,0)))
-        u.normalize();w=tangent.cross(u);r=radii[j];rx,ry=(r,r) if isinstance(r,(int,float)) else r
-        for i in range(N):v.append(Vector(p)+u*rx*math.cos(i*2*math.pi/N)+w*ry*math.sin(i*2*math.pi/N))
-    for j in range(len(points)-1):
-        for i in range(N):k=j*N+i;kk=j*N+(i+1)%N;f.append((k,kk,kk+N,k+N))
-    f.extend([tuple(range(N-1,-1,-1)),tuple((len(points)-1)*N+i for i in range(N))])
-    return mesh(n,v,f,m,par,sub)
+    return mesh(n,*tube_radii_geometry(points,radii,N),m,par,sub)
 def patch(n,pts,m,par,depth=.006):
     # Soft extruded silhouette in the front-facing Y/Z plane, with explicit thickness.
     v=[tuple(p) for p in pts]+[(p[0]-depth,p[1],p[2]) for p in pts];N=len(pts)

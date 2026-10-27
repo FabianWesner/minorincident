@@ -27,7 +27,7 @@ vi.mock('../../../src/sim/ai/InfectedSystem', async importOriginal => {
   } };
 });
 
-for (const id of missionIds) test(`${id}: one campaign navigation bake matches the previous mask/rebake path`, async () => {
+for (const id of missionIds) test(`${id} @nightly: one campaign navigation bake matches the previous mask/rebake path`, async () => {
   const run = async (previous: boolean) => {
     mode.previous = previous;
     const world = new SimWorld(); await world.init();

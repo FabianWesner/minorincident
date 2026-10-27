@@ -1,5 +1,5 @@
+import { launchBrowser } from '../browser-pool/client';
 /** Headless L6 adult reference/peer evidence at the fixed game camera. */
-import { chromium } from '@playwright/test';
 import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import { PNG } from 'pngjs';
 import { referenceFor } from './turntable';
@@ -8,7 +8,7 @@ import type { AssetDef } from '../../src/assets/types';
 const manifest = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as AssetDef[];
 const ids = process.argv[2]?.split(',') ?? manifest.filter(a => a.animatedDrawBase).map(a => a.id);
 const output = process.argv[3] ?? 'test-results/l6-shelter-adults-and-injuries';
-const browser = await chromium.launch({ headless: true, args: ['--use-angle=metal'] });
+const browser = await launchBrowser({ headless: true, args: ['--use-angle=metal'] });
 try {
   const page = await browser.newPage({ viewport: { width: 220, height: 280 } });
   for (const id of ids) {

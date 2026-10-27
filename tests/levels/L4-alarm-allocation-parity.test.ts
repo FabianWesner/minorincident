@@ -2,7 +2,7 @@ import { expect, test } from 'vitest';
 import { l4 } from '../../src/data/l4';
 import { loadL4, runL4 } from '../../tools/sim-runner/l4Bots';
 
-test('T-E22-20-refuge @E22-AC20 exterior street alarm allocation keeps seeded identities, targets and events deterministic', async () => {
+test('T-E22-20-refuge @nightly @E22-AC20 exterior street alarm allocation keeps seeded identities, targets and events deterministic', async () => {
   const run = async () => {
     const { world, mission } = await loadL4(2, 'low');
     try {

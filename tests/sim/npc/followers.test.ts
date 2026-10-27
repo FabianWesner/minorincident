@@ -2,7 +2,7 @@ import { expect, test } from 'vitest';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { npcs } from '../../../src/data/npcs';
 import { npcWorld, step, teleport } from './helpers';
-test('T-E08-04 @E08 @E08-AC04 three-minute combat bot: corgi close 95% and no player obstruction', async () => {
+test('T-E08-04 @nightly @E08 @E08-AC04 three-minute combat bot: corgi close 95% and no player obstruction', async () => {
   const w = await npcWorld(), corgi = [...w.entities.iterate()].find(e => e.companion)!;
   w.combat!.damage.god = false;
   let close = 0, blocked = 0, maxBlocked = 0; w.setInput({ move: { x: 1, z: 0 }, left: { down: false, held: true, up: false }, aim: { x: 1, z: 0 } });
@@ -45,7 +45,7 @@ test('T-E08-07 @E08 @E08-AC07 2s stand revives 50%; unattended 20s down fails mi
     w.dispose();
   }
 });
-test('T-E08-15 @E08 @E08-AC15 protected kids/brother never bitten, targeted or gored in full L2 duration', async () => {
+test('T-E08-15 @nightly @E08 @E08-AC15 protected kids/brother never bitten, targeted or gored in full L2 duration', async () => {
   const w = await npcWorld(); w.npcs!.civilians.level = 2; const child = w.npcs!.civilians.spawn('kid', { x: 3, z: 0 }, { child: true }), brother = w.npcs!.escorts.spawn({ x: 1, z: 0 }, true);
   const source = w.infected!.spawn('infected.butcher', { x: 3, z: 0 }); expect(w.npcs!.civilians.grab(child, source, true)).toBe(false); expect(w.npcs!.civilians.grab(brother, source, true)).toBe(false);
   w.entities.get(brother)!.health.current = 0; step(w, 120); expect(w.entities.get(brother)!.health.current).toBe(50);

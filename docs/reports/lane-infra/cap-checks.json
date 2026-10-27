@@ -1,0 +1,27 @@
+{
+  "timeout": {
+    "code": 124,
+    "ms": 6440,
+    "output": "Browser reservation reached its 1s batch limit (10-minute maximum including cleanup); split the batch into smaller commands.\n"
+  },
+  "overCap": {
+    "code": 2,
+    "ms": 327,
+    "output": "Browser reservations must be 1\u2013600 seconds; split batches longer than 10 minutes.\n"
+  },
+  "workers": {
+    "code": 2,
+    "ms": 318,
+    "output": "Playwright is limited to 1 or 2 workers on this machine\n"
+  },
+  "legacyOptIn": {
+    "code": 1,
+    "ms": 301,
+    "output": "/Users/wesner/Workspace/minorincident/.claude/worktrees/lane-infra/tools/browser-pool/client.ts:22\n  if (process.env.BROWSER_POOL === 'off') throw new Error('Legacy browser launches require E2E_LEGACY=1');\n                                                ^\n\nError: Legacy browser launches require E2E_LEGACY=1\n    at poolEndpoint (/Users/wesner/Workspace/minorincident/.claude/worktrees/lane-infra/tools/browser-pool/client.ts:22:49)\n    at file:///Users/wesner/Workspace/minorincident/.claude/worktrees/lane-infra/[eval1]:1:68\n    at ModuleJob.run (node:internal/modules/esm/module_job:437:25)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:249:26)\n    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:246:20)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v26.0.0\n"
+  },
+  "directWorkers": {
+    "code": 1,
+    "ms": 498,
+    "error": "Error: Playwright is limited to 1 or 2 workers on this machine"
+  }
+}

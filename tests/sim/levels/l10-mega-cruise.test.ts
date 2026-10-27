@@ -4,7 +4,7 @@ import { megaAlpha } from '../../../src/data/megaAlpha';
 import { curePursuitRoute } from '../../../src/levels/L10/district';
 
 for (const tier of ['high', 'low'] as const) {
-  test(`T-E32-10-production-pressure-${tier} @E32-AC10 R6 coarse pursuit cruises at 0.7× run and the courier outruns it`, async () => {
+  test(`T-E32-10-production-pressure-${tier} @nightly @E32-AC10 R6 coarse pursuit cruises at 0.7× run and the courier outruns it`, async () => {
     const w = await loadLevel('L10', 32);
     try {
       const p = w.entities.get(1)!;
@@ -30,7 +30,7 @@ for (const tier of ['high', 'low'] as const) {
     } finally { w.dispose(); }
   });
 
-  test(`T-E32-10-shortcuts-${tier} @E32-AC10 pursuit corner cuts clear the existing district at Mega radius`, async () => {
+  test(`T-E32-10-shortcuts-${tier} @nightly @E32-AC10 pursuit corner cuts clear the existing district at Mega radius`, async () => {
     const w = await loadLevel('L10', 32);
     try {
       w.chunks!.setQuality(tier);

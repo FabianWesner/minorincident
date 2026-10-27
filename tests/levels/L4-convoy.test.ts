@@ -8,7 +8,7 @@ let world: SimWorld | undefined;
 afterEach(() => { world?.dispose(); world = undefined; });
 
 describe('L4 convoy ride collisions', () => {
-  test('T-E22-04c @E22 @E22-AC04 during the live ride no convoy vehicle overlaps another vehicle entity (convoy, real cars, traffic)', async () => {
+  test('T-E22-04c @nightly @E22 @E22-AC04 during the live ride no convoy vehicle overlaps another vehicle entity (convoy, real cars, traffic)', async () => {
     const l = await loadL4(1); world = l.world; const w = l.world, s = l.mission.state.l4!, bad: string[] = []; // seed 1: the PO saw a dog under the bus (10-13)
     const dims = (e: { archetype?: string }) => e.archetype === 'veh.evac-bus' ? [9.36, 2.7] : e.archetype === 'veh.military-truck' ? [6.93, 2.86] : e.archetype === 'veh.military-apc' ? [5.69, 3.1] : e.archetype === 'veh.fuel-truck' ? [11.265, 3.1601] : [4.5, 1.9];
     const obb = (e: { transform: { x: number; z: number; yaw: number }; archetype?: string }) => { const [len, wid] = dims(e); return { x: e.transform.x, z: e.transform.z, yaw: e.transform.yaw, hl: len / 2 - .05, hw: wid / 2 - .05 }; };
@@ -29,7 +29,7 @@ describe('L4 convoy ride collisions', () => {
     expect([...new Set(bad)].slice(0, 400)).toEqual([]);
   }, 600_000);
 
-  test('T-E22-04f @E22 PO 10-12 "move this soldier away, all busses drive through him": during the live ride no actor stands inside a convoy vehicle hull', async () => {
+  test('T-E22-04f @nightly @E22 PO 10-12 "move this soldier away, all busses drive through him": during the live ride no actor stands inside a convoy vehicle hull', async () => {
     const l = await loadL4(1); world = l.world; const w = l.world, s = l.mission.state.l4!, bad: string[] = []; // seed 1: the PO saw a dog under the bus (10-13)
     const dims = (e: { archetype?: string }) => e.archetype === 'veh.evac-bus' ? [9.36, 2.7] : e.archetype === 'veh.military-truck' ? [6.93, 2.86] : e.archetype === 'veh.military-apc' ? [5.69, 3.1] : e.archetype === 'veh.fuel-truck' ? [11.265, 3.1601] : [4.5, 1.9];
     const inside = (v: { transform: { x: number; z: number; yaw: number }; archetype?: string }, a: { x: number; z: number }) => {
@@ -49,7 +49,7 @@ describe('L4 convoy ride collisions', () => {
     expect([...new Set(bad)].slice(0, 40)).toEqual([]);
   }, 600_000);
 
-  test('T-E22-04e @E22 PO 10-12 "sound when the bus is driving": every convoy vehicle emits engine events following speed, the courier bus is the muffled one, engines stop after the idle', async () => {
+  test('T-E22-04e @nightly @E22 PO 10-12 "sound when the bus is driving": every convoy vehicle emits engine events following speed, the courier bus is the muffled one, engines stop after the idle', async () => {
     const l = await loadL4(3); world = l.world; const w = l.world, s = l.mission.state.l4!;
     const seen: { id: number; phase: string; rpm: number; speed: number; inCar?: boolean }[] = [];
     w.events.on('vehicle.sound', e => { if (e.type === 'vehicle.sound') seen.push({ id: e.sourceId, phase: e.phase, rpm: e.rpm, speed: e.speed, inCar: e.inCar }); });
@@ -63,7 +63,7 @@ describe('L4 convoy ride collisions', () => {
     expect(seen.filter(e => e.phase === 'stop').map(e => e.id).sort()).toEqual([...s.convoyIds].sort());
   }, 600_000);
 
-  test('T-E22-04d @E22 PO 10-12 "Bus is extremely vibrating": the player bus pose has no high-frequency jitter over the whole ride', async () => {
+  test('T-E22-04d @nightly @E22 PO 10-12 "Bus is extremely vibrating": the player bus pose has no high-frequency jitter over the whole ride', async () => {
     const l = await loadL4(3); world = l.world; const w = l.world, s = l.mission.state.l4!, bus = w.entities.get(s.convoyIds[l4.convoy.vehicles.findIndex(v => v.player)])!;
     const xs: number[] = [], zs: number[] = [], yaws: number[] = [];
     let t = 0; while (s.phase === 'convoy' && t++ < 60 * 90) { w.update(); xs.push(bus.transform.x); zs.push(bus.transform.z); yaws.push(bus.transform.yaw); }

@@ -427,11 +427,6 @@ export function l4ConvoyStations(length: number): { start: number[]; end: number
   const tailStart = v[v.length - 1].len / 2 + 1, travel = end[v.length - 1] - tailStart;
   return { start: end.map(e => e - travel), end, travel };
 }
-/** Street of a world point on the L4 map (nearest of the five streets), for population, bots and dressing tests. */
-export function l4Edge(x: number, z: number): 'lakeshore' | 'harbor' | 'plaza' | 'east' | 'west' {
-  return z > 30 ? 'lakeshore' : z < -30 ? 'harbor' : x > 5 ? 'east' : x < -40 ? 'west' : 'plaza';
-}
-
 /** Remaining street-route distance, including the approach to its nearest leg; optionally writes the next turn for the minimap. */
 export function l4CellarDistance(p: { x: number; z: number }, next?: { x: number; z: number }): number {
   const route = l4.finale.route;

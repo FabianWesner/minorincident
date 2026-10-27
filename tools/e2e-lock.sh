@@ -3,20 +3,21 @@
 # Two units (10-18): three or more GPU browsers starved WindowServer (watchdog kill, user session lost on 10-16, 10-17, 10-18).
 # Playwright commands charge their worker count (default 2); other commands default to 1.
 # For an opaque wrapper, declare E2E_UNITS=1 or 2 explicitly. All lanes must agree on E2E_SLOTS.
-command -v lockf >/dev/null 2>&1 || exec "$@"
-slots="${E2E_SLOTS:-2}"
 root=$(cd "$(dirname "$0")/.." && pwd)
-# Only migrated callers bypass legacy process locks. All other tools wait on the
-# slots held by the daemon, and keep working unchanged when the pool is down.
-pool_supported=0
-for arg in "$@"; do
-  case "$arg" in
-    playwright|*/playwright|*/playwright/cli.js|*/@playwright/test/cli.js|tools/scenelab/cli.ts|tools/scenelab/catalog.ts|tools/playtest/session.ts|tools/playtest/seed.ts|tools/playtest/live.ts|tools/qa/ab.ts|tools/browser-pool/lane-load.ts) pool_supported=1;;
-  esac
-done
-for arg in "$@"; do case "$arg" in webkit|--project=webkit) pool_supported=0;; esac; done
-if [ "$pool_supported" -eq 1 ] && node "$root/tools/browser-pool/detect.mjs"; then
+if [ "${E2E_LEGACY:-0}" != 1 ]; then
+  # An opaque command already admitted by the pool owns the external reservation.
+  [ "${MI_BROWSER_POOL_EXTERNAL:-}" != 1 ] || exec "$@"
   exec node --import tsx "$root/tools/browser-pool/wrapper.ts" shared "$@"
+fi
+export BROWSER_POOL=off
+slots="${E2E_SLOTS:-2}"
+if ! command -v lockf >/dev/null 2>&1; then
+  [ "${MI_E2E_JOB_HELD:-}" != 1 ] || exec "$@"
+  fallback_seconds="${E2E_RESERVATION_SECONDS:-600}"
+  case "$fallback_seconds" in ''|*[!0-9]*|0) echo 'E2E_RESERVATION_SECONDS must be a positive integer' >&2; exit 2;; esac
+  [ "$fallback_seconds" -le 600 ] || { echo 'Browser reservations are capped at 10 minutes; split the batch.' >&2; exit 2; }
+  fallback_run=$((fallback_seconds - 5)); [ "$fallback_run" -gt 0 ] || fallback_run=1
+  exec python3 "$root/tools/browser-job.py" --seconds "$fallback_run" -- "$@"
 fi
 if [ "${MI_E2E_JOB_HELD:-}" != 1 ]; then
   export MI_E2E_JOB_HELD=1
@@ -55,10 +56,12 @@ if [ -n "${MI_E2E_LOCK_HELD:-}" ]; then
   exec "$@"
 fi
 export MI_E2E_LOCK_HELD=1 MI_E2E_UNITS_HELD="$units"
-if [ -n "${E2E_RESERVATION_SECONDS:-}" ]; then
-  case "$E2E_RESERVATION_SECONDS" in ''|*[!0-9]*|0) printf '%s\n' 'E2E_RESERVATION_SECONDS must be a positive integer' >&2; exit 2;; esac
-  set -- python3 "$root/tools/browser-job.py" --seconds "$E2E_RESERVATION_SECONDS" -- "$@"
-fi
+reservation_seconds="${E2E_RESERVATION_SECONDS:-600}"
+case "$reservation_seconds" in ''|*[!0-9]*|0) printf '%s\n' 'E2E_RESERVATION_SECONDS must be a positive integer' >&2; exit 2;; esac
+[ "$reservation_seconds" -le 600 ] || { echo 'Browser reservations are capped at 10 minutes; split the batch.' >&2; exit 2; }
+run_seconds=$((reservation_seconds - 5)); [ "$run_seconds" -gt 0 ] || run_seconds=1
+set -- python3 "$root/tools/browser-job.py" --seconds "$run_seconds" -- "$@"
+export MI_WAIT_KIND=browser MI_WAIT_STARTED="$(node -p 'Date.now()')"
 base="${E2E_LOCK:-/tmp/minor-incident-e2e.lock}"
 # The command may itself return 75. Record admission so that it is never mistaken for
 # lockf's busy status and executed again. Keep command stderr; -s silences only lockf.

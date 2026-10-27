@@ -180,7 +180,7 @@ class CivilianBatch extends Group {
     baked.geometry.setAttribute('_clip_frame', this.frame); baked.geometry.setAttribute('_variant', this.tint); baked.geometry.setAttribute('_overlay', this.overlay);
     this.bakedClip = baked.clip;
     this.poses = new CrowdPosePalette(baked.clip, this.capacity); this.texture = this.poses.texture;
-    const shared = civilianMaterial(this.shading, baked.doubleSided, this.bakedClip.parts.indexOf('handR'), this.texture, { bindRow: this.poses.bindRow, skinned: !!baked.clip.binds, atlas: baked.texture });
+    const shared = civilianMaterial(this.shading, baked.doubleSided, this.bakedClip.parts.indexOf('handR'), this.texture, { bindRow: this.poses.bindRow, skinned: !!baked.clip.binds, atlas: baked.texture, toyEyes: !!baked.clip.binds && !!baked.texture && toyEyeModels.has(this.model) });
     const material = shared.material; this.releaseMaterial = shared.release;
     const surface = this.surface = { bind: () => shared.bindTexture(this.texture, baked.texture), textures: baked.texture ? [baked.texture] : [] };
     crowdSurfaceBindings.set(baked.geometry, surface);
@@ -317,7 +317,7 @@ class CivilianBatch extends Group {
     else this.shirt.copy(crowdShirt(e.id));
     writeCrowdAppearance(this.tint, index, e.id, this.shirt, blend, this.accessories?.slot(e), this.accessories?.hidesHair(e, this.lod));
     const figure = this.probe.figures.at(-1);
-    if (this.probe.details && figure?.id === e.id) figure.appearance = renderedCrowdLook(e.id, this.model, this.mesh.geometry, this.shirt, this.accessories?.drawnSlot(e, this.lod) ?? null);
+    if (__QA_HOOKS__ && this.probe.details && figure?.id === e.id) figure.appearance = renderedCrowdLook(e.id, this.model, this.mesh.geometry, this.shirt, this.accessories?.drawnSlot(e, this.lod) ?? null);
   }
   private readonly deadFeet = new Map<number, { id: number; x: number; y: number; z: number }>();
   /** Scene Lab probe: dead pedestrian-look infected as drawn (feet position), frozen corpses included. */
@@ -401,6 +401,8 @@ class CivilianBatch extends Group {
 }
 
 /** Five civilian silhouettes share rigid-part LOD batches and the E07 clip path. */
+/** Spectacled textured figures whose painted eyes do not read at game size (crowd-texture-quality). */
+const toyEyeModels = new Set(['npc.civilian-woman-b', 'npc.civilian-elderly']);
 export class CivilianCrowd extends Group {
   private readonly batches: CivilianBatch[];
   private readonly props: RoutineProps;

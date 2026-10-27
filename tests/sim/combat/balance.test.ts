@@ -11,6 +11,8 @@ test('T-E05-14 T-E06-10 @E05 @E05-AC14 @E06 @E06-AC10 measure every reference we
   const rows = [];
   for (const weapon of Object.values(actions)) for (const [name, archetype] of Object.entries(combatArchetypes)) {
     const w = await arena(); equip(w, [weapon.id]); w.combat!.damage.god = true;
+    const attacks = new Set<string>();
+    w.events.on('combat.attack', e => { if (e.type === 'combat.attack' && e.sourceId === 1) attacks.add(e.actionId); });
     const id = w.spawnDummy(`infected.${name}`, { x: 1.2, z: 0 }, { ...archetype, yaw: 0 }), target = w.entities.get(id)!;
     const frame = emptyInput(); frame.aim = { x: 1, z: 0 }; frame.aimPoint = { x: 1.2, z: 0 }; frame.left.held = true;
     for (let tick = 0; tick < 9000 && target.health.current > 0; tick++) {
@@ -18,16 +20,19 @@ test('T-E05-14 T-E06-10 @E05 @E05-AC14 @E06 @E06-AC10 measure every reference we
       frame.aim!.x = distance ? dx / distance : 1; frame.aim!.z = distance ? dz / distance : 0;
       frame.aimPoint!.x = target.transform.x; frame.aimPoint!.z = target.transform.z;
       frame.move.x = distance > 1.3 ? frame.aim!.x : 0; frame.move.z = distance > 1.3 ? frame.aim!.z : 0;
-      frame.left.down = (weapon.category === 'throwable' && w.combat!.projectiles.length === 0) || weapon.category === 'ability';
+      // Q-161 deliberately selects another weapon on an empty trigger. This protocol measures
+      // only the reference weapon: wait for its charge instead of measuring fallback fist damage.
+      const loadout = w.combat!.runner.loadout;
+      frame.left.down = ((weapon.category === 'throwable' && w.combat!.projectiles.length === 0) || weapon.category === 'ability') && loadout.hasAmmo(loadout.current('LEFT'));
       w.applyInput(frame, 'keyboard'); w.update();
     }
     const seconds = w.tick / 60, band = ttkBands[weapon.id][name as keyof typeof combatArchetypes];
-    rows.push({ weapon: weapon.id, archetype: name, ticks: w.tick, seconds, band, killed: target.health.current === 0 });
+    rows.push({ weapon: weapon.id, archetype: name, ticks: w.tick, seconds, band, killed: target.health.current === 0, attacks: [...attacks] });
     w.dispose();
   }
   mkdirSync('test-results/balance', { recursive: true }); writeFileSync('test-results/balance/ttk.json', JSON.stringify({ protocol: 'Rear shield exposure, no upgrades, 1.2m initial range, chase knockback, serial aimed grenades, default assist', rows }, null, 2));
   expect(rows).toHaveLength(Object.keys(actions).length * Object.keys(combatArchetypes).length);
-  for (const row of rows) { expect(row.killed, `${row.weapon} × ${row.archetype}`).toBe(true); expect(row.seconds, JSON.stringify(row)).toBeGreaterThanOrEqual(row.band[0]); expect(row.seconds, JSON.stringify(row)).toBeLessThanOrEqual(row.band[1]); }
+  for (const row of rows) { expect(row.attacks, `${row.weapon} × ${row.archetype}: reference weapon only`).toEqual([row.weapon]); expect(row.killed, `${row.weapon} × ${row.archetype}`).toBe(true); expect(row.seconds, JSON.stringify(row)).toBeGreaterThanOrEqual(row.band[0]); expect(row.seconds, JSON.stringify(row)).toBeLessThanOrEqual(row.band[1]); }
 });
 
 test('S-05-combat @E05 @smoke 1800 combat ticks match a pinned golden gameplay hash', async () => {

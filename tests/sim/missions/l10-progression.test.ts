@@ -26,7 +26,9 @@ test('T-E32-01 @E32 @E32-AC01 ordered graph prevents skipping arsenal, cure and 
   expect(cureRegions.reduce((n, r) => n + r.routeMetres, 0)).toBe(4300);
   while (m.state.steps.hold.status !== 'active') m.completeObjective();
   m.state.counters['charge-ticks'] = 3600; m.setState('charge-active', true);
-  m.setState('mega-dead', false); world.update(); expect(m.state.steps.hold.status).toBe('active');
+  m.setState('mega-dead', false); world.update();
+  expect(m.state.steps.hold.status).toBe('completed'); expect(m.state.steps.mega.status).toBe('active');
+  expect(m.state.steps.release.status).toBe('pending');
   m.setState('mega-dead', true); world.update(); expect(m.state.steps.release.status).toBe('active');
   expect(m.state.steps.epilogue.status).toBe('pending');
   world.setInput({ interact: true }); world.update(); world.clearInput(); expect(m.state.steps.epilogue.status).toBe('active');
@@ -97,7 +99,7 @@ test('T-E32-27b @E32 @E32-AC27 live progress reload retains the prior retry snap
   m.restore(); expect(m.state.states['terminal-read']).toBe(false);
 });
 
-for (const quality of ['high','low'] as const) test(`T-E32-27-chunks-${quality} @E32 @E32-AC27 @E32-AC28 region retry and fresh reload restore inactive chunks and the same Mega`, () => {
+for (const quality of ['high','low'] as const) test(`T-E32-27-chunks-${quality} @nightly @E32 @E32-AC27 @E32-AC28 region retry and fresh reload restore inactive chunks and the same Mega`, () => {
   world.reset();
   const layout = JSON.parse(readFileSync('public/assets/layouts/D-CROSSING.layout.json', 'utf8'));
   // This shared-streamer fixture deliberately uses Crossing geometry, under the L10 mission.

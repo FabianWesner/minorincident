@@ -25,7 +25,7 @@ test('T-E07-09 @E07 @E07-AC09 150-infected stream follows spline on time and fan
   mkdirSync('test-results/epics/E07', { recursive: true }); writeFileSync('test-results/epics/E07/migration.json', JSON.stringify({ requested: m.requested, arrived: m.arrived, expectedSeconds: m.expectedSeconds, actualSeconds: w.tick / 60, fanRadius: 4.5 }, null, 2) + '\n');
   const before = w.infected!.active.map((e) => ({ ...e.transform })); step(w, 30); expect(w.infected!.active.filter((e, i) => Math.hypot(e.transform.x - before[i].x, e.transform.z - before[i].z) > 0.5).length).toBeGreaterThan(100);
 });
-test('T-E07-10 @E07 @E07-AC10 five-minute spawn/kill cycle reuses prewarmed entity objects', async () => {
+test('T-E07-10 @E07 @E07-AC10 @nightly five-minute spawn/kill cycle reuses prewarmed entity objects', async () => {
   const w = await arena(), ai = w.infected!, allocated = ai.counters.allocated, records = new Set(ai.pool); w.combat!.damage.god = true; let allRecordsReused = true;
   // This fixture measures reuse/retention. Keep idle brains out of perception;
   // the following fixture measures 200 active chasing brains separately.

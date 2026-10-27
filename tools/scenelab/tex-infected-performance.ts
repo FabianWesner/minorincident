@@ -1,4 +1,4 @@
-/** Native low-tier A/B. quiet-run owns the GPU; both roots serve remote production builds. */
+/** Native low-tier A/B. quiet-run owns the GPU; both roots serve remote QA builds. */
 import type { Game } from '../../src/Game';
 import { resolve } from 'node:path';
 import { execFileSync } from 'node:child_process';

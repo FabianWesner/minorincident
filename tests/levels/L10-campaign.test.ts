@@ -5,7 +5,7 @@ import { completeCampaignLevel } from '../../src/sim/progression/carryover';
 import { validateSave } from '../../src/sim/progression/Save';
 import { runLevel, type LevelReport, type RunnerLevel } from '../../tools/sim-runner/levels';
 
-test('T-E32-32 @E32-AC32 continuous seed 1 L1 through L10 reaches credits with real campaign handovers', async () => {
+test('T-E32-32 T-E31-20 T-E24-08 @E32-AC32 @E31-AC20 @E24-AC08 @nightly continuous seed 1 L1 through L10 reaches credits with real campaign handovers', async () => {
   const save = newCampaign('female', 1);
   const reports: (LevelReport & { racks: typeof save.racks; survivors: string[] })[] = [];
   const out = 'test-results/epics/E32/Q4/campaign-seed-1.json';
@@ -14,8 +14,18 @@ test('T-E32-32 @E32-AC32 continuous seed 1 L1 through L10 reaches credits with r
       const level = `L${n}` as RunnerLevel;
       const transport = structuredClone(save.transport);
       const abilities = save.ownedActions.filter(id => id.startsWith('ability.'));
+      const racks = structuredClone(save.racks);
+      const survivors = [...save.survivors ?? []];
       const report = await runLevel(level, 'complete', save.seed, n === 10 ? 3600 : 1200, 'auto', save, (world, result) => {
         // Match Game's completion callback, including the exact zoo APC payload.
+        if (n === 6) {
+          const held = world.entities.get(1)!.weapons!;
+          expect({ LEFT: held.LEFT.rack.map(s => s.id), RIGHT: held.RIGHT.rack.map(s => s.id) }).toEqual(racks);
+          expect(survivors).toEqual(save.results!.L5.survivors);
+          const roster = world.missions!.state.l6!.survivors;
+          expect(roster.slice(0, save.stationOccupants!.length).map(e => e.id)).toEqual(save.stationOccupants!.map(e => e.id));
+          expect(roster.slice(save.stationOccupants!.length).map(e => e.key)).toEqual(survivors);
+        }
         if (n === 7) expect(world.l7Encounters!.state.roster.map(r => r.id)).toEqual(save.results!.L6.escapedSurvivors!.map(e => e.id));
         if (n === 8) {
           expect(world.missions!.l8!.state.roster).toEqual(save.results!.L7.escapedSurvivors!.map(e => e.id));
@@ -54,6 +64,7 @@ test('T-E32-32 @E32-AC32 continuous seed 1 L1 through L10 reaches credits with r
       if (n === 9) {
         expect(save.racks).toEqual({ LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.fire-axe'] });
         expect(save.ownedActions.filter(id => id.startsWith('weapon.'))).toEqual(['weapon.fire-axe']);
+        expect(save.selectedAction).toBe('weapon.fire-axe');
         expect(save.ownedActions.filter(id => id.startsWith('ability.'))).toEqual(abilities);
         expect(save.crossingHandover!.shelteredPassengers.map(e => e.id)).toEqual(transport!.occupants.filter(e => e.id !== 1 && !e.companion).map(e => e.id));
       }

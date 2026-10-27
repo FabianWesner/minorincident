@@ -1,4 +1,5 @@
-import { chromium, devices } from '@playwright/test';
+import { launchBrowser } from '../browser-pool/client';
+import { devices } from '@playwright/test';
 import { spawn } from 'node:child_process';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
@@ -19,7 +20,7 @@ catch {
   }
   if (!ready) { server.kill(); throw new Error(`Motion lab server did not start on ${port}`); }
 }
-const browser = await chromium.launch({ headless: true, args: process.platform === 'darwin' ? ['--use-angle=metal', '--ignore-gpu-blocklist', '--enable-gpu'] : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+const browser = await launchBrowser({ headless: true, args: process.platform === 'darwin' ? ['--use-angle=metal', '--ignore-gpu-blocklist', '--enable-gpu'] : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
 const errors: string[] = [], reports: Record<string, unknown> = {};
 try {
   for (const profile of ['desktop', 'pixel7']) {

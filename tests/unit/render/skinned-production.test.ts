@@ -89,7 +89,7 @@ test('severed skinned corpses retain only the requested cap and exclude every re
   corpses.dispose(); material.dispose(); geometry.dispose();
 });
 
-test('production indexed skin batches retain a constant, correct severance mask on each triangle', async () => {
+test('production @nightly indexed skin batches retain a constant, correct severance mask on each triangle', async () => {
   for (const id of ['inf.common-worker', 'inf.nurse', 'inf.dog', 'inf.zebra']) {
     const { geometry, clip } = await baked(id), index = geometry.getIndex()!, tags = geometry.getAttribute('_parts'), skin = geometry.getAttribute('_skin');
     const groups = crowdLimbParts(clip.parts.includes('legFL'));

@@ -38,7 +38,7 @@ function startPickup(world: SimWorld, mission: Mission, offset: P): void {
   world.setInput({ interact: true }); world.update(); world.clearInput();
 }
 
-test.each([[0, 1.9], [-1.3, 1.2], [1.4, 1.2], [.5, 1.8]] as const)('@E19 depot clerk walks out of the door and back in (courier at counter %+.1f, %+.1f)', async (dx, dz) => {
+test.each([[0, 1.9], [-1.3, 1.2], [1.4, 1.2], [.5, 1.8]] as const)('@E19 depot clerk walks out of the door and back in (courier at counter %s, %s)', async (dx, dz) => {
   const { world, mission } = await loadL1(1);
   try {
     startPickup(world, mission, { x: dx, z: dz });

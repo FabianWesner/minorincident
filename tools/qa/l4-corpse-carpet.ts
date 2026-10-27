@@ -1,4 +1,4 @@
-/** Q-166 PO views. Run under tools/e2e-lock.sh after a production build. */
+/** Q-166 PO views. Run under tools/e2e-lock.sh after a QA build. */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { launchBrowser } from '../browser-pool/client';

@@ -1,5 +1,5 @@
+import { launchBrowser } from '../browser-pool/client';
 /** Reference | three authored tiers | shipped peer at the fixed game camera. */
-import { chromium } from '@playwright/test';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { PNG } from 'pngjs';
 import { referenceFor } from './turntable';
@@ -7,7 +7,7 @@ import manifest from '../../src/assets/manifest.json';
 import type { AssetDef } from '../../src/assets/types';
 
 const output = process.argv[2] ?? 'test-results/l5-five-survivor-aftermath';
-const browser = await chromium.launch({ headless: true, args: ['--use-angle=metal'] });
+const browser = await launchBrowser({ headless: true, args: ['--use-angle=metal'] });
 try {
   const page = await browser.newPage({ viewport: { width: 300, height: 260 }, deviceScaleFactor: 1 });
   await page.goto(`http://127.0.0.1:${process.env.E2E_PORT ?? 3317}/preview/?asset=npc.dale.aftermath&test=1&renderer=webgl&production=1`);

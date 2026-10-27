@@ -22,7 +22,7 @@ function die(w: SimWorld): void {
   expect(player.survivor!.invulnerableUntil - w.tick).toBeGreaterThan(0);
 }
 
-test('L4 @E22 @E22-AC17 three deaths after Fall back still reach the cellar from the escape checkpoint', async () => {
+test('L4 @E22 @E22-AC17 three deaths @nightly after Fall back still reach the cellar from the escape checkpoint', async () => {
   const l = await loadL4(2); world = l.world;
   runL4(world, l.mission, 'complete', { stopWhen: m => m.state.checkpoint === 'line-break' });
   expect(l.mission.state.checkpoint).toBe('line-break');
@@ -46,7 +46,7 @@ test('L4 @E22 @E22-AC17 three deaths after Fall back still reach the cellar from
   expect(l.mission.state.stats.deaths).toBeGreaterThanOrEqual(3);
 }, HEAVY);
 
-test('L4 @E22 @E22-AC17 a mid-war death keeps lost lines, soldiers, and the collapse clock', async () => {
+test('L4 @E22 @E22-AC17 a mid-war death @nightly keeps lost lines, soldiers, and the collapse clock', async () => {
   const l = await loadL4(2); world = l.world;
   runL4(world, l.mission, 'complete', { stopWhen: m => m.state.checkpoint === 'line-1' });
   expect(l.mission.state.checkpoint).toBe('line-1');

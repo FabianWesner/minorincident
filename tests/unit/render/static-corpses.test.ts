@@ -279,7 +279,8 @@ test('@E18 frozen corpses retain xyz normals after backend vec4 padding', () => 
     pool.place({ id: 1 } as EntitySnapshot, 'runner', baked.geometry, material, baked.clip, 0, new Matrix4(), new Color('white'), [0, 0, 0]);
     const geometry = (pool.children[0] as InstancedMesh).geometry, normal = geometry.getAttribute('normal');
     expect(normal.itemSize).toBe(3); expect(normal.count).toBe(geometry.getAttribute('position').count);
-    expect(normal.array).toEqual(expected);
+    // Pages interleave their static surface (Q-201): compare the attribute's own components.
+    expect(Float32Array.from({ length: normal.count * 3 }, (_, i) => normal.getComponent(Math.floor(i / 3), i % 3))).toEqual(expected);
   } finally { pool.dispose(); baked.geometry.dispose(); material.dispose(); }
 });
 

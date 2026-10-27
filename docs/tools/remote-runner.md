@@ -10,6 +10,8 @@ Use the pool for CPU suites (unit, levels and sim; at most four Vitest workers).
 ```sh
 # unit / sim / levels
 sh tools/remote/run.sh $PWD -- npx vitest run tests/levels/L2.test.ts --maxWorkers=2
+# Timing budgets: reserve both runner slots for the measured gate command.
+sh tools/remote/run.sh "$PWD" -- bash tools/remote/timing-isolated.sh --whole-run npm run test:gate
 # result files back to your worktree (paths relative to the repo root; pulled even when the command fails)
 sh tools/remote/run.sh $PWD --pull test-results/playwright/results.json -- sh -c 'npm run build && npx playwright test tests/e2e/smoke.spec.ts --project=chromium --workers=2'
 # extra env / paths that are normally not synced
@@ -18,6 +20,7 @@ sh tools/remote/status.sh        # servers, slots, queue, load, price
 ```
 * Do NOT wrap in `sim-lock.sh` / `e2e-lock.sh` (they are Mac locks; on the runner the slot limit does that). Use `--maxWorkers=2` / `--workers=2`.
 * The exit code is the remote command's. Output streams live. If all slots are busy the call waits (queue).
+* `timing-isolated.sh` reserves both runner slots in order. Its default mode releases the extra slot when Vitest reaches functional tests. Add `--whole-run` for gate/nightly wall-time measurements so another CPU job cannot distort either the 4/6 ms budgets or the measured duration. Existing jobs finish before admission; locks release when the command exits. Queue/sync time is separate from test execution time.
 * Playwright needs a build first: put `npm run build &&` in the command (`dist/` is not synced). Linux uses SwiftShader (no GPU), the config handles that.
 * Synced: tracked + untracked-not-ignored files. Not synced: `node_modules`, `dist`, `.git`, `test-results/`, `initial-drafts/`, `experiment/`, `references/`, `drafts-pipeline/`, `epics-pipeline/`, `folio-2025/`, and `assets/**/*.{blend,wav,ogg,mp3,webm,mp4}`. Use `--with <path>` to add one.
 * `node_modules` is installed with `npm ci` only when `package.json`/`package-lock.json` changed (cached by hash on the runner, hardlinked into each workspace).

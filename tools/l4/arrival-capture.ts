@@ -1,4 +1,4 @@
-import { chromium } from '@playwright/test';
+import { launchBrowser } from '../browser-pool/client';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { attachErrorGuard } from '../../tests/e2e/fixtures';
 
@@ -10,7 +10,7 @@ const renderer = process.argv[2] === 'webgpu' ? 'webgpu' : 'webgl';
 const quality: 'high' | 'low' = process.argv[3] === 'high' ? 'high' : 'low';
 const output = 'test-results/l4-civilians-stay/finish';
 mkdirSync(output, { recursive: true });
-const browser = await chromium.launch({ headless: true, args: ['--use-angle=metal', '--ignore-gpu-blocklist', '--enable-gpu', ...(renderer === 'webgpu' ? ['--enable-unsafe-webgpu'] : [])] });
+const browser = await launchBrowser({ headless: true, args: ['--use-angle=metal', '--ignore-gpu-blocklist', '--enable-gpu', ...(renderer === 'webgpu' ? ['--enable-unsafe-webgpu'] : [])] });
 const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
 const guard = attachErrorGuard(page);
 try {

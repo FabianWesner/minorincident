@@ -5,9 +5,9 @@ import { pickBodies } from './PickBodies';
 
 /** Draw-submission and ankle probes, read only by the query-gated test API. */
 export class CrowdFigureProbe {
-  private readonly enabled = typeof location !== 'undefined' && new URLSearchParams(location.search).has('test');
+  private readonly enabled = __QA_HOOKS__ && typeof location !== 'undefined' && new URLSearchParams(location.search).has('test');
   /** Native timing retains submission proof without collecting footwork diagnostics. */
-  readonly details = typeof location === 'undefined' || new URLSearchParams(location.search).get('crowdProbe') !== 'drawn';
+  readonly details = __QA_HOOKS__ && (typeof location === 'undefined' || new URLSearchParams(location.search).get('crowdProbe') !== 'drawn');
   /** Detail tier of the batch that drew the figure (guards against close figures in the far silhouette tier). */
   lod?: 'lod0' | 'lod1' | 'lod2';
   readonly figures: { appearance?: CrowdLook; severance?: number; id: number; instanceKey?: string; lod?: 'lod0' | 'lod1' | 'lod2'; clip: string; phase: number; drawn: boolean; feet: number[][]; scale?: number[]; soles?: number[][]; joints?: Record<string, number[]>; forward?: number[] }[] = [];
@@ -15,13 +15,14 @@ export class CrowdFigureProbe {
   static joints = false;
   private readonly matrix = new Matrix4();
   private readonly point = new Vector3();
-  begin(): void { this.figures.length = 0; }
-  draw(): void { for (const figure of this.figures) figure.drawn = true; }
+  begin(): void { if (__QA_HOOKS__) this.figures.length = 0; }
+  draw(): void { if (__QA_HOOKS__) for (const figure of this.figures) figure.drawn = true; }
   /** Sole (heel/toe) points need the rest ankle height in foot-local units (CrowdLocomotion.sole). */
   sole = 0;
   private animalSoles: { part: string; heel: Vector3; toe: Vector3 }[] = [];
   /** Probe actual paw/hoof geometry, never the animal rig's dummy humanoid feet. */
   animal(model: Object3D): void {
+    if (!__QA_HOOKS__) return;
     model.updateMatrixWorld(true);
     const declared = model.getObjectByName('root')?.userData.animalSoles as Record<string, number[][]> | undefined;
     if (declared) {
@@ -45,7 +46,7 @@ export class CrowdFigureProbe {
   }
   add(id: number, clip: string, phase: number, instance: Matrix4, palette: CrowdPosePalette, frame: number, outgoing: number, weight: number, geometry?: BufferGeometry, cutMask = 0): void {
     pickBodies.add(id, instance, palette, frame, outgoing, weight, geometry, cutMask);
-    if (!this.enabled) return;
+    if (!__QA_HOOKS__ || !this.enabled) return;
     if (!this.details && !CrowdFigureProbe.joints) { this.figures.push({ id, lod: this.lod, clip, phase, drawn: false, feet: [] }); return; }
     // Ordinary test/perf snapshots need two feet, not a newly allocated full
     // skeleton per figure per frame. Scene Lab still records every requested joint.

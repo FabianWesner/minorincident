@@ -42,21 +42,21 @@ for (const obstruction of ['range', 'hidden', 'wall'] as const) test(`T-E22-12-v
 
 for (const gun of ['rifle', 'hmg', 'pistol', 'legacy'] as const) test(`T-E22-09-shot-block-${gun} @E22-AC09 a panicking human suppresses allied shots, including a pending shot, until clear`, async () => {
   // A pending pistol shot requires a target inside its actual 12 m range.
-  const targetX = gun === 'pistol' ? -10 + l4.civilians.pistol.rangeM - 2 : 8;
+  const targetX = gun === 'pistol' ? -10 + l4.civilians.pistol.rangeM - 2 : 8, crossingX = (-10 + targetX) / 2;
   const w = await arena(), e = soldier(w, -10, 0), alpha = spawn(w, 'alpha', targetX, 0, 'idle');
   move(w, w.entities.get(1)!, 0, -10);
-  const human = w.entities.get(w.npcs!.civilians.spawn('cashier', { x: -1, z: 3 }))!;
+  const human = w.entities.get(w.npcs!.civilians.spawn('cashier', { x: crossingX, z: 3 }))!;
   human.civilian!.state = 'flee';
   if (gun === 'hmg') e.civilian!.ally!.gun = { ...l4.soldiers.hmg };
   if (gun === 'pistol') { e.civilian!.ally!.role = 'civilian'; e.civilian!.ally!.gun = { ...l4.civilians.pistol }; }
   if (gun === 'legacy') { e.civilian!.ally!.gun = undefined; e.civilian!.ally!.range = 26; }
   // Acquire and raise the gun, then the civilian crosses before the next tick resolves it.
   fire(w, [e], 1); expect(e.civilian!.ally!.strikeAt).toBeGreaterThan(0);
-  move(w, human, -1, 0); const hp = alpha.health.current, humanHp = human.health.current;
+  move(w, human, crossingX, 0); const hp = alpha.health.current, humanHp = human.health.current;
   fire(w, [e], 60);
   expect(alpha.health.current).toBe(hp); expect(human.health.current).toBe(humanHp);
   expect(w.events.events().filter(ev => ev.type === 'ally.attack' && ev.sourceId === e.id)).toHaveLength(0);
-  move(w, human, -1, 3); fire(w, [e], 300);
+  move(w, human, crossingX, 3); fire(w, [e], 300);
   expect(w.events.events().some(ev => ev.type === 'combat.hit' && ev.sourceId === e.id && ev.targetId === alpha.id)).toBe(true);
   expect(human.health.current).toBe(humanHp);
 });

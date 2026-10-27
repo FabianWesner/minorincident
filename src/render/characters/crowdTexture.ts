@@ -23,8 +23,12 @@ export function crowdTexture(root: Object3D): Texture | undefined {
 }
 /** One static buffer leaves room for matrix and instance state on both backends. */
 export function interleaveTexturedCrowd(geometry: BufferGeometry): void {
-  if (!geometry.hasAttribute('uv')) return;
-  const names = ['position', 'normal', 'color', 'uv', '_parts', ...(geometry.hasAttribute('_skin') ? ['_skin'] : [])];
+  if (geometry.hasAttribute('uv')) interleaveCrowdSurface(geometry);
+}
+/** Interleave the immutable per-vertex surface (whichever of position/normal/color/uv/_parts/_skin exist) into one
+ * buffer. Frozen corpse pages bind placement, colour and three instance channels on top (Q-201: <= 7 buffers). */
+export function interleaveCrowdSurface(geometry: BufferGeometry): void {
+  const names = ['position', 'normal', 'color', 'uv', '_parts', '_skin'].filter(name => geometry.hasAttribute(name));
   const attributes = names.map(name => geometry.getAttribute(name));
   const stride = attributes.reduce((sum, a) => sum + a.itemSize, 0);
   const buffer = new InterleavedBuffer(new Float32Array(attributes[0].count * stride), stride);

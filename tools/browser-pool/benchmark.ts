@@ -91,7 +91,7 @@ try {
           : [process.execPath, '--import', 'tsx', 'tools/browser-pool/lane-load.ts', resolve(dir, 'lanes.json')];
         const args = phase === 'before' ? ['--import', 'tsx', 'tools/browser-pool/legacy-run.ts', ...command] : ['--import', 'tsx', 'tools/browser-pool/wrapper.ts', 'shared', ...command];
         const requestedAt = Date.now();
-        const child = start(args, { BROWSER_POOL_JOB_ID: id, BROWSER_POOL_ADMISSION_FILE: admission, BENCH_REPORT: report, BENCH_ARTIFACTS: resolve(dir, 'artifacts'), ...(phase === 'before' ? { BROWSER_POOL: 'off' } : {}) });
+        const child = start(args, { BROWSER_POOL_JOB_ID: id, BROWSER_POOL_ADMISSION_FILE: admission, BENCH_REPORT: report, BENCH_ARTIFACTS: resolve(dir, 'artifacts'), ...(phase === 'before' ? { E2E_LEGACY: '1', BROWSER_POOL: 'off' } : {}) });
         let log = ''; child.stdout!.on('data', b => { log += b; }); child.stderr!.on('data', b => { log += b; });
         const code = await new Promise<number>((resolve, reject) => { child.once('error', reject); child.once('exit', code => resolve(code ?? 1)); });
         writeFileSync(resolve(dir, 'command.log'), log);

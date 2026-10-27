@@ -2,7 +2,7 @@ import { expect, test } from 'vitest';
 import { respawnAtCheckpoint, respawnRule } from '../../src/sim/missions/Respawn';
 import { forecourt } from '../fixtures/l1Forecourt';
 
-test.each(['high', 'low'] as const)('PO #3/#4b @E19 %s: 28 living infected, bounded forecourt attackers and bike reachable within 20 s', async tier => {
+test.each(['high', 'low'] as const)('PO @nightly #3/#4b @E19 %s: 28 living infected, bounded forecourt attackers and bike reachable within 20 s', async tier => {
   const { w, mission, bike } = await forecourt();
   try {
     w.npcs!.setQuality(tier);

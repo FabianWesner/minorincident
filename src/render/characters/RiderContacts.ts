@@ -12,4 +12,4 @@ export class RiderContacts {
 
 /** Fitted couriers are the default; skin=0 retains the rigid fallback. */
 export const DEFAULT_SKIN = true;
-export function useSkinnedCourier(params: URLSearchParams): boolean { return params.get('skin') === '1' || !params.has('skin') && DEFAULT_SKIN; }
+export function useSkinnedCourier(params: URLSearchParams): boolean { return !__QA_HOOKS__ || params.get('skin') === '1' || !params.has('skin') && DEFAULT_SKIN; }

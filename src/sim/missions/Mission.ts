@@ -5,6 +5,7 @@ import { transactArsenal } from '../progression/arsenal';
 import { LevelNineCrash } from './LevelNineCrash';
 import { LevelEightZoo } from './LevelEightZoo';
 import { LevelSixSubway } from './LevelSixSubway';
+import { activeInteractions, interactTrigger } from './interaction';
 // Zones enter/leave latching and named respawns adapted from Bruno Simon folio-2025
 // Zones.js / Respawns.js (MIT, 41046b5). State belongs to the fixed-step sim.
 import { LevelOneOutbreak } from './LevelOneOutbreak';
@@ -128,29 +129,17 @@ export class Mission {
   interactSnap(p: { x: number; z: number }): { x: number; z: number } {
     if (this.state.phase !== 'playing') return p;
     for (const def of this.def.steps) {
-      const trigger = this.interactTrigger(def.complete);
+      const trigger = interactTrigger(def.complete);
       if (this.state.steps[def.id].status !== 'active' || !trigger || trigger.actor) continue;
       const a = this.def.anchors[trigger.anchor];
       if (Math.hypot(p.x - a.x, p.z - a.z) <= a.radius + CLICK_SNAP_M) return { x: a.x, z: a.z };
     }
     return p;
   }
-  /** True while the player stands in an active step's interact ring: an `E` press belongs to the objective
-   * (E19 QA1-01: pick up the parcel without also leaving the bicycle). */
-  /** The active interact step whose ring the player stands in (HUD prompt), or null. */
-  private interactTrigger(t: Trigger): Extract<Trigger, { kind: 'interact' }> | undefined {
-    if (t.kind === 'interact') return t;
-    if (t.kind === 'all') for (const child of t.triggers) { const found = this.interactTrigger(child); if (found) return found; }
-    return undefined;
-  }
+  /** The active interact step whose ring the player stands in (an `E` press belongs to the objective: E19 QA1-01), or null. */
   interactStepInRange(): ObjectiveDef | null {
     if (this.state.phase !== 'playing') return null;
-    if (this.l10 && this.state.steps.hold.status === 'active' && !this.state.states['charge-active'] && this.def.anchors['cure-console'] && this.inside('cure-console')) {
-      const hold = this.def.steps.find(s => s.id === 'hold')!;
-      return { ...hold, text: 'Activate the dispersal console', type: 'interact', complete: { kind: 'interact', anchor: 'cure-console', seconds: .6 } };
-    }
-    const step = this.def.steps.find(def => this.state.steps[def.id].status === 'active' && this.interactTrigger(def.complete) && this.inside(this.interactTrigger(def.complete)!.anchor));
-    return step ? { ...step, complete: this.interactTrigger(step.complete)! } : null;
+    return activeInteractions(this).find(i => this.inside(i.trigger.anchor))?.step ?? null;
   }
   interactionAvailable(): boolean {
     return this.interactStepInRange() !== null;

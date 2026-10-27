@@ -36,7 +36,7 @@ function drain(): void {
     slot.job = queue.shift()!;
     // CDP's page CPU throttle does not cover worker threads. The diagnostic
     // phone run scales preparation time; the worker excludes HTTP wait time.
-    const cpuRate = Number(new URLSearchParams(location.search).get('workerCpu') ?? 1);
+    const cpuRate = __QA_HOOKS__ ? Number(new URLSearchParams(location.search).get('workerCpu') ?? 1) : 1;
     slot.worker.postMessage({ id: slot.job.id, model: slot.job.model, lod: slot.job.lod, source: slot.job.source, ...(slot.job.infected ? { infected: true } : {}), cpuRate: Number.isFinite(cpuRate) ? Math.max(1, cpuRate) : 1 });
   }
   if (!queue.length && workers.every(slot => !slot.job)) idle = setTimeout(() => { for (const slot of workers.splice(0)) slot.worker.terminate(); }, 250);

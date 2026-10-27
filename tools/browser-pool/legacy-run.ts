@@ -7,7 +7,7 @@ const release = await reserveLegacySlots();
 try {
   await gpuAdmission();
   if (process.env.BROWSER_POOL_ADMISSION_FILE) writeFileSync(process.env.BROWSER_POOL_ADMISSION_FILE, JSON.stringify({ at: Date.now() }));
-  const env: NodeJS.ProcessEnv = { ...process.env, BROWSER_POOL: 'off', MI_E2E_LOCK_HELD: '1', MI_E2E_UNITS_HELD: '4' };
+  const env: NodeJS.ProcessEnv = { ...process.env, E2E_LEGACY: '1', BROWSER_POOL: 'off', MI_E2E_LOCK_HELD: '1', MI_E2E_UNITS_HELD: '4' };
   delete env.MI_BROWSER_POOL; delete env.MI_BROWSER_POOL_WS;
   const child = spawn('python3', ['tools/browser-job.py', '--', ...process.argv.slice(2)], { stdio: 'inherit', env });
   process.on('SIGINT', () => child.kill('SIGINT')); process.on('SIGTERM', () => child.kill('SIGTERM'));

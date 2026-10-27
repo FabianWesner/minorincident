@@ -55,7 +55,7 @@ describe('L2 The Failed Rescue', () => {
     expect(t).toBeGreaterThanOrEqual(l2.bots.completeMedianS[0]); expect(t).toBeLessThanOrEqual(l2.bots.completeMedianS[1]);
   }, HEAVY);
 
-  test('T-E20-03 @E20 @E20-AC03 newbie single seed, median in band, median deaths <= 1; bat escape single seed', async () => {
+  test('T-E20-03 @E20 @nightly @E20-AC03 newbie single seed, median in band, median deaths <= 1; bat escape single seed', async () => {
     const newbie = await battery('newbie'), noAxe = await battery('no-axe');
     expect(newbie.filter(r => r.outcome === 'complete').length).toBeGreaterThanOrEqual(l2.bots.newbieMinSeeds);
     expect(median(newbie.map(r => r.deaths))).toBeLessThanOrEqual(l2.bots.newbieMaxMedianDeaths);
@@ -107,14 +107,14 @@ describe('L2 The Failed Rescue', () => {
     }
   }, HEAVY);
 
-  test('T-E20-07 @E20 @E20-AC07 snowball: idle courier (observer, no damage), rescue infected >= 20 at +60 s and >= 30 at +120 s, all by bites', async () => {
+  test('T-E20-07 @nightly @E20 @E20-AC07 snowball: idle courier (observer, no damage), rescue infected >= 20 at +60 s and >= 30 at +120 s, all by bites', async () => {
     const runs = await battery('idle', { god: true, stopAfterDoorsS: 125 });
     expect(median(runs.map(r => r.infectedAt[60].rescue))).toBeGreaterThanOrEqual(20);
     expect(median(runs.map(r => Math.min(r.infectedAt[120].rescue, l2.escape.caps.high)))).toBeGreaterThanOrEqual(30);
     expect(runs.every(r => r.infectedAt[0].rescue <= l2.rescue.ambush && r.doors!.nonBiteNearRescue === 0)).toBe(true);
   }, HEAVY);
 
-  test('T-E20-08 @E20 @E20-AC08 firefighters fight, turn with identity continuity, >= 2 turned by +90 s when idle, no immunity', async () => {
+  test('T-E20-08 @nightly @E20 @E20-AC08 firefighters fight, turn with identity continuity, >= 2 turned by +90 s when idle, no immunity', async () => {
     const runs = await complete(), idle = await battery('idle', { god: true, stopAfterDoorsS: 125 });
     expect(runs.filter(r => r.firefighterHits >= 1).length).toBeGreaterThanOrEqual(1);
     const turns = [...runs, ...idle].flatMap(r => r.crewTurns);
@@ -129,7 +129,7 @@ describe('L2 The Failed Rescue', () => {
     } });
   }, HEAVY);
 
-  test('T-E20-09 @E20 @E20-AC09 lesson: the aggressive axe kills >= 10 yet the outbreak grows and the courier falls; the disengaging bot survives', async () => {
+  test('T-E20-09 @nightly @E20 @E20-AC09 lesson: the aggressive axe kills >= 10 yet the outbreak grows and the courier falls; the disengaging bot survives', async () => {
     const observer = await battery('aggressive', { god: true, stopAfterDoorsS: 95 }), fair = await battery('aggressive', { stopAfterDoorsS: 121, stopAfterPlayerDeath: true });
     expect(observer.every(r => r.axe)).toBe(true);
     expect(observer.filter(r => r.killsNearDoors >= 10 && r.infectedAt[90].all >= r.infectedAt[10].all).length).toBeGreaterThanOrEqual(1);
@@ -179,7 +179,7 @@ describe('L2 The Failed Rescue', () => {
     record('layout-routes', { sideM: side.length * nav.cellSize, alarmM: alarm.length * nav.cellSize, alarms: w.toys!.alarmIds.length, dumpsters: w.toys!.dumpsterIds.length });
   });
 
-  test('T-E20-13 @E20 @E20-AC13 cluster of 12-16 on the approach; complete passes killing <= 50 %; side path and car alarm each suffice', async () => {
+  test('T-E20-13 @nightly @E20 @E20-AC13 cluster of 12-16 on the approach; complete passes killing <= 50 %; side path and car alarm each suffice', async () => {
     const side = await complete(), alarm = await battery('complete', { opening: 'alarm' });
     for (const r of side) { expect(r.cluster!.atApproach).toBeGreaterThanOrEqual(12); expect(r.cluster!.atApproach).toBeLessThanOrEqual(16); }
     expect(side.filter(r => r.clusterKilled <= r.clusterSize / 2).length).toBeGreaterThanOrEqual(1);
@@ -188,7 +188,7 @@ describe('L2 The Failed Rescue', () => {
     expect(alarm.filter(r => r.outcome === 'complete').length).toBeGreaterThanOrEqual(1);
   }, HEAVY);
 
-  test('T-E20-14 @E20 @E20-AC14 checkpoint: line composition, gate closes <= 1.5 s behind the courier, nothing crosses after, straight on to L3', async () => {
+  test('T-E20-14 @nightly @E20 @E20-AC14 checkpoint: line composition, gate closes <= 1.5 s behind the courier, nothing crosses after, straight on to L3', async () => {
     const l = await loadL2(1); world = l.world;
     const s = l.mission.state.l2!;
     expect(s.officerIds.length).toBeGreaterThanOrEqual(4); expect(s.lineIds.length).toBeGreaterThanOrEqual(8);
@@ -198,7 +198,7 @@ describe('L2 The Failed Rescue', () => {
     expect(l.mission.state.phase).toBe('progression'); expect(l.mission.state.result).not.toBeNull();
   }, HEAVY);
 
-  test('T-E20-21 @E20 rescued people never despawn: they flee for the checkpoint and end behind the line, at the gate, turned or down', async () => {
+  test('T-E20-21 @E20 @nightly rescued people never despawn: they flee for the checkpoint and end behind the line, at the gate, turned or down', async () => {
     // PO 10-08: "The crowd ... runs away and then just disappears." Every released person stays an entity for the whole level.
     for (const seed of [1, 2, 3]) {
       const l = await loadL2(seed); world = l.world; const m = l.mission, w = l.world;
@@ -247,7 +247,7 @@ describe('L2 The Failed Rescue', () => {
     }
   }, HEAVY);
 
-  test('T-E20-17 @E20 @E20-AC17 checkpoints doors, escape and cluster restore entities, outbreak, crew, gates and weapons', async () => {
+  test('T-E20-17 @nightly @E20 @E20-AC17 checkpoints doors, escape and cluster restore entities, outbreak, crew, gates and weapons', async () => {
     const l = await loadL2(2); world = l.world; const m = l.mission, w = l.world;
     // 'escape' is only saved at a calm moment (PO 10-09, l2.mercy), which a bot chased the whole way never gets before the cluster: its restore is covered in L2-escape-loop.test.ts.
     for (const id of ['doors', 'cluster'] as const) {

@@ -9,7 +9,7 @@ import type { InstancedGroup } from '../../../../src/render/InstancedGroup';
 import type { Mesh } from 'three';
 import { PNG } from 'pngjs';
 
-const baseline = process.env.QA_INVARIANTS_BASELINE ?? 'https://minor-incident.com';
+const baseline = process.env.QA_INVARIANTS_BASELINE ?? 'https://qa.minor-incident.pages.dev';
 const levels = ['L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8', 'L9', 'L10'] as const;
 
 test('6 objectives: L5 pharmacy and bus arrows draw in the first frame, with occluded ground rings', async ({ browser }, info) => {
@@ -100,7 +100,7 @@ async function measure(browser: Browser, origin: string, level: typeof levels[nu
   } finally { await context.close(); }
 }
 
-for (const [index, level] of levels.entries()) test(`8 load time ${level}: level click → playable versus PROD, WebGPU low`, async ({ browser, baseURL }, info) => {
+for (const [index, level] of levels.entries()) test(`8 load time ${level}: level click → playable versus QA baseline, WebGPU low`, async ({ browser, baseURL }, info) => {
   test.setTimeout(240_000);
   // Alternate order, with a fresh storage/cache context for every observation, using one browser.
   const results = new Map<string, Awaited<ReturnType<typeof measure>>>();

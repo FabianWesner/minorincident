@@ -1,7 +1,7 @@
 import { skinnedBrow } from './headMeasurements';
 import { Box3, Color, Matrix4, Vector3, type BufferGeometry, type InstancedBufferAttribute, type InterleavedBufferAttribute } from 'three';
 import type { Node } from 'three/webgpu';
-import { attribute, varying, vec3 } from 'three/tsl';
+import { attribute, varying, vec3, vec4 } from 'three/tsl';
 import { crowdAppearance, infectedWearsAccessory, hairTones, skinTones, infectedSkinTones, trouserTones, shirtTones } from '../../data/crowdAppearance';
 import palette from '../../assets/palette.json';
 import manifest from '../../assets/manifest.json' with { type: 'json' };
@@ -59,6 +59,23 @@ export function crowdAppearanceColor(infected = false) {
   // Palette selection belongs to the vertices: repeating eight-tone branches for every shaded pixel costs frame time.
   return varying(parts.y.equal(-1).select(skin.mul(shade.div(infected ? .35 : .45).clamp(.65, 1.2)),
     parts.y.equal(-4).select(source.mul(accessory), parts.y.equal(-5).select(source.mul(hair), parts.y.equal(-2).select(hair.mul(shade.div(.12).clamp(.65, 1.3)), parts.y.equal(-3).select(trousers.mul(shade.div(.1).clamp(.65, 1.25)), garment))))), 'crowdAppearanceColor');
+}
+/** Trouser tone (xyz) and the painted-skin vertex region (w) share one vertex output (Q-201: crowd pipelines keep
+ * <= 14 of the 15/16 portable outputs). Varyings dedupe by name, so every caller reads the same slot. */
+function crowdRegionTrousersSkin() {
+  const variant = attribute('_variant', 'vec4'), parts = attribute('_parts', 'vec4');
+  const exposed = parts.x.equal(characterNodes.indexOf('head')).or(parts.y.equal(-1)).and(parts.z.lessThan(.5)).select(1, 0);
+  return varying(vec4(pickColor(colors.trousers, variant.z.div(2).floor().mod(8)), exposed), 'crowdRegionTrousersSkin');
+}
+/** Vertex-classed exposed skin (head or skin-tagged, not an eye) for the painted-skin estimate. */
+export function crowdPaintedSkinRegion(): Node<'float'> { return crowdRegionTrousersSkin().w; }
+/** Per-person tones for the classed regions of textured figures (hair, skin, shirt, trousers). Two varyings only:
+ * skin is picked per pixel from its index (six tones), trousers share their slot with the painted-skin region. */
+export function crowdRegionColours(infected = false) {
+  const variant = attribute('_variant', 'vec4');
+  const hairSkin = varying(vec4(pickColor(colors.hair, variant.x.div(2).floor().mod(8)), variant.y.div(2).floor().mod(6)), 'crowdRegionHairSkin');
+  const trousers = crowdRegionTrousersSkin().xyz;
+  return { hair: hairSkin.xyz, skin: pickColor(infected ? colors.infected : colors.skin, hairSkin.w.round()), trousers, shirt: variant.xyz.mod(2) };
 }
 const tokenColors = Object.fromEntries(Object.entries(palette).map(([name, hex]) => [name, new Color(hex)])) as Record<keyof typeof palette, Color>;
 const headwearColors = Object.entries(palette).filter(([name]) => /^cap/.test(name)).map(([, hex]) => new Color(hex));
@@ -147,12 +164,20 @@ export function markCrowdAppearance(geometry: BufferGeometry, ordinaryInfected =
  * Pass `instanceMatrix` when a pass may still bind Three's implicit instancing (mask/id passes of static-attribute
  * batches); `explicitMatrix` only for a separate matrix buffer NOT already present as geometry attributes. */
 export function crowdVertexLayout(geometry: BufferGeometry, instanceMatrix?: InstancedBufferAttribute, explicitMatrix = false) {
-  const attributes = Object.values(geometry.attributes), buffers = new Set<unknown>();
-  let locations = attributes.reduce((n, a) => n + Math.ceil(a.itemSize / 4), 0);
-  for (const a of attributes) buffers.add('data' in a ? a.data : a);
-  if (instanceMatrix) { buffers.add(instanceMatrix); locations += 4; }
-  if (explicitMatrix) { buffers.add(Symbol()); locations += 4; }
-  return { buffers: buffers.size, locations, webgpu: buffers.size <= 8, webgl2: locations <= 16 };
+  const columns = /^_(crowd|placement)\d$/;
+  const all = Object.entries(geometry.attributes), surface = all.filter(([name]) => !columns.test(name)).map(([, a]) => a), own = all.filter(([name]) => columns.test(name)).map(([, a]) => a);
+  const count = (list: typeof surface, extra: unknown[]) => {
+    const buffers = new Set<unknown>(extra);
+    for (const a of list) buffers.add('data' in a ? a.data : a);
+    return { buffers: buffers.size, locations: list.reduce((n, a) => n + Math.ceil(a.itemSize / 4), 0) + 4 * extra.length };
+  };
+  // A pass binds either the geometry's explicit matrix columns (_crowd0-3/_placement0-3) or Three's implicit
+  // instanceMatrix (mask/id passes of static-attribute batches), never both: the compiled programs confirm it
+  // (tests/e2e/crowd-gpu-limits.spec.ts). Report the worse of the two passes.
+  const explicit = count([...surface, ...own], explicitMatrix ? [Symbol()] : []);
+  const implicit = instanceMatrix ? count(surface, [instanceMatrix]) : explicit;
+  const buffers = Math.max(explicit.buffers, implicit.buffers), locations = Math.max(explicit.locations, implicit.locations);
+  return { buffers, locations, webgpu: buffers <= 8, webgl2: locations <= 16 };
 }
 
 export interface CrowdLook { model: string; key: string; hair: number | null; skin: number | null; trousers: number | null; shirt: string | null; accessory: string | null }
@@ -188,8 +213,9 @@ export function crowdVariety(looks: readonly CrowdLook[]) {
   return { figures: looks.length, distinct: all.distinct, per20: groups, largestSameLookShare: looks.length ? all.largest / looks.length : 0, largestModelShare: looks.length ? models.largest / looks.length : 0 };
 }
 
-export function crowdCoveredScalpColor() {
-  return varying(pickColor(colors.hair, attribute('_variant', 'vec4').x.div(2).floor().mod(8)), 'crowdCoveredScalpColor');
+/** The person's hair tone (xyz) under a covered scalp, with the per-vertex cover weight (w) in the same output. */
+export function crowdCoveredScalp(weight: Node<'float'>): Node<'vec4'> {
+  return varying(vec4(pickColor(colors.hair, attribute('_variant', 'vec4').x.div(2).floor().mod(8)), weight), 'crowdCoveredScalp');
 }
 
 /** Authored hats give way to the selected rigid accessory without stacking two hats. */

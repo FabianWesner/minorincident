@@ -1,7 +1,8 @@
 import { spawn, spawnSync } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { chromium, devices } from '@playwright/test';
+import { devices, type Browser } from '@playwright/test';
+import { launchBrowser } from '../browser-pool/client';
 import { lookViewpoints } from '../../src/data/lookViewpoints';
 import { attachErrorGuard } from '../../tests/e2e/fixtures';
 import { gpuArgs, output, prepareReview } from './sheets';
@@ -10,12 +11,12 @@ const start = performance.now();
 const port = Number(process.env.E2E_PORT ?? 3306);
 const baseURL = process.env.LOOK_URL ?? `http://127.0.0.1:${port}`;
 let server: ReturnType<typeof spawn> | undefined;
-let browser: Awaited<ReturnType<typeof chromium.launch>> | undefined;
+let browser: Browser | undefined;
 try {
   if (!process.env.LOOK_URL) {
     if (process.env.LOOK_SKIP_BUILD !== '1') {
-      const build = spawnSync('npm', ['run', 'build'], { stdio: 'inherit' });
-      if (build.status !== 0) throw new Error('Production build failed');
+      const build = spawnSync('npm', ['run', 'build:qa'], { stdio: 'inherit' });
+      if (build.status !== 0) throw new Error('QA build failed');
     }
     const occupied = await fetch(baseURL).then(() => true, () => false);
     if (occupied) throw new Error(`Port ${port} is occupied; set E2E_PORT or LOOK_URL explicitly.`);
@@ -27,7 +28,7 @@ try {
       await new Promise(resolve => setTimeout(resolve, 100));
     }
   }
-  browser = await chromium.launch({ headless: true, args: gpuArgs });
+  browser = await launchBrowser({ headless: true, args: gpuArgs });
   const measurements = [];
   // One active game page at a time keeps this cheap on the shared Mac.
   for (const mobile of [false, true]) {

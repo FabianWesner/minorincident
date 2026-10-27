@@ -3,7 +3,7 @@
 The orchestrator runs this on `main` before every PROD deploy (PO rules 10-07 / 10-09; long bot batteries are not part of it).
 
 1. `npm run typecheck`, `npm run lint`
-2. `npm run test:unit` (Hetzner: `sh tools/remote/run.sh $PWD -- npm run test:unit`). Since 2026-10-13 it includes the static QA guards:
+2. `npm run test:gate` (Hetzner: `sh tools/remote/run.sh "$PWD" -- bash tools/remote/timing-isolated.sh --whole-run npm run test:gate`, target ≤15 minutes of test command wall time). It runs unit, sim, per-level completion and headless QA invariant suites with at most four Vitest workers. This includes the static QA guards:
    - `tests/unit/assets/lod-fidelity.test.ts`: every static prop/building/vehicle LOD against LOD0 (extent, silhouettes, vanished materials; backlog in `lod-fidelity.baseline.json`).
    - `tests/unit/levels/decoration-surface.test.ts`: drawn decorations only on soil, every district and tier.
    - `tests/sim/world/support-seams.test.ts`: no seam in raised walkable supports, every district.
@@ -13,16 +13,26 @@ The orchestrator runs this on `main` before every PROD deploy (PO rules 10-07 / 
 
 Details and the reasoning behind each guard: `docs/tools/scene-lab.md`, section "Quality x zoom matrix".
 
+## Cleanup checkpoint (2026-10-27)
+
+The PO has assigned a subsequent full test-suite rewrite. The scripts below are the current partition, **not a verified green release gate**: the last completed expanded gate took 16m 05.71s and failed three cases; two asset setup failures were corrected afterward, and the boss-staging expectation is superseded by Q-200. The expanded nightly was interrupted under the wrap directive. See the [failure list and measurements](tests-cleanup.md) before using this checkpoint for release approval.
+
+## Nightly simulation layer
+
+Run `sh tools/remote/run.sh "$PWD" -- bash tools/remote/timing-isolated.sh --whole-run npm run test:nightly` once nightly and before a release. Tests tagged `@nightly` are excluded from `test:gate`; the two scripts partition the same unit/sim/levels/headless-invariants inventory. Both retain Vitest's isolated timing project before functional tests. The nightly layer retains one seed-1 complete L1→L10 continuity run, including the L1→L9 axe reset and L5→L6 racks/roster checks, and the distinct newbie L1→L6 timing regression. Slow soak/diagnostic tests also belong here. Per-level ordinary-input completion remains in the gate, including a standalone L9 crossing/crash run.
+
+Passing the simulation gate does not replace build, browser smoke, Scene Lab, render invariants or native performance checks above. See [test cleanup evidence and coverage](tests-cleanup.md) for the assertion ownership matrix and measured before/after results.
+
 
 ## Browser admission (2026-10-23)
 
-Start `npm run browser:pool` in a worktree when coordinating local browser checks. Migrated `tools/e2e-lock.sh` callers discover it automatically. The pool runs **one GPU/Metal Chrome**, shared by WebGL2 and WebGPU, with **N=4 functional contexts**; SwiftShader is a separate optional process capped at two contexts. Playwright remains headless and limited to two workers per command. Use distinct private `E2E_PORT`/`SCENE_PORT` values; this pool's service and measurement tools use ports 4321–4329, never 3300. These limits are based on the fixed-set [pool measurements](../reports/browser-pool/README.md), with large-mission capacity explicitly unproven.
+`tools/e2e-lock.sh`, direct Scene Lab clients, and Playwright start/discover the local browser pool automatically. The pool runs **one GPU/Metal Chrome**, shared by WebGL2 and WebGPU, with **N=4 functional contexts**; SwiftShader is a separate optional process capped at two contexts. Playwright remains headless and limited to two workers per command. Use distinct private `E2E_PORT`/`SCENE_PORT` values; this pool's service and measurement tools use ports 4321–4329, never 3300. These limits are based on the fixed-set [pool measurements](../reports/browser-pool/README.md), with large-mission capacity explicitly unproven.
 
 Each test/spec/capture group has its own context and storage. Scene Lab CLI/catalog, QA A/B, playtests, and the Mac invariant runner use the pool. Playtest profiles have portable storage per profile, and live sessions release after 60 seconds without input/capture even if monitoring/autofight continues. An inactive context closes after 60 seconds without a client action; in-flight actions can finish. Idle Chrome processes close after another 60 seconds, releasing all legacy browser locks. The daemon can remain running. A client losing the pool after admission fails safely instead of starting an unguarded GPU process.
 
 The daemon reserves legacy slots 0–3 before launching Chrome, samples WindowServer CPU over ten seconds, and backs shared admission off above 60%. Three consecutive samples below 30% restore one context; a missing/invalid sample reduces capacity to one. A fresh GPU launch also uses the existing guard with a one-GPU-root cap. Unmigrated callers keep using the legacy locks and can run when idle Chrome releases them. When the pool is down, wrappers retain the existing guarded launch path and 30-minute admission deadline. During a coordinated one-GPU fallback window, use one Playwright worker and reserve both legacy units; do not run another GPU lane concurrently.
 
-Native timing and uncapped probes use `tools/perf/quiet-run.sh` directly. With the pool up it requests exclusive admission, blocks new shared steps, and waits for current contexts to close or expire. It retains load < 3, no foreign headless Chrome, no local Vitest/Blender/build, the one-minute cooldown, 30-minute admission deadline and 20-minute held-batch bound including cleanup. Native channel/launch flags can restart Chrome after draining; Playwright fixtures reconnect per test context. Opaque legacy timing commands run with pooled Chrome retired and every legacy lock held. Pool down uses quiet-run's existing full-slot fallback. Report unmeasured timing whenever quiet admission is unavailable.
+Native timing and uncapped probes use `tools/perf/quiet-run.sh` directly. It starts the pool when needed, requests exclusive admission, blocks new shared steps, and waits for current contexts to close or expire. It retains load < 3, no foreign headless Chrome, no local Vitest/Blender/build, the one-minute cooldown and 30-minute admission deadline; the held command is capped at 10 minutes including cleanup. Native channel/launch flags can restart Chrome after draining; Playwright fixtures reconnect per test context. Set `E2E_LEGACY=1` only for a command that must use legacy admission. Report unmeasured timing whenever quiet admission is unavailable.
 
 The orchestrator's existing `npm run scene:matrix` filter, WebGPU coverage and `E2E_UNITS=2` declaration stay valid: pooled admission counts contexts, and the declaration remains useful in fallback. See [pool operation and lifecycle validation](../../tools/browser-pool/README.md).
 

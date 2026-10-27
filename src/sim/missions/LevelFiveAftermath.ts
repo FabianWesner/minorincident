@@ -4,6 +4,7 @@ import { l5, l5Fires, l5Loadout, l5Survivors, l5Wanderers } from '../../data/l5'
 import { l5Dressing } from '../../levels/L5/layout';
 import { Outbreak } from '../outbreak/Outbreak';
 import type { Mission } from './Mission';
+import { emitBlocker, snapToClear } from './missionHelpers';
 import type { L5State } from './types';
 import type { EntitySnapshot } from '../world/types';
 import type { Point } from '../npc/types';
@@ -35,19 +36,11 @@ export class LevelFiveAftermath {
   private anchor(name: string) { return this.mission.def.anchors[name]; }
   private outbreak(): Outbreak { return this.world.npcs!.civilians.outbreak!; }
   private get low(): boolean { return this.world.infected!.director.tier === 'low'; }
-  private snap(p: Point, r = .4): Point {
-    const nav = this.world.infected!.nav;
-    for (let d = 0; d <= 6; d += .5) for (let k = 0; k < (d ? 16 : 1); k++) {
-      const x = p.x + Math.cos(k * Math.PI / 8) * d, z = p.z + Math.sin(k * Math.PI / 8) * d;
-      if (nav.clear(x, z, Math.max(r, .36))) return { x, z };
-    }
-    return { x: p.x, z: p.z };
-  }
+  private snap(p: Point, r = .4): Point { return snapToClear(this.world, p, r); }
   private entity(id: number): EntitySnapshot | undefined { return this.world.entities.get(id); }
   private shutterNavigation(blocked: boolean): void {
     const door = this.anchor('l5-metro-shutter');
-    this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: 900_600, blocked,
-      wall: { x: door.x, y: 1.2, z: door.z, halfX: door.radius, halfY: 1.2, halfZ: .2 } });
+    emitBlocker(this.world, 900_600, blocked, { x: door.x, y: 1.2, z: door.z, halfX: door.radius, halfY: 1.2, halfZ: .2 });
   }
 
   // ---------------------------------------------------------------------------------------------------------- setup

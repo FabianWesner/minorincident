@@ -1,7 +1,7 @@
 import { premultiplyRow, skinnedVertexMatrix, skinnedWoundNormal } from './skinnedCrowd';
-import { interleaveTexturedCrowd, crowdSurfaceBindings } from './crowdTexture';
+import { interleaveCrowdSurface, crowdSurfaceBindings } from './crowdTexture';
 import { writeCrowdAppearance, renderedCrowdLook, resolveCrowdAppearance } from './CrowdAppearance';
-import { BufferAttribute, BufferGeometry, Color, Group, InstancedBufferAttribute, InstancedMesh, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, Sphere, type Frustum, Vector3, Uint16BufferAttribute, Uint32BufferAttribute, MeshLambertNodeMaterial } from 'three/webgpu';
+import { BufferAttribute, BufferGeometry, Color, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Sphere, type Frustum, Vector3, Uint16BufferAttribute, Uint32BufferAttribute, MeshLambertNodeMaterial } from 'three/webgpu';
 import { normalViewGeometry } from 'three/tsl';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import type { CrowdClip } from '../../assets/crowd';
@@ -17,6 +17,7 @@ const CELL = 40;
 // graph too: copies per pool rebuilt identical shaders as new blast victims
 // settled. Pages still own their geometry and per-instance appearance buffers.
 const sharedFrozenMaterials = new WeakMap<PaletteMaterial, { material: PaletteMaterial; users: number }>();
+const interleavedSurfaces = new WeakMap<BufferGeometry, Record<string, BufferGeometry['attributes'][string]>>();
 interface Chunk { mesh: InstancedMesh; tint: InstancedBufferAttribute; overlay: InstancedBufferAttribute; probe: CrowdFigureProbe; keys: string[]; spheres: Sphere[] }
 interface CorpseSurface { source: BufferGeometry; material: MeshLambertNodeMaterial; clip: CrowdClip; frame: number }
 interface DetailBody {
@@ -86,7 +87,7 @@ export class StaticCorpses extends Group {
     }
     if (movedPages) for (const pages of this.chunks.values()) for (const page of pages) if (movedPages.has(page.mesh)) this.bounds(page);
     if (gone) for (const key of gone) this.drop(key);
-    for (const pages of this.chunks.values()) for (const page of pages) for (const figure of page.probe.figures) figure.drawn = false;
+    if (__QA_HOOKS__) for (const pages of this.chunks.values()) for (const page of pages) for (const figure of page.probe.figures) figure.drawn = false;
   }
   place(e: EntitySnapshot, key: string, source: BufferGeometry, material: MeshLambertNodeMaterial, clip: CrowdClip, frame: number, instance: Matrix4, tint: Color, overlay: number[], instanceKey = String(e.id), hiddenParts: readonly string[] = [], look?: ReturnType<typeof resolveCrowdAppearance>, near?: CorpseSurface): void {
     if (this.bodies.has(instanceKey)) return;
@@ -130,7 +131,7 @@ export class StaticCorpses extends Group {
     page.spheres[index] = this.placedSphere.clone();
     if (index === 0) (page.mesh.boundingSphere ??= new Sphere()).copy(this.placedSphere);
     else page.mesh.boundingSphere!.union(this.placedSphere);
-    page.probe.figures.push({ id: e.id, instanceKey, lod: page.probe.lod, clip: 'death-back', phase: 1, drawn: false, feet: [], ...(look ? { appearance: renderedCrowdLook(e.id, look.model, source, tint, look.accessory) } : {}) });
+    if (__QA_HOOKS__) page.probe.figures.push({ id: e.id, instanceKey, lod: page.probe.lod, clip: 'death-back', phase: 1, drawn: false, feet: [], ...(look ? { appearance: renderedCrowdLook(e.id, look.model, source, tint, look.accessory) } : {}) });
   }
   /** Drop one body: the page's last instance moves into its slot (matrix, tint, overlay), bounds refit. */
   private drop(instanceKey: string): void {
@@ -148,9 +149,9 @@ export class StaticCorpses extends Group {
       mesh.getMatrixAt(last, this.moved); mesh.setMatrixAt(index, this.moved);
       for (const attribute of [page.tint, page.overlay, page.mesh.instanceColor].filter((a): a is InstancedBufferAttribute => !!a)) for (let c = 0; c < attribute.itemSize; c++) attribute.array[index * attribute.itemSize + c] = attribute.array[last * attribute.itemSize + c];
       const moved = page.keys[last]; page.keys[index] = moved; this.slots.get(moved)!.index = index;
-      page.spheres[index] = page.spheres[last]; page.probe.figures[index] = page.probe.figures[last];
+      page.spheres[index] = page.spheres[last]; if (__QA_HOOKS__) page.probe.figures[index] = page.probe.figures[last];
     }
-    page.keys.length = page.spheres.length = page.probe.figures.length = last; mesh.count = last; mesh.visible = last > 0;
+    page.keys.length = page.spheres.length = last; if (__QA_HOOKS__) page.probe.figures.length = last; mesh.count = last; mesh.visible = last > 0;
     mesh.instanceMatrix.needsUpdate = page.tint.needsUpdate = page.overlay.needsUpdate = true;
     if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
     if (last > 0) this.bounds(page);
@@ -170,7 +171,7 @@ export class StaticCorpses extends Group {
           }
           [page.keys[i], page.keys[visible]] = [page.keys[visible], page.keys[i]];
           [page.spheres[i], page.spheres[visible]] = [page.spheres[visible], page.spheres[i]];
-          [page.probe.figures[i], page.probe.figures[visible]] = [page.probe.figures[visible], page.probe.figures[i]];
+          if (__QA_HOOKS__) [page.probe.figures[i], page.probe.figures[visible]] = [page.probe.figures[visible], page.probe.figures[i]];
           this.slots.get(page.keys[i])!.index = i; this.slots.get(page.keys[visible])!.index = visible; changed = true;
         }
         visible++;
@@ -327,22 +328,13 @@ export class StaticCorpses extends Group {
     // Static vertex buffers and shader are shared; only instance attributes differ per spatial page.
     const geometry = new BufferGeometry();
     for (const name of ['position', 'normal', 'color', '_parts', ...(frozen.geometry.hasAttribute('uv') ? ['uv'] : [])]) geometry.setAttribute(name, frozen.geometry.getAttribute(name));
-    if (geometry.hasAttribute('uv')) {
-      // Frozen texture pages also bind placement, tint and feedback. Keep their
-      // immutable surface in one buffer so the UV path stays within WebGPU's eight.
-      const names = ['position', 'normal', 'color', '_parts', 'uv'];
-      const attributes = names.map(name => geometry.getAttribute(name));
-      const stride = attributes.reduce((sum, attribute) => sum + attribute.itemSize, 0);
-      const data = new InterleavedBuffer(new Float32Array(attributes[0].count * stride), stride);
-      let offset = 0;
-      attributes.forEach((attribute, a) => {
-        for (let i = 0; i < attribute.count; i++) for (let c = 0; c < attribute.itemSize; c++) data.array[i * stride + offset + c] = attribute.getComponent(i, c);
-        geometry.setAttribute(names[a], new InterleavedBufferAttribute(data, attribute.itemSize, offset)); offset += attribute.itemSize;
-      });
-    }
     geometry.setIndex(frozen.geometry.getIndex());
     geometry.boundingSphere = frozen.geometry.boundingSphere!.clone();
-    interleaveTexturedCrowd(geometry);
+    // Frozen pages also bind placement, colour and three instance channels: keep the immutable surface (textured or
+    // not) in one buffer so every page stays within WebGPU's eight with headroom (Q-201). Pages of one pose share it.
+    const shared = interleavedSurfaces.get(frozen.geometry);
+    if (shared) for (const [name, attribute] of Object.entries(shared)) geometry.setAttribute(name, attribute);
+    else { interleaveCrowdSurface(geometry); interleavedSurfaces.set(frozen.geometry, { ...geometry.attributes }); }
     const state = new InstancedBufferAttribute(new Float32Array(128 * 4), 4);
     const colors = new InstancedBufferAttribute(new Float32Array(128 * 4), 4);
     const stains = new InstancedBufferAttribute(new Float32Array(128 * 4), 4); // crowd overlay layout (w: pose row, unused when frozen)
@@ -365,7 +357,7 @@ export class StaticCorpses extends Group {
     const surface = crowdSurfaceBindings.get(source);
     if (surface) mesh.onBeforeRender = surface.bind;
     mesh.userData.preRenderTextures = surface?.textures ?? material.userData.preRenderTextures ?? [];
-    const probe = new CrowdFigureProbe(); probe.lod = source.userData.crowdLod ?? 'lod2'; mesh.onAfterRender = () => { for (let i = 0; i < mesh.count && i < probe.figures.length; i++) probe.figures[i].drawn = true; };
+    const probe = new CrowdFigureProbe(); probe.lod = source.userData.crowdLod ?? 'lod2'; if (__QA_HOOKS__) mesh.onAfterRender = () => { for (let i = 0; i < mesh.count && i < probe.figures.length; i++) probe.figures[i].drawn = true; };
     const page = { mesh, tint: mesh.geometry.getAttribute('_variant') as InstancedBufferAttribute, overlay: mesh.geometry.getAttribute('_overlay') as InstancedBufferAttribute, probe, keys: [] as string[], spheres: [] as Sphere[] }; pages.push(page); this.add(mesh);
     return page;
   }

@@ -4,14 +4,13 @@ import { l3, l3Street } from '../../data/l3';
 import { emptyInput, type InputFrame } from '../../input/InputFrame';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import type { EntitySnapshot } from '../../sim/world/types';
+import { chasingCourier, dist, heldKit, jammed, nearestKit, newStuck, strikeAt, visibleThreats, walkTo, type P } from './helpers';
 import { Walker } from './Walker';
 
 /** E21 section 8 bot profiles. `evade-only` never attacks; `idle` stays where it starts in the station yard. */
 export type L3Profile = 'complete' | 'newbie' | 'evade-only' | 'idle';
 /** Street preference for combat detours and medkits; the connected army route overrides it at sealed wreck lines. */
 export type L3StreetChoice = 'auto' | 'blvd' | 'commerce' | 'oak';
-type P = { x: number; z: number };
-const dist = (a: P, b: P) => Math.hypot(a.x - b.x, a.z - b.z);
 const STREETS = ['blvd', 'commerce', 'oak'] as const;
 /** Cross-links the bot may switch streets at (full cross streets and the mid-block alleys). */
 const LINKS = [-120, -90, -55, -15, 40, 85, 128];
@@ -32,7 +31,7 @@ export class LevelThreeBot {
   private frame: InputFrame = emptyInput();
   private street: 'blvd' | 'commerce' | 'oak';
   private detour: (P & { until: number }) | null = null;
-  private stuck = { at: null as P | null, n: 0, next: 0 };
+  private stuck = newStuck();
   private last: P | null = null;
   private medkit = 0;
   private decidedAt: number | null = null;
@@ -48,12 +47,7 @@ export class LevelThreeBot {
   /** A forced-street run never leaves its avenue: a detour point on another avenue is dropped. */
   private keep<T extends P>(at: T | null | undefined): T | null { return at && (this.forced === 'auto' || l3Street(at.z) === this.street) ? at : null; }
   debug() { return { street: this.street, detour: this.detour, waiting: this.waiting, medkit: this.medkit, decidedAt: this.decidedAt, stuck: this.stuck.n }; }
-  private threats(p: P, radius: number): EntitySnapshot[] {
-    const w = this.world;
-    return (w.infected?.active ?? []).filter(e => e.health.current > 0 && !e.hidden && !e.infected?.hidden && !e.infectionRise && dist(e.transform, p) <= radius && w.infected!.nav.visible(p, e.transform, 0))
-      .sort((a, b) => dist(a.transform, p) - dist(b.transform, p));
-  }
-  private chasing(e: EntitySnapshot): boolean { const b = e.infected?.l1; return !!b && (b.mode === 'chase' || b.mode === 'bite') && b.targetId === 1; }
+  private threats(p: P, radius: number): EntitySnapshot[] { return visibleThreats(this.world, p, radius); }
   sample(): InputFrame {
     const w = this.world, m = w.missions!, s = m.state.l3;
     this.finished = m.state.phase === 'result' || m.state.phase === 'progression';
@@ -65,11 +59,8 @@ export class LevelThreeBot {
     if (newbie && w.tick % 15 !== 0) { this.frame.interact = false; return this.frame; }
     const frame = this.frame = emptyInput(), player = w.entities.get(1)!, p = player.transform, a = m.def.anchors;
     if (player.health.current <= 0 || this.profile === 'idle') return frame;
-    const go = (target: P, stop: number, key: string) => { const dir = this.walker.step(w, target, stop, key); if (dir) frame.move = dir; return !dir; };
-    const strike = (target: EntitySnapshot, side: 'LEFT' | 'RIGHT') => {
-      frame.attackTarget = { id: target.id, side }; frame.move = { x: 0, z: 0 };
-      if (side === 'LEFT') frame.left.held = true; else frame.right.held = true;
-    };
+    const go = walkTo(this.walker, w, frame);
+    const strike = (target: EntitySnapshot, side: 'LEFT' | 'RIGHT') => strikeAt(frame, target, side);
     const fights = this.profile !== 'evade-only', skip = newbie && this.rng.next() < .15;
     const gun = w.combat?.runner.loadout.state.RIGHT.rack.some(r => r.id === 'weapon.handgun') ?? false;
     const near = this.threats(p, 2.4);
@@ -78,11 +69,11 @@ export class LevelThreeBot {
       if (!fights || skip) return false;
       // In the escape segment, defend against pursuers rather than stopping for every nearby body on a
       // raised/blocked route. Walk-grid sight alone is insufficient to choose a reachable melee target.
-      const contact = near.find(e => (p.x < l3.map.segments[2][0] || this.chasing(e)) && w.combat!.query.visible(p, e.transform, e.id));
+      const contact = near.find(e => (p.x < l3.map.segments[2][0] || chasingCourier(e)) && w.combat!.query.visible(p, e.transform, e.id));
       if (contact) { strike(contact, 'LEFT'); return true; }
       if (!gun) return false;
       // In the last segment the courier escapes; the officers handle their own opponents.
-      const shot = this.threats(p, range).find(e => (this.chasing(e) || p.x < l3.map.segments[2][0] && dist(e.transform, p) < 9) && w.combat!.query.shotVisible(p, e.transform, e.id));
+      const shot = this.threats(p, range).find(e => (chasingCourier(e) || p.x < l3.map.segments[2][0] && dist(e.transform, p) < 9) && w.combat!.query.shotVisible(p, e.transform, e.id));
       if (shot) { strike(shot, 'RIGHT'); return true; }
       return false;
     };
@@ -101,13 +92,12 @@ export class LevelThreeBot {
     // Medkits when hurt: the nearest one ahead or close by that is still there.
     // A newbie grabs every medkit it passes once it has lost a little health; the complete bot waits until it needs one.
     if (!this.medkit && hp <= (newbie ? .9 : .65)) {
-      const kit = s.medkitIds.map(id => w.entities.get(id)).filter((e): e is EntitySnapshot => !!e?.pickup && 'kind' in e.pickup && !e.pickup.collected)
-        .filter(e => dist(e.transform, p) < (newbie ? 40 : 24) && e.transform.x > p.x - 10 && (this.forced === 'auto' || l3Street(e.transform.z) === this.street)).sort((x, y) => dist(x.transform, p) - dist(y.transform, p))[0];
+      const kit = nearestKit(w, s.medkitIds, p, e => dist(e.transform, p) < (newbie ? 40 : 24) && e.transform.x > p.x - 10 && (this.forced === 'auto' || l3Street(e.transform.z) === this.street));
       if (kit) this.medkit = kit.id;
     }
     if (this.medkit) {
-      const kit = w.entities.get(this.medkit);
-      if (!kit?.pickup || !('kind' in kit.pickup) || kit.pickup.collected || hp > (newbie ? .99 : .95)) this.medkit = 0;
+      const kit = heldKit(w, this.medkit, hp, newbie);
+      if (!kit) this.medkit = 0;
       else { if (fight(8)) return frame; go(kit.transform, .2, `kit-${this.medkit}`); return frame; }
     }
     // Street choice at the cross-links: keep away from the densest group the courier can see ahead.
@@ -122,14 +112,9 @@ export class LevelThreeBot {
       }
     }
     // A jammed walker (crowd, wreck or corner) steps aside along a connected route.
-    if (w.tick >= this.stuck.next) {
-      this.stuck.next = w.tick + 60;
-      if (this.stuck.at && dist(this.stuck.at, p) < .6 && !near.length && !frame.attackTarget && !this.waiting) this.stuck.n++; else this.stuck.n = 0;
-      this.stuck.at = { x: p.x, z: p.z };
-      if (this.stuck.n >= 3) { const at = this.keep(this.walker.detour(w, routeAhead)); this.detour = at ? { ...at, until: w.tick + 150 } : null; this.stuck.n = 0; }
-    }
+    if (jammed(this.stuck, w.tick, p, near.length > 0 || !!frame.attackTarget || this.waiting)) { const at = this.keep(this.walker.detour(w, routeAhead)); this.detour = at ? { ...at, until: w.tick + 150 } : null; }
     if (this.detour && (w.tick > this.detour.until || dist(p, this.detour) < 1)) { this.detour = null; this.walker.reset(); }
-    const crowd = this.threats(p, 4.5), many = this.threats(p, 9).filter(e => this.chasing(e)).length;
+    const crowd = this.threats(p, 4.5), many = this.threats(p, 9).filter(e => chasingCourier(e)).length;
     // Fight a few, flee from many: a crowd closing in (or a losing fight) means breaking away forward, not standing.
     if (!this.detour && (crowd.length >= (fights ? 4 : 2) || many >= 6) && (hp < .5 || !fights || many >= 6)) { const at = this.keep(this.walker.detour(w, routeAhead, crowd[0]?.transform ?? this.threats(p, 9)[0]?.transform)); if (at) this.detour = { ...at, until: w.tick + 90 }; }
     if (newbie && !this.detour && this.rng.next() < .0015) this.detour = { x: p.x - 6 + this.rng.next() * 8, z: p.z + (this.rng.next() - .5) * 12, until: w.tick + 180 };
@@ -163,7 +148,7 @@ export class LevelThreeBot {
       // At most 5 s at a time and 40 s (segment 1) / 20 s (segment 2): the courier does not wait for an officer who cannot get through.
       const seg = p.x < l3.map.segments[0][1] ? 0 : 1;
       if (lag <= 6.5) { if (this.waiting) this.waitedTotal[seg] += w.tick - this.waitedSince; this.waiting = false; }
-      else if (!this.threats(p, 20).some(e => this.chasing(e)) && this.waitedTotal[seg] < (newbie ? 900 : seg ? 1200 : 2400)) {
+      else if (!this.threats(p, 20).some(e => chasingCourier(e)) && this.waitedTotal[seg] < (newbie ? 900 : seg ? 1200 : 2400)) {
         if (!this.waiting) { this.waiting = true; this.waitedSince = w.tick; }
         if (w.tick - this.waitedSince < 300) return frame;
         this.waitedTotal[seg] += w.tick - this.waitedSince; this.waiting = false;

@@ -1,4 +1,5 @@
 import { paintedSkinMask } from './characters/paintedSkin';
+import { crowdRegionOf, crowdRegionSkin, crowdRegionTint } from './characters/crowdRegions';
 import { crowdLimbParts } from '../assets/crowdParts';
 import { crowdTexture, interleaveTexturedCrowd, crowdSurfaceBindings } from './characters/crowdTexture';
 import { shareDogCoatPalette } from './characters/shareDogCoatPalette';
@@ -369,11 +370,12 @@ export class CrowdView extends Group {
       // lower a chained swizzle (`sample.xyz.x`) and the whole pipeline is dropped (hotfix-16).
       const texelSample = infectedAtlas && baked.texture ? sampleTexture(baked.texture, uv()) : undefined;
       surfaceAtlas = texelSample;
-      const texel = texelSample?.rgb;
+      const region = texelSample ? crowdRegionOf(texelSample, uv()) : undefined;
+      const texel = texelSample ? crowdRegionTint(texelSample.rgb, region!, true) : undefined;
       const capSurface = parts.w.greaterThanEqual(1024);
       const painted = texel ? mix(sourceColor, texel.pow(.85).mul(mix(vec3(1), sourceColor, .08)), parts.y.equal(-4).or(parts.y.equal(-5)).or(parts.y.lessThanEqual(-10)).select(0, parts.w.mod(128).lessThan(8).select(1, 0))) : sourceColor;
       const sick = vec3(luminance(painted)).mul(vec3(.62, .75, .51));
-      const surface = skinned && asset.startsWith('npc.') ? mix(painted, sick, texelSample ? parts.y.equal(-11).select(1, paintedSkinMask(texelSample)).mul(.85) : parts.y.equal(-1).select(.85, 0)) : painted;
+      const surface = skinned && asset.startsWith('npc.') ? mix(painted, sick, texelSample ? parts.y.equal(-11).select(1, crowdRegionSkin(region!, () => paintedSkinMask(texelSample))).mul(.85) : parts.y.equal(-1).select(.85, 0)) : painted;
       // The approved atlas has bright orange/red eye paint. Restrict the mask to the head,
       // so the red tie and blood never emit. White teeth and pale skin fail the saturation gate.
       const albedo = capSurface.select(vec3(.4508, .006, .0137), surface);
@@ -682,7 +684,7 @@ export class CrowdView extends Group {
         if (!batch.animal && !batch.mesh.geometry.userData.inlineAccessories ) this.accessories?.place(e, batch.lod as 'lod0' | 'lod1' | 'lod2', batch.poses, frame, blend, this.transform, !!((feedback?.mask ?? 0) & 16));
         batch.probe.add(e.id, clip, phase, this.transform, batch.poses, frame, ...blend, batch.mesh.geometry, (feedback?.mask ?? 0) | (b.legLost ? 4 : 0));
         const figure = batch.probe.figures.at(-1);
-        if (batch.probe.details && figure?.id === e.id && !batch.animal && !e.civilian?.zooAnimal) figure.appearance = renderedCrowdLook(e.id, this.definitions.get(key)!.asset, batch.mesh.geometry, tint, this.accessories?.drawnSlot(e, batch.lod as 'lod0' | 'lod1' | 'lod2') ?? null);
+        if (__QA_HOOKS__ && batch.probe.details && figure?.id === e.id && !batch.animal && !e.civilian?.zooAnimal) figure.appearance = renderedCrowdLook(e.id, this.definitions.get(key)!.asset, batch.mesh.geometry, tint, this.accessories?.drawnSlot(e, batch.lod as 'lod0' | 'lod1' | 'lod2') ?? null);
         batch.mesh.setMatrixAt(batch.count, this.transform); writeCrowdAppearance(batch.tint, batch.count, e.id, tint, blend[0] * 2 + blend[1], this.accessories?.slot(e), this.accessories?.hidesHair(e, batch.lod)); batch.state.setXYZW(batch.count++, frame, Number(b.detached && this.goreEnabled), e.civilian?.zooAnimal ? e.infection?.progress ?? 0 : feedback?.mask ?? 0, this.flashStrength(e, feedback) + Math.round(fade * 255) * 2);
         for (let limb = 0; limb < 5; limb++) if ((feedback?.mask ?? 0) & (1 << limb)) { if (batch.mesh.geometry.userData.crowdAtlas) this.texturedCaps++; else { const p = this.limbPosition(e.id, limb)!; this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(p.x, p.y + (limb === 4 ? -.17 : .18), p.z); this.caps.setMatrixAt(this.caps.count++, this.transform); } }
       }

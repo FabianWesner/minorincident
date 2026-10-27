@@ -140,35 +140,6 @@ export class MegaPursuit {
     return id;
   }
 
-  /** Stage the living Mega Alpha near the finale console after its long approach.
-   * The arena and combat stats are unchanged; only its travel state is handed off. */
-  stageNear(at: { x: number; z: number }, distance = 9): void {
-    const e = this.entity(); if (!e || !this.alive()) return;
-    const player = this.world.entities.get(1)!.transform;
-    let dx = player.x - at.x, dz = player.z - at.z, len = Math.hypot(dx, dz);
-    if (len < .1) { dx = e.transform.x - at.x; dz = e.transform.z - at.z; len = Math.hypot(dx, dz); }
-    if (len < .1) { dx = 1; dz = 0; len = 1; }
-    // A clear tile can belong to an enclosed factory pocket. Stage on the
-    // same approach as the courier, with room for the boss along the whole
-    // segment, rather than choosing an unreachable nearest clear tile.
-    const angle = Math.atan2(-dz, -dx);
-    let place: { x: number; z: number } | undefined;
-    for (let turn = 0; turn <= 12 && !place; turn++) for (const side of turn ? [1, -1] : [1]) {
-      const a = angle + side * turn * Math.PI / 12;
-      const candidate = { x: at.x + Math.cos(a) * distance, z: at.z + Math.sin(a) * distance };
-      if (this.grid.visible(player, candidate, this.radius)) { place = candidate; break; }
-    }
-    if (!place) return;
-    e.transform.x = place.x; e.transform.z = place.z;
-    e.transform.y = .7 + (this.world.districts?.groundHeight(place.x, place.z) ?? 0);
-    if (e.locomotion) e.locomotion.vx = e.locomotion.vz = 0;
-    this.world.spatial.set(e.id, place.x, place.z);
-    e.infected!.hidden = false; e.infected!.path.length = 0; e.infected!.goal = -1; e.infected!.pathIndex = 0;
-    Object.assign(this.state, { x: place.x, z: place.z, mode: 'detailed', target: { x: player.x, z: player.z }, routeAt: -Infinity, route: [], passed: null, breach: null });
-    this.state.stuck = { level: 0, since: -1, sampleAt: this.world.tick, x: place.x, z: place.z, noPath: 0, goal: null };
-    this.path.path.length = 0; this.path.goal = -1;
-  }
-
   /** Per-tick bookkeeping before the AI phase: the introduction, death and the 2 Hz route refresh. */
   private tick(): void {
     const s = this.state, tick = this.world.tick;
