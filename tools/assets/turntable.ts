@@ -1,4 +1,5 @@
-import { chromium, type Page } from '@playwright/test';
+import { launchBrowser } from '../browser-pool/client';
+import { type Page } from '@playwright/test';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -119,7 +120,7 @@ export async function captureTurntable(page: Page, id: string, directory: string
   return occupancies;
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const browser = await chromium.launch({ headless: true, args: ['--use-angle=metal'] });
+  const browser = await launchBrowser({ headless: true, args: ['--use-angle=metal'] });
   try {
     const page = await browser.newPage({ viewport: {width:1600,height:900} });
     const target = process.argv[2];

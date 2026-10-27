@@ -1,4 +1,4 @@
-import { chromium } from '@playwright/test';
+import { launchBrowser } from '../browser-pool/client';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import type { Game } from '../../src/Game';
 
@@ -13,7 +13,7 @@ const look = process.env.LOOK ? JSON.parse(process.env.LOOK) : null;
 const only = process.env.STATIONS?.split(',');
 const want = (n: string) => !only || only.includes(n[0]);
 mkdirSync(out, { recursive: true });
-const browser = await chromium.launch({ headless: true, args: ['--use-angle=metal', '--ignore-gpu-blocklist', '--enable-gpu', ...(renderer === 'webgpu' ? ['--enable-unsafe-webgpu'] : [])] });
+const browser = await launchBrowser({ headless: true, args: ['--use-angle=metal', '--ignore-gpu-blocklist', '--enable-gpu', ...(renderer === 'webgpu' ? ['--enable-unsafe-webgpu'] : [])] });
 const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
 const errors: string[] = [];
 page.on('pageerror', e => errors.push(e.message));

@@ -1,7 +1,7 @@
+import { launchBrowser } from '../browser-pool/client';
 import { uncappedArgs } from '../perf/uncapped';
 import { writeFileSync } from 'node:fs';
 import { spawn } from 'node:child_process';
-import { chromium } from '@playwright/test';
 import { attachErrorGuard } from '../../tests/e2e/fixtures';
 const port=Number(process.env.SCENE_PORT??3484), origin=`http://127.0.0.1:${port}`;
 if(port===3300)throw new Error('Private port required');
@@ -10,7 +10,7 @@ const out:unknown[]=[];
 try{
  let up=false;for(let i=0;i<120&&!up;i++){try{up=(await fetch(origin)).ok;}catch{}if(!up)await new Promise(r=>setTimeout(r,500));}if(!up)throw new Error('Vite not ready');
  for(const tier of ['high','low'] as const){
-  const browser=await chromium.launch({channel:'chrome',headless:true,args:['--use-angle=metal','--enable-gpu','--ignore-gpu-blocklist',...uncappedArgs()]});
+  const browser=await launchBrowser({channel:'chrome',headless:true,args:['--use-angle=metal','--enable-gpu','--ignore-gpu-blocklist',...uncappedArgs()]});
   try{
    const context=await browser.newContext({viewport:{width:1280,height:720},deviceScaleFactor:1});const page=await context.newPage();const guard=attachErrorGuard(page);
    await page.goto(`${origin}/?test=1&renderer=webgl&quality=${tier}&audio=muted&profile=1&dpr=1&seed=1`);

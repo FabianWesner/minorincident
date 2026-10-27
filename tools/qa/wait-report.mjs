@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 const file = process.argv[2] ?? `${process.env.TMPDIR ?? '/tmp'}/mi-waits.jsonl`;
 let rows;
-try { rows = readFileSync(file, 'utf8').split(/\n/).filter(Boolean).map(line => JSON.parse(line)); }
+try { rows = readFileSync(file, 'utf8').split(/\n/).filter(Boolean).flatMap(line => { try { return [JSON.parse(line)]; } catch { console.error('Skipped an incomplete wait record'); return []; } }); }
 catch { console.error(`No wait log found: ${file}`); process.exit(1); }
 const groups = new Map();
 for (const row of rows) {

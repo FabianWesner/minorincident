@@ -24,7 +24,7 @@ export default defineConfig({
   fullyParallel: true,
   retries: 0,
   snapshotPathTemplate: '{testDir}/visual/__goldens__/{arg}{ext}',
-  timeout: process.platform === 'darwin' ? 60_000 : 180_000,
+  timeout: process.platform === 'darwin' && process.env.BROWSER_POOL_BACKEND !== 'swiftshader' ? 60_000 : 180_000,
   // Separate artifacts for simultaneous browser runs using isolated preview ports.
   outputDir: `test-results/playwright/run${process.env.E2E_PORT ? `-${port}` : ''}`,
   reporter: [['list'], ['json', { outputFile: 'test-results/playwright/results.json' }]],

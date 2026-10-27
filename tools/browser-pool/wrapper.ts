@@ -30,7 +30,7 @@ let child: ReturnType<typeof spawn> | undefined;
 process.on('SIGINT', () => { cancelled = true; child?.kill('SIGINT'); });
 process.on('SIGTERM', () => { cancelled = true; child?.kill('SIGTERM'); });
 const request = async (path: string, method = 'GET') => {
-  const r = await fetch(`${poolUrl()}${path}`, { method, signal: AbortSignal.timeout(3000) });
+  const r = await fetch(`${poolUrl()}${path}`, { method, signal: AbortSignal.timeout(path.endsWith('/external') ? Math.max(1, reservedAt + capSeconds * 1000 - Date.now() - 5000) : 3000) });
   if (!r.ok) throw new Error(`Pool ${path.split('?')[0]} returned ${r.status}`);
   return await r.json();
 };

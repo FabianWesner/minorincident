@@ -1,11 +1,11 @@
+import { launchBrowser } from '../browser-pool/client';
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { chromium } from '@playwright/test';
 
 // Audit real authored births on either PROD or the lane, without changing their look or renderer.
 const [origin, out] = process.argv.slice(2);
 if (!origin || !out) throw new Error('Usage: probe-l4-horde-visibility.ts <origin> <out>');
 mkdirSync(out, { recursive: true });
-const browser = await chromium.launch({ channel: 'chrome', headless: true, args: ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=metal'] });
+const browser = await launchBrowser({ channel: 'chrome', headless: true, args: ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=metal'] });
 try {
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 }, deviceScaleFactor: 1 });
   await page.goto(`${origin}/?test=1&renderer=webgpu&quality=low&dpr=1&audio=muted&seed=3&preload=0`);

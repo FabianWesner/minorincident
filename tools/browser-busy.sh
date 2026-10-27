@@ -10,7 +10,7 @@ try {
   process.exit(s.browsers?.some(b => b.backend === 'gpu') || s.leases?.some(l => l.backend === 'gpu') || s.exclusive?.some(e => e.granted) ? 0 : 1);
 } catch { process.exit(2); }
 NODE
-then exit 0; else rc=$?; [ "$rc" -eq 1 ] && exit 1; fi
+then exit 0; fi
 # Pool down: legacy reservations hold one or more of the same machine-wide locks.
 command -v lockf >/dev/null 2>&1 || exit 1
 base="${E2E_LOCK:-/tmp/minor-incident-e2e.lock}"

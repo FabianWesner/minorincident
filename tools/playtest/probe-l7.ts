@@ -1,6 +1,7 @@
 import { mkdirSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
-import { chromium, type Page } from '@playwright/test';
+import { type Page } from '@playwright/test';
+import { launchProfile } from '../browser-pool/client';
 
 /**
  * L7 start-position probe (playtest-all, 10-20): where does the courier stand when L7 starts via
@@ -20,7 +21,7 @@ const state = (page: Page) => page.evaluate(() => {
 });
 async function boot(profile: string) {
   rmSync(profile, { recursive: true, force: true });
-  const context = await chromium.launchPersistentContext(profile, { headless: true, args, viewport: { width: 1280, height: 720 } });
+  const context = await launchProfile(profile, { headless: true, args, viewport: { width: 1280, height: 720 } });
   const page = context.pages()[0] ?? await context.newPage();
   await page.goto(url); await page.waitForFunction(() => !!window.__SS__); await page.evaluate(() => window.__SS__!.ready);
   return { context, page };

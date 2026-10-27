@@ -1,5 +1,6 @@
 import { createServer } from 'node:http';
 import { appendFileSync } from 'node:fs';
+import type { Duplex } from 'node:stream';
 import { randomUUID } from 'node:crypto';
 import { chromium, type BrowserServer } from '@playwright/test';
 import WebSocket, { WebSocketServer, type RawData } from 'ws';
@@ -26,6 +27,7 @@ let negativeId = -1, order = 0;
 const browsers = new Map<Backend, { server: BrowserServer; signature: string }>();
 const leases = new Map<string, Lease>(), connections = new Set<Connection>();
 const waiters: Waiter[] = [], exclusives: Exclusive[] = [];
+const starting = new Map<Duplex, { job: string; backend: Backend; queuedAt: number }>();
 const flags = ['--disable-background-timer-throttling', '--disable-renderer-backgrounding', '--disable-backgrounding-occluded-windows'];
 function event(kind: string, data: Record<string, unknown> = {}) { console.log(JSON.stringify({ at: new Date().toISOString(), kind, ...data })); }
 function recordWait(job: string | undefined, kind: string, waitMs: number) {
@@ -60,13 +62,17 @@ function closeLease(lease: Lease, reason: string) {
 }
 function pump() {
   if (stopping) return;
-  while (exclusives.length && Date.now() - exclusives[0].last > 20_000) {
+  while (exclusives.length && (Date.now() - exclusives[0].last > 20_000 || exclusives[0].grantedAt !== undefined && Date.now() - exclusives[0].grantedAt! >= 600_000)) {
     const expired = exclusives.shift()!;
     for (const lease of leases.values()) if (lease.exclusive === expired.id) closeLease(lease, 'Exclusive owner disconnected');
   }
   // Shared requests before an exclusive barrier drain first. Once granted, only
   // its owner may create contexts; later shared requests retain their FIFO order.
   for (let i = waiters.length - 1; i >= 0; i--) if (waiters[i].connection.closed) waiters.splice(i, 1);
+  for (let i = waiters.length - 1; i >= 0; i--) {
+    const w = waiters[i];
+    if (w.exclusive && !exclusives.some(e => e.id === w.exclusive)) { wireError(w.connection, w.message.id, 'Exclusive reservation expired'); waiters.splice(i, 1); }
+  }
   const exclusive = exclusives[0];
   const earlier = () => exclusive && waiters.some(w => !w.exclusive && w.order < exclusive.order);
   if (exclusive && !exclusive.granted && leases.size === 0 && !earlier()) {
@@ -117,6 +123,7 @@ async function browserFor(backend: Backend, options: { args?: string[]; channel?
     if (token && software) { await software.server.close(); browsers.delete('swiftshader'); }
     await gpuAdmission(600_000, alive);
   }
+  if (!alive()) throw new Error('Browser admission client disconnected');
   const args = backend === 'gpu'
     ? ['--use-angle=metal', '--enable-gpu', '--enable-unsafe-webgpu', '--ignore-gpu-blocklist']
     : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
@@ -184,6 +191,7 @@ const http = createServer((req, res) => { void (async () => {
   if (url.pathname === '/health' || url.pathname === '/status') return json(200, {
     protocol: 1, pid: process.pid, playwright: '1.63.0', limit, configuredLimit, windowServerCpu, idleMs,
     endpoints: { gpu: `ws://127.0.0.1:${port}/ws/gpu`, swiftshader: `ws://127.0.0.1:${port}/ws/swiftshader` },
+    starting: [...starting.values()].map(s => ({ job: s.job, backend: s.backend, waitMs: Date.now() - s.queuedAt })),
     browsers: [...browsers.entries()].map(([backend, b]) => ({ backend, pid: b.server.process().pid })),
     leases: [...leases.values()].map(l => ({ id: l.id, backend: l.backend, context: l.context, heldMs: Date.now() - l.acquiredAt, idle: Date.now() - l.last, calls: l.calls, exclusive: !!l.exclusive, job: l.connection.job ?? null })),
     waiting: waiters.length, waiters: waiters.map(w => ({ job: w.connection.job ?? null, backend: w.connection.backend, waitMs: Date.now() - w.queuedAt })), exclusive: exclusives.map(e => ({ id: e.id, job: e.job, granted: e.granted, waitMs: (e.grantedAt ?? Date.now()) - e.queuedAt, heldMs: e.grantedAt ? Date.now() - e.grantedAt : 0 })),
@@ -229,6 +237,9 @@ http.on('upgrade', (req, socket, head) => {
   let options: { args?: string[]; channel?: string } = {};
   try { options = JSON.parse(String(req.headers['x-playwright-launch-options'] ?? req.headers['x-mi-launch-options'] ?? '{}')); } catch { socket.destroy(); return; }
   if (!token && options.args?.some(a => a === '--disable-frame-rate-limit' || a === '--disable-gpu-vsync')) { socket.destroy(); return; }
+  const admission = { job: String(req.headers['x-mi-job'] ?? ''), backend, queuedAt: Date.now() };
+  starting.set(socket, admission);
+  socket.once('close', () => starting.delete(socket));
   // Wait outside launchChain: a queued shared handshake must not block the
   // exclusive client that owns admission and needs a differently configured Chrome.
   const connect = () => {
@@ -236,11 +247,15 @@ http.on('upgrade', (req, socket, head) => {
     if (!token && exclusives.length) { setTimeout(connect, 100).unref(); return; }
     launchChain = launchChain.then(async () => {
       if (!token && exclusives.length) { setTimeout(connect, 100).unref(); return; }
+      if (token && !exclusives.some(e => e.id === token && e.granted)) { socket.destroy(); return; }
       const browser = await browserFor(backend, options, token, () => !socket.destroyed);
       if (socket.destroyed) return;
       const upstream = new WebSocket(browser.wsEndpoint());
       await new Promise<void>((resolve, reject) => { upstream.once('open', resolve); upstream.once('error', reject); });
-      ws.handleUpgrade(req, socket, head, client => proxy(client, upstream, backend, token, String(req.headers['x-mi-job'] ?? '')));
+      ws.handleUpgrade(req, socket, head, client => {
+        starting.delete(socket); recordWait(admission.job, 'browser-connect', Date.now() - admission.queuedAt);
+        proxy(client, upstream, backend, token, admission.job);
+      });
     }).catch(async error => { event('connection-error', { error: String(error) }); socket.destroy(); if (!browsers.size && releaseSlots) { const release = releaseSlots; releaseSlots = undefined; await release(); } });
   };
   socket.on('error', () => socket.destroy()); connect();

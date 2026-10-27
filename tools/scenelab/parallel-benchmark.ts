@@ -1,3 +1,4 @@
+import { launchBrowser } from '../browser-pool/client';
 import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { cpus, totalmem } from 'node:os';
@@ -24,7 +25,7 @@ mkdirSync(out, { recursive: true });
 const files = ['bench-sitter', 'house', 'courier-turns', 'qa-grove-east-south'].map(name => `specs/scenes/${name}.json`);
 if (cdp && mode === 'isolated') throw new Error('CDP probe requires shared or warm mode');
 const browserArgs = ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', ...(backend === 'webgpu' ? ['--enable-unsafe-webgpu'] : []), ...(cdp ? ['--remote-debugging-port=0'] : [])];
-const launch = () => chromium.launch({ headless: true, args: browserArgs, ...(channel === 'chromium' ? { channel: 'chromium' } : {}) });
+const launch = () => launchBrowser({ headless: true, args: browserArgs, ...(channel === 'chromium' ? { channel: 'chromium' } : {}) });
 
 const results: unknown[] = [], samples: Sample[] = [], pixels: unknown[] = [];
 let shared: Browser | undefined;
