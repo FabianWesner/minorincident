@@ -79,11 +79,13 @@
   "pipelineCommit": "6c85513",
   "newInferences": 1,
   "paidHfCreditsEUR": 0,
-  "guard": "Inherited from L3 when corrected body lands on main; no duplicate build retained. Shared weapon fix 4216c70a5.",
+  "guard": "Corrected National Guard inherited from main 82b4a2664 via 713d75c64, including L3 pipeline f2a4d0c and atlas identity fix. Reviewed L3 skin tones 0/3/5 and army front/back/neck sheets; tapered visible nape, dark rear hair rim, no orange band; shared guns rechecked in L4.",
   "runtimeReview": {
-    "street": "30 figures old/new on high/low WebGL2/WebGPU, zoom 1 and 1.5. All nine converted model batches submitted independently. Crawler prone; shield/axe retained; carryover pedestrian infected crouch poses match baseline.",
+    "street": "Matched 30-figure L4 D-FAIR street: courier/corgi, soldiers, armed civilians, nine converted infected plus common-worker. Healthy carryover NPCs use real pedestrian batches; all nine native infected batches submitted independently. Low/high WebGL2/WebGPU, zoom 1 and 1.5; turned carryovers additionally covered by inherited L3 state/motion sheets and production battle.",
     "corpses": "All nine old/new on high/low WebGL2/WebGPU, three close groups each. Whole continuous bodies and retained outfit colours; shield/axe remain attached. All five Alpha variants remain solid with radius 1 and block movement; courier cut active and legal relocation checked.",
-    "gunReview": "16 high/WebGL2 native close-ups: four angles of rifle, hunting rifle, pistol, shotgun. No plank silhouettes or floating weapons. Shared path will be reconciled with L3 before final acceptance.",
-    "productionBattle": "Old/new production L4 turn checkpoint seed3, 30/60/120/180s, zoom1/1.5, both tiers and backends. All eight 600-frame post-warm-up samples have zero shader builds and zero frames >200ms. All mission snapshots match at every sample. Corpse palette/equipment differentiation reviewed against the P3 breach-pile target; high-tier visual overlap counts change with the new silhouettes."
-  }
+    "gunReview": "80 close-ups reviewed: rifle, HMG, hunting rifle, pistol and shotgun, each at -45/45/135/225 degrees, low/high WebGL2/WebGPU. One owned geometry-copy helper and shared asset registry; actual authored grip/muzzle sockets and matching support-hand offsets. Barrel, stock and HMG ammo readable, no plank or floating weapon; Guard front/back neck and glove/face palette checked.",
+    "productionBattle": "Main 82b4a2664 versus new assets in production L4, seed3 turn checkpoint, 30/60/120/180s at zoom1/1.5, both tiers/backends. All 16 physical-state snapshot pairs are byte-hash identical, including entities, collision, mission and RNG. All eight 600-frame warm samples: zero late shader builds, zero frames over200ms (max16.8ms); RAF samples remain refresh-capped diagnostics pending PO quiet timing. Corpse equipment/palette separation reviewed against the breach-pile target.",
+    "scriptedScenes": "All seven L4 scenes reviewed in all four configurations (28 passing checks): plaza-safe, gate-convoy, war-line, fuel-chain, tank-heli, Kessler/cellar and finale-cellar. Reviewed time sheets through movement, firing, explosions and cellar handover; roof occlusion in the original pose-camera cellar fixture is inherited, while gameplay cellar handover is separately covered by the real-input run."
+  },
+  "runtimeBaseline": "Main 82b4a2664; retains the corrected L3 Guard on both sides. Nine individual figure baselines remain 83503eb18, with all nine definitions identical to current main."
 }

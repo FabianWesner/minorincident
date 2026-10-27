@@ -12,7 +12,7 @@ import type { Game } from '../../src/Game';
 const tier = process.env.REVIEW_TIER === 'high' ? 'high' : 'low';
 const backend = process.env.REVIEW_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
 const mode = process.env.L4_CAPTURE ?? 'crowd', variant = process.env.REVIEW_VARIANT ?? 'new';
-const base = process.env.REVIEW_BASE ?? '83503eb18';
+const base = process.env.REVIEW_BASE ?? '82b4a2664';
 const revision = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
 const out = resolve(`test-results/l4-all-new/${mode}-${variant}-${tier}-${backend}`);
 const converted = ['inf.crawler', 'inf.riot-cop', 'inf.firefighter', 'inf.hazmat', 'inf.alpha', 'inf.alpha-worker', 'inf.alpha-hoodie', 'inf.alpha-fire', 'inf.alpha-suit'];
@@ -87,7 +87,7 @@ try {
   for (const file of files) {
     const spec = readSpec(resolve(file));
     const result = await runSpec(session, spec, { file, out: resolve(out, spec.name!), sheet: Math.max(60, Math.ceil((spec.frames ?? 180) / 12)) });
-    receipts.push({ revision, backend, tier, file, ...result }); writeJson(`${out}/receipts.json`, receipts);
+    receipts.push({ revision, base, requestedBackend: backend, tier, file, ...result }); writeJson(`${out}/receipts.json`, receipts);
     assert.ok(result.pass, `${spec.name}: ${JSON.stringify(result.failed)}`);
   }
   if (mode === 'guns') {
@@ -102,7 +102,7 @@ try {
     for (const { model, prop, yaw, at, id } of fixtures) {
       await session.page.evaluate(at => window.__SCENE__!.setCamera({ mode: 'game', target: [at[0], .9, at[1]], zoom: .55 }), at);
       await session.ready(); const file = `${out}/${prop}-${yaw}.png`; await session.screenshot(file);
-      receipts.push({ revision, model, prop, yaw, actor: id, file, result }); writeJson(`${out}/receipts.json`, receipts);
+      receipts.push({ revision, base, model, prop, yaw, actor: id, file, result }); writeJson(`${out}/receipts.json`, receipts);
     }
   }
   if (mode === 'battle') {
@@ -124,7 +124,7 @@ try {
       const { gameplay, ...capture } = state;
       const gameplaySha256 = createHash('sha256').update(JSON.stringify(gameplay)).digest('hex');
       const resources = await session.page.evaluate(resourceSnapshot);
-      receipts.push({ revision, seconds, state: capture, gameplaySha256, resources }); writeJson(`${out}/receipts.json`, receipts); await session.screenshot(`${out}/${seconds}s.png`);
+      receipts.push({ revision, base, seconds, state: capture, gameplaySha256, resources }); writeJson(`${out}/receipts.json`, receipts); await session.screenshot(`${out}/${seconds}s.png`);
     }
     await session.page.evaluate(() => window.__SS__!.camera.zoom(1.5)); await session.ready(); await session.screenshot(`${out}/180s-zoom1.5.png`);
     if (process.env.L4_TIMING === '1') {
@@ -135,7 +135,7 @@ try {
         api.pause(); frames.sort((a, b) => a - b);
         return { count: frames.length, p95: frames[Math.ceil(frames.length * .95) - 1], max: frames.at(-1), over200: frames.filter(t => t > 200).length, builds: Object.entries(api.perf().nodeBuildMaterials).filter(([key, count]) => count !== (warm[key] ?? 0)), perf: api.perf() };
       });
-      writeJson(`${out}/cadence.json`, { revision, variant, tier, backend, hostLoad, cadence, timingStatus: 'Shared-host diagnostic; quiet p95/main and PROD five-cold-load comparison pending' });
+      writeJson(`${out}/cadence.json`, { revision, base, variant, tier, backend, hostLoad, cadence, timingStatus: 'Shared-host diagnostic; quiet p95/main and PROD five-cold-load comparison pending' });
       assert.equal(cadence.over200, 0); assert.deepEqual(cadence.builds, []);
     }
   }
@@ -187,7 +187,7 @@ try {
         return { relocated, player: player.transform, corpse: body.transform, cutStrength: seeThrough.corpse.value, radius: seeThrough.solidRadius.value };
       });
       assert.ok(cut.relocated && cut.cutStrength > 0);
-      await session.screenshot(`${out}/courier-cut.png`); writeJson(`${out}/corpse-proof.json`, { revision, backend, tier, variant, proof, cut });
+      await session.screenshot(`${out}/courier-cut.png`); writeJson(`${out}/corpse-proof.json`, { revision, base, backend, tier, variant, proof, cut });
     }
   }
   assert.equal(session.errors.length, 0);

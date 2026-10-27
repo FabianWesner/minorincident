@@ -542,5 +542,60 @@
       "byteLimit": 150000,
       "sha256": "812e60194b5551e9fed78456793846fb42493c8d4b6e9e7e8195fbe405e7177b"
     }
-  ]
+  ],
+  "inheritedNationalGuard": {
+    "main": "82b4a2664",
+    "sourcePipelineCommit": "f2a4d0c54a96dba3080bd5f40c1a3ee1cc608b48",
+    "policy": "Inherited L3/L1 retained far-LOD anatomy: 6000/2500/4000 triangle limits; 600000/250000/150000 byte caps. No second build.",
+    "deliveries": [
+      {
+        "path": "public/assets/models/skinned/npc.national-guard.lod0.glb",
+        "lod": 0,
+        "bytes": 369608,
+        "sha256": "d71edde91a3072f0644ccc1aa539700628ff3ce9d768596ed52a8dbd95511846",
+        "triangles": 5519,
+        "triangleLimit": 6000
+      },
+      {
+        "path": "public/assets/models/skinned/npc.national-guard.lod0.low.glb",
+        "lod": 0,
+        "bytes": 269104,
+        "sha256": "133b5e04c712b4733adc1ad78be2bd977d93c9892ea4021a8ce971ea2bc20dcf",
+        "triangles": 5519,
+        "triangleLimit": 6000
+      },
+      {
+        "path": "public/assets/models/skinned/npc.national-guard.lod1.glb",
+        "lod": 1,
+        "bytes": 191872,
+        "sha256": "8506c27032ed175b2574931f442ca8ce9115c899c885569b5326320b91d4c37a",
+        "triangles": 2344,
+        "triangleLimit": 2500
+      },
+      {
+        "path": "public/assets/models/skinned/npc.national-guard.lod1.low.glb",
+        "lod": 1,
+        "bytes": 191872,
+        "sha256": "8506c27032ed175b2574931f442ca8ce9115c899c885569b5326320b91d4c37a",
+        "triangles": 2344,
+        "triangleLimit": 2500
+      },
+      {
+        "path": "public/assets/models/skinned/npc.national-guard.lod2.glb",
+        "lod": 2,
+        "bytes": 149620,
+        "sha256": "a5f993e0e79352dff9ea1f2d40fefbfdb40424be1cfed28af8a3435066ac7a80",
+        "triangles": 2344,
+        "triangleLimit": 4000
+      },
+      {
+        "path": "public/assets/models/skinned/npc.national-guard.lod2.low.glb",
+        "lod": 2,
+        "bytes": 149620,
+        "sha256": "a5f993e0e79352dff9ea1f2d40fefbfdb40424be1cfed28af8a3435066ac7a80",
+        "triangles": 2344,
+        "triangleLimit": 4000
+      }
+    ]
+  }
 }

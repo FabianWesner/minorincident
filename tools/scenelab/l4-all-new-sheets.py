@@ -48,10 +48,20 @@ def runtime():
   '14-breach-old-new.jpg':[(ROOT/f'battle-{v}-high-webgl2/{t}s.png',f'{v} | {t}s after turn | zoom 1') for t in [30,60,120,180] for v in ['old','new']],
  }
  for name,cells in sheets.items():grid(cells,OUT/name)
+ # Keep the shared held-gun review alongside L4's story beats, within fourteen report files.
+ weapon_sources=[]
+ story=Image.open(OUT/'12-story-plaza-war.jpg').convert('RGB');strip_height=340
+ combined=Image.new('RGB',(1600,story.height+strip_height*2),BG);combined.paste(story,(0,0));draw=ImageDraw.Draw(combined)
+ for row,config in enumerate(['high-webgl2','low-webgpu']):
+  for col,(prop,yaw) in enumerate([('hmg',45),('rifle',225),('hunting-rifle',45),('pistol',225),('shotgun',225)]):
+   file=ROOT/f'guns-new-{config}/{prop}-{yaw}.png';weapon_sources.append(str(file))
+   im=Image.open(file).convert('RGB').crop((540,200,1060,700));im.thumbnail((320,307))
+   x=col*320;y=story.height+row*strip_height;combined.paste(im,(x,y+30));draw.text((x+4,y+7),f'{prop} | {config}',font=FONT,fill='white')
+ combined.save(OUT/'12-story-plaza-war.jpg',quality=91,optimize=True)
  import hashlib
  index=[]
  for p in sorted(OUT.glob('*.jpg')):
-  im=Image.open(p);index.append({'file':p.name,'size':list(im.size),'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'sources':[str(source) for source,_ in sheets.get(p.name,[])]})
+  im=Image.open(p);index.append({'file':p.name,'size':list(im.size),'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'sources':[str(source) for source,_ in sheets.get(p.name,[])]+(weapon_sources if p.name=='12-story-plaza-war.jpg' else [])})
  assert len(index)==14
  (OUT/'capture-index.json').write_text(json.dumps(index,indent=2)+'\n')
 

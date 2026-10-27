@@ -1,5 +1,6 @@
 {
-  "scope": "Matched production L4 fixture, old/new asset manifests; all mission snapshots identical at each tick. CorpseLayout is render-only: high-tier overlap counts change with the new silhouettes, with no mission or low-tier layout change. Full physical-state hashes will be recorded after final integration.",
+  "scope": "Same production L4 fixture and sim state; only asset manifests/bakes vary. Full physical-state SHA256 includes all entity, collision, mission and RNG snapshots. CorpseLayout is render-only and may change overlap counts with silhouettes.",
+  "baselineAssets": "82b4a2664",
   "comparisons": [
     {
       "config": "high-webgl2",
@@ -8,24 +9,36 @@
           "seconds": 30,
           "sameTick": true,
           "sameMission": true,
+          "samePhysicalState": true,
+          "oldPhysicalSha256": "cd46265523e8c8ba900d6c3b9b44674fdcec5c772d17f6c41160e58109c89365",
+          "newPhysicalSha256": "cd46265523e8c8ba900d6c3b9b44674fdcec5c772d17f6c41160e58109c89365",
           "sameCorpseLayout": true
         },
         {
           "seconds": 60,
           "sameTick": true,
           "sameMission": true,
+          "samePhysicalState": true,
+          "oldPhysicalSha256": "1e06433963d00588b287f9b18a42eeec76c76be98bf74228e9617de4ac86c24d",
+          "newPhysicalSha256": "1e06433963d00588b287f9b18a42eeec76c76be98bf74228e9617de4ac86c24d",
           "sameCorpseLayout": false
         },
         {
           "seconds": 120,
           "sameTick": true,
           "sameMission": true,
+          "samePhysicalState": true,
+          "oldPhysicalSha256": "a6a51c8b32b6b5bb85266762e2df47cb5d9fa71a3bc3444c2db43065125e1614",
+          "newPhysicalSha256": "a6a51c8b32b6b5bb85266762e2df47cb5d9fa71a3bc3444c2db43065125e1614",
           "sameCorpseLayout": false
         },
         {
           "seconds": 180,
           "sameTick": true,
           "sameMission": true,
+          "samePhysicalState": true,
+          "oldPhysicalSha256": "a1e1b99585ea68b6f9d98fd96f352d712f673a9b7834b6a2be57fbdc3135683b",
+          "newPhysicalSha256": "a1e1b99585ea68b6f9d98fd96f352d712f673a9b7834b6a2be57fbdc3135683b",
           "sameCorpseLayout": false
         }
       ]
@@ -37,24 +50,36 @@
           "seconds": 30,
           "sameTick": true,
           "sameMission": true,
+          "samePhysicalState": true,
+          "oldPhysicalSha256": "cd46265523e8c8ba900d6c3b9b44674fdcec5c772d17f6c41160e58109c89365",
+          "newPhysicalSha256": "cd46265523e8c8ba900d6c3b9b44674fdcec5c772d17f6c41160e58109c89365",
           "sameCorpseLayout": true
         },
         {
           "seconds": 60,
           "sameTick": true,
           "sameMission": true,
+          "samePhysicalState": true,
+          "oldPhysicalSha256": "1e06433963d00588b287f9b18a42eeec76c76be98bf74228e9617de4ac86c24d",
+          "newPhysicalSha256": "1e06433963d00588b287f9b18a42eeec76c76be98bf74228e9617de4ac86c24d",
           "sameCorpseLayout": false
         },
         {
           "seconds": 120,
           "sameTick": true,
           "sameMission": true,
+          "samePhysicalState": true,
+          "oldPhysicalSha256": "a6a51c8b32b6b5bb85266762e2df47cb5d9fa71a3bc3444c2db43065125e1614",
+          "newPhysicalSha256": "a6a51c8b32b6b5bb85266762e2df47cb5d9fa71a3bc3444c2db43065125e1614",
           "sameCorpseLayout": false
         },
         {
           "seconds": 180,
           "sameTick": true,
           "sameMission": true,
+          "samePhysicalState": true,
+          "oldPhysicalSha256": "a1e1b99585ea68b6f9d98fd96f352d712f673a9b7834b6a2be57fbdc3135683b",
+          "newPhysicalSha256": "a1e1b99585ea68b6f9d98fd96f352d712f673a9b7834b6a2be57fbdc3135683b",
           "sameCorpseLayout": false
         }
       ]
@@ -66,24 +91,36 @@
           "seconds": 30,
           "sameTick": true,
           "sameMission": true,
+          "samePhysicalState": true,
+          "oldPhysicalSha256": "bef2286ce415dfb02d1328f4e6728bd6d5b7d1fac7a2674f45d45895bce71f44",
+          "newPhysicalSha256": "bef2286ce415dfb02d1328f4e6728bd6d5b7d1fac7a2674f45d45895bce71f44",
           "sameCorpseLayout": true
         },
         {
           "seconds": 60,
           "sameTick": true,
           "sameMission": true,
+          "samePhysicalState": true,
+          "oldPhysicalSha256": "11527ea3fdcbca6e8f6db7b5a43bb984bcc012e0fa88c0380f5ecb06c2a55bac",
+          "newPhysicalSha256": "11527ea3fdcbca6e8f6db7b5a43bb984bcc012e0fa88c0380f5ecb06c2a55bac",
           "sameCorpseLayout": true
         },
         {
           "seconds": 120,
           "sameTick": true,
           "sameMission": true,
+          "samePhysicalState": true,
+          "oldPhysicalSha256": "3decd97256b50b56dae7950552d6832a4091f7dd5aa2b3de2a41f03ea9f6b8f4",
+          "newPhysicalSha256": "3decd97256b50b56dae7950552d6832a4091f7dd5aa2b3de2a41f03ea9f6b8f4",
           "sameCorpseLayout": true
         },
         {
           "seconds": 180,
           "sameTick": true,
           "sameMission": true,
+          "samePhysicalState": true,
+          "oldPhysicalSha256": "0a69f3bc39f30949366f3206785fdfb110d31141494d6f2bd6a6ac997d327f8e",
+          "newPhysicalSha256": "0a69f3bc39f30949366f3206785fdfb110d31141494d6f2bd6a6ac997d327f8e",
           "sameCorpseLayout": true
         }
       ]
@@ -95,24 +132,36 @@
           "seconds": 30,
           "sameTick": true,
           "sameMission": true,
+          "samePhysicalState": true,
+          "oldPhysicalSha256": "bef2286ce415dfb02d1328f4e6728bd6d5b7d1fac7a2674f45d45895bce71f44",
+          "newPhysicalSha256": "bef2286ce415dfb02d1328f4e6728bd6d5b7d1fac7a2674f45d45895bce71f44",
           "sameCorpseLayout": true
         },
         {
           "seconds": 60,
           "sameTick": true,
           "sameMission": true,
+          "samePhysicalState": true,
+          "oldPhysicalSha256": "11527ea3fdcbca6e8f6db7b5a43bb984bcc012e0fa88c0380f5ecb06c2a55bac",
+          "newPhysicalSha256": "11527ea3fdcbca6e8f6db7b5a43bb984bcc012e0fa88c0380f5ecb06c2a55bac",
           "sameCorpseLayout": true
         },
         {
           "seconds": 120,
           "sameTick": true,
           "sameMission": true,
+          "samePhysicalState": true,
+          "oldPhysicalSha256": "3decd97256b50b56dae7950552d6832a4091f7dd5aa2b3de2a41f03ea9f6b8f4",
+          "newPhysicalSha256": "3decd97256b50b56dae7950552d6832a4091f7dd5aa2b3de2a41f03ea9f6b8f4",
           "sameCorpseLayout": true
         },
         {
           "seconds": 180,
           "sameTick": true,
           "sameMission": true,
+          "samePhysicalState": true,
+          "oldPhysicalSha256": "0a69f3bc39f30949366f3206785fdfb110d31141494d6f2bd6a6ac997d327f8e",
+          "newPhysicalSha256": "0a69f3bc39f30949366f3206785fdfb110d31141494d6f2bd6a6ac997d327f8e",
           "sameCorpseLayout": true
         }
       ]

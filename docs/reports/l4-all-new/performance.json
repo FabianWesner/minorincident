@@ -1,14 +1,16 @@
 {
-  "scope": "Matched 30-figure D-FAIR L4 street; Scene Lab also preloads its catalog. Texture bytes are decoded/compressed mip allocations, not download bytes. Old assets supplied from immutable 83503eb18 manifest/bakes over browser routes; same game code and camera.",
-  "timingStatus": "PERF PENDING: shared host busy (load average 6-8). PO quiet-window gate remains low p95 <= main +1ms and five cold-load worst <= PROD *1.10.",
+  "scope": "Matched 30-figure D-FAIR L4 street and production turn checkpoint, same game code/camera. Old assets from main 82b4a2664 retain the corrected L3 Guard on both sides. Scene Lab preloads its catalog; texture bytes count bound 2D allocations including compressed mip chains, excluding render targets/background. These are neither download bytes nor an isolated production memory total.",
+  "timingStatus": "PERF PENDING: shared host; refresh-capped RAF samples are diagnostic. PO quiet-window gate remains low p95 <= main +1ms and worst of five cold loads <= PROD *1.10.",
+  "baselineAssets": "82b4a2664",
   "crowd": [
     {
       "config": "high-webgl2",
       "old": {
+        "revision": "7328fe642955dd3dcd9c66a54183694ebc109998",
         "drawsP95": 78,
-        "trianglesP95": 171779,
-        "decodedTextureBytes": 340354736,
-        "textureCount": 204,
+        "trianglesP95": 155100,
+        "decodedTextureBytes": 344032208,
+        "textureCount": 210,
         "actors": 30,
         "submittedModelBatches": [
           "inf.crawler",
@@ -23,10 +25,11 @@
         ]
       },
       "new": {
+        "revision": "7328fe642955dd3dcd9c66a54183694ebc109998",
         "drawsP95": 78,
-        "trianglesP95": 159579,
-        "decodedTextureBytes": 348503768,
-        "textureCount": 231,
+        "trianglesP95": 142900,
+        "decodedTextureBytes": 352181240,
+        "textureCount": 237,
         "actors": 30,
         "submittedModelBatches": [
           "inf.crawler",
@@ -45,10 +48,11 @@
     {
       "config": "high-webgpu",
       "old": {
+        "revision": "7328fe642955dd3dcd9c66a54183694ebc109998",
         "drawsP95": 78,
-        "trianglesP95": 171779,
-        "decodedTextureBytes": 340354736,
-        "textureCount": 204,
+        "trianglesP95": 155100,
+        "decodedTextureBytes": 344032208,
+        "textureCount": 210,
         "actors": 30,
         "submittedModelBatches": [
           "inf.crawler",
@@ -63,10 +67,11 @@
         ]
       },
       "new": {
+        "revision": "7328fe642955dd3dcd9c66a54183694ebc109998",
         "drawsP95": 78,
-        "trianglesP95": 159579,
-        "decodedTextureBytes": 348503768,
-        "textureCount": 231,
+        "trianglesP95": 142900,
+        "decodedTextureBytes": 352181240,
+        "textureCount": 237,
         "actors": 30,
         "submittedModelBatches": [
           "inf.crawler",
@@ -85,10 +90,11 @@
     {
       "config": "low-webgl2",
       "old": {
+        "revision": "7328fe642955dd3dcd9c66a54183694ebc109998",
         "drawsP95": 77,
-        "trianglesP95": 163365,
-        "decodedTextureBytes": 301832320,
-        "textureCount": 182,
+        "trianglesP95": 146686,
+        "decodedTextureBytes": 302711104,
+        "textureCount": 186,
         "actors": 30,
         "submittedModelBatches": [
           "inf.crawler",
@@ -103,10 +109,11 @@
         ]
       },
       "new": {
+        "revision": "7328fe642955dd3dcd9c66a54183694ebc109998",
         "drawsP95": 77,
-        "trianglesP95": 151469,
-        "decodedTextureBytes": 305150408,
-        "textureCount": 205,
+        "trianglesP95": 134790,
+        "decodedTextureBytes": 306029192,
+        "textureCount": 209,
         "actors": 30,
         "submittedModelBatches": [
           "inf.crawler",
@@ -125,10 +132,11 @@
     {
       "config": "low-webgpu",
       "old": {
+        "revision": "7328fe642955dd3dcd9c66a54183694ebc109998",
         "drawsP95": 77,
-        "trianglesP95": 163365,
-        "decodedTextureBytes": 301832320,
-        "textureCount": 182,
+        "trianglesP95": 146686,
+        "decodedTextureBytes": 302711104,
+        "textureCount": 186,
         "actors": 30,
         "submittedModelBatches": [
           "inf.crawler",
@@ -143,10 +151,11 @@
         ]
       },
       "new": {
+        "revision": "7328fe642955dd3dcd9c66a54183694ebc109998",
         "drawsP95": 77,
-        "trianglesP95": 151469,
-        "decodedTextureBytes": 305150408,
-        "textureCount": 205,
+        "trianglesP95": 134790,
+        "decodedTextureBytes": 306029192,
+        "textureCount": 209,
         "actors": 30,
         "submittedModelBatches": [
           "inf.crawler",
@@ -167,127 +176,143 @@
     {
       "config": "high-webgl2",
       "old": {
+        "revision": "7328fe642955dd3dcd9c66a54183694ebc109998",
         "hostLoad": [
-          3.18994140625,
-          4.1806640625,
-          4.37548828125
+          3.28515625,
+          3.07275390625,
+          2.7548828125
         ],
         "p95Ms": 16.799999999995634,
-        "maxMs": 133.40000000000146,
-        "lateShaderBuilds": [],
-        "framesOver200ms": 0,
-        "decodedTextureBytes": 241490664,
-        "frameCount": 600,
-        "scope": "Production L4 turn checkpoint, seed3, 180s after turn, zoom1.5, real mission/horde/solid corpses; god and camera-position fixture only, separate from required input playthrough"
-      },
-      "new": {
-        "hostLoad": [
-          4.69384765625,
-          4.51708984375,
-          4.49072265625
-        ],
-        "p95Ms": 16.700000000004366,
         "maxMs": 16.80000000000291,
         "lateShaderBuilds": [],
         "framesOver200ms": 0,
-        "decodedTextureBytes": 249639696,
-        "frameCount": 600,
-        "scope": "Production L4 turn checkpoint, seed3, 180s after turn, zoom1.5, real mission/horde/solid corpses; god and camera-position fixture only, separate from required input playthrough"
+        "drawCalls": 301,
+        "triangles": 1265283,
+        "decodedTextureBytes": 243333048,
+        "frameCount": 600
+      },
+      "new": {
+        "revision": "7328fe642955dd3dcd9c66a54183694ebc109998",
+        "hostLoad": [
+          2.244140625,
+          2.80029296875,
+          2.673828125
+        ],
+        "p95Ms": 16.799999999995634,
+        "maxMs": 16.80000000000291,
+        "lateShaderBuilds": [],
+        "framesOver200ms": 0,
+        "drawCalls": 301,
+        "triangles": 667209,
+        "decodedTextureBytes": 251482080,
+        "frameCount": 600
       }
     },
     {
       "config": "high-webgpu",
       "old": {
+        "revision": "7328fe642955dd3dcd9c66a54183694ebc109998",
         "hostLoad": [
-          3.55517578125,
-          4.1923828125,
-          4.36767578125
+          2.37158203125,
+          2.73095703125,
+          2.6552734375
         ],
         "p95Ms": 16.700000000004366,
-        "maxMs": 33.200000000004366,
-        "lateShaderBuilds": [],
-        "framesOver200ms": 0,
-        "decodedTextureBytes": 241490664,
-        "frameCount": 600,
-        "scope": "Production L4 turn checkpoint, seed3, 180s after turn, zoom1.5, real mission/horde/solid corpses; god and camera-position fixture only, separate from required input playthrough"
-      },
-      "new": {
-        "hostLoad": [
-          4.21826171875,
-          4.3466796875,
-          4.4169921875
-        ],
-        "p95Ms": 16.799999999995634,
         "maxMs": 16.80000000000291,
         "lateShaderBuilds": [],
         "framesOver200ms": 0,
-        "decodedTextureBytes": 249639696,
-        "frameCount": 600,
-        "scope": "Production L4 turn checkpoint, seed3, 180s after turn, zoom1.5, real mission/horde/solid corpses; god and camera-position fixture only, separate from required input playthrough"
+        "drawCalls": 297,
+        "triangles": 1251776,
+        "decodedTextureBytes": 243333048,
+        "frameCount": 600
+      },
+      "new": {
+        "revision": "7328fe642955dd3dcd9c66a54183694ebc109998",
+        "hostLoad": [
+          2.27783203125,
+          2.630859375,
+          2.6220703125
+        ],
+        "p95Ms": 16.700000000004366,
+        "maxMs": 16.80000000000291,
+        "lateShaderBuilds": [],
+        "framesOver200ms": 0,
+        "drawCalls": 301,
+        "triangles": 667209,
+        "decodedTextureBytes": 251482080,
+        "frameCount": 600
       }
     },
     {
       "config": "low-webgl2",
       "old": {
+        "revision": "7328fe642955dd3dcd9c66a54183694ebc109998",
         "hostLoad": [
-          5.61962890625,
-          4.634765625,
-          4.515625
+          2.60302734375,
+          2.66650390625,
+          2.6337890625
         ],
         "p95Ms": 16.700000000000728,
-        "maxMs": 50,
+        "maxMs": 16.80000000000291,
         "lateShaderBuilds": [],
         "framesOver200ms": 0,
-        "decodedTextureBytes": 149302288,
-        "frameCount": 600,
-        "scope": "Production L4 turn checkpoint, seed3, 180s after turn, zoom1.5, real mission/horde/solid corpses; god and camera-position fixture only, separate from required input playthrough"
+        "drawCalls": 231,
+        "triangles": 1106399,
+        "decodedTextureBytes": 149744112,
+        "frameCount": 600
       },
       "new": {
+        "revision": "7328fe642955dd3dcd9c66a54183694ebc109998",
         "hostLoad": [
-          7.03955078125,
-          5.068359375,
-          4.67529296875
+          2.30810546875,
+          2.5859375,
+          2.6044921875
         ],
-        "p95Ms": 16.799999999999272,
-        "maxMs": 50,
+        "p95Ms": 16.700000000000728,
+        "maxMs": 16.80000000000291,
         "lateShaderBuilds": [],
         "framesOver200ms": 0,
-        "decodedTextureBytes": 152620376,
-        "frameCount": 600,
-        "scope": "Production L4 turn checkpoint, seed3, 180s after turn, zoom1.5, real mission/horde/solid corpses; god and camera-position fixture only, separate from required input playthrough"
+        "drawCalls": 231,
+        "triangles": 378580,
+        "decodedTextureBytes": 153062200,
+        "frameCount": 600
       }
     },
     {
       "config": "low-webgpu",
       "old": {
+        "revision": "7328fe642955dd3dcd9c66a54183694ebc109998",
         "hostLoad": [
-          6.57861328125,
-          5.169921875,
-          4.7265625
+          2.28076171875,
+          2.55078125,
+          2.5888671875
         ],
-        "p95Ms": 16.799999999999272,
-        "maxMs": 50,
+        "p95Ms": 16.700000000000728,
+        "maxMs": 16.80000000000291,
         "lateShaderBuilds": [],
         "framesOver200ms": 0,
-        "decodedTextureBytes": 149302288,
-        "frameCount": 600,
-        "scope": "Production L4 turn checkpoint, seed3, 180s after turn, zoom1.5, real mission/horde/solid corpses; god and camera-position fixture only, separate from required input playthrough"
+        "drawCalls": 231,
+        "triangles": 1106399,
+        "decodedTextureBytes": 149744112,
+        "frameCount": 600
       },
       "new": {
+        "revision": "7328fe642955dd3dcd9c66a54183694ebc109998",
         "hostLoad": [
-          5.22998046875,
-          4.9775390625,
-          4.6708984375
+          2.24462890625,
+          2.513671875,
+          2.5732421875
         ],
-        "p95Ms": 16.799999999999272,
-        "maxMs": 50,
+        "p95Ms": 16.700000000000728,
+        "maxMs": 16.80000000000291,
         "lateShaderBuilds": [],
         "framesOver200ms": 0,
-        "decodedTextureBytes": 152620376,
-        "frameCount": 600,
-        "scope": "Production L4 turn checkpoint, seed3, 180s after turn, zoom1.5, real mission/horde/solid corpses; god and camera-position fixture only, separate from required input playthrough"
+        "drawCalls": 231,
+        "triangles": 378580,
+        "decodedTextureBytes": 153062200,
+        "frameCount": 600
       }
     }
   ],
-  "productionDiagnosticRevision": "bdb1662b4"
+  "productionScope": "Production L4 turn checkpoint seed3, 30/60/120/180s after turn, zoom1/1.5. Real mission, horde and solid corpses; god/camera-position fixture only, separate from the real-input playthrough."
 }
