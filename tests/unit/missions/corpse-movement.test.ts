@@ -41,3 +41,39 @@ test('a retained Alpha corpse has a solid footprint while small human corpses st
     expect(courier.x).toBeLessThan(4.5);
   } finally { world.dispose(); }
 });
+
+test('the companion follows around a large corpse without crossing its footprint', async () => {
+  const world = new SimWorld(); await world.init(); world.loadScenario('horde-arena', 3);
+  try {
+    const ai = world.infected!; for (const e of [...ai.active]) ai.release(e);
+    ai.director.ambientTarget = 0; ai.director.queue.length = 0;
+    const id = ai.spawn('infected.alpha', { x: 5, z: 0 });
+    world.combat!.damage.apply({ sourceId: 1, targetId: id, attackId: 1, actionId: 'burn', origin: { x: 0, z: 0 }, direction: { x: 1, z: 0 }, base: 9999, multiplier: 1, type: 'status', knockback: 0, stagger: 0, permanent: true });
+    for (let tick = 0; tick < 125; tick++) world.update();
+    const companion = world.entities.get(world.npcs!.companion.spawn())!;
+    world.npcs!.companion.forceSafe = true;
+    world.solids.relocate(companion, { x: 0, y: .3, z: 0 }, 'test.companion');
+    world.solids.relocate(world.entities.get(1)!, { x: 9, y: .7, z: 0 }, 'test.player');
+    let nearest = Infinity;
+    for (let tick = 0; tick < 600; tick++) { world.update(); nearest = Math.min(nearest, Math.hypot(companion.transform.x - 5, companion.transform.z)); }
+    expect(nearest, 'the corgi must respect the dead Alpha footprint').toBeGreaterThan(1.3);
+    expect(companion.transform.x, 'the corgi must reach the far side rather than remain stuck at the body').toBeGreaterThan(6);
+  } finally { world.dispose(); }
+});
+
+test('Mega and every zoo species retain a solid corpse for courier and companion queries', async () => {
+  const world = new SimWorld(); await world.init(); world.loadScenario('horde-arena', 3);
+  try {
+    const ai = world.infected!; for (const e of [...ai.active]) ai.release(e);
+    ai.director.ambientTarget = 0; ai.director.queue.length = 0;
+    const companion = world.npcs!.companion.spawn();
+    const ids = ['alpha', 'lion', 'gorilla', 'elephant', 'zebra', 'flamingo'].map((name, i) => ai.spawn(`infected.${name}`, { x: 6 + i * 5, z: 8 }, name === 'alpha' ? { variant: 'inf.mega-alpha' } : {}));
+    for (const id of ids) world.combat!.damage.apply({ sourceId: 1, targetId: id, attackId: id, actionId: 'burn', origin: { x: 0, z: 0 }, direction: { x: 1, z: 0 }, base: 99999, multiplier: 1, type: 'status', knockback: 0, stagger: 0, permanent: true });
+    for (let tick = 0; tick < 125; tick++) world.update();
+    for (const id of ids) {
+      const body = world.entities.get(id)!; expect(body.corpse).toBe(true);
+      expect(world.solids.clear(body.transform, .35, 1), body.archetype).toBe(false);
+      expect(world.solids.clear({ ...body.transform, y: .3 }, .44, companion), `${body.archetype} / corgi`).toBe(false);
+    }
+  } finally { world.dispose(); }
+});

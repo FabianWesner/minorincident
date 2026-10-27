@@ -1,6 +1,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import type { Page } from '@playwright/test';
 import { test, expect, boot } from '../fixtures';
+import { l4BreachSite } from '../../../src/data/l4Perimeter';
 
 /**
  * l4-po-round game-camera captures (PO 10-13 L4 requests) at both quality tiers and both player zooms (1.0 = default framing,
@@ -90,6 +91,9 @@ async function run(page: Page, quality: 'high' | 'low', zoom: number, renderer: 
   await until(60); await shot('5-opening-minute-60s');
   await until(95); await shot('6-war-95s');
   await until(150); await shot('7-exterior-breach-flood-150s');
+  const west = l4BreachSite('west').centre;
+  await page.evaluate(p => window.__SS__!.teleport('player', { x: p.x + 4.1, z: p.z }), west);
+  await step(30); await shot('8-west-breach-follow');
   writeFileSync(`${output}/${name}.json`, JSON.stringify(report, null, 1) + '\n');
 }
 
