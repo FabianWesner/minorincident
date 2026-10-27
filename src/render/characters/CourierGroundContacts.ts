@@ -48,7 +48,6 @@ export class CourierGroundContacts {
   private readonly up = new Vector3(0, 1, 0);
   private readonly lateralAxis = new Vector3(0, 0, 1);
   private readonly sole: number;
-  private readonly hipRest: number;
   private pelvisHeight: number | undefined;
   private heading: number | undefined;
   private moving = false;
@@ -67,7 +66,6 @@ export class CourierGroundContacts {
     rig.root.updateWorldMatrix(true, true);
     rig.root.getWorldPosition(this.origin); rig.root.getWorldQuaternion(this.frame);
     const scale = scaleNode.getWorldScale(this.scale).y;
-    this.hipRest = (rig.hip.getWorldPosition(this.joint).y - this.origin.y) / scale;
     this.sole = (rig.footL.getWorldPosition(this.joint).y - this.origin.y) / scale;
     this.feet = (['L', 'R'] as const).map((side, index) => {
       const upper = rig[`leg${side}`], middle = rig[`shin${side}`], end = rig[`foot${side}`];
