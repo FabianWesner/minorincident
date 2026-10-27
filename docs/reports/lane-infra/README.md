@@ -45,7 +45,7 @@ The [whole-host report](wait-report-all.tsv) includes sim acquisitions and mac-r
 ## Checks and limits
 
 - `npm run typecheck` and `npm run lint`: passed after final code changes.
-- `E2E_LOCK=/private/tmp/mi-infra-protocol.lock node --import tsx tools/browser-pool/check.ts`: passed isolation, capacity, FIFO across exclusive barriers, idle release, reconnect/native restart, opaque exclusive commands, profile portability and explicit legacy fallback. [Receipt](protocol-check.log).
+- `E2E_LOCK=/private/tmp/mi-infra-protocol.lock node --import tsx tools/browser-pool/check.ts`: passed isolation, capacity, FIFO across exclusive barriers, idle release, reconnect/native restart, opaque exclusive commands, profile portability and explicit legacy fallback. [Receipt](protocol-check.txt).
 - [Reservation checks](cap-checks.json): shortened reservation exits 124 with split-batch guidance and cleanup; 601 seconds and wrapped three-worker commands are rejected with exit 2; direct three-worker CLI invocations are also rejected; `BROWSER_POOL=off` alone cannot select legacy. The shortened probe has a one-second execution allowance plus five seconds for cleanup; the default uses 595 + 5 seconds.
 - [Cache pruning check](cache-prune-check.json): current/locked entries preserved, old unlocked entries removed, eventual three-entry bound. Writable dependency clones and a real warm build were exercised in fresh worktrees.
 
