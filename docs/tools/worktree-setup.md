@@ -9,3 +9,5 @@ Vite's optimizer cache is stored centrally and partitioned by lockfile, Vite con
 `sh tools/worktree-setup.sh --smoke` reports setup footprint/time and the elapsed time for the first green full smoke. It releases the dependency-store lock before running tests. Browser runs need private `E2E_PORT` and `SCENE_PORT` values; port 3300 is reserved for the user's dev server. Retain measurement output under `docs/reports/lane-infra/`.
 
 Browser/legacy and sim acquisitions append `{at,lane,kind,waitMs}` to `$TMPDIR/mi-waits.jsonl`. `node tools/qa/wait-report.mjs [file]` groups by lane/resource/hour and also accepts mac-runner's `{ts,lane,lock,waitMs}` schema. Remote/local CPU slot instrumentation remains owned by the mac-runner lane. `sh tools/browser-busy.sh` exposes the shared GPU reservation probe for that lane.
+
+The browser daemon runs from a small versioned snapshot under the shared cache, with stable dependencies. Removing the initiating worktree therefore does not break later GPU admission or Playwright launches.
