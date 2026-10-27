@@ -13,7 +13,7 @@ if (!Number.isInteger(capSeconds) || capSeconds < 1 || capSeconds > 600) {
   console.error('Browser reservations must be 1–600 seconds; split batches longer than 10 minutes.'); process.exit(2);
 }
 let reservedAt = 0;
-if (command.some(arg => arg === 'playwright' || /\/(?:playwright|playwright-core)(?:\/cli[.]js)?$/.test(arg) || /\/@playwright\/test\/cli[.]js$/.test(arg))) {
+if (command.some(arg => /(?:^|\/)(?:playwright|cli[.]js)$/.test(arg) || /\/(?:playwright|playwright-core)(?:\/cli[.]js)?$/.test(arg) || /\/@playwright\/test\/cli[.]js$/.test(arg))) {
   for (let i = 0; i < command.length; i++) {
     const workers = command[i] === '--workers' ? command[++i] : command[i].startsWith('--workers=') ? command[i].slice('--workers='.length) : undefined;
     if ((command[i - 1] === '--workers' || workers !== undefined) && workers !== '1' && workers !== '2') {
