@@ -22,6 +22,7 @@ test('T-E22-wall @E22 @E22-AC13 the west wall falls to an announced Alpha by log
   w.events.on('barricade.damaged', e => { if (e.type === 'barricade.damaged' && e.groupId === 'l4-wall') damage.push({ slot: e.slotId, source: w.entities.get(e.sourceId)?.archetype ?? '?', amount: e.amount }); });
   w.events.on('barricade.broken', e => { if (e.type === 'barricade.broken' && e.groupId === 'l4-wall') broken.push(e.slotId); });
   let text = '', marker: string | null = null, announcedText = '', throughGap = 0, cowerViolations = 0, sheltered = 0;
+  const staleCowers: unknown[] = [];
   const westIds = new Set(l4Breaches.west.segments.map(i => l4WallSlots[i].id)), seenInside = new Set<number>();
   runL4(w, m, 'idle', { seed: 3, god: true, maxSeconds: 200, stopWhen: mm => {
     const s = mm.state.l4!; if (!s.turnAt) return false;
@@ -35,7 +36,7 @@ test('T-E22-wall @E22 @E22-AC13 the west wall falls to an announced Alpha by log
       if (c.story?.clip !== 'npc-cower') continue;
       // 10-tick check cadence: allow the distance a runner covers meanwhile.
       const near = [...w.infected!.active, ...[...w.entities.iterate()].filter(x => x.infection && x.id !== e.id)].some(a => a.health.current > 0 && !a.hidden && Math.hypot(a.transform.x - e.transform.x, a.transform.z - e.transform.z) < cowerThreatM + 2);
-      if (!near) cowerViolations++;
+      if (!near) { cowerViolations++; staleCowers.push({ t, id: e.id, state: c.state, anchor: c.schedule?.[c.scheduleStep ?? 0]?.anchor, at: { ...e.transform } }); }
     }
     return t > 75;
   } });
@@ -51,5 +52,5 @@ test('T-E22-wall @E22 @E22-AC13 the west wall falls to an announced Alpha by log
   expect(text).toMatch(/^Hold the west breach/); expect(marker).toBe('l4-breach-west');
   expect(throughGap, 'infected come in through the west gap').toBeGreaterThanOrEqual(3);
   expect(sheltered, 'civilians reach real shelter').toBeGreaterThan(0);
-  expect(cowerViolations, 'no cower without an infected close by').toBe(0);
+  expect(cowerViolations, `no cower without an infected close by: ${JSON.stringify(staleCowers)}`).toBe(0);
 }, HEAVY);

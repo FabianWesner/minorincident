@@ -91,7 +91,12 @@ export class Outbreak {
       if (last && last.tick === event.tick && Math.hypot(last.x - event.from.x, last.z - event.from.z) < 3) return;
       this.gunfire.push({ x: event.from.x, z: event.from.z, tx: event.to.x, tz: event.to.z, tick: event.tick });
     }));
-    this.offs.push(world.events.on('sim.tick', () => this.dressInfected(), SimPhase.cleanup));
+    this.offs.push(world.events.on('sim.tick', () => {
+      this.dressInfected();
+      // Combat later in the tick may remove the last nearby threat. Clear its
+      // cower pose before rendering, rather than leaving a stale reaction.
+      if (world.scenario === 'L4') for (const e of world.entities.iterate()) if (e.civilian?.story?.clip === 'npc-cower' && !e.infection && !this.threatNear(e)) e.civilian.story = null;
+    }, SimPhase.cleanup));
     this.offs.push(world.events.on('outbreak.bite', event => { if (event.type === 'outbreak.bite' && !this.emitting) this.externalBite(event); }));
     // Lane C's L1 brain grabs on contact and owns the 1.0 s hold and the rescue; the victim only mirrors it here.
     this.offs.push(world.events.on('civilian.grabbed', event => { if (event.type === 'civilian.grabbed' && !this.emitting && this.aiBites()) this.grabbedBy(event.targetId, event.sourceId); }));
@@ -234,7 +239,7 @@ export class Outbreak {
   /** PO Q-159 ("people behave strange"): sheltering/hiding people cower only while a live infected is within `cowerThreatM`; otherwise they stand alert. */
   threatNear(e: EntitySnapshot): boolean {
     for (const a of this.world.infected?.active ?? []) if (a.health.current > 0 && !a.hidden && !a.infected?.hidden && Math.hypot(a.transform.x - e.transform.x, a.transform.z - e.transform.z) < cowerThreatM) return true;
-    for (const a of this.turning) if (a !== e && a.health.current > 0 && !a.hidden && Math.hypot(a.transform.x - e.transform.x, a.transform.z - e.transform.z) < cowerThreatM) return true;
+    for (const a of this.turning) if (a !== e && a.infection && a.health.current > 0 && !a.hidden && Math.hypot(a.transform.x - e.transform.x, a.transform.z - e.transform.z) < cowerThreatM) return true;
     return false;
   }
   private shelterCower(e: EntitySnapshot): void {
