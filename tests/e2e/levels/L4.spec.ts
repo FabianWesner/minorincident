@@ -42,12 +42,12 @@ function helpers(page: Page) {
   };
   /** Click the actual destination (camera framed for the click only); re-click after fights and respawns. */
   const go = async (target: P, stop = 1.2, done?: () => Promise<boolean>, range = 2.6) => {
-    const click = async () => {
+    const click = async (detour?: P) => {
       const start = (await player()).transform, m = await mission();
       // After a collapse respawn, resume the authored street route. The extended
       // north/west legs must not click diagonally through the fallen camp.
-      let goal = target;
-      if (m.l4?.phase === 'collapse') {
+      let goal = detour ?? target;
+      if (!detour && m.l4?.phase === 'collapse') {
         const route = l4.finale.route, end = route.findIndex(([x, z]) => Math.hypot(x - target.x, z - target.z) < .1);
         let nearest = Infinity;
         for (let i = 1; i <= end; i++) {
@@ -72,12 +72,21 @@ function helpers(page: Page) {
       await page.evaluate(() => window.__SS__!.camera.follow());
     };
     await click();
-    let fights = 0;
+    let fights = 0, stalled = 0, detourSide = 1, lastAt = (await player()).transform;
     for (let i = 0; i < 600; i++) {
       await step(20);
       if (done && await done()) return;
       const p = (await player()).transform;
       if (Math.hypot(target.x - p.x, target.z - p.z) <= stop) return;
+      stalled = Math.hypot(p.x - lastAt.x, p.z - lastAt.z) < .1 ? stalled + 1 : 0; lastAt = p;
+      // Large corpses are now solid. Real input must walk around a blocked body,
+      // rather than repeatedly clicking the same line through its footprint.
+      if (stalled >= 4) {
+        const dx = target.x - p.x, dz = target.z - p.z, length = Math.hypot(dx, dz);
+        await click({ x: p.x + dz / length * 2.5 * detourSide, z: p.z - dx / length * 2.5 * detourSide });
+        await step(45); await click(); detourSide *= -1; stalled = 0; fights = 0;
+        lastAt = (await player()).transform; continue;
+      }
       const crowd = await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!.transform; return a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 10).length; });
       // Many ahead: back off for a moment (they string out), then push on.
       if (crowd >= 5 && (await mission()).l4?.phase === 'collapse') { await click(); fights = 0; }
