@@ -55,7 +55,8 @@ test('T-E08-13 @E08 @E08-AC13 finishing eyes only; 100 real crowd shots pass thr
   for (let i = 0; i < 10; i++) w.npcs!.civilians.spawn('jogger', { x: i + 1, z: (i + 1) * .2 });
   w.spawnDummy('infected.dummy', { x: 15, z: 3 }, { hp: 100000 });
   w.combat!.setLoadout(['weapon.pistol'], ['weapon.grenade']); w.combat!.runner.infiniteCharges = true;
-  w.setInput({ left: { down: true, held: true, up: false }, aim: { x: 1, z: .2 } });
+  // Hold automatic fire through reloads; repeated down edges invoke Q-161's empty-trigger fallback.
+  w.setInput({ left: { down: false, held: true, up: false }, aim: { x: 1, z: .2 } });
   step(w, 3600); expect(w.events.events().filter(e => e.type === 'combat.attack').length).toBeGreaterThanOrEqual(100);
   expect(w.events.events().filter(e => e.type === 'combat.hit' && w.entities.get(e.targetId)?.civilian)).toHaveLength(0);
   expect(w.events.events().filter(e => e.type === 'combat.hit' && e.actionId === 'weapon.pistol').length).toBeGreaterThanOrEqual(100);
@@ -80,7 +81,7 @@ test('T-E08-14 @E08 @E08-AC14 full cap postpones rising; mass turning never exce
   for (let i = 0; i < 1800; i++) { mass.update(); expect(mass.infected!.director.count).toBeLessThanOrEqual(15); }
   expect(mass.npcs!.civilians.turns).toBe(npcs.turnChainLimit[0]); mass.dispose();
 });
-test('T-E08-01 @E08 @E08-AC01 W0 civ-street 30 routines never stuck over five minutes', async () => {
+test('T-E08-01 @nightly @E08 @E08-AC01 W0 civ-street 30 routines never stuck over five minutes', async () => {
   const w = await world(); w.loadScenario('civ-street'); const crowd = [...w.entities.iterate()].filter(e => e.kind === 'civilian'); expect(crowd).toHaveLength(30);
   // Moving paths loop; displacement is measured throughout each 20s window, not only matching loop endpoints.
   const starts = crowd.map(e => ({ x: e.transform.x, z: e.transform.z })), maxDistance = new Float64Array(30);

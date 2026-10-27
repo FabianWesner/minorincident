@@ -1,13 +1,11 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { execFileSync } from 'node:child_process';
-import { homedir } from 'node:os';
 import { resolve } from 'node:path';
 import { gunzipSync } from 'node:zlib';
 import { open, origin } from '../skinpilot/browser';
+import { encodeWebm } from './shared';
 
 /** Run through e2e-lock, with a Vite dev server on E2E_PORT serving preview/player-anim.html. */
 const out = process.argv[2] ?? 'test-results/player-anim', after = process.argv[3] ?? 'after', only = process.argv[4];
-const ffmpeg = process.env.FFMPEG_BIN ?? `${homedir()}/Library/Caches/ms-playwright/ffmpeg-1011/ffmpeg-mac`;
 const game = process.argv.includes('--game'), stills = process.argv.includes('--stills');
 const { page, close } = await open({ width: 1280, height: game ? 640 : 960 });
 const errors: string[] = []; page.on('pageerror', e => errors.push(e.message));
@@ -32,7 +30,7 @@ try {
       if (!stills) frames.push(await page.screenshot({ type: 'jpeg', quality: 90 }));
       if (spots.includes(i)) await page.screenshot({ path: `${stem}-${i}.png` });
     }
-    if (!stills) execFileSync(ffmpeg, ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-c:v', 'mjpeg', '-framerate', '15', '-i', 'pipe:0', '-c:v', 'libvpx', '-b:v', '3M', '-crf', '10', `${stem}.webm`], { input: Buffer.concat(frames), maxBuffer: 1024 * 1024 });
+    if (!stills) encodeWebm(frames, `${stem}.webm`, { fps: 15, bitrate: '3M', crf: 10 });
     console.log(stem, count / 60, 'seconds');
   }
   writeFileSync(`${out}/${after}-capture.json`, JSON.stringify({ errors, renderer: 'headless Chromium ANGLE Metal / WebGL2, neutral studio lighting, production recorded poses', fps: 15, camera: game ? '25° perspective, production polar=0.30π, azimuth=π/4; zoomed courier, neutral studio lighting' : 'side + game angle', stillIndices: [32, 60, 120, 156, 168, 180, 192, 240] }, null, 2));

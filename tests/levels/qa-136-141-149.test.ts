@@ -17,7 +17,7 @@ async function level(id: 'L8' | 'L9' | 'L10') {
   const m = w.loadMission(resolveCampaignMission(id, w.districts!)); m.begin(); return { w, m };
 }
 
-test('Q-138 headlamp remains at its authored E-only pickup while companion updates', async () => {
+test('Q-138 @nightly headlamp remains at its authored E-only pickup while companion updates', async () => {
   const { world: w } = await loadL6(1); worlds.push(w);
   const lamp = [...w.entities.iterate()].find(e => e.archetype === 'pickup.headlamp')!;
   const authored = { x: lamp.transform.x, z: lamp.transform.z };
@@ -65,7 +65,7 @@ test('Q-139 every authored L9 road and detour centerline clears a 1.6 m APC radi
   expect(blocked.slice(0, 20)).toEqual([]);
 });
 
-test('Q-149 L10 console infected takes player attack damage instead of remaining invulnerable', async () => {
+test('Q-149 @nightly L10 console infected takes player attack damage instead of remaining invulnerable', async () => {
   const { w, m } = await level('L10');
   const console = m.def.anchors['cure-console'];
   const player = w.entities.get(1)!;

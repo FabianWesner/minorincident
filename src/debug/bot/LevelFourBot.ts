@@ -3,14 +3,13 @@ import { l4 } from '../../data/l4';
 import { emptyInput, type InputFrame } from '../../input/InputFrame';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import type { EntitySnapshot } from '../../sim/world/types';
+import { chasingCourier, dist, heldKit, jammed, nearestKit, newStuck, strikeAt, visibleThreats, walkTo, type P } from './helpers';
 import { Walker } from './Walker';
 
 /** E22 section 8 bot profiles. `evade-only` never attacks; `idle` goes to the quartermaster and stays there. */
 export type L4Profile = 'complete' | 'newbie' | 'evade-only' | 'idle';
 /** Route to Kessler Lane (AC01): Harbor Street in the north, Lakeshore Avenue in the south; `auto` picks the emptier one at the line break. */
 export type L4RouteChoice = 'auto' | 'harbor' | 'lakeshore';
-type P = { x: number; z: number };
-const dist = (a: P, b: P) => Math.hypot(a.x - b.x, a.z - b.z);
 const ROUTES: Record<'harbor' | 'lakeshore', P[]> = {
   harbor: [{ x: -39.2, z: -36.4 }, { x: -64, z: -39.5 }, { x: -79, z: -40 }],
   // The escape street (l4-collapse-2): the horde leaves a gap on it at "Fall back!" (LevelFourWar.clearGap).
@@ -43,19 +42,14 @@ export class LevelFourBot {
   private detour: (P & { until: number }) | null = null;
   private noPath = 0;
   private picked = false;
-  private stuck = { at: null as P | null, n: 0, next: 0 };
+  private stuck = newStuck();
   private medkit = 0;
   constructor(private readonly world: SimWorld, readonly profile: L4Profile = 'complete', readonly forced: L4RouteChoice = 'auto') {
     this.rng = new Rng(world.seed, `l4-bot-${profile}-${forced}`);
     this.route = forced === 'auto' ? 'lakeshore' : forced;
   }
   debug() { return { route: this.route, leg: this.leg, detour: this.detour, medkit: this.medkit, stuck: this.stuck.n }; }
-  private threats(p: P, radius: number): EntitySnapshot[] {
-    const w = this.world;
-    return (w.infected?.active ?? []).filter(e => e.health.current > 0 && !e.hidden && !e.infected?.hidden && !e.infectionRise && dist(e.transform, p) <= radius && w.infected!.nav.visible(p, e.transform, 0))
-      .sort((a, b) => dist(a.transform, p) - dist(b.transform, p));
-  }
-  private chasing(e: EntitySnapshot): boolean { const b = e.infected?.l1; return !!b && (b.mode === 'chase' || b.mode === 'bite') && b.targetId === 1; }
+  private threats(p: P, radius: number): EntitySnapshot[] { return visibleThreats(this.world, p, radius); }
   sample(): InputFrame {
     const w = this.world, m = w.missions!, s = m.state.l4;
     this.finished = m.state.phase === 'result' || m.state.phase === 'progression';
@@ -67,11 +61,8 @@ export class LevelFourBot {
     if (newbie && w.tick % 15 !== 0) { this.frame.interact = false; return this.frame; }
     const frame = this.frame = emptyInput(), player = w.entities.get(1)!, p = player.transform, a = m.def.anchors;
     if (player.health.current <= 0 || s.phase === 'convoy') return frame;
-    const go = (target: P, stop: number, key: string) => { const dir = this.walker.step(w, target, stop, key); if (dir) frame.move = dir; return !dir; };
-    const strike = (target: EntitySnapshot, side: 'LEFT' | 'RIGHT') => {
-      frame.attackTarget = { id: target.id, side }; frame.move = { x: 0, z: 0 };
-      if (side === 'LEFT') frame.left.held = true; else frame.right.held = true;
-    };
+    const go = walkTo(this.walker, w, frame);
+    const strike = (target: EntitySnapshot, side: 'LEFT' | 'RIGHT') => strikeAt(frame, target, side);
     const fights = this.profile !== 'evade-only', skip = newbie && this.rng.next() < .15;
     const gun = w.combat?.runner.loadout.state.RIGHT.rack.some(r => r.id === l4.machineGun.id) ?? false;
     const near = this.threats(p, 2.4);
@@ -82,7 +73,7 @@ export class LevelFourBot {
       if (s.phase === 'collapse' && w.infected!.active.some(e => e.archetype === 'infected.alpha' && e.health.current > 0 && dist(e.transform, p) < 14)) return false;
       if (near[0]) { strike(near[0], 'LEFT'); return true; }
       if (!gun) return false;
-      const shot = this.threats(p, range).find(e => this.chasing(e) || dist(e.transform, p) < 11);
+      const shot = this.threats(p, range).find(e => chasingCourier(e) || dist(e.transform, p) < 11);
       if (shot) { strike(shot, 'RIGHT'); return true; }
       return false;
     };
@@ -95,7 +86,7 @@ export class LevelFourBot {
       const hold = retreating ? player.survivor!.checkpoint : { x: -21.5, z: 3 };
       // Keep moving during a retreat: stopping for every shot sent the courier back into a lost line's crowd.
       const movingFight = (range: number) => { const move = frame.move; fight(range); frame.move = move; };
-      const crowd = this.threats(p, 5), many = this.threats(p, 10).filter(e => this.chasing(e)).length;
+      const crowd = this.threats(p, 5), many = this.threats(p, 10).filter(e => chasingCourier(e)).length;
       const alpha = this.threats(p, 14).find(e => e.archetype === 'infected.alpha' &&
         e.infected?.specialAttack?.stage === 'telegraph');
       // The slower newbie must start backing away before a crowd is already in melee range.
@@ -108,7 +99,7 @@ export class LevelFourBot {
         go(this.detour, .8, `det-${this.detour.until}`); movingFight(newbie ? 13 : 20); return frame;
       }
       const hurt = player.health.current / player.health.max <= (newbie ? .4 : .5);
-      const kit = hurt ? s.medkitIds.map(id => w.entities.get(id)).filter((e): e is EntitySnapshot => !!e?.pickup && 'kind' in e.pickup && !e.pickup.collected && dist(e.transform, p) < 14 && (!retreating || e.transform.x >= hold.x)).sort((x, y) => dist(x.transform, p) - dist(y.transform, p))[0] : undefined;
+      const kit = hurt ? nearestKit(w, s.medkitIds, p, e => dist(e.transform, p) < 14 && (!retreating || e.transform.x >= hold.x)) : undefined;
       if (kit) { go(kit.transform, .2, `war-kit-${kit.id}`); movingFight(6); return frame; }
       go(hold, 1.4, `hold-${m.state.checkpoint}`); movingFight(newbie ? 13 : 20);
       return frame;
@@ -122,13 +113,12 @@ export class LevelFourBot {
     if (!this.medkit && hp <= (newbie ? .9 : .65)) {
       // Never back into the flooded ring for a kit: only kits on the way (not farther from the door than the courier).
       const ring = l4.map.ring, next = ROUTES[this.route][this.leg] ?? a['l4-cellar-door'], ahead = (e: EntitySnapshot) => !(e.transform.x > ring.x0 && e.transform.x < ring.x1 && e.transform.z > ring.z0 && e.transform.z < ring.z1) && dist(e.transform, next) <= dist(p, next) + 4;
-      const kit = s.medkitIds.map(id => w.entities.get(id)).filter((e): e is EntitySnapshot => !!e?.pickup && 'kind' in e.pickup && !e.pickup.collected)
-        .filter(e => dist(e.transform, p) < (newbie ? 34 : 22) && ahead(e)).sort((x, y) => dist(x.transform, p) - dist(y.transform, p))[0];
+      const kit = nearestKit(w, s.medkitIds, p, e => dist(e.transform, p) < (newbie ? 34 : 22) && ahead(e));
       if (kit) this.medkit = kit.id;
     }
     if (this.medkit) {
-      const kit = w.entities.get(this.medkit);
-      if (!kit?.pickup || !('kind' in kit.pickup) || kit.pickup.collected || hp > (newbie ? .99 : .95)) this.medkit = 0;
+      const kit = heldKit(w, this.medkit, hp, newbie);
+      if (!kit) this.medkit = 0;
       else { if (fight(8)) return frame; go(kit.transform, .2, `kit-${this.medkit}`); return frame; }
     }
     // At the break (and after a respawn): the escape street with the gap (forced runs keep theirs), joined at the nearest leg.
@@ -138,18 +128,13 @@ export class LevelFourBot {
       this.leg = joinLeg(ROUTES[this.route], p);
     }
     // A jammed walker steps aside along a connected route.
-    if (w.tick >= this.stuck.next) {
-      this.stuck.next = w.tick + 60;
-      if (this.stuck.at && dist(this.stuck.at, p) < .6 && !near.length && !frame.attackTarget) this.stuck.n++; else this.stuck.n = 0;
-      this.stuck.at = { x: p.x, z: p.z };
-      if (this.stuck.n >= 3) { const at = this.walker.detour(w, { x: p.x + 8, z: p.z }); this.detour = at ? { ...at, until: w.tick + 150 } : null; this.stuck.n = 0; }
-    }
+    if (jammed(this.stuck, w.tick, p, near.length > 0 || !!frame.attackTarget)) { const at = this.walker.detour(w, { x: p.x + 8, z: p.z }); this.detour = at ? { ...at, until: w.tick + 150 } : null; }
     if (this.detour && (w.tick > this.detour.until || dist(p, this.detour) < 1)) { this.detour = null; this.walker.reset(); }
     // Reaching a street corner advances the route even while dodging. Otherwise
     // an evade-only courier circles the reached corner instead of taking the next street.
     const legs = ROUTES[this.route];
     while (this.leg < legs.length && dist(p, legs[this.leg]) < 3) this.leg++;
-    const crowd = this.threats(p, 4.5), many = this.threats(p, 9).filter(e => this.chasing(e)).length;
+    const crowd = this.threats(p, 4.5), many = this.threats(p, 9).filter(e => chasingCourier(e)).length;
     const door = a['l4-cellar-door'], next = ROUTES[this.route][this.leg] ?? door;
     if (!this.detour && (crowd.length >= (fights ? 4 : 2) || many >= 6) && (hp < .5 || !fights || many >= 6)) { const at = this.walker.detour(w, next, crowd[0]?.transform ?? this.threats(p, 9)[0]?.transform); if (at) this.detour = { ...at, until: w.tick + 90 }; }
     if (newbie && !this.detour && this.rng.next() < .0015) this.detour = { x: p.x - 4 + this.rng.next() * 8, z: p.z + (this.rng.next() - .5) * 10, until: w.tick + 180 };

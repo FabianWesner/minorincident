@@ -45,7 +45,6 @@ export class CharacterView extends Group {
   private readonly characters = new Map<SurvivorVariant, LoadedCharacter>();
   private variant: SurvivorVariant = 'female';
   private tier: GearTier = 0;
-  private readonly facingTarget = new Quaternion();
   private readonly facingAxis = new Vector3(0, 1, 0);
   private facingTime = -1;
   private turn = 0;

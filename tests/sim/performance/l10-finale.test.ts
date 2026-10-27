@@ -26,7 +26,9 @@ for (const [count, budget] of [[200, 4], [100, 6]] as const) test(`T-E32-20-perf
     const proof = { count: w.infected!.director.count, chargeTicks: m.state.counters['charge-ticks'], boss: pursuit.state.mode, p95: times[Math.ceil(times.length * .95) - 1], budget };
     mkdirSync('test-results/epics/E32/S7', { recursive: true }); writeFileSync(`test-results/epics/E32/S7/sim-perf-${count}.json`, JSON.stringify(proof, null, 2));
     expect(proof.count).toBe(count); expect(proof.chargeTicks).toBe(3600);
-    expect(m.state.steps.hold.status).toBe('active'); expect(m.state.states['cure-released']).toBe(false);
+    // Full charge completes the hold objective; the living boss owns the next gate (AC22).
+    expect(m.state.steps.hold.status).toBe('completed'); expect(m.state.steps.mega.status).toBe('active');
+    expect(m.state.states['mega-dead']).toBe(false); expect(m.state.states['cure-released']).toBe(false);
     expect(proof.p95).toBeLessThanOrEqual(budget);
   } finally { w.dispose(); }
 });

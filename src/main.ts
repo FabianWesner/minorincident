@@ -5,14 +5,14 @@ import { installAssetVersions } from './assets/assetUrl';
 installAssetVersions();
 
 const params = new URLSearchParams(location.search);
-if (params.has('motionlab')) {
+if (__QA_HOOKS__ && params.has('motionlab')) {
   const { startMotionLab } = await import('./debug/motionlab/MotionLab');
   await startMotionLab(params);
 } else {
 const game = new Game(params);
 const ready = (async () => {
   await game.init();
-  if (import.meta.env.DEV || params.get('debug') === 'true') {
+  if (__QA_HOOKS__ && (import.meta.env.DEV || params.get('debug') === 'true')) {
     const { Inspection } = await import('./debug/Inspection');
     game.inspect = new Inspection(game);
     if (params.get('inspect') === '1') {
@@ -23,7 +23,7 @@ const ready = (async () => {
   }
 })();
 try {
-  if (import.meta.env.DEV || params.get('test') === '1' || params.get('testApi') === '1' || params.get('debug') === 'true') {
+  if (__QA_HOOKS__ && (import.meta.env.DEV || params.get('test') === '1' || params.get('testApi') === '1' || params.get('debug') === 'true')) {
     const { installTestApi } = await import('./debug/testApi');
     installTestApi(game, ready);
     if (params.has('scenelab')) { const { installSceneLab } = await import('./debug/scenelab/SceneLab'); installSceneLab(game); }
@@ -31,7 +31,7 @@ try {
   await ready;
   // Anonymous play telemetry for real players of the live site (never in tests, dev or automation).
   void import('./telemetry').then(({ telemetryMode, installTelemetry }) => { const mode = telemetryMode(params, location.hostname, navigator.webdriver); if (mode) installTelemetry(game, mode); }).catch(() => { /* telemetry must never break the game */ });
-  if (params.has('lookdev') || import.meta.env.DEV && params.has('debug') && !params.has('scenelab')) {
+  if (__QA_HOOKS__ && (params.has('lookdev') || import.meta.env.DEV && params.has('debug') && !params.has('scenelab'))) {
     if (params.has('lookdev')) await game.loadLevel('L1', { seed: Number(params.get('seed') ?? 1) });
     const { Debug } = await import('./debug/Debug');
     const debug = new Debug(game);

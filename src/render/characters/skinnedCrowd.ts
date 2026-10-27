@@ -3,7 +3,7 @@
  * A final atlas row holds inverse binds; the shader blends joint(frame) × inverseBind.
  * _parts.x stores the dominant joint; _skin packs the other three joints and weights.
  */
-import { BufferAttribute, DataTexture, Matrix4, type BufferGeometry } from 'three';
+import { BufferAttribute, DataTexture, Matrix4 } from 'three';
 import { float, Fn, If, attribute, int, ivec2, mat4, normalFlat, textureLoad } from 'three/tsl';
 import type { Node, TextureNode } from 'three/webgpu';
 import { crowdBlendedMatrix, poseTexture, type CrowdClip } from '../../assets/crowd';
@@ -93,7 +93,6 @@ export function premultiplyRow(rows: ArrayLike<number>, gpu: Float32Array, binds
   }
 }
 
-export function isSkinnedCrowd(geometry: BufferGeometry): boolean { return geometry.hasAttribute('_skin'); }
 
 /** A wound is a new spatial surface: use its posed face normal. Blended rim
  * normals can oppose across a folded cap and normalize to NaN on WebGL2. */

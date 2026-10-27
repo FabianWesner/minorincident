@@ -50,7 +50,7 @@ function plazaGrid(w: SimWorld, phase: string): void {
   place(w, pose); player.hidden = hidden; w.physics.playerCollider!.setEnabled(!hidden);
 }
 
-test('@E22 PO16b visible perimeter holds courier at the reported south edge, all ground actors respect it and infected cannot vault the wall; one-metre plaza gate', async () => {
+test('@E22 @nightly PO16b visible perimeter holds courier at the reported south edge, all ground actors respect it and infected cannot vault the wall; one-metre plaza gate', async () => {
   const { world: w, mission: m } = await loadL4(1);
   try {
     w.combat!.damage.god = true;

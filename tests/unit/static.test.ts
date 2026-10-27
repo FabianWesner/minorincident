@@ -3,9 +3,9 @@ import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { basename } from 'node:path';
 import { expect, test } from 'vitest';
 
-test('T-E01-01b @E01 @E01-AC01 typecheck, lint and build exit zero without warnings', () => {
+test('T-E01-01b @E01 @nightly @E01-AC01 typecheck, lint and production/QA builds pass their hook contracts', () => {
   mkdirSync('test-results/epics/E01/logs', { recursive: true });
-  for (const command of ['typecheck', 'lint', 'build']) {
+  for (const command of ['typecheck', 'lint', 'build:qa']) {
     const result = spawnSync('npm', ['run', command], { encoding: 'utf8' });
     const output = `${result.stdout ?? ''}${result.stderr ?? ''}`;
     writeFileSync(`test-results/epics/E01/logs/${command}.txt`, output);
@@ -13,7 +13,10 @@ test('T-E01-01b @E01 @E01-AC01 typecheck, lint and build exit zero without warni
     expect(output).not.toMatch(/\bwarning\b|\bWARN\b|npm warn/i);
   }
   expect(readdirSync('dist', { recursive: true }).filter((path) => String(path).endsWith('.html')).sort()).toEqual(['index.html', 'perf-device.html', 'preview/index.html']);
-  // API remains an opt-in chunk, outside the default entry and eager dependency graph.
+  const files = readdirSync('dist', { recursive: true }).map(String).filter((path) => path.endsWith('.js') || path.endsWith('.html'));
+  const qaBundle = files.map(path => readFileSync(`dist/${path}`, 'utf8')).join('\n');
+  for (const hook of ['__SS__', '__SCENE__', '__MOTIONLAB__', '__ASSET__', 'downAll', 'testApi', 'SceneLab', 'MotionLab']) expect(qaBundle).toContain(hook);
+  // API remains an opt-in chunk, outside the default entry and eager dependency graph in QA.
   const html = readFileSync('dist/index.html', 'utf8');
   // Hashed bundles live under /build/ (immutable CDN caching, see public/_headers).
   const eagerScripts = [...html.matchAll(/(?:src|href)="(\/build\/[^\"]+\.js)"/g)].map((match) => match[1]);
@@ -22,4 +25,12 @@ test('T-E01-01b @E01 @E01-AC01 typecheck, lint and build exit zero without warni
     expect(basename(path)).not.toMatch(/testApi|Debug/);
     expect(readFileSync(`dist${path}`, 'utf8')).not.toContain('__SS__');
   }
-}, 180_000); // Includes three builds/checks on the shared development Mac.
+  // PROD must not ship browser authoring, test API, cheats, or the recorder page.
+  const production = spawnSync('npm', ['run', 'build'], { encoding: 'utf8', env: { ...process.env, BRANCH: 'production', VITE_QA_HOOKS: '0' } });
+  expect(production.status, `${production.stdout ?? ''}${production.stderr ?? ''}`).toBe(0);
+  expect(readdirSync('dist', { recursive: true }).filter((path) => String(path).endsWith('.html')).sort()).toEqual(['index.html']);
+  const productionFiles = readdirSync('dist', { recursive: true }).map(String).filter((path) => path.endsWith('.js') || path.endsWith('.html'));
+  const publicBundle = productionFiles.map(path => readFileSync(`dist/${path}`, 'utf8')).join('\n');
+  for (const hook of ['__SS__', '__SCENE__', '__MOTIONLAB__', '__ASSET__', '__LIGHT_SPIKE__', 'downAll', 'testApi', 'SceneLab', 'MotionLab']) expect(publicBundle).not.toContain(hook);
+
+}, 240_000); // Includes typecheck, lint and two builds on the shared development Mac.

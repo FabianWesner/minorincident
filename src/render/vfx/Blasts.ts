@@ -7,7 +7,7 @@ import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.j
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { attribute, cameraPosition, cameraWorldMatrix, cos, dot, exp, float, Fn, fract, mix, mx_noise_float, normalView, normalWorld, positionGeometry, positionWorld, screenCoordinate, sin, smoothstep, uniform, uv, vec2, vec3, vec4 } from 'three/tsl';
 import { Rng } from '../../core/Rng';
-import { blastFxPresets, type BlastFxPreset } from '../../data/explosions';
+import { blastFxPresets } from '../../data/explosions';
 import type { GameEvent } from '../../sim/world/types';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { seeThroughHole } from '../SeeThrough';
@@ -647,4 +647,3 @@ export class Blasts extends Group {
     this.clear();
   }
 }
-export type { BlastFxPreset };

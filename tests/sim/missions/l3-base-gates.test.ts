@@ -8,7 +8,7 @@ import type { SimWorld } from '../../../src/sim/world/SimWorld';
 let world: SimWorld | undefined;
 afterEach(() => world?.dispose());
 
-test('PO-10b @E21 @E21-AC17 ring acknowledges arrival immediately and evacuates after exactly 15 seconds', async () => {
+test('PO-10b @nightly @E21 @E21-AC17 ring acknowledges arrival immediately and evacuates after exactly 15 seconds', async () => {
   const { world: w, mission: m } = await loadL3(1); world = w;
   m.completeObjective('armory'); m.completeObjective('defend');
   const api = missionControls(w), s = m.state.l3!;
@@ -30,7 +30,7 @@ test('PO-10b @E21 @E21-AC17 ring acknowledges arrival immediately and evacuates 
   expect(w.events.events().filter(e => e.type === 'l3.crossed')).toHaveLength(1);
 }, 120_000);
 
-test('PO-11 @E21 @E21-AC17 full horde attacks the base for 120 s without entering the perimeter', async () => {
+test('PO-11 @nightly @E21 @E21-AC17 full horde attacks the base for 120 s without entering the perimeter', async () => {
   const { world: w, mission: m } = await loadL3(1); world = w;
   m.completeObjective('armory'); m.completeObjective('defend');
   const s = m.state.l3!, api = missionControls(w), ai = w.infected!;

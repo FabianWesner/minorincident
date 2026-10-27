@@ -1,6 +1,6 @@
 import { Rng } from '../../core/Rng';
 import { l1v2 } from '../../data/l1v2';
-import { l1AccidentEvents, type L1AccidentEventName } from '../outbreak/types';
+import { type L1AccidentEventName } from '../outbreak/types';
 import { installL1Outbreak } from '../outbreak/install';
 import type { Mission } from './Mission';
 import type { L1State } from './types';
@@ -455,4 +455,3 @@ export class LevelOneOutbreak {
     }
   }
 }
-export { l1AccidentEvents };

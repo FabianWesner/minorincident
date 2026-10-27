@@ -21,7 +21,7 @@ if (port === 3300) throw new Error('Use the lane preview port');
 mkdirSync(out, { recursive: true });
 const server = await preview({ configFile: false, build: { outDir: resolve('dist') }, preview: { host: '127.0.0.1', port, strictPort: true } });
 const browser = await chromium.launch({ channel: 'chrome', headless: true, args: ['--use-angle=metal', '--enable-gpu', '--enable-unsafe-webgpu', '--ignore-gpu-blocklist', ...uncappedArgs()] });
-const sources = { baseline: 'https://minor-incident.com', candidate: `http://127.0.0.1:${port}` };
+const sources = { baseline: 'https://qa.minor-incident.pages.dev', candidate: `http://127.0.0.1:${port}` };
 const rows: { side: string; repeat: number; afterTurnS: number; frameP95: number; [key: string]: unknown }[] = [];
 try {
   // Alternate which build goes first, measuring one browser/context at a time.

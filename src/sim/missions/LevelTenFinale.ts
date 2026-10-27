@@ -36,12 +36,8 @@ export class LevelTenFinale {
         state.counters['charge-ticks'] = Math.min(cureChargeTicks, state.counters['charge-ticks'] + 1);
       }
       state.states['charge-ready'] = state.counters['charge-ticks'] === cureChargeTicks;
-      if (state.states['charge-ready'] && boss?.alive()) {
-        // Stage the existing boss inside the authored finale arena after the charge.
-        if (boss.distance() > 26) boss.stageNear(console, 24);
-      }
       if (state.states['charge-ready'] && !wasReady) {
-        // A boss retry keeps the completed charge and restores the staged boss at full health.
+        // A boss retry keeps the completed charge and restores the pursuing boss at full health.
         const entity = boss?.entity();
         if (entity && entity.health.current > 0) {
           entity.health.current = entity.health.max;

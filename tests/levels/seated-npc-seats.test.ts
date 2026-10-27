@@ -21,7 +21,7 @@ const local = (p: Placement, origin: [number, number], x: number, z: number) => 
 };
 const ref = (p: Placement) => { const o = new Object3D(); o.position.set(...p.position as [number, number, number]); o.rotation.y = p.yaw; o.scale.set(...p.scale as [number, number, number]); o.updateMatrix(); return o; };
 
-for (const level of missionIds) test(`T-PO112-${level} @PO112 every seated NPC in ${level} has a drawn seat prop under it`, async () => {
+for (const level of missionIds) test(`T-PO112-${level} @nightly @PO112 every seated NPC in ${level} has a drawn seat prop under it`, async () => {
   world = await loadLevel(level, 1);
   for (let i = 0; i < 30; i++) world.update();
   const seated: Seated[] = [];

@@ -35,7 +35,7 @@ function certificate(): { cert: string; key: string; spki: string } | null {
 
 test('T-LOAD-01 @perf @load production L1 load: critical download, title and Start -> playable (desktop, 4G, warm)', async () => {
   test.setTimeout(900_000);
-  test.skip(!existsSync('dist/index.html'), 'requires `npm run build`');
+  test.skip(!existsSync('dist/index.html'), 'requires `npm run build:qa`');
   mkdirSync(output, { recursive: true });
   const tls = certificate();
   const { port, stop } = await startCdnServer({ root: 'dist', port: 0, cert: tls?.cert, key: tls?.key });

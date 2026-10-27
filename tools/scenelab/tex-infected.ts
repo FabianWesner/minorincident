@@ -1,6 +1,6 @@
 /** Reproducible common-worker A/B camera and motion captures. Run through e2e-lock.
  * TEX_ROOT selects the pinned main worktree; TEX_VARIANT labels its receipt.
- * SCENE_SERVER=preview uses the remotely built production output. */
+ * SCENE_SERVER=preview uses the remotely built QA output. */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { execFileSync } from 'node:child_process';

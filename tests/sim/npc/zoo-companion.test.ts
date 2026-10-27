@@ -6,7 +6,7 @@ import { step, teleport } from './helpers';
 import { installPerformanceLevel } from '../../fixtures/scenarios/performance';
 const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds.splice(0)) w.dispose(); });
-for (const tier of ['high', 'low'] as const) test(`@E30 @E31 corgi follows in zoo and survives APC handover/checkpoint: ${tier}`, async () => {
+for (const tier of ['high', 'low'] as const) test(`@E30 @nightly @E31 corgi follows in zoo and survives APC handover/checkpoint: ${tier}`, async () => {
   const w = await loadLevel('L8', 32); worlds.push(w); w.npcs!.setQuality(tier); w.combat!.damage.god = true;
   let dog = [...w.entities.iterate()].find(e => e.companion)!;
   expect(dog).toBeDefined(); expect(w.npcs!.companion.safe).toBe(true);
@@ -43,7 +43,7 @@ test('@E29 @E30 bus passenger keeps the same corgi identity at zoo arrival', asy
   expect([...next.entities.iterate()].filter(e => e.companion)).toHaveLength(1);
   expect(Math.hypot(arrived.transform.x - next.entities.get(1)!.transform.x, arrived.transform.z - next.entities.get(1)!.transform.z)).toBeLessThan(3);
 });
-test('@E31 standalone crossing start keeps the protected corgi aboard the APC', async () => {
+test('@E31 @nightly standalone crossing start keeps the protected corgi aboard the APC', async () => {
   const w = await loadLevel('L9', 32); worlds.push(w);
   const dog = [...w.entities.iterate()].find(e => e.companion)!;
   expect(dog.passengerOf).toBe(w.vehicles!.active);

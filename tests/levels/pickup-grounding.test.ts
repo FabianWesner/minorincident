@@ -8,7 +8,7 @@ import { missionIds } from '../../src/levels/missions';
  * reachable on foot (`TrapRescue.reachable`, so not on a lower street the route never visits), and it rests within 5 cm of the support
  * at its xz: the deck/ramp where the route runs over it. The view draws it at `transform.y - 0.3` (the same y), never at 0.
  */
-for (const level of missionIds) test(`@pickup-grounding ${level}: every pickup is reachable from the route and rests on the support at its xz`, async () => {
+for (const level of missionIds) test(`@pickup-grounding @nightly ${level}: every pickup is reachable from the route and rests on the support at its xz`, async () => {
   const world = await loadLevel(level, 1);
   try {
     const d = world.districts!, rescue = world.trapRescue, bad: string[] = [];

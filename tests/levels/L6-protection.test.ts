@@ -2,7 +2,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { expect, test } from 'vitest';
 import { loadL6, runL6 } from '../../tools/sim-runner/l6Bots';
 
-test('T-E24-09-evade @E24 @E24-AC09 a non-fighting courier evacuates at most thirty percent, with real casualties', async () => {
+test('T-E24-09-evade @E24 @nightly @E24-AC09 a non-fighting courier evacuates at most thirty percent, with real casualties', async () => {
   const { world } = await loadL6(1);
   try {
     let attacks = 0;
