@@ -762,6 +762,7 @@ export class InfectedSystem {
       // than the pedestrian search brain. Without a target they wander at distant mouths.
       if (state.state === 'attack' || state.specialAttack || state.grabUntil > this.world.tick) return false;
       state.heardTargetId = targetId;
+      if (this.world.scenario === 'L4') state.l4ArmyApproach = targetId !== 1;
       if (state.state === 'idle' || state.state === 'wander' || state.state === 'attracted') {
         state.state = 'alerted'; state.until = this.world.tick + hearingReactionTicks;
       }

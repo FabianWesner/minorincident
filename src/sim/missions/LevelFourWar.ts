@@ -750,7 +750,7 @@ export class LevelFourWar {
         const flank = this.human(assigned) ? assigned : this.liveSoldiers().filter(soldier => dist(soldier.transform, player.transform) >= 20)
           .sort((a, b) => dist(a.transform, e.transform) - dist(b.transform, e.transform))[0];
         if (flank) { target = flank; e.infected!.l4FlankTarget = flank.id; } else delete e.infected!.l4FlankTarget;
-      } else if (!this.low && !(wirePressure && e.id % 2 === 0)) {
+      } else if (!this.low && !wirePressure) {
         const soldiers = defenders.filter(e => e.id !== 1);
         if (soldiers.length) target = soldiers.reduce((a, b) => dist(a.transform, e.transform) < dist(b.transform, e.transform) ? a : b);
       } else if (!wirePressure && !Object.values(this.s.breaches ?? {}).some(b => b?.openAt)) {
@@ -993,10 +993,9 @@ export class LevelFourWar {
       if (!id) continue;
       released.set(source.k, (released.get(source.k) ?? 0) + 1);
       admitted++; s.perimeterPending--; s.emergedIds.push(id); s.origin[id] = l4Emergence.length + source.k;
-      // Half of the high-tier wire cohort presses the courier; the rest
-      // keeps the army engaged while both streams cross actual breaches.
-      const soldiers = this.low || id % 2 === 0 ? [] : this.liveSoldiers();
-      const target = soldiers.length ? soldiers.reduce((a, b) => dist(a.transform, source.at) < dist(b.transform, source.at) ? a : b) : world.entities.get(1)!;
+      // Breach cohorts press the courier; the street waves and Alphas engage
+      // the army. A recycled entity ID must not decide a cohort's assignment.
+      const target = world.entities.get(1)!;
       ai.press(id, target.id, tick + ticks(45), 30);
       const brain = world.entities.get(id)?.infected?.l1;
       if (brain) { brain.search.completeApproach = true; brain.goalX = target.transform.x; brain.goalZ = target.transform.z; brain.search.originX = target.transform.x; brain.search.originZ = target.transform.z; }
