@@ -61,13 +61,13 @@ export class CrowdFootwork {
   }
 }
 
-/** One small off-scene skeleton per batch; figures retain only their contact
- * state. The scene still contains instanced meshes, never per-person actors. */
 export interface CrowdPresentation {
   frame: number; blend: [number, number]; clip: string; phase: number; instance: Matrix4;
   scale: number; speed: number; time: number; near: boolean;
   layers?: CrowdLayers; style?: GaitStyle; procedural?: boolean; cadence?: number; holdDistanceM?: number;
 }
+/** One small off-scene skeleton per batch; figures retain only their contact
+ * state. The scene still contains instanced meshes, never per-person actors. */
 export class CrowdLocomotion {
   /** Borrowed scratch input, reused by sequential figure submissions to avoid per-frame option allocations. */
   readonly presentation: CrowdPresentation = { frame: 0, blend: [0, 1], clip: '', phase: 0, instance: new Matrix4(), scale: 1, speed: 0, time: 0, near: false };
