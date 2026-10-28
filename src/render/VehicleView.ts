@@ -50,7 +50,7 @@ export class VehicleView extends Group {
   async prewarmOccupants(): Promise<(() => void) | undefined> {
     const truckId = this.world.missions?.state.l2?.truckId;
     const missionVehicleId = this.world.missions?.l8?.state.carId;
-    const car = (truckId ?? missionVehicleId) ? this.world.vehicles!.cars.get(truckId ?? missionVehicleId!) : [...this.world.vehicles!.cars.values()].find(c => c.physics.def.transport);
+    const car = (truckId ?? missionVehicleId) ? this.world.vehicles!.cars.get(truckId ?? missionVehicleId!) : this.world.vehicles!.cars.values().next().value;
     const record = car && this.records.get(car.entity.id);
     if (!record) return;
     // Q-126: warming disposable prototypes still rebuilt geometry and skinned
