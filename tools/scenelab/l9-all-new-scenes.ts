@@ -127,8 +127,9 @@ try {
       assert.equal(proof.filter(e => e.corpse).length, 8);
       writeJson(`${out}/state-proof.json`, proof);
       for (const [row, label] of ['live', 'corpse'].entries()) {
-        await session.page.evaluate(target => window.__SCENE__!.setCamera({ mode: 'game', target, zoom: 1.5 }), [0, .6, row * 18] as [number, number, number]);
-        await session.ready(); await session.screenshot(`${out}/${label}.png`);
+        // Frame the full eight-model row, including the much taller Alpha.
+        await session.page.evaluate(target => window.__SCENE__!.setCamera({ mode: 'game', target, zoom: 2.1 }), [0, .6, row * 18] as [number, number, number]);
+        await session.step(1); await session.ready(); await session.screenshot(`${out}/${label}.png`);
       }
     }
     writeJson(`${out}/receipt.json`, { variant, tier, backend, result, metrics, errors: session.errors });

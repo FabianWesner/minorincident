@@ -237,7 +237,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
         inverse.fromArray(binds!, indices[i] * 16);
         point.fromBufferAttribute(geometry.getAttribute('position'), i).applyMatrix4(inverse);
         const region = geometry.getAttribute('_crowd_region');
-        shirt[i] = cap ? -10 : (region?.getX(i) ?? 0) > 3.5 ? -2 : (region?.getX(i) ?? 0) > 2.5 ? -12 : !material.map ? /^(pal_)?skin/.test(material.name) || (region?.getX(i) ?? 0) > .5 ? -11 : -10 : region ? region.getX(i) > 1.5 ? -6 : region.getX(i) > .5 ? -1 : 0 : name === 'head' || /^hand[LR]$/.test(name) ? -1 : 0;
+        shirt[i] = cap ? -10 : (region?.getX(i) ?? 0) > 2.5 ? -12 : !material.map ? /^(pal_)?skin/.test(material.name) || (region?.getX(i) ?? 0) > .5 ? -11 : -10 : region ? region.getX(i) > 1.5 ? -6 : region.getX(i) > .5 ? -1 : 0 : name === 'head' || /^hand[LR]$/.test(name) ? -1 : 0;
         emissive[i] = node.userData.crowdEye === true || material.name === 'emi_infectedEye' ? 2 : 0;
       }
       // Integer bits in the fourth weight identify every limb touched by a

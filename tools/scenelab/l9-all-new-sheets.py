@@ -1,6 +1,7 @@
 """Compose L9 review captures without resampling the 120/400-pixel figure cells."""
 import json
 import math
+import hashlib
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
@@ -87,9 +88,26 @@ for config in ['low-webgl2', 'high-webgpu']:
         if not scene.is_dir():
             continue
         shots = sorted(scene.glob('shot-*.png'))
-        selected = [shots[0], shots[-1]] if len(shots) > 1 else shots
+        selected = [shots[0], shots[-1]] if len(shots) > 1 else shots.copy()
+        spec = json.loads((Path('specs/scenes/catalog')/(scene.name+'.json')).read_text())
+        frames = spec.get('frames', 180)
+        sample_frames = list(range(0, frames+1, max(60, math.ceil(frames/12))))
+        sheet = scene/'sheet.jpg'
+        if sheet.exists() and sample_frames:
+            k = len(sample_frames)//2
+            cols = len(sample_frames) if len(sample_frames) <= 4 else 4 if len(sample_frames) <= 12 else 6
+            x, y = k%cols*322, k//cols*182
+            middle = scene/f'review-mid-{sample_frames[k]:04}.jpg'
+            Image.open(sheet).crop((x, y, x+320, y+180)).save(middle, quality=95)
+            selected.insert(1, middle)
+            if len(shots) == 1:
+                k = len(sample_frames)-1
+                x, y = k%cols*322, k//cols*182
+                last = scene/f'review-last-{sample_frames[k]:04}.jpg'
+                Image.open(sheet).crop((x, y, x+320, y+180)).save(last, quality=95)
+                selected.append(last)
         story.extend((p, f'{config} | {scene.name} | {p.stem}') for p in selected)
-play = sorted((ROOT/'playtest'/'captures').glob('*.jpg'))
+play = sorted((p for p in (ROOT/'playtest'/'captures').glob('*.jpg') if p.stem.rsplit('-t', 1)[-1].isdigit()), key=lambda p: int(p.stem.rsplit('-t', 1)[-1]))
 if play:
     picks = sorted(set([0, len(play)//3, 2*len(play)//3, len(play)-1]))
     story.extend((play[i], 'L9 real-input | '+play[i].stem) for i in picks)
@@ -102,5 +120,10 @@ if all(p.exists() for p, _ in details):
     file = OUT/'10-runtime-skin-headwear-props.jpg'
     grid(details, width=400, cols=4).save(file, quality=93, optimize=True)
     index.append({'file': str(file), 'sources': [str(p) for p, _ in details]})
+assert len(index) <= 14
+for entry in index:
+    file = Path(entry['file'])
+    entry['pixels'] = list(Image.open(file).size)
+    entry['sha256'] = hashlib.sha256(file.read_bytes()).hexdigest()
 (OUT/'capture-index.json').write_text(json.dumps(index, indent=2)+'\n')
 print(json.dumps({'reportCaptures': len(index)}))

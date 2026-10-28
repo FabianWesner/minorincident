@@ -36,7 +36,7 @@
       "id": "inf.jogger",
       "role": "regular infected",
       "share": "~1/7 of 78 runners",
-      "status": "v2 skinned (built in this batch; not visually reviewed)",
+      "status": "v2 skinned; reviewed at native 120/400 px, front/back, low/high, WebGL2/WebGPU; runtime L9 light and corpse states reviewed",
       "migration": true,
       "source": "cast/wave1/inf.jogger",
       "priorStatus": "rigid"
@@ -45,7 +45,7 @@
       "id": "inf.cashier",
       "role": "regular infected",
       "share": "~1/7 of 78 runners",
-      "status": "v2 skinned (built in this batch; not visually reviewed)",
+      "status": "v2 skinned; reviewed at native 120/400 px, front/back, low/high, WebGL2/WebGPU; runtime L9 light and corpse states reviewed",
       "migration": true,
       "source": "cast/wave1/inf.cashier",
       "priorStatus": "rigid"
@@ -54,7 +54,7 @@
       "id": "inf.delivery-driver",
       "role": "regular infected",
       "share": "~1/7 of 78 runners",
-      "status": "v2 skinned (built in this batch; not visually reviewed)",
+      "status": "v2 skinned; reviewed at native 120/400 px, front/back, low/high, WebGL2/WebGPU; runtime L9 light and corpse states reviewed",
       "migration": true,
       "source": "cast/wave1/inf.delivery-driver",
       "priorStatus": "rigid"
@@ -63,7 +63,7 @@
       "id": "inf.suburban-mom",
       "role": "regular infected",
       "share": "~1/7 of 78 runners",
-      "status": "v2 skinned (built in this batch; not visually reviewed)",
+      "status": "v2 skinned; reviewed at native 120/400 px, front/back, low/high, WebGL2/WebGPU; runtime L9 light and corpse states reviewed",
       "migration": true,
       "source": "cast/wave2/inf.suburban-mom",
       "priorStatus": "rigid"
@@ -72,7 +72,7 @@
       "id": "inf.bbq-dad",
       "role": "regular infected",
       "share": "~1/7 of 78 runners",
-      "status": "v2 skinned (built in this batch; not visually reviewed)",
+      "status": "v2 skinned; reviewed at native 120/400 px, front/back, low/high, WebGL2/WebGPU; runtime L9 light and corpse states reviewed",
       "migration": true,
       "source": "cast/wave2/inf.bbq-dad",
       "priorStatus": "rigid"
@@ -81,7 +81,7 @@
       "id": "inf.bathrobe-neighbor",
       "role": "regular infected",
       "share": "~1/7 of 78 runners",
-      "status": "v2 skinned (built in this batch; not visually reviewed)",
+      "status": "v2 skinned; reviewed at native 120/400 px, front/back, low/high, WebGL2/WebGPU; runtime L9 light and corpse states reviewed",
       "migration": true,
       "source": "cast/wave1/inf.bathrobe-neighbor",
       "priorStatus": "rigid"
@@ -107,7 +107,7 @@
       "share": "one; seated/hidden during drive",
       "status": "v2 skinned; animal excluded by scope",
       "migration": false,
-      "carriedPassengers": "L8 zoo companions may be carried into L9; v2 skinned; animal excluded from conversion."
+      "carriedPassengers": "L8 excludes zoo animals from its transfer roster; the existing v2 corgi is the L9 companion. No zoo-animal conversion is needed for this lane."
     },
     {
       "id": "inf.alpha-worker",
@@ -142,5 +142,7 @@
   "transferredActors": "Up to six rendered APC passengers from L8; the reachable campaign roster and rescuable L8 visitors/staff/soldiers are enumerated in coverage.json. They already use v2. No animal conversions.",
   "inferences": 0,
   "paidCreditsEUR": 0,
-  "baselineRevision": "f36334ddd"
+  "baselineRevision": "f36334ddd",
+  "headwearPolicy": "V2 native infected retain source-authored hair, cap and visor; explicit story accessories still win. No random second head piece is stacked on these sculpted heads.",
+  "animals": "Only the existing v2 corgi is reachable as a rendered animal/companion in L9. L8 zoo animals are excluded by roster() before transfer; no zoo-animal conversion was made or deferred by this lane."
 }

@@ -1,0 +1,56 @@
+{
+  "reviewed": true,
+  "settings": "L9-crossing lighting; native 120/400px comparison cells without resampling; four renderer/tier combinations; runtime crowd zoom 1/1.5",
+  "captures": [
+    {
+      "file": "01-inf.jogger.jpg",
+      "review": "Pink visor clears both eyes at both sizes/tiers; brown ponytail remains attached from the back. Face and bare arms share the same cool infected complexion. No extra shared hat/hair piece is stacked."
+    },
+    {
+      "file": "02-inf.cashier.jpg",
+      "review": "Both eyes and mouth remain visible beneath the fringe at 120px. Red apron, pale sleeves and dark trousers remain separate; hair, neck and hands stay connected in front/back views."
+    },
+    {
+      "file": "03-inf.delivery-driver.jpg",
+      "review": "Blue cap and brim preserve two visible eyes; the backpack remains attached behind the torso in both back views. Its painted pizza graphic is softer than the old graphic mesh; the bag silhouette and contrasting panel are retained."
+    },
+    {
+      "file": "04-inf.suburban-mom.jpg",
+      "review": "Fringe clearance and reprojected eyes preserve both eyes at 120px. The explicitly named auburn/copper hair palette removes stray pink hair streaks. Isolation confirmed the red band below the hair belongs to torso/blouse geometry, so it was preserved."
+    },
+    {
+      "file": "05-inf.bbq-dad.jpg",
+      "review": "Face and exposed arms match; beard stays part of the face. GRILL & CHILL is readable at 400px, subtle at 120px as on the old sheet. The thin slotted spatula stays on handR, including the far runtime body; apron decal UVs are reserved from gutter painting."
+    },
+    {
+      "file": "06-inf.bathrobe-neighbor.jpg",
+      "review": "Eyes and teeth remain visible at 120/400px; face and hands share the infected complexion. Navy robe, sash, pale cuffs and slippers retain their shapes. The painted cloth pattern is softer than the old plaid geometry."
+    },
+    {
+      "file": "07-crowd-old-new.jpg",
+      "review": "All 30 figures were drawn in each of four renderer/tier combinations; each of seven regular identities has four bodies. Reviewed zoom 1 and 1.5 old/new. Native sculpted heads retain their own hair/headwear, eliminating the rejected floating/stacked shared pieces."
+    },
+    {
+      "file": "08-live-corpse.jpg",
+      "review": "Reviewed seven regular identities plus Alpha alive and settled as eight corpses, on both renderers/tiers. The camera was widened to include the complete Alpha and all eight bodies. Identity, headwear and clothing survive the frozen-page path."
+    },
+    {
+      "file": "09-scripted-scenes-playthrough.jpg",
+      "review": "Reviewed all twelve complete timeline sheets: Alpha ram, shortcut ram, zero-health ram, crash at 1000/0 health, and crawl-stage fixture on low WebGL2 and high WebGPU. Encounter contact and crash/explosion frames are included in the composite. Appended four real-input L9 playthrough frames; the 241-second run reaches the L10 handover with zero issues, deaths, assists or skips."
+    },
+    {
+      "file": "10-runtime-skin-headwear-props.jpg",
+      "review": "Reviewed front/back runtime details for all six in L9 street lighting on low WebGL2 and high WebGPU. Both eyes, source visor/cap fit, exposed skin, back-of-head surfaces, backpack attachment, apron text and spatula remain visible. No unified long-gun path was replaced; the courier uses the existing held-gun path."
+    }
+  ],
+  "captureCount": 10,
+  "limit": 14,
+  "rejectedIterations": [
+    "Raw dark/noisy paint, reduced with semantic regions and original in-game palette tokens.",
+    "Hidden eyes beneath brims/fringe, repaired automatically by bounded brim clearance and source eye re-projection.",
+    "Lost apron lettering from aliased PNG buffer gutters, repaired by copying source bytes and reserving prop/decal UVs.",
+    "Floating/stacked random replacement head pieces on native sculptures, replaced by the existing authored-head policy.",
+    "Over-simplified distant anatomy, replaced with the middle surface under unchanged triangle/file caps."
+  ],
+  "scope": "Review establishes visibility, source-detail retention and lack of the listed artifacts; it does not impose a must-beat-old art-style gate."
+}

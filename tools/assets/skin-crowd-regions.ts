@@ -248,14 +248,11 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean, coveredUnif
       if (part.getScalar(i) === head && !eyeBounds.isEmpty()) {
         point.fromArray(position.getElement(i, [])).applyMatrix4(inverse);
         const face = point.y >= centre.y - .28 && point.y <= eyeBounds.max.y + .025 && point.x >= centre.x - .26 && point.x <= eyeBounds.max.x + .04 && Math.abs(point.z - centre.z) <= span.z * .8;
-        // Vertex region 4 names authored hair for the covered-scalp morph;
-        // it does not replace the sculpt's uncovered RGB with a crowd tint.
-        // The cast can paint pink/bloody streaks into a ponytail. Geometry
-        // outside the measured face must yield with the rest of that crown,
-        // otherwise those unclassified locks form a floating ring under wigs.
-        const hair = kind === crowdRegion.hair || !face;
-        values[i] = hair ? 4 : 1;
-        if (!hair) faceVertices.push({ i, distance: point.distanceToSquared(centre), key: point.toArray().map(value => Math.round(value * 1e5)).join(',') });
+        // Only mark the measured face as skin. The remaining authored head
+        // may contain hair, cap, eyebrows or beard: it must not become a hair
+        // discard tag when an explicit accessory is worn.
+        values[i] = face ? 1 : 0;
+        if (face) faceVertices.push({ i, distance: point.distanceToSquared(centre), key: point.toArray().map(value => Math.round(value * 1e5)).join(',') });
       }
     }
     // Far meshes may have no UV sample inside a narrow facial island. Keep a

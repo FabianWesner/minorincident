@@ -1,0 +1,86 @@
+{
+  "pass": true,
+  "command": "E2E_PORT=3859 npm run playtest -- --levels L9 --mode continue --entry debug --quality low --zoom 2 --no-skip --out test-results/l9-all-new/playtest",
+  "summary": {
+    "mode": "continue",
+    "quality": "low",
+    "heroine": "female",
+    "zoom": 2,
+    "levels": [
+      "L9"
+    ],
+    "runs": [
+      {
+        "level": "L9",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 241,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 16.766666666666666,
+        "deaths": 0,
+        "assists": 0,
+        "attacks": {},
+        "weaponsStart": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.rocket-launcher",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.fire-axe"
+        ],
+        "steps": [
+          {
+            "id": "approach",
+            "text": "Drive toward the city \u00b7 1020\u00a0m",
+            "tick": 1,
+            "marker": {
+              "anchor": "crash-approach",
+              "ring": {
+                "x": 470,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": [
+                470,
+                0,
+                0
+              ],
+              "playerY": 1.0482969284057617,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "reach-outskirts",
+            "text": "Get clear of the wreck \u00b7 80\u00a0m",
+            "tick": 13174,
+            "marker": {
+              "anchor": "crawl-end",
+              "ring": {
+                "x": 547,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": null,
+              "playerY": 0.9960344399346246,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "issues": 0,
+    "bySeverity": {
+      "P0": 0,
+      "P1": 0,
+      "P2": 0,
+      "P3": 0
+    }
+  },
+  "startupAttempt": "The initial default zoom-1.5 run stopped before movement because the debug loadout equips the launcher and the wheel burst reaches its supported 2.0 limit. The accepted run requests and observes 2.0. Figure/crowd comparisons use the requested 1/1.5 framing."
+}

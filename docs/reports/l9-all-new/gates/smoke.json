@@ -1,0 +1,28 @@
+{
+  "pass": true,
+  "qaCases": 6,
+  "publicCases": 1,
+  "seconds": 212.3,
+  "freezeGuard": {
+    "pass": true,
+    "shaderBuildsAfterWarmup": 0,
+    "framesOver200ms": 0
+  },
+  "gpuLimits": {
+    "webgl": {
+      "programs": 487,
+      "crowdPrograms": 78,
+      "maxAttributes": 13,
+      "maxVaryings": 14
+    },
+    "webgpu": {
+      "programs": 712,
+      "crowdPrograms": 83,
+      "maxAttributes": 13,
+      "maxVaryings": 14,
+      "maxCrowdBuffers": 6,
+      "maxAllBuffers": 8
+    }
+  },
+  "newTestCases": 0
+}
