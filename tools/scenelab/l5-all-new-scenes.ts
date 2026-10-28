@@ -30,9 +30,9 @@ const crowd30: SceneSpec = {
  camera:{mode:'game',target:[-24,.6,1],zoom:1.5},frames:3,shots:[3],expect:{consoleErrors:0},
 };
 const states:SceneSpec={name:'l5-body-states',ground:'asphalt',time:'L5',size:100,
- actors:[{id:'courier',kind:'courier',at:[30,30]},...converted.flatMap((model,i):ActorSpec[]=>['live','turned','dead'].map((state,k)=>({id:`${state}-${i}`,kind:'pedestrian',at:[i%4*3,Math.floor(i/4)*12+k*3],yaw:-45,look:{model,accessories:[]},state:'idle'})))],
- script:converted.flatMap((_,i)=>[{frame:3,actor:`turned-${i}`,do:{infect:{instant:true}}},{frame:3,actor:`dead-${i}`,do:{corpse:true as const}}]),
- camera:{mode:'game',target:[4.5,.5,8.5],zoom:.8},frames:120,shots:[120],expect:{consoleErrors:0},
+ actors:[{id:'courier',kind:'courier',at:[0,0]},...converted.flatMap((model,i):ActorSpec[]=>['live','turned','dead'].map((state,k)=>({id:`${state}-${i}`,kind:'pedestrian',at:[(Math.floor(i/4)?22:-22)+(i%4*4-6),k*18-18],yaw:-45,look:{model,accessories:[]},state:'idle'})))],
+ script:converted.flatMap((_,i)=>[{frame:1,actor:`turned-${i}`,do:{infect:{instant:true}}},{frame:1,actor:`dead-${i}`,do:{infect:{instant:true}}},{frame:3,actor:`dead-${i}`,do:{corpse:true as const}}]),
+ camera:{mode:'game',target:[-22,.5,0],zoom:2},frames:120,shots:[120],expect:{consoleErrors:0},
 };
 function resourceSnapshot() {
       const game = (window.__SCENE__ as unknown as { game: Game }).game;
@@ -104,7 +104,13 @@ try{
     assert.equal(cadence.over200,0);assert.deepEqual(cadence.builds,[]);
    }
   }else{
-   for(let i=0;i<2;i++){await session.page.evaluate(i=>window.__SCENE__!.setCamera({mode:'game',target:[4.5,.6,i*12+3],zoom:1.5}),i);await session.ready();await session.screenshot(`${out}/group-${i}.png`);}
+   const proof=await session.page.evaluate(()=>window.__SS__!.query({}).filter(e=>e.appearance?.asset?.endsWith('.aftermath')).map(e=>({id:e.id,model:e.appearance!.asset,health:e.health.current,corpse:!!e.corpse,infected:!!e.infected,state:e.civilian?.state})));
+   assert.equal(proof.filter(e=>e.corpse).length,8,'Eight actual frozen corpses');
+   assert.equal(proof.filter(e=>e.infected&&e.health>0).length,8,'Eight living turned bodies');
+   assert.equal(proof.filter(e=>!e.infected&&e.health>0).length,8,'Eight healthy bodies');
+   writeJson(`${out}/state-proof.json`,proof);
+   for(let group=0;group<2;group++)for(const [row,label] of ['live','turned','corpse'].entries()){await session.page.evaluate(([x,z])=>window.__SCENE__!.setCamera({mode:'game',target:[x,.6,z],zoom:1.2}),[group?22:-22,row*18-18]);await session.ready();await session.screenshot(`${out}/group-${group}-${label}.png`);}
+   if (process.env.L5_CORPSE_CLOSE === '1') for (let i=0;i<8;i++) { const at=await session.page.evaluate(id=>{const e=window.__SS__!.query({}).find(e=>e.appearance?.asset===id&&e.corpse)!;return [e.transform.x,.35,e.transform.z] as [number,number,number];},converted[i]);await session.page.evaluate(target=>window.__SCENE__!.setCamera({mode:'game',target,zoom:.35}),at);await session.ready();await session.screenshot(`${out}/corpse-${i}.png`); }
   }
   writeJson(`${out}/receipt.json`,{revision,base,variant,tier,backend,result,metrics,resources,errors:session.errors});
  }

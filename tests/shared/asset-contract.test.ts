@@ -7,6 +7,7 @@ import manifest from '../../src/assets/manifest.json';
 import type { AssetDef } from '../../src/assets/types';
 import { validateAssets, validateDocument } from '../../tools/assets/validate';
 import { PNG } from 'pngjs';
+import { adoptStandingBind } from '../../tools/assets/skin-crowd-standing';
 import { classifyCrowdAtlas } from '../../tools/assets/skin-crowd-regions';
 import { crowdRegion } from '../../src/render/characters/crowdRegionData';
 
@@ -99,6 +100,17 @@ test('uniform and civilian faces and yellow bare arms share the per-person skin 
 });
 
 test('the asset validator rejects every contract violation, and every production asset passes it', async () => {
+  // A fitted template can carry its uniform scale on a parent rather than the
+  // story rig's root. The copied standing reset must not apply that scale twice.
+  const template = new Document(), parent = template.createNode('assetScale').setScale([1.25, 1.25, 1.25]);
+  const root = template.createNode('root').setExtras({ marker: 'retained', ss_standingPose: JSON.stringify({ root: { translation: [0, 0, 0], rotation: [0, 0, 0, 1], scale: [1.25, 1.25, 1.25] } }) });
+  template.createScene().addChild(parent); parent.addChild(root);
+  const bind = root.getWorldMatrix(); adoptStandingBind(template);
+  const reset = JSON.parse(root.getExtras().ss_standingPose as string).root;
+  expect(reset.scale).toEqual([1, 1, 1]); root.setScale(reset.scale);
+  expect(root.getWorldMatrix()).toEqual(bind); expect(parent.getScale()).toEqual([1.25, 1.25, 1.25]);
+  expect(root.getExtras().marker).toBe('retained');
+
   const { doc, def } = fixture();
   expect(validateDocument(doc, def, 1024).errors).toEqual([]);
   const cases: [string, (d: Document, a: AssetDef) => void][] = [
