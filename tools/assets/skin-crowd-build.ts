@@ -1,6 +1,7 @@
 import { restoreCrowdGlasses } from './skin-crowd-glasses';
 import { restoreFireHelmet } from './restore-fire-helmet';
 import { paintAnimalDetails, restoreElephantTail, type TuskRecipe } from './skin-crowd-animal-details';
+import { animalTeeth } from './skin-crowd-animal-infection';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, readdirSync, unlinkSync, writeFileSync } from 'node:fs';
@@ -45,7 +46,8 @@ let eyeSource = existsSync(join(source, 'eyes.json')) ? join(source, 'eyes.json'
 if (metadata && ['quadruped', 'bird'].includes(metadata.class ?? '') && animalEyeRecipes[sourceId]) {
   const recipe = animalEyeRecipes[sourceId], body = join(source, 'source/flat-lod0.glb');
   if (createHash('sha256').update(readFileSync(body)).digest('hex') !== recipe.source_sha256) throw Error(`${id}: animal eye landmarks do not match the source body`);
-  eyeSource = join(report, 'source-eyes.json'); writeFileSync(eyeSource, JSON.stringify(recipe, null, 2) + '\n');
+  const infectedRadius: Record<string, number> = { 'inf.lion': .040, 'inf.gorilla': .036, 'inf.elephant': .060, 'inf.flamingo': .024 };
+  eyeSource = join(report, 'source-eyes.json'); writeFileSync(eyeSource, JSON.stringify({ ...recipe, game_radius: infectedRadius[id] ?? recipe.game_radius }, null, 2) + '\n');
 }
 // Derived story identities fit the continuous source directly to the neutral
 // game rig. The old cut-source ownership leaves shoulder slivers in cower poses.
@@ -131,6 +133,11 @@ for (const lod of [0, 1, 2]) {
     if (id === 'npc.firefighter-alive') await restoreFireHelmet(raw, join(assets, 'model.lod1.glb'), lod);
     if (id === 'amb.elephant' || id === 'inf.elephant') await restoreElephantTail(raw, join(assets, 'model.glb'), lod);
     const document = await io.read(raw);
+    if (['inf.lion', 'inf.gorilla'].includes(id)) {
+      const fit = JSON.parse(readFileSync(join(report, `lod${lod}.json`), 'utf8')) as { scale: number; yaw: number; translation: number[] };
+      const teeth = animalTeeth(document, fit, { species: id.split('.')[1], infected: true });
+      await io.write(raw, document); writeFileSync(join(report, `lod${lod}.teeth.json`), JSON.stringify(teeth, null, 2) + '\n');
+    }
     if (alignment?.rectangular_glasses) { restoreCrowdGlasses(document, lod); await io.write(raw, document); }
     const total = document.getRoot().listNodes().reduce((sum, node) => sum + (node.getMesh()?.listPrimitives().reduce((sum, primitive) => sum + (primitive.getIndices()?.getCount() ?? primitive.getAttribute('POSITION')!.getCount()) / 3, 0) ?? 0), 0);
     if (total <= triangleLimit) break;
@@ -139,9 +146,10 @@ for (const lod of [0, 1, 2]) {
     if (attempt === 3 || bodyBudget <= 0) throw Error(`${id}: fitted caps exceed triangle budget ${triangleLimit}`);
   }
   const animalRecipe = animalEyeRecipes[sourceId];
-  if (animalRecipe && (id.startsWith('amb.') || animalRecipe.tusks)) {
+  if (animalRecipe) {
     const document = await io.read(raw), fit = JSON.parse(readFileSync(join(report, `lod${lod}.json`), 'utf8')) as { scale: number; yaw: number; translation: number[] };
-    const details = paintAnimalDetails(document, id.startsWith('amb.'), animalRecipe.tusks, fit, sourceId === 'amb.flamingo');
+    const look = ['amb.lion', 'inf.lion', 'inf.gorilla', 'inf.elephant', 'inf.flamingo'].includes(id) ? { species: id.split('.')[1], infected: id.startsWith('inf.') } : undefined;
+    const details = paintAnimalDetails(document, id.startsWith('amb.'), animalRecipe.tusks, fit, sourceId === 'amb.flamingo', look);
     await io.write(raw, document); writeFileSync(join(report, `lod${lod}.details.json`), JSON.stringify(details, null, 2) + '\n');
   }
   // Region classes in the atlas alpha: tinted, flattened hair/skin/garments for civilians; skin only for uniforms.

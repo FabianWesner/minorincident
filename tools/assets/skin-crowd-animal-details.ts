@@ -5,11 +5,12 @@ import { MeshoptSimplifier } from 'meshoptimizer';
 import { PNG } from 'pngjs';
 import { Matrix4, Vector3 } from 'three';
 import { assetIO } from './io';
+import { animalColour, type AnimalLook } from './skin-crowd-animal-infection';
 
 type Fit = { scale: number; yaw: number; translation: number[] };
 export type TuskRecipe = { capsules: { a: number[]; b: number[]; radius: number }[] };
 /** Paint only UV triangle interiors. No dilation can reach another island (L6 bandage lesson). */
-export function paintAnimalDetails(document: Document, naturalEyes: boolean, tusks?: TuskRecipe, fit?: Fit, healEyeMasks = false) {
+export function paintAnimalDetails(document: Document, naturalEyes: boolean, tusks?: TuskRecipe, fit?: Fit, healEyeMasks = false, look?: AnimalLook) {
   const body = document.getRoot().listNodes().find(n => n.getName() === 'skin_body')!;
   const primitive = body.getMesh()!.listPrimitives()[0], texture = primitive.getMaterial()!.getBaseColorTexture()!;
   if (texture.getMimeType() !== 'image/png') throw Error('Animal detail painting requires the uncompressed source PNG');
@@ -24,10 +25,18 @@ export function paintAnimalDetails(document: Document, naturalEyes: boolean, tus
   const inverse = fit ? new Matrix4().makeRotationY(fit.yaw * Math.PI / 180).scale(new Vector3(fit.scale, fit.scale, fit.scale)).setPosition(new Vector3().fromArray(fit.translation)).invert() : new Matrix4();
   const capsules = tusks?.capsules.map(c => ({ a: new Vector3().fromArray(c.a), b: new Vector3().fromArray(c.b), radius: c.radius })) ?? [];
   const point = new Vector3(), local = new Vector3(), nearest = new Vector3(), axis = new Vector3();
-  let ivoryTexels = 0, bleedTexels = 0, healedTexels = 0;
+  let ivoryTexels = 0, bleedTexels = 0, healedTexels = 0, lookTexels = 0, woundTexels = 0;
   // Healing a dark source mask needs colour in its UV gutters too. Reserve
   // every island first, so padding can never overwrite another surface.
-  const padEdges = healEyeMasks || capsules.length > 0, originalPixels = capsules.length ? Buffer.from(png.data) : png.data;
+  const padEdges = healEyeMasks || capsules.length > 0 || !!look, originalPixels = Buffer.from(png.data);
+  // Discard flattened camouflage even in empty UV gutters; the whole lion
+  // coat is spatially repainted below, including its continuous mane envelope.
+  if (look?.species === 'lion') for (let i = 0; i < png.data.length; i += 4) {
+    // The infection pass appended an isolated ivory strip for dimensional teeth.
+    if (look.infected && i / 4 % png.width >= png.width - 32) continue;
+    const coat = look.infected ? [147, 149, 112] : [199, 147, 69];
+    for (let c = 0; c < 3; c++) png.data[i + c] = coat[c];
+  }
   const owner = new Int32Array(png.width * png.height).fill(-1);
   if (padEdges) for (let t = 0; t < (indices?.getCount() ?? position.getCount()); t += 3) {
     const u = [0, 1, 2].map(k => uv.getElement(indices ? indices.getScalar(t + k) : t + k, []).map((v, c) => v * (c ? png.height : png.width) - .5));
@@ -52,6 +61,11 @@ export function paintAnimalDetails(document: Document, naturalEyes: boolean, tus
       } else if (Math.min(w0, w1, w2) < -1e-6) continue;
       point.set(...[0, 1, 2].map(c => p[0][c] * weights[0] + p[1][c] * weights[1] + p[2][c] * weights[2]) as [number, number, number]);
       const pixel = (y * png.width + x) * 4; let colour: number[] | undefined;
+      local.copy(point).applyMatrix4(inverse);
+      if (look) {
+        colour = animalColour(local, Array.from(originalPixels.subarray(pixel, pixel + 3)), look);
+        if (colour) { lookTexels++; if (colour[0] > colour[1] * 2 && colour[0] > colour[2] * 2) woundTexels++; }
+      }
       if (capsules.length) {
         local.copy(point).applyMatrix4(inverse);
         const onTusk = capsules.some(c => { axis.subVectors(c.b, c.a); const along = Math.max(0, Math.min(1, nearest.subVectors(local, c.a).dot(axis) / axis.lengthSq())); nearest.copy(c.a).addScaledVector(axis, along); return local.distanceTo(nearest) < c.radius; });
@@ -67,7 +81,8 @@ export function paintAnimalDetails(document: Document, naturalEyes: boolean, tus
     }
   }
   if (naturalEyes && eyeTexels.some(n => n < 2)) throw Error(`Natural animal pupil disappeared: ${eyeTexels}`);
-  texture.setImage(PNG.sync.write(png)); return { eyeTexels, ivoryTexels, bleedTexels, healedTexels };
+  if (look?.infected && woundTexels < 5) throw Error(`Animal infection wounds disappeared: ${woundTexels}`);
+  texture.setImage(PNG.sync.write(png)); return { eyeTexels, ivoryTexels, bleedTexels, healedTexels, lookTexels, woundTexels };
 }
 
 /** Preserve the authored tail's shape and existing tail joint when the reconstruction omitted it. */
