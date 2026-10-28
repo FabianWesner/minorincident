@@ -1,0 +1,145 @@
+{
+  "command": "E2E_PORT=3353 MI_SLUG=l6-all-new PLAYTEST_GOD=0 node --import tsx tools/playtest/play.ts --levels L6 --quality low --mode campaign --entry debug --no-skip --level-minutes 25 --out test-results/l6-all-new/playthrough-final",
+  "sourceCommit": "8d91b9907",
+  "summary": {
+    "mode": "campaign",
+    "quality": "low",
+    "heroine": "female",
+    "zoom": 1.5,
+    "levels": [
+      "L6"
+    ],
+    "runs": [
+      {
+        "level": "L6",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 227,
+        "simSeconds": 219,
+        "maxNoProgressSeconds": 8.308,
+        "deaths": 0,
+        "assists": 0,
+        "attacks": {
+          "weapon.army-mg": 82,
+          "weapon.fire-axe": 30,
+          "weapon.kick": 4,
+          "weapon.fists": 7
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick"
+        ],
+        "steps": [
+          {
+            "id": "shelter",
+            "text": "Look around the shelter \u00b7 0:34 remaining",
+            "tick": 11,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "stop",
+            "text": "Stop the infected \u00b7 Retreat in 0:36",
+            "tick": 2000,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "retreat",
+            "text": "Cover the retreat through the tunnel \u00b7 15\u00a0m",
+            "tick": 3829,
+            "marker": {
+              "anchor": "l6-next",
+              "ring": {
+                "x": 6,
+                "y": 0.6,
+                "z": 15
+              },
+              "drawn": [
+                6,
+                0.6,
+                15
+              ],
+              "playerY": 1.3200000524520874,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "exit",
+            "text": "Bring the survivors into the night \u00b7 0/2 out \u00b7 29\u00a0m",
+            "tick": 12556,
+            "marker": {
+              "anchor": "night-exit",
+              "ring": {
+                "x": 273,
+                "y": 3.9,
+                "z": 15
+              },
+              "drawn": [
+                273,
+                3.9,
+                15
+              ],
+              "playerY": 1.2699999809265137,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "issues": 0,
+    "bySeverity": {
+      "P0": 0,
+      "P1": 0,
+      "P2": 0,
+      "P3": 0
+    }
+  },
+  "godModeFixture": false,
+  "lastGates": [
+    {
+      "id": 45,
+      "x": 90,
+      "closedAt": 0,
+      "hold": 0,
+      "passed": true
+    },
+    {
+      "id": 46,
+      "x": 150,
+      "closedAt": 0,
+      "hold": 0,
+      "passed": true
+    },
+    {
+      "id": 47,
+      "x": 210,
+      "closedAt": 0,
+      "hold": 0,
+      "passed": true
+    }
+  ],
+  "physicalInput": true
+}

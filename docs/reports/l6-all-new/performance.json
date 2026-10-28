@@ -1,0 +1,291 @@
+{
+  "status": "Final quiet-window performance pending PO. Shared host load was approximately 5; no exclusive browser jobs used.",
+  "timingPending": [
+    "low p95 vs main <= +1ms",
+    "worst of five cold loads <= PROD +10%"
+  ],
+  "method": "Same 30-figure L6 shelter fixture, game renderer, zoom 1.5. Decoded bytes count unique texture upload payloads including pre-render textures; excludes driver padding/residency. Full mission stress timing remains pending.",
+  "rows": [
+    {
+      "configuration": "crowd-new-high-webgl2",
+      "drawCalls": 81,
+      "triangles": 190083,
+      "decodedTextureBytes": 450351384,
+      "textureCount": 314,
+      "marcus": [
+        {
+          "id": 11,
+          "at": [
+            15.8,
+            1.2999999999999998,
+            -3
+          ],
+          "muzzle": [
+            15.988924254459551,
+            1.419668538693304,
+            -2.5013444324064107
+          ]
+        },
+        {
+          "id": 25,
+          "at": [
+            5,
+            1.300000011920929,
+            4
+          ],
+          "muzzle": [
+            5.188724347177697,
+            1.4178923753060046,
+            4.501610442572096
+          ]
+        }
+      ]
+    },
+    {
+      "configuration": "crowd-new-high-webgpu",
+      "drawCalls": 81,
+      "triangles": 190083,
+      "decodedTextureBytes": 450351384,
+      "textureCount": 314,
+      "marcus": [
+        {
+          "id": 11,
+          "at": [
+            15.8,
+            1.2999999999999998,
+            -3
+          ],
+          "muzzle": [
+            15.988924254459551,
+            1.419668538693304,
+            -2.5013444324064107
+          ]
+        },
+        {
+          "id": 25,
+          "at": [
+            5,
+            1.300000011920929,
+            4
+          ],
+          "muzzle": [
+            5.188724347177697,
+            1.4178923753060046,
+            4.501610442572096
+          ]
+        }
+      ]
+    },
+    {
+      "configuration": "crowd-new-low-webgl2",
+      "drawCalls": 62,
+      "triangles": 119138,
+      "decodedTextureBytes": 390344968,
+      "textureCount": 278,
+      "marcus": [
+        {
+          "id": 11,
+          "at": [
+            15.8,
+            1.2999999999999998,
+            -3
+          ],
+          "muzzle": [
+            15.988924222852832,
+            1.4227533174790095,
+            -2.5013444429465403
+          ]
+        },
+        {
+          "id": 25,
+          "at": [
+            5,
+            1.300000011920929,
+            4
+          ],
+          "muzzle": [
+            5.188724305030882,
+            1.4209771540917102,
+            4.501610421498638
+          ]
+        }
+      ]
+    },
+    {
+      "configuration": "crowd-new-low-webgpu",
+      "drawCalls": 62,
+      "triangles": 119138,
+      "decodedTextureBytes": 390344968,
+      "textureCount": 278,
+      "marcus": [
+        {
+          "id": 11,
+          "at": [
+            15.8,
+            1.2999999999999998,
+            -3
+          ],
+          "muzzle": [
+            15.988924222852832,
+            1.4227533174790095,
+            -2.5013444429465403
+          ]
+        },
+        {
+          "id": 25,
+          "at": [
+            5,
+            1.300000011920929,
+            4
+          ],
+          "muzzle": [
+            5.188724305030882,
+            1.4209771540917102,
+            4.501610421498638
+          ]
+        }
+      ]
+    },
+    {
+      "configuration": "crowd-old-high-webgl2",
+      "drawCalls": 81,
+      "triangles": 211659,
+      "decodedTextureBytes": 438735864,
+      "textureCount": 292,
+      "marcus": [
+        {
+          "id": 11,
+          "at": [
+            15.8,
+            1.2999999999999998,
+            -3
+          ],
+          "muzzle": [
+            15.988924254459551,
+            1.419668538693304,
+            -2.5013444324064107
+          ]
+        },
+        {
+          "id": 25,
+          "at": [
+            5,
+            1.300000011920929,
+            4
+          ],
+          "muzzle": [
+            5.188724347177697,
+            1.4178923753060046,
+            4.501610442572096
+          ]
+        }
+      ]
+    },
+    {
+      "configuration": "crowd-old-high-webgpu",
+      "drawCalls": 81,
+      "triangles": 211659,
+      "decodedTextureBytes": 438735864,
+      "textureCount": 292,
+      "marcus": [
+        {
+          "id": 11,
+          "at": [
+            15.8,
+            1.2999999999999998,
+            -3
+          ],
+          "muzzle": [
+            15.988924254459551,
+            1.419668538693304,
+            -2.5013444324064107
+          ]
+        },
+        {
+          "id": 25,
+          "at": [
+            5,
+            1.300000011920929,
+            4
+          ],
+          "muzzle": [
+            5.188724347177697,
+            1.4178923753060046,
+            4.501610442572096
+          ]
+        }
+      ]
+    },
+    {
+      "configuration": "crowd-old-low-webgl2",
+      "drawCalls": 62,
+      "triangles": 131279,
+      "decodedTextureBytes": 387026952,
+      "textureCount": 262,
+      "marcus": [
+        {
+          "id": 11,
+          "at": [
+            15.8,
+            1.2999999999999998,
+            -3
+          ],
+          "muzzle": [
+            15.988924222852832,
+            1.4227533174790095,
+            -2.5013444429465403
+          ]
+        },
+        {
+          "id": 25,
+          "at": [
+            5,
+            1.300000011920929,
+            4
+          ],
+          "muzzle": [
+            5.188724305030882,
+            1.4209771540917102,
+            4.501610421498638
+          ]
+        }
+      ]
+    },
+    {
+      "configuration": "crowd-old-low-webgpu",
+      "drawCalls": 62,
+      "triangles": 131279,
+      "decodedTextureBytes": 387026952,
+      "textureCount": 262,
+      "marcus": [
+        {
+          "id": 11,
+          "at": [
+            15.8,
+            1.2999999999999998,
+            -3
+          ],
+          "muzzle": [
+            15.988924222852832,
+            1.4227533174790095,
+            -2.5013444429465403
+          ]
+        },
+        {
+          "id": 25,
+          "at": [
+            5,
+            1.300000011920929,
+            4
+          ],
+          "muzzle": [
+            5.188724305030882,
+            1.4209771540917102,
+            4.501610421498638
+          ]
+        }
+      ]
+    }
+  ],
+  "bandageFixSource": "a34bbc075"
+}

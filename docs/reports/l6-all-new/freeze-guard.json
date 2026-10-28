@@ -1,0 +1,26 @@
+{
+  "sourceCommit": "a34bbc075",
+  "title": "L1 handover + outbreak: no shader builds after warm-up and no frame over 200 ms @smoke",
+  "status": "passed",
+  "qaStats": {
+    "startTime": "2026-10-28T04:11:31.765Z",
+    "duration": 164150.60799999998,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "annotations": [
+    {
+      "type": "builds after warm-up",
+      "description": "{}"
+    },
+    {
+      "type": "frames",
+      "description": "max 17 ms in 168"
+    }
+  ],
+  "shaderBuildsAfterWarmup": 0,
+  "maxGameplayFrameMs": 17,
+  "measuredFrames": 168
+}

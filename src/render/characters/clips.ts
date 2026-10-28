@@ -98,6 +98,9 @@ function buildRetargetedClip(root: Object3D, name: string, additive: boolean, so
       if (path === 'rotation') {
         for (let i = 0; i < times.length; i++) {
           q.set(0, 0, 0, 1); if (track) q.fromArray(track.values, i * 4).normalize();
+          // Source-fitted head dressings must leave the face visible while
+          // cowering. This authored fit is shared by live and offline samples.
+          if (name === 'npc-cower' && nodeName === 'head' && typeof node.userData.cowerHeadLift === 'number') q.premultiply(new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), node.userData.cowerHeadLift));
           if ((skinLocomotion || skinPlanted) && nodeName === 'hip') q.slerp(new Quaternion(), skinLocomotion ? .82 : .7);
           // Forward-reaching infected need their arms beside the body and bent
           // legs lowered as the back pose settles, rather than pointing upward.

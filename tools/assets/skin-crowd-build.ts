@@ -2,7 +2,7 @@ import { restoreCrowdGlasses } from './skin-crowd-glasses';
 import { restoreFireHelmet } from './restore-fire-helmet';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { existsSync, mkdirSync, readFileSync, unlinkSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, readdirSync, unlinkSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, resolve } from 'node:path';
 import { getBounds } from '@gltf-transform/functions';
 import type { AssetDef } from '../../src/assets/types';
@@ -12,13 +12,15 @@ import { validateAssets } from './validate';
 import { compressSkin } from './skin-crowd-compress';
 import { skinCrowdBakes } from './skin-crowd-bakes';
 import { classifyCrowdAtlas } from './skin-crowd-regions';
-import { paintCrowdWraps, type CrowdWrap } from './skin-crowd-wraps';
+import { paintCrowdShirt, paintCrowdWraps, type CrowdWrap } from './skin-crowd-wraps';
 import { Matrix4, Vector3 } from 'three';
 
 // A cast directory is the complete input; no hand-prepared files or placement numbers.
-const source = resolve(process.argv[2] ?? ''), id = basename(source);
+// A named game variant can consume a compatible reviewed base cast without
+// copying or modifying that source package.
+const source = resolve(process.argv[2] ?? ''), sourceId = basename(source), id = process.argv[3] || sourceId;
 const authored = existsSync(join(source, 'model.glb'));
-if (!process.argv[2] || !existsSync(join(source, authored ? 'model.glb' : 'lod0.glb'))) throw Error('Usage: skin-crowd-build.sh <cast/<id> directory>');
+if (!process.argv[2] || !existsSync(join(source, authored ? 'model.glb' : 'lod0.glb'))) throw Error('Usage: skin-crowd-build.sh <cast/<id> directory> [asset-id]');
 // A game asset directory is not a new-pipeline cast. Without the durable,
 // pre-binding source manifest, --reconstruct-body would quietly skin the old
 // rigid geometry and make an incomplete migration look like a new figure.
@@ -35,6 +37,16 @@ const def = manifest.find(a => a.id === id); if (!def) throw Error(`Unknown cast
 const output = 'public/assets/models/skinned', report = join(process.env.CROWD_REPORT ?? 'test-results/skinned-prod/builds', id), assets = join('assets', id);
 mkdirSync(output, { recursive: true }); mkdirSync(report, { recursive: true }); mkdirSync(assets, { recursive: true });
 const metadata = existsSync(join(source, 'rig.json')) ? JSON.parse(readFileSync(join(source, 'rig.json'), 'utf8')) as { class?: string; lods: { lod: number; uniform_scale?: number; world_scale?: number; rotation_y_degrees?: number }[] } : undefined;
+// Derived story identities fit the continuous source directly to the neutral
+// game rig. The old cut-source ownership leaves shoulder slivers in cower poses.
+const derivedTemplate = id !== sourceId && id.startsWith('npc.') && existsSync(join('assets', sourceId, 'model.glb'));
+if (derivedTemplate) {
+  def.budget.triangles = 6000; def.budget.fileKB = 600;
+  // Retain the source LOD1 anatomy at distance. The legacy 2k cap otherwise
+  // invokes position simplification after binding and reconnects two seams.
+  def.authoredLodTriangles = { lod1: 2500, lod2: 2500 };
+  delete def.authoredLodRatios;
+}
 const unbound = existsSync(join(source, 'source/manifest.json')) && !metadata;
 const alignment = unbound ? JSON.parse(readFileSync(join(id === 'inf.dog' ? join(dirname(source), 'amb.dog') : source, 'source/manifest.json'), 'utf8')) as { initial_game_height_scale: number; game_alignment_rotation_y_degrees: number; triangle_budgets?: [number, number, number]; rig_class?: string; rig_source?: string; rig_fit_height?: boolean; authored_skin?: true | string; wraps?: CrowdWrap[]; spectacles?: boolean; covered_legs?: boolean; healthy_toy_eyes?: boolean; rectangular_glasses?: boolean } : undefined;
 if (alignment?.triangle_budgets) {
@@ -63,18 +75,18 @@ for (const lod of [0, 1, 2]) {
   // The authored human LOD2 can attach a hand only to the thigh. Retain the
   // sound LOD1 anatomy (well inside the 4k far-tier budget) with a smaller atlas.
   // Never position-simplify a painted body across its UV islands.
-  const sourceLod = unbound && id.startsWith('npc.') && lod === 2 ? 1 : lod;
-  const rig = alignment?.rig_source ? join(source, alignment.rig_source) : unbound ? join(id === 'inf.dog' ? 'assets/amb.dog' : assets, id === 'char.corgi' && lod ? `model.lod${lod}.glb` : 'model.glb') : join(source, authored ? `model${lod ? `.lod${lod}` : ''}.glb` : `lod${lod}.glb`), body = join(source, `source/${unbound ? 'assembled' : 'flat'}-lod${sourceLod}.glb`), raw = join(report, `lod${lod}.raw.glb`);
+  const sourceLod = (unbound || derivedTemplate) && id.startsWith('npc.') && lod === 2 ? 1 : lod;
+  const rig = derivedTemplate ? join('assets', sourceId, 'model.glb') : alignment?.rig_source ? join(source, alignment.rig_source) : unbound ? join(id === 'inf.dog' ? 'assets/amb.dog' : assets, id === 'char.corgi' && lod ? `model.lod${lod}.glb` : 'model.glb') : join(source, authored ? `model${lod ? `.lod${lod}` : ''}.glb` : `lod${lod}.glb`), body = join(source, `source/${unbound ? 'assembled' : 'flat'}-lod${sourceLod}.glb`), raw = join(report, `lod${lod}.raw.glb`);
   const args = ['tools/assets/skin-crowd-figure.ts', '--rig', rig, '--out', raw, '--report', join(report, `lod${lod}.json`)];
   const contract = join(assets, 'model.glb'); if (existsSync(contract)) args.push('--contract', contract);
   const placement = metadata?.lods.find(p => p.lod === lod);
   if (existsSync(body)) args.push('--body', body, '--body-scale', String(alignment?.initial_game_height_scale ?? placement?.uniform_scale ?? placement?.world_scale ?? 1), '--body-rot-y', String(alignment?.game_alignment_rotation_y_degrees ?? placement?.rotation_y_degrees ?? 0));
-  if (alignment) args.push('--body-yaw-fixed');
+  if (alignment || derivedTemplate) args.push('--body-yaw-fixed');
   if (unbound && id === 'inf.dog') args.push('--atlas-base-half', '--eyes', join(source, 'eyes.json'));
   else if (unbound && (id.startsWith('inf.') || alignment?.healthy_toy_eyes) && existsSync(join(source, 'eyes.json'))) args.push('--eyes', join(source, 'eyes.json'));
-  else if (metadata) args.push('--reconstruct-body');
+  else if (metadata && !derivedTemplate) args.push('--reconstruct-body');
   if (id.startsWith('npc.')) args.push('--healthy');
-  if (unbound && (!alignment?.rig_source || alignment.rig_fit_height) && (id.startsWith('npc.') || alignment?.rig_class === 'humanoid' || alignment?.rig_class === 'alpha')) args.push('--fit-rig-height');
+  if (derivedTemplate || unbound && (!alignment?.rig_source || alignment.rig_fit_height) && (id.startsWith('npc.') || alignment?.rig_class === 'humanoid' || alignment?.rig_class === 'alpha')) args.push('--fit-rig-height');
   if (alignment?.spectacles || ['npc.civilian-woman-b', 'npc.civilian-elderly'].includes(id)) args.push('--spectacles');
   if (lod > 0 && (alignment?.spectacles || ['npc.civilian-woman-b', 'npc.civilian-elderly'].includes(id))) {
     const measured = JSON.parse(readFileSync(join(report, 'lod0.json'), 'utf8')) as { spectacleTop: number };
@@ -107,14 +119,27 @@ for (const lod of [0, 1, 2]) {
   }
   // Region classes in the atlas alpha: tinted, flattened hair/skin/garments for civilians; skin only for uniforms.
   if (id.startsWith('npc.')) {
-    const document = await io.read(raw), regions = classifyCrowdAtlas(document, id.startsWith('npc.civilian-'), id === 'npc.national-guard', alignment?.authored_skin, alignment?.covered_legs);
+    const document = await io.read(raw);
+    const shelter = id.startsWith('npc.shelter-survivor.');
+    if (id === 'npc.shelter-survivor.bandaged') {
+      const head = document.getRoot().listNodes().find(n => n.getName() === 'head')!;
+      // This source's heavy fringe hides the whole face in the legacy cower.
+      head.setExtras({ ...head.getExtras(), cowerHeadLift: .95 });
+    }
+    if (shelter && /\.(bandaged|sitting)$/.test(id)) paintCrowdShirt(document, '#f2b630');
+    const regions = classifyCrowdAtlas(document, id.startsWith('npc.civilian-'), id === 'npc.national-guard', alignment?.authored_skin, alignment?.covered_legs ?? (derivedTemplate && sourceId === 'npc.civilian-man-a'));
     if (regions) { await io.write(raw, document); writeFileSync(join(report, `lod${lod}.regions.json`), JSON.stringify(regions, null, 2) + '\n'); }
-    if (alignment?.wraps?.length) { const wraps = paintCrowdWraps(document, alignment.wraps); await io.write(raw, document); writeFileSync(join(report, `lod${lod}.wraps.json`), JSON.stringify(wraps, null, 2) + '\n'); }
+    const dressings: CrowdWrap[] = shelter || id === 'npc.civilian-man-a.aftermath' ? [
+      { joint: 'foreArmL', colour: '#e7dfce', stain: true },
+      ...(/\.(bandaged|sitting)$/.test(id) ? [{ joint: 'head', colour: '#b6aa93', stain: true }] : []),
+      ...(id.endsWith('.bandaged') ? [{ joint: 'armL', colour: '#e7dfce', stain: true }] : []),
+    ] : alignment?.wraps ?? [];
+    if (dressings.length) { const wraps = paintCrowdWraps(document, dressings); await io.write(raw, document); writeFileSync(join(report, `lod${lod}.wraps.json`), JSON.stringify(wraps, null, 2) + '\n'); }
   }
   const tiers = [];
   for (const low of [false, true]) {
     const target = join(output, `${id}.lod${lod}${low ? '.low' : ''}.glb`);
-    await compressSkin(raw, target, basis, lod === 2 && unbound && id.startsWith('npc.') ? 256 : low || lod > 0 ? 512 : 1024);
+    await compressSkin(raw, target, basis, lod === 2 && (unbound || derivedTemplate) && id.startsWith('npc.') ? 256 : low || lod > 0 ? 512 : 1024);
     // Keep the continuous mid-tier anatomy at distance; a smaller far atlas
     // satisfies the cold-file cap when detailed faces leave too little room.
     if (lod === 2 && readFileSync(target).length > 150000) await compressSkin(raw, target, basis, 128);
@@ -162,6 +187,10 @@ for (const key of Object.keys(bakes)) if (key.startsWith(id + ':')) {
   const file = 'public' + bakes[key]; if (!Object.values(preparedBakes).includes(bakes[key]) && existsSync(file)) unlinkSync(file); delete bakes[key];
 }
 Object.assign(bakes, preparedBakes);
+// A failed or interrupted bake can leave content-addressed files that never
+// reached the registry. Retire only this identity's unreferenced outputs.
+const referencedBakes = new Set(Object.values(bakes));
+for (const name of readdirSync('public/assets/civilians')) if (name.startsWith(id + '.lod') && name.endsWith('.bin.gz') && !referencedBakes.has('/assets/civilians/' + name)) unlinkSync(join('public/assets/civilians', name));
 writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
 writeFileSync(bakePath, JSON.stringify(bakes, null, 2) + '\n');
 writeFileSync(join(report, 'build.json'), JSON.stringify({ id, source, elapsedSeconds: (Date.now() - started) / 1000, manualSteps: [], receipts, preparedBakes }, null, 2) + '\n');

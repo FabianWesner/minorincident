@@ -1,0 +1,67 @@
+{
+  "assetValidator": {
+    "fullRecords": 1262,
+    "errors": 0,
+    "currentConvertedRecords": 12,
+    "allSourceLodsClosed": true,
+    "unrelatedSeamJoins": 0
+  },
+  "typecheck": true,
+  "lint": true,
+  "npmTest": {
+    "passed": 104,
+    "files": 24,
+    "budget": 144,
+    "newCases": 0,
+    "caseBudgetFiles": 40,
+    "sourceCommit": "a34bbc075"
+  },
+  "smoke": {
+    "passed": 7,
+    "qa": 6,
+    "public": 1,
+    "seconds": 184.9,
+    "webglAttributesMax": 13,
+    "webgpuVertexBuffersMax": 8,
+    "webgpuCrowdVertexBuffersMax": 6,
+    "freezeGuardPassed": true,
+    "shaderBuildsAfterWarmup": 0,
+    "maxGameplayFrameMs": 17,
+    "measuredFrames": 168,
+    "sourceCommit": "a34bbc075"
+  },
+  "sceneGate": {
+    "exit": 0,
+    "passed": 43,
+    "knownBaselineExceptions": 5,
+    "missing": 0,
+    "minutes": 7.4,
+    "sourceCommit": "8d91b9907"
+  },
+  "realInputL6": {
+    "exit": 0,
+    "finished": true,
+    "wallSeconds": 227,
+    "simSeconds": 219,
+    "skipped": 0,
+    "deaths": 0,
+    "assists": 0,
+    "issues": 0,
+    "mandatorySteps": [
+      "shelter",
+      "stop",
+      "retreat",
+      "exit"
+    ],
+    "sourceCommit": "8d91b9907"
+  },
+  "bandageFix": {
+    "sourceCommit": "a34bbc075",
+    "assetValidatorExit": 0,
+    "npmTestExit": 0,
+    "smokeExit": 0,
+    "scriptedSceneChecks": 28,
+    "nativeConfigurations": 9,
+    "newTestCases": 0
+  }
+}

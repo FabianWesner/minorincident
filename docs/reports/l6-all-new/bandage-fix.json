@@ -1,0 +1,73 @@
+{
+  "sourceCommit": "a34bbc075",
+  "request": "Orchestrator review of 02: floating white halo, dark head mass and hidden face",
+  "material": {
+    "region": "authored",
+    "class": 5,
+    "alpha": 219,
+    "albedo": "#b6aa93",
+    "roughness": 1,
+    "metallic": 0,
+    "emissive": [
+      0,
+      0,
+      0
+    ],
+    "sameBodyMaterialAsSkin": true,
+    "newShaderOrEmissionPath": false
+  },
+  "changes": [
+    "UV triangle ownership prevents padding from painting neighboring islands; padding bounded to 1.5 texels per edge",
+    "Crown gauze replaces the narrow stripe over dark hair; smooth paint, localized temple stain",
+    "Source head cower lift 0.95 rad; live and offline samples share retargeting, pose cache includes authored fit"
+  ],
+  "captures": [
+    "02-npc.shelter-survivor.bandaged.jpg",
+    "07-scripted-scenes.jpg",
+    "08-scripted-scenes.jpg"
+  ],
+  "nativeConfigurations": [
+    "high-webgl2",
+    "high-webgl2-tone5",
+    "high-webgpu",
+    "high-webgpu-tone5",
+    "low-webgl2",
+    "low-webgl2-tone5",
+    "low-webgpu",
+    "low-webgpu-tone5",
+    "neutral-high-webgpu"
+  ],
+  "reviewed": true,
+  "checks": {
+    "assetValidator": {
+      "records": 1262,
+      "errors": 0
+    },
+    "npmTest": {
+      "passed": 104,
+      "caseBudget": 144,
+      "newCases": 0
+    },
+    "smoke": {
+      "passed": 7,
+      "qa": 6,
+      "public": 1,
+      "seconds": 184.9,
+      "webglAttributesMax": 13,
+      "webgpuVertexBuffersMax": 8,
+      "webgpuCrowdVertexBuffersMax": 6,
+      "freezeGuardPassed": true,
+      "shaderBuildsAfterWarmup": 0,
+      "maxGameplayFrameMs": 17,
+      "measuredFrames": 168,
+      "sourceCommit": "a34bbc075"
+    },
+    "typecheck": true,
+    "lint": true,
+    "scriptedScenesPassed": 28,
+    "reproducibleFiles": 54
+  },
+  "inferenceSpendEur": 0,
+  "capturesCommand": "SCENE_PORT=3354 MI_SLUG=l6-bandage-fix FIGURES=npc.shelter-survivor.bandaged,npc.shelter-survivor.sitting REVIEW_VARIANTS=new sh tools/scenelab/l6-all-new-capture.sh",
+  "sourceScope": "UV wrap painter applies to all four residents; crown changes apply to bandaged/sitting; cower head fit applies only to bandaged. All updated native and production sheets reviewed."
+}

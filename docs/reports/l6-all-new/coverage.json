@@ -1,0 +1,712 @@
+{
+  "crowds": [
+    {
+      "name": "crowd-new-high-webgl2",
+      "pass": true,
+      "actors": 30,
+      "allDrawn": true,
+      "errors": [],
+      "source": "glb",
+      "placeholders": [],
+      "convertedSubmitted": {
+        "npc.civilian-man-a.aftermath": 3,
+        "npc.shelter-survivor.bandaged": 2,
+        "npc.shelter-survivor.lying": 2,
+        "npc.shelter-survivor.sitting": 2
+      }
+    },
+    {
+      "name": "crowd-new-high-webgpu",
+      "pass": true,
+      "actors": 30,
+      "allDrawn": true,
+      "errors": [],
+      "source": "glb",
+      "placeholders": [],
+      "convertedSubmitted": {
+        "npc.civilian-man-a.aftermath": 3,
+        "npc.shelter-survivor.bandaged": 2,
+        "npc.shelter-survivor.lying": 2,
+        "npc.shelter-survivor.sitting": 2
+      }
+    },
+    {
+      "name": "crowd-new-low-webgl2",
+      "pass": true,
+      "actors": 30,
+      "allDrawn": true,
+      "errors": [],
+      "source": "glb",
+      "placeholders": [],
+      "convertedSubmitted": {
+        "npc.civilian-man-a.aftermath": 3,
+        "npc.shelter-survivor.bandaged": 2,
+        "npc.shelter-survivor.lying": 2,
+        "npc.shelter-survivor.sitting": 2
+      }
+    },
+    {
+      "name": "crowd-new-low-webgpu",
+      "pass": true,
+      "actors": 30,
+      "allDrawn": true,
+      "errors": [],
+      "source": "glb",
+      "placeholders": [],
+      "convertedSubmitted": {
+        "npc.civilian-man-a.aftermath": 3,
+        "npc.shelter-survivor.bandaged": 2,
+        "npc.shelter-survivor.lying": 2,
+        "npc.shelter-survivor.sitting": 2
+      }
+    },
+    {
+      "name": "crowd-old-high-webgl2",
+      "pass": true,
+      "actors": 30,
+      "allDrawn": true,
+      "errors": [],
+      "source": "glb",
+      "placeholders": [],
+      "convertedSubmitted": {
+        "npc.civilian-man-a.aftermath": 3,
+        "npc.shelter-survivor.bandaged": 2,
+        "npc.shelter-survivor.lying": 2,
+        "npc.shelter-survivor.sitting": 2
+      }
+    },
+    {
+      "name": "crowd-old-high-webgpu",
+      "pass": true,
+      "actors": 30,
+      "allDrawn": true,
+      "errors": [],
+      "source": "glb",
+      "placeholders": [],
+      "convertedSubmitted": {
+        "npc.civilian-man-a.aftermath": 3,
+        "npc.shelter-survivor.bandaged": 2,
+        "npc.shelter-survivor.lying": 2,
+        "npc.shelter-survivor.sitting": 2
+      }
+    },
+    {
+      "name": "crowd-old-low-webgl2",
+      "pass": true,
+      "actors": 30,
+      "allDrawn": true,
+      "errors": [],
+      "source": "glb",
+      "placeholders": [],
+      "convertedSubmitted": {
+        "npc.civilian-man-a.aftermath": 3,
+        "npc.shelter-survivor.bandaged": 2,
+        "npc.shelter-survivor.lying": 2,
+        "npc.shelter-survivor.sitting": 2
+      }
+    },
+    {
+      "name": "crowd-old-low-webgpu",
+      "pass": true,
+      "actors": 30,
+      "allDrawn": true,
+      "errors": [],
+      "source": "glb",
+      "placeholders": [],
+      "convertedSubmitted": {
+        "npc.civilian-man-a.aftermath": 3,
+        "npc.shelter-survivor.bandaged": 2,
+        "npc.shelter-survivor.lying": 2,
+        "npc.shelter-survivor.sitting": 2
+      }
+    }
+  ],
+  "states": [
+    {
+      "name": "states-new-high-webgpu",
+      "proof": [
+        {
+          "id": 3,
+          "model": "npc.civilian-man-a.aftermath",
+          "health": 100,
+          "corpse": false,
+          "infected": false
+        },
+        {
+          "id": 4,
+          "model": "npc.civilian-man-a.aftermath",
+          "health": 60,
+          "corpse": false,
+          "infected": true
+        },
+        {
+          "id": 5,
+          "model": "npc.civilian-man-a.aftermath",
+          "health": 0,
+          "corpse": true,
+          "infected": true
+        },
+        {
+          "id": 6,
+          "model": "npc.shelter-survivor.bandaged",
+          "health": 100,
+          "corpse": false,
+          "infected": false
+        },
+        {
+          "id": 7,
+          "model": "npc.shelter-survivor.bandaged",
+          "health": 60,
+          "corpse": false,
+          "infected": true
+        },
+        {
+          "id": 8,
+          "model": "npc.shelter-survivor.bandaged",
+          "health": 0,
+          "corpse": true,
+          "infected": true
+        },
+        {
+          "id": 9,
+          "model": "npc.shelter-survivor.lying",
+          "health": 100,
+          "corpse": false,
+          "infected": false
+        },
+        {
+          "id": 10,
+          "model": "npc.shelter-survivor.lying",
+          "health": 60,
+          "corpse": false,
+          "infected": true
+        },
+        {
+          "id": 11,
+          "model": "npc.shelter-survivor.lying",
+          "health": 0,
+          "corpse": true,
+          "infected": true
+        },
+        {
+          "id": 12,
+          "model": "npc.shelter-survivor.sitting",
+          "health": 100,
+          "corpse": false,
+          "infected": false
+        },
+        {
+          "id": 13,
+          "model": "npc.shelter-survivor.sitting",
+          "health": 60,
+          "corpse": false,
+          "infected": true
+        },
+        {
+          "id": 14,
+          "model": "npc.shelter-survivor.sitting",
+          "health": 0,
+          "corpse": true,
+          "infected": true
+        }
+      ],
+      "healthy": 4,
+      "turned": 4,
+      "frozen": 4
+    },
+    {
+      "name": "states-new-low-webgl2",
+      "proof": [
+        {
+          "id": 3,
+          "model": "npc.civilian-man-a.aftermath",
+          "health": 100,
+          "corpse": false,
+          "infected": false
+        },
+        {
+          "id": 4,
+          "model": "npc.civilian-man-a.aftermath",
+          "health": 60,
+          "corpse": false,
+          "infected": true
+        },
+        {
+          "id": 5,
+          "model": "npc.civilian-man-a.aftermath",
+          "health": 0,
+          "corpse": true,
+          "infected": true
+        },
+        {
+          "id": 6,
+          "model": "npc.shelter-survivor.bandaged",
+          "health": 100,
+          "corpse": false,
+          "infected": false
+        },
+        {
+          "id": 7,
+          "model": "npc.shelter-survivor.bandaged",
+          "health": 60,
+          "corpse": false,
+          "infected": true
+        },
+        {
+          "id": 8,
+          "model": "npc.shelter-survivor.bandaged",
+          "health": 0,
+          "corpse": true,
+          "infected": true
+        },
+        {
+          "id": 9,
+          "model": "npc.shelter-survivor.lying",
+          "health": 100,
+          "corpse": false,
+          "infected": false
+        },
+        {
+          "id": 10,
+          "model": "npc.shelter-survivor.lying",
+          "health": 60,
+          "corpse": false,
+          "infected": true
+        },
+        {
+          "id": 11,
+          "model": "npc.shelter-survivor.lying",
+          "health": 0,
+          "corpse": true,
+          "infected": true
+        },
+        {
+          "id": 12,
+          "model": "npc.shelter-survivor.sitting",
+          "health": 100,
+          "corpse": false,
+          "infected": false
+        },
+        {
+          "id": 13,
+          "model": "npc.shelter-survivor.sitting",
+          "health": 60,
+          "corpse": false,
+          "infected": true
+        },
+        {
+          "id": 14,
+          "model": "npc.shelter-survivor.sitting",
+          "health": 0,
+          "corpse": true,
+          "infected": true
+        }
+      ],
+      "healthy": 4,
+      "turned": 4,
+      "frozen": 4
+    },
+    {
+      "name": "states-old-high-webgpu",
+      "proof": [
+        {
+          "id": 3,
+          "model": "npc.civilian-man-a.aftermath",
+          "health": 100,
+          "corpse": false,
+          "infected": false
+        },
+        {
+          "id": 4,
+          "model": "npc.civilian-man-a.aftermath",
+          "health": 60,
+          "corpse": false,
+          "infected": true
+        },
+        {
+          "id": 5,
+          "model": "npc.civilian-man-a.aftermath",
+          "health": 0,
+          "corpse": true,
+          "infected": true
+        },
+        {
+          "id": 6,
+          "model": "npc.shelter-survivor.bandaged",
+          "health": 100,
+          "corpse": false,
+          "infected": false
+        },
+        {
+          "id": 7,
+          "model": "npc.shelter-survivor.bandaged",
+          "health": 60,
+          "corpse": false,
+          "infected": true
+        },
+        {
+          "id": 8,
+          "model": "npc.shelter-survivor.bandaged",
+          "health": 0,
+          "corpse": true,
+          "infected": true
+        },
+        {
+          "id": 9,
+          "model": "npc.shelter-survivor.lying",
+          "health": 100,
+          "corpse": false,
+          "infected": false
+        },
+        {
+          "id": 10,
+          "model": "npc.shelter-survivor.lying",
+          "health": 60,
+          "corpse": false,
+          "infected": true
+        },
+        {
+          "id": 11,
+          "model": "npc.shelter-survivor.lying",
+          "health": 0,
+          "corpse": true,
+          "infected": true
+        },
+        {
+          "id": 12,
+          "model": "npc.shelter-survivor.sitting",
+          "health": 100,
+          "corpse": false,
+          "infected": false
+        },
+        {
+          "id": 13,
+          "model": "npc.shelter-survivor.sitting",
+          "health": 60,
+          "corpse": false,
+          "infected": true
+        },
+        {
+          "id": 14,
+          "model": "npc.shelter-survivor.sitting",
+          "health": 0,
+          "corpse": true,
+          "infected": true
+        }
+      ],
+      "healthy": 4,
+      "turned": 4,
+      "frozen": 4
+    },
+    {
+      "name": "states-old-low-webgl2",
+      "proof": [
+        {
+          "id": 3,
+          "model": "npc.civilian-man-a.aftermath",
+          "health": 100,
+          "corpse": false,
+          "infected": false
+        },
+        {
+          "id": 4,
+          "model": "npc.civilian-man-a.aftermath",
+          "health": 60,
+          "corpse": false,
+          "infected": true
+        },
+        {
+          "id": 5,
+          "model": "npc.civilian-man-a.aftermath",
+          "health": 0,
+          "corpse": true,
+          "infected": true
+        },
+        {
+          "id": 6,
+          "model": "npc.shelter-survivor.bandaged",
+          "health": 100,
+          "corpse": false,
+          "infected": false
+        },
+        {
+          "id": 7,
+          "model": "npc.shelter-survivor.bandaged",
+          "health": 60,
+          "corpse": false,
+          "infected": true
+        },
+        {
+          "id": 8,
+          "model": "npc.shelter-survivor.bandaged",
+          "health": 0,
+          "corpse": true,
+          "infected": true
+        },
+        {
+          "id": 9,
+          "model": "npc.shelter-survivor.lying",
+          "health": 100,
+          "corpse": false,
+          "infected": false
+        },
+        {
+          "id": 10,
+          "model": "npc.shelter-survivor.lying",
+          "health": 60,
+          "corpse": false,
+          "infected": true
+        },
+        {
+          "id": 11,
+          "model": "npc.shelter-survivor.lying",
+          "health": 0,
+          "corpse": true,
+          "infected": true
+        },
+        {
+          "id": 12,
+          "model": "npc.shelter-survivor.sitting",
+          "health": 100,
+          "corpse": false,
+          "infected": false
+        },
+        {
+          "id": 13,
+          "model": "npc.shelter-survivor.sitting",
+          "health": 60,
+          "corpse": false,
+          "infected": true
+        },
+        {
+          "id": 14,
+          "model": "npc.shelter-survivor.sitting",
+          "health": 0,
+          "corpse": true,
+          "infected": true
+        }
+      ],
+      "healthy": 4,
+      "turned": 4,
+      "frozen": 4
+    }
+  ],
+  "scenes": [
+    {
+      "group": "story-new-high-webgpu",
+      "name": "qa-l6-audit-cohort",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "group": "story-new-high-webgpu",
+      "name": "qa-l6-exit-approach",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "group": "story-new-high-webgpu",
+      "name": "qa-l6-gate-route",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "group": "story-new-high-webgpu",
+      "name": "qa-l6-nav-shelter-mouth",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "group": "story-new-high-webgpu",
+      "name": "qa-l6-po-entry",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "group": "story-new-high-webgpu",
+      "name": "qa-l6-po-gate",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "group": "story-new-high-webgpu",
+      "name": "qa-l6-po-headlamp",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "group": "story-new-high-webgpu",
+      "name": "qa-l6-po-pickup",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "group": "story-new-high-webgpu",
+      "name": "qa-l6-rested-shelter",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "group": "story-new-high-webgpu",
+      "name": "qa-l6-room-boundary",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "group": "story-new-high-webgpu",
+      "name": "qa-l6-shelter-reveal",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "group": "story-new-low-webgl2",
+      "name": "qa-l6-audit-cohort",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "group": "story-new-low-webgl2",
+      "name": "qa-l6-exit-approach",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "group": "story-new-low-webgl2",
+      "name": "qa-l6-gate-route",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "group": "story-new-low-webgl2",
+      "name": "qa-l6-nav-shelter-mouth",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "group": "story-new-low-webgl2",
+      "name": "qa-l6-po-entry",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "group": "story-new-low-webgl2",
+      "name": "qa-l6-po-gate",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "group": "story-new-low-webgl2",
+      "name": "qa-l6-po-headlamp",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "group": "story-new-low-webgl2",
+      "name": "qa-l6-po-pickup",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "group": "story-new-low-webgl2",
+      "name": "qa-l6-rested-shelter",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "group": "story-new-low-webgl2",
+      "name": "qa-l6-room-boundary",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "group": "story-new-low-webgl2",
+      "name": "qa-l6-shelter-reveal",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "group": "beats-new-high-webgpu",
+      "name": "l6-tunnel-group",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "group": "beats-new-high-webgpu",
+      "name": "l6-tunnel-hatch",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "group": "beats-new-high-webgpu",
+      "name": "l6-station-portal",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "group": "beats-new-low-webgl2",
+      "name": "l6-tunnel-group",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "group": "beats-new-low-webgl2",
+      "name": "l6-tunnel-hatch",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "group": "beats-new-low-webgl2",
+      "name": "l6-station-portal",
+      "pass": true,
+      "failed": []
+    }
+  ],
+  "native": [
+    {
+      "configuration": "high-webgl2",
+      "captures": 32,
+      "maxFramingErrorPx": 4.816740784008289e-08
+    },
+    {
+      "configuration": "high-webgl2-tone5",
+      "captures": 32,
+      "maxFramingErrorPx": 4.816740784008289e-08
+    },
+    {
+      "configuration": "high-webgpu",
+      "captures": 32,
+      "maxFramingErrorPx": 4.816740784008289e-08
+    },
+    {
+      "configuration": "high-webgpu-tone5",
+      "captures": 32,
+      "maxFramingErrorPx": 4.816740784008289e-08
+    },
+    {
+      "configuration": "low-webgl2",
+      "captures": 32,
+      "maxFramingErrorPx": 4.816740784008289e-08
+    },
+    {
+      "configuration": "low-webgl2-tone5",
+      "captures": 32,
+      "maxFramingErrorPx": 4.816740784008289e-08
+    },
+    {
+      "configuration": "low-webgpu",
+      "captures": 32,
+      "maxFramingErrorPx": 4.816740784008289e-08
+    },
+    {
+      "configuration": "low-webgpu-tone5",
+      "captures": 32,
+      "maxFramingErrorPx": 4.816740784008289e-08
+    },
+    {
+      "configuration": "neutral-high-webgpu",
+      "captures": 32,
+      "maxFramingErrorPx": 9.407585821463726e-11
+    }
+  ],
+  "bandageFixSource": "a34bbc075"
+}
