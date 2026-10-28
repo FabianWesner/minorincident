@@ -39,3 +39,12 @@ export function reviewEyeMaterial(source: Material, shading: Materials): MeshLam
   material.userData.reviewEyeMask = true;
   return material;
 }
+
+/** The white/dark toy discs used by the production spectacled civilian renderer. */
+export function reviewHealthyEyeMaterial(source: Material, shading: Materials): MeshLambertNodeMaterial {
+  const radius = uv().sub(.5).mul(2).length();
+  const material = shading.shaded(radius.lessThan(.62).select(vec3(.015), vec3(.85)));
+  material.side = source.side; material.maskNode = radius.lessThanEqual(1);
+  material.userData.reviewEyeMask = true;
+  return material;
+}

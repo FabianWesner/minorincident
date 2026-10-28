@@ -48,9 +48,20 @@ export function rigDrawErrors(document: Document, def: AssetDef, base: Document)
   const errors = calls > limit ? [`animated-owner drawCalls: ${calls} > shipped base ${limit}`] : [];
   // The crowd baker chooses animal clips by `body`, and skin/eye effects by material name.
   if (nodes.some(n => n.getName() === 'body') && !base.getRoot().listNodes().some(n => n.getName() === 'body')) errors.push('living rig: added body node selects animal clips');
-  const names = document.getRoot().listMaterials().map(m => m.getName());
-  for (const pattern of [/^pal_skin/, /^pal_eyeBrown$/]) {
-    if (base.getRoot().listMaterials().some(m => pattern.test(m.getName())) && !names.some(n => pattern.test(n))) errors.push(`living rig: lost ${pattern.source} material classification`);
+  if (def.crowdSkin) {
+    // The UV-preserving skin route carries these semantics in vertex regions
+    // and an eye node; the former palette primitives are merged into one atlas.
+    const body = nodes.find(n => n.getName() === 'skin_body');
+    if (!body?.getSkin() || !body.getMesh()?.listPrimitives().some(p => {
+      const region = p.getAttribute('_CROWD_REGION');
+      return region && Array.from({ length: region.getCount() }, (_, i) => region.getScalar(i)).some(value => Math.abs(value - 1) < .01);
+    })) errors.push('living rig: lost skinned skin classification');
+    if (!nodes.some(n => n.getExtras().crowdEye && n.getMesh())) errors.push('living rig: lost skinned eye classification');
+  } else {
+    const names = document.getRoot().listMaterials().map(m => m.getName());
+    for (const pattern of [/^pal_skin/, /^pal_eyeBrown$/]) {
+      if (base.getRoot().listMaterials().some(m => pattern.test(m.getName())) && !names.some(n => pattern.test(n))) errors.push(`living rig: lost ${pattern.source} material classification`);
+    }
   }
   return errors;
 }
@@ -293,6 +304,11 @@ export async function validateAssets(manifest: AssetDef[], production = true): P
             // attachments cannot escape the total cap by nesting below a joint.
             const owners = new Set(def.animatedNodes), pairs = new Set<string>();
             for (const node of document.getRoot().listNodes()) {
+              // Dismemberment caps are dormant alternatives, never simultaneous
+              // draws to batch with each other under their retained joint.
+              let hidden = false;
+              for (let ancestor: Node | null = node; ancestor; ancestor = ancestor.getParentNode()) if (ancestor.getExtras().hidden === true) hidden = true;
+              if (hidden) continue;
               let owner: Node | null = node;
               while (owner && !owners.has(owner.getName())) owner = owner.getParentNode();
               for (const primitive of node.getMesh()?.listPrimitives() ?? []) {

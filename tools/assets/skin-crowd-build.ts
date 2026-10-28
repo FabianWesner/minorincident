@@ -1,3 +1,4 @@
+import { restoreCrowdGlasses } from './skin-crowd-glasses';
 import { restoreFireHelmet } from './restore-fire-helmet';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -11,6 +12,7 @@ import { validateAssets } from './validate';
 import { compressSkin } from './skin-crowd-compress';
 import { skinCrowdBakes } from './skin-crowd-bakes';
 import { classifyCrowdAtlas } from './skin-crowd-regions';
+import { paintCrowdWraps, type CrowdWrap } from './skin-crowd-wraps';
 import { Matrix4, Vector3 } from 'three';
 
 // A cast directory is the complete input; no hand-prepared files or placement numbers.
@@ -34,7 +36,7 @@ const output = 'public/assets/models/skinned', report = join(process.env.CROWD_R
 mkdirSync(output, { recursive: true }); mkdirSync(report, { recursive: true }); mkdirSync(assets, { recursive: true });
 const metadata = existsSync(join(source, 'rig.json')) ? JSON.parse(readFileSync(join(source, 'rig.json'), 'utf8')) as { class?: string; lods: { lod: number; uniform_scale?: number; world_scale?: number; rotation_y_degrees?: number }[] } : undefined;
 const unbound = existsSync(join(source, 'source/manifest.json')) && !metadata;
-const alignment = unbound ? JSON.parse(readFileSync(join(id === 'inf.dog' ? join(dirname(source), 'amb.dog') : source, 'source/manifest.json'), 'utf8')) as { initial_game_height_scale: number; game_alignment_rotation_y_degrees: number; triangle_budgets?: [number, number, number]; rig_class?: string; rig_source?: string; rig_fit_height?: boolean } : undefined;
+const alignment = unbound ? JSON.parse(readFileSync(join(id === 'inf.dog' ? join(dirname(source), 'amb.dog') : source, 'source/manifest.json'), 'utf8')) as { initial_game_height_scale: number; game_alignment_rotation_y_degrees: number; triangle_budgets?: [number, number, number]; rig_class?: string; rig_source?: string; rig_fit_height?: boolean; authored_skin?: true | string; wraps?: CrowdWrap[]; spectacles?: boolean; covered_legs?: boolean; healthy_toy_eyes?: boolean; rectangular_glasses?: boolean } : undefined;
 if (alignment?.triangle_budgets) {
   const [near, middle, far] = alignment.triangle_budgets;
   if (![near, middle, far].every(n => Number.isInteger(n) && n > 0) || middle > near || far > middle) throw Error(`${id}: invalid source triangle budgets`);
@@ -69,12 +71,12 @@ for (const lod of [0, 1, 2]) {
   if (existsSync(body)) args.push('--body', body, '--body-scale', String(alignment?.initial_game_height_scale ?? placement?.uniform_scale ?? placement?.world_scale ?? 1), '--body-rot-y', String(alignment?.game_alignment_rotation_y_degrees ?? placement?.rotation_y_degrees ?? 0));
   if (alignment) args.push('--body-yaw-fixed');
   if (unbound && id === 'inf.dog') args.push('--atlas-base-half', '--eyes', join(source, 'eyes.json'));
-  else if (unbound && id.startsWith('inf.') && existsSync(join(source, 'eyes.json'))) args.push('--eyes', join(source, 'eyes.json'));
+  else if (unbound && (id.startsWith('inf.') || alignment?.healthy_toy_eyes) && existsSync(join(source, 'eyes.json'))) args.push('--eyes', join(source, 'eyes.json'));
   else if (metadata) args.push('--reconstruct-body');
   if (id.startsWith('npc.')) args.push('--healthy');
   if (unbound && (!alignment?.rig_source || alignment.rig_fit_height) && (id.startsWith('npc.') || alignment?.rig_class === 'humanoid' || alignment?.rig_class === 'alpha')) args.push('--fit-rig-height');
-  if (['npc.civilian-woman-b', 'npc.civilian-elderly'].includes(id)) args.push('--spectacles');
-  if (lod > 0 && ['npc.civilian-woman-b', 'npc.civilian-elderly'].includes(id)) {
+  if (alignment?.spectacles || ['npc.civilian-woman-b', 'npc.civilian-elderly'].includes(id)) args.push('--spectacles');
+  if (lod > 0 && (alignment?.spectacles || ['npc.civilian-woman-b', 'npc.civilian-elderly'].includes(id))) {
     const measured = JSON.parse(readFileSync(join(report, 'lod0.json'), 'utf8')) as { spectacleTop: number };
     args.push('--spectacle-top', String(measured.spectacleTop));
   }
@@ -95,7 +97,9 @@ for (const lod of [0, 1, 2]) {
   for (let attempt = 0; attempt < 4; attempt++) {
     execFileSync(process.execPath, ['--import', 'tsx', ...args, ...bodyBudget ? ['--body-budget', String(bodyBudget)] : []], { stdio: 'pipe' });
     if (id === 'npc.firefighter-alive') await restoreFireHelmet(raw, join(assets, 'model.lod1.glb'), lod);
-    const document = await io.read(raw), total = document.getRoot().listNodes().reduce((sum, node) => sum + (node.getMesh()?.listPrimitives().reduce((sum, primitive) => sum + (primitive.getIndices()?.getCount() ?? primitive.getAttribute('POSITION')!.getCount()) / 3, 0) ?? 0), 0);
+    const document = await io.read(raw);
+    if (alignment?.rectangular_glasses) { restoreCrowdGlasses(document, lod); await io.write(raw, document); }
+    const total = document.getRoot().listNodes().reduce((sum, node) => sum + (node.getMesh()?.listPrimitives().reduce((sum, primitive) => sum + (primitive.getIndices()?.getCount() ?? primitive.getAttribute('POSITION')!.getCount()) / 3, 0) ?? 0), 0);
     if (total <= triangleLimit) break;
     const info = JSON.parse(readFileSync(join(report, `lod${lod}.json`), 'utf8')) as { triangles: number };
     bodyBudget = info.triangles - (total - triangleLimit) - 8;
@@ -103,13 +107,17 @@ for (const lod of [0, 1, 2]) {
   }
   // Region classes in the atlas alpha: tinted, flattened hair/skin/garments for civilians; skin only for uniforms.
   if (id.startsWith('npc.')) {
-    const document = await io.read(raw), regions = classifyCrowdAtlas(document, id.startsWith('npc.civilian-'), id === 'npc.national-guard');
+    const document = await io.read(raw), regions = classifyCrowdAtlas(document, id.startsWith('npc.civilian-'), id === 'npc.national-guard', alignment?.authored_skin, alignment?.covered_legs);
     if (regions) { await io.write(raw, document); writeFileSync(join(report, `lod${lod}.regions.json`), JSON.stringify(regions, null, 2) + '\n'); }
+    if (alignment?.wraps?.length) { const wraps = paintCrowdWraps(document, alignment.wraps); await io.write(raw, document); writeFileSync(join(report, `lod${lod}.wraps.json`), JSON.stringify(wraps, null, 2) + '\n'); }
   }
   const tiers = [];
   for (const low of [false, true]) {
     const target = join(output, `${id}.lod${lod}${low ? '.low' : ''}.glb`);
     await compressSkin(raw, target, basis, lod === 2 && unbound && id.startsWith('npc.') ? 256 : low || lod > 0 ? 512 : 1024);
+    // Keep the continuous mid-tier anatomy at distance; a smaller far atlas
+    // satisfies the cold-file cap when detailed faces leave too little room.
+    if (lod === 2 && readFileSync(target).length > 150000) await compressSkin(raw, target, basis, 128);
     const bytes = readFileSync(target), document = await io.read(target), errors: string[] = [];
     if (bytes.length > [600000, 250000, 150000][lod]) errors.push(`size ${bytes.length} exceeds LOD${lod}`);
     if (!document.getRoot().listSkins().length) errors.push('missing skin');

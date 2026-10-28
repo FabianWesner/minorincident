@@ -73,9 +73,18 @@ export class RoutineProps extends Group {
     }
   }
   begin(): void { this.contacts.length = 0; this.guns.length = 0; this.muzzles.clear(); for (const mesh of this.meshes.values()) mesh.count = 0; }
-  held(prop: CivilianProp, matrix: Matrix4, entity: number, hand?: Float32Array, reach = .07, machineGun = false): void {
+  held(prop: CivilianProp, matrix: Matrix4, entity: number, hand?: Float32Array, reach = .07, machineGun = false, groundY?: number): void {
     const key = machineGun ? 'hmg' : prop;
     this.gripMatrix.makeTranslation(prop === 'phone' ? reach - .07 : 0, 0, 0).premultiply(matrix);
+    if (prop === 'cane' && groundY !== undefined) {
+      const bottom = this.meshes.get('cane')!.geometry.boundingBox!.min.y, m = this.gripMatrix.elements;
+      // Keep the grip at the hand while the shaft meets the holder's floor,
+      // including the inherited rig scale and raised pavements.
+      if (bottom < 0 && m[5] > 0 && m[13] > groundY) {
+        const scale = (m[13] - groundY) / (-bottom * m[5]);
+        for (const axis of [4, 5, 6]) m[axis] *= scale;
+      }
+    }
     this.place(key, this.gripMatrix);
     const muzzle = isCrowdGun(key) ? this.weaponMuzzles.get(key) : undefined;
     if (muzzle) {

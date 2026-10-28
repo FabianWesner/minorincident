@@ -7,6 +7,7 @@ import manifest from '../../src/assets/manifest.json';
 import type { AssetDef } from '../../src/assets/types';
 import { validateAssets, validateDocument } from '../../tools/assets/validate';
 import { PNG } from 'pngjs';
+import { adoptStandingBind } from '../../tools/assets/skin-crowd-standing';
 import { classifyCrowdAtlas } from '../../tools/assets/skin-crowd-regions';
 import { crowdRegion } from '../../src/render/characters/crowdRegionData';
 
@@ -71,7 +72,7 @@ test('uniform and civilian faces and yellow bare arms share the per-person skin 
     const scene = doc.createScene(), head = doc.createNode('head'), arm = doc.createNode('foreArmL'), shoulder = doc.createNode('armL'); scene.addChild(head).addChild(arm).addChild(shoulder);
     scene.addChild(doc.createNode('skin_body').setSkin(doc.createSkin().addJoint(head).addJoint(arm).addJoint(shoulder)).setMesh(doc.createMesh().addPrimitive(prim)));
     scene.addChild(doc.createNode('skin_eyes').setMesh(doc.createMesh().addPrimitive(doc.createPrimitive().setAttribute('POSITION', attribute([1, .8, 0], 'VEC3')))));
-    const covered = garments ? undefined : cloneDocument(doc);
+    const covered = garments ? undefined : cloneDocument(doc), named = cloneDocument(doc);
     classifyCrowdAtlas(doc, garments);
     const result = PNG.sync.read(Buffer.from(material.getBaseColorTexture()!.getImage()!));
     const pixel = (x: number, y: number) => [...result.data.subarray((y * 128 + x) * 4, (y * 128 + x) * 4 + 4)];
@@ -79,6 +80,13 @@ test('uniform and civilian faces and yellow bare arms share the per-person skin 
     expect(face[3]).toBe(skinAlpha); expect(forearm[3]).toBe(skinAlpha);
     expect(Math.max(...face.slice(0, 3).map((v, c) => Math.abs(v - forearm[c])))).toBeLessThan(20);
     expect(pixel(96, 20)[3]).not.toBe(skinAlpha);
+    classifyCrowdAtlas(named, false, false, '#704431');
+    const authored = PNG.sync.read(Buffer.from(named.getRoot().listTextures()[0].getImage()!));
+    const namedFace = [...authored.data.subarray((80 * 128 + 32) * 4, (80 * 128 + 32) * 4 + 4)];
+    const namedArm = [...authored.data.subarray((80 * 128 + 96) * 4, (80 * 128 + 96) * 4 + 4)];
+    expect(namedFace[3], 'named complexion stays authored and remains an infection skin mask').toBe(Math.round((crowdRegion.skinMask + 1) * 255 / 7));
+    expect(namedFace[0], 'dark named complexion is not normalised to the crowd reference luminance').toBeLessThan(150);
+    expect(Math.max(...namedFace.slice(0, 3).map((value, c) => Math.abs(value - namedArm[c])))).toBeLessThan(20);
     if (!garments) expect(pixel(96, 32)[3], 'warm gold shoulder patch').not.toBe(skinAlpha);
     if (covered) {
       classifyCrowdAtlas(covered, false, true);
@@ -92,6 +100,17 @@ test('uniform and civilian faces and yellow bare arms share the per-person skin 
 });
 
 test('the asset validator rejects every contract violation, and every production asset passes it', async () => {
+  // A fitted template can carry its uniform scale on a parent rather than the
+  // story rig's root. The copied standing reset must not apply that scale twice.
+  const template = new Document(), parent = template.createNode('assetScale').setScale([1.25, 1.25, 1.25]);
+  const root = template.createNode('root').setExtras({ marker: 'retained', ss_standingPose: JSON.stringify({ root: { translation: [0, 0, 0], rotation: [0, 0, 0, 1], scale: [1.25, 1.25, 1.25] } }) });
+  template.createScene().addChild(parent); parent.addChild(root);
+  const bind = root.getWorldMatrix(); adoptStandingBind(template);
+  const reset = JSON.parse(root.getExtras().ss_standingPose as string).root;
+  expect(reset.scale).toEqual([1, 1, 1]); root.setScale(reset.scale);
+  expect(root.getWorldMatrix()).toEqual(bind); expect(parent.getScale()).toEqual([1.25, 1.25, 1.25]);
+  expect(root.getExtras().marker).toBe('retained');
+
   const { doc, def } = fixture();
   expect(validateDocument(doc, def, 1024).errors).toEqual([]);
   const cases: [string, (d: Document, a: AssetDef) => void][] = [

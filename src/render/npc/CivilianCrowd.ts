@@ -253,9 +253,12 @@ class CivilianBatch extends Group {
         this.transform.setPosition(presented.x + (activity.seat.x - presented.x) * seatBlend, presented.y - .7 + (activity.seatLift ?? 0) * seatBlend, presented.z + (activity.seat.z - presented.z) * seatBlend);
       }
       let frame = civilianClips.indexOf(clip) * framesPerClip + (storyFrame ?? phase) * (framesPerClip - 1);
-      const carried = e.appearance?.handProp;
+      // Okafor's v2 body is cane-free; the shared held-prop path replaces the
+      // rigid cane baked into his original hand, with the same visible identity.
+      const authoredCane = this.model === 'npc.mr-okafor.aftermath' && !!this.bakedClip.binds;
+      const carried = e.appearance?.handProp ?? (authoredCane ? 'cane' : undefined);
       const handProp = (c.story ? c.story.prop : activity?.prop) ?? (carried ? carried as CivilianProp : c.ally?.role === 'officer' ? 'pistol' : c.ally?.gun ? 'rifle' : undefined);
-      const holding = !!handProp && (c.state === 'calm' || c.state === 'flee' && !!c.ally?.gun || c.state === 'grabbed' && (c.ally?.role === 'officer' || !!c.ally?.gun)) && !!this.props && !!(c.story || c.ally?.gun || c.ally?.role === 'officer' || e.appearance?.handProp !== null);
+      const holding = !!handProp && (c.state === 'calm' || c.state === 'flee' && (!!c.ally?.gun || authoredCane) || c.state === 'grabbed' && (c.ally?.role === 'officer' || !!c.ally?.gun)) && !!this.props && !!(c.story || c.ally?.gun || c.ally?.role === 'officer' || authoredCane || e.appearance?.handProp !== null);
       const sourceFrame = frame;
       const player = this.world.entities.get(1)!.transform;
       const baked = low && !handProp && useBakedCivilianPose(e, true, this.distant, this.visibility.renderPixels(e.transform.x, e.transform.y, e.transform.z, e.civilian?.adult === false ? 1.3 : 1.8), Math.hypot(presented.x - player.x, presented.z - player.z), clip);
@@ -308,7 +311,7 @@ class CivilianBatch extends Group {
         const pour = handProp === 'watering-can' && c.state === 'calm' && activity?.activity === 'water' && !!activity.facing && !!c.activityUntil ? Math.min(1, Math.max(0, (this.world.tick - (c.activityStarted ?? 0) - 20) / 20)) : 0;
         if (pour > 0) { this.hand.multiply(this.tilt.makeRotationZ(-.75 * pour)); this.props!.spouts.set(e.id, this.spoutPoint.set(.36, -.13, 0).applyMatrix4(this.hand).clone()); }
         else this.props!.spouts.delete(e.id);
-        this.props!.held(handProp!, this.hand, e.id, weaponProps.has(handProp!) ? undefined : this.gripTriangles, this.gripReach, c.ally?.weapon === 'hmg');
+        this.props!.held(handProp!, this.hand, e.id, weaponProps.has(handProp!) ? undefined : this.gripTriangles, this.gripReach, c.ally?.weapon === 'hmg', authoredCane ? presented.y - .7 : undefined);
       }
       this.tintOf(e, index, blend[0] * 2 + blend[1]);
       const glow = c.eyesGlow ? e.infection ? Math.min(1, (this.world.tick - (e.infection.endsTick - 78)) / 30) : Math.min(1, Math.max(0, (c.veins - .12) / .65)) : 0;
@@ -342,6 +345,15 @@ class CivilianBatch extends Group {
   private place(e: EntitySnapshot, index: number, alpha: number, low = false): boolean {
     const b = e.infected!, tick = this.world.tick;
     if (e.hidden || b.hidden) return false;
+    const authoredCane = this.model === 'npc.mr-okafor.aftermath' && !!this.bakedClip.binds && this.props;
+    if (e.corpse && authoredCane) {
+      // Retain the original story cane through the frozen pose using the same
+      // held-prop geometry and hand matrix as the live figure.
+      const resting = corpseLayout(this.world).place(e), frame = civilianClips.indexOf(corpsePose(e.id)) * framesPerClip + framesPerClip - 1;
+      this.transform.makeRotationY(resting.yaw).setPosition(resting.x, resting.y, resting.z);
+      this.poses.part(frame, 0, 1, this.bakedClip.parts.indexOf('handR'), this.hand).premultiply(this.transform);
+      this.props!.held('cane', this.hand, e.id, this.gripTriangles, this.gripReach);
+    }
     if (e.corpse && this.corpses.has(e.id)) return false;
     // PO "skating": the sim publishes the actual post-collision ground motion every tick (AgentMotion) - use it, not a
     // per-batch sampler that goes stale when the figure crosses the near/far batch boundary.
@@ -410,6 +422,10 @@ class CivilianBatch extends Group {
       });
       blend[0] = frame; blend[1] = 1;
     }
+    if (!e.corpse && authoredCane) {
+      this.poses.part(frame, ...blend, this.bakedClip.parts.indexOf('handR'), this.hand).premultiply(this.transform);
+      this.props!.held('cane', this.hand, e.id, this.gripTriangles, this.gripReach);
+    }
     if (e.corpse) {
       this.tintOf(e, index, 1);
       const source = this.accessories?.corpseSource(e, this.mesh.geometry, this.model, this.bakedClip.parts.indexOf('head')) ?? this.mesh.geometry;
@@ -430,7 +446,7 @@ class CivilianBatch extends Group {
 
 /** Five civilian silhouettes share rigid-part LOD batches and the E07 clip path. */
 /** Spectacled textured figures whose painted eyes do not read at game size (crowd-texture-quality). */
-const toyEyeModels = new Set(['npc.civilian-woman-b', 'npc.civilian-elderly']);
+const toyEyeModels = new Set(['npc.civilian-woman-b', 'npc.civilian-elderly', 'npc.civilian-woman-b.aftermath', 'npc.mr-okafor.aftermath', 'npc.dale.aftermath', 'npc.rosa.aftermath', 'npc.sam.aftermath']);
 export class CivilianCrowd extends Group {
   private readonly batches: CivilianBatch[];
   private readonly props: RoutineProps;

@@ -1,0 +1,301 @@
+{
+  "scope": "Matched 30-figure L5 D-FAIR plaza street, same renderer code, camera and actors; old assets pinned to c0dc2ff43. Scene Lab preloads the catalog. Decoded bytes count bound 2D texture payload/mips, excluding render targets/background; not isolated production memory or download size.",
+  "baselineAssets": "c0dc2ff43",
+  "timingStatus": "PERF PENDING: shared host. PO quiet-window gate remains low p95 <= main +1ms and worst five cold loads <= PROD *1.10. RAF samples are refresh-capped diagnostics.",
+  "crowd": [
+    {
+      "config": "high-webgl2",
+      "old": {
+        "revision": "fd0c88872483a3fcd2c11a94255abab699431ec4",
+        "drawsP95": 73,
+        "trianglesP95": 148755,
+        "decodedTextureBytes": 212631312,
+        "rgbaUpperBoundBytes": 303432341,
+        "textureCount": 137,
+        "actors": 30,
+        "heldProps": [],
+        "sourceReceiptSha256": "4cef91fbada2b88a5876011073800531c5c1045dcad80fc3a49a94e6486c1f7b"
+      },
+      "new": {
+        "revision": "4a6971cec1415f6198f1dc7b168518ca740c00b4",
+        "drawsP95": 74,
+        "trianglesP95": 117993,
+        "decodedTextureBytes": 227210128,
+        "rgbaUpperBoundBytes": 361657509,
+        "textureCount": 161,
+        "actors": 30,
+        "heldProps": [
+          {
+            "entity": 7,
+            "prop": "cane",
+            "minY": 0,
+            "floorY": 0
+          },
+          {
+            "entity": 15,
+            "prop": "cane",
+            "minY": 0,
+            "floorY": 0
+          },
+          {
+            "entity": 23,
+            "prop": "cane",
+            "minY": 0,
+            "floorY": 0
+          }
+        ],
+        "sourceReceiptSha256": "55fb207b09d088b5b7bf556a94880442303a5da044a589dc7260a933c7808da5"
+      },
+      "deltaDecodedBytes": 14578816
+    },
+    {
+      "config": "high-webgpu",
+      "old": {
+        "revision": "fd0c88872483a3fcd2c11a94255abab699431ec4",
+        "drawsP95": 73,
+        "trianglesP95": 148755,
+        "decodedTextureBytes": 212631312,
+        "rgbaUpperBoundBytes": 303432341,
+        "textureCount": 137,
+        "actors": 30,
+        "heldProps": [],
+        "sourceReceiptSha256": "806e6a8903f1ba5faaf5e745f0b30bc832da2028c4511df668a11c0400326e4c"
+      },
+      "new": {
+        "revision": "4a6971cec1415f6198f1dc7b168518ca740c00b4",
+        "drawsP95": 74,
+        "trianglesP95": 117993,
+        "decodedTextureBytes": 227210128,
+        "rgbaUpperBoundBytes": 361657509,
+        "textureCount": 161,
+        "actors": 30,
+        "heldProps": [
+          {
+            "entity": 7,
+            "prop": "cane",
+            "minY": 0,
+            "floorY": 0
+          },
+          {
+            "entity": 15,
+            "prop": "cane",
+            "minY": 0,
+            "floorY": 0
+          },
+          {
+            "entity": 23,
+            "prop": "cane",
+            "minY": 0,
+            "floorY": 0
+          }
+        ],
+        "sourceReceiptSha256": "30695114d221498f0d05802f3d775b4f5e532634b847bd2ac59de0101dc5e407"
+      },
+      "deltaDecodedBytes": 14578816
+    },
+    {
+      "config": "low-webgl2",
+      "old": {
+        "revision": "fd0c88872483a3fcd2c11a94255abab699431ec4",
+        "drawsP95": 72,
+        "trianglesP95": 140047,
+        "decodedTextureBytes": 148099960,
+        "rgbaUpperBoundBytes": 180964815,
+        "textureCount": 103,
+        "actors": 30,
+        "heldProps": [],
+        "sourceReceiptSha256": "c494922af010737e59322ce29fe8ef820680022901b330cb746c06d5fb06adac"
+      },
+      "new": {
+        "revision": "4a6971cec1415f6198f1dc7b168518ca740c00b4",
+        "drawsP95": 73,
+        "trianglesP95": 109285,
+        "decodedTextureBytes": 151484024,
+        "rgbaUpperBoundBytes": 194441007,
+        "textureCount": 119,
+        "actors": 30,
+        "heldProps": [
+          {
+            "entity": 7,
+            "prop": "cane",
+            "minY": 0,
+            "floorY": 0
+          },
+          {
+            "entity": 15,
+            "prop": "cane",
+            "minY": 0,
+            "floorY": 0
+          },
+          {
+            "entity": 23,
+            "prop": "cane",
+            "minY": 0,
+            "floorY": 0
+          }
+        ],
+        "sourceReceiptSha256": "193bde7dc596c301a53d5e64a6e91a3362c36f51a4132545830ede199586599e"
+      },
+      "deltaDecodedBytes": 3384064
+    },
+    {
+      "config": "low-webgpu",
+      "old": {
+        "revision": "fd0c88872483a3fcd2c11a94255abab699431ec4",
+        "drawsP95": 72,
+        "trianglesP95": 140047,
+        "decodedTextureBytes": 148099960,
+        "rgbaUpperBoundBytes": 180964815,
+        "textureCount": 103,
+        "actors": 30,
+        "heldProps": [],
+        "sourceReceiptSha256": "4d5acd315156c59bd6792295ef067f97b31002d950215f7ce12155a1fcdb6927"
+      },
+      "new": {
+        "revision": "4a6971cec1415f6198f1dc7b168518ca740c00b4",
+        "drawsP95": 73,
+        "trianglesP95": 109285,
+        "decodedTextureBytes": 151484024,
+        "rgbaUpperBoundBytes": 194441007,
+        "textureCount": 119,
+        "actors": 30,
+        "heldProps": [
+          {
+            "entity": 7,
+            "prop": "cane",
+            "minY": 0,
+            "floorY": 0
+          },
+          {
+            "entity": 15,
+            "prop": "cane",
+            "minY": 0,
+            "floorY": 0
+          },
+          {
+            "entity": 23,
+            "prop": "cane",
+            "minY": -1.1102230246251565e-16,
+            "floorY": 0
+          }
+        ],
+        "sourceReceiptSha256": "30622be4b7c26b19871a6bce29f38e1b7537fda750489495399a4106890abf67"
+      },
+      "deltaDecodedBytes": 3384064
+    }
+  ],
+  "warmCadence": [
+    {
+      "config": "high-webgl2",
+      "variant": "old",
+      "hostLoad": [
+        6.36376953125,
+        6.0517578125,
+        4.78466796875
+      ],
+      "count": 600,
+      "p95": 16.700000000000728,
+      "max": 33.400000000001455,
+      "over200": 0,
+      "builds": []
+    },
+    {
+      "config": "high-webgl2",
+      "variant": "new",
+      "hostLoad": [
+        3.21923828125,
+        2.2744140625,
+        2.0771484375
+      ],
+      "count": 600,
+      "p95": 16.700000000000728,
+      "max": 16.80000000000291,
+      "over200": 0,
+      "builds": []
+    },
+    {
+      "config": "high-webgpu",
+      "variant": "old",
+      "hostLoad": [
+        4.9384765625,
+        5.7412109375,
+        4.73486328125
+      ],
+      "count": 600,
+      "p95": 16.700000000000728,
+      "max": 16.80000000000291,
+      "over200": 0,
+      "builds": []
+    },
+    {
+      "config": "high-webgpu",
+      "variant": "new",
+      "hostLoad": [
+        2.45751953125,
+        2.2626953125,
+        2.1044921875
+      ],
+      "count": 600,
+      "p95": 16.799999999999272,
+      "max": 16.80000000000291,
+      "over200": 0,
+      "builds": []
+    },
+    {
+      "config": "low-webgl2",
+      "variant": "old",
+      "hostLoad": [
+        4.939453125,
+        5.63232421875,
+        4.74072265625
+      ],
+      "count": 600,
+      "p95": 16.700000000000728,
+      "max": 33.399999999999636,
+      "over200": 0,
+      "builds": []
+    },
+    {
+      "config": "low-webgl2",
+      "variant": "new",
+      "hostLoad": [
+        2.671875,
+        2.41552734375,
+        2.1865234375
+      ],
+      "count": 600,
+      "p95": 16.799999999999272,
+      "max": 16.80000000000109,
+      "over200": 0,
+      "builds": []
+    },
+    {
+      "config": "low-webgpu",
+      "variant": "old",
+      "hostLoad": [
+        8.94287109375,
+        6.138671875,
+        4.62548828125
+      ],
+      "count": 600,
+      "p95": 16.700000000000728,
+      "max": 16.80000000000109,
+      "over200": 0,
+      "builds": []
+    },
+    {
+      "config": "low-webgpu",
+      "variant": "new",
+      "hostLoad": [
+        2.1630859375,
+        2.27197265625,
+        2.15234375
+      ],
+      "count": 600,
+      "p95": 16.700000000000728,
+      "max": 16.80000000000109,
+      "over200": 0,
+      "builds": []
+    }
+  ]
+}

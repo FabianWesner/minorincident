@@ -1,0 +1,753 @@
+{
+  "baselineRevision": "c0dc2ff43",
+  "revision": "ae420afe102c8d0280022a664e64f6695b20e204",
+  "source": "Production L5 complete bot, seed 1, sampled every 0.5 s; world population exposure, not camera visibility",
+  "sources": [
+    "src/data/l5.ts",
+    "src/levels/L5/layout.ts",
+    "src/sim/missions/LevelFiveAftermath.ts",
+    "src/render/CrowdView.ts"
+  ],
+  "scope": [
+    "npc.dale.aftermath",
+    "npc.rosa.aftermath",
+    "npc.mr-okafor.aftermath",
+    "npc.mia.aftermath",
+    "npc.sam.aftermath",
+    "npc.marcus.aftermath",
+    "npc.civilian-man-b.aftermath",
+    "npc.civilian-woman-b.aftermath"
+  ],
+  "carryover": [
+    "npc.national-guard",
+    "npc.civilian-man-a",
+    "npc.civilian-woman-b",
+    "npc.civilian-man-b",
+    "npc.civilian-woman-a",
+    "npc.civilian-elderly",
+    "inf.alpha",
+    "inf.alpha-worker",
+    "inf.alpha-hoodie",
+    "inf.alpha-fire",
+    "inf.alpha-suit",
+    "char.courier-female",
+    "char.courier-male",
+    "char.corgi"
+  ],
+  "deferred": [],
+  "rows": [
+    {
+      "id": "npc.dale.aftermath",
+      "inheritedV2": false,
+      "high": {
+        "peak": 1,
+        "actorSeconds": 111.5,
+        "infectedSeconds": 0,
+        "corpseSeconds": 0
+      },
+      "low": {
+        "peak": 1,
+        "actorSeconds": 87.5,
+        "infectedSeconds": 0,
+        "corpseSeconds": 0
+      }
+    },
+    {
+      "id": "npc.rosa.aftermath",
+      "inheritedV2": false,
+      "high": {
+        "peak": 1,
+        "actorSeconds": 69.5,
+        "infectedSeconds": 0,
+        "corpseSeconds": 0
+      },
+      "low": {
+        "peak": 1,
+        "actorSeconds": 46,
+        "infectedSeconds": 0,
+        "corpseSeconds": 0
+      }
+    },
+    {
+      "id": "npc.mr-okafor.aftermath",
+      "inheritedV2": false,
+      "high": {
+        "peak": 1,
+        "actorSeconds": 158.5,
+        "infectedSeconds": 0,
+        "corpseSeconds": 0
+      },
+      "low": {
+        "peak": 1,
+        "actorSeconds": 128,
+        "infectedSeconds": 0,
+        "corpseSeconds": 0
+      }
+    },
+    {
+      "id": "npc.mia.aftermath",
+      "inheritedV2": false,
+      "high": {
+        "peak": 1,
+        "actorSeconds": 171.5,
+        "infectedSeconds": 0,
+        "corpseSeconds": 0
+      },
+      "low": {
+        "peak": 1,
+        "actorSeconds": 141,
+        "infectedSeconds": 0,
+        "corpseSeconds": 0
+      }
+    },
+    {
+      "id": "npc.sam.aftermath",
+      "inheritedV2": false,
+      "high": {
+        "peak": 1,
+        "actorSeconds": 138,
+        "infectedSeconds": 78,
+        "corpseSeconds": 14
+      },
+      "low": {
+        "peak": 1,
+        "actorSeconds": 109.5,
+        "infectedSeconds": 0,
+        "corpseSeconds": 0
+      }
+    },
+    {
+      "id": "npc.marcus.aftermath",
+      "inheritedV2": false,
+      "high": {
+        "peak": 1,
+        "actorSeconds": 6.5,
+        "infectedSeconds": 0,
+        "corpseSeconds": 0
+      },
+      "low": {
+        "peak": 1,
+        "actorSeconds": 18.5,
+        "infectedSeconds": 0,
+        "corpseSeconds": 0
+      }
+    },
+    {
+      "id": "npc.civilian-man-b.aftermath",
+      "inheritedV2": false,
+      "high": {
+        "peak": 12,
+        "actorSeconds": 2334,
+        "infectedSeconds": 0,
+        "corpseSeconds": 0
+      },
+      "low": {
+        "peak": 12,
+        "actorSeconds": 1968,
+        "infectedSeconds": 0,
+        "corpseSeconds": 0
+      }
+    },
+    {
+      "id": "npc.civilian-woman-b.aftermath",
+      "inheritedV2": false,
+      "high": {
+        "peak": 12,
+        "actorSeconds": 2334,
+        "infectedSeconds": 0,
+        "corpseSeconds": 0
+      },
+      "low": {
+        "peak": 12,
+        "actorSeconds": 1968,
+        "infectedSeconds": 0,
+        "corpseSeconds": 0
+      }
+    },
+    {
+      "id": "npc.national-guard",
+      "inheritedV2": true,
+      "high": {
+        "peak": 14,
+        "actorSeconds": 2723,
+        "infectedSeconds": 0,
+        "corpseSeconds": 2723
+      },
+      "low": {
+        "peak": 14,
+        "actorSeconds": 2296,
+        "infectedSeconds": 0,
+        "corpseSeconds": 2296
+      }
+    },
+    {
+      "id": "npc.civilian-man-a",
+      "inheritedV2": true,
+      "high": {
+        "peak": 8,
+        "actorSeconds": 1556,
+        "infectedSeconds": 389,
+        "corpseSeconds": 1214.5
+      },
+      "low": {
+        "peak": 7,
+        "actorSeconds": 1148,
+        "infectedSeconds": 164,
+        "corpseSeconds": 1003.5
+      }
+    },
+    {
+      "id": "npc.civilian-woman-b",
+      "inheritedV2": true,
+      "high": {
+        "peak": 13,
+        "actorSeconds": 2528.5,
+        "infectedSeconds": 1556,
+        "corpseSeconds": 1145
+      },
+      "low": {
+        "peak": 10,
+        "actorSeconds": 1640,
+        "infectedSeconds": 820,
+        "corpseSeconds": 868.5
+      }
+    },
+    {
+      "id": "npc.civilian-man-b",
+      "inheritedV2": true,
+      "high": {
+        "peak": 8,
+        "actorSeconds": 1556,
+        "infectedSeconds": 583.5,
+        "corpseSeconds": 1021.5
+      },
+      "low": {
+        "peak": 7,
+        "actorSeconds": 1148,
+        "infectedSeconds": 328,
+        "corpseSeconds": 833.5
+      }
+    },
+    {
+      "id": "npc.civilian-woman-a",
+      "inheritedV2": true,
+      "high": {
+        "peak": 6,
+        "actorSeconds": 1167,
+        "infectedSeconds": 389,
+        "corpseSeconds": 809
+      },
+      "low": {
+        "peak": 6,
+        "actorSeconds": 984,
+        "infectedSeconds": 328,
+        "corpseSeconds": 683.5
+      }
+    },
+    {
+      "id": "npc.civilian-elderly",
+      "inheritedV2": true,
+      "high": {
+        "peak": 13,
+        "actorSeconds": 2528.5,
+        "infectedSeconds": 1945,
+        "corpseSeconds": 838
+      },
+      "low": {
+        "peak": 9,
+        "actorSeconds": 1476,
+        "infectedSeconds": 984,
+        "corpseSeconds": 601
+      }
+    },
+    {
+      "id": "inf.alpha",
+      "inheritedV2": true,
+      "high": {
+        "peak": 2,
+        "actorSeconds": 389,
+        "infectedSeconds": 389,
+        "corpseSeconds": 16
+      },
+      "low": {
+        "peak": 2,
+        "actorSeconds": 328,
+        "infectedSeconds": 328,
+        "corpseSeconds": 16
+      }
+    },
+    {
+      "id": "inf.alpha-worker",
+      "inheritedV2": true,
+      "high": null,
+      "low": null
+    },
+    {
+      "id": "inf.alpha-hoodie",
+      "inheritedV2": true,
+      "high": null,
+      "low": null
+    },
+    {
+      "id": "inf.alpha-fire",
+      "inheritedV2": true,
+      "high": null,
+      "low": null
+    },
+    {
+      "id": "inf.alpha-suit",
+      "inheritedV2": true,
+      "high": null,
+      "low": null
+    },
+    {
+      "id": "char.courier-female",
+      "inheritedV2": true,
+      "high": {
+        "peak": 1,
+        "actorSeconds": 194.5,
+        "infectedSeconds": 0,
+        "corpseSeconds": 0
+      },
+      "low": {
+        "peak": 1,
+        "actorSeconds": 164,
+        "infectedSeconds": 0,
+        "corpseSeconds": 0
+      }
+    },
+    {
+      "id": "char.courier-male",
+      "inheritedV2": true,
+      "high": null,
+      "low": null
+    },
+    {
+      "id": "char.corgi",
+      "inheritedV2": true,
+      "high": {
+        "peak": 1,
+        "actorSeconds": 194.5,
+        "infectedSeconds": 0,
+        "corpseSeconds": 0
+      },
+      "low": {
+        "peak": 1,
+        "actorSeconds": 164,
+        "infectedSeconds": 0,
+        "corpseSeconds": 0
+      }
+    }
+  ],
+  "runs": [
+    {
+      "tier": "high",
+      "report": {
+        "profile": "complete",
+        "seed": 1,
+        "outcome": "complete",
+        "simSeconds": 194.9,
+        "deaths": 0,
+        "kills": 0,
+        "knockdowns": 33,
+        "damage": 30,
+        "timeline": [
+          {
+            "type": "objective:emerge",
+            "t": 1
+          },
+          {
+            "type": "l5.emerged",
+            "t": 1.65
+          },
+          {
+            "type": "l5.searching",
+            "t": 11.65
+          },
+          {
+            "type": "l5.accounted",
+            "t": 125.05
+          },
+          {
+            "type": "objective:look",
+            "t": 125.05
+          },
+          {
+            "type": "l5.shutter",
+            "t": 186.9
+          },
+          {
+            "type": "l5.sheltered",
+            "t": 189.9
+          },
+          {
+            "type": "objective:metro",
+            "t": 189.9
+          }
+        ],
+        "found": [
+          {
+            "key": "mia",
+            "t": 23.2
+          },
+          {
+            "key": "okafor",
+            "t": 36.166666666666664
+          },
+          {
+            "key": "sam",
+            "t": 56.95
+          },
+          {
+            "key": "dale",
+            "t": 83.13333333333334
+          },
+          {
+            "key": "rosa",
+            "t": 125.05
+          }
+        ],
+        "fates": {
+          "dale": "sheltered",
+          "rosa": "sheltered",
+          "okafor": "sheltered",
+          "mia": "sheltered",
+          "sam": "turned"
+        },
+        "rescued": 4,
+        "rescuedKeys": [
+          "dale",
+          "rosa",
+          "okafor",
+          "mia"
+        ],
+        "maxConcurrent": 28,
+        "infectedAtStart": 27,
+        "maxGroup": 2,
+        "followShare": 0.9654159433836293,
+        "maxFollowerJump": 0.06333333333333727,
+        "lost": [
+          {
+            "key": "sam",
+            "cause": "turned",
+            "t": 113.75
+          }
+        ],
+        "deathsAt": [],
+        "gunshots": 60,
+        "audit": {
+          "sightViolations": 0,
+          "nonSightAlerts": 0,
+          "directorQueueMax": 0,
+          "newInfected": 0
+        }
+      },
+      "counts": {
+        "char.courier-female": {
+          "peak": 1,
+          "actorSeconds": 194.5,
+          "infectedSeconds": 0,
+          "corpseSeconds": 0
+        },
+        "char.corgi": {
+          "peak": 1,
+          "actorSeconds": 194.5,
+          "infectedSeconds": 0,
+          "corpseSeconds": 0
+        },
+        "npc.national-guard": {
+          "peak": 14,
+          "actorSeconds": 2723,
+          "infectedSeconds": 0,
+          "corpseSeconds": 2723
+        },
+        "npc.civilian-man-a": {
+          "peak": 8,
+          "actorSeconds": 1556,
+          "infectedSeconds": 389,
+          "corpseSeconds": 1214.5
+        },
+        "npc.civilian-woman-b": {
+          "peak": 13,
+          "actorSeconds": 2528.5,
+          "infectedSeconds": 1556,
+          "corpseSeconds": 1145
+        },
+        "npc.civilian-man-b": {
+          "peak": 8,
+          "actorSeconds": 1556,
+          "infectedSeconds": 583.5,
+          "corpseSeconds": 1021.5
+        },
+        "npc.civilian-woman-a": {
+          "peak": 6,
+          "actorSeconds": 1167,
+          "infectedSeconds": 389,
+          "corpseSeconds": 809
+        },
+        "npc.civilian-elderly": {
+          "peak": 13,
+          "actorSeconds": 2528.5,
+          "infectedSeconds": 1945,
+          "corpseSeconds": 838
+        },
+        "inf.alpha": {
+          "peak": 2,
+          "actorSeconds": 389,
+          "infectedSeconds": 389,
+          "corpseSeconds": 16
+        },
+        "npc.civilian-woman-b.aftermath": {
+          "peak": 12,
+          "actorSeconds": 2334,
+          "infectedSeconds": 0,
+          "corpseSeconds": 0
+        },
+        "npc.civilian-man-b.aftermath": {
+          "peak": 12,
+          "actorSeconds": 2334,
+          "infectedSeconds": 0,
+          "corpseSeconds": 0
+        },
+        "npc.mia.aftermath": {
+          "peak": 1,
+          "actorSeconds": 171.5,
+          "infectedSeconds": 0,
+          "corpseSeconds": 0
+        },
+        "npc.mr-okafor.aftermath": {
+          "peak": 1,
+          "actorSeconds": 158.5,
+          "infectedSeconds": 0,
+          "corpseSeconds": 0
+        },
+        "npc.sam.aftermath": {
+          "peak": 1,
+          "actorSeconds": 138,
+          "infectedSeconds": 78,
+          "corpseSeconds": 14
+        },
+        "npc.dale.aftermath": {
+          "peak": 1,
+          "actorSeconds": 111.5,
+          "infectedSeconds": 0,
+          "corpseSeconds": 0
+        },
+        "npc.rosa.aftermath": {
+          "peak": 1,
+          "actorSeconds": 69.5,
+          "infectedSeconds": 0,
+          "corpseSeconds": 0
+        },
+        "npc.marcus.aftermath": {
+          "peak": 1,
+          "actorSeconds": 6.5,
+          "infectedSeconds": 0,
+          "corpseSeconds": 0
+        }
+      }
+    },
+    {
+      "tier": "low",
+      "report": {
+        "profile": "complete",
+        "seed": 1,
+        "outcome": "complete",
+        "simSeconds": 164.35,
+        "deaths": 0,
+        "kills": 0,
+        "knockdowns": 14,
+        "damage": 42.5,
+        "timeline": [
+          {
+            "type": "objective:emerge",
+            "t": 1
+          },
+          {
+            "type": "l5.emerged",
+            "t": 1.65
+          },
+          {
+            "type": "l5.searching",
+            "t": 11.65
+          },
+          {
+            "type": "l5.accounted",
+            "t": 118.16666666666667
+          },
+          {
+            "type": "objective:look",
+            "t": 118.16666666666667
+          },
+          {
+            "type": "l5.shutter",
+            "t": 161.35
+          },
+          {
+            "type": "l5.sheltered",
+            "t": 164.35
+          },
+          {
+            "type": "objective:metro",
+            "t": 164.35
+          }
+        ],
+        "found": [
+          {
+            "key": "mia",
+            "t": 23.5
+          },
+          {
+            "key": "okafor",
+            "t": 36.5
+          },
+          {
+            "key": "sam",
+            "t": 54.7
+          },
+          {
+            "key": "dale",
+            "t": 76.58333333333333
+          },
+          {
+            "key": "rosa",
+            "t": 118.16666666666667
+          }
+        ],
+        "fates": {
+          "dale": "sheltered",
+          "rosa": "sheltered",
+          "okafor": "sheltered",
+          "mia": "sheltered",
+          "sam": "sheltered"
+        },
+        "rescued": 5,
+        "rescuedKeys": [
+          "dale",
+          "rosa",
+          "okafor",
+          "mia",
+          "sam"
+        ],
+        "maxConcurrent": 18,
+        "infectedAtStart": 18,
+        "maxGroup": 2,
+        "followShare": 1,
+        "maxFollowerJump": 0.06333333333333732,
+        "lost": [],
+        "deathsAt": [],
+        "gunshots": 22,
+        "audit": {
+          "sightViolations": 0,
+          "nonSightAlerts": 0,
+          "directorQueueMax": 0,
+          "newInfected": 0
+        }
+      },
+      "counts": {
+        "char.courier-female": {
+          "peak": 1,
+          "actorSeconds": 164,
+          "infectedSeconds": 0,
+          "corpseSeconds": 0
+        },
+        "char.corgi": {
+          "peak": 1,
+          "actorSeconds": 164,
+          "infectedSeconds": 0,
+          "corpseSeconds": 0
+        },
+        "npc.national-guard": {
+          "peak": 14,
+          "actorSeconds": 2296,
+          "infectedSeconds": 0,
+          "corpseSeconds": 2296
+        },
+        "npc.civilian-man-a": {
+          "peak": 7,
+          "actorSeconds": 1148,
+          "infectedSeconds": 164,
+          "corpseSeconds": 1003.5
+        },
+        "npc.civilian-woman-b": {
+          "peak": 10,
+          "actorSeconds": 1640,
+          "infectedSeconds": 820,
+          "corpseSeconds": 868.5
+        },
+        "npc.civilian-man-b": {
+          "peak": 7,
+          "actorSeconds": 1148,
+          "infectedSeconds": 328,
+          "corpseSeconds": 833.5
+        },
+        "npc.civilian-woman-a": {
+          "peak": 6,
+          "actorSeconds": 984,
+          "infectedSeconds": 328,
+          "corpseSeconds": 683.5
+        },
+        "npc.civilian-elderly": {
+          "peak": 9,
+          "actorSeconds": 1476,
+          "infectedSeconds": 984,
+          "corpseSeconds": 601
+        },
+        "inf.alpha": {
+          "peak": 2,
+          "actorSeconds": 328,
+          "infectedSeconds": 328,
+          "corpseSeconds": 16
+        },
+        "npc.civilian-woman-b.aftermath": {
+          "peak": 12,
+          "actorSeconds": 1968,
+          "infectedSeconds": 0,
+          "corpseSeconds": 0
+        },
+        "npc.civilian-man-b.aftermath": {
+          "peak": 12,
+          "actorSeconds": 1968,
+          "infectedSeconds": 0,
+          "corpseSeconds": 0
+        },
+        "npc.mia.aftermath": {
+          "peak": 1,
+          "actorSeconds": 141,
+          "infectedSeconds": 0,
+          "corpseSeconds": 0
+        },
+        "npc.mr-okafor.aftermath": {
+          "peak": 1,
+          "actorSeconds": 128,
+          "infectedSeconds": 0,
+          "corpseSeconds": 0
+        },
+        "npc.sam.aftermath": {
+          "peak": 1,
+          "actorSeconds": 109.5,
+          "infectedSeconds": 0,
+          "corpseSeconds": 0
+        },
+        "npc.dale.aftermath": {
+          "peak": 1,
+          "actorSeconds": 87.5,
+          "infectedSeconds": 0,
+          "corpseSeconds": 0
+        },
+        "npc.rosa.aftermath": {
+          "peak": 1,
+          "actorSeconds": 46,
+          "infectedSeconds": 0,
+          "corpseSeconds": 0
+        },
+        "npc.marcus.aftermath": {
+          "peak": 1,
+          "actorSeconds": 18.5,
+          "infectedSeconds": 0,
+          "corpseSeconds": 0
+        }
+      }
+    }
+  ]
+}

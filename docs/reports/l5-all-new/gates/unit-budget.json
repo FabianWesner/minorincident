@@ -1,0 +1,29 @@
+{
+  "name": "test",
+  "cases": 141,
+  "counts": {
+    "vitest": 120,
+    "e2e": 9,
+    "invariantsBrowser": 12
+  },
+  "files": 40,
+  "limits": {
+    "cases": 150,
+    "files": 45,
+    "seconds": 240
+  },
+  "command": [
+    "npx",
+    "vitest",
+    "run",
+    "--project",
+    "default",
+    "--configLoader",
+    "runner"
+  ],
+  "seconds": 20.06841375,
+  "exitCode": 0,
+  "signal": null,
+  "failures": [],
+  "at": "2026-10-28T01:21:18.596Z"
+}

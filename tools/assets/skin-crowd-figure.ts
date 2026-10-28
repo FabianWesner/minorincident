@@ -22,6 +22,7 @@ import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { adoptStandingBind } from './skin-crowd-standing';
 import { crowdLimbParts } from '../../src/assets/crowdParts';
 import { Document, NodeIO, type Node as GNode } from '@gltf-transform/core';
 import { copyToDocument, getBounds, normals as generateNormals, unpartition } from '@gltf-transform/functions';
@@ -638,6 +639,11 @@ const clone = (node: GNode, cap = false): GNode | null => {
 };
 const scene = out.createScene('scene');
 for (const top of sceneRoot.listChildren()) { const c = clone(top); if (c) scene.addChild(c); }
+// An alternate fitted template owns its standing bind pose. Imported story
+// metadata describes the legacy rig (which may put scale on a different node).
+// Restoring that stale pose before civilian baking stretches the new sleeves.
+if (contract && rigPath !== contractPath) adoptStandingBind(out);
+
 if (!out.getRoot().listNodes().some(n => n.getName() === 'front')) {
   const root = copy.get(jointNode.get('root')!)!, front = new Vector3(Math.max(...body.pos.filter((_, i) => i % 3 === 0)), 0, 0).applyMatrix4(world(jointNode.get('root')!).invert());
   root.addChild(out.createNode('front').setTranslation(front.toArray()).setExtras({ front: true }));
