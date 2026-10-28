@@ -34,7 +34,7 @@ export function paintAnimalDetails(document: Document, naturalEyes: boolean, tus
   if (look?.species === 'lion') for (let i = 0; i < png.data.length; i += 4) {
     // The infection pass appended an isolated ivory strip for dimensional teeth.
     if (look.infected && i / 4 % png.width >= png.width - 32) continue;
-    const coat = look.infected ? [147, 149, 112] : [199, 147, 69];
+    const coat = look.infected ? [170, 122, 90] : [199, 147, 69];
     for (let c = 0; c < 3; c++) png.data[i + c] = coat[c];
   }
   const owner = new Int32Array(png.width * png.height).fill(-1);
