@@ -16,7 +16,7 @@ try {
   console.log('page created');
   page.on('pageerror',e=>console.error('pageerror',e.message)); page.on('console',m=>{if(m.type()==='error')console.error('console',m.text())});
   await page.addInitScript('window.__name=f=>f');
-  await page.goto('http://127.0.0.1:4277/?test=poses&testApi=1&scenelab=1&debug=1&quality=low&audio=muted&dpr=1');
+  await page.goto(`${process.env.PLAYTEST_ORIGIN ?? 'http://127.0.0.1:4277'}/?test=poses&testApi=1&scenelab=1&debug=1&quality=low&audio=muted&dpr=1`);
   await page.waitForFunction(() => !!window.__SS__);
   await page.evaluate(() => window.__SS__!.ready); console.log('boot ready');
   await page.getByTestId('title-settings').click(); await page.getByTestId('setting-quality').selectOption('low'); await page.getByTestId('settings-back').click();
@@ -83,18 +83,22 @@ try {
   // click stays a movement command even when the pointer is moved over the infected.
   const repairId=await page.evaluate(()=>{const a=window.__SS__!,p=a.getEntity(1)!.transform;return a.spawn('infected.runner',{x:p.x+3,z:p.z},{variant:'inf.bbq-dad',state:'chase'});});
   await page.waitForTimeout(500);
-  await page.mouse.move(1000,600);await page.mouse.down();await page.waitForTimeout(1500);
+  const feet=await page.evaluate(()=>{const a=window.__SS__!;return a.input.project(a.getEntity(1)!.transform,'destination');});
+  await page.mouse.move(feet.x,feet.y);await page.mouse.down();await page.waitForTimeout(1500);
+  const stalledAim=(await page.evaluate(look)).enemies.find(e=>e.id===repairId)!;await page.mouse.move(stalledAim.aim.x,stalledAim.aim.y);await page.waitForTimeout(6500);
+  await page.screenshot({path:`${out}/bbq-held-miss-eight-seconds.jpg`});
   const commanded=await page.evaluate(()=>(window.__SCENE__ as unknown as {game:Game}).game.world.controls.targetId);
   assert.notEqual(commanded,repairId,'fixture must miss the initial body pick');
   const target=(await page.evaluate(look)).enemies.find(e=>e.id===repairId)!;
   assert.ok(target,'repair target must be visibly drawn');
-  assert.ok(needsTargetInput(repairId,commanded,repairId,1500,1500));
+  assert.equal(target.hp,60,'a held missed pick never starts an attack');
+  assert.ok(needsTargetInput(repairId,commanded,repairId,8000,8000));
   await page.mouse.up();await page.mouse.move(target.aim.x,target.aim.y);await page.mouse.down();
   await page.waitForFunction(id=>window.__SS__!.getEntity(id)!.health.current<60,repairId,{timeout:5000});
   await page.mouse.up();
   const repaired=await page.evaluate(id=>({entity:window.__SS__!.getEntity(id),bars:window.__SS__!.getState().render.healthBars,pick:window.__SS__!.input.lastPick()}),repairId);
   await page.screenshot({path:`${out}/bbq-lost-command-repaired.jpg`});
-  writeFileSync(`${out}/receipt.json`,JSON.stringify({setup,corgi,rows,repair:{id:repairId,commanded,repaired}},null,2));
+  writeFileSync(`${out}/receipt.json`,JSON.stringify({setup,corgi,rows,repair:{id:repairId,heldMs:8000,stalledDistance:target.d,hpBeforeRepair:target.hp,commanded,repaired}},null,2));
   console.log(`held-ground-command repair #${repairId}: ${target.hp} -> ${repaired.entity!.health.current}`);
   for(const row of rows as {model:string;before:{health:{current:number}};after:{health:{current:number}};observations:{render:{bars:{id:number}[]};hits:{sourceId:number;targetId:number}[]}[];id:number}[]) {
     assert.ok(row.after.health.current<row.before.health.current,`${row.model}: held real mouse input did not damage target`);

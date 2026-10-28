@@ -361,19 +361,27 @@ export class CrowdView extends Group {
       // Keep a default attribute even in scenes that do not load the cream coat.
       const dogPalette = asset === 'inf.dog' && !def.decay && lod === 'lod1';
       if (dogPalette) baked.geometry.setAttribute('_dogCream', baked.geometry.getAttribute('color'));
-      const materialKey = this.world.scenario === 'L4' && skinned && infectedAtlas && baked.texture ? `${baked.clip.parts.join('|')}:${poses.bindRow}:${baked.doubleSided}:${inlineAccessories}:${asset.startsWith('npc.')}:${baked.geometry.hasAttribute('_skin')}` : undefined;
+      // Zoo LODs/variants share the same graph just as L4's horde does. Bind each
+      // draw's pose and unchanged atlas below; graph identity must include every
+      // branch that changes the surface, including healthy animals and dog coats.
+      // Alpha hero/frozen surfaces retain their original snapshots; only the
+      // intermediate living band joins the zoo's shared shader path.
+      const zooSurface = this.world.scenario === 'L8' && /^(infected|healthy)\.(lion|gorilla|elephant|zebra|flamingo)$/.test(def.id);
+      const sharedSurface = this.world.scenario === 'L4' && infectedAtlas || zooSurface || this.world.scenario === 'L8' && alpha && lod === 'lod1';
+      const materialKey = sharedSurface && skinned && baked.texture ? `${baked.clip.parts.join('|')}:${poses.bindRow}:${baked.doubleSided}:${inlineAccessories}:${asset.startsWith('npc.')}:${baked.geometry.hasAttribute('_skin')}:${human}:${healthy}:${infectedAtlas}:${dogPalette}` : undefined;
       let sharedSkin = materialKey ? this.sharedSkinMaterials.get(materialKey) : undefined;
       let material = sharedSkin?.material, surfaceAtlas = sharedSkin?.atlas;
       if (!material) {
       const paletteColor = textured ? parts.y.equal(-4).or(parts.y.equal(-5)).or(parts.y.lessThanEqual(-10)).select(crowdAppearanceColor(true), attribute('color', 'vec3')) : dogPalette ? variant.x.mod(2).greaterThan(.5).select(attribute('_dogCream', 'vec3'), attribute('color', 'vec3')) : human ? crowdAppearanceColor(true) : attribute('color', 'vec3');
       const atlasUV = attribute('uv', 'vec2');
-      const sourceColor = atlas && !infectedAtlas ? paletteColor.mul(mix(vec3(1), sampleTexture(atlas, atlasUV).rgb, parts.y.equal(-4).or(parts.y.equal(-5)).or(parts.y.lessThanEqual(-10)).select(0, 1))) : paletteColor;
+      const sourceAtlas = atlas && !infectedAtlas ? sampleTexture(atlas, atlasUV) : undefined;
+      const sourceColor = sourceAtlas ? paletteColor.mul(mix(vec3(1), sourceAtlas.rgb, parts.y.equal(-4).or(parts.y.equal(-5)).or(parts.y.lessThanEqual(-10)).select(0, 1))) : paletteColor;
       // Keep the infected eye swatch out of the lit albedo. A bounded red
       // emitter avoids the pink centres from luminance-normalized swatches.
       // Read channels off the vec4 sample, never off its .rgb view: Tint (Dawn/Metal) fails to
       // lower a chained swizzle (`sample.xyz.x`) and the whole pipeline is dropped (hotfix-16).
       const texelSample = infectedAtlas && baked.texture ? sampleTexture(baked.texture, uv()) : undefined;
-      surfaceAtlas = texelSample;
+      surfaceAtlas = texelSample ?? sourceAtlas;
       const region = texelSample ? crowdRegionOf(texelSample, uv()) : undefined;
       const texel = texelSample ? crowdRegionTint(texelSample.rgb, region!, true) : undefined;
       const capSurface = parts.w.greaterThanEqual(1024);
@@ -482,7 +490,7 @@ export class CrowdView extends Group {
         const surface = { bind: bindSurface, textures: [atlas] };
         crowdSurfaceBindings.set(mesh.geometry, surface);
         const body = this.corpseGeometry.get(key);
-        if (body) crowdSurfaceBindings.set(body, surface);
+        if (body && !(this.world.scenario === 'L8' && alpha)) crowdSurfaceBindings.set(body, surface);
       }
       Object.defineProperty(mesh, 'isInstancedMesh', { value: false, writable: true });
       mesh.userData.staticInstanceAttributes = true;
