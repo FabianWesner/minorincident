@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { join, resolve } from 'node:path';
 import { launchProfile } from '../browser-pool/client';
 import { EscortClearance, look, visibleGroupTarget, type Body, type Eyes } from './eyes';
-import { assertRenderedBodies, campaignEndingComplete, isMandatoryBossObjective, needsZoomInput, observeWithin, shouldResumePause } from './startup';
+import { assertRenderedBodies, campaignEndingComplete, campaignEndingWaiting, isMandatoryBossObjective, needsZoomInput, observeWithin, shouldResumePause } from './startup';
 import { rangedWeaponPattern as ranged, campaignCombatWeapon, campaignThreat, canCoverVisibleAllies, finaleDodgeGoal, fistsRetreatAttack, keepMovingWithFists, prioritizeAllyThreat, rocketAimPoint } from './combat';
 import { weaponKey } from '../../src/data/weaponKeys';
 import { PlaytestProgress } from './progress';
@@ -542,7 +542,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         const m = window.__SS__!.missions.state()!;
         return { level: m.id, phase: m.phase, creditsFinished: !!m.states['credits-finished'], endingPhase: m.epilogue?.phase ?? null, completedLevels: window.__SS__!.campaign.state()?.completedLevels ?? 0 };
       });
-      if (!campaignEndingComplete(ending) && ['playable', 'title', 'credits'].includes(ending.endingPhase ?? '')) {
+      if (!campaignEndingComplete(ending) && campaignEndingWaiting(ending.endingPhase)) {
         // The scripted epilogue and credits are timed mission phases, not a
         // result screen that should be clicked through or reported as stuck.
         idleScreens = 0;

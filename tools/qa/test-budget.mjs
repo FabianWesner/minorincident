@@ -37,11 +37,8 @@ async function bounded(cmd, args, options) {
   // Existing owned-process watchdog forwards cancellation and kills descendants
   // that ignore TERM; spawnSync's timeout alone can leave those children alive.
   const executable = cmd === 'node' ? process.execPath : cmd;
-  const path = [dirname(process.execPath), options.env?.PATH, process.env.PATH, '/usr/bin:/bin:/usr/sbin:/sbin'].filter(Boolean).join(delimiter);
-  const env = { ...options.env, PATH: path, MI_TEST_BUDGET_PROCESS_PID: String(process.pid) };
-  // Smoke and its browser-pool daemon need a writable per-job cache; the shared
-  // cache beside the common repository can be read-only in isolated runners.
-  if (name === 'smoke') env.MI_WORKTREE_CACHE = join(tmpdir(), 'mi-worktree-cache-followups-25');
+  const path = [dirname(process.execPath), options.env?.PATH ?? process.env.PATH].filter(Boolean).join(delimiter);
+  const env = { ...process.env, ...options.env, PATH: path, MI_TEST_BUDGET_PROCESS_PID: String(process.pid) };
   const child = spawn('python3', ['tools/browser-job.py', '--seconds', String(Math.ceil(remaining)), '--', executable, ...args], {
     ...options, env,
   });

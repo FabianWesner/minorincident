@@ -30,6 +30,11 @@ export function campaignEndingComplete(ending: { level: string | null; phase: st
   return ending.level === 'L10' && ending.phase === 'progression' && ending.creditsFinished && ending.endingPhase === 'done' && ending.completedLevels === 10;
 }
 
+/** Scripted L10 ending phases advance on mission time without player input. */
+export function campaignEndingWaiting(phase: string | null): boolean {
+  return phase === 'playable' || phase === 'title' || phase === 'credits';
+}
+
 /** A dead renderer must not hold an unattended driver forever inside evaluate(). */
 export async function observeWithin<T>(operation: Promise<T>, timeoutMs = 15_000): Promise<T> {
   let timer: ReturnType<typeof setTimeout> | undefined;

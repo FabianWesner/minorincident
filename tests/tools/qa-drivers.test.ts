@@ -7,7 +7,7 @@ import type { AssetDef } from '../../src/assets/types';
 import { validateSpec, type SceneSpec } from '../../src/debug/scenelab/spec';
 import { frameInterval, type FrameState } from '../../tools/playtest/frames';
 import { PlaytestProgress, type ProgressSample } from '../../tools/playtest/progress';
-import { campaignEndingComplete, needsZoomInput, observeWithin } from '../../tools/playtest/startup';
+import { campaignEndingComplete, campaignEndingWaiting, needsZoomInput, observeWithin } from '../../tools/playtest/startup';
 
 const sample = (seconds: number, fields: Partial<ProgressSample> = {}): ProgressSample => ({ context: 'L6|retreat', text: 'Cover the retreat · 12 m', distance: 12, player: { x: 0, z: 15 }, marker: { x: 12, z: 15 }, tick: seconds * 60, nowMs: seconds * 1000, ...fields });
 
@@ -50,6 +50,8 @@ test('playtest session: success only after real credits; an unresponsive rendere
   const done = { level: 'L10', phase: 'progression', creditsFinished: true, endingPhase: 'done', completedLevels: 10 };
   expect(campaignEndingComplete(done)).toBe(true);
   for (const partial of [{ creditsFinished: false }, { endingPhase: 'credits' }, { completedLevels: 9 }, { phase: 'playing' }]) expect(campaignEndingComplete({ ...done, ...partial })).toBe(false);
+  for (const phase of ['playable', 'title', 'credits']) expect(campaignEndingWaiting(phase)).toBe(true);
+  expect(campaignEndingWaiting('done')).toBe(false);
   vi.useFakeTimers();
   try {
     const failure = expect(observeWithin(new Promise<never>(() => {}), 100)).rejects.toThrow('browser renderer is unresponsive');
