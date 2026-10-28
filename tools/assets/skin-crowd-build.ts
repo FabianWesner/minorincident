@@ -42,6 +42,9 @@ const metadata = existsSync(join(source, 'rig.json')) ? JSON.parse(readFileSync(
 // Animal fur/mane envelopes are wider than the face. Use reviewed pre-binding
 // eye landmarks instead of placing dormant/infected eyes on that envelope.
 const animalEyeRecipes = JSON.parse(readFileSync('tools/assets/skin-crowd-animal-eyes.json', 'utf8')) as Record<string, { source_sha256: string; eye_centers: number[][]; radius_extent: number; game_radius: number; tusks?: TuskRecipe }>;
+if (['inf.lion', 'inf.gorilla', 'inf.elephant', 'inf.flamingo'].includes(id) && !animalEyeRecipes[sourceId]) {
+  throw Error(`${id}: missing animal infection recipe for ${sourceId}`);
+}
 let eyeSource = existsSync(join(source, 'eyes.json')) ? join(source, 'eyes.json') : undefined;
 if (metadata && ['quadruped', 'bird'].includes(metadata.class ?? '') && animalEyeRecipes[sourceId]) {
   const recipe = animalEyeRecipes[sourceId], body = join(source, 'source/flat-lod0.glb');

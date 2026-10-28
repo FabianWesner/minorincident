@@ -17,7 +17,7 @@
   "smoke": {
     "qaPassed": 6,
     "publicPassed": 1,
-    "seconds": 193.6,
+    "seconds": 195.0,
     "budgetSeconds": 240,
     "webgl2": {
       "programs": 492,
@@ -33,11 +33,15 @@
       "maxAttributes": 13,
       "maxVaryings": 14
     },
-    "freshness": "Run after final geometry/contact changes; subsequent RGB-only atlas gutter padding changes no programs or geometry. Four final L8 freeze captures and validator rerun after atlas repair."
+    "freshness": "Re-run after final infected textures, eye sizes and merged dimensional teeth.",
+    "gpuEvidence": [
+      "[gpu-limits] webgl: 492 programs, 83 crowd; crowd max attributes 13, varyings 14, buffers 0; all max attributes 13, varyings 14, buffers 0",
+      "[gpu-limits] webgpu: 717 programs, 88 crowd; crowd max attributes 13, varyings 14, buffers 6; all max attributes 13, varyings 14, buffers 8"
+    ]
   },
   "l8Freeze": {
     "freeze-new-low-webgpu": {
-      "maxFrameMs": 49.900000000001455,
+      "maxFrameMs": 16.80000000000109,
       "over200": [],
       "builds": {}
     },
@@ -194,6 +198,26 @@
     "playthrough-final.log": {
       "sha256": "473b77d43f3afe4ff29d98d03b411b7f1b2e06a2e662283a206a833fa840da39",
       "tail": "{\"runs\":[{\"level\":\"L8\",\"finished\":true,\"skipped\":[],\"wall\":97}],\"issues\":0}\nplaytest continue: 1/1 levels finished; issues {\"P0\":0,\"P1\":0,\"P2\":0,\"P3\":0} \u2192 /Users/wesner/Workspace/minorincident/.claude/worktrees/l8-all-new/test-results/l8-all-new/playthrough\n"
+    },
+    "infected-final-lint.log": {
+      "sha256": "5f9aee6b798507e187dcd3d4fbd5bcf5fdc37488cb89c27a01d5667ca7bb9fa1",
+      "tail": "\n> lint\n> eslint src tests tools functions *.config.ts eslint.config.js\n\n"
+    },
+    "infected-final-smoke.log": {
+      "sha256": "c17d41f75977abb150e2cb2e3bfb98ff2a6b40003b859c207b4c497d9a869382",
+      "tail": " (49.7s)\n[gpu-limits] webgpu: 717 programs, 88 crowd; crowd max attributes 13, varyings 14, buffers 6; all max attributes 13, varyings 14, buffers 8\n  \u2713  2 [chromium] \u203a tests/e2e/crowd-gpu-limits.spec.ts:19:52 \u203a every crowd, corpse and accessory program compiles within the portable GPU limits on webgpu @smoke (50.3s)\n  \u2713  3 [chromium] \u203a tests/e2e/smoke.spec.ts:38:1 \u203a L1 handover + outbreak: no shader builds after warm-up and no frame over 200 ms @smoke (15.3s)\n  \u2713  4 [chromium] \u203a tests/e2e/smoke.spec.ts:109:54 \u203a L1 start: pedestrians are drawn on screen (webgl), not only their props @smoke (19.8s)\n  \u2713  5 [chromium] \u203a tests/e2e/smoke.spec.ts:109:54 \u203a L1 start: pedestrians are drawn on screen (webgpu), not only their props @smoke (19.3s)\n  \u2713  6 [chromium] \u203a tests/e2e/webgpu-unflagged.spec.ts:12:1 \u203a menu \u2192 L1 start on unflagged WebGPU compiles every render pipeline with suit zombies drawn (low tier) @smoke (6.3s)\n\n  6 passed (2.9m)\n\n> build\n> NODE_ENV=production sh tools/build-cached.sh\n\nvite v6.4.3 building for production...\ntransforming...\n\u2713 602 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                                     1.54 kB \u2502 gzip:     0.68 kB\ndist/build/civilianBakeData-DlqJfKzP.js             3.93 kB\ndist/build/BufferGeometryUtils-B9lQkqNz.js          6.88 kB\ndist/build/civilianBake.worker-flIkK_Fq.js         24.63 kB\ndist/build/basis_transcoder-o4Hde_L7.js            57.53 kB\ndist/build/three.module-CwjGdtFU.js               206.12 kB\ndist/build/civilianSource-htGKaByk.js             432.90 kB\ndist/build/basis_transcoder-VXdx5NbI.wasm         527.33 kB \u2502 gzip:   244.57 kB\ndist/build/prefetch.worker-vnkARzm8.js          1,117.67 kB\ndist/build/prepareCivilianGeometry-9C0aK4KB.js  2,029.63 kB\ndist/build/rapier-C6GCbKVJ.wasm                 3,082.10 kB \u2502 gzip: 1,171.17 kB\ndist/build/index-CUk1QJun.css                      41.64 kB \u2502 gzip:     8.85 kB\ndist/build/index-CIQ5HQav.js                       17.32 kB \u2502 gzip:     6.19 kB\ndist/build/light-anchors-DQGCSUUw.js               90.38 kB \u2502 gzip:     6.79 kB\ndist/build/rapier-ykuY6d4E.js                     212.13 kB \u2502 gzip:    36.15 kB\ndist/build/three-core-B_ZAxbv8.js                 306.07 kB \u2502 gzip:    81.70 kB\ndist/build/three-webgpu-BgQTMWSf.js               688.67 kB \u2502 gzip:   192.06 kB\ndist/build/wreck-roofs-GAckelu8.js                755.61 kB \u2502 gzip:   253.19 kB\ndist/build/character-clips-CGKWtM3S.js          1,939.70 kB \u2502 gzip:   341.80 kB\ndist/build/index-B-jQmh_y.js                    3,208.15 kB \u2502 gzip:   897.74 kB\n\n(!) Some chunks are larger than 3200 kB after minification. Consider:\n- Using dynamic import() to code-split the application\n- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks\n- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.\n\u2713 built in 5.97s\n[public-build] PASS: 18 HTML/JS files contain no QA hooks\n\nRunning 1 test using 1 worker\n\n  \u2713  1 [chromium] \u203a tests/e2e/smoke.spec.ts:15:1 \u203a public build: menu start draws L1 and exposes no QA globals @public-smoke (4.4s)\n\n  1 passed (5.0s)\n[test-budget] smoke: 195.0 s (budget 240 s)\n"
+    },
+    "infected-final-validator.log": {
+      "sha256": "39dc36134da126216af9fc83381227dbd8f9811ff3a67eaba3f4047e441bd4e4",
+      "tail": "lock-a.w5:lod1\",\n    \"errors\": [],\n    \"triangles\": 6059\n  },\n  {\n    \"id\": \"bld.apartment-block-a.w5:lod2\",\n    \"errors\": [],\n    \"triangles\": 3097\n  },\n  {\n    \"id\": \"bld.apartment-block-a.w6:lod0\",\n    \"errors\": [],\n    \"triangles\": 23998\n  },\n  {\n    \"id\": \"bld.apartment-block-a.w6:lod1\",\n    \"errors\": [],\n    \"triangles\": 5415\n  },\n  {\n    \"id\": \"bld.apartment-block-a.w6:lod2\",\n    \"errors\": [],\n    \"triangles\": 2694\n  },\n  {\n    \"id\": \"bld.apartment-block-b.w5:lod0\",\n    \"errors\": [],\n    \"triangles\": 13903\n  },\n  {\n    \"id\": \"bld.apartment-block-b.w5:lod1\",\n    \"errors\": [],\n    \"triangles\": 6020\n  },\n  {\n    \"id\": \"bld.apartment-block-b.w5:lod2\",\n    \"errors\": [],\n    \"triangles\": 3518\n  },\n  {\n    \"id\": \"bld.apartment-block-b.w6:lod0\",\n    \"errors\": [],\n    \"triangles\": 13213\n  },\n  {\n    \"id\": \"bld.apartment-block-b.w6:lod1\",\n    \"errors\": [],\n    \"triangles\": 5472\n  },\n  {\n    \"id\": \"bld.apartment-block-b.w6:lod2\",\n    \"errors\": [],\n    \"triangles\": 3118\n  },\n  {\n    \"id\": \"bld.town-hall.w5:lod0\",\n    \"errors\": [],\n    \"triangles\": 12688\n  },\n  {\n    \"id\": \"bld.town-hall.w5:lod1\",\n    \"errors\": [],\n    \"triangles\": 4762\n  },\n  {\n    \"id\": \"bld.town-hall.w5:lod2\",\n    \"errors\": [],\n    \"triangles\": 2709\n  },\n  {\n    \"id\": \"bld.town-hall.w6:lod0\",\n    \"errors\": [],\n    \"triangles\": 11694\n  },\n  {\n    \"id\": \"bld.town-hall.w6:lod1\",\n    \"errors\": [],\n    \"triangles\": 4076\n  },\n  {\n    \"id\": \"bld.town-hall.w6:lod2\",\n    \"errors\": [],\n    \"triangles\": 2337\n  },\n  {\n    \"id\": \"bld.church.w5:lod0\",\n    \"errors\": [],\n    \"triangles\": 15335\n  },\n  {\n    \"id\": \"bld.church.w5:lod1\",\n    \"errors\": [],\n    \"triangles\": 5128\n  },\n  {\n    \"id\": \"bld.church.w5:lod2\",\n    \"errors\": [],\n    \"triangles\": 2953\n  },\n  {\n    \"id\": \"bld.church.w6:lod0\",\n    \"errors\": [],\n    \"triangles\": 14980\n  },\n  {\n    \"id\": \"bld.church.w6:lod1\",\n    \"errors\": [],\n    \"triangles\": 4968\n  },\n  {\n    \"id\": \"bld.church.w6:lod2\",\n    \"errors\": [],\n    \"triangles\": 2875\n  },\n  {\n    \"id\": \"veh.tank.wrecked:lod0\",\n    \"errors\": [],\n    \"triangles\": 8968\n  },\n  {\n    \"id\": \"veh.tank.wrecked:lod1\",\n    \"errors\": [],\n    \"triangles\": 3082\n  },\n  {\n    \"id\": \"veh.tank.wrecked:lod2\",\n    \"errors\": [],\n    \"triangles\": 1532\n  },\n  {\n    \"id\": \"amb.dog.black:lod0\",\n    \"errors\": [],\n    \"triangles\": 3955\n  },\n  {\n    \"id\": \"amb.dog.black:lod1\",\n    \"errors\": [],\n    \"triangles\": 1472\n  },\n  {\n    \"id\": \"amb.dog.black:lod2\",\n    \"errors\": [],\n    \"triangles\": 673\n  },\n  {\n    \"id\": \"amb.dog.cream:lod0\",\n    \"errors\": [],\n    \"triangles\": 3955\n  },\n  {\n    \"id\": \"amb.dog.cream:lod1\",\n    \"errors\": [],\n    \"triangles\": 1472\n  },\n  {\n    \"id\": \"amb.dog.cream:lod2\",\n    \"errors\": [],\n    \"triangles\": 673\n  },\n  {\n    \"id\": \"inf.dog.black:lod0\",\n    \"errors\": [],\n    \"triangles\": 3959\n  },\n  {\n    \"id\": \"inf.dog.black:lod1\",\n    \"errors\": [],\n    \"triangles\": 1476\n  },\n  {\n    \"id\": \"inf.dog.black:lod2\",\n    \"errors\": [],\n    \"triangles\": 677\n  },\n  {\n    \"id\": \"inf.dog.cream:lod0\",\n    \"errors\": [],\n    \"triangles\": 3959\n  },\n  {\n    \"id\": \"inf.dog.cream:lod1\",\n    \"errors\": [],\n    \"triangles\": 1476\n  },\n  {\n    \"id\": \"inf.dog.cream:lod2\",\n    \"errors\": [],\n    \"triangles\": 677\n  }\n]\n"
+    },
+    "infected-final-npm-test.log": {
+      "sha256": "fa19b1117fd31ac7d319aacb9e8c526a1d2f61e09992034d3b1865c0a507e652",
+      "tail": "\n> test\n> node tools/qa/test-budget.mjs --name test --max-seconds 240 -- npx vitest run --project default --configLoader runner\n\n[test-budget] 144/150 test cases ({\"vitest\":123,\"e2e\":9,\"invariantsBrowser\":12}), 40/45 files\n\n RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/l8-all-new\n\n\n Test Files  24 passed (24)\n      Tests  104 passed (104)\n   Start at  13:51:14\n   Duration  15.26s (tests 89%, import 5%, transform 5%, setup 1%)\n\n[test-budget] test: 17.3 s (budget 240 s)\n"
+    },
+    "infected-final-typecheck.log": {
+      "sha256": "768699d3cead53493237d3322201d28ee449107e90af9a5aa6f5dcab3f066b0c",
+      "tail": "\n> typecheck\n> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json\n\n"
     }
   },
   "storyScenes": {
@@ -1636,7 +1660,7 @@
         "backend": "webgl",
         "actualTier": "high",
         "frames": 420,
-        "seconds": 9.884,
+        "seconds": 11.853,
         "failed": [
           {
             "name": "clipping",
@@ -1690,13 +1714,13 @@
           {
             "name": "trianglesMax",
             "pass": true,
-            "value": 32819,
+            "value": 32851,
             "limit": 1500000
           },
           {
             "name": "canvas.f0.varianceMin",
             "pass": true,
-            "value": 57.84487718706589,
+            "value": 43.40186470137678,
             "limit": 1
           },
           {
@@ -1708,7 +1732,7 @@
           {
             "name": "canvas.f75.varianceMin",
             "pass": true,
-            "value": 56.05267218964059,
+            "value": 41.86427816480705,
             "limit": 1
           },
           {
@@ -1720,7 +1744,7 @@
           {
             "name": "canvas.f150.varianceMin",
             "pass": true,
-            "value": 50.85655381727963,
+            "value": 36.50939122623265,
             "limit": 1
           },
           {
@@ -1732,7 +1756,7 @@
           {
             "name": "canvas.f225.varianceMin",
             "pass": true,
-            "value": 44.00372819749998,
+            "value": 33.12414633388846,
             "limit": 1
           },
           {
@@ -1744,7 +1768,7 @@
           {
             "name": "canvas.f300.varianceMin",
             "pass": true,
-            "value": 443.08912926448875,
+            "value": 436.3553123853005,
             "limit": 1
           },
           {
@@ -1756,7 +1780,7 @@
           {
             "name": "canvas.f310.varianceMin",
             "pass": true,
-            "value": 510.8790620506709,
+            "value": 504.7074519761916,
             "limit": 1
           },
           {
@@ -1768,7 +1792,7 @@
           {
             "name": "canvas.f375.varianceMin",
             "pass": true,
-            "value": 75.0429590761762,
+            "value": 48.75934838909677,
             "limit": 1
           },
           {
@@ -1780,7 +1804,7 @@
           {
             "name": "canvas.f450.varianceMin",
             "pass": true,
-            "value": 70.60285245310138,
+            "value": 44.59313129650411,
             "limit": 1
           },
           {
@@ -1792,7 +1816,7 @@
           {
             "name": "canvas.f525.varianceMin",
             "pass": true,
-            "value": 340.162162151423,
+            "value": 305.5892921533257,
             "limit": 1
           },
           {
@@ -1804,7 +1828,7 @@
           {
             "name": "canvas.f600.varianceMin",
             "pass": true,
-            "value": 95.56962679239541,
+            "value": 49.14895826388454,
             "limit": 1
           },
           {
@@ -1829,7 +1853,7 @@
         "backend": "webgl",
         "actualTier": "high",
         "frames": 600,
-        "seconds": 13.035,
+        "seconds": 15.538,
         "failed": [],
         "clipping": {
           "gunBodyHits": 0,
@@ -1839,7 +1863,7 @@
           "piercing": 0
         },
         "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l8-all-new/test-results/l8-all-new/story-new-high-webgl2/qa-l8-turn-lion/sheet.jpg",
-        "sheetKb": 35,
+        "sheetKb": 34,
         "files": [
           "/Users/wesner/Workspace/minorincident/.claude/worktrees/l8-all-new/test-results/l8-all-new/story-new-high-webgl2/qa-l8-turn-lion/shot-0000.png",
           "/Users/wesner/Workspace/minorincident/.claude/worktrees/l8-all-new/test-results/l8-all-new/story-new-high-webgl2/qa-l8-turn-lion/shot-0310.png",
@@ -1875,7 +1899,7 @@
           {
             "name": "trianglesMax",
             "pass": true,
-            "value": 37372,
+            "value": 37404,
             "limit": 1500000
           },
           {
@@ -1953,7 +1977,7 @@
           {
             "name": "canvas.f375.varianceMin",
             "pass": true,
-            "value": 62.23319881791622,
+            "value": 52.24230590157231,
             "limit": 1
           },
           {
@@ -1965,7 +1989,7 @@
           {
             "name": "canvas.f450.varianceMin",
             "pass": true,
-            "value": 60.67914851774685,
+            "value": 51.078580829930615,
             "limit": 1
           },
           {
@@ -1977,7 +2001,7 @@
           {
             "name": "canvas.f525.varianceMin",
             "pass": true,
-            "value": 307.7681082561728,
+            "value": 303.2943548851614,
             "limit": 1
           },
           {
@@ -1989,7 +2013,7 @@
           {
             "name": "canvas.f600.varianceMin",
             "pass": true,
-            "value": 68.74526184942079,
+            "value": 57.17731292004464,
             "limit": 1
           },
           {
@@ -2014,7 +2038,7 @@
         "backend": "webgl",
         "actualTier": "high",
         "frames": 600,
-        "seconds": 13.623,
+        "seconds": 14.92,
         "failed": [],
         "clipping": {
           "gunBodyHits": 0,
@@ -2138,7 +2162,7 @@
           {
             "name": "canvas.f375.varianceMin",
             "pass": true,
-            "value": 74.14440978277571,
+            "value": 58.96207148905819,
             "limit": 1
           },
           {
@@ -2150,7 +2174,7 @@
           {
             "name": "canvas.f450.varianceMin",
             "pass": true,
-            "value": 74.20150833444404,
+            "value": 56.50905689715273,
             "limit": 1
           },
           {
@@ -2162,7 +2186,7 @@
           {
             "name": "canvas.f525.varianceMin",
             "pass": true,
-            "value": 321.36691317003033,
+            "value": 347.0002663692703,
             "limit": 1
           },
           {
@@ -2174,7 +2198,7 @@
           {
             "name": "canvas.f600.varianceMin",
             "pass": true,
-            "value": 104.21808840800759,
+            "value": 101.52759821851078,
             "limit": 1
           },
           {
@@ -2199,7 +2223,7 @@
         "backend": "webgl",
         "actualTier": "high",
         "frames": 600,
-        "seconds": 14.218,
+        "seconds": 14.844,
         "failed": [],
         "clipping": {
           "gunBodyHits": 0,
@@ -2209,7 +2233,7 @@
           "piercing": 0
         },
         "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l8-all-new/test-results/l8-all-new/story-new-high-webgl2/qa-l8-turn-elephant/sheet.jpg",
-        "sheetKb": 38,
+        "sheetKb": 39,
         "files": [
           "/Users/wesner/Workspace/minorincident/.claude/worktrees/l8-all-new/test-results/l8-all-new/story-new-high-webgl2/qa-l8-turn-elephant/shot-0000.png",
           "/Users/wesner/Workspace/minorincident/.claude/worktrees/l8-all-new/test-results/l8-all-new/story-new-high-webgl2/qa-l8-turn-elephant/shot-0310.png",
@@ -2384,7 +2408,7 @@
         "backend": "webgl",
         "actualTier": "high",
         "frames": 600,
-        "seconds": 14.297,
+        "seconds": 15.19,
         "failed": [],
         "clipping": {
           "gunBodyHits": 0,
@@ -2508,7 +2532,7 @@
           {
             "name": "canvas.f375.varianceMin",
             "pass": true,
-            "value": 78.38685662035823,
+            "value": 53.87260381695546,
             "limit": 1
           },
           {
@@ -2520,7 +2544,7 @@
           {
             "name": "canvas.f450.varianceMin",
             "pass": true,
-            "value": 171.16638469151042,
+            "value": 147.0112032359183,
             "limit": 1
           },
           {
@@ -2532,7 +2556,7 @@
           {
             "name": "canvas.f525.varianceMin",
             "pass": true,
-            "value": 356.63290354407354,
+            "value": 322.6850640311337,
             "limit": 1
           },
           {
@@ -2544,7 +2568,7 @@
           {
             "name": "canvas.f600.varianceMin",
             "pass": true,
-            "value": 96.85999928761532,
+            "value": 57.114571739860594,
             "limit": 1
           },
           {
@@ -2569,7 +2593,7 @@
         "backend": "webgl",
         "actualTier": "high",
         "frames": 600,
-        "seconds": 14.061,
+        "seconds": 14.916,
         "failed": [],
         "clipping": {
           "gunBodyHits": 0,
@@ -2724,7 +2748,7 @@
         "backend": "webgl",
         "actualTier": "high",
         "frames": 450,
-        "seconds": 13.284,
+        "seconds": 14.441,
         "failed": [],
         "clipping": {
           "gunBodyHits": 0,
@@ -2744,5 +2768,268 @@
       }
     ],
     "newFailures": []
+  },
+  "renderOnlyCorrection": "Animal geometry/atlas build recipe and asset registration only. Earlier scene:gate and real-input L8 completion retained; no sim, runtime code or gameplay values changed in correction.",
+  "l8Motion": {
+    "high-webgl2": [
+      {
+        "id": "amb.lion",
+        "motion": {
+          "frames": 258,
+          "torsoPitchMinDeg": 84.3,
+          "torsoPitchMaxDeg": 85.7,
+          "contacts": 10,
+          "slideMaxCm": 0.3,
+          "slideP95Cm": 0.3,
+          "yawDriftMaxDeg": 0.1,
+          "liftMaxCm": 5.7,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 63
+        }
+      },
+      {
+        "id": "inf.lion",
+        "motion": {
+          "frames": 255,
+          "torsoPitchMinDeg": 84.3,
+          "torsoPitchMaxDeg": 87,
+          "contacts": 14,
+          "slideMaxCm": 0.1,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 21,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 14
+        }
+      },
+      {
+        "id": "amb.gorilla",
+        "motion": {
+          "frames": 258,
+          "torsoPitchMinDeg": 40.4,
+          "torsoPitchMaxDeg": 52.9,
+          "contacts": 6,
+          "slideMaxCm": 0.1,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 12.4,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 7
+        }
+      },
+      {
+        "id": "inf.gorilla",
+        "motion": {
+          "frames": 255,
+          "torsoPitchMinDeg": 41.7,
+          "torsoPitchMaxDeg": 65.6,
+          "contacts": 9,
+          "slideMaxCm": 0.3,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 21.6,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 63
+        }
+      },
+      {
+        "id": "amb.elephant",
+        "motion": {
+          "frames": 258,
+          "torsoPitchMinDeg": 83.3,
+          "torsoPitchMaxDeg": 84.7,
+          "contacts": 10,
+          "slideMaxCm": 6.6,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 1.8,
+          "liftMaxCm": 8.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 75
+        }
+      },
+      {
+        "id": "inf.elephant",
+        "motion": {
+          "frames": 255,
+          "torsoPitchMinDeg": 83.3,
+          "torsoPitchMaxDeg": 87.8,
+          "contacts": 11,
+          "slideMaxCm": 0.3,
+          "slideP95Cm": 0.3,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 12.7,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 63
+        }
+      },
+      {
+        "id": "amb.flamingo",
+        "motion": {
+          "frames": 258,
+          "torsoPitchMinDeg": 23.7,
+          "torsoPitchMaxDeg": 25.4,
+          "contacts": 3,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 16.9,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 54
+        }
+      },
+      {
+        "id": "inf.flamingo",
+        "motion": {
+          "frames": 255,
+          "torsoPitchMinDeg": 23.7,
+          "torsoPitchMaxDeg": 29.3,
+          "contacts": 8,
+          "slideMaxCm": 0.2,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 6.7,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 30
+        }
+      }
+    ],
+    "low-webgpu": [
+      {
+        "id": "amb.lion",
+        "motion": {
+          "frames": 258,
+          "torsoPitchMinDeg": 84.3,
+          "torsoPitchMaxDeg": 85.7,
+          "contacts": 10,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 5.6,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 63
+        }
+      },
+      {
+        "id": "inf.lion",
+        "motion": {
+          "frames": 255,
+          "torsoPitchMinDeg": 84.3,
+          "torsoPitchMaxDeg": 87,
+          "contacts": 14,
+          "slideMaxCm": 0.1,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 21.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 14
+        }
+      },
+      {
+        "id": "amb.gorilla",
+        "motion": {
+          "frames": 258,
+          "torsoPitchMinDeg": 40.4,
+          "torsoPitchMaxDeg": 52.9,
+          "contacts": 5,
+          "slideMaxCm": 0.1,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 12.4,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 7
+        }
+      },
+      {
+        "id": "inf.gorilla",
+        "motion": {
+          "frames": 255,
+          "torsoPitchMinDeg": 41.7,
+          "torsoPitchMaxDeg": 65.6,
+          "contacts": 9,
+          "slideMaxCm": 0.2,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 20.7,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 63
+        }
+      },
+      {
+        "id": "amb.elephant",
+        "motion": {
+          "frames": 258,
+          "torsoPitchMinDeg": 83.3,
+          "torsoPitchMaxDeg": 84.7,
+          "contacts": 7,
+          "slideMaxCm": 7.2,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 1.9,
+          "liftMaxCm": 8.3,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 75
+        }
+      },
+      {
+        "id": "inf.elephant",
+        "motion": {
+          "frames": 255,
+          "torsoPitchMinDeg": 83.3,
+          "torsoPitchMaxDeg": 87.8,
+          "contacts": 8,
+          "slideMaxCm": 0.3,
+          "slideP95Cm": 0.1,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 13.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 63
+        }
+      },
+      {
+        "id": "amb.flamingo",
+        "motion": {
+          "frames": 258,
+          "torsoPitchMinDeg": 23.7,
+          "torsoPitchMaxDeg": 25.4,
+          "contacts": 3,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 18.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 54
+        }
+      },
+      {
+        "id": "inf.flamingo",
+        "motion": {
+          "frames": 255,
+          "torsoPitchMinDeg": 23.7,
+          "torsoPitchMaxDeg": 29.3,
+          "contacts": 8,
+          "slideMaxCm": 0.2,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 5.9,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 30
+        }
+      }
+    ]
   }
 }

@@ -46,7 +46,7 @@ def showcase():
  folder=Path('/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/showcase/img');folder.mkdir(parents=True,exist_ok=True)
  dest=folder/'l8-crowd-old-new.jpg';grid([(ROOT/f'crowd-{v}-high-webgpu/zoom-1.5.png',f'L8 | {v.upper()} | 30 figures | high WebGPU')for v in ['old','new']],dest,width=1400,cols=1)
  im=Image.open(dest);im.thumbnail((1600,1600),Image.Resampling.LANCZOS);im.save(dest,quality=93,optimize=True)
- (OUT/'showcase.json').write_text(json.dumps({'file':str(dest),'size':list(im.size),'sha256':hashlib.sha256(dest.read_bytes()).hexdigest(),'bestCaptures':['09-crowd-old-new.jpg','01-amb.lion.jpg','05-amb.elephant.jpg','12-story-zoo.jpg']},indent=2)+'\n')
+ (OUT/'showcase.json').write_text(json.dumps({'file':str(dest),'size':list(im.size),'sha256':hashlib.sha256(dest.read_bytes()).hexdigest(),'bestCaptures':['09-crowd-old-new.jpg','02-inf.lion.jpg','04-inf.gorilla.jpg','11-corpses-old-new.jpg']},indent=2)+'\n')
 if __name__=='__main__':
  import argparse
  p=argparse.ArgumentParser();p.add_argument('mode',choices=['figures','runtime','showcase']);a=p.parse_args();globals()[a.mode]()
