@@ -1,0 +1,17 @@
+diff --git a/src/render/characters/CrowdAppearance.ts b/src/render/characters/CrowdAppearance.ts
+index 455262b06..60ff9ecb0 100644
+--- a/src/render/characters/CrowdAppearance.ts
++++ b/src/render/characters/CrowdAppearance.ts
+@@ -71,7 +71,11 @@ function crowdRegionTrousersSkin() {
+   return varying(vec4(pickColor(colors.trousers, variant.z.div(2).floor().mod(8)), exposed), 'crowdRegionTrousersSkin');
+ }
+ /** Vertex-classed exposed skin (head or skin-tagged, not an eye) for the painted-skin estimate. */
+-export function crowdPaintedSkinRegion(): Node<'float'> { return crowdRegionTrousersSkin().w; }
++export function crowdPaintedSkinRegion(): Node<'float'> {
++  const parts = attribute('_parts', 'vec4');
++  const exposed = parts.x.equal(characterNodes.indexOf('head')).or(parts.y.equal(-1)).and(parts.z.lessThan(.5)).select(1, 0);
++  return varying(exposed, 'smokeSpeedOverLimit');
++}
+ /** Per-person tones for the classed regions of textured figures (hair, skin, shirt, trousers). Two varyings only:
+  * skin is picked per pixel from its index (six tones), trousers share their slot with the painted-skin region. */
+ export function crowdRegionColours(infected = false) {

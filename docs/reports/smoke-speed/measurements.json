@@ -1,0 +1,407 @@
+{
+  "baselineCommit": "8ac48ff6db0001f5f270aaf599ce149de98c6b45",
+  "implementationCommit": "be681e0b0d4ee9effddb2c58604c281ffeb53db9",
+  "command": "E2E_PORT=3378 MI_SLUG=smoke-speed npm run test:smoke",
+  "before": [
+    {
+      "run": 1,
+      "receipt": {
+        "name": "smoke",
+        "cases": 144,
+        "counts": {
+          "vitest": 123,
+          "e2e": 9,
+          "invariantsBrowser": 12
+        },
+        "files": 40,
+        "limits": {
+          "cases": 150,
+          "files": 45,
+          "seconds": 240
+        },
+        "command": [
+          "sh",
+          "tools/qa/smoke.sh"
+        ],
+        "seconds": 230.470423709,
+        "exitCode": 0,
+        "signal": null,
+        "failures": [],
+        "at": "2026-10-28T18:04:29.348Z"
+      },
+      "programCounts": [
+        {
+          "backend": "webgl",
+          "programs": 482,
+          "crowdPrograms": 73
+        },
+        {
+          "backend": "webgpu",
+          "programs": 707,
+          "crowdPrograms": 78
+        }
+      ]
+    },
+    {
+      "run": 2,
+      "receipt": {
+        "name": "smoke",
+        "cases": 144,
+        "counts": {
+          "vitest": 123,
+          "e2e": 9,
+          "invariantsBrowser": 12
+        },
+        "files": 40,
+        "limits": {
+          "cases": 150,
+          "files": 45,
+          "seconds": 240
+        },
+        "command": [
+          "sh",
+          "tools/qa/smoke.sh"
+        ],
+        "seconds": 218.31352608299997,
+        "exitCode": 0,
+        "signal": null,
+        "failures": [],
+        "at": "2026-10-28T18:08:12.827Z"
+      },
+      "programCounts": [
+        {
+          "backend": "webgl",
+          "programs": 482,
+          "crowdPrograms": 73
+        },
+        {
+          "backend": "webgpu",
+          "programs": 707,
+          "crowdPrograms": 78
+        }
+      ]
+    },
+    {
+      "run": 3,
+      "receipt": {
+        "name": "smoke",
+        "cases": 144,
+        "counts": {
+          "vitest": 123,
+          "e2e": 9,
+          "invariantsBrowser": 12
+        },
+        "files": 40,
+        "limits": {
+          "cases": 150,
+          "files": 45,
+          "seconds": 240
+        },
+        "command": [
+          "sh",
+          "tools/qa/smoke.sh"
+        ],
+        "seconds": 220.318092875,
+        "exitCode": 0,
+        "signal": null,
+        "failures": [],
+        "at": "2026-10-28T18:11:53.309Z"
+      },
+      "programCounts": [
+        {
+          "backend": "webgl",
+          "programs": 482,
+          "crowdPrograms": 73
+        },
+        {
+          "backend": "webgpu",
+          "programs": 707,
+          "crowdPrograms": 78
+        }
+      ]
+    }
+  ],
+  "after": [
+    {
+      "run": 1,
+      "receipt": {
+        "name": "smoke",
+        "cases": 144,
+        "counts": {
+          "vitest": 123,
+          "e2e": 9,
+          "invariantsBrowser": 12
+        },
+        "files": 40,
+        "limits": {
+          "cases": 150,
+          "files": 45,
+          "seconds": 240
+        },
+        "command": [
+          "sh",
+          "tools/qa/smoke.sh"
+        ],
+        "seconds": 143.60102937500002,
+        "exitCode": 0,
+        "signal": null,
+        "failures": [],
+        "at": "2026-10-28T18:14:22.163Z"
+      },
+      "programCounts": [
+        {
+          "backend": "webgl",
+          "programs": 482,
+          "crowdPrograms": 73
+        },
+        {
+          "backend": "webgpu",
+          "programs": 707,
+          "crowdPrograms": 78
+        }
+      ]
+    },
+    {
+      "run": 2,
+      "receipt": {
+        "name": "smoke",
+        "cases": 144,
+        "counts": {
+          "vitest": 123,
+          "e2e": 9,
+          "invariantsBrowser": 12
+        },
+        "files": 40,
+        "limits": {
+          "cases": 150,
+          "files": 45,
+          "seconds": 240
+        },
+        "command": [
+          "sh",
+          "tools/qa/smoke.sh"
+        ],
+        "seconds": 128.192608041,
+        "exitCode": 0,
+        "signal": null,
+        "failures": [],
+        "at": "2026-10-28T18:16:42.167Z"
+      },
+      "programCounts": [
+        {
+          "backend": "webgl",
+          "programs": 482,
+          "crowdPrograms": 73
+        },
+        {
+          "backend": "webgpu",
+          "programs": 707,
+          "crowdPrograms": 78
+        }
+      ]
+    },
+    {
+      "run": 3,
+      "receipt": {
+        "name": "smoke",
+        "cases": 144,
+        "counts": {
+          "vitest": 123,
+          "e2e": 9,
+          "invariantsBrowser": 12
+        },
+        "files": 40,
+        "limits": {
+          "cases": 150,
+          "files": 45,
+          "seconds": 240
+        },
+        "command": [
+          "sh",
+          "tools/qa/smoke.sh"
+        ],
+        "seconds": 128.100267792,
+        "exitCode": 0,
+        "signal": null,
+        "failures": [],
+        "at": "2026-10-28T18:18:50.430Z"
+      },
+      "programCounts": [
+        {
+          "backend": "webgl",
+          "programs": 482,
+          "crowdPrograms": 73
+        },
+        {
+          "backend": "webgpu",
+          "programs": 707,
+          "crowdPrograms": 78
+        }
+      ]
+    }
+  ],
+  "worstAfterSeconds": 143.60102937500002,
+  "programLayouts": {
+    "webgl": {
+      "uniqueLayouts": 67,
+      "crowdLayouts": 15,
+      "sha256": "1ab916668b64eeaca9651c9254291a24879e2ddb2fc986979ec170764c96220c"
+    },
+    "webgpu": {
+      "uniqueLayouts": 68,
+      "crowdLayouts": 15,
+      "sha256": "31e1dda080ce0387ac98c7faf24faaaf8f33b2f3afaa8c942d162bd19f8b4370"
+    }
+  },
+  "unchangedAssertionSources": {
+    "tests/e2e/crowd-gpu-limits.spec.ts": "8686ef1fd9ae0e7dcd99c6c0c7ce6417924121376ffa331f1efb5e367b937686",
+    "tests/e2e/smoke.spec.ts": "9f894adda1b63d21a90cd85e76af0c9a90d646dc60568cc4136af0220db52b33",
+    "tests/e2e/webgpu-unflagged.spec.ts": "2e6d80b2eb002c97ea4e6a85e296852c7c429eed5f72e61cc7f5635c12b47f6a",
+    "tests/e2e/fixtures.ts": "7f9d581fafd99c651158c03c3a3b6ac56b07359a1a56e4f2ff918b48d86ab8f4"
+  },
+  "injection": {
+    "command": "npm run build:qa && E2E_PORT=3378 MI_SLUG=smoke-speed sh tools/e2e-lock.sh npx playwright test tests/e2e/crowd-gpu-limits.spec.ts --project=chromium --workers=2",
+    "exitCode": 1,
+    "backends": {
+      "webgl": {
+        "status": "failed",
+        "assertion": "crowd varyings <= 14",
+        "received": 15,
+        "uniqueOverLimitLayouts": 3,
+        "outputs": [
+          "vec3 v_positionView",
+          "vec3 v_normalViewGeometry",
+          "vec3 v_positionWorld",
+          "vec3 crowdAppearanceColor",
+          "vec4 crowdRegionHairSkin",
+          "vec4 crowdRegionTrousersSkin",
+          "float smokeSpeedOverLimit",
+          "vec3 v_positionViewDirection",
+          "vec3 vInstanceColor",
+          "vec4 nodeVarying12",
+          "vec2 nodeVarying13",
+          "vec3 nodeVarying14",
+          "vec4 nodeVarying15",
+          "vec3 nodeVarying16",
+          "vec4 nodeVarying17"
+        ]
+      },
+      "webgpu": {
+        "status": "failed",
+        "assertion": "crowd varyings <= 14",
+        "received": 15,
+        "uniqueOverLimitLayouts": 3,
+        "outputs": [
+          "v_positionView:vec3<f32>",
+          "v_normalViewGeometry:vec3<f32>",
+          "v_positionWorld:vec3<f32>",
+          "crowdAppearanceColor:vec3<f32>",
+          "crowdRegionHairSkin:vec4<f32>",
+          "crowdRegionTrousersSkin:vec4<f32>",
+          "smokeSpeedOverLimit:f32",
+          "v_positionViewDirection:vec3<f32>",
+          "vInstanceColor:vec3<f32>",
+          "nodeVarying12:vec4<f32>",
+          "nodeVarying13:vec2<f32>",
+          "nodeVarying14:vec3<f32>",
+          "nodeVarying15:vec4<f32>",
+          "nodeVarying16:vec3<f32>",
+          "nodeVarying17:vec4<f32>"
+        ]
+      }
+    },
+    "errors": [
+      {
+        "test": "every crowd, corpse and accessory program compiles within the portable GPU limits on webgl @smoke",
+        "message": "Error: crowd position,_placement0,_placement1,_placement2,_placement3,normal,_placementColor,_parts,uv,_variant,color,_state varyings\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 14\nReceived:    15"
+      },
+      {
+        "test": "every crowd, corpse and accessory program compiles within the portable GPU limits on webgl @smoke",
+        "message": "Error: crowd position,_crowd0,_crowd1,_crowd2,_crowd3,_parts,_state,_variant,_skin,uv,normal,color varyings\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 14\nReceived:    15"
+      },
+      {
+        "test": "every crowd, corpse and accessory program compiles within the portable GPU limits on webgl @smoke",
+        "message": "Error: crowd position,_placement0,_placement1,_placement2,_placement3,normal,_placementColor,_parts,_variant,color,uv,_overlay varyings\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 14\nReceived:    15"
+      },
+      {
+        "test": "every crowd, corpse and accessory program compiles within the portable GPU limits on webgl @smoke",
+        "message": "Error: crowd position,_placement0,_placement1,_placement2,_placement3,normal,_placementColor,_parts,_variant,color,uv,_overlay varyings\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 14\nReceived:    15"
+      },
+      {
+        "test": "every crowd, corpse and accessory program compiles within the portable GPU limits on webgpu @smoke",
+        "message": "Error: crowd renderPipeline_pal_picketWhite_10380 varyings\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 14\nReceived:    15"
+      },
+      {
+        "test": "every crowd, corpse and accessory program compiles within the portable GPU limits on webgpu @smoke",
+        "message": "Error: crowd renderPipeline_pal_picketWhite_10311 varyings\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 14\nReceived:    15"
+      },
+      {
+        "test": "every crowd, corpse and accessory program compiles within the portable GPU limits on webgpu @smoke",
+        "message": "Error: crowd renderPipeline_pal_picketWhite_24009 varyings\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 14\nReceived:    15"
+      },
+      {
+        "test": "every crowd, corpse and accessory program compiles within the portable GPU limits on webgpu @smoke",
+        "message": "Error: crowd renderPipeline_pal_picketWhite_29978 varyings\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 14\nReceived:    15"
+      }
+    ]
+  },
+  "restoredSmoke": {
+    "name": "smoke",
+    "cases": 144,
+    "counts": {
+      "vitest": 123,
+      "e2e": 9,
+      "invariantsBrowser": 12
+    },
+    "files": 40,
+    "limits": {
+      "cases": 150,
+      "files": 45,
+      "seconds": 240
+    },
+    "command": [
+      "sh",
+      "tools/qa/smoke.sh"
+    ],
+    "seconds": 126.427446666,
+    "exitCode": 0,
+    "signal": null,
+    "failures": [],
+    "at": "2026-10-28T18:22:49.777Z"
+  },
+  "unitTest": {
+    "name": "test",
+    "cases": 144,
+    "counts": {
+      "vitest": 123,
+      "e2e": 9,
+      "invariantsBrowser": 12
+    },
+    "files": 40,
+    "limits": {
+      "cases": 150,
+      "files": 45,
+      "seconds": 240
+    },
+    "command": [
+      "npx",
+      "vitest",
+      "run",
+      "--project",
+      "default",
+      "--configLoader",
+      "runner"
+    ],
+    "seconds": 21.565174584,
+    "exitCode": 0,
+    "signal": null,
+    "failures": [],
+    "at": "2026-10-28T18:23:16.229Z"
+  },
+  "typecheck": {
+    "exitCode": 0
+  },
+  "lint": {
+    "exitCode": 0
+  }
+}
