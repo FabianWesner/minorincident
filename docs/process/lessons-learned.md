@@ -170,3 +170,4 @@ A living record, updated after every lane or experiment. Short entries with evid
 ### L10 long real-input runs and corridor progress (2026-10-28)
 - The 4.3 km level exceeds a shared browser reservation: release after at most eight minutes and resume the ordinary checkpoint save through the menu; keep each segment's input/issue evidence.
 - The R6 barrier detour moves about 55 m laterally while the HUD distance increases. The progress detector now credits a bounded new lateral frontier; parked actors, repeated loops and travel beyond the bound still fail. Extend the existing driver test instead of consuming another registered case.
+- Scene Lab installs L1 outbreak dressing by default, even on a D-CURE layout. L10 review fixtures must disable that dressing, retain native runner identities and assert the drawn model/accessory keys; a thirty-actor count alone did not prove that the intended thirty figures were pictured.

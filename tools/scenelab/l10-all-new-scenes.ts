@@ -35,6 +35,20 @@ function resources() {
   return {decodedBytes,uncompressedUpperBytes,textureCount:textures.size,perf:window.__SS__!.perf(),render:window.__SS__!.getState().render};
 }
 const base: SceneSpec = { name:'l10-review',ground:'asphalt',time:'L10-night',size:100,dof:false,actors:[],camera:{mode:'game',target:[0,0],zoom:1},frames:3,expect:{consoleErrors:0} };
+const load = session.load.bind(session);
+session.load = async spec => {
+  const result = await load(spec);
+  if(mode==='crowd'||mode==='story') await session.page.evaluate(() => {
+    const world=(window.__SCENE__ as unknown as {game:Game}).game.world;
+    // Match production L10: Scene Lab's default L1 dressing must not replace
+    // native runner identities or their authored headwear (same as L9 review).
+    world.scenario='L10';
+    const outbreak=world.npcs?.civilians.outbreak;
+    if(outbreak) outbreak.dressInfected=()=>{};
+    for(const entity of world.entities.values()) if(entity.infected&&entity.archetype==='infected.runner') delete entity.appearance;
+  });
+  return result;
+};
 try {
   await session.open();
   await session.page.addInitScript('window.__name = (fn) => fn;'); await session.page.evaluate('window.__name = (fn) => fn;');
@@ -88,6 +102,19 @@ try {
     assert.equal(actors.length,30);
     await session.load({...base,name:'l10-street-crowd30',ground:'district',layout:{district:'D-CURE',bbox:[[origin[0]-30,origin[1]-30],[origin[0]+30,origin[1]+30]]},actors,camera:{mode:'game',target:[origin[0]-3,.6,origin[1]-3],zoom:1.5}});await session.step(3);await session.ready();
     const metrics=await session.metrics();assert.equal(Object.keys(metrics.actors).length,30);
+    assert.ok(Object.values(metrics.actors).every(actor=>actor.drawnFrames>0),'All 30 figures must be drawn');
+    const identities=await session.page.evaluate(()=>{
+      const game=(window.__SCENE__ as unknown as {game:Game}).game,figures=game.view.crowdFigures();
+      return [...game.world.entities.values()].filter(e=>e.infected||e.civilian&&!e.companion).map(e=>({entity:e.id,model:e.appearance?.asset??e.civilian?.model??e.infected?.model??e.infected?.variant,drawn:figures.find(f=>f.id===e.id&&f.drawn)?.appearance??null,drawnRig:figures.some(f=>f.id===e.id&&f.drawn)}));
+    });
+    for(const [i,model]of models.entries()) {
+      const receipt=identities.find(row=>row.entity===metrics.actors[`figure-${i}`].entity);
+      assert.equal(receipt?.model,model,`figure-${i} requested identity`);
+      assert.equal(receipt?.drawnRig,true,`figure-${i} drawn rig`);
+      if(!model.startsWith('inf.dog')) assert.equal(receipt?.drawn?.model,model,`figure-${i} drawn identity`);
+      if(regularInfectedModels.includes(model as typeof regularInfectedModels[number])) assert.equal(receipt?.drawn?.accessory,null,`${model} keeps authored headwear`);
+    }
+    writeJson(`${out}/identities.json`,identities);
     for(const zoom of [1,1.5]){await session.page.evaluate(zoom=>window.__SS__!.camera.zoom(zoom),zoom);await session.screenshot(`${out}/zoom-${zoom}.png`);}
     writeJson(`${out}/metrics.json`,metrics);writeJson(`${out}/resources.json`,await session.page.evaluate(resources));
   } else if(mode==='states') {
