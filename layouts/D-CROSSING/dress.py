@@ -1058,6 +1058,14 @@ def gone(i):
 
 
 solids = [q['visualAabb'] for q in l.data['placements'] if not q['assetId'].startswith(('prop.tree', 'prop.hedge', 'prop.garden-bush', 'kit.crossing-crash')) and q['visualAabb']['max'][1] > 1.2]
+# The APC steers between a route and its encounter detour, not just along their
+# centre lines. Keep that whole bypass strip clear, including its 2.5 m hull margin.
+tree_corridors = []
+for route in source['routes']:
+    for a, b, da, db in zip(route['points'], route['points'][1:], route['detour'], route['detour'][1:]):
+        mid_a = ((a[0] + da[0]) / 2, (a[1] + da[1]) / 2)
+        mid_b = ((b[0] + db[0]) / 2, (b[1] + db[1]) / 2)
+        tree_corridors.append((mid_a, mid_b, max(math.dist(a, da), math.dist(b, db)) / 2 + 2.5))
 drop = []
 for i, p in enumerate(l.data['placements']):
     x, z = p['position'][0], p['position'][2]
@@ -1074,6 +1082,10 @@ for i, p in enumerate(l.data['placements']):
         continue
     if p['assetId'] == 'prop.tree':
         b = p['visualAabb']
+        if any(lane_hit((b['min'][0], b['min'][2], b['max'][0], b['max'][2]), a, c, clearance)
+               for a, c, clearance in tree_corridors):
+            drop.append(i)
+            continue
         mx, mz = (b['max'][0] - b['min'][0]) * .18, (b['max'][2] - b['min'][2]) * .18
         crown = (b['min'][0] + mx, b['min'][2] + mz, b['max'][0] - mx, b['max'][2] - mz)
         if any(box_gap(crown, (a['min'][0], a['min'][2], a['max'][0], a['max'][2])) < 0 for a in solids):
