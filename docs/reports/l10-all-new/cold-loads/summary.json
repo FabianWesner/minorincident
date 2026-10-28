@@ -1,0 +1,262 @@
+{
+  "rows": [
+    {
+      "variant": "prod",
+      "summary": {
+        "origin": "https://minor-incident.pages.dev",
+        "backend": "webgpu",
+        "quality": "low",
+        "level": "L10",
+        "diagnostic": false,
+        "gameplaySamples": 0,
+        "menuWaits": [
+          0
+        ],
+        "n": 5,
+        "median": 6111.199999809265,
+        "p90": 6260.89999961853,
+        "max": 6260.89999961853,
+        "maxFrameMs": 16.800000000000182,
+        "errors": []
+      },
+      "samples": [
+        {
+          "sampledAt": "2026-10-28T16:43:09.456Z",
+          "ms": 6111.199999809265,
+          "bundle": "https://minor-incident.pages.dev/build/index-DZEalWrY.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "contexts": [
+            "webgpu",
+            "2d"
+          ],
+          "load": [
+            4.7333984375,
+            3.63134765625,
+            3.47705078125
+          ],
+          "errors": []
+        },
+        {
+          "sampledAt": "2026-10-28T16:43:17.047Z",
+          "ms": 6226.5,
+          "bundle": "https://minor-incident.pages.dev/build/index-DZEalWrY.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "contexts": [
+            "webgpu",
+            "2d"
+          ],
+          "load": [
+            4.67431640625,
+            3.63720703125,
+            3.47998046875
+          ],
+          "errors": []
+        },
+        {
+          "sampledAt": "2026-10-28T16:43:24.660Z",
+          "ms": 6260.89999961853,
+          "bundle": "https://minor-incident.pages.dev/build/index-DZEalWrY.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "contexts": [
+            "webgpu",
+            "2d"
+          ],
+          "load": [
+            4.41650390625,
+            3.61572265625,
+            3.47412109375
+          ],
+          "errors": []
+        },
+        {
+          "sampledAt": "2026-10-28T16:43:32.043Z",
+          "ms": 6092.800000190735,
+          "bundle": "https://minor-incident.pages.dev/build/index-DZEalWrY.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "contexts": [
+            "webgpu",
+            "2d"
+          ],
+          "load": [
+            4.3828125,
+            3.6220703125,
+            3.47705078125
+          ],
+          "errors": []
+        },
+        {
+          "sampledAt": "2026-10-28T16:43:39.441Z",
+          "ms": 6058.89999961853,
+          "bundle": "https://minor-incident.pages.dev/build/index-DZEalWrY.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "contexts": [
+            "webgpu",
+            "2d"
+          ],
+          "load": [
+            4.32373046875,
+            3.6337890625,
+            3.48291015625
+          ],
+          "errors": []
+        }
+      ]
+    },
+    {
+      "variant": "new",
+      "summary": {
+        "origin": "http://127.0.0.1:4733",
+        "backend": "webgpu",
+        "quality": "low",
+        "level": "L10",
+        "diagnostic": false,
+        "gameplaySamples": 0,
+        "menuWaits": [
+          0
+        ],
+        "n": 5,
+        "median": 5576.199999809265,
+        "p90": 5732.099999427795,
+        "max": 5732.099999427795,
+        "maxFrameMs": 16.700000000000728,
+        "errors": []
+      },
+      "samples": [
+        {
+          "sampledAt": "2026-10-28T16:43:46.717Z",
+          "ms": 5433.599999427795,
+          "bundle": "http://127.0.0.1:4733/build/index-C4iboe88.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "contexts": [
+            "webgpu",
+            "2d"
+          ],
+          "load": [
+            4.37744140625,
+            3.65625,
+            3.49169921875
+          ],
+          "errors": []
+        },
+        {
+          "sampledAt": "2026-10-28T16:43:53.324Z",
+          "ms": 5440.199999809265,
+          "bundle": "http://127.0.0.1:4733/build/index-C4iboe88.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "contexts": [
+            "webgpu",
+            "2d"
+          ],
+          "load": [
+            4.26708984375,
+            3.64501953125,
+            3.48876953125
+          ],
+          "errors": []
+        },
+        {
+          "sampledAt": "2026-10-28T16:44:00.061Z",
+          "ms": 5576.199999809265,
+          "bundle": "http://127.0.0.1:4733/build/index-C4iboe88.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "contexts": [
+            "webgpu",
+            "2d"
+          ],
+          "load": [
+            4.63232421875,
+            3.73974609375,
+            3.52392578125
+          ],
+          "errors": []
+        },
+        {
+          "sampledAt": "2026-10-28T16:44:06.976Z",
+          "ms": 5726.5,
+          "bundle": "http://127.0.0.1:4733/build/index-C4iboe88.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "contexts": [
+            "webgpu",
+            "2d"
+          ],
+          "load": [
+            4.58154296875,
+            3.74365234375,
+            3.5263671875
+          ],
+          "errors": []
+        },
+        {
+          "sampledAt": "2026-10-28T16:44:13.982Z",
+          "ms": 5732.099999427795,
+          "bundle": "http://127.0.0.1:4733/build/index-C4iboe88.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "contexts": [
+            "webgpu",
+            "2d"
+          ],
+          "load": [
+            4.45458984375,
+            3.73095703125,
+            3.52294921875
+          ],
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "ratio": 0.9155392994261282,
+  "limit": 1.1,
+  "pass": true,
+  "method": "Five empty contexts per build, shared native Metal WebGPU low, real menu click to loading-card closure. Remote PROD versus local public build; network and browser/device caches differ. Final matched-host uncapped performance remains pending the PO quiet window."
+}

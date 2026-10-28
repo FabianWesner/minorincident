@@ -1,0 +1,399 @@
+{
+  "date": "2026-10-28",
+  "base": "e45cbde3b",
+  "sources": [
+    "src/levels/L10/encounters.ts",
+    "src/sim/missions/LevelTenEncounters.ts",
+    "src/sim/ai/InfectedSystem.ts",
+    "src/data/crowdAppearance.ts",
+    "src/data/alphaLooks.ts",
+    "src/data/dogAppearance.ts",
+    "src/sim/missions/LevelTenEpilogue.ts",
+    "src/sim/npc/Civilians.ts",
+    "src/sim/npc/install.ts",
+    "src/sim/npc/Npcs.ts",
+    "public/assets/layouts/D-CURE.layout.json",
+    "src/assets/manifest.json"
+  ],
+  "totalIdentities": 27,
+  "authoredSlots": {
+    "high": {
+      "infected.runner": 427,
+      "infected.dog": 21,
+      "infected.firefighter": 6,
+      "infected.alpha": 11
+    },
+    "low": {
+      "infected.runner": 248,
+      "infected.dog": 21,
+      "infected.firefighter": 6,
+      "infected.alpha": 10
+    }
+  },
+  "population": [
+    {
+      "asset": "char.courier-female",
+      "role": "player courier",
+      "visibility": "continuous, selected player identity",
+      "v2AtLaneBase": true,
+      "v2Current": true,
+      "owner": "already v2; skip",
+      "states": [
+        "alive",
+        "corpse"
+      ]
+    },
+    {
+      "asset": "char.courier-male",
+      "role": "player courier",
+      "visibility": "continuous, selected player identity",
+      "v2AtLaneBase": true,
+      "v2Current": true,
+      "owner": "already v2; skip",
+      "states": [
+        "alive",
+        "corpse"
+      ]
+    },
+    {
+      "asset": "char.corgi",
+      "role": "protected companion",
+      "visibility": "continuous; never infected",
+      "v2AtLaneBase": true,
+      "v2Current": true,
+      "owner": "already v2; skip",
+      "states": [
+        "alive"
+      ]
+    },
+    {
+      "asset": "inf.common-worker",
+      "role": "ordinary runner",
+      "visibility": "dominant regular population; least-crowded selector spreads seven looks",
+      "v2AtLaneBase": true,
+      "v2Current": true,
+      "owner": "already v2; skip",
+      "states": [
+        "alive",
+        "knockdown",
+        "recovery",
+        "corpse"
+      ]
+    },
+    {
+      "asset": "inf.jogger",
+      "role": "ordinary runner",
+      "visibility": "dominant regular population; least-crowded selector spreads seven looks",
+      "v2AtLaneBase": false,
+      "v2Current": true,
+      "owner": "L9; imported from main 904ae77a9",
+      "states": [
+        "alive",
+        "knockdown",
+        "recovery",
+        "corpse"
+      ]
+    },
+    {
+      "asset": "inf.cashier",
+      "role": "ordinary runner",
+      "visibility": "dominant regular population; least-crowded selector spreads seven looks",
+      "v2AtLaneBase": false,
+      "v2Current": true,
+      "owner": "L9; imported from main 904ae77a9",
+      "states": [
+        "alive",
+        "knockdown",
+        "recovery",
+        "corpse"
+      ]
+    },
+    {
+      "asset": "inf.delivery-driver",
+      "role": "ordinary runner",
+      "visibility": "dominant regular population; least-crowded selector spreads seven looks",
+      "v2AtLaneBase": false,
+      "v2Current": true,
+      "owner": "L9; imported from main 904ae77a9",
+      "states": [
+        "alive",
+        "knockdown",
+        "recovery",
+        "corpse"
+      ]
+    },
+    {
+      "asset": "inf.suburban-mom",
+      "role": "ordinary runner",
+      "visibility": "dominant regular population; least-crowded selector spreads seven looks",
+      "v2AtLaneBase": false,
+      "v2Current": true,
+      "owner": "L9; imported from main 904ae77a9",
+      "states": [
+        "alive",
+        "knockdown",
+        "recovery",
+        "corpse"
+      ]
+    },
+    {
+      "asset": "inf.bbq-dad",
+      "role": "ordinary runner",
+      "visibility": "dominant regular population; least-crowded selector spreads seven looks",
+      "v2AtLaneBase": false,
+      "v2Current": true,
+      "owner": "L9; imported from main 904ae77a9",
+      "states": [
+        "alive",
+        "knockdown",
+        "recovery",
+        "corpse"
+      ]
+    },
+    {
+      "asset": "inf.bathrobe-neighbor",
+      "role": "ordinary runner",
+      "visibility": "dominant regular population; least-crowded selector spreads seven looks",
+      "v2AtLaneBase": false,
+      "v2Current": true,
+      "owner": "L9; imported from main 904ae77a9",
+      "states": [
+        "alive",
+        "knockdown",
+        "recovery",
+        "corpse"
+      ]
+    },
+    {
+      "asset": "inf.firefighter",
+      "role": "industrial tough",
+      "visibility": "two per authored industrial group",
+      "v2AtLaneBase": true,
+      "v2Current": true,
+      "owner": "already v2; skip",
+      "states": [
+        "alive",
+        "knockdown",
+        "recovery",
+        "corpse"
+      ]
+    },
+    {
+      "asset": "inf.alpha",
+      "role": "regular Alpha",
+      "visibility": "R3-R7; deterministic renderer look, all five possible",
+      "v2AtLaneBase": true,
+      "v2Current": true,
+      "owner": "already v2; skip",
+      "states": [
+        "alive",
+        "knockdown",
+        "recovery",
+        "corpse"
+      ]
+    },
+    {
+      "asset": "inf.alpha-worker",
+      "role": "regular Alpha",
+      "visibility": "R3-R7; deterministic renderer look, all five possible",
+      "v2AtLaneBase": true,
+      "v2Current": true,
+      "owner": "already v2; skip",
+      "states": [
+        "alive",
+        "knockdown",
+        "recovery",
+        "corpse"
+      ]
+    },
+    {
+      "asset": "inf.alpha-hoodie",
+      "role": "regular Alpha",
+      "visibility": "R3-R7; deterministic renderer look, all five possible",
+      "v2AtLaneBase": true,
+      "v2Current": true,
+      "owner": "already v2; skip",
+      "states": [
+        "alive",
+        "knockdown",
+        "recovery",
+        "corpse"
+      ]
+    },
+    {
+      "asset": "inf.alpha-fire",
+      "role": "regular Alpha",
+      "visibility": "R3-R7; deterministic renderer look, all five possible",
+      "v2AtLaneBase": true,
+      "v2Current": true,
+      "owner": "already v2; skip",
+      "states": [
+        "alive",
+        "knockdown",
+        "recovery",
+        "corpse"
+      ]
+    },
+    {
+      "asset": "inf.alpha-suit",
+      "role": "regular Alpha",
+      "visibility": "R3-R7; deterministic renderer look, all five possible",
+      "v2AtLaneBase": true,
+      "v2Current": true,
+      "owner": "already v2; skip",
+      "states": [
+        "alive",
+        "knockdown",
+        "recovery",
+        "corpse"
+      ]
+    },
+    {
+      "asset": "inf.mega-alpha",
+      "role": "persistent Mega boss",
+      "visibility": "introduction, pursuit, finale; deterministic renderer look",
+      "v2AtLaneBase": false,
+      "v2Current": true,
+      "owner": "L10 build",
+      "states": [
+        "alive",
+        "knockdown",
+        "recovery",
+        "corpse"
+      ]
+    },
+    {
+      "asset": "inf.mega-alpha-ashen",
+      "role": "persistent Mega boss",
+      "visibility": "introduction, pursuit, finale; deterministic renderer look",
+      "v2AtLaneBase": false,
+      "v2Current": true,
+      "owner": "L10 build",
+      "states": [
+        "alive",
+        "knockdown",
+        "recovery",
+        "corpse"
+      ]
+    },
+    {
+      "asset": "inf.mega-alpha-ember",
+      "role": "persistent Mega boss",
+      "visibility": "introduction, pursuit, finale; deterministic renderer look",
+      "v2AtLaneBase": false,
+      "v2Current": true,
+      "owner": "L10 build",
+      "states": [
+        "alive",
+        "knockdown",
+        "recovery",
+        "corpse"
+      ]
+    },
+    {
+      "asset": "inf.dog",
+      "role": "infected dog",
+      "visibility": "recurs R2-R7; seeded coat selector",
+      "v2AtLaneBase": true,
+      "v2Current": true,
+      "owner": "already v2; skip",
+      "states": [
+        "alive",
+        "knockdown",
+        "recovery",
+        "corpse"
+      ]
+    },
+    {
+      "asset": "inf.dog.black",
+      "role": "infected dog",
+      "visibility": "recurs R2-R7; seeded coat selector",
+      "v2AtLaneBase": true,
+      "v2Current": true,
+      "owner": "already v2; skip",
+      "states": [
+        "alive",
+        "knockdown",
+        "recovery",
+        "corpse"
+      ]
+    },
+    {
+      "asset": "inf.dog.cream",
+      "role": "infected dog",
+      "visibility": "recurs R2-R7; seeded coat selector",
+      "v2AtLaneBase": true,
+      "v2Current": true,
+      "owner": "already v2; skip",
+      "states": [
+        "alive",
+        "knockdown",
+        "recovery",
+        "corpse"
+      ]
+    },
+    {
+      "asset": "npc.civilian-man-a",
+      "role": "epilogue resident",
+      "visibility": "three/six residents after cure release",
+      "v2AtLaneBase": true,
+      "v2Current": true,
+      "owner": "already v2; skip",
+      "states": [
+        "alive",
+        "corpse"
+      ]
+    },
+    {
+      "asset": "npc.civilian-man-b",
+      "role": "epilogue resident",
+      "visibility": "three/six residents after cure release",
+      "v2AtLaneBase": true,
+      "v2Current": true,
+      "owner": "already v2; skip",
+      "states": [
+        "alive",
+        "corpse"
+      ]
+    },
+    {
+      "asset": "npc.civilian-woman-a",
+      "role": "epilogue resident",
+      "visibility": "three/six residents after cure release",
+      "v2AtLaneBase": true,
+      "v2Current": true,
+      "owner": "already v2; skip",
+      "states": [
+        "alive",
+        "corpse"
+      ]
+    },
+    {
+      "asset": "npc.civilian-woman-b",
+      "role": "epilogue resident",
+      "visibility": "three/six residents after cure release",
+      "v2AtLaneBase": true,
+      "v2Current": true,
+      "owner": "already v2; skip",
+      "states": [
+        "alive",
+        "corpse"
+      ]
+    },
+    {
+      "asset": "npc.civilian-elderly",
+      "role": "epilogue resident",
+      "visibility": "three/six residents after cure release",
+      "v2AtLaneBase": true,
+      "v2Current": true,
+      "owner": "already v2; skip",
+      "states": [
+        "alive",
+        "corpse"
+      ]
+    }
+  ],
+  "selection": "All nine identities still rigid at the lane base fit the twelve-conversion limit: six shared runners are owned by L9, three Mega looks by this lane. No batch-3 remainder. Already-v2 Alpha looks, dog coats, couriers, companion and residents are retained and reviewed in the mixed crowd.",
+  "lifecycle": "NPCs only emerge after cure release, which disables civilian grabs; no new turned identity can enter L10. Corpses retain the selected registered look. L10 begins alone after the crash: no carried survivor or passenger entities are imported.",
+  "ambientAndDressing": "L10 NPC installation and Npcs.setQuality disable ambient humans/pets/children. The baked D-CURE layout contains no character, NPC, infected, animal or fixed corpse asset references; all figures come from the selectors and bounded epilogue above."
+}

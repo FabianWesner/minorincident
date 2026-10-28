@@ -507,7 +507,15 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         if (frame.playMs > 500) await issue(frame.playMs > 2000 ? 'P1' : 'P2', 'hitch', `Frame of ${Math.round(frame.playMs)} ms at tick ${frame.tick}`, false, frame);
       }
     }
-    if (run && o.sampleSeconds !== undefined && Date.now() - wallStart >= o.sampleSeconds * 1000) break;
+    if (run && o.sampleSeconds !== undefined && Date.now() - wallStart >= o.sampleSeconds * 1000) {
+      await press([]); await releaseAim();
+      run.wallSeconds = Math.round((Date.now() - wallStart) / 1000); run.simSeconds = Math.round((e.tick - tickStart) / 60);
+      run.weaponsEnd = e.player?.weapons ?? [];
+      run.attacks = await page.evaluate(() => ({ ...(window as unknown as { __playtestAttacks: Record<string, number> }).__playtestAttacks }));
+      log({ checkpointYield: e.checkpoint, level: e.level, tick: e.tick, finished: run.finished });
+      await capture(`${e.level}-checkpoint-yield`);
+      break;
+    }
 
     // The title screen loads L1 speculatively behind the menu: ignore levels outside the range until the first one starts.
     if (!run && e.level && !o.levels.includes(e.level)) { if (Date.now() - bootWall > 600_000) break; await hold(300); continue; }
@@ -558,6 +566,10 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       await hold(200); continue;
     }
     if (e.phase !== 'playing') { await press([]); await releaseAim(); await hold(200); idleScreens++; if (idleScreens === 900) { await issue('P0', 'long-cinematic', `Phase ${e.phase} lasted ~3 min`); break; } continue; }
+
+    // Direct-entry levels can report playing while their loading card still
+    // owns input. Wait for it before sending the first wheel or movement input.
+    if (e.loading) { await press([]); await releaseAim(); await hold(200); continue; }
 
     // Playing.
     if (e.tick - lastShot > 45 * 60) { lastShot = e.tick; await capture(`${e.level}-t${e.tick}`); }
@@ -611,7 +623,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       const seen = escort && e.allies.find(b => b.id === escort!.id && b.drawn && b.hp > 0 && !b.corpse);
       if (seen && escort) { escort.x = seen.x; escort.z = seen.z; }
     }
-    const observed=visibleProgress.update({context:`${e.level}|${e.step}|${e.checkpoint}|${run.deaths}`,text:e.tracker||e.objective,distance:e.distance,player:e.player,marker:ring,tick:e.tick,nowMs:Date.now()});
+    const observed=visibleProgress.update({context:`${e.level}|${e.step}|${e.checkpoint}|${run.deaths}`,text:e.tracker||e.objective,distance:e.distance,player:e.player,marker:ring,enemies:e.enemies.filter(body=>body.drawn),tick:e.tick,nowMs:Date.now()});
     if(observed.reason) {
       lastProgress.tick=e.tick;lastProgress.wall=Date.now();lastProgress.best=e.distance??Infinity;
       log({visibleProgress:{tick:e.tick,text:e.objective,distance:e.distance,player:e.player?{x:e.player.x,z:e.player.z}:null,marker:ring,reason:observed.reason}});
@@ -636,7 +648,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
 
     }
     if (e.distance !== null && e.distance < lastProgress.best - 2) { lastProgress.best = e.distance; lastProgress.wall = Date.now(); }
-    const stuckSim = (e.tick - lastProgress.tick) / 60, stuckWall = (Date.now() - lastProgress.wall) / 1000;
+    const stuckSim = observed.seconds, stuckWall = observed.seconds;
     run.maxNoProgressSeconds=Math.max(run.maxNoProgressSeconds,observed.seconds);
     if (e.player && e.player.hp < lastHp && e.player.hp <= 0) run.deaths++;
     if (e.player && e.player.hp <= 0) { await releaseAim(); await press([]); lastHp = 0; await hold(120); continue; }
@@ -652,7 +664,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     // The HUD distance can point at a moving guidance waypoint (L3 l3-route); the ring itself decides "at the ring".
     const ringDist = ring && e.player ? Math.hypot(ring.x - e.player.x, ring.z - e.player.z) : e.distance;
     const atRing = ringDist !== null && ringDist < 4;
-    if (stuckSim > 20 && stuckWall > 20) {
+    if (stuckSim > 20 && stuckWall > 20 && !watchingEnding) {
       const tag = `${key}|${atRing ? 'ring' : 'nav'}`;
       if (!stuckLogged.has(tag)) { stuckLogged.add(tag); await issue('P2', atRing ? 'stuck-at-ring' : 'stuck-navigating', `${Math.round(stuckSim)} s without objective progress ${atRing ? `standing at the ring (${e.distance?.toFixed(1)} m)` : `(distance ${e.distance?.toFixed(1) ?? 'none'} m, no marker: ${!e.marker?.visible})`}; HUD: "${e.tracker}"`); }
     }

@@ -1,5 +1,6 @@
 import { restoreCrowdGlasses } from './skin-crowd-glasses';
 import { restoreFireHelmet } from './restore-fire-helmet';
+import { restoreMegaSkull } from './restore-mega-skull';
 import { paintAnimalDetails, restoreElephantTail, type TuskRecipe } from './skin-crowd-animal-details';
 import { animalTeeth } from './skin-crowd-animal-infection';
 import { execFileSync } from 'node:child_process';
@@ -87,7 +88,10 @@ const protectedDetailsPath = join(source, 'protected-details.json');
 const protectedDetails = existsSync(protectedDetailsPath) ? JSON.parse(readFileSync(protectedDetailsPath, 'utf8')) as { lods?: ProtectedDetailLod[] } : undefined;
 // A carried object fused into the body cannot follow the game's prop lifecycle.
 // Refuse it before changing any active asset; anatomy fits inside this hand envelope.
-if (metadata?.class !== 'quadruped' && !def.animatedNodes.includes('body')) {
+// Mega Alpha hands are intentionally far beyond the ordinary hand reach: the
+// boss's oversized fists are anatomy, not fused carried props. L10's Mega has
+// no held-weapon socket; keep the prop guard for all other humanoid sources.
+if (metadata?.class !== 'quadruped' && metadata?.class !== 'mega' && !def.animatedNodes.includes('body')) {
   const document = await io.read(join(source, authored ? 'model.glb' : 'lod0.glb'));
   // Some reviewed casts carry a separately-authored hand prop. It remains a
   // child of the hand for animation, but is not fused body geometry and must
@@ -128,6 +132,9 @@ for (const lod of [0, 1, 2]) {
   if (unbound && id === 'inf.dog') args.push('--atlas-base-half', '--eyes', join(source, 'eyes.json'));
   else if (eyeSource && (id.startsWith('inf.') || alignment?.healthy_toy_eyes || metadata && ['quadruped', 'bird'].includes(metadata.class ?? ''))) args.push('--eyes', eyeSource);
   if (metadata && !derivedTemplate) args.push('--reconstruct-body');
+  // The lowered Mega fists contain small nearest-template trouser islands.
+  // Repair their semantic ownership without refitting the matching v2 rig.
+  if (metadata?.class === 'mega') args.push('--repair-contacts');
   if (id.startsWith('npc.')) args.push('--healthy');
   if (nativeInfected) {
     args.push('--eye-radius', '.04', '--basis', basis);
@@ -179,9 +186,13 @@ for (const lod of [0, 1, 2]) {
   if (id === 'char.corgi' || id === 'amb.dog') args.push('--no-eye-discs');
   const cheap = def.category === 'prop' && def.budget.triangles <= 12000;
   const triangleLimit = lod > 0 && def.authoredLodTriangles ? def.authoredLodTriangles[lod === 1 ? 'lod1' : 'lod2'] : lod > 0 && def.authoredLodRatios ? Math.ceil(def.budget.triangles * def.authoredLodRatios[lod === 1 ? 'lod1' : 'lod2']) : lod === 1 && def.tier === 'hero' ? Math.ceil(def.budget.triangles * .15) : lod === 2 && !cheap ? Math.min(4000, def.budget.triangles) : def.budget.triangles;
+  // The Mega's corrected four-weight seams need a little more encoded data.
+  // Keep its painted atlas readable inside 250 kB with modest LOD1 headroom.
+  const workingTriangleLimit = metadata?.class === 'mega' && lod === 1 ? triangleLimit - 128 : triangleLimit;
   let bodyBudget: number | undefined = unbound && id === 'inf.dog' ? (JSON.parse(readFileSync(join(dirname(report), 'amb.dog', `lod${lod}.json`), 'utf8')) as { bodyTriangleBudget: number | null }).bodyTriangleBudget ?? undefined : undefined;
   for (let attempt = 0; attempt < 4; attempt++) {
     execFileSync(process.execPath, ['--import', 'tsx', ...args, ...bodyBudget ? ['--body-budget', String(bodyBudget)] : []], { stdio: 'pipe' });
+    if (id.startsWith('inf.mega-alpha')) writeFileSync(join(report, `lod${lod}.head.json`), JSON.stringify(await restoreMegaSkull(raw, join(assets, lod ? `model.lod${lod}.glb` : 'model.glb')), null, 2) + '\n');
     if (id === 'npc.firefighter-alive') await restoreFireHelmet(raw, join(assets, 'model.lod1.glb'), lod);
     if (id === 'amb.elephant' || id === 'inf.elephant') await restoreElephantTail(raw, join(assets, 'model.glb'), lod);
     const document = await io.read(raw);
@@ -192,9 +203,9 @@ for (const lod of [0, 1, 2]) {
     }
     if (alignment?.rectangular_glasses) { restoreCrowdGlasses(document, lod); await io.write(raw, document); }
     const total = document.getRoot().listNodes().reduce((sum, node) => sum + (node.getMesh()?.listPrimitives().reduce((sum, primitive) => sum + (primitive.getIndices()?.getCount() ?? primitive.getAttribute('POSITION')!.getCount()) / 3, 0) ?? 0), 0);
-    if (total <= triangleLimit) break;
+    if (total <= workingTriangleLimit) break;
     const info = JSON.parse(readFileSync(join(report, `lod${lod}.json`), 'utf8')) as { triangles: number };
-    bodyBudget = info.triangles - (total - triangleLimit) - 8;
+    bodyBudget = info.triangles - (total - workingTriangleLimit) - 8;
     if (attempt === 3 || bodyBudget <= 0) throw Error(`${id}: fitted caps exceed triangle budget ${triangleLimit}`);
   }
   const animalRecipe = animalEyeRecipes[sourceId];
@@ -237,16 +248,22 @@ for (const lod of [0, 1, 2]) {
   const tiers = [];
   for (const low of [false, true]) {
     const target = join(output, `${id}.lod${lod}${low ? '.low' : ''}.glb`);
+    const initialAtlas = lod === 2 && (unbound || derivedTemplate) && id.startsWith('npc.') ? 256 : low || lod > 0 ? 512 : 1024;
     let positionPrecision: number | undefined;
-    await compressSkin(raw, target, basis, lod === 2 && (unbound || derivedTemplate) && id.startsWith('npc.') ? 256 : low || lod > 0 ? 512 : 1024);
-    // Keep the continuous mid-tier anatomy at distance; a smaller far atlas
-    // satisfies the cold-file cap when detailed faces leave too little room.
-    if (lod === 2 && readFileSync(target).length > 150000) {
-      if (nativeInfected) for (const precision of [1 / 16384, 1 / 8192, 1 / 4096, 1 / 2048, 1 / 1024]) {
+    await compressSkin(raw, target, basis, initialAtlas);
+    // Keep detailed boss faces at 512 when the standalone LOD budget permits.
+    const byteLimit = [600000, 250000, 150000][lod];
+    for (const atlas of nativeInfected ? [] : [512, 256, 128]) {
+      if (readFileSync(target).length <= byteLimit || atlas >= initialAtlas) continue;
+      await compressSkin(raw, target, basis, atlas);
+    }
+    // Preserve L9's continuous native infected anatomy at its far file cap.
+    if (lod === 2 && nativeInfected && readFileSync(target).length > byteLimit) {
+      for (const precision of [1 / 16384, 1 / 8192, 1 / 4096, 1 / 2048, 1 / 1024]) {
         positionPrecision = precision;
         await compressSkin(raw, target, basis, 128, undefined, undefined, false, precision);
-        if (readFileSync(target).length <= 150000) break;
-      } else await compressSkin(raw, target, basis, 128);
+        if (readFileSync(target).length <= byteLimit) break;
+      }
     }
     const bytes = readFileSync(target), document = await io.read(target), errors: string[] = [];
     if (bytes.length > [600000, 250000, 150000][lod]) errors.push(`size ${bytes.length} exceeds LOD${lod}`);

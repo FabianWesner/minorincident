@@ -22813,13 +22813,13 @@
     "status": "integrated",
     "tier": "hero",
     "script": "assets/inf.mega-alpha/build.py",
-    "glb": "public/assets/models/inf.mega-alpha.glb",
-    "sourceGlb": "assets/inf.mega-alpha/model.glb",
+    "glb": "public/assets/models/skinned/inf.mega-alpha.lod0.glb",
+    "sourceGlb": "assets/inf.mega-alpha/model.skin.glb",
     "dimensions": {
-      "x": 1.6933,
-      "y": 2.585,
-      "z": 2.9571,
-      "tolerance": 0.25
+      "x": 1.809944748878479,
+      "y": 2.6473909012559034,
+      "z": 2.938337206840515,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -22877,14 +22877,23 @@
     "decayVariants": [],
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/inf.mega-alpha.lod1.glb",
-      "lod2": "public/assets/models/inf.mega-alpha.lod2.glb"
+      "lod1": "public/assets/models/skinned/inf.mega-alpha.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.mega-alpha.lod2.glb"
     },
     "sourceScale": 1.08101627,
     "authoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
-    }
+    },
+    "rigidBaseline": {
+      "glb": "public/assets/models/inf.mega-alpha.glb",
+      "lods": {
+        "lod1": "public/assets/models/inf.mega-alpha.lod1.glb",
+        "lod2": "public/assets/models/inf.mega-alpha.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "inf.mega-alpha-ashen",
@@ -22892,13 +22901,13 @@
     "status": "integrated",
     "tier": "hero",
     "script": "assets/inf.mega-alpha/build.py",
-    "glb": "public/assets/models/inf.mega-alpha-ashen.glb",
-    "sourceGlb": "assets/inf.mega-alpha-ashen/model.glb",
+    "glb": "public/assets/models/skinned/inf.mega-alpha-ashen.lod0.glb",
+    "sourceGlb": "assets/inf.mega-alpha-ashen/model.skin.glb",
     "dimensions": {
-      "x": 1.6933,
-      "y": 2.5849,
-      "z": 2.9588,
-      "tolerance": 0.25
+      "x": 1.809944748878479,
+      "y": 2.6473909012559034,
+      "z": 2.938337206840515,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -22956,14 +22965,23 @@
     "decayVariants": [],
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/inf.mega-alpha-ashen.lod1.glb",
-      "lod2": "public/assets/models/inf.mega-alpha-ashen.lod2.glb"
+      "lod1": "public/assets/models/skinned/inf.mega-alpha-ashen.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.mega-alpha-ashen.lod2.glb"
     },
     "sourceScale": 1.08101627,
     "authoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
-    }
+    },
+    "rigidBaseline": {
+      "glb": "public/assets/models/inf.mega-alpha-ashen.glb",
+      "lods": {
+        "lod1": "public/assets/models/inf.mega-alpha-ashen.lod1.glb",
+        "lod2": "public/assets/models/inf.mega-alpha-ashen.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "inf.mega-alpha-ember",
@@ -22971,13 +22989,13 @@
     "status": "integrated",
     "tier": "hero",
     "script": "assets/inf.mega-alpha/build.py",
-    "glb": "public/assets/models/inf.mega-alpha-ember.glb",
-    "sourceGlb": "assets/inf.mega-alpha-ember/model.glb",
+    "glb": "public/assets/models/skinned/inf.mega-alpha-ember.lod0.glb",
+    "sourceGlb": "assets/inf.mega-alpha-ember/model.skin.glb",
     "dimensions": {
-      "x": 1.6933,
-      "y": 2.585,
-      "z": 2.9595,
-      "tolerance": 0.25
+      "x": 1.7735825777053833,
+      "y": 2.5942042288750145,
+      "z": 2.879305362701416,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -23035,14 +23053,23 @@
     "decayVariants": [],
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/inf.mega-alpha-ember.lod1.glb",
-      "lod2": "public/assets/models/inf.mega-alpha-ember.lod2.glb"
+      "lod1": "public/assets/models/skinned/inf.mega-alpha-ember.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.mega-alpha-ember.lod2.glb"
     },
     "sourceScale": 1.08101627,
     "authoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
-    }
+    },
+    "rigidBaseline": {
+      "glb": "public/assets/models/inf.mega-alpha-ember.glb",
+      "lods": {
+        "lod1": "public/assets/models/inf.mega-alpha-ember.lod1.glb",
+        "lod2": "public/assets/models/inf.mega-alpha-ember.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "amb.dog",

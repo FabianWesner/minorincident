@@ -1,0 +1,64 @@
+{
+  "pass": true,
+  "command": "SCENE_PORT=4734 npm run scene:gate -- --out test-results/l10-all-new/scene-gate-final --jobs 1",
+  "total": 48,
+  "passed": 43,
+  "known": [
+    {
+      "name": "ped-zoo-staff@high",
+      "failed": [
+        "clipping 4 > 0"
+      ],
+      "reason": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; 4 hand-vs-held-prop grip overlaps (coffee, bag x2, watering can); sheet looks fine"
+    },
+    {
+      "name": "ped-sit-all@high",
+      "failed": [
+        "clipping 1 > 0"
+      ],
+      "reason": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; right hand vs held cane, 215 tris, grip overlap only (sheet looks fine)"
+    },
+    {
+      "name": "ped-water-flowerbed@high",
+      "failed": [
+        "clipping 1 > 0"
+      ],
+      "reason": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; right hand vs watering can grip overlap"
+    },
+    {
+      "name": "dog-pet-trot@low-z1.5",
+      "failed": [
+        "footSlideMaxCm 8.2 > 3"
+      ],
+      "reason": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; footSlideMaxCm 8.2 > 3 at every zoom (low tier dog trot)"
+    },
+    {
+      "name": "ped-sit-all@low",
+      "failed": [
+        "clipping 1 > 0"
+      ],
+      "reason": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; same hand/cane overlap"
+    }
+  ],
+  "unexpected": [],
+  "batches": {
+    "webgl2-low-1": {
+      "code": 0,
+      "seconds": 140.61
+    },
+    "webgpu-high-1": {
+      "code": 1,
+      "seconds": 74.245
+    },
+    "webgl2-high-1": {
+      "code": 1,
+      "seconds": 129.172
+    },
+    "webgpu-low-1": {
+      "code": 1,
+      "seconds": 105.839
+    }
+  },
+  "testedCommit": "90cbc347e",
+  "identity": "{\"revision\":\"90cbc347e4d7f6cc02a487ee6d58a85db6f9944a\",\"inputs\":\"80b6e5426fe48252e159615e818913dd9758026a3ba959bc2166b9b36942f23d\",\"mode\":\"gate\",\"rows\":[[\"webgl2\",\"low\",\"courier-gear-tier4-female@low-z1.5\"],[\"webgpu\",\"high\",\"courier-gear-tier4-male@high-z0.5\"],[\"webgl2\",\"high\",\"courier-gear-tier2-female@high-z1.5\"],[\"webgpu\",\"low\",\"courier-gear-tier4-swing-female@low-z0.5\"],[\"webgl2\",\"high\",\"e18-courier-armed-male@high-z1.5\"],[\"webgpu\",\"low\",\"e18-courier-armed-female@low-z0.5\"],[\"webgl2\",\"high\",\"courier-locomotion-f@high-z1.5\"],[\"webgl2\",\"high\",\"courier-turns@high-z1.5\"],[\"webgl2\",\"high\",\"ped-walk-all@high\"],[\"webgpu\",\"low\",\"ped-walk-all@low\"],[\"webgl2\",\"high\",\"ped-sit-all@high\"],[\"webgpu\",\"low\",\"ped-sit-all@low\"],[\"webgl2\",\"low\",\"ped-newchars-walk-1@low-z0.5\"],[\"webgl2\",\"low\",\"ped-newchars-sit@low\"],[\"webgpu\",\"low\",\"ped-hats-glasses@low-z1.5\"],[\"webgl2\",\"high\",\"ped-hats-spots-l1@high-z0.5\"],[\"webgpu\",\"low\",\"ped-l1-staged-cast@low-z1.5\"],[\"webgl2\",\"high\",\"ped-water-flowerbed@high\"],[\"webgpu\",\"high\",\"ped-zoo-staff@high\"],[\"webgl2\",\"low\",\"ped-bitten@low\"],[\"webgl2\",\"low\",\"inf-chase-l1@low-z1.5\"],[\"webgpu\",\"high\",\"inf-chase-l3@high-z0.5\"],[\"webgpu\",\"low\",\"inf-looks@low\"],[\"webgl2\",\"high\",\"inf-horde-headwear@high-z1.5\"],[\"webgl2\",\"low\",\"inf-attack-knockdown@low\"],[\"webgpu\",\"low\",\"alpha-variants-close@low-z1.5\"],[\"webgl2\",\"high\",\"alpha-hit-corpse-suit@high-z1.5\"],[\"webgl2\",\"low\",\"mega-alpha-variants-lineup@low-z0.5\"],[\"webgl2\",\"high\",\"corgi-tongue-female@high-z1.5\"],[\"webgpu\",\"low\",\"dog-pet-trot@low-z1.5\"],[\"webgpu\",\"low\",\"animal-zoo-healthy@low-z0.5\"],[\"webgpu\",\"high\",\"wave3-zoo-routines@high-z1.5\"],[\"webgl2\",\"low\",\"corpse-look-close@low-z1.5\"],[\"webgpu\",\"high\",\"corpse-look-alpha@high-z0.5\"],[\"webgpu\",\"low\",\"corpse-placement-pile@low-z0.5\"],[\"webgl2\",\"high\",\"l4-broken-army-line@high-z0.5\"],[\"webgpu\",\"high\",\"fight-army-line-zoom06@high-z1.5\"],[\"webgl2\",\"low\",\"l10-d2-military-breach@low-z0.5\"],[\"webgl2\",\"low\",\"l10-mega-close-contact@low-z1.5\"],[\"webgpu\",\"low\",\"seethrough-open-sidewalk-l4@low-z0.5\"],[\"webgl2\",\"low\",\"seethrough-gear-four@low-z1.5\"],[\"webgpu\",\"high\",\"seat-bench-l1-start@high-z1.5\"],[\"webgl2\",\"low\",\"seat-bench-tipped@low\"],[\"webgpu\",\"low\",\"seat-grip-coffee-game@low-z1.5\"],[\"webgl2\",\"high\",\"veh-bus-hero@high-z0.5\"],[\"webgpu\",\"low\",\"veh-apc-damage-250@low-z1.5\"],[\"webgl2\",\"high\",\"collision-vehicle-admission@high-z0.5\"],[\"webgpu\",\"high\",\"inf-mega-arrival@high-z0.5\"]],\"maxRows\":15}"
+}

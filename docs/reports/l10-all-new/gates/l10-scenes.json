@@ -1,0 +1,68 @@
+{
+  "pass": true,
+  "cases": [
+    {
+      "name": "l10-crash-axe",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "name": "l10-d2-military-breach",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "name": "l10-e2-terminal",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "name": "l10-e2-backpack",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "name": "l10-mega-close-contact",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "name": "l10-cure-install-defend",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "name": "l10-cure-mist",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "name": "qa-l10-epilogue",
+      "pass": true,
+      "failed": []
+    }
+  ],
+  "nativeL10Dressing": true,
+  "freeze": {
+    "timing": "shared pool refresh-capped diagnostic; uncapped p95 acceptance pending PO quiet window",
+    "samples": 360,
+    "p95": 16.700000000004366,
+    "maxFrameMs": 16.80000000000291,
+    "over200": [],
+    "shaderBuilds": {},
+    "ai": 168,
+    "mission": {
+      "charge-active": true,
+      "console-held": false,
+      "terminal-read": true,
+      "cure-carried": false,
+      "cure-installed": true,
+      "charge-ready": true,
+      "mega-dead": false,
+      "cure-released": false,
+      "epilogue-finished": false,
+      "credits-finished": false,
+      "anchor-unavailable": false
+    }
+  }
+}
