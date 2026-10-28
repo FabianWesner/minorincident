@@ -29,7 +29,7 @@ import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon InstancedGroup.js (MIT, 41046b5), using E17 GPU crowdMatrix/clipTexture.
 import { BoxGeometry, BufferGeometry, PlaneGeometry, Color, DoubleSide, FrontSide, Group, InstancedInterleavedBuffer, InterleavedBufferAttribute, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, Frustum, Sphere, Vector3, StreamDrawUsage } from 'three/webgpu';
 import { varying, mix, attribute, mat4, normalGeometry, vec3, positionGeometry, vec4, float, uint, cameraViewMatrix, luminance, screenCoordinate, uniform, sharedUniformGroup, frontFacing, texture as sampleTexture, uv } from 'three/tsl';
-import { crowdBlendedMatrix, packCrowdParts, poseTexture } from '../assets/crowd';
+import { packCrowdParts, poseTexture } from '../assets/crowd';
 import type { Materials } from './Materials';
 import { PaletteMaterial } from './PaletteMaterial';
 import { AssetRegistry } from '../assets/registry';
@@ -52,13 +52,13 @@ import { keepsLook } from '../sim/outbreak/appearance';
 import { alphaLook, alphaLooks, alphaLookAssets } from '../data/alphaLooks';
 import { cureEncounters, cureEncounterSlots } from '../levels/L10/encounters';
 import { mergeCrowdVertices } from './characters/mergeCrowdVertices';
-import { crowdSkinJoint, skinnedCrowdMatrix, skinnedWoundNormal } from './characters/skinnedCrowd';
+import { skinnedCrowdMatrix, skinnedWoundNormal } from './characters/skinnedCrowd';
 import { loadSkinnedCrowdBake } from '../assets/civilianBake';
 import type { Node as TslNode } from 'three/webgpu';
 interface Batch { asset: string; animal: boolean; locomotion: CrowdLocomotion; probe: CrowdFigureProbe; poses: CrowdPosePalette; mesh: InstancedMesh; state: InterleavedBufferAttribute; tint: InterleavedBufferAttribute; shirt: Color; strideScale: number; windup: number; texture: import('three').DataTexture; count: number; placeholders: boolean; lod: string; role: string }
 /** Simulation ticks a hit flash may last at most (Vfx pulses for 0.1 s = 6 ticks at 60 Hz). */
 export const hitFlashTicks = 8;
-/** One instanced, rigid-part GPU batch per archetype. Scene graph size never grows with infected population. */
+/** One instanced, skinned GPU batch per archetype. Scene graph size never grows with infected population. */
 /** E19 §5.4: the speed tier must read from the silhouette. Prefer the sim's tier,
  * else the brain's jittered run speed (frail 4.7, average 5.1, athletic 5.6 m/s). */
 function tierGait(b: { speed?: number; tier?: string; l1?: { tier: string } }): 'infected-frail' | 'infected-lurch' | 'infected-sprint' {
@@ -417,7 +417,8 @@ export class CrowdView extends Group {
       material.depthTest = material.depthWrite = true;
       material.side = baked.doubleSided ? DoubleSide : FrontSide;
       const outgoing = variant.w.div(2).floor(), weight = variant.w.mod(2);
-      const matrix: TslNode<'mat4'> = baked.geometry.hasAttribute('_skin') ? skinnedCrowdMatrix(sharedPose ?? texture, parts.x, feedbackState.x, outgoing, weight, poses.bindRow) : baked.clip.binds ? crowdSkinJoint(sharedPose ?? texture, parts.x, feedbackState.x, outgoing, weight, poses.bindRow) : crowdBlendedMatrix(sharedPose ?? texture, parts.x, feedbackState.x, outgoing, weight);
+      if (!baked.clip.binds || !baked.geometry.hasAttribute('_skin')) throw new Error(`${asset} is missing the v2 skinned crowd contract`);
+      const matrix: TslNode<'mat4'> = skinnedCrowdMatrix(sharedPose ?? texture, parts.x, feedbackState.x, outgoing, weight, poses.bindRow);
       // Part indices are uniforms, not shader constants: every archetype/LOD compiles to the same program (one shared
       // pipeline), only the uniform values differ. Missing parts get -1 and never match.
       // Rig part indices are immutable for this material. Upload them once;
