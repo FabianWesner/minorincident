@@ -1,6 +1,6 @@
 import {chromium} from '@playwright/test';
 import {mkdirSync,readFileSync,writeFileSync} from 'node:fs';
-const targets=[['int.metro-station','int.metro-station','int.fire-station-bay'],['util.flashlight','util.flashlight','wpn.halligan'],...['npc.civilian-elderly','npc.paramedic','npc.civilian-woman-a','npc.survivor-group'].map(id=>[id+'.aftermath',id+'.aftermath',id]),...['dale','sam','cap-woman','bun-woman'].map(key=>['npc.survivor-group.aftermath.'+key,'npc.survivor-group.aftermath.'+key,'npc.survivor-group'])];
+const targets=[['int.metro-station','int.metro-station','int.fire-station-bay'],['util.flashlight','util.flashlight','wpn.halligan']];
 const manifest: {id:string;dimensions:{x:number;y:number;z:number}}[]=JSON.parse(readFileSync('src/assets/manifest.json','utf8'));
 const browser=await chromium.launch({headless:true,args:['--use-angle=metal']});
 try {

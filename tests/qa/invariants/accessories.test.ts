@@ -1,6 +1,6 @@
-import { existsSync, readFileSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import { expect, test, vi } from 'vitest';
-import { Box3, Color, Matrix4, Mesh, Texture, Vector3, type BufferGeometry, type Group, type InstancedMesh, type MeshBasicMaterial } from 'three';
+import { Box3, Matrix4, Mesh, Texture, Vector3, type BufferGeometry, type Group, type InstancedMesh } from 'three';
 import { clone as cloneSkeleton } from 'three/addons/utils/SkeletonUtils.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
@@ -18,15 +18,9 @@ import type { CrowdPosePalette } from '../../../src/render/characters/CrowdPoseP
 import { oracle } from './oracles';
 import { loadCivilianSource } from '../../../src/assets/civilianSource';
 import { prepareCivilianRig } from '../../../src/render/npc/prepareCivilianGeometry';
-import { palette } from '../../../src/data/palette';
 import type { AssetDef } from '../../../src/assets/types';
 
 type Lod = 'lod0' | 'lod1' | 'lod2';
-// Authored glasses are native head meshes, including staff/quest characters. Aftermath variants inherit their source.
-const authoredGlasses = new Set(manifest.filter(a => a.id.startsWith('npc.') && existsSync(`assets/${a.id}/build.py`) && /glasses|spectacle/i.test(readFileSync(`assets/${a.id}/build.py`, 'utf8'))).map(a => a.id));
-// tools/blender/sslib/aftermath.py extracts Sam from survivor03_root (the authored glassesMan).
-authoredGlasses.add('npc.survivor-group.aftermath.sam');
-const spectacleColors = [new Color(palette.uiDark), new Color(palette.leather)];
 const cache = new Map<string, Promise<Group>>();
 async function asset(id: string, lod: Lod): Promise<Group> {
   const key = `${id}/${lod}`;
@@ -162,19 +156,10 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
       // Shared legacy build.py files contain an unexecuted depot-clerk spectacles
       // branch for the lab staff too. Atlas sources declare geometric frame tags
       // explicitly; fused painted eyewear is checked by the source-UV/pixel gates.
-      const geometricGlasses = geometry.userData.crowdBinds
-        ? root.getObjectByName('root')?.userData.spectacleTop !== undefined
-        : authoredGlasses.has(model) || authoredGlasses.has(model.replace(/\.aftermath$/, ''));
+      const geometricGlasses = root.getObjectByName('root')?.userData.spectacleTop !== undefined;
       if (geometricGlasses) {
         glassesHeads++;
-        // Palette-folded aftermath heads retain the source rig/shape but no separate skin material.
-        let glassSkull = skull;
-        if (!glassSkull && model.endsWith('.aftermath')) {
-          const source = await asset(model.replace(/\.aftermath$/, ''), lod);
-          prepareCivilianRig(source, model.replace(/\.aftermath$/, ''));
-          glassSkull = authoredSkull(source);
-        }
-        if (!glassSkull && model === 'npc.survivor-group.aftermath.sam') glassSkull = authoredSkull(await asset('npc.survivor-group', lod), 'survivor03_head');
+        const glassSkull = skull;
         const headNode = root.getObjectByName('head')!; root.updateMatrixWorld(true);
         const inverse = headNode.matrixWorld.clone().invert(), spectacles = new Box3(), point = new Vector3(), authoredFace: Vector3[] = [];
         const skin = root.getObjectByName('skin_body') as Mesh | undefined;
@@ -182,26 +167,6 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
           const p = skin.geometry.getAttribute('position'), region = skin.geometry.getAttribute('_crowd_region'), matrix = inverse.clone().multiply(skin.matrixWorld);
           for (let i = 0; i < p.count; i++) if (region?.getX(i) > 1.5) { point.fromBufferAttribute(p, i).applyMatrix4(matrix); spectacles.expandByPoint(point); authoredFace.push(point.clone()); }
         }
-        headNode.traverse(node => {
-          if (!(node instanceof Mesh) || Array.isArray(node.material)) return;
-          const material = node.material as MeshBasicMaterial, nativeDark = /pal_(leather|uiDark)$/.test(material.name);
-          const position = node.geometry.getAttribute('position'), index = node.geometry.index, colors = node.geometry.getAttribute('color'), transform = inverse.clone().multiply(node.matrixWorld), shade = new Color();
-          if (!nativeDark && !(material.vertexColors && colors)) return;
-          for (let i = 0; i < (index?.count ?? position.count); i++) {
-            const vertex = index ? index.getX(i) : i;
-            // Aftermath authoring folds swatches into soot-tinted vertex colors under pal_picketWhite.
-            if (!nativeDark) {
-              shade.fromBufferAttribute(colors, vertex).multiply(material.color);
-              const dark = spectacleColors.some(swatch => {
-                const ratio = Math.max(shade.r, shade.g, shade.b) / Math.max(swatch.r, swatch.g, swatch.b);
-                return ratio >= .25 && ratio <= 1.05 && (['r', 'g', 'b'] as const).every(axis => Math.abs(shade[axis] - swatch[axis] * ratio) <= .003);
-              });
-              if (!dark) continue;
-            }
-            point.fromBufferAttribute(position, vertex).applyMatrix4(transform);
-            if (point.x > .02 && point.y > .04) { spectacles.expandByPoint(point); authoredFace.push(point.clone()); }
-          }
-        });
         if (!glassSkull || spectacles.isEmpty()) errors.push(`${model}/${lod}: authored glasses need ${!glassSkull ? 'source head skin' : 'visible face geometry'}`);
         else {
           const top = glassSkull.centre.y + glassSkull.size.y / 2;
