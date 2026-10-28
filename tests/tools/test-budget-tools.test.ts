@@ -1,5 +1,5 @@
 import { execFile, spawnSync } from 'node:child_process';
-import { chmodSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { chmodSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { promisify } from 'node:util';
@@ -17,24 +17,33 @@ test('test budget collection is passive, rejects missing counts and bounds colle
   const root = mkdtempSync(join(tmpdir(), 'mi-budget-fixture-'));
   try {
     const npx = join(root, 'npx');
-    const run = (mode: string, seconds: string) => spawnSync(process.execPath,
+    const run = (mode: string, seconds: string) => {
+      const result = spawnSync(process.execPath,
       [process.env.MI_BUDGET_RUNNER ?? resolve('tools/qa/test-budget.mjs'), '--name', 'budget-fixture', '--max-seconds', seconds, '--', process.execPath, '-e', ''],
       { env: { ...process.env, PATH: `${root}:${process.env.PATH}`, BUDGET_FIXTURE_MODE: mode, BUDGET_FIXTURE_PID: join(root, 'pid'), BUDGET_FIXTURE_ORPHAN_PID: join(root, 'orphan-pid') }, encoding: 'utf8', timeout: 35_000 });
+      const collectedDir = join(root, 'list-dir');
+      expect(existsSync(readFileSync(collectedDir, 'utf8')), `${mode}: collection temp directory must be removed`).toBe(false);
+      return result;
+    };
     writeFileSync(npx, `#!/usr/bin/env node
 const fs = require('node:fs');
-const { spawn } = require('node:child_process');
-if (process.env.BUDGET_FIXTURE_MODE === 'hang' || process.env.BUDGET_FIXTURE_MODE === 'kill-parent') {
+const { spawn, execFileSync } = require('node:child_process');
+const path = require('node:path');
+const out = process.argv.find(arg => arg.startsWith('--json='));
+if (out) fs.writeFileSync(path.join(path.dirname(process.env.BUDGET_FIXTURE_PID), 'list-dir'), path.dirname(out.slice(7)));
+if (['hang', 'kill-parent', 'kill-watchdog'].includes(process.env.BUDGET_FIXTURE_MODE)) {
   fs.writeFileSync(process.env.BUDGET_FIXTURE_PID, String(process.pid));
-  if (process.env.BUDGET_FIXTURE_MODE === 'kill-parent') process.kill(process.ppid, 'SIGTERM');
-  process.on('SIGTERM', () => {}); setInterval(() => {}, 1000);
+  process.on('SIGTERM', () => {});
+  if (process.env.BUDGET_FIXTURE_MODE === 'kill-parent') process.kill(Number(execFileSync('ps', ['-o', 'ppid=', '-p', String(process.ppid)]).toString().trim()), 'SIGTERM');
+  if (process.env.BUDGET_FIXTURE_MODE === 'kill-watchdog') process.kill(process.ppid, 'SIGTERM');
+  setInterval(() => {}, 1000);
 } else {
   if (process.env.BUDGET_FIXTURE_MODE === 'orphan' && process.argv.some(arg => arg.startsWith('--json='))) {
-    const child = spawn(process.execPath, ['-e', "process.on('SIGTERM',()=>{});setInterval(()=>{},1000)"], { stdio: 'ignore' });
+    const child = spawn(process.execPath, ['-e', "process.on('SIGTERM',()=>{});setInterval(()=>{},1000)", process.env.BUDGET_FIXTURE_ORPHAN_PID], { stdio: 'ignore' });
     child.unref();
     fs.writeFileSync(process.env.BUDGET_FIXTURE_ORPHAN_PID, String(child.pid));
   }
   if (process.env.BUDGET_FIXTURE_MODE === 'delay') Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 300);
-  const out = process.argv.find(arg => arg.startsWith('--json='));
   if (out) fs.writeFileSync(out.slice(7), '[]');
   else console.log(process.env.BUDGET_FIXTURE_MODE === 'malformed' ? 'No total line' : 'Total: 1 test');
 }
@@ -52,8 +61,20 @@ if (process.env.BUDGET_FIXTURE_MODE === 'hang' || process.env.BUDGET_FIXTURE_MOD
     const pid = Number(readFileSync(join(root, 'pid'), 'utf8'));
     expect(() => process.kill(pid, 0), 'timed-out collector must be reaped').toThrow();
     const killed = run('kill-parent', '5');
-    expect(killed.status, 'killing the budget watchdog must fail the wrapper').not.toBe(0);
+    expect(killed.status, 'the collector must forward TERM, clean up and preserve signal status').toBe(143);
     const killedPid = Number(readFileSync(join(root, 'pid'), 'utf8'));
     expect(() => process.kill(killedPid, 0), 'killed watchdog must reap its process group').toThrow();
-  } finally { rmSync(root, { recursive: true, force: true }); }
+    expect(run('kill-watchdog', '10').status, 'watchdog cancellation must fail collection').toBe(1);
+    const watchdogChild = Number(readFileSync(join(root, 'pid'), 'utf8'));
+    expect(() => process.kill(watchdogChild, 0), 'cancelled watchdog must reap its process group').toThrow();
+  } finally {
+    // Failed assertions must not themselves leave the regression fixture alive.
+    for (const name of ['pid', 'orphan-pid']) {
+      if (!existsSync(join(root, name))) continue;
+      const pid = Number(readFileSync(join(root, name), 'utf8'));
+      const command = spawnSync('ps', ['-p', String(pid), '-o', 'command='], { encoding: 'utf8' }).stdout;
+      if (command?.includes(root)) { try { process.kill(pid, 'SIGKILL'); } catch { /* already exited */ } }
+    }
+    rmSync(root, { recursive: true, force: true });
+  }
 }, 60_000);
