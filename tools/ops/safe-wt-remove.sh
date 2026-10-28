@@ -10,6 +10,7 @@ if [ -n "$dirty" ]; then
   echo "$dirty" | head -20 >&2
   exit 1
 fi
+git worktree unlock "$wt" 2>/dev/null || true
 git worktree remove --force "$wt"
 git worktree prune
 echo "removed $wt"
