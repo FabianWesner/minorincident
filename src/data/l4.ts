@@ -196,11 +196,12 @@ export const l4 = {
   },
   /** Section 5.5: military spectacle (sim-light, view-heavy). */
   tank: {
+    asset: 'veh.tank',
     /** Enters at turn + enterAfterS from the army gate along Lakeshore, then north through the lake garden gap. PO #116: the lane keeps clear of the parked cars (z 43.3) and the stop sits outside the military wall (z 22.5), never astride it. */
     enterAfterS: 22, speedMs: 3.6, fireEveryS: [8, 12] as P, minDistM: 15, shellId: 'explosion.tank-shell', turnRate: 2.2,
     path: [[-70, 47], [-26, 47], [-20, 41], [-20, 27.5]] as readonly P[],
   },
-  heli: { alt: 17, orbitR: 30, omega: .26, centre: [-14, 4] as P, burstEveryS: [2.2, 3.6] as P, burst: { shots: 5, shotS: .09, damage: 22, hit: .6, rangeM: 60 }, startR: 95, arriveS: 7, withdrawS: 7 },
+  heli: { asset: 'veh.helicopter-military', alt: 17, orbitR: 30, omega: .26, centre: [-14, 4] as P, burstEveryS: [2.2, 3.6] as P, burst: { shots: 5, shotS: .09, damage: 22, hit: .6, rangeM: 60 }, startR: 95, arriveS: 7, withdrawS: 7 },
   /** Fuel truck at the plaza edge (Plaza Way, by the convoy gap): the tank shell sets it off at the line break (mega chain). */
   fuelTruck: { x: 16.3, z: -9.5, yaw: Math.PI / 2, blast: 'explosion.fuel-truck' },
   /** Beat 5-6: live damage and the collapse; the cellar marker appears at the line break. */

@@ -22,6 +22,7 @@ import { courierForegroundOn, useCourierDepth } from './courierDepth';
 type LoadedCharacter = Awaited<ReturnType<typeof loadCharacter>> & { assetId: string; animator: KeyframeAnimator; living?: CourierLiving; gear: Group[]; tierGear?: { mesh: SkinnedMesh; tierTris: number[] }; body: Set<Mesh>; headlamp?: Group; cure?: Group; aim: GunAim; sockets: Record<'LEFT' | 'RIGHT', { socket: import('three').Object3D; hand: import('three').Object3D }> };
 /** Hero hierarchy presentation. Cosmetic variants share identical sim state and attachment rules. */
 export class CharacterView extends Group {
+  constructor() { super(); this.userData.nodeBuildScope = 'character'; }
   /** The same presentation silhouette used through faded buildings: keep the
    * courier readable at boss contact without dissolving the boss's body. Called every frame: the near-camera depth
    * slice is a uniform switch (courierDepth, Q-208: no shader rebuild); later attachments get the shared depth node. */

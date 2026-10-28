@@ -57,7 +57,7 @@ export class BicycleView extends Group {
   private loading = false;
   private disposed = false;
   constructor(private readonly world: SimWorld, materials: Materials) {
-    super(); this.name = 'bicycle';
+    super(); this.name = 'bicycle'; this.userData.nodeBuildScope = 'vehicle';
     this.prompt.className = 'interaction-prompt'; this.prompt.dataset.testid = 'bike-prompt'; this.prompt.hidden = true; this.prompt.innerHTML = '<strong>Cargo bike</strong><span>Stand here or press E to ride</span>';
     document.querySelector('#game')?.append(this.prompt);
     this.registry = new AssetRegistry(() => {}, { materials });

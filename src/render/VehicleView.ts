@@ -29,6 +29,7 @@ interface Record { bounds: Box3; apc?: ApcDamage; doorHeldAt: number; decay?: st
 export class VehicleView extends Group {
   private readonly registry: AssetRegistry;
   private readonly records = new Map<number, Record>();
+  private readonly variants = new Map<number, Map<string, Record>>();
   private readonly occupants = new Map<number, VehicleOccupant>();
   private readonly occupantLoads = new Map<number, Promise<void>>();
   private readonly occupantSeats = new Map<number, Group>();
@@ -43,9 +44,8 @@ export class VehicleView extends Group {
   private disposed = false;
   private readonly contact = new Vector3();
   private readonly chassisRotation = new Quaternion();
-  private readonly crashModels = new Map<string, { model: Object3D; paint: Record['paint'] }>();
   private readonly pending = new Map<number, Promise<void>>();
-  constructor(private readonly world: SimWorld, private readonly materials: Materials, private readonly view: View, private readonly low = false) { super(); this.registry = new AssetRegistry(() => {}, { materials: materials }); this.fireMaterial.color.multiplyScalar(3); }
+  constructor(private readonly world: SimWorld, private readonly materials: Materials, private readonly view: View, private readonly low = false) { super(); this.userData.nodeBuildScope = 'vehicle'; this.registry = new AssetRegistry(() => {}, { materials: materials }); this.fireMaterial.color.multiplyScalar(3); }
   /** Compile transport passenger rigs during level loading, before boarding can hitch. */
   async prewarmOccupants(): Promise<(() => void) | undefined> {
     const truckId = this.world.missions?.state.l2?.truckId;
@@ -92,16 +92,25 @@ export class VehicleView extends Group {
   async prewarmCrash(): Promise<(() => void) | undefined> {
     const id = this.world.missions?.l9?.state.carId, car = id === undefined ? undefined : this.world.vehicles!.cars.get(id);
     if (!car) return;
-    const root = new Group(); root.position.copy(car.entity.transform);
-    const def = car.physics.def;
     for (const lod of this.low ? ['lod1', 'lod2'] as const : ['lod0', 'lod1', 'lod2'] as const) {
-      const model = await this.registry.loadAsset(def.asset, lod, 'wrecked');
-      prepareTransportModel(model, def); this.crashModels.set(lod, { model, paint: this.paintModel(model) }); model.position.y = -(def.suspension + def.wheelRadius + .15); root.add(model);
+      await this.addCar(id!, lod, false, 'wrecked');
     }
-    this.add(root);
-    return () => root.removeFromParent();
   }
-  async load(): Promise<void> { for (const car of this.world.vehicles!.cars.values()) await this.addCar(car.entity.id); this.update(1); }
+  async load(): Promise<void> {
+    for (const car of this.world.vehicles!.cars.values()) {
+      await this.addCar(car.entity.id);
+      for (const lod of this.low ? ['lod1', 'lod2'] as const : ['lod0', 'lod1', 'lod2'] as const) await this.addCar(car.entity.id, lod, false);
+    }
+    this.update(1); await this.ready();
+  }
+  /** Both occluding and ridden hull graphs belong to the level warm-up. */
+  prewarmReveal(enabled: boolean): () => void {
+    const saved: [PaletteMaterial, boolean][] = [];
+    for (const variants of this.variants.values()) for (const record of variants.values()) for (const material of record.paint) if (material instanceof PaletteMaterial) {
+      saved.push([material, material.userData.seeThrough === true]); material.seeThrough(enabled);
+    }
+    return () => { for (const [material, value] of saved) material.seeThrough(value); };
+  }
   private paintModel(model: Object3D): Record['paint'] {
     const paint: Record['paint'] = [], copies = new Map<import('three').Material, Record['paint'][number]>();
     model.traverse(node => { if (!(node instanceof Mesh)) return; const convert = (material: import('three').Material) => {
@@ -127,20 +136,30 @@ export class VehicleView extends Group {
     }; node.material = Array.isArray(node.material) ? node.material.map(convert) : convert(node.material); });
     return paint;
   }
-  private async addCar(id: number): Promise<void> {
+  private async addCar(id: number, requestedLod?: AssetQuality, activate = true, decayOverride?: string): Promise<void> {
     const car = this.world.vehicles!.cars.get(id)!, def = car.physics.def;
     const distance = Math.hypot(car.entity.transform.x - this.view.cameraTarget.x, car.entity.transform.z - this.view.cameraTarget.z);
-    const lod = modelLod(distance, this.records.get(id)?.lod, this.low);
-    const decay = car.entity.vehicle!.decay;
+    const lod = requestedLod ?? modelLod(distance, this.records.get(id)?.lod, this.low);
+    const decay = decayOverride ?? car.entity.vehicle!.decay, key = `${lod}:${decay ?? ''}`;
+    let variants = this.variants.get(id);
+    if (!variants) { variants = new Map(); this.variants.set(id, variants); }
+    const cached = variants.get(key);
+    if (cached) {
+      if (activate) {
+        const previous = this.records.get(id);
+        if (previous && previous !== cached) { previous.parent.visible = false; cached.doorHeldAt = previous.doorHeldAt; Object.assign(cached.feel, previous.feel); }
+        cached.parent.visible = true; this.records.set(id, cached);
+        const feedback = this.feedbackEvents.get(id); if (feedback) this.feedback(feedback, this.bloodEnabled);
+      }
+      return;
+    }
     const asset = def.asset, shell = decay ?? (def.bodyVariant && this.registry.definition(asset).decayVariants.includes(def.bodyVariant) ? def.bodyVariant : undefined);
-    const prepared = decay === 'wrecked' && id === this.world.missions?.l9?.state.carId ? this.crashModels.get(lod) : undefined;
-    if (prepared) this.crashModels.delete(lod);
-    const model = prepared?.model ?? (atLeast(this.registry.definition(asset).status, 'integrated') ? await this.registry.loadAsset(asset, lod, shell) : vehiclePlaceholder(def, this.materials.get(def.emergency ? 'picketWhite' : def.id === 'vehicle.school-bus' ? 'schoolBusYellow' : 'survivorRed')));
+    const model = atLeast(this.registry.definition(asset).status, 'integrated') ? await this.registry.loadAsset(asset, lod, shell) : vehiclePlaceholder(def, this.materials.get(def.emergency ? 'picketWhite' : def.id === 'vehicle.school-bus' ? 'schoolBusYellow' : 'survivorRed'));
     if (this.disposed) return;
     model.userData.assetId = def.asset; prepareTransportModel(model, def);
-    const paint = prepared?.paint ?? this.paintModel(model);
+    const paint = this.paintModel(model);
     if (!decay) openTransportCab(model, def);
-    const parent = new Group(); parent.add(model); this.add(parent); model.position.y = -(def.suspension + def.wheelRadius + .15);
+    const parent = new Group(); parent.add(model); this.add(parent); parent.position.copy(car.entity.transform); parent.quaternion.copy(car.physics.rotation); parent.visible = activate; model.position.y = -(def.suspension + def.wheelRadius + .15);
     const wheels = ['wheelFL', 'wheelFR', 'wheelRL', 'wheelRR', ...(def.transport ? ['wheelML', 'wheelMR'] : [])].filter(name => model.getObjectByName(name)).map(name => { const node = model.getObjectByName(name)!; node.rotation.order = 'YXZ'; return { node, y: node.position.y, steer: node.rotation.y, spin: node.rotation.z, contacts: tyreSurface(node), contactPose: new Matrix4(), contactOffset: 0, contactGround: null }; });
     const lamp = (name: string, color: string) => {
       const material = new MeshBasicNodeMaterial({ color });
@@ -156,17 +175,18 @@ export class VehicleView extends Group {
     for (let i = 0; i < 5; i++) { const mesh = new Mesh(this.puffGeometry, this.smokeMaterial); mesh.position.set(def.length * .3, 1 + i * .32, (i % 2 ? 1 : -1) * .12); mesh.scale.setScalar(1 + i * .25); smoke.add(mesh); }
     const fire = new Mesh(this.puffGeometry, this.fireMaterial); fire.position.set(def.length * .3, .9, 0); fire.scale.set(1.8, 2.8, 1.3); parent.add(fire);
     const apc = car.entity.vehicle!.floor && def.asset === 'veh.military-apc' ? new ApcDamage(model) : undefined;
-    const previous = this.records.get(id); if (previous) { previous.parent.removeFromParent(); this.releaseRecord(previous); }
-    this.records.set(id, { bounds, apc, doorHeldAt: -carTransitionTicks, decay, lod, parent, model, wheels, brake, sirens, smoke, fire, door, paint, blood: 0, charred: false, feel: { tick: this.world.tick, speed: car.entity.vehicle!.speed, accel: 0, roll: 0, pitch: 0, restRoll: model.rotation.x, restPitch: model.rotation.z } });
+    const record = { bounds, apc, doorHeldAt: -carTransitionTicks, decay, lod, parent, model, wheels, brake, sirens, smoke, fire, door, paint, blood: 0, charred: false, feel: { tick: this.world.tick, speed: car.entity.vehicle!.speed, accel: 0, roll: 0, pitch: 0, restRoll: model.rotation.x, restPitch: model.rotation.z } };
+    variants.set(key, record);
+    if (activate) { const previous = this.records.get(id); if (previous) previous.parent.visible = false; this.records.set(id, record); }
     const feedback = this.feedbackEvents.get(id); if (feedback) this.feedback(feedback, this.bloodEnabled);
   }
   update(alpha: number): void {
     for (const [id, car] of this.world.vehicles!.cars) {
-      const record = this.records.get(id);
+      let record = this.records.get(id);
       const distance = Math.hypot(car.entity.transform.x - this.view.cameraTarget.x, car.entity.transform.z - this.view.cameraTarget.z);
       const lod = modelLod(distance, record?.lod, this.low);
       const decay = car.entity.vehicle!.decay;
-      if (!record || record.lod !== lod || record.decay !== decay) { if (!this.pending.has(id)) { this.pending.set(id, this.addCar(id).finally(() => { this.pending.delete(id); })); } if (!record) continue; }
+      if (!record || record.lod !== lod || record.decay !== decay) { if (!this.pending.has(id)) { this.pending.set(id, this.addCar(id).finally(() => { this.pending.delete(id); })); } record = this.records.get(id); if (!record) continue; }
       const body = car.physics, p = body.transform, prev = body.previous, state = car.entity.vehicle!;
       if (body.body.isKinematic()) {
         const feel = record.feel, elapsed = (this.world.tick - feel.tick) / 60;
@@ -427,10 +447,9 @@ export class VehicleView extends Group {
   }
   dispose(): void {
     this.disposed = true;
-    for (const { model, paint } of this.crashModels.values()) { model.removeFromParent(); for (const material of paint) material.dispose(); } this.crashModels.clear();
     const geometries = new Set<import('three').BufferGeometry>(), materials = new Set<MeshBasicNodeMaterial>();
-    for (const r of this.records.values()) { r.apc?.dispose(); disposeTransportCab(r.model); for (const material of r.paint) material.dispose(); geometries.add(r.door.geometry); materials.add(r.brake); for (const s of r.sirens) materials.add(s); if (r.model.userData.placeholder) r.model.traverse(node => { if (node instanceof Mesh) { geometries.add(node.geometry); const m = node.material; if (!Array.isArray(m) && m instanceof MeshBasicNodeMaterial) materials.add(m); } }); }
+    for (const variants of this.variants.values()) for (const r of variants.values()) { this.releaseRecord(r); if (r.model.userData.placeholder) r.model.traverse(node => { if (node instanceof Mesh) { geometries.add(node.geometry); const m = node.material; if (!Array.isArray(m) && m instanceof MeshBasicNodeMaterial) materials.add(m); } }); }
     for (const g of geometries) g.dispose(); for (const m of materials) m.dispose();
-    for (const occupant of this.occupants.values()) occupant.dispose(); this.occupants.clear(); this.occupantSeats.clear(); this.registry.dispose(); this.propGeometry.dispose(); this.puffGeometry.dispose(); this.smokeMaterial.dispose(); this.fireMaterial.dispose(); this.records.clear(); this.props.clear(); this.debris.length = 0; this.clear();
+    for (const occupant of this.occupants.values()) occupant.dispose(); this.occupants.clear(); this.occupantSeats.clear(); this.registry.dispose(); this.propGeometry.dispose(); this.puffGeometry.dispose(); this.smokeMaterial.dispose(); this.fireMaterial.dispose(); this.records.clear(); this.variants.clear(); this.props.clear(); this.debris.length = 0; this.clear();
   }
 }
