@@ -11,8 +11,8 @@ import type { Game } from '../../src/Game';
 
 const tier = process.env.REVIEW_TIER === 'high' ? 'high' : 'low';
 const backend = process.env.REVIEW_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
-const mode = process.env.L4_CAPTURE ?? 'crowd', variant = process.env.REVIEW_VARIANT ?? 'new';
-const base = process.env.REVIEW_BASE ?? '82b4a2664';
+const mode = process.env.L4_CAPTURE ?? 'crowd', variant = 'v2';
+const base = '82b4a2664';
 const revision = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
 const out = resolve(`test-results/l4-all-new/${mode}-${variant}-${tier}-${backend}`);
 const converted = ['inf.crawler', 'inf.riot-cop', 'inf.firefighter', 'inf.hazmat', 'inf.alpha', 'inf.alpha-worker', 'inf.alpha-hoodie', 'inf.alpha-fire', 'inf.alpha-suit'];
@@ -68,19 +68,6 @@ try {
   await session.open();
   await session.page.addInitScript("window.__name = (fn, name) => Object.defineProperty(fn, 'name', { value: name, configurable: true });");
   await session.page.evaluate("window.__name = (fn, name) => Object.defineProperty(fn, 'name', { value: name, configurable: true });");
-  if (variant === 'old') {
-    // Substitute immutable baseline data over the wire. No second checkout or
-    // copy, and no mutation of the active manifest or production source files.
-    for (const file of ['src/assets/manifest.json', 'src/assets/civilianBakes.json']) {
-      const data = execFileSync('git', ['show', `${base}:${file}`], { encoding: 'utf8' });
-      await session.page.context().route(`**/${file}*`, route => route.fulfill({ contentType: 'application/javascript', body: `export default ${data};` }));
-    }
-    const bakes = JSON.parse(execFileSync('git', ['show', `${base}:src/assets/civilianBakes.json`], { encoding: 'utf8' })) as Record<string, string>;
-    for (const path of new Set(Object.values(bakes))) await session.page.context().route(`**${path}`, route => route.fulfill({ contentType: 'application/octet-stream', body: execFileSync('git', ['show', `${base}:public${path}`], { maxBuffer: 8 * 1024 * 1024 }) }));
-    await session.page.reload();
-    await session.page.waitForFunction(() => !!window.__SCENE__ && !!window.__SS__);
-    await session.page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.pause(); });
-  }
   const actual = await session.page.evaluate(() => window.__SS__!.getState().render);
   assert.equal(actual.backend, backend === 'webgl2' ? 'webgl' : 'webgpu'); assert.equal(actual.quality, tier);
   const files = mode === 'story' ? ['specs/scenes/qa-l4-plaza-safe.json', 'specs/scenes/qa-l4-gate-convoy.json', 'specs/scenes/qa-l4-war-line.json', 'specs/scenes/qa-l4-fuel-chain.json', 'specs/scenes/qa-l4-tank-heli.json', 'specs/scenes/qa-l4-kessler-cellar.json', 'tests/scenes/catalog/l4-finale-cellar.json'] : [];

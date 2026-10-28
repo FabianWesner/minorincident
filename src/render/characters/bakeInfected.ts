@@ -1,5 +1,5 @@
 import { crowdLimbParts } from '../../assets/crowdParts';
-// Runtime adaptation of E17 bake-crowd.ts and Bruno InstancedGroup.js (MIT).
+// Runtime adaptation of Bruno InstancedGroup.js (MIT).
 import { AnimationMixer, LoopOnce, BufferAttribute, DoubleSide, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, Mesh, Vector3, type Group, type Object3D, type MeshBasicMaterial, type MeshStandardMaterial, type SkinnedMesh, type Texture } from 'three';
 import { packSkin, restInverses } from './skinnedCrowd';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
@@ -7,15 +7,15 @@ import { characterNodes } from '../../data/survivor';
 import { authoredClips, groundClips, sampleClip, strideScale } from './clips';
 import type { CharacterRig } from './rig';
 import type { CrowdClip } from '../../assets/crowd';
-import { compactCrowdGeometry } from './compactCrowdGeometry';
 import { authoredSoles } from './footSoles';
-type BakedCrowd = { geometry: import('three').BufferGeometry; clip: CrowdClip; shirtColor: import('three').Color | undefined; doubleSided: boolean; strideScale: number; texture?: Texture };
+type SkinnedCrowdClip = CrowdClip & { binds: Float32Array };
+type BakedCrowd = { geometry: import('three').BufferGeometry; clip: SkinnedCrowdClip; shirtColor: import('three').Color | undefined; doubleSided: boolean; strideScale: number; texture?: Texture };
 // Keep sampled animation and small bind transforms across loads. The source
 // registry already owns the geometry; cached expanded triangle soup otherwise
 // pins another vertex buffer after the scene indexes/disposes its own copy.
-const bakedCrowds = new Map<string, { clip: CrowdClip; transforms: Matrix4[] }>();
+const bakedCrowds = new Map<string, { clip: SkinnedCrowdClip; transforms: Matrix4[] }>();
 const bakedCrowdLimit = 64;
-// LODs with exactly the same rigid skeleton share geometry-independent samples
+// LODs with exactly the same skeleton share geometry-independent samples
 // within a cold load. Grounded/death poses still sample each model's own bounds.
 const rigPoses = new Map<string, Map<string, Float32Array>>();
 export const infectedClips = ['idle', 'run', 'swing', 'hurt', 'die', 'crawl', 'windup', 'walk', 'shamble', 'infected-run', 'npc-walk', 'npc-walk-relaxed', 'stagger-left', 'stagger-right', 'knockdown', 'get-up', 'flung', 'death-back', 'death-side', 'death-crumple', 'infection-stagger', 'infection-collapse', 'infection-rise',
@@ -26,7 +26,7 @@ export const framesPerClip = 24;
 /** Clips whose feet legitimately leave the floor plane (seated, knocked down, rising, dying): Scene Lab's rule. */
 const unplantedClips = /death|die|knockdown|flung|get-up|crawl|collapse|rise|sit|stand-up|grabbed|bitten|down/;
 const sole = new Vector3();
-/** Bake once at level load: merged color geometry, part indices and the shared authored glTF rigid-part actions. */
+/** Bake once at level load: merged color geometry, part indices and the shared authored glTF actions. */
 export function bakeInfected(...args: Parameters<typeof bakeInfectedSteps>): BakedCrowd {
   const steps = bakeInfectedSteps(...args);
   let step = steps.next();
@@ -45,6 +45,8 @@ export async function bakeInfectedAsync(pause: () => Promise<void>, ...args: Par
   return step.value;
 }
 function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], crawlingRestPose = false, clipNames: readonly string[] = infectedClips, cacheKey?: string, preserveIndices = false, preserveUV = false): Generator<void, BakedCrowd> {
+  let hasSkinnedMesh = false; root.traverse(node => { if ((node as SkinnedMesh).isSkinnedMesh) hasSkinnedMesh = true; });
+  if (!hasSkinnedMesh) throw new Error('Crowd bake requires the v2 skinned figure contract');
   preserveUV ||= root.userData.assetTextureMode === 'baseColor' || root.getObjectByName('root')?.userData.crowdAtlas === true;
   const texturedHumanoid = preserveUV && !root.getObjectByName('body');
   const rig = {} as CharacterRig;
@@ -171,8 +173,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
   let texture: Texture | undefined;
   let doubleSided = false;
   // Welded bodies keep vertices in world rest space. The shader combines unchanged joint rows with inverse binds.
-  let skinnedFigure = false; root.traverse(node => { if ((node as SkinnedMesh).isSkinnedMesh) skinnedFigure = true; });
-  const binds = skinnedFigure ? restInverses(parts) : undefined;
+  const binds = restInverses(parts);
   root.traverse((node) => {
     if (!(node instanceof Mesh)) return;
     let capNode: Object3D | null = node;
@@ -189,18 +190,17 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
     // for geometry must match the sampled atlas on subsequent loads.
     const bind = transforms[meshIndex++];
     if (bind) relative.copy(bind);
-    else { if ((node as SkinnedMesh).isSkinnedMesh) relative.copy(root.matrixWorld); else if (skinnedFigure) relative.copy(node.matrixWorld); else relative.copy(parts[part].matrixWorld).invert().multiply(node.matrixWorld); if (key) transforms.push(relative.clone()); }
+    else { if ((node as SkinnedMesh).isSkinnedMesh) relative.copy(root.matrixWorld); else relative.copy(node.matrixWorld); if (key) transforms.push(relative.clone()); }
     // CrowdView can retain authored indices through the bake. Expanding every
     // triangle first repeated transforms, attribute packing and welding work.
     // Civilian grip tessellation still requests the original triangle soup.
-    const geometry = node.geometry.index && (!preserveIndices || skinnedFigure) ? node.geometry.toNonIndexed() : node.geometry.clone();
+    const geometry = node.geometry.index ? node.geometry.toNonIndexed() : node.geometry.clone();
     if (preserveIndices && !geometry.index) {
       const indices = new Uint32Array(geometry.getAttribute('position').count);
       for (let i = 0; i < indices.length; i++) indices[i] = i;
       geometry.setIndex(new BufferAttribute(indices, 1));
     }
     if (cap) { geometry.computeVertexNormals(); geometry.setAttribute('uv', new BufferAttribute(new Float32Array(geometry.getAttribute('position').count * 2), 2)); }
-    if (preserveIndices && !skinnedFigure) compactCrowdGeometry(geometry);
     // Meshopt GLBs may use normalized integer attributes; transforms must write floats.
     for (const name of ['position', 'normal', ...(preserveUV ? ['uv'] : [])]) {
       const attribute = geometry.getAttribute(name);
@@ -224,55 +224,44 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
     const sourceColor = geometry.getAttribute('color');
     const base = material.color?.toArray() ?? [0.4, 0.3, 0.25];
     for (let i = 0; i < count; i++) {
-      colors[i * 3] = base[0] * (sourceColor && (material.vertexColors || skinnedFigure) ? sourceColor.getX(i) : 1);
-      colors[i * 3 + 1] = base[1] * (sourceColor && (material.vertexColors || skinnedFigure) ? sourceColor.getY(i) : 1);
-      colors[i * 3 + 2] = base[2] * (sourceColor && (material.vertexColors || skinnedFigure) ? sourceColor.getZ(i) : 1);
-      // uiDark also owns hair, brows and collars: height cannot identify pupils.
-      const pupil = owner === rig.head && /^(pal_)?eyeBrown$/.test(material.name) && geometry.getAttribute('position').getY(i) > .08;
-      const eyeRegion = texturedHumanoid && owner === rig.head && geometry.getAttribute('position').getY(i) > .25 && geometry.getAttribute('position').getY(i) < .43 && geometry.getAttribute('position').getX(i) > -.02;
-      // Authored eye discs use the existing flag/UV channels; they must survive
-      // minification independently of the colour atlas's tiny red texels.
-      emissive[i] = node.userData.crowdEye === true ? 2 : Number(material.name.startsWith('emi_') || pupil || eyeRegion); indices[i] = part; shirt[i] = /^(pal_)?skin/.test(material.name) || texturedHumanoid && (owner === rig.head && geometry.getAttribute('position').getY(i) < .4 || /^hand[LR]$/.test(owner?.name ?? '')) ? -1 : Number(clothing);
+      colors[i * 3] = base[0] * (sourceColor ? sourceColor.getX(i) : 1);
+      colors[i * 3 + 1] = base[1] * (sourceColor ? sourceColor.getY(i) : 1);
+      colors[i * 3 + 2] = base[2] * (sourceColor ? sourceColor.getZ(i) : 1);
     }
-    if (skinnedFigure) {
-      const skinIndex = geometry.getAttribute('skinIndex'), skinWeight = geometry.getAttribute('skinWeight');
-      const map = (node as SkinnedMesh).skeleton?.bones.map(bone => parts.findIndex(p => p.name === bone.name)) ?? [];
-      if (map.some(part => part < 0 || part >= 32)) throw new Error(`Crowd skin joints must belong to the 32-part pose contract (parts=${parts.map(p => p.name).join(',')}; map=${map.join(',')})`);
-      const joints = new Float32Array(count * 4), weights = new Float32Array(count * 4);
-      for (let i = 0; i < count; i++) for (let c = 0; c < 4; c++) {
-        if (skinIndex) { joints[i * 4 + c] = Math.max(0, map[skinIndex.getComponent(i, c)] ?? part); weights[i * 4 + c] = skinWeight.getComponent(i, c); }
-        else { joints[i * 4 + c] = part; weights[i * 4 + c] = c === 0 ? 1 : 0; }
-      }
-      const semantic = geometry.getAttribute('_crowd_part'), semanticParts = semantic ? Float32Array.from({ length: count }, (_, i) => map[semantic.getX(i)]) : undefined;
-      const packed = packSkin(joints, weights, count, semanticParts);
-      indices.set(packed.dominant);
-      const point = new Vector3(), inverse = new Matrix4();
-      for (let i = 0; i < count; i++) {
-        const name = parts[indices[i]].name;
-        inverse.fromArray(binds!, indices[i] * 16);
-        point.fromBufferAttribute(geometry.getAttribute('position'), i).applyMatrix4(inverse);
-        const region = geometry.getAttribute('_crowd_region');
-        shirt[i] = cap ? -10 : (region?.getX(i) ?? 0) > 2.5 ? -12 : !material.map ? /^(pal_)?skin/.test(material.name) || (region?.getX(i) ?? 0) > .5 ? -11 : -10 : region ? region.getX(i) > 1.5 ? -6 : region.getX(i) > .5 ? -1 : 0 : name === 'head' || /^hand[LR]$/.test(name) ? -1 : 0;
-        emissive[i] = node.userData.crowdEye === true || material.name === 'emi_infectedEye' ? 2 : 0;
-      }
-      // Integer bits in the fourth weight identify every limb touched by a
-      // triangle. Its fractional part remains the fourth skin weight. Shared
-      // vertices are compacted after this triangle-local mask is assigned.
-      if (!cap && preserveUV) {
-        const groups = crowdLimbParts(animalRig);
-        for (let t = 0; t < count; t += 3) {
-          let mask = 0;
-          for (let k = 0; k < 3; k++) for (let group = 0; group < groups.length; group++) if (groups[group].includes(parts[indices[t + k]].name)) mask |= 1 << group;
-          for (let k = 0; k < 3; k++) packed.skin[(t + k) * 4 + 3] += mask;
-        }
-      }
-      geometry.setAttribute('_skin', new BufferAttribute(packed.skin, 4));
-      geometry.deleteAttribute('_crowd_region'); geometry.deleteAttribute('_crowd_part');
-      geometry.deleteAttribute('skinIndex'); geometry.deleteAttribute('skinWeight');
+    const skinIndex = geometry.getAttribute('skinIndex'), skinWeight = geometry.getAttribute('skinWeight');
+    const map = (node as SkinnedMesh).skeleton?.bones.map(bone => parts.findIndex(p => p.name === bone.name)) ?? [];
+    if (map.some(part => part < 0 || part >= 32)) throw new Error(`Crowd skin joints must belong to the 32-part pose contract (parts=${parts.map(p => p.name).join(',')}; map=${map.join(',')})`);
+    const joints = new Float32Array(count * 4), weights = new Float32Array(count * 4);
+    for (let i = 0; i < count; i++) for (let c = 0; c < 4; c++) {
+      if (skinIndex) { joints[i * 4 + c] = Math.max(0, map[skinIndex.getComponent(i, c)] ?? part); weights[i * 4 + c] = skinWeight.getComponent(i, c); }
+      else { joints[i * 4 + c] = part; weights[i * 4 + c] = c === 0 ? 1 : 0; }
     }
+    const semantic = geometry.getAttribute('_crowd_part'), semanticParts = semantic ? Float32Array.from({ length: count }, (_, i) => map[semantic.getX(i)]) : undefined;
+    const packed = packSkin(joints, weights, count, semanticParts);
+    indices.set(packed.dominant);
+    for (let i = 0; i < count; i++) {
+      const name = parts[indices[i]].name;
+      const region = geometry.getAttribute('_crowd_region');
+      shirt[i] = cap ? -10 : (region?.getX(i) ?? 0) > 2.5 ? -12 : !material.map ? /^(pal_)?skin/.test(material.name) || (region?.getX(i) ?? 0) > .5 ? -11 : -10 : region ? region.getX(i) > 1.5 ? -6 : region.getX(i) > .5 ? -1 : 0 : name === 'head' || /^hand[LR]$/.test(name) ? -1 : 0;
+      emissive[i] = node.userData.crowdEye === true || material.name === 'emi_infectedEye' ? 2 : 0;
+    }
+    // Integer bits in the fourth weight identify every limb touched by a
+    // triangle. Its fractional part remains the fourth skin weight. Shared
+    // vertices are compacted after this triangle-local mask is assigned.
+    if (!cap && preserveUV) {
+      const groups = crowdLimbParts(animalRig);
+      for (let t = 0; t < count; t += 3) {
+        let mask = 0;
+        for (let k = 0; k < 3; k++) for (let group = 0; group < groups.length; group++) if (groups[group].includes(parts[indices[t + k]].name)) mask |= 1 << group;
+        for (let k = 0; k < 3; k++) packed.skin[(t + k) * 4 + 3] += mask;
+      }
+    }
+    geometry.setAttribute('_skin', new BufferAttribute(packed.skin, 4));
+    geometry.deleteAttribute('_crowd_region'); geometry.deleteAttribute('_crowd_part');
+    geometry.deleteAttribute('skinIndex'); geometry.deleteAttribute('skinWeight');
     if (preserveUV) {
       const sourceUV = geometry.getAttribute('uv'), uv = new Float32Array(count * 2);
-      for (let i = 0; i < count; i++) { uv[i * 2] = sourceUV?.getX(i) ?? 0; uv[i * 2 + 1] = sourceUV?.getY(i) ?? 0; if (!material.map && !skinnedFigure) shirt[i] = -10; }
+      for (let i = 0; i < count; i++) { uv[i * 2] = sourceUV?.getX(i) ?? 0; uv[i * 2 + 1] = sourceUV?.getY(i) ?? 0; }
       geometry.setAttribute('uv', new BufferAttribute(uv, 2));
     }
     geometry.setAttribute('_shirt', new BufferAttribute(shirt, 1)); geometry.setAttribute('color', new BufferAttribute(colors, 3)); geometry.setAttribute('_emissive', new BufferAttribute(emissive, 1)); geometry.setAttribute('_part_index', new BufferAttribute(indices, 1));
@@ -301,8 +290,8 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
       yield;
     }
   }
-  const clip: CrowdClip = cached || { parts: parts.map(part => part.name), frames: framesPerClip * clipNames.length, duration: clipNames.length, matrices };
-  if (binds) { clip.binds = binds; geometry.userData.crowdBinds = Array.from(binds); }
+  const clip: SkinnedCrowdClip = cached || { parts: parts.map(part => part.name), frames: framesPerClip * clipNames.length, duration: clipNames.length, matrices, binds };
+  clip.binds = binds; geometry.userData.crowdBinds = Array.from(binds);
   if (preserveUV) geometry.userData.crowdAtlas = true;
   const spectacleTop = root.getObjectByName('root')?.userData.spectacleTop;
   if (typeof spectacleTop === 'number') geometry.userData.crowdGlassesTop = spectacleTop;

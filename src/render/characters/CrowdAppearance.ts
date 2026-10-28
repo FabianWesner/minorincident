@@ -3,7 +3,6 @@ import { Box3, Color, Matrix4, Vector3, type BufferGeometry, type InstancedBuffe
 import type { Node } from 'three/webgpu';
 import { attribute, varying, vec3, vec4 } from 'three/tsl';
 import { crowdAppearance, infectedWearsAccessory, hairTones, skinTones, infectedSkinTones, trouserTones, shirtTones } from '../../data/crowdAppearance';
-import palette from '../../assets/palette.json';
 import manifest from '../../assets/manifest.json' with { type: 'json' };
 const accessoryKinds = new Map((manifest as unknown as {id: string; accessory?: {slot: string}}[]).map(a => [a.id, a.accessory?.slot]));
 import { infectedDefinitions } from '../../data/infected';
@@ -80,86 +79,49 @@ export function crowdRegionColours(infected = false) {
   const trousers = crowdRegionTrousersSkin().xyz;
   return { hair: hairSkin.xyz, skin: pickColor(infected ? colors.infected : colors.skin, hairSkin.w.round()), trousers, shirt: variant.xyz.mod(2) };
 }
-const tokenColors = Object.fromEntries(Object.entries(palette).map(([name, hex]) => [name, new Color(hex)])) as Record<keyof typeof palette, Color>;
-const headwearColors = Object.entries(palette).filter(([name]) => /^cap/.test(name)).map(([, hex]) => new Color(hex));
-const swatches = Object.entries(palette).filter(([name]) => /^(hair|denim|trouser|khaki|navy|skin|infectedSkin)/.test(name)).map(([name, hex]) => ({ name, color: new Color(hex) }));
-// aftermath.py folds skin materials into vertex colours with a fixed 8% soot tint.
-// Retain their skin ownership so those heads can register an accessory fit after material folding.
-swatches.push(...swatches.filter(({ name }) => /skin/i.test(name)).map(({ name, color }) => ({ name, color: color.clone().multiplyScalar(.92) })));
-// The stock survivor group's local skin palette is already folded/quantized in its shipped GLBs.
-// Measured linear RGB for warm skin, blush and shadow; these are not the shared palette's swatches.
-swatches.push(...[[.79043, .40030, .23576], [.68596, .27928, .20208], [.44918, .17378, .10665]]
-  .map(([r, g, b]) => ({ name: 'skinSurvivorAftermath', color: new Color().setRGB(r, g, b) })));
-// The male hoodie export calls its brown hair swatch woodWarm; it is local to the head, never wood props.
-swatches.push({ name: 'headHair', color: new Color('#57301f') }, { name: 'headHair', color: new Color(palette.woodWarm) });
-/** Also annotates shipped prebuilt civilian bakes, whose material names were folded into vertex colours.
- * Skin/eye/garment flags win over matching colours, keeping lips, pupils and story uniforms intact. */
-export function markCrowdAppearance(geometry: BufferGeometry, ordinaryInfected = false): void {
-  const parts = geometry.getAttribute('_parts'), color = geometry.getAttribute('color'), position = geometry.getAttribute('position');
-  if (geometry.userData.crowdAtlas) {
-    // Source paint owns skin, hair and wounds. Only the authored crown yields
-    // to shared hats; palette matching would hide the entire textured face.
-    const binds = geometry.userData.crowdBinds as number[] | undefined;
-    const inverse = binds ? new Matrix4().fromArray(binds, characterNodes.indexOf('head') * 16) : undefined, point = new Vector3();
-    let low = Infinity, high = -Infinity;
-    const headY = (i: number) => { point.fromBufferAttribute(position, i); if (inverse) point.applyMatrix4(inverse); return point.y; };
-    if (inverse) for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getY(i) !== -6 && parts.getW(i) < 1024 && !parts.getZ(i)) { const y = headY(i); low = Math.min(low, y); high = Math.max(high, y); }
-    const brow = skinnedBrow(geometry);
-    let frameTop = -Infinity;
-    if (inverse) for (let i = 0; i < parts.count; i++) if (parts.getY(i) === -6) frameTop = Math.max(frameTop, headY(i));
-    const grip = geometry.getAttribute('_gripPosition');
-    if (brow && inverse && grip) {
-      // Reuse the hand alternate-position stream for a closed bare scalp. A
-      // textured cap cannot be cut away without opening the welded forehead.
-      const rest = inverse.clone().invert(), eyes = new Box3(), skin = new Box3();
-      for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getW(i) < 1024) {
-        point.fromBufferAttribute(position, i).applyMatrix4(inverse);
-        if (parts.getZ(i) > 1.5) eyes.expandByPoint(point);
-        else if (parts.getY(i) === -1) skin.expandByPoint(point);
-      }
-      const eye = eyes.getCenter(new Vector3()), front = eye.x - .025, back = skin.min.x;
-      const centre = new Vector3((front + back) * .5, brow.y - .09, brow.centre.z);
-      const radii = new Vector3(Math.max(.08, (front - back) * .5), .21, brow.width * .5), alternate = new Vector3();
-      for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getY(i) !== -6 && parts.getW(i) < 1024 && !parts.getZ(i)) {
-        point.fromBufferAttribute(position, i).applyMatrix4(inverse);
-        const t = Math.max(0, Math.min(1, (point.y - (brow.y - .045)) / .065)), weight = t * t * (3 - 2 * t);
-        alternate.copy(point).sub(centre).divide(radii);
-        if (alternate.length() > 1) alternate.normalize();
-        alternate.multiply(radii).add(centre);
-        // The cap bill retracts behind the iris plane as its crown closes.
-        alternate.x = Math.min(alternate.x, front);
-        alternate.lerp(point, 1 - weight).applyMatrix4(rest);
-        grip.setXYZ(i, alternate.x, alternate.y, alternate.z);
-        parts.setW(i, weight * 3);
-      }
-      geometry.userData.headwearMorph = true;
-    } else {
-      const crown = brow ? Math.max(brow.y + .018, frameTop + .012) : inverse ? low + (high - low) * .82 : .4;
-      for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getY(i) !== -6 && parts.getW(i) < 1024 && !parts.getZ(i)) parts.setW(i, headY(i) > crown ? 4 : 0);
+/** Annotate the authored skinned atlas without replacing skin, eye or garment ownership. */
+export function markCrowdAppearance(geometry: BufferGeometry): void {
+  const parts = geometry.getAttribute('_parts'), position = geometry.getAttribute('position');
+  if (!geometry.userData.crowdAtlas || !geometry.userData.crowdBinds) throw new Error('Crowd appearance requires the v2 skinned atlas contract');
+  // Source paint owns skin, hair and wounds. Only the authored crown yields
+  // to shared hats; palette matching would hide the entire textured face.
+  const binds = geometry.userData.crowdBinds as number[];
+  const inverse = new Matrix4().fromArray(binds, characterNodes.indexOf('head') * 16), point = new Vector3();
+  let low = Infinity, high = -Infinity;
+  const headY = (i: number) => { point.fromBufferAttribute(position, i); point.applyMatrix4(inverse); return point.y; };
+  for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getY(i) !== -6 && parts.getW(i) < 1024 && !parts.getZ(i)) { const y = headY(i); low = Math.min(low, y); high = Math.max(high, y); }
+  const brow = skinnedBrow(geometry);
+  let frameTop = -Infinity;
+  for (let i = 0; i < parts.count; i++) if (parts.getY(i) === -6) frameTop = Math.max(frameTop, headY(i));
+  const grip = geometry.getAttribute('_gripPosition');
+  if (brow && grip) {
+    // Reuse the hand alternate-position stream for a closed bare scalp. A
+    // textured cap cannot be cut away without opening the welded forehead.
+    const rest = inverse.clone().invert(), eyes = new Box3(), skin = new Box3();
+    for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getW(i) < 1024) {
+      point.fromBufferAttribute(position, i).applyMatrix4(inverse);
+      if (parts.getZ(i) > 1.5) eyes.expandByPoint(point);
+      else if (parts.getY(i) === -1) skin.expandByPoint(point);
     }
-    return;
-  }
-  // Ordinary infected: the glowing eyes bound the face; any surface clearly above them belongs to hair or headwear.
-  let eyeTop = -Infinity;
-  if (ordinaryInfected) for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getZ(i) > 0) eyeTop = Math.max(eyeTop, position.getY(i));
-  if (eyeTop === -Infinity) eyeTop = Infinity;
-  for (let i = 0; i < parts.count; i++) {
-    if (parts.getY(i) !== 0 || parts.getZ(i) > 0) continue;
-    if (parts.getX(i) === characterNodes.indexOf('head') && headwearColors.some(c => Math.abs(c.r-color.getX(i)) < .003 && Math.abs(c.g-color.getY(i)) < .003 && Math.abs(c.b-color.getZ(i)) < .003)) parts.setW(i, parts.getW(i) % 4 + 4);
-    const swatch = swatches.find(({ name, color: c }) => (name !== 'headHair' || parts.getX(i) === characterNodes.indexOf('head')) && Math.abs(c.r-color.getX(i)) < .003 && Math.abs(c.g-color.getY(i)) < .003 && Math.abs(c.b-color.getZ(i)) < .003);
-    if (swatch) parts.setY(i, (swatch.name.startsWith('hair') || swatch.name === 'headHair') ? -2 : /skin/i.test(swatch.name) ? -1 : -3);
-    if (parts.getY(i) !== 0) continue;
-    const same = (token: keyof typeof palette) => { const c = tokenColors[token]; return Math.abs(c.r-color.getX(i)) < .003 && Math.abs(c.g-color.getY(i)) < .003 && Math.abs(c.b-color.getZ(i)) < .003; };
-    const part = characterNodes[parts.getX(i)];
-    // Cream skirt panels use the world palette's white/grey swatches, identified by their lower-body ownership.
-    if (['hip', 'legL', 'legR', 'shinL', 'shinR'].includes(part) && (same('picketWhite') || same('sidewalk') || ordinaryInfected && (same('asphalt') || same('uiDark')))) parts.setY(i, -3);
-    else if (ordinaryInfected && part === 'head' && same('uiDark') && geometry.getAttribute('position').getY(i) > .08) parts.setY(i, -2);
-    else if (ordinaryInfected && ['torso', 'armL', 'armR', 'foreArmL', 'foreArmR'].includes(part) && (same('picketWhite') || same('survivorRed') || same('woodWarm') || same('cardiganRose') || same('policeBlue'))) parts.setY(i, 1);
-    // Spec audit 10-16 (E07-AC13): ordinary infected exports tint their own hair and caps per model (woodWarm/
-    // policeBlue/teal/... in model-specific shades), so no token matched them and they poked through every shared
-    // hat or hair piece as jagged multicoloured patches. Every remaining head surface except the face tokens
-    // (teeth/eye whites, blood, mouth, pupils/brows) is own headwear: hidden whenever an accessory covers the head.
-    else if (ordinaryInfected && part === 'head' && (position.getY(i) > eyeTop + .06 || !same('picketWhite') && !same('blood') && !same('survivorRed') && !same('uiDark'))) parts.setW(i, parts.getW(i) % 4 + 4);
+    const eye = eyes.getCenter(new Vector3()), front = eye.x - .025, back = skin.min.x;
+    const centre = new Vector3((front + back) * .5, brow.y - .09, brow.centre.z);
+    const radii = new Vector3(Math.max(.08, (front - back) * .5), .21, brow.width * .5), alternate = new Vector3();
+    for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getY(i) !== -6 && parts.getW(i) < 1024 && !parts.getZ(i)) {
+      point.fromBufferAttribute(position, i).applyMatrix4(inverse);
+      const t = Math.max(0, Math.min(1, (point.y - (brow.y - .045)) / .065)), weight = t * t * (3 - 2 * t);
+      alternate.copy(point).sub(centre).divide(radii);
+      if (alternate.length() > 1) alternate.normalize();
+      alternate.multiply(radii).add(centre);
+      // The cap bill retracts behind the iris plane as its crown closes.
+      alternate.x = Math.min(alternate.x, front);
+      alternate.lerp(point, 1 - weight).applyMatrix4(rest);
+      grip.setXYZ(i, alternate.x, alternate.y, alternate.z);
+      parts.setW(i, weight * 3);
+    }
+    geometry.userData.headwearMorph = true;
+  } else {
+    const crown = brow ? Math.max(brow.y + .018, frameTop + .012) : low + (high - low) * .82;
+    for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getY(i) !== -6 && parts.getW(i) < 1024 && !parts.getZ(i)) parts.setW(i, headY(i) > crown ? 4 : 0);
   }
 }
 /** Count unique GPU buffers and attribute locations (an interleaved matrix is one buffer/four locations).

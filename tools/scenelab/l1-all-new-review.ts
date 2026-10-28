@@ -1,5 +1,4 @@
-/** Native 120/400 px old/new figures through the game's lighting and camera. */
-import { execFileSync } from 'node:child_process';
+/** Native 120/400 px v2 figures through the game's lighting and camera. */
 import { existsSync, mkdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import type { AssetDef } from '../../src/assets/types';
@@ -9,7 +8,6 @@ import { SceneSession, stopServer, writeJson } from './session';
 const out = resolve(process.env.L1_REVIEW_RAW ?? 'test-results/l1-all-new/figures');
 mkdirSync(out, { recursive: true });
 const current = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as AssetDef[];
-const old = JSON.parse(execFileSync('git', ['show', `${process.env.REVIEW_BASE ?? '0009f107d'}:src/assets/manifest.json`], { encoding: 'utf8' })) as AssetDef[];
 const ids = (process.env.FIGURES ?? 'npc.depot-clerk').split(',');
 const tier = process.env.REVIEW_TIER === 'low' ? 'low' : 'high';
 const backend = process.env.REVIEW_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
@@ -25,9 +23,10 @@ try {
   await session.load({ name: 'figure-review', ground: 'asphalt', time: process.env.REVIEW_TIME === 'L9' ? 'L9-crossing' : ['L6', 'L7'].includes(process.env.REVIEW_TIME ?? '') ? 'L6' : process.env.REVIEW_TIME === 'L5' ? 'L5' : process.env.REVIEW_TIME === 'L4' ? 'L4' : process.env.REVIEW_TIME === 'L3' ? 'L3' : process.env.REVIEW_TIME === 'L2' ? 'L2' : 'L1', size: 100, actors: [{ id: 'courier', kind: 'courier', at: [40, 40] }], camera: { mode: 'pose', position: [7, 6, 7], target: [0, .8, 0] } });
   const actual = await session.page.evaluate(() => window.__SS__!.getState().render);
   if (actual.backend !== (backend === 'webgl2' ? 'webgl' : 'webgpu') || actual.quality !== tier) throw Error(`Review renderer mismatch: requested ${backend}/${tier}, got ${actual.backend}/${actual.quality}`);
-  for (const id of ids) for (const variant of ['old', 'new']) for (const pixels of [120, 400]) for (const yaw of [-45, 135]) {
+  const variant = 'v2';
+  for (const id of ids) for (const pixels of [120, 400]) for (const yaw of [-45, 135]) {
     const coat = id.match(/\.(black|cream)$/)?.[1], base = coat ? id.replace(/\.(black|cream)$/, '') : id;
-    const def = structuredClone((variant === 'old' ? old : current).find(d => d.id === base)!);
+    const def = structuredClone(current.find(d => d.id === base)!);
     if (tier === 'low' && def.crowdSkin) {
       const lowPath = (path: string) => { const low = path.replace(/\.glb$/, '.low.glb'); return existsSync(low) ? low : path; };
       def.glb = lowPath(def.glb!);

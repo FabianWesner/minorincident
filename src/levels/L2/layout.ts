@@ -17,7 +17,6 @@ const H = Math.PI / 2;
 /**
  * Static L2 dressing manifest. Asset ids are manifest ids; ids that are not integrated yet (`decay.dropped-belongings`,
  * `decay.broken-glass`) render as registry placeholders until the art lane lands them. Counts per entry default to 1;
- * `inf.corpse-poses` carries four bodies.
  */
 export const l2Dressing: readonly Dressing[] = [
   // Corpses: bystanders killed in the first hours, lying where they fell (dead pedestrians of the civilian crowd, spawned by the

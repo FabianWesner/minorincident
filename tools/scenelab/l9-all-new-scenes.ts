@@ -9,7 +9,7 @@ import { SceneSession, readSpec, stopServer, writeJson } from './session';
 
 const tier = process.env.REVIEW_TIER === 'high' ? 'high' : 'low';
 const backend = process.env.REVIEW_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
-const variant = process.env.REVIEW_VARIANT ?? 'new', mode = process.env.L9_CAPTURE ?? 'crowd';
+const variant = 'v2', mode = process.env.L9_CAPTURE ?? 'crowd';
 const out = resolve(`test-results/l9-all-new/${mode}-${variant}-${tier}-${backend}`);
 const census = JSON.parse(readFileSync('docs/reports/l9-all-new/census.json', 'utf8')) as { identities: { id: string; migration: boolean }[] };
 const migrated = census.identities.filter(row => row.migration).map(row => row.id);

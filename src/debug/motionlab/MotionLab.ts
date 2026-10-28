@@ -54,8 +54,8 @@ export async function startMotionLab(params: URLSearchParams): Promise<void> {
     const hero = new Group(); hero.add(prototype ? cloneSkeleton(heroModel) : heroModel); scene.add(hero);
     const rig = Object.fromEntries(characterNodes.map(name => [name, hero.getObjectByName(name)!])) as CharacterRig;
     const animator = prototype && mesh2motion ? new LibraryAnimator(hero.children[0], mesh2motion.animations, .9 * strideScale(survivor)) : new KeyframeAnimator(rig, courier && prototype && params.get('skinclips') !== '0' ? skinClips : undefined);
-    const civ = new LabCrowd(prototype && skins ? skinFigure(civilian.clone(true)) : civilian.clone(true), 1, prototype, true);
-    const crowd = new LabCrowd(prototype && skins ? skinFigure(infected.clone(true)) : infected.clone(true), count, prototype);
+    const civ = new LabCrowd(civilian.clone(true), 1, prototype, true);
+    const crowd = new LabCrowd(infected.clone(true), count, prototype);
     scene.add(civ.mesh, crowd.mesh);
     if (params.get('focus') === 'hero') civ.mesh.visible = crowd.mesh.visible = false;
     const physics = new Physics(); await physics.init(); physics.load({ name: 'motion-lab', survivor: true, ground: { width: 100, depth: 100 }, player: { x: 0, y: .7, z: 0 } });

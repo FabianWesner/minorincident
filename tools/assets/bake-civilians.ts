@@ -1,41 +1,19 @@
-import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
-import { gzipSync } from 'node:zlib';
-import { createHash } from 'node:crypto';
+import { readFileSync, writeFileSync } from 'node:fs';
 import manifest from '../../src/assets/manifest.json';
 import { coreCivilianModels } from '../../src/data/npcs';
 import { l6CastModels } from '../../src/data/l6';
-import { loadCivilianSource, disposeCivilianSource } from '../../src/assets/civilianSource';
-import { encodeCivilianBake } from '../../src/assets/civilianBakeData';
-import { prepareCivilianGeometry, prepareCivilianRig } from '../../src/render/npc/prepareCivilianGeometry';
 import { skinCrowdBakes } from './skin-crowd-bakes';
 import type { AssetDef } from '../../src/assets/types';
 
-// Run after changing civilian source GLBs, palette, clips or preparation code.
-// The production loader retains the runtime worker path for unavailable bakes.
-const directory = 'public/assets/civilians';
-mkdirSync(directory, { recursive: true });
-// Refresh only distant bodies after a LOD2 preparation change.
+// Run after changing figure sources, palette, clips or preparation code.
+// The companion uses its hero rig instead of crowd bakes.
 const lod2Only = process.argv.includes('--lod2');
 const files: Record<string, string> = lod2Only ? JSON.parse(readFileSync('src/assets/civilianBakes.json', 'utf8')) : {};
-let total = 0, count = 0;
-// The companion uses its hero rig, not crowd bakes (same exclusion as skin-crowd-build).
-for (const model of [...new Set([...coreCivilianModels, ...l6CastModels, ...manifest.filter(def => def.id !== 'char.corgi' && 'crowdSkin' in def && def.crowdSkin).map(def => def.id)])].sort()) {
-  const skin = manifest.find(def => def.id === model && 'crowdSkin' in def && def.crowdSkin);
-  if (skin) { Object.assign(files, await skinCrowdBakes(skin as AssetDef, lod2Only ? ['lod2'] : undefined)); continue; }
-  for (const lod of lod2Only ? ['lod2'] as const : ['lod0', 'lod1', 'lod2'] as const) {
-    const root = await loadCivilianSource(model, lod, async url => {
-      const data = readFileSync(`public${url}`);
-      return data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength);
-    });
-    try {
-      prepareCivilianRig(root, model);
-      const prepared = await prepareCivilianGeometry(root, model); prepared.rig = root;
-      const bytes = gzipSync(encodeCivilianBake(prepared), { level: 9 });
-      const name = `${model}.${lod}.${createHash('sha256').update(bytes).digest('hex').slice(0, 16)}.bin.gz`;
-      writeFileSync(`${directory}/${name}`, bytes); files[`${model}:${lod}`] = `/assets/civilians/${name}`;
-      total += bytes.length; count++; prepared.geometry.dispose();
-    } finally { disposeCivilianSource(root); }
-  }
+for (const id of [...new Set([...coreCivilianModels, ...l6CastModels])]) {
+  if (!manifest.find(def => def.id === id)?.crowdSkin) throw new Error(`${id} must use the v2 crowd contract`);
+}
+for (const def of manifest.filter(def => def.id !== 'char.corgi' && def.crowdSkin).sort((a, b) => a.id.localeCompare(b.id))) {
+  Object.assign(files, await skinCrowdBakes(def as AssetDef, lod2Only ? ['lod2'] : undefined));
 }
 writeFileSync('src/assets/civilianBakes.json', JSON.stringify(files, null, 2) + '\n');
-console.log(`${count} lossless civilian bakes: ${(total / 1048576).toFixed(2)} MiB gzip`);
+console.log(`${Object.keys(files).length} skinned crowd bakes`);

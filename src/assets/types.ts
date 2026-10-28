@@ -52,8 +52,6 @@ export interface AssetDef {
   sourceGlb?: string;
   /** Optional E18 mobile export (<id>.low.glb); otherwise low reuses declared lod1. */
   lowGlb?: string;
-  /** Closed rigid shells used only by permanent infected bodies. */
-  corpseGlb?: string;
   lods?: { lod1?: string; lod2?: string };
   /** Regenerate these tiers from LOD0 when supplied LODs violate size or density contracts. */
   generatedLodRatios?: { lod1?: number; lod2?: number };
@@ -99,7 +97,7 @@ export function variantPath(path: string, decay?: string): string {
   return decay ? path.replace(/(\.lod[12])?\.glb$/, `.${decay}$1.glb`) : path;
 }
 
-/** Compare unconverted rigid derivatives with their original rigid base; converted pairs use the current skin. */
+/** Compare a derivative with the current shipped tier of its declared base. */
 export function drawComparisonPath(base: AssetDef, lod: number): string | undefined {
   return lod === 0 ? base.glb : base.lods?.[lod === 1 ? 'lod1' : 'lod2'];
 }

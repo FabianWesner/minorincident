@@ -13,8 +13,6 @@ import { infectedContactDistance } from '../sim/ai/CharacterSeparation';
 import { deinterleaveGeometry } from 'three/addons/utils/BufferGeometryUtils.js';
 import { CrowdVisibility } from './CrowdVisibility';
 import { crowdModelKey, isCrowdVariant, registerCrowdModel } from './crowdModels';
-import { markInfectedEyeCores } from './characters/infectedEyes';
-import { simplifyCrowdLod } from './characters/crowdLodGeometry';
 import { compactCrowdGeometry } from './characters/compactCrowdGeometry';
 import { cloneCrowdGeometry } from './characters/cloneCrowdGeometry';
 import { crowdLod, canHoldCrowdPose } from './lodPolicy';
@@ -28,7 +26,7 @@ import { contactShadowMaterial } from './ContactShadows';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon InstancedGroup.js (MIT, 41046b5), using E17 GPU crowdMatrix/clipTexture.
 import { BoxGeometry, BufferGeometry, PlaneGeometry, Color, DoubleSide, FrontSide, Group, InstancedInterleavedBuffer, InterleavedBufferAttribute, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, Frustum, Sphere, Vector3, StreamDrawUsage } from 'three/webgpu';
-import { varying, mix, attribute, mat4, normalGeometry, vec3, positionGeometry, vec4, float, uint, cameraViewMatrix, luminance, screenCoordinate, uniform, sharedUniformGroup, frontFacing, texture as sampleTexture, uv } from 'three/tsl';
+import { varying, mix, attribute, mat4, normalGeometry, vec3, positionGeometry, vec4, float, uint, cameraViewMatrix, luminance, screenCoordinate, frontFacing, texture as sampleTexture, uv } from 'three/tsl';
 import { packCrowdParts, poseTexture } from '../assets/crowd';
 import type { Materials } from './Materials';
 import { PaletteMaterial } from './PaletteMaterial';
@@ -54,7 +52,7 @@ import { mergeCrowdVertices } from './characters/mergeCrowdVertices';
 import { skinnedCrowdMatrix, skinnedWoundNormal } from './characters/skinnedCrowd';
 import { loadSkinnedCrowdBake } from '../assets/civilianBake';
 import type { Node as TslNode } from 'three/webgpu';
-interface Batch { asset: string; animal: boolean; locomotion: CrowdLocomotion; probe: CrowdFigureProbe; poses: CrowdPosePalette; mesh: InstancedMesh; state: InterleavedBufferAttribute; tint: InterleavedBufferAttribute; shirt: Color; strideScale: number; windup: number; texture: import('three').DataTexture; count: number; placeholders: boolean; lod: string; role: string }
+interface Batch { asset: string; animal: boolean; locomotion: CrowdLocomotion; probe: CrowdFigureProbe; poses: CrowdPosePalette; mesh: InstancedMesh; state: InterleavedBufferAttribute; tint: InterleavedBufferAttribute; shirt: Color; strideScale: number; windup: number; texture: import('three').DataTexture; count: number; lod: string; role: string }
 /** Simulation ticks a hit flash may last at most (Vfx pulses for 0.1 s = 6 ticks at 60 Hz). */
 export const hitFlashTicks = 8;
 /** One instanced, skinned GPU batch per archetype. Scene graph size never grows with infected population. */
@@ -142,7 +140,7 @@ export class CrowdView extends Group {
     const healthyDefinitions = animals.map(species => ({ ...infectedDefinitions.find(d => d.id === `infected.${species}`)!, id: `healthy.${species}`, asset: `amb.${species}` }));
     // Healthy amb.* assets are catalog props, so register their real rigs explicitly as animated crowds.
     const dogDefinitions = dogCoats.slice(1).map(coat => ({ ...infectedDefinitions.find(d => d.id === 'infected.dog')!, id: `inf.dog.${coat}`, decay: coat }));
-    const allDefinitions = [...dogDefinitions, ...healthyDefinitions, ...[...models].map(model => ({ ...infectedDefinitions[0], id: model, asset: model })), ...infectedDefinitions, { ...infectedDefinitions[0], id: 'infected.patient-zero', asset: 'npc.patient-zero-courier' }, ...variants.map(a => ({ ...infectedDefinitions[0], id: a.id, asset: a.id }))];
+    const allDefinitions = [...dogDefinitions, ...healthyDefinitions, ...[...models].map(model => ({ ...infectedDefinitions[0], id: model, asset: model })), ...infectedDefinitions, { ...infectedDefinitions[0], id: 'infected.patient-zero', asset: 'npc.patient-zero-courier' }, ...variants.map(a => ({ ...infectedDefinitions[0], id: a.id, asset: a.id }))].filter(def => manifest.find(asset => asset.id === def.asset)?.crowdSkin);
     // L1 v2: every infected is a pedestrian that keeps its look and is drawn by the civilian crowd (lane D); this view
     // only needs the plain runner fallback plus scripted infected actors. Without the outbreak layer keep the old set.
     const regularCrowd = this.world.scenario === 'L7' || this.world.scenario === 'L10' || this.world.scenario?.startsWith('perf-horde-');
@@ -218,7 +216,7 @@ export class CrowdView extends Group {
       const key = crowdModelKey(def);
       const role = dogCoat(def.id) ? 'dog' : def.id.startsWith('infected.') ? def.id.slice(9) : 'runner', asset = def.asset;
       const cpuKey = `${def.id}|${asset}|${def.decay ?? ''}|${lod}|${this.low ? 'low' : 'high'}`;
-      const prebuilt = this.registry.definition(asset).crowdSkin && !preparedBatches.has(cpuKey) ? loadSkinnedCrowdBake(asset, lod) : undefined;
+      const prebuilt = !preparedBatches.has(cpuKey) ? loadSkinnedCrowdBake(asset, lod) : undefined;
       const [loaded, delivered] = await Promise.all([
         this.registry.loadAsset(asset, lod, def.decay) as Promise<Group>,
         this.world.scenario === 'L4' ? prebuilt : undefined,
@@ -268,24 +266,19 @@ export class CrowdView extends Group {
       if (!shipped) { deinterleaveGeometry(baked.geometry);
       const indexed = mergeCrowdVertices(baked.geometry); baked.geometry.dispose(); baked.geometry = indexed; }
       if (this.world.scenario === 'L8') { await loadGate.wait(); if (this.disposed) { baked.geometry.dispose(); return; } }
-      if (!healthy && !infectedAtlas && !baked.clip.binds) markInfectedEyeCores(baked.geometry);
       if (lod === 'lod2') {
-        if (atlas && human && !this.registry.definition(asset).corpseGlb) {
+        if (atlas && human) {
           // The authored textured tier already meets its budget. Keep its UV
           // surface for both live actors and frozen permanent bodies.
           const corpse = baked.geometry.clone(); packCrowdParts(corpse);
           corpse.userData.crowdLod = lod; corpse.userData.corpseSource = this.registry.definition(asset).lods?.lod2 ?? this.registry.definition(asset).glb;
           this.corpseGeometry.set(key, corpse); createdCorpse = corpse;
         } else {
-        const dedicated = this.registry.definition(asset).corpseGlb;
         const intactSource = role === 'dog' || role === 'firefighter';
-        if (dedicated || intactSource || alpha) {
-          // Generated living LODs already lost thin shells. Further index-only
-          // reduction made permanent bodies look like shards (PO #85). Dedicated
-          // corpse meshes collapse each intact shell offline and keep their own rig.
-          // Dogs, industrial firefighters and Alphas retain their intact authored source instead.
-          const cachedBody = !dedicated && this.registry.definition(asset).crowdSkin ? await loadSkinnedCrowdBake(asset, 'lod0') : undefined;
-          const bodyModel = cachedBody ? undefined : await (dedicated ? this.registry.loadCorpse(asset, def.decay) : this.registry.loadAsset(asset, 'lod0', def.decay)) as Group;
+        if (intactSource || alpha) {
+          // Dogs, industrial firefighters and Alphas retain their intact skinned LOD0.
+          const cachedBody = await loadSkinnedCrowdBake(asset, 'lod0');
+          const bodyModel = cachedBody ? undefined : await this.registry.loadAsset(asset, 'lod0', def.decay) as Group;
           if (this.disposed) { baked.geometry.dispose(); return; }
           // LOD0 and LOD2 can finish in either order. Both must retain the same
           // intact source, including when a distant victim settles before a hero draw.
@@ -297,21 +290,18 @@ export class CrowdView extends Group {
             if (asset.startsWith('inf.mega-alpha')) groundDeathFeet(body.clip, 'death-side');
             if (!cachedBody) deinterleaveGeometry(body.geometry);
             const corpse = cachedBody ? body.geometry : mergeCrowdVertices(body.geometry); if (!cachedBody) body.geometry.dispose();
-            if (!healthy && !infectedAtlas) markInfectedEyeCores(corpse);
             if (this.disposed) { corpse.dispose(); baked.geometry.dispose(); return; }
             corpse.userData.crowdLod = lod;
-            corpse.userData.corpseSource = dedicated ?? this.registry.definition(asset).glb; corpseClip = body.clip; this.corpseClips.set(key, corpseClip);
-            packCrowdParts(corpse); if (human) markCrowdAppearance(corpse, regularInfectedModels.some(id => id === asset));
+            corpse.userData.corpseSource = this.registry.definition(asset).glb; corpseClip = body.clip; this.corpseClips.set(key, corpseClip);
+            packCrowdParts(corpse); if (human) markCrowdAppearance(corpse);
             this.corpseGeometry.set(key, corpse); createdCorpse = corpse;
           }
         }
-        // Preserve colors, eyes, rigid-part ownership and each part's surface.
-        if (!textured) await simplifyCrowdLod(baked.geometry, this.low ? .025 : .01, this.low ? (healthy ? .2 : .1) : .35, !healthy);
         if (this.disposed) { baked.geometry.dispose(); return; }
-        if (!alpha && !dedicated && !intactSource) {
-          const corpse = baked.geometry.clone(); if (!textured) await simplifyCrowdLod(corpse, .04, .1, !healthy);
+        if (!alpha && !intactSource) {
+          const corpse = baked.geometry.clone();
           if (this.disposed) { corpse.dispose(); baked.geometry.dispose(); return; }
-          packCrowdParts(corpse); if (human) markCrowdAppearance(corpse, regularInfectedModels.some(id => id === asset));
+          packCrowdParts(corpse); if (human) markCrowdAppearance(corpse);
           this.corpseGeometry.set(key, corpse); createdCorpse = corpse;
         }
         }
@@ -319,14 +309,14 @@ export class CrowdView extends Group {
       if (alpha && lod === 'lod0') {
         if (!this.corpseGeometry.has(key)) {
           const corpse = baked.geometry.clone(); packCrowdParts(corpse);
-          if (human) markCrowdAppearance(corpse, false);
+          if (human) markCrowdAppearance(corpse);
           corpse.userData.corpseSource = this.registry.definition(asset).glb;
           this.corpseGeometry.set(key, corpse); this.corpseClips.set(key, baked.clip);
         }
         createdCorpse = this.corpseGeometry.get(key)!; corpseClip = this.corpseClips.get(key);
       }
       if (this.world.scenario === 'L8') { await loadGate.wait(); if (this.disposed) { baked.geometry.dispose(); return; } }
-      packCrowdParts(baked.geometry); if (human) markCrowdAppearance(baked.geometry, regularInfectedModels.some(id => id === asset));
+      packCrowdParts(baked.geometry); if (human) markCrowdAppearance(baked.geometry);
       compactCrowdGeometry(baked.geometry);
       if (createdCorpse) compactCrowdGeometry(createdCorpse);
       if (preparedKey) {
@@ -337,13 +327,8 @@ export class CrowdView extends Group {
       baked.geometry.userData.crowdLod = lod;
       const locomotion = new CrowdLocomotion(model, baked.clip, this.footwork);
       const probe = new CrowdFigureProbe(); probe.lod = lod; probe.sole = locomotion.sole; if (model.getObjectByName('legFL') || model.getObjectByName('root')?.userData.crowdQuadruped === true) probe.animal(model);
-      const skinned = !!baked.clip.binds;
+      if (!baked.clip.binds || !baked.geometry.hasAttribute('_skin')) throw new Error(`${asset} is missing the v2 skinned crowd contract`);
       this.accessories?.registerSkull(asset, baked.geometry);
-      if (lod === 'lod2' && !textured && !skinned && this.accessories && regularInfectedModels.some(id => id === asset)) {
-        await this.accessories.init();
-        if (this.disposed) { baked.geometry.dispose(); return; }
-        baked.geometry = this.accessories.livingSource(baked.geometry, asset, baked.clip.parts.indexOf('head'));
-      }
       const poses = new CrowdPosePalette(baked.clip, capacity), texture = poses.texture;
       const sharedPose = baked.texture ? poseTexture(texture) : undefined;
       const instanceData = new InstancedInterleavedBuffer(new Float32Array(capacity * 8), 8, 1).setUsage(StreamDrawUsage);
@@ -361,7 +346,7 @@ export class CrowdView extends Group {
       // Keep a default attribute even in scenes that do not load the cream coat.
       const dogPalette = asset === 'inf.dog' && !def.decay && lod === 'lod1';
       if (dogPalette) baked.geometry.setAttribute('_dogCream', baked.geometry.getAttribute('color'));
-      const materialKey = this.world.scenario === 'L4' && skinned && infectedAtlas && baked.texture ? `${baked.clip.parts.join('|')}:${poses.bindRow}:${baked.doubleSided}:${inlineAccessories}:${asset.startsWith('npc.')}:${baked.geometry.hasAttribute('_skin')}` : undefined;
+      const materialKey = this.world.scenario === 'L4' && infectedAtlas && baked.texture ? `${baked.clip.parts.join('|')}:${poses.bindRow}:${baked.doubleSided}:${inlineAccessories}:${asset.startsWith('npc.')}:${baked.geometry.hasAttribute('_skin')}` : undefined;
       let sharedSkin = materialKey ? this.sharedSkinMaterials.get(materialKey) : undefined;
       let material = sharedSkin?.material, surfaceAtlas = sharedSkin?.atlas;
       if (!material) {
@@ -379,7 +364,7 @@ export class CrowdView extends Group {
       const capSurface = parts.w.greaterThanEqual(1024);
       const painted = texel ? mix(sourceColor, texel.pow(.85).mul(mix(vec3(1), sourceColor, .08)), parts.y.equal(-4).or(parts.y.equal(-5)).or(parts.y.lessThanEqual(-10)).select(0, parts.w.mod(128).lessThan(8).select(1, 0))) : sourceColor;
       const sick = vec3(luminance(painted)).mul(vec3(.62, .75, .51));
-      const surface = skinned && asset.startsWith('npc.') ? mix(painted, sick, texelSample ? parts.y.equal(-11).select(1, crowdRegionSkin(region!, () => paintedSkinMask(texelSample))).mul(.85) : parts.y.equal(-1).select(.85, 0)) : painted;
+      const surface = asset.startsWith('npc.') ? mix(painted, sick, texelSample ? parts.y.equal(-11).select(1, crowdRegionSkin(region!, () => paintedSkinMask(texelSample))).mul(.85) : parts.y.equal(-1).select(.85, 0)) : painted;
       // The approved atlas has bright orange/red eye paint. Restrict the mask to the head,
       // so the red tie and blood never emit. White teeth and pale skin fail the saturation gate.
       const albedo = capSurface.select(vec3(.4508, .006, .0137), surface);
@@ -417,30 +402,11 @@ export class CrowdView extends Group {
       material.depthTest = material.depthWrite = true;
       material.side = baked.doubleSided ? DoubleSide : FrontSide;
       const outgoing = variant.w.div(2).floor(), weight = variant.w.mod(2);
-      if (!baked.clip.binds || !baked.geometry.hasAttribute('_skin')) throw new Error(`${asset} is missing the v2 skinned crowd contract`);
       const matrix: TslNode<'mat4'> = skinnedCrowdMatrix(sharedPose ?? texture, parts.x, feedbackState.x, outgoing, weight, poses.bindRow);
-      // Part indices are uniforms, not shader constants: every archetype/LOD compiles to the same program (one shared
-      // pipeline), only the uniform values differ. Missing parts get -1 and never match.
-      // Rig part indices are immutable for this material. Upload them once;
-      // they need no per-object uniform scan in every crowd and shadow draw.
-      const rigParts = sharedUniformGroup('crowdParts');
-      const part = parts.x, index = (name: string) => uniform(baked.clip.parts.indexOf(name)).setGroup(rigParts);
-      let visible = part.equal(index('legL')).or(part.equal(index('shinL'))).or(part.equal(index('footL'))).select(feedbackState.y.oneMinus(), 1);
-      visible = capSurface.select(0, visible);
-      const capNames = ['head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'legL', 'legR'];
-      const groups = crowdLimbParts(!!model.getObjectByName('body'));
-      groups.forEach((names, bit) => {
-        let hidden = float(0).equal(1);
-        for (const name of names) hidden = hidden.or(part.equal(index(name)));
-        const detached = feedbackState.z.div(2 ** bit).floor().mod(2);
-        visible = hidden.select(visible.mul(detached.oneMinus()), visible);
-        const cap = capSurface.and(parts.w.sub(1024).equal(capNames.indexOf(names[0])));
-        visible = cap.select(names[0] === 'legL' ? detached.max(feedbackState.y) : detached, visible);
-      });
       const column = (offset: number) => attribute(`_crowd${offset / 4}`, 'vec4');
       const instance = mat4(column(0), column(4), column(8), column(12));
-      material.positionNode = instance.mul(matrix.mul(vec4(skinned ? positionGeometry : positionGeometry.mul(visible).mul(crowdHeadwearVisibility()), 1))).xyz;
-      if (skinned) {
+      material.positionNode = instance.mul(matrix.mul(vec4(positionGeometry, 1))).xyz;
+      {
         const cut = uint(feedbackState.z).bitOr(uint(feedbackState.y.greaterThan(.5).select(4, 0)));
         const triangle = varying(uint(attribute('_skin', 'vec4').w.floor()), 'crowdTriangleCut');
         const capIndex = parts.w.round().sub(1024);
@@ -451,7 +417,7 @@ export class CrowdView extends Group {
       // Skinned bodies: the joint ids and weights vary inside a seam triangle. Evaluate the normal per vertex (a fragment-stage
       // normalNode would interpolate packed joint ids into unrelated or out-of-range atlas rows: NaN normals, black bloom blocks).
       const normal = instance.mul(matrix.mul(vec4(normalGeometry, 0))).xyz.transformDirection(cameraViewMatrix);
-      material.normalNode = skinned ? skinnedWoundNormal(varying(normal, 'skinnedCrowdNormal')) : normal;
+      material.normalNode = skinnedWoundNormal(varying(normal, 'skinnedCrowdNormal'));
       if (materialKey && sharedPose && surfaceAtlas) {
         sharedSkin = { material, pose: sharedPose, atlas: surfaceAtlas }; this.sharedSkinMaterials.set(materialKey, sharedSkin);
       }
@@ -489,7 +455,7 @@ export class CrowdView extends Group {
       mesh.userData.staticInstanceAttributes = true;
       mesh.userData.staticInstancePosition = material.positionNode;
       mesh.onAfterRender = () => probe.draw();
-      this.batches.set(`${key}:${lod}`, { animal: !!model.getObjectByName('legFL'), locomotion, probe, poses, lod, role: key, mesh, state, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), strideScale: baked.strideScale, windup: def.windup, asset, texture, count: 0, placeholders: false }); this.add(mesh);
+      this.batches.set(`${key}:${lod}`, { animal: !!model.getObjectByName('legFL'), locomotion, probe, poses, lod, role: key, mesh, state, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), strideScale: baked.strideScale, windup: def.windup, asset, texture, count: 0 }); this.add(mesh);
       if (lod === 'lod1' || lod === 'lod2') this.loadedModels.add(key);
       // Ordinary deaths use the retained far surface; Alphas keep the authored body. Warm in
       // every combat scene so the first settled blast victims cannot link it
@@ -659,7 +625,7 @@ export class CrowdView extends Group {
           const nearBatch = regularInfectedModels.some(id => id === def.asset) ? this.batches.get(`${key}:lod1`) : undefined;
           const frame = infectedClips.indexOf(death) * framesPerClip + framesPerClip - 1;
           const near = nearBatch ? { source: this.accessories?.corpseSource(e, nearBatch.mesh.geometry, def.asset, nearBatch.poses.clip.parts.indexOf('head')) ?? nearBatch.mesh.geometry, material: nearBatch.mesh.material as MeshLambertNodeMaterial, clip: nearBatch.poses.clip, frame } : undefined;
-          const mask = batch.poses.clip.binds && this.goreEnabled ? (feedback?.mask ?? 0) | (b.legLost ? 4 : 0) : 0;
+          const mask = this.goreEnabled ? (feedback?.mask ?? 0) | (b.legLost ? 4 : 0) : 0;
           const hidden = crowdLimbParts(batch.animal).flatMap((names, bit) => mask & 1 << bit ? names : []);
           this.staticCorpses.place(e, `${key}:${death}:${mask}`, frozenSource, batch.mesh.material as MeshLambertNodeMaterial, this.corpseClips.get(key) ?? batch.poses.clip, frame, this.transform, tint, [0, 0, 0], String(e.id), hidden, !batch.animal ? look : undefined, near);
           continue;
@@ -759,7 +725,7 @@ export class CrowdView extends Group {
     this.traverse((node) => { if (node !== this) objects++; if (node instanceof InstancedMesh) { instances += node.count; if (node.count) draws++; } else if (node instanceof Mesh) nonInstanced++; });
     const accessoryDrawCalls = this.accessories?.infectedDrawCalls() ?? 0;
     // Legacy probe fields: warnings now live in render.vfx.telegraphs.
-    return { telegraphs: [0, 0], figures: [...this.batches.values()].flatMap(b => b.probe.figures).concat(this.staticCorpses.snapshot().figures), instances, meshDrawCalls: draws + accessoryDrawCalls, bodyMeshDrawCalls: draws, accessoryDrawCalls, objects, staticCorpsePages: this.staticCorpses.children.length, texturedCorpsePages: this.staticCorpses.children.filter(mesh => mesh instanceof InstancedMesh && mesh.geometry.hasAttribute('uv')).length, nonInstancedMeshes: nonInstanced, caps: this.caps.count + this.texturedCaps, flashes: [...this.feedback.values()].filter(f => f.strength > 0).length, batches: [...this.batches.values()].map((b) => ({ id: b.role, lod: b.lod, instances: b.count, layout: crowdVertexLayout(b.mesh.geometry, b.mesh.instanceMatrix), source: b.placeholders ? 'placeholder' : 'glb', atlas: b.mesh.userData.crowdAtlas ? { ...b.mesh.userData.crowdAtlas, width: b.mesh.userData.preRenderTextures[1].image.width, height: b.mesh.userData.preRenderTextures[1].image.height, decodedBytesWithMips: (b.mesh.userData.preRenderTextures[1].image.width ** 2 * 4 * 4 - 4) / 3 } : null })).concat([...this.heroSlots.keys()].map(id => ({ id, lod: 'lod0', instances: 0, layout: { buffers: 0, locations: 0, webgpu: true, webgl2: true }, source: 'pending', atlas: null }))), assets: this.logs };
+    return { telegraphs: [0, 0], figures: [...this.batches.values()].flatMap(b => b.probe.figures).concat(this.staticCorpses.snapshot().figures), instances, meshDrawCalls: draws + accessoryDrawCalls, bodyMeshDrawCalls: draws, accessoryDrawCalls, objects, staticCorpsePages: this.staticCorpses.children.length, texturedCorpsePages: this.staticCorpses.children.filter(mesh => mesh instanceof InstancedMesh && mesh.geometry.hasAttribute('uv')).length, nonInstancedMeshes: nonInstanced, caps: this.caps.count + this.texturedCaps, flashes: [...this.feedback.values()].filter(f => f.strength > 0).length, batches: [...this.batches.values()].map((b) => ({ id: b.role, lod: b.lod, instances: b.count, layout: crowdVertexLayout(b.mesh.geometry, b.mesh.instanceMatrix), source: 'glb', atlas: b.mesh.userData.crowdAtlas ? { ...b.mesh.userData.crowdAtlas, width: b.mesh.userData.preRenderTextures[1].image.width, height: b.mesh.userData.preRenderTextures[1].image.height, decodedBytesWithMips: (b.mesh.userData.preRenderTextures[1].image.width ** 2 * 4 * 4 - 4) / 3 } : null })).concat([...this.heroSlots.keys()].map(id => ({ id, lod: 'lod0', instances: 0, layout: { buffers: 0, locations: 0, webgpu: true, webgl2: true }, source: 'pending', atlas: null }))), assets: this.logs };
   }
   dispose(): void {
     this.disposed = true; this.staticCorpses.dispose();

@@ -13,7 +13,7 @@ import type { Game } from '../../src/Game';
 const ids = ['inf.mega-alpha','inf.mega-alpha-ashen','inf.mega-alpha-ember'];
 const tier = process.env.REVIEW_TIER === 'high' ? 'high' : 'low';
 const backend = process.env.REVIEW_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
-const variant = process.env.REVIEW_VARIANT ?? 'new', mode = process.env.L10_CAPTURE ?? 'portraits';
+const variant = 'v2', mode = process.env.L10_CAPTURE ?? 'portraits';
 const out = resolve(`test-results/l10-all-new/${mode}-${variant}-${tier}-${backend}`);
 const session = new SceneSession({ backend, tier, nativeFrameTiming: false, viewport: mode === 'portraits' ? { width:800,height:600 } : { width:1600,height:900 }, query:{ ...(mode==='population'?{crowdProbe:'drawn'}:{crowdProbe:'full'}), ...(mode==='freeze'?{loadProfile:'2'}:{}) } });
 const actor = (model: string, id='subject', at: [number,number]=[0,0], yaw=-45): ActorSpec => ({id,kind:'infected',archetype:model.startsWith('inf.dog')?'infected.dog':model.includes('alpha')?'infected.alpha':model==='inf.firefighter'?'infected.firefighter':'infected.runner',look:{model},at,yaw,state:'idle'});

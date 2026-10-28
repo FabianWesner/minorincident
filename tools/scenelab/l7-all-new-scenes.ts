@@ -1,6 +1,5 @@
 /** L7 production-light crowd/state and authored story captures, one shared context per job. */
 import assert from 'node:assert/strict';
-import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { SceneSession, readSpec, stopServer, writeJson } from './session';
@@ -10,7 +9,7 @@ import type { Game } from '../../src/Game';
 
 const tier: 'high' | 'low' = process.env.REVIEW_TIER === 'high' ? 'high' : 'low';
 const backend = process.env.REVIEW_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
-const mode = process.env.L7_CAPTURE ?? 'crowd', variant = process.env.REVIEW_VARIANT ?? 'new';
+const mode = process.env.L7_CAPTURE ?? 'crowd', variant = 'v2';
 const out = resolve(`test-results/l7-all-new/${mode}-${variant}-${tier}-${backend}`);
 const review = (JSON.parse(readFileSync('docs/reports/l7-all-new/census.json', 'utf8')) as { review: string[] }).review;
 const people = review.filter(id => id.startsWith('npc.')), alphas = review.filter(id => id.startsWith('inf.'));
@@ -41,18 +40,6 @@ try {
   await session.open();
   await session.page.addInitScript("window.__name = (fn, name) => Object.defineProperty(fn, 'name', { value: name, configurable: true });");
   await session.page.evaluate("window.__name = (fn, name) => Object.defineProperty(fn, 'name', { value: name, configurable: true });");
-  if (variant === 'main') {
-    const base = '93d73c529';
-    for (const file of ['src/assets/manifest.json', 'src/assets/civilianBakes.json']) {
-      const data = execFileSync('git', ['show', `${base}:${file}`], { encoding: 'utf8' });
-      await session.page.context().route(`**/${file}*`, route => route.fulfill({ contentType: 'application/javascript', body: `export default ${data};` }));
-    }
-    const bakes = JSON.parse(execFileSync('git', ['show', `${base}:src/assets/civilianBakes.json`], { encoding: 'utf8' })) as Record<string, string>;
-    const files = [...new Set(Object.entries(bakes).filter(([key]) => key.startsWith('npc.civilian-man-b:')).map(([, path]) => `public${path}`)), ...[0, 1, 2].flatMap(lod => [false, true].map(low => `public/assets/models/skinned/npc.civilian-man-b.lod${lod}${low ? '.low' : ''}.glb`))];
-    for (const file of files) await session.page.context().route(`**/${file.replace(/^public\//, '')}`, route => route.fulfill({ contentType: 'application/octet-stream', body: execFileSync('git', ['show', `${base}:${file}`], { maxBuffer: 8 * 1024 * 1024 }) }));
-    await session.page.reload(); await session.page.waitForFunction(() => !!window.__SCENE__ && !!window.__SS__);
-    await session.page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.pause(); });
-  }
   const actual = await session.page.evaluate(() => window.__SS__!.getState().render);
   assert.equal(actual.backend, backend === 'webgl2' ? 'webgl' : 'webgpu'); assert.equal(actual.quality, tier);
   if (mode === 'population') {

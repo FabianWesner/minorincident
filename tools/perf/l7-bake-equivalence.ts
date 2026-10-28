@@ -1,8 +1,10 @@
 /** Byte equality of synchronous and paced versions of the same complete bake. */
 import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { createCorgiPlaceholder } from '../../src/render/npc/placeholders';
-import { createInfectedPlaceholder } from '../../src/render/characters/infectedPlaceholder';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import manifest from '../../src/assets/manifest.json' with { type: 'json' };
 import { bakeInfected, bakeInfectedAsync } from '../../src/render/characters/bakeInfected';
 
 const hash = (array: ArrayLike<number>) => {
@@ -11,11 +13,10 @@ const hash = (array: ArrayLike<number>) => {
 };
 let pauses = 0, clipComponents = 0;
 const cases: string[] = [];
-for (const [name, root, crawl] of [
-  ['runner', createInfectedPlaceholder('runner'), false],
-  ['crawler', createInfectedPlaceholder('crawler'), true],
-  ['corgi', createCorgiPlaceholder(), false],
-] as const) {
+const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
+for (const [name, crawl] of [['inf.common-worker', false], ['inf.crawler', true], ['char.corgi', false]] as const) {
+  const def = manifest.find(asset => asset.id === name)!;
+  const bytes = readFileSync(def.glb), root = (await loader.parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '')).scene;
   const a = bakeInfected(root.clone(true), [], crawl);
   const b = await bakeInfectedAsync(async () => { pauses++; await Promise.resolve(); }, root.clone(true), [], crawl);
   if (JSON.stringify(a.clip.parts) !== JSON.stringify(b.clip.parts) || hash(a.clip.matrices) !== hash(b.clip.matrices)) throw Error(`Pose differs: ${name}`);

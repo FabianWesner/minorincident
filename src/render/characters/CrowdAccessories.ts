@@ -25,37 +25,24 @@ export const referenceSkull = { size: new Vector3(.301, .334, .381), centre: new
  * retain the full head depth so a hat stays centred over the skull, not the nose. */
 export function bakedSkull(geometry: BufferGeometry): { size: Vector3; centre: Vector3 } | null {
   const parts = geometry.getAttribute('_parts'), position = geometry.getAttribute('position'), bounds = new Box3(), depth = new Box3(), point = new Vector3();
-  const binds = geometry.userData.crowdBinds as number[] | undefined, inverse = binds ? new Matrix4().fromArray(binds, characterNodes.indexOf('head') * 16) : undefined;
+  const binds = geometry.userData.crowdBinds as number[];
+  if (!binds) throw new Error('Crowd head measurements require v2 inverse binds');
+  const inverse = new Matrix4().fromArray(binds, characterNodes.indexOf('head') * 16);
   for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getY(i) !== -6 && parts.getW(i) < 1024 && !parts.getZ(i)) {
-    point.fromBufferAttribute(position, i); if (inverse) point.applyMatrix4(inverse);
+    point.fromBufferAttribute(position, i).applyMatrix4(inverse);
     if (parts.getY(i) === -1) bounds.expandByPoint(point);
-    if (inverse) depth.expandByPoint(point);
+    depth.expandByPoint(point);
   }
   if (!bounds.isEmpty() && !depth.isEmpty()) { bounds.min.x = depth.min.x; bounds.max.x = depth.max.x; }
   return bounds.isEmpty() ? null : { size: bounds.getSize(new Vector3()), centre: bounds.getCenter(new Vector3()) };
 }
-/** Head-local height of a spectacle frame: near-black neutral, untagged head vertices in front of the skull centre
- * that reach the temples (eyes, brows and mouths stay inside the face). null without glasses. */
+/** Head-local height of the authored spectacle region; null when there are no glasses. */
 export function glassesTop(geometry: BufferGeometry): number | null {
-  if (geometry.userData.crowdBinds) {
-    const position = geometry.getAttribute('position'), parts = geometry.getAttribute('_parts');
-    const inverse = new Matrix4().fromArray(geometry.userData.crowdBinds, characterNodes.indexOf('head') * 16), point = new Vector3();
-    let top = -Infinity;
-    for (let i = 0; i < position.count; i++) if (parts.getY(i) === -6) top = Math.max(top, point.fromBufferAttribute(position, i).applyMatrix4(inverse).y);
-    return Number.isFinite(top) ? top : null;
-  }
-  const skull = bakedSkull(geometry); if (!skull) return null;
-  const parts = geometry.getAttribute('_parts'), position = geometry.getAttribute('position'), color = geometry.getAttribute('color');
-  if (!color) return null;
-  const head = characterNodes.indexOf('head'), temple = skull.size.z / 2 * .75;
-  let top = -Infinity, temples = false;
-  for (let i = 0; i < parts.count; i++) {
-    if (parts.getX(i) !== head || parts.getY(i) !== 0 || parts.getW(i) % 128 >= 4 || position.getX(i) <= skull.centre.x) continue;
-    const r = color.getX(i), g = color.getY(i), b = color.getZ(i), max = Math.max(r, g, b);
-    if (max >= .05 || max - Math.min(r, g, b) >= .02) continue;
-    top = Math.max(top, position.getY(i)); if (Math.abs(position.getZ(i) - skull.centre.z) > temple) temples = true;
-  }
-  return temples ? top : null;
+  const position = geometry.getAttribute('position'), parts = geometry.getAttribute('_parts');
+  const inverse = new Matrix4().fromArray(geometry.userData.crowdBinds, characterNodes.indexOf('head') * 16), point = new Vector3();
+  let top = -Infinity;
+  for (let i = 0; i < position.count; i++) if (parts.getY(i) === -6) top = Math.max(top, point.fromBufferAttribute(position, i).applyMatrix4(inverse).y);
+  return Number.isFinite(top) ? top : null;
 }
 /** Authored head-local frame tops of the spectacled civilian bases (measured from the shipped LOD0 bakes; pinned
  * against the GLBs by tests/unit/render/crowd-hat-glasses.test.ts). Runtime bakes recolour the frames, so this is data. */
@@ -89,7 +76,8 @@ export class CrowdAccessories extends Group {
   private readonly corpseSources = new Map<string, BufferGeometry>();
   private readonly fits = new Map<string, Matrix4>();
   private readonly accessoryFits = new Map<string, Matrix4>();
-  private readonly skinnedModels = new Set<string>();
+  /** Models with a measured bare skull; covered faces retain their authored fit. */
+  private readonly measuredModels = new Set<string>();
   private readonly brows = new Map<string, ReturnType<typeof skinnedBrow>>();
   private readonly skullLods = new Map<string, number>();
   private readonly measuredGlasses = new Map<string, number>();
@@ -116,7 +104,7 @@ export class CrowdAccessories extends Group {
     const rank = geometry.userData.crowdLod === 'lod1' ? 0 : geometry.userData.crowdLod === 'lod0' ? 1 : 2;
     const skull = bakedSkull(geometry); if (!skull) return;
     const frames = glassesTop(geometry);
-    if (geometry.userData.crowdBinds) {
+    {
       // One immutable fit serves all LODs. Their skin bounds can differ by a few
       // millimetres; keep even a shallow beanie above every LOD's upper face.
       const brow = skinnedBrow(geometry);
@@ -139,7 +127,7 @@ export class CrowdAccessories extends Group {
     if (this.fits.has(model) && rank >= (this.skullLods.get(model) ?? 2)) return;
     this.skullLods.set(model, rank);
     for (const cache of [this.lifts, this.accessoryFits]) for (const key of cache.keys()) if (key.endsWith(`/${model}`)) cache.delete(key);
-    if (geometry.userData.crowdBinds) this.skinnedModels.add(model);
+    this.measuredModels.add(model);
     const scale = skull.size.divide(referenceSkull.size);
     // Map the reference skull onto this skull: centre to centre, per-axis size ratio.
     this.fits.set(model, new Matrix4().makeTranslation(skull.centre.x, skull.centre.y, skull.centre.z)
@@ -208,10 +196,10 @@ export class CrowdAccessories extends Group {
     const slot = this.slot(e), head = poses.clip.parts.indexOf('head');
     if (!slot || head < 0 || hiddenHead || e.corpse) return;
     const model = this.look(e).model;
-    const mesh = this.batches.get(`${this.ids[slot - 1]}:${this.skinnedModels.has(model) && definitions.get(this.ids[slot - 1])?.slot === 'hat' ? 'lod0' : lod === 'lod2' ? 'lod1' : lod}`); if (!mesh || mesh.count >= 350) return;
+    const mesh = this.batches.get(`${this.ids[slot - 1]}:${this.measuredModels.has(model) && definitions.get(this.ids[slot - 1])?.slot === 'hat' ? 'lod0' : lod === 'lod2' ? 'lod1' : lod}`); if (!mesh || mesh.count >= 350) return;
     poses.part(frame, blend[0], blend[1], head, this.headTransform).premultiply(transform);
     const id = this.ids[slot - 1];
-    if (this.skinnedModels.has(model) && definitions.get(id)?.slot === 'hat' && e.faction === 'infected') {
+    if (this.measuredModels.has(model) && definitions.get(id)?.slot === 'hat' && e.faction === 'infected') {
       // Keep the brim level through the infected hunch, rotating about the skull rather than the neck pivot.
       const skull = this.brows.get(model)?.centre ?? new Vector3();
       const centre = skull.clone().applyMatrix4(this.headTransform), scale = new Vector3().setFromMatrixScale(this.headTransform);
@@ -238,13 +226,13 @@ export class CrowdAccessories extends Group {
   }
   private authoredOrRetargeted(id: string, model: string): void {
     const base = model.replace(/\.aftermath$/, ''), authored = definitions.get(id)?.fits?.[base];
-    if (authored && !this.skinnedModels.has(model)) { authoredFit(authored, this.fitTransform); return; }
+    if (authored && !this.measuredModels.has(model)) { authoredFit(authored, this.fitTransform); return; }
     const skull = this.fits.get(model);
     if (!skull) { this.fitTransform.identity(); return; }
     // Retargeted reference fit: skull mapping x the reference base's authored fit of this accessory.
     const reference = definitions.get(id)?.fits?.[referenceBase];
     this.fitTransform.copy(skull); if (reference) this.fitTransform.multiply(authoredFit(reference, this.referenceFit));
-    if (this.skinnedModels.has(model) && definitions.get(id)?.slot === 'hat') {
+    if (this.measuredModels.has(model) && definitions.get(id)?.slot === 'hat') {
       const scale = new Vector3().setFromMatrixScale(skull), centre = new Vector3(referenceSkull.centre.x, referenceSkull.centre.y, referenceSkull.centre.z).applyMatrix4(skull);
       const limit = 1.15, skullDepth = this.brows.get(model)?.depth ?? referenceSkull.size.x * scale.x, skullWidth = this.brows.get(model)?.width ?? referenceSkull.size.z * scale.z;
       let width = 0, depth = 0, height = 0;
@@ -274,7 +262,7 @@ export class CrowdAccessories extends Group {
     let top = this.measuredGlasses.get(model) ?? spectacleTops[model.replace(/\.aftermath$/, '')];
     const seat = this.minimumHatY.get(model);
     if (definitions.get(id)?.slot !== 'hat' || top === undefined && seat === undefined) return 0;
-    if (top !== undefined && this.skinnedModels.has(model) && !this.measuredGlasses.has(model)) top = this.glassesPoint.set(0, top, 0).applyMatrix4(this.fits.get(model)!).y;
+    if (top !== undefined && this.measuredModels.has(model) && !this.measuredGlasses.has(model)) top = this.glassesPoint.set(0, top, 0).applyMatrix4(this.fits.get(model)!).y;
     const key = `${id}/${model}`, cached = this.lifts.get(key); if (cached !== undefined) return cached;
     // One lift for both LOD pieces, so a LOD change never moves the hat.
     const meshes = [this.batches.get(`${id}:lod0`), this.batches.get(`${id}:lod1`)].filter(mesh => !!mesh); if (!meshes.length) return 0;
@@ -287,7 +275,7 @@ export class CrowdAccessories extends Group {
   private readonly glassesPoint = new Vector3();
   private readonly liftMatrix = new Matrix4();
   private readonly referenceFit = new Matrix4();
-  private headPiece(id: string, model: string, head: number, slot = 0): BufferGeometry {
+  private headPiece(id: string, model: string, head: number): BufferGeometry {
     this.fit(id, model);
     // Render backends may pad colours/normals to vec4 in place. Read the semantic
     // channels from both sources rather than borrowing their GPU attribute layout.
@@ -301,21 +289,9 @@ export class CrowdAccessories extends Group {
     piece.setIndex(original.index?.clone() ?? Array.from({ length: original.getAttribute('position').count }, (_, i) => i));
     piece.applyMatrix4(this.fitTransform);
     const count = piece.getAttribute('position').count, parts = new Float32Array(count * 4);
-    for (let i = 0; i < count; i++) { parts[i * 4] = head; parts[i * 4 + 3] = slot ? 128 + slot * 8 : 0; parts[i * 4 + 1] = definitions.get(id)?.tint === 'hair' ? -5 : -4; }
+    for (let i = 0; i < count; i++) { parts[i * 4] = head; parts[i * 4 + 1] = definitions.get(id)?.tint === 'hair' ? -5 : -4; }
     piece.setAttribute('_parts', new BufferAttribute(parts, 4));
     return piece;
-  }
-  /** Transfer source ownership to one body draw; each optional head piece retains its exact fitted geometry. */
-  livingSource(source: BufferGeometry, model: string, head: number): BufferGeometry {
-    if (head < 0 || !this.ids.every(id => this.batches.has(`${id}:lod1`))) return source;
-    const body = source.clone(), parts = body.getAttribute('_parts');
-    for (let i = 0; i < parts.count; i++) parts.setW(i, parts.getW(i) + 128);
-    const pieces = this.ids.map((id, i) => this.headPiece(id, model, head, i + 1));
-    const geometry = mergeGeometries([body, ...pieces])!;
-    body.dispose(); pieces.forEach(piece => piece.dispose());
-    geometry.userData = { ...source.userData, inlineAccessories: true, inlineBody: source };
-    geometry.addEventListener('dispose', () => source.dispose());
-    return geometry;
   }
   /** Freeze the selected accessory into the body's head part and spatial pages, with no separate head draw. */
   corpseSource(e: EntitySnapshot, source: BufferGeometry, model: string, head: number): BufferGeometry {
@@ -326,10 +302,16 @@ export class CrowdAccessories extends Group {
     const key = `${source.uuid}/${model}/${look.accessory}/${head}`;
     const cached = this.corpseSources.get(key); if (cached) return cached;
     const piece = this.headPiece(look.accessory, model, head);
+    const binds = source.userData.crowdBinds as number[];
+    if (!binds || !source.hasAttribute('_skin')) throw new Error('Corpse accessories require the v2 skinned body contract');
+    // The fitted piece starts in head-local metres. Skin it with one head influence
+    // in bind space, so the shared freezer produces the same joint-local pose.
+    piece.applyMatrix4(new Matrix4().fromArray(binds, head * 16).invert());
+    piece.setAttribute('_skin', new BufferAttribute(new Float32Array(piece.getAttribute('position').count * 4), 4));
     // Keep the large live buffers shared. StaticCorpses reuses their frozen
     // body pose and merges only after the small head piece has been posed.
     const merged = new BufferGeometry();
-    for (const name of ['position', 'normal', 'color', '_parts']) merged.setAttribute(name, source.getAttribute(name));
+    for (const name of ['position', 'normal', 'color', '_parts', '_skin']) merged.setAttribute(name, source.getAttribute(name));
     merged.setIndex(source.index);
     merged.userData.corpseBody = source; merged.userData.corpseAccessory = piece;
     merged.userData.appearanceTags = source.userData.appearanceTags;

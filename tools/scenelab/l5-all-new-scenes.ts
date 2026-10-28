@@ -10,7 +10,7 @@ import type { ActorSpec, SceneSpec } from '../../src/debug/scenelab/spec';
 import type { Game } from '../../src/Game';
 const tier = process.env.REVIEW_TIER === 'high' ? 'high' : 'low';
 const backend = process.env.REVIEW_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
-const mode = process.env.L5_CAPTURE ?? 'crowd', variant = process.env.REVIEW_VARIANT ?? 'new';
+const mode = process.env.L5_CAPTURE ?? 'crowd', variant = 'v2';
 const base = 'c0dc2ff43';
 const revision = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
 const out = resolve(`test-results/l5-all-new/${mode}-${variant}-${tier}-${backend}`);
@@ -64,16 +64,6 @@ try{
  await session.open();
  await session.page.addInitScript("window.__name = (fn, name) => Object.defineProperty(fn, 'name', { value: name, configurable: true });");
  await session.page.evaluate("window.__name = (fn, name) => Object.defineProperty(fn, 'name', { value: name, configurable: true });");
- if(variant==='old'){
-  for(const file of ['src/assets/manifest.json','src/assets/civilianBakes.json']){
-   const data=execFileSync('git',['show',`${base}:${file}`],{encoding:'utf8'});
-   await session.page.context().route(`**/${file}*`,route=>route.fulfill({contentType:'application/javascript',body:`export default ${data};`}));
-  }
-  const bakes=JSON.parse(execFileSync('git',['show',`${base}:src/assets/civilianBakes.json`],{encoding:'utf8'})) as Record<string,string>;
-  for(const path of new Set(Object.values(bakes)))await session.page.context().route(`**${path}`,route=>route.fulfill({contentType:'application/octet-stream',body:execFileSync('git',['show',`${base}:public${path}`],{maxBuffer:8*1024*1024})}));
-  await session.page.reload();await session.page.waitForFunction(()=>!!window.__SCENE__&&!!window.__SS__);
-  await session.page.evaluate(async()=>{await window.__SS__!.ready;window.__SS__!.pause();});
- }
  const actual=await session.page.evaluate(()=>window.__SS__!.getState().render);
  assert.equal(actual.backend,backend==='webgl2'?'webgl':'webgpu');assert.equal(actual.quality,tier);
  if(mode==='story'){
@@ -88,7 +78,7 @@ try{
   const spec=mode==='states'?states:crowd30;
   const result=await runSpec(session,spec,{out,sheet:0});assert.ok(result.pass,JSON.stringify(result.failed));
   const metrics=await session.metrics(),resources=await session.page.evaluate(resourceSnapshot);
-  if (mode === 'crowd' && variant === 'new') for (const held of resources.heldProps.filter(p => p.prop === 'cane')) assert.ok(Math.abs(held.minY - held.floorY) < .001, `cane floor contact: ${JSON.stringify(held)}`);
+  if (mode === 'crowd') for (const held of resources.heldProps.filter(p => p.prop === 'cane')) assert.ok(Math.abs(held.minY - held.floorY) < .001, `cane floor contact: ${JSON.stringify(held)}`);
   if(mode!=='states'){
    assert.equal(Object.keys(metrics.actors).length,30);assert.ok(Object.values(metrics.actors).every(a=>a.drawnFrames>0),'Every crowd figure submitted');
    for(const zoom of [1,1.5]){await session.page.evaluate(zoom=>window.__SS__!.camera.zoom(zoom),zoom);await session.ready();await session.screenshot(`${out}/zoom-${zoom}.png`);}
@@ -106,7 +96,7 @@ try{
   }else{
    const proof=await session.page.evaluate(()=>window.__SS__!.query({}).filter(e=>e.appearance?.asset?.endsWith('.aftermath')).map(e=>({id:e.id,model:e.appearance!.asset,health:e.health.current,corpse:!!e.corpse,infected:!!e.infected,state:e.civilian?.state})));
    assert.equal(proof.filter(e=>e.corpse).length,8,'Eight actual frozen corpses');
-   if (variant === 'new') assert.equal(resources.heldProps.filter(p=>p.prop==='cane').length,3,'Live, turned and frozen Okafor each retain exactly one cane');
+   assert.equal(resources.heldProps.filter(p=>p.prop==='cane').length,3,'Live, turned and frozen Okafor each retain exactly one cane');
    assert.equal(proof.filter(e=>e.infected&&e.health>0).length,8,'Eight living turned bodies');
    assert.equal(proof.filter(e=>!e.infected&&e.health>0).length,8,'Eight healthy bodies');
    writeJson(`${out}/state-proof.json`,proof);

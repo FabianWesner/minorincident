@@ -84,7 +84,7 @@ test('authored aftermath and skinned infected headwear survives variation and ac
   const brow = skinnedBrow(coarse)!;
   expect(brow.width).toBeCloseTo(.4); expect(brow.depth).toBeCloseTo(.3);
   coarse.userData.crowdAtlas = true;
-  markCrowdAppearance(coarse, true);
+  markCrowdAppearance(coarse);
   expect(coarse.getAttribute('_parts').getY(3)).toBe(0); // authored lower-face/beard surface is never hair
   expect(coarse.getAttribute('_parts').getW(3)).toBe(0);
   coarse.dispose();
@@ -93,11 +93,10 @@ test('authored aftermath and skinned infected headwear survives variation and ac
 test('crowd registration retains converted textured variants with their own model identity', () => {
   const native = new Set(['inf.runner']), aliases = new Map<string, string>();
   const variant = { id: 'inf.outfit', status: 'integrated', category: 'infected' } as const;
-  expect(isCrowdVariant(variant, native)).toBe(true);
+  expect(isCrowdVariant(variant, native)).toBe(false);
   expect(isCrowdVariant({ ...variant, textureMode: 'baseColor' }, native)).toBe(false);
   expect(isCrowdVariant({ ...variant, textureMode: 'baseColor', crowdSkin: true }, native)).toBe(true);
   expect(isCrowdVariant({ ...variant, id: 'inf.runner', crowdSkin: true }, native)).toBe(false);
-  expect(isCrowdVariant({ ...variant, id: 'inf.corpse-poses', crowdSkin: true }, native)).toBe(false);
   expect(registerCrowdModel(aliases, { id: variant.id, asset: variant.id })).toBe(variant.id);
   expect(aliases.get(variant.id)).toBe(variant.id);
 });
@@ -172,6 +171,25 @@ test('skinned crowd: four-influence packing, joint·bind⁻¹ atlas rows, and co
   const out = skinnedVertexMatrix(clip, 0, new BufferAttribute(new Float32Array([0, 0, 0, 0]), 4), new BufferAttribute(new Float32Array([1, .25, 0, 0]), 4), 0, new Float32Array(16));
   const a = new Matrix4().multiplyMatrices(frame[0], rest[0].clone().invert()), b = new Matrix4().multiplyMatrices(frame[1], rest[1].clone().invert());
   expect([...out].map(v => +v.toFixed(5))).toEqual(a.toArray().map((v, i) => +(v * .75 + b.elements[i] * .25).toFixed(5)));
+  // A frozen accessory uses one head influence in bind space, including nonidentity binds.
+  const triangle = (part: number, points: Vector3[]) => {
+    const geometry = new BufferGeometry();
+    geometry.setAttribute('position', new BufferAttribute(new Float32Array(points.flatMap(p => p.toArray())), 3));
+    geometry.setAttribute('normal', new BufferAttribute(new Float32Array([0, 1, 0, 0, 1, 0, 0, 1, 0]), 3));
+    geometry.setAttribute('color', new BufferAttribute(new Float32Array(9).fill(.5), 3));
+    geometry.setAttribute('_parts', new BufferAttribute(new Float32Array([part, -4, 0, 0, part, -4, 0, 0, part, -4, 0, 0]), 4));
+    geometry.setAttribute('_skin', new BufferAttribute(new Float32Array(12), 4));
+    return geometry;
+  };
+  const localPoints = [new Vector3(0, .1, 0), new Vector3(.2, .1, 0), new Vector3(0, .3, .1)];
+  const body = triangle(0, localPoints), accessory = triangle(1, localPoints.map(p => p.clone().applyMatrix4(rest[1])));
+  const composite = body.clone(); composite.userData = { corpseBody: body, corpseAccessory: accessory };
+  const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial();
+  pool.prepare('attachment', composite, material, clip, 0);
+  pool.place({ id: 7 } as EntitySnapshot, 'attachment', composite, material, clip, 0, new Matrix4(), new Color('white'), [0, 0, 0]);
+  const positions = (pool.children[0] as InstancedMesh).geometry.getAttribute('position');
+  for (let i = 0; i < 3; i++) expect(new Vector3().fromBufferAttribute(positions, positions.count - 3 + i).distanceTo(localPoints[i].clone().applyMatrix4(frame[1]))).toBeLessThan(1e-5);
+  pool.dispose(); material.dispose(); composite.dispose(); body.dispose(); accessory.dispose();
 });
 
 test('corpse pages: bodies persist past the old cap, bounds stay conservative, culling restores identity/pose/tint, normals survive vec4 padding', () => {

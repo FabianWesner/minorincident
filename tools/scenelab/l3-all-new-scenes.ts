@@ -8,7 +8,7 @@ import type { SceneSpec, ActorSpec } from '../../src/debug/scenelab/spec';
 import type { Game } from '../../src/Game';
 
 const root = process.cwd(), tier = process.env.REVIEW_TIER === 'high' ? 'high' : 'low';
-const mode = process.env.L3_CAPTURE ?? 'crowd', variant = process.env.REVIEW_VARIANT ?? 'new';
+const mode = process.env.L3_CAPTURE ?? 'crowd', variant = 'v2';
 const out = resolve(root, `test-results/l3-all-new/${mode}-${variant}-${tier}`);
 const pedestrians = ['npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'npc.civilian-elderly'];
 export const crowd30: SceneSpec = {
@@ -27,7 +27,6 @@ export const crowd30: SceneSpec = {
   script: Array.from({ length: 6 }, (_, i) => ({ frame: 1, actor: `ped-${16 + i}`, do: { infect: { instant: true } } })),
   camera: { mode: 'game', target: [-46, .7, 0], zoom: 1.5 }, frames: 3, shots: [3], expect: { consoleErrors: 0 },
 };
-if (variant === 'old') process.chdir(process.env.BASELINE_ROOT ?? resolve(root, '../l3-all-new-baseline'));
 const session = new SceneSession({ backend: 'webgl2', tier, viewport: { width: 1600, height: 900 }, query: { crowdProbe: 'full' } });
 const receipts = [];
 try {

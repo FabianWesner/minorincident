@@ -103,16 +103,16 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
     prepareCivilianRig(referenceRoot, 'npc.civilian-man-a');
     const referenceGeo = bakeInfected(referenceRoot, [], false, ['idle']).geometry;
     packCrowdParts(referenceGeo);
-    markCrowdAppearance(referenceGeo, false);
+    markCrowdAppearance(referenceGeo);
     const reference = bakedSkull(referenceGeo)!;
     const ids = manifest.filter(a => a.category === 'accessory' && a.accessory && ['hat', 'glasses'].includes(a.accessory.slot)).map(a => a.id);
     expect(ids.length).toBeGreaterThan(0);
     // Group tableaux contain several people; their individually registered members are the crowd variants.
-    const models = [...new Set([...regularInfectedModels, ...manifest.filter(a => a.id.startsWith('npc.') && !['npc.survivor-group', 'npc.survivor-group.aftermath'].includes(a.id)).map(a => a.id)])];
+    const models = [...new Set([...regularInfectedModels, ...manifest.filter(a => a.id.startsWith('npc.') && a.crowdSkin).map(a => a.id)])];
     const raw = new Map<string, Box3>();
     for (const id of ids) for (const lod of ['lod0', 'lod1', 'lod2'] as const) raw.set(`${id}/${lod}`, await authoredBounds(id, lod));
     const frameTops = new Map<string, number>();
-    for (const model of ['npc.civilian-woman-b', 'npc.civilian-woman-b.aftermath', 'npc.civilian-elderly', 'npc.civilian-elderly.aftermath']) {
+    for (const model of ['npc.civilian-woman-b', 'npc.civilian-woman-b.aftermath', 'npc.civilian-elderly']) {
       const base = model.replace(/\.aftermath$/, '');
       const root = await asset(model, 'lod0'); prepareCivilianRig(root, base); root.updateMatrixWorld(true);
       const head = root.getObjectByName('head')!, inverse = head.matrixWorld.clone().invert(), point = new Vector3(); let top = -Infinity;
@@ -144,7 +144,7 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
       if (model.startsWith('npc.')) prepareCivilianRig(root, model);
       const baked = bakeInfected(root, [], false, ['idle']);
       deinterleaveGeometry(baked.geometry); const geometry = mergeVertices(baked.geometry); packCrowdParts(geometry);
-      markCrowdAppearance(geometry, model.startsWith('inf.'));
+      markCrowdAppearance(geometry);
       const registeredSkull = bakedSkull(geometry), skull = registeredSkull ?? authoredSkull(root);
       let civilianFrameTop = frameTops.get(model) ?? frameTops.get(model.replace(/\.aftermath$/, ''));
       if (geometry.userData.crowdBinds) {
@@ -265,13 +265,16 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
             || actual.min.y < seat - .002 || actual.min.y > Math.max(brow.y + .06, (civilianFrameTop ?? -Infinity) + .03)
             || Math.abs(centre.z - skull!.centre.z) > .03 || Math.abs(centre.x - skull!.centre.x) > skull!.size.x * .3) errors.push(`${model}/${lod}/${tier}/${id}: bare skull fit or eye clearance failed: ${actual.min.toArray()}..${actual.max.toArray()}`);
         } else if (!mesh.visible || mesh.count !== 1 || oracle.accessory({ attach: 'head', offset: [actual.min.distanceTo(expected.min), actual.max.distanceTo(expected.max)], tolerance })) errors.push(`${model}/${lod}/${tier}/${id}: head bounds ${actual.min.toArray()}..${actual.max.toArray()}, authored ${expected.min.toArray()}..${expected.max.toArray()}, tolerance ${tolerance}`);
-        // Textured crowds retain the separately fitted head-piece draw at every
-        // LOD; only palette bodies use livingSource's merged accessory path.
-        if (lod !== 'lod0' && !geometry.hasAttribute('uv')) {
-          const inline = renderer.livingSource(geometry, model, characterNodes.indexOf('head')), parts = inline.getAttribute('_parts'), slot = renderer.ids.indexOf(id) + 1;
-          const inlineBounds = bounds(inline, new Matrix4(), i => Math.floor((parts.getW(i) - 128) / 8) === slot);
-          if (inlineBounds.min.distanceTo(expected.min) > tolerance || inlineBounds.max.distanceTo(expected.max) > tolerance) errors.push(`${model}/${lod}/${tier}/${id}: inline head geometry differs from authored bounds`);
-          inline.dispose();
+        // Frozen head pieces use the same four-influence contract as the body.
+        // Moving from head-local to bind space must preserve the authored fit.
+        const corpse = renderer.corpseSource(e, geometry, model, characterNodes.indexOf('head'));
+        if (corpse !== geometry) {
+          const piece = corpse.userData.corpseAccessory as BufferGeometry;
+          const inverseBind = new Matrix4().fromArray(geometry.userData.crowdBinds, characterNodes.indexOf('head') * 16);
+          const corpseBounds = bounds(piece, inverseBind);
+          expect(piece.hasAttribute('_skin')).toBe(true);
+          const expectedCorpse = fittedAccessoryBounds(id, 'lod1', headLocal);
+          if (corpseBounds.min.distanceTo(expectedCorpse.min) > tolerance || corpseBounds.max.distanceTo(expectedCorpse.max) > tolerance) errors.push(`${model}/${lod}/${tier}/${id}: frozen head geometry differs from authored bounds`);
         }
       }
       geometry.dispose(); baked.geometry.dispose();

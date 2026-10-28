@@ -7,6 +7,7 @@ type Header = { gripReach?: number; rig?: RigNode; version: number; arrays: Arra
 export { decompressCivilianBake } from './bakeCompression';
 /** Lossless build output: a small JSON header followed by aligned Float32/Uint32 arrays. */
 export function encodeCivilianBake(baked: PreparedCivilian): Uint8Array {
+  if (!baked.clip.binds || !baked.geometry.hasAttribute('_skin')) throw new Error('Crowd delivery requires a v2 skinned figure');
   const arrays: { spec: ArraySpec; data?: Float32Array | Uint32Array }[] = [];
   const shared = new Map<InterleavedBuffer, string>();
   for (const [name, a] of Object.entries(baked.geometry.attributes)) {
@@ -22,7 +23,7 @@ export function encodeCivilianBake(baked: PreparedCivilian): Uint8Array {
   if (baked.gripTriangles) arrays.push({ spec: { name: 'grip', size: 3, length: baked.gripTriangles.length }, data: baked.gripTriangles });
   if (baked.geometry.index) arrays.push({ spec: { name: 'index', size: 1, length: baked.geometry.index.array.length, uint: true }, data: new Uint32Array(baked.geometry.index.array) });
   arrays.push({ spec: { name: 'poses', size: 16, length: baked.clip.matrices.length }, data: new Float32Array(baked.clip.matrices) });
-  if (baked.clip.binds) arrays.push({ spec: { name: 'binds', size: 16, length: baked.clip.binds.length }, data: new Float32Array(baked.clip.binds) });
+  arrays.push({ spec: { name: 'binds', size: 16, length: baked.clip.binds.length }, data: new Float32Array(baked.clip.binds) });
   const header: Header = { gripReach: baked.gripReach, rig: baked.rig ? encodeRig(baked.rig, baked.clip.parts) : undefined, version: 1, arrays: arrays.map(a => a.spec), clip: { parts: baked.clip.parts, frames: baked.clip.frames, duration: baked.clip.duration }, shirt: baked.shirtColor?.toArray(), doubleSided: baked.doubleSided, strideScale: baked.strideScale, userData: baked.geometry.userData };
   const json = new TextEncoder().encode(JSON.stringify(header)), start = 4 + Math.ceil(json.length / 4) * 4;
   const bytes = new Uint8Array(start + arrays.reduce((n, a) => n + (a.data?.byteLength ?? 0), 0));
@@ -53,8 +54,8 @@ export function decodeCivilianBake(bytes: ArrayBuffer): PreparedCivilian {
     else geometry.setAttribute(spec.name, new BufferAttribute(data, spec.size, spec.normalized));
   }
   if (!matrices || offset !== bytes.byteLength || matrices.length !== header.clip.parts.length * header.clip.frames * 16) throw new Error('Incomplete civilian bake');
-  if (binds && binds.length !== header.clip.parts.length * 16) throw Error('Incomplete civilian inverse binds');
-  return { gripTriangles: grip, gripReach: header.gripReach, rig: header.rig ? decodeRig(header.rig) : undefined, geometry, clip: { ...header.clip, matrices, ...(binds ? { binds } : {}) }, shirtColor: header.shirt ? new Color().fromArray(header.shirt) : undefined, doubleSided: header.doubleSided, strideScale: header.strideScale };
+  if (!binds || binds.length !== header.clip.parts.length * 16 || !geometry.hasAttribute('_skin')) throw Error('Incomplete skinned crowd delivery');
+  return { gripTriangles: grip, gripReach: header.gripReach, rig: header.rig ? decodeRig(header.rig) : undefined, geometry, clip: { ...header.clip, matrices, binds }, shirtColor: header.shirt ? new Color().fromArray(header.shirt) : undefined, doubleSided: header.doubleSided, strideScale: header.strideScale };
 }
 function encodeRig(root: Group, parts: string[]): RigNode {
   const required = new Set<Object3D>([root]);

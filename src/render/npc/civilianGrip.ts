@@ -17,57 +17,13 @@ export function gripPoint(point: Vector3): Vector3 {
   return point;
 }
 
-/** Split only hand triangles before curling, so a broad palm triangle cannot bridge
- * the handle hole. Interpolate native attributes; the rest of the body is unchanged. */
-function subdivideHand(geometry: BufferGeometry, handPart: number): void {
-  const attributes = Object.entries(geometry.attributes), parts = geometry.getAttribute('_part_index'), skin = geometry.getAttribute('_shirt');
-  const positionIndex = attributes.findIndex(([name]) => name === 'position');
-  const vertex = (i: number) => attributes.map(([, attribute]) => Array.from({ length: attribute.itemSize }, (_, c) => attribute.getComponent(i, c)));
-  type Vertex = number[][];
-  const midpoint = (a: Vertex, b: Vertex): Vertex => a.map((values, i) => values.map((v, c) => (v + b[i][c]) / 2));
-  const hands = new Map<number, Vertex[]>();
-  let handVertices = 0;
-  const emit = (output: Vertex[], a: Vertex, b: Vertex, c: Vertex, depth = 0): void => {
-    const vertices = [a, b, c], distances = vertices.map((v, i) => Math.hypot(...v[positionIndex].map((p, k) => p - vertices[(i + 1) % 3][positionIndex][k])));
-    if (Math.max(...distances) > .008 && depth < 6) {
-      const ab = midpoint(a, b), bc = midpoint(b, c), ca = midpoint(c, a);
-      emit(output, a, ab, ca, depth + 1); emit(output, ab, b, bc, depth + 1); emit(output, ca, bc, c, depth + 1); emit(output, ab, bc, ca, depth + 1);
-    } else output.push(...vertices);
-  };
-  for (let i = 0; i < parts.count; i += 3) if (parts.getX(i) === handPart && skin.getX(i) < 0) {
-    const output: Vertex[] = []; emit(output, vertex(i), vertex(i + 1), vertex(i + 2));
-    hands.set(i, output); handVertices += output.length - 3;
-  }
-  // Copy the unchanged body directly. Only the hand needs interpolated vertices;
-  // expanding every body attribute into nested JS arrays dominated cold loads.
-  const count = parts.count + handVertices;
-  attributes.forEach(([name, attribute], attr) => {
-    const size = attribute.itemSize, output = new Float32Array(count * size);
-    let offset = 0, from = 0;
-    const copy = (to: number) => {
-      if (!attribute.normalized && !('isInterleavedBufferAttribute' in attribute)) {
-        output.set(attribute.array.subarray(from * size, to * size), offset);
-        offset += (to - from) * size;
-      } else for (let v = from; v < to; v++) for (let c = 0; c < size; c++) output[offset++] = attribute.getComponent(v, c);
-    };
-    for (const [triangle, vertices] of hands) {
-      copy(triangle);
-      for (const v of vertices) { output.set(v[attr], offset); offset += size; }
-      from = triangle + 3;
-    }
-    copy(parts.count);
-    geometry.setAttribute(name, new BufferAttribute(output, size));
-  });
-}
-
-export function prepareGrip(geometry: BufferGeometry, handPart: number, binds?: Float32Array): void {
-  if (!binds) subdivideHand(geometry, handPart);
+export function prepareGrip(geometry: BufferGeometry, handPart: number, binds: Float32Array): void {
   const positions = geometry.getAttribute('position'), parts = geometry.getAttribute('_part_index'), skin = geometry.getAttribute('_shirt');
-  const values = new Float32Array(positions.count * 3), point = new Vector3(), inverse = binds ? new Matrix4().fromArray(binds, handPart * 16) : undefined, rest = inverse?.clone().invert();
+  const values = new Float32Array(positions.count * 3), point = new Vector3(), inverse = new Matrix4().fromArray(binds, handPart * 16), rest = inverse.clone().invert();
   for (let i = 0; i < positions.count; i++) {
     point.fromBufferAttribute(positions, i);
     const hand = parts.getX(i) === handPart && skin.getX(i) < 0;
-    if (hand) { if (inverse) point.applyMatrix4(inverse); gripPoint(point); if (rest) point.applyMatrix4(rest); }
+    if (hand) { point.applyMatrix4(inverse); gripPoint(point); point.applyMatrix4(rest); }
     point.toArray(values, i * 3);
   }
   geometry.setAttribute('_gripPosition', new BufferAttribute(values, 3));

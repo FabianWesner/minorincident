@@ -298,7 +298,7 @@ for (const lod of [0, 1, 2]) {
 }
 def.crowdSkin = true; def.textureMode = 'baseColor'; def.sourceGlb = join(assets, 'model.skin.glb');
 def.glb = join(output, `${id}.lod0.glb`); def.lods = { lod1: join(output, `${id}.lod1.glb`), lod2: join(output, `${id}.lod2.glb`) };
-delete def.textureAtlasLow; delete def.lowGlb; delete def.corpseGlb;
+delete def.textureAtlasLow; delete def.lowGlb;
 const bakePath = 'src/assets/civilianBakes.json', bakes = JSON.parse(readFileSync(bakePath, 'utf8')) as Record<string, string>;
 const preparedBakes = id === 'char.corgi' ? {} : await skinCrowdBakes(def);
 const validation = await validateAssets([def]);

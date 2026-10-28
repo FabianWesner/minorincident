@@ -133,18 +133,16 @@ class CivilianBatch extends Group {
     this.name = 'civilian-crowd'; this.add(this.corpses); this.probe.lod = lod; }
   async init(): Promise<void> {
     await loadGate.foreground(); await loadGate.wait();
-    const key: string | undefined = `${this.model}:${this.lod}`;
+    const key = `${this.model}:${this.lod}`;
+    const loadedSkin = (this.registry ??= new AssetRegistry(() => {}, { materials: this.shading, textureSize: this.world.infected?.director.tier === 'low' ? 512 : 1024 })).loadAsset(this.model, this.lod);
     const cached = preparedCrowds.get(key) ?? await loadCivilianBake(this.model, this.lod);
     // Level handover (10-20): the appearance marking is a pure function of the baked vertices. Mark the retained copy
     // once; every level then clones an already marked geometry instead of re-marking it (~50-150 ms per model at 1x).
     if (cached && !cached.marked) { markCrowdAppearance(cached.geometry); cached.marked = true; }
-    let model: Group;
-    if (cached?.rig) model = cached.rig.clone(true);
-    else {
-      const loaded = await (this.registry ??= new AssetRegistry(() => {}, { materials: this.shading, textureSize: this.world.infected?.director.tier === 'low' ? 512 : 1024 })).loadAsset(this.model, this.lod);
-      if (loaded.userData.placeholder) throw new Error(`${this.model} is missing its v2 civilian asset`);
-      model = loaded as Group; prepareCivilianRig(model, this.model);
-    }
+    // CPU bake rigs omit meshes and textures. The renderer owns the original atlas and skeleton.
+    const loaded = await loadedSkin;
+    if (loaded.userData.placeholder) throw new Error(`${this.model} is missing its v2 civilian asset`);
+    const model = loaded as Group; prepareCivilianRig(model, this.model);
     this.source = 'glb';
     if (cached) for (const name of cached.clip.parts) if (!model.getObjectByName(name)) {
       const joint = model.clone(false); joint.name = name; joint.position.set(0, 0, 0); model.add(joint);
@@ -402,9 +400,9 @@ class CivilianBatch extends Group {
         pose.cadence = low && canHoldCrowdPose(e, tick) ? 2 : 1;
         pose.holdDistanceM = undefined;
         frame = this.locomotion.present(e.id, this.poses, pose); }
-    if (this.bakedClip.binds && !e.corpse && !heavy) {
+    if (!e.corpse && !heavy) {
       // A narrow painted forehead hides tiny eyes when the rigid infected clip pitches the whole head down.
-      // Keep the gaze forward over the torso hunch; rigid PROD figures retain their authored poses.
+      // Keep the gaze forward over the torso hunch.
       frame = this.poses.correct(e.id, frame, ...blend, pose => {
         const offset = this.bakedClip.parts.indexOf('head') * 16;
         this.hand.fromArray(pose, offset).premultiply(this.transform);
@@ -436,7 +434,7 @@ class CivilianBatch extends Group {
   dispose(): void { this.corpses.dispose(); if (this.mesh) { this.mesh.geometry.dispose(); this.releaseMaterial?.(); this.mesh.dispose(); this.texture.dispose(); } if (!this.sharedRegistry) void this.registry?.dispose(); this.clear(); }
 }
 
-/** Five civilian silhouettes share rigid-part LOD batches and the E07 clip path. */
+/** Civilian silhouettes share skinned LOD batches and the E07 clip path. */
 /** Spectacled textured figures whose painted eyes do not read at game size (crowd-texture-quality). */
 const toyEyeModels = new Set(['npc.civilian-woman-b', 'npc.civilian-elderly', 'npc.civilian-woman-b.aftermath', 'npc.mr-okafor.aftermath', 'npc.dale.aftermath', 'npc.rosa.aftermath', 'npc.sam.aftermath']);
 export class CivilianCrowd extends Group {
