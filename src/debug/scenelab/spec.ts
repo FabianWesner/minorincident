@@ -1,3 +1,4 @@
+import { infectedDefinitions } from '../../data/infected';
 import { isWorldTier } from '../../levels/districts/types';
 import { vehicleDecayFallback } from '../../assets/vehicleDecay';
 import type { TimeOfDay } from '../../data/timeOfDay';
@@ -408,6 +409,11 @@ export function validateSpec(spec: SceneSpec, assets: Map<string, AssetDef>): st
     if (a.at) point(a.at, `actors[${i}].at`);
     if (a.id) { if (ids.has(a.id)) errors.push(`duplicate id ${a.id}`); ids.add(a.id); }
     if (a.look?.model && a.kind === 'pedestrian' && !assets.has(a.look.model)) errors.push(`actors[${i}].look.model: unknown ${a.look.model}`);
+    if (a.kind === 'pedestrian' && a.look?.model || a.kind === 'infected') {
+      const requested = a.look?.model ?? a.archetype ?? 'infected.runner';
+      const source = requested.startsWith('infected.') ? infectedDefinitions.find(def => def.id === requested)?.asset : requested;
+      if (!source || !assets.get(source)?.crowdSkin) errors.push(`actors[${i}]: retired rigid figure ${requested}; choose an accepted v2 crowd asset`);
+    }
   });
   if (couriers > 1) errors.push('at most one courier (it is the player entity)');
   spec.vehicles?.forEach((v, i) => { point(v.at, `vehicles[${i}].at`); if (v.id) { if (ids.has(v.id)) errors.push(`duplicate id ${v.id}`); ids.add(v.id); } });

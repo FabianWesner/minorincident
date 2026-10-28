@@ -1,0 +1,261 @@
+{
+  "gameplayReachability": {
+    "pass": true,
+    "oldNpcIdsInCampaignDataOrLayouts": [],
+    "bruteButcherCatCrowCampaignSpawns": [],
+    "sprinter": "Behavior remains reachable; InfectedSystem.spawn assigns regularInfectedModels (all v2), L4 authored looks also all v2. Native inf.sprinter is never selected.",
+    "assetRegistry": "Old registry records are catalog inventory, not campaign selections."
+  },
+  "gateRowsBefore": 48,
+  "gateRowsAfter": 48,
+  "repointed": 22,
+  "deleted": 10,
+  "cases": [
+    {
+      "file": "specs/scenes/qa-newchars-idle-0.json",
+      "actor": "p0",
+      "from": "npc.civilian-elderly.aftermath",
+      "action": "deleted",
+      "reason": "Retired actor or build-pipeline showcase; accepted v2 idle/injury figures remain covered elsewhere."
+    },
+    {
+      "file": "specs/scenes/qa-newchars-idle-0.json",
+      "actor": "p1",
+      "from": "npc.civilian-woman-a.aftermath",
+      "action": "deleted",
+      "reason": "Retired actor or build-pipeline showcase; accepted v2 idle/injury figures remain covered elsewhere."
+    },
+    {
+      "file": "specs/scenes/qa-newchars-idle-0.json",
+      "actor": "p2",
+      "from": "npc.paramedic.aftermath",
+      "action": "deleted",
+      "reason": "Retired actor or build-pipeline showcase; accepted v2 idle/injury figures remain covered elsewhere."
+    },
+    {
+      "file": "specs/scenes/qa-newchars-idle-0.json",
+      "actor": "p3",
+      "from": "npc.survivor-group.aftermath.dale",
+      "action": "deleted",
+      "reason": "Retired actor or build-pipeline showcase; accepted v2 idle/injury figures remain covered elsewhere."
+    },
+    {
+      "file": "specs/scenes/qa-newchars-idle-0.json",
+      "actor": "p4",
+      "from": "npc.survivor-group.aftermath.sam",
+      "action": "deleted",
+      "reason": "Retired actor or build-pipeline showcase; accepted v2 idle/injury figures remain covered elsewhere."
+    },
+    {
+      "file": "specs/scenes/qa-newchars-idle-1.json",
+      "actor": "p0",
+      "from": "npc.survivor-group.aftermath.cap-woman",
+      "action": "deleted",
+      "reason": "Retired actor or build-pipeline showcase; accepted v2 idle/injury figures remain covered elsewhere."
+    },
+    {
+      "file": "specs/scenes/qa-newchars-idle-1.json",
+      "actor": "p1",
+      "from": "npc.survivor-group.aftermath.bun-woman",
+      "action": "deleted",
+      "reason": "Retired actor or build-pipeline showcase; accepted v2 idle/injury figures remain covered elsewhere."
+    },
+    {
+      "file": "specs/scenes/qa-newchars-run.json",
+      "actor": "p0",
+      "from": "npc.paramedic.aftermath",
+      "action": "repointed",
+      "to": "npc.rosa.aftermath",
+      "reason": "Same role: v2 survivor/paramedic/elderly civilian or heavy/fast infected. Movement, simulation archetype and scripted behavior unchanged."
+    },
+    {
+      "file": "specs/scenes/qa-newchars-sit.json",
+      "actor": "p0",
+      "from": "npc.civilian-elderly.aftermath",
+      "action": "repointed",
+      "to": "npc.mr-okafor.aftermath",
+      "reason": "Same role: v2 survivor/paramedic/elderly civilian or heavy/fast infected. Movement, simulation archetype and scripted behavior unchanged."
+    },
+    {
+      "file": "specs/scenes/qa-newchars-spin.json",
+      "actor": "c",
+      "from": "npc.civilian-woman-a.aftermath",
+      "action": "deleted",
+      "reason": "Retired actor or build-pipeline showcase; accepted v2 idle/injury figures remain covered elsewhere."
+    },
+    {
+      "file": "specs/scenes/qa-newchars-walk-0.json",
+      "actor": "p0",
+      "from": "npc.civilian-elderly.aftermath",
+      "action": "repointed",
+      "to": "npc.mr-okafor.aftermath",
+      "reason": "Same role: v2 survivor/paramedic/elderly civilian or heavy/fast infected. Movement, simulation archetype and scripted behavior unchanged."
+    },
+    {
+      "file": "specs/scenes/qa-newchars-walk-0.json",
+      "actor": "p1",
+      "from": "npc.civilian-woman-a.aftermath",
+      "action": "repointed",
+      "to": "npc.civilian-woman-b.aftermath",
+      "reason": "Same role: v2 survivor/paramedic/elderly civilian or heavy/fast infected. Movement, simulation archetype and scripted behavior unchanged."
+    },
+    {
+      "file": "specs/scenes/qa-newchars-walk-0.json",
+      "actor": "p2",
+      "from": "npc.paramedic.aftermath",
+      "action": "repointed",
+      "to": "npc.rosa.aftermath",
+      "reason": "Same role: v2 survivor/paramedic/elderly civilian or heavy/fast infected. Movement, simulation archetype and scripted behavior unchanged."
+    },
+    {
+      "file": "specs/scenes/qa-newchars-walk-0.json",
+      "actor": "p3",
+      "from": "npc.survivor-group.aftermath.dale",
+      "action": "repointed",
+      "to": "npc.dale.aftermath",
+      "reason": "Same role: v2 survivor/paramedic/elderly civilian or heavy/fast infected. Movement, simulation archetype and scripted behavior unchanged."
+    },
+    {
+      "file": "specs/scenes/qa-newchars-walk-0.json",
+      "actor": "p4",
+      "from": "npc.survivor-group.aftermath.sam",
+      "action": "repointed",
+      "to": "npc.sam.aftermath",
+      "reason": "Same role: v2 survivor/paramedic/elderly civilian or heavy/fast infected. Movement, simulation archetype and scripted behavior unchanged."
+    },
+    {
+      "file": "specs/scenes/qa-newchars-walk-1.json",
+      "actor": "p0",
+      "from": "npc.survivor-group.aftermath.cap-woman",
+      "action": "repointed",
+      "to": "npc.civilian-woman-b.aftermath",
+      "reason": "Same role: v2 survivor/paramedic/elderly civilian or heavy/fast infected. Movement, simulation archetype and scripted behavior unchanged."
+    },
+    {
+      "file": "specs/scenes/qa-newchars-walk-1.json",
+      "actor": "p1",
+      "from": "npc.survivor-group.aftermath.bun-woman",
+      "action": "repointed",
+      "to": "npc.mia.aftermath",
+      "reason": "Same role: v2 survivor/paramedic/elderly civilian or heavy/fast infected. Movement, simulation archetype and scripted behavior unchanged."
+    },
+    {
+      "file": "tests/scenes/catalog/aim-assist-keyboard-handgun.json",
+      "actor": "front",
+      "from": "infected.brute",
+      "action": "repointed",
+      "to": "inf.alpha",
+      "reason": "Same role: v2 survivor/paramedic/elderly civilian or heavy/fast infected. Movement, simulation archetype and scripted behavior unchanged."
+    },
+    {
+      "file": "tests/scenes/catalog/aim-assist-keyboard-handgun.json",
+      "actor": "far",
+      "from": "infected.brute",
+      "action": "repointed",
+      "to": "inf.alpha",
+      "reason": "Same role: v2 survivor/paramedic/elderly civilian or heavy/fast infected. Movement, simulation archetype and scripted behavior unchanged."
+    },
+    {
+      "file": "tests/scenes/catalog/aim-assist-keyboard-mg.json",
+      "actor": "front",
+      "from": "infected.brute",
+      "action": "repointed",
+      "to": "inf.alpha",
+      "reason": "Same role: v2 survivor/paramedic/elderly civilian or heavy/fast infected. Movement, simulation archetype and scripted behavior unchanged."
+    },
+    {
+      "file": "tests/scenes/catalog/aim-assist-keyboard-mg.json",
+      "actor": "far",
+      "from": "infected.brute",
+      "action": "repointed",
+      "to": "inf.alpha",
+      "reason": "Same role: v2 survivor/paramedic/elderly civilian or heavy/fast infected. Movement, simulation archetype and scripted behavior unchanged."
+    },
+    {
+      "file": "tests/scenes/catalog/aim-assist-keyboard-off.json",
+      "actor": "front",
+      "from": "infected.brute",
+      "action": "repointed",
+      "to": "inf.alpha",
+      "reason": "Same role: v2 survivor/paramedic/elderly civilian or heavy/fast infected. Movement, simulation archetype and scripted behavior unchanged."
+    },
+    {
+      "file": "tests/scenes/catalog/aim-assist-keyboard-off.json",
+      "actor": "far",
+      "from": "infected.brute",
+      "action": "repointed",
+      "to": "inf.alpha",
+      "reason": "Same role: v2 survivor/paramedic/elderly civilian or heavy/fast infected. Movement, simulation archetype and scripted behavior unchanged."
+    },
+    {
+      "file": "tests/scenes/catalog/aim-assist-keyboard-shotgun.json",
+      "actor": "front",
+      "from": "infected.brute",
+      "action": "repointed",
+      "to": "inf.alpha",
+      "reason": "Same role: v2 survivor/paramedic/elderly civilian or heavy/fast infected. Movement, simulation archetype and scripted behavior unchanged."
+    },
+    {
+      "file": "tests/scenes/catalog/aim-assist-keyboard-shotgun.json",
+      "actor": "far",
+      "from": "infected.brute",
+      "action": "repointed",
+      "to": "inf.alpha",
+      "reason": "Same role: v2 survivor/paramedic/elderly civilian or heavy/fast infected. Movement, simulation archetype and scripted behavior unchanged."
+    },
+    {
+      "file": "tests/scenes/catalog/l10-cure-mist.json",
+      "actor": "cat",
+      "from": "infected.cat",
+      "action": "deleted",
+      "reason": "No accepted v2 cat/crow figure exists; the cure scene retains all five shipped zoo species and dog controls."
+    },
+    {
+      "file": "tests/scenes/catalog/l10-cure-mist.json",
+      "actor": "crow",
+      "from": "infected.crow",
+      "action": "deleted",
+      "reason": "No accepted v2 cat/crow figure exists; the cure scene retains all five shipped zoo species and dog controls."
+    },
+    {
+      "file": "tests/scenes/combat-clearance/butcher-contact-game.json",
+      "actor": "butcher",
+      "from": "infected.butcher",
+      "action": "repointed",
+      "to": "inf.alpha",
+      "reason": "Same role: v2 survivor/paramedic/elderly civilian or heavy/fast infected. Movement, simulation archetype and scripted behavior unchanged."
+    },
+    {
+      "file": "tests/scenes/combat-clearance/pileup-game.json",
+      "actor": "a2",
+      "from": "infected.brute",
+      "action": "repointed",
+      "to": "inf.alpha",
+      "reason": "Same role: v2 survivor/paramedic/elderly civilian or heavy/fast infected. Movement, simulation archetype and scripted behavior unchanged."
+    },
+    {
+      "file": "tests/scenes/combat-clearance/pileup-game.json",
+      "actor": "a3",
+      "from": "infected.butcher",
+      "action": "repointed",
+      "to": "inf.alpha",
+      "reason": "Same role: v2 survivor/paramedic/elderly civilian or heavy/fast infected. Movement, simulation archetype and scripted behavior unchanged."
+    },
+    {
+      "file": "tests/scenes/combat-clearance/pileup-game.json",
+      "actor": "a7",
+      "from": "infected.sprinter",
+      "action": "repointed",
+      "to": "inf.jogger",
+      "reason": "Same role: v2 survivor/paramedic/elderly civilian or heavy/fast infected. Movement, simulation archetype and scripted behavior unchanged."
+    },
+    {
+      "file": "tests/scenes/vehicle-contacts-truck-infected.json",
+      "actor": "brute",
+      "from": "infected.brute",
+      "action": "repointed",
+      "to": "inf.alpha",
+      "reason": "Same role: v2 survivor/paramedic/elderly civilian or heavy/fast infected. Movement, simulation archetype and scripted behavior unchanged."
+    }
+  ]
+}

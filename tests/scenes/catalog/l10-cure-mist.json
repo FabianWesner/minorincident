@@ -1,6 +1,6 @@
 {
   "name": "l10-cure-mist",
-  "note": "Explicit release of the precharged installed console. Pale cyan mist expands through runners, dogs, Alpha and infected zoo animals; all collapse and remain on the ground. Courier, healthy civilians and corgi remain standing. Shared smoke pool, no added particle/voice cap. Review high/low, game camera zoom 1 and 0.5 on both backends. All five zoo species are explicit named health gates; healthy zebra joins the civilian, courier and corgi controls. Fan rotation is sampled from rendered rotation-node batches. Existing infected cat/crow species are included too.",
+  "note": "Explicit release of the precharged installed console. Pale cyan mist expands through runners, dogs, Alpha and infected zoo animals; all collapse and remain on the ground. Courier, healthy civilians and corgi remain standing. Shared smoke pool, no added particle/voice cap. Review high/low, game camera zoom 1 and 0.5 on both backends. All five zoo species are explicit named health gates; healthy zebra joins the civilian, courier and corgi controls. Fan rotation is sampled from rendered rotation-node batches. Retired fixture-only cat/crow cases removed; no accepted v2 counterparts exist.",
   "seed": 32,
   "ground": "asphalt",
   "time": "L4",
@@ -203,26 +203,6 @@
         8
       ],
       "state": "idle"
-    },
-    {
-      "id": "cat",
-      "kind": "infected",
-      "archetype": "infected.cat",
-      "at": [
-        12,
-        6
-      ],
-      "state": "idle"
-    },
-    {
-      "id": "crow",
-      "kind": "infected",
-      "archetype": "infected.crow",
-      "at": [
-        -12,
-        -6
-      ],
-      "state": "idle"
     }
   ],
   "cureProgression": {
@@ -340,14 +320,6 @@
       "healthy-zebra": [
         1,
         1000
-      ],
-      "cat": [
-        0,
-        0
-      ],
-      "crow": [
-        0,
-        0
       ]
     },
     "cure": {
