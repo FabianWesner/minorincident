@@ -854,14 +854,13 @@
     "status": "integrated",
     "tier": "hero",
     "script": "assets/inf.jogger/build.py",
-    "glb": "public/assets/models/inf.jogger.glb",
-    "corpseGlb": "public/assets/models/inf.jogger.corpse.glb",
-    "sourceGlb": "assets/inf.jogger/model.glb",
+    "glb": "public/assets/models/skinned/inf.jogger.lod0.glb",
+    "sourceGlb": "assets/inf.jogger/model.skin.glb",
     "dimensions": {
-      "x": 1.2936,
-      "y": 1.8,
-      "z": 1.0271,
-      "tolerance": 0.1
+      "x": 1.1817037463188171,
+      "y": 1.799788624521966,
+      "z": 1.2234529256820679,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -919,14 +918,23 @@
     "decayVariants": [],
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/inf.jogger.lod1.glb",
-      "lod2": "public/assets/models/inf.jogger.lod2.glb"
+      "lod1": "public/assets/models/skinned/inf.jogger.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.jogger.lod2.glb"
     },
     "sourceScale": 1.07516837,
     "authoredLodTriangles": {
       "lod1": 6000,
       "lod2": 5000
-    }
+    },
+    "rigidBaseline": {
+      "glb": "public/assets/models/inf.jogger.glb",
+      "lods": {
+        "lod1": "public/assets/models/inf.jogger.lod1.glb",
+        "lod2": "public/assets/models/inf.jogger.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "inf.baseball-cap",
@@ -1013,14 +1021,13 @@
     "status": "integrated",
     "tier": "hero",
     "script": "assets/inf.suburban-mom/build.py",
-    "glb": "public/assets/models/inf.suburban-mom.glb",
-    "corpseGlb": "public/assets/models/inf.suburban-mom.corpse.glb",
-    "sourceGlb": "assets/inf.suburban-mom/model.glb",
+    "glb": "public/assets/models/skinned/inf.suburban-mom.lod0.glb",
+    "sourceGlb": "assets/inf.suburban-mom/model.skin.glb",
     "dimensions": {
-      "x": 1.085,
-      "y": 1.8,
-      "z": 1.1889,
-      "tolerance": 0.1
+      "x": 0.8682342618703842,
+      "y": 1.8000049553870021,
+      "z": 1.3428131937980652,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -1078,14 +1085,23 @@
     "decayVariants": [],
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/inf.suburban-mom.lod1.glb",
-      "lod2": "public/assets/models/inf.suburban-mom.lod2.glb"
+      "lod1": "public/assets/models/skinned/inf.suburban-mom.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.suburban-mom.lod2.glb"
     },
     "sourceScale": 1.17538151,
     "authoredLodTriangles": {
       "lod1": 6000,
       "lod2": 6000
-    }
+    },
+    "rigidBaseline": {
+      "glb": "public/assets/models/inf.suburban-mom.glb",
+      "lods": {
+        "lod1": "public/assets/models/inf.suburban-mom.lod1.glb",
+        "lod2": "public/assets/models/inf.suburban-mom.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "inf.delivery-driver",
@@ -1093,14 +1109,13 @@
     "status": "integrated",
     "tier": "hero",
     "script": "assets/inf.delivery-driver/build.py",
-    "glb": "public/assets/models/inf.delivery-driver.glb",
-    "corpseGlb": "public/assets/models/inf.delivery-driver.corpse.glb",
-    "sourceGlb": "assets/inf.delivery-driver/model.glb",
+    "glb": "public/assets/models/skinned/inf.delivery-driver.lod0.glb",
+    "sourceGlb": "assets/inf.delivery-driver/model.skin.glb",
     "dimensions": {
-      "x": 1.0714,
-      "y": 1.8,
-      "z": 1.1165,
-      "tolerance": 0.1
+      "x": 1.2841450572013855,
+      "y": 1.7994079740124107,
+      "z": 1.103926956653595,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -1158,14 +1173,23 @@
     "decayVariants": [],
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/inf.delivery-driver.lod1.glb",
-      "lod2": "public/assets/models/inf.delivery-driver.lod2.glb"
+      "lod1": "public/assets/models/skinned/inf.delivery-driver.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.delivery-driver.lod2.glb"
     },
     "sourceScale": 1.06594941,
     "authoredLodTriangles": {
       "lod1": 6000,
       "lod2": 6000
-    }
+    },
+    "rigidBaseline": {
+      "glb": "public/assets/models/inf.delivery-driver.glb",
+      "lods": {
+        "lod1": "public/assets/models/inf.delivery-driver.lod1.glb",
+        "lod2": "public/assets/models/inf.delivery-driver.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "inf.skater",
@@ -1329,13 +1353,12 @@
     "category": "infected",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/inf.bbq-dad.glb",
-    "corpseGlb": "public/assets/models/inf.bbq-dad.corpse.glb",
+    "glb": "public/assets/models/skinned/inf.bbq-dad.lod0.glb",
     "dimensions": {
-      "x": 0.8314,
-      "y": 1.8,
-      "z": 1.4728,
-      "tolerance": 0.1
+      "x": 0.7766779661178589,
+      "y": 1.799997086302028,
+      "z": 1.3954452276229858,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -1391,31 +1414,39 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/inf.bbq-dad/model.glb",
+    "sourceGlb": "assets/inf.bbq-dad/model.skin.glb",
     "script": "assets/inf.bbq-dad/build.py",
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/inf.bbq-dad.lod1.glb",
-      "lod2": "public/assets/models/inf.bbq-dad.lod2.glb"
+      "lod1": "public/assets/models/skinned/inf.bbq-dad.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.bbq-dad.lod2.glb"
     },
     "sourceScale": 1.12392643,
     "authoredLodTriangles": {
       "lod1": 5000,
       "lod2": 5000
-    }
+    },
+    "rigidBaseline": {
+      "glb": "public/assets/models/inf.bbq-dad.glb",
+      "lods": {
+        "lod1": "public/assets/models/inf.bbq-dad.lod1.glb",
+        "lod2": "public/assets/models/inf.bbq-dad.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "inf.cashier",
     "category": "infected",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/inf.cashier.glb",
-    "corpseGlb": "public/assets/models/inf.cashier.corpse.glb",
+    "glb": "public/assets/models/skinned/inf.cashier.lod0.glb",
     "dimensions": {
-      "x": 0.7374,
-      "y": 1.8,
-      "z": 1.2666,
-      "tolerance": 0.1
+      "x": 0.8243665993213654,
+      "y": 1.8007847919361666,
+      "z": 0.9151637554168701,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -1471,27 +1502,35 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/inf.cashier/model.glb",
+    "sourceGlb": "assets/inf.cashier/model.skin.glb",
     "script": "assets/inf.cashier/build.py",
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/inf.cashier.lod1.glb",
-      "lod2": "public/assets/models/inf.cashier.lod2.glb"
+      "lod1": "public/assets/models/skinned/inf.cashier.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.cashier.lod2.glb"
     },
-    "sourceScale": 1.10086369
+    "sourceScale": 1.10086369,
+    "rigidBaseline": {
+      "glb": "public/assets/models/inf.cashier.glb",
+      "lods": {
+        "lod1": "public/assets/models/inf.cashier.lod1.glb",
+        "lod2": "public/assets/models/inf.cashier.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "inf.bathrobe-neighbor",
     "category": "infected",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/inf.bathrobe-neighbor.glb",
-    "corpseGlb": "public/assets/models/inf.bathrobe-neighbor.corpse.glb",
+    "glb": "public/assets/models/skinned/inf.bathrobe-neighbor.lod0.glb",
     "dimensions": {
-      "x": 0.8855,
-      "y": 1.8,
-      "z": 1.4104,
-      "tolerance": 0.1
+      "x": 0.9710331559181213,
+      "y": 1.7975277726605228,
+      "z": 1.5126383304595947,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -1547,17 +1586,26 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/inf.bathrobe-neighbor/model.glb",
+    "sourceGlb": "assets/inf.bathrobe-neighbor/model.skin.glb",
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/inf.bathrobe-neighbor.lod1.glb",
-      "lod2": "public/assets/models/inf.bathrobe-neighbor.lod2.glb"
+      "lod1": "public/assets/models/skinned/inf.bathrobe-neighbor.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.bathrobe-neighbor.lod2.glb"
     },
     "sourceScale": 1.08101233,
     "authoredLodTriangles": {
       "lod1": 5000,
       "lod2": 5000
-    }
+    },
+    "rigidBaseline": {
+      "glb": "public/assets/models/inf.bathrobe-neighbor.glb",
+      "lods": {
+        "lod1": "public/assets/models/inf.bathrobe-neighbor.lod1.glb",
+        "lod2": "public/assets/models/inf.bathrobe-neighbor.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "inf.construction-worker",

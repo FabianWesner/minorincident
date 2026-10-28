@@ -9,6 +9,7 @@ import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { PNG } from 'pngjs';
+import { Box3, Matrix4, Vector3 } from 'three';
 import { crowdRegion, crowdRegionLuminance } from '../../src/render/characters/crowdRegionData';
 
 type Lab = [number, number, number];
@@ -41,7 +42,9 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean, coveredUnif
   const uv = prim.getAttribute('TEXCOORD_0')!, part = prim.getAttribute('_CROWD_PART')!, region = prim.getAttribute('_CROWD_REGION'), indices = prim.getIndices();
   const count = indices?.getCount() ?? uv.getCount(), vertex = (t: number) => indices ? indices.getScalar(t) : t;
   const png = decodePng(map.getImage()!), { width: w, height: h, data } = png;
-  const originalRgb = authoredSkin ? data.slice() : undefined;
+  // pngjs returns a Buffer: slice() aliases the pixels, so gutter painting
+  // would also overwrite the supposedly protected prop/decal source.
+  const originalRgb = authoredSkin ? Buffer.from(data) : undefined;
   // 0 none, 1 head, 2 upper, 3 lower, 4 hand, 5 foot; skinTri marks triangles whose corners were all tagged as skin paint.
   const groups = ['none', 'head', 'upper', 'lower', 'hand', 'foot'] as const;
   const owner = new Uint8Array(w * h), skinSeed = new Uint8Array(w * h), limb = new Uint8Array(w * h);
@@ -217,6 +220,35 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean, coveredUnif
     cls.set(next);
   }
   if (authoredPalette) for (let i = 0; i < cls.length; i++) if (cls[i] === crowdRegion.hair || cls[i] === crowdRegion.shirt || cls[i] === crowdRegion.trousers) cls[i] = crowdRegion.authored;
+  if (authoredPalette) {
+    // The hat fitter reads vertex skin regions, not atlas alpha. Without this
+    // stream bakeInfected treats the whole head (including hair) as bare skin,
+    // making hats grow to the ponytail and float above the actual skull.
+    const previous = prim.getAttribute('_CROWD_REGION'), values = new Float32Array(uv.getCount());
+    const head = joints.indexOf('head'), inverse = new Matrix4().fromArray(body!.getSkin()!.listJoints()[head].getWorldMatrix()).invert();
+    const eyeBounds = new Box3(), point = new Vector3();
+    if (eyes) for (let i = 0; i < eyes.getCount(); i++) eyeBounds.expandByPoint(point.fromArray(eyes.getElement(i, [])).applyMatrix4(inverse));
+    const centre = eyeBounds.getCenter(new Vector3()), span = eyeBounds.getSize(new Vector3()), faceVertices: { i: number; distance: number; key: string }[] = [];
+    for (let i = 0; i < values.length; i++) {
+      const at = uv.getElement(i, []), x = Math.max(0, Math.min(w - 1, Math.floor(at[0] * w))), y = Math.max(0, Math.min(h - 1, Math.floor(at[1] * h)));
+      const kind = cls[y * w + x];
+      values[i] = (previous?.getScalar(i) ?? 0) > 1.5 ? previous!.getScalar(i) : Number(kind === crowdRegion.skin || kind === crowdRegion.skinMask);
+      if (part.getScalar(i) === head && !eyeBounds.isEmpty()) {
+        point.fromArray(position.getElement(i, [])).applyMatrix4(inverse);
+        const face = point.y >= centre.y - .28 && point.y <= eyeBounds.max.y + .025 && point.x >= centre.x - .26 && point.x <= eyeBounds.max.x + .04 && Math.abs(point.z - centre.z) <= span.z * .8;
+        values[i] = Number(face);
+        faceVertices.push({ i, distance: point.distanceToSquared(centre), key: point.toArray().map(value => Math.round(value * 1e5)).join(',') });
+      }
+    }
+    // Far meshes may have no UV sample inside a narrow facial island. Keep a
+    // measured face seed in geometry at every LOD rather than reverting to hair.
+    const seeds = new Set(faceVertices.filter(({ i }) => values[i] === 1).map(vertex => vertex.key));
+    if (seeds.size < 4) {
+      for (const vertex of faceVertices.sort((a, b) => a.distance - b.distance)) { seeds.add(vertex.key); if (seeds.size >= 4) break; }
+      for (const { i, key } of faceVertices) if (seeds.has(key)) values[i] = 1;
+    }
+    prim.setAttribute('_CROWD_REGION', doc.createAccessor().setType('SCALAR').setArray(values));
+  }
   if (coveredUniform) for (let i = 0; i < cls.length; i++) if (!skinEligible[i] && cls[i] === crowdRegion.skin) cls[i] = crowdRegion.authored;
   // Gutters take their nearest island's class: whole 4x4 blocks then carry one value, which keeps the alpha slice small.
   const out = cls.slice(), queue: number[] = [];

@@ -96,11 +96,11 @@ for (const lod of [0, 1, 2]) {
   // The authored human LOD2 can attach a hand only to the thigh. Retain the
   // sound LOD1 anatomy (well inside the 4k far-tier budget) with a smaller atlas.
   // Never position-simplify a painted body across its UV islands.
-  const sourceLod = (unbound || derivedTemplate) && id.startsWith('npc.') && lod === 2 ? 1 : lod;
-  const rig = derivedTemplate ? join('assets', sourceId, 'model.glb') : alignment?.rig_source ? join(source, alignment.rig_source) : unbound ? join(id === 'inf.dog' ? 'assets/amb.dog' : assets, id === 'char.corgi' && lod ? `model.lod${lod}.glb` : 'model.glb') : join(source, authored ? `model${lod ? `.lod${lod}` : ''}.glb` : `lod${lod}.glb`), body = join(source, `source/${unbound ? 'assembled' : 'flat'}-lod${sourceLod}.glb`), raw = join(report, `lod${lod}.raw.glb`);
+  const sourceLod = ((unbound || derivedTemplate) && id.startsWith('npc.') || nativeInfected) && lod === 2 ? 1 : lod;
+  const rig = derivedTemplate ? join('assets', sourceId, 'model.glb') : alignment?.rig_source ? join(source, alignment.rig_source) : unbound ? join(id === 'inf.dog' ? 'assets/amb.dog' : assets, id === 'char.corgi' && lod ? `model.lod${lod}.glb` : 'model.glb') : join(source, authored ? `model${sourceLod ? `.lod${sourceLod}` : ''}.glb` : `lod${sourceLod}.glb`), body = join(source, `source/${unbound ? 'assembled' : 'flat'}-lod${sourceLod}.glb`), raw = join(report, `lod${lod}.raw.glb`);
   const args = ['tools/assets/skin-crowd-figure.ts', '--rig', rig, '--out', raw, '--report', join(report, `lod${lod}.json`)];
   const contract = join(assets, 'model.glb'); if (existsSync(contract)) args.push('--contract', contract);
-  const placement = metadata?.lods.find(p => p.lod === lod);
+  const placement = metadata?.lods.find(p => p.lod === sourceLod);
   if (existsSync(body)) args.push('--body', body, '--body-scale', String(alignment?.initial_game_height_scale ?? placement?.uniform_scale ?? placement?.world_scale ?? 1), '--body-rot-y', String(alignment?.game_alignment_rotation_y_degrees ?? placement?.rotation_y_degrees ?? 0));
   if (alignment || derivedTemplate) args.push('--body-yaw-fixed');
   if (unbound && id === 'inf.dog') args.push('--atlas-base-half', '--eyes', join(source, 'eyes.json'));
@@ -109,11 +109,12 @@ for (const lod of [0, 1, 2]) {
   if (id.startsWith('npc.')) args.push('--healthy');
   if (nativeInfected) {
     args.push('--eye-radius', '.04', '--basis', basis);
+    if (existsSync(body) && existsSync(join(source, 'eyes.json'))) args.push('--eyes', join(source, 'eyes.json'), '--reproject-eyes');
     const headwear = id === 'inf.jogger' ? 'magenta' : id === 'inf.delivery-driver' ? 'navy' : id === 'inf.suburban-mom' ? 'brown' : undefined;
     if (headwear) args.push('--clear-headwear', headwear, '--brim-clearance', '.07', '--brim-reach-scale', '.7', '--brim-sightline-degrees', '60', '--brim-max-lift', '.08');
   }
   if (protectedDetails?.lods) {
-    const lodDetails = protectedDetails.lods.find(item => item.lod === lod);
+    const lodDetails = protectedDetails.lods.find(item => item.lod === sourceLod);
     const protectedProps: { pattern: RegExp; triangles?: number; owner?: string }[] = [
       { pattern: /spatula/i, triangles: lodDetails?.spatula_triangles, owner: lodDetails?.spatula_parent },
       { pattern: /decal/i, triangles: lodDetails?.decal_triangles, owner: lodDetails?.text_parent },
@@ -201,10 +202,17 @@ for (const lod of [0, 1, 2]) {
   const tiers = [];
   for (const low of [false, true]) {
     const target = join(output, `${id}.lod${lod}${low ? '.low' : ''}.glb`);
+    let positionPrecision: number | undefined;
     await compressSkin(raw, target, basis, lod === 2 && (unbound || derivedTemplate) && id.startsWith('npc.') ? 256 : low || lod > 0 ? 512 : 1024);
     // Keep the continuous mid-tier anatomy at distance; a smaller far atlas
     // satisfies the cold-file cap when detailed faces leave too little room.
-    if (lod === 2 && readFileSync(target).length > 150000) await compressSkin(raw, target, basis, 128);
+    if (lod === 2 && readFileSync(target).length > 150000) {
+      if (nativeInfected) for (const precision of [1 / 16384, 1 / 8192, 1 / 4096, 1 / 2048, 1 / 1024]) {
+        positionPrecision = precision;
+        await compressSkin(raw, target, basis, 128, undefined, undefined, false, precision);
+        if (readFileSync(target).length <= 150000) break;
+      } else await compressSkin(raw, target, basis, 128);
+    }
     const bytes = readFileSync(target), document = await io.read(target), errors: string[] = [];
     if (bytes.length > [600000, 250000, 150000][lod]) errors.push(`size ${bytes.length} exceeds LOD${lod}`);
     if (!document.getRoot().listSkins().length) errors.push('missing skin');
@@ -215,7 +223,7 @@ for (const lod of [0, 1, 2]) {
     if (document.getRoot().listTextures().some(t => t.getMimeType() !== 'image/ktx2')) errors.push('non-KTX2 texture');
     if (document.getRoot().listTextures().some(t => t.getSize()?.some(n => n % 4))) errors.push('texture extent is not aligned to its 4x4 GPU block');
     if (errors.length) throw Error(`${id} LOD${lod}: ${errors.slice(0, 5).join('; ')}`);
-    tiers.push({ low, path: target, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex'), errors });
+    tiers.push({ low, path: target, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex'), positionPrecision, errors });
     if (id === 'inf.dog' || id === 'amb.dog') for (const coat of def.decayVariants) {
       const sibling = variantPath(target, coat);
       const coatSource = join(dirname(source), `${id}.${coat}`, 'source', `assembled-lod${lod}.glb`);

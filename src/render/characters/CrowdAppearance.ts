@@ -1,5 +1,5 @@
 import { skinnedBrow } from './headMeasurements';
-import { Box3, Color, Matrix4, Vector3, type BufferGeometry, type InstancedBufferAttribute, type InterleavedBufferAttribute } from 'three';
+import { Box3, BufferAttribute, Color, Matrix4, Vector3, type BufferGeometry, type InstancedBufferAttribute, type InterleavedBufferAttribute } from 'three';
 import type { Node } from 'three/webgpu';
 import { attribute, varying, vec3, vec4 } from 'three/tsl';
 import { crowdAppearance, infectedWearsAccessory, hairTones, skinTones, infectedSkinTones, trouserTones, shirtTones } from '../../data/crowdAppearance';
@@ -106,7 +106,14 @@ export function markCrowdAppearance(geometry: BufferGeometry, ordinaryInfected =
     const brow = skinnedBrow(geometry);
     let frameTop = -Infinity;
     if (inverse) for (let i = 0; i < parts.count; i++) if (parts.getY(i) === -6) frameTop = Math.max(frameTop, headY(i));
-    const grip = geometry.getAttribute('_gripPosition');
+    let grip = geometry.getAttribute('_gripPosition');
+    if (!grip && ordinaryInfected && brow && inverse) {
+      // Native infected have no hand-grip alternate stream. Reuse the same
+      // closed-scalp channel as civilian skins instead of cutting their head.
+      const alternate = new Float32Array(position.count * 3);
+      for (let i = 0; i < position.count; i++) for (let c = 0; c < 3; c++) alternate[i * 3 + c] = position.getComponent(i, c);
+      grip = new BufferAttribute(alternate, 3); geometry.setAttribute('_gripPosition', grip);
+    }
     if (brow && inverse && grip) {
       // Reuse the hand alternate-position stream for a closed bare scalp. A
       // textured cap cannot be cut away without opening the welded forehead.

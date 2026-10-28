@@ -2,12 +2,16 @@
 import type { Document } from '@gltf-transform/core';
 import { Matrix4, Vector3 } from 'three';
 import type { AuthoredCrowdPalette } from './skin-crowd-regions';
+import { palette as gamePalette } from '../../src/assets/palette';
 
 export function legacyCrowdPalette(document: Document): AuthoredCrowdPalette {
   const palette: AuthoredCrowdPalette = {}, votes = { shirt: new Map<string, number>(), trousers: new Map<string, number>() };
   const colours = new Map<string, [number, number, number]>();
   for (const material of document.getRoot().listMaterials()) {
-    const rgb = material.getBaseColorFactor().slice(0, 3).map(c => Math.round(255 * (c <= .0031308 ? c * 12.92 : 1.055 * c ** (1 / 2.4) - .055))) as [number, number, number];
+    // AssetMaterials resolves pal_* by token, ignoring the exporter tint.
+    // Matching that tint made the new hair much darker than the actual old body.
+    const token = material.getName().replace(/^(pal|emi)_/, ''), hex = gamePalette[token];
+    const rgb = (hex ? [1, 3, 5].map(offset => parseInt(hex.slice(offset, offset + 2), 16)) : material.getBaseColorFactor().slice(0, 3).map(c => Math.round(255 * (c <= .0031308 ? c * 12.92 : 1.055 * c ** (1 / 2.4) - .055)))) as [number, number, number];
     colours.set(material.getName(), rgb);
     if (/infectedSkin|^pal_skin/.test(material.getName())) palette.skin = [rgb];
     if (/woodWarm|hairBrown/.test(material.getName())) palette.hair = [rgb];

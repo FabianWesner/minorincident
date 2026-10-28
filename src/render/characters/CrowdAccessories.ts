@@ -244,7 +244,8 @@ export class CrowdAccessories extends Group {
     // Retargeted reference fit: skull mapping x the reference base's authored fit of this accessory.
     const reference = definitions.get(id)?.fits?.[referenceBase];
     this.fitTransform.copy(skull); if (reference) this.fitTransform.multiply(authoredFit(reference, this.referenceFit));
-    if (this.skinnedModels.has(model) && definitions.get(id)?.slot === 'hat') {
+    const nativeHair = model.startsWith('inf.') && definitions.get(id)?.slot === 'hair';
+    if (this.skinnedModels.has(model) && (definitions.get(id)?.slot === 'hat' || nativeHair)) {
       const scale = new Vector3().setFromMatrixScale(skull), centre = new Vector3(referenceSkull.centre.x, referenceSkull.centre.y, referenceSkull.centre.z).applyMatrix4(skull);
       const limit = 1.15, skullDepth = this.brows.get(model)?.depth ?? referenceSkull.size.x * scale.x, skullWidth = this.brows.get(model)?.width ?? referenceSkull.size.z * scale.z;
       let width = 0, depth = 0, height = 0;
@@ -254,7 +255,8 @@ export class CrowdAccessories extends Group {
         depth = Math.max(depth, geometry.boundingBox!.clone().applyMatrix4(this.fitTransform).getSize(new Vector3()).x);
         height = Math.max(height, geometry.boundingBox!.clone().applyMatrix4(this.fitTransform).getSize(new Vector3()).y);
       }
-      this.fitTransform.premultiply(new Matrix4().makeTranslation(centre.x, 0, centre.z).multiply(new Matrix4().makeScale(Math.min(1, skullDepth * limit / depth), Math.min(1, referenceSkull.size.y * scale.y * .42 / height), Math.min(1, skullWidth * limit / width))).multiply(new Matrix4().makeTranslation(-centre.x, 0, -centre.z)));
+      // A native sculpt's ponytail cannot determine the size of a shared wig.
+      this.fitTransform.premultiply(new Matrix4().makeTranslation(centre.x, 0, centre.z).multiply(new Matrix4().makeScale(Math.min(1, skullDepth * limit / depth), Math.min(1, referenceSkull.size.y * scale.y * (nativeHair ? .75 : .42) / height), Math.min(1, skullWidth * limit / width))).multiply(new Matrix4().makeTranslation(-centre.x, 0, -centre.z)));
       const bounds = new Box3();
       for (const lod of ['lod0', 'lod1']) {
         const geometry = this.batches.get(`${id}:${lod}`)?.geometry; if (geometry?.boundingBox) bounds.union(geometry.boundingBox.clone().applyMatrix4(this.fitTransform));
@@ -262,8 +264,10 @@ export class CrowdAccessories extends Group {
       if (!bounds.isEmpty()) {
         const offset = bounds.getCenter(new Vector3()).x - centre.x, allowance = referenceSkull.size.x * scale.x * .2;
         if (Math.abs(offset) > allowance) this.fitTransform.premultiply(new Matrix4().makeTranslation(Math.sign(offset) * allowance - offset, 0, 0));
-        this.fitTransform.premultiply(new Matrix4().makeTranslation(centre.x, centre.y, 0).multiply(new Matrix4().makeRotationZ(.45)).multiply(new Matrix4().makeTranslation(-centre.x, -centre.y, 0)));
-
+        if (nativeHair) {
+          const brow = this.brows.get(model);
+          if (brow) this.fitTransform.premultiply(new Matrix4().makeTranslation(0, brow.y - .025 - bounds.min.y, 0));
+        } else this.fitTransform.premultiply(new Matrix4().makeTranslation(centre.x, centre.y, 0).multiply(new Matrix4().makeRotationZ(.45)).multiply(new Matrix4().makeTranslation(-centre.x, -centre.y, 0)));
       }
     }
   }

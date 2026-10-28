@@ -1,0 +1,180 @@
+{
+  "rig": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.suburban-mom/lod0.glb",
+  "out": "test-results/skinned-prod/builds/inf.suburban-mom/lod0.raw.glb",
+  "bytes": 1858908,
+  "body": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.suburban-mom/source/flat-lod0.glb",
+  "scale": 2.0150561635779383,
+  "yaw": 90,
+  "translation": [
+    0.24717492220071488,
+    1.0142026554205095,
+    0.005888514385693322
+  ],
+  "meanDistanceToRigidSurface": 0.0034190164915305194,
+  "headwearClearance": {
+    "eyeX": 0.5462651239818945,
+    "eyeY": 1.392483803097909,
+    "brimY": 1.215998692798092,
+    "vertices": 251,
+    "maxLift": 0.08,
+    "maxRetraction": 0.0065106855116912055
+  },
+  "eyeLandmarks": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.suburban-mom/eyes.json",
+  "vertices": 8065,
+  "weldedVertices": 2923,
+  "triangles": 5978,
+  "bodyTriangleBudget": null,
+  "components": 1,
+  "openEdges": 0,
+  "unrelatedSeams": 854,
+  "maxInfluences": 3,
+  "zeroNormals": 0,
+  "jointNames": [
+    "root",
+    "hip",
+    "torso",
+    "head",
+    "armL",
+    "armR",
+    "foreArmL",
+    "foreArmR",
+    "handL",
+    "handR",
+    "legL",
+    "legR",
+    "shinL",
+    "shinR",
+    "footL",
+    "footR"
+  ],
+  "rigKind": "humanoid",
+  "capFits": [
+    {
+      "part": "head",
+      "rim": 152,
+      "triangles": 138,
+      "loops": 7,
+      "distance": 0.07065406568084402,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "armL",
+      "rim": 134,
+      "triangles": 120,
+      "loops": 7,
+      "distance": 0.07263091891856706,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "armR",
+      "rim": 113,
+      "triangles": 103,
+      "loops": 5,
+      "distance": 0.11754774879506957,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "foreArmL",
+      "rim": 21,
+      "triangles": 19,
+      "loops": 1,
+      "distance": 0.3958824699628907,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "foreArmR",
+      "rim": 5,
+      "triangles": 3,
+      "loops": 1,
+      "distance": 0.05914530157178064,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "legL",
+      "rim": 77,
+      "triangles": 73,
+      "loops": 2,
+      "distance": 0.2922855496318104,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "legR",
+      "rim": 57,
+      "triangles": 49,
+      "loops": 4,
+      "distance": 0.3359383041575233,
+      "method": "cut-boundary"
+    }
+  ],
+  "removedClosureTriangles": 0,
+  "removedDegenerateTriangles": 0,
+  "joints": 16,
+  "eyes": 2,
+  "seams": {
+    "shinR/legR": {
+      "seamVertices": 75,
+      "band": 0.05500015048104631,
+      "blended": 83
+    },
+    "footR/shinR": {
+      "seamVertices": 44,
+      "band": 0.049505078328099535,
+      "blended": 44
+    },
+    "head/torso": {
+      "seamVertices": 124,
+      "band": 0.049505078328099535,
+      "blended": 135
+    },
+    "torso/hip": {
+      "seamVertices": 47,
+      "band": 0.07000019152133168,
+      "blended": 68
+    },
+    "armL/torso": {
+      "seamVertices": 106,
+      "band": 0.060000164161141435,
+      "blended": 129
+    },
+    "foreArmR/armR": {
+      "seamVertices": 9,
+      "band": 0.050000136800951195,
+      "blended": 10
+    },
+    "legL/hip": {
+      "seamVertices": 69,
+      "band": 0.07000019152133168,
+      "blended": 85
+    },
+    "armR/torso": {
+      "seamVertices": 57,
+      "band": 0.060000164161141435,
+      "blended": 70
+    },
+    "footL/shinL": {
+      "seamVertices": 35,
+      "band": 0.049505078328099535,
+      "blended": 35
+    },
+    "shinL/legL": {
+      "seamVertices": 39,
+      "band": 0.05500015048104631,
+      "blended": 41
+    },
+    "legR/hip": {
+      "seamVertices": 25,
+      "band": 0.07000019152133168,
+      "blended": 30
+    },
+    "handL/foreArmL": {
+      "seamVertices": 8,
+      "band": 0.049505078328099535,
+      "blended": 8
+    },
+    "foreArmL/armL": {
+      "seamVertices": 6,
+      "band": 0.050000136800951195,
+      "blended": 6
+    }
+  }
+}

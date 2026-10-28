@@ -979,6 +979,9 @@ if (!args.includes('--retain-corgi-props')) {
     capFits.push({ part, rim: capParts.length, triangles: triangles.length / 3, loops: selected.length, distance, method: surface ? 'closed-part-surface' : created.length ? 'cut-boundary' : 'source-opening' });
   }
 }
+// A calibrated continuous body can differ from its older cut cast. Its own
+// recorded landmarks, transformed with that body, own the emitter positions.
+if (args.includes('--reproject-eyes')) eyes.length = 0;
 if (!eyes.length && !args.includes('--no-eye-discs')) {
   // Healthy-source bodies need dormant eye discs too: CivilianMaterial reveals them only as infection takes hold.
   const head = JOINTS.indexOf('head'), inverse = world(jointNode.get('head')!).invert(), rest = inverse.clone().invert();

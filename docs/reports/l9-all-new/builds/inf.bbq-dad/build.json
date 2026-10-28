@@ -1,0 +1,82 @@
+{
+  "id": "inf.bbq-dad",
+  "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.bbq-dad",
+  "elapsedSeconds": 13.173,
+  "manualSteps": [],
+  "receipts": [
+    {
+      "lod": 0,
+      "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.bbq-dad/lod0.glb",
+      "sourceSha256": "9ec2b76d2f9c9404ee9a1682a212b67634262440f938dea8424f6b341da5d540",
+      "bodySource": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.bbq-dad/source/flat-lod0.glb",
+      "bodySha256": "9b8ba008aaea9c0026ec5fb5e6ffb3607bbc4cc4726b945d38e9061556db8380",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/inf.bbq-dad.lod0.glb",
+          "bytes": 259832,
+          "sha256": "7fee40aaaa779d1a34fdee17266687c9ea7e81d790ecb5719137ee2bc23dc318",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/inf.bbq-dad.lod0.low.glb",
+          "bytes": 207676,
+          "sha256": "cc27060aae1e5b12fc65223e0f9224283cd662a5ddf525d896b00e322d342a70",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 1,
+      "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.bbq-dad/lod1.glb",
+      "sourceSha256": "27d2c5be3247a88ad92884ad7194f3ef68d9dba515ddaf9ce4a18e61356d07e4",
+      "bodySource": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.bbq-dad/source/flat-lod1.glb",
+      "bodySha256": "0e3aadf9d0a0080f0adfc5e59a08dc39af29e92da5d8c5013c0fedeed85d775a",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/inf.bbq-dad.lod1.glb",
+          "bytes": 120792,
+          "sha256": "36ccfe58884b25e39deab4f700b9c35f1a9963bae9ab02364f7c7705818b7735",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/inf.bbq-dad.lod1.low.glb",
+          "bytes": 120792,
+          "sha256": "36ccfe58884b25e39deab4f700b9c35f1a9963bae9ab02364f7c7705818b7735",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 2,
+      "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.bbq-dad/lod1.glb",
+      "sourceSha256": "27d2c5be3247a88ad92884ad7194f3ef68d9dba515ddaf9ce4a18e61356d07e4",
+      "bodySource": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.bbq-dad/source/flat-lod1.glb",
+      "bodySha256": "0e3aadf9d0a0080f0adfc5e59a08dc39af29e92da5d8c5013c0fedeed85d775a",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/inf.bbq-dad.lod2.glb",
+          "bytes": 120792,
+          "sha256": "36ccfe58884b25e39deab4f700b9c35f1a9963bae9ab02364f7c7705818b7735",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/inf.bbq-dad.lod2.low.glb",
+          "bytes": 120792,
+          "sha256": "36ccfe58884b25e39deab4f700b9c35f1a9963bae9ab02364f7c7705818b7735",
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "preparedBakes": {
+    "inf.bbq-dad:lod0:infected": "/assets/civilians/inf.bbq-dad.lod0.infected.b63ab0697329c6ab.bin.gz",
+    "inf.bbq-dad:lod1:infected": "/assets/civilians/inf.bbq-dad.lod1.infected.01674c6a699f6843.bin.gz",
+    "inf.bbq-dad:lod2:infected": "/assets/civilians/inf.bbq-dad.lod2.infected.01674c6a699f6843.bin.gz"
+  }
+}

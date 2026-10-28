@@ -8,6 +8,8 @@ import { KHRMeshQuantization, KHRTextureBasisu, EXTMeshoptCompression } from '@g
 import { dedup, prune, quantize, reorder, weld } from '@gltf-transform/functions';
 import { MeshoptEncoder } from 'meshoptimizer';
 import { assetIO } from './io';
+import type { Accessor } from '@gltf-transform/core';
+import { Vector3 } from 'three';
 
 interface Encoder {
   setSliceSourceImage(i: number, data: Uint8Array, w: number, h: number, png: boolean): void;
@@ -64,12 +66,36 @@ function halveClassed(image: PNG, maxSize: number): PNG {
 }
 
 /** Pipeline Apache-2.0 Basis encoder: ETC1S q192, full sRGB mip chain (PLAYBOOK §5). */
-export async function compressSkin(input: string, output: string, basisRoot: string, maxSize = 1024, coat?: string, coatSource?: string, coatBaseHalf = false): Promise<void> {
+export async function compressSkin(input: string, output: string, basisRoot: string, maxSize = 1024, coat?: string, coatSource?: string, coatBaseHalf = false, positionPrecision?: number): Promise<void> {
   const require = createRequire(import.meta.url);
   const factory = require(join(basisRoot, 'basis_encoder.js')) as (options: { wasmBinary: Uint8Array }) => Promise<Basis>;
   const basis = await factory({ wasmBinary: readFileSync(join(basisRoot, 'basis_encoder.wasm')) }); basis.initializeBasis();
   const io = await assetIO(), doc = await io.read(input), directory = mkdtempSync(join(tmpdir(), 'crowd-codec-'));
   try {
+    if (positionPrecision) {
+      const originals = new Map<Accessor, number[]>(), protectedPoints = new Set<string>();
+      for (const mesh of doc.getRoot().listMeshes()) for (const primitive of mesh.listPrimitives()) {
+        const position = primitive.getAttribute('POSITION')!; if (originals.has(position)) continue;
+        originals.set(position, Array.from(position.getArray()!));
+        // Stay in the bind frame: normal glTF position quantization adds a
+        // mesh-node scale outside the skin. Binary-grid floats do not.
+        for (let i = 0; i < position.getCount(); i++) position.setElement(i, position.getElement(i, []).map(value => Math.round(value / positionPrecision) * positionPrecision));
+      }
+      for (const mesh of doc.getRoot().listMeshes()) for (const primitive of mesh.listPrimitives()) {
+        const position = primitive.getAttribute('POSITION')!, indices = primitive.getIndices(), original = originals.get(position)!;
+        for (let i = 0; i < (indices?.getCount() ?? position.getCount()); i += 3) {
+          const ids = [0, 1, 2].map(k => indices ? indices.getScalar(i + k) : i + k);
+          const [a, b, c] = ids.map(id => new Vector3().fromArray(position.getElement(id, [])));
+          if (b.sub(a).cross(c.sub(a)).length() < 1e-12) for (const id of ids) protectedPoints.add(original.slice(id * 3, id * 3 + 3).join(','));
+        }
+      }
+      // Preserve tiny faces and every UV duplicate of their vertices exactly;
+      // rounding a narrow cuff must neither collapse it nor open its seam.
+      for (const [position, original] of originals) for (let i = 0; i < position.getCount(); i++) {
+        const point = original.slice(i * 3, i * 3 + 3);
+        if (protectedPoints.has(point.join(','))) position.setElement(i, point);
+      }
+    }
     if (coatSource) {
       const source = await io.read(coatSource), atlas = source.getRoot().listTextures()[0];
       let image = atlas.getImage()!, mime = atlas.getMimeType();

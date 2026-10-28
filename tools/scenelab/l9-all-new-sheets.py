@@ -97,5 +97,10 @@ if story:
     file = OUT/'09-scripted-scenes-playthrough.jpg'
     grid(story, width=400, cols=4).save(file, quality=93, optimize=True)
     index.append({'file': str(file), 'sources': [str(p) for p, _ in story]})
+details = [(ROOT/f'crowd-new-{c}'/f'{ident}-{side}.png', f'{c} | {ident} | {side}') for c in ['low-webgl2', 'high-webgpu'] for ident in IDS for side in ['front', 'back']]
+if all(p.exists() for p, _ in details):
+    file = OUT/'10-runtime-skin-headwear-props.jpg'
+    grid(details, width=400, cols=4).save(file, quality=93, optimize=True)
+    index.append({'file': str(file), 'sources': [str(p) for p, _ in details]})
 (OUT/'capture-index.json').write_text(json.dumps(index, indent=2)+'\n')
 print(json.dumps({'reportCaptures': len(index)}))

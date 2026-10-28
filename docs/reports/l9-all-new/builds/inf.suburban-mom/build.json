@@ -1,0 +1,84 @@
+{
+  "id": "inf.suburban-mom",
+  "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.suburban-mom",
+  "elapsedSeconds": 13.43,
+  "manualSteps": [],
+  "receipts": [
+    {
+      "lod": 0,
+      "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.suburban-mom/lod0.glb",
+      "sourceSha256": "1efbedc3016ed6f39e396e4737a43e1427156b762299dacaa5890551713d5d1a",
+      "bodySource": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.suburban-mom/source/flat-lod0.glb",
+      "bodySha256": "3d9a4f736a3594bf2acd01463a57fba13b19ae548e71c86cf736b9a24c50ce12",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/inf.suburban-mom.lod0.glb",
+          "bytes": 448180,
+          "sha256": "569907b14b7da967009058dd0ca12556fc6a0a30219adb55f903f0dd6c6e138f",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/inf.suburban-mom.lod0.low.glb",
+          "bytes": 322160,
+          "sha256": "9ab048fbd38f3d47a314a39317262ec7e0ed1a144c2a9fa587372b1444b9a4db",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 1,
+      "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.suburban-mom/lod1.glb",
+      "sourceSha256": "bf32cf2108210ac3d66c8ef8c2dce657e5f66a07b97db4a7e04e82e1fe144b7d",
+      "bodySource": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.suburban-mom/source/flat-lod1.glb",
+      "bodySha256": "eb5ba1937930951e99ccdbe35c8f2d1dc69b8ce56c14295b8b72f6f41cdd6c14",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/inf.suburban-mom.lod1.glb",
+          "bytes": 213408,
+          "sha256": "6b551ca71d8b48a15657afafb886f452256df5f4a9e02946d3d27a1f317ac148",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/inf.suburban-mom.lod1.low.glb",
+          "bytes": 213408,
+          "sha256": "6b551ca71d8b48a15657afafb886f452256df5f4a9e02946d3d27a1f317ac148",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 2,
+      "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.suburban-mom/lod1.glb",
+      "sourceSha256": "bf32cf2108210ac3d66c8ef8c2dce657e5f66a07b97db4a7e04e82e1fe144b7d",
+      "bodySource": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.suburban-mom/source/flat-lod1.glb",
+      "bodySha256": "eb5ba1937930951e99ccdbe35c8f2d1dc69b8ce56c14295b8b72f6f41cdd6c14",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/inf.suburban-mom.lod2.glb",
+          "bytes": 128988,
+          "sha256": "4bcfc22586f3d8377a6cea5d3e1e604a4db9845cdfdd52a8e1c063acb6e9aeb1",
+          "positionPrecision": 0.00006103515625,
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/inf.suburban-mom.lod2.low.glb",
+          "bytes": 128988,
+          "sha256": "4bcfc22586f3d8377a6cea5d3e1e604a4db9845cdfdd52a8e1c063acb6e9aeb1",
+          "positionPrecision": 0.00006103515625,
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "preparedBakes": {
+    "inf.suburban-mom:lod0:infected": "/assets/civilians/inf.suburban-mom.lod0.infected.cf711b3284f6b9b0.bin.gz",
+    "inf.suburban-mom:lod1:infected": "/assets/civilians/inf.suburban-mom.lod1.infected.7597f978bde10095.bin.gz",
+    "inf.suburban-mom:lod2:infected": "/assets/civilians/inf.suburban-mom.lod2.infected.a67056cab87afd6c.bin.gz"
+  }
+}

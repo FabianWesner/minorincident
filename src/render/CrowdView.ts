@@ -6,7 +6,7 @@ import { shareDogCoatPalette } from './characters/shareDogCoatPalette';
 import { dogCoats, dogCoat } from '../data/dogAppearance';
 import { regularInfectedModels } from '../data/crowdAppearance';
 import { l4InfectedArchetypes, l4InfectedLooks } from '../data/l4';
-import { resolveCrowdAppearance, crowdAppearanceColor, crowdShirt, markCrowdAppearance, writeCrowdAppearance, renderedCrowdLook, crowdVertexLayout, crowdHeadwearVisibility } from './characters/CrowdAppearance';
+import { resolveCrowdAppearance, crowdAppearanceColor, crowdShirt, markCrowdAppearance, writeCrowdAppearance, renderedCrowdLook, crowdVertexLayout, crowdHeadwearVisibility, crowdCoveredScalp } from './characters/CrowdAppearance';
 import type { CrowdAccessories } from './characters/CrowdAccessories';
 import { corpseLayout, corpsePose, corpsePoses } from './characters/CorpseLayout';
 import { infectedContactDistance } from '../sim/ai/CharacterSeparation';
@@ -351,6 +351,10 @@ export class CrowdView extends Group {
       const feedbackState = attribute('_state', 'vec4'), parts = attribute('_parts', 'vec4'), variant = attribute('_variant', 'vec4');
       const opacity = feedbackState.w.div(2).floor().div(255).oneMinus();
       const inlineAccessories = baked.geometry.userData.inlineAccessories === true;
+      const scalpMorph = skinned && baked.geometry.userData.headwearMorph === true && baked.geometry.hasAttribute('_gripPosition');
+      const headPart = uniform(baked.clip.parts.indexOf('head')).setGroup(sharedUniformGroup('crowdParts'));
+      const covered = variant.x.div(512).floor().mod(2).equal(1);
+      const scalp = scalpMorph ? crowdCoveredScalp(parts.x.equal(headPart).and(parts.z.lessThan(.5)).and(parts.y.notEqual(-6)).and(parts.w.lessThan(4)).select(parts.w.div(3).mul(covered.select(1, 0)), 0)) : undefined;
       const figureMask = inlineAccessories ? parts.w.mod(128).lessThan(8).select(1, 0) : undefined;
       // Frozen sources keep their original untagged body/head pieces and shadow reception.
       const shadowReceiver = inlineAccessories ? parts.w.greaterThanEqual(128).select(figureMask!.oneMinus(), 1) : undefined;
@@ -358,7 +362,7 @@ export class CrowdView extends Group {
       // Keep a default attribute even in scenes that do not load the cream coat.
       const dogPalette = asset === 'inf.dog' && !def.decay && lod === 'lod1';
       if (dogPalette) baked.geometry.setAttribute('_dogCream', baked.geometry.getAttribute('color'));
-      const materialKey = this.world.scenario === 'L4' && skinned && infectedAtlas && baked.texture ? `${baked.clip.parts.join('|')}:${poses.bindRow}:${baked.doubleSided}:${inlineAccessories}:${asset.startsWith('npc.')}:${baked.geometry.hasAttribute('_skin')}` : undefined;
+      const materialKey = this.world.scenario === 'L4' && skinned && infectedAtlas && baked.texture ? `${baked.clip.parts.join('|')}:${poses.bindRow}:${baked.doubleSided}:${inlineAccessories}:${asset.startsWith('npc.')}:${baked.geometry.hasAttribute('_skin')}:${scalpMorph}` : undefined;
       let sharedSkin = materialKey ? this.sharedSkinMaterials.get(materialKey) : undefined;
       let material = sharedSkin?.material, surfaceAtlas = sharedSkin?.atlas;
       if (!material) {
@@ -379,7 +383,7 @@ export class CrowdView extends Group {
       const surface = skinned && asset.startsWith('npc.') ? mix(painted, sick, texelSample ? parts.y.equal(-11).select(1, crowdRegionSkin(region!, () => paintedSkinMask(texelSample))).mul(.85) : parts.y.equal(-1).select(.85, 0)) : painted;
       // The approved atlas has bright orange/red eye paint. Restrict the mask to the head,
       // so the red tie and blood never emit. White teeth and pale skin fail the saturation gate.
-      const albedo = capSurface.select(vec3(.4508, .006, .0137), surface);
+      const albedo = capSurface.select(vec3(.4508, .006, .0137), scalp ? mix(surface, scalp.xyz, scalp.w) : surface);
       const eyeDisc = parts.z.greaterThan(1.5);
       const eyeRadius = uv().sub(.5).mul(2).length();
       const eye = texelSample ? eyeDisc.or(texelSample.r.greaterThan(.5).and(texelSample.g.lessThan(texelSample.r.mul(.65))).and(texelSample.b.lessThan(.2)).and(parts.z.greaterThan(.5))).select(1, 0) : healthy ? parts.z.min(1).mul(feedbackState.z) : parts.z.min(1);
@@ -435,7 +439,8 @@ export class CrowdView extends Group {
       });
       const column = (offset: number) => attribute(`_crowd${offset / 4}`, 'vec4');
       const instance = mat4(column(0), column(4), column(8), column(12));
-      material.positionNode = instance.mul(matrix.mul(vec4(skinned ? positionGeometry : positionGeometry.mul(visible).mul(crowdHeadwearVisibility()), 1))).xyz;
+      const position = scalpMorph ? mix(positionGeometry, attribute('_gripPosition', 'vec3'), parts.x.equal(headPart).and(covered).select(1, 0)) : positionGeometry;
+      material.positionNode = instance.mul(matrix.mul(vec4(skinned ? position : position.mul(visible).mul(crowdHeadwearVisibility()), 1))).xyz;
       if (skinned) {
         const cut = uint(feedbackState.z).bitOr(uint(feedbackState.y.greaterThan(.5).select(4, 0)));
         const triangle = varying(uint(attribute('_skin', 'vec4').w.floor()), 'crowdTriangleCut');
