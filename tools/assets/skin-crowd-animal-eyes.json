@@ -1,0 +1,129 @@
+{
+  "amb.lion": {
+    "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/amb.lion/source/flat-lod0.glb",
+    "heading": 0,
+    "front_pixels": [
+      "620,499",
+      "880,500"
+    ],
+    "eye_centers": [
+      [
+        -0.06583532781600952,
+        0.12580525797843933,
+        0.45070495223285567
+      ],
+      [
+        0.06448420972824097,
+        0.12530402898788454,
+        0.4489808446761345
+      ]
+    ],
+    "radius_extent": 0.014,
+    "game_radius": 0.021,
+    "source_sha256": "e51bdb617cea4ebeed132909647606c002ab5af5095a7a2397fd7f603b1e7079",
+    "selection": "Reviewed 1500px front ray picks on the pre-binding source. Rebuilds consume these source landmarks automatically."
+  },
+  "amb.gorilla": {
+    "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/amb.gorilla/source/flat-lod0.glb",
+    "heading": 0,
+    "front_pixels": [
+      "775,297",
+      "918,331"
+    ],
+    "eye_centers": [
+      [
+        0.02702207660675054,
+        0.2979715582084656,
+        0.44621483831926856
+      ],
+      [
+        0.12192461678504943,
+        0.27540731788635253,
+        0.44834943019188467
+      ]
+    ],
+    "radius_extent": 0.014,
+    "game_radius": 0.021,
+    "source_sha256": "00819b15c8ecd1ea542bdf205c5223e6dbaef093dc25b1ea50520481e4f46d97",
+    "selection": "Reviewed 1500px front ray picks on the pre-binding source. Rebuilds consume these source landmarks automatically."
+  },
+  "amb.flamingo": {
+    "eye_centers": [
+      [
+        -0.05857103690505028,
+        0.36555179953575134,
+        0.3905363082885742
+      ],
+      [
+        0.05194716155529022,
+        0.36353012919425964,
+        0.39187121391296387
+      ]
+    ],
+    "radius_extent": 0.016,
+    "authored_front_pixels": [
+      [
+        663,
+        207
+      ],
+      [
+        827,
+        210
+      ]
+    ],
+    "selection": "Healthy flamingo uses the exact infected source geometry with healed texture; reuse its reviewed source eye landmarks.",
+    "source": "/Users/wesner/Workspace/3dp-wave2/cache/wave2/inf.flamingo/calibrated.glb",
+    "lods": [
+      {
+        "lod": 0,
+        "eye_texels": 1219,
+        "emissive_dimensions": [
+          512,
+          512
+        ]
+      },
+      {
+        "lod": 1,
+        "eye_texels": 303,
+        "emissive_dimensions": [
+          256,
+          256
+        ]
+      },
+      {
+        "lod": 2,
+        "eye_texels": 432,
+        "emissive_dimensions": [
+          256,
+          256
+        ]
+      }
+    ],
+    "source_sha256": "0ea8eac628ca1c4fa251ff366829e2e5dac6cac201c3f2b4906ed1ec376b73e0",
+    "game_radius": 0.014
+  },
+  "amb.elephant": {
+    "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/amb.elephant/source/flat-lod0.glb",
+    "heading": 0,
+    "front_pixels": [
+      "540,324",
+      "936,324"
+    ],
+    "eye_centers": [
+      [
+        -0.1074724697351456,
+        0.21945951207160955,
+        0.3010260512252363
+      ],
+      [
+        0.09766486287593842,
+        0.21945951207160955,
+        0.3034510559746977
+      ]
+    ],
+    "source_sha256": "814c0352271e777254d9ce55a41eedd05e614b34c8629a28cf387b5f20f6dd70",
+    "radius_extent": 0.013,
+    "game_radius": 0.025,
+    "selection": "Reviewed 1500px front ray picks on the pre-binding healthy elephant."
+  }
+}

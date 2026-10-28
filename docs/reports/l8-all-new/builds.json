@@ -15,14 +15,14 @@
             "low": false,
             "path": "public/assets/models/skinned/amb.lion.lod0.glb",
             "bytes": 375124,
-            "sha256": "1e888639c321e0bd35b25ad2799a9fc0b9d3ad71ae68a08c9a12360e1d0390ac",
+            "sha256": "c6cdc295c022a152cbf1a43813ccabbc6b50df90f7e68722f51af77400198351",
             "errors": []
           },
           {
             "low": true,
             "path": "public/assets/models/skinned/amb.lion.lod0.low.glb",
-            "bytes": 289988,
-            "sha256": "243d53fa77160756f356e359d7fc4e8b925c0051f39217c2b6456d1a3cc4000d",
+            "bytes": 289992,
+            "sha256": "11236204aca569fd07d1c2caf50d48c17ad68e41b96aff0b1269a4d6e170682e",
             "errors": []
           }
         ]
@@ -37,15 +37,15 @@
           {
             "low": false,
             "path": "public/assets/models/skinned/amb.lion.lod1.glb",
-            "bytes": 178528,
-            "sha256": "5a59101e140b27f47c99c2cc95ea23d8a60c2ac3acf6526912f7733baa868bb6",
+            "bytes": 178524,
+            "sha256": "ebdcd44452a1fb438759a23ca3dea95458925498c078d088a389e92f6da93cbd",
             "errors": []
           },
           {
             "low": true,
             "path": "public/assets/models/skinned/amb.lion.lod1.low.glb",
-            "bytes": 178528,
-            "sha256": "5a59101e140b27f47c99c2cc95ea23d8a60c2ac3acf6526912f7733baa868bb6",
+            "bytes": 178524,
+            "sha256": "ebdcd44452a1fb438759a23ca3dea95458925498c078d088a389e92f6da93cbd",
             "errors": []
           }
         ]
@@ -61,14 +61,14 @@
             "low": false,
             "path": "public/assets/models/skinned/amb.lion.lod2.glb",
             "bytes": 115232,
-            "sha256": "ada34ba5c1ad1623dfe378fb486fd76aac673f4fa73d65746978c6b260c237af",
+            "sha256": "85e872d5f16042f3eb42067f4734a9da1aba5ea33e49034c6633f95cec0b5f27",
             "errors": []
           },
           {
             "low": true,
             "path": "public/assets/models/skinned/amb.lion.lod2.low.glb",
             "bytes": 115232,
-            "sha256": "ada34ba5c1ad1623dfe378fb486fd76aac673f4fa73d65746978c6b260c237af",
+            "sha256": "85e872d5f16042f3eb42067f4734a9da1aba5ea33e49034c6633f95cec0b5f27",
             "errors": []
           }
         ]
@@ -88,7 +88,7 @@
           1.3039316808471995,
           1.0769121050834656
         ],
-        "hash": "9101b8880a328cca0796dacac07399de287b3c7c06f3fab22adfc784d7a32290"
+        "hash": "445a8d98a17d9f1a309b3f6ec40e7ac516d4920aa36663fe2a05f614743b065b"
       },
       {
         "id": "amb.lion:lod1",
@@ -97,13 +97,13 @@
         "materials": 2,
         "drawCalls": 9,
         "animatedDrawCalls": 7,
-        "fileKB": 174.34375,
+        "fileKB": 174.33984375,
         "dimensions": [
           1.8838370442390442,
           1.3039316926946185,
           1.0785548090934753
         ],
-        "hash": "112f27c89625699ece14df9759399c512b2323963caeb5071135631783d9df29"
+        "hash": "96dacaab7dc640f20be9e67d23c771478268d5a81b8e55770a09b293623faa28"
       },
       {
         "id": "amb.lion:lod2",
@@ -118,9 +118,33 @@
           1.3039316711947322,
           1.0845496654510498
         ],
-        "hash": "9ba9ac377ba98276410be2a888d18bdc8bdf1c580cff51e832c93f1dbf0a00aa"
+        "hash": "eb160aa660a423a8c3ec243bea25bf3277a0ab2c992ee09c13d5500e840c4911"
       }
-    ]
+    ],
+    "eyeLandmarks": {
+      "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/amb.lion/source/flat-lod0.glb",
+      "heading": 0,
+      "front_pixels": [
+        "620,499",
+        "880,500"
+      ],
+      "eye_centers": [
+        [
+          -0.06583532781600952,
+          0.12580525797843933,
+          0.45070495223285567
+        ],
+        [
+          0.06448420972824097,
+          0.12530402898788454,
+          0.4489808446761345
+        ]
+      ],
+      "radius_extent": 0.014,
+      "game_radius": 0.021,
+      "source_sha256": "e51bdb617cea4ebeed132909647606c002ab5af5095a7a2397fd7f603b1e7079",
+      "selection": "Reviewed 1500px front ray picks on the pre-binding source. Rebuilds consume these source landmarks automatically."
+    }
   },
   {
     "id": "inf.lion",
@@ -138,14 +162,14 @@
             "low": false,
             "path": "public/assets/models/skinned/inf.lion.lod0.glb",
             "bytes": 375124,
-            "sha256": "1e888639c321e0bd35b25ad2799a9fc0b9d3ad71ae68a08c9a12360e1d0390ac",
+            "sha256": "c6cdc295c022a152cbf1a43813ccabbc6b50df90f7e68722f51af77400198351",
             "errors": []
           },
           {
             "low": true,
             "path": "public/assets/models/skinned/inf.lion.lod0.low.glb",
-            "bytes": 289988,
-            "sha256": "243d53fa77160756f356e359d7fc4e8b925c0051f39217c2b6456d1a3cc4000d",
+            "bytes": 289992,
+            "sha256": "11236204aca569fd07d1c2caf50d48c17ad68e41b96aff0b1269a4d6e170682e",
             "errors": []
           }
         ]
@@ -160,15 +184,15 @@
           {
             "low": false,
             "path": "public/assets/models/skinned/inf.lion.lod1.glb",
-            "bytes": 178528,
-            "sha256": "5a59101e140b27f47c99c2cc95ea23d8a60c2ac3acf6526912f7733baa868bb6",
+            "bytes": 178524,
+            "sha256": "ebdcd44452a1fb438759a23ca3dea95458925498c078d088a389e92f6da93cbd",
             "errors": []
           },
           {
             "low": true,
             "path": "public/assets/models/skinned/inf.lion.lod1.low.glb",
-            "bytes": 178528,
-            "sha256": "5a59101e140b27f47c99c2cc95ea23d8a60c2ac3acf6526912f7733baa868bb6",
+            "bytes": 178524,
+            "sha256": "ebdcd44452a1fb438759a23ca3dea95458925498c078d088a389e92f6da93cbd",
             "errors": []
           }
         ]
@@ -184,14 +208,14 @@
             "low": false,
             "path": "public/assets/models/skinned/inf.lion.lod2.glb",
             "bytes": 115232,
-            "sha256": "ada34ba5c1ad1623dfe378fb486fd76aac673f4fa73d65746978c6b260c237af",
+            "sha256": "85e872d5f16042f3eb42067f4734a9da1aba5ea33e49034c6633f95cec0b5f27",
             "errors": []
           },
           {
             "low": true,
             "path": "public/assets/models/skinned/inf.lion.lod2.low.glb",
             "bytes": 115232,
-            "sha256": "ada34ba5c1ad1623dfe378fb486fd76aac673f4fa73d65746978c6b260c237af",
+            "sha256": "85e872d5f16042f3eb42067f4734a9da1aba5ea33e49034c6633f95cec0b5f27",
             "errors": []
           }
         ]
@@ -211,7 +235,7 @@
           1.3039316808471995,
           1.0769121050834656
         ],
-        "hash": "9101b8880a328cca0796dacac07399de287b3c7c06f3fab22adfc784d7a32290"
+        "hash": "445a8d98a17d9f1a309b3f6ec40e7ac516d4920aa36663fe2a05f614743b065b"
       },
       {
         "id": "inf.lion:lod1",
@@ -220,13 +244,13 @@
         "materials": 2,
         "drawCalls": 9,
         "animatedDrawCalls": 7,
-        "fileKB": 174.34375,
+        "fileKB": 174.33984375,
         "dimensions": [
           1.8838370442390442,
           1.3039316926946185,
           1.0785548090934753
         ],
-        "hash": "112f27c89625699ece14df9759399c512b2323963caeb5071135631783d9df29"
+        "hash": "96dacaab7dc640f20be9e67d23c771478268d5a81b8e55770a09b293623faa28"
       },
       {
         "id": "inf.lion:lod2",
@@ -241,9 +265,33 @@
           1.3039316711947322,
           1.0845496654510498
         ],
-        "hash": "9ba9ac377ba98276410be2a888d18bdc8bdf1c580cff51e832c93f1dbf0a00aa"
+        "hash": "eb160aa660a423a8c3ec243bea25bf3277a0ab2c992ee09c13d5500e840c4911"
       }
-    ]
+    ],
+    "eyeLandmarks": {
+      "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/amb.lion/source/flat-lod0.glb",
+      "heading": 0,
+      "front_pixels": [
+        "620,499",
+        "880,500"
+      ],
+      "eye_centers": [
+        [
+          -0.06583532781600952,
+          0.12580525797843933,
+          0.45070495223285567
+        ],
+        [
+          0.06448420972824097,
+          0.12530402898788454,
+          0.4489808446761345
+        ]
+      ],
+      "radius_extent": 0.014,
+      "game_radius": 0.021,
+      "source_sha256": "e51bdb617cea4ebeed132909647606c002ab5af5095a7a2397fd7f603b1e7079",
+      "selection": "Reviewed 1500px front ray picks on the pre-binding source. Rebuilds consume these source landmarks automatically."
+    }
   },
   {
     "id": "amb.gorilla",
@@ -261,14 +309,14 @@
             "low": false,
             "path": "public/assets/models/skinned/amb.gorilla.lod0.glb",
             "bytes": 388996,
-            "sha256": "1cd95b9e1cb4bbe7c7b98943d111ffd165aee840cc2f260cfddf9846d2539420",
+            "sha256": "961d2b0819e580b1d5d2b76ecdc2c3d2d20e6308bc7e256f7da3ac22fc3c5695",
             "errors": []
           },
           {
             "low": true,
             "path": "public/assets/models/skinned/amb.gorilla.lod0.low.glb",
             "bytes": 309560,
-            "sha256": "97101fbf127c4f077fdfc4f26bca73e1db10e482248f365915b5f4dbe8c74253",
+            "sha256": "0f0f3fae80b962dc2478d5d99563de9c3bf25fcd47567a8584914f262670a939",
             "errors": []
           }
         ]
@@ -283,15 +331,15 @@
           {
             "low": false,
             "path": "public/assets/models/skinned/amb.gorilla.lod1.glb",
-            "bytes": 184232,
-            "sha256": "fa6accba117b9a8006f29195bdd36d66f95c2f68b5c66c322c5d794f6c023b24",
+            "bytes": 184236,
+            "sha256": "6500d9e16e2117e08d61edfdcaa0a249c6eccca4094042a059b37b37f0bb29fc",
             "errors": []
           },
           {
             "low": true,
             "path": "public/assets/models/skinned/amb.gorilla.lod1.low.glb",
-            "bytes": 184232,
-            "sha256": "fa6accba117b9a8006f29195bdd36d66f95c2f68b5c66c322c5d794f6c023b24",
+            "bytes": 184236,
+            "sha256": "6500d9e16e2117e08d61edfdcaa0a249c6eccca4094042a059b37b37f0bb29fc",
             "errors": []
           }
         ]
@@ -306,15 +354,15 @@
           {
             "low": false,
             "path": "public/assets/models/skinned/amb.gorilla.lod2.glb",
-            "bytes": 107644,
-            "sha256": "13306efbd611cd4a35eb862b2e427ccfa70a485cfa979ecf92edfbe31931bf24",
+            "bytes": 107636,
+            "sha256": "d5bfb0bf805afbb6fd934f554ffb27d960cf29dfb890fd969199c9cf2b365bbc",
             "errors": []
           },
           {
             "low": true,
             "path": "public/assets/models/skinned/amb.gorilla.lod2.low.glb",
-            "bytes": 107644,
-            "sha256": "13306efbd611cd4a35eb862b2e427ccfa70a485cfa979ecf92edfbe31931bf24",
+            "bytes": 107636,
+            "sha256": "d5bfb0bf805afbb6fd934f554ffb27d960cf29dfb890fd969199c9cf2b365bbc",
             "errors": []
           }
         ]
@@ -334,7 +382,7 @@
           1.8025982826948166,
           1.7223642468452454
         ],
-        "hash": "0fedcd655da976da846deb280ce931d1f60517cec26b8ac3e9553c6ff28b32f3"
+        "hash": "7fe603b60d141e5c4076c050715713b03794f7929c3476694d01d717f0837a51"
       },
       {
         "id": "amb.gorilla:lod1",
@@ -343,13 +391,13 @@
         "materials": 2,
         "drawCalls": 9,
         "animatedDrawCalls": 7,
-        "fileKB": 179.9140625,
+        "fileKB": 179.91796875,
         "dimensions": [
           1.9395849108695984,
           1.8025983087718487,
           1.7242935299873352
         ],
-        "hash": "226b1e5ae93e4a9254ec9b5263fa5182e95e7b96795fbadbb792ccaf54f724a2"
+        "hash": "134aa1e8ed73632acd1b4d153ab80fdf3893fca4bd3dfd153d6c3cf25e24b5cc"
       },
       {
         "id": "amb.gorilla:lod2",
@@ -358,15 +406,39 @@
         "materials": 2,
         "drawCalls": 9,
         "animatedDrawCalls": 7,
-        "fileKB": 105.12109375,
+        "fileKB": 105.11328125,
         "dimensions": [
           1.9686012268066406,
           1.8025983087718487,
           1.7116144895553589
         ],
-        "hash": "a2f718a2aaac670d29c677333072b0b8bc983c703d50715254e9321e45b4ad02"
+        "hash": "d7b431c70496edd339323b7ffea882b63375bd2919d3661faafd1eb9e740f87c"
       }
-    ]
+    ],
+    "eyeLandmarks": {
+      "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/amb.gorilla/source/flat-lod0.glb",
+      "heading": 0,
+      "front_pixels": [
+        "775,297",
+        "918,331"
+      ],
+      "eye_centers": [
+        [
+          0.02702207660675054,
+          0.2979715582084656,
+          0.44621483831926856
+        ],
+        [
+          0.12192461678504943,
+          0.27540731788635253,
+          0.44834943019188467
+        ]
+      ],
+      "radius_extent": 0.014,
+      "game_radius": 0.021,
+      "source_sha256": "00819b15c8ecd1ea542bdf205c5223e6dbaef093dc25b1ea50520481e4f46d97",
+      "selection": "Reviewed 1500px front ray picks on the pre-binding source. Rebuilds consume these source landmarks automatically."
+    }
   },
   {
     "id": "inf.gorilla",
@@ -384,14 +456,14 @@
             "low": false,
             "path": "public/assets/models/skinned/inf.gorilla.lod0.glb",
             "bytes": 388996,
-            "sha256": "1cd95b9e1cb4bbe7c7b98943d111ffd165aee840cc2f260cfddf9846d2539420",
+            "sha256": "961d2b0819e580b1d5d2b76ecdc2c3d2d20e6308bc7e256f7da3ac22fc3c5695",
             "errors": []
           },
           {
             "low": true,
             "path": "public/assets/models/skinned/inf.gorilla.lod0.low.glb",
             "bytes": 309560,
-            "sha256": "97101fbf127c4f077fdfc4f26bca73e1db10e482248f365915b5f4dbe8c74253",
+            "sha256": "0f0f3fae80b962dc2478d5d99563de9c3bf25fcd47567a8584914f262670a939",
             "errors": []
           }
         ]
@@ -406,15 +478,15 @@
           {
             "low": false,
             "path": "public/assets/models/skinned/inf.gorilla.lod1.glb",
-            "bytes": 184232,
-            "sha256": "fa6accba117b9a8006f29195bdd36d66f95c2f68b5c66c322c5d794f6c023b24",
+            "bytes": 184236,
+            "sha256": "6500d9e16e2117e08d61edfdcaa0a249c6eccca4094042a059b37b37f0bb29fc",
             "errors": []
           },
           {
             "low": true,
             "path": "public/assets/models/skinned/inf.gorilla.lod1.low.glb",
-            "bytes": 184232,
-            "sha256": "fa6accba117b9a8006f29195bdd36d66f95c2f68b5c66c322c5d794f6c023b24",
+            "bytes": 184236,
+            "sha256": "6500d9e16e2117e08d61edfdcaa0a249c6eccca4094042a059b37b37f0bb29fc",
             "errors": []
           }
         ]
@@ -429,15 +501,15 @@
           {
             "low": false,
             "path": "public/assets/models/skinned/inf.gorilla.lod2.glb",
-            "bytes": 107644,
-            "sha256": "13306efbd611cd4a35eb862b2e427ccfa70a485cfa979ecf92edfbe31931bf24",
+            "bytes": 107636,
+            "sha256": "d5bfb0bf805afbb6fd934f554ffb27d960cf29dfb890fd969199c9cf2b365bbc",
             "errors": []
           },
           {
             "low": true,
             "path": "public/assets/models/skinned/inf.gorilla.lod2.low.glb",
-            "bytes": 107644,
-            "sha256": "13306efbd611cd4a35eb862b2e427ccfa70a485cfa979ecf92edfbe31931bf24",
+            "bytes": 107636,
+            "sha256": "d5bfb0bf805afbb6fd934f554ffb27d960cf29dfb890fd969199c9cf2b365bbc",
             "errors": []
           }
         ]
@@ -457,7 +529,7 @@
           1.8025982826948166,
           1.7223642468452454
         ],
-        "hash": "0fedcd655da976da846deb280ce931d1f60517cec26b8ac3e9553c6ff28b32f3"
+        "hash": "7fe603b60d141e5c4076c050715713b03794f7929c3476694d01d717f0837a51"
       },
       {
         "id": "inf.gorilla:lod1",
@@ -466,13 +538,13 @@
         "materials": 2,
         "drawCalls": 9,
         "animatedDrawCalls": 7,
-        "fileKB": 179.9140625,
+        "fileKB": 179.91796875,
         "dimensions": [
           1.9395849108695984,
           1.8025983087718487,
           1.7242935299873352
         ],
-        "hash": "226b1e5ae93e4a9254ec9b5263fa5182e95e7b96795fbadbb792ccaf54f724a2"
+        "hash": "134aa1e8ed73632acd1b4d153ab80fdf3893fca4bd3dfd153d6c3cf25e24b5cc"
       },
       {
         "id": "inf.gorilla:lod2",
@@ -481,15 +553,39 @@
         "materials": 2,
         "drawCalls": 9,
         "animatedDrawCalls": 7,
-        "fileKB": 105.12109375,
+        "fileKB": 105.11328125,
         "dimensions": [
           1.9686012268066406,
           1.8025983087718487,
           1.7116144895553589
         ],
-        "hash": "a2f718a2aaac670d29c677333072b0b8bc983c703d50715254e9321e45b4ad02"
+        "hash": "d7b431c70496edd339323b7ffea882b63375bd2919d3661faafd1eb9e740f87c"
       }
-    ]
+    ],
+    "eyeLandmarks": {
+      "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/amb.gorilla/source/flat-lod0.glb",
+      "heading": 0,
+      "front_pixels": [
+        "775,297",
+        "918,331"
+      ],
+      "eye_centers": [
+        [
+          0.02702207660675054,
+          0.2979715582084656,
+          0.44621483831926856
+        ],
+        [
+          0.12192461678504943,
+          0.27540731788635253,
+          0.44834943019188467
+        ]
+      ],
+      "radius_extent": 0.014,
+      "game_radius": 0.021,
+      "source_sha256": "00819b15c8ecd1ea542bdf205c5223e6dbaef093dc25b1ea50520481e4f46d97",
+      "selection": "Reviewed 1500px front ray picks on the pre-binding source. Rebuilds consume these source landmarks automatically."
+    }
   },
   {
     "id": "amb.elephant",
@@ -506,15 +602,15 @@
           {
             "low": false,
             "path": "public/assets/models/skinned/amb.elephant.lod0.glb",
-            "bytes": 198308,
-            "sha256": "e728927c71837f1952e6f90be6be636dd83d98d981f7f4220e891cc5764fed0f",
+            "bytes": 198312,
+            "sha256": "ec28262661fac8b68d34f7215a89b20084364952edc445878b83c3ec1a6e42c2",
             "errors": []
           },
           {
             "low": true,
             "path": "public/assets/models/skinned/amb.elephant.lod0.low.glb",
             "bytes": 180540,
-            "sha256": "1e1f228b7751a7d4c85fde3f219556541877591d1bf79ea4b9b8400dc5084050",
+            "sha256": "95ea72461c4be9a5c5196c0557d58f8bac1567abf747e8bb6ce4c45403c21439",
             "errors": []
           }
         ]
@@ -530,14 +626,14 @@
             "low": false,
             "path": "public/assets/models/skinned/amb.elephant.lod1.glb",
             "bytes": 104640,
-            "sha256": "a7e0c857e20551f1e8d79b4b00c728892ba321865cab942419b181575d276bdc",
+            "sha256": "2424699d7061aa8c727d89c8ed573b0e889567392d39799a31a4907bf7ad4cf7",
             "errors": []
           },
           {
             "low": true,
             "path": "public/assets/models/skinned/amb.elephant.lod1.low.glb",
             "bytes": 104640,
-            "sha256": "a7e0c857e20551f1e8d79b4b00c728892ba321865cab942419b181575d276bdc",
+            "sha256": "2424699d7061aa8c727d89c8ed573b0e889567392d39799a31a4907bf7ad4cf7",
             "errors": []
           }
         ]
@@ -552,15 +648,15 @@
           {
             "low": false,
             "path": "public/assets/models/skinned/amb.elephant.lod2.glb",
-            "bytes": 66388,
-            "sha256": "591f27bec8b7bb09f2cd8f8b9d2d2a0fde309df7e1c0f95f264937590d014e6f",
+            "bytes": 66392,
+            "sha256": "2d7d0e36b6eaac246b7c19fda8fc7e38d03c5434c72695521009b8b5e28ca404",
             "errors": []
           },
           {
             "low": true,
             "path": "public/assets/models/skinned/amb.elephant.lod2.low.glb",
-            "bytes": 66388,
-            "sha256": "591f27bec8b7bb09f2cd8f8b9d2d2a0fde309df7e1c0f95f264937590d014e6f",
+            "bytes": 66392,
+            "sha256": "2d7d0e36b6eaac246b7c19fda8fc7e38d03c5434c72695521009b8b5e28ca404",
             "errors": []
           }
         ]
@@ -574,13 +670,13 @@
         "materials": 2,
         "drawCalls": 9,
         "animatedDrawCalls": 7,
-        "fileKB": 193.66015625,
+        "fileKB": 193.6640625,
         "dimensions": [
           4.250258445739746,
           3.040003741482451,
           2.0369949340820312
         ],
-        "hash": "7608f86231f836c6abeb6c0f428404d2b4fc396004511a47eb5e1a8c767b2659"
+        "hash": "71ee20928992f525dec1335869aeb3ba8c2425f37b6c78596af5780046ccd0d3"
       },
       {
         "id": "amb.elephant:lod1",
@@ -595,7 +691,7 @@
           3.0400037705529144,
           2.0420397520065308
         ],
-        "hash": "51daf926504e176820b8f69ea8c44a4edc9ea690e1b4e16c620850d486f825aa"
+        "hash": "2e36e4308fe8ba31b428d7fd5bf02f4f4f591c0fbcf90227c0b54fad21f22801"
       },
       {
         "id": "amb.elephant:lod2",
@@ -604,15 +700,39 @@
         "materials": 2,
         "drawCalls": 9,
         "animatedDrawCalls": 7,
-        "fileKB": 64.83203125,
+        "fileKB": 64.8359375,
         "dimensions": [
           4.221358776092529,
           3.0400038957595825,
           2.0422277450561523
         ],
-        "hash": "a4deb09b217992d0cbf1045f5df226c2d55a18aaaf4b96bc0e00af57b5e81ef8"
+        "hash": "4b6e0c153759307c19ef055b4690a4496e9785352b06af3b076cf229e22e2463"
       }
-    ]
+    ],
+    "eyeLandmarks": {
+      "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/amb.elephant/source/flat-lod0.glb",
+      "heading": 0,
+      "front_pixels": [
+        "540,324",
+        "936,324"
+      ],
+      "eye_centers": [
+        [
+          -0.1074724697351456,
+          0.21945951207160955,
+          0.3010260512252363
+        ],
+        [
+          0.09766486287593842,
+          0.21945951207160955,
+          0.3034510559746977
+        ]
+      ],
+      "source_sha256": "814c0352271e777254d9ce55a41eedd05e614b34c8629a28cf387b5f20f6dd70",
+      "radius_extent": 0.013,
+      "game_radius": 0.025,
+      "selection": "Reviewed 1500px front ray picks on the pre-binding healthy elephant."
+    }
   },
   {
     "id": "inf.elephant",
@@ -629,15 +749,15 @@
           {
             "low": false,
             "path": "public/assets/models/skinned/inf.elephant.lod0.glb",
-            "bytes": 223484,
-            "sha256": "59e3ac6d30815e65d5389b49a698786e82a28addff5e057f26807da16289f59a",
+            "bytes": 223508,
+            "sha256": "69beef46d46b8b9c4abcb202fd8cb2202e0f4a422fc795195f1ab24c3201ad1d",
             "errors": []
           },
           {
             "low": true,
             "path": "public/assets/models/skinned/inf.elephant.lod0.low.glb",
-            "bytes": 202064,
-            "sha256": "7b85e0cf39033093bbfd4ea1d6106073e41e707e9ca41dc5e1ac6c1dcbd60d84",
+            "bytes": 202092,
+            "sha256": "5cd32c97f8fdea2fbf6c0d5d17e77821197c1a9e461a8d88e1d679de7343c000",
             "errors": []
           }
         ]
@@ -652,15 +772,15 @@
           {
             "low": false,
             "path": "public/assets/models/skinned/inf.elephant.lod1.glb",
-            "bytes": 117788,
-            "sha256": "7f0a3479e0ae5eb388eaf5ec39b3463bf1ac2e17565f4b49e58e7e63675fc66d",
+            "bytes": 117792,
+            "sha256": "773918b00163bf7c5d3d534beddad554afd49e91f5a741ce9c783f6c3098ab14",
             "errors": []
           },
           {
             "low": true,
             "path": "public/assets/models/skinned/inf.elephant.lod1.low.glb",
-            "bytes": 117788,
-            "sha256": "7f0a3479e0ae5eb388eaf5ec39b3463bf1ac2e17565f4b49e58e7e63675fc66d",
+            "bytes": 117792,
+            "sha256": "773918b00163bf7c5d3d534beddad554afd49e91f5a741ce9c783f6c3098ab14",
             "errors": []
           }
         ]
@@ -675,15 +795,15 @@
           {
             "low": false,
             "path": "public/assets/models/skinned/inf.elephant.lod2.glb",
-            "bytes": 71416,
-            "sha256": "935065a0f6e9886e95d76e951698db27f82a1d4b620d27dddb367739bda566d1",
+            "bytes": 71448,
+            "sha256": "d58e466792e89602ad105239d3e21f6265bb9e29a927fea5b1f1ffc695ede867",
             "errors": []
           },
           {
             "low": true,
             "path": "public/assets/models/skinned/inf.elephant.lod2.low.glb",
-            "bytes": 71416,
-            "sha256": "935065a0f6e9886e95d76e951698db27f82a1d4b620d27dddb367739bda566d1",
+            "bytes": 71448,
+            "sha256": "d58e466792e89602ad105239d3e21f6265bb9e29a927fea5b1f1ffc695ede867",
             "errors": []
           }
         ]
@@ -693,17 +813,17 @@
       {
         "id": "inf.elephant:lod0",
         "errors": [],
-        "triangles": 7421,
+        "triangles": 7423,
         "materials": 2,
         "drawCalls": 9,
         "animatedDrawCalls": 7,
-        "fileKB": 218.24609375,
+        "fileKB": 218.26953125,
         "dimensions": [
           4.322078824043274,
           3.0400037761169187,
           2.4707894325256348
         ],
-        "hash": "d025d797aaadc6aa0e029bf2e27c4b796004ec67c08c3356bd8958b1c0573906"
+        "hash": "5dd88ac4eb74360c9da4d3abeaaae56cdcd88e0b212874463bf8c4554e7e4bc5"
       },
       {
         "id": "inf.elephant:lod1",
@@ -712,30 +832,31 @@
         "materials": 2,
         "drawCalls": 9,
         "animatedDrawCalls": 7,
-        "fileKB": 115.02734375,
+        "fileKB": 115.03125,
         "dimensions": [
           4.320116639137268,
           3.040003759539104,
           2.4561104774475098
         ],
-        "hash": "d6daa411a5adca4dbc4e9a554d87e10c9ab78b5a240838e675e010e345925d87"
+        "hash": "15008e006368f343e4c80a571ef12892acb703660bafd9efd4729fcc4a935f15"
       },
       {
         "id": "inf.elephant:lod2",
         "errors": [],
-        "triangles": 957,
+        "triangles": 959,
         "materials": 2,
         "drawCalls": 9,
         "animatedDrawCalls": 7,
-        "fileKB": 69.7421875,
+        "fileKB": 69.7734375,
         "dimensions": [
           4.2738341093063354,
           3.0400038957595825,
           2.4150980710983276
         ],
-        "hash": "372e4f6e34788b546b29a512de7661a435e20ea9babd9675546f79cfb2abe294"
+        "hash": "8a151051b2ba0a8aee8d416f17004f58a36a1ab094a478456f9c53c601503abc"
       }
-    ]
+    ],
+    "eyeLandmarks": null
   },
   {
     "id": "amb.flamingo",
@@ -858,7 +979,8 @@
         ],
         "hash": "36e96ba008e0869e651c774ab1b83ebf42cc7f780333fd83b0bbfe322a40ed0e"
       }
-    ]
+    ],
+    "eyeLandmarks": null
   },
   {
     "id": "inf.flamingo",
@@ -876,14 +998,14 @@
             "low": false,
             "path": "public/assets/models/skinned/inf.flamingo.lod0.glb",
             "bytes": 179268,
-            "sha256": "242569d64b26e31010a9bcad048fe0a05bd550a503390e3412ceb2fb1ac22e5f",
+            "sha256": "e51f669c0af8767d7c9267cc9633f477f73b1228c8e0ef17a280fd62cd54f32e",
             "errors": []
           },
           {
             "low": true,
             "path": "public/assets/models/skinned/inf.flamingo.lod0.low.glb",
             "bytes": 123016,
-            "sha256": "7ab25eed055cad6bbfafa7d2b034ee413b6ed273861d05178c5e3a3a84ba77e7",
+            "sha256": "cc8ff2d5bde1b981e8de6ee1b255c7ebe5907ba66497a9954f321f3602f49d05",
             "errors": []
           }
         ]
@@ -898,15 +1020,15 @@
           {
             "low": false,
             "path": "public/assets/models/skinned/inf.flamingo.lod1.glb",
-            "bytes": 85532,
-            "sha256": "02c97868484d226345abe1cd0fa244d7001d7eb9e5da3c36291c7b2a48dbfd36",
+            "bytes": 85536,
+            "sha256": "6ee6507dfd9d99adb3558128bbbf3575226ae2e6d16a35d26fa279cc21a81b30",
             "errors": []
           },
           {
             "low": true,
             "path": "public/assets/models/skinned/inf.flamingo.lod1.low.glb",
-            "bytes": 85532,
-            "sha256": "02c97868484d226345abe1cd0fa244d7001d7eb9e5da3c36291c7b2a48dbfd36",
+            "bytes": 85536,
+            "sha256": "6ee6507dfd9d99adb3558128bbbf3575226ae2e6d16a35d26fa279cc21a81b30",
             "errors": []
           }
         ]
@@ -922,14 +1044,14 @@
             "low": false,
             "path": "public/assets/models/skinned/inf.flamingo.lod2.glb",
             "bytes": 76128,
-            "sha256": "4513abf882876064865c1550b0d4fbfee50781caa9c21d4ba71566c8f65c1810",
+            "sha256": "154b6079b239d543c404ffdb0a017f36b73a13edb8ab32010aca0e01f667f555",
             "errors": []
           },
           {
             "low": true,
             "path": "public/assets/models/skinned/inf.flamingo.lod2.low.glb",
             "bytes": 76128,
-            "sha256": "4513abf882876064865c1550b0d4fbfee50781caa9c21d4ba71566c8f65c1810",
+            "sha256": "154b6079b239d543c404ffdb0a017f36b73a13edb8ab32010aca0e01f667f555",
             "errors": []
           }
         ]
@@ -949,7 +1071,7 @@
           1.5999996976188413,
           0.8456838130950928
         ],
-        "hash": "68844549c34241b95b45f8f6071315a6e51f4baec7587a66ea85e15f1e6b20b3"
+        "hash": "5b9012af976e3ba7857170af613d8414f71313031af6c8f15df8fe6156a8197d"
       },
       {
         "id": "inf.flamingo:lod1",
@@ -958,13 +1080,13 @@
         "materials": 2,
         "drawCalls": 9,
         "animatedDrawCalls": 7,
-        "fileKB": 83.52734375,
+        "fileKB": 83.53125,
         "dimensions": [
           1.7253877520561218,
           1.599999709336032,
           0.8600009083747864
         ],
-        "hash": "f1a9ae20afb1d2b294c57216f0d37c1ee4292131a9d200e8a00695c10338195b"
+        "hash": "0cf4b9fff2eeb06886241129a249c9594d80f1179beb6eef77089a772fa4f19d"
       },
       {
         "id": "inf.flamingo:lod2",
@@ -979,8 +1101,9 @@
           1.5999996911268681,
           0.8556502163410187
         ],
-        "hash": "013512a067dc2a1efd7e307a496fde1506dd9a62e653d3cbbb642f8647fb3379"
+        "hash": "7d6e6106d66d4e63c943247b3b83e8309d38a5578c4517df390903cd3c53eae6"
       }
-    ]
+    ],
+    "eyeLandmarks": null
   }
 ]

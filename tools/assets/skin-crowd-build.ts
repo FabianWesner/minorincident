@@ -37,6 +37,15 @@ const def = manifest.find(a => a.id === id); if (!def) throw Error(`Unknown cast
 const output = 'public/assets/models/skinned', report = join(process.env.CROWD_REPORT ?? 'test-results/skinned-prod/builds', id), assets = join('assets', id);
 mkdirSync(output, { recursive: true }); mkdirSync(report, { recursive: true }); mkdirSync(assets, { recursive: true });
 const metadata = existsSync(join(source, 'rig.json')) ? JSON.parse(readFileSync(join(source, 'rig.json'), 'utf8')) as { class?: string; lods: { lod: number; uniform_scale?: number; world_scale?: number; rotation_y_degrees?: number }[] } : undefined;
+// Animal fur/mane envelopes are wider than the face. Use reviewed pre-binding
+// eye landmarks instead of placing dormant/infected eyes on that envelope.
+const animalEyeRecipes = JSON.parse(readFileSync('tools/assets/skin-crowd-animal-eyes.json', 'utf8')) as Record<string, { source_sha256: string; eye_centers: number[][]; radius_extent: number; game_radius: number }>;
+let eyeSource = existsSync(join(source, 'eyes.json')) ? join(source, 'eyes.json') : undefined;
+if (metadata?.class === 'quadruped' && animalEyeRecipes[sourceId]) {
+  const recipe = animalEyeRecipes[sourceId], body = join(source, 'source/flat-lod0.glb');
+  if (createHash('sha256').update(readFileSync(body)).digest('hex') !== recipe.source_sha256) throw Error(`${id}: animal eye landmarks do not match the source body`);
+  eyeSource = join(report, 'source-eyes.json'); writeFileSync(eyeSource, JSON.stringify(recipe, null, 2) + '\n');
+}
 // Derived story identities fit the continuous source directly to the neutral
 // game rig. The old cut-source ownership leaves shoulder slivers in cower poses.
 const derivedTemplate = id !== sourceId && id.startsWith('npc.') && existsSync(join('assets', sourceId, 'model.glb'));
@@ -90,8 +99,8 @@ for (const lod of [0, 1, 2]) {
   if (existsSync(body)) args.push('--body', body, '--body-scale', String(alignment?.initial_game_height_scale ?? placement?.uniform_scale ?? placement?.world_scale ?? 1), '--body-rot-y', String(alignment?.game_alignment_rotation_y_degrees ?? placement?.rotation_y_degrees ?? 0));
   if (alignment || derivedTemplate) args.push('--body-yaw-fixed');
   if (unbound && id === 'inf.dog') args.push('--atlas-base-half', '--eyes', join(source, 'eyes.json'));
-  else if (unbound && (id.startsWith('inf.') || alignment?.healthy_toy_eyes) && existsSync(join(source, 'eyes.json'))) args.push('--eyes', join(source, 'eyes.json'));
-  else if (metadata && !derivedTemplate) args.push('--reconstruct-body');
+  else if (eyeSource && (id.startsWith('inf.') || alignment?.healthy_toy_eyes || metadata?.class === 'quadruped')) args.push('--eyes', eyeSource);
+  if (metadata && !derivedTemplate) args.push('--reconstruct-body');
   if (id.startsWith('npc.')) args.push('--healthy');
   if (derivedTemplate || unbound && (!alignment?.rig_source || alignment.rig_fit_height) && (id.startsWith('npc.') || alignment?.rig_class === 'humanoid' || alignment?.rig_class === 'alpha')) args.push('--fit-rig-height');
   if (alignment?.spectacles || ['npc.civilian-woman-b', 'npc.civilian-elderly'].includes(id)) args.push('--spectacles');
