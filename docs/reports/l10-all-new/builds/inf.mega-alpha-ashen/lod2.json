@@ -1,8 +1,8 @@
 {
-  "rig": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.mega-alpha-ashen/lod2.glb",
+  "rig": "/Users/wesner/Workspace/3dp-l10-all-new/cast/wave2/inf.mega-alpha-ashen/lod2.glb",
   "out": "docs/reports/l10-all-new/builds/inf.mega-alpha-ashen/lod2.raw.glb",
-  "bytes": 446672,
-  "body": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.mega-alpha-ashen/source/flat-lod2.glb",
+  "bytes": 412716,
+  "body": "/Users/wesner/Workspace/3dp-l10-all-new/cast/wave2/inf.mega-alpha-ashen/source/flat-lod2.glb",
   "scale": 2.921769102247072,
   "yaw": 90,
   "translation": [
@@ -11,16 +11,16 @@
     0.002668686907249973
   ],
   "meanDistanceToRigidSurface": 0.011762416573980335,
-  "eyeLandmarks": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.mega-alpha-ashen/eyes.json",
-  "vertices": 2661,
-  "weldedVertices": 879,
-  "triangles": 1822,
-  "bodyTriangleBudget": 1826,
+  "eyeLandmarks": "/Users/wesner/Workspace/3dp-l10-all-new/cast/wave2/inf.mega-alpha-ashen/eyes.json",
+  "vertices": 2404,
+  "weldedVertices": 795,
+  "triangles": 1642,
+  "bodyTriangleBudget": 1658,
   "components": 1,
   "openEdges": 0,
-  "unrelatedSeams": 290,
+  "unrelatedSeams": 254,
   "maxInfluences": 3,
-  "zeroNormals": 2,
+  "zeroNormals": 4,
   "jointNames": [
     "root",
     "hip",
@@ -51,18 +51,18 @@
     },
     {
       "part": "armL",
-      "rim": 60,
-      "triangles": 50,
+      "rim": 59,
+      "triangles": 49,
       "loops": 5,
       "distance": 0.2736166423953573,
       "method": "cut-boundary"
     },
     {
       "part": "armR",
-      "rim": 49,
-      "triangles": 43,
+      "rim": 46,
+      "triangles": 40,
       "loops": 3,
-      "distance": 0.23094526415505565,
+      "distance": 0.24738648153913373,
       "method": "cut-boundary"
     },
     {
@@ -83,18 +83,18 @@
     },
     {
       "part": "legL",
-      "rim": 44,
-      "triangles": 40,
+      "rim": 39,
+      "triangles": 35,
       "loops": 2,
-      "distance": 0.31894898716003417,
+      "distance": 0.2963305443331092,
       "method": "cut-boundary"
     },
     {
       "part": "legR",
-      "rim": 13,
-      "triangles": 11,
+      "rim": 12,
+      "triangles": 10,
       "loops": 1,
-      "distance": 0.5959278559304838,
+      "distance": 0.5938641325202206,
       "method": "cut-boundary"
     }
   ],
@@ -104,23 +104,23 @@
   "eyes": 2,
   "seams": {
     "torso/hip": {
-      "seamVertices": 68,
-      "band": 0.15501477305381503,
-      "blended": 66
+      "seamVertices": 58,
+      "band": 0.16372707226759428,
+      "blended": 54
     },
     "legL/hip": {
-      "seamVertices": 15,
-      "band": 0.15501477305381503,
-      "blended": 16
+      "seamVertices": 14,
+      "band": 0.16372707226759428,
+      "blended": 13
     },
     "armR/torso": {
-      "seamVertices": 67,
-      "band": 0.15501477305381503,
-      "blended": 69
+      "seamVertices": 65,
+      "band": 0.16372707226759428,
+      "blended": 67
     },
     "armL/torso": {
-      "seamVertices": 49,
-      "band": 0.15501477305381503,
+      "seamVertices": 47,
+      "band": 0.16372707226759428,
       "blended": 50
     },
     "head/torso": {
@@ -130,7 +130,7 @@
     },
     "legR/hip": {
       "seamVertices": 3,
-      "band": 0.15501477305381503,
+      "band": 0.16372707226759428,
       "blended": 3
     }
   }
