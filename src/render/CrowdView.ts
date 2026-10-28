@@ -336,7 +336,7 @@ export class CrowdView extends Group {
       }
       baked.geometry.userData.crowdLod = lod;
       const locomotion = new CrowdLocomotion(model, baked.clip, this.footwork);
-      const probe = new CrowdFigureProbe(); probe.lod = lod; probe.sole = locomotion.sole; if (model.getObjectByName('legFL')) probe.animal(model);
+      const probe = new CrowdFigureProbe(); probe.lod = lod; probe.sole = locomotion.sole; if (model.getObjectByName('legFL') || model.getObjectByName('root')?.userData.crowdQuadruped === true) probe.animal(model);
       const skinned = !!baked.clip.binds;
       this.accessories?.registerSkull(asset, baked.geometry);
       if (lod === 'lod2' && !textured && !skinned && this.accessories && regularInfectedModels.some(id => id === asset)) {

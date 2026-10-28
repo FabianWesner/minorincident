@@ -53,7 +53,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
     if (!node) { node = root.clone(false); node.name = name; node.position.set(0, 0, 0); root.add(node); }
     rig[name] = node;
   }
-  const animalRig = !!root.getObjectByName('body') || root.getObjectByName('root')?.userData.crowdQuadruped === true;
+  const animalRig = !!root.getObjectByName('body') || root.getObjectByName('root')?.userData.crowdQuadruped === true && !!root.getObjectByName('legFL');
   // Quadruped skins carry an extended animal pose set (trunk, tail, four
   // legs and paws). Weapon/backpack sockets are not used by animals and would
   // push the sampled pose indices beyond the shared 32-part crowd contract.
@@ -140,7 +140,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
       const action = embedded ? mixer.clipAction(embedded).setLoop(LoopOnce, 1) : undefined;
       if (action) { action.clampWhenFinished = true; action.reset().play(); }
       const name = animalRig ? /^(die|death-|flung|knockdown)/.test(clip) ? 'animal-death' : /^(idle|infected-idle|infected-search|civ-startle|civ-grabbed)$/.test(clip) ? 'corgi-idle' : /^(windup|swing|zebra-rear-kick|zebra-stampede)$/.test(clip) ? 'corgi-idle' : flying ? 'infected-flight' : 'corgi-trot' : clip.startsWith('zebra-') || clip.startsWith('dog-') ? 'idle' : crawlingRestPose && clip === 'crawl' ? 'infected-run' : clip;
-      const duration = embedded?.duration ?? authoredClips.get(name)!.duration, planted = (!animalRig || root.getObjectByName('root')?.userData.groundedAnimal === true) && soleHeight > 0 && !unplantedClips.test(clip);
+      const duration = embedded?.duration ?? authoredClips.get(name)!.duration, planted = !hoofPoints.length && (!animalRig || root.getObjectByName('root')?.userData.groundedAnimal === true) && soleHeight > 0 && !unplantedClips.test(clip);
       for (let frame = 0; frame < framesPerClip; frame++) {
         for (let i = 0; i < parts.length; i++) { parts[i].position.copy(rest[i].position); parts[i].rotation.copy(rest[i].rotation); }
         const t = frame / (framesPerClip - 1);
@@ -148,7 +148,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
         updateJoints();
         if (hoofPoints.length && !unplantedClips.test(clip)) {
           const deficit = hoofFloor - lowestHoof();
-          if (deficit > 1e-4) { rig.hip.position.y += deficit / rig.hip.parent!.getWorldScale(sole).y; updateJoints(); }
+          if (Math.abs(deficit) > 1e-4) { rig.hip.position.y += deficit / rig.hip.parent!.getWorldScale(sole).y; updateJoints(); }
         }
         if (planted) {
           const deficit = floor - lowestSole();

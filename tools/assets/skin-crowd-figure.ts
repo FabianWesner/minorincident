@@ -234,7 +234,7 @@ if (bodyPath) {
     for (let i = 0; i < out.length; i++) { lo[i % 3] = Math.min(lo[i % 3], out[i]); hi[i % 3] = Math.max(hi[i % 3], out[i]); }
     for (let i = 0; i < rigid.pos.length; i++) { rlo[i % 3] = Math.min(rlo[i % 3], rigid.pos[i]); rhi[i % 3] = Math.max(rhi[i % 3], rigid.pos[i]); }
     // Feet on the floor (y min), centre of the x/z bounds.
-    const t = [(rlo[0] + rhi[0]) / 2 - (lo[0] + hi[0]) / 2, rlo[1] - lo[1], (rlo[2] + rhi[2]) / 2 - (lo[2] + hi[2]) / 2];
+    const t = [(rlo[0] + rhi[0]) / 2 - (lo[0] + hi[0]) / 2, (quadruped ? 0 : rlo[1]) - lo[1], (rlo[2] + rhi[2]) / 2 - (lo[2] + hi[2]) / 2];
     for (let i = 0; i < out.length; i++) out[i] += t[i % 3];
     let error = 0; for (let i = 0; i < out.length; i += 3) error += closestToRig(out[i], out[i + 1], out[i + 2]).distance;
     error /= out.length / 3;

@@ -114,7 +114,7 @@ try {
     for(const [i,model]of ids.entries()){
       if(process.env.L8_IDS&&!process.env.L8_IDS.split(',').includes(model))continue;
       // Exercise the actual healthy zoo routine, turn into the infected identity, then freeze the corpse.
-      const subject=actor(model);
+      const subject=actor(model,'subject',[0,0],0);
       await session.load({...base,name:`l8-states-${model}`,actors:[{id:'courier',kind:'courier',at:[12,0]},subject],camera:{mode:'game',target:[0,.5,0],zoom:.6},trace:true});
       await session.step(3);await session.screenshot(`${out}/${i}-idle.png`);
       const entity=(await session.metrics()).actors.subject.entity;

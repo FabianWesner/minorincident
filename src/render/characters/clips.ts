@@ -92,6 +92,19 @@ function buildRetargetedClip(root: Object3D, name: string, additive: boolean, so
     const wholeAnimal = name === 'animal-death' && nodeName === 'body' && (root.getObjectByName('body')?.parent?.name === 'torso' || skinnedAnimal && !root.getObjectByName('body'));
     const node = root.getObjectByName(wholeAnimal ? 'hip' : nodeName);
     if (!node || additive && !upperBody.test(nodeName)) continue;
+    let animalGait = 1;
+    if (skinnedAnimal && /^corgi-(walk|trot|gallop)$/.test(name) && /^leg[FB][LR]$/.test(nodeName)) {
+      root.updateWorldMatrix(true, true);
+      const paw = root.getObjectByName(nodeName.replace('leg', 'paw'));
+      const soles = root.getObjectByName('root')?.userData.animalSoles as Record<string, number[][]> | undefined;
+      if (paw && soles?.[paw.name]?.length) {
+        const floor = Math.min(...soles[paw.name].map(p => paw.localToWorld(new Vector3().fromArray(p)).y));
+        const reach = node.getWorldPosition(new Vector3()).y - floor;
+        // Dog angles swing a long elephant leg over a metre beyond its
+        // support reach. Retarget the same gait to its actual stride length.
+        animalGait = Math.min(1, Math.atan((strides[name] ?? .8) * strideScale(root) * .25 / Math.max(.1, reach)) / .73);
+      }
+    }
     if (name.startsWith('corgi-') && name !== 'corgi-sit' && /^legF[LR]$/.test(nodeName)) tracks.push(new VectorKeyframeTrack(`${nodeName}.scale`, [0, source.duration], [...node.scale.toArray(), ...node.scale.toArray()]));
     for (const path of ['rotation', 'translation'] as const) {
       const track = source.tracks.find(t => t.node === nodeName && t.path === path), times = track?.times ?? [0, source.duration];
@@ -99,6 +112,7 @@ function buildRetargetedClip(root: Object3D, name: string, additive: boolean, so
       if (path === 'rotation') {
         for (let i = 0; i < times.length; i++) {
           q.set(0, 0, 0, 1); if (track) q.fromArray(track.values, i * 4).normalize();
+          if (animalGait < 1) q.slerp(new Quaternion(), 1 - animalGait);
           // Continuous animal anatomy cannot separate at the rigid clip's
           // exaggerated neck/paw folds. Retain the whole-body fall and soften
           // local articulation, so the mane and limb roots stay connected.
