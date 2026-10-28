@@ -1,0 +1,164 @@
+{
+  "review": [
+    "amb.lion",
+    "inf.lion",
+    "amb.gorilla",
+    "inf.gorilla",
+    "amb.elephant",
+    "inf.elephant",
+    "amb.flamingo",
+    "inf.flamingo"
+  ],
+  "converted": [
+    {
+      "id": "amb.lion",
+      "crowdSkin": true,
+      "sourceGlb": "assets/amb.lion/model.skin.glb",
+      "rigidBaseline": {
+        "glb": "public/assets/models/amb.lion.glb",
+        "lods": {
+          "lod1": "public/assets/models/amb.lion.lod1.glb",
+          "lod2": "public/assets/models/amb.lion.lod2.glb"
+        }
+      },
+      "triangles": 8000,
+      "fileKB": 1000,
+      "lodBudgets": {
+        "lod1": 3000,
+        "lod2": 1000
+      }
+    },
+    {
+      "id": "inf.lion",
+      "crowdSkin": true,
+      "sourceGlb": "assets/inf.lion/model.skin.glb",
+      "rigidBaseline": {
+        "glb": "public/assets/models/inf.lion.glb",
+        "lods": {
+          "lod1": "public/assets/models/inf.lion.lod1.glb",
+          "lod2": "public/assets/models/inf.lion.lod2.glb"
+        }
+      },
+      "triangles": 8000,
+      "fileKB": 6000,
+      "lodBudgets": {
+        "lod1": 3000,
+        "lod2": 1000
+      }
+    },
+    {
+      "id": "amb.gorilla",
+      "crowdSkin": true,
+      "sourceGlb": "assets/amb.gorilla/model.skin.glb",
+      "rigidBaseline": {
+        "glb": "public/assets/models/amb.gorilla.glb",
+        "lods": {
+          "lod1": "public/assets/models/amb.gorilla.lod1.glb",
+          "lod2": "public/assets/models/amb.gorilla.lod2.glb"
+        }
+      },
+      "triangles": 8000,
+      "fileKB": 1000,
+      "lodBudgets": {
+        "lod1": 3000,
+        "lod2": 1000
+      }
+    },
+    {
+      "id": "inf.gorilla",
+      "crowdSkin": true,
+      "sourceGlb": "assets/inf.gorilla/model.skin.glb",
+      "rigidBaseline": {
+        "glb": "public/assets/models/inf.gorilla.glb",
+        "lods": {
+          "lod1": "public/assets/models/inf.gorilla.lod1.glb",
+          "lod2": "public/assets/models/inf.gorilla.lod2.glb"
+        }
+      },
+      "triangles": 8000,
+      "fileKB": 6000,
+      "lodBudgets": {
+        "lod1": 3000,
+        "lod2": 1000
+      }
+    },
+    {
+      "id": "amb.elephant",
+      "crowdSkin": true,
+      "sourceGlb": "assets/amb.elephant/model.skin.glb",
+      "rigidBaseline": {
+        "glb": "public/assets/models/amb.elephant.glb",
+        "lods": {
+          "lod1": "public/assets/models/amb.elephant.lod1.glb",
+          "lod2": "public/assets/models/amb.elephant.lod2.glb"
+        }
+      },
+      "triangles": 8000,
+      "fileKB": 1000,
+      "lodBudgets": {
+        "lod1": 3000,
+        "lod2": 1000
+      }
+    },
+    {
+      "id": "inf.elephant",
+      "crowdSkin": true,
+      "sourceGlb": "assets/inf.elephant/model.skin.glb",
+      "rigidBaseline": {
+        "glb": "public/assets/models/inf.elephant.glb",
+        "lods": {
+          "lod1": "public/assets/models/inf.elephant.lod1.glb",
+          "lod2": "public/assets/models/inf.elephant.lod2.glb"
+        }
+      },
+      "triangles": 8000,
+      "fileKB": 1000,
+      "lodBudgets": {
+        "lod1": 3000,
+        "lod2": 1000
+      }
+    },
+    {
+      "id": "amb.flamingo",
+      "crowdSkin": true,
+      "sourceGlb": "assets/amb.flamingo/model.skin.glb",
+      "rigidBaseline": {
+        "glb": "public/assets/models/amb.flamingo.glb",
+        "lods": {
+          "lod1": "public/assets/models/amb.flamingo.lod1.glb",
+          "lod2": "public/assets/models/amb.flamingo.lod2.glb"
+        }
+      },
+      "triangles": 2000,
+      "fileKB": 400,
+      "lodBudgets": {
+        "lod1": 800,
+        "lod2": 300
+      }
+    },
+    {
+      "id": "inf.flamingo",
+      "crowdSkin": true,
+      "sourceGlb": "assets/inf.flamingo/model.skin.glb",
+      "rigidBaseline": {
+        "glb": "public/assets/models/inf.flamingo.glb",
+        "lods": {
+          "lod1": "public/assets/models/inf.flamingo.lod1.glb",
+          "lod2": "public/assets/models/inf.flamingo.lod2.glb"
+        }
+      },
+      "triangles": 40000,
+      "fileKB": 6000,
+      "lodBudgets": {
+        "lod1": 5000,
+        "lod2": 4000
+      }
+    }
+  ],
+  "source": {
+    "lionAndGorilla": "derived healthy and infected from new healthy cast; shared anatomy and production infected eye/pose contract",
+    "others": "matching wave2 casts"
+  },
+  "inferences": 0,
+  "creditsEUR": 0
+}
