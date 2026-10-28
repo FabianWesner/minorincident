@@ -2,7 +2,7 @@ import { restoreCrowdGlasses } from './skin-crowd-glasses';
 import { restoreFireHelmet } from './restore-fire-helmet';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { existsSync, mkdirSync, readFileSync, unlinkSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, readdirSync, unlinkSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, resolve } from 'node:path';
 import { getBounds } from '@gltf-transform/functions';
 import type { AssetDef } from '../../src/assets/types';
@@ -175,6 +175,10 @@ for (const key of Object.keys(bakes)) if (key.startsWith(id + ':')) {
   const file = 'public' + bakes[key]; if (!Object.values(preparedBakes).includes(bakes[key]) && existsSync(file)) unlinkSync(file); delete bakes[key];
 }
 Object.assign(bakes, preparedBakes);
+// A failed or interrupted bake can leave content-addressed files that never
+// reached the registry. Retire only this identity's unreferenced outputs.
+const referencedBakes = new Set(Object.values(bakes));
+for (const name of readdirSync('public/assets/civilians')) if (name.startsWith(id + '.lod') && name.endsWith('.bin.gz') && !referencedBakes.has('/assets/civilians/' + name)) unlinkSync(join('public/assets/civilians', name));
 writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
 writeFileSync(bakePath, JSON.stringify(bakes, null, 2) + '\n');
 writeFileSync(join(report, 'build.json'), JSON.stringify({ id, source, elapsedSeconds: (Date.now() - started) / 1000, manualSteps: [], receipts, preparedBakes }, null, 2) + '\n');
