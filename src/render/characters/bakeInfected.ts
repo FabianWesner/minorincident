@@ -53,8 +53,23 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
     if (!node) { node = root.clone(false); node.name = name; node.position.set(0, 0, 0); root.add(node); }
     rig[name] = node;
   }
-  const parts: Object3D[] = characterNodes.map((name) => rig[name]);
+  const animalRig = !!root.getObjectByName('body') || root.getObjectByName('root')?.userData.crowdQuadruped === true;
+  // Quadruped skins carry an extended animal pose set (trunk, tail, four
+  // legs and paws). Weapon/backpack sockets are not used by animals and would
+  // push the sampled pose indices beyond the shared 32-part crowd contract.
+  const parts: Object3D[] = characterNodes.filter(name => !animalRig || !/Socket/.test(name)).map((name) => rig[name]);
   for (const name of animatedNodes) { const node = root.getObjectByName(name); if (node && !parts.includes(node)) parts.push(node); }
+  // Some quadruped cast rigs contain more deforming bones than their legacy
+  // AssetDef animatedNodes list (lion rigs add neck, four legs, paws and body).
+  // The skin itself is authoritative; include its named bones in the pose set.
+  if (animalRig) root.traverse(node => {
+    const skinned = node as SkinnedMesh;
+    if (!skinned.isSkinnedMesh) return;
+    for (const bone of skinned.skeleton.bones) {
+      if (/Socket/.test(bone.name) || parts.includes(bone)) continue;
+      parts.push(bone);
+    }
+  });
   // Pose frames need joint matrices, not every rigid mesh's world matrix.
   // Include each joint's ancestors in tree order; source meshes get a full
   // update once after the rest pose is restored, before geometry extraction.
@@ -91,7 +106,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
     // under the ground. Same heel/toe points as the footwork solver and CrowdFigureProbe; the pelvis rises by the deficit.
     const feet = [rig.footL, rig.footR], soleHeight = (root.updateMatrixWorld(true), rig.footL.getWorldPosition(sole).y / rig.hip.parent!.getWorldScale(sole).y);
     const lowestSole = () => Math.min(...feet.flatMap((foot, side) => sourceSoles ? sourceSoles[side].map(point => sole.copy(point).applyMatrix4(foot.matrixWorld).y) : [-.05, .085].map(x => sole.set(x, -soleHeight, 0).applyMatrix4(foot.matrixWorld).y)));
-    const floor = lowestSole(), animalRig = !!root.getObjectByName('body'), flying = !!root.getObjectByName('wingL');
+    const floor = lowestSole(), flying = !!root.getObjectByName('wingL');
     // Zebra's long multi-part legs retain authored joint offsets. Ground all four real
     // hoof bounds together instead of moving a whole upper leg away from its shoulder.
     const preserveAnimalJoints = root.getObjectByName('root')?.userData.ss_preserveAnimalJoints === true;
@@ -222,7 +237,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
     if (skinnedFigure) {
       const skinIndex = geometry.getAttribute('skinIndex'), skinWeight = geometry.getAttribute('skinWeight');
       const map = (node as SkinnedMesh).skeleton?.bones.map(bone => parts.findIndex(p => p.name === bone.name)) ?? [];
-      if (map.some(part => part < 0 || part >= 32)) throw new Error('Crowd skin joints must belong to the 32-part pose contract');
+      if (map.some(part => part < 0 || part >= 32)) throw new Error(`Crowd skin joints must belong to the 32-part pose contract (parts=${parts.map(p => p.name).join(',')}; map=${map.join(',')})`);
       const joints = new Float32Array(count * 4), weights = new Float32Array(count * 4);
       for (let i = 0; i < count; i++) for (let c = 0; c < 4; c++) {
         if (skinIndex) { joints[i * 4 + c] = Math.max(0, map[skinIndex.getComponent(i, c)] ?? part); weights[i * 4 + c] = skinWeight.getComponent(i, c); }
@@ -244,7 +259,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
       // triangle. Its fractional part remains the fourth skin weight. Shared
       // vertices are compacted after this triangle-local mask is assigned.
       if (!cap && preserveUV) {
-        const groups = crowdLimbParts(!!root.getObjectByName('body'));
+        const groups = crowdLimbParts(animalRig);
         for (let t = 0; t < count; t += 3) {
           let mask = 0;
           for (let k = 0; k < 3; k++) for (let group = 0; group < groups.length; group++) if (groups[group].includes(parts[indices[t + k]].name)) mask |= 1 << group;

@@ -55,6 +55,13 @@ if (alignment?.triangle_budgets) {
   def.budget.triangles = near; def.budget.fileKB = 600;
   def.authoredLodTriangles = { lod1: middle, lod2: far };
 }
+// L8 zoo quadrupeds follow the measured class budgets in the v2 playbook,
+// even when an older source manifest carries the former 4k/1.5k distance caps.
+if (metadata?.class === 'quadruped' && ['amb.lion', 'inf.lion', 'amb.gorilla', 'inf.gorilla', 'amb.elephant', 'inf.elephant', 'amb.flamingo', 'inf.flamingo'].includes(id)) {
+  def.budget.triangles = 8000;
+  def.authoredLodTriangles = { lod1: 3000, lod2: 1000 };
+  delete def.authoredLodRatios;
+}
 const io = await assetIO(), started = Date.now(), receipts = [];
 // A carried object fused into the body cannot follow the game's prop lifecycle.
 // Refuse it before changing any active asset; anatomy fits inside this hand envelope.

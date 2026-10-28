@@ -70,7 +70,7 @@ if (args.includes('--retain-corgi-props')) {
 const nodes = rig.getRoot().listNodes();
 const quadruped = arg('--rig-kind') === 'quadruped' || nodes.some(n => n.getName() === 'body' || n.getName() === 'legFL');
 const JOINTS = (quadruped ? QUADRUPED : HUMANOID).filter(name => nodes.some(n => n.getName() === name));
-for (const name of quadruped ? ['root', 'body', 'head'] : HUMANOID) if (!JOINTS.includes(name)) throw new Error(`missing joint ${name}`);
+for (const name of quadruped ? ['root', 'head'] : HUMANOID) if (!JOINTS.includes(name)) throw new Error(`missing joint ${name}`);
 const jointNode = new Map(JOINTS.map(name => [name, nodes.find(n => n.getName() === name)!] as const));
 for (const [name, node] of jointNode) if (!node) throw new Error(`missing joint ${name}`);
 let neutralArm: string | undefined;
@@ -899,7 +899,10 @@ if (!args.includes('--retain-corgi-props')) {
       }
     }
     if (!loop || !centre) throw Error(`No retained skin surface for stump_${part}`);
-    const distance = centre.distanceTo(pivot); if (!created.length && distance > .35) throw Error(`Distant retained skin surface for stump_${part}: ${distance}`);
+    // Quadruped production pivots can sit just beyond the nearest closed
+    // legacy limb surface (the elephant forearm LOD2 is 0.357 m). Keep the
+    // stricter humanoid limit; allow only the small measured quadruped margin.
+    const distance = centre.distanceTo(pivot); if (!created.length && distance > (quadruped ? .4 : .35)) throw Error(`Distant retained skin surface for stump_${part}: ${distance}`);
     const selected = created.length ? created : [loop];
     const capParts: number[] = [], capPositions: number[] = [], capNormals: number[] = [], capJoints: number[] = [], capWeights: number[] = [], triangles: number[] = [];
     for (const boundary of selected) {
@@ -1088,7 +1091,7 @@ const animalSoles = Object.fromEntries(['FL', 'FR', 'BL', 'BR'].flatMap(side => 
   const name = JOINTS.includes(`paw${side}`) ? `paw${side}` : `leg${side}`, box = soleBounds(name);
   return box ? [[name, [box[0], box[3]].flatMap(x => [box[2], box[5]].map(z => [x, box[1], z]))]] : [];
 }));
-for (const node of out.getRoot().listNodes()) if (node.getName() === 'root') node.setExtras({ ...node.getExtras(), skinnedCrowd: true, crowdAtlas: true, ...(spectacleTop !== undefined ? { spectacleTop } : {}), ...(soleBoxes.every(Boolean) ? { meshSoles: true, soleBounds: soleBoxes } : {}), ...(quadruped ? { animalSoles } : {}) });
+for (const node of out.getRoot().listNodes()) if (node.getName() === 'root') node.setExtras({ ...node.getExtras(), skinnedCrowd: true, crowdAtlas: true, ...(quadruped ? { crowdQuadruped: true } : {}), ...(spectacleTop !== undefined ? { spectacleTop } : {}), ...(soleBoxes.every(Boolean) ? { meshSoles: true, soleBounds: soleBoxes } : {}), ...(quadruped ? { animalSoles } : {}) });
 if (bodyPath && (openEdges > 0 || components !== 1)) {
   const seen = new Set<number>(), groups = [];
   for (let start = 0; start < welded; start++) if (!seen.has(start)) {
