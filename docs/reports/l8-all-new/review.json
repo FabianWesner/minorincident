@@ -1,0 +1,170 @@
+{
+  "verdict": "Reviewed final correction against legacy old models at native 120/400px on both backends and tiers; infected animals read as enemies, lion coat/mane camouflage removed. Prior calm infected verdict superseded.",
+  "captureCount": 13,
+  "nativePortraitPixels": [
+    120,
+    400
+  ],
+  "tiers": [
+    "low",
+    "high"
+  ],
+  "backends": [
+    "webgl2",
+    "webgpu"
+  ],
+  "views": [
+    "front",
+    "back",
+    "walk",
+    "actual healthy-to-infected turn",
+    "frozen corpse"
+  ],
+  "figures": [
+    {
+      "id": "amb.lion",
+      "sheet": "01-amb.lion.jpg",
+      "reviewed": true,
+      "notes": "Coherent dark neck/mane envelope and even tawny coat; no source camouflage on front/back. Healthy natural eyes, muzzle and tail tuft retained.",
+      "ground": "No measured sinking; declared real soles used."
+    },
+    {
+      "id": "inf.lion",
+      "sheet": "02-inf.lion.jpg",
+      "reviewed": true,
+      "notes": "Open dark snarling mouth with four dimensional ivory fangs/incisors, strong red eyes, sickly coat, torn flank/ribs and mane scratches. Mane is one connected dark envelope on front/back; body even. Replaces rejected calm closed-mouth look.",
+      "ground": "No measured sinking; declared real soles used."
+    },
+    {
+      "id": "amb.gorilla",
+      "sheet": "03-amb.gorilla.jpg",
+      "reviewed": true,
+      "notes": "Healthy white/pupil eyes, silverback, hands, feet and back intact; no infection wounds/teeth applied. Existing arm-up corpse silhouette retained.",
+      "ground": "No measured sinking; declared real soles used."
+    },
+    {
+      "id": "inf.gorilla",
+      "sheet": "04-inf.gorilla.jpg",
+      "reviewed": true,
+      "notes": "Open dark snarl with four dimensional ivory teeth, stronger glowing eyes, torn chest/flank with exposed ribs, infection coat tint; silverback retained. Replaces rejected calm closed-mouth look.",
+      "ground": "No measured sinking; declared real soles used."
+    },
+    {
+      "id": "amb.elephant",
+      "sheet": "05-amb.elephant.jpg",
+      "reviewed": true,
+      "notes": "Both tusks ivory, no stray ivory edge on ears/trunk; eyes and ears visible, trunk and restored small tail attached. Four soles grounded. Healthy/infected bodies differ; model handoff shows up to 6.6 cm sole-bound change, walking p95 slide 0 cm.",
+      "ground": "No measured sinking; declared real soles used."
+    },
+    {
+      "id": "inf.elephant",
+      "sheet": "06-inf.elephant.jpg",
+      "reviewed": true,
+      "notes": "Stronger red eyes, sickly tint, ear cuts and torn flank/dorsal wound with ivory exposed detail; both natural tusks, ears, trunk and tail retained. Wounds visible from isometric lens.",
+      "ground": "No measured sinking; declared real soles used."
+    },
+    {
+      "id": "amb.flamingo",
+      "sheet": "07-amb.flamingo.jpg",
+      "reviewed": true,
+      "notes": "Clean eye-mask repair with UV-owner guard; white/pupil healthy eyes and infected red eyes readable. Neck, wings, feet, tail silhouette intact. No floating black eye remnants or bright gutter outlines.",
+      "ground": "No measured sinking; declared real soles used."
+    },
+    {
+      "id": "inf.flamingo",
+      "sheet": "08-inf.flamingo.jpg",
+      "reviewed": true,
+      "notes": "Strong red eyes, desaturated infected plumage, neck cut and torn dorsal wings with exposed ivory details; feet, wings, beak and neck retained. Registered source-hash recipe ensures infection paint actually runs.",
+      "ground": "No measured sinking; declared real soles used."
+    }
+  ],
+  "crowd": {
+    "sheet": "09-crowd-old-new.jpg",
+    "count": 30,
+    "mix": "1 courier, 1 corgi, 4 guards, 10 visitors, 4 zoo staff, 10 animals (healthy/infected pairs including zebra)",
+    "bounds": "All 30 projected body bounds asserted inside 4px viewport margin at both zooms in all four configurations. Natural occlusion of some human lower bodies behind elephants.",
+    "review": "Faces, exposed skin versus face tones, caps/back of head, held props/rifles reviewed; existing staff and human materials retain region classes/tints. No new floating accessories or garment bleed observed."
+  },
+  "motion": {
+    "sheet": "10-motion-ground-tails.jpg",
+    "review": "Paws/feet plant, limbs remain attached; tails/manes/trunks follow body. Walking slides sub-centimetre, no foot sink. Explicit elephant model replacement has 6.6 cm sole-bound change, not sustained walking drift.",
+    "corpseSheet": "11-corpses-old-new.jpg",
+    "corpses": "All eight frozen final poses reviewed on high WebGL2 and low WebGPU; ground seated, tail/mane/trunk retained; corpseOffMaxCm 0."
+  },
+  "sources": {
+    "sheet": "13-pipeline-viewer.jpg",
+    "review": "Source packages reviewed. This sheet predates pipeline eye/tusk/tail repairs; final output is in sheets 01\u201312."
+  },
+  "showcaseReviewed": true,
+  "story": {
+    "sheet": "12-story-zoo.jpg",
+    "verdict": "Reviewed all seven fixtures plus actual sanctuary low/high. Six strict pass; identical old/new district static clipping 20; no new failures. Animal soles, tails and body details retained in scene lighting; APC scene unchanged."
+  },
+  "captures": [
+    {
+      "file": "01-amb.lion.jpg",
+      "sha256": "9c9e482ce00ee36a0e5554b9d1e503fe495e69fbe9e15ec4e0367fae004dec05",
+      "reviewed": true
+    },
+    {
+      "file": "02-inf.lion.jpg",
+      "sha256": "c7e8747774c292bb8562ae886e3739898ca33703e5534eb9c39bfa9ce4d9194b",
+      "reviewed": true
+    },
+    {
+      "file": "03-amb.gorilla.jpg",
+      "sha256": "3d79d1e1454d6e672f52144f5236c6d92cd22cd6fd4076a4b25f002b2b1df6c5",
+      "reviewed": true
+    },
+    {
+      "file": "04-inf.gorilla.jpg",
+      "sha256": "76bbf3671728c8effc3bcb42eba41e847e759aaa7fc3642c75cc3648fa9802a9",
+      "reviewed": true
+    },
+    {
+      "file": "05-amb.elephant.jpg",
+      "sha256": "9835fe2152aaa88c1b72a1a9da8d24490721b7ffa97ccc96658554d1546cda63",
+      "reviewed": true
+    },
+    {
+      "file": "06-inf.elephant.jpg",
+      "sha256": "58b8bb1279356c79c3b45355f478812942d1e9e861d5fc655105cad24e434bb4",
+      "reviewed": true
+    },
+    {
+      "file": "07-amb.flamingo.jpg",
+      "sha256": "12055148c595cbb319f7292c566ed2026f24b76089e44c8dd9ad1de05e851ecc",
+      "reviewed": true
+    },
+    {
+      "file": "08-inf.flamingo.jpg",
+      "sha256": "5e4ff84baebdf97a27c0ddeaa18eb469620b4eabc2770f48810d9e736c8c53dc",
+      "reviewed": true
+    },
+    {
+      "file": "09-crowd-old-new.jpg",
+      "sha256": "fdafef2246164ae91e3da863d1ddf3bdb3d28ba3d25acd73b99a99256741b876",
+      "reviewed": true
+    },
+    {
+      "file": "10-motion-ground-tails.jpg",
+      "sha256": "6b89e59a6d1a58467342beaa798c96ae08826e03dd5afd7b7da93a0e77278fa8",
+      "reviewed": true
+    },
+    {
+      "file": "11-corpses-old-new.jpg",
+      "sha256": "e654570c42929badeaf830f66eea0e93f00099ecd707c724f53383c7ada906d7",
+      "reviewed": true
+    },
+    {
+      "file": "12-story-zoo.jpg",
+      "sha256": "f180a1344ce6e56a16e548b2ac80b360e17e861091b9bb0a77668c0243a8a427",
+      "reviewed": true
+    },
+    {
+      "file": "13-pipeline-viewer.jpg",
+      "sha256": "eb4adc23238f2e42a2d53ddaaad6d33afa2f9bdc7b1179dcaff369d4ec4407a2",
+      "reviewed": true
+    }
+  ]
+}

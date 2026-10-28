@@ -1,0 +1,292 @@
+{
+  "sourceCommit": "d4a6afba8c888132355876e5d7b61778d37e2150",
+  "scope": [
+    "amb.lion",
+    "inf.lion",
+    "inf.gorilla",
+    "inf.elephant",
+    "inf.flamingo"
+  ],
+  "cause": [
+    "Flattened lion source had camouflage-like RGB patches; no civilian region tint was applied.",
+    "Healthy source derivatives lacked an authored infected snarl/wounds; original new eye radius too small.",
+    "inf.flamingo missing shared animal-detail recipe, so initial infection paint was skipped; now registered and source-hash guarded."
+  ],
+  "pipeline": "skin-crowd-build.sh; deterministic source-space UV-interior/gutter painting; merged head-weighted dimensional teeth and isolated ivory atlas strip, no new material/draw; all LOD budgets include teeth.",
+  "eyeGameRadii": {
+    "inf.lion": 0.04,
+    "inf.gorilla": 0.036,
+    "inf.elephant": 0.06,
+    "inf.flamingo": 0.024
+  },
+  "budgets": [
+    {
+      "lod": 0,
+      "triangleCap": 8000,
+      "byteCap": 600000,
+      "maxTriangles": 7494,
+      "maxBytes": 429356
+    },
+    {
+      "lod": 1,
+      "triangleCap": 3000,
+      "byteCap": 250000,
+      "maxTriangles": 2891,
+      "maxBytes": 206252
+    },
+    {
+      "lod": 2,
+      "triangleCap": 1000,
+      "byteCap": 150000,
+      "maxTriangles": 992,
+      "maxBytes": 124320
+    }
+  ],
+  "reproducibility": true,
+  "reviewedSheets": [
+    "01-amb.lion.jpg",
+    "02-inf.lion.jpg",
+    "04-inf.gorilla.jpg",
+    "06-inf.elephant.jpg",
+    "08-inf.flamingo.jpg",
+    "09-crowd-old-new.jpg",
+    "10-motion-ground-tails.jpg",
+    "11-corpses-old-new.jpg",
+    "12-story-zoo.jpg"
+  ],
+  "inferenceSpendEUR": 0,
+  "gates": {
+    "validator": {
+      "rows": 1262,
+      "errors": 0
+    },
+    "npmTest": 104,
+    "smoke": "6 QA + 1 public pass",
+    "typecheck": "pass",
+    "lint": "pass",
+    "freeze": {
+      "freeze-new-low-webgpu": {
+        "maxFrameMs": 16.80000000000109,
+        "over200": [],
+        "builds": {}
+      },
+      "freeze-new-high-webgpu": {
+        "maxFrameMs": 16.80000000000109,
+        "over200": [],
+        "builds": {}
+      },
+      "freeze-new-low-webgl2": {
+        "maxFrameMs": 16.80000000000109,
+        "over200": [],
+        "builds": {}
+      },
+      "freeze-new-high-webgl2": {
+        "maxFrameMs": 16.80000000000109,
+        "over200": [],
+        "builds": {}
+      }
+    }
+  },
+  "redEmissionDiagnostic": {
+    "method": "Native 120px front, body bounds, R>180 and R>1.8G and R>1.5B; peak and bright-red pixel count. Footprint is not an anatomy-normalized eye-area score.",
+    "rows": [
+      {
+        "config": "high-webgl2",
+        "id": "inf.lion",
+        "old": {
+          "pixels": 20,
+          "peakR": 242
+        },
+        "new": {
+          "pixels": 16,
+          "peakR": 242
+        }
+      },
+      {
+        "config": "high-webgl2",
+        "id": "inf.gorilla",
+        "old": {
+          "pixels": 15,
+          "peakR": 242
+        },
+        "new": {
+          "pixels": 9,
+          "peakR": 242
+        }
+      },
+      {
+        "config": "high-webgl2",
+        "id": "inf.elephant",
+        "old": {
+          "pixels": 4,
+          "peakR": 242
+        },
+        "new": {
+          "pixels": 11,
+          "peakR": 243
+        }
+      },
+      {
+        "config": "high-webgl2",
+        "id": "inf.flamingo",
+        "old": {
+          "pixels": 31,
+          "peakR": 242
+        },
+        "new": {
+          "pixels": 26,
+          "peakR": 242
+        }
+      },
+      {
+        "config": "high-webgpu",
+        "id": "inf.lion",
+        "old": {
+          "pixels": 22,
+          "peakR": 242
+        },
+        "new": {
+          "pixels": 15,
+          "peakR": 242
+        }
+      },
+      {
+        "config": "high-webgpu",
+        "id": "inf.gorilla",
+        "old": {
+          "pixels": 14,
+          "peakR": 242
+        },
+        "new": {
+          "pixels": 10,
+          "peakR": 242
+        }
+      },
+      {
+        "config": "high-webgpu",
+        "id": "inf.elephant",
+        "old": {
+          "pixels": 5,
+          "peakR": 242
+        },
+        "new": {
+          "pixels": 11,
+          "peakR": 243
+        }
+      },
+      {
+        "config": "high-webgpu",
+        "id": "inf.flamingo",
+        "old": {
+          "pixels": 30,
+          "peakR": 242
+        },
+        "new": {
+          "pixels": 26,
+          "peakR": 242
+        }
+      },
+      {
+        "config": "low-webgl2",
+        "id": "inf.lion",
+        "old": {
+          "pixels": 20,
+          "peakR": 242
+        },
+        "new": {
+          "pixels": 16,
+          "peakR": 242
+        }
+      },
+      {
+        "config": "low-webgl2",
+        "id": "inf.gorilla",
+        "old": {
+          "pixels": 15,
+          "peakR": 242
+        },
+        "new": {
+          "pixels": 9,
+          "peakR": 242
+        }
+      },
+      {
+        "config": "low-webgl2",
+        "id": "inf.elephant",
+        "old": {
+          "pixels": 6,
+          "peakR": 242
+        },
+        "new": {
+          "pixels": 11,
+          "peakR": 243
+        }
+      },
+      {
+        "config": "low-webgl2",
+        "id": "inf.flamingo",
+        "old": {
+          "pixels": 31,
+          "peakR": 242
+        },
+        "new": {
+          "pixels": 26,
+          "peakR": 242
+        }
+      },
+      {
+        "config": "low-webgpu",
+        "id": "inf.lion",
+        "old": {
+          "pixels": 23,
+          "peakR": 242
+        },
+        "new": {
+          "pixels": 15,
+          "peakR": 242
+        }
+      },
+      {
+        "config": "low-webgpu",
+        "id": "inf.gorilla",
+        "old": {
+          "pixels": 14,
+          "peakR": 242
+        },
+        "new": {
+          "pixels": 10,
+          "peakR": 242
+        }
+      },
+      {
+        "config": "low-webgpu",
+        "id": "inf.elephant",
+        "old": {
+          "pixels": 6,
+          "peakR": 242
+        },
+        "new": {
+          "pixels": 11,
+          "peakR": 243
+        }
+      },
+      {
+        "config": "low-webgpu",
+        "id": "inf.flamingo",
+        "old": {
+          "pixels": 30,
+          "peakR": 242
+        },
+        "new": {
+          "pixels": 26,
+          "peakR": 242
+        }
+      }
+    ]
+  },
+  "recipeGuard": {
+    "missingRecipeRejected": true,
+    "positiveFlamingoRebuild": "pass",
+    "failure": "missing animal infection recipe for npc.civilian-man-a"
+  }
+}

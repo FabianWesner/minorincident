@@ -10466,12 +10466,12 @@
     "category": "infected",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/inf.lion.glb",
+    "glb": "public/assets/models/skinned/inf.lion.lod0.glb",
     "dimensions": {
-      "x": 2.3575,
-      "y": 1.3,
-      "z": 0.8784,
-      "tolerance": 0.1
+      "x": 1.921461284160614,
+      "y": 1.3039316808471995,
+      "z": 1.0769121050834656,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -10523,35 +10523,44 @@
     ],
     "sockets": [],
     "budget": {
-      "triangles": 40000,
+      "triangles": 8000,
       "materials": 32,
       "fileKB": 6000,
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/inf.lion/model.glb",
+    "sourceGlb": "assets/inf.lion/model.skin.glb",
     "sourceForward": "+X",
     "sourceScale": 0.7807986,
     "lods": {
-      "lod1": "public/assets/models/inf.lion.lod1.glb",
-      "lod2": "public/assets/models/inf.lion.lod2.glb"
+      "lod1": "public/assets/models/skinned/inf.lion.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.lion.lod2.glb"
     },
     "authoredLodTriangles": {
-      "lod1": 5000,
-      "lod2": 5000
-    }
+      "lod1": 3000,
+      "lod2": 1000
+    },
+    "rigidBaseline": {
+      "glb": "public/assets/models/inf.lion.glb",
+      "lods": {
+        "lod1": "public/assets/models/inf.lion.lod1.glb",
+        "lod2": "public/assets/models/inf.lion.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "inf.gorilla",
     "category": "infected",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/inf.gorilla.glb",
+    "glb": "public/assets/models/skinned/inf.gorilla.lod0.glb",
     "dimensions": {
-      "x": 1.6149,
-      "y": 1.8,
-      "z": 1.9386,
-      "tolerance": 0.1
+      "x": 2.0100059509277344,
+      "y": 1.802598237991333,
+      "z": 1.7223642468452454,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -10601,39 +10610,48 @@
     ],
     "sockets": [],
     "budget": {
-      "triangles": 40000,
+      "triangles": 8000,
       "materials": 32,
       "fileKB": 6000,
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/inf.gorilla/model.glb",
+    "sourceGlb": "assets/inf.gorilla/model.skin.glb",
     "sourceForward": "+X",
     "sourceScale": 0.83209854,
     "lods": {
-      "lod1": "public/assets/models/inf.gorilla.lod1.glb",
-      "lod2": "public/assets/models/inf.gorilla.lod2.glb"
+      "lod1": "public/assets/models/skinned/inf.gorilla.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.gorilla.lod2.glb"
     },
     "generatedLodRatios": {
       "lod1": 0.1,
       "lod2": 0.08
     },
     "authoredLodTriangles": {
-      "lod1": 10000,
-      "lod2": 9000
-    }
+      "lod1": 3000,
+      "lod2": 1000
+    },
+    "rigidBaseline": {
+      "glb": "public/assets/models/inf.gorilla.glb",
+      "lods": {
+        "lod1": "public/assets/models/inf.gorilla.lod1.glb",
+        "lod2": "public/assets/models/inf.gorilla.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "inf.flamingo",
     "category": "infected",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/inf.flamingo.glb",
+    "glb": "public/assets/models/skinned/inf.flamingo.lod0.glb",
     "dimensions": {
-      "x": 1.5822,
-      "y": 1.6,
-      "z": 0.7776,
-      "tolerance": 0.1
+      "x": 1.7088608145713806,
+      "y": 1.5999996976188413,
+      "z": 0.8456838130950928,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -10692,17 +10710,26 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/inf.flamingo/model.glb",
+    "sourceGlb": "assets/inf.flamingo/model.skin.glb",
     "sourceForward": "+X",
     "sourceScale": 1.00085172,
     "lods": {
-      "lod1": "public/assets/models/inf.flamingo.lod1.glb",
-      "lod2": "public/assets/models/inf.flamingo.lod2.glb"
+      "lod1": "public/assets/models/skinned/inf.flamingo.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.flamingo.lod2.glb"
     },
     "authoredLodTriangles": {
       "lod1": 5000,
       "lod2": 4000
-    }
+    },
+    "rigidBaseline": {
+      "glb": "public/assets/models/inf.flamingo.glb",
+      "lods": {
+        "lod1": "public/assets/models/inf.flamingo.lod1.glb",
+        "lod2": "public/assets/models/inf.flamingo.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "amb.zebra",
@@ -10941,12 +10968,12 @@
     "category": "prop",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/amb.elephant.glb",
+    "glb": "public/assets/models/skinned/amb.elephant.lod0.glb",
     "dimensions": {
-      "x": 4.6,
-      "y": 3,
-      "z": 1.85,
-      "tolerance": 0.1
+      "x": 4.43056058883667,
+      "y": 3.040003741482451,
+      "z": 2.0369949340820312,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -11030,23 +11057,32 @@
     ],
     "sockets": [],
     "budget": {
-      "triangles": 12000,
+      "triangles": 8000,
       "materials": 4,
       "fileKB": 1000,
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/amb.elephant/model.glb",
+    "sourceGlb": "assets/amb.elephant/model.skin.glb",
     "script": "assets/amb.elephant/build.py",
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/amb.elephant.lod1.glb",
-      "lod2": "public/assets/models/amb.elephant.lod2.glb"
+      "lod1": "public/assets/models/skinned/amb.elephant.lod1.glb",
+      "lod2": "public/assets/models/skinned/amb.elephant.lod2.glb"
     },
     "authoredLodTriangles": {
-      "lod1": 4000,
-      "lod2": 1500
-    }
+      "lod1": 3000,
+      "lod2": 1000
+    },
+    "rigidBaseline": {
+      "glb": "public/assets/models/amb.elephant.glb",
+      "lods": {
+        "lod1": "public/assets/models/amb.elephant.lod1.glb",
+        "lod2": "public/assets/models/amb.elephant.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "gib.chunk-set",
@@ -20829,12 +20865,12 @@
     "category": "infected",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/inf.elephant.glb",
+    "glb": "public/assets/models/skinned/inf.elephant.lod0.glb",
     "dimensions": {
-      "x": 4.6,
-      "y": 3,
-      "z": 1.85,
-      "tolerance": 0.1
+      "x": 4.466472148895264,
+      "y": 3.0400037761169187,
+      "z": 2.4707894325256348,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -20918,35 +20954,44 @@
     ],
     "sockets": [],
     "budget": {
-      "triangles": 12000,
+      "triangles": 8000,
       "materials": 4,
       "fileKB": 1000,
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/inf.elephant/model.glb",
+    "sourceGlb": "assets/inf.elephant/model.skin.glb",
     "script": "assets/inf.elephant/build.py",
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/inf.elephant.lod1.glb",
-      "lod2": "public/assets/models/inf.elephant.lod2.glb"
+      "lod1": "public/assets/models/skinned/inf.elephant.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.elephant.lod2.glb"
     },
     "authoredLodTriangles": {
-      "lod1": 4000,
-      "lod2": 1500
-    }
+      "lod1": 3000,
+      "lod2": 1000
+    },
+    "rigidBaseline": {
+      "glb": "public/assets/models/inf.elephant.glb",
+      "lods": {
+        "lod1": "public/assets/models/inf.elephant.lod1.glb",
+        "lod2": "public/assets/models/inf.elephant.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "amb.lion",
     "category": "prop",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/amb.lion.glb",
+    "glb": "public/assets/models/skinned/amb.lion.lod0.glb",
     "dimensions": {
-      "x": 2.3575,
-      "y": 1.3,
-      "z": 0.8784,
-      "tolerance": 0.1
+      "x": 1.8891475796699524,
+      "y": 1.3039316808471995,
+      "z": 1.0769121050834656,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -20991,36 +21036,45 @@
     ],
     "sockets": [],
     "budget": {
-      "triangles": 12000,
+      "triangles": 8000,
       "materials": 4,
       "fileKB": 1000,
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/amb.lion/model.glb",
+    "sourceGlb": "assets/amb.lion/model.skin.glb",
     "sourceForward": "+X",
     "sourceScale": 0.7807986,
     "lods": {
-      "lod1": "public/assets/models/amb.lion.lod1.glb",
-      "lod2": "public/assets/models/amb.lion.lod2.glb"
+      "lod1": "public/assets/models/skinned/amb.lion.lod1.glb",
+      "lod2": "public/assets/models/skinned/amb.lion.lod2.glb"
     },
     "authoredLodTriangles": {
-      "lod1": 4000,
-      "lod2": 1500
+      "lod1": 3000,
+      "lod2": 1000
     },
-    "script": "assets/amb.lion/build.py"
+    "script": "assets/amb.lion/build.py",
+    "rigidBaseline": {
+      "glb": "public/assets/models/amb.lion.glb",
+      "lods": {
+        "lod1": "public/assets/models/amb.lion.lod1.glb",
+        "lod2": "public/assets/models/amb.lion.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "amb.gorilla",
     "category": "prop",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/amb.gorilla.glb",
+    "glb": "public/assets/models/skinned/amb.gorilla.lod0.glb",
     "dimensions": {
-      "x": 1.6149,
-      "y": 1.8,
-      "z": 1.9386,
-      "tolerance": 0.1
+      "x": 1.9587392807006836,
+      "y": 1.802598237991333,
+      "z": 1.7223642468452454,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -21063,36 +21117,45 @@
     ],
     "sockets": [],
     "budget": {
-      "triangles": 12000,
+      "triangles": 8000,
       "materials": 4,
       "fileKB": 1000,
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/amb.gorilla/model.glb",
+    "sourceGlb": "assets/amb.gorilla/model.skin.glb",
     "sourceForward": "+X",
     "sourceScale": 0.83209854,
     "lods": {
-      "lod1": "public/assets/models/amb.gorilla.lod1.glb",
-      "lod2": "public/assets/models/amb.gorilla.lod2.glb"
+      "lod1": "public/assets/models/skinned/amb.gorilla.lod1.glb",
+      "lod2": "public/assets/models/skinned/amb.gorilla.lod2.glb"
     },
     "authoredLodTriangles": {
-      "lod1": 4000,
-      "lod2": 1500
+      "lod1": 3000,
+      "lod2": 1000
     },
-    "script": "assets/amb.gorilla/build.py"
+    "script": "assets/amb.gorilla/build.py",
+    "rigidBaseline": {
+      "glb": "public/assets/models/amb.gorilla.glb",
+      "lods": {
+        "lod1": "public/assets/models/amb.gorilla.lod1.glb",
+        "lod2": "public/assets/models/amb.gorilla.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "amb.flamingo",
     "category": "prop",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/amb.flamingo.glb",
+    "glb": "public/assets/models/skinned/amb.flamingo.lod0.glb",
     "dimensions": {
-      "x": 1.5822,
-      "y": 1.6,
-      "z": 0.7776,
-      "tolerance": 0.1
+      "x": 1.711469054222107,
+      "y": 1.6024416720547379,
+      "z": 0.8469745516777039,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -21144,18 +21207,27 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/amb.flamingo/model.glb",
+    "sourceGlb": "assets/amb.flamingo/model.skin.glb",
     "sourceForward": "+X",
     "sourceScale": 1.00085172,
     "lods": {
-      "lod1": "public/assets/models/amb.flamingo.lod1.glb",
-      "lod2": "public/assets/models/amb.flamingo.lod2.glb"
+      "lod1": "public/assets/models/skinned/amb.flamingo.lod1.glb",
+      "lod2": "public/assets/models/skinned/amb.flamingo.lod2.glb"
     },
     "authoredLodTriangles": {
       "lod1": 800,
       "lod2": 300
     },
-    "script": "assets/amb.flamingo/build.py"
+    "script": "assets/amb.flamingo/build.py",
+    "rigidBaseline": {
+      "glb": "public/assets/models/amb.flamingo.glb",
+      "lods": {
+        "lod1": "public/assets/models/amb.flamingo.lod1.glb",
+        "lod2": "public/assets/models/amb.flamingo.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "kit.zoo-tunnel-mouth",
