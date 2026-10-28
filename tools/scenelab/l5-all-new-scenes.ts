@@ -106,6 +106,7 @@ try{
   }else{
    const proof=await session.page.evaluate(()=>window.__SS__!.query({}).filter(e=>e.appearance?.asset?.endsWith('.aftermath')).map(e=>({id:e.id,model:e.appearance!.asset,health:e.health.current,corpse:!!e.corpse,infected:!!e.infected,state:e.civilian?.state})));
    assert.equal(proof.filter(e=>e.corpse).length,8,'Eight actual frozen corpses');
+   if (variant === 'new') assert.equal(resources.heldProps.filter(p=>p.prop==='cane').length,3,'Live, turned and frozen Okafor each retain exactly one cane');
    assert.equal(proof.filter(e=>e.infected&&e.health>0).length,8,'Eight living turned bodies');
    assert.equal(proof.filter(e=>!e.infected&&e.health>0).length,8,'Eight healthy bodies');
    writeJson(`${out}/state-proof.json`,proof);

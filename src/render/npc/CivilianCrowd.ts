@@ -345,6 +345,15 @@ class CivilianBatch extends Group {
   private place(e: EntitySnapshot, index: number, alpha: number, low = false): boolean {
     const b = e.infected!, tick = this.world.tick;
     if (e.hidden || b.hidden) return false;
+    const authoredCane = this.model === 'npc.mr-okafor.aftermath' && !!this.bakedClip.binds && this.props;
+    if (e.corpse && authoredCane) {
+      // Retain the original story cane through the frozen pose using the same
+      // held-prop geometry and hand matrix as the live figure.
+      const resting = corpseLayout(this.world).place(e), frame = civilianClips.indexOf(corpsePose(e.id)) * framesPerClip + framesPerClip - 1;
+      this.transform.makeRotationY(resting.yaw).setPosition(resting.x, resting.y, resting.z);
+      this.poses.part(frame, 0, 1, this.bakedClip.parts.indexOf('handR'), this.hand).premultiply(this.transform);
+      this.props!.held('cane', this.hand, e.id, this.gripTriangles, this.gripReach);
+    }
     if (e.corpse && this.corpses.has(e.id)) return false;
     // PO "skating": the sim publishes the actual post-collision ground motion every tick (AgentMotion) - use it, not a
     // per-batch sampler that goes stale when the figure crosses the near/far batch boundary.
@@ -412,6 +421,10 @@ class CivilianBatch extends Group {
         this.tilt.premultiply(this.hand.copy(this.transform).invert()).toArray(pose, offset);
       });
       blend[0] = frame; blend[1] = 1;
+    }
+    if (!e.corpse && authoredCane) {
+      this.poses.part(frame, ...blend, this.bakedClip.parts.indexOf('handR'), this.hand).premultiply(this.transform);
+      this.props!.held('cane', this.hand, e.id, this.gripTriangles, this.gripReach);
     }
     if (e.corpse) {
       this.tintOf(e, index, 1);
