@@ -664,7 +664,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     // The HUD distance can point at a moving guidance waypoint (L3 l3-route); the ring itself decides "at the ring".
     const ringDist = ring && e.player ? Math.hypot(ring.x - e.player.x, ring.z - e.player.z) : e.distance;
     const atRing = ringDist !== null && ringDist < 4;
-    if (stuckSim > 20 && stuckWall > 20) {
+    if (stuckSim > 20 && stuckWall > 20 && !watchingEnding) {
       const tag = `${key}|${atRing ? 'ring' : 'nav'}`;
       if (!stuckLogged.has(tag)) { stuckLogged.add(tag); await issue('P2', atRing ? 'stuck-at-ring' : 'stuck-navigating', `${Math.round(stuckSim)} s without objective progress ${atRing ? `standing at the ring (${e.distance?.toFixed(1)} m)` : `(distance ${e.distance?.toFixed(1) ?? 'none'} m, no marker: ${!e.marker?.visible})`}; HUD: "${e.tracker}"`); }
     }
