@@ -1,0 +1,253 @@
+{
+  "sourceCommit": "1436c4c7920f6206f47828370c60baf5e3a616a7",
+  "reproduction": [
+    {
+      "label": "before",
+      "wrapperExit": 0,
+      "seconds": 0.175574875,
+      "pid": 58469,
+      "remaining": [
+        {
+          "pid": 58469,
+          "ppid": 1,
+          "pgid": 58468,
+          "elapsed": "00:00",
+          "cpu": 11.8,
+          "command": "/opt/homebrew/Cellar/node/26.0.0/bin/node /private/tmp/mi-budget-fixture-proof-fmrznv7s/npx vitest list --orphan"
+        }
+      ],
+      "ignoredTerm": true
+    },
+    {
+      "label": "after",
+      "wrapperExit": 0,
+      "seconds": 5.270659,
+      "pid": 58476,
+      "remaining": []
+    }
+  ],
+  "runs": [
+    {
+      "label": "test-1",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exitCode": 0,
+      "seconds": 21.615617791,
+      "ps": [
+        {
+          "pid": 2793,
+          "ppid": 2723,
+          "pgid": 2793,
+          "elapsed": "18:41",
+          "cpu": 0.0,
+          "command": "npm exec @playwright/mcp@latest  "
+        },
+        {
+          "pid": 64703,
+          "ppid": 1,
+          "pgid": 64703,
+          "elapsed": "19-01:59:25",
+          "cpu": 0.0,
+          "command": "npm exec vite preview --host 127.0.0.1 --port 3301 --strictPort --configLoader runner          "
+        }
+      ],
+      "newLeftovers": []
+    },
+    {
+      "label": "test-2",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exitCode": 0,
+      "seconds": 26.129517792,
+      "ps": [
+        {
+          "pid": 2793,
+          "ppid": 2723,
+          "pgid": 2793,
+          "elapsed": "19:07",
+          "cpu": 0.0,
+          "command": "npm exec @playwright/mcp@latest  "
+        },
+        {
+          "pid": 64703,
+          "ppid": 1,
+          "pgid": 64703,
+          "elapsed": "19-01:59:51",
+          "cpu": 0.0,
+          "command": "npm exec vite preview --host 127.0.0.1 --port 3301 --strictPort --configLoader runner          "
+        }
+      ],
+      "newLeftovers": []
+    },
+    {
+      "label": "test-3",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exitCode": 0,
+      "seconds": 21.444072333,
+      "ps": [
+        {
+          "pid": 2793,
+          "ppid": 2723,
+          "pgid": 2793,
+          "elapsed": "19:28",
+          "cpu": 0.0,
+          "command": "npm exec @playwright/mcp@latest  "
+        },
+        {
+          "pid": 64703,
+          "ppid": 1,
+          "pgid": 64703,
+          "elapsed": "19-02:00:12",
+          "cpu": 0.0,
+          "command": "npm exec vite preview --host 127.0.0.1 --port 3301 --strictPort --configLoader runner          "
+        }
+      ],
+      "newLeftovers": []
+    },
+    {
+      "label": "smoke-1",
+      "command": [
+        "npm",
+        "run",
+        "test:smoke"
+      ],
+      "exitCode": 0,
+      "seconds": 224.095619709,
+      "ps": [
+        {
+          "pid": 64703,
+          "ppid": 1,
+          "pgid": 64703,
+          "elapsed": "19-02:12:40",
+          "cpu": 0.0,
+          "command": "npm exec vite preview --host 127.0.0.1 --port 3301 --strictPort --configLoader runner          "
+        },
+        {
+          "pid": 75432,
+          "ppid": 75407,
+          "pgid": 75432,
+          "elapsed": "04:35",
+          "cpu": 0.0,
+          "command": "npm exec @playwright/mcp@latest  "
+        },
+        {
+          "pid": 75460,
+          "ppid": 75406,
+          "pgid": 75460,
+          "elapsed": "04:35",
+          "cpu": 0.0,
+          "command": "npm exec @playwright/mcp@latest  "
+        }
+      ],
+      "newLeftovers": []
+    },
+    {
+      "label": "smoke-2",
+      "command": [
+        "npm",
+        "run",
+        "test:smoke"
+      ],
+      "exitCode": 0,
+      "seconds": 179.67233316600002,
+      "ps": [
+        {
+          "pid": 64703,
+          "ppid": 1,
+          "pgid": 64703,
+          "elapsed": "19-02:15:40",
+          "cpu": 0.0,
+          "command": "npm exec vite preview --host 127.0.0.1 --port 3301 --strictPort --configLoader runner          "
+        },
+        {
+          "pid": 75432,
+          "ppid": 75407,
+          "pgid": 75432,
+          "elapsed": "07:35",
+          "cpu": 0.0,
+          "command": "npm exec @playwright/mcp@latest  "
+        },
+        {
+          "pid": 75460,
+          "ppid": 75406,
+          "pgid": 75460,
+          "elapsed": "07:35",
+          "cpu": 0.0,
+          "command": "npm exec @playwright/mcp@latest  "
+        }
+      ],
+      "newLeftovers": []
+    },
+    {
+      "label": "smoke-3",
+      "command": [
+        "npm",
+        "run",
+        "test:smoke"
+      ],
+      "exitCode": 0,
+      "seconds": 183.11687049999995,
+      "ps": [
+        {
+          "pid": 64703,
+          "ppid": 1,
+          "pgid": 64703,
+          "elapsed": "19-02:18:43",
+          "cpu": 0.0,
+          "command": "npm exec vite preview --host 127.0.0.1 --port 3301 --strictPort --configLoader runner          "
+        },
+        {
+          "pid": 75432,
+          "ppid": 75407,
+          "pgid": 75432,
+          "elapsed": "10:38",
+          "cpu": 0.0,
+          "command": "npm exec @playwright/mcp@latest  "
+        }
+      ],
+      "newLeftovers": []
+    }
+  ],
+  "quietCap": {
+    "exitCode": 75,
+    "seconds": 3.3278832919999104,
+    "blockerPid": 5350
+  },
+  "quietSuccess": {
+    "exitCode": 0,
+    "seconds": 10.696713457999977
+  },
+  "finalProcesses": [
+    {
+      "pid": 6167,
+      "ppid": 6068,
+      "pgid": 6167,
+      "elapsed": "00:00",
+      "cpu": 38.8,
+      "command": "npm exec @playwright/mcp@latest  "
+    },
+    {
+      "pid": 64703,
+      "ppid": 1,
+      "pgid": 64703,
+      "elapsed": "19-02:19:02",
+      "cpu": 0.0,
+      "command": "npm exec vite preview --host 127.0.0.1 --port 3301 --strictPort --configLoader runner          "
+    },
+    {
+      "pid": 75432,
+      "ppid": 75407,
+      "pgid": 75432,
+      "elapsed": "10:57",
+      "cpu": 0.0,
+      "command": "npm exec @playwright/mcp@latest  "
+    }
+  ]
+}
