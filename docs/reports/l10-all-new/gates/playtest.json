@@ -1,0 +1,590 @@
+{
+  "pass": true,
+  "testedCommit": "297734301",
+  "command": "E2E_PORT=4732 npm run playtest -- --levels L10 --quality low --mode campaign --entry debug --zoom 1.5 --level-minutes 60 --session-seconds 480 --no-skip",
+  "fullPlaythrough": {
+    "mode": "campaign",
+    "quality": "low",
+    "heroine": "female",
+    "zoom": 1.5,
+    "levels": [
+      "L10"
+    ],
+    "runs": [
+      {
+        "level": "L10",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 480,
+        "simSeconds": 476,
+        "maxNoProgressSeconds": 2.486,
+        "deaths": 0,
+        "assists": 0,
+        "attacks": {
+          "weapon.pistol": 11,
+          "weapon.army-mg": 35
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.fire-axe"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.fire-axe",
+          "weapon.pistol",
+          "weapon.shotgun",
+          "weapon.army-mg"
+        ],
+        "steps": [
+          {
+            "id": "residential-fringe",
+            "text": "Recover the handgun at the checkpoint \u00b7 221\u00a0m",
+            "tick": 1,
+            "marker": {
+              "anchor": "cure-residential",
+              "ring": {
+                "x": 767,
+                "y": 0,
+                "z": 25
+              },
+              "drawn": [
+                767,
+                0,
+                25
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "industrial-area",
+            "text": "Recover the shotgun at the checkpoint \u00b7 490\u00a0m",
+            "tick": 3258,
+            "marker": {
+              "anchor": "cure-industrial",
+              "ring": {
+                "x": 1257,
+                "y": 0,
+                "z": 25
+              },
+              "drawn": [
+                1257,
+                0,
+                25
+              ],
+              "playerY": 0.7200000286102295,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "military-zone",
+            "text": "Recover the machine gun at the checkpoint \u00b7 600\u00a0m",
+            "tick": 10905,
+            "marker": {
+              "anchor": "cure-military",
+              "ring": {
+                "x": 1857,
+                "y": 0,
+                "z": 25
+              },
+              "drawn": [
+                1857,
+                0,
+                25
+              ],
+              "playerY": 0.7200000286102295,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "research-campus",
+            "text": "Reach the research campus \u00b7 611\u00a0m",
+            "tick": 19594,
+            "marker": {
+              "anchor": "cure-research-entry",
+              "ring": {
+                "x": 2467,
+                "y": 0,
+                "z": -5
+              },
+              "drawn": [
+                2467,
+                0,
+                -5
+              ],
+              "playerY": 0.7200000286102295,
+              "pinVisible": true
+            }
+          }
+        ]
+      },
+      {
+        "level": "L10",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 480,
+        "simSeconds": 475,
+        "maxNoProgressSeconds": 2.683333333333333,
+        "deaths": 1,
+        "assists": 0,
+        "attacks": {
+          "weapon.army-mg": 162
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.fire-axe",
+          "weapon.pistol",
+          "weapon.shotgun",
+          "weapon.army-mg"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.pistol",
+          "weapon.shotgun",
+          "weapon.army-mg",
+          "weapon.rocket-launcher"
+        ],
+        "steps": [
+          {
+            "id": "research-campus",
+            "text": "Reach the research campus \u00b7 611\u00a0m",
+            "tick": 0,
+            "marker": {
+              "anchor": "cure-research-entry",
+              "ring": {
+                "x": 2467,
+                "y": 0,
+                "z": -5
+              },
+              "drawn": [
+                2467,
+                0,
+                -5
+              ],
+              "playerY": 0.7200000286102295,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "research",
+            "text": "Play the research recording \u00b7 246\u00a0m",
+            "tick": 9496,
+            "marker": {
+              "anchor": "cure-terminal",
+              "ring": {
+                "x": 2707,
+                "y": 0,
+                "z": 41.25
+              },
+              "drawn": [
+                2707,
+                0,
+                41.25
+              ],
+              "playerY": 0.7200000286102295,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "cure",
+            "text": "Pack the cure canister \u00b7 8\u00a0m",
+            "tick": 13671,
+            "marker": {
+              "anchor": "cure-canister",
+              "ring": {
+                "x": 2713,
+                "y": 0,
+                "z": 41
+              },
+              "drawn": [
+                2713,
+                0,
+                41
+              ],
+              "playerY": 0.7200000286102295,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "research-exit",
+            "text": "Get the cure out of the laboratory \u00b7 94\u00a0m",
+            "tick": 13830,
+            "marker": {
+              "anchor": "cure-research",
+              "ring": {
+                "x": 2807,
+                "y": 0,
+                "z": 45
+              },
+              "drawn": [
+                2807,
+                0,
+                45
+              ],
+              "playerY": 0.7200000286102295,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "destroyed-corridor",
+            "text": "Carry the cure down the corridor and grab the rocket launcher \u00b7 140\u00a0m",
+            "tick": 15151,
+            "marker": {
+              "anchor": "cure-corridor",
+              "ring": {
+                "x": 2937,
+                "y": 0,
+                "z": -5
+              },
+              "drawn": [
+                2937,
+                0,
+                -5
+              ],
+              "playerY": 0.7200000286102295,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "dispersal-complex",
+            "text": "Bring the cure to the dispersal complex \u00b7 760\u00a0m",
+            "tick": 18911,
+            "marker": {
+              "anchor": "cure-complex",
+              "ring": {
+                "x": 3697,
+                "y": 0,
+                "z": -25
+              },
+              "drawn": [
+                3697,
+                0,
+                -25
+              ],
+              "playerY": 0.7200000286102295,
+              "pinVisible": true
+            }
+          }
+        ]
+      },
+      {
+        "level": "L10",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 481,
+        "simSeconds": 477,
+        "maxNoProgressSeconds": 80.941,
+        "deaths": 0,
+        "assists": 0,
+        "attacks": {
+          "weapon.rocket-launcher": 64
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.pistol",
+          "weapon.shotgun",
+          "weapon.army-mg",
+          "weapon.rocket-launcher"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.pistol",
+          "weapon.shotgun",
+          "weapon.army-mg",
+          "weapon.rocket-launcher"
+        ],
+        "steps": [
+          {
+            "id": "dispersal-complex",
+            "text": "Bring the cure to the dispersal complex \u00b7 761\u00a0m",
+            "tick": 0,
+            "marker": {
+              "anchor": "cure-complex",
+              "ring": {
+                "x": 3697,
+                "y": 0,
+                "z": -25
+              },
+              "drawn": [
+                3697,
+                0,
+                -25
+              ],
+              "playerY": 0.7200000286102295,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "install",
+            "text": "Install the cure in the dispersal device \u00b7 311\u00a0m",
+            "tick": 12029,
+            "marker": {
+              "anchor": "cure-install",
+              "ring": {
+                "x": 4006.5,
+                "y": 0,
+                "z": -39
+              },
+              "drawn": [
+                4006.5,
+                0,
+                -39
+              ],
+              "playerY": 0.7200000286102295,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "hold",
+            "text": "Activate the dispersal console \u00b7 13\u00a0m",
+            "tick": 16402,
+            "marker": {
+              "anchor": "cure-console",
+              "ring": {
+                "x": 4002,
+                "y": 0,
+                "z": -27
+              },
+              "drawn": [
+                4002,
+                0,
+                -27
+              ],
+              "playerY": 0.7200000286102295,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "mega",
+            "text": "Kill the Mega Alpha \u00b7 1354\u00a0m",
+            "tick": 20215,
+            "marker": {
+              "anchor": "cure-mega",
+              "ring": {
+                "x": 2643.952499997559,
+                "y": 0.7,
+                "z": 45
+              },
+              "drawn": [
+                3974.88,
+                0.7,
+                -48.17
+              ],
+              "playerY": 0.7099999785423279,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "release",
+            "text": "Release the cure at the console \u00b7 66\u00a0m",
+            "tick": 22133,
+            "marker": {
+              "anchor": "cure-console",
+              "ring": {
+                "x": 4002,
+                "y": 0,
+                "z": -27
+              },
+              "drawn": [
+                4002,
+                0,
+                -27
+              ],
+              "playerY": 0.7099999785423279,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "epilogue",
+            "text": "Watch the cure spread",
+            "tick": 23629,
+            "marker": {
+              "anchor": "cure-console",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          }
+        ]
+      },
+      {
+        "level": "L10",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 172,
+        "simSeconds": 167,
+        "maxNoProgressSeconds": 149.6,
+        "deaths": 1,
+        "assists": 0,
+        "attacks": {},
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.pistol",
+          "weapon.shotgun",
+          "weapon.army-mg",
+          "weapon.rocket-launcher"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.pistol",
+          "weapon.shotgun",
+          "weapon.army-mg",
+          "weapon.rocket-launcher"
+        ],
+        "steps": [
+          {
+            "id": "epilogue",
+            "text": "Watch the cure spread",
+            "tick": 12,
+            "marker": {
+              "anchor": "cure-console",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "credits",
+            "text": "Minor Incident",
+            "tick": 9003,
+            "marker": {
+              "anchor": "cure-console",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          }
+        ]
+      }
+    ],
+    "issues": 1,
+    "bySeverity": {
+      "P0": 0,
+      "P1": 0,
+      "P2": 1,
+      "P3": 0
+    }
+  },
+  "missionDeaths": 1,
+  "completion": {
+    "creditsFinished": true,
+    "endingPhase": "done",
+    "completedLevels": 10,
+    "megaDead": true,
+    "cureReleased": true
+  },
+  "endingFollowUp": {
+    "summary": {
+      "mode": "campaign",
+      "quality": "low",
+      "heroine": "female",
+      "zoom": 1.5,
+      "levels": [
+        "L10"
+      ],
+      "runs": [
+        {
+          "level": "L10",
+          "entry": "continue",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 172,
+          "simSeconds": 167,
+          "maxNoProgressSeconds": 146.878,
+          "deaths": 1,
+          "assists": 0,
+          "attacks": {},
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.pistol",
+            "weapon.shotgun",
+            "weapon.army-mg",
+            "weapon.rocket-launcher"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.pistol",
+            "weapon.shotgun",
+            "weapon.army-mg",
+            "weapon.rocket-launcher"
+          ],
+          "steps": [
+            {
+              "id": "release",
+              "text": "Release the cure at the console \u00b7 0\u00a0m",
+              "tick": 0,
+              "marker": {
+                "anchor": "cure-console",
+                "ring": null,
+                "drawn": null,
+                "playerY": 0.7200000286102295,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "epilogue",
+              "text": "Watch the cure spread",
+              "tick": 109,
+              "marker": {
+                "anchor": "cure-console",
+                "ring": null,
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "credits",
+              "text": "Minor Incident",
+              "tick": 9037,
+              "marker": {
+                "anchor": "cure-console",
+                "ring": null,
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ],
+      "issues": 0,
+      "bySeverity": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      }
+    },
+    "restore": {
+      "source": "test-results/l10-all-new/playthrough-acceptance/campaign-3-completion.json",
+      "sourceSHA256": "6b65432e24da5093295336cac4040503eac66fceb87432eb84de4d0b871d33d1",
+      "method": "Exact recorded campaign snapshot placed in isolated playtest profile; normal menu Continue; no gameplay fields edited."
+    },
+    "gameplayFramesOver200ms": 0,
+    "maxRecordedGameplayFrameMs": 0,
+    "frameProbe": "Records long frames; three recorded loading frames have playMs=0, no gameplay long frames recorded.",
+    "nodeBuilderRecords": 648,
+    "nodeBuildersAfterTick1800": 0,
+    "traceFiles": {
+      "campaign-clicks.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "campaign-builds.json": "fd043651422dcbcdea94d543758ca49555e670a3ed5a2f73268a790faea933f0",
+      "campaign-inputs.json": "d8ab386ec3871a4cb8d3174cc88c25ce4f45e3c2372af542bd21c6f52744f229",
+      "campaign-frames.json": "1e29692ece23b7bfea6fd3389e6372f9cb5f9c6a4504c7865526867d85eabd18",
+      "campaign-completion.json": "8c75b0ecb197edb795c67cd92f1e35a99df8ef01d906cd856dd68b3b0a4d140b"
+    }
+  },
+  "findings": "Fresh full route includes one checkpoint death and one P2 700 ms epilogue frame. Exact recorded ending snapshot rerun finishes with zero issues and zero gameplay frames >200 ms; original finding retained. Uncapped p95 remains perf pending PO quiet window."
+}

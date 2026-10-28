@@ -1,4 +1,4 @@
-# L10 all-new — final playthrough in progress
+# L10 all-new — accepted (uncapped perf pending)
 
 - [Census](census.json): all 27 possible L10 identities are v2, including passenger/carry-over audit and corpse states; nine rigid at lane base, six imported from main `904ae77a9`, three Mega looks built here; no batch-3 remainder.
 - Built `inf.mega-alpha`, `-ashen`, `-ember` through `skin-crowd-build.sh`, zero manual asset steps; existing TRELLIS highs/casts, pipeline `df14953`, zero inferences / HF spend €0. Authored skull/eyes/horns and repaired leg/corpse surfaces are automatic; [receipts](build-integrity.json).
@@ -7,6 +7,6 @@
 - [Validator](gates/asset-validator.json): 1,262 rows / zero errors; [typecheck](gates/typecheck.txt), [lint](gates/lint.txt), [npm test](gates/npm-test.txt) pass: 104 tests, unchanged registered budget 144/150 cases and 40/45 files.
 - [Smoke](gates/smoke.json): six QA + one public pass, zero warm shader builds / frames >200 ms, GPU ≤13 attributes / ≤8 buffers; [scene:gate](gates/scene-gate.json): 43 clean + five existing known findings, zero unexpected.
 - [Eight scripted scenes](gates/l10-scenes.json) pass; actual L10 87/168-AI warm samples have zero shader builds / frames >200 ms. [Q-200](gates/boss-rally.json): full-HP join in 9.63 s, no visible jump, ten direct rockets then cure release.
-- Fresh complete real-input L10 acceptance is running with bounded checkpoint-resume sessions; [prior completed route/ending](gates/prior-full-playthrough.json) and corrected false driver warnings are retained.
+- [Real-input L10](gates/playtest.json) completes every step and credits with zero assists/skips and one checkpoint death; one P2 700 ms epilogue frame is retained. Exact recorded-ending rerun: zero issues / gameplay frames >200 ms. Four bounded pool sessions use normal checkpoint resumes.
 - [Resources](performance-summary.json): actual low draws 92→92, decoded textures 164.21→164.87 MiB; 30 figures 107→107 draws, 291.43→292.10 MiB. [Five cold loads](cold-loads/summary.json): new worst 5,732 ms vs PROD 6,261 ms (91.6%, limit 110%); uncapped low p95 (+1 ms) remains perf pending PO quiet window.
 - [Showcase](showcase.json): `l10-crowd-old-new.jpg` installed (1369×1600); best sources 04 crowd comparison and 03 Ember detail. Branch `lane/l10-all-new`; unified held-gun path retained, no gameplay values changed, no deployment.
