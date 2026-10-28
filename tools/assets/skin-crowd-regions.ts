@@ -30,9 +30,10 @@ const GROUP: Record<string, 'head' | 'upper' | 'lower' | 'hand' | 'foot'> = {
 };
 
 export interface RegionReport { width: number; height: number; garments: boolean; shares: Record<string, number>; absorbed: number; colours: Record<string, number[]> }
+export type AuthoredCrowdPalette = Partial<Record<'skin' | 'hair' | 'shirt' | 'trousers', [number, number, number][]>>;
 
 /** Classify and flatten the body atlas of a raw crowd figure in place (PNG source atlas expected). */
-export function classifyCrowdAtlas(doc: Document, garments: boolean, coveredUniform = false, authoredSkin?: true | string, coveredLegs = false): RegionReport | undefined {
+export function classifyCrowdAtlas(doc: Document, garments: boolean, coveredUniform = false, authoredSkin?: true | string, coveredLegs = false, authoredPalette?: AuthoredCrowdPalette): RegionReport | undefined {
   const body = doc.getRoot().listNodes().find(n => n.getName() === 'skin_body'), prim = body?.getMesh()?.listPrimitives()[0];
   const map = prim?.getMaterial()?.getBaseColorTexture();
   if (!prim || !map || map.getMimeType() !== 'image/png') return undefined;
@@ -175,6 +176,13 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean, coveredUnif
     absorbed += members.length;
   }
   if (coveredUniform) for (let i = 0; i < cls.length; i++) if (!skinEligible[i] && cls[i] === crowdRegion.skin) cls[i] = crowdRegion.authored;
+  // Native infected retain their original identity's palette, while sharing
+  // the civilian flattening and face/limb classification machinery.
+  if (authoredPalette) for (const [name, candidates] of Object.entries(authoredPalette)) {
+    const original = colours[name];
+    const choices = candidates.map(rgb => lab(...rgb));
+    colours[name] = original ? choices.sort((a, b) => dE(a, original) - dE(b, original))[0] : choices[0];
+  }
   // Named story people retain their authored complexion rather than the per-person crowd palette.
   if (authoredSkin) {
     for (let i = 0; i < cls.length; i++) if (cls[i] === crowdRegion.skin) cls[i] = crowdRegion.skinMask;
@@ -193,7 +201,7 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean, coveredUnif
     for (let i = 0; i < w * h; i++) if (owner[i] && cls[i] === value) {
       const L = reference[0] + Math.max(-8, Math.min(8, (labs[i * 3] - mean) * .3));
       const rgb = labToSrgb([L, reference[1], reference[2]]);
-      const scale = target && (garments || value === crowdRegion.skin) ? target / Math.max(1e-4, luminance(...labToSrgb(reference))) : 1;
+      const scale = !authoredPalette && target && (garments || value === crowdRegion.skin) ? target / Math.max(1e-4, luminance(...labToSrgb(reference))) : 1;
       for (let c = 0; c < 3; c++) data[i * 4 + c] = toSrgb(LINEAR[rgb[c]] * scale);
     }
   }
@@ -208,6 +216,7 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean, coveredUnif
     }
     cls.set(next);
   }
+  if (authoredPalette) for (let i = 0; i < cls.length; i++) if (cls[i] === crowdRegion.hair || cls[i] === crowdRegion.shirt || cls[i] === crowdRegion.trousers) cls[i] = crowdRegion.authored;
   if (coveredUniform) for (let i = 0; i < cls.length; i++) if (!skinEligible[i] && cls[i] === crowdRegion.skin) cls[i] = crowdRegion.authored;
   // Gutters take their nearest island's class: whole 4x4 blocks then carry one value, which keeps the alpha slice small.
   const out = cls.slice(), queue: number[] = [];

@@ -24,6 +24,28 @@ interface Ktx {
 }
 interface Basis { initializeBasis(): void; BasisEncoder: new () => Encoder; KTX2File: new (data: Uint8Array) => Ktx }
 
+/** Decode an authored atlas before shared-atlas packing or regional painting. */
+export async function decodeSkinImage(image: Uint8Array, mime: string, basisRoot: string): Promise<PNG> {
+  if (mime === 'image/png' && readable(image)) return PNG.sync.read(Buffer.from(image));
+  if (mime === 'image/ktx2') {
+    const factory = createRequire(import.meta.url)(join(basisRoot, 'basis_encoder.js')) as (options: { wasmBinary: Uint8Array }) => Promise<Basis>;
+    const basis = await factory({ wasmBinary: readFileSync(join(basisRoot, 'basis_encoder.wasm')) }); basis.initializeBasis();
+    const file = new basis.KTX2File(image);
+    try {
+      if (!file.isValid() || !file.startTranscoding()) throw Error('Invalid source KTX2');
+      const rgba = new Uint8Array(file.getImageTranscodedSizeInBytes(0, 0, 0, 13));
+      if (!file.transcodeImage(rgba, 0, 0, 0, 13, 0, -1, -1)) throw Error('KTX2 RGBA transcode failed');
+      return { width: file.getWidth(), height: file.getHeight(), data: Buffer.from(rgba) } as PNG;
+    } finally { file.close(); file.delete(); }
+  }
+  const directory = mkdtempSync(join(tmpdir(), 'crowd-image-'));
+  try {
+    const input = join(directory, 'input.' + mime.split('/')[1]), output = join(directory, 'output.png');
+    writeFileSync(input, image); execFileSync('sips', ['-s', 'format', 'png', input, '--out', output], { stdio: 'ignore' });
+    return PNG.sync.read(readFileSync(output));
+  } finally { rmSync(directory, { recursive: true, force: true }); }
+}
+
 // Classed atlases must bypass CoreGraphics (premultiplied alpha); some opaque L1 sources only CoreGraphics can read.
 const readable = (image: Uint8Array) => { try { PNG.sync.read(Buffer.from(image)); return true; } catch { return false; } };
 /** Box-filter the colour and keep the top-left class of each 2x2 block, until the long side fits. */

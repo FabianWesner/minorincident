@@ -56,6 +56,15 @@ while remaining:
 area = sum(face.calc_area() for face in bm.faces)
 scraps = [face for component in components if sum(face.calc_area() for face in component) < area * .001 for face in component]
 bmesh.ops.delete(bm, geom=scraps, context='FACES')
+# Decimation can leave a tiny triangular fin attached to an otherwise closed
+# edge. Filling that fin's two boundary edges creates an overlapping cap.
+# Remove only that sub-0.1%-area topology before closing real boundary rings.
+fins = [face for face in bm.faces
+        if sum(edge.is_boundary for edge in face.edges) >= 2
+        and any(len(edge.link_faces) > 2 for edge in face.edges)
+        and face.calc_area() < area * .001]
+if fins:
+    bmesh.ops.delete(bm, geom=fins, context='FACES')
 loose = [vertex for vertex in bm.verts if not vertex.link_faces]
 bmesh.ops.delete(bm, geom=loose, context='VERTS')
 boundary = [edge for edge in bm.edges if edge.is_boundary]
