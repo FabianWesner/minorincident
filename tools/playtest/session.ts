@@ -559,6 +559,10 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     }
     if (e.phase !== 'playing') { await press([]); await releaseAim(); await hold(200); idleScreens++; if (idleScreens === 900) { await issue('P0', 'long-cinematic', `Phase ${e.phase} lasted ~3 min`); break; } continue; }
 
+    // Direct-entry levels can report playing while their loading card still
+    // owns input. Wait for it before sending the first wheel or movement input.
+    if (e.loading) { await press([]); await releaseAim(); await hold(200); continue; }
+
     // Playing.
     if (e.tick - lastShot > 45 * 60) { lastShot = e.tick; await capture(`${e.level}-t${e.tick}`); }
     if (!zoomed) {

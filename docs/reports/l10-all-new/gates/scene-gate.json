@@ -1,0 +1,62 @@
+{
+  "pass": true,
+  "command": "SCENE_PORT=4734 npm run scene:gate -- --out test-results/l10-all-new/scene-gate --jobs 1",
+  "total": 48,
+  "passed": 43,
+  "known": [
+    {
+      "name": "ped-zoo-staff@high",
+      "failed": [
+        "clipping 4 > 0"
+      ],
+      "reason": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; 4 hand-vs-held-prop grip overlaps (coffee, bag x2, watering can); sheet looks fine"
+    },
+    {
+      "name": "ped-sit-all@high",
+      "failed": [
+        "clipping 1 > 0"
+      ],
+      "reason": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; right hand vs held cane, 215 tris, grip overlap only (sheet looks fine)"
+    },
+    {
+      "name": "ped-water-flowerbed@high",
+      "failed": [
+        "clipping 1 > 0"
+      ],
+      "reason": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; right hand vs watering can grip overlap"
+    },
+    {
+      "name": "dog-pet-trot@low-z1.5",
+      "failed": [
+        "footSlideMaxCm 8.2 > 3"
+      ],
+      "reason": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; footSlideMaxCm 8.2 > 3 at every zoom (low tier dog trot)"
+    },
+    {
+      "name": "ped-sit-all@low",
+      "failed": [
+        "clipping 1 > 0"
+      ],
+      "reason": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; same hand/cane overlap"
+    }
+  ],
+  "unexpected": [],
+  "batches": {
+    "webgl2-low-1": {
+      "code": 0,
+      "seconds": 147.268
+    },
+    "webgpu-high-1": {
+      "code": 1,
+      "seconds": 78.191
+    },
+    "webgl2-high-1": {
+      "code": 1,
+      "seconds": 141.396
+    },
+    "webgpu-low-1": {
+      "code": 1,
+      "seconds": 114.189
+    }
+  }
+}

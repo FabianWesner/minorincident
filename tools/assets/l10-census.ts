@@ -32,9 +32,10 @@ const authoredSlots = Object.fromEntries((['high', 'low'] as const).map(tier => 
   return [tier, counts];
 }));
 writeFileSync('docs/reports/l10-all-new/census.json', JSON.stringify({ date: '2026-10-28', base: 'e45cbde3b',
-  sources: ['src/levels/L10/encounters.ts', 'src/sim/missions/LevelTenEncounters.ts', 'src/sim/ai/InfectedSystem.ts', 'src/data/crowdAppearance.ts', 'src/data/alphaLooks.ts', 'src/data/dogAppearance.ts', 'src/sim/missions/LevelTenEpilogue.ts', 'src/sim/npc/Civilians.ts', 'src/assets/manifest.json'],
+  sources: ['src/levels/L10/encounters.ts', 'src/sim/missions/LevelTenEncounters.ts', 'src/sim/ai/InfectedSystem.ts', 'src/data/crowdAppearance.ts', 'src/data/alphaLooks.ts', 'src/data/dogAppearance.ts', 'src/sim/missions/LevelTenEpilogue.ts', 'src/sim/npc/Civilians.ts', 'src/sim/npc/install.ts', 'src/sim/npc/Npcs.ts', 'public/assets/layouts/D-CURE.layout.json', 'src/assets/manifest.json'],
   totalIdentities: population.length, authoredSlots, population,
   selection: 'All nine identities still rigid at the lane base fit the twelve-conversion limit: six shared runners are owned by L9, three Mega looks by this lane. No batch-3 remainder. Already-v2 Alpha looks, dog coats, couriers, companion and residents are retained and reviewed in the mixed crowd.',
-  lifecycle: 'NPCs only emerge after cure release, which disables civilian grabs; no new turned identity can enter L10. Corpses retain the selected registered look. L10 begins alone after the crash: no carried survivor or passenger entities are imported.'
+  lifecycle: 'NPCs only emerge after cure release, which disables civilian grabs; no new turned identity can enter L10. Corpses retain the selected registered look. L10 begins alone after the crash: no carried survivor or passenger entities are imported.',
+  ambientAndDressing: 'L10 NPC installation and Npcs.setQuality disable ambient humans/pets/children. The baked D-CURE layout contains no character, NPC, infected, animal or fixed corpse asset references; all figures come from the selectors and bounded epilogue above.'
 }, null, 2) + '\n');
 console.log(`${population.length} L10 identities; ${population.filter(row => !row.v2AtLaneBase).length} legacy at base; ${population.filter(row => row.owner === 'L10 build').length} owned here`);

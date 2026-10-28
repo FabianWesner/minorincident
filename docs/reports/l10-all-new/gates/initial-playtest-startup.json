@@ -1,0 +1,6 @@
+{
+  "finished": false,
+  "reason": "First wheel input occurred while direct-entry L10 still had its loading card visible; requested zoom 1.5 stayed at 1.",
+  "fix": "tools/playtest/session.ts waits for e.loading=false before sending playing input; gameplay unchanged.",
+  "retry": "pending"
+}

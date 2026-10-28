@@ -25,9 +25,14 @@ function resources() {
     if(mesh.isMesh)for(const material of Array.isArray(mesh.material)?mesh.material:[mesh.material])for(const value of Object.values(material))if(value&&typeof value==='object'&&'isTexture'in value)textures.add(value as import('three').Texture);
     for(const texture of node.userData.preRenderTextures??[])textures.add(texture);
   });
-  let decodedBytes=0;
-  for(const texture of textures){const image=texture.image as {width?:number;height?:number;data?:{byteLength:number}};if(image?.width&&image.height)decodedBytes+=(texture.mipmaps as {data?:{byteLength:number}}[]).reduce((n,m)=>n+(m.data?.byteLength??0),0)||Math.ceil((image.data?.byteLength??image.width*image.height*4)*(texture.generateMipmaps?4/3:1));}
-  return {decodedBytes,textureCount:textures.size,perf:window.__SS__!.perf(),render:window.__SS__!.getState().render};
+  let decodedBytes=0,uncompressedUpperBytes=0;
+  for(const texture of textures){
+    const image=texture.image as {width?:number;height?:number;data?:{byteLength:number}};
+    if(!image?.width||!image.height)continue;
+    decodedBytes+=(texture.mipmaps as {data?:{byteLength:number}}[]).reduce((n,m)=>n+(m.data?.byteLength??0),0)||Math.ceil((image.data?.byteLength??image.width*image.height*4)*(texture.generateMipmaps?4/3:1));
+    uncompressedUpperBytes+=Math.ceil(Math.max(image.data?.byteLength??0,image.width*image.height*4)*(texture.generateMipmaps||texture.mipmaps.length>1?4/3:1));
+  }
+  return {decodedBytes,uncompressedUpperBytes,textureCount:textures.size,perf:window.__SS__!.perf(),render:window.__SS__!.getState().render};
 }
 const base: SceneSpec = { name:'l10-review',ground:'asphalt',time:'L10-night',size:100,dof:false,actors:[],camera:{mode:'game',target:[0,0],zoom:1},frames:3,expect:{consoleErrors:0} };
 try {
@@ -74,7 +79,7 @@ try {
     const people=['npc.civilian-man-a','npc.civilian-man-b','npc.civilian-woman-a','npc.civilian-woman-b','npc.civilian-elderly'];
     const models=[...ids,...alphaLooks['inf.alpha'],...regularInfectedModels,'inf.firefighter','inf.dog','inf.dog.black','inf.dog.cream',...people,...regularInfectedModels.slice(0,4)];
     const origin=cure.anchors['cure-industrial'];
-    const actors:ActorSpec[]=[{id:'courier',kind:'courier',at:[origin[0]+4,origin[1]-5],yaw:-45,loadout:['weapon.army-mg','weapon.axe']},{id:'corgi',kind:'corgi',at:[origin[0]+5,origin[1]-5],yaw:-45}];
+    const actors:ActorSpec[]=[{id:'courier',kind:'courier',at:[origin[0]+4,origin[1]-5],yaw:-45,loadout:['weapon.fire-axe','weapon.army-mg'],state:{select:'RIGHT'}},{id:'corgi',kind:'corgi',at:[origin[0]+5,origin[1]-5],yaw:-45}];
     for(const [i,model]of models.entries()){
       const u=i<3?(i-1)*3.3:-4.8+(i-3)%7*1.6,v=i<3?0:4+Math.floor((i-3)/7)*2.4;
       const at:[number,number]=[origin[0]+(u-v)/Math.SQRT2,origin[1]+(-u-v)/Math.SQRT2];

@@ -1,0 +1,31 @@
+{
+  "status": "portraits reviewed; remaining runtime sheets pending",
+  "portraits": "96 native 120/400 px captures, front/back, old/new, low/high WebGL2/WebGPU",
+  "fixes": [
+    "matching semantic Mega rig fixes the detached LOD2 leg",
+    "authored skull and variant horns/head hardware restored automatically",
+    "white eye cores classified as emitters with the red shells",
+    "living neck collar carries UVs required by the textured bake"
+  ],
+  "sheets": [
+    {
+      "capture": "01-inf.mega-alpha.jpg",
+      "reviewed": true,
+      "sha256": "40a2137296a5e89e4d6f2701dbaf8f119d3723e2d558414c5c747bcd46096ba9",
+      "verdict": "The broad rose flesh, dark trousers and bony crown stay separated in L10 light; restored skull and independent red eye cores remain readable at 120 px. Rear legs stay connected at the far tier."
+    },
+    {
+      "capture": "02-inf.mega-alpha-ashen.jpg",
+      "reviewed": true,
+      "sha256": "c1e7979d87464e23771ade35fd8d6f38798eb814d30c9920e2951dec1ef7772b",
+      "verdict": "Ash paint stays on its source surface; authored side horns meet the retained skull rather than floating above it. Pale skull is intentional bone, not exposed human skin. Both backend and quality pairs agree."
+    },
+    {
+      "capture": "03-inf.mega-alpha-ember.jpg",
+      "reviewed": true,
+      "sha256": "e4729cb491b845454c4bc6624419941728e08a243efa4c1f6649f3b1804da96b",
+      "verdict": "Red flesh and ivory back armour remain distinct from black trousers; authored head hardware and eye cores survive all tiers. No held weapon is baked into this body."
+    }
+  ],
+  "sharedL9Review": "Viewed all six L9 portrait sheets in their lane; final main import and L10 mixed crowd still pending."
+}

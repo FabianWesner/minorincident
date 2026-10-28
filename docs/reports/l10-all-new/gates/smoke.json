@@ -1,6 +1,16 @@
 {
-  "command": "MI_WORKTREE_CACHE=/private/tmp/mi-l10-worktree-cache npm run test:smoke",
-  "result": "incomplete: QA build passed; browser phase did not start",
-  "cause": "managed sandbox denies local loopback connect/listen with EPERM; live browser-pool process 91433 was listening on 127.0.0.1:4329 but inaccessible from this command environment",
-  "firstAttempt": "cache write under shared repository was denied; redirected to /private/tmp and retried"
+  "command": "E2E_PORT=4732 npm run test:smoke",
+  "exitCode": 0,
+  "qaTests": 6,
+  "publicTests": 1,
+  "seconds": 209.6,
+  "freezeGuard": {
+    "shaderBuildsAfterWarmup": 0,
+    "framesOver200ms": 0
+  },
+  "maxGPU": {
+    "attributes": 13,
+    "vertexBuffers": 8
+  },
+  "log": "smoke.txt"
 }
