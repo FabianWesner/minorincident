@@ -9,13 +9,6 @@ import { frameInterval, type FrameState } from '../../tools/playtest/frames';
 import { PlaytestProgress, type ProgressSample } from '../../tools/playtest/progress';
 import { campaignEndingComplete, needsZoomInput, observeWithin } from '../../tools/playtest/startup';
 
-test('playtest zoom tolerates camera settling but detects overshoot', () => {
-  expect(needsZoomInput(1.51, 1.5)).toBe(false);
-  expect(needsZoomInput(1.52, 1.5)).toBe(false);
-  expect(needsZoomInput(NaN, 1.5)).toBe(true);
-  expect(needsZoomInput(1.53, 1.5)).toBe(true);
-});
-
 const sample = (seconds: number, fields: Partial<ProgressSample> = {}): ProgressSample => ({ context: 'L6|retreat', text: 'Cover the retreat · 12 m', distance: 12, player: { x: 0, z: 15 }, marker: { x: 12, z: 15 }, tick: seconds * 60, nowMs: seconds * 1000, ...fields });
 
 test('playtest stuck detection: following a moving ring is progress; a parked courier, a 30 s loop or a static zero-distance objective is not', () => {
@@ -35,6 +28,10 @@ test('playtest stuck detection: following a moving ring is progress; a parked co
 });
 
 test('playtest session: success only after real credits; an unresponsive renderer fails in budget; frame stalls are guarded outside loading', async () => {
+  expect(needsZoomInput(1.51, 1.5)).toBe(false);
+  expect(needsZoomInput(1.52, 1.5)).toBe(false);
+  expect(needsZoomInput(NaN, 1.5)).toBe(true);
+  expect(needsZoomInput(1.53, 1.5)).toBe(true);
   const done = { level: 'L10', phase: 'progression', creditsFinished: true, endingPhase: 'done', completedLevels: 10 };
   expect(campaignEndingComplete(done)).toBe(true);
   for (const partial of [{ creditsFinished: false }, { endingPhase: 'credits' }, { completedLevels: 9 }, { phase: 'playing' }]) expect(campaignEndingComplete({ ...done, ...partial })).toBe(false);
