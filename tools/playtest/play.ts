@@ -19,6 +19,7 @@ import type { Issue, LevelRun, SessionOptions } from './session';
 const { values } = parseArgs({ options: {
   levels: { type: 'string', default: 'L1-L10' }, quality: { type: 'string', default: 'low' }, mode: { type: 'string', default: 'campaign' },
   heroine: { type: 'string', default: 'female' }, zoom: { type: 'string', default: '1.5' }, 'level-minutes': { type: 'string', default: '60' },
+  weapon: { type: 'string' },
   'no-skip': { type: 'boolean', default: false },
   out: { type: 'string' }, entry: { type: 'string' }, 'keep-profile': { type: 'boolean', default: false },
 } });
@@ -56,7 +57,7 @@ const session = (options: SessionOptions): boolean => {
   sessionsOk &&= result.status === 0;
   return result.status === 0;
 };
-const base = { origin, out, quality, zoom: Number(values.zoom), heroine: (values.heroine === 'male' ? 'male' : 'female') as 'female' | 'male', profile, levelMinutes: Number(values['level-minutes']), noSkip: values['no-skip'] } as const;
+const base = { origin, out, quality, zoom: Number(values.zoom), weapon: values.weapon, heroine: (values.heroine === 'male' ? 'male' : 'female') as 'female' | 'male', profile, levelMinutes: Number(values['level-minutes']), noSkip: values['no-skip'] } as const;
 try {
   if (mode === 'campaign') session({ ...base, levels, entry: (values.entry as SessionOptions['entry']) ?? (levels[0] === 'L1' ? 'new' : 'debug'), stopAfterLevel: false, tag: 'campaign' });
   else for (const [i, level] of levels.entries()) {

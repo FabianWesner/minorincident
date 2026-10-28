@@ -6,7 +6,7 @@ import type { L1Aftermath } from '../../levels/continuity';
 import { l7DefaultArsenal } from '../../data/l7';
 /** Campaign through L10 The Cure (specs/po-levels-9-10-2026-10-13.md). */
 export type Level = 1|2|3|4|5|6|7|8|9|10;
-export type ProgressionPreset = `L${2|3|4|5|6|7|8|10}-default`;
+export type ProgressionPreset = `L${2|3|4|5|6|7|8|9|10}-default`;
 export interface CampaignSettings { cameraShake?:boolean; flashReduction?:boolean; gore?:'Off'|'Reduced'|'Full'; quality?:'high'|'low'|'auto'; muted?:boolean; captions?:boolean; noiseRings?:boolean; mono?:boolean; haptics?:boolean; tinnitus?:boolean; bloom?:boolean; cheapDof?:boolean; vfx?:boolean; aimAssist?:'Off'|'Low'|'Default'|'High'; textSize?:1|1.25|1.5; colorblind?:boolean; slowMotion?:boolean }
 export interface CampaignSave {
   version:2; seed:number; character:SurvivorVariant; unlockedLevel:Level; completedLevels:number;
@@ -136,7 +136,7 @@ export function preset(name:ProgressionPreset):CampaignSave {
     save.racks = { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.fire-axe'] };
     return save;
   }
-  if(!/^L[2-8]-default$/.test(name))throw new Error('Unknown progression preset');
+  if(!/^L[2-9]-default$/.test(name))throw new Error('Unknown progression preset');
   const target=Number(name[1]),save=newCampaign();
   for(let level=1;level<Math.min(target,6);level++){
     // The default L2 run takes the optional fire axe; later presets retain it.
@@ -147,17 +147,17 @@ export function preset(name:ProgressionPreset):CampaignSave {
   // L5's authored L4 end arsenal has the machine gun, not the legacy reward launchers.
   if(target===5)save.ownedActions=save.ownedActions.filter(id=>id!=='weapon.rocket-launcher'&&id!=='weapon.pipe-bomb');
   if(target>=5)save.racks={LEFT:["weapon.fire-axe","weapon.bat"],RIGHT:["weapon.army-mg","weapon.handgun","weapon.kick"]};
-  if(target===7) {
-    save.completedLevels=6;save.unlockedLevel=7;
+  if(target>=7) {
+    save.completedLevels=target-1;save.unlockedLevel=target as Level;
     save.ownedActions=save.ownedActions.filter(id=>id!=='weapon.rocket-launcher');
     for(const id of [...l7DefaultArsenal.LEFT,...l7DefaultArsenal.RIGHT])if(!save.ownedActions.includes(id))save.ownedActions.push(id);
     save.racks={LEFT:[...l7DefaultArsenal.LEFT],RIGHT:[...l7DefaultArsenal.RIGHT]};
   }
-  if(target===8) {
-    save.completedLevels=7;save.unlockedLevel=8;
+  if(target>=8) {
     for(const id of ['weapon.shotgun','weapon.rocket-launcher'])if(!save.ownedActions.includes(id))save.ownedActions.push(id);
     save.racks={LEFT:['weapon.bat','weapon.fire-axe'],RIGHT:['weapon.rocket-launcher','weapon.army-mg','weapon.shotgun','weapon.handgun']};
   }
+  if(target===9) { save.completedLevels=8; save.unlockedLevel=9; }
   if(target===6)save.survivors=["dale","rosa","okafor","mia","sam"];
   return save;
 }
@@ -167,7 +167,7 @@ export function debugCampaign(level:Level, current:CampaignSave|null):CampaignSa
   let save:CampaignSave;
   if(level===1) save=newCampaign(current?.character??'female',current?.seed??1);
   else if(level===10) save=preset('L10-default');
-  else if(level===9) { save=preset('L8-default'); save.completedLevels=8; save.unlockedLevel=9; }
+  else if(level===9) save=preset('L9-default');
   else save=preset(`L${level}-default` as ProgressionPreset);
   // Level-list starts use the level's normal boundary arsenal, but still honor the
   // weapon the player was carrying when it exists in that arsenal.

@@ -22,7 +22,7 @@ import { l2Routes } from '../../src/debug/bot/LevelTwoBot';
  * is logged as an "assist" entry and named in the report.
  */
 export interface SessionOptions {
-  origin: string; out: string; levels: string[]; quality: 'low' | 'high'; zoom: number; heroine: 'female' | 'male';
+  origin: string; out: string; levels: string[]; quality: 'low' | 'high'; zoom: number; weapon?: string; heroine: 'female' | 'male';
   /** new: title → Start game → heroine → L1. continue: title → Start game → resume level (menu Continue). debug: level list with ?debug=1. */
   entry: 'new' | 'continue' | 'debug'; profile: string; levelMinutes: number; stopAfterLevel: boolean; tag: string; noSkip?: boolean;
   /** Bounded diagnostic sample; finish without skipping an objective when time expires. */
@@ -573,12 +573,17 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     }
     if (!zoomed) { // the PO's zoom: wheel over the canvas
       const before = await page.evaluate(() => window.__SS__!.getState().render.camera);
-      if (needsZoomInput(before.targetZoom, o.zoom)) {
+      const requestedZoom = Math.max(before.zoomLimits[0], Math.min(before.zoomLimits[1], o.zoom));
+      if (needsZoomInput(before.targetZoom, requestedZoom)) {
         await page.mouse.move(e.view.w / 2, e.view.h / 2);
-        for (let i = 0; i < 6; i++) { await page.mouse.wheel(0, o.zoom >= 1 ? 120 : -120); await hold(60); }
+        for (let i = 0; i < 24; i++) {
+          const current = await page.evaluate(() => window.__SS__!.getState().render.camera.targetZoom);
+          if (!needsZoomInput(current, requestedZoom)) break;
+          await page.mouse.wheel(0, requestedZoom > current ? 120 : -120); await hold(140);
+        }
       }
       const camera = await page.evaluate(() => window.__SS__!.getState().render.camera);
-      if (o.zoom === 1.5) assert.ok(!needsZoomInput(camera.targetZoom, o.zoom), `Requested zoom 1.5, observed target ${camera.targetZoom} in ${e.level}`);
+      assert.ok(!needsZoomInput(camera.targetZoom, requestedZoom), `Requested zoom ${requestedZoom}, observed target ${camera.targetZoom} (allowed ${camera.zoomLimits.join('–')}) in ${e.level}`);
       zoomed = true; log({ zoom: camera.zoom, targetZoom: camera.targetZoom, level: e.level });
     }
     const key = `${e.step}|${e.completed}|${e.checkpoint}|${e.objective.replace(/ · [\d.]+\s?m\b/g, '').replace(/ · \d+:\d\d/g, '').replace(/\d+\/\d+ ?s\b/g, '#')}`;
@@ -717,7 +722,9 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       await page.keyboard.down('KeyE'); await hold(1400); await page.keyboard.up('KeyE');
       log({ prompt: e.prompt, tick: e.tick }); continue;
     }
-    const weapon = e.player && campaignCombatWeapon(e.level, e.player.weapons, e.player.emptyWeapons);
+    const weapon = e.player && (o.weapon && e.player.weapons.includes(o.weapon)
+      ? o.weapon
+      : campaignCombatWeapon(e.level, e.player.weapons, e.player.emptyWeapons));
     const shortcut = weapon && weaponKey(weapon);
     if (weapon && shortcut && e.player?.current !== weapon) {
       await press([]); await releaseAim();

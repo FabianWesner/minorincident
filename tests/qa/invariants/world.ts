@@ -10,7 +10,7 @@ export async function loadLevel(id: MissionId, seed: number, tier: 'high' | 'low
   const world = new SimWorld();
   try {
     await world.init();
-    const campaign = id === 'L1' ? newCampaign('female', seed) : preset((id === 'L9' ? 'L8-default' : `${id}-default`) as ProgressionPreset);
+    const campaign = id === 'L1' ? newCampaign('female', seed) : preset(`${id}-default` as ProgressionPreset);
     campaign.seed = seed; campaign.settings.quality = tier;
     const composition = compositions[id];
     world.loadComposition(composition, composition.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), seed, id === 'L2' ? campaign.world?.L1 ?? null : null, id === 'L7' ? campaign.results?.L6?.escapedSurvivors : id === 'L8' ? campaign.results?.L7?.escapedSurvivors : undefined, id === 'L8' ? campaign.results?.L7?.companion : undefined, reservedCampaignIds(id, campaign));

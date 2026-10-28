@@ -7,7 +7,12 @@ import type { AssetDef } from '../../src/assets/types';
 import { validateSpec, type SceneSpec } from '../../src/debug/scenelab/spec';
 import { frameInterval, type FrameState } from '../../tools/playtest/frames';
 import { PlaytestProgress, type ProgressSample } from '../../tools/playtest/progress';
-import { campaignEndingComplete, observeWithin } from '../../tools/playtest/startup';
+import { campaignEndingComplete, needsZoomInput, observeWithin } from '../../tools/playtest/startup';
+
+test('playtest zoom tolerates camera settling but detects overshoot', () => {
+  expect(needsZoomInput(1.51, 1.5)).toBe(false);
+  expect(needsZoomInput(1.53, 1.5)).toBe(true);
+});
 
 const sample = (seconds: number, fields: Partial<ProgressSample> = {}): ProgressSample => ({ context: 'L6|retreat', text: 'Cover the retreat · 12 m', distance: 12, player: { x: 0, z: 15 }, marker: { x: 12, z: 15 }, tick: seconds * 60, nowMs: seconds * 1000, ...fields });
 

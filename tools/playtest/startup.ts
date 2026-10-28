@@ -17,7 +17,7 @@ export function shouldResumePause(menu: string | null, loading: boolean): boolea
 
 /** Level handovers preserve zoom; another wheel burst can reach the launcher's wider limit. */
 export function needsZoomInput(targetZoom: number, requestedZoom: number): boolean {
-  return Math.abs(targetZoom - requestedZoom) > .001;
+  return Math.abs(targetZoom - requestedZoom) > .02;
 }
 
 /** Never advance past the L10 Mega objective with the boss still alive. */

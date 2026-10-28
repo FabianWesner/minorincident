@@ -18,6 +18,13 @@ const fakeWorld = (racks: CampaignSave['racks'], selectedAction = 'weapon.handgu
 const start = (level: Level): CampaignSave => level === 1 ? newCampaign() : preset(`L${level}-default` as Parameters<typeof preset>[0]);
 const resume = (save: CampaignSave, level: number) => { const l = campaignLoadout(save, level as Level); return new Loadout(l.LEFT, l.RIGHT, undefined, l.size); };
 
+test('L9 cold-load preset starts at the L9 boundary with the L8 carryover arsenal', () => {
+  const save = preset('L9-default');
+  expect(save.completedLevels).toBe(8); expect(save.unlockedLevel).toBe(9);
+  expect(validateSave(save)).toBe(true);
+  expect(save.racks.RIGHT).toContain('weapon.rocket-launcher');
+});
+
 test('every handover L1→L9 keeps every carried weapon (plus a picked-up firearm) and the selected action, and the save reloads', () => {
   for (const level of [1, 2, 3, 4, 5, 6, 7, 8] as const) {
     const save = start(level), next = level + 1;

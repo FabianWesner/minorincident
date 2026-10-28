@@ -49,7 +49,8 @@ export class VehicleView extends Group {
   /** Compile transport passenger rigs during level loading, before boarding can hitch. */
   async prewarmOccupants(): Promise<(() => void) | undefined> {
     const truckId = this.world.missions?.state.l2?.truckId;
-    const car = truckId ? this.world.vehicles!.cars.get(truckId) : [...this.world.vehicles!.cars.values()].find(c => c.physics.def.transport);
+    const missionVehicleId = this.world.missions?.l8?.state.carId;
+    const car = (truckId ?? missionVehicleId) ? this.world.vehicles!.cars.get(truckId ?? missionVehicleId!) : [...this.world.vehicles!.cars.values()].find(c => c.physics.def.transport);
     const record = car && this.records.get(car.entity.id);
     if (!record) return;
     // Q-126: warming disposable prototypes still rebuilt geometry and skinned
@@ -69,13 +70,23 @@ export class VehicleView extends Group {
         for (const copy of copies) { copy.visible = false; copy.removeFromParent(); this.occupants.get(copy.actorId)?.dispose(); this.occupants.set(copy.actorId, copy); }
       };
     }
-    const assets = new Set<string>([`char.courier-${this.world.entities.get(1)!.survivor!.variant}`]);
+    const player = this.world.entities.get(1)!;
+    const assets = new Set<string>();
     for (const entity of this.world.entities.iterate()) if (entity.civilian && !entity.civilian.pet && entity.health.current > 0) assets.add(entity.appearance?.asset ?? entity.civilian.model ?? 'npc.firefighter-alive');
-    const copies = await Promise.all([...assets].map((asset, i) => VehicleOccupant.load(this.registry, -i - 1, asset, this.materials)));
+    const copies = await Promise.all([
+      ...(!this.occupants.has(player.id) ? [VehicleOccupant.load(this.registry, player.id, `char.courier-${player.survivor!.variant}`, this.materials).then(copy => ({ copy, retain: true }))] : []),
+      ...[...assets].map((asset, index) => VehicleOccupant.load(this.registry, -index - 1, asset, this.materials).then(copy => ({ copy, retain: false }))),
+    ]);
     const seat = record.model.getObjectByName('driverSeat')!;
-    for (const copy of copies) { record.model.add(copy); copy.pose(seat); }
+    for (const { copy } of copies) { record.model.add(copy); copy.pose(seat); }
     let cleaned = false;
-    return () => { if (cleaned) return; cleaned = true; for (const copy of copies) copy.dispose(); };
+    return () => {
+      if (cleaned) return; cleaned = true;
+      for (const { copy, retain } of copies) {
+        copy.visible = false; copy.removeFromParent();
+        if (retain) this.occupants.set(copy.actorId, copy); else copy.dispose();
+      }
+    };
   }
   /** The mandatory L9 wreck is loaded and compiled before driving, through the existing registry. */
   async prewarmCrash(): Promise<(() => void) | undefined> {
