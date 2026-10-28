@@ -1,5 +1,6 @@
 import { restoreCrowdGlasses } from './skin-crowd-glasses';
 import { restoreFireHelmet } from './restore-fire-helmet';
+import { restoreMegaSkull } from './restore-mega-skull';
 import { paintAnimalDetails, restoreElephantTail, type TuskRecipe } from './skin-crowd-animal-details';
 import { animalTeeth } from './skin-crowd-animal-infection';
 import { execFileSync } from 'node:child_process';
@@ -80,7 +81,10 @@ if (metadata?.class === 'quadruped' && ['amb.lion', 'inf.lion', 'amb.gorilla', '
 const io = await assetIO(), started = Date.now(), receipts = [];
 // A carried object fused into the body cannot follow the game's prop lifecycle.
 // Refuse it before changing any active asset; anatomy fits inside this hand envelope.
-if (metadata?.class !== 'quadruped' && !def.animatedNodes.includes('body')) {
+// Mega Alpha hands are intentionally far beyond the ordinary hand reach: the
+// boss's oversized fists are anatomy, not fused carried props. L10's Mega has
+// no held-weapon socket; keep the prop guard for all other humanoid sources.
+if (metadata?.class !== 'quadruped' && metadata?.class !== 'mega' && !def.animatedNodes.includes('body')) {
   const document = await io.read(join(source, authored ? 'model.glb' : 'lod0.glb'));
   const bounds = getBounds(document.getRoot().listScenes()[0]), reach = (bounds.max[1] - bounds.min[1]) * .2;
   for (const name of ['handL', 'handR']) {
@@ -133,6 +137,7 @@ for (const lod of [0, 1, 2]) {
   let bodyBudget: number | undefined = unbound && id === 'inf.dog' ? (JSON.parse(readFileSync(join(dirname(report), 'amb.dog', `lod${lod}.json`), 'utf8')) as { bodyTriangleBudget: number | null }).bodyTriangleBudget ?? undefined : undefined;
   for (let attempt = 0; attempt < 4; attempt++) {
     execFileSync(process.execPath, ['--import', 'tsx', ...args, ...bodyBudget ? ['--body-budget', String(bodyBudget)] : []], { stdio: 'pipe' });
+    if (id.startsWith('inf.mega-alpha')) writeFileSync(join(report, `lod${lod}.head.json`), JSON.stringify(await restoreMegaSkull(raw, join(assets, lod ? `model.lod${lod}.glb` : 'model.glb')), null, 2) + '\n');
     if (id === 'npc.firefighter-alive') await restoreFireHelmet(raw, join(assets, 'model.lod1.glb'), lod);
     if (id === 'amb.elephant' || id === 'inf.elephant') await restoreElephantTail(raw, join(assets, 'model.glb'), lod);
     const document = await io.read(raw);
@@ -177,10 +182,15 @@ for (const lod of [0, 1, 2]) {
   const tiers = [];
   for (const low of [false, true]) {
     const target = join(output, `${id}.lod${lod}${low ? '.low' : ''}.glb`);
-    await compressSkin(raw, target, basis, lod === 2 && (unbound || derivedTemplate) && id.startsWith('npc.') ? 256 : low || lod > 0 ? 512 : 1024);
-    // Keep the continuous mid-tier anatomy at distance; a smaller far atlas
-    // satisfies the cold-file cap when detailed faces leave too little room.
-    if (lod === 2 && readFileSync(target).length > 150000) await compressSkin(raw, target, basis, 128);
+    const initialAtlas = lod === 2 && (unbound || derivedTemplate) && id.startsWith('npc.') ? 256 : low || lod > 0 ? 512 : 1024;
+    await compressSkin(raw, target, basis, initialAtlas);
+    // Let detailed boss faces retain the normal 512 atlas when it fits, then
+    // reduce the image only as needed for each standalone LOD byte budget.
+    const byteLimit = [600000, 250000, 150000][lod];
+    for (const atlas of [256, 128]) {
+      if (readFileSync(target).length <= byteLimit || atlas >= initialAtlas) continue;
+      await compressSkin(raw, target, basis, atlas);
+    }
     const bytes = readFileSync(target), document = await io.read(target), errors: string[] = [];
     if (bytes.length > [600000, 250000, 150000][lod]) errors.push(`size ${bytes.length} exceeds LOD${lod}`);
     if (!document.getRoot().listSkins().length) errors.push('missing skin');

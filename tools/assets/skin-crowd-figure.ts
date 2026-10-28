@@ -1131,7 +1131,9 @@ if (bodyPath && (openEdges > 0 || components !== 1)) {
   for (let start = 0; start < welded; start++) if (!seen.has(start)) {
     const stack = [start], vertices: number[] = []; seen.add(start);
     while (stack.length) { const w = stack.pop()!; vertices.push(w); for (const u of neighbours[w]) if (!seen.has(u)) { seen.add(u); stack.push(u); } }
-    groups.push({ vertices: vertices.length, owners: [...new Set(vertices.map(w => JOINTS[owner[w]]))] });
+    const bounds = [[Infinity, Infinity, Infinity], [-Infinity, -Infinity, -Infinity]];
+    for (const w of vertices) for (let axis = 0; axis < 3; axis++) { const value = body.pos[w * 3 + axis]; bounds[0][axis] = Math.min(bounds[0][axis], value); bounds[1][axis] = Math.max(bounds[1][axis], value); }
+    groups.push({ vertices: vertices.length, owners: [...new Set(vertices.map(w => JOINTS[owner[w]]))], bounds });
   }
   console.error(JSON.stringify({ topology: groups }));
   throw new Error(`Continuous source must remain closed and connected: ${components} components, ${openEdges} open edges`);
