@@ -51,7 +51,7 @@ test('streamed highway joints reuse the static placement and shadow graph across
   } finally { a.dispose(); b.dispose(); for (const geometry of geometries) geometry.dispose(); shading.dispose(); lighting.dispose(); }
 });
 
-test('a held cane reaches the floor across rig scales without moving its grip', () => {
+test('a held cane reaches the floor across rig scales without moving its fitted grip', () => {
   const props = new RoutineProps(), matrix = new Matrix4();
   for (const scale of [.8, 1, 1.3]) for (const floor of [0, .13]) {
     const hand = new Matrix4().makeScale(scale, scale, scale).setPosition(.2, floor + .8 * scale, .3);
@@ -59,7 +59,8 @@ test('a held cane reaches the floor across rig scales without moving its grip', 
     const mesh = props.children.find(child => (child as InstancedMesh).count === 1) as InstancedMesh;
     mesh.getMatrixAt(0, matrix);
     expect(mesh.geometry.boundingBox!.clone().applyMatrix4(matrix).min.y).toBeCloseTo(floor, 5);
-    for (const axis of [12, 13, 14]) expect(matrix.elements[axis]).toBeCloseTo(hand.elements[axis], 6);
+    const grip = hand.clone().multiply(new Matrix4().makeTranslation(.07 - .025, 0, 0));
+    for (const axis of [12, 13, 14]) expect(matrix.elements[axis]).toBeCloseTo(grip.elements[axis], 6);
   }
   props.dispose();
 });
