@@ -27,7 +27,7 @@ try {
         const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: Game }).game;
         const view = g.view as unknown as { vehicles?: Object3D; bicycle?: Object3D; character?: Object3D };
         const builds: { at: number; tick: number; material: string; object: string; asset?: string; subject: boolean }[] = [];
-        const frames: { at: number; ms: number; tick: number; sim: number; update: number; render: number; builds: number; infected: number; heap: number }[] = [];
+        const frames: { at: number; ms: number; tick: number; x: number; z: number; sim: number; update: number; render: number; builds: number; infected: number; heap: number }[] = [];
         const before = { ...a.perf().nodeBuildMaterials }, original = g.view.renderer.debug.onNodeBuilderCreated;
         let stop = false, previous = performance.now();
         g.view.renderer.debug.onNodeBuilderCreated = (builder, object) => {
@@ -43,7 +43,8 @@ try {
         };
         const sample = (at: number) => {
           if (stop) return;
-          frames.push({ at, ms: at - previous, tick: a.tick(), sim: (g as unknown as { simMs: number }).simMs, update: g.view.updateCpuMs, render: g.view.renderCpuMs, builds: builds.length, infected: g.world.infected?.director.count ?? 0, heap: (performance as Performance & { memory?: { usedJSHeapSize: number } }).memory?.usedJSHeapSize ?? 0 });
+          const player = g.world.entities.get(1)!;
+          frames.push({ at, ms: at - previous, tick: a.tick(), x: player.transform.x, z: player.transform.z, sim: (g as unknown as { simMs: number }).simMs, update: g.view.updateCpuMs, render: g.view.renderCpuMs, builds: builds.length, infected: g.world.infected?.director.count ?? 0, heap: (performance as Performance & { memory?: { usedJSHeapSize: number } }).memory?.usedJSHeapSize ?? 0 });
           previous = at; requestAnimationFrame(sample);
         };
         const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -63,7 +64,8 @@ try {
             await wait(1800);
             a.teleport(1, { x: -48, z: 46 });
             mark('bus-fight-start');
-            for (let shot = 0; shot < 16; shot++) {
+            for (let shot = 0; shot < 24; shot++) {
+              if (shot === 8) { a.teleport(1, { x: -70.5, z: 47.5 }); mark('bus-door-fight'); }
               const player = g.world.entities.get(1)!;
               const enemy = g.world.infected!.active.filter(e => e.health.current > 0 && !e.hidden && !e.emerging)
                 .sort((x, y) => Math.hypot(x.transform.x - player.transform.x, x.transform.z - player.transform.z) - Math.hypot(y.transform.x - player.transform.x, y.transform.z - player.transform.z))[0];
