@@ -19,20 +19,37 @@
     "passed": 7,
     "qa": 6,
     "public": 1,
-    "seconds": 181.2,
+    "seconds": 194.6,
     "webglAttributesMax": 13,
     "webgpuVertexBuffersMax": 8,
     "freezeGuardPassed": true,
     "shaderBuildsAfterWarmup": 0,
     "maxGameplayFrameMs": 17,
-    "measuredFrames": 169
+    "measuredFrames": 169,
+    "sourceCommit": "8d91b9907"
   },
   "sceneGate": {
     "exit": 0,
     "passed": 43,
     "knownBaselineExceptions": 5,
     "missing": 0,
-    "repeatForFinalFarLod": "pending"
+    "minutes": 7.4,
+    "sourceCommit": "8d91b9907"
   },
-  "realInputL6": "pending"
+  "realInputL6": {
+    "exit": 0,
+    "finished": true,
+    "wallSeconds": 227,
+    "simSeconds": 219,
+    "skipped": 0,
+    "deaths": 0,
+    "assists": 0,
+    "issues": 0,
+    "mandatorySteps": [
+      "shelter",
+      "stop",
+      "retreat",
+      "exit"
+    ]
+  }
 }
