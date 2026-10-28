@@ -38,6 +38,7 @@ interface Footwork { contacts: CourierGroundContacts; owner: CrowdLocomotion; ti
 /** Per-figure footwork shared by every LOD batch of one crowd, with a per-frame budget of fully solved figures. */
 export class CrowdFootwork {
   readonly states = new Map<number, Footwork>();
+  readonly animalContacts = new Map<number, { contacts: PawContacts; owner: CrowdLocomotion; time: number }>();
   readonly far = new Map<number, { contacts: GroundContacts; owner: CrowdLocomotion; time: number }>();
   private frame = 0;
   private admitted = 0;
@@ -58,6 +59,7 @@ export class CrowdFootwork {
     if (this.frame % 120 !== 0) return;
     for (const [id, s] of this.states) if (time - s.time > 2 || time < s.time) this.states.delete(id);
     for (const [id, s] of this.far) if (time - s.time > 2 || time < s.time) this.far.delete(id);
+    for (const [id, s] of this.animalContacts) if (time - s.time > 2 || time < s.time) this.animalContacts.delete(id);
   }
 }
 
@@ -88,6 +90,8 @@ export class CrowdLocomotion {
   private prunedAt = -1;
   private readonly paws = new Map<number, PawContacts>();
   private readonly animal: boolean;
+  private readonly animalSkin: boolean;
+  private readonly fourLegs: boolean;
   private readonly groundedAnimal: boolean;
   private readonly preserveAnimalJoints: boolean;
   private readonly rest: { position: Vector3; quaternion: import('three').Quaternion; scale: Vector3 }[];
@@ -95,8 +99,11 @@ export class CrowdLocomotion {
   /** Rest ankle height in foot-local units (sole contact offset for probes). */
   readonly sole: number;
   private readonly solePoints?: Vector3[][];
+  private readonly pawSoles: { node: Object3D; points: Vector3[] }[];
   constructor(private readonly model: Object3D, clip: CrowdClip, readonly footwork = new CrowdFootwork()) {
-    this.animal = !!model.getObjectByName('legFL');
+    this.fourLegs = !!model.getObjectByName('legFL');
+    this.animalSkin = model.getObjectByName('root')?.userData.crowdQuadruped === true;
+    this.animal = this.fourLegs || this.animalSkin;
     this.groundedAnimal = this.animal && model.getObjectByName('root')?.userData.groundedAnimal === true;
     this.preserveAnimalJoints = model.getObjectByName('root')?.userData.ss_preserveAnimalJoints === true;
     model.updateMatrixWorld(true);
@@ -124,6 +131,12 @@ export class CrowdLocomotion {
     this.rig = Object.fromEntries(this.nodes.map(node => [node.name, node])) as CharacterRig;
     // The instance frame supplies heading and world scale; internal GLB scale remains on the skeleton.
     this.rig.root = this.frame;
+    let declaredPaws = model.getObjectByName('root')?.userData.crowdQuadruped === true ? model.getObjectByName('root')?.userData.animalSoles as Record<string, number[][]> | undefined : undefined;
+    if (this.animal && !this.fourLegs && this.solePoints) declaredPaws = Object.fromEntries(this.solePoints.map((points, side) => [side ? 'footR' : 'footL', points.map(p => p.toArray())]));
+    this.pawSoles = Object.entries(declaredPaws ?? {}).flatMap(([name, points]) => {
+      const node = this.nodes.find(n => n.name === name);
+      return node ? [{ node, points: points.map(p => new Vector3().fromArray(p)) }] : [];
+    });
     this.frame.updateMatrixWorld(true);
     this.reach = this.rig.legL && this.rig.shinL && this.rig.footL
       ? this.rig.legL.getWorldPosition(new Vector3()).distanceTo(this.rig.shinL.getWorldPosition(new Vector3())) + this.rig.shinL.getWorldPosition(new Vector3()).distanceTo(this.rig.footL.getWorldPosition(new Vector3())) : 0;
@@ -238,22 +251,34 @@ export class CrowdLocomotion {
       if (left && right) contacts.inherit(phase, [left, right]);
     }
     this.load(pose, instance, layers, phase);
-    const stride = cadenceStride(this.animal ? 'corgi-trot' : name, scale, speed), run = /run|sprint|flee/.test(name) ? 1 : 0;
+    const stride = cadenceStride(this.fourLegs ? 'corgi-trot' : name, scale, speed), run = /run|sprint|flee/.test(name) ? 1 : 0;
     if (this.animal) {
       let paws = this.paws.get(id);
       if (!paws) { paws = new PawContacts(this.frame, this.model); this.paws.set(id, paws); }
-      if (speed > .06 && strides[name]) paws.update(phase, stride, 'corgi-trot');
+      const previous = this.animalSkin ? this.footwork.animalContacts.get(id) : undefined;
+      if (previous && previous.owner !== this && time !== undefined && time >= previous.time && time - previous.time <= .3) paws.inherit(previous.contacts);
+      if (speed > .06 && strides[name]) paws.update(phase, stride, this.fourLegs ? 'corgi-trot' : name);
       else paws.hold(1 / 60, this.groundedAnimal);
+      if (this.animalSkin && time !== undefined) this.footwork.animalContacts.set(id, { contacts: paws, owner: this, time });
     } else if (contacts && strides[name] && speed > .06) contacts.update(phase, stride, run, 1, this.stance(name, stride, this.scale.setFromMatrixScale(this.frame.matrixWorld).y), true);
     if (contacts && time !== undefined) this.footwork.far.set(id, { contacts, owner: this, time });
     // Humans always keep the sole correction; large authored quadrupeds retain it after paw/contact pose layers.
-    if (!this.animal || (this.groundedAnimal && (gaitStyles[name] || standingClips.has(name)))) this.ground();
+    if (!this.animal || ((this.groundedAnimal || this.pawSoles.length) && (gaitStyles[name] || standingClips.has(name)))) this.ground();
     this.store(pose, instance);
   }
   /** Pose layers (hunch, lunge, flinch) pivot the legs with the pelvis: lift the pelvis by whatever heel or toe they
    * pushed under the floor (QA: infected feet 2-6 cm under the floor at melee range). Same sole points as the probe. */
   private ground(): void {
     const { hip, footL, footR } = this.rig;
+    if (hip && this.pawSoles.length) {
+      let bottom = Infinity;
+      for (const { node, points } of this.pawSoles) for (const point of points) bottom = Math.min(bottom, this.point.copy(point).applyMatrix4(node.matrixWorld).y);
+      const delta = this.frame.matrixWorld.elements[13] - bottom;
+      // Test the four drawn paws, rather than dummy humanoid sole offsets.
+      // Keep swing clearance after the per-paw stance solve.
+      if (delta > 1e-4) { hip.position.y += delta / this.scale.setFromMatrixScale(hip.parent!.matrixWorld).y; updateWorldTranslation(hip); }
+      return;
+    }
     if (!hip || !footL || !footR || !this.sole) return;
     const floor = this.frame.matrixWorld.elements[13];
     let deficit = 0;

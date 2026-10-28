@@ -2,6 +2,7 @@ import type { CrowdLook } from './CrowdAppearance';
 import { Mesh, type Object3D, Matrix4, Vector3, type BufferGeometry } from 'three';
 import type { CrowdPosePalette } from './CrowdPosePalette';
 import { pickBodies } from './PickBodies';
+import { authoredSoles } from './footSoles';
 
 /** Draw-submission and ankle probes, read only by the query-gated test API. */
 export class CrowdFigureProbe {
@@ -25,9 +26,15 @@ export class CrowdFigureProbe {
     if (!__QA_HOOKS__) return;
     model.updateMatrixWorld(true);
     const declared = model.getObjectByName('root')?.userData.animalSoles as Record<string, number[][]> | undefined;
-    if (declared) {
+    if (declared && Object.keys(declared).length) {
       this.animalSoles = Object.entries(declared).map(([part, points]) => ({ part, heel: new Vector3().fromArray(points[0]), toe: new Vector3().fromArray(points.at(-1)!) }));
       return;
+    }
+    // Zoo bipeds retain humanoid ankle aliases. Their fitted sole bounds,
+    // rather than the old dummy ankle height, describe the drawn feet.
+    const biped = model.getObjectByName('root')?.userData.crowdQuadruped === true ? authoredSoles(model) : undefined;
+    if (biped) {
+      this.animalSoles = biped.map((points, side) => ({ part: side ? 'footR' : 'footL', heel: points[0], toe: points.at(-1)! })); return;
     }
     this.animalSoles = ['FL', 'FR', 'BL', 'BR'].flatMap(side => {
       const part = model.getObjectByName(`paw${side}`) ?? model.getObjectByName(`leg${side}`);

@@ -16,7 +16,7 @@
  *    w_other = 0.5 * (1 - smoothstep(0, R, d)), d = edge distance to the seam on either side.
  * 4. Smooth normals come from the welded surface (no lighting seam at UV islands).
  * Output: the same node hierarchy, the rigid meshes removed, one SkinnedMesh `skin_body` (+ `skin_eyes`
- * with a crowdEye material marker). Humanoids use 16 deforming joints; quadrupeds retain the 28-name contract below.
+ * with a crowdEye material marker). Humanoids use 16 deforming joints; quadrupeds retain the extended animal contract below.
  */
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -51,10 +51,10 @@ if (!rigPath || !outPath) throw new Error('Expected --rig and --out');
 
 const HUMANOID = ['root', 'hip', 'torso', 'head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'handL', 'handR', 'legL', 'legR', 'shinL', 'shinR', 'footL', 'footR'];
 // Production dog/zebra rigs retain the humanoid aliases on the same leg chains. Lion rigs may omit the paw aliases.
-const QUADRUPED = [...HUMANOID, 'body', 'neck', 'jaw', 'tail', 'legFL', 'legFR', 'legBL', 'legBR', 'pawFL', 'pawFR', 'pawBL', 'pawBR', 'tongue'];
+const QUADRUPED = [...HUMANOID, 'body', 'neck', 'jaw', 'tail', 'legFL', 'legFR', 'legBL', 'legBR', 'pawFL', 'pawFR', 'pawBL', 'pawBR', 'tongue', 'trunk', 'trunkTip', 'earL', 'earR', 'wingL', 'wingR'];
 /** Geodesic blend half-width per child joint (metres at 1.8 m figure height). */
 const BAND: Record<string, number> = { hip: .06, torso: .07, head: .035, armL: .06, armR: .06, foreArmL: .05, foreArmR: .05, handL: .03, handR: .03, legL: .07, legR: .07, shinL: .055, shinR: .055, footL: .035, footR: .035, body: .08, neck: .06, jaw: .025, tail: .035, legFL: .06, legFR: .06, legBL: .06, legBR: .06, pawFL: .035, pawFR: .035, pawBL: .035, pawBR: .035 };
-BAND.tongue = .015;
+BAND.tongue = .015; BAND.trunk = .05; BAND.trunkTip = .035; BAND.earL = BAND.earR = .04; BAND.wingL = BAND.wingR = .05;
 
 await Promise.all([MeshoptDecoder.ready, MeshoptSimplifier.ready]);
 const io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({ 'meshopt.decoder': MeshoptDecoder });
@@ -71,7 +71,8 @@ if (args.includes('--retain-corgi-props')) {
 const nodes = rig.getRoot().listNodes();
 const quadruped = arg('--rig-kind') === 'quadruped' || nodes.some(n => n.getName() === 'body' || n.getName() === 'legFL');
 const JOINTS = (quadruped ? QUADRUPED : HUMANOID).filter(name => nodes.some(n => n.getName() === name));
-for (const name of quadruped ? ['root', 'body', 'head'] : HUMANOID) if (!JOINTS.includes(name)) throw new Error(`missing joint ${name}`);
+if (JOINTS.length > 32) throw Error(`Animal skin exceeds the 32-part pose contract: ${JOINTS.length}`);
+for (const name of quadruped ? ['root', 'head'] : HUMANOID) if (!JOINTS.includes(name)) throw new Error(`missing joint ${name}`);
 const jointNode = new Map(JOINTS.map(name => [name, nodes.find(n => n.getName() === name)!] as const));
 for (const [name, node] of jointNode) if (!node) throw new Error(`missing joint ${name}`);
 let neutralArm: string | undefined;
@@ -225,7 +226,7 @@ if (bodyPath) {
   }
   // Place by the recorded scale/yaw, choose the yaw sign that fits the rigid surface, translate by bounds.
   const rigidGrid = grid(rigid.pos, .05);
-  const closestToRig = args.includes('--fit-rig-height') ? surfaceNearest(rigid) : (x: number, y: number, z: number) => nearest(rigidGrid, rigid.pos, x, y, z);
+  const closestToRig = args.includes('--fit-rig-height') || quadruped ? surfaceNearest(rigid) : (x: number, y: number, z: number) => nearest(rigidGrid, rigid.pos, x, y, z);
   let best: { error: number; pos: number[]; yaw: number; translation: number[] } | undefined;
   for (const sign of args.includes('--body-yaw-fixed') ? [1] : [1, -1]) {
     const a = sign * yaw * Math.PI / 180, c = Math.cos(a), s = Math.sin(a), out: number[] = [];
@@ -234,7 +235,7 @@ if (bodyPath) {
     for (let i = 0; i < out.length; i++) { lo[i % 3] = Math.min(lo[i % 3], out[i]); hi[i % 3] = Math.max(hi[i % 3], out[i]); }
     for (let i = 0; i < rigid.pos.length; i++) { rlo[i % 3] = Math.min(rlo[i % 3], rigid.pos[i]); rhi[i % 3] = Math.max(rhi[i % 3], rigid.pos[i]); }
     // Feet on the floor (y min), centre of the x/z bounds.
-    const t = [(rlo[0] + rhi[0]) / 2 - (lo[0] + hi[0]) / 2, rlo[1] - lo[1], (rlo[2] + rhi[2]) / 2 - (lo[2] + hi[2]) / 2];
+    const t = [(rlo[0] + rhi[0]) / 2 - (lo[0] + hi[0]) / 2, (quadruped && Math.abs(rlo[1]) > 1e-3 ? 0 : rlo[1]) - lo[1], (rlo[2] + rhi[2]) / 2 - (lo[2] + hi[2]) / 2];
     for (let i = 0; i < out.length; i++) out[i] += t[i % 3];
     let error = 0; for (let i = 0; i < out.length; i += 3) error += closestToRig(out[i], out[i + 1], out[i + 2]).distance;
     error /= out.length / 3;
@@ -347,6 +348,39 @@ if (args.includes('--retain-corgi-props')) {
   const pivot = new Vector3(lo.x, (lo.y + hi.y) / 2, (lo.z + hi.z) / 2).applyMatrix4(world(jointNode.get('head')!).invert());
   jointNode.get('tongue')!.setTranslation(pivot.toArray());
   fit.tongue = { vertices: points.length, pivot: pivot.toArray() }; rmSync(directory, { recursive: true, force: true });
+}
+
+// Bound animal sources can leave isolated nearest-surface labels (a mane
+// vertex on a paw). Resolve these on the welded topology before weighting.
+if (quadruped && bodyPath) {
+  const keys = new Map<string, number>(), representatives: number[] = [];
+  const weld = body.owner.map((_, i) => {
+    const key = body.pos.slice(i * 3, i * 3 + 3).map(x => Math.round(x / 1e-6)).join(',');
+    if (!keys.has(key)) { keys.set(key, keys.size); representatives.push(i); }
+    return keys.get(key)!;
+  });
+  const labels = representatives.map(i => body.owner[i]);
+  const links: Set<number>[] = labels.map(() => new Set());
+  for (let t = 0; t < body.tris.length; t += 3) for (let e = 0; e < 3; e++) {
+    const a = weld[body.tris[t + e]], b = weld[body.tris[t + (e + 1) % 3]]; links[a].add(b); links[b].add(a);
+  }
+  let repaired = 0;
+  for (let pass = 0; pass < 3; pass++) {
+    const seen = new Set<number>(), groups: number[][] = [], largest = new Map<number, number>();
+    for (let start = 0; start < labels.length; start++) if (!seen.has(start)) {
+      const group: number[] = [], stack = [start]; seen.add(start);
+      while (stack.length) { const at = stack.pop()!; group.push(at); for (const to of links[at]) if (!seen.has(to) && labels[to] === labels[start]) { seen.add(to); stack.push(to); } }
+      groups.push(group); largest.set(labels[start], Math.max(largest.get(labels[start]) ?? 0, group.length));
+    }
+    for (const group of groups) {
+      if (group.length === largest.get(labels[group[0]])) continue;
+      const counts = new Map<number, number>();
+      for (const at of group) for (const to of links[at]) if (labels[to] !== labels[at]) counts.set(labels[to], (counts.get(labels[to]) ?? 0) + 1);
+      const replacement = [...counts].sort((a, b) => b[1] - a[1])[0]?.[0];
+      if (replacement !== undefined) for (const at of group) { labels[at] = replacement; repaired++; }
+    }
+  }
+  body.owner = weld.map(w => labels[w]); fit.animalOwnershipRepairs = repaired;
 }
 
 const bodyBudget = Number(arg('--body-budget') ?? Infinity);
@@ -587,7 +621,7 @@ for (const cap of capWeights) {
   for (const w of cap.rim) for (const [joint, weight] of weights[w]) average.set(joint, (average.get(joint) ?? 0) + weight / cap.rim.length);
   weights[cap.centre] = average;
 }
-if (args.includes('--fit-rig-height')) {
+if (args.includes('--fit-rig-height') || quadruped) {
   // Relax intersecting shoulder/hip blend bands on the surface graph. Local
   // of local passes removes abrupt multi-joint transitions without spatially
   // bleeding a glove into the neighbouring leg across a gap.
@@ -926,7 +960,10 @@ if (!args.includes('--retain-corgi-props')) {
       }
     }
     if (!loop || !centre) throw Error(`No retained skin surface for stump_${part}`);
-    const distance = centre.distanceTo(pivot); if (!created.length && distance > .35) throw Error(`Distant retained skin surface for stump_${part}: ${distance}`);
+    // Quadruped production pivots can sit just beyond the nearest closed
+    // legacy limb surface (the elephant forearm LOD2 is 0.357 m). Keep the
+    // stricter humanoid limit; allow only the small measured quadruped margin.
+    const distance = centre.distanceTo(pivot); if (!created.length && distance > (quadruped ? .4 : .35)) throw Error(`Distant retained skin surface for stump_${part}: ${distance}`);
     const selected = created.length ? created : [loop];
     const capParts: number[] = [], capPositions: number[] = [], capNormals: number[] = [], capJoints: number[] = [], capWeights: number[] = [], triangles: number[] = [];
     for (const boundary of selected) {
@@ -1126,7 +1163,7 @@ const animalSoles = Object.fromEntries(['FL', 'FR', 'BL', 'BR'].flatMap(side => 
   const name = JOINTS.includes(`paw${side}`) ? `paw${side}` : `leg${side}`, box = soleBounds(name);
   return box ? [[name, [box[0], box[3]].flatMap(x => [box[2], box[5]].map(z => [x, box[1], z]))]] : [];
 }));
-for (const node of out.getRoot().listNodes()) if (node.getName() === 'root') node.setExtras({ ...node.getExtras(), skinnedCrowd: true, crowdAtlas: true, ...(spectacleTop !== undefined ? { spectacleTop } : {}), ...(soleBoxes.every(Boolean) ? { meshSoles: true, soleBounds: soleBoxes } : {}), ...(quadruped ? { animalSoles } : {}) });
+for (const node of out.getRoot().listNodes()) if (node.getName() === 'root') node.setExtras({ ...node.getExtras(), skinnedCrowd: true, crowdAtlas: true, ...(quadruped ? { crowdQuadruped: true } : {}), ...(spectacleTop !== undefined ? { spectacleTop } : {}), ...(soleBoxes.every(Boolean) ? { meshSoles: true, soleBounds: soleBoxes } : {}), ...(quadruped ? { animalSoles } : {}) });
 if (bodyPath && (openEdges > 0 || components !== 1)) {
   const seen = new Set<number>(), groups = [];
   for (let start = 0; start < welded; start++) if (!seen.has(start)) {

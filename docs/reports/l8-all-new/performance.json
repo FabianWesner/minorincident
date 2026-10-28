@@ -1,0 +1,408 @@
+{
+  "mainCommit": "f36334ddd8a41181ea7055051f4889ddc01a36ba",
+  "method": "Shared pool, native Metal WebGPU; full L8 population plus all animal forms. RAF p95 refresh-capped diagnostic, not uncapped acceptance. Textures are distinct decoded/upload payload including mipmaps and pose atlases, excluding driver padding, not physical VRAM.",
+  "uncappedLowP95Within1ms": "pending PO quiet window; shared-only browser rule precludes exclusive uncapped job",
+  "population": {
+    "low": {
+      "main": {
+        "timing": {
+          "timing": "shared pool, refresh-capped diagnostic; uncapped acceptance pending the PO quiet window",
+          "samples": 361,
+          "p95": 16.700000000000728,
+          "max": 16.80000000000109,
+          "ai": 100
+        },
+        "decodedBytes": 329190080,
+        "draws": 153,
+        "triangles": 304809
+      },
+      "old": {
+        "timing": {
+          "timing": "shared pool, refresh-capped diagnostic; uncapped acceptance pending the PO quiet window",
+          "samples": 361,
+          "p95": 16.799999999999272,
+          "max": 16.80000000000291,
+          "ai": 100
+        },
+        "decodedBytes": 318789440,
+        "draws": 153,
+        "triangles": 318942
+      },
+      "new": {
+        "timing": {
+          "timing": "shared pool, refresh-capped diagnostic; uncapped acceptance pending the PO quiet window",
+          "samples": 361,
+          "p95": 16.799999999999272,
+          "max": 16.80000000000291,
+          "ai": 100
+        },
+        "decodedBytes": 330715936,
+        "draws": 153,
+        "triangles": 291511
+      },
+      "deltaVersusMain": {
+        "decodedBytes": 1525856,
+        "draws": 0,
+        "triangles": -13298
+      }
+    },
+    "high": {
+      "main": {
+        "timing": {
+          "timing": "shared pool, refresh-capped diagnostic; uncapped acceptance pending the PO quiet window",
+          "samples": 360,
+          "p95": 16.700000000000728,
+          "max": 16.80000000000109,
+          "ai": 200
+        },
+        "decodedBytes": 376055168,
+        "draws": 176,
+        "triangles": 463625
+      },
+      "old": {
+        "timing": {
+          "timing": "shared pool, refresh-capped diagnostic; uncapped acceptance pending the PO quiet window",
+          "samples": 361,
+          "p95": 16.700000000000728,
+          "max": 16.80000000000291,
+          "ai": 200
+        },
+        "decodedBytes": 363288704,
+        "draws": 176,
+        "triangles": 494969
+      },
+      "new": {
+        "timing": {
+          "timing": "shared pool, refresh-capped diagnostic; uncapped acceptance pending the PO quiet window",
+          "samples": 358,
+          "p95": 16.799999999999272,
+          "max": 50,
+          "ai": 200
+        },
+        "decodedBytes": 385483024,
+        "draws": 176,
+        "triangles": 443319
+      },
+      "deltaVersusMain": {
+        "decodedBytes": 9427856,
+        "draws": 0,
+        "triangles": -20306
+      }
+    }
+  },
+  "sanctuary": {
+    "low": {
+      "main": {
+        "timing": null,
+        "decodedBytes": 160580952,
+        "draws": 110,
+        "triangles": 117583
+      },
+      "old": {
+        "timing": null,
+        "decodedBytes": 155849304,
+        "draws": 110,
+        "triangles": 117583
+      },
+      "new": {
+        "timing": null,
+        "decodedBytes": 166000568,
+        "draws": 110,
+        "triangles": 117583
+      },
+      "deltaVersusMain": {
+        "decodedBytes": 5419616,
+        "draws": 0,
+        "triangles": 0
+      }
+    },
+    "high": {
+      "main": {
+        "timing": null,
+        "decodedBytes": 194002032,
+        "draws": 123,
+        "triangles": 153874
+      },
+      "old": {
+        "timing": null,
+        "decodedBytes": 200024168,
+        "draws": 123,
+        "triangles": 153874
+      },
+      "new": {
+        "timing": null,
+        "decodedBytes": 220443256,
+        "draws": 123,
+        "triangles": 153874
+      },
+      "deltaVersusMain": {
+        "decodedBytes": 26441224,
+        "draws": 0,
+        "triangles": 0
+      }
+    }
+  },
+  "coldLoads": {
+    "rows": [
+      {
+        "variant": "prod",
+        "summary": {
+          "origin": "https://minor-incident.pages.dev",
+          "backend": "webgpu",
+          "quality": "low",
+          "level": "L8",
+          "diagnostic": false,
+          "gameplaySamples": 0,
+          "menuWaits": [
+            0
+          ],
+          "n": 5,
+          "median": 4625.5,
+          "p90": 5038.10000038147,
+          "max": 5038.10000038147,
+          "maxFrameMs": 16.800000000000182,
+          "errors": []
+        },
+        "samples": [
+          {
+            "sampledAt": "2026-10-28T12:48:47.352Z",
+            "ms": 4625.5,
+            "bundle": "https://minor-incident.pages.dev/build/index-DZEalWrY.js",
+            "adapter": {
+              "vendor": "apple",
+              "architecture": "metal-3",
+              "description": "",
+              "fallback": false
+            },
+            "contexts": [
+              "webgpu",
+              "2d"
+            ],
+            "load": [
+              5.376953125,
+              5.216796875,
+              4.43408203125
+            ],
+            "errors": []
+          },
+          {
+            "sampledAt": "2026-10-28T12:48:53.393Z",
+            "ms": 4624.099999427795,
+            "bundle": "https://minor-incident.pages.dev/build/index-DZEalWrY.js",
+            "adapter": {
+              "vendor": "apple",
+              "architecture": "metal-3",
+              "description": "",
+              "fallback": false
+            },
+            "contexts": [
+              "webgpu",
+              "2d"
+            ],
+            "load": [
+              4.94384765625,
+              5.12744140625,
+              4.4111328125
+            ],
+            "errors": []
+          },
+          {
+            "sampledAt": "2026-10-28T12:48:59.735Z",
+            "ms": 5038.10000038147,
+            "bundle": "https://minor-incident.pages.dev/build/index-DZEalWrY.js",
+            "adapter": {
+              "vendor": "apple",
+              "architecture": "metal-3",
+              "description": "",
+              "fallback": false
+            },
+            "contexts": [
+              "webgpu",
+              "2d"
+            ],
+            "load": [
+              4.7080078125,
+              5.0751953125,
+              4.39697265625
+            ],
+            "errors": []
+          },
+          {
+            "sampledAt": "2026-10-28T12:49:05.660Z",
+            "ms": 4639.199999809265,
+            "bundle": "https://minor-incident.pages.dev/build/index-DZEalWrY.js",
+            "adapter": {
+              "vendor": "apple",
+              "architecture": "metal-3",
+              "description": "",
+              "fallback": false
+            },
+            "contexts": [
+              "webgpu",
+              "2d"
+            ],
+            "load": [
+              4.65087890625,
+              5.05712890625,
+              4.39453125
+            ],
+            "errors": []
+          },
+          {
+            "sampledAt": "2026-10-28T12:49:11.457Z",
+            "ms": 4522.299999237061,
+            "bundle": "https://minor-incident.pages.dev/build/index-DZEalWrY.js",
+            "adapter": {
+              "vendor": "apple",
+              "architecture": "metal-3",
+              "description": "",
+              "fallback": false
+            },
+            "contexts": [
+              "webgpu",
+              "2d"
+            ],
+            "load": [
+              4.4384765625,
+              5.00634765625,
+              4.38037109375
+            ],
+            "errors": []
+          }
+        ]
+      },
+      {
+        "variant": "new",
+        "summary": {
+          "origin": "http://127.0.0.1:4477",
+          "backend": "webgpu",
+          "quality": "low",
+          "level": "L8",
+          "diagnostic": false,
+          "gameplaySamples": 0,
+          "menuWaits": [
+            0
+          ],
+          "n": 5,
+          "median": 4385.200000762939,
+          "p90": 4407.199999809265,
+          "max": 4407.199999809265,
+          "maxFrameMs": 16.800000000000182,
+          "errors": []
+        },
+        "samples": [
+          {
+            "sampledAt": "2026-10-28T12:49:17.676Z",
+            "ms": 4391,
+            "bundle": "http://127.0.0.1:4477/build/index-B-jQmh_y.js",
+            "adapter": {
+              "vendor": "apple",
+              "architecture": "metal-3",
+              "description": "",
+              "fallback": false
+            },
+            "contexts": [
+              "webgpu",
+              "2d"
+            ],
+            "load": [
+              4.1630859375,
+              4.939453125,
+              4.3603515625
+            ],
+            "errors": []
+          },
+          {
+            "sampledAt": "2026-10-28T12:49:23.277Z",
+            "ms": 4407.199999809265,
+            "bundle": "http://127.0.0.1:4477/build/index-B-jQmh_y.js",
+            "adapter": {
+              "vendor": "apple",
+              "architecture": "metal-3",
+              "description": "",
+              "fallback": false
+            },
+            "contexts": [
+              "webgpu",
+              "2d"
+            ],
+            "load": [
+              3.90380859375,
+              4.85888671875,
+              4.337890625
+            ],
+            "errors": []
+          },
+          {
+            "sampledAt": "2026-10-28T12:49:28.864Z",
+            "ms": 4372.300000190735,
+            "bundle": "http://127.0.0.1:4477/build/index-B-jQmh_y.js",
+            "adapter": {
+              "vendor": "apple",
+              "architecture": "metal-3",
+              "description": "",
+              "fallback": false
+            },
+            "contexts": [
+              "webgpu",
+              "2d"
+            ],
+            "load": [
+              4.1513671875,
+              4.89404296875,
+              4.35302734375
+            ],
+            "errors": []
+          },
+          {
+            "sampledAt": "2026-10-28T12:49:34.417Z",
+            "ms": 4385.200000762939,
+            "bundle": "http://127.0.0.1:4477/build/index-B-jQmh_y.js",
+            "adapter": {
+              "vendor": "apple",
+              "architecture": "metal-3",
+              "description": "",
+              "fallback": false
+            },
+            "contexts": [
+              "webgpu",
+              "2d"
+            ],
+            "load": [
+              3.97900390625,
+              4.845703125,
+              4.3388671875
+            ],
+            "errors": []
+          },
+          {
+            "sampledAt": "2026-10-28T12:49:39.970Z",
+            "ms": 4365.89999961853,
+            "bundle": "http://127.0.0.1:4477/build/index-B-jQmh_y.js",
+            "adapter": {
+              "vendor": "apple",
+              "architecture": "metal-3",
+              "description": "",
+              "fallback": false
+            },
+            "contexts": [
+              "webgpu",
+              "2d"
+            ],
+            "load": [
+              4.380859375,
+              4.91455078125,
+              4.36572265625
+            ],
+            "errors": []
+          }
+        ]
+      }
+    ],
+    "ratio": 0.8747742203361516,
+    "limit": 1.1,
+    "pass": true,
+    "method": "Five empty contexts per build, shared native Metal WebGPU low, real menu click to loading-card closure. Remote PROD versus local public build; network and browser/device caches differ. Final matched-host uncapped performance remains pending the PO quiet window."
+  },
+  "revision": "Final infected readability correction; current new population and sanctuary recaptured."
+}
