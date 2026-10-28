@@ -17,12 +17,12 @@ import { l2Routes } from '../../src/debug/bot/LevelTwoBot';
  * One browser session of the playtest driver (run under tools/e2e-lock.sh by play.ts).
  * Plays levels by real device input only: mouse clicks on the ground (the game's own click-to-move),
  * WASD while driving or unsticking, mouse aim + Space to attack, E to interact, real clicks on the menu
- * and mission buttons. It follows the HUD objective text, the ring and the screen-edge arrow.
+ * and mission buttons. Camera zoom is explicit QA configuration. It follows the HUD objective text, the ring and the screen-edge arrow.
  * Game state is used (a) to read what the HUD shows anyway and (b) to locate itself when lost; every (b)
  * is logged as an "assist" entry and named in the report.
  */
 export interface SessionOptions {
-  origin: string; out: string; levels: string[]; quality: 'low' | 'high'; zoom: number; heroine: 'female' | 'male';
+  origin: string; out: string; levels: string[]; quality: 'low' | 'high'; zoom: number; weapon?: string; heroine: 'female' | 'male';
   /** new: title → Start game → heroine → L1. continue: title → Start game → resume level (menu Continue). debug: level list with ?debug=1. */
   entry: 'new' | 'continue' | 'debug'; profile: string; levelMinutes: number; stopAfterLevel: boolean; tag: string; noSkip?: boolean;
   /** Bounded diagnostic sample; finish without skipping an objective when time expires. */
@@ -583,14 +583,37 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       const lost = (prevWeapons ?? []).filter(w => !run!.weaponsStart.includes(w) && !/fists|kick|unarmed/.test(w));
       if (lost.length) await issue('P1', 'lost-weapon', `Carried ${lost.join(', ')} at the end of the previous level, not in the rack when ${e.level} starts (rack: ${run.weaponsStart.join(', ')})`);
     }
-    if (!zoomed) { // the PO's zoom: wheel over the canvas
-      const before = await page.evaluate(() => window.__SS__!.getState().render.camera);
-      if (needsZoomInput(before.targetZoom, o.zoom)) {
-        await page.mouse.move(e.view.w / 2, e.view.h / 2);
-        for (let i = 0; i < 6; i++) { await page.mouse.wheel(0, o.zoom >= 1 ? 120 : -120); await hold(60); }
+    if (!zoomed) {
+      if (o.weapon && e.player?.weapons.includes(o.weapon) && e.player.current !== o.weapon) {
+        const shortcut = weaponKey(o.weapon);
+        assert.ok(shortcut, `No weapon shortcut for ${o.weapon}`);
+        await press([]); await releaseAim();
+        if (e.driving) {
+          // L9 starts inside the APC, where the UI locks weapon shortcuts. This
+          // explicit diagnostic option selects a carried slot without changing the arsenal.
+          await page.evaluate(key => {
+            const w = (window.__SCENE__ as unknown as { game: Game }).game.world;
+            w.combat!.runner.loadout.input({ move: { x: 0, z: 0 }, aim: null, aimSource: null,
+              left: { down: false, held: false, up: false }, right: { down: false, held: false, up: false },
+              selector: 0, interact: false, pause: false, selectedWeaponKey: key }, w.tick);
+          }, shortcut);
+          log({ assist: 'requested starting weapon while driving', weapon: o.weapon, level: e.level });
+        } else await page.keyboard.press(`Digit${shortcut}`);
+        await hold(300);
+        const selected = await page.evaluate(() => { const w = window.__SS__!.getEntity(1)!.weapons!; return w[w.selectedSide].rack[w[w.selectedSide].index]?.id; });
+        assert.equal(selected, o.weapon, 'requested carried weapon selected');
+        log({ selectedCarriedWeapon: o.weapon, level: e.level, tick: e.tick });
       }
-      const camera = await page.evaluate(() => window.__SS__!.getState().render.camera);
-      if (o.zoom === 1.5) assert.ok(!needsZoomInput(camera.targetZoom, o.zoom), `Requested zoom 1.5, observed target ${camera.targetZoom} in ${e.level}`);
+      // Wheel notches change radius by exp(.14). With the launcher the nearest
+      // notch can miss 1.5 by > .02 and retries oscillate forever. Set this QA
+      // framing explicitly through the camera API, using the equipped weapon's limits.
+      const { camera, requestedZoom } = await page.evaluate(requested => {
+        const a = window.__SS__!, limits = a.getState().render.camera.zoomLimits;
+        const requestedZoom = Math.max(limits[0], Math.min(limits[1], requested));
+        a.camera.zoom(requestedZoom);
+        return { camera: a.getState().render.camera, requestedZoom };
+      }, o.zoom);
+      assert.ok(!needsZoomInput(camera.targetZoom, requestedZoom), `Requested zoom ${requestedZoom}, observed target ${camera.targetZoom} (allowed ${camera.zoomLimits.join('–')}) in ${e.level}`);
       zoomed = true; log({ zoom: camera.zoom, targetZoom: camera.targetZoom, level: e.level });
     }
     const key = `${e.step}|${e.completed}|${e.checkpoint}|${e.objective.replace(/ · [\d.]+\s?m\b/g, '').replace(/ · \d+:\d\d/g, '').replace(/\d+\/\d+ ?s\b/g, '#')}`;
@@ -729,7 +752,9 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       await page.keyboard.down('KeyE'); await hold(1400); await page.keyboard.up('KeyE');
       log({ prompt: e.prompt, tick: e.tick }); continue;
     }
-    const weapon = e.player && campaignCombatWeapon(e.level, e.player.weapons, e.player.emptyWeapons);
+    const weapon = e.player && (o.weapon && e.player.weapons.includes(o.weapon)
+      ? o.weapon
+      : campaignCombatWeapon(e.level, e.player.weapons, e.player.emptyWeapons));
     const shortcut = weapon && weaponKey(weapon);
     if (weapon && shortcut && e.player?.current !== weapon) {
       await press([]); await releaseAim();

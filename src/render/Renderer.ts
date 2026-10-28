@@ -248,7 +248,13 @@ export class Renderer extends WebGPURenderer {
         // loadProfile=2 separates the builds of one material by material instance, render context and object, which
         // tells per-object (InstancedMesh uuid) and per-context rebuilds from genuinely different graphs.
         const detail = params.get('loadProfile') === '2' ? `:m${draw.material.id}:c${(object as { context: { id: number } }).context.id}:o${draw.object.id}` : '';
-        const key = `${draw.material.name || draw.material.type}:${draw.object.userData.staticInstanceAttributes ? 'static' : draw.object.name || draw.object.parent?.name || draw.object.type}${detail}`;
+        let scope: string | undefined;
+        for (let node = draw.object as unknown as import('three').Object3D | null; node && !scope; node = node.parent) {
+          scope = node.userData.nodeBuildScope as string | undefined;
+          if (!scope && (node.userData.assetId as string | undefined)?.startsWith('veh.')) scope = 'vehicle';
+        }
+        const name = draw.material.name || draw.material.type;
+        const key = `${scope && !/^(character|action-held|vehicle):/.test(name) ? `${scope}:` : ''}${name}:${draw.object.userData.staticInstanceAttributes ? 'static' : draw.object.name || draw.object.parent?.name || draw.object.type}${detail}`;
         this.nodeBuildMaterials[key] = (this.nodeBuildMaterials[key] ?? 0) + 1;
       }
       const context = (object as { context: object }).context;

@@ -1,7 +1,7 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import { describe, expect, test, vi } from 'vitest';
 import { missionIds } from '../../../src/levels/missions';
-import { preset } from '../../../src/sim/progression/Campaign';
+import { preset, type ProgressionPreset } from '../../../src/sim/progression/Campaign';
 import physicsAssets from '../../../src/data/physicsAssets';
 import { l4, l4Route, l4RoutePose, l4ConvoyStations } from '../../../src/data/l4';
 import { l7Departure } from '../../../src/data/l7';
@@ -265,7 +265,10 @@ describe('automatic regression invariants', () => {
       }
     } finally { survivorRings.dispose(); l5world.dispose(); }
     expect(violations, 'P1-114: objective routes and marker anchors must exist').toEqual([]);
-    expect(preset('L10-default')).toBeTruthy(); // document the campaign-ready level preset used for late levels
+    for (let level = 2; level <= 10; level++) {
+      const save = preset(`L${level}-default` as ProgressionPreset);
+      expect(save.unlockedLevel, `cold-load preset L${level}`).toBe(level);
+    }
   }, 300_000);
 
   test('7 walkable ground: every authored raised walkable surface edge follows sim ground within 20 cm', async () => {

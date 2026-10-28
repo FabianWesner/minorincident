@@ -66,7 +66,7 @@ async function measure(browser: Browser, origin: string, level: typeof levels[nu
     await page.goto(url.href, { waitUntil: 'domcontentloaded' });
     await expect(page.getByTestId('menu-title')).toBeVisible({ timeout: 120_000 });
     await page.waitForFunction(() => !!window.__SS__);
-    const save = level === 'L1' ? newCampaign() : preset((level === 'L9' ? 'L8-default' : `${level}-default`) as ProgressionPreset);
+    const save = level === 'L1' ? newCampaign() : preset(`${level}-default` as ProgressionPreset);
     save.unlockedLevel = Number(level.slice(1)) as typeof save.unlockedLevel;
     save.completedLevels = save.unlockedLevel - 1; save.settings.quality = 'low';
     await page.evaluate(save => { window.__SS__!.campaign.restore(save); window.__SS__!.campaign.menu(); window.__SS__!.settings.set({ quality: 'low' }); }, save);

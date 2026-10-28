@@ -1,0 +1,76 @@
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › tests/e2e/smoke.spec.ts:38:1 › L1 handover + outbreak: no shader builds after warm-up and no frame over 200 ms @smoke (33.0s)
+
+
+  1) [chromium] › tests/e2e/smoke.spec.ts:38:1 › L1 handover + outbreak: no shader builds after warm-up and no frame over 200 ms @smoke
+
+    Error: courier, weapon, or vehicle builds after L8 warm-up and APC boarding
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 38
+
+    - Array []
+    + Array [
+    +   Array [
+    +     "vehicle:pal_picketWhite:mesh_3:m8861:c31:o54669",
+    +     1,
+    +   ],
+    +   Array [
+    +     "vehicle:pal_picketWhite:mesh_0:m8860:c31:o54646",
+    +     1,
+    +   ],
+    +   Array [
+    +     "vehicle:MeshBasicNodeMaterial:mesh_1:m8863:c31:o54658",
+    +     1,
+    +   ],
+    +   Array [
+    +     "vehicle:MeshLambertNodeMaterial:doorR:m8862:c31:o54684",
+    +     1,
+    +   ],
+    +   Array [
+    +     "vehicle:MeshLambertNodeMaterial:transportRoof:m8862:c31:o54680",
+    +     1,
+    +   ],
+    +   Array [
+    +     "vehicle:ShadowMaterial:geometry_0:m8832:c32:o54824",
+    +     1,
+    +   ],
+    +   Array [
+    +     "vehicle:char.courier-female:tex:geometry_0:m8912:c31:o54824",
+    +     1,
+    +   ],
+    +   Array [
+    +     "vehicle:ShadowMaterial:geometry_0_1:m8831:c32:o54825",
+    +     1,
+    +   ],
+    +   Array [
+    +     "vehicle:ShadowMaterial:doorL:m8831:c32:o54682",
+    +     2,
+    +   ],
+    + ]
+
+      118 |   test.info().annotations.push({ type: 'L8 boarding shader builds', description: JSON.stringify({ carId: l8.carId, boarded: l8.boarded, builds: Object.fromEntries(lateVehicleBuilds) }) });
+      119 |   expect(l8.boarded, 'L8 APC boarding exercised after warm-up').toBe(true);
+    > 120 |   expect(lateVehicleBuilds, 'courier, weapon, or vehicle builds after L8 warm-up and APC boarding').toEqual([]);
+          |                                                                                                     ^
+      121 | });
+      122 |
+      123 | // P0 guard (PROD "all other players are invisible"): each on-screen pedestrian's head/torso pixels must change when that
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/vehicle-warmup/tests/e2e/smoke.spec.ts:120:101
+
+    Error Context: test-results/playwright/run-4381/e2e-smoke-L1-handover-outb-c8fda--no-frame-over-200-ms-smoke-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-4381/e2e-smoke-L1-handover-outb-c8fda--no-frame-over-200-ms-smoke-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-4381/e2e-smoke-L1-handover-outb-c8fda--no-frame-over-200-ms-smoke-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/e2e/smoke.spec.ts:38:1 › L1 handover + outbreak: no shader builds after warm-up and no frame over 200 ms @smoke

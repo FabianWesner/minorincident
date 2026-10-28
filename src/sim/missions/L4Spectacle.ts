@@ -66,7 +66,7 @@ export class L4Spectacle {
   }
   startTank(): void {
     const s = this.s(), p = this.tankRoute().pts[0];
-    const e = spawnSetPiece(this.world, 'veh.tank', { x: p.x, z: p.z, yaw: 0 });
+    const e = spawnSetPiece(this.world, l4.tank.asset, { x: p.x, z: p.z, yaw: 0 });
     s.tankId = e.id; s.tankS = 0; s.tankPhase = 'enter';
   }
   private tankPose(at: number): { x: number; z: number; yaw: number } {
@@ -128,7 +128,7 @@ export class L4Spectacle {
   // ---------------------------------------------------------------------------------------------------- the helicopter
   startHeli(): void {
     const s = this.s(), h = l4.heli;
-    const e = spawnSetPiece(this.world, 'veh.helicopter-military', { x: h.centre[0] + h.startR, z: h.centre[1], y: h.alt + .7 + 12, yaw: 0 });
+    const e = spawnSetPiece(this.world, l4.heli.asset, { x: h.centre[0] + h.startR, z: h.centre[1], y: h.alt + .7 + 12, yaw: 0 });
     s.heliId = e.id; s.heliAngle = 0; s.heliPhase = 'arrive'; s.heliAt = this.world.tick; s.heliBurstAt = this.world.tick + ticks(3); s.heliBurst = 0;
   }
   updateHeli(): void {

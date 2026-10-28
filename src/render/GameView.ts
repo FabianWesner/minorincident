@@ -324,6 +324,7 @@ export class GameView implements Lifecycle {
     };
     let corgiPrewarmed = false;
     try {
+      await this.entityAssets?.prewarmVehicles();
       prewarmed.occupants = await this.vehicles?.prewarmOccupants();
       prewarmed.crash = await this.vehicles?.prewarmCrash();
       // Put the rigid prototype in front of the loading camera, clear of the
@@ -490,14 +491,21 @@ export class GameView implements Lifecycle {
     const focus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(this.camera.position);
     const unwarm = this.labWindows?.prewarmWindows();
     const restore = this.vfx?.prewarm(focus.x, focus.z); this.labAccident?.prewarm();
-    const prepareVariant = () => preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); })), this.background ? () => loadGate.wait() : () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0))), this.loadProgress, this.background, this.world.scenario === 'L3' || this.world.scenario === 'L6' || this.world.scenario === 'L8', cooperative);
+    const renderWarm = (): void => {
+      // Reserved inactive maps can already exist from the loading preview. Warm
+      // every caster in both maps, rather than waiting for the first hero lamp.
+      if (this.lighting) { this.lighting.sun.shadow.needsUpdate = true; this.lighting.spot.shadow.needsUpdate = true; }
+      if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera);
+    };
+    const prepareVariant = () => preRender(this.renderer, this.scene, this.camera, renderWarm, partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); })), this.background ? () => loadGate.wait() : () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0))), this.loadProgress, this.background, this.world.scenario === 'L3' || this.world.scenario === 'L6' || this.world.scenario === 'L8', cooperative);
     const prepare = async (): Promise<void> => {
       // L4's moving set pieces reveal the courier during combat. Warm both
       // graphs against every loading light/weather variant, before LOD swaps.
-      if (this.world.scenario === 'L4' && this.entityAssets) {
+      if (this.vehicles || this.entityAssets?.hasVehicles || this.world.scenario === 'L4' && this.entityAssets) {
         for (const enabled of [false, true]) {
-          const restoreReveal = this.entityAssets.prewarmReveal(focus, enabled);
-          try { await prepareVariant(); } finally { restoreReveal(); }
+          const restoreReveal = this.world.scenario === 'L4' || this.entityAssets?.hasVehicles ? this.entityAssets?.prewarmReveal(focus, enabled) : undefined;
+          const restoreVehicles = this.vehicles?.prewarmReveal(enabled);
+          try { await prepareVariant(); } finally { restoreVehicles?.(); restoreReveal?.(); }
         }
       } else await prepareVariant();
     };

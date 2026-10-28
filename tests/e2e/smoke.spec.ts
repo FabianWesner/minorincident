@@ -1,4 +1,4 @@
-import { mkdirSync } from 'node:fs';
+import { mkdirSync, writeFileSync } from 'node:fs';
 import { PNG } from 'pngjs';
 import { canvasFrame, canvasFrameChecks } from './canvas-frame';
 import { boot, expect, test, testUrl } from './fixtures';
@@ -102,6 +102,22 @@ test('L1 handover + outbreak: no shader builds after warm-up and no frame over 2
     return { loaded, after: { ...a.perf().nodeBuildMaterials } };
   });
   expect(heldBuilds(l2.loaded, l2.after), 'L2 carried-weapon builds after the level warm-up (fire axe at the start and at its pickup)').toEqual([]);
+  const l8 = await page.evaluate(async () => {
+    const a = window.__SS__!;
+    await a.loadLevel('L8', { seed: 1 }); a.pause(); a.missions.begin();
+    const loaded = { ...a.perf().nodeBuildMaterials }, state = a.getState(), carId = state.l8!.carId, car = a.getEntity(carId)!;
+    const yaw = car.transform.yaw, c = Math.cos(yaw), s = Math.sin(yaw);
+    a.teleport(1, { x: car.transform.x + c * .71 + s * 2.025, z: car.transform.z - s * .71 + c * 2.025 });
+    a.input.set({ interact: true }); await a.step(1); a.input.clear(); a.resume(); await new Promise(resolve => setTimeout(resolve, 1500)); a.pause();
+    const boarded = a.events(0).some(event => event.type === 'vehicle.entered' && event.sourceId === carId && event.targetId === 1);
+    return { loaded, after: { ...a.perf().nodeBuildMaterials }, boarded, carId };
+  });
+  const lateVehicleBuilds = Object.entries(l8.after).filter(([key, count]) => count !== l8.loaded[key] && /^(character:|action-held:|vehicle:)/.test(key));
+  mkdirSync('test-results/smoke', { recursive: true });
+  writeFileSync('test-results/smoke/l8-boarding-builds.json', JSON.stringify({ level: 'L8', vehicle: 'APC', boarded: l8.boarded, before: l8.loaded, after: l8.after, lateVehicleBuilds: Object.fromEntries(lateVehicleBuilds) }, null, 2));
+  test.info().annotations.push({ type: 'L8 boarding shader builds', description: JSON.stringify({ carId: l8.carId, boarded: l8.boarded, builds: Object.fromEntries(lateVehicleBuilds) }) });
+  expect(l8.boarded, 'L8 APC boarding exercised after warm-up').toBe(true);
+  expect(lateVehicleBuilds, 'courier, weapon, or vehicle builds after L8 warm-up and APC boarding').toEqual([]);
 });
 
 // P0 guard (PROD "all other players are invisible"): each on-screen pedestrian's head/torso pixels must change when that

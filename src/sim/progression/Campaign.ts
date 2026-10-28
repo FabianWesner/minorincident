@@ -6,7 +6,7 @@ import type { L1Aftermath } from '../../levels/continuity';
 import { l7DefaultArsenal } from '../../data/l7';
 /** Campaign through L10 The Cure (specs/po-levels-9-10-2026-10-13.md). */
 export type Level = 1|2|3|4|5|6|7|8|9|10;
-export type ProgressionPreset = `L${2|3|4|5|6|7|8|10}-default`;
+export type ProgressionPreset = `L${2|3|4|5|6|7|8|9|10}-default`;
 export interface CampaignSettings { cameraShake?:boolean; flashReduction?:boolean; gore?:'Off'|'Reduced'|'Full'; quality?:'high'|'low'|'auto'; muted?:boolean; captions?:boolean; noiseRings?:boolean; mono?:boolean; haptics?:boolean; tinnitus?:boolean; bloom?:boolean; cheapDof?:boolean; vfx?:boolean; aimAssist?:'Off'|'Low'|'Default'|'High'; textSize?:1|1.25|1.5; colorblind?:boolean; slowMotion?:boolean }
 export interface CampaignSave {
   version:2; seed:number; character:SurvivorVariant; unlockedLevel:Level; completedLevels:number;
@@ -127,6 +127,9 @@ export function completePending(save:CampaignSave):void {
 }
 export function autoRewards(save:CampaignSave,level:Level):void {beginRewards(save,level);completePending(save);}
 export function preset(name:ProgressionPreset):CampaignSave {
+  if (name === 'L9-default') {
+    const save = preset('L8-default'); save.completedLevels = 8; save.unlockedLevel = 9; return save;
+  }
   if (name === 'L10-default') {
     const save = preset('L8-default');
     const lostWeapons = save.ownedActions.filter(id => catalog[id].category !== 'ability' && id !== 'weapon.fire-axe');
@@ -167,7 +170,7 @@ export function debugCampaign(level:Level, current:CampaignSave|null):CampaignSa
   let save:CampaignSave;
   if(level===1) save=newCampaign(current?.character??'female',current?.seed??1);
   else if(level===10) save=preset('L10-default');
-  else if(level===9) { save=preset('L8-default'); save.completedLevels=8; save.unlockedLevel=9; }
+  else if(level===9) save=preset('L9-default');
   else save=preset(`L${level}-default` as ProgressionPreset);
   // Level-list starts use the level's normal boundary arsenal, but still honor the
   // weapon the player was carrying when it exists in that arsenal.

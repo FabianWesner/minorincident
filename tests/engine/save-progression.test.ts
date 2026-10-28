@@ -19,6 +19,12 @@ const start = (level: Level): CampaignSave => level === 1 ? newCampaign() : pres
 const resume = (save: CampaignSave, level: number) => { const l = campaignLoadout(save, level as Level); return new Loadout(l.LEFT, l.RIGHT, undefined, l.size); };
 
 test('every handover L1→L9 keeps every carried weapon (plus a picked-up firearm) and the selected action, and the save reloads', () => {
+  for (let level = 1; level <= 10; level++) {
+    const save = start(level as Level);
+    expect(validateSave(save), `L${level} cold-load boundary`).toBe(true);
+    expect(save.unlockedLevel, `L${level} unlocked`).toBe(level);
+    expect(save.completedLevels, `L${level} completed`).toBe(level - 1);
+  }
   for (const level of [1, 2, 3, 4, 5, 6, 7, 8] as const) {
     const save = start(level), next = level + 1;
     const extra = Object.keys(catalog).find(id => catalog[id].category === 'ranged' && !save.racks.RIGHT.includes(id) && !save.racks.LEFT.includes(id) && id !== 'weapon.rocket-launcher')!;

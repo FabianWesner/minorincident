@@ -24,12 +24,16 @@ const actorAssets: Record<string, string> = {
 };
 /** Last two tick poses of a scripted rigid actor; the drawn pose lerps between them like the camera does (a moving L4 convoy bus judders against the interpolated camera otherwise). */
 interface Pose { tick: number; px: number; py: number; pz: number; pyaw: number; x: number; y: number; z: number; yaw: number; distance: number; pdistance: number; steer: number }
+interface ActorRecord { model: Object3D; lod: AssetQuality; reveal: PaletteMaterial[]; copies: Map<PaletteMaterial, PaletteMaterial>; bounds: Box3; pose?: Pose; wheels: { node: Object3D; radius: number; spin: number; steer: number; front: boolean }[] }
 /** Presentation of authored mission actors and the cosmetic corgi companion.
  * Async loads participate in screenshotReady; no visual transform changes the sim. */
 export class EntityAssets extends Group {
   private readonly logs: { id: string; reason: string }[] = [];
   private readonly registry: AssetRegistry;
-  private readonly records = new Map<number, { model: Object3D; lod: AssetQuality; reveal: PaletteMaterial[]; copies: Map<PaletteMaterial, PaletteMaterial>; bounds: Box3; pose?: Pose; wheels: { node: Object3D; radius: number; spin: number; steer: number; front: boolean }[] }>();
+  private readonly records = new Map<number, ActorRecord>();
+  private readonly vehicleVariants = new Map<number, Map<AssetQuality, ActorRecord>>();
+  private readonly futureVehicles: ActorRecord[] = [];
+  private readonly preparedVehicleCopies = new Map<string, Map<PaletteMaterial, PaletteMaterial>>();
   private view?: View;
   private readonly prototypes = new Map<string, Promise<Group>>();
   // L4's late glass/crater and actor LODs use the same static feature graphs.
@@ -64,7 +68,39 @@ export class EntityAssets extends Group {
     }));
     return (await this.prototypes.get(key)!).clone(true);
   }
-  async ready(): Promise<void> {
+  /** Scripted buses/tanks use the same retained LODs as drivable vehicles. */
+  async prewarmVehicles(): Promise<void> {
+    const active = new Map(this.records);
+    for (const lod of this.low ? ['lod1', 'lod2'] as const : ['lod0', 'lod1', 'lod2'] as const) await this.ready(lod, true);
+    for (const [id, record] of active) if (this.vehicleVariants.has(id)) {
+      this.records.get(id)!.model.visible = false; record.model.visible = true; this.records.set(id, record);
+    }
+    // L4 introduces these set pieces during the war. Retain their source
+    // geometry and exact reveal materials before their simulation actors exist.
+    if (this.world.scenario === 'L4') for (const asset of [l4.tank.asset, l4.heli.asset]) {
+      const copies = new Map<PaletteMaterial, PaletteMaterial>(); this.preparedVehicleCopies.set(asset, copies);
+      for (const lod of this.low ? ['lod1', 'lod2'] as const : ['lod0', 'lod1', 'lod2'] as const) {
+        const model = await this.actorModel(asset, lod); model.userData.assetId = asset; model.visible = false; this.add(model);
+        this.futureVehicles.push({ model, lod, copies, reveal: this.revealModel(model, copies), bounds: new Box3().setFromObject(model), wheels: [] });
+      }
+    }
+  }
+  get hasVehicles(): boolean { return this.vehicleVariants.size > 0 || this.futureVehicles.length > 0; }
+  private revealModel(model: Object3D, copies: Map<PaletteMaterial, PaletteMaterial>): PaletteMaterial[] {
+    const reveal: PaletteMaterial[] = [];
+    model.traverse(node => {
+      if (!(node instanceof Mesh)) return;
+      const cut = (material: Material) => {
+        if (!(material instanceof PaletteMaterial)) return material;
+        let copy = copies.get(material);
+        if (!copy) { copy = material.frozenCopy().seeThrough(); copies.set(material, copy); this.materials.add(copy); }
+        if (!reveal.includes(copy)) reveal.push(copy); return copy;
+      };
+      node.material = Array.isArray(node.material) ? node.material.map(cut) : cut(node.material);
+    });
+    return reveal;
+  }
+  async ready(requestedLod?: AssetQuality, vehiclesOnly = false): Promise<void> {
     for (const entity of this.world.entities.iterate()) {
       // BicycleView owns the animated cargo bike. Loading it again here draws a
       // second rigid bike and downloads an unused phone LOD1 alongside its rig.
@@ -74,32 +110,35 @@ export class EntityAssets extends Group {
       if (entity.kind === 'light' || entity.kind === 'physics-prop' || entity.id === 1 || entity.bicycle || this.world.npcs && (entity.companion || entity.escort || entity.civilian) || this.world.vehicles?.cars.has(entity.id) || entity.faction === 'infected' || this.pending.has(entity.id)) continue;
       const id = productionObstacleAssets[entity.archetype] ?? actorAssets[entity.archetype] ?? (assetIds.has(entity.archetype) ? entity.archetype : entity.kind === 'escort' || entity.faction === 'civilian' ? 'npc.civilian-man-a' : undefined);
       if (!id) continue;
+      if (vehiclesOnly && !id.startsWith('veh.')) continue;
       const target = this.view?.cameraTarget ?? this.world.entities.get(1)!.transform;
       const distance = Math.hypot(entity.transform.x - target.x, entity.transform.z - target.z);
-      const lod = modelLod(distance, this.records.get(entity.id)?.lod, this.low);
+      const lod = requestedLod ?? modelLod(distance, this.records.get(entity.id)?.lod, this.low);
       if (this.records.get(entity.id)?.lod === lod) continue;
+      const cached = this.vehicleVariants.get(entity.id)?.get(lod);
+      if (cached) {
+        const previous = this.records.get(entity.id); if (previous) { previous.model.visible = false; cached.pose = previous.pose; }
+        cached.model.visible = true; this.records.set(entity.id, cached); continue;
+      }
       const load = this.actorModel(id, lod).then(model => {
         if (!this.disposed && this.world.entities.get(entity.id)) {
+          model.userData.assetId = id;
           // An LOD swap keeps the interpolation history (a fresh record restarted at the tick pose: a one-frame snap per swap).
-          const previous = this.records.get(entity.id); previous?.model.removeFromParent();
+          const previous = this.records.get(entity.id);
+          if (previous) { if (id.startsWith('veh.')) previous.model.visible = false; else previous.model.removeFromParent(); }
           const wheels: { node: Object3D; radius: number; spin: number; steer: number; front: boolean }[] = [];
           model.traverse(node => { if (node.userData.wheelRadius) { node.rotation.order = 'YXZ'; wheels.push({ node, radius: node.userData.wheelRadius, spin: node.rotation.z, steer: node.rotation.y, front: node.name.startsWith('wheelF') }); } });
           // LODs borrow the same immutable source palette. Keep this actor's
           // reveal graph and uniforms instead of compiling fresh copies in combat.
           // The view's materials set retains ownership until level disposal.
-          const reveal: PaletteMaterial[] = [], copies = previous?.copies ?? new Map<PaletteMaterial, PaletteMaterial>();
-          if (!/^(npc|char)\./.test(id)) model.traverse(node => {
-            if (!(node instanceof Mesh)) return;
-            const cut = (material: Material) => {
-              if (!(material instanceof PaletteMaterial)) return material;
-              let copy = copies.get(material);
-              if (!copy) { copy = material.frozenCopy().seeThrough(); copies.set(material, copy); this.materials.add(copy); }
-              if (!reveal.includes(copy)) reveal.push(copy);
-              return copy;
-            };
-            node.material = Array.isArray(node.material) ? node.material.map(cut) : cut(node.material);
-          });
-          this.records.set(entity.id, { model, lod, reveal, copies, bounds: new Box3().setFromObject(model), pose: previous?.pose, wheels });
+          const copies = previous?.copies ?? this.preparedVehicleCopies.get(id) ?? new Map<PaletteMaterial, PaletteMaterial>();
+          const reveal = /^(npc|char)\./.test(id) ? [] : this.revealModel(model, copies);
+          const record = { model, lod, reveal, copies, bounds: new Box3().setFromObject(model), pose: previous?.pose, wheels };
+          this.records.set(entity.id, record);
+          if (id.startsWith('veh.')) {
+            let variants = this.vehicleVariants.get(entity.id); if (!variants) { variants = new Map(); this.vehicleVariants.set(entity.id, variants); }
+            variants.set(lod, record);
+          }
           model.position.set(entity.transform.x, entity.kind === 'obstacle' ? 0 : Math.max(0, entity.transform.y - .7), entity.transform.z);
           model.rotation.y = entity.transform.yaw;
           // Phone tier: flat scripted dressing (glass shards, craters) never casts a shadow.
@@ -137,12 +176,13 @@ export class EntityAssets extends Group {
   private readonly occlusion = new SubjectOcclusion();
   /** Compile the cutaway variant behind loading; restore each actor's current state. */
   prewarmReveal(at?: Vector3, enabled = true): () => void {
-    const saved: [PaletteMaterial, boolean][] = [];
+    const saved = new Map<PaletteMaterial, boolean>();
     const positions: [Object3D, Vector3, boolean][] = [];
-    for (const record of this.records.values()) {
+    const records = new Set([...this.records.values(), ...this.futureVehicles, ...[...this.vehicleVariants.values()].flatMap(variants => [...variants.values()])]);
+    for (const record of records) {
       if (at) { positions.push([record.model, record.model.position.clone(), record.model.visible]); record.model.position.copy(this.worldToLocal(at.clone())); record.model.visible = true; }
       for (const material of record.reveal) {
-        saved.push([material, material.userData.seeThrough === true]); material.seeThrough(enabled);
+        if (!saved.has(material)) { saved.set(material, material.userData.seeThrough === true); material.seeThrough(enabled); }
       }
     }
     return () => {
@@ -204,7 +244,7 @@ export class EntityAssets extends Group {
     out.setFromObject(record.model); return !out.isEmpty();
   }
   getState() { return { companion: this.companion?.userData.placeholder ? 'placeholder' : 'glb', actors: [...this.records].map(([id, { model, lod, wheels }]) => ({ id, lod, position: model.position.toArray(), yaw: model.rotation.y, wheels: wheels.map(w => ({ name: w.node.name, spin: w.node.rotation.z, steer: w.node.rotation.y })), source: model.userData.placeholder ? 'placeholder' : 'glb' })), placeholders: this.logs }; }
-  dispose(): void { this.disposed = true; this.clear(); this.records.clear();
+  dispose(): void { this.disposed = true; this.clear(); this.records.clear(); this.vehicleVariants.clear(); this.futureVehicles.length = 0; this.preparedVehicleCopies.clear();
     for (const geometry of this.geometries) geometry.dispose(); for (const material of this.materials) material.dispose();
     this.geometries.clear(); this.materials.clear(); this.materialGraphs.clear(); this.prototypes.clear(); void this.registry.dispose(); }
 }

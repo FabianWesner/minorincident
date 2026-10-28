@@ -1,0 +1,8 @@
+# Vehicle warm-up
+
+- L4/L7/L8/L9 courier/vehicle builds stay at **zero** on native WebGPU and WebGL2; L8 boarding, L9 damage/crash and L1 bike mounting are exercised ([probe records](summary.json)).
+- Warm-up retains actual vehicle LOD records, cab materials and the courier rig; prepares later L4 tank/helicopter assets; compiles both reveal states and refreshes inactive shadow maps. Gameplay reuses those objects.
+- Existing smoke case, no added browser case: original `VehicleView.ts` from `904ae77a9` fails after confirmed L8 APC boarding with **9** late builds; fixed code has **0** ([before](evidence/before-smoke.json), [after](evidence/after-smoke.json), [negative guard](evidence/negative-guard.log.txt)).
+- L7 repeatedly linked two near-bus/cutaway graphs after loading. Those builds are eliminated; three close bus-door fights peak at **83.2/66.6/50.0 ms**, with **11/10/10** rocket attacks and no frame over 200 ms. The historical 283–333 ms outlier did not recur; no GC/spawn cause is asserted ([raw frames/builds](evidence/frames-and-builds.json.gz)).
+- Driver zoom is explicit camera configuration, clamped to equipped-weapon limits with ±0.02 acceptance; `--weapon` selects existing carried weapons (logged QA assist when L9 starts seated). L8 launcher/MG and L9 handgun checks pass; all L1–L10 cold menu presets load without errors ([details and shared-pool timing limits](summary.json)).
+- `npm test` **104/104**, typecheck, lint and full smoke **219.4/240 s** pass; suite stays at **144/150** cases. `scene:gate` exits **0**: **43 pass, 5 unchanged known exceptions, 0 missing/unexpected** ([receipt](evidence/scene-gate/summary.md)).
