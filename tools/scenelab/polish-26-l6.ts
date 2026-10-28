@@ -35,6 +35,12 @@ try {
     if (second % 10 === 0 || sample.cinematic) { await session.page.evaluate(() => window.__SS__!.screenshotReady()); await session.screenshot(`${out}/second-${second}.png`); }
     if (sample.cinematic) {
       await session.page.evaluate(() => window.__SS__!.step(120));
+      if (process.argv[3] === 'baseline') await session.page.evaluate(async () => {
+        // Reproduce the original fixed shot even when the production presenter now centres the courier.
+        window.__SS__!.camera.cinematic({ position: [299, 39, 42], target: [273, 3.9, 16] }, true);
+        (window.__SCENE__ as unknown as { game: Game }).game.view.update(1);
+        await window.__SS__!.screenshotReady();
+      });
       await session.screenshot(`${out}/ending.png`); break;
     }
     const [x, y] = sample.projected;
