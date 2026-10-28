@@ -72,15 +72,31 @@ try {
   } else if(mode==='crowd'||mode==='freeze') {
     const people=['npc.civilian-man-a','npc.civilian-man-b','npc.civilian-woman-a','npc.civilian-woman-b','npc.civilian-elderly'];
     const actors:ActorSpec[]=Array.from({length:30},(_,i)=>{
-      const at:[number,number]=[-9+(i%10)*2.1,-5+Math.floor(i/10)*5];
+      const animalPlaces:Record<number,[number,number]>={20:[-2.7,0],21:[2.7,0],22:[-.9,0],23:[.9,0],24:[-4.2,3],25:[4.2,3],26:[-4.5,0],27:[4.5,0],28:[-1.35,3.2],29:[1.35,3.2]};
+      const [u,v]=i===0?[5.8,2.2]:i===1?[5.7,.8]:animalPlaces[i]??[-3.25+(i-2)%6*1.3,6+Math.floor((i-2)/6)*2.2];
+      const at:[number,number]=[(u-v)/Math.SQRT2,(-u-v)/Math.SQRT2];
       if(i===0)return{id:'courier',kind:'courier',at,yaw:-45};
       if(i===1)return{id:'corgi',kind:'corgi',at,yaw:-45};
       if(i>=20)return actor([...ids,'amb.zebra','inf.zebra'][i-20],`animal-${i}`,at);
       return{id:`person-${i}`,kind:'pedestrian',at,yaw:-45,state:'idle',look:i>=16?zooStaffLook(i-16):{model:i<6?'npc.national-guard':people[i%5],role:i<6?'soldier':undefined,accessories:[],handProp:i<6?'rifle':null}};
     });
-    await session.load({...base,name:'l8-street-crowd30',ground:'district',layout:{district:'D-ZOO',bbox:[[-35,-20],[35,20]]},actors,camera:{mode:'game',target:[1,0,0],zoom:1.5}});await session.step(3);await session.ready();
+    await session.load({...base,name:'l8-street-crowd30',ground:'district',layout:{district:'D-ZOO',bbox:[[-35,-20],[35,20]]},actors,camera:{mode:'game',target:[-4/Math.SQRT2,.5,-4/Math.SQRT2],zoom:1.5}});await session.step(3);await session.ready();
     const metrics=await session.metrics();assert.equal(Object.keys(metrics.actors).length,30);assert.ok(Object.values(metrics.actors).every(a=>a.drawnFrames>0));
-    for(const zoom of [1,1.5]){await session.page.evaluate(zoom=>window.__SS__!.camera.zoom(zoom),zoom);await session.ready();await session.screenshot(`${out}/zoom-${zoom}.png`);}
+    for(const zoom of [1,1.5]){
+      await session.page.evaluate(zoom=>window.__SS__!.camera.zoom(zoom),zoom);await session.ready();
+      const projected=await session.page.evaluate(async entities=>{
+        const three='/node_modules/three/build/three.webgpu.js',pick='/src/render/characters/PickBodies.ts';
+        const {Box3,Matrix4,Vector3}=await import(three),{pickBodies}=await import(pick);
+        const game=(window.__SCENE__ as unknown as {game:Game}).game,camera=game.view.camera,projection=new Matrix4().multiplyMatrices(camera.projectionMatrix,camera.matrixWorldInverse);
+        return entities.map(({id,entity})=>{
+          let b=pickBodies.bounds(entity,new Box3(),projection);
+          if(!b){const e=game.world.entities.get(entity)!,p=e.transform;b=new Box3(new Vector3(p.x-.5,p.y-.7,p.z-.5),new Vector3(p.x+.5,p.y+1.3,p.z+.5)).applyMatrix4(projection);}
+          return {id,bounds:[(b.min.x+1)*800,(1-b.max.y)*450,(b.max.x+1)*800,(1-b.min.y)*450]};
+        });
+      },Object.entries(metrics.actors).map(([id,a])=>({id,entity:a.entity})));
+      writeJson(`${out}/bounds-${zoom}.json`,projected);assert.ok(projected.every(r=>r.bounds[0]>=4&&r.bounds[1]>=4&&r.bounds[2]<=1596&&r.bounds[3]<=896),JSON.stringify(projected.filter(r=>r.bounds[0]<4||r.bounds[1]<4||r.bounds[2]>1596||r.bounds[3]>896)));
+      await session.screenshot(`${out}/zoom-${zoom}.png`);
+    }
     writeJson(`${out}/metrics.json`,metrics);writeJson(`${out}/resources.json`,await session.page.evaluate(resources));
     if(mode==='freeze'){
       await session.page.evaluate(()=>{for(const id of ['animal-21','animal-23','animal-25','animal-27','animal-29'])window.__SCENE__!.command(id,{corpse:true});});await session.step(180);await session.ready();
@@ -149,4 +165,4 @@ try {
     }
   }
   assert.equal(session.errors.length,0,JSON.stringify(session.errors));
-} finally { await session.close();stopServer(); }
+} finally { await session.close();stopServer();await new Promise(done=>setTimeout(done,500)); }

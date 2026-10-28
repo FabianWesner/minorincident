@@ -27,8 +27,9 @@ export function paintAnimalDetails(document: Document, naturalEyes: boolean, tus
   let ivoryTexels = 0, bleedTexels = 0, healedTexels = 0;
   // Healing a dark source mask needs colour in its UV gutters too. Reserve
   // every island first, so padding can never overwrite another surface.
+  const padEdges = healEyeMasks || capsules.length > 0, originalPixels = capsules.length ? Buffer.from(png.data) : png.data;
   const owner = new Int32Array(png.width * png.height).fill(-1);
-  if (healEyeMasks) for (let t = 0; t < (indices?.getCount() ?? position.getCount()); t += 3) {
+  if (padEdges) for (let t = 0; t < (indices?.getCount() ?? position.getCount()); t += 3) {
     const u = [0, 1, 2].map(k => uv.getElement(indices ? indices.getScalar(t + k) : t + k, []).map((v, c) => v * (c ? png.height : png.width) - .5));
     const area = (u[1][0] - u[0][0]) * (u[2][1] - u[0][1]) - (u[2][0] - u[0][0]) * (u[1][1] - u[0][1]); if (Math.abs(area) < 1e-9) continue;
     for (let y = Math.max(0, Math.ceil(Math.min(...u.map(v => v[1])))); y <= Math.min(png.height - 1, Math.floor(Math.max(...u.map(v => v[1])))); y++) for (let x = Math.max(0, Math.ceil(Math.min(...u.map(v => v[0])))); x <= Math.min(png.width - 1, Math.floor(Math.max(...u.map(v => v[0])))); x++) {
@@ -39,12 +40,12 @@ export function paintAnimalDetails(document: Document, naturalEyes: boolean, tus
   for (let t = 0; t < (indices?.getCount() ?? position.getCount()); t += 3) {
     const ids = [0, 1, 2].map(k => indices ? indices.getScalar(t + k) : t + k), p = ids.map(i => position.getElement(i, [])), u = ids.map(i => uv.getElement(i, []).map((v, c) => v * (c ? png.height : png.width) - .5));
     const area = (u[1][0] - u[0][0]) * (u[2][1] - u[0][1]) - (u[2][0] - u[0][0]) * (u[1][1] - u[0][1]); if (Math.abs(area) < 1e-9) continue;
-    const padding = healEyeMasks ? 2 : 0;
+    const padding = padEdges ? 2 : 0;
     const lo = [0, 1].map(c => Math.max(0, Math.ceil(Math.min(...u.map(v => v[c]))) - padding)), hi = [0, 1].map(c => Math.min((c ? png.height : png.width) - 1, Math.floor(Math.max(...u.map(v => v[c]))) + padding));
     for (let y = lo[1]; y <= hi[1]; y++) for (let x = lo[0]; x <= hi[0]; x++) {
       const w1 = ((x - u[0][0]) * (u[2][1] - u[0][1]) - (y - u[0][1]) * (u[2][0] - u[0][0])) / area, w2 = ((u[1][0] - u[0][0]) * (y - u[0][1]) - (u[1][1] - u[0][1]) * (x - u[0][0])) / area, w0 = 1 - w1 - w2;
       let weights = [w0, w1, w2];
-      if (healEyeMasks) {
+      if (padEdges) {
         const owned = owner[y * png.width + x]; if (owned !== -1 && owned !== t) continue;
         if (weights.some((w, k) => w * Math.abs(area) < -1.5 * Math.hypot(u[(k + 1) % 3][0] - u[(k + 2) % 3][0], u[(k + 1) % 3][1] - u[(k + 2) % 3][1]))) continue;
         weights = weights.map(w => Math.max(0, w)); const total = weights.reduce((a, b) => a + b, 0); weights = weights.map(w => w / total);
@@ -55,7 +56,7 @@ export function paintAnimalDetails(document: Document, naturalEyes: boolean, tus
         local.copy(point).applyMatrix4(inverse);
         const onTusk = capsules.some(c => { axis.subVectors(c.b, c.a); const along = Math.max(0, Math.min(1, nearest.subVectors(local, c.a).dot(axis) / axis.lengthSq())); nearest.copy(c.a).addScaledVector(axis, along); return local.distanceTo(nearest) < c.radius; });
         if (onTusk) { colour = [238, 234, 210]; ivoryTexels++; }
-        else if (local.y > -.01 && local.y < .18 && local.z > .18 && Math.abs(local.x) < .24 && png.data[pixel] > 185 && png.data[pixel + 1] > 180 && png.data[pixel + 2] > 150 && png.data[pixel] - png.data[pixel + 2] > 12 && png.data[pixel + 1] - png.data[pixel + 2] > 8) { colour = [145, 139, 150]; bleedTexels++; }
+        else if (local.y > -.01 && local.y < .18 && local.z > .18 && Math.abs(local.x) < .24 && originalPixels[pixel] > 185 && originalPixels[pixel + 1] > 180 && originalPixels[pixel + 2] > 150 && originalPixels[pixel] - originalPixels[pixel + 2] > 12 && originalPixels[pixel + 1] - originalPixels[pixel + 2] > 8) { colour = [145, 139, 150]; bleedTexels++; }
       }
       for (let side = 0; side < centres.length; side++) {
         const distance = point.distanceTo(centres[side]);
