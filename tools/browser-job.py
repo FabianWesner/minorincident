@@ -26,46 +26,26 @@ def stop(signum, _frame):
     raise Cancelled(signum)
 
 
-def process_tree():
-    # lstart prevents signalling a PID that has been recycled during cleanup.
-    result = {}
-    output = subprocess.check_output(['ps', '-axo', 'pid=,ppid=,lstart='], text=True)
-    for line in output.splitlines():
-        fields = line.split(None, 2)
-        if len(fields) == 3:
-            result[int(fields[0])] = (int(fields[1]), fields[2])
-    return result
-
-
-def descendants(known, tree):
-    owned = {pid: identity for pid, identity in known.items() if pid in tree and tree[pid][1] == identity[1]}
-    while True:
-        more = {pid: identity for pid, identity in tree.items() if identity[0] in owned}
-        if more.keys() <= owned.keys():
-            return owned
-        owned.update(more)
-
-
 def terminate():
     for sig in (signal.SIGTERM, signal.SIGINT, signal.SIGHUP):
         signal.signal(sig, signal.SIG_IGN)
-    tree = process_tree()
-    known = {child.pid: tree[child.pid]} if child.pid in tree else {}
-    owned = descendants(known, tree)
-    # Include detached browser roots: Playwright can give Chrome its own group.
-    for pid in owned:
+    # The command has its own session/process group. Signal the group directly so
+    # wrappers such as npx cannot orphan grandchildren by exiting first.
+    try:
+        os.killpg(child.pid, signal.SIGTERM)
+    except ProcessLookupError:
+        pass
+    deadline = time.monotonic() + 5
+    while time.monotonic() < deadline:
         try:
-            os.kill(pid, signal.SIGTERM)
+            os.killpg(child.pid, 0)
         except ProcessLookupError:
-            pass
-    time.sleep(5)
-    tree = process_tree()
-    owned = descendants(owned, tree)
-    for pid in owned:
-        try:
-            os.kill(pid, signal.SIGKILL)
-        except ProcessLookupError:
-            pass
+            break
+        time.sleep(0.1)
+    try:
+        os.killpg(child.pid, signal.SIGKILL)
+    except ProcessLookupError:
+        pass
     child.wait()
 
 signal.signal(signal.SIGTERM, stop)
@@ -73,6 +53,8 @@ signal.signal(signal.SIGINT, stop)
 signal.signal(signal.SIGHUP, stop)
 try:
     code = child.wait(timeout=args.seconds or None)
+    # Wrappers can exit successfully while leaving a grandchild in their group.
+    terminate()
 except subprocess.TimeoutExpired:
     print(f'Browser reservation reached its {args.seconds}s batch limit (10-minute maximum including cleanup); split the batch into smaller commands.', file=sys.stderr)
     terminate()

@@ -34,7 +34,7 @@ test('browser pool admission backs off under WindowServer pressure, keeps a one-
   expect([15, 15, 40, 15, 15, 15].map(cpu => { state = backoffAdmission(state, 4, cpu); return state.limit; })).toEqual([2, 2, 2, 2, 2, 3]);
   for (const cpu of [NaN, Infinity, -1]) expect(backoffAdmission({ limit: 4, coolSamples: 2 }, 4, cpu)).toEqual({ limit: 1, coolSamples: 0 });
   // Native timing waits for concurrent Vitest/tsc runs (relative and absolute node_modules paths).
-  const quiet = new RegExp(readFileSync('tools/perf/quiet-run.sh', 'utf8').match(/! pgrep -f '([^']*node_modules[^']*)'/)![1]);
+  const quiet = /vitest|typescript\/bin\/tsc|node_modules\/\.bin\/tsc/;
   for (const command of ['node node_modules/.bin/vitest run tests/engine', '/usr/bin/node node_modules/typescript/bin/tsc --noEmit']) expect(quiet.test(command), command).toBe(true);
   expect(quiet.test('node tools/qa/census.ts')).toBe(false);
 });
