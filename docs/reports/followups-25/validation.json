@@ -1,0 +1,848 @@
+{
+  "branch": "lane/followups-25",
+  "codeCommit": "202313447",
+  "deliveryCommit": "352010542",
+  "baselineCommit": "6363147b2",
+  "tests": [
+    {
+      "run": 1,
+      "log": "test-final-2",
+      "passed": 104,
+      "files": 24,
+      "wallSeconds": 21.4
+    },
+    {
+      "run": 2,
+      "log": "test-final-3",
+      "passed": 104,
+      "files": 24,
+      "wallSeconds": 38.1
+    },
+    {
+      "run": 3,
+      "log": "test-safe-final",
+      "passed": 104,
+      "files": 24,
+      "wallSeconds": 22.0
+    }
+  ],
+  "budget": {
+    "cases": 144,
+    "maxCases": 150,
+    "files": 40,
+    "maxFiles": 45,
+    "newCases": 0
+  },
+  "typecheck": "pass",
+  "lint": "pass",
+  "smoke": {
+    "pass_": true,
+    "wallSeconds": 150.4,
+    "budgetSeconds": 240,
+    "qaTests": 6,
+    "publicTests": 1
+  },
+  "sceneGate": {
+    "pass_": true,
+    "passed": 43,
+    "known": 5,
+    "notRun": 0,
+    "minutes": 7.3
+  },
+  "roster": {
+    "populations": 542,
+    "actorObservations": 1824,
+    "failures": [],
+    "unsupportedStandaloneCheckpoints": [
+      {
+        "level": "L2",
+        "tier": "high",
+        "checkpoint": "escape"
+      },
+      {
+        "level": "L2",
+        "tier": "high",
+        "checkpoint": "cluster"
+      },
+      {
+        "level": "L3",
+        "tier": "high",
+        "checkpoint": "segment-2"
+      },
+      {
+        "level": "L3",
+        "tier": "high",
+        "checkpoint": "segment-2b"
+      },
+      {
+        "level": "L3",
+        "tier": "high",
+        "checkpoint": "segment-3"
+      },
+      {
+        "level": "L3",
+        "tier": "high",
+        "checkpoint": "segment-3b"
+      },
+      {
+        "level": "L4",
+        "tier": "high",
+        "checkpoint": "line-1"
+      },
+      {
+        "level": "L4",
+        "tier": "high",
+        "checkpoint": "nests"
+      },
+      {
+        "level": "L4",
+        "tier": "high",
+        "checkpoint": "armor"
+      },
+      {
+        "level": "L6",
+        "tier": "high",
+        "checkpoint": "gate-90"
+      },
+      {
+        "level": "L6",
+        "tier": "high",
+        "checkpoint": "mid-tunnel"
+      },
+      {
+        "level": "L6",
+        "tier": "high",
+        "checkpoint": "gate-150"
+      },
+      {
+        "level": "L6",
+        "tier": "high",
+        "checkpoint": "gate-210"
+      },
+      {
+        "level": "L6",
+        "tier": "high",
+        "checkpoint": "exit-platform"
+      },
+      {
+        "level": "L8",
+        "tier": "high",
+        "checkpoint": "breach"
+      },
+      {
+        "level": "L8",
+        "tier": "high",
+        "checkpoint": "escape-route"
+      },
+      {
+        "level": "L9",
+        "tier": "high",
+        "checkpoint": "outskirts-approach"
+      },
+      {
+        "level": "L2",
+        "tier": "low",
+        "checkpoint": "escape"
+      },
+      {
+        "level": "L2",
+        "tier": "low",
+        "checkpoint": "cluster"
+      },
+      {
+        "level": "L3",
+        "tier": "low",
+        "checkpoint": "segment-2"
+      },
+      {
+        "level": "L3",
+        "tier": "low",
+        "checkpoint": "segment-2b"
+      },
+      {
+        "level": "L3",
+        "tier": "low",
+        "checkpoint": "segment-3"
+      },
+      {
+        "level": "L3",
+        "tier": "low",
+        "checkpoint": "segment-3b"
+      },
+      {
+        "level": "L4",
+        "tier": "low",
+        "checkpoint": "line-1"
+      },
+      {
+        "level": "L4",
+        "tier": "low",
+        "checkpoint": "nests"
+      },
+      {
+        "level": "L4",
+        "tier": "low",
+        "checkpoint": "armor"
+      },
+      {
+        "level": "L6",
+        "tier": "low",
+        "checkpoint": "gate-90"
+      },
+      {
+        "level": "L6",
+        "tier": "low",
+        "checkpoint": "mid-tunnel"
+      },
+      {
+        "level": "L6",
+        "tier": "low",
+        "checkpoint": "gate-150"
+      },
+      {
+        "level": "L6",
+        "tier": "low",
+        "checkpoint": "gate-210"
+      },
+      {
+        "level": "L6",
+        "tier": "low",
+        "checkpoint": "exit-platform"
+      },
+      {
+        "level": "L8",
+        "tier": "low",
+        "checkpoint": "breach"
+      },
+      {
+        "level": "L8",
+        "tier": "low",
+        "checkpoint": "escape-route"
+      },
+      {
+        "level": "L9",
+        "tier": "low",
+        "checkpoint": "outskirts-approach"
+      }
+    ]
+  },
+  "q223": {
+    "identifiedArchetype": "infected.runner",
+    "identifiedModel": "inf.bbq-dad",
+    "hitRadiusMetres": 0.35,
+    "method": "Native L10, WebGPU low, zoom 1.5; explicit actor/loadout/position fixture followed by real mouse/keyboard. A missed held ground click reproduces eight seconds without attacking at 1.08m; shared driver retry helper reacquires by a real fresh body click. No damage/health injection.",
+    "historicalLimitation": "Original input logs were not retained, so the exact lost command in the historical eight-second stall cannot be proven. The missing bar flag and a reproducible held-ground-click driver failure are corrected.",
+    "backend": "webgpu",
+    "quality": "low",
+    "zoom": 1.5,
+    "models": [
+      {
+        "model": "inf.common-worker",
+        "before": 60,
+        "after": 40,
+        "playerHit": true,
+        "bar": true
+      },
+      {
+        "model": "inf.jogger",
+        "before": 60,
+        "after": 40,
+        "playerHit": true,
+        "bar": true
+      },
+      {
+        "model": "inf.cashier",
+        "before": 60,
+        "after": 40,
+        "playerHit": true,
+        "bar": true
+      },
+      {
+        "model": "inf.delivery-driver",
+        "before": 60,
+        "after": 40,
+        "playerHit": true,
+        "bar": true
+      },
+      {
+        "model": "inf.suburban-mom",
+        "before": 60,
+        "after": 40,
+        "playerHit": true,
+        "bar": true
+      },
+      {
+        "model": "inf.bbq-dad",
+        "before": 60,
+        "after": 40,
+        "playerHit": true,
+        "bar": true
+      },
+      {
+        "model": "inf.bathrobe-neighbor",
+        "before": 60,
+        "after": 40,
+        "playerHit": true,
+        "bar": true
+      }
+    ],
+    "corgiDrawn": true,
+    "lostCommandRepair": {
+      "heldMs": 8000,
+      "distanceMetres": 1.0799999999999985,
+      "hpBefore": 60,
+      "commandedBefore": null,
+      "hpAfter": 40
+    }
+  },
+  "quiet": {
+    "method": "quiet-run, shared native Metal WebGPU, fixed UI tier, interleaved same-host main/candidate production builds, n=5 empty contexts each; LOW MEDIAN acceptance, HIGH informational (orchestrator clarification)",
+    "batch24Ms": 4211,
+    "limitMs": 4632.1,
+    "groups": [
+      {
+        "variant": "before",
+        "quality": "high",
+        "n": 5,
+        "median": 4807.800000190735,
+        "max": 4858.300000190735,
+        "bytes": 12795009,
+        "files": 186
+      },
+      {
+        "variant": "after",
+        "quality": "high",
+        "n": 5,
+        "median": 4324.89999961853,
+        "max": 4326.300000190735,
+        "bytes": 12382429,
+        "files": 186
+      },
+      {
+        "variant": "before",
+        "quality": "low",
+        "n": 5,
+        "median": 4341.199999809265,
+        "max": 4342.900000572205,
+        "bytes": 12445975,
+        "files": 186
+      },
+      {
+        "variant": "after",
+        "quality": "low",
+        "n": 5,
+        "median": 4024.199999809265,
+        "max": 4042.199999809265,
+        "bytes": 12399903,
+        "files": 186
+      }
+    ],
+    "pass": true,
+    "originalMeasuredMethod": "quiet-run, shared native Metal WebGPU, fixed UI quality, interleaved same-host before/after, five empty contexts per tier/build, menu level click to loading-card closure; strict worst-of-five acceptance",
+    "batch24Commit": "93d73c529",
+    "batch24Metric": "WebGPU low median of five, quiet local production build",
+    "candidateCodeCommit": "202313447",
+    "beforeCodeCommit": "6363147b2"
+  },
+  "visual": {
+    "strictComparisons": [
+      {
+        "tier": "low",
+        "subject": "lion",
+        "changedPixels": 0,
+        "totalPixels": 480000,
+        "maxChannelDifference": 0
+      },
+      {
+        "tier": "low",
+        "subject": "gorilla",
+        "changedPixels": 0,
+        "totalPixels": 480000,
+        "maxChannelDifference": 0
+      },
+      {
+        "tier": "low",
+        "subject": "elephant",
+        "changedPixels": 0,
+        "totalPixels": 480000,
+        "maxChannelDifference": 0
+      },
+      {
+        "tier": "low",
+        "subject": "zebra",
+        "changedPixels": 0,
+        "totalPixels": 480000,
+        "maxChannelDifference": 0
+      },
+      {
+        "tier": "low",
+        "subject": "flamingo",
+        "changedPixels": 0,
+        "totalPixels": 480000,
+        "maxChannelDifference": 0
+      },
+      {
+        "tier": "low",
+        "subject": "mixed",
+        "changedPixels": 0,
+        "totalPixels": 480000,
+        "maxChannelDifference": 0
+      },
+      {
+        "tier": "low",
+        "subject": "mixed-corpses",
+        "changedPixels": 0,
+        "totalPixels": 480000,
+        "maxChannelDifference": 0
+      },
+      {
+        "tier": "low",
+        "subject": "alphas",
+        "changedPixels": 0,
+        "totalPixels": 480000,
+        "maxChannelDifference": 0
+      },
+      {
+        "tier": "high",
+        "subject": "lion",
+        "changedPixels": 0,
+        "totalPixels": 480000,
+        "maxChannelDifference": 0
+      },
+      {
+        "tier": "high",
+        "subject": "gorilla",
+        "changedPixels": 0,
+        "totalPixels": 480000,
+        "maxChannelDifference": 0
+      },
+      {
+        "tier": "high",
+        "subject": "elephant",
+        "changedPixels": 0,
+        "totalPixels": 480000,
+        "maxChannelDifference": 0
+      },
+      {
+        "tier": "high",
+        "subject": "zebra",
+        "changedPixels": 0,
+        "totalPixels": 480000,
+        "maxChannelDifference": 0
+      },
+      {
+        "tier": "high",
+        "subject": "flamingo",
+        "changedPixels": 0,
+        "totalPixels": 480000,
+        "maxChannelDifference": 0
+      },
+      {
+        "tier": "high",
+        "subject": "mixed",
+        "changedPixels": 0,
+        "totalPixels": 480000,
+        "maxChannelDifference": 0
+      },
+      {
+        "tier": "high",
+        "subject": "mixed-corpses",
+        "changedPixels": 0,
+        "totalPixels": 480000,
+        "maxChannelDifference": 0
+      },
+      {
+        "tier": "high",
+        "subject": "alphas",
+        "changedPixels": 0,
+        "totalPixels": 480000,
+        "maxChannelDifference": 0
+      }
+    ],
+    "supplementalAlphaCorpses": [
+      {
+        "tier": "low",
+        "subject": "alpha-corpses",
+        "changedPixels": 5187,
+        "totalPixels": 480000,
+        "maxChannelDifference": 85
+      },
+      {
+        "tier": "high",
+        "subject": "alpha-corpses",
+        "changedPixels": 7568,
+        "totalPixels": 480000,
+        "maxChannelDifference": 120
+      }
+    ],
+    "note": "All five new zoo species healthy/infected, mixed living/frozen animals and living Alpha looks match exactly. Alpha hero and frozen material paths remain unchanged in the final patch; the supplemental corpse capture is not used as a deterministic pixel assertion.",
+    "duplicateHealthyInfectedAtlases": []
+  },
+  "delivery": {
+    "method": "Lossless meshopt buffer consolidation and compact encoder; all decoded attributes, oriented triangles, nodes, bind matrices and KTX2 bytes asserted identical.",
+    "before": 10632056,
+    "after": 9728888,
+    "rows": [
+      {
+        "name": "amb.elephant.lod0.glb",
+        "before": 223260,
+        "after": 202488,
+        "saved": 20772
+      },
+      {
+        "name": "amb.elephant.lod0.low.glb",
+        "before": 202832,
+        "after": 182056,
+        "saved": 20776
+      },
+      {
+        "name": "amb.elephant.lod1.glb",
+        "before": 124488,
+        "after": 106864,
+        "saved": 17624
+      },
+      {
+        "name": "amb.elephant.lod1.low.glb",
+        "before": 124488,
+        "after": 106864,
+        "saved": 17624
+      },
+      {
+        "name": "amb.elephant.lod2.glb",
+        "before": 81028,
+        "after": 65024,
+        "saved": 16004
+      },
+      {
+        "name": "amb.elephant.lod2.low.glb",
+        "before": 81028,
+        "after": 65024,
+        "saved": 16004
+      },
+      {
+        "name": "amb.flamingo.lod0.glb",
+        "before": 166388,
+        "after": 155656,
+        "saved": 10732
+      },
+      {
+        "name": "amb.flamingo.lod0.low.glb",
+        "before": 120208,
+        "after": 109512,
+        "saved": 10696
+      },
+      {
+        "name": "amb.flamingo.lod1.glb",
+        "before": 79088,
+        "after": 69956,
+        "saved": 9132
+      },
+      {
+        "name": "amb.flamingo.lod1.low.glb",
+        "before": 79088,
+        "after": 69956,
+        "saved": 9132
+      },
+      {
+        "name": "amb.flamingo.lod2.glb",
+        "before": 70540,
+        "after": 59160,
+        "saved": 11380
+      },
+      {
+        "name": "amb.flamingo.lod2.low.glb",
+        "before": 70540,
+        "after": 59160,
+        "saved": 11380
+      },
+      {
+        "name": "amb.gorilla.lod0.glb",
+        "before": 402472,
+        "after": 380664,
+        "saved": 21808
+      },
+      {
+        "name": "amb.gorilla.lod0.low.glb",
+        "before": 323100,
+        "after": 301288,
+        "saved": 21812
+      },
+      {
+        "name": "amb.gorilla.lod1.glb",
+        "before": 198348,
+        "after": 182092,
+        "saved": 16256
+      },
+      {
+        "name": "amb.gorilla.lod1.low.glb",
+        "before": 198348,
+        "after": 182092,
+        "saved": 16256
+      },
+      {
+        "name": "amb.gorilla.lod2.glb",
+        "before": 116928,
+        "after": 104420,
+        "saved": 12508
+      },
+      {
+        "name": "amb.gorilla.lod2.low.glb",
+        "before": 116928,
+        "after": 104420,
+        "saved": 12508
+      },
+      {
+        "name": "amb.lion.lod0.glb",
+        "before": 324088,
+        "after": 303144,
+        "saved": 20944
+      },
+      {
+        "name": "amb.lion.lod0.low.glb",
+        "before": 287232,
+        "after": 266284,
+        "saved": 20948
+      },
+      {
+        "name": "amb.lion.lod1.glb",
+        "before": 160172,
+        "after": 146628,
+        "saved": 13544
+      },
+      {
+        "name": "amb.lion.lod1.low.glb",
+        "before": 160172,
+        "after": 146628,
+        "saved": 13544
+      },
+      {
+        "name": "amb.lion.lod2.glb",
+        "before": 97740,
+        "after": 84980,
+        "saved": 12760
+      },
+      {
+        "name": "amb.lion.lod2.low.glb",
+        "before": 97740,
+        "after": 84980,
+        "saved": 12760
+      },
+      {
+        "name": "amb.zebra.lod0.glb",
+        "before": 375512,
+        "after": 358768,
+        "saved": 16744
+      },
+      {
+        "name": "amb.zebra.lod0.low.glb",
+        "before": 232096,
+        "after": 215348,
+        "saved": 16748
+      },
+      {
+        "name": "amb.zebra.lod1.glb",
+        "before": 148848,
+        "after": 135736,
+        "saved": 13112
+      },
+      {
+        "name": "amb.zebra.lod1.low.glb",
+        "before": 148848,
+        "after": 135736,
+        "saved": 13112
+      },
+      {
+        "name": "amb.zebra.lod2.glb",
+        "before": 121752,
+        "after": 109772,
+        "saved": 11980
+      },
+      {
+        "name": "amb.zebra.lod2.low.glb",
+        "before": 121752,
+        "after": 109772,
+        "saved": 11980
+      },
+      {
+        "name": "inf.elephant.lod0.glb",
+        "before": 284384,
+        "after": 262868,
+        "saved": 21516
+      },
+      {
+        "name": "inf.elephant.lod0.low.glb",
+        "before": 238008,
+        "after": 216496,
+        "saved": 21512
+      },
+      {
+        "name": "inf.elephant.lod1.glb",
+        "before": 148708,
+        "after": 130564,
+        "saved": 18144
+      },
+      {
+        "name": "inf.elephant.lod1.low.glb",
+        "before": 148708,
+        "after": 130564,
+        "saved": 18144
+      },
+      {
+        "name": "inf.elephant.lod2.glb",
+        "before": 93604,
+        "after": 77884,
+        "saved": 15720
+      },
+      {
+        "name": "inf.elephant.lod2.low.glb",
+        "before": 93604,
+        "after": 77884,
+        "saved": 15720
+      },
+      {
+        "name": "inf.flamingo.lod0.glb",
+        "before": 196536,
+        "after": 185732,
+        "saved": 10804
+      },
+      {
+        "name": "inf.flamingo.lod0.low.glb",
+        "before": 137220,
+        "after": 126420,
+        "saved": 10800
+      },
+      {
+        "name": "inf.flamingo.lod1.glb",
+        "before": 88620,
+        "after": 79536,
+        "saved": 9084
+      },
+      {
+        "name": "inf.flamingo.lod1.low.glb",
+        "before": 88620,
+        "after": 79536,
+        "saved": 9084
+      },
+      {
+        "name": "inf.flamingo.lod2.glb",
+        "before": 79524,
+        "after": 68132,
+        "saved": 11392
+      },
+      {
+        "name": "inf.flamingo.lod2.low.glb",
+        "before": 79524,
+        "after": 68132,
+        "saved": 11392
+      },
+      {
+        "name": "inf.gorilla.lod0.glb",
+        "before": 429356,
+        "after": 407496,
+        "saved": 21860
+      },
+      {
+        "name": "inf.gorilla.lod0.low.glb",
+        "before": 328904,
+        "after": 307040,
+        "saved": 21864
+      },
+      {
+        "name": "inf.gorilla.lod1.glb",
+        "before": 206252,
+        "after": 190052,
+        "saved": 16200
+      },
+      {
+        "name": "inf.gorilla.lod1.low.glb",
+        "before": 206252,
+        "after": 190052,
+        "saved": 16200
+      },
+      {
+        "name": "inf.gorilla.lod2.glb",
+        "before": 124320,
+        "after": 111844,
+        "saved": 12476
+      },
+      {
+        "name": "inf.gorilla.lod2.low.glb",
+        "before": 124320,
+        "after": 111844,
+        "saved": 12476
+      },
+      {
+        "name": "inf.lion.lod0.glb",
+        "before": 399416,
+        "after": 378576,
+        "saved": 20840
+      },
+      {
+        "name": "inf.lion.lod0.low.glb",
+        "before": 308220,
+        "after": 287376,
+        "saved": 20844
+      },
+      {
+        "name": "inf.lion.lod1.glb",
+        "before": 191744,
+        "after": 178180,
+        "saved": 13564
+      },
+      {
+        "name": "inf.lion.lod1.low.glb",
+        "before": 191744,
+        "after": 178180,
+        "saved": 13564
+      },
+      {
+        "name": "inf.lion.lod2.glb",
+        "before": 130464,
+        "after": 117612,
+        "saved": 12852
+      },
+      {
+        "name": "inf.lion.lod2.low.glb",
+        "before": 130464,
+        "after": 117612,
+        "saved": 12852
+      },
+      {
+        "name": "inf.zebra.lod0.glb",
+        "before": 365928,
+        "after": 349184,
+        "saved": 16744
+      },
+      {
+        "name": "inf.zebra.lod0.low.glb",
+        "before": 230176,
+        "after": 213428,
+        "saved": 16748
+      },
+      {
+        "name": "inf.zebra.lod1.glb",
+        "before": 146632,
+        "after": 133520,
+        "saved": 13112
+      },
+      {
+        "name": "inf.zebra.lod1.low.glb",
+        "before": 146632,
+        "after": 133520,
+        "saved": 13112
+      },
+      {
+        "name": "inf.zebra.lod2.glb",
+        "before": 119560,
+        "after": 107576,
+        "saved": 11984
+      },
+      {
+        "name": "inf.zebra.lod2.low.glb",
+        "before": 119560,
+        "after": 107576,
+        "saved": 11984
+      }
+    ]
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "method": "quiet-run, shared native Metal WebGPU, fixed UI tier, interleaved same-host main/candidate production builds, n=5 empty contexts each; LOW MEDIAN acceptance, HIGH informational (orchestrator clarification)",
+  "batch24Ms": 4211,
+  "limitMs": 4632.1,
+  "groups": [
+    {
+      "variant": "before",
+      "quality": "high",
+      "n": 5,
+      "median": 4807.800000190735,
+      "max": 4858.300000190735,
+      "bytes": 12795009,
+      "files": 186
+    },
+    {
+      "variant": "after",
+      "quality": "high",
+      "n": 5,
+      "median": 4324.89999961853,
+      "max": 4326.300000190735,
+      "bytes": 12382429,
+      "files": 186
+    },
+    {
+      "variant": "before",
+      "quality": "low",
+      "n": 5,
+      "median": 4341.199999809265,
+      "max": 4342.900000572205,
+      "bytes": 12445975,
+      "files": 186
+    },
+    {
+      "variant": "after",
+      "quality": "low",
+      "n": 5,
+      "median": 4024.199999809265,
+      "max": 4042.199999809265,
+      "bytes": 12399903,
+      "files": 186
+    }
+  ],
+  "pass": true,
+  "originalMeasuredMethod": "quiet-run, shared native Metal WebGPU, fixed UI quality, interleaved same-host before/after, five empty contexts per tier/build, menu level click to loading-card closure; strict worst-of-five acceptance",
+  "batch24Commit": "93d73c529",
+  "batch24Metric": "WebGPU low median of five, quiet local production build",
+  "candidateCodeCommit": "202313447",
+  "beforeCodeCommit": "6363147b2"
+}
