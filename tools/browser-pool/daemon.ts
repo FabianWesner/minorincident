@@ -220,7 +220,7 @@ const http = createServer((req, res) => { void (async () => {
       if (e.granted && leases.size === 0 && (e.external || [...browsers.values()].some(b => b.signature !== JSON.stringify({ extra: [], channel: undefined })))) await closeBrowsers('exclusive-finished');
       exclusives.splice(i, 1); pump(); return json(200, { released: true });
     }
-    if (url.searchParams.has('quiet')) return json(200, { ...e, conditions: await quietConditions(new Set([...browsers.values()].map(b => b.server.process().pid!))) });
+    if (url.searchParams.has('quiet')) return json(200, { ...e, conditions: await quietConditions(new Set([...browsers.values()].map(b => b.server.process().pid!)), e.queuedAt) });
     return json(200, e);
   }
   json(404, { error: 'Not found' });

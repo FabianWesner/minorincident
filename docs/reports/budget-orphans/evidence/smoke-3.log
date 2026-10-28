@@ -1,0 +1,114 @@
+
+> test:smoke
+> node tools/qa/test-budget.mjs --name smoke --max-seconds 240 -- sh tools/qa/smoke.sh
+
+[test-budget] 144/150 test cases ({"vitest":123,"e2e":9,"invariantsBrowser":12}), 40/45 files
+
+> build:qa
+> NODE_ENV=production VITE_QA_HOOKS=1 sh tools/build-cached.sh
+
+vite v6.4.3 building for production...
+transforming...
+✓ 641 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/preview/index.html                             1.81 kB │ gzip:     0.75 kB
+dist/index.html                                     2.90 kB │ gzip:     0.96 kB
+dist/build/civilianBakeData-W9xWw0wY.js             3.93 kB
+dist/build/BufferGeometryUtils-B9lQkqNz.js          6.88 kB
+dist/build/civilianBake.worker-BYHzApEL.js         22.29 kB
+dist/build/basis_transcoder-o4Hde_L7.js            57.53 kB
+dist/build/three.module-CwjGdtFU.js               206.12 kB
+dist/build/civilianSource-V_eHwVFs.js             430.58 kB
+dist/build/basis_transcoder-VXdx5NbI.wasm         527.33 kB │ gzip:   244.57 kB
+dist/build/prefetch.worker-D96HqIvO.js          1,110.09 kB
+dist/build/prepareCivilianGeometry-CIQS68M3.js  2,028.74 kB
+dist/build/rapier-C6GCbKVJ.wasm                 3,082.10 kB │ gzip: 1,171.17 kB
+dist/build/index-CUk1QJun.css                      41.64 kB │ gzip:     8.85 kB
+dist/build/lookViewpoints-BX-OEann.js               0.23 kB │ gzip:     0.16 kB
+dist/build/modulepreload-polyfill-B5Qt9EMX.js       0.71 kB │ gzip:     0.40 kB
+dist/build/three.module-BAanMjXz.js                 1.10 kB │ gzip:     0.64 kB
+dist/build/preload-helper-BlTxHScW.js               1.11 kB │ gzip:     0.65 kB
+dist/build/controls-BD2KGrGS.js                     1.40 kB │ gzip:     0.75 kB
+dist/build/crowdProbe-D-RJfKPs.js                   1.53 kB │ gzip:     0.88 kB
+dist/build/worldLook-o3T_90Bf.js                    1.96 kB │ gzip:     0.88 kB
+dist/build/crowd-DBDNlYLx.js                        3.01 kB │ gzip:     1.56 kB
+dist/build/lookPatch-BJ2Iw5hk.js                    5.68 kB │ gzip:     2.83 kB
+dist/build/probe-DC6G_q6a.js                        7.51 kB │ gzip:     3.05 kB
+dist/build/meleeCombos-B-Pehqzd.js                  9.60 kB │ gzip:     3.09 kB
+dist/build/index-B3pIWlYP.js                       12.43 kB │ gzip:     4.50 kB
+dist/build/Inspection-go6B6wvS.js                  12.86 kB │ gzip:     4.41 kB
+dist/build/MotionLab-B0K3vQCZ.js                   20.11 kB │ gzip:     8.47 kB
+dist/build/LevelFiveBot-Cm6UCn_M.js                22.90 kB │ gzip:     6.65 kB
+dist/build/survivor-JATdyqv7.js                    23.85 kB │ gzip:     9.68 kB
+dist/build/LevelSixSubway-C1Pm_fDI.js              26.65 kB │ gzip:    10.23 kB
+dist/build/index-d6Sfl_7m.js                       28.31 kB │ gzip:     7.74 kB
+dist/build/testApi-DOxyk81I.js                     35.68 kB │ gzip:    13.02 kB
+dist/build/Physics-Deeqjdst.js                     80.92 kB │ gzip:    28.07 kB
+dist/build/Pickups-h5y5vQYT.js                     85.65 kB │ gzip:    27.71 kB
+dist/build/light-anchors-DQGCSUUw.js               90.38 kB │ gzip:     6.79 kB
+dist/build/SceneLab-CNdDNcvH.js                   103.77 kB │ gzip:    35.70 kB
+dist/build/PropSystem-D1I8rr_h.js                 132.83 kB │ gzip:    45.14 kB
+dist/build/Debug-C5mqunPp.js                      155.77 kB │ gzip:    33.00 kB
+dist/build/registry-BGfKUl6N.js                   207.85 kB │ gzip:    70.73 kB
+dist/build/rapier-ykuY6d4E.js                     212.13 kB │ gzip:    36.15 kB
+dist/build/l6-DKlywkva.js                         268.41 kB │ gzip:    81.99 kB
+dist/build/three-core-CZlmsIZ_.js                 307.37 kB │ gzip:    82.33 kB
+dist/build/WeatherView-DNEnZXit.js                384.86 kB │ gzip:    43.16 kB
+dist/build/install-v6vLXl4X.js                    626.88 kB │ gzip:   159.60 kB
+dist/build/three-webgpu-CAPdUbxp.js               688.67 kB │ gzip:   192.05 kB
+dist/build/wreck-roofs-GAckelu8.js                755.61 kB │ gzip:   253.19 kB
+dist/build/index-CtMOISXs.js                    1,375.73 kB │ gzip:   431.24 kB
+dist/build/character-clips-CGKWtM3S.js          1,939.70 kB │ gzip:   341.80 kB
+✓ built in 5.03s
+
+Running 6 tests using 1 worker
+
+[gpu-limits] webgl: 497 programs, 88 crowd; crowd max attributes 13, varyings 14, buffers 0; all max attributes 13, varyings 14, buffers 0
+  ✓  1 [chromium] › tests/e2e/crowd-gpu-limits.spec.ts:19:52 › every crowd, corpse and accessory program compiles within the portable GPU limits on webgl @smoke (45.8s)
+[gpu-limits] webgpu: 722 programs, 93 crowd; crowd max attributes 13, varyings 14, buffers 6; all max attributes 13, varyings 14, buffers 8
+  ✓  2 [chromium] › tests/e2e/crowd-gpu-limits.spec.ts:19:52 › every crowd, corpse and accessory program compiles within the portable GPU limits on webgpu @smoke (47.2s)
+  ✓  3 [chromium] › tests/e2e/smoke.spec.ts:38:1 › L1 handover + outbreak: no shader builds after warm-up and no frame over 200 ms @smoke (15.2s)
+  ✓  4 [chromium] › tests/e2e/smoke.spec.ts:109:54 › L1 start: pedestrians are drawn on screen (webgl), not only their props @smoke (23.0s)
+  ✓  5 [chromium] › tests/e2e/smoke.spec.ts:109:54 › L1 start: pedestrians are drawn on screen (webgpu), not only their props @smoke (24.1s)
+  ✓  6 [chromium] › tests/e2e/webgpu-unflagged.spec.ts:12:1 › menu → L1 start on unflagged WebGPU compiles every render pipeline with suit zombies drawn (low tier) @smoke (6.1s)
+
+  6 passed (2.7m)
+
+> build
+> NODE_ENV=production sh tools/build-cached.sh
+
+vite v6.4.3 building for production...
+transforming...
+✓ 602 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                     1.54 kB │ gzip:     0.68 kB
+dist/build/civilianBakeData-W9xWw0wY.js             3.93 kB
+dist/build/BufferGeometryUtils-B9lQkqNz.js          6.88 kB
+dist/build/civilianBake.worker-BYHzApEL.js         22.29 kB
+dist/build/basis_transcoder-o4Hde_L7.js            57.53 kB
+dist/build/three.module-CwjGdtFU.js               206.12 kB
+dist/build/civilianSource-V_eHwVFs.js             430.58 kB
+dist/build/basis_transcoder-VXdx5NbI.wasm         527.33 kB │ gzip:   244.57 kB
+dist/build/prefetch.worker-D96HqIvO.js          1,110.09 kB
+dist/build/prepareCivilianGeometry-CIQS68M3.js  2,028.74 kB
+dist/build/rapier-C6GCbKVJ.wasm                 3,082.10 kB │ gzip: 1,171.17 kB
+dist/build/index-CUk1QJun.css                      41.64 kB │ gzip:     8.85 kB
+dist/build/index-haGrLlea.js                       17.32 kB │ gzip:     6.19 kB
+dist/build/light-anchors-DQGCSUUw.js               90.38 kB │ gzip:     6.79 kB
+dist/build/rapier-ykuY6d4E.js                     212.13 kB │ gzip:    36.15 kB
+dist/build/three-core-B_ZAxbv8.js                 306.07 kB │ gzip:    81.70 kB
+dist/build/three-webgpu-BgQTMWSf.js               688.67 kB │ gzip:   192.06 kB
+dist/build/wreck-roofs-GAckelu8.js                755.61 kB │ gzip:   253.19 kB
+dist/build/character-clips-CGKWtM3S.js          1,939.70 kB │ gzip:   341.80 kB
+dist/build/index-dkiy9_Wa.js                    3,194.80 kB │ gzip:   894.86 kB
+✓ built in 5.36s
+[public-build] PASS: 18 HTML/JS files contain no QA hooks
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/e2e/smoke.spec.ts:15:1 › public build: menu start draws L1 and exposes no QA globals @public-smoke (4.2s)
+
+  1 passed (4.8s)
+[test-budget] smoke: 182.9 s (budget 240 s)

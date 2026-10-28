@@ -27,9 +27,12 @@ def stop(signum, _frame):
 
 
 def process_tree():
-    # lstart prevents signalling a PID that has been recycled during cleanup.
+    # Identity guards prevent a recycled PID from becoming a cleanup target.
     result = {}
-    output = subprocess.check_output(['ps', '-axo', 'pid=,ppid=,lstart='], text=True)
+    try:
+        output = subprocess.check_output(['ps', '-axo', 'pid=,ppid=,lstart='], text=True)
+    except (OSError, subprocess.CalledProcessError):
+        return result  # Process-group cleanup still works without ps access.
     for line in output.splitlines():
         fields = line.split(None, 2)
         if len(fields) == 3:
@@ -49,19 +52,38 @@ def descendants(known, tree):
 def terminate():
     for sig in (signal.SIGTERM, signal.SIGINT, signal.SIGHUP):
         signal.signal(sig, signal.SIG_IGN)
+    # The command has its own session/process group. Signal the group directly so
+    # wrappers such as npx cannot orphan grandchildren by exiting first.
     tree = process_tree()
-    known = {child.pid: tree[child.pid]} if child.pid in tree else {}
-    owned = descendants(known, tree)
-    # Include detached browser roots: Playwright can give Chrome its own group.
+    owned = descendants({child.pid: tree[child.pid]} if child.pid in tree else {}, tree)
+    # Playwright can detach Chrome into a separate process group. Preserve owned
+    # descendant cleanup in addition to the npx/Vitest group.
+    detached = []
     for pid in owned:
         try:
-            os.kill(pid, signal.SIGTERM)
+            if os.getpgid(pid) != child.pid:
+                detached.append(pid)
+                os.kill(pid, signal.SIGTERM)
         except ProcessLookupError:
             pass
-    time.sleep(5)
-    tree = process_tree()
-    owned = descendants(owned, tree)
-    for pid in owned:
+    try:
+        os.killpg(child.pid, signal.SIGTERM)
+    except ProcessLookupError:
+        pass
+    deadline = time.monotonic() + 5
+    while time.monotonic() < deadline:
+        child.poll()
+        try:
+            os.killpg(child.pid, 0)
+        except ProcessLookupError:
+            if not detached:
+                break
+        time.sleep(0.1)
+    try:
+        os.killpg(child.pid, signal.SIGKILL)
+    except ProcessLookupError:
+        pass
+    for pid in descendants(owned, process_tree()):
         try:
             os.kill(pid, signal.SIGKILL)
         except ProcessLookupError:
@@ -73,6 +95,8 @@ signal.signal(signal.SIGINT, stop)
 signal.signal(signal.SIGHUP, stop)
 try:
     code = child.wait(timeout=args.seconds or None)
+    # Wrappers can exit successfully while leaving a grandchild in their group.
+    terminate()
 except subprocess.TimeoutExpired:
     print(f'Browser reservation reached its {args.seconds}s batch limit (10-minute maximum including cleanup); split the batch into smaller commands.', file=sys.stderr)
     terminate()
