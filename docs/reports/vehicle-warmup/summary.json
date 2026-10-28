@@ -1,0 +1,835 @@
+{
+  "branch": "lane/vehicle-warmup",
+  "captureCommit": "c50b4429ba4c86714667c3fc47c755ba43a6539f",
+  "cpu": "Apple M4",
+  "browser": "pinned Playwright Chromium, headless ANGLE Metal / native WebGPU, shared pool only",
+  "quality": "low",
+  "viewport": [
+    1600,
+    900
+  ],
+  "negativeGuard": {
+    "source": "VehicleView.ts from 904ae77a9; current guard and vehicle ancestry telemetry",
+    "exit": 1,
+    "boarded": true,
+    "lateSubjectBuilds": 9
+  },
+  "probes": [
+    {
+      "file": "L1-webgpu-1.json",
+      "backend": "webgpu",
+      "level": "L1",
+      "vehicles": [],
+      "scriptedVehicles": [],
+      "boarded": false,
+      "bikeBoarded": true,
+      "lateSubjectBuilds": 0,
+      "frames": 104,
+      "maxMs": 16.800000000000182,
+      "over200": 0,
+      "errors": []
+    },
+    {
+      "file": "L4-webgl2-1.json",
+      "backend": "webgl",
+      "level": "L4",
+      "vehicles": [
+        {
+          "id": 77,
+          "def": "vehicle.sedan",
+          "at": {
+            "x": -30,
+            "z": 43.3,
+            "y": 0.79,
+            "yaw": 0
+          }
+        },
+        {
+          "id": 78,
+          "def": "vehicle.suv",
+          "at": {
+            "x": -6,
+            "z": 43.3,
+            "y": 0.79,
+            "yaw": 0
+          }
+        },
+        {
+          "id": 79,
+          "def": "vehicle.pickup",
+          "at": {
+            "x": -38,
+            "z": -42.6,
+            "y": 0.79,
+            "yaw": 3.141592653589793
+          }
+        },
+        {
+          "id": 80,
+          "def": "vehicle.sedan",
+          "at": {
+            "x": 30,
+            "z": -42.6,
+            "y": 0.79,
+            "yaw": 3.141592653589793
+          }
+        },
+        {
+          "id": 81,
+          "def": "vehicle.suv",
+          "at": {
+            "x": 15.8,
+            "z": 14,
+            "y": 0.79,
+            "yaw": -1.5707963267948966
+          }
+        },
+        {
+          "id": 82,
+          "def": "vehicle.pickup",
+          "at": {
+            "x": -59.7,
+            "z": 20,
+            "y": 0.79,
+            "yaw": -1.5707963267948966
+          }
+        }
+      ],
+      "scriptedVehicles": [
+        {
+          "id": 30,
+          "asset": "veh.military-apc"
+        },
+        {
+          "id": 31,
+          "asset": "veh.military-truck"
+        },
+        {
+          "id": 33,
+          "asset": "veh.military-truck"
+        },
+        {
+          "id": 32,
+          "asset": "veh.evac-bus"
+        },
+        {
+          "id": 34,
+          "asset": "veh.evac-bus"
+        },
+        {
+          "id": 98,
+          "asset": "veh.fuel-truck"
+        },
+        {
+          "id": 102,
+          "asset": "veh.tank"
+        },
+        {
+          "id": 103,
+          "asset": "veh.helicopter-military"
+        }
+      ],
+      "boarded": false,
+      "bikeBoarded": false,
+      "lateSubjectBuilds": 0,
+      "frames": 3428,
+      "maxMs": 699.8999999999978,
+      "over200": 1,
+      "errors": []
+    },
+    {
+      "file": "L4-webgpu-1.json",
+      "backend": "webgpu",
+      "level": "L4",
+      "vehicles": [
+        {
+          "id": 77,
+          "def": "vehicle.sedan",
+          "at": {
+            "x": -30,
+            "z": 43.3,
+            "y": 0.79,
+            "yaw": 0
+          }
+        },
+        {
+          "id": 78,
+          "def": "vehicle.suv",
+          "at": {
+            "x": -6,
+            "z": 43.3,
+            "y": 0.79,
+            "yaw": 0
+          }
+        },
+        {
+          "id": 79,
+          "def": "vehicle.pickup",
+          "at": {
+            "x": -38,
+            "z": -42.6,
+            "y": 0.79,
+            "yaw": 3.141592653589793
+          }
+        },
+        {
+          "id": 80,
+          "def": "vehicle.sedan",
+          "at": {
+            "x": 30,
+            "z": -42.6,
+            "y": 0.79,
+            "yaw": 3.141592653589793
+          }
+        },
+        {
+          "id": 81,
+          "def": "vehicle.suv",
+          "at": {
+            "x": 15.8,
+            "z": 14,
+            "y": 0.79,
+            "yaw": -1.5707963267948966
+          }
+        },
+        {
+          "id": 82,
+          "def": "vehicle.pickup",
+          "at": {
+            "x": -59.7,
+            "z": 20,
+            "y": 0.79,
+            "yaw": -1.5707963267948966
+          }
+        }
+      ],
+      "scriptedVehicles": [
+        {
+          "id": 30,
+          "asset": "veh.military-apc"
+        },
+        {
+          "id": 31,
+          "asset": "veh.military-truck"
+        },
+        {
+          "id": 33,
+          "asset": "veh.military-truck"
+        },
+        {
+          "id": 32,
+          "asset": "veh.evac-bus"
+        },
+        {
+          "id": 34,
+          "asset": "veh.evac-bus"
+        },
+        {
+          "id": 98,
+          "asset": "veh.fuel-truck"
+        },
+        {
+          "id": 102,
+          "asset": "veh.tank"
+        },
+        {
+          "id": 103,
+          "asset": "veh.helicopter-military"
+        }
+      ],
+      "boarded": false,
+      "bikeBoarded": false,
+      "lateSubjectBuilds": 0,
+      "frames": 3619,
+      "maxMs": 66.70000000000073,
+      "over200": 0,
+      "errors": []
+    },
+    {
+      "file": "L7-webgl2-1.json",
+      "backend": "webgl",
+      "level": "L7",
+      "vehicles": [],
+      "scriptedVehicles": [
+        {
+          "id": 50,
+          "asset": "veh.evac-bus"
+        }
+      ],
+      "boarded": false,
+      "bikeBoarded": false,
+      "lateSubjectBuilds": 0,
+      "frames": 859,
+      "maxMs": 33.400000000000546,
+      "over200": 0,
+      "errors": []
+    },
+    {
+      "file": "L7-webgpu-1.json",
+      "backend": "webgpu",
+      "level": "L7",
+      "vehicles": [],
+      "scriptedVehicles": [
+        {
+          "id": 50,
+          "asset": "veh.evac-bus"
+        }
+      ],
+      "boarded": false,
+      "bikeBoarded": false,
+      "lateSubjectBuilds": 0,
+      "frames": 853,
+      "maxMs": 66.69999999999891,
+      "over200": 0,
+      "errors": []
+    },
+    {
+      "file": "L7-webgpu-2.json",
+      "backend": "webgpu",
+      "level": "L7",
+      "vehicles": [],
+      "scriptedVehicles": [
+        {
+          "id": 50,
+          "asset": "veh.evac-bus"
+        }
+      ],
+      "boarded": false,
+      "bikeBoarded": false,
+      "lateSubjectBuilds": 0,
+      "frames": 859,
+      "maxMs": 33.399999999999636,
+      "over200": 0,
+      "errors": []
+    },
+    {
+      "file": "L7-webgpu-3.json",
+      "backend": "webgpu",
+      "level": "L7",
+      "vehicles": [],
+      "scriptedVehicles": [
+        {
+          "id": 50,
+          "asset": "veh.evac-bus"
+        }
+      ],
+      "boarded": false,
+      "bikeBoarded": false,
+      "lateSubjectBuilds": 0,
+      "frames": 859,
+      "maxMs": 33.29999999999927,
+      "over200": 0,
+      "errors": []
+    },
+    {
+      "file": "L8-webgl2-1.json",
+      "backend": "webgl",
+      "level": "L8",
+      "vehicles": [
+        {
+          "id": 406,
+          "def": "vehicle.military-apc",
+          "at": {
+            "x": 96,
+            "z": 74,
+            "y": 1.0499999999999998,
+            "yaw": 0
+          }
+        }
+      ],
+      "scriptedVehicles": [
+        {
+          "id": 405,
+          "asset": "veh.evac-bus"
+        }
+      ],
+      "boarded": true,
+      "bikeBoarded": false,
+      "lateSubjectBuilds": 0,
+      "frames": 341,
+      "maxMs": 16.80000000000109,
+      "over200": 0,
+      "errors": []
+    },
+    {
+      "file": "L8-webgpu-1.json",
+      "backend": "webgpu",
+      "level": "L8",
+      "vehicles": [
+        {
+          "id": 406,
+          "def": "vehicle.military-apc",
+          "at": {
+            "x": 96,
+            "z": 74,
+            "y": 1.0499999999999998,
+            "yaw": 0
+          }
+        }
+      ],
+      "scriptedVehicles": [
+        {
+          "id": 405,
+          "asset": "veh.evac-bus"
+        }
+      ],
+      "boarded": true,
+      "bikeBoarded": false,
+      "lateSubjectBuilds": 0,
+      "frames": 341,
+      "maxMs": 16.80000000000109,
+      "over200": 0,
+      "errors": []
+    },
+    {
+      "file": "L9-webgl2-1.json",
+      "backend": "webgl",
+      "level": "L9",
+      "vehicles": [
+        {
+          "id": 711,
+          "def": "vehicle.military-apc",
+          "at": {
+            "x": -550,
+            "y": 1.0499999999999998,
+            "z": 0,
+            "yaw": 0
+          }
+        }
+      ],
+      "scriptedVehicles": [],
+      "boarded": true,
+      "bikeBoarded": false,
+      "lateSubjectBuilds": 0,
+      "frames": 271,
+      "maxMs": 16.80000000000109,
+      "over200": 0,
+      "errors": []
+    },
+    {
+      "file": "L9-webgpu-1.json",
+      "backend": "webgpu",
+      "level": "L9",
+      "vehicles": [
+        {
+          "id": 711,
+          "def": "vehicle.military-apc",
+          "at": {
+            "x": -550,
+            "y": 1.0499999999999998,
+            "z": 0,
+            "yaw": 0
+          }
+        }
+      ],
+      "scriptedVehicles": [],
+      "boarded": true,
+      "bikeBoarded": false,
+      "lateSubjectBuilds": 0,
+      "frames": 271,
+      "maxMs": 16.80000000000109,
+      "over200": 0,
+      "errors": []
+    }
+  ],
+  "l7Before": [
+    {
+      "file": "L7-webgpu-1.json",
+      "maxMs": 50.100000000000364,
+      "lateSubjectBuilds": [
+        {
+          "at": 8143,
+          "tick": 107,
+          "material": "pal_static-colors",
+          "object": "static-body",
+          "asset": "veh.evac-bus",
+          "subject": true
+        },
+        {
+          "at": 8152.099999427795,
+          "tick": 107,
+          "material": "emi_static-windows",
+          "object": "window-light",
+          "asset": "veh.evac-bus",
+          "subject": true
+        }
+      ],
+      "attacks": 9
+    },
+    {
+      "file": "L7-webgpu-2.json",
+      "maxMs": 83.29999999999927,
+      "lateSubjectBuilds": [
+        {
+          "at": 7347.900000572205,
+          "tick": 108,
+          "material": "pal_static-colors",
+          "object": "static-body",
+          "asset": "veh.evac-bus",
+          "subject": true
+        },
+        {
+          "at": 7361.5,
+          "tick": 108,
+          "material": "emi_static-windows",
+          "object": "window-light",
+          "asset": "veh.evac-bus",
+          "subject": true
+        }
+      ],
+      "attacks": 9
+    },
+    {
+      "file": "L7-webgpu-3.json",
+      "maxMs": 50,
+      "lateSubjectBuilds": [
+        {
+          "at": 7075.300000190735,
+          "tick": 108,
+          "material": "pal_static-colors",
+          "object": "static-body",
+          "asset": "veh.evac-bus",
+          "subject": true
+        },
+        {
+          "at": 7084.60000038147,
+          "tick": 108,
+          "material": "emi_static-windows",
+          "object": "window-light",
+          "asset": "veh.evac-bus",
+          "subject": true
+        }
+      ],
+      "attacks": 9
+    }
+  ],
+  "l7After": [
+    {
+      "file": "L7-webgpu-1.json",
+      "maxMs": 83.19999999999982,
+      "lateSubjectBuilds": [],
+      "attacks": 11,
+      "over200": [],
+      "maxInfected": 100
+    },
+    {
+      "file": "L7-webgpu-2.json",
+      "maxMs": 66.60000000000218,
+      "lateSubjectBuilds": [],
+      "attacks": 10,
+      "over200": [],
+      "maxInfected": 100
+    },
+    {
+      "file": "L7-webgpu-3.json",
+      "maxMs": 50,
+      "lateSubjectBuilds": [],
+      "attacks": 10,
+      "over200": [],
+      "maxInfected": 100
+    }
+  ],
+  "coldPresets": [
+    {
+      "origin": "http://127.0.0.1:4384",
+      "backend": "webgpu",
+      "quality": "low",
+      "level": "L1",
+      "diagnostic": false,
+      "gameplaySamples": 0,
+      "menuWaits": [
+        0
+      ],
+      "n": 1,
+      "median": 2755,
+      "p90": 2755,
+      "max": 2755,
+      "maxFrameMs": 16.699999999999818,
+      "errors": []
+    },
+    {
+      "origin": "http://127.0.0.1:4384",
+      "backend": "webgpu",
+      "quality": "low",
+      "level": "L10",
+      "diagnostic": false,
+      "gameplaySamples": 0,
+      "menuWaits": [
+        0
+      ],
+      "n": 1,
+      "median": 7476.5,
+      "p90": 7476.5,
+      "max": 7476.5,
+      "maxFrameMs": 16.700000000000728,
+      "errors": []
+    },
+    {
+      "origin": "http://127.0.0.1:4384",
+      "backend": "webgpu",
+      "quality": "low",
+      "level": "L2",
+      "diagnostic": false,
+      "gameplaySamples": 0,
+      "menuWaits": [
+        0
+      ],
+      "n": 1,
+      "median": 4267.599999427795,
+      "p90": 4267.599999427795,
+      "max": 4267.599999427795,
+      "maxFrameMs": 16.699999999999818,
+      "errors": []
+    },
+    {
+      "origin": "http://127.0.0.1:4384",
+      "backend": "webgpu",
+      "quality": "low",
+      "level": "L3",
+      "diagnostic": false,
+      "gameplaySamples": 0,
+      "menuWaits": [
+        0
+      ],
+      "n": 1,
+      "median": 3677.0999994277954,
+      "p90": 3677.0999994277954,
+      "max": 3677.0999994277954,
+      "maxFrameMs": 16.699999999999818,
+      "errors": []
+    },
+    {
+      "origin": "http://127.0.0.1:4384",
+      "backend": "webgpu",
+      "quality": "low",
+      "level": "L4",
+      "diagnostic": false,
+      "gameplaySamples": 0,
+      "menuWaits": [
+        0
+      ],
+      "n": 1,
+      "median": 6886.89999961853,
+      "p90": 6886.89999961853,
+      "max": 6886.89999961853,
+      "maxFrameMs": 16.700000000000728,
+      "errors": []
+    },
+    {
+      "origin": "http://127.0.0.1:4384",
+      "backend": "webgpu",
+      "quality": "low",
+      "level": "L5",
+      "diagnostic": false,
+      "gameplaySamples": 0,
+      "menuWaits": [
+        0
+      ],
+      "n": 1,
+      "median": 6226.400000572205,
+      "p90": 6226.400000572205,
+      "max": 6226.400000572205,
+      "maxFrameMs": 16.800000000000182,
+      "errors": []
+    },
+    {
+      "origin": "http://127.0.0.1:4384",
+      "backend": "webgpu",
+      "quality": "low",
+      "level": "L6",
+      "diagnostic": false,
+      "gameplaySamples": 0,
+      "menuWaits": [
+        0
+      ],
+      "n": 1,
+      "median": 3281.1000003814697,
+      "p90": 3281.1000003814697,
+      "max": 3281.1000003814697,
+      "maxFrameMs": 16.699999999999818,
+      "errors": []
+    },
+    {
+      "origin": "http://127.0.0.1:4384",
+      "backend": "webgpu",
+      "quality": "low",
+      "level": "L7",
+      "diagnostic": false,
+      "gameplaySamples": 0,
+      "menuWaits": [
+        0
+      ],
+      "n": 1,
+      "median": 6122,
+      "p90": 6122,
+      "max": 6122,
+      "maxFrameMs": 49.900000000000546,
+      "errors": []
+    },
+    {
+      "origin": "http://127.0.0.1:4384",
+      "backend": "webgpu",
+      "quality": "low",
+      "level": "L8",
+      "diagnostic": false,
+      "gameplaySamples": 0,
+      "menuWaits": [
+        0
+      ],
+      "n": 1,
+      "median": 6751.300000190735,
+      "p90": 6751.300000190735,
+      "max": 6751.300000190735,
+      "maxFrameMs": 16.699999999999818,
+      "errors": []
+    },
+    {
+      "origin": "http://127.0.0.1:4384",
+      "backend": "webgpu",
+      "quality": "low",
+      "level": "L9",
+      "diagnostic": false,
+      "gameplaySamples": 0,
+      "menuWaits": [
+        0
+      ],
+      "n": 1,
+      "median": 10737.60000038147,
+      "p90": 10737.60000038147,
+      "max": 10737.60000038147,
+      "maxFrameMs": 16.700000000000728,
+      "errors": []
+    }
+  ],
+  "driver": [
+    {
+      "tag": "L8-mg",
+      "requestedWeapon": "weapon.army-mg",
+      "requestedZoom": 2,
+      "observations": [
+        {
+          "t": "2026-10-28T17:11:20.986Z",
+          "selectedCarriedWeapon": "weapon.army-mg",
+          "level": "L8",
+          "tick": 13
+        },
+        {
+          "t": "2026-10-28T17:11:21.000Z",
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "level": "L8"
+        },
+        {
+          "t": "2026-10-28T17:11:21.634Z",
+          "selectedCarriedWeapon": "weapon.army-mg",
+          "level": "L8",
+          "tick": 13
+        }
+      ]
+    },
+    {
+      "tag": "L8-rocket",
+      "requestedWeapon": "weapon.rocket-launcher",
+      "requestedZoom": 1.5,
+      "observations": [
+        {
+          "t": "2026-10-28T17:11:40.608Z",
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "level": "L8"
+        }
+      ]
+    },
+    {
+      "tag": "L9-handgun-fixed",
+      "requestedWeapon": "weapon.handgun",
+      "requestedZoom": 2,
+      "observations": [
+        {
+          "t": "2026-10-28T17:13:10.648Z",
+          "assist": "requested starting weapon while driving",
+          "weapon": "weapon.handgun",
+          "level": "L9"
+        },
+        {
+          "t": "2026-10-28T17:13:10.952Z",
+          "selectedCarriedWeapon": "weapon.handgun",
+          "level": "L9",
+          "tick": 3
+        },
+        {
+          "t": "2026-10-28T17:13:10.962Z",
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "level": "L9"
+        },
+        {
+          "t": "2026-10-28T17:13:11.583Z",
+          "selectedCarriedWeapon": "weapon.handgun",
+          "level": "L9",
+          "tick": 3
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "L4 parked cars intentionally have noEnterUntil=MAX_SAFE_INTEGER. The probe waits for the real convoy unload and introduces the authored tank/helicopter through L4Spectacle for render coverage; it does not unlock cars or alter mission timing.",
+    "L7 after captures add an explicit close-bus-door phase at (-70.5,47.5), after the same initial approach.",
+    "The historical 283\u2013333 ms L7 outlier was not reproduced; two definite cold bus graph builds were reproduced in all three before runs and eliminated. No GC/spawn attribution is asserted.",
+    "Shared-pool frame logs are not isolated FPS certification. One L4 WebGL2 699.9 ms frame had zero new builds (sim 10.2 ms, update 2.3 ms, render 3.4 ms).",
+    "Cold presets use one fresh context per level to exercise actual menu loading, not the 20-sample LOAD_ASSERT latency gate."
+  ],
+  "checks": {
+    "unit": {
+      "command": "npm test",
+      "pass": true,
+      "tests": 104,
+      "files": 24,
+      "seconds": 22.6,
+      "collectedCases": 144,
+      "caseLimit": 150
+    },
+    "typecheck": {
+      "command": "npm run typecheck",
+      "pass": true
+    },
+    "lint": {
+      "command": "npm run lint",
+      "pass": true
+    },
+    "smoke": {
+      "command": "E2E_PORT=4381 npm run test:smoke",
+      "pass": true,
+      "seconds": 219.4,
+      "budgetSeconds": 240,
+      "qaCases": 6,
+      "publicCases": 1,
+      "sourceCommit": "c50b4429ba4c86714667c3fc47c755ba43a6539f"
+    },
+    "sceneGate": {
+      "command": "SCENE_PORT=4386 npm run scene:gate",
+      "pass": true,
+      "exitCode": 0,
+      "executed": 48,
+      "passed": 43,
+      "known": 5,
+      "missing": 0,
+      "unexpectedFailures": 0,
+      "minutes": 7.3,
+      "unchangedKnownExceptions": {
+        "ped-sit-all@high": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; right hand vs held cane, 215 tris, grip overlap only (sheet looks fine)",
+        "ped-sit-all@low": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; same hand/cane overlap",
+        "ped-water-flowerbed@high": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; right hand vs watering can grip overlap",
+        "ped-zoo-staff@high": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; 4 hand-vs-held-prop grip overlaps (coffee, bag x2, watering can); sheet looks fine",
+        "dog-pet-trot@low-z1.5": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; footSlideMaxCm 8.2 > 3 at every zoom (low tier dog trot)"
+      }
+    }
+  },
+  "reproduce": [
+    "npm run build:qa",
+    "SCENE_PORT=4382 SCENE_SERVER=preview WARMUP_BACKEND=webgpu WARMUP_ASSERT=1 sh tools/e2e-lock.sh node --import tsx tools/qa/vehicle-warmup.ts L7 3",
+    "SCENE_PORT=4382 SCENE_SERVER=preview WARMUP_BACKEND=webgl2 WARMUP_ASSERT=1 sh tools/e2e-lock.sh node --import tsx tools/qa/vehicle-warmup.ts L8 1",
+    "SCENE_PORT=4382 SCENE_SERVER=preview sh tools/e2e-lock.sh node --import tsx docs/reports/vehicle-warmup/evidence/l9-crash-probe.mts"
+  ],
+  "validationCommit": "4d6e8bc1ec21479cf667e7a5d2622ba074170a7c"
+}
