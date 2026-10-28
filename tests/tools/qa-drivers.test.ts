@@ -33,6 +33,13 @@ test('playtest stuck detection: following a moving ring is progress; a parked co
   const runaway = new PlaytestProgress(); runaway.update(barrier(0, 0));
   for(let t=1;t<=80;t++) runaway.update(barrier(t,-t*2));
   expect(runaway.update(barrier(81,-162)).seconds).toBeGreaterThan(30);
+  const fight = new PlaytestProgress(); fight.update(sample(0,{enemies:[{id:1,hp:100}]}));
+  expect(fight.update(sample(20,{enemies:[{id:1,hp:75}]})).reason).toBe('damage');
+  expect(fight.update(sample(41,{enemies:[{id:1,hp:75}]})).seconds).toBe(21);
+  expect(fight.update(sample(42,{enemies:[{id:1,hp:100}]})).reason).toBeNull();
+  expect(fight.update(sample(43,{enemies:[{id:1,hp:75}]})).reason).toBeNull();
+  expect(fight.update(sample(44,{enemies:[{id:1,hp:50}]})).reason).toBe('damage');
+  expect(fight.update(sample(65,{enemies:[{id:2,hp:100}]})).seconds).toBe(21);
 });
 
 test('playtest session: success only after real credits; an unresponsive renderer fails in budget; frame stalls are guarded outside loading', async () => {

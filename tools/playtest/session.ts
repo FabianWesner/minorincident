@@ -623,7 +623,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       const seen = escort && e.allies.find(b => b.id === escort!.id && b.drawn && b.hp > 0 && !b.corpse);
       if (seen && escort) { escort.x = seen.x; escort.z = seen.z; }
     }
-    const observed=visibleProgress.update({context:`${e.level}|${e.step}|${e.checkpoint}|${run.deaths}`,text:e.tracker||e.objective,distance:e.distance,player:e.player,marker:ring,tick:e.tick,nowMs:Date.now()});
+    const observed=visibleProgress.update({context:`${e.level}|${e.step}|${e.checkpoint}|${run.deaths}`,text:e.tracker||e.objective,distance:e.distance,player:e.player,marker:ring,enemies:e.enemies.filter(body=>body.drawn),tick:e.tick,nowMs:Date.now()});
     if(observed.reason) {
       lastProgress.tick=e.tick;lastProgress.wall=Date.now();lastProgress.best=e.distance??Infinity;
       log({visibleProgress:{tick:e.tick,text:e.objective,distance:e.distance,player:e.player?{x:e.player.x,z:e.player.z}:null,marker:ring,reason:observed.reason}});

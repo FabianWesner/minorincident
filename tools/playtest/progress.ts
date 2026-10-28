@@ -1,6 +1,7 @@
 interface Point { x: number; z: number }
 export interface ProgressSample {
   context: string; text: string; distance: number | null; player: Point | null; marker: Point | null; tick: number; nowMs: number;
+  enemies?: { id: number; hp: number }[];
 }
 /** Progress comes only from the visible HUD, courier and marker. */
 export class PlaytestProgress {
@@ -18,6 +19,7 @@ export class PlaytestProgress {
   private detourOrigin: Point | null = null;
   private detourTarget: Point | null = null;
   private detourFar = 0;
+  private enemyHealth = new Map<number, number>();
   update(s: ProgressSample): { seconds: number; reason: string | null } {
     const text=s.text.replace(/ · [\d.]+\s?m\b/g,'');
     let reason: string | null=null;
@@ -30,6 +32,7 @@ export class PlaytestProgress {
       this.context=s.context;this.text=text;this.best=s.distance??Infinity;reason=shifted?'view-change':'hud-change';
       this.playerOrigin=s.player?{...s.player}:null;this.markerOrigin=marker?{...marker}:null;
       this.playerFar=this.markerFar=0;
+      this.enemyHealth.clear();
     } else if(s.distance!==null&&s.distance<this.best-2) {this.best=s.distance;reason='nearer';}
     if(reason) {
       this.detourOrigin=s.player?{...s.player}:null;this.detourTarget=marker?{...marker}:null;this.detourFar=0;
@@ -54,6 +57,13 @@ export class PlaytestProgress {
         this.playerFar=playerTravel;this.markerFar=markerTravel;this.best=s.distance??this.best;reason='moving-marker';
       }
     }
+    let damaged=false;
+    for(const enemy of s.enemies??[]) {
+      const previous=this.enemyHealth.get(enemy.id);
+      if(previous!==undefined&&enemy.hp<previous) damaged=true;
+      this.enemyHealth.set(enemy.id,Math.min(previous??Infinity,enemy.hp));
+    }
+    if(!reason&&damaged) reason='damage';
     if(reason){this.tick=s.tick;this.wall=s.nowMs;}
     return {seconds:Math.max(0,Math.min((s.tick-this.tick)/60,(s.nowMs-this.wall)/1000)),reason};
   }
