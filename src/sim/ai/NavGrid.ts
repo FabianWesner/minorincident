@@ -379,7 +379,8 @@ export class NavGrid {
   }
   /** Reverse BFS for groups >20. Never exceeds the supplied expansion budget in one tick. */
   flow(x: number, z: number, budget: number): void {
-    const target = this.cell(x, z);
+    // The courier can fit closer to geometry than the grid's obstacle clearance.
+    const target = this.nearestCell(x, z);
     if (target !== this.target) {
       this.target = target; this.distance.fill(-1); this.head = this.tail = 0;
       if (target >= 0 && !this.blocked[target]) { this.distance[target] = 0; this.queue[this.tail++] = target; }
