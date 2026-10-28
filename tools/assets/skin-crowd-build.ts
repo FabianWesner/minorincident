@@ -121,12 +121,17 @@ for (const lod of [0, 1, 2]) {
   if (id.startsWith('npc.')) {
     const document = await io.read(raw);
     const shelter = id.startsWith('npc.shelter-survivor.');
+    if (id === 'npc.shelter-survivor.bandaged') {
+      const head = document.getRoot().listNodes().find(n => n.getName() === 'head')!;
+      // This source's heavy fringe hides the whole face in the legacy cower.
+      head.setExtras({ ...head.getExtras(), cowerHeadLift: .95 });
+    }
     if (shelter && /\.(bandaged|sitting)$/.test(id)) paintCrowdShirt(document, '#f2b630');
     const regions = classifyCrowdAtlas(document, id.startsWith('npc.civilian-'), id === 'npc.national-guard', alignment?.authored_skin, alignment?.covered_legs ?? (derivedTemplate && sourceId === 'npc.civilian-man-a'));
     if (regions) { await io.write(raw, document); writeFileSync(join(report, `lod${lod}.regions.json`), JSON.stringify(regions, null, 2) + '\n'); }
     const dressings: CrowdWrap[] = shelter || id === 'npc.civilian-man-a.aftermath' ? [
       { joint: 'foreArmL', colour: '#e7dfce', stain: true },
-      ...(/\.(bandaged|sitting)$/.test(id) ? [{ joint: 'head', colour: '#e7dfce', stain: true }] : []),
+      ...(/\.(bandaged|sitting)$/.test(id) ? [{ joint: 'head', colour: '#b6aa93', stain: true }] : []),
       ...(id.endsWith('.bandaged') ? [{ joint: 'armL', colour: '#e7dfce', stain: true }] : []),
     ] : alignment?.wraps ?? [];
     if (dressings.length) { const wraps = paintCrowdWraps(document, dressings); await io.write(raw, document); writeFileSync(join(report, `lod${lod}.wraps.json`), JSON.stringify(wraps, null, 2) + '\n'); }

@@ -9,8 +9,10 @@ import { validateAssets, validateDocument } from '../../tools/assets/validate';
 import { PNG } from 'pngjs';
 import { adoptStandingBind } from '../../tools/assets/skin-crowd-standing';
 import { classifyCrowdAtlas } from '../../tools/assets/skin-crowd-regions';
-import { paintCrowdShirt } from '../../tools/assets/skin-crowd-wraps';
+import { paintCrowdShirt, paintCrowdWraps } from '../../tools/assets/skin-crowd-wraps';
 import { crowdRegion } from '../../src/render/characters/crowdRegionData';
+import { Group, Object3D, Quaternion } from 'three';
+import { retargetClip } from '../../src/render/characters/clips';
 
 function fixture(): { doc: Document; def: AssetDef } {
   const doc = new Document(), buffer = doc.createBuffer();
@@ -52,6 +54,28 @@ test('crowd atlas cleanup preserves enclosed eye paint and its authored alpha cl
     }
     const graphicPixel = (38 * 128 + 115) * 4;
     expect([...result.data.subarray(graphicPixel, graphicPixel + 4)], 'shared prop paint must not inherit skin gutters').toEqual([224, 168, 124, Math.round((crowdRegion.authored + 1) * 255 / 7)]);
+    const dressed = cloneDocument(doc), before = PNG.sync.read(Buffer.from(dressed.getRoot().listTextures()[0].getImage()!));
+    // A second head island sits beside the crown UVs but represents the lower
+    // face. Padding may fill the gap; it must never paint this other surface.
+    const dressedPrim = dressed.getRoot().listNodes().find(n => n.getName() === 'skin_body')!.getMesh()!.listPrimitives()[0];
+    for (const [name, tail] of Object.entries({ POSITION: [1, .1, -1, 1, .2, -1, 1, .2, 1], TEXCOORD_0: [.75, .8, .79, .8, .75, .88], _CROWD_PART: [0, 0, 0], _CROWD_REGION: [1, 1, 1] })) {
+      const a = dressedPrim.getAttribute(name)!; a.setArray(new Float32Array([...a.getArray()!, ...tail]));
+    }
+    dressedPrim.getIndices()!.setArray(new Uint16Array([0, 1, 2, 0, 2, 3, 4, 5, 6]));
+    paintCrowdWraps(dressed, [{ joint: 'head', colour: '#b6aa93' }]);
+    const cloth = PNG.sync.read(Buffer.from(dressed.getRoot().listTextures()[0].getImage()!));
+    const at = (x: number, y: number) => (y * 128 + x) * 4;
+    expect([...cloth.data.subarray(at(97, 107), at(97, 107) + 4)], 'dressing must not extrapolate across the UV island edge').toEqual([...before.data.subarray(at(97, 107), at(97, 107) + 4)]);
+    expect([...cloth.data.subarray(at(60, 60), at(60, 60) + 4)], 'dressing leaves eye paint intact').toEqual([...before.data.subarray(at(60, 60), at(60, 60) + 4)]);
+    expect(cloth.data[at(32, 107) + 3], 'cloth is authored albedo, never the skin/eye class').toBe(Math.round((crowdRegion.authored + 1) * 255 / 7));
+    expect(cloth.data[at(32, 107)], 'matte cloth stays below near-white albedo').toBeGreaterThan(150);
+    expect(cloth.data[at(32, 107)]).toBeLessThan(195);
+    expect(cloth.data[at(32, 120) + 3], 'head dressing covers the crown instead of outlining a dark hair mass').toBe(Math.round((crowdRegion.authored + 1) * 255 / 7));
+    const rig = new Group(), headJoint = new Object3D(); headJoint.name = 'head'; rig.add(headJoint);
+    const plain = retargetClip(rig, 'npc-cower').tracks.find(t => t.name === 'head.quaternion')!;
+    const fitted = rig.clone(); fitted.getObjectByName('head')!.userData.cowerHeadLift = .95;
+    const lifted = retargetClip(fitted, 'npc-cower').tracks.find(t => t.name === 'head.quaternion')!;
+    for (let i = 0; i < plain.values.length; i += 4) expect(new Quaternion().fromArray(plain.values, i).angleTo(new Quaternion().fromArray(lifted.values, i)), 'authored head fit survives every cower frame').toBeCloseTo(.95, 5);
     // L6 review found that bright authored garment paint wrapped a Uint8 red
     // channel past 255 and made lime-green patches. Exercise the shared derivation.
     const shirt = cloneDocument(doc), atlas = new PNG({ width: 128, height: 128 });

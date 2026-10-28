@@ -64,7 +64,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
   if (preserveIndices) root.updateMatrixWorld(true);
   const sourceSoles = authoredSoles(root);
   const poseKey = preserveIndices && !root.parent && !root.animations.length && !root.getObjectByName('body')
-    ? JSON.stringify([crawlingRestPose, sourceSoles, parts.map(part => joints.indexOf(part)), joints.map(node => [node.name, joints.indexOf(node.parent!), node.matrixAutoUpdate, node.matrixWorldAutoUpdate, node.matrix.elements, node.rotation.order])]) : undefined;
+    ? JSON.stringify([crawlingRestPose, sourceSoles, parts.map(part => joints.indexOf(part)), joints.map(node => [node.name, joints.indexOf(node.parent!), node.matrixAutoUpdate, node.matrixWorldAutoUpdate, node.matrix.elements, node.rotation.order, node.userData.cowerHeadLift])]) : undefined;
   const sharedPoses = poseKey ? rigPoses.get(poseKey) ?? new Map<string, Float32Array>() : undefined;
   if (poseKey) {
     rigPoses.delete(poseKey); rigPoses.set(poseKey, sharedPoses!);

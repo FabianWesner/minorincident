@@ -4,7 +4,7 @@ set -eu
 export SCENE_PORT=${SCENE_PORT:-3349}
 export REVIEW_BASE=fe434da85
 export FIGURES=npc.civilian-man-a.aftermath,npc.shelter-survivor.bandaged,npc.shelter-survivor.lying,npc.shelter-survivor.sitting
-for config in low-webgl2 high-webgl2 low-webgpu high-webgpu low-webgl2-tone5 high-webgpu-tone5 neutral-high-webgpu; do
+for config in low-webgl2 high-webgl2 low-webgpu high-webgpu low-webgl2-tone5 high-webgl2-tone5 low-webgpu-tone5 high-webgpu-tone5 neutral-high-webgpu; do
   REVIEW_TIME=L6 REVIEW_REST_POSES=1 REVIEW_STANDING=0 REVIEW_SKIN_TONE=0
   case "$config" in
     neutral-*) REVIEW_TIER=high REVIEW_BACKEND=webgpu REVIEW_TIME=L1 REVIEW_REST_POSES=0 REVIEW_STANDING=1;;
