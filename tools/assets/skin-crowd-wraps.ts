@@ -85,8 +85,10 @@ export function paintCrowdWraps(document: Document, recipes: CrowdWrap[]): { joi
         // across the source's lumpy hair reads as a disconnected halo from the
         // steep game camera, even with correct non-emissive cloth shading.
         if (along < .23 || !headband && (along > .77 || offset.clone().addScaledVector(axis, -along).length() > length * .55)) continue;
-        const stain = recipe.stain && Math.abs(along - .54) < .11 && offset.x > .015;
-        const shade = 1 - .045 * Math.cos(along * Math.PI * 22);
+        const stain = recipe.stain && Math.abs(along - .54) < .11 && offset.x > .015 && (!headband || offset.z > .035 && offset.z < .11);
+        // Limb folds repeat over a short wrap. Extending that oscillation over
+        // the whole crown makes contour rings instead of broad matte gauze.
+        const shade = headband ? .98 : 1 - .045 * Math.cos(along * Math.PI * 22);
         for (let c = 0; c < 3; c++) png.data[pixel * 4 + c] = Math.round((stain ? [184, 113, 101][c] : colour[c]) * shade);
         png.data[pixel * 4 + 3] = Math.round((crowdRegion.authored + 1) / 7 * 255); marked.add(pixel);
       }

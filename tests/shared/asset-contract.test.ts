@@ -67,10 +67,11 @@ test('crowd atlas cleanup preserves enclosed eye paint and its authored alpha cl
     const at = (x: number, y: number) => (y * 128 + x) * 4;
     expect([...cloth.data.subarray(at(97, 107), at(97, 107) + 4)], 'dressing must not extrapolate across the UV island edge').toEqual([...before.data.subarray(at(97, 107), at(97, 107) + 4)]);
     expect([...cloth.data.subarray(at(60, 60), at(60, 60) + 4)], 'dressing leaves eye paint intact').toEqual([...before.data.subarray(at(60, 60), at(60, 60) + 4)]);
-    expect(cloth.data[at(32, 107) + 3], 'cloth is authored albedo, never the skin/eye class').toBe(Math.round((crowdRegion.authored + 1) * 255 / 7));
+    expect(cloth.data[at(32, 107) + 3], 'cloth keeps authored albedo rather than skin tint').toBe(Math.round((crowdRegion.authored + 1) * 255 / 7));
     expect(cloth.data[at(32, 107)], 'matte cloth stays below near-white albedo').toBeGreaterThan(150);
     expect(cloth.data[at(32, 107)]).toBeLessThan(195);
     expect(cloth.data[at(32, 120) + 3], 'head dressing covers the crown instead of outlining a dark hair mass').toBe(Math.round((crowdRegion.authored + 1) * 255 / 7));
+    expect([...cloth.data.subarray(at(32, 120), at(32, 120) + 3)], 'crown gauze has broad matte paint, not repeating limb contour rings').toEqual([...cloth.data.subarray(at(32, 107), at(32, 107) + 3)]);
     const rig = new Group(), headJoint = new Object3D(); headJoint.name = 'head'; rig.add(headJoint);
     const plain = retargetClip(rig, 'npc-cower').tracks.find(t => t.name === 'head.quaternion')!;
     const fitted = rig.clone(); fitted.getObjectByName('head')!.userData.cowerHeadLift = .95;
