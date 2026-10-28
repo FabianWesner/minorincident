@@ -3,6 +3,9 @@ import { highwayJointSegments } from '../levels/L3/highway';
 
 /** Add the integral concrete joins to every LOD of the shipped L3 ramp. */
 export function addHighwayRailJoints(root: Object3D, material: Material): BoxGeometry[] {
+  // These plain joins are added after staticBatch. Streamed LODs must still
+  // use its named placement attributes, including the shared shadow graph.
+  material.userData.batchFeatures = '0:0:0';
   return highwayJointSegments.flatMap(joint => {
     const name = `highway-joint-${joint.side}`;
     if (root.getObjectByName(name)) return [];

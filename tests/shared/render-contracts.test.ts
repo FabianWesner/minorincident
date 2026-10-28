@@ -24,10 +24,30 @@ import { crowdWeaponGeometry, crowdWeaponAssets } from '../../src/render/npc/cro
 import { isCrowdVariant, registerCrowdModel } from '../../src/render/crowdModels';
 import { installTextureBindingIdentity } from '../../src/render/Renderer';
 import { crowdSurfaceBindings } from '../../src/render/characters/crowdTexture';
+import { addHighwayRailJoints } from '../../src/assets/highwayRailJoints';
+import { InstancedGroup } from '../../src/render/InstancedGroup';
 
 /** Crowd headroom below the portable hard limits (16 attributes, 8 WebGPU vertex buffers). */
 const CROWD = { attributes: 14, buffers: 7 };
 const deathFrame = () => infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1;
+
+test('streamed highway joints reuse the static placement and shadow graph across LODs', () => {
+  const lighting = new Lighting(new Scene()), shading = new Materials(lighting), material = shading.fromColor('joint', new Color('#999996'), 0, true);
+  const root = new Group(), geometries = addHighwayRailJoints(root, material);
+  const a = new InstancedGroup(root, [new Object3D()]), b = new InstancedGroup(root, [new Object3D()]);
+  try {
+    expect(a.children).toHaveLength(2);
+    a.children.forEach((child, index) => {
+      const mesh = child as InstancedMesh, other = b.children[index] as InstancedMesh;
+      expect(mesh.userData.staticInstanceAttributes).toBe(true);
+      expect(mesh.isInstancedMesh).toBe(false);
+      expect(mesh.material).toBe(other.material);
+      expect(mesh.geometry.getAttribute('_placement0')).toBeDefined();
+      expect(mesh.castShadow && mesh.receiveShadow).toBe(true);
+      expect(mesh.geometry.index!.count).toBe(36);
+    });
+  } finally { a.dispose(); b.dispose(); for (const geometry of geometries) geometry.dispose(); shading.dispose(); lighting.dispose(); }
+});
 
 test('crowd registration retains converted textured variants with their own model identity', () => {
   const native = new Set(['inf.runner']), aliases = new Map<string, string>();
