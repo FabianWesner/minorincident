@@ -1,0 +1,110 @@
+{
+  "productionRevision": "951f9976dd6cc555a2bb88e19693ba0d441ed96c",
+  "finalToolTypecheck": 0,
+  "finalToolLint": 0,
+  "assetValidator": {
+    "entries": 1262,
+    "errors": 0
+  },
+  "unit": {
+    "command": "npm test via npm run verify -- E23",
+    "passed": 101,
+    "files": 24,
+    "checks": [
+      {
+        "command": "npm run typecheck",
+        "status": 0,
+        "seconds": 10.996
+      },
+      {
+        "command": "npm run lint",
+        "status": 0,
+        "seconds": 6.906
+      },
+      {
+        "command": "npm test",
+        "status": 0,
+        "seconds": 20.237
+      }
+    ]
+  },
+  "smoke": {
+    "qa": 6,
+    "public": 1,
+    "failed": 0,
+    "shaderBuildsAfterWarmup": 0,
+    "warmupFrameMaxMs": 17,
+    "sampleFrames": 169,
+    "gpuMaxima": {
+      "webgl": {
+        "attributes": 13,
+        "varyings": 14,
+        "buffers": 0
+      },
+      "webgpu": {
+        "attributes": 13,
+        "varyings": 14,
+        "buffers": 8
+      }
+    },
+    "seconds": 195.10507270899998
+  },
+  "sceneGate": {
+    "passed": 43,
+    "known": 5,
+    "unexpected": 0,
+    "notRun": 0,
+    "knownEvidence": "scene-gate-summary.md",
+    "state": "scene-gate-state.json"
+  },
+  "realInput": {
+    "command": [
+      "node",
+      "--import",
+      "tsx",
+      "tools/playtest/play.ts",
+      "--levels",
+      "L5",
+      "--quality",
+      "low",
+      "--mode",
+      "campaign",
+      "--no-skip",
+      "--out",
+      "test-results/l5-all-new/playthrough"
+    ],
+    "frameGate": true,
+    "wallSeconds": 140,
+    "finished": true,
+    "skips": [],
+    "deaths": 0,
+    "assists": 0,
+    "issues": 0,
+    "activeL5FramesOver200ms": 0,
+    "loadingLongFrames": 3
+  },
+  "runtime": {
+    "scriptedSceneChecks": 52,
+    "warmFrames": 4800,
+    "lateShaderBuilds": 0,
+    "framesOver200ms": 0,
+    "maxFrameMs": 33.400000000001455
+  },
+  "bodyStates": {
+    "configs": 4,
+    "healthyPerConfig": 8,
+    "turnedPerConfig": 8,
+    "frozenPerConfig": 8,
+    "canesPerConfig": 3
+  },
+  "quietPerf": "pending, as allowed by PO; diagnostic draw and decoded-memory deltas in ../performance.json",
+  "logs": {
+    "asset-validator.log": "5cd5f3f69fce4510e7af88e0988b9f625d65249b01d16e3c9aa5ea01c1fb053b",
+    "playthrough.log": "eaf45f77b099c83a4bd247b79ea73d6e80342da7f1ceb664a5205fcd5eb80228",
+    "verify-E23.log": "96819dd2ec19dea93763a6eb5084cc1b294d557f5db9292ff815287322b2a4c4",
+    "smoke.log": "d9ef02d6a13eff74ee8761b14fb456f97084660cd1eb29568d636bd200e5f04e",
+    "final-typecheck.log": "768699d3cead53493237d3322201d28ee449107e90af9a5aa6f5dcab3f066b0c",
+    "scene-gate.log": "e3e30cc1bf83547d695b885f0e4986233a42bf7705ae64e9165cc48570a342ad",
+    "final-lint.log": "5f9aee6b798507e187dcd3d4fbd5bcf5fdc37488cb89c27a01d5667ca7bb9fa1"
+  }
+}

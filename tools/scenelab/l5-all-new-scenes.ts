@@ -110,7 +110,10 @@ try{
    assert.equal(proof.filter(e=>e.infected&&e.health>0).length,8,'Eight living turned bodies');
    assert.equal(proof.filter(e=>!e.infected&&e.health>0).length,8,'Eight healthy bodies');
    writeJson(`${out}/state-proof.json`,proof);
-   for(let group=0;group<2;group++)for(const [row,label] of ['live','turned','corpse'].entries()){await session.page.evaluate(([x,z])=>window.__SCENE__!.setCamera({mode:'game',target:[x,.6,z],zoom:1.2}),[group?22:-22,row*18-18]);await session.ready();await session.screenshot(`${out}/group-${group}-${label}.png`);}
+   for(let group=0;group<2;group++)for(const [row,label] of ['live','turned','corpse'].entries()){
+    const target=await session.page.evaluate(({models,row})=>{const bodies=window.__SS__!.query({}).filter(e=>models.includes(e.appearance?.asset??'')&&(row===2?e.corpse:row===1?e.infected&&e.health.current>0:!e.infected&&e.health.current>0));const xs=bodies.map(e=>e.transform.x),zs=bodies.map(e=>e.transform.z);return [(Math.min(...xs)+Math.max(...xs))/2,.6,(Math.min(...zs)+Math.max(...zs))/2] as [number,number,number];},{models:converted.slice(group*4,group*4+4),row});
+    await session.page.evaluate(target=>window.__SCENE__!.setCamera({mode:'game',target,zoom:1.35}),target);await session.ready();await session.screenshot(`${out}/group-${group}-${label}.png`);
+   }
    if (process.env.L5_CORPSE_CLOSE === '1') for (let i=0;i<8;i++) { const at=await session.page.evaluate(id=>{const e=window.__SS__!.query({}).find(e=>e.appearance?.asset===id&&e.corpse)!;return [e.transform.x,.35,e.transform.z] as [number,number,number];},converted[i]);await session.page.evaluate(target=>window.__SCENE__!.setCamera({mode:'game',target,zoom:.35}),at);await session.ready();await session.screenshot(`${out}/corpse-${i}.png`); }
   }
   writeJson(`${out}/receipt.json`,{revision,base,variant,tier,backend,result,metrics,resources,errors:session.errors});

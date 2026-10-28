@@ -1,0 +1,53 @@
+{
+  "smoke": {
+    "command": [
+      "npm",
+      "run",
+      "test:smoke"
+    ],
+    "exitCode": 0,
+    "seconds": 195.10507270899998
+  },
+  "scene-gate": {
+    "command": [
+      "npm",
+      "run",
+      "scene:gate",
+      "--",
+      "--out",
+      "test-results/l5-all-new/scene-gate",
+      "--jobs",
+      "1"
+    ],
+    "exitCode": 0,
+    "seconds": 470.21572829200005
+  },
+  "playthrough-build": {
+    "command": [
+      "npm",
+      "run",
+      "build:qa"
+    ],
+    "exitCode": 0,
+    "seconds": 6.080514332999996
+  },
+  "playthrough": {
+    "command": [
+      "node",
+      "--import",
+      "tsx",
+      "tools/playtest/play.ts",
+      "--levels",
+      "L5",
+      "--quality",
+      "low",
+      "--mode",
+      "campaign",
+      "--no-skip",
+      "--out",
+      "test-results/l5-all-new/playthrough"
+    ],
+    "exitCode": 0,
+    "seconds": 146.380637083
+  }
+}

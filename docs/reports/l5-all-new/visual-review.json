@@ -1,0 +1,119 @@
+{
+  "reviewer": "Codex visual inspection",
+  "at": "2026-10-28T01:39:35.215905+00:00",
+  "baselineAssets": "c0dc2ff43",
+  "camera": "Production isometric game camera; native front -45/back 135 degrees",
+  "nativePixels": [
+    120,
+    400
+  ],
+  "nativeLods": [
+    "lod1",
+    "lod0"
+  ],
+  "configs": [
+    "high-webgl2",
+    "high-webgpu",
+    "low-webgl2",
+    "low-webgpu"
+  ],
+  "paletteExtremes": [
+    "low-webgl2-tone5",
+    "high-webgpu-tone5"
+  ],
+  "figureSheets": [
+    {
+      "id": "npc.dale.aftermath",
+      "sheet": "01-npc.dale.aftermath.jpg",
+      "sha256": "8f4abc75b6cd4c0a0012713aa1bd7618fce5e6c70f6a60428dd9afa142d75f17",
+      "reviewed": true,
+      "review": "Dale: navy workwear, right forearm wrap, matching exposed skin; measured eye whites and thin rectangular frames remain clear at 120px; hair checked from behind."
+    },
+    {
+      "id": "npc.rosa.aftermath",
+      "sheet": "02-npc.rosa.aftermath.jpg",
+      "sha256": "5c6fad4319bc19566c9dd73ed98a623c0ff40a47a82e1dafbb0f682125b750e3",
+      "reviewed": true,
+      "review": "Rosa: white paramedic shirt, red braces, radio/pouches, black gloves and yellow leg bands retained; reflective cloth excluded from skin; ponytail and eye fit checked."
+    },
+    {
+      "id": "npc.mr-okafor.aftermath",
+      "sheet": "03-npc.mr-okafor.aftermath.jpg",
+      "sha256": "ee6ae01ae3ccfb188813a62b753ba6dc3901ba246ba3fb8e7110ac79968ad0e2",
+      "reviewed": true,
+      "review": "Okafor: face and hands share the authored dark complexion; flat cap, white hair/beard, glasses and argyle vest retained; shared cane follows live, turned and frozen hands."
+    },
+    {
+      "id": "npc.mia.aftermath",
+      "sheet": "04-npc.mia.aftermath.jpg",
+      "sha256": "9f80a5515109824211609e0b10cf602e116277e3b1010cdc9d1c5d4725f736ee",
+      "reviewed": true,
+      "review": "Mia: corrected source heading; face and arms consistent, floral red dress, cardigan, tote/strap and red shoes retained; back hair and bag fit checked."
+    },
+    {
+      "id": "npc.sam.aftermath",
+      "sheet": "05-npc.sam.aftermath.jpg",
+      "sha256": "10cb8e52b1476d820948bdc9af7ea89cd330c9da7fe8f2a92e8e8c5f0c8f1631",
+      "reviewed": true,
+      "review": "Sam: cap brim clears both eyes, beard and backpack retained; face and hands match; shin wrap survives both tiers. The L5 source is unarmed."
+    },
+    {
+      "id": "npc.marcus.aftermath",
+      "sheet": "06-npc.marcus.aftermath.jpg",
+      "sha256": "ff33ead61861bedebf8a70997b610ed2a43ed61c6dedd070a5011805a39bd59a",
+      "reviewed": true,
+      "review": "Marcus: teal top, olive trousers, yellow organizer band and wrist wrap retained; pants mask excludes hands and RGB gutters remove orange seams; back hair checked."
+    },
+    {
+      "id": "npc.civilian-man-b.aftermath",
+      "sheet": "07-npc.civilian-man-b.aftermath.jpg",
+      "sha256": "6f2109f624a9940acd4fff8bb496c582883131b09e2f8bdbebcd05eee354536e",
+      "reviewed": true,
+      "review": "Station man: shorter cap bill exposes the painted eyes at the elevated game camera; beard/eyes retain their colour class; face/hand tone checked at palette extremes."
+    },
+    {
+      "id": "npc.civilian-woman-b.aftermath",
+      "sheet": "08-npc.civilian-woman-b.aftermath.jpg",
+      "sha256": "876f28cd3435a151c094074ca40171d6eb5a7e1d57a10cc15076af8611d631fc",
+      "reviewed": true,
+      "review": "Station woman: fitted glasses/eye landmarks, bun, lavender outfit, badge/lanyard, bag and wrist wrap retained; standing reset uses the chosen fitting rig rather than legacy parent-scale metadata; frozen pose inspected close against old."
+    }
+  ],
+  "runtimeSheets": [
+    {
+      "sheet": "09-crowd-old-new.jpg",
+      "sha256": "da4a4aaf631b5a57477ba446c2336c40800bbdfef49f25c29bc47632e44c7a81",
+      "reviewed": true
+    },
+    {
+      "sheet": "10-story-five-survivors.jpg",
+      "sha256": "ede180523bc554534fb7d49237f4df2a45ea397884c058375ee63b7a4c1ab75c",
+      "reviewed": true
+    },
+    {
+      "sheet": "11-story-group-metro.jpg",
+      "sha256": "123071a8a4bb958e2b1bca64aaa1160ab31b049cb2c20687735fdb5984a614c5",
+      "reviewed": true
+    },
+    {
+      "sheet": "12-states-and-held-props.jpg",
+      "sha256": "cbe7c5585706f33ba1854dc3e819cc2c4f768ef9b9f327253045be9ef0119f8f",
+      "reviewed": true
+    },
+    {
+      "sheet": "13-story-locations.jpg",
+      "sha256": "fc69c8997d8ea51659e3a56f4964b92b0290ecf96e561c41f40831f095ee2de9",
+      "reviewed": true
+    },
+    {
+      "sheet": "14-corpses-old-new.jpg",
+      "sha256": "a556c9019c0fc31278c1e3b155ede4ecf8a3e487a2b333acb8e05989c7dbd572",
+      "reviewed": true
+    }
+  ],
+  "stateEvidence": "Each configuration asserts eight healthy, eight living turned, eight frozen corpses, and exactly three shared canes; close old/new frozen poses inspected for all eight models.",
+  "sourceStyle": "The retained v2 base has faceted sleeve/hand surfaces at close range; the standing bind metadata now preserves its actual local transforms.",
+  "fixtureObservation": "Canonical hide-Dale fixture places both courier and Dale on the truck roof under existing placement clearance; specs unchanged. The real-input production mission is checked separately.",
+  "captureCount": 14,
+  "stateFraming": "Final group views follow the actual healthy/turned/corpse positions, keeping fast turned actors inside the frame."
+}

@@ -1,6 +1,6 @@
 {
   "pass": true,
-  "sourcePipelineCommit": "872d1f030258b3d67be55aae5ca76ba63a6f91be",
+  "sourcePipelineCommit": "0b7f2b52cd4e53691949ba94514a5ca25f238527",
   "triangleCaps": [
     6000,
     2500,
@@ -1728,34 +1728,35 @@
             "lod": 0,
             "source": "cast/wave2/npc.civilian-man-b/source/flat-lod0.glb",
             "source_sha256": "cf15d0f332527ab205077b756561fc173e5449c172cfa85819365ea928840eea",
-            "output_sha256": "cf15d0f332527ab205077b756561fc173e5449c172cfa85819365ea928840eea"
+            "output_sha256": "4e1bf12a7672b9b8c5bddc1d95b75ab302f3ff0b27dcdef9a16a181e50923d37"
           },
           {
             "lod": 1,
             "source": "cast/wave2/npc.civilian-man-b/source/flat-lod1.glb",
             "source_sha256": "2f5d8d06b1ea4fd92b3d93530cc1591e488816d845ed47a5b3c76bfb3f1ba7f5",
-            "output_sha256": "2f5d8d06b1ea4fd92b3d93530cc1591e488816d845ed47a5b3c76bfb3f1ba7f5"
+            "output_sha256": "ad16c24c16ec01e98eabc6b2f6107895349cc7b8ceb86df0f76efe31519efcff"
           },
           {
             "lod": 2,
             "source": "cast/wave2/npc.civilian-man-b/source/flat-lod2.glb",
             "source_sha256": "bf88ed9082c9fdd1ad7e1a0a5d1ab0631b2de800bfb1d3d05a594eff8a1c9ea3",
-            "output_sha256": "bf88ed9082c9fdd1ad7e1a0a5d1ab0631b2de800bfb1d3d05a594eff8a1c9ea3"
+            "output_sha256": "aae9e22c761ce2b5f82534fdbf557233e3cb5479060684c2b667eb7c109caaeb"
           }
-        ]
+        ],
+        "headwear_correction": "Shorten front bill extrusion above y=.38 by 70% beyond z=.105, smoothly returning to the crown at y=.47; eyes remain clear at game-camera elevation."
       },
-      "sourceContractSha256": "735b40a3f5a69207a40c526eb000c302a1abd18930f407d125c551f5ac6b1cf8",
+      "sourceContractSha256": "26e29e9aae48a5a663aa080238c2d8cc1836ddb1595244d08044ce314b929f7c",
       "manualSteps": [],
       "pipelineViewer": {
         "source": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l5-all-new/assets/npc.civilian-man-b.aftermath/model.skin.glb",
-        "source_sha256": "1209abd8b24095e64e5cdb75a548da372263a12913cf32046d06bee4859f2c77",
+        "source_sha256": "39bc4cd25707bbd6c65661761f8f12fccb0aeaac5cc82e32f77ea17658bc86a2",
         "emission_only": false,
         "heading_degrees": 90,
         "elevation_degrees": 36,
         "relative_camera_azimuth_degrees": 45,
         "projection": "PERSP",
         "game_fov_degrees": 25,
-        "render_crop_fov_degrees": 6.040553561388515,
+        "render_crop_fov_degrees": 5.973808525932328,
         "canonical_height_m": 1.8,
         "game_radius_m": 19,
         "figure_min": [
@@ -1768,7 +1769,7 @@
           0.9999999403953552,
           1.438000202178955
         ],
-        "mesh_vertices": 15906
+        "mesh_vertices": 15894
       },
       "lods": [
         {
@@ -1779,26 +1780,26 @@
           "wraps": [
             {
               "joint": "foreArmL",
-              "paintedTexels": 4095
+              "paintedTexels": 4432
             }
           ],
           "regions": {
             "width": 1024,
             "height": 1024,
             "garments": true,
-            "absorbed": 13539,
+            "absorbed": 13850,
             "shares": {
-              "hair": 0.0625,
-              "skin": 0.1086,
-              "shirt": 0.331,
-              "trousers": 0.1908,
+              "hair": 0.0627,
+              "skin": 0.1084,
+              "shirt": 0.3281,
+              "trousers": 0.192,
               "skinMask": 0,
-              "authored": 0.3071
+              "authored": 0.3088
             },
             "colours": {
               "skin": [
                 75.3,
-                23,
+                23.5,
                 37.3
               ],
               "hair": [
@@ -1822,10 +1823,10 @@
             {
               "low": false,
               "path": "public/assets/models/skinned/npc.civilian-man-b.aftermath.lod0.glb",
-              "bytes": 337384,
-              "sha256": "f584b719001bf630e7dd866ff28d2c29ceec8883856ba4f27d73c024ffb5322f",
+              "bytes": 337772,
+              "sha256": "4426635a7d47c1ff30ce0b7510dbcbc8acb9c232e1d2ff5c90f2671f653832ed",
               "errors": [],
-              "triangles": 5472,
+              "triangles": 5487,
               "textures": [
                 {
                   "format": "image/ktx2",
@@ -1839,10 +1840,10 @@
             {
               "low": true,
               "path": "public/assets/models/skinned/npc.civilian-man-b.aftermath.lod0.low.glb",
-              "bytes": 249788,
-              "sha256": "250e868207378b663bdc1fbc7d3b02352c1225ff5d6ec8b3de341c45425915f6",
+              "bytes": 250624,
+              "sha256": "d6beb4b7c92a775afb2e977515e85e9c6a83e6a93e975f4282e93496520ef878",
               "errors": [],
-              "triangles": 5472,
+              "triangles": 5487,
               "textures": [
                 {
                   "format": "image/ktx2",
@@ -1863,21 +1864,21 @@
           "wraps": [
             {
               "joint": "foreArmL",
-              "paintedTexels": 1128
+              "paintedTexels": 1176
             }
           ],
           "regions": {
             "width": 512,
             "height": 512,
             "garments": true,
-            "absorbed": 5658,
+            "absorbed": 6340,
             "shares": {
-              "hair": 0.0652,
-              "skin": 0.1049,
-              "shirt": 0.3224,
-              "trousers": 0.2045,
+              "hair": 0.061,
+              "skin": 0.1185,
+              "shirt": 0.3135,
+              "trousers": 0.1959,
               "skinMask": 0,
-              "authored": 0.303
+              "authored": 0.311
             },
             "colours": {
               "skin": [
@@ -1906,10 +1907,10 @@
             {
               "low": false,
               "path": "public/assets/models/skinned/npc.civilian-man-b.aftermath.lod1.glb",
-              "bytes": 174668,
-              "sha256": "b0d0b980a1eaba840005cacc26587e03f287fc218b0481bf9df62d25463ff481",
+              "bytes": 174608,
+              "sha256": "a6209c92deed6efaa8e7c14a674b22f25b7d7208a07fba675aa8dea7e2d4388f",
               "errors": [],
-              "triangles": 2302,
+              "triangles": 2311,
               "textures": [
                 {
                   "format": "image/ktx2",
@@ -1923,10 +1924,10 @@
             {
               "low": true,
               "path": "public/assets/models/skinned/npc.civilian-man-b.aftermath.lod1.low.glb",
-              "bytes": 174668,
-              "sha256": "b0d0b980a1eaba840005cacc26587e03f287fc218b0481bf9df62d25463ff481",
+              "bytes": 174608,
+              "sha256": "a6209c92deed6efaa8e7c14a674b22f25b7d7208a07fba675aa8dea7e2d4388f",
               "errors": [],
-              "triangles": 2302,
+              "triangles": 2311,
               "textures": [
                 {
                   "format": "image/ktx2",
@@ -1947,21 +1948,21 @@
           "wraps": [
             {
               "joint": "foreArmL",
-              "paintedTexels": 1128
+              "paintedTexels": 1176
             }
           ],
           "regions": {
             "width": 512,
             "height": 512,
             "garments": true,
-            "absorbed": 5658,
+            "absorbed": 6340,
             "shares": {
-              "hair": 0.0652,
-              "skin": 0.1049,
-              "shirt": 0.3224,
-              "trousers": 0.2045,
+              "hair": 0.061,
+              "skin": 0.1185,
+              "shirt": 0.3135,
+              "trousers": 0.1959,
               "skinMask": 0,
-              "authored": 0.303
+              "authored": 0.311
             },
             "colours": {
               "skin": [
@@ -1990,10 +1991,10 @@
             {
               "low": false,
               "path": "public/assets/models/skinned/npc.civilian-man-b.aftermath.lod2.glb",
-              "bytes": 135652,
-              "sha256": "8c93f6053ebb52f8e1e334128ff0a4510d731cde89ca1101f46ec569b5317be4",
+              "bytes": 135592,
+              "sha256": "108d98891f115e444b985854da44dea0cc9110c9138cbbc47aac0373c37a5b9b",
               "errors": [],
-              "triangles": 2302,
+              "triangles": 2311,
               "textures": [
                 {
                   "format": "image/ktx2",
@@ -2007,10 +2008,10 @@
             {
               "low": true,
               "path": "public/assets/models/skinned/npc.civilian-man-b.aftermath.lod2.low.glb",
-              "bytes": 135652,
-              "sha256": "8c93f6053ebb52f8e1e334128ff0a4510d731cde89ca1101f46ec569b5317be4",
+              "bytes": 135592,
+              "sha256": "108d98891f115e444b985854da44dea0cc9110c9138cbbc47aac0373c37a5b9b",
               "errors": [],
-              "triangles": 2302,
+              "triangles": 2311,
               "textures": [
                 {
                   "format": "image/ktx2",
@@ -2081,7 +2082,7 @@
       "manualSteps": [],
       "pipelineViewer": {
         "source": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l5-all-new/assets/npc.civilian-woman-b.aftermath/model.skin.glb",
-        "source_sha256": "57aecaad462e7ac06955cfa8954ef7099150cdc23c47ca79867683eb4f96e0cc",
+        "source_sha256": "13cc2ad3f6e26eda2be941dcf55d4d75179c3cd85d63b3dd068c6c58d9a91dfc",
         "emission_only": false,
         "heading_degrees": 90,
         "elevation_degrees": 36,
@@ -2155,8 +2156,8 @@
             {
               "low": false,
               "path": "public/assets/models/skinned/npc.civilian-woman-b.aftermath.lod0.glb",
-              "bytes": 366144,
-              "sha256": "877b96db0e9d2b9b8e475bfb1c7586fc2dba789b15cfd7d2178905f4166b4cff",
+              "bytes": 364652,
+              "sha256": "7040004e0944e53f20a28554981b0625d942fb342f880a73cceb417425a21e7f",
               "errors": [],
               "triangles": 5497,
               "textures": [
@@ -2172,8 +2173,8 @@
             {
               "low": true,
               "path": "public/assets/models/skinned/npc.civilian-woman-b.aftermath.lod0.low.glb",
-              "bytes": 258028,
-              "sha256": "b8d324ff830133a0aae30461b3b17937ffe6a3e4132c28fa7df71d2c37dcf249",
+              "bytes": 256532,
+              "sha256": "e00e8b93bda3608cb0017db68b0a4feebe9e0a6f6d97646bd00fde156b4047d0",
               "errors": [],
               "triangles": 5497,
               "textures": [
@@ -2239,8 +2240,8 @@
             {
               "low": false,
               "path": "public/assets/models/skinned/npc.civilian-woman-b.aftermath.lod1.glb",
-              "bytes": 177756,
-              "sha256": "6ce0baaeb8139e21ffed63dac6b7a1e12b2d32365337a185b5de352a17ba4438",
+              "bytes": 176264,
+              "sha256": "0ea61904a5978049cb3656061b76b7157cf934a862b625aed590bc5b7e78fa0a",
               "errors": [],
               "triangles": 2326,
               "textures": [
@@ -2256,8 +2257,8 @@
             {
               "low": true,
               "path": "public/assets/models/skinned/npc.civilian-woman-b.aftermath.lod1.low.glb",
-              "bytes": 177756,
-              "sha256": "6ce0baaeb8139e21ffed63dac6b7a1e12b2d32365337a185b5de352a17ba4438",
+              "bytes": 176264,
+              "sha256": "0ea61904a5978049cb3656061b76b7157cf934a862b625aed590bc5b7e78fa0a",
               "errors": [],
               "triangles": 2326,
               "textures": [
@@ -2323,8 +2324,8 @@
             {
               "low": false,
               "path": "public/assets/models/skinned/npc.civilian-woman-b.aftermath.lod2.glb",
-              "bytes": 133164,
-              "sha256": "da1515f63092f5eb261cf46bb8f4063bed55999b1a2137ee223ab59d14573c07",
+              "bytes": 131672,
+              "sha256": "7053965408423e018f579b3b474e935ea267a0f82ffc2a21e475ed92ac46cd63",
               "errors": [],
               "triangles": 2326,
               "textures": [
@@ -2340,8 +2341,8 @@
             {
               "low": true,
               "path": "public/assets/models/skinned/npc.civilian-woman-b.aftermath.lod2.low.glb",
-              "bytes": 133164,
-              "sha256": "da1515f63092f5eb261cf46bb8f4063bed55999b1a2137ee223ab59d14573c07",
+              "bytes": 131672,
+              "sha256": "7053965408423e018f579b3b474e935ea267a0f82ffc2a21e475ed92ac46cd63",
               "errors": [],
               "triangles": 2326,
               "textures": [
