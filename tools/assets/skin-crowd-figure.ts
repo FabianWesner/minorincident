@@ -644,6 +644,29 @@ for (const top of sceneRoot.listChildren()) { const c = clone(top); if (c) scene
 // Restoring that stale pose before civilian baking stretches the new sleeves.
 if (contract && rigPath !== contractPath) adoptStandingBind(out);
 
+// Preserve the legacy rest-only pivot contract. Production removes these
+// pivots before sampling rest/movement clips, so the new neutral skin carries
+// no old rigid cushion geometry.
+if (contract) {
+  const originalRoot = contract.getRoot().listNodes().find(node => node.getName() === 'root');
+  const rawRestOnly = (originalRoot?.getExtras() as { restOnlyNodes?: string[] | string } | undefined)?.restOnlyNodes;
+  const restOnly = typeof rawRestOnly === 'string' ? [rawRestOnly] : rawRestOnly ?? [];
+  const originalNodes = contract.getRoot().listNodes(), outputNodes = out.getRoot().listNodes();
+  for (const name of restOnly) {
+    if (outputNodes.some(node => node.getName() === name)) continue;
+    const original = originalNodes.find(node => node.getName() === name);
+    if (!original) throw new Error(`Missing contract rest-only node ${name}`);
+    const parentName = original.getParentNode()?.getName(), parent = outputNodes.find(node => node.getName() === parentName) ?? outputNodes.find(node => node.getName() === 'root');
+    if (!parent) throw new Error(`Missing output owner for contract rest-only prop ${name}`);
+    // Rest-only props are hidden/removed before the crowd's standing rig and
+    // corpse poses run. Preserve their named pivot, not obsolete rigid geometry
+    // that would reintroduce the old model or inflate the skinned body bounds.
+    const copied = out.createNode(name).setExtras({ ...original.getExtras() });
+    copied.setMatrix(new Matrix4().fromArray(parent.getWorldMatrix()).invert().multiply(new Matrix4().fromArray(original.getWorldMatrix())).toArray());
+    parent.addChild(copied);
+  }
+}
+
 if (!out.getRoot().listNodes().some(n => n.getName() === 'front')) {
   const root = copy.get(jointNode.get('root')!)!, front = new Vector3(Math.max(...body.pos.filter((_, i) => i % 3 === 0)), 0, 0).applyMatrix4(world(jointNode.get('root')!).invert());
   root.addChild(out.createNode('front').setTranslation(front.toArray()).setExtras({ front: true }));

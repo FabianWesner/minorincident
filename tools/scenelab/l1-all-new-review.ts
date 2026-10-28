@@ -22,7 +22,7 @@ try {
   await session.open();
   await session.page.addInitScript("window.__name = (fn, name) => Object.defineProperty(fn, 'name', { value: name, configurable: true });");
   await session.page.evaluate("window.__name = (fn, name) => Object.defineProperty(fn, 'name', { value: name, configurable: true });");
-  await session.load({ name: 'figure-review', ground: 'asphalt', time: process.env.REVIEW_TIME === 'L5' ? 'L5' : process.env.REVIEW_TIME === 'L4' ? 'L4' : process.env.REVIEW_TIME === 'L3' ? 'L3' : process.env.REVIEW_TIME === 'L2' ? 'L2' : 'L1', size: 100, actors: [{ id: 'courier', kind: 'courier', at: [40, 40] }], camera: { mode: 'pose', position: [7, 6, 7], target: [0, .8, 0] } });
+  await session.load({ name: 'figure-review', ground: 'asphalt', time: process.env.REVIEW_TIME === 'L6' ? 'L6' : process.env.REVIEW_TIME === 'L5' ? 'L5' : process.env.REVIEW_TIME === 'L4' ? 'L4' : process.env.REVIEW_TIME === 'L3' ? 'L3' : process.env.REVIEW_TIME === 'L2' ? 'L2' : 'L1', size: 100, actors: [{ id: 'courier', kind: 'courier', at: [40, 40] }], camera: { mode: 'pose', position: [7, 6, 7], target: [0, .8, 0] } });
   const actual = await session.page.evaluate(() => window.__SS__!.getState().render);
   if (actual.backend !== (backend === 'webgl2' ? 'webgl' : 'webgpu') || actual.quality !== tier) throw Error(`Review renderer mismatch: requested ${backend}/${tier}, got ${actual.backend}/${actual.quality}`);
   for (const id of ids) for (const variant of ['old', 'new']) for (const pixels of [120, 400]) for (const yaw of [-45, 135]) {
@@ -33,7 +33,7 @@ try {
       def.glb = lowPath(def.glb!);
       if (def.lods) for (const lod of ['lod1', 'lod2'] as const) if (def.lods[lod]) def.lods[lod] = lowPath(def.lods[lod]!);
     }
-    const framing = await session.page.evaluate(async ({ def, pixels, yaw, moving, coat, clip, skinTone }) => {
+    const framing = await session.page.evaluate(async ({ def, pixels, yaw, moving, coat, clip, skinTone, restPoses, standing }) => {
       const modulePath = '/src/assets/registry.ts', threePath = '/node_modules/three/build/three.webgpu.js';
       const reviewMaterialPath = '/tools/scenelab/l1-all-new-review-material.ts';
       const { AssetRegistry } = await import(modulePath), { Box3, Vector3 } = await import(threePath), { reviewEyeMaterial, reviewHealthyEyeMaterial, reviewSkinTone } = await import(reviewMaterialPath);
@@ -60,6 +60,10 @@ try {
         mesh.material = Array.isArray(mesh.material) ? mesh.material.map(m => eyeMaterial(m, view.materials)) : eyeMaterial(mesh.material, view.materials);
       });
       if (def.crowdSkin && skinTone !== undefined) reviewSkinTone(root, skinTone, view.materials);
+      if (restPoses || standing) {
+        const standingPath = '/src/render/npc/prepareCivilianGeometry.ts', { restoreStanding } = await import(standingPath);
+        restoreStanding(root);
+      }
       if (def.id.startsWith('npc.')) {
         const box = new Box3().setFromObject(root.getObjectByName('skin_body') ?? root); root.scale.multiplyScalar(1.8 / (box.max.y - box.min.y));
       }
@@ -68,9 +72,11 @@ try {
         const modulePath = '/src/render/characters/NpcAnimator.ts', { NpcAnimator } = await import(modulePath);
         new NpcAnimator(root).update(.3, 3.2, .96, false);
       }
-      if (clip && def.id.startsWith('npc.')) {
+      const restClip = restPoses ? def.id.endsWith('.lying') ? 'death-side' : def.id.endsWith('.sitting') ? 'npc-sit' : def.id.endsWith('.bandaged') ? 'npc-cower' : undefined : undefined;
+      if ((clip || restClip) && def.id.startsWith('npc.')) {
         const path = '/src/render/characters/clips.ts', { sampleClip, authoredClips } = await import(path);
-        sampleClip(root, clip, authoredClips.get(clip).duration * .5);
+        const selected = clip || restClip;
+        sampleClip(root, selected, authoredClips.get(selected).duration * (restClip === 'death-side' ? 1 : .5));
       }
       root.traverse(node => { if ('isMesh' in node) { node.castShadow = node.receiveShadow = true; } });
       view.scene.add(root); root.updateMatrixWorld(true);
@@ -87,10 +93,10 @@ try {
           for (let i = 0; i < positions.count; i++) { mesh.getVertexPosition(i, point); point.applyMatrix4(mesh.matrixWorld).project(view.camera); xs.push((point.x + 1) * 400); ys.push((1 - point.y) * 300); }
         });
         bounds = [xs.reduce((a, b) => Math.min(a, b), Infinity), ys.reduce((a, b) => Math.min(a, b), Infinity), xs.reduce((a, b) => Math.max(a, b), -Infinity), ys.reduce((a, b) => Math.max(a, b), -Infinity)];
-        distance *= (bounds[3] - bounds[1]) / pixels;
+        distance *= (restClip === 'death-side' ? Math.max(bounds[3] - bounds[1], bounds[2] - bounds[0]) : bounds[3] - bounds[1]) / pixels;
       }
-      return { bounds, targetPixels: pixels, actualPixels: bounds[3] - bounds[1], yaw, lod: pixels === 120 ? 'lod1' : 'lod0' };
-    }, { def, pixels, yaw, moving: process.env.POSE === 'run', coat, clip: process.env.CLIP, skinTone });
+      return { bounds, targetPixels: pixels, actualPixels: restClip === 'death-side' ? Math.max(bounds[3] - bounds[1], bounds[2] - bounds[0]) : bounds[3] - bounds[1], framing: restClip === 'death-side' ? 'longest projected span' : 'height', yaw, lod: pixels === 120 ? 'lod1' : 'lod0' };
+    }, { def, pixels, yaw, moving: process.env.POSE === 'run', coat, clip: process.env.CLIP, skinTone, restPoses: process.env.REVIEW_REST_POSES === '1', standing: process.env.REVIEW_STANDING === '1' });
     const file = resolve(out, `${id}-${variant}-${pixels}-${yaw}.png`);
     await session.screenshot(file); receipts.push({ id, variant, tier, backend, actualBackend: actual.backend, skinTone, file, ...framing });
     writeJson(resolve(out, 'receipts.json'), receipts);

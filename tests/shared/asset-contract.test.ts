@@ -9,6 +9,7 @@ import { validateAssets, validateDocument } from '../../tools/assets/validate';
 import { PNG } from 'pngjs';
 import { adoptStandingBind } from '../../tools/assets/skin-crowd-standing';
 import { classifyCrowdAtlas } from '../../tools/assets/skin-crowd-regions';
+import { paintCrowdShirt } from '../../tools/assets/skin-crowd-wraps';
 import { crowdRegion } from '../../src/render/characters/crowdRegionData';
 
 function fixture(): { doc: Document; def: AssetDef } {
@@ -51,6 +52,18 @@ test('crowd atlas cleanup preserves enclosed eye paint and its authored alpha cl
     }
     const graphicPixel = (38 * 128 + 115) * 4;
     expect([...result.data.subarray(graphicPixel, graphicPixel + 4)], 'shared prop paint must not inherit skin gutters').toEqual([224, 168, 124, Math.round((crowdRegion.authored + 1) * 255 / 7)]);
+    // L6 review found that bright authored garment paint wrapped a Uint8 red
+    // channel past 255 and made lime-green patches. Exercise the shared derivation.
+    const shirt = cloneDocument(doc), atlas = new PNG({ width: 128, height: 128 });
+    for (let i = 0; i < atlas.data.length; i += 4) atlas.data.set([80, 130, 165, 255], i);
+    shirt.getRoot().listTextures()[0].setImage(new Uint8Array(PNG.sync.write(atlas)));
+    shirt.getRoot().listNodes().find(n => n.getName() === 'head')!.setName('torso');
+    shirt.getRoot().listNodes().find(n => n.getName() === 'skin_body')!.getMesh()!.listPrimitives()[0].getAttribute('_CROWD_REGION')!.setArray(new Float32Array(4));
+    expect(paintCrowdShirt(shirt, '#f2b630')).toBeGreaterThan(64);
+    const painted = PNG.sync.read(Buffer.from(shirt.getRoot().listTextures()[0].getImage()!));
+    const [red, green, blue] = painted.data.subarray((32 * 128 + 32) * 4, (32 * 128 + 32) * 4 + 3);
+    expect(red, 'yellow garment red channel must saturate instead of overflowing').toBeGreaterThan(200);
+    expect(red).toBeGreaterThan(green); expect(green).toBeGreaterThan(blue);
   }
 });
 

@@ -1,0 +1,85 @@
+{
+  "id": "npc.shelter-survivor.bandaged",
+  "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/npc.civilian-man-a",
+  "elapsedSeconds": 16.873,
+  "manualSteps": [],
+  "receipts": [
+    {
+      "lod": 0,
+      "source": "assets/npc.civilian-man-a/model.glb",
+      "sourceSha256": "31c21ce0040d284151f397aae87eae0d16a0c2af765bf4c11089d38fa876b110",
+      "bodySource": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/npc.civilian-man-a/source/flat-lod0.glb",
+      "bodySha256": "48edf00bf7966744cd9bb70e9bce7198f846c9118c0ef25b60e085c291d6c5ce",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/npc.shelter-survivor.bandaged.lod0.glb",
+          "bytes": 341560,
+          "sha256": "278363b17efc7c1ca6d914674b87097194e881245e75d05068b1a544d03da7c4",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/npc.shelter-survivor.bandaged.lod0.low.glb",
+          "bytes": 240844,
+          "sha256": "83136a2dade2760f71d3e34403cc4193c5e455091721f8b761275f8aadf01bf4",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 1,
+      "source": "assets/npc.civilian-man-a/model.glb",
+      "sourceSha256": "31c21ce0040d284151f397aae87eae0d16a0c2af765bf4c11089d38fa876b110",
+      "bodySource": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/npc.civilian-man-a/source/flat-lod1.glb",
+      "bodySha256": "9d065b80e79e06d3148789bd43b9a10803089814a69a2d3e73331a02dae22855",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/npc.shelter-survivor.bandaged.lod1.glb",
+          "bytes": 169060,
+          "sha256": "02b3566b9de0e3026a800a069df0b1495af456ef415c75073135510bf932f526",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/npc.shelter-survivor.bandaged.lod1.low.glb",
+          "bytes": 169060,
+          "sha256": "02b3566b9de0e3026a800a069df0b1495af456ef415c75073135510bf932f526",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 2,
+      "source": "assets/npc.civilian-man-a/model.glb",
+      "sourceSha256": "31c21ce0040d284151f397aae87eae0d16a0c2af765bf4c11089d38fa876b110",
+      "bodySource": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/npc.civilian-man-a/source/flat-lod1.glb",
+      "bodySha256": "9d065b80e79e06d3148789bd43b9a10803089814a69a2d3e73331a02dae22855",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/npc.shelter-survivor.bandaged.lod2.glb",
+          "bytes": 119900,
+          "sha256": "956527e2b91ea86fcd84706da77b103b7a5a80ad3b559502fe2c5a79ce94cac9",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/npc.shelter-survivor.bandaged.lod2.low.glb",
+          "bytes": 119900,
+          "sha256": "956527e2b91ea86fcd84706da77b103b7a5a80ad3b559502fe2c5a79ce94cac9",
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "preparedBakes": {
+    "npc.shelter-survivor.bandaged:lod0:infected": "/assets/civilians/npc.shelter-survivor.bandaged.lod0.infected.7bff12e0fcfbd0a9.bin.gz",
+    "npc.shelter-survivor.bandaged:lod0": "/assets/civilians/npc.shelter-survivor.bandaged.lod0.2bfb57acf5e1e16f.bin.gz",
+    "npc.shelter-survivor.bandaged:lod1:infected": "/assets/civilians/npc.shelter-survivor.bandaged.lod1.infected.504808ca24cef796.bin.gz",
+    "npc.shelter-survivor.bandaged:lod1": "/assets/civilians/npc.shelter-survivor.bandaged.lod1.f3428b010ab674ed.bin.gz",
+    "npc.shelter-survivor.bandaged:lod2:infected": "/assets/civilians/npc.shelter-survivor.bandaged.lod2.infected.8c190f4231ca26e8.bin.gz",
+    "npc.shelter-survivor.bandaged:lod2": "/assets/civilians/npc.shelter-survivor.bandaged.lod2.30852598c4e863bf.bin.gz"
+  }
+}

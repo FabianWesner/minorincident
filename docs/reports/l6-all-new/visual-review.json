@@ -1,0 +1,42 @@
+{
+  "reviewedCaptures": [
+    "01-npc.civilian-man-a.aftermath.jpg",
+    "02-npc.shelter-survivor.bandaged.jpg",
+    "03-npc.shelter-survivor.lying.jpg",
+    "04-npc.shelter-survivor.sitting.jpg",
+    "05-crowd-old-new.jpg",
+    "06-body-states.jpg",
+    "07-scripted-scenes.jpg",
+    "08-scripted-scenes.jpg",
+    "09-retreat-and-hatch.jpg",
+    "10-marcus-pistol.jpg",
+    "11-turned-corpses-close.jpg"
+  ],
+  "nativeConfigurations": [
+    "high-webgl2",
+    "high-webgpu",
+    "high-webgpu-tone5",
+    "low-webgl2",
+    "low-webgl2-tone5",
+    "low-webgpu",
+    "neutral-high-webgpu"
+  ],
+  "verdict": "Four conversions accepted after fixes; source style is the same approved v2 civilian body as prior levels.",
+  "checks": {
+    "skin": "Face and exposed arms follow the same palette, including tone 5. Khaki trousers remain clothes; normalized trouser paint looks dark in the standalone comparison but takes the production person tint.",
+    "dressings": "Forearm wraps retained on all four; shoulder dressing on bandaged; head wrap on bandaged and sitting. Paint follows the skin and cannot float.",
+    "binding": "Neutral game template fit removes 104 unrelated seam joins from the initial cut-source fit; final sources have zero unrelated joins and zero open edges.",
+    "headwear": "Head wraps and rear hair inspected in every native sheet. Existing named caps retained; Marcus checked from front and reverse game-camera azimuth.",
+    "weapons": "The four converted residents are unarmed. Both Marcus instances retain live pistol muzzles through the unified weapon path; no baked/box weapon added.",
+    "rests": "Standing source bind is restored before production story clips. Old and new source-only cushions are removed by the same production restoreStanding path. Lying comparison uses 120/400 px longest projected span to avoid clipping.",
+    "faces": "Eyes remain visible at 120 px and 400 px, with neutral-light supplements for the dark L6 palette. No new glasses added to these four faces.",
+    "states": "Actual four healthy, four living turned and four frozen corpses asserted; close sheets inspected for dressing/colour/eye retention."
+  },
+  "fixedFindings": [
+    "Lost medical dressings and mustard shirt",
+    "Cut-source shoulder slivers in cower pose",
+    "Bright garment Uint8 overflow created lime patches (existing shared test extended)",
+    "Warm tan trousers classified as exposed skin",
+    "Lying 400px comparison clipped; frame by longest projected span"
+  ]
+}

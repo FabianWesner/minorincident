@@ -1,0 +1,173 @@
+{
+  "level": "L6",
+  "sources": [
+    "src/data/l6.ts:l6BreachModels",
+    "src/data/l6.ts:l6CastModels",
+    "src/data/l5.ts:l5Survivors",
+    "src/sim/missions/LevelSixSubway.ts:prepare",
+    "src/sim/missions/LevelSixSubway.ts:spawn",
+    "src/data/infected.ts:runner",
+    "src/assets/manifest.json",
+    "src/sim/npc/install.ts:installCampaignNpcs",
+    "src/sim/missions/LevelSixSubway.ts:prepare setAmbient(0)",
+    "src/render/characters/CharacterView.ts:prepareVariant"
+  ],
+  "method": "Enumerated authored survivor slots, breach pedestrian model pool, carried L5 story survivors, and the L6 infected spawn path; checked each identity against manifest crowdSkin/textureMode and model path.",
+  "highTierShelterSlots": 24,
+  "lowTierShelterSlots": 24,
+  "infectedCap": {
+    "high": 60,
+    "low": 30
+  },
+  "infectedModelSelection": "Turned breach pedestrians preserve their civilian appearance. L6 creates generic infected.runner for its authored infected path (asset inf.common-worker); no L6 animal or Alpha spawns are authored.",
+  "figures": [
+    {
+      "id": "npc.civilian-man-a.aftermath",
+      "sourcePath": "l6BreachModels[0]",
+      "exposure": "primary first breach model; can recur in later breach waves",
+      "v2AtStart": false,
+      "v2": true,
+      "manifestGlb": "public/assets/models/skinned/npc.civilian-man-a.aftermath.lod0.glb"
+    },
+    {
+      "id": "npc.civilian-man-b.aftermath",
+      "sourcePath": "l6BreachModels[1] and shelter fallback",
+      "exposure": "recurring shelter fallback and breach pool",
+      "v2": true,
+      "manifestGlb": "public/assets/models/skinned/npc.civilian-man-b.aftermath.lod0.glb"
+    },
+    {
+      "id": "npc.civilian-woman-b.aftermath",
+      "sourcePath": "l6BreachModels[2] and shelter fallback",
+      "exposure": "recurring shelter fallback and breach pool",
+      "v2": true,
+      "manifestGlb": "public/assets/models/skinned/npc.civilian-woman-b.aftermath.lod0.glb"
+    },
+    {
+      "id": "npc.civilian-woman-a",
+      "sourcePath": "l6BreachModels[3]",
+      "exposure": "occasional breach pedestrian",
+      "v2": true,
+      "manifestGlb": "public/assets/models/skinned/npc.civilian-woman-a.lod0.glb"
+    },
+    {
+      "id": "npc.civilian-elderly",
+      "sourcePath": "l6BreachModels[4]",
+      "exposure": "occasional breach pedestrian",
+      "v2": true,
+      "manifestGlb": "public/assets/models/skinned/npc.civilian-elderly.lod0.glb"
+    },
+    {
+      "id": "npc.marcus.aftermath",
+      "sourcePath": "LevelSixSubway.prepare first shelter slot",
+      "exposure": "named guard, lead shelter character; pistol is a live ally weapon",
+      "v2": true,
+      "manifestGlb": "public/assets/models/skinned/npc.marcus.aftermath.lod0.glb"
+    },
+    {
+      "id": "npc.shelter-survivor.bandaged",
+      "sourcePath": "LevelSixSubway.prepare injured routine",
+      "exposure": "repeated injured shelter residents",
+      "v2AtStart": false,
+      "v2": true,
+      "manifestGlb": "public/assets/models/skinned/npc.shelter-survivor.bandaged.lod0.glb"
+    },
+    {
+      "id": "npc.shelter-survivor.lying",
+      "sourcePath": "LevelSixSubway.prepare rest routine",
+      "exposure": "repeated resting shelter residents",
+      "v2AtStart": false,
+      "v2": true,
+      "manifestGlb": "public/assets/models/skinned/npc.shelter-survivor.lying.lod0.glb"
+    },
+    {
+      "id": "npc.shelter-survivor.sitting",
+      "sourcePath": "LevelSixSubway.prepare sit routine",
+      "exposure": "repeated seated shelter residents",
+      "v2AtStart": false,
+      "v2": true,
+      "manifestGlb": "public/assets/models/skinned/npc.shelter-survivor.sitting.lod0.glb"
+    },
+    {
+      "id": "npc.dale.aftermath",
+      "sourcePath": "carried L5 survivor state",
+      "exposure": "named carried survivor when rescued in L5",
+      "v2": true,
+      "manifestGlb": "public/assets/models/skinned/npc.dale.aftermath.lod0.glb"
+    },
+    {
+      "id": "npc.rosa.aftermath",
+      "sourcePath": "carried L5 survivor state",
+      "exposure": "named carried survivor; medic treatment story",
+      "v2": true,
+      "manifestGlb": "public/assets/models/skinned/npc.rosa.aftermath.lod0.glb"
+    },
+    {
+      "id": "npc.mr-okafor.aftermath",
+      "sourcePath": "carried L5 survivor state",
+      "exposure": "named carried survivor",
+      "v2": true,
+      "manifestGlb": "public/assets/models/skinned/npc.mr-okafor.aftermath.lod0.glb"
+    },
+    {
+      "id": "npc.mia.aftermath",
+      "sourcePath": "carried L5 survivor state",
+      "exposure": "named carried survivor",
+      "v2": true,
+      "manifestGlb": "public/assets/models/skinned/npc.mia.aftermath.lod0.glb"
+    },
+    {
+      "id": "npc.sam.aftermath",
+      "sourcePath": "carried L5 survivor state",
+      "exposure": "named survivor; may turn and become a corpse",
+      "v2": true,
+      "manifestGlb": "public/assets/models/skinned/npc.sam.aftermath.lod0.glb"
+    },
+    {
+      "id": "inf.common-worker",
+      "sourcePath": "infected.runner definition",
+      "exposure": "generic L6 infected fallback and corpses",
+      "v2": true,
+      "manifestGlb": "public/assets/models/skinned/inf.common-worker.lod0.glb"
+    },
+    {
+      "id": "char.courier-female",
+      "sourcePath": "CharacterView default skinned courier",
+      "exposure": "player-selected courier; existing fitted v2 skin",
+      "v2": true,
+      "runtimeGlb": "public/assets/models/char.courier-female.skin.glb"
+    },
+    {
+      "id": "char.courier-male",
+      "sourcePath": "CharacterView default skinned courier",
+      "exposure": "player-selected courier; existing fitted v2 skin",
+      "v2": true,
+      "runtimeGlb": "public/assets/models/char.courier-male.skin.glb"
+    },
+    {
+      "id": "char.corgi",
+      "sourcePath": "installCampaignNpcs companion spawn; campaign rescue state controls visibility",
+      "exposure": "companion when rescued/visible",
+      "v2": true,
+      "manifestGlb": "public/assets/models/skinned/char.corgi.lod0.glb"
+    }
+  ],
+  "oldRigidAtStart": [
+    "npc.civilian-man-a.aftermath",
+    "npc.shelter-survivor.bandaged",
+    "npc.shelter-survivor.lying",
+    "npc.shelter-survivor.sitting"
+  ],
+  "converted": [
+    "npc.civilian-man-a.aftermath",
+    "npc.shelter-survivor.bandaged",
+    "npc.shelter-survivor.lying",
+    "npc.shelter-survivor.sitting"
+  ],
+  "conversionSource": "/Users/wesner/Workspace/trellis-highs/wave2-sources/npc.civilian-man-a/calibrated.glb",
+  "conversionSourceSha256": "6889c6a79a772345f44886359939a3874f57e91ccf1ba60cb7f96463745a0840",
+  "inferenceCreditsEur": 0,
+  "restStates": "Turned breach pedestrians preserve their selected appearance for infected and frozen corpse states; the carried Sam identity can also turn. Those source identities are already v2 except the listed old man-a aftermath model.",
+  "animals": "No ambient animal or animal-infected spawns remain after L6 prepare sets ambient population to zero. The carried/rescued char.corgi companion is already v2 and is listed separately.",
+  "deferred": []
+}

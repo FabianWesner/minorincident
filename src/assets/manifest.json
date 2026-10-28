@@ -20159,12 +20159,12 @@
     "category": "character",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/npc.civilian-man-a.aftermath.glb",
+    "glb": "public/assets/models/skinned/npc.civilian-man-a.aftermath.lod0.glb",
     "dimensions": {
-      "x": 0.45,
-      "y": 1.8,
-      "z": 0.8363,
-      "tolerance": 0.1
+      "x": 0.4857945293188095,
+      "y": 1.4316673297435045,
+      "z": 0.7575148046016693,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -20220,12 +20220,12 @@
       "fileKB": 1500
     },
     "decayVariants": [],
-    "sourceGlb": "assets/npc.civilian-man-a.aftermath/model.glb",
+    "sourceGlb": "assets/npc.civilian-man-a.aftermath/model.skin.glb",
     "script": "assets/npc.civilian-man-a.aftermath/build.py",
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/npc.civilian-man-a.aftermath.lod1.glb",
-      "lod2": "public/assets/models/npc.civilian-man-a.aftermath.lod2.glb"
+      "lod1": "public/assets/models/skinned/npc.civilian-man-a.aftermath.lod1.glb",
+      "lod2": "public/assets/models/skinned/npc.civilian-man-a.aftermath.lod2.glb"
     },
     "sourceScale": 1,
     "authoredLodTriangles": {
@@ -20233,7 +20233,16 @@
       "lod2": 2000
     },
     "animatedDrawBase": "npc.civilian-man-a",
-    "budgetNote": "Living adult: per-owner material draws capped by shipped npc.civilian-man-a at each tier; attachments batch inside owners."
+    "budgetNote": "Living adult: per-owner material draws capped by shipped npc.civilian-man-a at each tier; attachments batch inside owners.",
+    "rigidBaseline": {
+      "glb": "public/assets/models/npc.civilian-man-a.aftermath.glb",
+      "lods": {
+        "lod1": "public/assets/models/npc.civilian-man-a.aftermath.lod1.glb",
+        "lod2": "public/assets/models/npc.civilian-man-a.aftermath.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "npc.civilian-man-b.aftermath",
@@ -20504,12 +20513,12 @@
     "category": "character",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/npc.shelter-survivor.bandaged.glb",
+    "glb": "public/assets/models/skinned/npc.shelter-survivor.bandaged.lod0.glb",
     "dimensions": {
-      "x": 0.755,
-      "y": 1.814,
-      "z": 0.836,
-      "tolerance": 0.1
+      "x": 0.4857945293188095,
+      "y": 1.4316673297435045,
+      "z": 0.7575148046016693,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -20565,12 +20574,12 @@
       "fileKB": 1500
     },
     "decayVariants": [],
-    "sourceGlb": "assets/npc.shelter-survivor.bandaged/model.glb",
+    "sourceGlb": "assets/npc.shelter-survivor.bandaged/model.skin.glb",
     "script": "assets/npc.shelter-survivor.bandaged/build.py",
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/npc.shelter-survivor.bandaged.lod1.glb",
-      "lod2": "public/assets/models/npc.shelter-survivor.bandaged.lod2.glb"
+      "lod1": "public/assets/models/skinned/npc.shelter-survivor.bandaged.lod1.glb",
+      "lod2": "public/assets/models/skinned/npc.shelter-survivor.bandaged.lod2.glb"
     },
     "sourceScale": 1,
     "authoredLodTriangles": {
@@ -20578,19 +20587,28 @@
       "lod2": 2000
     },
     "animatedDrawBase": "npc.civilian-man-a",
-    "budgetNote": "Living adult: per-owner material draws capped by shipped npc.civilian-man-a at each tier; attachments batch inside owners."
+    "budgetNote": "Living adult: per-owner material draws capped by shipped npc.civilian-man-a at each tier; attachments batch inside owners.",
+    "rigidBaseline": {
+      "glb": "public/assets/models/npc.shelter-survivor.bandaged.glb",
+      "lods": {
+        "lod1": "public/assets/models/npc.shelter-survivor.bandaged.lod1.glb",
+        "lod2": "public/assets/models/npc.shelter-survivor.bandaged.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "npc.shelter-survivor.lying",
     "category": "character",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/npc.shelter-survivor.lying.glb",
+    "glb": "public/assets/models/skinned/npc.shelter-survivor.lying.lod0.glb",
     "dimensions": {
-      "x": 1.81,
-      "y": 0.545,
-      "z": 0.836,
-      "tolerance": 0.1
+      "x": 0.4857945293188095,
+      "y": 1.4316673297435045,
+      "z": 0.7575148046016693,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -20648,12 +20666,12 @@
       "fileKB": 1500
     },
     "decayVariants": [],
-    "sourceGlb": "assets/npc.shelter-survivor.lying/model.glb",
+    "sourceGlb": "assets/npc.shelter-survivor.lying/model.skin.glb",
     "script": "assets/npc.shelter-survivor.lying/build.py",
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/npc.shelter-survivor.lying.lod1.glb",
-      "lod2": "public/assets/models/npc.shelter-survivor.lying.lod2.glb"
+      "lod1": "public/assets/models/skinned/npc.shelter-survivor.lying.lod1.glb",
+      "lod2": "public/assets/models/skinned/npc.shelter-survivor.lying.lod2.glb"
     },
     "sourceScale": 1,
     "authoredLodTriangles": {
@@ -20661,18 +20679,27 @@
       "lod2": 2000
     },
     "animatedDrawBase": "npc.civilian-man-a",
-    "budgetNote": "Living adult: per-owner material draws capped by shipped npc.civilian-man-a at each tier; attachments batch inside owners."
+    "budgetNote": "Living adult: per-owner material draws capped by shipped npc.civilian-man-a at each tier; attachments batch inside owners.",
+    "rigidBaseline": {
+      "glb": "public/assets/models/npc.shelter-survivor.lying.glb",
+      "lods": {
+        "lod1": "public/assets/models/npc.shelter-survivor.lying.lod1.glb",
+        "lod2": "public/assets/models/npc.shelter-survivor.lying.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "npc.shelter-survivor.sitting",
     "category": "character",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/npc.shelter-survivor.sitting.glb",
+    "glb": "public/assets/models/skinned/npc.shelter-survivor.sitting.lod0.glb",
     "dimensions": {
-      "x": 0.7,
-      "y": 1.35,
-      "z": 0.836,
+      "x": 0.4857945293188095,
+      "y": 1.4316673297435045,
+      "z": 0.7575148046016693,
       "tolerance": 0.15
     },
     "forward": "+X",
@@ -20729,12 +20756,12 @@
       "fileKB": 1500
     },
     "decayVariants": [],
-    "sourceGlb": "assets/npc.shelter-survivor.sitting/model.glb",
+    "sourceGlb": "assets/npc.shelter-survivor.sitting/model.skin.glb",
     "script": "assets/npc.shelter-survivor.sitting/build.py",
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/npc.shelter-survivor.sitting.lod1.glb",
-      "lod2": "public/assets/models/npc.shelter-survivor.sitting.lod2.glb"
+      "lod1": "public/assets/models/skinned/npc.shelter-survivor.sitting.lod1.glb",
+      "lod2": "public/assets/models/skinned/npc.shelter-survivor.sitting.lod2.glb"
     },
     "sourceScale": 1,
     "authoredLodTriangles": {
@@ -20742,7 +20769,16 @@
       "lod2": 2000
     },
     "animatedDrawBase": "npc.civilian-man-a",
-    "budgetNote": "Living adult: per-owner material draws capped by shipped npc.civilian-man-a at each tier; attachments batch inside owners."
+    "budgetNote": "Living adult: per-owner material draws capped by shipped npc.civilian-man-a at each tier; attachments batch inside owners.",
+    "rigidBaseline": {
+      "glb": "public/assets/models/npc.shelter-survivor.sitting.glb",
+      "lods": {
+        "lod1": "public/assets/models/npc.shelter-survivor.sitting.lod1.glb",
+        "lod2": "public/assets/models/npc.shelter-survivor.sitting.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "kit.guard-tower",
