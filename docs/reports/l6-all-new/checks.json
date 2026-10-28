@@ -13,20 +13,22 @@
     "files": 24,
     "budget": 144,
     "newCases": 0,
-    "caseBudgetFiles": 40
+    "caseBudgetFiles": 40,
+    "sourceCommit": "a34bbc075"
   },
   "smoke": {
     "passed": 7,
     "qa": 6,
     "public": 1,
-    "seconds": 194.6,
+    "seconds": 184.9,
     "webglAttributesMax": 13,
     "webgpuVertexBuffersMax": 8,
+    "webgpuCrowdVertexBuffersMax": 6,
     "freezeGuardPassed": true,
     "shaderBuildsAfterWarmup": 0,
     "maxGameplayFrameMs": 17,
-    "measuredFrames": 169,
-    "sourceCommit": "8d91b9907"
+    "measuredFrames": 168,
+    "sourceCommit": "a34bbc075"
   },
   "sceneGate": {
     "exit": 0,
@@ -50,6 +52,16 @@
       "stop",
       "retreat",
       "exit"
-    ]
+    ],
+    "sourceCommit": "8d91b9907"
+  },
+  "bandageFix": {
+    "sourceCommit": "a34bbc075",
+    "assetValidatorExit": 0,
+    "npmTestExit": 0,
+    "smokeExit": 0,
+    "scriptedSceneChecks": 28,
+    "nativeConfigurations": 9,
+    "newTestCases": 0
   }
 }
