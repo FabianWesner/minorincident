@@ -18,7 +18,7 @@ function hit(w: SimWorld, e: EntitySnapshot, type: DamageEvent['type'] = 'melee'
 const [lowS, highS] = infectedRecovery.downS;
 
 test('every human and animal role validates and spawns with its catalog health and speed; every attack is telegraphed', async () => {
-  validateInfected(); expect(() => validateInfected([{ ...humanInfected[0], windup: 0.1 }])).toThrow();
+  validateInfected(); expect(infectedDefinitions.every(def => def.bar)).toBe(true); expect(() => validateInfected([{ ...humanInfected[0], windup: 0.1 }])).toThrow();
   const w = await arena();
   for (const [i, def] of [...humanInfected, ...animalInfected].entries()) {
     const e = w.entities.get(w.infected!.spawn(def.id, { x: i * 2 - 12, z: 10 }, def.id === 'infected.crow' ? { perched: false } : undefined))!;

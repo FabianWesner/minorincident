@@ -542,6 +542,12 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         const m = window.__SS__!.missions.state()!;
         return { level: m.id, phase: m.phase, creditsFinished: !!m.states['credits-finished'], endingPhase: m.epilogue?.phase ?? null, completedLevels: window.__SS__!.campaign.state()?.completedLevels ?? 0 };
       });
+      if (!campaignEndingComplete(ending) && ['playable', 'title', 'credits'].includes(ending.endingPhase ?? '')) {
+        // The scripted epilogue and credits are timed mission phases, not a
+        // result screen that should be clicked through or reported as stuck.
+        idleScreens = 0;
+        await press([]); await releaseAim(); await hold(200); continue;
+      }
       assert.ok(campaignEndingComplete(ending), `L10 left play without completed credits: ${JSON.stringify(ending)}`);
       await press([]); await releaseAim();
       if (!run.finished) await finishLevel(e);
@@ -549,6 +555,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     }
 
     if (e.phase === 'briefing' || e.phase === 'retry' || e.phase === 'progression') {
+      if (e.level === 'L10' && e.phase === 'progression') { idleScreens = 0; await press([]); await releaseAim(); await hold(200); continue; }
       if (e.phase === 'retry' && lastDeathTick !== e.tick) { lastDeathTick = e.tick; run.deaths++; await issue('P3', 'retry', `Mission failed screen: ${e.panel.heading}`); }
       await press([]); await releaseAim();
       if (e.panel.button && !e.loading) { await page.getByTestId('mission-button').click({ timeout: 5000 }).catch(() => undefined); }
@@ -678,7 +685,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     lastHp = e.player?.hp ?? 0;
     await watchAllies(e);
 
-    const watchingEnding = e.level === 'L10' && /Watch the cure spread|Minor Incident/.test(e.objective);
+    const watchingEnding = e.level === 'L10' && (e.ending || /Watch the cure spread|Minor Incident/.test(e.objective));
     if(o.noSkip&&observed.seconds>=90&&!watchingEnding) {
       await issue('P0','cannot-finish',`No visible progress for ${observed.seconds.toFixed(1)} s; stopping without advancing the objective`);
       log({abortedNoSkip:true,level:e.level,tick:e.tick,step:e.step});break;

@@ -10,6 +10,7 @@
 export interface Body { id: number; x: number; z: number; hp: number; max: number; d: number; kind: string; archetype?: string; drawn: boolean; screen: { x: number; y: number }; aim: { x: number; y: number }; moving: boolean; speed: number; yaw: number; vx: number; vz: number; corpse: boolean; state?: string; attacking?: boolean }
 export interface Eyes {
   tick: number; level: string | null; phase: string | null; step: string | null; checkpoint: string | null; completed: number;
+  ending: boolean;
   objective: string; tracker: string; distance: number | null;
   marker: { visible: boolean; offscreen: boolean; x: number; y: number; anchor: string | null; guidance?: string } | null;
   route: { dx: number; dz: number } | null;
@@ -109,7 +110,8 @@ export function look(): Eyes {
       // The drawn chest may sit behind Home, Pause or a rack button. A mouse
       // attack there activates the UI and can leave the driver holding WASD on the title menu.
       if (document.elementFromPoint(aim.x, aim.y)?.closest('button, input, select, textarea, [role="dialog"]')) continue;
-      const b: Body = { id: e.id, x: e.transform.x, z: e.transform.z, hp: e.health.current, max: e.health.max, d: Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z), kind: e.kind, archetype: e.archetype, drawn: figures.has(e.id), screen: s, aim,
+      const drawn = enemy ? figures.has(e.id) : a.input.visible(e.transform) && s.x >= 0 && s.x < view.w && s.y >= 0 && s.y < view.h;
+      const b: Body = { id: e.id, x: e.transform.x, z: e.transform.z, hp: e.health.current, max: e.health.max, d: Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z), kind: e.kind, archetype: e.archetype, drawn, screen: s, aim,
         moving: !!e.motion?.moving, speed: e.motion?.speed ?? 0, yaw: e.transform.yaw, vx: e.motion?.velocity.x ?? 0, vz: e.motion?.velocity.z ?? 0, corpse: !!e.corpse,
         state: e.infected?.state ?? e.escort?.state ?? e.companion?.state ?? e.civilian?.state, attacking: /^(windup|swing|dog-lunge-bite|zebra-rear-kick)$/.test(figures.get(e.id)?.clip ?? '') };
       (enemy ? enemies : allies).push(b);
@@ -124,6 +126,7 @@ export function look(): Eyes {
   const left = markerEl ? parseFloat(markerEl.style.left) : NaN, top = markerEl ? parseFloat(markerEl.style.top) : NaN;
   return {
     tick: a.tick(), level: m?.id ?? null, phase: m?.phase ?? null, step: active, checkpoint: m?.checkpoint ?? null,
+    ending: m?.id === 'L10' && !!m.epilogue && m.epilogue.phase !== 'done',
     completed: m ? Object.values(m.steps).filter(s => s.status === 'completed').length : 0,
     objective: shown(objective) ? objective!.textContent ?? '' : trackerText, tracker: trackerText,
     distance: shown(tracker) && tracker?.dataset.distance ? Number(tracker.dataset.distance) : distanceText ? Number(distanceText[1]) : null,

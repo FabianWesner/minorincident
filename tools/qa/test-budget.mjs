@@ -56,7 +56,9 @@ async function run(cmd, args) {
 async function vitestCases() {
   const dir = mkdtempSync(join(tmpdir(), 'mi-test-budget-')), out = join(dir, 'list.json');
   try {
-    await run('npx', ['vitest', 'list', `--json=${out}`, '--configLoader', 'runner']);
+    // Bypass npx's shim process: if Vitest outlives the wrapper during a budget
+    // timeout, it can be reparented before browser-job's descendant sweep sees it.
+    await run(process.execPath, ['node_modules/vitest/vitest.mjs', 'list', `--json=${out}`, '--configLoader', 'runner']);
     const listed = JSON.parse(readFileSync(out, 'utf8'));
     if (!Array.isArray(listed)) throw new Error('Vitest collection did not report a test array');
     return listed.length;
