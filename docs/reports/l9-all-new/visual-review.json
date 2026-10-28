@@ -36,7 +36,7 @@
     },
     {
       "file": "09-scripted-scenes-playthrough.jpg",
-      "review": "Reviewed all twelve complete timeline sheets: Alpha ram, shortcut ram, zero-health ram, crash at 1000/0 health, and crawl-stage fixture on low WebGL2 and high WebGPU. Encounter contact and crash/explosion frames are included in the composite. Appended four real-input L9 playthrough frames; the 241-second run reaches the L10 handover with zero issues, deaths, assists or skips."
+      "review": "Reviewed all twelve complete timeline sheets: Alpha ram, shortcut ram, zero-health ram, crash at 1000/0 health, and crawl-stage fixture on low WebGL2 and high WebGPU. Encounter contact and crash/explosion frames are included in the composite. Appended three real-input L9 playthrough frames; the 144-second run reaches the L10 handover with zero issues, deaths, assists or skips."
     },
     {
       "file": "10-runtime-skin-headwear-props.jpg",
@@ -52,5 +52,10 @@
     "Floating/stacked random replacement head pieces on native sculptures, replaced by the existing authored-head policy.",
     "Over-simplified distant anatomy, replaced with the middle surface under unchanged triangle/file caps."
   ],
-  "scope": "Review establishes visibility, source-detail retention and lack of the listed artifacts; it does not impose a must-beat-old art-style gate."
+  "scope": "Review establishes visibility, source-detail retention and lack of the listed artifacts; it does not impose a must-beat-old art-style gate.",
+  "committedTreeRefresh": {
+    "testedRevision": "dc06e59983732b9c3ff3d361f3eddb7c9ff4cc70",
+    "playthroughSeconds": 144,
+    "sceneGateKnown": 5
+  }
 }

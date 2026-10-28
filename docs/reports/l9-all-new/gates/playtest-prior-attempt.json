@@ -1,0 +1,102 @@
+{
+  "testedRevision": "dc06e59983732b9c3ff3d361f3eddb7c9ff4cc70",
+  "accepted": false,
+  "reason": "One P2 stuck-navigating observation during driving; preserved and rerun without code, gameplay, threshold or harness changes.",
+  "summary": {
+    "mode": "continue",
+    "quality": "low",
+    "heroine": "female",
+    "zoom": 2,
+    "levels": [
+      "L9"
+    ],
+    "runs": [
+      {
+        "level": "L9",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 215,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 28.066666666666666,
+        "deaths": 0,
+        "assists": 0,
+        "attacks": {},
+        "weaponsStart": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.rocket-launcher",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.fire-axe"
+        ],
+        "steps": [
+          {
+            "id": "approach",
+            "text": "Drive toward the city \u00b7 1020\u00a0m",
+            "tick": 0,
+            "marker": {
+              "anchor": "crash-approach",
+              "ring": {
+                "x": 470,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": [
+                470,
+                0,
+                0
+              ],
+              "playerY": 0.705,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "reach-outskirts",
+            "text": "Get clear of the wreck \u00b7 78\u00a0m",
+            "tick": 11534,
+            "marker": {
+              "anchor": "crawl-end",
+              "ring": {
+                "x": 547,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": null,
+              "playerY": 0.9969384087456598,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "issues": 1,
+    "bySeverity": {
+      "P0": 0,
+      "P1": 0,
+      "P2": 1,
+      "P3": 0
+    }
+  },
+  "issues": [
+    {
+      "level": "L9",
+      "tick": 4717,
+      "x": -36.7,
+      "z": -16.6,
+      "severity": "P2",
+      "kind": "stuck-navigating",
+      "text": "20 s without objective progress (distance 507.0 m, no marker: false); HUD: \"Drive toward the city \u00b7 507\u00a0m\"",
+      "captures": [
+        "captures/continue-L9-L9-4717-stuck-navigating.jpg"
+      ],
+      "step": "approach",
+      "objective": "Drive toward the city \u00b7 507\u00a0m"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # scene-gate
 
-43/48 rows pass, 5 known, 0 not run; 7.6 min this run (batch s: webgl2-low-1=150 webgpu-high-1=73 webgl2-high-1=127 webgpu-low-1=107).
+43/48 rows pass, 5 known, 0 not run; 8.0 min this run (batch s: webgl2-low-1=146 webgpu-high-1=81 webgl2-high-1=138 webgpu-low-1=116).
 
 - known ped-zoo-staff@high: pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; 4 hand-vs-held-prop grip overlaps (coffee, bag x2, watering can); sheet looks fine (clipping 4 > 0)
 - known ped-sit-all@high: pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; right hand vs held cane, 215 tris, grip overlap only (sheet looks fine) (clipping 1 > 0)

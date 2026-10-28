@@ -1,5 +1,7 @@
 {
   "pass": true,
+  "testedRevision": "dc06e59983732b9c3ff3d361f3eddb7c9ff4cc70",
+  "exitCode": 0,
   "rows": 48,
   "passed": 43,
   "known": [
@@ -7,7 +9,7 @@
       "name": "ped-zoo-staff@high",
       "file": "specs/scenes/catalog/ped-zoo-staff.json",
       "pass": false,
-      "seconds": 6.921,
+      "seconds": 7.636,
       "frames": 60,
       "errors": 0,
       "requestedTier": "high",
@@ -18,15 +20,13 @@
       ],
       "sheet": "ped-zoo-staff@high/sheet.jpg",
       "sheetKb": 137,
-      "note": "L8 zoo staff (src/data/zooStaff.ts) beside ordinary visitors at the game camera, golden light. Look for: staff uniform green clearly distinct from the visitors' shirts, cap/backpack/prop attached, no sunk feet or clipping, same silhouettes as the civilian bases.",
-      "backend": "webgpu",
-      "reason": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; 4 hand-vs-held-prop grip overlaps (coffee, bag x2, watering can); sheet looks fine"
+      "note": "L8 zoo staff (src/data/zooStaff.ts) beside ordinary visitors at the game camera, golden light. Look for: staff uniform green clearly distinct from the visitors' shirts, cap/backpack/prop attached, no sunk feet or clipping, same silhouettes as the civilian bases."
     },
     {
       "name": "ped-sit-all@high",
       "file": "specs/scenes/catalog/ped-sit-all.json",
       "pass": false,
-      "seconds": 7.932,
+      "seconds": 8.741,
       "frames": 300,
       "errors": 0,
       "requestedTier": "high",
@@ -37,15 +37,13 @@
       ],
       "sheet": "ped-sit-all@high/sheet.jpg",
       "sheetKb": 145,
-      "note": "Sitters on every seat type: bench, lawn-chair-a, lawn-chair-b (L1 seat rule and authored squash).",
-      "backend": "webgl2",
-      "reason": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; right hand vs held cane, 215 tris, grip overlap only (sheet looks fine)"
+      "note": "Sitters on every seat type: bench, lawn-chair-a, lawn-chair-b (L1 seat rule and authored squash)."
     },
     {
       "name": "ped-water-flowerbed@high",
       "file": "specs/scenes/catalog/ped-water-flowerbed.json",
       "pass": false,
-      "seconds": 7.851,
+      "seconds": 8.383,
       "frames": 420,
       "errors": 0,
       "requestedTier": "high",
@@ -56,15 +54,13 @@
       ],
       "sheet": "ped-water-flowerbed@high/sheet.jpg",
       "sheetKb": 150,
-      "note": "PO 10-12 'this person is not watering the plants'. The gardener walks to a flower bed, stands within 0.5 m of it, faces it and waters it with a droplet arc. Look for: can over the bed, body turned to the bed, water landing on the flowers, no clipping with the bed.",
-      "backend": "webgl2",
-      "reason": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; right hand vs watering can grip overlap"
+      "note": "PO 10-12 'this person is not watering the plants'. The gardener walks to a flower bed, stands within 0.5 m of it, faces it and waters it with a droplet arc. Look for: can over the bed, body turned to the bed, water landing on the flowers, no clipping with the bed."
     },
     {
       "name": "dog-pet-trot@low-z1.5",
       "file": "specs/scenes/catalog/dog-pet-trot.json",
       "pass": false,
-      "seconds": 6.975,
+      "seconds": 7.259,
       "frames": 150,
       "errors": 0,
       "requestedTier": "low",
@@ -75,15 +71,13 @@
       ],
       "sheet": "dog-pet-trot@low-z1.5/sheet.jpg",
       "sheetKb": 95,
-      "note": "PO 10-15 'Dog looks broken' (repeat of 10-14 'that dog looks strange'): the healthy pet dog (amb.dog, NpcView lod1 on every tier) trotting at the jog speed and fleeing at 4.8 m/s. The sim used to put a moving pet at the corgi's 0.3 m height while NpcView drew it at y - 0.7: the dog sank 40 cm (sinkMaxCm 40), only the paws showed as separate blobs and the buried legs' shadow smeared out from under the body. Gate: paws on the pavement (sink <= 1 cm), planted (slide <= 3 cm).",
-      "backend": "webgpu",
-      "reason": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; footSlideMaxCm 8.2 > 3 at every zoom (low tier dog trot)"
+      "note": "PO 10-15 'Dog looks broken' (repeat of 10-14 'that dog looks strange'): the healthy pet dog (amb.dog, NpcView lod1 on every tier) trotting at the jog speed and fleeing at 4.8 m/s. The sim used to put a moving pet at the corgi's 0.3 m height while NpcView drew it at y - 0.7: the dog sank 40 cm (sinkMaxCm 40), only the paws showed as separate blobs and the buried legs' shadow smeared out from under the body. Gate: paws on the pavement (sink <= 1 cm), planted (slide <= 3 cm)."
     },
     {
       "name": "ped-sit-all@low",
       "file": "specs/scenes/catalog/ped-sit-all.json",
       "pass": false,
-      "seconds": 7.209,
+      "seconds": 7.825,
       "frames": 300,
       "errors": 0,
       "requestedTier": "low",
@@ -94,14 +88,12 @@
       ],
       "sheet": "ped-sit-all@low/sheet.jpg",
       "sheetKb": 137,
-      "note": "Sitters on every seat type: bench, lawn-chair-a, lawn-chair-b (L1 seat rule and authored squash).",
-      "backend": "webgpu",
-      "reason": "pre-existing on batch-19 PROD (6c3c8fc99), identical numbers; same hand/cane overlap"
+      "note": "Sitters on every seat type: bench, lawn-chair-a, lawn-chair-b (L1 seat rule and authored squash)."
     }
   ],
   "unexpected": [],
   "identity": {
-    "revision": "7b0e0c1f3e51fe18946de7f64fffdd65e740bd59",
+    "revision": "dc06e59983732b9c3ff3d361f3eddb7c9ff4cc70",
     "inputs": "912aa9517e158571ce2b2a3d6b86ed56343727cc2184850aab34d28a904d3e92",
     "mode": "gate",
     "rows": [

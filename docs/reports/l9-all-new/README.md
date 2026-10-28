@@ -1,4 +1,5 @@
-# L9 all-new — final acceptance refresh
+# L9 all-new — accepted
+
 - Census: [32 human IDs + existing v2 corgi](coverage.json); six rigid identities converted, no remaining rigid humans or batch-3 backlog; animals excluded.
 - Converted: jogger, cashier, delivery-driver, suburban-mom, bbq-dad, bathrobe-neighbor; [36 zero-manual deliveries](build-integrity.json), existing high sources, €0 / zero inferences.
 - LOD0/1/2 caps: 40k/6k/4k triangles and 600/250/150 kB per file; actual maxima 6487/2786/2786 triangles; every unchanged registered identity budget also passes.
@@ -6,6 +7,6 @@
 - [Pipeline decisions](pipeline-decisions.json): authored hair/caps/visors retained, both eyes exposed, face/limb tone matched, apron decal and held spatula preserved; explicit story accessories still win.
 - Typecheck/lint pass; [validator](gates/asset-validator.json) 1262 rows/zero errors; [npm test](gates/npm-test.txt) 104 pass, registered budget unchanged at 144/150 cases and 40/45 files; no new cases.
 - [Smoke](gates/smoke.json) 6 QA + 1 public pass, zero warm shader rebuilds or frames >200 ms; GPU ≤13 attributes / ≤8 buffers; [scene:gate](gates/scene-gate.json) passes with 43 clean rows + five existing known findings, zero unexpected failures; two grip contacts [exactly match baseline](gates/baseline-prop-contacts.json).
-- [Twelve L9 scene runs](gates/l9-scenes.json) pass; [real-input L9](gates/playtest.json) finishes in 241 s at low/launcher zoom 2, zero issues/deaths/assists/skips, handover to L10; [scene/playthrough captures](09-scripted-scenes-playthrough.jpg).
+- [Twelve L9 scene runs](gates/l9-scenes.json) pass; [real-input L9](gates/playtest.json) finishes in 144 s at low/launcher zoom 2, zero issues/deaths/assists/skips on rerun ([prior P2 drive stall](gates/playtest-prior-attempt.json)), handover to L10; [scene/playthrough captures](09-scripted-scenes-playthrough.jpg).
 - [Resource A/B](performance-summary.json): low draws 94→89, triangles 539409→132739, decoded textures 259.34→260.64 MiB; formal p95 (+1 ms) and worst-of-five cold loads (PROD +10%) remain perf pending for PO’s quiet window.
-- Showcase installed as `l9-crowd-old-new.jpg` (1600×960); best sources: 07 crowd comparison, 10 runtime details, 09 ram/crash context; [destination/hash](showcase.json). Branch `lane/l9-all-new`; no gameplay values, animal assets, specs or deployment changed.
+- Showcase installed as `l9-crowd-old-new.jpg` (1600×960); best sources: 07 crowd comparison, 10 runtime details, 09 ram/crash context; [destination/hash](showcase.json). Acceptance tested committed `dc06e5998` ([receipt](gates/committed-acceptance.json)); branch `lane/l9-all-new`; no gameplay values, animal assets, specs or deployment changed.
