@@ -1,0 +1,24 @@
+{
+  "name": "smoke",
+  "cases": 142,
+  "counts": {
+    "vitest": 121,
+    "e2e": 9,
+    "invariantsBrowser": 12
+  },
+  "files": 40,
+  "limits": {
+    "cases": 150,
+    "files": 45,
+    "seconds": 240
+  },
+  "command": [
+    "sh",
+    "tools/qa/smoke.sh"
+  ],
+  "seconds": 208.74975537499998,
+  "exitCode": 0,
+  "signal": null,
+  "failures": [],
+  "at": "2026-10-28T00:14:14.564Z"
+}

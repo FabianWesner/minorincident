@@ -1,0 +1,1215 @@
+{
+  "method": "Production builds served by Vite preview on the same Mac; 1600×900, DPR1, high tier, native Metal WebGPU. Five empty contexts per row, shared pool admission, no artificial menu wait; real level-select click to loading-card closure/Begin availability. OS/browser driver caches remain shared. No CPU build/test work launched by this job during the matrix.",
+  "rows": [
+    {
+      "variant": "batch21",
+      "level": "L1",
+      "origin": "http://127.0.0.1:4357",
+      "backend": "webgpu",
+      "quality": "high",
+      "diagnostic": false,
+      "gameplaySamples": 1,
+      "menuWaits": [
+        0
+      ],
+      "n": 5,
+      "median": 2042.6000003814697,
+      "p90": 2136.5,
+      "max": 2136.5,
+      "maxFrameMs": 66.69999999999982,
+      "errors": [],
+      "samples": [
+        {
+          "ms": 2136.5,
+          "load": [
+            2.82763671875,
+            4.16259765625,
+            3.76513671875
+          ],
+          "bundle": "http://127.0.0.1:4357/build/index-DMykY-ia.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:54:34.243Z"
+        },
+        {
+          "ms": 2040.6999998092651,
+          "load": [
+            2.82763671875,
+            4.16259765625,
+            3.76513671875
+          ],
+          "bundle": "http://127.0.0.1:4357/build/index-DMykY-ia.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:54:37.481Z"
+        },
+        {
+          "ms": 2042.6000003814697,
+          "load": [
+            2.76123046875,
+            4.12646484375,
+            3.75439453125
+          ],
+          "bundle": "http://127.0.0.1:4357/build/index-DMykY-ia.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:54:40.731Z"
+        },
+        {
+          "ms": 2122.0999994277954,
+          "load": [
+            2.8603515625,
+            4.1240234375,
+            3.75537109375
+          ],
+          "bundle": "http://127.0.0.1:4357/build/index-DMykY-ia.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:54:44.088Z"
+        },
+        {
+          "ms": 2023.6000003814697,
+          "load": [
+            2.96142578125,
+            4.10302734375,
+            3.75146484375
+          ],
+          "bundle": "http://127.0.0.1:4357/build/index-DMykY-ia.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:54:57.422Z"
+        }
+      ]
+    },
+    {
+      "variant": "main",
+      "level": "L1",
+      "origin": "http://127.0.0.1:4361",
+      "backend": "webgpu",
+      "quality": "high",
+      "diagnostic": false,
+      "gameplaySamples": 1,
+      "menuWaits": [
+        0
+      ],
+      "n": 5,
+      "median": 2243.300000190735,
+      "p90": 2292.6000003814697,
+      "max": 2292.6000003814697,
+      "maxFrameMs": 100,
+      "errors": [],
+      "samples": [
+        {
+          "ms": 2142.2999992370605,
+          "load": [
+            2.88427734375,
+            4.06787109375,
+            3.74072265625
+          ],
+          "bundle": "http://127.0.0.1:4361/build/index-CwE4jtYF.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:55:01.496Z"
+        },
+        {
+          "ms": 2292.6000003814697,
+          "load": [
+            2.89306640625,
+            4.0498046875,
+            3.736328125
+          ],
+          "bundle": "http://127.0.0.1:4361/build/index-CwE4jtYF.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:55:04.981Z"
+        },
+        {
+          "ms": 2243.300000190735,
+          "load": [
+            3.8623046875,
+            4.2314453125,
+            3.80224609375
+          ],
+          "bundle": "http://127.0.0.1:4361/build/index-CwE4jtYF.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:55:08.715Z"
+        },
+        {
+          "ms": 2292.3999996185303,
+          "load": [
+            3.8623046875,
+            4.2314453125,
+            3.80224609375
+          ],
+          "bundle": "http://127.0.0.1:4361/build/index-CwE4jtYF.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:55:12.283Z"
+        },
+        {
+          "ms": 2239.5,
+          "load": [
+            4.34814453125,
+            4.3310546875,
+            3.84521484375
+          ],
+          "bundle": "http://127.0.0.1:4361/build/index-CwE4jtYF.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:55:25.802Z"
+        }
+      ]
+    },
+    {
+      "variant": "fix",
+      "level": "L1",
+      "origin": "http://127.0.0.1:4362",
+      "backend": "webgpu",
+      "quality": "high",
+      "diagnostic": false,
+      "gameplaySamples": 1,
+      "menuWaits": [
+        0
+      ],
+      "n": 5,
+      "median": 2156.3999996185303,
+      "p90": 2192,
+      "max": 2192,
+      "maxFrameMs": 49.90000000000009,
+      "errors": [],
+      "samples": [
+        {
+          "ms": 2156.3999996185303,
+          "load": [
+            4.39990234375,
+            4.341796875,
+            3.8515625
+          ],
+          "bundle": "http://127.0.0.1:4362/build/index-Czc_U5Hd.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:55:29.982Z"
+        },
+        {
+          "ms": 2192,
+          "load": [
+            4.36767578125,
+            4.3359375,
+            3.85205078125
+          ],
+          "bundle": "http://127.0.0.1:4362/build/index-Czc_U5Hd.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:55:33.630Z"
+        },
+        {
+          "ms": 2169.300000190735,
+          "load": [
+            4.36767578125,
+            4.3359375,
+            3.85205078125
+          ],
+          "bundle": "http://127.0.0.1:4362/build/index-Czc_U5Hd.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:55:36.954Z"
+        },
+        {
+          "ms": 2139.6000003814697,
+          "load": [
+            4.2578125,
+            4.3134765625,
+            3.8466796875
+          ],
+          "bundle": "http://127.0.0.1:4362/build/index-Czc_U5Hd.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:55:40.313Z"
+        },
+        {
+          "ms": 2140.7000007629395,
+          "load": [
+            3.91064453125,
+            4.232421875,
+            3.8251953125
+          ],
+          "bundle": "http://127.0.0.1:4362/build/index-Czc_U5Hd.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:55:53.751Z"
+        }
+      ]
+    },
+    {
+      "variant": "batch21",
+      "level": "L2",
+      "origin": "http://127.0.0.1:4357",
+      "backend": "webgpu",
+      "quality": "high",
+      "diagnostic": false,
+      "gameplaySamples": 1,
+      "menuWaits": [
+        0
+      ],
+      "n": 5,
+      "median": 3140.300000190735,
+      "p90": 3324.5,
+      "max": 3324.5,
+      "maxFrameMs": 66.70000000000073,
+      "errors": [],
+      "samples": [
+        {
+          "ms": 3140.1000003814697,
+          "load": [
+            5.67919921875,
+            4.59375,
+            3.955078125
+          ],
+          "bundle": "http://127.0.0.1:4357/build/index-DMykY-ia.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:55:58.891Z"
+        },
+        {
+          "ms": 3140.300000190735,
+          "load": [
+            5.54443359375,
+            4.58349609375,
+            3.955078125
+          ],
+          "bundle": "http://127.0.0.1:4357/build/index-DMykY-ia.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:56:03.230Z"
+        },
+        {
+          "ms": 3226.6000003814697,
+          "load": [
+            5.54443359375,
+            4.58349609375,
+            3.955078125
+          ],
+          "bundle": "http://127.0.0.1:4357/build/index-DMykY-ia.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:56:07.686Z"
+        },
+        {
+          "ms": 3121.6000003814697,
+          "load": [
+            5.58056640625,
+            4.60693359375,
+            3.966796875
+          ],
+          "bundle": "http://127.0.0.1:4357/build/index-DMykY-ia.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:56:11.996Z"
+        },
+        {
+          "ms": 3324.5,
+          "load": [
+            9.13525390625,
+            5.40234375,
+            4.2587890625
+          ],
+          "bundle": "http://127.0.0.1:4357/build/index-DMykY-ia.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:56:26.920Z"
+        }
+      ]
+    },
+    {
+      "variant": "main",
+      "level": "L2",
+      "origin": "http://127.0.0.1:4361",
+      "backend": "webgpu",
+      "quality": "high",
+      "diagnostic": false,
+      "gameplaySamples": 1,
+      "menuWaits": [
+        0
+      ],
+      "n": 5,
+      "median": 4189.800000190735,
+      "p90": 4342.5,
+      "max": 4342.5,
+      "maxFrameMs": 100,
+      "errors": [],
+      "samples": [
+        {
+          "ms": 4141,
+          "load": [
+            8.3388671875,
+            5.35546875,
+            4.2548828125
+          ],
+          "bundle": "http://127.0.0.1:4361/build/index-CwE4jtYF.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:56:33.254Z"
+        },
+        {
+          "ms": 4189.800000190735,
+          "load": [
+            7.9111328125,
+            5.31591796875,
+            4.2470703125
+          ],
+          "bundle": "http://127.0.0.1:4361/build/index-CwE4jtYF.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:56:38.658Z"
+        },
+        {
+          "ms": 4307.099999427795,
+          "load": [
+            9.279296875,
+            5.642578125,
+            4.36865234375
+          ],
+          "bundle": "http://127.0.0.1:4361/build/index-CwE4jtYF.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:56:44.151Z"
+        },
+        {
+          "ms": 4342.5,
+          "load": [
+            9.4169921875,
+            5.7314453125,
+            4.4072265625
+          ],
+          "bundle": "http://127.0.0.1:4361/build/index-CwE4jtYF.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:56:49.828Z"
+        },
+        {
+          "ms": 4072.2999992370605,
+          "load": [
+            7.91455078125,
+            5.58056640625,
+            4.37646484375
+          ],
+          "bundle": "http://127.0.0.1:4361/build/index-CwE4jtYF.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:57:05.300Z"
+        }
+      ]
+    },
+    {
+      "variant": "fix",
+      "level": "L2",
+      "origin": "http://127.0.0.1:4362",
+      "backend": "webgpu",
+      "quality": "high",
+      "diagnostic": false,
+      "gameplaySamples": 1,
+      "menuWaits": [
+        0
+      ],
+      "n": 5,
+      "median": 3207.2000007629395,
+      "p90": 3224.3999996185303,
+      "max": 3224.3999996185303,
+      "maxFrameMs": 66.70000000000073,
+      "errors": [],
+      "samples": [
+        {
+          "ms": 3156.199999809265,
+          "load": [
+            7.92138671875,
+            5.62060546875,
+            4.3974609375
+          ],
+          "bundle": "http://127.0.0.1:4362/build/index-Czc_U5Hd.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:57:10.452Z"
+        },
+        {
+          "ms": 3224.3999996185303,
+          "load": [
+            11.29052734375,
+            6.35693359375,
+            4.66455078125
+          ],
+          "bundle": "http://127.0.0.1:4362/build/index-Czc_U5Hd.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:57:14.895Z"
+        },
+        {
+          "ms": 3207.699999809265,
+          "load": [
+            10.62646484375,
+            6.30078125,
+            4.65478515625
+          ],
+          "bundle": "http://127.0.0.1:4362/build/index-Czc_U5Hd.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:57:19.266Z"
+        },
+        {
+          "ms": 3207.2000007629395,
+          "load": [
+            10.015625,
+            6.24560546875,
+            4.64501953125
+          ],
+          "bundle": "http://127.0.0.1:4362/build/index-Czc_U5Hd.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:57:23.673Z"
+        },
+        {
+          "ms": 3021.8999996185303,
+          "load": [
+            8.70703125,
+            6.13623046875,
+            4.63330078125
+          ],
+          "bundle": "http://127.0.0.1:4362/build/index-Czc_U5Hd.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:57:38.065Z"
+        }
+      ]
+    },
+    {
+      "variant": "batch21",
+      "level": "L3",
+      "origin": "http://127.0.0.1:4357",
+      "backend": "webgpu",
+      "quality": "high",
+      "diagnostic": false,
+      "gameplaySamples": 1,
+      "menuWaits": [
+        0
+      ],
+      "n": 5,
+      "median": 3041.4000005722046,
+      "p90": 3073.699999809265,
+      "max": 3073.699999809265,
+      "maxFrameMs": 33.399999999999636,
+      "errors": [],
+      "samples": [
+        {
+          "ms": 3041.4000005722046,
+          "load": [
+            8.810546875,
+            6.2001953125,
+            4.66455078125
+          ],
+          "bundle": "http://127.0.0.1:4357/build/index-DMykY-ia.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:57:43.380Z"
+        },
+        {
+          "ms": 3073.699999809265,
+          "load": [
+            8.810546875,
+            6.2001953125,
+            4.66455078125
+          ],
+          "bundle": "http://127.0.0.1:4357/build/index-DMykY-ia.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:57:47.629Z"
+        },
+        {
+          "ms": 2972,
+          "load": [
+            8.42529296875,
+            6.16357421875,
+            4.66064453125
+          ],
+          "bundle": "http://127.0.0.1:4357/build/index-DMykY-ia.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:57:51.789Z"
+        },
+        {
+          "ms": 2974.5,
+          "load": [
+            7.91064453125,
+            6.09423828125,
+            4.64501953125
+          ],
+          "bundle": "http://127.0.0.1:4357/build/index-DMykY-ia.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:57:55.933Z"
+        },
+        {
+          "ms": 3071.300000190735,
+          "load": [
+            7.41357421875,
+            6.07275390625,
+            4.66259765625
+          ],
+          "bundle": "http://127.0.0.1:4357/build/index-DMykY-ia.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:58:10.242Z"
+        }
+      ]
+    },
+    {
+      "variant": "main",
+      "level": "L3",
+      "origin": "http://127.0.0.1:4361",
+      "backend": "webgpu",
+      "quality": "high",
+      "diagnostic": false,
+      "gameplaySamples": 1,
+      "menuWaits": [
+        0
+      ],
+      "n": 5,
+      "median": 3658.800000190735,
+      "p90": 3905.8999996185303,
+      "max": 3905.8999996185303,
+      "maxFrameMs": 33.400000000000546,
+      "errors": [],
+      "samples": [
+        {
+          "ms": 3658.800000190735,
+          "load": [
+            7.78076171875,
+            6.1708984375,
+            4.70556640625
+          ],
+          "bundle": "http://127.0.0.1:4361/build/index-CwE4jtYF.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:58:15.825Z"
+        },
+        {
+          "ms": 3905.8999996185303,
+          "load": [
+            7.4775390625,
+            6.134765625,
+            4.701171875
+          ],
+          "bundle": "http://127.0.0.1:4361/build/index-CwE4jtYF.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:58:21.064Z"
+        },
+        {
+          "ms": 3655.300000190735,
+          "load": [
+            7.19873046875,
+            6.09912109375,
+            4.69677734375
+          ],
+          "bundle": "http://127.0.0.1:4361/build/index-CwE4jtYF.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:58:25.956Z"
+        },
+        {
+          "ms": 3620.699999809265,
+          "load": [
+            6.9423828125,
+            6.06396484375,
+            4.6923828125
+          ],
+          "bundle": "http://127.0.0.1:4361/build/index-CwE4jtYF.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:58:30.780Z"
+        },
+        {
+          "ms": 3674.800000190735,
+          "load": [
+            6.83154296875,
+            6.07763671875,
+            4.72021484375
+          ],
+          "bundle": "http://127.0.0.1:4361/build/index-CwE4jtYF.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:58:45.700Z"
+        }
+      ]
+    },
+    {
+      "variant": "fix",
+      "level": "L3",
+      "origin": "http://127.0.0.1:4362",
+      "backend": "webgpu",
+      "quality": "high",
+      "diagnostic": false,
+      "gameplaySamples": 1,
+      "menuWaits": [
+        0
+      ],
+      "n": 5,
+      "median": 3174.8999996185303,
+      "p90": 3190.1000003814697,
+      "max": 3190.1000003814697,
+      "maxFrameMs": 33.400000000000546,
+      "errors": [],
+      "samples": [
+        {
+          "ms": 3107,
+          "load": [
+            6.5244140625,
+            6.0263671875,
+            4.7099609375
+          ],
+          "bundle": "http://127.0.0.1:4362/build/index-Czc_U5Hd.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:58:50.808Z"
+        },
+        {
+          "ms": 3190.1000003814697,
+          "load": [
+            6.48193359375,
+            6.02587890625,
+            4.71728515625
+          ],
+          "bundle": "http://127.0.0.1:4362/build/index-Czc_U5Hd.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:58:55.146Z"
+        },
+        {
+          "ms": 3174.8999996185303,
+          "load": [
+            6.20263671875,
+            5.9755859375,
+            4.70703125
+          ],
+          "bundle": "http://127.0.0.1:4362/build/index-Czc_U5Hd.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:58:59.508Z"
+        },
+        {
+          "ms": 3175.2000007629395,
+          "load": [
+            6.74658203125,
+            6.091796875,
+            4.75537109375
+          ],
+          "bundle": "http://127.0.0.1:4362/build/index-Czc_U5Hd.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:59:03.868Z"
+        },
+        {
+          "ms": 3108.1000003814697,
+          "load": [
+            6.28515625,
+            6.02099609375,
+            4.75244140625
+          ],
+          "bundle": "http://127.0.0.1:4362/build/index-Czc_U5Hd.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:59:18.229Z"
+        }
+      ]
+    },
+    {
+      "variant": "batch21",
+      "level": "L4",
+      "origin": "http://127.0.0.1:4357",
+      "backend": "webgpu",
+      "quality": "high",
+      "diagnostic": false,
+      "gameplaySamples": 1,
+      "menuWaits": [
+        0
+      ],
+      "n": 5,
+      "median": 5356.5,
+      "p90": 5422.800000190735,
+      "max": 5422.800000190735,
+      "maxFrameMs": 116.70000000000073,
+      "errors": [],
+      "samples": [
+        {
+          "ms": 5301.39999961853,
+          "load": [
+            6.50244140625,
+            6.0703125,
+            4.77685546875
+          ],
+          "bundle": "http://127.0.0.1:4357/build/index-DMykY-ia.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:59:25.489Z"
+        },
+        {
+          "ms": 5422.800000190735,
+          "load": [
+            6.2216796875,
+            6.01904296875,
+            4.76611328125
+          ],
+          "bundle": "http://127.0.0.1:4357/build/index-DMykY-ia.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:59:32.079Z"
+        },
+        {
+          "ms": 5356.5,
+          "load": [
+            6.33447265625,
+            6.05078125,
+            4.79150390625
+          ],
+          "bundle": "http://127.0.0.1:4357/build/index-DMykY-ia.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:59:38.651Z"
+        },
+        {
+          "ms": 5307.5,
+          "load": [
+            6.2275390625,
+            6.033203125,
+            4.79248046875
+          ],
+          "bundle": "http://127.0.0.1:4357/build/index-DMykY-ia.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-27T23:59:45.157Z"
+        },
+        {
+          "ms": 5358.39999961853,
+          "load": [
+            5.81982421875,
+            5.94970703125,
+            4.78369140625
+          ],
+          "bundle": "http://127.0.0.1:4357/build/index-DMykY-ia.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-28T00:00:01.823Z"
+        }
+      ]
+    },
+    {
+      "variant": "main",
+      "level": "L4",
+      "origin": "http://127.0.0.1:4361",
+      "backend": "webgpu",
+      "quality": "high",
+      "diagnostic": false,
+      "gameplaySamples": 1,
+      "menuWaits": [
+        0
+      ],
+      "n": 5,
+      "median": 4650.89999961853,
+      "p90": 4741.299999237061,
+      "max": 4741.299999237061,
+      "maxFrameMs": 116.60000000000036,
+      "errors": [],
+      "samples": [
+        {
+          "ms": 4741.299999237061,
+          "load": [
+            5.3857421875,
+            5.85205078125,
+            4.76220703125
+          ],
+          "bundle": "http://127.0.0.1:4361/build/index-CwE4jtYF.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-28T00:00:08.454Z"
+        },
+        {
+          "ms": 4608.200000762939,
+          "load": [
+            5.1943359375,
+            5.8046875,
+            4.75146484375
+          ],
+          "bundle": "http://127.0.0.1:4361/build/index-CwE4jtYF.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-28T00:00:14.273Z"
+        },
+        {
+          "ms": 4608,
+          "load": [
+            4.9384765625,
+            5.7412109375,
+            4.73486328125
+          ],
+          "bundle": "http://127.0.0.1:4361/build/index-CwE4jtYF.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-28T00:00:20.082Z"
+        },
+        {
+          "ms": 4650.89999961853,
+          "load": [
+            5.0234375,
+            5.7451171875,
+            4.7421875
+          ],
+          "bundle": "http://127.0.0.1:4361/build/index-CwE4jtYF.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-28T00:00:26.026Z"
+        },
+        {
+          "ms": 4673,
+          "load": [
+            4.70947265625,
+            5.64208984375,
+            4.72314453125
+          ],
+          "bundle": "http://127.0.0.1:4361/build/index-CwE4jtYF.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-28T00:00:42.239Z"
+        }
+      ]
+    },
+    {
+      "variant": "fix",
+      "level": "L4",
+      "origin": "http://127.0.0.1:4362",
+      "backend": "webgpu",
+      "quality": "high",
+      "diagnostic": false,
+      "gameplaySamples": 1,
+      "menuWaits": [
+        0
+      ],
+      "n": 5,
+      "median": 3736.800000190735,
+      "p90": 3806.1000003814697,
+      "max": 3806.1000003814697,
+      "maxFrameMs": 116.59999999999945,
+      "errors": [],
+      "samples": [
+        {
+          "ms": 3691.300000190735,
+          "load": [
+            4.892578125,
+            5.66455078125,
+            4.736328125
+          ],
+          "bundle": "http://127.0.0.1:4362/build/index-Czc_U5Hd.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-28T00:00:48.006Z"
+        },
+        {
+          "ms": 3806.1000003814697,
+          "load": [
+            4.66064453125,
+            5.603515625,
+            4.72021484375
+          ],
+          "bundle": "http://127.0.0.1:4362/build/index-Czc_U5Hd.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-28T00:00:53.045Z"
+        },
+        {
+          "ms": 3788.800000190735,
+          "load": [
+            4.84765625,
+            5.62646484375,
+            4.7333984375
+          ],
+          "bundle": "http://127.0.0.1:4362/build/index-Czc_U5Hd.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-28T00:00:57.982Z"
+        },
+        {
+          "ms": 3736.800000190735,
+          "load": [
+            4.939453125,
+            5.63232421875,
+            4.74072265625
+          ],
+          "bundle": "http://127.0.0.1:4362/build/index-Czc_U5Hd.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-28T00:01:02.972Z"
+        },
+        {
+          "ms": 3671,
+          "load": [
+            5.0947265625,
+            5.64599609375,
+            4.76171875
+          ],
+          "bundle": "http://127.0.0.1:4362/build/index-Czc_U5Hd.js",
+          "adapter": {
+            "vendor": "apple",
+            "architecture": "metal-3",
+            "description": "",
+            "fallback": false
+          },
+          "sampledAt": "2026-10-28T00:01:17.878Z"
+        }
+      ]
+    }
+  ],
+  "limits": {
+    "l3Ms": 5150,
+    "l3Ratio": 1.1,
+    "l4Ms": 6000
+  },
+  "checks": {
+    "l3Absolute": true,
+    "l3Regression": true,
+    "l4Absolute": true
+  }
+}

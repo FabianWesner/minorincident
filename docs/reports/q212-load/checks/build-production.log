@@ -1,0 +1,31 @@
+
+> build
+> NODE_ENV=production sh tools/build-cached.sh
+
+vite v6.4.3 building for production...
+transforming...
+✓ 602 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                     1.54 kB │ gzip:     0.68 kB
+dist/build/civilianBakeData-DHwXDQWp.js             3.93 kB
+dist/build/BufferGeometryUtils-B9lQkqNz.js          6.88 kB
+dist/build/civilianBake.worker-51iaalCp.js         17.86 kB
+dist/build/basis_transcoder-o4Hde_L7.js            57.53 kB
+dist/build/three.module-CwjGdtFU.js               206.12 kB
+dist/build/civilianSource-BbHg78fy.js             426.69 kB
+dist/build/basis_transcoder-VXdx5NbI.wasm         527.33 kB │ gzip:   244.57 kB
+dist/build/prefetch.worker-BNf4wJIp.js          1,096.48 kB
+dist/build/prepareCivilianGeometry-CmCEhpbO.js  2,028.57 kB
+dist/build/rapier-C6GCbKVJ.wasm                 3,082.10 kB │ gzip: 1,171.17 kB
+dist/build/index-CUk1QJun.css                      41.64 kB │ gzip:     8.85 kB
+dist/build/index-BaeFd5rP.js                       17.32 kB │ gzip:     6.19 kB
+dist/build/light-anchors-DQGCSUUw.js               90.38 kB │ gzip:     6.79 kB
+dist/build/rapier-ykuY6d4E.js                     212.13 kB │ gzip:    36.15 kB
+dist/build/three-core-B_ZAxbv8.js                 306.07 kB │ gzip:    81.70 kB
+dist/build/three-webgpu-BgQTMWSf.js               688.67 kB │ gzip:   192.06 kB
+dist/build/wreck-roofs-GAckelu8.js                755.61 kB │ gzip:   253.19 kB
+dist/build/character-clips-CGKWtM3S.js          1,939.70 kB │ gzip:   341.80 kB
+dist/build/index-qENUgyGK.js                    3,179.95 kB │ gzip:   892.95 kB
+✓ built in 11.99s
+[public-build] PASS: 18 HTML/JS files contain no QA hooks

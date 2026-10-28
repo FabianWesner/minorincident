@@ -1,0 +1,62 @@
+{
+  "note": "L1 shader compilation is the existing PreRenderer measure name for all levels; only measures starting after the L3 click are included. main-cache-key-only is an unsafe diagnostic build: only the CivilianMaterial key changed from atlas UUID to boolean, retaining every other main asset/path. Final fix also repairs sampled texture identity and corpse callbacks. Concurrent crowd readiness phases overlap and must not be added.",
+  "rows": [
+    {
+      "variant": "batch21",
+      "samplesMs": [
+        2836.3999996185303,
+        2837.800000190735,
+        2859,
+        2856.800000190735,
+        2838.0999994277954
+      ],
+      "worstMs": 2859,
+      "meanPhasesMs": {
+        "L1 shader compilation": 938.639999961853,
+        "view:actors": 25.84000015258789,
+        "view:warm-up": 1279.4000001907348,
+        "Texture atlas upload": 15.6,
+        "view:civilian-crowd": 919.5000001907349,
+        "view:infected-crowd": 892.1
+      }
+    },
+    {
+      "variant": "main",
+      "samplesMs": [
+        3337.800000190735,
+        3385,
+        3378.199999809265,
+        3354,
+        3357.800000190735
+      ],
+      "worstMs": 3385,
+      "meanPhasesMs": {
+        "L1 shader compilation": 1349.9,
+        "view:actors": 121.26000003814697,
+        "view:warm-up": 1761.239999961853,
+        "Texture atlas upload": 14.619999885559082,
+        "view:civilian-crowd": 1043.9399999618531,
+        "view:infected-crowd": 804.3
+      }
+    },
+    {
+      "variant": "main-cache-key-only",
+      "samplesMs": [
+        2882.5,
+        2862.2999992370605,
+        2905.9000005722046,
+        2861.5,
+        2856.300000190735
+      ],
+      "worstMs": 2905.9000005722046,
+      "meanPhasesMs": {
+        "L1 shader compilation": 941.6200002670288,
+        "view:actors": 126.43999996185303,
+        "view:warm-up": 1282.780000114441,
+        "Texture atlas upload": 13.52000026702881,
+        "view:civilian-crowd": 1020.9000001907349,
+        "view:infected-crowd": 794.0799997329711
+      }
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+Q212/Q213 PASS on lane/q212-load: render fixes 5ae023a8e + a7783a64c; evidence.json has causes, captures, checks and reproduction.
+Worst-of-5 seconds; production previews, high, native Metal WebGPU, fresh contexts; full samples in load-ab.json/raw.
+Level  batch21    main       fix
+L1     2.253    2.291    2.324
+L2     3.071    4.224    3.255
+L3     3.125    3.607    3.122
+L4     5.342    4.763    3.952
+102 unit tests, typecheck/lint, E21/E22, smoke, scene gate (43 pass/5 known/0 unexpected), prod probe: PASS; shader guards 0 late builds.

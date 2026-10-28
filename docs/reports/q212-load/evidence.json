@@ -1,0 +1,199 @@
+{
+  "status": "PASS",
+  "branch": "lane/q212-load",
+  "builds": {
+    "batch21": {
+      "revision": "83503eb18ccdfcc1a0c04bb5791527ea87dbacdb",
+      "htmlSha256": "aa4fa819c765db00d8e3371f757b208b0e0976e6f5524ce79c86c2c3d989e901",
+      "scripts": [
+        {
+          "path": "/build/index-DMykY-ia.js",
+          "sha256": "b0bf45301d6d6efdf38d1d1f84dcd6e157a37c6e38ae98109d11d1d99dd801c9"
+        }
+      ]
+    },
+    "main": {
+      "revision": "8b3c847d9893389832e5fddb476fb2ac107adb2d",
+      "htmlSha256": "572f56bcda926ad93fd1501429e2a5302cdfe9692fbb9954244f07515dda61b6",
+      "scripts": [
+        {
+          "path": "/build/index-CwE4jtYF.js",
+          "sha256": "fda7c83e9a5d646b3d89eb7175af00008c54ab10cf6a7a68a16edee711b1cfe2"
+        }
+      ]
+    },
+    "fix": {
+      "revision": "a7783a64c15d24aee23ce774c465aa40b2ad3ffd",
+      "htmlSha256": "882c9924aeba1ac708379b589ee164b882beafefe9adf3ca979d7e10f508cc25",
+      "scripts": [
+        {
+          "path": "/build/index-qENUgyGK.js",
+          "sha256": "f89ef708547174a43eb3eb9eb8ebc0d673d2848df1688c962a21c82355668bbc"
+        }
+      ]
+    }
+  },
+  "targets": {
+    "L3WorstMs": 5150,
+    "L3WorstRatioToBatch21": 1.1,
+    "L4WorstMs": 6000
+  },
+  "loadEvidence": "load-ab.json",
+  "methodLimits": "Fresh isolated browser contexts on the same Mac, high quality, 1600x900 DPR1, native Metal WebGPU; production Vite builds/previews. Shared pool and OS/driver caches remain shared. Original QA absolute 5.46 s was not reproduced on this host, but the matched initial bisect reproduced an 18.4% L3 regression. All samples and the earlier complete matrix are retained. No builds/tests from this job ran during either timing matrix.",
+  "bisect": "bisect.json: changing only the atlas-UUID material-cache key to atlas-presence removes the regression while retaining new skinned guard assets and the unified weapon path. Main shader-compilation average 1349.9 ms versus 938.6 ms in batch21 and 941.6 ms in the cache-only diagnostic. Atlas upload averages 13.5-15.6 ms. Actor setup adds about 95 ms, but the duplicate graphs account for the dominant regression. The diagnostic alone was unsafe and is not the shipped fix.",
+  "fix": [
+    "5ae023a8e: share identical crowd shader graphs by feature layout; invalidate sampled-binding generations when texture identity switches, including equal-generation atlases and pose textures.",
+    "5ae023a8e: retain crowdSurfaceBindings on accessory-merged corpse sources; compose atlas binding with static placement upload instead of overwriting it.",
+    "a7783a64c: mark the unchanged plain highway rail joints for the existing static placement-attribute graph, so streamed LODs reuse warmed shadow programs."
+  ],
+  "Q213": {
+    "fixture": "Real L4, seed3, turn checkpoint, L4-default progression; player (-29,4), follow camera, zoom1, paused explicit simulation, god mode. Capture at turn+180 seconds; no crowd isolation in the four retained full frames.",
+    "identification": {
+      "model": "inf.common-worker",
+      "entityId": 352,
+      "mesh": "corpses:infected.runner:death-back:0:acc.hair-side-part/-1/0",
+      "LOD": "lod2",
+      "trianglesWithHair": 876,
+      "root": [
+        -30.342275619506836,
+        2.25,
+        4.437649250030518
+      ],
+      "rayPixel": [
+        600,
+        170
+      ],
+      "detached": false
+    },
+    "cause": "The flat black silhouette is an intact common-worker suit corpse with side-part hair. Its accessory-merged source lost the atlas bind callback, so the shared graph sampled the preceding unrelated texture (a pose texture on the low-tier failing draw). Plain textured corpse pages also replaced the placement-upload callback, leaving new placement buffers at version0. This was not missing geometry or a detached limb.",
+    "capturesInspected": [
+      "captures/before-low-zoom1.png",
+      "captures/after-low-zoom1.png",
+      "captures/before-high-zoom1.png",
+      "captures/after-high-zoom1.png",
+      "captures/identified-suit-352-low.jpg",
+      "captures/comparison-low-high.jpg"
+    ],
+    "crop": "identified-suit-352-low.jpg is a labeled side-by-side crop of the unchanged full frames, bbox (500,100)-(850,320), scaled2x.",
+    "bindingBeforeAfter": {
+      "wrongAtlasPages": [
+        7,
+        0
+      ],
+      "stalePlacementPages": [
+        4,
+        0
+      ],
+      "lateBuildsLow": [
+        0,
+        0
+      ],
+      "lateBuildsHigh": [
+        4,
+        0
+      ]
+    },
+    "preservation": [
+      {
+        "beforeCount": 250,
+        "afterCount": 250,
+        "sameIdsAndRoots": true,
+        "sameCommonWorkerMeshesRootsTriangles": true,
+        "note": "High-tier alpha IDs 344 and 528 resolved their existing higher LOD before the after capture; all IDs/roots and common-worker mesh/triangle data are identical. No geometry or authored asset files changed."
+      },
+      {
+        "beforeCount": 406,
+        "afterCount": 406,
+        "sameIdsAndRoots": true,
+        "sameCommonWorkerMeshesRootsTriangles": true,
+        "note": "High-tier alpha IDs 344 and 528 resolved their existing higher LOD before the after capture; all IDs/roots and common-worker mesh/triangle data are identical. No geometry or authored asset files changed."
+      }
+    ]
+  },
+  "shaderGuards": {
+    "L3-low-webgpu": {
+      "start": 0,
+      "tick": 14158,
+      "phase": "progression",
+      "renderedFrames": 236,
+      "lateBuilds": 0,
+      "backend": "webgpu",
+      "builds": [],
+      "l3Phase": "done",
+      "furthest": 224.9504852294922
+    },
+    "L4-low-webgl2": {
+      "lateBuilds": 0,
+      "wrongAtlas": 0,
+      "stalePlacement": 0,
+      "sampledCorpsePages": 11,
+      "secondsAfterTurn": 180
+    },
+    "L4-low-webgpu": {
+      "lateBuilds": 0,
+      "wrongAtlas": 0,
+      "stalePlacement": 0,
+      "sampledCorpsePages": 11,
+      "secondsAfterTurn": 180
+    },
+    "L3-high-webgpu": {
+      "start": 0,
+      "tick": 36000,
+      "phase": "playing",
+      "renderedFrames": 602,
+      "lateBuilds": 0,
+      "backend": "webgpu",
+      "builds": [],
+      "l3Phase": "corridor",
+      "furthest": 170.1698455810547
+    },
+    "L4-high-webgl2": {
+      "lateBuilds": 0,
+      "wrongAtlas": 0,
+      "stalePlacement": 0,
+      "sampledCorpsePages": 11,
+      "secondsAfterTurn": 180
+    },
+    "L4-high-webgpu": {
+      "lateBuilds": 0,
+      "wrongAtlas": 0,
+      "stalePlacement": 0,
+      "sampledCorpsePages": 11,
+      "secondsAfterTurn": 180
+    }
+  },
+  "guardLimits": "High-tier L3 bot reaches x170.17 and stalls at the highway approach; its 600-second run is corridor/shadow coverage, not a completed playthrough. Low-tier L3 completes (done/progression) at x224.95 after 14,158 ticks. The harness stops before automatic L4 navigation. L4 checks simulate the real breach for 180 seconds after warm-up on both tiers/backends.",
+  "checks": {
+    "npmTest": "102 passed / 24 files",
+    "typecheck": 0,
+    "lint": 0,
+    "verifyE21": 0,
+    "verifyE22": 0,
+    "smoke": {
+      "exitCode": 0,
+      "seconds": 208.74975537499998
+    },
+    "sceneGate": {
+      "exitCode": 0,
+      "passed": 43,
+      "known": 5,
+      "unexpected": 0,
+      "notRun": 0,
+      "knownListUnchanged": true
+    },
+    "prodProbe": {
+      "title": "Minor Incident",
+      "L1BeginSeconds": 2.16,
+      "errors": []
+    }
+  },
+  "constraints": "No asset, LOD policy, figure budget, gameplay, prewarm implementation, spec or reference files changed. Geometry and figures remain present; the placement fix restores bodies that were previously drawn at stale transforms. All browser jobs were headless/shared pool; no port3300, deploy or messages to third parties.",
+  "reproduce": [
+    "Serve npm run build outputs for batch21, main and fix on separate non3300 preview ports; see builds.json for revision and bundle hashes.",
+    "LOAD_OUT=test-results/q212-load/matrix-final LOAD_GAMEPLAY_MS=10000 LOAD_GAMEPLAY_LAST=1 node --import tsx tools/perf/q212-load-matrix.ts <batch21-origin> <main-origin> <fix-origin>",
+    "REVIEW_VARIANT=after REVIEW_TIER=low|high REVIEW_BACKEND=webgl2|webgpu SCENE_PORT=<QA-preview-port> E2E_UNITS=1 sh tools/e2e-lock.sh node --import tsx tools/scenelab/q212-breach.ts",
+    "REVIEW_TIER=low|high REVIEW_BACKEND=webgpu SCENE_PORT=<QA-preview-port> E2E_UNITS=1 sh tools/e2e-lock.sh node --import tsx tools/scenelab/q212-l3-freeze.ts",
+    "E2E_PORT=4370 E2E_UNITS=1 npm run test:smoke; SCENE_PORT=4371 SCENE_SERVER=preview SCENE_DIST=<QA-dist> E2E_UNITS=1 npm run scene:gate",
+    "node --import tsx tools/ops/prod-probe.mjs <fix-production-preview-origin>"
+  ]
+}
