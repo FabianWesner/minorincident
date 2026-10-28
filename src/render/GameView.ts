@@ -870,7 +870,16 @@ export class GameView implements Lifecycle {
   }
   private syncMission(): void {
     const mission = this.world.missions, cinematic = mission?.state.cinematic;
-    if (cinematic && this.cinematicId !== cinematic.id) { this.cinematicId = cinematic.id; this.view.cinematic(mission!.def.cinematics[cinematic.id]); }
+    if (cinematic && this.cinematicId !== cinematic.id) {
+      this.cinematicId = cinematic.id;
+      const pose = mission!.def.cinematics[cinematic.id], player = this.world.entities.get(1);
+      // Escaped L6 residents are hidden; the courier may stop anywhere beyond the stairs.
+      // Keep the authored closing angle while framing the person who is still on screen.
+      if (mission!.def.id === 'L6' && cinematic.id === 'night' && player) {
+        const p = player.transform, target: [number, number, number] = [p.x, p.y + .3, p.z];
+        this.view.cinematic({ position: pose.position.map((v, i) => v + target[i] - pose.target[i]) as [number, number, number], target });
+      } else this.view.cinematic(pose);
+    }
     else if (!cinematic && this.cinematicId) { this.cinematicId = null; this.view.follow(); }
     if (mission?.state.timeOfDay && this.lighting?.preset !== mission.state.timeOfDay) this.lighting?.set(mission.state.timeOfDay);
     // E23: the sunset fades with the story (the sim owns the target; the picture eases toward it).
