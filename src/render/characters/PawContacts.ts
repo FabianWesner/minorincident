@@ -15,12 +15,17 @@ export class PawContacts {
   private readonly origin = new Vector3();
   private readonly offset = new Vector3();
   private readonly spot = new Vector3();
+  private readonly forward = new Vector3();
   private readonly feet;
+  private pelvisDrop = 0;
+  private readonly liveSkin: boolean;
   private clip = '';
   constructor(private readonly root: Object3D, template = root) {
     template.updateWorldMatrix(true, true); template.getWorldPosition(this.origin);
     const body = template.getObjectByName('skin_body') as SkinnedMesh | undefined;
-    const continuous = body?.isSkinnedMesh === true && template.getObjectByName('root')?.userData.crowdQuadruped === true;
+    const skeleton = template.getObjectByName('root');
+    const continuous = body?.isSkinnedMesh === true && (skeleton?.userData.crowdQuadruped === true || !!skeleton?.userData.animalSoles);
+    this.liveSkin = continuous && root === template;
     const weightedPoints = (owner: Object3D): Vector3[] => {
       if (!body?.isSkinnedMesh) return [];
       const geometry = body.geometry, joints = geometry.getAttribute('skinIndex'), weights = geometry.getAttribute('skinWeight'), points: Vector3[] = [];
@@ -42,7 +47,9 @@ export class PawContacts {
       for (const point of weighted) bounds.expandByPoint(point);
       if (bounds.isEmpty()) return [];
       const sourcePaw = template.getObjectByName(name.replace('leg', biped ? 'foot' : 'paw'));
-      const solePoints = continuous && root !== template && sourcePaw ? declaredSoles?.[sourcePaw.name]?.map(p => sourcePaw.localToWorld(new Vector3().fromArray(p))) : undefined;
+      // Live skinned dogs carry the same authored paw soles as the crowd rig.
+      // A whole-leg bounding-box centre is not that paw's contact point.
+      const solePoints = sourcePaw ? declaredSoles?.[sourcePaw.name]?.map(p => sourcePaw.localToWorld(new Vector3().fromArray(p))) : undefined;
       const paw = solePoints?.length ? solePoints.reduce((sum, p) => sum.add(p), new Vector3()).multiplyScalar(1 / solePoints.length) : bounds.getCenter(new Vector3()).setY(bounds.min.y);
       const vertices: Vector3[] = [];
       for (const point of weighted) vertices.push(original.worldToLocal(point.clone()));
@@ -75,14 +82,14 @@ export class PawContacts {
       // to that pivot, then keep the drawn sole level; a knee-only endpoint
       // rotates a broad elephant foot across the ground during support.
       const ankleName = ({ legFL: 'handL', legFR: 'handR', legBL: 'footL', legBR: 'footR', legL: 'footL', legR: 'footR' } as Record<string, string>)[name];
-      const originalAnkle = continuous && root !== template ? original.getObjectByName(ankleName) : undefined;
+      const originalAnkle = continuous ? original.getObjectByName(ankleName) : undefined;
       const ankle = originalAnkle ? root.getObjectByName(ankleName) : undefined;
       const pawAnkle = originalAnkle ? originalAnkle.worldToLocal(paw.clone()) : undefined;
       const ankleSoles = originalAnkle ? solePoints?.map(p => originalAnkle.worldToLocal(p.clone())) : undefined;
       const bindAnkle = originalAnkle?.getWorldQuaternion(new Quaternion()).premultiply(template.getWorldQuaternion(new Quaternion()).invert());
       const chainLength = originalAnkle && originalKnee ? original.getWorldPosition(new Vector3()).distanceTo(originalKnee.getWorldPosition(new Vector3())) + originalKnee.getWorldPosition(new Vector3()).distanceTo(originalAnkle.getWorldPosition(new Vector3())) : 0;
       const sole = paw.y - this.origin.y;
-      return [{ leg, vertices, chainLength, ankle, pawAnkle, ankleSoles, bindAnkle, jointed: knee !== null && pawKnee !== null, knee: knee as Object3D | null, pawKnee, kneeVertices, rest: leg.position.clone(), turned: new Quaternion(), kneeTurned: new Quaternion(), turning: false, paw: original.worldToLocal(paw), reach: bounds.max.y - bounds.min.y, sole, planted: new Vector3(), correction: new Vector3(), release: new Vector3(), phase: -1,
+      return [{ leg, vertices, chainLength, ankle, pawAnkle, ankleSoles, bindAnkle, neutral: template.worldToLocal(paw.clone()), jointed: knee !== null && pawKnee !== null, knee: knee as Object3D | null, pawKnee, kneeVertices, rest: leg.position.clone(), turned: new Quaternion(), kneeTurned: new Quaternion(), ankleTurned: new Quaternion(), turning: false, paw: original.worldToLocal(paw), reach: bounds.max.y - bounds.min.y, sole, planted: new Vector3(), correction: new Vector3(), release: new Vector3(), phase: -1,
         /** Last drawn paw point (world), standing-hold state and the current settle step (-1: none). */
         last: null as Vector3 | null, held: false, step: -1, from: new Vector3(), fadeStart: 0 }];
     });
@@ -97,7 +104,12 @@ export class PawContacts {
       foot.last = old.last ? (foot.last ?? new Vector3()).copy(old.last) : null;
     }
   }
-  restore(): void { for (const foot of this.feet) { foot.leg.position.sub(foot.correction); foot.correction.set(0, 0, 0); if (foot.turning) { foot.leg.quaternion.copy(foot.turned); foot.knee?.quaternion.copy(foot.kneeTurned); foot.turning = false; } } }
+  restore(): void {
+    const pelvis = this.root.getObjectByName('hip');
+    if (pelvis) pelvis.position.y += this.pelvisDrop;
+    this.pelvisDrop = 0;
+    for (const foot of this.feet) { foot.leg.position.sub(foot.correction); foot.correction.set(0, 0, 0); if (foot.turning) { foot.leg.quaternion.copy(foot.turned); foot.knee?.quaternion.copy(foot.kneeTurned); foot.ankle?.quaternion.copy(foot.ankleTurned); foot.turning = false; } }
+  }
   /** Scene Lab guard: the largest distance (cm) of a jointed leg's joint from its bind position on the parent. */
   limbGapCm(): number {
     let gap = 0;
@@ -113,7 +125,7 @@ export class PawContacts {
     if (!foot.jointed || !foot.knee || foot.correction.lengthSq() < 1e-12) return;
     const leg = foot.leg, knee = foot.knee, target = this.target.copy(foot.paw).applyMatrix4(leg.matrixWorld);
     leg.position.sub(foot.correction); foot.correction.set(0, 0, 0); leg.updateWorldMatrix(false, true);
-    if (!foot.turning) { foot.turned.copy(leg.quaternion); foot.kneeTurned.copy(knee.quaternion); foot.turning = true; }
+    if (!foot.turning) { foot.turned.copy(leg.quaternion); foot.kneeTurned.copy(knee.quaternion); if (foot.ankle) foot.ankleTurned.copy(foot.ankle.quaternion); foot.turning = true; }
     if (this.placeAnkle(foot, target, floor)) return;
     this.solve(foot, target);
     // The bent lower limb's own lowest vertex must stay on the floor (the rigid-leg dip check cannot see the knee bend).
@@ -126,6 +138,9 @@ export class PawContacts {
   /** Three-joint solve for a continuous skin: keep the actual ankle and sole together. */
   private placeAnkle(foot: (typeof this.feet)[number], world: Vector3, floor: number): boolean {
     if (!foot.ankle || !foot.pawAnkle || !foot.bindAnkle) return false;
+    if (!foot.turning) {
+      foot.turned.copy(foot.leg.quaternion); foot.kneeTurned.copy(foot.knee!.quaternion); foot.ankleTurned.copy(foot.ankle.quaternion); foot.turning = true;
+    }
     const target = this.target.copy(world);
     if (foot.step >= 0) target.y = Math.max(target.y, floor + arc(foot.step));
     const desired = this.root.getWorldQuaternion(new Quaternion()).multiply(foot.bindAnkle);
@@ -192,6 +207,8 @@ export class PawContacts {
   update(phase: number, stride: number, clip: string, dt = 1 / 60): void {
     const offsets = clip === 'corgi-walk' ? [0, .5, .75, .25] : clip === 'corgi-gallop' ? [0, .1, .5, .6] : [0, .5, .5, 0];
     const stance = this.stance(stride); this.root.updateWorldMatrix(true, true); this.root.getWorldPosition(this.origin);
+    this.forward.set(1, 0, 0).applyQuaternion(this.root.getWorldQuaternion(this.turn));
+    const landing = (foot: (typeof this.feet)[number], out: Vector3) => this.root.localToWorld(out.copy(foot.neutral)).addScaledVector(this.forward, stride * stance / 2).setY(this.origin.y + foot.sole);
     const switched = clip !== this.clip; this.clip = clip;
     // Lower the pelvis before solving planted ankles if the neutral, nearly
     // straight chain cannot reach the floor at this stride's horizontal offset.
@@ -200,16 +217,26 @@ export class PawContacts {
     for (const [index, foot] of this.feet.entries()) {
       const p = (phase + offsets[index]) % 1;
       if (!foot.ankle || !foot.pawAnkle || !foot.bindAnkle || !foot.chainLength || p > stance) continue;
-      const target = foot.phase < 0 || p < foot.phase ? this.pawWorld(foot, new Vector3()) : foot.planted.clone();
+      const target = foot.phase < 0 || p < foot.phase || this.liveSkin && switched ? this.liveSkin ? landing(foot, new Vector3()) : this.pawWorld(foot, new Vector3()) : foot.planted.clone();
       target.y = this.origin.y + foot.sole;
       const orientation = this.root.getWorldQuaternion(new Quaternion()).multiply(foot.bindAnkle);
       target.sub(foot.pawAnkle.clone().multiply(foot.ankle.getWorldScale(new Vector3())).applyQuaternion(orientation));
-      const hip = foot.leg.getWorldPosition(new Vector3()), horizontal = Math.hypot(target.x - hip.x, target.z - hip.z);
-      const vertical = Math.sqrt(Math.max(0, (foot.chainLength * .999) ** 2 - horizontal ** 2));
+      const hip = foot.leg.getWorldPosition(new Vector3());
+      let horizontal = Math.hypot(target.x - hip.x, target.z - hip.z);
+      let vertical = Math.sqrt(Math.max(0, (foot.chainLength * .999) ** 2 - horizontal ** 2));
+      if (this.liveSkin && hip.y - target.y - vertical > .08) {
+        // A sharp turn can leave the old support point beyond the attached leg's reach.
+        // Step to the new stance rather than burying the pelvis to keep that old point.
+        foot.from.copy(foot.last ?? foot.planted); landing(foot, foot.planted); foot.step = 0;
+        target.copy(foot.planted).sub(foot.pawAnkle.clone().multiply(foot.ankle.getWorldScale(new Vector3())).applyQuaternion(orientation));
+        horizontal = Math.hypot(target.x - hip.x, target.z - hip.z);
+        vertical = Math.sqrt(Math.max(0, (foot.chainLength * .999) ** 2 - horizontal ** 2));
+      }
       supportDrop = Math.max(supportDrop, hip.y - target.y - vertical);
     }
     const pelvis = this.root.getObjectByName('hip');
-    if (pelvis && supportDrop > 1e-4) { pelvis.position.y -= supportDrop / pelvis.parent!.getWorldScale(new Vector3()).y; pelvis.updateWorldMatrix(false, true); }
+    this.pelvisDrop = pelvis && supportDrop > 1e-4 ? supportDrop / pelvis.parent!.getWorldScale(new Vector3()).y : 0;
+    if (pelvis && this.pelvisDrop) { pelvis.position.y -= this.pelvisDrop; pelvis.updateWorldMatrix(false, true); }
     for (const [index, foot] of this.feet.entries()) {
       const p = (phase + offsets[index]) % 1, sole = this.origin.y + foot.sole;
       // A gait change (walk/trot/gallop use different foot offsets) or leaving a standing hold must not re-plant a
@@ -218,9 +245,12 @@ export class PawContacts {
       const resume = foot.last !== null && (foot.held || switched && foot.phase >= 0);
       foot.held = false;
       const fresh = !resume && (foot.phase < 0 || p < foot.phase);
-      if (resume) { foot.planted.copy(foot.last!).setY(sole); foot.fadeStart = Math.max(stance, p); foot.step = -1; }
+      if (resume) {
+        foot.planted.copy(foot.last!).setY(sole); foot.fadeStart = Math.max(stance, p); foot.step = -1;
+        if (this.liveSkin && p <= stance) { foot.from.copy(foot.last!).setY(sole); landing(foot, foot.planted); foot.step = 0; }
+      }
       if (fresh) {
-        (foot.ankle ? this.pawWorld(foot, foot.planted) : foot.planted.copy(foot.paw).applyMatrix4(foot.leg.matrixWorld)).setY(sole); foot.fadeStart = stance; foot.step = -1;
+        (this.liveSkin ? landing(foot, foot.planted) : foot.ankle ? this.pawWorld(foot, foot.planted) : foot.planted.copy(foot.paw).applyMatrix4(foot.leg.matrixWorld)).setY(sole); foot.fadeStart = stance; foot.step = -1;
         // Touchdown away from where a grounded paw is drawn (after a gait change): a short lifted catch-up step.
         if (foot.last && foot.last.y < sole + .015 && Math.hypot(foot.last.x - foot.planted.x, foot.last.z - foot.planted.z) > .03) { foot.from.copy(foot.last).setY(sole); foot.step = 0; }
       }
@@ -237,8 +267,9 @@ export class PawContacts {
           }
         } else {
           foot.step = -1;
-          const raw = this.pawWorld(foot, this.spot), swing = (p - stance) / Math.max(.001, 1 - stance);
-          world.lerpVectors(foot.planted, raw, smooth(Math.min(1, (p - stance) / .15)));
+          const raw = this.liveSkin ? landing(foot, this.spot) : this.pawWorld(foot, this.spot), swing = (p - stance) / Math.max(.001, 1 - stance);
+          const progress = this.liveSkin ? (p - foot.fadeStart) / Math.max(.001, 1 - foot.fadeStart) : (p - stance) / .15;
+          world.lerpVectors(foot.planted, raw, smooth(Math.max(0, Math.min(1, progress))));
           world.y = sole + swingLift * Math.min(1, Math.max(.4, swing / .1));
         }
         this.placeAnkle(foot, world, sole); foot.phase = p;
@@ -288,7 +319,7 @@ export class PawContacts {
     this.root.updateWorldMatrix(true, true); this.root.getWorldPosition(this.origin);
     const floor = this.origin.y, partner = [3, 2, 1, 0];
     for (const [index, foot] of this.feet.entries()) {
-      const spot = this.spot.copy(foot.paw).applyMatrix4(foot.leg.matrixWorld), lifted = spot.y, sole = floor + foot.sole;
+      const spot = this.pawWorld(foot, this.spot), lifted = spot.y, sole = floor + foot.sole;
       spot.y = sole;
       // The spawn capsule settles vertically before standing still. Keep the
       // horizontal anchor, but follow its floor rather than the spawn height.
@@ -309,6 +340,11 @@ export class PawContacts {
         const bottom = foot.ankle ? this.paw.copy(foot.paw).applyMatrix4(foot.leg.matrixWorld).y : this.lowest(foot.vertices, foot.leg.matrixWorld);
         desired.y = lifted + floor - bottom + Math.max(0, desired.y - sole);
       } else desired.y = Math.max(desired.y, lifted);
+      if (foot.ankle) {
+        this.placeAnkle(foot, desired, sole);
+        this.pawWorld(foot, foot.last ??= new Vector3());
+        continue;
+      }
       const target = foot.leg.parent!.worldToLocal(desired);
       foot.correction.copy(target).sub(this.offset.copy(foot.paw).multiply(foot.leg.scale).applyQuaternion(foot.leg.quaternion)).sub(foot.leg.position);
       foot.release.copy(foot.correction);
