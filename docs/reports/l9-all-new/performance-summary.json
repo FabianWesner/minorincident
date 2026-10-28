@@ -1,0 +1,180 @@
+{
+  "scene": "30 figures in D-CROSSING, L9 lighting; same camera/seed, old rigid baseline for six migrated IDs versus new",
+  "samples": [
+    {
+      "config": "low-webgl2",
+      "old": {
+        "drawCalls": 94,
+        "triangles": 539409,
+        "decodedTextureBytes": 271939232,
+        "textureCount": 176,
+        "crowd": {
+          "drawCalls": 16,
+          "triangles": 474576
+        },
+        "modelCounts": {
+          "inf.alpha": 1,
+          "inf.bathrobe-neighbor": 4,
+          "inf.bbq-dad": 4,
+          "inf.cashier": 4,
+          "inf.common-worker": 4,
+          "inf.delivery-driver": 4,
+          "inf.jogger": 4,
+          "inf.suburban-mom": 4
+        }
+      },
+      "new": {
+        "drawCalls": 89,
+        "triangles": 132739,
+        "decodedTextureBytes": 273302432,
+        "textureCount": 188,
+        "crowd": {
+          "drawCalls": 16,
+          "triangles": 68148
+        },
+        "modelCounts": {
+          "inf.alpha": 1,
+          "inf.bathrobe-neighbor": 4,
+          "inf.bbq-dad": 4,
+          "inf.cashier": 4,
+          "inf.common-worker": 4,
+          "inf.delivery-driver": 4,
+          "inf.jogger": 4,
+          "inf.suburban-mom": 4
+        }
+      }
+    },
+    {
+      "config": "high-webgpu",
+      "old": {
+        "drawCalls": 106,
+        "triangles": 820979,
+        "decodedTextureBytes": 286283432,
+        "textureCount": 184,
+        "crowd": {
+          "drawCalls": 9,
+          "triangles": 655596
+        },
+        "modelCounts": {
+          "inf.alpha": 1,
+          "inf.bathrobe-neighbor": 4,
+          "inf.bbq-dad": 4,
+          "inf.cashier": 4,
+          "inf.common-worker": 4,
+          "inf.delivery-driver": 4,
+          "inf.jogger": 4,
+          "inf.suburban-mom": 4
+        }
+      },
+      "new": {
+        "drawCalls": 100,
+        "triangles": 237529,
+        "decodedTextureBytes": 287646632,
+        "textureCount": 196,
+        "crowd": {
+          "drawCalls": 9,
+          "triangles": 72576
+        },
+        "modelCounts": {
+          "inf.alpha": 1,
+          "inf.bathrobe-neighbor": 4,
+          "inf.bbq-dad": 4,
+          "inf.cashier": 4,
+          "inf.common-worker": 4,
+          "inf.delivery-driver": 4,
+          "inf.jogger": 4,
+          "inf.suburban-mom": 4
+        }
+      }
+    },
+    {
+      "config": "high-webgl2",
+      "old": {
+        "drawCalls": 106,
+        "triangles": 820979,
+        "decodedTextureBytes": 286283432,
+        "textureCount": 184,
+        "crowd": {
+          "drawCalls": 9,
+          "triangles": 655596
+        },
+        "modelCounts": {
+          "inf.alpha": 1,
+          "inf.bathrobe-neighbor": 4,
+          "inf.bbq-dad": 4,
+          "inf.cashier": 4,
+          "inf.common-worker": 4,
+          "inf.delivery-driver": 4,
+          "inf.jogger": 4,
+          "inf.suburban-mom": 4
+        }
+      },
+      "new": {
+        "drawCalls": 100,
+        "triangles": 237529,
+        "decodedTextureBytes": 287646632,
+        "textureCount": 196,
+        "crowd": {
+          "drawCalls": 9,
+          "triangles": 72576
+        },
+        "modelCounts": {
+          "inf.alpha": 1,
+          "inf.bathrobe-neighbor": 4,
+          "inf.bbq-dad": 4,
+          "inf.cashier": 4,
+          "inf.common-worker": 4,
+          "inf.delivery-driver": 4,
+          "inf.jogger": 4,
+          "inf.suburban-mom": 4
+        }
+      }
+    },
+    {
+      "config": "low-webgpu",
+      "old": {
+        "drawCalls": 94,
+        "triangles": 539409,
+        "decodedTextureBytes": 271939232,
+        "textureCount": 176,
+        "crowd": {
+          "drawCalls": 16,
+          "triangles": 474576
+        },
+        "modelCounts": {
+          "inf.alpha": 1,
+          "inf.bathrobe-neighbor": 4,
+          "inf.bbq-dad": 4,
+          "inf.cashier": 4,
+          "inf.common-worker": 4,
+          "inf.delivery-driver": 4,
+          "inf.jogger": 4,
+          "inf.suburban-mom": 4
+        }
+      },
+      "new": {
+        "drawCalls": 89,
+        "triangles": 132739,
+        "decodedTextureBytes": 273302432,
+        "textureCount": 188,
+        "crowd": {
+          "drawCalls": 16,
+          "triangles": 68148
+        },
+        "modelCounts": {
+          "inf.alpha": 1,
+          "inf.bathrobe-neighbor": 4,
+          "inf.bbq-dad": 4,
+          "inf.cashier": 4,
+          "inf.common-worker": 4,
+          "inf.delivery-driver": 4,
+          "inf.jogger": 4,
+          "inf.suburban-mom": 4
+        }
+      }
+    }
+  ],
+  "decodedMemoryMethod": "Sum resident compressed mip byte arrays; RGBA allocation with mips where no compressed bytes exist. Includes pose textures and scene assets visible through the scene graph.",
+  "timingStatus": "perf pending: formal low p95 vs main (+1 ms) and worst-of-five cold loads vs PROD (+10%) reserved for PO quiet window; no timing acceptance claimed from shared pool captures.",
+  "observedOverlap": "L8 shared GPU jobs overlapped preliminary measurements and early captures; browser jobs remain shared-only as requested."
+}

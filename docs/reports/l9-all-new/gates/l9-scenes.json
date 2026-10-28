@@ -1,0 +1,2579 @@
+{
+  "pass": true,
+  "rows": [
+    {
+      "config": "low-webgl2",
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/specs/scenes/catalog/l9-enc-alpha-group.json",
+      "tier": "low",
+      "name": "l9-enc-alpha-group",
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "clipping",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 63,
+          "limit": 300
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 90575,
+          "limit": 500000
+        },
+        {
+          "name": "vehicleTiltMaxDeg",
+          "pass": true,
+          "value": 1.7,
+          "limit": 8
+        },
+        {
+          "name": "vehicleSlipMaxDeg",
+          "pass": true,
+          "value": 0.1,
+          "limit": 20
+        },
+        {
+          "name": "headlightsDarkFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "canvas.f0.varianceMin",
+          "pass": true,
+          "value": 597.9145066656897,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f0.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f60.varianceMin",
+          "pass": true,
+          "value": 1463.2039863775008,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f60.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f120.varianceMin",
+          "pass": true,
+          "value": 1477.7593761492117,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f120.variedTilesMin",
+          "pass": true,
+          "value": 62,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f180.varianceMin",
+          "pass": true,
+          "value": 1453.927550412025,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f180.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f240.varianceMin",
+          "pass": true,
+          "value": 1237.6509748527606,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f240.variedTilesMin",
+          "pass": true,
+          "value": 62,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f300.varianceMin",
+          "pass": true,
+          "value": 1696.701700675344,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f300.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f360.varianceMin",
+          "pass": true,
+          "value": 1618.67459636493,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f360.variedTilesMin",
+          "pass": true,
+          "value": 62,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f420.varianceMin",
+          "pass": true,
+          "value": 1692.8112517209493,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f420.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ],
+      "backend": "webgl",
+      "actualTier": "low",
+      "frames": 420,
+      "seconds": 9.356,
+      "failed": [],
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      },
+      "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-enc-alpha-group/sheet.jpg",
+      "sheetKb": 57,
+      "files": [
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-enc-alpha-group/shot-0000.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-enc-alpha-group/sheet.jpg",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-enc-alpha-group/metrics.json"
+      ],
+      "consoleErrors": []
+    },
+    {
+      "config": "low-webgl2",
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/specs/scenes/catalog/l9-enc-shortcut-ram.json",
+      "tier": "low",
+      "name": "l9-enc-shortcut-ram",
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "clipping",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 59,
+          "limit": 300
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 85607,
+          "limit": 500000
+        },
+        {
+          "name": "vehicleTiltMaxDeg",
+          "pass": true,
+          "value": 1.7,
+          "limit": 8
+        },
+        {
+          "name": "vehicleSlipMaxDeg",
+          "pass": true,
+          "value": 0,
+          "limit": 20
+        },
+        {
+          "name": "headlightsDarkFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "canvas.f0.varianceMin",
+          "pass": true,
+          "value": 698.7990249868708,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f0.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f60.varianceMin",
+          "pass": true,
+          "value": 1509.3406091328106,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f60.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f120.varianceMin",
+          "pass": true,
+          "value": 1511.15643987148,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f120.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f180.varianceMin",
+          "pass": true,
+          "value": 1394.4464462268506,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f180.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f240.varianceMin",
+          "pass": true,
+          "value": 1524.0739035216611,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f240.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f300.varianceMin",
+          "pass": true,
+          "value": 1288.5236170387734,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f300.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f360.varianceMin",
+          "pass": true,
+          "value": 1602.9929535540105,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f360.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f420.varianceMin",
+          "pass": true,
+          "value": 1272.9867947672537,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f420.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ],
+      "backend": "webgl",
+      "actualTier": "low",
+      "frames": 420,
+      "seconds": 16.441,
+      "failed": [],
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      },
+      "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-enc-shortcut-ram/sheet.jpg",
+      "sheetKb": 56,
+      "files": [
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-enc-shortcut-ram/shot-0000.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-enc-shortcut-ram/sheet.jpg",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-enc-shortcut-ram/metrics.json"
+      ],
+      "consoleErrors": []
+    },
+    {
+      "config": "low-webgl2",
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/specs/scenes/catalog/l9-enc-zero-ram.json",
+      "tier": "low",
+      "name": "l9-enc-zero-ram",
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "clipping",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 55,
+          "limit": 300
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 79570,
+          "limit": 500000
+        },
+        {
+          "name": "vehicleTiltMaxDeg",
+          "pass": true,
+          "value": 0.5,
+          "limit": 8
+        },
+        {
+          "name": "vehicleSlipMaxDeg",
+          "pass": true,
+          "value": 0,
+          "limit": 20
+        },
+        {
+          "name": "canvas.f0.varianceMin",
+          "pass": true,
+          "value": 434.3111363892572,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f0.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f60.varianceMin",
+          "pass": true,
+          "value": 488.93894114333307,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f60.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f120.varianceMin",
+          "pass": true,
+          "value": 459.6321671727701,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f120.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f180.varianceMin",
+          "pass": true,
+          "value": 414.06776368041665,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f180.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f240.varianceMin",
+          "pass": true,
+          "value": 619.3677352307282,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f240.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f300.varianceMin",
+          "pass": true,
+          "value": 519.8223918209874,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f300.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f360.varianceMin",
+          "pass": true,
+          "value": 667.6877929193279,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f360.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f420.varianceMin",
+          "pass": true,
+          "value": 528.0723812601836,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f420.variedTilesMin",
+          "pass": true,
+          "value": 62,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ],
+      "backend": "webgl",
+      "actualTier": "low",
+      "frames": 420,
+      "seconds": 16.394,
+      "failed": [],
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      },
+      "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-enc-zero-ram/sheet.jpg",
+      "sheetKb": 53,
+      "files": [
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-enc-zero-ram/shot-0000.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-enc-zero-ram/sheet.jpg",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-enc-zero-ram/metrics.json"
+      ],
+      "consoleErrors": []
+    },
+    {
+      "config": "low-webgl2",
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/specs/scenes/catalog/l9-crash-sequence-1000.json",
+      "tier": "low",
+      "name": "l9-crash-sequence-1000",
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 63,
+          "limit": 300
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 96275,
+          "limit": 500000
+        },
+        {
+          "name": "canvas.f0.varianceMin",
+          "pass": true,
+          "value": 4129.797759929335,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f0.variedTilesMin",
+          "pass": true,
+          "value": 62,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f71.varianceMin",
+          "pass": true,
+          "value": 2333.118287221787,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f71.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f142.varianceMin",
+          "pass": true,
+          "value": 1416.6151346351162,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f142.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f180.varianceMin",
+          "pass": true,
+          "value": 988.6426355647327,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f180.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f213.varianceMin",
+          "pass": true,
+          "value": 880.7465331182293,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f213.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f284.varianceMin",
+          "pass": true,
+          "value": 816.6078262140727,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f284.variedTilesMin",
+          "pass": true,
+          "value": 59,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f299.varianceMin",
+          "pass": true,
+          "value": 896.4277190333014,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f299.variedTilesMin",
+          "pass": true,
+          "value": 59,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f310.varianceMin",
+          "pass": true,
+          "value": 2022.050891858078,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f310.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f355.varianceMin",
+          "pass": true,
+          "value": 1113.1430472530383,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f355.variedTilesMin",
+          "pass": true,
+          "value": 62,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f426.varianceMin",
+          "pass": true,
+          "value": 1305.7415289148503,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f426.variedTilesMin",
+          "pass": true,
+          "value": 61,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f480.varianceMin",
+          "pass": true,
+          "value": 1332.5185200651204,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f480.variedTilesMin",
+          "pass": true,
+          "value": 61,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f497.varianceMin",
+          "pass": true,
+          "value": 1424.9879477876493,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f497.variedTilesMin",
+          "pass": true,
+          "value": 56,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f568.varianceMin",
+          "pass": true,
+          "value": 905.6162294308642,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f568.variedTilesMin",
+          "pass": true,
+          "value": 61,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f639.varianceMin",
+          "pass": true,
+          "value": 826.9522755648486,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f639.variedTilesMin",
+          "pass": true,
+          "value": 60,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f660.varianceMin",
+          "pass": true,
+          "value": 812.2399457866259,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f660.variedTilesMin",
+          "pass": true,
+          "value": 58,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f710.varianceMin",
+          "pass": true,
+          "value": 775.4607778948575,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f710.variedTilesMin",
+          "pass": true,
+          "value": 56,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f781.varianceMin",
+          "pass": true,
+          "value": 697.4663249544446,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f781.variedTilesMin",
+          "pass": true,
+          "value": 56,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f840.varianceMin",
+          "pass": true,
+          "value": 688.581450820966,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f840.variedTilesMin",
+          "pass": true,
+          "value": 58,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f850.varianceMin",
+          "pass": true,
+          "value": 690.6668000958016,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f850.variedTilesMin",
+          "pass": true,
+          "value": 58,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ],
+      "backend": "webgl",
+      "actualTier": "low",
+      "frames": 850,
+      "seconds": 20.559,
+      "failed": [],
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      },
+      "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-crash-sequence-1000/sheet.jpg",
+      "sheetKb": 86,
+      "files": [
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-crash-sequence-1000/shot-0000.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-crash-sequence-1000/shot-0180.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-crash-sequence-1000/shot-0299.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-crash-sequence-1000/shot-0310.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-crash-sequence-1000/shot-0480.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-crash-sequence-1000/shot-0660.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-crash-sequence-1000/shot-0840.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-crash-sequence-1000/sheet.jpg",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-crash-sequence-1000/metrics.json"
+      ],
+      "consoleErrors": []
+    },
+    {
+      "config": "low-webgl2",
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/specs/scenes/catalog/l9-crash-sequence-0.json",
+      "tier": "low",
+      "name": "l9-crash-sequence-0",
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 63,
+          "limit": 300
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 96275,
+          "limit": 500000
+        },
+        {
+          "name": "canvas.f0.varianceMin",
+          "pass": true,
+          "value": 3879.0142430831347,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f0.variedTilesMin",
+          "pass": true,
+          "value": 60,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f71.varianceMin",
+          "pass": true,
+          "value": 2042.547626423876,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f71.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f142.varianceMin",
+          "pass": true,
+          "value": 1102.6272075688194,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f142.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f180.varianceMin",
+          "pass": true,
+          "value": 950.5921480023135,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f180.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f213.varianceMin",
+          "pass": true,
+          "value": 905.2238199392241,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f213.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f284.varianceMin",
+          "pass": true,
+          "value": 822.0506794110306,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f284.variedTilesMin",
+          "pass": true,
+          "value": 59,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f299.varianceMin",
+          "pass": true,
+          "value": 897.9730138262939,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f299.variedTilesMin",
+          "pass": true,
+          "value": 59,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f310.varianceMin",
+          "pass": true,
+          "value": 2095.881659613604,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f310.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f355.varianceMin",
+          "pass": true,
+          "value": 1409.4349073636758,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f355.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f426.varianceMin",
+          "pass": true,
+          "value": 1366.1574528221272,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f426.variedTilesMin",
+          "pass": true,
+          "value": 61,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f480.varianceMin",
+          "pass": true,
+          "value": 1341.1240518860413,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f480.variedTilesMin",
+          "pass": true,
+          "value": 61,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f497.varianceMin",
+          "pass": true,
+          "value": 1455.8350496249304,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f497.variedTilesMin",
+          "pass": true,
+          "value": 56,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f568.varianceMin",
+          "pass": true,
+          "value": 954.2790386037386,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f568.variedTilesMin",
+          "pass": true,
+          "value": 61,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f639.varianceMin",
+          "pass": true,
+          "value": 826.9040462673447,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f639.variedTilesMin",
+          "pass": true,
+          "value": 60,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f660.varianceMin",
+          "pass": true,
+          "value": 812.1600978419447,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f660.variedTilesMin",
+          "pass": true,
+          "value": 58,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f710.varianceMin",
+          "pass": true,
+          "value": 775.9969606610939,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f710.variedTilesMin",
+          "pass": true,
+          "value": 56,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f781.varianceMin",
+          "pass": true,
+          "value": 703.2441932081401,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f781.variedTilesMin",
+          "pass": true,
+          "value": 56,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f840.varianceMin",
+          "pass": true,
+          "value": 687.946226579752,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f840.variedTilesMin",
+          "pass": true,
+          "value": 58,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f850.varianceMin",
+          "pass": true,
+          "value": 690.278538188395,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f850.variedTilesMin",
+          "pass": true,
+          "value": 58,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ],
+      "backend": "webgl",
+      "actualTier": "low",
+      "frames": 850,
+      "seconds": 21.136,
+      "failed": [],
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      },
+      "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-crash-sequence-0/sheet.jpg",
+      "sheetKb": 85,
+      "files": [
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-crash-sequence-0/shot-0000.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-crash-sequence-0/shot-0180.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-crash-sequence-0/shot-0299.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-crash-sequence-0/shot-0310.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-crash-sequence-0/shot-0480.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-crash-sequence-0/shot-0660.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-crash-sequence-0/shot-0840.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-crash-sequence-0/sheet.jpg",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-crash-sequence-0/metrics.json"
+      ],
+      "consoleErrors": []
+    },
+    {
+      "config": "low-webgl2",
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/specs/scenes/catalog/l9-crash-crawl.json",
+      "tier": "low",
+      "name": "l9-crash-crawl",
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "clipping",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 39,
+          "limit": 300
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 59253,
+          "limit": 500000
+        },
+        {
+          "name": "canvas.f0.varianceMin",
+          "pass": true,
+          "value": 1040.716300614561,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f0.variedTilesMin",
+          "pass": true,
+          "value": 57,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f60.varianceMin",
+          "pass": true,
+          "value": 916.5261024586234,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f60.variedTilesMin",
+          "pass": true,
+          "value": 62,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f100.varianceMin",
+          "pass": true,
+          "value": 843.6878506099983,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f100.variedTilesMin",
+          "pass": true,
+          "value": 60,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f120.varianceMin",
+          "pass": true,
+          "value": 785.742729436377,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f120.variedTilesMin",
+          "pass": true,
+          "value": 58,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f180.varianceMin",
+          "pass": true,
+          "value": 736.0220680204638,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f180.variedTilesMin",
+          "pass": true,
+          "value": 57,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f200.varianceMin",
+          "pass": true,
+          "value": 713.240936806942,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f200.variedTilesMin",
+          "pass": true,
+          "value": 57,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f240.varianceMin",
+          "pass": true,
+          "value": 719.1277155281823,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f240.variedTilesMin",
+          "pass": true,
+          "value": 55,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f300.varianceMin",
+          "pass": true,
+          "value": 698.3686481133773,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f300.variedTilesMin",
+          "pass": true,
+          "value": 56,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ],
+      "backend": "webgl",
+      "actualTier": "low",
+      "frames": 300,
+      "seconds": 15.765,
+      "failed": [],
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      },
+      "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-crash-crawl/sheet.jpg",
+      "sheetKb": 35,
+      "files": [
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-crash-crawl/shot-0000.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-crash-crawl/shot-0100.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-crash-crawl/shot-0200.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-crash-crawl/shot-0300.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-crash-crawl/sheet.jpg",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-low-webgl2/l9-crash-crawl/metrics.json"
+      ],
+      "consoleErrors": []
+    },
+    {
+      "config": "high-webgpu",
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/specs/scenes/catalog/l9-enc-alpha-group.json",
+      "tier": "high",
+      "name": "l9-enc-alpha-group",
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "clipping",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 66,
+          "limit": 300
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 177473,
+          "limit": 500000
+        },
+        {
+          "name": "vehicleTiltMaxDeg",
+          "pass": true,
+          "value": 1.7,
+          "limit": 8
+        },
+        {
+          "name": "vehicleSlipMaxDeg",
+          "pass": true,
+          "value": 0.1,
+          "limit": 20
+        },
+        {
+          "name": "headlightsDarkFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "canvas.f0.varianceMin",
+          "pass": true,
+          "value": 602.2219940533773,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f0.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f60.varianceMin",
+          "pass": true,
+          "value": 1453.084529921909,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f60.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f120.varianceMin",
+          "pass": true,
+          "value": 1598.453191058194,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f120.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f180.varianceMin",
+          "pass": true,
+          "value": 1505.928267524826,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f180.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f240.varianceMin",
+          "pass": true,
+          "value": 1247.8624582132643,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f240.variedTilesMin",
+          "pass": true,
+          "value": 62,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f300.varianceMin",
+          "pass": true,
+          "value": 1738.7703309545468,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f300.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f360.varianceMin",
+          "pass": true,
+          "value": 1778.6887649609262,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f360.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f420.varianceMin",
+          "pass": true,
+          "value": 1833.6253412435108,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f420.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ],
+      "backend": "webgpu",
+      "actualTier": "high",
+      "frames": 420,
+      "seconds": 11.559,
+      "failed": [],
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      },
+      "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-enc-alpha-group/sheet.jpg",
+      "sheetKb": 61,
+      "files": [
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-enc-alpha-group/shot-0000.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-enc-alpha-group/sheet.jpg",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-enc-alpha-group/metrics.json"
+      ],
+      "consoleErrors": []
+    },
+    {
+      "config": "high-webgpu",
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/specs/scenes/catalog/l9-enc-shortcut-ram.json",
+      "tier": "high",
+      "name": "l9-enc-shortcut-ram",
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "clipping",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 62,
+          "limit": 300
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 174385,
+          "limit": 500000
+        },
+        {
+          "name": "vehicleTiltMaxDeg",
+          "pass": true,
+          "value": 1.7,
+          "limit": 8
+        },
+        {
+          "name": "vehicleSlipMaxDeg",
+          "pass": true,
+          "value": 0,
+          "limit": 20
+        },
+        {
+          "name": "headlightsDarkFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "canvas.f0.varianceMin",
+          "pass": true,
+          "value": 739.4261132075444,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f0.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f60.varianceMin",
+          "pass": true,
+          "value": 1633.5550232221913,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f60.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f120.varianceMin",
+          "pass": true,
+          "value": 1621.5696124911801,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f120.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f180.varianceMin",
+          "pass": true,
+          "value": 1477.2679083400462,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f180.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f240.varianceMin",
+          "pass": true,
+          "value": 1530.6478827677993,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f240.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f300.varianceMin",
+          "pass": true,
+          "value": 1296.3585345785286,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f300.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f360.varianceMin",
+          "pass": true,
+          "value": 1615.0223671258018,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f360.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f420.varianceMin",
+          "pass": true,
+          "value": 1250.9733083799692,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f420.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ],
+      "backend": "webgpu",
+      "actualTier": "high",
+      "frames": 420,
+      "seconds": 20.229,
+      "failed": [],
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      },
+      "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-enc-shortcut-ram/sheet.jpg",
+      "sheetKb": 59,
+      "files": [
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-enc-shortcut-ram/shot-0000.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-enc-shortcut-ram/sheet.jpg",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-enc-shortcut-ram/metrics.json"
+      ],
+      "consoleErrors": []
+    },
+    {
+      "config": "high-webgpu",
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/specs/scenes/catalog/l9-enc-zero-ram.json",
+      "tier": "high",
+      "name": "l9-enc-zero-ram",
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "clipping",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 55,
+          "limit": 300
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 174579,
+          "limit": 500000
+        },
+        {
+          "name": "vehicleTiltMaxDeg",
+          "pass": true,
+          "value": 0.5,
+          "limit": 8
+        },
+        {
+          "name": "vehicleSlipMaxDeg",
+          "pass": true,
+          "value": 0,
+          "limit": 20
+        },
+        {
+          "name": "canvas.f0.varianceMin",
+          "pass": true,
+          "value": 476.0091165943172,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f0.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f60.varianceMin",
+          "pass": true,
+          "value": 603.5174014409331,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f60.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f120.varianceMin",
+          "pass": true,
+          "value": 552.9961415895064,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f120.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f180.varianceMin",
+          "pass": true,
+          "value": 493.6126419663892,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f180.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f240.varianceMin",
+          "pass": true,
+          "value": 693.6875345958292,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f240.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f300.varianceMin",
+          "pass": true,
+          "value": 578.1106115867879,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f300.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f360.varianceMin",
+          "pass": true,
+          "value": 703.7695745851775,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f360.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f420.varianceMin",
+          "pass": true,
+          "value": 566.9706567252315,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f420.variedTilesMin",
+          "pass": true,
+          "value": 62,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ],
+      "backend": "webgpu",
+      "actualTier": "high",
+      "frames": 420,
+      "seconds": 20.347,
+      "failed": [],
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      },
+      "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-enc-zero-ram/sheet.jpg",
+      "sheetKb": 56,
+      "files": [
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-enc-zero-ram/shot-0000.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-enc-zero-ram/sheet.jpg",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-enc-zero-ram/metrics.json"
+      ],
+      "consoleErrors": []
+    },
+    {
+      "config": "high-webgpu",
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/specs/scenes/catalog/l9-crash-sequence-1000.json",
+      "tier": "high",
+      "name": "l9-crash-sequence-1000",
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 63,
+          "limit": 300
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 186053,
+          "limit": 500000
+        },
+        {
+          "name": "canvas.f0.varianceMin",
+          "pass": true,
+          "value": 3969.2021006775467,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f0.variedTilesMin",
+          "pass": true,
+          "value": 62,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f71.varianceMin",
+          "pass": true,
+          "value": 2326.1464175761757,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f71.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f142.varianceMin",
+          "pass": true,
+          "value": 1523.1505067417593,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f142.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f180.varianceMin",
+          "pass": true,
+          "value": 1165.5545537050612,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f180.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f213.varianceMin",
+          "pass": true,
+          "value": 1104.2393103920595,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f213.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f284.varianceMin",
+          "pass": true,
+          "value": 1286.4732369595667,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f284.variedTilesMin",
+          "pass": true,
+          "value": 61,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f299.varianceMin",
+          "pass": true,
+          "value": 1313.9610928694783,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f299.variedTilesMin",
+          "pass": true,
+          "value": 60,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f310.varianceMin",
+          "pass": true,
+          "value": 2115.778094809375,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f310.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f355.varianceMin",
+          "pass": true,
+          "value": 1516.3111492952894,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f355.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f426.varianceMin",
+          "pass": true,
+          "value": 1685.4208409119883,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f426.variedTilesMin",
+          "pass": true,
+          "value": 62,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f480.varianceMin",
+          "pass": true,
+          "value": 1568.359084702498,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f480.variedTilesMin",
+          "pass": true,
+          "value": 62,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f497.varianceMin",
+          "pass": true,
+          "value": 1747.884131059227,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f497.variedTilesMin",
+          "pass": true,
+          "value": 57,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f568.varianceMin",
+          "pass": true,
+          "value": 1038.8197345490498,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f568.variedTilesMin",
+          "pass": true,
+          "value": 62,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f639.varianceMin",
+          "pass": true,
+          "value": 833.3541852825438,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f639.variedTilesMin",
+          "pass": true,
+          "value": 62,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f660.varianceMin",
+          "pass": true,
+          "value": 816.6680205415723,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f660.variedTilesMin",
+          "pass": true,
+          "value": 60,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f710.varianceMin",
+          "pass": true,
+          "value": 781.3977760110156,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f710.variedTilesMin",
+          "pass": true,
+          "value": 58,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f781.varianceMin",
+          "pass": true,
+          "value": 697.3164376027089,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f781.variedTilesMin",
+          "pass": true,
+          "value": 58,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f840.varianceMin",
+          "pass": true,
+          "value": 689.8948213933636,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f840.variedTilesMin",
+          "pass": true,
+          "value": 60,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f850.varianceMin",
+          "pass": true,
+          "value": 691.9878118798024,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f850.variedTilesMin",
+          "pass": true,
+          "value": 60,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ],
+      "backend": "webgpu",
+      "actualTier": "high",
+      "frames": 850,
+      "seconds": 22.629,
+      "failed": [],
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      },
+      "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-crash-sequence-1000/sheet.jpg",
+      "sheetKb": 92,
+      "files": [
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-crash-sequence-1000/shot-0000.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-crash-sequence-1000/shot-0180.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-crash-sequence-1000/shot-0299.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-crash-sequence-1000/shot-0310.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-crash-sequence-1000/shot-0480.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-crash-sequence-1000/shot-0660.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-crash-sequence-1000/shot-0840.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-crash-sequence-1000/sheet.jpg",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-crash-sequence-1000/metrics.json"
+      ],
+      "consoleErrors": []
+    },
+    {
+      "config": "high-webgpu",
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/specs/scenes/catalog/l9-crash-sequence-0.json",
+      "tier": "high",
+      "name": "l9-crash-sequence-0",
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 63,
+          "limit": 300
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 186053,
+          "limit": 500000
+        },
+        {
+          "name": "canvas.f0.varianceMin",
+          "pass": true,
+          "value": 3775.9622379475295,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f0.variedTilesMin",
+          "pass": true,
+          "value": 60,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f71.varianceMin",
+          "pass": true,
+          "value": 2042.4033334894757,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f71.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f142.varianceMin",
+          "pass": true,
+          "value": 1208.512182306249,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f142.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f180.varianceMin",
+          "pass": true,
+          "value": 1149.6319800599913,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f180.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f213.varianceMin",
+          "pass": true,
+          "value": 1163.9107301362255,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f213.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f284.varianceMin",
+          "pass": true,
+          "value": 1283.4594274109331,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f284.variedTilesMin",
+          "pass": true,
+          "value": 61,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f299.varianceMin",
+          "pass": true,
+          "value": 1311.8130181232846,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f299.variedTilesMin",
+          "pass": true,
+          "value": 60,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f310.varianceMin",
+          "pass": true,
+          "value": 2175.740649683563,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f310.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f355.varianceMin",
+          "pass": true,
+          "value": 1492.1537575954862,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f355.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f426.varianceMin",
+          "pass": true,
+          "value": 1599.3449408932875,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f426.variedTilesMin",
+          "pass": true,
+          "value": 62,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f480.varianceMin",
+          "pass": true,
+          "value": 1552.9472009166657,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f480.variedTilesMin",
+          "pass": true,
+          "value": 62,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f497.varianceMin",
+          "pass": true,
+          "value": 1710.9254548605204,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f497.variedTilesMin",
+          "pass": true,
+          "value": 57,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f568.varianceMin",
+          "pass": true,
+          "value": 1070.740585535972,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f568.variedTilesMin",
+          "pass": true,
+          "value": 62,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f639.varianceMin",
+          "pass": true,
+          "value": 835.3459448437034,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f639.variedTilesMin",
+          "pass": true,
+          "value": 62,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f660.varianceMin",
+          "pass": true,
+          "value": 817.6329377708335,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f660.variedTilesMin",
+          "pass": true,
+          "value": 60,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f710.varianceMin",
+          "pass": true,
+          "value": 780.9414929785871,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f710.variedTilesMin",
+          "pass": true,
+          "value": 57,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f781.varianceMin",
+          "pass": true,
+          "value": 700.7087778897185,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f781.variedTilesMin",
+          "pass": true,
+          "value": 56,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f840.varianceMin",
+          "pass": true,
+          "value": 689.8780264925845,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f840.variedTilesMin",
+          "pass": true,
+          "value": 60,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f850.varianceMin",
+          "pass": true,
+          "value": 692.1793616258947,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f850.variedTilesMin",
+          "pass": true,
+          "value": 60,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ],
+      "backend": "webgpu",
+      "actualTier": "high",
+      "frames": 850,
+      "seconds": 22.899,
+      "failed": [],
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      },
+      "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-crash-sequence-0/sheet.jpg",
+      "sheetKb": 91,
+      "files": [
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-crash-sequence-0/shot-0000.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-crash-sequence-0/shot-0180.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-crash-sequence-0/shot-0299.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-crash-sequence-0/shot-0310.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-crash-sequence-0/shot-0480.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-crash-sequence-0/shot-0660.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-crash-sequence-0/shot-0840.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-crash-sequence-0/sheet.jpg",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-crash-sequence-0/metrics.json"
+      ],
+      "consoleErrors": []
+    },
+    {
+      "config": "high-webgpu",
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/specs/scenes/catalog/l9-crash-crawl.json",
+      "tier": "high",
+      "name": "l9-crash-crawl",
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "clipping",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 40,
+          "limit": 300
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 121185,
+          "limit": 500000
+        },
+        {
+          "name": "canvas.f0.varianceMin",
+          "pass": true,
+          "value": 1168.4149327346277,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f0.variedTilesMin",
+          "pass": true,
+          "value": 57,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f60.varianceMin",
+          "pass": true,
+          "value": 971.6648430238411,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f60.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f100.varianceMin",
+          "pass": true,
+          "value": 867.3031702395838,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f100.variedTilesMin",
+          "pass": true,
+          "value": 61,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f120.varianceMin",
+          "pass": true,
+          "value": 795.075626569791,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f120.variedTilesMin",
+          "pass": true,
+          "value": 61,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f180.varianceMin",
+          "pass": true,
+          "value": 738.6643667708177,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f180.variedTilesMin",
+          "pass": true,
+          "value": 58,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f200.varianceMin",
+          "pass": true,
+          "value": 707.6949124428429,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f200.variedTilesMin",
+          "pass": true,
+          "value": 58,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f240.varianceMin",
+          "pass": true,
+          "value": 718.7537744542497,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f240.variedTilesMin",
+          "pass": true,
+          "value": 58,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f300.varianceMin",
+          "pass": true,
+          "value": 702.7308332690845,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f300.variedTilesMin",
+          "pass": true,
+          "value": 58,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ],
+      "backend": "webgpu",
+      "actualTier": "high",
+      "frames": 300,
+      "seconds": 16.599,
+      "failed": [],
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      },
+      "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-crash-crawl/sheet.jpg",
+      "sheetKb": 37,
+      "files": [
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-crash-crawl/shot-0000.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-crash-crawl/shot-0100.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-crash-crawl/shot-0200.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-crash-crawl/shot-0300.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-crash-crawl/sheet.jpg",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-all-new/test-results/l9-all-new/story-new-high-webgpu/l9-crash-crawl/metrics.json"
+      ],
+      "consoleErrors": []
+    }
+  ]
+}

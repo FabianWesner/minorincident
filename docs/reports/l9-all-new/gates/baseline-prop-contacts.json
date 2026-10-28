@@ -1,0 +1,176 @@
+{
+  "baselineRevision": "f36334ddd",
+  "pass": true,
+  "note": "Both standalone baseline rows intentionally return 1 because their already-triaged grip overlaps are real; the scene:gate known list accepts these unchanged findings. No criterion or threshold was edited.",
+  "rows": [
+    {
+      "scene": "ped-sit-all@high",
+      "identicalClipping": true,
+      "baseline": {
+        "static": [],
+        "actors": [],
+        "gunBodies": [],
+        "heldProps": [
+          {
+            "a": "s3/handR",
+            "b": "s3/cane",
+            "assetA": "handR",
+            "assetB": "cane",
+            "intersectingTriangles": 215,
+            "region": {
+              "min": [
+                0.3659229278564453,
+                0.9264163970947266,
+                5.478382110595703
+              ],
+              "max": [
+                0.522322952747345,
+                0.9970162510871887,
+                5.532172679901123
+              ]
+            },
+            "regionCm": [
+              16,
+              7,
+              5
+            ],
+            "actor": "s3",
+            "frame": 300
+          }
+        ],
+        "summary": {
+          "gunBodyHits": 0,
+          "staticPairs": 0,
+          "heldPropHits": 1,
+          "actorHits": 0,
+          "piercing": 0
+        }
+      },
+      "candidate": {
+        "static": [],
+        "actors": [],
+        "gunBodies": [],
+        "heldProps": [
+          {
+            "a": "s3/handR",
+            "b": "s3/cane",
+            "assetA": "handR",
+            "assetB": "cane",
+            "intersectingTriangles": 215,
+            "region": {
+              "min": [
+                0.3659229278564453,
+                0.9264163970947266,
+                5.478382110595703
+              ],
+              "max": [
+                0.522322952747345,
+                0.9970162510871887,
+                5.532172679901123
+              ]
+            },
+            "regionCm": [
+              16,
+              7,
+              5
+            ],
+            "actor": "s3",
+            "frame": 300
+          }
+        ],
+        "summary": {
+          "gunBodyHits": 0,
+          "staticPairs": 0,
+          "heldPropHits": 1,
+          "actorHits": 0,
+          "piercing": 0
+        }
+      }
+    },
+    {
+      "scene": "ped-water-flowerbed@high",
+      "identicalClipping": true,
+      "baseline": {
+        "static": [],
+        "actors": [],
+        "gunBodies": [],
+        "heldProps": [
+          {
+            "a": "gardener/handR",
+            "b": "gardener/watering-can",
+            "assetA": "handR",
+            "assetB": "watering-can",
+            "intersectingTriangles": 112,
+            "region": {
+              "min": [
+                0.32809847593307495,
+                0.9135226607322693,
+                0.5121761560440063
+              ],
+              "max": [
+                0.48020341992378235,
+                0.9423717260360718,
+                0.5944327116012573
+              ]
+            },
+            "regionCm": [
+              15,
+              3,
+              8
+            ],
+            "actor": "gardener",
+            "frame": 420
+          }
+        ],
+        "summary": {
+          "gunBodyHits": 0,
+          "staticPairs": 0,
+          "heldPropHits": 1,
+          "actorHits": 0,
+          "piercing": 0
+        }
+      },
+      "candidate": {
+        "static": [],
+        "actors": [],
+        "gunBodies": [],
+        "heldProps": [
+          {
+            "a": "gardener/handR",
+            "b": "gardener/watering-can",
+            "assetA": "handR",
+            "assetB": "watering-can",
+            "intersectingTriangles": 112,
+            "region": {
+              "min": [
+                0.32809847593307495,
+                0.9135226607322693,
+                0.5121761560440063
+              ],
+              "max": [
+                0.48020341992378235,
+                0.9423717260360718,
+                0.5944327116012573
+              ]
+            },
+            "regionCm": [
+              15,
+              3,
+              8
+            ],
+            "actor": "gardener",
+            "frame": 420
+          }
+        ],
+        "summary": {
+          "gunBodyHits": 0,
+          "staticPairs": 0,
+          "heldPropHits": 1,
+          "actorHits": 0,
+          "piercing": 0
+        }
+      }
+    }
+  ],
+  "candidateRevision": "dc06e59983732b9c3ff3d361f3eddb7c9ff4cc70"
+}

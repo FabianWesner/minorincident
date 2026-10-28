@@ -18,7 +18,8 @@ mkdirSync(directory, { recursive: true });
 const lod2Only = process.argv.includes('--lod2');
 const files: Record<string, string> = lod2Only ? JSON.parse(readFileSync('src/assets/civilianBakes.json', 'utf8')) : {};
 let total = 0, count = 0;
-for (const model of [...new Set([...coreCivilianModels, ...l6CastModels, ...manifest.filter(def => 'crowdSkin' in def && def.crowdSkin).map(def => def.id)])].sort()) {
+// The companion uses its hero rig, not crowd bakes (same exclusion as skin-crowd-build).
+for (const model of [...new Set([...coreCivilianModels, ...l6CastModels, ...manifest.filter(def => def.id !== 'char.corgi' && 'crowdSkin' in def && def.crowdSkin).map(def => def.id)])].sort()) {
   const skin = manifest.find(def => def.id === model && 'crowdSkin' in def && def.crowdSkin);
   if (skin) { Object.assign(files, await skinCrowdBakes(skin as AssetDef, lod2Only ? ['lod2'] : undefined)); continue; }
   for (const lod of lod2Only ? ['lod2'] as const : ['lod0', 'lod1', 'lod2'] as const) {

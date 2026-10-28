@@ -1,0 +1,148 @@
+{
+  "level": "L9",
+  "source": [
+    "src/data/l9.ts",
+    "src/sim/missions/LevelNineEncounters.ts",
+    "src/sim/ai/InfectedSystem.ts",
+    "src/data/crowdAppearance.ts",
+    "src/sim/missions/LevelNineCrash.ts",
+    "src/sim/missions/LevelEightZoo.ts",
+    "src/data/alphaLooks.ts",
+    "src/data/l6.ts",
+    "src/data/zooStaff.ts",
+    "src/render/VehicleView.ts",
+    "src/render/CrowdView.ts"
+  ],
+  "authoredEncounters": {
+    "groups": 11,
+    "byRoute": {
+      "road": 2,
+      "countryside": 3,
+      "dry-shortcut": 6
+    },
+    "regularRunners": 78,
+    "alphas": 2,
+    "regularVariantRule": "leastCrowdedModel(regularInfectedModels); seven identities are cycled to balance neighbourhood spawn share"
+  },
+  "identities": [
+    {
+      "id": "inf.common-worker",
+      "role": "regular infected",
+      "share": "~1/7 of 78 runners",
+      "status": "v2 skinned",
+      "migration": false
+    },
+    {
+      "id": "inf.jogger",
+      "role": "regular infected",
+      "share": "~1/7 of 78 runners",
+      "status": "v2 skinned; reviewed at native 120/400 px, front/back, low/high, WebGL2/WebGPU; runtime L9 light and corpse states reviewed",
+      "migration": true,
+      "source": "cast/wave1/inf.jogger",
+      "priorStatus": "rigid"
+    },
+    {
+      "id": "inf.cashier",
+      "role": "regular infected",
+      "share": "~1/7 of 78 runners",
+      "status": "v2 skinned; reviewed at native 120/400 px, front/back, low/high, WebGL2/WebGPU; runtime L9 light and corpse states reviewed",
+      "migration": true,
+      "source": "cast/wave1/inf.cashier",
+      "priorStatus": "rigid"
+    },
+    {
+      "id": "inf.delivery-driver",
+      "role": "regular infected",
+      "share": "~1/7 of 78 runners",
+      "status": "v2 skinned; reviewed at native 120/400 px, front/back, low/high, WebGL2/WebGPU; runtime L9 light and corpse states reviewed",
+      "migration": true,
+      "source": "cast/wave1/inf.delivery-driver",
+      "priorStatus": "rigid"
+    },
+    {
+      "id": "inf.suburban-mom",
+      "role": "regular infected",
+      "share": "~1/7 of 78 runners",
+      "status": "v2 skinned; reviewed at native 120/400 px, front/back, low/high, WebGL2/WebGPU; runtime L9 light and corpse states reviewed",
+      "migration": true,
+      "source": "cast/wave2/inf.suburban-mom",
+      "priorStatus": "rigid"
+    },
+    {
+      "id": "inf.bbq-dad",
+      "role": "regular infected",
+      "share": "~1/7 of 78 runners",
+      "status": "v2 skinned; reviewed at native 120/400 px, front/back, low/high, WebGL2/WebGPU; runtime L9 light and corpse states reviewed",
+      "migration": true,
+      "source": "cast/wave2/inf.bbq-dad",
+      "priorStatus": "rigid"
+    },
+    {
+      "id": "inf.bathrobe-neighbor",
+      "role": "regular infected",
+      "share": "~1/7 of 78 runners",
+      "status": "v2 skinned; reviewed at native 120/400 px, front/back, low/high, WebGL2/WebGPU; runtime L9 light and corpse states reviewed",
+      "migration": true,
+      "source": "cast/wave1/inf.bathrobe-neighbor",
+      "priorStatus": "rigid"
+    },
+    {
+      "id": "inf.alpha",
+      "role": "Alpha infected",
+      "share": "2 authored",
+      "status": "v2 skinned",
+      "migration": false
+    },
+    {
+      "id": "char.courier-female | char.courier-male",
+      "role": "player",
+      "share": "one selected campaign variant; visible in driving and crash scenes",
+      "status": "v2 skinned hero files (.skin.glb/.skin.low.glb)",
+      "migration": false,
+      "carriedPassengers": "L8/L7 survivor roster sources are covered by l6CastModels; all 14 manifest entries are crowdSkin=true."
+    },
+    {
+      "id": "char.corgi",
+      "role": "companion",
+      "share": "one; seated/hidden during drive",
+      "status": "v2 skinned; animal excluded by scope",
+      "migration": false,
+      "carriedPassengers": "L8 excludes zoo animals from its transfer roster; the existing v2 corgi is the L9 companion. No zoo-animal conversion is needed for this lane."
+    },
+    {
+      "id": "inf.alpha-worker",
+      "role": "Alpha render look",
+      "share": "entity-ID-selected sibling; two authored Alpha actors",
+      "status": "v2 skinned",
+      "migration": false
+    },
+    {
+      "id": "inf.alpha-hoodie",
+      "role": "Alpha render look",
+      "share": "entity-ID-selected sibling; two authored Alpha actors",
+      "status": "v2 skinned",
+      "migration": false
+    },
+    {
+      "id": "inf.alpha-fire",
+      "role": "Alpha render look",
+      "share": "entity-ID-selected sibling; two authored Alpha actors",
+      "status": "v2 skinned",
+      "migration": false
+    },
+    {
+      "id": "inf.alpha-suit",
+      "role": "Alpha render look",
+      "share": "entity-ID-selected sibling; two authored Alpha actors",
+      "status": "v2 skinned",
+      "migration": false
+    }
+  ],
+  "states": "Regular infected and Alpha living, knocked-down/get-up, and frozen corpse presentations reuse the same skinned identity and the existing crowd pose/frozen-page path; no separate L9 rigid corpse identity is authored.",
+  "transferredActors": "Up to six rendered APC passengers from L8; the reachable campaign roster and rescuable L8 visitors/staff/soldiers are enumerated in coverage.json. They already use v2. No animal conversions.",
+  "inferences": 0,
+  "paidCreditsEUR": 0,
+  "baselineRevision": "f36334ddd",
+  "headwearPolicy": "V2 native infected retain source-authored hair, cap and visor; explicit story accessories still win. No random second head piece is stacked on these sculpted heads.",
+  "animals": "Only the existing v2 corgi is reachable as a rendered animal/companion in L9. L8 zoo animals are excluded by roster() before transfer; no zoo-animal conversion was made or deferred by this lane."
+}

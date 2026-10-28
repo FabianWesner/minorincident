@@ -1,0 +1,343 @@
+{
+  "pass": true,
+  "testedRevision": "dc06e59983732b9c3ff3d361f3eddb7c9ff4cc70",
+  "exitCode": 0,
+  "rows": 48,
+  "passed": 43,
+  "known": [
+    {
+      "name": "ped-zoo-staff@high",
+      "file": "specs/scenes/catalog/ped-zoo-staff.json",
+      "pass": false,
+      "seconds": 7.636,
+      "frames": 60,
+      "errors": 0,
+      "requestedTier": "high",
+      "actualTier": "high",
+      "gates": "ok consoleErrors 0/0; FAIL clipping 4/0; ok undrawnFramesMax 0/0; ok canvas.f0.varianceMin 1425.0/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f4.varianceMin 1415.0/1; ok canvas.f4.variedTilesMin 64/8; ok canvas.f8.varianceMin 1446.4/1; ok canvas.f8.variedTilesMin 64/8; ok canvas.f12.varianceMin 1437.1/1; ok canvas.f12.variedTilesMin 64/8; ok canvas.f16.varianceMin 1435.7/1; ok canvas.f16.variedTilesMin 64/8; ok canvas.f20.varianceMin 1436.1/1; ok canvas.f20.variedTilesMin 64/8; ok canvas.f24.varianceMin 1452.4/1; ok canvas.f24.variedTilesMin 64/8; ok canvas.f28.varianceMin 1463.4/1; ok canvas.f28.variedTilesMin 64/8; ok canvas.f32.varianceMin 1464.6/1; ok canvas.f32.variedTilesMin 64/8; ok canvas.f36.varianceMin 1461.5/1; ok canvas.f36.variedTilesMin 64/8; ok canvas.f40.varianceMin 1463.0/1; ok canvas.f40.variedTilesMin 64/8; ok canvas.f44.varianceMin 1443.2/1; ok canvas.f44.variedTilesMin 64/8; ok canvas.f48.varianceMin 1430.4/1; ok canvas.f48.variedTilesMin 64/8; ok canvas.f52.varianceMin 1430.5/1; ok canvas.f52.variedTilesMin 64/8; ok canvas.f56.varianceMin 1434.1/1; ok canvas.f56.variedTilesMin 64/8; ok canvas.f60.varianceMin 1438.9/1; ok canvas.f60.variedTilesMin 64/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+      "failed": [
+        "clipping 4 > 0"
+      ],
+      "sheet": "ped-zoo-staff@high/sheet.jpg",
+      "sheetKb": 137,
+      "note": "L8 zoo staff (src/data/zooStaff.ts) beside ordinary visitors at the game camera, golden light. Look for: staff uniform green clearly distinct from the visitors' shirts, cap/backpack/prop attached, no sunk feet or clipping, same silhouettes as the civilian bases."
+    },
+    {
+      "name": "ped-sit-all@high",
+      "file": "specs/scenes/catalog/ped-sit-all.json",
+      "pass": false,
+      "seconds": 8.741,
+      "frames": 300,
+      "errors": 0,
+      "requestedTier": "high",
+      "actualTier": "high",
+      "gates": "ok consoleErrors 0/0; FAIL clipping 1/0; ok undrawnFramesMax 0/0; ok canvas.f0.varianceMin 1846.7/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f19.varianceMin 2149.9/1; ok canvas.f19.variedTilesMin 64/8; ok canvas.f38.varianceMin 2562.2/1; ok canvas.f38.variedTilesMin 64/8; ok canvas.f57.varianceMin 2701.5/1; ok canvas.f57.variedTilesMin 64/8; ok canvas.f76.varianceMin 3003.8/1; ok canvas.f76.variedTilesMin 64/8; ok canvas.f95.varianceMin 3170.1/1; ok canvas.f95.variedTilesMin 64/8; ok canvas.f114.varianceMin 3272.9/1; ok canvas.f114.variedTilesMin 64/8; ok canvas.f133.varianceMin 3109.2/1; ok canvas.f133.variedTilesMin 64/8; ok canvas.f152.varianceMin 3075.4/1; ok canvas.f152.variedTilesMin 64/8; ok canvas.f171.varianceMin 2981.9/1; ok canvas.f171.variedTilesMin 64/8; ok canvas.f190.varianceMin 3020.6/1; ok canvas.f190.variedTilesMin 64/8; ok canvas.f209.varianceMin 2925.2/1; ok canvas.f209.variedTilesMin 64/8; ok canvas.f228.varianceMin 2845.4/1; ok canvas.f228.variedTilesMin 64/8; ok canvas.f247.varianceMin 2820.4/1; ok canvas.f247.variedTilesMin 64/8; ok canvas.f266.varianceMin 2799.2/1; ok canvas.f266.variedTilesMin 64/8; ok canvas.f285.varianceMin 2814.3/1; ok canvas.f285.variedTilesMin 64/8; ok canvas.f300.varianceMin 2810.9/1; ok canvas.f300.variedTilesMin 64/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+      "failed": [
+        "clipping 1 > 0"
+      ],
+      "sheet": "ped-sit-all@high/sheet.jpg",
+      "sheetKb": 145,
+      "note": "Sitters on every seat type: bench, lawn-chair-a, lawn-chair-b (L1 seat rule and authored squash)."
+    },
+    {
+      "name": "ped-water-flowerbed@high",
+      "file": "specs/scenes/catalog/ped-water-flowerbed.json",
+      "pass": false,
+      "seconds": 8.383,
+      "frames": 420,
+      "errors": 0,
+      "requestedTier": "high",
+      "actualTier": "high",
+      "gates": "ok consoleErrors 0/0; FAIL clipping 1/0; ok canvas.f0.varianceMin 2390.1/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f27.varianceMin 2354.2/1; ok canvas.f27.variedTilesMin 64/8; ok canvas.f54.varianceMin 2095.2/1; ok canvas.f54.variedTilesMin 64/8; ok canvas.f81.varianceMin 1809.7/1; ok canvas.f81.variedTilesMin 64/8; ok canvas.f108.varianceMin 2276.7/1; ok canvas.f108.variedTilesMin 64/8; ok canvas.f135.varianceMin 2359.3/1; ok canvas.f135.variedTilesMin 64/8; ok canvas.f162.varianceMin 2640.9/1; ok canvas.f162.variedTilesMin 64/8; ok canvas.f189.varianceMin 3087.5/1; ok canvas.f189.variedTilesMin 64/8; ok canvas.f216.varianceMin 3177.7/1; ok canvas.f216.variedTilesMin 64/8; ok canvas.f243.varianceMin 3401.6/1; ok canvas.f243.variedTilesMin 64/8; ok canvas.f270.varianceMin 3420.0/1; ok canvas.f270.variedTilesMin 64/8; ok canvas.f297.varianceMin 3408.2/1; ok canvas.f297.variedTilesMin 64/8; ok canvas.f324.varianceMin 3427.2/1; ok canvas.f324.variedTilesMin 64/8; ok canvas.f351.varianceMin 3415.1/1; ok canvas.f351.variedTilesMin 64/8; ok canvas.f378.varianceMin 3362.1/1; ok canvas.f378.variedTilesMin 64/8; ok canvas.f405.varianceMin 3391.9/1; ok canvas.f405.variedTilesMin 64/8; ok canvas.f420.varianceMin 3395.5/1; ok canvas.f420.variedTilesMin 64/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+      "failed": [
+        "clipping 1 > 0"
+      ],
+      "sheet": "ped-water-flowerbed@high/sheet.jpg",
+      "sheetKb": 150,
+      "note": "PO 10-12 'this person is not watering the plants'. The gardener walks to a flower bed, stands within 0.5 m of it, faces it and waters it with a droplet arc. Look for: can over the bed, body turned to the bed, water landing on the flowers, no clipping with the bed."
+    },
+    {
+      "name": "dog-pet-trot@low-z1.5",
+      "file": "specs/scenes/catalog/dog-pet-trot.json",
+      "pass": false,
+      "seconds": 7.259,
+      "frames": 150,
+      "errors": 0,
+      "requestedTier": "low",
+      "actualTier": "low",
+      "gates": "ok consoleErrors 0/0; FAIL footSlideMaxCm 8.2/3; ok footSinkMaxCm 0/1; ok undrawnFramesMax 0/0; ok canvas.f0.varianceMin 194.5/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f10.varianceMin 195.0/1; ok canvas.f10.variedTilesMin 64/8; ok canvas.f20.varianceMin 195.5/1; ok canvas.f20.variedTilesMin 64/8; ok canvas.f30.varianceMin 196.1/1; ok canvas.f30.variedTilesMin 64/8; ok canvas.f40.varianceMin 196.1/1; ok canvas.f40.variedTilesMin 64/8; ok canvas.f50.varianceMin 195.8/1; ok canvas.f50.variedTilesMin 64/8; ok canvas.f60.varianceMin 194.8/1; ok canvas.f60.variedTilesMin 64/8; ok canvas.f70.varianceMin 191.4/1; ok canvas.f70.variedTilesMin 64/8; ok canvas.f80.varianceMin 190.3/1; ok canvas.f80.variedTilesMin 64/8; ok canvas.f90.varianceMin 187.8/1; ok canvas.f90.variedTilesMin 64/8; ok canvas.f100.varianceMin 185.3/1; ok canvas.f100.variedTilesMin 64/8; ok canvas.f110.varianceMin 183.4/1; ok canvas.f110.variedTilesMin 64/8; ok canvas.f120.varianceMin 182.6/1; ok canvas.f120.variedTilesMin 64/8; ok canvas.f130.varianceMin 186.2/1; ok canvas.f130.variedTilesMin 64/8; ok canvas.f140.varianceMin 191.9/1; ok canvas.f140.variedTilesMin 64/8; ok canvas.f150.varianceMin 194.7/1; ok canvas.f150.variedTilesMin 64/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+      "failed": [
+        "footSlideMaxCm 8.2 > 3"
+      ],
+      "sheet": "dog-pet-trot@low-z1.5/sheet.jpg",
+      "sheetKb": 95,
+      "note": "PO 10-15 'Dog looks broken' (repeat of 10-14 'that dog looks strange'): the healthy pet dog (amb.dog, NpcView lod1 on every tier) trotting at the jog speed and fleeing at 4.8 m/s. The sim used to put a moving pet at the corgi's 0.3 m height while NpcView drew it at y - 0.7: the dog sank 40 cm (sinkMaxCm 40), only the paws showed as separate blobs and the buried legs' shadow smeared out from under the body. Gate: paws on the pavement (sink <= 1 cm), planted (slide <= 3 cm)."
+    },
+    {
+      "name": "ped-sit-all@low",
+      "file": "specs/scenes/catalog/ped-sit-all.json",
+      "pass": false,
+      "seconds": 7.825,
+      "frames": 300,
+      "errors": 0,
+      "requestedTier": "low",
+      "actualTier": "low",
+      "gates": "ok consoleErrors 0/0; FAIL clipping 1/0; ok undrawnFramesMax 0/0; ok canvas.f0.varianceMin 1436.0/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f19.varianceMin 1686.0/1; ok canvas.f19.variedTilesMin 64/8; ok canvas.f38.varianceMin 2101.6/1; ok canvas.f38.variedTilesMin 64/8; ok canvas.f57.varianceMin 2204.4/1; ok canvas.f57.variedTilesMin 64/8; ok canvas.f76.varianceMin 2422.5/1; ok canvas.f76.variedTilesMin 64/8; ok canvas.f95.varianceMin 2445.1/1; ok canvas.f95.variedTilesMin 64/8; ok canvas.f114.varianceMin 2500.1/1; ok canvas.f114.variedTilesMin 64/8; ok canvas.f133.varianceMin 2379.3/1; ok canvas.f133.variedTilesMin 64/8; ok canvas.f152.varianceMin 2370.7/1; ok canvas.f152.variedTilesMin 64/8; ok canvas.f171.varianceMin 2193.1/1; ok canvas.f171.variedTilesMin 64/8; ok canvas.f190.varianceMin 2158.3/1; ok canvas.f190.variedTilesMin 64/8; ok canvas.f209.varianceMin 2104.4/1; ok canvas.f209.variedTilesMin 64/8; ok canvas.f228.varianceMin 2039.1/1; ok canvas.f228.variedTilesMin 64/8; ok canvas.f247.varianceMin 2017.6/1; ok canvas.f247.variedTilesMin 64/8; ok canvas.f266.varianceMin 2016.6/1; ok canvas.f266.variedTilesMin 64/8; ok canvas.f285.varianceMin 2031.1/1; ok canvas.f285.variedTilesMin 64/8; ok canvas.f300.varianceMin 2025.4/1; ok canvas.f300.variedTilesMin 64/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+      "failed": [
+        "clipping 1 > 0"
+      ],
+      "sheet": "ped-sit-all@low/sheet.jpg",
+      "sheetKb": 137,
+      "note": "Sitters on every seat type: bench, lawn-chair-a, lawn-chair-b (L1 seat rule and authored squash)."
+    }
+  ],
+  "unexpected": [],
+  "identity": {
+    "revision": "dc06e59983732b9c3ff3d361f3eddb7c9ff4cc70",
+    "inputs": "912aa9517e158571ce2b2a3d6b86ed56343727cc2184850aab34d28a904d3e92",
+    "mode": "gate",
+    "rows": [
+      [
+        "webgl2",
+        "low",
+        "courier-gear-tier4-female@low-z1.5"
+      ],
+      [
+        "webgpu",
+        "high",
+        "courier-gear-tier4-male@high-z0.5"
+      ],
+      [
+        "webgl2",
+        "high",
+        "courier-gear-tier2-female@high-z1.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "courier-gear-tier4-swing-female@low-z0.5"
+      ],
+      [
+        "webgl2",
+        "high",
+        "e18-courier-armed-male@high-z1.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "e18-courier-armed-female@low-z0.5"
+      ],
+      [
+        "webgl2",
+        "high",
+        "courier-locomotion-f@high-z1.5"
+      ],
+      [
+        "webgl2",
+        "high",
+        "courier-turns@high-z1.5"
+      ],
+      [
+        "webgl2",
+        "high",
+        "ped-walk-all@high"
+      ],
+      [
+        "webgpu",
+        "low",
+        "ped-walk-all@low"
+      ],
+      [
+        "webgl2",
+        "high",
+        "ped-sit-all@high"
+      ],
+      [
+        "webgpu",
+        "low",
+        "ped-sit-all@low"
+      ],
+      [
+        "webgl2",
+        "low",
+        "ped-newchars-walk-1@low-z0.5"
+      ],
+      [
+        "webgl2",
+        "low",
+        "ped-newchars-sit@low"
+      ],
+      [
+        "webgpu",
+        "low",
+        "ped-hats-glasses@low-z1.5"
+      ],
+      [
+        "webgl2",
+        "high",
+        "ped-hats-spots-l1@high-z0.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "ped-l1-staged-cast@low-z1.5"
+      ],
+      [
+        "webgl2",
+        "high",
+        "ped-water-flowerbed@high"
+      ],
+      [
+        "webgpu",
+        "high",
+        "ped-zoo-staff@high"
+      ],
+      [
+        "webgl2",
+        "low",
+        "ped-bitten@low"
+      ],
+      [
+        "webgl2",
+        "low",
+        "inf-chase-l1@low-z1.5"
+      ],
+      [
+        "webgpu",
+        "high",
+        "inf-chase-l3@high-z0.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "inf-looks@low"
+      ],
+      [
+        "webgl2",
+        "high",
+        "inf-horde-headwear@high-z1.5"
+      ],
+      [
+        "webgl2",
+        "low",
+        "inf-attack-knockdown@low"
+      ],
+      [
+        "webgpu",
+        "low",
+        "alpha-variants-close@low-z1.5"
+      ],
+      [
+        "webgl2",
+        "high",
+        "alpha-hit-corpse-suit@high-z1.5"
+      ],
+      [
+        "webgl2",
+        "low",
+        "mega-alpha-variants-lineup@low-z0.5"
+      ],
+      [
+        "webgl2",
+        "high",
+        "corgi-tongue-female@high-z1.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "dog-pet-trot@low-z1.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "animal-zoo-healthy@low-z0.5"
+      ],
+      [
+        "webgpu",
+        "high",
+        "wave3-zoo-routines@high-z1.5"
+      ],
+      [
+        "webgl2",
+        "low",
+        "corpse-look-close@low-z1.5"
+      ],
+      [
+        "webgpu",
+        "high",
+        "corpse-look-alpha@high-z0.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "corpse-placement-pile@low-z0.5"
+      ],
+      [
+        "webgl2",
+        "high",
+        "l4-broken-army-line@high-z0.5"
+      ],
+      [
+        "webgpu",
+        "high",
+        "fight-army-line-zoom06@high-z1.5"
+      ],
+      [
+        "webgl2",
+        "low",
+        "l10-d2-military-breach@low-z0.5"
+      ],
+      [
+        "webgl2",
+        "low",
+        "l10-mega-close-contact@low-z1.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "seethrough-open-sidewalk-l4@low-z0.5"
+      ],
+      [
+        "webgl2",
+        "low",
+        "seethrough-gear-four@low-z1.5"
+      ],
+      [
+        "webgpu",
+        "high",
+        "seat-bench-l1-start@high-z1.5"
+      ],
+      [
+        "webgl2",
+        "low",
+        "seat-bench-tipped@low"
+      ],
+      [
+        "webgpu",
+        "low",
+        "seat-grip-coffee-game@low-z1.5"
+      ],
+      [
+        "webgl2",
+        "high",
+        "veh-bus-hero@high-z0.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "veh-apc-damage-250@low-z1.5"
+      ],
+      [
+        "webgl2",
+        "high",
+        "collision-vehicle-admission@high-z0.5"
+      ],
+      [
+        "webgpu",
+        "high",
+        "inf-mega-arrival@high-z0.5"
+      ]
+    ],
+    "maxRows": 15
+  }
+}

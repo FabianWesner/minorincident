@@ -19,5 +19,8 @@ export function skinnedBrow(geometry: BufferGeometry): { width: number; depth: n
     point.fromBufferAttribute(position, i).applyMatrix4(inverse);
     if (Math.abs(point.y - y) <= band && point.x >= skin.min.x) brow.expandByPoint(point);
   }
-  return { width: Math.min(skin.max.z - skin.min.z, brow.isEmpty() ? Infinity : brow.max.z - brow.min.z), depth: Math.min(skin.max.x - skin.min.x, brow.isEmpty() ? Infinity : brow.max.x - brow.min.x), y, centre: skin.getCenter(new Vector3()) };
+  // A coarse LOD can contribute only one vertex to the eye-height slice. That
+  // point is not a zero-width skull: retain the measured skin envelope there.
+  const width = brow.max.z - brow.min.z, depth = brow.max.x - brow.min.x;
+  return { width: Math.min(skin.max.z - skin.min.z, width > 1e-6 ? width : Infinity), depth: Math.min(skin.max.x - skin.min.x, depth > 1e-6 ? depth : Infinity), y, centre: skin.getCenter(new Vector3()) };
 }

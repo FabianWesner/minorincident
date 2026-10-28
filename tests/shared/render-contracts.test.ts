@@ -6,7 +6,7 @@ import { float, vec3 } from 'three/tsl';
 import { expect, test, vi } from 'vitest';
 import { packCrowdParts } from '../../src/assets/crowd';
 import { bakeInfected, framesPerClip, infectedClips } from '../../src/render/characters/bakeInfected';
-import { crowdVertexLayout, resolveCrowdAppearance } from '../../src/render/characters/CrowdAppearance';
+import { crowdVertexLayout, resolveCrowdAppearance, markCrowdAppearance } from '../../src/render/characters/CrowdAppearance';
 import { createInfectedPlaceholder } from '../../src/render/characters/infectedPlaceholder';
 import { packSkin, premultiplyRow, restInverses, skinnedVertexMatrix } from '../../src/render/characters/skinnedCrowd';
 import { StaticCorpses } from '../../src/render/characters/StaticCorpses';
@@ -26,6 +26,8 @@ import { installTextureBindingIdentity } from '../../src/render/Renderer';
 import { crowdSurfaceBindings } from '../../src/render/characters/crowdTexture';
 import { addHighwayRailJoints } from '../../src/assets/highwayRailJoints';
 import { InstancedGroup } from '../../src/render/InstancedGroup';
+import { skinnedBrow } from '../../src/render/characters/headMeasurements';
+import { characterNodes } from '../../src/data/survivor';
 
 /** Crowd headroom below the portable hard limits (16 attributes, 8 WebGPU vertex buffers). */
 const CROWD = { attributes: 14, buffers: 7 };
@@ -62,13 +64,30 @@ test('a held cane reaches the floor across rig scales without moving its grip', 
   props.dispose();
 });
 
-test('authored aftermath headwear survives crowd palette variation and accepts explicit accessories', () => {
+test('authored aftermath and skinned infected headwear survives variation and accepts explicit accessories', () => {
   for (let id = 1; id <= 32; id++) {
     const entity = { id, archetype: 'civilian.cashier', appearance: { entityId: id, asset: 'npc.person.aftermath', accessories: [], tint: '#888888' } } as unknown as EntitySnapshot;
     expect(resolveCrowdAppearance(entity, ['acc.test']).accessory, `authored headwear, entity ${id}`).toBeNull();
     entity.appearance!.accessories = ['acc.test'];
     expect(resolveCrowdAppearance(entity, ['acc.test']).accessory).toBe('acc.test');
+    for (const model of ['inf.common-worker', 'inf.jogger', 'inf.cashier', 'inf.delivery-driver', 'inf.suburban-mom', 'inf.bbq-dad', 'inf.bathrobe-neighbor']) {
+      const native = { id, archetype: 'infected.runner', infected: { variant: model } } as unknown as EntitySnapshot;
+      expect(resolveCrowdAppearance(native, ['acc.test']).accessory, model).toBeNull();
+      native.appearance = { entityId: id, asset: model, accessories: ['acc.test'], tint: '#888888' } as EntitySnapshot['appearance'];
+      expect(resolveCrowdAppearance(native, ['acc.test']).accessory, model).toBe('acc.test');
+    }
   }
+  const coarse = new BufferGeometry(), head = characterNodes.indexOf('head');
+  coarse.setAttribute('position', new BufferAttribute(new Float32Array([-.15, 0, -.2, .15, .3, .2, .2, .24, 0, .2, .05, 0]), 3));
+  coarse.setAttribute('_parts', new BufferAttribute(new Float32Array([head, -1, 0, 0, head, -1, 0, 0, head, 0, 2, 0, head, 0, 0, 0]), 4));
+  coarse.userData.crowdBinds = characterNodes.flatMap(() => new Matrix4().toArray());
+  const brow = skinnedBrow(coarse)!;
+  expect(brow.width).toBeCloseTo(.4); expect(brow.depth).toBeCloseTo(.3);
+  coarse.userData.crowdAtlas = true;
+  markCrowdAppearance(coarse, true);
+  expect(coarse.getAttribute('_parts').getY(3)).toBe(0); // authored lower-face/beard surface is never hair
+  expect(coarse.getAttribute('_parts').getW(3)).toBe(0);
+  coarse.dispose();
 });
 
 test('crowd registration retains converted textured variants with their own model identity', () => {

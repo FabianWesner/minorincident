@@ -1,0 +1,78 @@
+{
+  "id": "inf.jogger",
+  "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave1/inf.jogger",
+  "elapsedSeconds": 40.72,
+  "manualSteps": [],
+  "receipts": [
+    {
+      "lod": 0,
+      "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave1/inf.jogger/lod0.glb",
+      "sourceSha256": "b1640294e30acc5ecaeccf8a508fa2dee8c2a34abf43ce4abe0841fbc6b0ecb1",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/inf.jogger.lod0.glb",
+          "bytes": 413704,
+          "sha256": "6ad8dc7f1f541e93574ae972f9bbdc1ff188aa2b2364b30b70785f7ec8c13fe2",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/inf.jogger.lod0.low.glb",
+          "bytes": 378336,
+          "sha256": "920703f3208be266db5bc7db9a492b63506f59c66aa166af8b2384fa694fee26",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 1,
+      "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave1/inf.jogger/lod1.glb",
+      "sourceSha256": "b0c1187989dbac3a514aff686514979de9b9ece41d33e91e99ddd6c5f79501ab",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/inf.jogger.lod1.glb",
+          "bytes": 177476,
+          "sha256": "517477efd4882cb338f1393616ee5a20bc5dccce6028cf6922c705c6ed1dc7e6",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/inf.jogger.lod1.low.glb",
+          "bytes": 177476,
+          "sha256": "517477efd4882cb338f1393616ee5a20bc5dccce6028cf6922c705c6ed1dc7e6",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 2,
+      "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave1/inf.jogger/lod1.glb",
+      "sourceSha256": "b0c1187989dbac3a514aff686514979de9b9ece41d33e91e99ddd6c5f79501ab",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/inf.jogger.lod2.glb",
+          "bytes": 149152,
+          "sha256": "4ef1c09161953db800f3f8182deb1f95d4e76e78506b7a546ddd375eeee4dbf3",
+          "positionPrecision": 0.00006103515625,
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/inf.jogger.lod2.low.glb",
+          "bytes": 149152,
+          "sha256": "4ef1c09161953db800f3f8182deb1f95d4e76e78506b7a546ddd375eeee4dbf3",
+          "positionPrecision": 0.00006103515625,
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "preparedBakes": {
+    "inf.jogger:lod0:infected": "/assets/civilians/inf.jogger.lod0.infected.3cfe15662f9251cb.bin.gz",
+    "inf.jogger:lod1:infected": "/assets/civilians/inf.jogger.lod1.infected.801c37a4f98855ef.bin.gz",
+    "inf.jogger:lod2:infected": "/assets/civilians/inf.jogger.lod2.infected.fbc5c17c98fd9e0c.bin.gz"
+  }
+}

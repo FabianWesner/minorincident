@@ -12,11 +12,14 @@ import type { AssetDef } from '../../src/assets/types';
 import { variantPath } from '../../src/assets/types';
 import { assetIO } from './io';
 import { validateAssets } from './validate';
-import { compressSkin } from './skin-crowd-compress';
+import { compressSkin, decodeSkinImage } from './skin-crowd-compress';
 import { skinCrowdBakes } from './skin-crowd-bakes';
 import { classifyCrowdAtlas } from './skin-crowd-regions';
 import { paintCrowdShirt, paintCrowdWraps, type CrowdWrap } from './skin-crowd-wraps';
 import { Matrix4, Vector3 } from 'three';
+import { PNG } from 'pngjs';
+import { regularInfectedModels } from '../../src/data/crowdAppearance';
+import { legacyCrowdPalette } from './skin-crowd-legacy-palette';
 
 // A cast directory is the complete input; no hand-prepared files or placement numbers.
 // A named game variant can consume a compatible reviewed base cast without
@@ -40,6 +43,7 @@ const def = manifest.find(a => a.id === id); if (!def) throw Error(`Unknown cast
 const output = 'public/assets/models/skinned', report = join(process.env.CROWD_REPORT ?? 'test-results/skinned-prod/builds', id), assets = join('assets', id);
 mkdirSync(output, { recursive: true }); mkdirSync(report, { recursive: true }); mkdirSync(assets, { recursive: true });
 const metadata = existsSync(join(source, 'rig.json')) ? JSON.parse(readFileSync(join(source, 'rig.json'), 'utf8')) as { class?: string; lods: { lod: number; uniform_scale?: number; world_scale?: number; rotation_y_degrees?: number }[] } : undefined;
+const nativeInfected = !!metadata && metadata.class !== 'quadruped' && regularInfectedModels.some(model => model === id);
 // Animal fur/mane envelopes are wider than the face. Use reviewed pre-binding
 // eye landmarks instead of placing dormant/infected eyes on that envelope.
 const animalEyeRecipes = JSON.parse(readFileSync('tools/assets/skin-crowd-animal-eyes.json', 'utf8')) as Record<string, { source_sha256: string; eye_centers: number[][]; radius_extent: number; game_radius: number; tusks?: TuskRecipe }>;
@@ -79,6 +83,9 @@ if (metadata?.class === 'quadruped' && ['amb.lion', 'inf.lion', 'amb.gorilla', '
   delete def.authoredLodRatios;
 }
 const io = await assetIO(), started = Date.now(), receipts = [];
+type ProtectedDetailLod = { lod: number; spatula_triangles?: number; spatula_parent?: string; decal_triangles?: number; text_parent?: string };
+const protectedDetailsPath = join(source, 'protected-details.json');
+const protectedDetails = existsSync(protectedDetailsPath) ? JSON.parse(readFileSync(protectedDetailsPath, 'utf8')) as { lods?: ProtectedDetailLod[] } : undefined;
 // A carried object fused into the body cannot follow the game's prop lifecycle.
 // Refuse it before changing any active asset; anatomy fits inside this hand envelope.
 // Mega Alpha hands are intentionally far beyond the ordinary hand reach: the
@@ -86,26 +93,40 @@ const io = await assetIO(), started = Date.now(), receipts = [];
 // no held-weapon socket; keep the prop guard for all other humanoid sources.
 if (metadata?.class !== 'quadruped' && metadata?.class !== 'mega' && !def.animatedNodes.includes('body')) {
   const document = await io.read(join(source, authored ? 'model.glb' : 'lod0.glb'));
-  const bounds = getBounds(document.getRoot().listScenes()[0]), reach = (bounds.max[1] - bounds.min[1]) * .2;
+  // Some reviewed casts carry a separately-authored hand prop. It remains a
+  // child of the hand for animation, but is not fused body geometry and must
+  // not expand the anatomical reach envelope.
+  const propContract = protectedDetails?.lods?.find(item => item.lod === 0);
+  const separateProps = new Set<string>();
+  if (propContract?.spatula_triangles && propContract.spatula_parent) {
+    const candidates = document.getRoot().listNodes().filter(node => node.getName().toLowerCase().includes('spatula'));
+    const matching = candidates.filter(node => {
+      const triangles = (node.getMesh()?.listPrimitives() ?? []).reduce((sum, primitive) => sum + (primitive.getIndices()?.getCount() ?? primitive.getAttribute('POSITION')!.getCount()) / 3, 0);
+      return triangles === propContract.spatula_triangles && node.listParents().some(parent => parent.getName() === propContract.spatula_parent);
+    });
+    if (matching.length !== 1 || candidates.length !== 1) throw Error(`${id}: protected spatula contract does not match one separate source mesh`);
+    separateProps.add(matching[0].getName());
+  }
+  const bounds = getBounds(document.getRoot().listScenes()[0]), reach = (bounds.max[1] - bounds.min[1]) * .25;
   for (const name of ['handL', 'handR']) {
     const hand = document.getRoot().listNodes().find(node => node.getName() === name); if (!hand) continue;
-    const pivot = new Vector3().setFromMatrixPosition(new Matrix4().fromArray(hand.getWorldMatrix())); let distance = 0;
-    hand.traverse(node => { for (const primitive of node.getMesh()?.listPrimitives() ?? []) {
+    const pivot = new Vector3().setFromMatrixPosition(new Matrix4().fromArray(hand.getWorldMatrix())); let distance = 0, furthest = '';
+    hand.traverse(node => { if (separateProps.has(node.getName())) return; for (const primitive of node.getMesh()?.listPrimitives() ?? []) {
       const position = primitive.getAttribute('POSITION')!, matrix = new Matrix4().fromArray(node.getWorldMatrix());
-      for (let i = 0; i < position.getCount(); i++) distance = Math.max(distance, new Vector3().fromArray(position.getElement(i, [])).applyMatrix4(matrix).distanceTo(pivot));
+      for (let i = 0; i < position.getCount(); i++) { const d = new Vector3().fromArray(position.getElement(i, [])).applyMatrix4(matrix).distanceTo(pivot); if (d > distance) { distance = d; furthest = node.getName(); } }
     } });
-    if (distance > reach) throw Error(`${id}: ${name} includes a fused carried prop (${distance.toFixed(3)} m); separate it from the source body before migration`);
+    if (distance > reach) throw Error(`${id}: ${name} includes a fused carried prop (${distance.toFixed(3)} m on ${furthest}, reach ${reach.toFixed(3)}); separate it from the source body before migration`);
   }
 }
 for (const lod of [0, 1, 2]) {
   // The authored human LOD2 can attach a hand only to the thigh. Retain the
   // sound LOD1 anatomy (well inside the 4k far-tier budget) with a smaller atlas.
   // Never position-simplify a painted body across its UV islands.
-  const sourceLod = (unbound || derivedTemplate) && id.startsWith('npc.') && lod === 2 ? 1 : lod;
-  const rig = derivedTemplate ? join('assets', sourceId, 'model.glb') : alignment?.rig_source ? join(source, alignment.rig_source) : unbound ? join(id === 'inf.dog' ? 'assets/amb.dog' : assets, id === 'char.corgi' && lod ? `model.lod${lod}.glb` : 'model.glb') : join(source, authored ? `model${lod ? `.lod${lod}` : ''}.glb` : `lod${lod}.glb`), body = join(source, `source/${unbound ? 'assembled' : 'flat'}-lod${sourceLod}.glb`), raw = join(report, `lod${lod}.raw.glb`);
+  const sourceLod = ((unbound || derivedTemplate) && id.startsWith('npc.') || nativeInfected) && lod === 2 ? 1 : lod;
+  const rig = derivedTemplate ? join('assets', sourceId, 'model.glb') : alignment?.rig_source ? join(source, alignment.rig_source) : unbound ? join(id === 'inf.dog' ? 'assets/amb.dog' : assets, id === 'char.corgi' && lod ? `model.lod${lod}.glb` : 'model.glb') : join(source, authored ? `model${sourceLod ? `.lod${sourceLod}` : ''}.glb` : `lod${sourceLod}.glb`), body = join(source, `source/${unbound ? 'assembled' : 'flat'}-lod${sourceLod}.glb`), raw = join(report, `lod${lod}.raw.glb`);
   const args = ['tools/assets/skin-crowd-figure.ts', '--rig', rig, '--out', raw, '--report', join(report, `lod${lod}.json`)];
   const contract = join(assets, 'model.glb'); if (existsSync(contract)) args.push('--contract', contract);
-  const placement = metadata?.lods.find(p => p.lod === lod);
+  const placement = metadata?.lods.find(p => p.lod === sourceLod);
   if (existsSync(body)) args.push('--body', body, '--body-scale', String(alignment?.initial_game_height_scale ?? placement?.uniform_scale ?? placement?.world_scale ?? 1), '--body-rot-y', String(alignment?.game_alignment_rotation_y_degrees ?? placement?.rotation_y_degrees ?? 0));
   if (alignment || derivedTemplate) args.push('--body-yaw-fixed');
   if (unbound && id === 'inf.dog') args.push('--atlas-base-half', '--eyes', join(source, 'eyes.json'));
@@ -115,6 +136,34 @@ for (const lod of [0, 1, 2]) {
   // Repair their semantic ownership without refitting the matching v2 rig.
   if (metadata?.class === 'mega') args.push('--repair-contacts');
   if (id.startsWith('npc.')) args.push('--healthy');
+  if (nativeInfected) {
+    args.push('--eye-radius', '.04', '--basis', basis);
+    if (existsSync(body) && existsSync(join(source, 'eyes.json'))) args.push('--eyes', join(source, 'eyes.json'), '--reproject-eyes');
+    const headwear = id === 'inf.jogger' ? 'magenta' : id === 'inf.delivery-driver' ? 'navy' : id === 'inf.suburban-mom' ? 'brown' : undefined;
+    if (headwear) args.push('--clear-headwear', headwear, '--brim-clearance', '.07', '--brim-reach-scale', '.7', '--brim-sightline-degrees', '60', '--brim-max-lift', '.08');
+  }
+  if (protectedDetails?.lods) {
+    const lodDetails = protectedDetails.lods.find(item => item.lod === sourceLod);
+    const protectedProps: { pattern: RegExp; triangles?: number; owner?: string }[] = [
+      { pattern: /spatula/i, triangles: lodDetails?.spatula_triangles, owner: lodDetails?.spatula_parent },
+      { pattern: /decal/i, triangles: lodDetails?.decal_triangles, owner: lodDetails?.text_parent },
+    ].filter(prop => prop.triangles && prop.owner);
+    if (protectedProps.length) {
+      const sourceDocument = await io.read(rig);
+      const entries = protectedProps.map(prop => {
+        const candidates = sourceDocument.getRoot().listNodes().filter(node => node.getName() && prop.pattern.test(node.getName()));
+        const matching = candidates.filter(node => {
+          const triangles = (node.getMesh()?.listPrimitives() ?? []).reduce((sum, primitive) => sum + (primitive.getIndices()?.getCount() ?? primitive.getAttribute('POSITION')!.getCount()) / 3, 0);
+          return triangles === prop.triangles && node.listParents().some(parent => parent.getName() === prop.owner);
+        });
+        if (matching.length !== 1 || candidates.length !== 1) throw Error(`${id}: protected detail ${prop.pattern} does not match one separate source mesh at LOD${lod}`);
+        return { name: matching[0].getName(), intended_owner: prop.owner, exact_owner: true };
+      });
+      const recipe = join(report, 'protected-props.json');
+      writeFileSync(recipe, JSON.stringify({ lods: [{ lod, props: entries }] }, null, 2) + '\n');
+      args.push('--props', rig, '--props-recipe', recipe, '--props-lod', String(lod), '--props-rest-aligned', '--basis', basis);
+    }
+  }
   if (derivedTemplate || unbound && (!alignment?.rig_source || alignment.rig_fit_height) && (id.startsWith('npc.') || alignment?.rig_class === 'humanoid' || alignment?.rig_class === 'alpha')) args.push('--fit-rig-height');
   if (alignment?.spectacles || ['npc.civilian-woman-b', 'npc.civilian-elderly'].includes(id)) args.push('--spectacles');
   if (lod > 0 && (alignment?.spectacles || ['npc.civilian-woman-b', 'npc.civilian-elderly'].includes(id))) {
@@ -185,17 +234,36 @@ for (const lod of [0, 1, 2]) {
     ] : alignment?.wraps ?? [];
     if (dressings.length) { const wraps = paintCrowdWraps(document, dressings); await io.write(raw, document); writeFileSync(join(report, `lod${lod}.wraps.json`), JSON.stringify(wraps, null, 2) + '\n'); }
   }
+  if (nativeInfected) {
+    const document = await io.read(raw);
+    for (const texture of document.getRoot().listTextures()) {
+      texture.setImage(new Uint8Array(PNG.sync.write(await decodeSkinImage(texture.getImage()!, texture.getMimeType(), basis)))).setMimeType('image/png');
+    }
+    const palette = legacyCrowdPalette(await io.read(join(assets, 'model.glb')));
+    const regions = classifyCrowdAtlas(document, true, false, true, false, palette);
+    if (!regions) throw Error(`${id}: regional readability pass requires a decoded body atlas`);
+    await io.write(raw, document);
+    writeFileSync(join(report, `lod${lod}.regions.json`), JSON.stringify({ ...regions, authoredPalette: palette }, null, 2) + '\n');
+  }
   const tiers = [];
   for (const low of [false, true]) {
     const target = join(output, `${id}.lod${lod}${low ? '.low' : ''}.glb`);
     const initialAtlas = lod === 2 && (unbound || derivedTemplate) && id.startsWith('npc.') ? 256 : low || lod > 0 ? 512 : 1024;
+    let positionPrecision: number | undefined;
     await compressSkin(raw, target, basis, initialAtlas);
-    // Let detailed boss faces retain the normal 512 atlas when it fits, then
-    // reduce the image only as needed for each standalone LOD byte budget.
+    // Keep detailed boss faces at 512 when the standalone LOD budget permits.
     const byteLimit = [600000, 250000, 150000][lod];
     for (const atlas of [512, 256, 128]) {
       if (readFileSync(target).length <= byteLimit || atlas >= initialAtlas) continue;
       await compressSkin(raw, target, basis, atlas);
+    }
+    // Preserve L9's continuous native infected anatomy at its far file cap.
+    if (lod === 2 && nativeInfected && readFileSync(target).length > byteLimit) {
+      for (const precision of [1 / 16384, 1 / 8192, 1 / 4096, 1 / 2048, 1 / 1024]) {
+        positionPrecision = precision;
+        await compressSkin(raw, target, basis, 128, undefined, undefined, false, precision);
+        if (readFileSync(target).length <= byteLimit) break;
+      }
     }
     const bytes = readFileSync(target), document = await io.read(target), errors: string[] = [];
     if (bytes.length > [600000, 250000, 150000][lod]) errors.push(`size ${bytes.length} exceeds LOD${lod}`);
@@ -207,7 +275,7 @@ for (const lod of [0, 1, 2]) {
     if (document.getRoot().listTextures().some(t => t.getMimeType() !== 'image/ktx2')) errors.push('non-KTX2 texture');
     if (document.getRoot().listTextures().some(t => t.getSize()?.some(n => n % 4))) errors.push('texture extent is not aligned to its 4x4 GPU block');
     if (errors.length) throw Error(`${id} LOD${lod}: ${errors.slice(0, 5).join('; ')}`);
-    tiers.push({ low, path: target, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex'), errors });
+    tiers.push({ low, path: target, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex'), positionPrecision, errors });
     if (id === 'inf.dog' || id === 'amb.dog') for (const coat of def.decayVariants) {
       const sibling = variantPath(target, coat);
       const coatSource = join(dirname(source), `${id}.${coat}`, 'source', `assembled-lod${lod}.glb`);

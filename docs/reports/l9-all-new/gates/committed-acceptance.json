@@ -1,0 +1,41 @@
+{
+  "pass": true,
+  "testedRevision": "dc06e59983732b9c3ff3d361f3eddb7c9ff4cc70",
+  "implementationTreeSha256": "02c7bd113cd31814fbdd639f3f34b203c6c0773cb256adb1cbe733d0835d8a7f",
+  "implementationPaths": [
+    "assets",
+    "public",
+    "src",
+    "tests",
+    "tools",
+    "package.json",
+    "package-lock.json"
+  ],
+  "completedUtc": "2026-10-28T14:36:19.682337+00:00",
+  "cleanTreeBeforeAndAfterEveryCommand": true,
+  "commands": [
+    {
+      "command": "E2E_PORT=3859 npm run test:smoke",
+      "exitCode": 0,
+      "seconds": 214.4
+    },
+    {
+      "command": "SCENE_PORT=3862 npm run scene:gate -- --out test-results/l9-all-new/scene-gate-committed --jobs 1",
+      "exitCode": 0,
+      "rows": 48,
+      "known": 5,
+      "unexpected": 0
+    },
+    {
+      "command": "E2E_PORT=3859 npm run playtest -- --levels L9 --mode continue --entry debug --quality low --zoom 2 --no-skip --out test-results/l9-all-new/playtest",
+      "exitCode": 0,
+      "seconds": 144,
+      "finished": true,
+      "issues": 0,
+      "deaths": 0,
+      "assists": 0,
+      "skipped": []
+    }
+  ],
+  "finalReportCommitScope": "Documentation and capture evidence only; implementation tree must match testedRevision."
+}

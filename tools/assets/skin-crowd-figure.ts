@@ -29,6 +29,7 @@ import { copyToDocument, getBounds, normals as generateNormals, unpartition } fr
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
 import { MeshoptDecoder, MeshoptSimplifier } from 'meshoptimizer';
 import { PNG } from 'pngjs';
+import { decodeSkinImage } from './skin-crowd-compress';
 import { Box3, Matrix4, Ray, Triangle, Vector3 } from 'three';
 
 class MinHeap {
@@ -263,7 +264,7 @@ if (bodyPath) {
   bodyTransform = new Matrix4().makeRotationY(best!.yaw * Math.PI / 180).scale(new Vector3(scale, scale, scale)).setPosition(new Vector3().fromArray(best!.translation));
   fit = { body: bodyPath, scale, yaw: best!.yaw, translation: best!.translation, meanDistanceToRigidSurface: best!.error, neutralArm, anatomyMaterials: anatomyMaterials ? [...anatomyMaterials] : undefined };
 }
-if (recovered) { fit.body = 'automatic 512-cell voxel union of closed source partitions'; rmSync(recovered, { recursive: true, force: true }); }
+if (recovered) fit.body = 'automatic 512-cell voxel union of closed source partitions';
 if (args.includes('--atlas-base-half')) {
   // The dog source stacks its emission beneath the base image. Runtime eye
   // emission is separate, so keep the canonical healthy UVs and base half only.
@@ -276,8 +277,9 @@ if (arg('--clear-headwear')) {
   // Give painted cap/helmet brims clearance over the face along the game camera's
   // 36-degree elevation. Move welded position groups together, retaining UV seams.
   const directory = mkdtempSync(join(tmpdir(), 'crowd-brim-')), input = join(directory, 'atlas.' + texture!.mime.split('/')[1]), output = join(directory, 'atlas.png');
-  writeFileSync(input, texture!.image); execFileSync('sips', ['-s', 'format', 'png', input, '--out', output], { stdio: 'ignore' });
-  const png = PNG.sync.read(readFileSync(output)), head = JOINTS.indexOf('head');
+  writeFileSync(input, texture!.image);
+  const png = texture!.mime === 'image/ktx2' ? await decodeSkinImage(texture!.image, texture!.mime, arg('--basis')!) : (execFileSync('sips', ['-s', 'format', 'png', input, '--out', output], { stdio: 'ignore' }), PNG.sync.read(readFileSync(output)));
+  const head = JOINTS.indexOf('head');
   const headVertices = body.owner.flatMap((owner, i) => owner === head ? [i] : []), face: number[] = [], cap: number[] = [];
   const xs = headVertices.map(i => body.pos[i * 3]), ys = headVertices.map(i => body.pos[i * 3 + 1]), zs = headVertices.map(i => body.pos[i * 3 + 2]);
   const centreX = (Math.min(...xs) + Math.max(...xs)) / 2, centreZ = (Math.min(...zs) + Math.max(...zs)) / 2, headWidth = Math.max(...zs) - Math.min(...zs), headHeight = Math.max(...ys) - Math.min(...ys);
@@ -285,9 +287,9 @@ if (arg('--clear-headwear')) {
     const x = Math.max(0, Math.min(png.width - 1, Math.floor(body.uv[i * 2] * png.width))), y = Math.max(0, Math.min(png.height - 1, Math.floor(body.uv[i * 2 + 1] * png.height))), offset = (y * png.width + x) * 4;
     const [r, g, b] = png.data.subarray(offset, offset + 3);
     if (body.pos[i * 3] > centreX && Math.abs(body.pos[i * 3 + 2] - centreZ) < headWidth * .3 && r > 140 && g > r * .45 && g < r * .85 && b > r * .25 && b < r * .8) face.push(i);
-    if (arg('--clear-headwear') === 'brown' ? r >= 80 && r < 170 && r > g * 1.1 && g > b * 1.05 : arg('--clear-headwear') === 'red' ? r > g * 1.6 && r > b * 1.4 : arg('--clear-headwear') === 'green' ? g > r * 1.1 && g > b * .75 : arg('--clear-headwear') === 'yellow' ? r > 130 && g > 100 && b < Math.min(r, g) * .7 : b > r * 1.1 && b >= g * .9) cap.push(i);
+    if (arg('--clear-headwear') === 'brown' ? r >= 80 && r < 170 && r > g * 1.1 && g > b * 1.05 : arg('--clear-headwear') === 'magenta' ? r > g * 1.2 && b > g * 1.1 : arg('--clear-headwear') === 'red' ? r > g * 1.6 && r > b * 1.4 : arg('--clear-headwear') === 'green' ? g > r * 1.1 && g > b * .75 : arg('--clear-headwear') === 'yellow' ? r > 130 && g > 100 && b < Math.min(r, g) * .7 : b > r * 1.1 && b >= g * .9) cap.push(i);
   }
-  const pickedEyes = arg('--eyes') ? (JSON.parse(readFileSync(arg('--eyes')!, 'utf8')) as { eye_centers: number[][] }).eye_centers.map(p => new Vector3().fromArray(p).applyMatrix4(bodyTransform)) : undefined;
+  const pickedEyes = arg('--eyes') ? (JSON.parse(readFileSync(arg('--eyes')!, 'utf8')) as { eye_centers: number[][] }).eye_centers.map(p => new Vector3().fromArray(p).applyMatrix4(bodyTransform)) : arg('--eye-radius') && eyes.length ? eyes.map(eye => new Vector3().fromArray(eye.pos.reduce((sum, value, i) => { sum[i % 3] += value / (eye.pos.length / 3); return sum; }, [0, 0, 0]))) : undefined;
   if ((!pickedEyes && face.length < 4) || cap.length < 4) throw Error('Cannot measure face/headwear clearance from the source atlas');
   const percentile = (values: number[], p: number) => values.sort((a, b) => a - b)[Math.floor((values.length - 1) * p)];
   let eyeY = pickedEyes ? Math.max(...pickedEyes.map(p => p.y)) : percentile(face.map(i => body.pos[i * 3 + 1]), .72);
@@ -316,7 +318,7 @@ if (arg('--clear-headwear')) {
     // A bound civilian's head leans during infection. Shorten the forward bill
     // around its measured face plane as well as lifting it, retaining the crown.
     const hinge = eyeX + headWidth * .12, forward = reachScale === 1 ? x : Math.min(x, hinge + Math.max(0, x - hinge) * reachScale);
-    const delta = Math.min(headHeight * liftFraction, Math.max(0, eyeY + Math.tan(sightline) * (forward - eyeX) + clearance - y));
+    const delta = Math.min(Number(arg('--brim-max-lift', String(headHeight * liftFraction))), Math.max(0, eyeY + Math.tan(sightline) * (forward - eyeX) + clearance - y));
     lifts.set(key(i), Math.max(lifts.get(key(i)) ?? 0, delta));
     retractions.set(key(i), Math.max(retractions.get(key(i)) ?? 0, x - forward));
   }
@@ -689,6 +691,7 @@ for (let t = 0; t < body.tris.length; t += 3) {
 // ---- output document --------------------------------------------------------------------------------
 const out = new Document(); out.createBuffer();
 const copy = new Map<GNode, GNode>();
+const retainedProps: GNode[] = [];
 const capMaterial = out.createMaterial('pal_blood').setBaseColorFactor([.4508, .006, .0137, 1]).setMetallicFactor(0).setRoughnessFactor(1);
 const clone = (node: GNode, cap = false): GNode | null => {
   if (retained(node)) {
@@ -775,9 +778,10 @@ if (propsPath) {
     // Authored rigid attachments retain their joint-local grip/fit when a
     // neutral arm is refitted. Source-space placement alone can float an axe
     // at the former wrist position after that bone moves.
-    const binding = entry.bind_matrix ? new Matrix4().fromArray(entry.bind_matrix).invert() : world(owner).invert().multiply(bodyTransform);
+    const binding = entry.bind_matrix ? new Matrix4().fromArray(entry.bind_matrix).invert() : world(owner).invert().multiply(args.includes('--props-rest-aligned') ? new Matrix4() : bodyTransform);
     node.setMatrix(binding.multiply(world(source)).toArray());
     copy.get(owner)!.addChild(node);
+    retainedProps.push(node);
   }
 }
 const outJoints = JOINTS.map(name => copy.get(jointNode.get(name)!)!);
@@ -796,8 +800,31 @@ if (image && textureMax) {
   execFileSync('sips', ['-Z', textureMax, '-s', 'format', 'jpeg', '-s', 'formatOptions', '88', input, '--out', output], { stdio: 'ignore' });
   image = readFileSync(output); mime = 'image/jpeg'; rmSync(dir, { recursive: true });
 }
+if (image && retainedProps.length && args.includes('--props-rest-aligned')) {
+  // Protected details can use a different atlas layout from the continuous
+  // pre-binding body. Preserve both images and remap UVs into one shared map.
+  const base = await decodeSkinImage(image, mime!, arg('--basis')!);
+  const maps = [...new Set(retainedProps.flatMap(node => node.getMesh()!.listPrimitives().map(p => p.getMaterial()!.getBaseColorTexture()!)))];
+  const images = [base, ...await Promise.all(maps.map(map => decodeSkinImage(map.getImage()!, map.getMimeType(), arg('--basis')!)))];
+  const width = 2 ** Math.ceil(Math.log2(Math.max(...images.map(png => png.width))));
+  const height = 2 ** Math.ceil(Math.log2(images.reduce((sum, png) => sum + png.height, 0)));
+  const atlas = new PNG({ width, height }); atlas.data.fill(255);
+  let offset = 0;
+  for (const [index, png] of images.entries()) {
+    for (let y = 0; y < png.height; y++) png.data.copy(atlas.data, ((y + offset) * width) * 4, y * png.width * 4, (y + 1) * png.width * 4);
+    if (index === 0) for (let i = 0; i < body.uv.length; i += 2) { body.uv[i] *= png.width / width; body.uv[i + 1] = (body.uv[i + 1] * png.height + offset) / height; }
+    else for (const node of retainedProps) for (const primitive of node.getMesh()!.listPrimitives()) if (primitive.getMaterial()!.getBaseColorTexture() === maps[index - 1]) {
+      const uv = primitive.getAttribute('TEXCOORD_0')!;
+      for (let i = 0; i < uv.getCount(); i++) { const at = uv.getElement(i, []); uv.setElement(i, [at[0] * png.width / width, (at[1] * png.height + offset) / height]); }
+    }
+    offset += png.height;
+  }
+  image = new Uint8Array(PNG.sync.write(atlas)); mime = 'image/png';
+  fit.protectedAtlas = { width, height, sourceImages: images.map(png => [png.width, png.height]) };
+}
 if (mime === 'image/ktx2') out.createExtension((await import('@gltf-transform/extensions')).KHRTextureBasisu).setRequired(true);
 if (image) material.setBaseColorTexture(out.createTexture('atlas').setImage(new Uint8Array(image)).setMimeType(mime!));
+if (args.includes('--props-rest-aligned')) for (const node of retainedProps) for (const primitive of node.getMesh()?.listPrimitives() ?? []) primitive.setMaterial(material);
 const prim = out.createPrimitive().setMaterial(material);
 const positions = new Float32Array(n * 3), normals = new Float32Array(n * 3), uvs = new Float32Array(n * 2), J = new Uint16Array(n * 4), W = new Float32Array(n * 4);
 const semanticParts = new Uint16Array(n);
@@ -1020,6 +1047,9 @@ if (!args.includes('--retain-corgi-props')) {
     capFits.push({ part, rim: capParts.length, triangles: triangles.length / 3, loops: selected.length, distance, method: surface ? 'closed-part-surface' : created.length ? 'cut-boundary' : 'source-opening' });
   }
 }
+// A calibrated continuous body can differ from its older cut cast. Its own
+// recorded landmarks, transformed with that body, own the emitter positions.
+if (args.includes('--reproject-eyes')) eyes.length = 0;
 if (!eyes.length && !args.includes('--no-eye-discs')) {
   // Healthy-source bodies need dormant eye discs too: CivilianMaterial reveals them only as infection takes hold.
   const head = JOINTS.indexOf('head'), inverse = world(jointNode.get('head')!).invert(), rest = inverse.clone().invert();
@@ -1082,6 +1112,14 @@ if (!eyes.length && !args.includes('--no-eye-discs')) {
   }
 }
 if (eyes.length) {
+  if (arg('--eye-radius')) for (const eye of eyes) {
+    const centre = [0, 0, 0];
+    for (let i = 0; i < eye.pos.length; i++) centre[i % 3] += eye.pos[i] / (eye.pos.length / 3);
+    const radius = Math.max(...eye.pos.filter((_, i) => i % 3 === 1)) - Math.min(...eye.pos.filter((_, i) => i % 3 === 1));
+    const scale = Number(arg('--eye-radius')) * 2 / radius;
+    if (!Number.isFinite(scale) || scale <= 0) throw Error('Invalid infection eye radius');
+    eye.pos = eye.pos.map((value, i) => centre[i % 3] + (value - centre[i % 3]) * scale);
+  }
   // Infected eye discs: rigid on the head, emissive by material name (bakeInfected's emi_ rule).
   const eyeMaterial = capMaterial;
   const pos: number[] = [], tris: number[] = [], eyeUV: number[] = [];
@@ -1185,6 +1223,7 @@ const bytes = await io.writeBinary(out);
 writeFileSync(outPath, bytes);
 const report = { rig: rigPath, out: outPath, bytes: bytes.length, ...fit, vertices: n, weldedVertices: welded, triangles: body.tris.length / 3, bodyTriangleBudget: Number.isFinite(bodyBudget) ? bodyBudget : null, components, openEdges, unrelatedSeams, maxInfluences, zeroNormals, jointNames: JOINTS, rigKind: quadruped ? 'quadruped' : 'humanoid', capFits, removedClosureTriangles, removedDegenerateTriangles, spectacleTop, joints: JOINTS.length, eyes: eyes.length, seams };
 if (reportPath) writeFileSync(reportPath, JSON.stringify(report, null, 2) + '\n');
+if (recovered) rmSync(recovered, { recursive: true, force: true });
 console.log(JSON.stringify(report));
 
 // ---- helpers ----------------------------------------------------------------------------------------
