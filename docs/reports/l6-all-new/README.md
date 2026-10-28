@@ -2,7 +2,7 @@
 
 - [Census](census.json): four converted IDs; fourteen already v2, including both couriers and the companion; none deferred. Reused the durable man-a Trellis high; inference spend **€0**.
 - [Rebuild proof](rebuild-proof.json): all **54 active delivery/source/bake/registry files reproduce identically**, zero manual asset steps; run `tools/assets/skin-crowd-build.sh <wave2/npc.civilian-man-a> <asset-id>` for each converted ID.
-- [LOD0/1/2 budget](delivery-budget.json): **5433/2284/1965 triangles** ≤6000/2500/4000; maximum **351884/174280/123972 bytes** ≤600000/250000/150000.
+- [LOD0/1/2 budget](delivery-budget.json): **5433/2284/2284 triangles** ≤6000/2500/4000; maximum **351884/174280/128708 bytes** ≤600000/250000/150000.
 - Reviewed native 120/400 px front/back, low/high, WebGL2/WebGPU and two skin tones: [man-a](01-npc.civilian-man-a.aftermath.jpg), [bandaged](02-npc.shelter-survivor.bandaged.jpg), [lying](03-npc.shelter-survivor.lying.jpg), [sitting](04-npc.shelter-survivor.sitting.jpg); [verdict and fixes](visual-review.json).
 - Reviewed [30-figure L6 crowd](05-crowd-old-new.jpg), [healthy/turned/frozen states](06-body-states.jpg) and [close turned/corpse views](11-turned-corpses-close.jpg); four real bodies per state asserted on both capture configurations.
 - Reviewed [scripted scenes](07-scripted-scenes.jpg), [shelter/power failure](08-scripted-scenes.jpg), [retreat/hatch](09-retreat-and-hatch.jpg), and [Marcus pistol front/back](10-marcus-pistol.jpg); **28 scene checks pass**, both live pistols retain muzzles on the unified weapon path. [Coverage](coverage.json).

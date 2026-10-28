@@ -2,7 +2,9 @@
   "assetValidator": {
     "fullRecords": 1262,
     "errors": 0,
-    "currentConvertedRecords": 12
+    "currentConvertedRecords": 12,
+    "allSourceLodsClosed": true,
+    "unrelatedSeamJoins": 0
   },
   "typecheck": true,
   "lint": true,
@@ -10,7 +12,8 @@
     "passed": 104,
     "files": 24,
     "budget": 144,
-    "newCases": 0
+    "newCases": 0,
+    "caseBudgetFiles": 40
   },
   "smoke": {
     "passed": 7,
@@ -19,8 +22,17 @@
     "seconds": 181.2,
     "webglAttributesMax": 13,
     "webgpuVertexBuffersMax": 8,
-    "freezeGuardPassed": true
+    "freezeGuardPassed": true,
+    "shaderBuildsAfterWarmup": 0,
+    "maxGameplayFrameMs": 17,
+    "measuredFrames": 169
   },
-  "sceneGate": "pending",
+  "sceneGate": {
+    "exit": 0,
+    "passed": 43,
+    "knownBaselineExceptions": 5,
+    "missing": 0,
+    "repeatForFinalFarLod": "pending"
+  },
   "realInputL6": "pending"
 }

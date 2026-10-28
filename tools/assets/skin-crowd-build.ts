@@ -40,6 +40,13 @@ const metadata = existsSync(join(source, 'rig.json')) ? JSON.parse(readFileSync(
 // Derived story identities fit the continuous source directly to the neutral
 // game rig. The old cut-source ownership leaves shoulder slivers in cower poses.
 const derivedTemplate = id !== sourceId && id.startsWith('npc.') && existsSync(join('assets', sourceId, 'model.glb'));
+if (derivedTemplate) {
+  def.budget.triangles = 6000; def.budget.fileKB = 600;
+  // Retain the source LOD1 anatomy at distance. The legacy 2k cap otherwise
+  // invokes position simplification after binding and reconnects two seams.
+  def.authoredLodTriangles = { lod1: 2500, lod2: 2500 };
+  delete def.authoredLodRatios;
+}
 const unbound = existsSync(join(source, 'source/manifest.json')) && !metadata;
 const alignment = unbound ? JSON.parse(readFileSync(join(id === 'inf.dog' ? join(dirname(source), 'amb.dog') : source, 'source/manifest.json'), 'utf8')) as { initial_game_height_scale: number; game_alignment_rotation_y_degrees: number; triangle_budgets?: [number, number, number]; rig_class?: string; rig_source?: string; rig_fit_height?: boolean; authored_skin?: true | string; wraps?: CrowdWrap[]; spectacles?: boolean; covered_legs?: boolean; healthy_toy_eyes?: boolean; rectangular_glasses?: boolean } : undefined;
 if (alignment?.triangle_budgets) {
