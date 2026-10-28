@@ -12,7 +12,9 @@ def grid(cells,dest,width=800,cols=2,crop=None):
   im.paste(pic,(x+(width-pic.width)//2,y+30));d.text((x+6,y+6),label,font=FONT,fill='white')
  im.save(dest,quality=92,optimize=True)
 def figures():
+ import os
  for n,ident in enumerate(IDS,1):
+  if os.environ.get('L8_IDS') and ident not in os.environ['L8_IDS'].split(','):continue
   rows=[]
   for config in ['high-webgl2','high-webgpu','low-webgl2','low-webgpu']:
    for pixels in [120,400]:
