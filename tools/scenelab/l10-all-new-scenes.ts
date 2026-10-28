@@ -91,13 +91,16 @@ try {
     for(const zoom of [1,1.5]){await session.page.evaluate(zoom=>window.__SS__!.camera.zoom(zoom),zoom);await session.screenshot(`${out}/zoom-${zoom}.png`);}
     writeJson(`${out}/metrics.json`,metrics);writeJson(`${out}/resources.json`,await session.page.evaluate(resources));
   } else if(mode==='states') {
-    for(const model of ids){
+    for(const model of ids.filter(id=>!process.env.L10_IDS||process.env.L10_IDS.split(',').includes(id))){
       await session.load({...base,name:`l10-states-${model}`,actors:[{id:'courier',kind:'courier',at:[7,0],god:true},actor(model)],camera:{mode:'game',target:'subject',zoom:.7},trace:true});
       await session.step(3);await session.screenshot(`${out}/${model}-idle.png`);
       await session.page.evaluate(()=>window.__SCENE__!.command('subject',{special:'alpha.roar',target:'courier'}));
       for(const frame of [30,60,120]){await session.step(frame===120?60:30);await session.screenshot(`${out}/${model}-roar-${frame}.png`);}
-      await session.page.evaluate(()=>window.__SCENE__!.command('subject',{corpse:true}));await session.step(180);await session.screenshot(`${out}/${model}-corpse.png`);
-      receipts.push({model,metrics:await session.metrics()});writeJson(`${out}/receipts.json`,receipts);
+      const entity=(await session.metrics()).actors.subject.entity;
+      await session.page.evaluate(entity=>{const game=(window.__SCENE__ as unknown as {game:Game}).game;game.world.combat!.damage.cure(game.world.entities.get(entity)!);},entity);
+      await session.step(180);await session.screenshot(`${out}/${model}-corpse.png`);
+      const metrics=await session.metrics();assert.equal(metrics.actors.subject.state,'dead');assert.equal(metrics.actors.subject.health,0);
+      receipts.push({model,death:'canonical cure death, intact side-fall; boss rally probe separately verifies rocket kill',metrics});writeJson(`${out}/receipts.json`,receipts);
     }
   } else if(mode==='story') {
     for(const name of ['l10-crash-axe','l10-d2-military-breach','l10-e2-terminal','l10-e2-backpack','l10-mega-close-contact','l10-cure-install-defend','l10-cure-mist','qa-l10-epilogue']){

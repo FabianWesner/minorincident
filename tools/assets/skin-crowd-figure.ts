@@ -168,7 +168,7 @@ for (const node of nodes) {
     const base = eye ? 0 : rigid.pos.length / 3, el: number[] = [];
     // Indexed palette primitives can share an accessor containing other parts
     // and props. Only referenced vertices belong to this primitive's joint.
-    const used = index && args.includes('--fit-rig-height') ? [...new Set(Array.from({ length: index.getCount() }, (_, i) => index.getScalar(i)))] : Array.from({ length: position.getCount() }, (_, i) => i);
+    const used = index ? [...new Set(Array.from({ length: index.getCount() }, (_, i) => index.getScalar(i)))] : Array.from({ length: position.getCount() }, (_, i) => i);
     const vertexMap = new Map(used.map((vertex, i) => [vertex, i]));
     for (const i of used) {
       position.getElement(i, el); v.set(el[0], el[1], el[2]).applyMatrix4(m);
@@ -362,6 +362,7 @@ if (quadruped && bodyPath) {
   for (let t = 0; t < body.tris.length; t += 3) for (let e = 0; e < 3; e++) {
     const a = weld[body.tris[t + e]], b = weld[body.tris[t + (e + 1) % 3]]; links[a].add(b); links[b].add(a);
   }
+
   let repaired = 0;
   for (let pass = 0; pass < 3; pass++) {
     const seen = new Set<number>(), groups: number[][] = [], largest = new Map<number, number>();
@@ -384,7 +385,7 @@ if (quadruped && bodyPath) {
 const bodyBudget = Number(arg('--body-budget') ?? Infinity);
 const contactCaps: { centre: number[]; rim: number[][] }[] = [];
 
-if (args.includes('--fit-rig-height')) {
+if (args.includes('--fit-rig-height') || args.includes('--repair-contacts')) {
   // TRELLIS sometimes fuses a lowered glove/sleeve to the hip or thigh. That
   // contact is not an anatomical joint: skinning it produces a waist-to-hand
   // web when the hand rises. Remove only the cross-contact strip and close
@@ -400,6 +401,34 @@ if (args.includes('--fit-rig-height')) {
   for (let t = 0; t < body.tris.length; t += 3) for (let e = 0; e < 3; e++) {
     const a = weld[body.tris[t + e]], b = weld[body.tris[t + (e + 1) % 3]]; links[a].add(b); links[b].add(a);
   }
+  if (args.includes('--repair-contacts')) {
+    // Mega template partitioning can put a connected trouser patch inside a
+    // fist. Anchor each leg chain to its sole, rather than to the whole torso:
+    // a false patch may touch the torso through an upper-arm label boundary.
+    let legOwnershipRepairs = 0;
+    for (const side of ['L', 'R']) {
+      const leg = (w: number) => /^(leg|shin|foot)[LR]$/.test(JOINTS[body.owner[representatives[w]]]) && JOINTS[body.owner[representatives[w]]].endsWith(side);
+      const visited = new Set<number>(), pieces: number[][] = [];
+      for (let start = 0; start < links.length; start++) if (leg(start) && !visited.has(start)) {
+        const piece: number[] = [], stack = [start]; visited.add(start);
+        while (stack.length) { const at = stack.pop()!; piece.push(at); for (const to of links[at]) if (leg(to) && !visited.has(to)) { visited.add(to); stack.push(to); } }
+        pieces.push(piece);
+      }
+      const sole = pieces.reduce<number[] | undefined>((best, piece) => !best || Math.min(...piece.map(w => body.pos[representatives[w] * 3 + 1])) < Math.min(...best.map(w => body.pos[representatives[w] * 3 + 1])) ? piece : best, undefined);
+      for (const piece of pieces) {
+        if (piece === sole) continue;
+        const votes = new Map<number, number>();
+        for (const w of piece) for (const to of links[w]) {
+          const owner = body.owner[representatives[to]];
+          if (armSide(JOINTS[owner]) === side) votes.set(owner, (votes.get(owner) ?? 0) + 1);
+        }
+        const replacement = [...votes].sort((a, b) => b[1] - a[1])[0]?.[0]; if (replacement === undefined) continue;
+        const members = new Set(piece);
+        for (let i = 0; i < body.owner.length; i++) if (members.has(weld[i])) { body.owner[i] = replacement; legOwnershipRepairs++; }
+      }
+    }
+    fit.legOwnershipRepairs = legOwnershipRepairs;
+  }
   const region = representatives.map(i => armSide(JOINTS[body.owner[i]]) ?? 'body'), seen = new Set<number>();
   const groups: number[][] = [];
   for (let start = 0; start < links.length; start++) if (!seen.has(start)) {
@@ -409,14 +438,16 @@ if (args.includes('--fit-rig-height')) {
   }
   const largest = new Map<string, number>();
   for (const group of groups) largest.set(region[group[0]], Math.max(largest.get(region[group[0]]) ?? 0, group.length));
+  let contactOwnershipRepairs = 0;
   for (const group of groups) {
     const kind = region[group[0]]; if (group.length === largest.get(kind)) continue;
     const neighbours = group.flatMap(at => [...links[at]].filter(to => region[to] !== kind));
     const counts = new Map<number, number>(); for (const to of neighbours) { const owner = body.owner[representatives[to]]; counts.set(owner, (counts.get(owner) ?? 0) + 1); }
     const replacement = [...counts].sort((a, b) => b[1] - a[1])[0]?.[0];
     if (replacement === undefined) continue;
-    const members = new Set(group); for (let i = 0; i < body.owner.length; i++) if (members.has(weld[i])) body.owner[i] = replacement;
+    const members = new Set(group); for (let i = 0; i < body.owner.length; i++) if (members.has(weld[i])) { body.owner[i] = replacement; contactOwnershipRepairs++; }
   }
+  fit.contactOwnershipRepairs = contactOwnershipRepairs;
   const forbidden = (a: number, b: number) => {
     const x = JOINTS[body.owner[a]], y = JOINTS[body.owner[b]], side = armSide(x);
     return !!side && /^(foreArm|hand)/.test(x) && armSide(y) !== side;
@@ -566,7 +597,7 @@ let unrelatedSeams = 0;
 const owning = new Set(owner);
 const ancestors = (j: number) => { const out: number[] = []; for (let q = parentJoint.get(JOINTS[j]); q; q = parentJoint.get(q)) out.push(JOINTS.indexOf(q as typeof JOINTS[number])); return out; };
 const related = (x: number, y: number) => {
-  if (args.includes('--fit-rig-height') && (ancestors(x).includes(y) || ancestors(y).includes(x))) return true;
+  if ((args.includes('--fit-rig-height') || args.includes('--repair-contacts')) && (ancestors(x).includes(y) || ancestors(y).includes(x))) return true;
   const owningParent = (j: number) => ancestors(j).find(a => owning.has(a));
   if (owningParent(x) === y || owningParent(y) === x) return true;
   const px = ancestors(x)[0], py = ancestors(y)[0];
@@ -594,7 +625,7 @@ for (const [x, y] of pairs.values()) {
     const span = dist(w, u); crossingSpan = Math.max(crossingSpan, span);
     const half = span / 2; if (half < d[w]) { d[w] = half; heap.push([half, w]); }
   }
-  if (args.includes('--fit-rig-height')) band = Math.max(band, Math.min(height * .12, crossingSpan * 2.1));
+  if (args.includes('--fit-rig-height') || args.includes('--repair-contacts')) band = Math.max(band, Math.min(height * .12, crossingSpan * 2.1));
   for (let w = 0; w < welded; w++) if (d[w] < Infinity) seamCount++;
   heap.sort((a, b) => a[0] - b[0]);
   // Small graphs: a sorted frontier (Dijkstra) is fast enough.
@@ -619,7 +650,7 @@ for (const cap of capWeights) {
   for (const w of cap.rim) for (const [joint, weight] of weights[w]) average.set(joint, (average.get(joint) ?? 0) + weight / cap.rim.length);
   weights[cap.centre] = average;
 }
-if (args.includes('--fit-rig-height') || quadruped) {
+if (args.includes('--fit-rig-height') || args.includes('--repair-contacts') || quadruped) {
   // Relax intersecting shoulder/hip blend bands on the surface graph. Local
   // of local passes removes abrupt multi-joint transitions without spatially
   // bleeding a glove into the neighbouring leg across a gap.

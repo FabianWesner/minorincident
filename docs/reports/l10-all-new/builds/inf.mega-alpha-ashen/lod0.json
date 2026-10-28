@@ -1,7 +1,7 @@
 {
   "rig": "/Users/wesner/Workspace/3dp-l10-all-new/cast/wave2/inf.mega-alpha-ashen/lod0.glb",
   "out": "docs/reports/l10-all-new/builds/inf.mega-alpha-ashen/lod0.raw.glb",
-  "bytes": 3051280,
+  "bytes": 3069908,
   "body": "/Users/wesner/Workspace/3dp-l10-all-new/cast/wave2/inf.mega-alpha-ashen/source/flat-lod0.glb",
   "scale": 2.9230859785355547,
   "yaw": 90,
@@ -11,14 +11,22 @@
     0.009674185495350929
   ],
   "meanDistanceToRigidSurface": 0.003493160303691676,
+  "legOwnershipRepairs": 1074,
+  "contactOwnershipRepairs": 105,
+  "contactRepair": {
+    "removedTriangles": 13,
+    "closedBoundaries": 1,
+    "removedScrapTriangles": 0
+  },
+  "weightRelaxationPasses": 2,
   "eyeLandmarks": "/Users/wesner/Workspace/3dp-l10-all-new/cast/wave2/inf.mega-alpha-ashen/eyes.json",
-  "vertices": 16720,
-  "weldedVertices": 7441,
-  "triangles": 14958,
-  "bodyTriangleBudget": 14958,
+  "vertices": 17045,
+  "weldedVertices": 7631,
+  "triangles": 15338,
+  "bodyTriangleBudget": 15338,
   "components": 1,
   "openEdges": 0,
-  "unrelatedSeams": 938,
+  "unrelatedSeams": 422,
   "maxInfluences": 4,
   "zeroNormals": 0,
   "jointNames": [
@@ -43,58 +51,58 @@
   "capFits": [
     {
       "part": "head",
-      "rim": 65,
-      "triangles": 63,
+      "rim": 51,
+      "triangles": 49,
       "loops": 1,
-      "distance": 0.2655035642559902,
+      "distance": 0.2901310852772785,
       "method": "cut-boundary"
     },
     {
       "part": "armL",
-      "rim": 198,
-      "triangles": 188,
-      "loops": 5,
-      "distance": 0.15309145200432525,
+      "rim": 79,
+      "triangles": 77,
+      "loops": 1,
+      "distance": 0.17576250371994656,
       "method": "cut-boundary"
     },
     {
       "part": "armR",
-      "rim": 120,
-      "triangles": 114,
-      "loops": 3,
-      "distance": 0.22969402901512873,
+      "rim": 88,
+      "triangles": 84,
+      "loops": 2,
+      "distance": 0.20330103241409228,
       "method": "cut-boundary"
     },
     {
       "part": "foreArmL",
-      "rim": 87,
-      "triangles": 85,
+      "rim": 49,
+      "triangles": 47,
       "loops": 1,
-      "distance": 0.6625943964862261,
+      "distance": 0.34246833142769645,
       "method": "cut-boundary"
     },
     {
       "part": "foreArmR",
-      "rim": 88,
-      "triangles": 80,
-      "loops": 4,
-      "distance": 0.1450317515283419,
+      "rim": 71,
+      "triangles": 65,
+      "loops": 3,
+      "distance": 0.14779726779122745,
       "method": "cut-boundary"
     },
     {
       "part": "legL",
-      "rim": 181,
-      "triangles": 169,
-      "loops": 6,
-      "distance": 0.3207923091463063,
+      "rim": 89,
+      "triangles": 83,
+      "loops": 3,
+      "distance": 0.31327486933656346,
       "method": "cut-boundary"
     },
     {
       "part": "legR",
-      "rim": 142,
-      "triangles": 128,
-      "loops": 7,
-      "distance": 0.24140164488382598,
+      "rim": 111,
+      "triangles": 103,
+      "loops": 4,
+      "distance": 0.6708171399990146,
       "method": "cut-boundary"
     }
   ],
@@ -104,74 +112,84 @@
   "eyes": 2,
   "seams": {
     "foreArmR/armR": {
-      "seamVertices": 155,
-      "band": 0.07353863549948071,
-      "blended": 188
+      "seamVertices": 157,
+      "band": 0.23918859431667086,
+      "blended": 443
     },
     "footR/shinR": {
       "seamVertices": 83,
-      "band": 0.05186708201943058,
-      "blended": 88
+      "band": 0.25329542513313286,
+      "blended": 399
     },
     "shinL/legL": {
-      "seamVertices": 105,
-      "band": 0.08089249904942879,
-      "blended": 143
+      "seamVertices": 102,
+      "band": 0.23405498404919364,
+      "blended": 314
     },
     "torso/hip": {
-      "seamVertices": 251,
-      "band": 0.102954089699273,
-      "blended": 455
+      "seamVertices": 255,
+      "band": 0.3176869053577567,
+      "blended": 1157
     },
     "head/torso": {
-      "seamVertices": 119,
-      "band": 0.05186708201943058,
-      "blended": 116
+      "seamVertices": 122,
+      "band": 0.3176869053577567,
+      "blended": 534
     },
     "foreArmL/armL": {
-      "seamVertices": 56,
-      "band": 0.07353863549948071,
-      "blended": 63
+      "seamVertices": 55,
+      "band": 0.24848299090374082,
+      "blended": 231
     },
     "armR/torso": {
-      "seamVertices": 184,
-      "band": 0.08824636259937685,
-      "blended": 318
+      "seamVertices": 174,
+      "band": 0.3069660820269542,
+      "blended": 990
     },
     "handR/foreArmR": {
-      "seamVertices": 92,
-      "band": 0.05186708201943058,
-      "blended": 87
+      "seamVertices": 93,
+      "band": 0.31561453057242933,
+      "blended": 353
     },
     "legL/hip": {
-      "seamVertices": 93,
-      "band": 0.102954089699273,
-      "blended": 154
-    },
-    "armL/torso": {
-      "seamVertices": 238,
-      "band": 0.08824636259937685,
-      "blended": 339
-    },
-    "handL/foreArmL": {
-      "seamVertices": 53,
-      "band": 0.05186708201943058,
-      "blended": 52
+      "seamVertices": 94,
+      "band": 0.26761370625456726,
+      "blended": 294
     },
     "footL/shinL": {
-      "seamVertices": 166,
-      "band": 0.05186708201943058,
-      "blended": 170
+      "seamVertices": 84,
+      "band": 0.22935820797319406,
+      "blended": 343
+    },
+    "handL/armL": {
+      "seamVertices": 60,
+      "band": 0.3049532473738162,
+      "blended": 373
+    },
+    "armL/torso": {
+      "seamVertices": 158,
+      "band": 0.3176869053577567,
+      "blended": 737
+    },
+    "handL/foreArmL": {
+      "seamVertices": 77,
+      "band": 0.22716964503744075,
+      "blended": 300
     },
     "shinR/legR": {
       "seamVertices": 27,
-      "band": 0.08089249904942879,
-      "blended": 34
+      "band": 0.2669623345986518,
+      "blended": 99
     },
     "legR/hip": {
       "seamVertices": 71,
-      "band": 0.102954089699273,
-      "blended": 155
+      "band": 0.1694558001963019,
+      "blended": 240
+    },
+    "shinL/hip": {
+      "seamVertices": 21,
+      "band": 0.27202903058901184,
+      "blended": 110
     }
   }
 }

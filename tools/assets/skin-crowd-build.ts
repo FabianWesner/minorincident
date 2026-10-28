@@ -111,6 +111,9 @@ for (const lod of [0, 1, 2]) {
   if (unbound && id === 'inf.dog') args.push('--atlas-base-half', '--eyes', join(source, 'eyes.json'));
   else if (eyeSource && (id.startsWith('inf.') || alignment?.healthy_toy_eyes || metadata && ['quadruped', 'bird'].includes(metadata.class ?? ''))) args.push('--eyes', eyeSource);
   if (metadata && !derivedTemplate) args.push('--reconstruct-body');
+  // The lowered Mega fists contain small nearest-template trouser islands.
+  // Repair their semantic ownership without refitting the matching v2 rig.
+  if (metadata?.class === 'mega') args.push('--repair-contacts');
   if (id.startsWith('npc.')) args.push('--healthy');
   if (derivedTemplate || unbound && (!alignment?.rig_source || alignment.rig_fit_height) && (id.startsWith('npc.') || alignment?.rig_class === 'humanoid' || alignment?.rig_class === 'alpha')) args.push('--fit-rig-height');
   if (alignment?.spectacles || ['npc.civilian-woman-b', 'npc.civilian-elderly'].includes(id)) args.push('--spectacles');
@@ -134,6 +137,9 @@ for (const lod of [0, 1, 2]) {
   if (id === 'char.corgi' || id === 'amb.dog') args.push('--no-eye-discs');
   const cheap = def.category === 'prop' && def.budget.triangles <= 12000;
   const triangleLimit = lod > 0 && def.authoredLodTriangles ? def.authoredLodTriangles[lod === 1 ? 'lod1' : 'lod2'] : lod > 0 && def.authoredLodRatios ? Math.ceil(def.budget.triangles * def.authoredLodRatios[lod === 1 ? 'lod1' : 'lod2']) : lod === 1 && def.tier === 'hero' ? Math.ceil(def.budget.triangles * .15) : lod === 2 && !cheap ? Math.min(4000, def.budget.triangles) : def.budget.triangles;
+  // The Mega's corrected four-weight seams need a little more encoded data.
+  // Keep its painted atlas readable inside 250 kB with modest LOD1 headroom.
+  const workingTriangleLimit = metadata?.class === 'mega' && lod === 1 ? triangleLimit - 128 : triangleLimit;
   let bodyBudget: number | undefined = unbound && id === 'inf.dog' ? (JSON.parse(readFileSync(join(dirname(report), 'amb.dog', `lod${lod}.json`), 'utf8')) as { bodyTriangleBudget: number | null }).bodyTriangleBudget ?? undefined : undefined;
   for (let attempt = 0; attempt < 4; attempt++) {
     execFileSync(process.execPath, ['--import', 'tsx', ...args, ...bodyBudget ? ['--body-budget', String(bodyBudget)] : []], { stdio: 'pipe' });
@@ -148,9 +154,9 @@ for (const lod of [0, 1, 2]) {
     }
     if (alignment?.rectangular_glasses) { restoreCrowdGlasses(document, lod); await io.write(raw, document); }
     const total = document.getRoot().listNodes().reduce((sum, node) => sum + (node.getMesh()?.listPrimitives().reduce((sum, primitive) => sum + (primitive.getIndices()?.getCount() ?? primitive.getAttribute('POSITION')!.getCount()) / 3, 0) ?? 0), 0);
-    if (total <= triangleLimit) break;
+    if (total <= workingTriangleLimit) break;
     const info = JSON.parse(readFileSync(join(report, `lod${lod}.json`), 'utf8')) as { triangles: number };
-    bodyBudget = info.triangles - (total - triangleLimit) - 8;
+    bodyBudget = info.triangles - (total - workingTriangleLimit) - 8;
     if (attempt === 3 || bodyBudget <= 0) throw Error(`${id}: fitted caps exceed triangle budget ${triangleLimit}`);
   }
   const animalRecipe = animalEyeRecipes[sourceId];
@@ -187,7 +193,7 @@ for (const lod of [0, 1, 2]) {
     // Let detailed boss faces retain the normal 512 atlas when it fits, then
     // reduce the image only as needed for each standalone LOD byte budget.
     const byteLimit = [600000, 250000, 150000][lod];
-    for (const atlas of [256, 128]) {
+    for (const atlas of [512, 256, 128]) {
       if (readFileSync(target).length <= byteLimit || atlas >= initialAtlas) continue;
       await compressSkin(raw, target, basis, atlas);
     }
