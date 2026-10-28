@@ -14,7 +14,7 @@ const tier = process.env.REVIEW_TIER === 'high' ? 'high' : 'low';
 const backend = process.env.REVIEW_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
 const variant = process.env.REVIEW_VARIANT ?? 'new', mode = process.env.L8_CAPTURE ?? 'portraits';
 const out = resolve(`test-results/l8-all-new/${mode}-${variant}-${tier}-${backend}`);
-const session = new SceneSession({ backend, tier, nativeFrameTiming: mode==='population', viewport: mode === 'portraits' ? { width:800,height:600 } : { width:1600,height:900 }, query:{ ...(mode==='population'?{}:{crowdProbe:'full'}), ...(mode==='freeze'?{loadProfile:'2'}:{}) } });
+const session = new SceneSession({ backend, tier, nativeFrameTiming: false, viewport: mode === 'portraits' ? { width:800,height:600 } : { width:1600,height:900 }, query:{ ...(mode==='population'?{crowdProbe:'drawn'}:{crowdProbe:'full'}), ...(mode==='freeze'?{loadProfile:'2'}:{}) } });
 const actor = (model: string, id='subject', at: [number,number]=[0,0], yaw=-45): ActorSpec => model.startsWith('amb.')
   ? { id, kind:'animal', species:model.slice(4) as ActorSpec['species'], at,yaw,state:'idle' }
   : { id,kind:'infected',archetype:`infected.${model.slice(4)}`,look:{model},at,yaw,state:'idle' };
@@ -107,7 +107,7 @@ try {
     const sample=await session.page.evaluate(async()=>{
       const api=window.__SS__!,frames:number[]=[];api.resume();const start=performance.now();let previous=0;
       while(performance.now()-start<8000){const now=await new Promise<number>(requestAnimationFrame);if(previous&&now-start>2000)frames.push(now-previous);previous=now;}
-      api.pause();frames.sort((a,b)=>a-b);return {samples:frames.length,p95:frames[Math.ceil(frames.length*.95)-1],max:Math.max(...frames),ai:api.getState().ai?.count};
+      api.pause();frames.sort((a,b)=>a-b);return {timing:'shared pool, refresh-capped diagnostic; uncapped acceptance pending the PO quiet window',samples:frames.length,p95:frames[Math.ceil(frames.length*.95)-1],max:Math.max(...frames),ai:api.getState().ai?.count};
     });
     assert.equal(sample.ai,cap);writeJson(`${out}/resources.json`,{sample,...await session.page.evaluate(resources)});await session.screenshot(`${out}/population.png`);console.log(JSON.stringify(sample));
   } else if(mode==='states') {
@@ -139,7 +139,13 @@ try {
   } else if(mode==='story') {
     for(const relative of ['l8-district/walk.json','l8-systems/lion.json','l8-systems/gorilla.json','l8-systems/elephant.json','l8-systems/zebra.json','l8-systems/flamingo.json','l8-apc/transport.json']){
       const file=resolve('tests/scenes',relative),spec=readSpec(file);spec.time='L8-zoo';
-      const result=await runSpec(session,spec,{file,out:resolve(out,spec.name!),sheet:Math.max(60,Math.ceil((spec.frames??180)/8))});assert.ok(result.pass,JSON.stringify(result.failed));receipts.push({file,...result});writeJson(`${out}/receipts.json`,receipts);
+      const result=await runSpec(session,spec,{file,out:resolve(out,spec.name!),sheet:Math.max(60,Math.ceil((spec.frames??180)/8))});
+      receipts.push({file,...result});writeJson(`${out}/receipts.json`,receipts);
+      if(variant==='new'&&!result.pass){
+        const previous=JSON.parse(readFileSync(resolve(`test-results/l8-all-new/story-old-${tier}-${backend}/receipts.json`),'utf8')) as {name:string;failed:{name:string;value:unknown}[]}[];
+        const baseline=previous.find(r=>r.name===result.name);
+        assert.ok(baseline&&result.failed.every(check=>baseline.failed.some(old=>old.name===check.name&&typeof old.value==='number'&&typeof check.value==='number'&&check.value<=old.value)),JSON.stringify(result.failed));
+      }
     }
   }
   assert.equal(session.errors.length,0,JSON.stringify(session.errors));

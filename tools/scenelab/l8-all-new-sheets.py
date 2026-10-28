@@ -32,10 +32,10 @@ def figures():
   im.save(OUT/f'{n:02}-{ident}.jpg',quality=92,optimize=True)
 def runtime():
  configs=['high-webgl2','high-webgpu','low-webgl2','low-webgpu']
- grid([(ROOT/f'crowd-{v}-{c}/zoom-1.5.png',f'{v} | {c} | 30 figures')for c in configs for v in ['old','new']],OUT/'09-crowd-old-new.jpg')
+ grid([(ROOT/f'crowd-{v}-{c}/zoom-{zoom}.png',f'{v} | {c} | zoom {zoom} | 30 figures')for c in configs for zoom in [1,1.5] for v in ['old','new']],OUT/'09-crowd-old-new.jpg',width=800,cols=2)
  grid([(ROOT/f'states-new-{c}/{i}-walk-{frame}.png',f'{ident} {c} | stride {frame}')for c in ['high-webgl2','low-webgpu'] for i,ident in enumerate(IDS) for frame in [12,60]]+[(ROOT/f'states-new-{c}/{i}-turned.png',f'{ident} actual turn | {c}')for c in ['high-webgl2','low-webgpu']for i,ident in enumerate(IDS)if ident.startswith('amb.')],OUT/'10-motion-ground-tails.jpg',width=500,cols=4,crop=(300,100,1300,850))
  grid([(ROOT/f'states-{v}-{c}/{i}-corpse.png',f'{ident} {"turned " if ident.startswith("amb.") else ""}{v} {c} | frozen')for c in ['high-webgl2','low-webgpu'] for i,ident in enumerate(IDS) for v in ['old','new']],OUT/'11-corpses-old-new.jpg',width=500,cols=4,crop=(300,100,1300,850))
- cells=[]
+ cells=[(ROOT/f'level-new-{tier}-webgpu/sanctuary.png',f'Actual L8 sanctuary | {tier} WebGPU')for tier in ['low','high']if(ROOT/f'level-new-{tier}-webgpu/sanctuary.png').exists()]
  for folder in sorted((ROOT/'story-new-high-webgl2').iterdir()):
   if not folder.is_dir():continue
   shots=sorted(folder.glob('shot-*.png'))

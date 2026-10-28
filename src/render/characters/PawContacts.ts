@@ -20,6 +20,7 @@ export class PawContacts {
   constructor(private readonly root: Object3D, template = root) {
     template.updateWorldMatrix(true, true); template.getWorldPosition(this.origin);
     const body = template.getObjectByName('skin_body') as SkinnedMesh | undefined;
+    const continuous = body?.isSkinnedMesh === true && template.getObjectByName('root')?.userData.crowdQuadruped === true;
     const weightedPoints = (owner: Object3D): Vector3[] => {
       if (!body?.isSkinnedMesh) return [];
       const geometry = body.geometry, joints = geometry.getAttribute('skinIndex'), weights = geometry.getAttribute('skinWeight'), points: Vector3[] = [];
@@ -41,7 +42,7 @@ export class PawContacts {
       for (const point of weighted) bounds.expandByPoint(point);
       if (bounds.isEmpty()) return [];
       const sourcePaw = template.getObjectByName(name.replace('leg', biped ? 'foot' : 'paw'));
-      const solePoints = sourcePaw && declaredSoles?.[sourcePaw.name]?.map(p => sourcePaw.localToWorld(new Vector3().fromArray(p)));
+      const solePoints = continuous && root !== template && sourcePaw ? declaredSoles?.[sourcePaw.name]?.map(p => sourcePaw.localToWorld(new Vector3().fromArray(p))) : undefined;
       const paw = solePoints?.length ? solePoints.reduce((sum, p) => sum.add(p), new Vector3()).multiplyScalar(1 / solePoints.length) : bounds.getCenter(new Vector3()).setY(bounds.min.y);
       const vertices: Vector3[] = [];
       for (const point of weighted) vertices.push(original.worldToLocal(point.clone()));
@@ -59,8 +60,8 @@ export class PawContacts {
       });
       // Jointed legs (amb.dog/inf.dog: shoulder/hip -> fore-arm/shin -> paw) hang from a shoulder or hip joint: moving the leg
       // joint itself detaches the whole limb from the body (PO 10-19 "detached leg of dog"), so their pin is a swing about it.
-      // Only a drawn hierarchy (NpcView pets) can bend the knee; the instanced crowd bakes each leg as one rigid part.
-      let knee: Object3D | null = null; if (root === template || body?.isSkinnedMesh) leg.traverse(node => { if (!knee && node !== leg && /^(foreArm|shin)/.test(node.name)) knee = node; });
+      // Live pets and continuous crowd skins can bend the knee; rigid crowd legs retain their original positional pin.
+      let knee: Object3D | null = null; if (root === template || continuous) leg.traverse(node => { if (!knee && node !== leg && /^(foreArm|shin)/.test(node.name)) knee = node; });
       const originalKnee = knee ? original.getObjectByName((knee as Object3D).name) : undefined, pawKnee = originalKnee ? originalKnee.worldToLocal(paw.clone()) : null;
       // The lower limb's vertices on the knee (sampled): its drawn sole once the knee bends.
       const kneeVertices: Vector3[] = [];
@@ -74,7 +75,7 @@ export class PawContacts {
       // to that pivot, then keep the drawn sole level; a knee-only endpoint
       // rotates a broad elephant foot across the ground during support.
       const ankleName = ({ legFL: 'handL', legFR: 'handR', legBL: 'footL', legBR: 'footR', legL: 'footL', legR: 'footR' } as Record<string, string>)[name];
-      const originalAnkle = body?.isSkinnedMesh && root !== template ? original.getObjectByName(ankleName) : undefined;
+      const originalAnkle = continuous && root !== template ? original.getObjectByName(ankleName) : undefined;
       const ankle = originalAnkle ? root.getObjectByName(ankleName) : undefined;
       const pawAnkle = originalAnkle ? originalAnkle.worldToLocal(paw.clone()) : undefined;
       const ankleSoles = originalAnkle ? solePoints?.map(p => originalAnkle.worldToLocal(p.clone())) : undefined;
@@ -85,6 +86,16 @@ export class PawContacts {
         /** Last drawn paw point (world), standing-hold state and the current settle step (-1: none). */
         last: null as Vector3 | null, held: false, step: -1, from: new Vector3(), fadeStart: 0 }];
     });
+  }
+  /** A texture/model or LOD handoff keeps world-space support points. */
+  inherit(previous: PawContacts): void {
+    this.clip = previous.clip;
+    for (const foot of this.feet) {
+      const old = previous.feet.find(other => other.leg.name === foot.leg.name); if (!old) continue;
+      foot.phase = old.phase; foot.held = old.held; foot.step = old.step; foot.fadeStart = old.fadeStart;
+      foot.planted.copy(old.planted); foot.from.copy(old.from); foot.release.copy(old.release);
+      foot.last = old.last ? (foot.last ?? new Vector3()).copy(old.last) : null;
+    }
   }
   restore(): void { for (const foot of this.feet) { foot.leg.position.sub(foot.correction); foot.correction.set(0, 0, 0); if (foot.turning) { foot.leg.quaternion.copy(foot.turned); foot.knee?.quaternion.copy(foot.kneeTurned); foot.turning = false; } } }
   /** Scene Lab guard: the largest distance (cm) of a jointed leg's joint from its bind position on the parent. */
