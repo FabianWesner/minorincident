@@ -202,10 +202,13 @@ export class CrowdView extends Group {
     }
     await Promise.all(definitions.flatMap(def => {
       const warmHero = !this.low && !grove && residents.has(this.modelAliases.get(def.id)!);
+      // A zoo turn can put the infected body in the close band immediately.
+      // Prepare both forms behind the loading card, including their LOD0 material.
+      const zooHero = !this.low && this.world.scenario === 'L8' && /^(infected|healthy)\.(lion|gorilla|elephant|zebra|flamingo)$/.test(def.id);
       // perf-w6: Alpha bodies draw LOD0 (heroes, and their corpses on both tiers). In L4/L5/L7 the Alphas arrive during play
       // (the L4 waves); the first death baked that batch synchronously (~200 ms at low/4x CPU). Bake it while loading there too.
       const alpha = (alphaLooks['inf.alpha'].includes(def.asset) || alphaLooks['inf.mega-alpha'].includes(def.asset)) && (residents.has(this.modelAliases.get(def.id)!) || alphaLevel);
-      return [...new Set(warmHero || alpha ? ['lod0' as const, ...lods] : lods)].map(lod => this.loadBatch(def, lod));
+      return [...new Set(warmHero || zooHero || alpha ? ['lod0' as const, ...lods] : lods)].map(lod => this.loadBatch(def, lod));
     }));
     const dog = this.batches.get('inf.dog:lod1'), cream = this.batches.get('inf.dog.cream:lod1');
     if (dog && cream && !dog.mesh.geometry.hasAttribute('uv')) this.sharedDogCoats = shareDogCoatPalette(dog.mesh.geometry, cream.mesh.geometry, dog.poses.clip, cream.poses.clip);

@@ -85,10 +85,11 @@ function buildRetargetedClip(root: Object3D, name: string, additive: boolean, so
   const hipHeight = root.getObjectByName('hip')?.position.y ?? .705;
   const skinLocomotion = !!gait;
   const skinPlanted = skinned && /^(unarmed-(jab|cross|uppercut)|bat-|hurt)/.test(name);
+  const skinnedAnimal = root.getObjectByName('root')?.userData.crowdQuadruped === true;
   const contract = name === 'infected-flight' || name === 'animal-death' ? ['body','head','tail','packSocket','legFL','legFR','legBL','legBR','wingL','wingR'] : name.startsWith('corgi-') ? ['body','head','tail','packSocket','legFL','legFR','legBL','legBR'] : ['root','hip','torso','head','armL','armR','foreArmL','foreArmR','handL','handR','legL','legR','shinL','shinR','footL','footR','backpackSocket', ...skinned ? ['spine','chest','neck','clavicleL','clavicleR'] : []];
   for (const nodeName of contract) {
     // Converted quadrupeds put limbs beside body under hip/torso. Roll their whole rig for death.
-    const wholeAnimal = name === 'animal-death' && nodeName === 'body' && root.getObjectByName('body')?.parent?.name === 'torso';
+    const wholeAnimal = name === 'animal-death' && nodeName === 'body' && (root.getObjectByName('body')?.parent?.name === 'torso' || skinnedAnimal && !root.getObjectByName('body'));
     const node = root.getObjectByName(wholeAnimal ? 'hip' : nodeName);
     if (!node || additive && !upperBody.test(nodeName)) continue;
     if (name.startsWith('corgi-') && name !== 'corgi-sit' && /^legF[LR]$/.test(nodeName)) tracks.push(new VectorKeyframeTrack(`${nodeName}.scale`, [0, source.duration], [...node.scale.toArray(), ...node.scale.toArray()]));
@@ -98,6 +99,10 @@ function buildRetargetedClip(root: Object3D, name: string, additive: boolean, so
       if (path === 'rotation') {
         for (let i = 0; i < times.length; i++) {
           q.set(0, 0, 0, 1); if (track) q.fromArray(track.values, i * 4).normalize();
+          // Continuous animal anatomy cannot separate at the rigid clip's
+          // exaggerated neck/paw folds. Retain the whole-body fall and soften
+          // local articulation, so the mane and limb roots stay connected.
+          if (skinnedAnimal && name === 'animal-death' && !wholeAnimal) q.slerp(new Quaternion(), .75);
           // Source-fitted head dressings must leave the face visible while
           // cowering. This authored fit is shared by live and offline samples.
           if (name === 'npc-cower' && nodeName === 'head' && typeof node.userData.cowerHeadLift === 'number') q.premultiply(new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), node.userData.cowerHeadLift));

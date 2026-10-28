@@ -1,5 +1,6 @@
 import { restoreCrowdGlasses } from './skin-crowd-glasses';
 import { restoreFireHelmet } from './restore-fire-helmet';
+import { paintAnimalDetails, restoreElephantTail, type TuskRecipe } from './skin-crowd-animal-details';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, readdirSync, unlinkSync, writeFileSync } from 'node:fs';
@@ -39,9 +40,9 @@ mkdirSync(output, { recursive: true }); mkdirSync(report, { recursive: true }); 
 const metadata = existsSync(join(source, 'rig.json')) ? JSON.parse(readFileSync(join(source, 'rig.json'), 'utf8')) as { class?: string; lods: { lod: number; uniform_scale?: number; world_scale?: number; rotation_y_degrees?: number }[] } : undefined;
 // Animal fur/mane envelopes are wider than the face. Use reviewed pre-binding
 // eye landmarks instead of placing dormant/infected eyes on that envelope.
-const animalEyeRecipes = JSON.parse(readFileSync('tools/assets/skin-crowd-animal-eyes.json', 'utf8')) as Record<string, { source_sha256: string; eye_centers: number[][]; radius_extent: number; game_radius: number }>;
+const animalEyeRecipes = JSON.parse(readFileSync('tools/assets/skin-crowd-animal-eyes.json', 'utf8')) as Record<string, { source_sha256: string; eye_centers: number[][]; radius_extent: number; game_radius: number; tusks?: TuskRecipe }>;
 let eyeSource = existsSync(join(source, 'eyes.json')) ? join(source, 'eyes.json') : undefined;
-if (metadata?.class === 'quadruped' && animalEyeRecipes[sourceId]) {
+if (metadata && ['quadruped', 'bird'].includes(metadata.class ?? '') && animalEyeRecipes[sourceId]) {
   const recipe = animalEyeRecipes[sourceId], body = join(source, 'source/flat-lod0.glb');
   if (createHash('sha256').update(readFileSync(body)).digest('hex') !== recipe.source_sha256) throw Error(`${id}: animal eye landmarks do not match the source body`);
   eyeSource = join(report, 'source-eyes.json'); writeFileSync(eyeSource, JSON.stringify(recipe, null, 2) + '\n');
@@ -99,7 +100,7 @@ for (const lod of [0, 1, 2]) {
   if (existsSync(body)) args.push('--body', body, '--body-scale', String(alignment?.initial_game_height_scale ?? placement?.uniform_scale ?? placement?.world_scale ?? 1), '--body-rot-y', String(alignment?.game_alignment_rotation_y_degrees ?? placement?.rotation_y_degrees ?? 0));
   if (alignment || derivedTemplate) args.push('--body-yaw-fixed');
   if (unbound && id === 'inf.dog') args.push('--atlas-base-half', '--eyes', join(source, 'eyes.json'));
-  else if (eyeSource && (id.startsWith('inf.') || alignment?.healthy_toy_eyes || metadata?.class === 'quadruped')) args.push('--eyes', eyeSource);
+  else if (eyeSource && (id.startsWith('inf.') || alignment?.healthy_toy_eyes || metadata && ['quadruped', 'bird'].includes(metadata.class ?? ''))) args.push('--eyes', eyeSource);
   if (metadata && !derivedTemplate) args.push('--reconstruct-body');
   if (id.startsWith('npc.')) args.push('--healthy');
   if (derivedTemplate || unbound && (!alignment?.rig_source || alignment.rig_fit_height) && (id.startsWith('npc.') || alignment?.rig_class === 'humanoid' || alignment?.rig_class === 'alpha')) args.push('--fit-rig-height');
@@ -128,6 +129,7 @@ for (const lod of [0, 1, 2]) {
   for (let attempt = 0; attempt < 4; attempt++) {
     execFileSync(process.execPath, ['--import', 'tsx', ...args, ...bodyBudget ? ['--body-budget', String(bodyBudget)] : []], { stdio: 'pipe' });
     if (id === 'npc.firefighter-alive') await restoreFireHelmet(raw, join(assets, 'model.lod1.glb'), lod);
+    if (id === 'amb.elephant' || id === 'inf.elephant') await restoreElephantTail(raw, join(assets, 'model.glb'), lod);
     const document = await io.read(raw);
     if (alignment?.rectangular_glasses) { restoreCrowdGlasses(document, lod); await io.write(raw, document); }
     const total = document.getRoot().listNodes().reduce((sum, node) => sum + (node.getMesh()?.listPrimitives().reduce((sum, primitive) => sum + (primitive.getIndices()?.getCount() ?? primitive.getAttribute('POSITION')!.getCount()) / 3, 0) ?? 0), 0);
@@ -135,6 +137,12 @@ for (const lod of [0, 1, 2]) {
     const info = JSON.parse(readFileSync(join(report, `lod${lod}.json`), 'utf8')) as { triangles: number };
     bodyBudget = info.triangles - (total - triangleLimit) - 8;
     if (attempt === 3 || bodyBudget <= 0) throw Error(`${id}: fitted caps exceed triangle budget ${triangleLimit}`);
+  }
+  const animalRecipe = animalEyeRecipes[sourceId];
+  if (animalRecipe && (id.startsWith('amb.') || animalRecipe.tusks)) {
+    const document = await io.read(raw), fit = JSON.parse(readFileSync(join(report, `lod${lod}.json`), 'utf8')) as { scale: number; yaw: number; translation: number[] };
+    const details = paintAnimalDetails(document, id.startsWith('amb.'), animalRecipe.tusks, fit, sourceId === 'amb.flamingo');
+    await io.write(raw, document); writeFileSync(join(report, `lod${lod}.details.json`), JSON.stringify(details, null, 2) + '\n');
   }
   // Region classes in the atlas alpha: tinted, flattened hair/skin/garments for civilians; skin only for uniforms.
   if (id.startsWith('npc.')) {
