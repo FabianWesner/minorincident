@@ -17,9 +17,9 @@ const out = resolve(`test-results/l5-all-new/${mode}-${variant}-${tier}-${backen
 const converted = (JSON.parse(readFileSync('docs/reports/l5-all-new/census.json','utf8')) as {scope:string[]}).scope;
 const crowd30: SceneSpec = {
  name: 'l5-street-crowd30', ground: 'district', time: 'L5', tier: 5, size: 100,
- layout: { district: 'D-FAIR', level: 'L5', bbox: [[-12,-55],[9,-32]] },
+ layout: { district: 'D-FAIR', level: 'L5', bbox: [[-34,-13],[-6,12]] },
  actors: Array.from({length:30},(_,i):ActorSpec=>{
-  const at:[number,number]=[-10+i%10*1.8,-39+Math.floor(i/10)*2.5];
+  const at:[number,number]=[-33.1+i%10*1.8,-3.5+Math.floor(i/10)*3.5];
   if(i===0)return {id:'courier',kind:'courier',at,yaw:-45,loadout:['weapon.fire-axe','weapon.shotgun'],state:{aim:'alpha'}};
   if(i===1)return {id:'corgi',kind:'corgi',at,yaw:-45};
   if(i===2)return {id:'alpha',kind:'infected',archetype:'infected.alpha',look:{model:'inf.alpha'},at,yaw:-45,state:'idle'};
@@ -27,7 +27,7 @@ const crowd30: SceneSpec = {
   return {id:`ped-${i}`,kind:'pedestrian',at,yaw:-45,look:{model,accessories:[]},state:'idle'};
  }),
  script:[{frame:1,actor:'courier',do:{select:'RIGHT'}},{frame:2,actor:'courier',do:{aim:'alpha',seconds:30}}],
- camera:{mode:'game',target:[-2,.6,-36.5],zoom:1.5},frames:3,shots:[3],expect:{consoleErrors:0},
+ camera:{mode:'game',target:[-24,.6,1],zoom:1.5},frames:3,shots:[3],expect:{consoleErrors:0},
 };
 const states:SceneSpec={name:'l5-body-states',ground:'asphalt',time:'L5',size:100,
  actors:[{id:'courier',kind:'courier',at:[30,30]},...converted.flatMap((model,i):ActorSpec[]=>['live','turned','dead'].map((state,k)=>({id:`${state}-${i}`,kind:'pedestrian',at:[i%4*3,Math.floor(i/4)*12+k*3],yaw:-45,look:{model,accessories:[]},state:'idle'})))],
@@ -92,9 +92,9 @@ try{
   if(mode!=='states'){
    assert.equal(Object.keys(metrics.actors).length,30);assert.ok(Object.values(metrics.actors).every(a=>a.drawnFrames>0),'Every crowd figure submitted');
    for(const zoom of [1,1.5]){await session.page.evaluate(zoom=>window.__SS__!.camera.zoom(zoom),zoom);await session.ready();await session.screenshot(`${out}/zoom-${zoom}.png`);}
-   for(const [label,target] of [['okafor-cane',[-1,.7,-39]],['courier-shotgun',[-10,.7,-39]]] as const){await session.page.evaluate(target=>window.__SCENE__!.setCamera({mode:'game',target:[...target],zoom:.55}),target);await session.ready();await session.screenshot(`${out}/${label}.png`);}
+   for(const [label,target] of [['okafor-cane',[-24.1,.7,-3.5]],['courier-shotgun',[-33.1,.7,-3.5]]] as const){await session.page.evaluate(target=>window.__SCENE__!.setCamera({mode:'game',target:[...target],zoom:.55}),target);await session.ready();await session.screenshot(`${out}/${label}.png`);}
    if(process.env.L5_TIMING==='1'){
-    await session.page.evaluate(()=>window.__SCENE__!.setCamera({mode:'game',target:[-2,.6,-36.5],zoom:1.5}));await session.ready();
+    await session.page.evaluate(()=>window.__SCENE__!.setCamera({mode:'game',target:[-24,.6,1],zoom:1.5}));await session.ready();
     const cadence=await session.page.evaluate(async()=>{
      const api=window.__SS__!;api.resume();const frames:number[]=[];let previous=0,warm:Record<string,number>={};
      for(let i=0;i<720;i++){const now=await new Promise<number>(requestAnimationFrame);if(i===119)warm={...api.perf().nodeBuildMaterials};if(i>=120&&previous)frames.push(now-previous);previous=now;}
