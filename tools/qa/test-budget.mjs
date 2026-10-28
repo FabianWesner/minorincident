@@ -6,7 +6,7 @@
 import { spawn } from 'node:child_process';
 import { mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { delimiter, dirname, join } from 'node:path';
 import { performance } from 'node:perf_hooks';
 import { parsePlaywrightTotal } from './test-budget-count.mjs';
 
@@ -36,7 +36,11 @@ async function bounded(cmd, args, options) {
   if (remaining <= 0) throw new Error(`${name} exhausted its ${maxSeconds}s budget during collection`);
   // Existing owned-process watchdog forwards cancellation and kills descendants
   // that ignore TERM; spawnSync's timeout alone can leave those children alive.
-  const child = spawn('python3', ['tools/browser-job.py', '--seconds', String(Math.ceil(remaining)), '--', cmd, ...args], options);
+  const executable = cmd === 'node' ? process.execPath : cmd;
+  const path = [dirname(process.execPath), options.env?.PATH, process.env.PATH, '/usr/bin:/bin:/usr/sbin:/sbin'].filter(Boolean).join(delimiter);
+  const child = spawn('python3', ['tools/browser-job.py', '--seconds', String(Math.ceil(remaining)), '--', executable, ...args], {
+    ...options, env: { ...options.env, PATH: path, MI_TEST_BUDGET_PROCESS_PID: String(process.pid) },
+  });
   activeChild = child;
   let stdout = '', stderr = '';
   child.stdout?.on('data', data => { stdout += data; });
@@ -58,14 +62,15 @@ async function vitestCases() {
   try {
     // Bypass npx's shim process: if Vitest outlives the wrapper during a budget
     // timeout, it can be reparented before browser-job's descendant sweep sees it.
-    await run(process.execPath, ['node_modules/vitest/vitest.mjs', 'list', `--json=${out}`, '--configLoader', 'runner']);
+    await run(process.execPath, [process.env.MI_TEST_BUDGET_VITEST_CLI ?? 'node_modules/vitest/vitest.mjs', 'list', `--json=${out}`, '--configLoader', 'runner']);
     const listed = JSON.parse(readFileSync(out, 'utf8'));
     if (!Array.isArray(listed)) throw new Error('Vitest collection did not report a test array');
     return listed.length;
   } finally { rmSync(dir, { recursive: true, force: true }); }
 }
 async function playwrightCases(args) {
-  try { return parsePlaywrightTotal(await run('npx', ['playwright', 'test', '--list', ...args])); }
+  const cli = process.env.MI_TEST_BUDGET_PLAYWRIGHT_CLI;
+  try { return parsePlaywrightTotal(await run(cli ? process.execPath : 'npx', cli ? [cli, 'playwright', 'test', '--list', ...args] : ['playwright', 'test', '--list', ...args])); }
   catch (error) { throw new Error(`${error instanceof Error ? error.message : String(error)} (${args.join(' ')})`); }
 }
 
