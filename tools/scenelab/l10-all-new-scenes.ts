@@ -115,7 +115,7 @@ try {
       if(regularInfectedModels.includes(model as typeof regularInfectedModels[number])) assert.equal(receipt?.drawn?.accessory,null,`${model} keeps authored headwear`);
     }
     writeJson(`${out}/identities.json`,identities);
-    for(const zoom of [1,1.5]){await session.page.evaluate(zoom=>window.__SS__!.camera.zoom(zoom),zoom);await session.screenshot(`${out}/zoom-${zoom}.png`);}
+    for(const zoom of [1.5]){await session.page.evaluate(zoom=>window.__SS__!.camera.zoom(zoom),zoom);await session.screenshot(`${out}/zoom-${zoom}.png`);}
     writeJson(`${out}/metrics.json`,metrics);writeJson(`${out}/resources.json`,await session.page.evaluate(resources));
   } else if(mode==='states') {
     for(const model of ids.filter(id=>!process.env.L10_IDS||process.env.L10_IDS.split(',').includes(id))){

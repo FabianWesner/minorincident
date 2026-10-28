@@ -1,0 +1,226 @@
+{
+  "baselineMain": "904ae77a9",
+  "method": "Same-camera 30-figure fixture (all three Mega looks) and actual L10 full finale, seed 327; old route restores only the three Mega rigid baselines, retaining L9 and all other main conversions. Shared native Metal contexts, one review job at a time.",
+  "memoryMethod": "Unique visible scene/material textures plus pre-render texture bindings; decoded upload/mip payload bytes with RGBA/data-type upper bound. Excludes render targets, driver padding and non-texture GPU buffers.",
+  "formalLowP95": {
+    "status": "perf pending PO quiet window",
+    "allowedDeltaMs": 1,
+    "reason": "Shared refresh-capped samples validate the freeze guard, not uncapped +1 ms acceptance."
+  },
+  "rows": [
+    {
+      "fixture": "crowd",
+      "tier": "low",
+      "backend": "webgpu",
+      "rows": {
+        "old": {
+          "drawCalls": 107,
+          "triangles": 143529,
+          "decodedTextureBytes": 305587912,
+          "uncompressedTextureUpperBytes": 377178163,
+          "textureCount": 228
+        },
+        "new": {
+          "drawCalls": 107,
+          "triangles": 167066,
+          "decodedTextureBytes": 306287104,
+          "uncompressedTextureUpperBytes": 382694137,
+          "textureCount": 237
+        }
+      }
+    },
+    {
+      "fixture": "crowd",
+      "tier": "low",
+      "backend": "webgl2",
+      "rows": {
+        "old": {
+          "drawCalls": 107,
+          "triangles": 143529,
+          "decodedTextureBytes": 305587912,
+          "uncompressedTextureUpperBytes": 377178163,
+          "textureCount": 228
+        },
+        "new": {
+          "drawCalls": 107,
+          "triangles": 167066,
+          "decodedTextureBytes": 306287104,
+          "uncompressedTextureUpperBytes": 382694137,
+          "textureCount": 237
+        }
+      }
+    },
+    {
+      "fixture": "crowd",
+      "tier": "high",
+      "backend": "webgpu",
+      "rows": {
+        "old": {
+          "drawCalls": 112,
+          "triangles": 165367,
+          "decodedTextureBytes": 335593448,
+          "uncompressedTextureUpperBytes": 456037643,
+          "textureCount": 246
+        },
+        "new": {
+          "drawCalls": 112,
+          "triangles": 188904,
+          "decodedTextureBytes": 336292640,
+          "uncompressedTextureUpperBytes": 461553617,
+          "textureCount": 255
+        }
+      }
+    },
+    {
+      "fixture": "crowd",
+      "tier": "high",
+      "backend": "webgl2",
+      "rows": {
+        "old": {
+          "drawCalls": 112,
+          "triangles": 165367,
+          "decodedTextureBytes": 335593448,
+          "uncompressedTextureUpperBytes": 456037643,
+          "textureCount": 246
+        },
+        "new": {
+          "drawCalls": 112,
+          "triangles": 188904,
+          "decodedTextureBytes": 336292640,
+          "uncompressedTextureUpperBytes": 461553617,
+          "textureCount": 255
+        }
+      }
+    },
+    {
+      "fixture": "population",
+      "tier": "low",
+      "backend": "webgpu",
+      "rows": {
+        "old": {
+          "drawCalls": 92,
+          "triangles": 257446,
+          "decodedTextureBytes": 172183608,
+          "uncompressedTextureUpperBytes": 215910227,
+          "textureCount": 136,
+          "sample": {
+            "timing": "shared pool refresh-capped diagnostic; uncapped p95 acceptance pending PO quiet window",
+            "samples": 360,
+            "p95": 16.700000000004366,
+            "maxFrameMs": 16.80000000000291,
+            "over200": [],
+            "shaderBuilds": {},
+            "ai": 87,
+            "mission": {
+              "charge-active": true,
+              "console-held": false,
+              "terminal-read": true,
+              "cure-carried": false,
+              "cure-installed": true,
+              "charge-ready": true,
+              "mega-dead": false,
+              "cure-released": false,
+              "epilogue-finished": false,
+              "credits-finished": false,
+              "anchor-unavailable": false
+            }
+          }
+        },
+        "new": {
+          "drawCalls": 92,
+          "triangles": 268666,
+          "decodedTextureBytes": 172882800,
+          "uncompressedTextureUpperBytes": 221426201,
+          "textureCount": 145,
+          "sample": {
+            "timing": "shared pool refresh-capped diagnostic; uncapped p95 acceptance pending PO quiet window",
+            "samples": 360,
+            "p95": 16.700000000004366,
+            "maxFrameMs": 16.80000000000291,
+            "over200": [],
+            "shaderBuilds": {},
+            "ai": 87,
+            "mission": {
+              "charge-active": true,
+              "console-held": false,
+              "terminal-read": true,
+              "cure-carried": false,
+              "cure-installed": true,
+              "charge-ready": true,
+              "mega-dead": false,
+              "cure-released": false,
+              "epilogue-finished": false,
+              "credits-finished": false,
+              "anchor-unavailable": false
+            }
+          }
+        }
+      }
+    },
+    {
+      "fixture": "population",
+      "tier": "high",
+      "backend": "webgpu",
+      "rows": {
+        "old": {
+          "drawCalls": 99,
+          "triangles": 459799,
+          "decodedTextureBytes": 185290840,
+          "uncompressedTextureUpperBytes": 255190612,
+          "textureCount": 144,
+          "sample": {
+            "timing": "shared pool refresh-capped diagnostic; uncapped p95 acceptance pending PO quiet window",
+            "samples": 360,
+            "p95": 16.700000000004366,
+            "maxFrameMs": 16.80000000000291,
+            "over200": [],
+            "shaderBuilds": {},
+            "ai": 168,
+            "mission": {
+              "charge-active": true,
+              "console-held": false,
+              "terminal-read": true,
+              "cure-carried": false,
+              "cure-installed": true,
+              "charge-ready": true,
+              "mega-dead": false,
+              "cure-released": false,
+              "epilogue-finished": false,
+              "credits-finished": false,
+              "anchor-unavailable": false
+            }
+          }
+        },
+        "new": {
+          "drawCalls": 99,
+          "triangles": 458128,
+          "decodedTextureBytes": 185990032,
+          "uncompressedTextureUpperBytes": 260706586,
+          "textureCount": 153,
+          "sample": {
+            "timing": "shared pool refresh-capped diagnostic; uncapped p95 acceptance pending PO quiet window",
+            "samples": 360,
+            "p95": 16.799999999999272,
+            "maxFrameMs": 16.80000000000291,
+            "over200": [],
+            "shaderBuilds": {},
+            "ai": 168,
+            "mission": {
+              "charge-active": true,
+              "console-held": false,
+              "terminal-read": true,
+              "cure-carried": false,
+              "cure-installed": true,
+              "charge-ready": true,
+              "mega-dead": false,
+              "cure-released": false,
+              "epilogue-finished": false,
+              "credits-finished": false,
+              "anchor-unavailable": false
+            }
+          }
+        }
+      }
+    }
+  ]
+}

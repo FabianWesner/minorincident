@@ -5,10 +5,17 @@ from PIL import Image, ImageDraw, ImageFont
 ROOT=Path('test-results/l10-all-new'); OUT=Path('docs/reports/l10-all-new'); OUT.mkdir(parents=True,exist_ok=True)
 IDS=['inf.mega-alpha','inf.mega-alpha-ashen','inf.mega-alpha-ember']
 FONT=ImageFont.truetype('/System/Library/Fonts/Menlo.ttc',14);BG='#23232d'
-def grid(cells,dest,width=800,cols=2,crop=None):
- h=round(width*((crop[3]-crop[1])/(crop[2]-crop[0]) if crop else 9/16))+30;im=Image.new('RGB',(width*cols,h*math.ceil(len(cells)/cols)),BG);d=ImageDraw.Draw(im)
+def grid(cells,dest,width=800,cols=2,crop=None,natural=False):
+ h=round(width*((crop[3]-crop[1])/(crop[2]-crop[0]) if crop else 9/16))+30
+ row_heights=[h]*math.ceil(len(cells)/cols)
+ if natural:
+  heights=[]
+  for file,_ in cells:
+   with Image.open(file) as p:heights.append(min(h-30,round(width*p.height/p.width))+30)
+  row_heights=[max(heights[i:i+cols])for i in range(0,len(cells),cols)]
+ im=Image.new('RGB',(width*cols,sum(row_heights)),BG);d=ImageDraw.Draw(im)
  for i,(file,label) in enumerate(cells):
-  pic=Image.open(file).convert('RGB');pic=pic.crop(crop) if crop else pic;pic.thumbnail((width,h-30));x=i%cols*width;y=i//cols*h
+  pic=Image.open(file).convert('RGB');pic=pic.crop(crop) if crop else pic;pic.thumbnail((width,row_heights[i//cols]-30));x=i%cols*width;y=sum(row_heights[:i//cols])
   im.paste(pic,(x+(width-pic.width)//2,y+30));d.text((x+6,y+6),label,font=FONT,fill='white')
  im.save(dest,quality=92,optimize=True)
 def figures():
@@ -32,15 +39,20 @@ def figures():
   im.save(OUT/f'{n:02}-{ident}.jpg',quality=92,optimize=True)
 def runtime():
  configs=['high-webgl2','high-webgpu','low-webgl2','low-webgpu']
- grid([(ROOT/f'crowd-{v}-{c}/zoom-{zoom}.png',f'{v} | {c} | zoom {zoom} | 30 figures')for c in configs for zoom in [1,1.5] for v in ['old','new']],OUT/'04-crowd-old-new.jpg',width=800,cols=2)
+ grid([(ROOT/f'crowd-{v}-{c}/zoom-{zoom}.png',f'{v} | {c} | camera radius {zoom} | 30 figures')for c in configs for zoom in [1.5] for v in ['old','new']],OUT/'04-crowd-old-new.jpg',width=800,cols=2)
  grid([(ROOT/f'states-new-{c}/{ident}-roar-{frame}.png',f'{ident} {c} | roar {frame}')for c in ['high-webgl2','low-webgpu'] for ident in IDS for frame in [30,120]],OUT/'05-motion.jpg',width=500,cols=3,crop=(300,100,1300,850))
  grid([(ROOT/f'states-{v}-{c}/{ident}-corpse.png',f'{ident} {v} {c} | frozen')for c in ['high-webgl2','low-webgpu'] for ident in IDS for v in ['old','new']],OUT/'06-corpses-old-new.jpg',width=500,cols=3,crop=(300,100,1300,850))
- cells=[(ROOT/f'level-new-{tier}-webgpu/assault.png',f'Actual L10 finale | {tier} WebGPU')for tier in ['low','high']if(ROOT/f'level-new-{tier}-webgpu/assault.png').exists()]
+ cells=[(ROOT/f'population-new-{tier}-webgpu/assault.png',f'Actual L10 finale | {tier} WebGPU')for tier in ['low','high']if(ROOT/f'population-new-{tier}-webgpu/assault.png').exists()]
+ if(ROOT/'level-new-high-webgl2/assault.png').exists():cells.append((ROOT/'level-new-high-webgl2/assault.png','Actual L10 finale | high WebGL2'))
+ rally=ROOT/'boss-rally/result-low.json'
+ if rally.exists():
+  result=json.loads(rally.read_text())
+  if result['shots']:cells.append((Path(result['shots'][-1]['file']),'Q-200 | boss joins alive at full HP'))
  for folder in sorted((ROOT/'story-new-high-webgl2').iterdir()):
   if not folder.is_dir():continue
-  shots=sorted(folder.glob('shot-*.png'))
-  for shot in [shots[0],shots[len(shots)//2],shots[-1]]:cells.append((shot,f'{folder.name} | {shot.stem}'))
- if cells:grid(cells,OUT/'07-story-finale.jpg',width=640,cols=3)
+  sheet=folder/'sheet.jpg'
+  if sheet.exists():cells.append((sheet,f'{folder.name} | recorded frame sequence'))
+ if cells:grid(cells,OUT/'07-story-finale.jpg',width=960,cols=2,natural=True)
  sources=[(Path('/Users/wesner/Workspace/trellis-highs/mega-alpha/solidified/sheet.jpg'),'Base Mega | reconstructed source')]
  for ident in IDS[1:]:
   file=Path('/Users/wesner/Workspace/3dp-l10-all-new/cast/wave2')/ident/'sheet.png'
