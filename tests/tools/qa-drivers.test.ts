@@ -25,6 +25,14 @@ test('playtest stuck detection: following a moving ring is progress; a parked co
   expect(bring.update(sample(42, { text: 'Bring the injured survivor · 0 m', distance: 0 })).seconds).toBe(31);
   const respawn = new PlaytestProgress(); respawn.update(sample(0, { player: { x: 50, z: 15 }, marker: { x: 62, z: 15 } }));
   expect(respawn.update(sample(.1, { player: { x: 2, z: 15 }, marker: { x: 14, z: 15 } })).reason).toBe('view-change');
+  const detour = new PlaytestProgress(), barrier = (t: number, z: number) => sample(t, { player: { x: 0, z }, marker: { x: 380, z: 0 }, distance: Math.hypot(380, z), text: 'Bring the cure to the dispersal complex' });
+  detour.update(barrier(0, 0));
+  for(let t=1;t<=30;t++) expect(detour.update(barrier(t, -t*2)).seconds).toBeLessThan(3);
+  for(let t=31;t<=65;t++) detour.update(barrier(t, t%2?-58:-60));
+  expect(detour.update(barrier(66, -60)).seconds).toBeGreaterThan(30);
+  const runaway = new PlaytestProgress(); runaway.update(barrier(0, 0));
+  for(let t=1;t<=80;t++) runaway.update(barrier(t,-t*2));
+  expect(runaway.update(barrier(81,-162)).seconds).toBeGreaterThan(30);
 });
 
 test('playtest session: success only after real credits; an unresponsive renderer fails in budget; frame stalls are guarded outside loading', async () => {
