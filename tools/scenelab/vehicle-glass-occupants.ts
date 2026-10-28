@@ -6,10 +6,11 @@ import { SceneSession, stopServer } from './session';
 import type { ActorSpec } from '../../src/debug/scenelab/spec';
 import { vehicles } from '../../src/data/vehicles';
 import { getBounds } from '@gltf-transform/functions';
+import manifest from '../../src/assets/manifest.json' with { type: 'json' };
 
 const out = process.argv[2] ?? 'test-results/vehicle-glass/after';
 const io = await assetIO(), session = new SceneSession(), metrics: unknown[] = [];
-const human = await io.read('public/assets/models/npc.firefighter-alive.glb');
+const human = await io.read(manifest.find(def => def.id === 'npc.firefighter-alive')!.glb!);
 const bounds = getBounds(human.getRoot().listScenes()[0]), height = bounds.max[1] - bounds.min[1];
 const hip = (human.getRoot().listNodes().find(n => n.getName() === 'hip')!.getWorldTranslation()[1] - .22) * (Math.abs(height / 1.8 - 1) > .08 ? 1.8 / height : 1);
 mkdirSync(out, { recursive: true });

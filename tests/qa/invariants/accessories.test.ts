@@ -28,17 +28,15 @@ const authoredGlasses = new Set(manifest.filter(a => a.id.startsWith('npc.') && 
 authoredGlasses.add('npc.survivor-group.aftermath.sam');
 const spectacleColors = [new Color(palette.uiDark), new Color(palette.leather)];
 const cache = new Map<string, Promise<Group>>();
-async function asset(id: string, lod: Lod, reference = false): Promise<Group> {
-  const key = `${id}/${lod}/${reference}`;
+async function asset(id: string, lod: Lod): Promise<Group> {
+  const key = `${id}/${lod}`;
   if (!cache.has(key)) cache.set(key, (async () => {
-    if (id.startsWith('npc.') && !reference) return loadCivilianSource(id, lod, async url => {
+    if (id.startsWith('npc.')) return loadCivilianSource(id, lod, async url => {
       const bytes = readFileSync(`public${url}`);
       return bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength);
     });
     const def = manifest.find(a => a.id === id)! as AssetDef;
-    // Authored accessory fits use the original man-A calibration mesh, retained by conversion.
-    const paths = reference ? def.rigidBaseline ?? def : def;
-    const bytes = readFileSync(lod === 'lod0' ? paths.glb : paths.lods![lod]!);
+    const bytes = readFileSync(lod === 'lod0' ? def.glb! : def.lods![lod]!);
     // This geometry oracle runs in Node. Keep real UVs/material slots while
     // bypassing browser image decoding; rendered atlas pixels have native gates.
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).register(() => ({ name: 'KHR_texture_basisu', loadTexture: async () => new Texture() }));
@@ -101,7 +99,7 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
   const errors: string[] = [];
   try {
     await renderer.init();
-    const referenceRoot = await asset('npc.civilian-man-a', 'lod1', true);
+    const referenceRoot = await asset('npc.civilian-man-a', 'lod1');
     prepareCivilianRig(referenceRoot, 'npc.civilian-man-a');
     const referenceGeo = bakeInfected(referenceRoot, [], false, ['idle']).geometry;
     packCrowdParts(referenceGeo);
@@ -116,8 +114,7 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
     const frameTops = new Map<string, number>();
     for (const model of ['npc.civilian-woman-b', 'npc.civilian-woman-b.aftermath', 'npc.civilian-elderly', 'npc.civilian-elderly.aftermath']) {
       const base = model.replace(/\.aftermath$/, '');
-      const legacy = base !== model;
-      const root = await asset(legacy ? base : model, 'lod0', legacy); prepareCivilianRig(root, base); root.updateMatrixWorld(true);
+      const root = await asset(model, 'lod0'); prepareCivilianRig(root, base); root.updateMatrixWorld(true);
       const head = root.getObjectByName('head')!, inverse = head.matrixWorld.clone().invert(), point = new Vector3(); let top = -Infinity;
       // Measure the base GLB's head-part frames; aftermath recolours them but retains the same rig and shape.
       // This is independent of the renderer's cached spectacle-top values and fitted hat output.

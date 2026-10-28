@@ -7,7 +7,7 @@ import { expect, test, vi } from 'vitest';
 import { packCrowdParts } from '../../src/assets/crowd';
 import { bakeInfected, framesPerClip, infectedClips } from '../../src/render/characters/bakeInfected';
 import { crowdVertexLayout, resolveCrowdAppearance, markCrowdAppearance } from '../../src/render/characters/CrowdAppearance';
-import { createInfectedPlaceholder } from '../../src/render/characters/infectedPlaceholder';
+import { createSkinnedCrowdFixture } from '../fixtures/skinnedCrowd';
 import { packSkin, premultiplyRow, restInverses, skinnedVertexMatrix } from '../../src/render/characters/skinnedCrowd';
 import { StaticCorpses } from '../../src/render/characters/StaticCorpses';
 import { Lighting } from '../../src/render/Lighting';
@@ -125,7 +125,7 @@ test('GPU limits: crowd layouts bind matrix columns or instanceMatrix (never bot
   const layout = crowdVertexLayout(geometry, new InstancedBufferAttribute(new Float32Array(16), 16));
   expect(layout).toEqual({ buffers: 7, locations: 11, webgpu: true, webgl2: true });
 
-  const baked = bakeInfected(createInfectedPlaceholder('runner'), [], false); packCrowdParts(baked.geometry);
+  const baked = bakeInfected(createSkinnedCrowdFixture(), [], false); packCrowdParts(baked.geometry);
   const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial();
   pool.prepare('plain', baked.geometry, material, baked.clip, deathFrame());
   for (const id of [1, 2]) pool.place({ id } as EntitySnapshot, 'plain', baked.geometry, material, baked.clip, deathFrame(), new Matrix4(), new Color(1, 1, 1), [0, 0, 0]);
@@ -138,7 +138,7 @@ test('GPU limits: crowd layouts bind matrix columns or instanceMatrix (never bot
 });
 
 test('textured corpse draws bind their surface and upload placements added after warm-up', () => {
-  const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
+  const baked = bakeInfected(createSkinnedCrowdFixture()); packCrowdParts(baked.geometry);
   const lighting = new Lighting(new Scene()), shading = new Materials(lighting), pool = new StaticCorpses();
   const material = shading.shaded(vec3(.5)), bind = vi.fn();
   crowdSurfaceBindings.set(baked.geometry, { bind, textures: [] });
@@ -158,7 +158,7 @@ test('textured corpse draws bind their surface and upload placements added after
 
 test('skinned crowd: four-influence packing, joint·bind⁻¹ atlas rows, and corpse freezing with the shader blend', () => {
   const pose = (x: number, angle: number) => new Matrix4().compose(new Vector3(x, 1, 0), new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), angle), new Vector3(1, 1, 1));
-  const { dominant, skin } = packSkin([3, 7, 12, 0], [.2, .5, .3, 0], 1, false);
+  const { dominant, skin } = packSkin([3, 7, 12, 0], [.2, .5, .3, 0], 1);
   expect(dominant[0]).toBe(7);
   expect(skin[0] % 32).toBe(12); expect(Math.floor(skin[0] / 32) % 32).toBe(3);
   expect(1 - skin[1] - skin[2] - skin[3]).toBeCloseTo(.5);
@@ -175,7 +175,7 @@ test('skinned crowd: four-influence packing, joint·bind⁻¹ atlas rows, and co
 });
 
 test('corpse pages: bodies persist past the old cap, bounds stay conservative, culling restores identity/pose/tint, normals survive vec4 padding', () => {
-  const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
+  const baked = bakeInfected(createSkinnedCrowdFixture()); packCrowdParts(baked.geometry);
   const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial(), records = new Map<number, EntitySnapshot>();
   try {
     for (let id = 1; id <= 260; id++) {
@@ -293,9 +293,9 @@ test('switching equal-version colour and pose textures refreshes the GPU binding
 // Soldiers and armed civilians in L3/L4 share the courier's real gun contracts.
 test('crowd long guns use asset grip/muzzle sockets and the courier support-hand offsets', async () => {
   const shading = new Materials(new Lighting(new Scene())), pose = new DataTexture(), a = new DataTexture(), b = new DataTexture();
-  const one = civilianMaterial(shading, false, 2, pose, { bindRow: 0, skinned: true, atlas: a });
-  const same = civilianMaterial(shading, false, 2, pose, { bindRow: 0, skinned: true, atlas: a });
-  const other = civilianMaterial(shading, false, 2, pose, { bindRow: 0, skinned: true, atlas: b });
+  const one = civilianMaterial(shading, false, pose, { bindRow: 0, atlas: a });
+  const same = civilianMaterial(shading, false, pose, { bindRow: 0, atlas: a });
+  const other = civilianMaterial(shading, false, pose, { bindRow: 0, atlas: b });
   expect(one.material).toBe(same.material); expect(one.material).toBe(other.material);
   one.release(); same.release(); other.release(); shading.dispose();
   const props = new RoutineProps();

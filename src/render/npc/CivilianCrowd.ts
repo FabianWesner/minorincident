@@ -1,4 +1,3 @@
-import manifest from '../../assets/manifest.json' with { type: 'json' };
 import { crowdTexture, crowdSurfaceBindings, type CrowdSurfaceBinding } from '../characters/crowdTexture';
 import { waitingIdle, idleOffset } from './waitingIdle';
 import { resolveCrowdAppearance, markCrowdAppearance, crowdShirt, writeCrowdAppearance, renderedCrowdLook, crowdVertexLayout } from '../characters/CrowdAppearance';
@@ -6,7 +5,7 @@ import type { CrowdAccessories } from '../characters/CrowdAccessories';
 import { infectedContactDistance } from '../../sim/ai/CharacterSeparation';
 import { useBakedCivilianPose, canHoldCrowdPose } from '../lodPolicy';
 import { CrowdVisibility } from '../CrowdVisibility';
-// E07 GPU rigid-part crowd path, adapted from Bruno InstancedGroup.js (MIT).
+// E07 GPU skinned crowd path, adapted from Bruno InstancedGroup.js (MIT).
 import { StaticCorpses } from '../characters/StaticCorpses';
 import { corpseLayout, corpsePose, corpsePoses } from '../characters/CorpseLayout';
 import { CrowdFootwork, CrowdLocomotion } from '../characters/CrowdLocomotion';
@@ -37,8 +36,6 @@ import { MotionPresentation, crowdTurnRate } from '../characters/MotionPresentat
 import { CrowdGunAim, crowdGunHolds } from '../characters/GunAim';
 import { MotionPhase } from '../characters/MotionPhase';
 import { authoredClips, strides } from '../characters/clips';
-import { disposeCharacter } from '../characters/rig';
-import { createCivilianPlaceholder } from './placeholders';
 import { loadMeasure } from '../../assets/loadTiming';
 import { loadCivilianBake } from '../../assets/civilianBake';
 import { keepsLook } from '../../sim/outbreak/appearance';
@@ -116,7 +113,7 @@ class CivilianBatch extends Group {
   private readonly shirt = new Color();
   private registry?: AssetRegistry;
   private surface?: CrowdSurfaceBinding;
-  source = 'placeholder';
+  source = 'glb';
   /** lod2 = the far band; lod1 = the near band; lod0 = the few closest figures (CrowdVisibility heroes). */
   get distant(): boolean { return this.lod === 'lod2'; }
   constructor(readonly world: SimWorld, readonly model: string, readonly lod: 'lod0' | 'lod1' | 'lod2', private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps, private readonly gait = new GaitPhase(), private readonly footwork = new CrowdFootwork(), private readonly moves = new InfectedMoves(), private readonly presentation = new MotionPresentation(crowdTurnRate), private readonly accessories?: CrowdAccessories, private readonly sharedRegistry?: AssetRegistry) { super(); this.registry = sharedRegistry;
@@ -136,30 +133,25 @@ class CivilianBatch extends Group {
     this.name = 'civilian-crowd'; this.add(this.corpses); this.probe.lod = lod; }
   async init(): Promise<void> {
     await loadGate.foreground(); await loadGate.wait();
-    const skinned = manifest.some(def => def.id === this.model && 'crowdSkin' in def && def.crowdSkin);
-    let key: string | undefined = `${this.model}:${this.lod}`;
-    // The small initial L1 cast uses the existing worker source path: shipping
-    // its full pose atlases costs more than downloading the meshes and baking
-    // off-thread. Later tiers still stream their prebuilt atlases during play.
-    const source = !skinned && this.world.scenario === 'L1' && this.world.missions?.state.phase === 'briefing';
-    const loadedSkin = skinned ? (this.registry ??= new AssetRegistry(() => {}, { materials: this.shading, textureSize: this.world.infected?.director.tier === 'low' ? 512 : 1024 })).loadAsset(this.model, this.lod) : undefined;
-    const cached = preparedCrowds.get(key) ?? await loadCivilianBake(this.model, this.lod, source);
+    const key: string | undefined = `${this.model}:${this.lod}`;
+    const cached = preparedCrowds.get(key) ?? await loadCivilianBake(this.model, this.lod);
     // Level handover (10-20): the appearance marking is a pure function of the baked vertices. Mark the retained copy
     // once; every level then clones an already marked geometry instead of re-marking it (~50-150 ms per model at 1x).
     if (cached && !cached.marked) { markCrowdAppearance(cached.geometry); cached.marked = true; }
-    let placeholder = false, model: Group;
-    if (cached?.rig && !skinned) model = cached.rig.clone(true);
+    let model: Group;
+    if (cached?.rig) model = cached.rig.clone(true);
     else {
-      const loaded = await (loadedSkin ?? (this.registry ??= new AssetRegistry(() => {}, { materials: this.shading, textureSize: this.world.infected?.director.tier === 'low' ? 512 : 1024 })).loadAsset(this.model, this.lod));
-      placeholder = !!loaded.userData.placeholder; model = placeholder ? createCivilianPlaceholder() : loaded as Group;
-      prepareCivilianRig(model, this.model, placeholder); if (placeholder) key = undefined;
+      const loaded = await (this.registry ??= new AssetRegistry(() => {}, { materials: this.shading, textureSize: this.world.infected?.director.tier === 'low' ? 512 : 1024 })).loadAsset(this.model, this.lod);
+      if (loaded.userData.placeholder) throw new Error(`${this.model} is missing its v2 civilian asset`);
+      model = loaded as Group; prepareCivilianRig(model, this.model);
     }
-    this.source = placeholder ? 'placeholder' : 'glb';
+    this.source = 'glb';
     if (cached) for (const name of cached.clip.parts) if (!model.getObjectByName(name)) {
       const joint = model.clone(false); joint.name = name; joint.position.set(0, 0, 0); model.add(joint);
     }
-    const baked = cached && !placeholder ? { ...cached, geometry: cached.geometry.clone(), shirtColor: cached.shirtColor?.clone() } : await prepareCivilianGeometry(model, this.model, this.distant, placeholder);
-    if (baked.clip.binds && !placeholder) baked.texture = crowdTexture(model);
+    const baked = cached ? { ...cached, geometry: cached.geometry.clone(), shirtColor: cached.shirtColor?.clone() } : await prepareCivilianGeometry(model, this.model);
+    if (!baked.clip.binds || !baked.geometry.hasAttribute('_skin')) throw new Error(`${this.model} is missing the v2 skinned crowd contract`);
+    baked.texture = crowdTexture(model);
     if (!baked.marked) { markCrowdAppearance(baked.geometry); baked.marked = true; }
     this.gunAim = new CrowdGunAim(model, baked.clip.parts);
     this.strideScale = baked.strideScale;
@@ -178,7 +170,7 @@ class CivilianBatch extends Group {
     baked.geometry.setAttribute('_clip_frame', this.frame); baked.geometry.setAttribute('_variant', this.tint); baked.geometry.setAttribute('_overlay', this.overlay);
     this.bakedClip = baked.clip;
     this.poses = new CrowdPosePalette(baked.clip, this.capacity); this.texture = this.poses.texture;
-    const shared = civilianMaterial(this.shading, baked.doubleSided, this.bakedClip.parts.indexOf('handR'), this.texture, { bindRow: this.poses.bindRow, skinned: !!baked.clip.binds, atlas: baked.texture, toyEyes: !!baked.clip.binds && !!baked.texture && toyEyeModels.has(this.model) });
+    const shared = civilianMaterial(this.shading, baked.doubleSided, this.texture, { bindRow: this.poses.bindRow, atlas: baked.texture, toyEyes: toyEyeModels.has(this.model) });
     const material = shared.material; this.releaseMaterial = shared.release;
     const surface = this.surface = { bind: () => shared.bindTexture(this.texture, baked.texture), textures: baked.texture ? [baked.texture] : [] };
     crowdSurfaceBindings.set(baked.geometry, surface);
@@ -198,7 +190,7 @@ class CivilianBatch extends Group {
     // while desktop and L6 freeze LOD1. Warming a different band left the first
     // phone corpse baking geometry and compiling its shader during combat.
     if (['L4', 'L6', 'L7'].includes(this.world.scenario ?? '') && this.lod === this.corpseLod) for (const death of corpsePoses) this.corpses.prepare(`${this.model}:${death}`, baked.geometry, material, baked.clip, civilianClips.indexOf(death) * framesPerClip + framesPerClip - 1, true);
-    this.add(this.mesh); if (placeholder) disposeCharacter(model); this.update();
+    this.add(this.mesh); this.update();
   }
   update(alpha = 1, low = false, shotId?: number, figures?: readonly EntitySnapshot[]): void {
     this.probe.begin(); this.deadFeet.clear(); this.corpses.begin(id => this.world.entities.get(id), e => corpseLayout(this.world).place(e), this.world.entities.get(1)?.transform);
@@ -633,7 +625,7 @@ export class CivilianCrowd extends Group {
     }
     for (const e of this.world.entities.iterate()) if (e.droppedProp) this.props.dropped(e.droppedProp, e.transform); this.props.finish();
   }
-  snapshot() { const states=this.batches.map(b=>b.snapshot());return {instances:states.reduce((n,s)=>n+s.instances,0),draws:states.reduce((n,s)=>n+s.draws,0),figures:states.flatMap(s=>s.figures),muzzles: [...this.props.muzzles].map(([id, position]) => ({ id, position: position.toArray() })),layouts:states.map(s=>s.layout).filter(Boolean),source:states.every(s=>s.source==='glb')?'glb':'placeholder'}; }
+  snapshot() { const states=this.batches.map(b=>b.snapshot());return {instances:states.reduce((n,s)=>n+s.instances,0),draws:states.reduce((n,s)=>n+s.draws,0),figures:states.flatMap(s=>s.figures),muzzles: [...this.props.muzzles].map(([id, position]) => ({ id, position: position.toArray() })),layouts:states.map(s=>s.layout).filter(Boolean),source:'glb'}; }
   aimGun(id: number, direction: { x: number; y?: number; z: number }): void { this.props.aiming.set(id, { until: this.world.tick + 24, direction: { ...direction } }); }
   shotMuzzle(id: number, direction: { x: number; y?: number; z: number }): Vector3 | null {
     this.aimGun(id,direction);

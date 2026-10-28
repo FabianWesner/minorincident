@@ -8,7 +8,6 @@ import { cure } from '../../src/levels/L10/district';
 import { regularInfectedModels } from '../../src/data/crowdAppearance';
 import { alphaLooks } from '../../src/data/alphaLooks';
 import type { ActorSpec, SceneSpec } from '../../src/debug/scenelab/spec';
-import type { AssetDef } from '../../src/assets/types';
 import type { Game } from '../../src/Game';
 
 const ids = ['inf.mega-alpha','inf.mega-alpha-ashen','inf.mega-alpha-ember'];
@@ -52,16 +51,6 @@ session.load = async spec => {
 try {
   await session.open();
   await session.page.addInitScript('window.__name = (fn) => fn;'); await session.page.evaluate('window.__name = (fn) => fn;');
-  if (variant === 'old') {
-    const manifest = JSON.parse(readFileSync('src/assets/manifest.json','utf8')) as AssetDef[];
-    for (const def of manifest) if (ids.includes(def.id) && def.rigidBaseline) {
-      def.glb=def.rigidBaseline.glb;def.lods=def.rigidBaseline.lods;def.sourceGlb=`assets/${def.id}/model.glb`;
-      delete def.crowdSkin;delete def.textureMode;delete def.textureAtlasLow;delete def.lowGlb;delete def.corpseGlb;
-    }
-    await session.page.context().route('**/src/assets/manifest.json*',route=>route.fulfill({contentType:'application/javascript',body:`export default ${JSON.stringify(manifest)};`}));
-    await session.page.context().route('**/src/assets/civilianBakes.json*',route=>route.fulfill({contentType:'application/javascript',body:'export default {};'}));
-    await session.page.reload();await session.page.waitForFunction(()=>!!window.__SCENE__&&!!window.__SS__);await session.page.evaluate(async()=>{await window.__SS__!.ready;window.__SS__!.pause();});
-  }
   const receipts: { [key: string]: unknown }[]=existsSync(`${out}/receipts.json`)&&(process.env.L10_RESUME==='1'||process.env.L10_IDS)?JSON.parse(readFileSync(`${out}/receipts.json`,'utf8')).filter((r:{id?:string;model?:string})=>process.env.L10_RESUME==='1'||!process.env.L10_IDS?.split(',').includes(r.id??r.model??'')):[];
   if (mode==='portraits') {
     for (const model of ids.filter(id=>!process.env.L10_IDS||process.env.L10_IDS.split(',').includes(id))) for (const yaw of [-45,135]) {

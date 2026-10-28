@@ -34,7 +34,6 @@
     "assets:turntable": "tsx tools/assets/turntable.ts",
     "deploy": "npm run build && npx --yes wrangler@4 pages deploy dist --project-name minor-incident",
     "assets:build": "tsx tools/assets/build.ts",
-    "assets:bake-crowd": "tsx tools/assets/bake-crowd.ts",
     "assets:bake-civilians": "tsx tools/assets/bake-civilians.ts",
     "layouts:build": "tsx tools/layouts/build.ts",
     "assets:collision": "tsx tools/assets/bake-static-collision.ts",

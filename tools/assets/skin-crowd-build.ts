@@ -296,7 +296,6 @@ for (const lod of [0, 1, 2]) {
   receipts.push({ lod, source: rig, sourceSha256: createHash('sha256').update(readFileSync(rig)).digest('hex'), ...(existsSync(body) ? { bodySource: body, bodySha256: createHash('sha256').update(readFileSync(body)).digest('hex') } : {}), tiers });
   unlinkSync(raw);
 }
-if (!def.crowdSkin) def.rigidBaseline = { glb: def.glb, lods: def.lods };
 def.crowdSkin = true; def.textureMode = 'baseColor'; def.sourceGlb = join(assets, 'model.skin.glb');
 def.glb = join(output, `${id}.lod0.glb`); def.lods = { lod1: join(output, `${id}.lod1.glb`), lod2: join(output, `${id}.lod2.glb`) };
 delete def.textureAtlasLow; delete def.lowGlb; delete def.corpseGlb;

@@ -2,7 +2,6 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import type { AssetDef } from '../../src/assets/types';
 import type { ActorSpec, SceneSpec } from '../../src/debug/scenelab/spec';
 import type { Game } from '../../src/Game';
 import { runSpec } from './run';
@@ -53,18 +52,6 @@ try {
   await session.open();
   await session.page.addInitScript("window.__name = (fn, name) => Object.defineProperty(fn, 'name', { value: name, configurable: true });");
   await session.page.evaluate("window.__name = (fn, name) => Object.defineProperty(fn, 'name', { value: name, configurable: true });");
-  if (variant === 'old') {
-    const manifest = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as AssetDef[];
-    for (const def of manifest) if (migrated.includes(def.id)) {
-      assert.ok(def.rigidBaseline, `${def.id} needs its old rigid baseline`);
-      def.glb = def.rigidBaseline.glb; def.lods = def.rigidBaseline.lods;
-      delete def.crowdSkin; delete def.textureMode; delete def.textureAtlasLow; delete def.lowGlb; delete def.corpseGlb;
-    }
-    await session.page.context().route('**/src/assets/manifest.json*', route => route.fulfill({ contentType: 'application/javascript', body: `export default ${JSON.stringify(manifest)};` }));
-    await session.page.context().route('**/src/assets/civilianBakes.json*', route => route.fulfill({ contentType: 'application/javascript', body: 'export default {};' }));
-    await session.page.reload(); await session.page.waitForFunction(() => !!window.__SCENE__ && !!window.__SS__);
-    await session.page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.pause(); });
-  }
   if (mode === 'story') {
     const files = (process.env.L9_STORY_FILES ?? 'l9-enc-alpha-group,l9-enc-shortcut-ram,l9-enc-zero-ram,l9-crash-sequence-1000,l9-crash-sequence-0,l9-crash-crawl').split(',');
     const receipts = [];

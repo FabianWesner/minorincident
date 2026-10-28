@@ -78,11 +78,6 @@ attribute. PNG atlases require `toktx` on PATH or `TOKTX_BIN`; color maps use
 ETC1S, detail maps use UASTC. Texture-free builds need no encoder. The bundled
 Three.js Basis transcoder is loaded by KTX2Loader.
 
-`npm run assets:bake-crowd -- inf.common-worker` reads a supplied LOD1 or
-generates lower-density geometry without rebuilding Blender. It exports one
-primitive per palette material, `_PART_INDEX` and a sampled rigid-part clip
-in scene extras. E07 can supply its clip evaluator to `bakeCrowd`.
-
 The registry returns independent clones of cached prototypes and logs
 `asset.placeholder` for unavailable or pre-integrated art. Use
 `loadAsset(id, 'lod0'|'lod1'|'lod2', decay?)`; the live LOD policy is in

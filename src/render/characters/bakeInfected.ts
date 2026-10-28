@@ -244,7 +244,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
         else { joints[i * 4 + c] = part; weights[i * 4 + c] = c === 0 ? 1 : 0; }
       }
       const semantic = geometry.getAttribute('_crowd_part'), semanticParts = semantic ? Float32Array.from({ length: count }, (_, i) => map[semantic.getX(i)]) : undefined;
-      const packed = packSkin(joints, weights, count, false, semanticParts);
+      const packed = packSkin(joints, weights, count, semanticParts);
       indices.set(packed.dominant);
       const point = new Vector3(), inverse = new Matrix4();
       for (let i = 0; i < count; i++) {

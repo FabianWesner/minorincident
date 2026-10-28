@@ -29,7 +29,7 @@ for (const model of [...new Set([...coreCivilianModels, ...l6CastModels, ...mani
     });
     try {
       prepareCivilianRig(root, model);
-      const prepared = await prepareCivilianGeometry(root, model, lod === 'lod2'); prepared.rig = root;
+      const prepared = await prepareCivilianGeometry(root, model); prepared.rig = root;
       const bytes = gzipSync(encodeCivilianBake(prepared), { level: 9 });
       const name = `${model}.${lod}.${createHash('sha256').update(bytes).digest('hex').slice(0, 16)}.bin.gz`;
       writeFileSync(`${directory}/${name}`, bytes); files[`${model}:${lod}`] = `/assets/civilians/${name}`;

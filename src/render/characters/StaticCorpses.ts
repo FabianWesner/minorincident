@@ -219,6 +219,7 @@ export class StaticCorpses extends Group {
     if (![...this.chunks.keys()].some(k => k === key || k.startsWith(`${key}/`))) this.createPage(key, source, material, clip, frame, []);
   }
   private frozenPose(source: BufferGeometry, material: MeshLambertNodeMaterial, clip: CrowdClip, frame: number, hiddenParts: readonly string[], hidesHair = false) {
+    if (!clip.binds || !source.hasAttribute('_skin')) throw new Error('Frozen crowd bodies require the v2 skinned contract');
     const frozenKey = `${source.uuid}/${material.uuid}/${frame}/${hiddenParts.join(',')}/${hidesHair}`;
     let frozen = this.frozen.get(frozenKey);
     if (!frozen) {
@@ -244,16 +245,16 @@ export class StaticCorpses extends Group {
         geometry = new BufferGeometry(); const parts = source.getAttribute('_parts');
         const hidden = new Set(hiddenParts.map(name => clip.parts.indexOf(name)));
         const capNames = ['head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'legL', 'legR'];
-        const visible = (i: number) => (!clip.binds || parts.getZ(i) <= 1.5) && (parts.getW(i) >= 1024 ? hiddenParts.includes(capNames[parts.getW(i) - 1024]) && !hidden.has(parts.getX(i)) : !hidden.has(parts.getX(i))) && !(hidesHair && !source.userData.headwearMorph && (parts.getY(i) === -2 || parts.getW(i) % 128 >= 4 && parts.getW(i) % 128 < 8));
+        const visible = (i: number) => parts.getZ(i) <= 1.5 && (parts.getW(i) >= 1024 ? hiddenParts.includes(capNames[parts.getW(i) - 1024]) && !hidden.has(parts.getX(i)) : !hidden.has(parts.getX(i))) && !(hidesHair && !source.userData.headwearMorph && (parts.getY(i) === -2 || parts.getW(i) % 128 >= 4 && parts.getW(i) % 128 < 8));
         // Colour tags may differ at vertices of one triangle. Keep whole triangles
         // in triangle soup; indexed geometry is filtered through its index below.
         const kept: number[] = [];
         if (source.index) { for (let i = 0; i < parts.count; i++) if (visible(i)) kept.push(i); }
         else for (let i = 0; i + 2 < parts.count; i += 3) if (visible(i) && visible(i + 1) && visible(i + 2)) kept.push(i, i + 1, i + 2);
-        const frameOffset = Math.floor(frame) * clip.parts.length * 16, skin = clip.binds ? source.getAttribute('_skin') : undefined, skinMatrix = new Float32Array(16);
+        const frameOffset = Math.floor(frame) * clip.parts.length * 16, skin = source.getAttribute('_skin'), skinMatrix = new Float32Array(16);
         // A frozen pose reuses each joint × inverse bind for every vertex.
-        const skinPose = skin && clip.binds ? new Float32Array(clip.parts.length * 16) : undefined;
-        if (skinPose) premultiplyRow(clip.matrices, skinPose, clip.binds!, frameOffset, clip.parts.length, 0);
+        const skinPose = new Float32Array(clip.parts.length * 16);
+        premultiplyRow(clip.matrices, skinPose, clip.binds, frameOffset, clip.parts.length, 0);
         for (const name of ['position', 'normal', 'color', '_parts', ...(source.hasAttribute('uv') ? ['uv'] : [])]) {
           const original = source.getAttribute(name), coveredScalp = name === 'position' && hidesHair && source.userData.headwearMorph ? source.getAttribute('_gripPosition') : undefined;
           // GPU backends may pad normals to vec4. Frozen geometry retains the
@@ -264,10 +265,9 @@ export class StaticCorpses extends Group {
             const i = kept[output];
             if (name === 'position' || name === 'normal') {
               // Blend the premultiplied joint matrices of this vertex.
-              const skinned = skin && clip.binds ? skinnedVertexMatrix(clip, frameOffset, parts, skin, i, skinMatrix, skinPose) : undefined;
-              const matrices = skinned ?? clip.matrices;
+              const matrices = skinnedVertexMatrix(clip, frameOffset, parts, skin, i, skinMatrix, skinPose);
               const sample = coveredScalp && parts.getX(i) === clip.parts.indexOf('head') ? coveredScalp : original;
-              const m = skinned ? 0 : frameOffset + parts.getX(i) * 16, x = sample.getX(i), y = sample.getY(i), z = sample.getZ(i);
+              const m = 0, x = sample.getX(i), y = sample.getY(i), z = sample.getZ(i);
               let nx = matrices[m] * x + matrices[m + 4] * y + matrices[m + 8] * z;
               let ny = matrices[m + 1] * x + matrices[m + 5] * y + matrices[m + 9] * z;
               let nz = matrices[m + 2] * x + matrices[m + 6] * y + matrices[m + 10] * z;
@@ -318,7 +318,7 @@ export class StaticCorpses extends Group {
           frozenMaterial = new MeshLambertNodeMaterial().copy(material);
           frozenMaterial.positionNode = null; frozenMaterial.normalNode = null; frozenMaterial.maskNode = corpseMask(material.userData.frozenSurfaceMask);
         }
-        if (clip.binds) frozenMaterial.normalNode = skinnedWoundNormal(normalViewGeometry);
+        frozenMaterial.normalNode = skinnedWoundNormal(normalViewGeometry);
         this.frozenMaterials.set(material, frozenMaterial);
       }
       frozen = { geometry, material: frozenMaterial }; this.frozen.set(frozenKey, frozen);

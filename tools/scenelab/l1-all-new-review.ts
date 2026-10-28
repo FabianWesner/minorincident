@@ -28,11 +28,6 @@ try {
   for (const id of ids) for (const variant of ['old', 'new']) for (const pixels of [120, 400]) for (const yaw of [-45, 135]) {
     const coat = id.match(/\.(black|cream)$/)?.[1], base = coat ? id.replace(/\.(black|cream)$/, '') : id;
     const def = structuredClone((variant === 'old' ? old : current).find(d => d.id === base)!);
-    if (variant === 'old' && process.env.REVIEW_RIGID_BASELINE === '1') {
-      const baseline = current.find(d => d.id === base)?.rigidBaseline;
-      if (!baseline) throw Error(`${base}: no retained rigid baseline`);
-      def.glb = baseline.glb; def.lods = baseline.lods; delete def.crowdSkin; delete def.textureMode;
-    }
     if (tier === 'low' && def.crowdSkin) {
       const lowPath = (path: string) => { const low = path.replace(/\.glb$/, '.low.glb'); return existsSync(low) ? low : path; };
       def.glb = lowPath(def.glb!);

@@ -32,7 +32,7 @@ worker.onmessage = async ({ data }) => {
       finally { downloads += performance.now() - before; }
     });
     prepareCivilianRig(root, data.model);
-    const baked = await prepareCivilianGeometry(root, data.model, data.lod === 'lod2'); baked.rig = root;
+    const baked = await prepareCivilianGeometry(root, data.model); baked.rig = root;
     const bytes = encodeCivilianBake(baked); baked.geometry.dispose();
     if (data.cpuRate > 1) await new Promise(resolve => setTimeout(resolve, (performance.now() - start - downloads) * (data.cpuRate - 1)));
     worker.postMessage({ bytes: bytes.buffer }, [bytes.buffer]);

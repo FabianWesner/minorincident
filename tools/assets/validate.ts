@@ -275,7 +275,7 @@ export async function validateAssets(manifest: AssetDef[], production = true): P
           // the same distance tier; a declared budget cannot widen this limit.
           const definitions = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as AssetDef[];
           const rig = definitions.find(candidate => candidate.id === def.rigidDrawBase);
-          const rigPath = rig && drawComparisonPath(rig, lod, def.crowdSkin);
+          const rigPath = rig && drawComparisonPath(rig, lod);
           if (!rigPath || !existsSync(rigPath)) validation.errors.push(`rigidDrawBase: missing shipped LOD${lod}`);
           else {
             const baseline = await io.read(rigPath);
@@ -286,14 +286,14 @@ export async function validateAssets(manifest: AssetDef[], production = true): P
         if (def.rigDrawBase) {
           const definitions = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as AssetDef[];
           const rigBase = definitions.find(a => a.id === def.rigDrawBase!.id);
-          const basePath = rigBase && drawComparisonPath(rigBase, lod, def.crowdSkin);
+          const basePath = rigBase && drawComparisonPath(rigBase, lod);
           if (def.category !== 'character' || !rigBase || rigBase.id === def.id || rigBase.category !== 'character' || !atLeast(rigBase.status, 'integrated') || !basePath || !existsSync(basePath)) validation.errors.push('rigDrawBase: expected a shipped living character tier');
           else validation.errors.push(...rigDrawErrors(document, def, await io.read(basePath)));
         }
         if (def.animatedDrawBase) {
           const definitions = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as AssetDef[];
           const peer = definitions.find(candidate => candidate.id === def.animatedDrawBase);
-          const peerPath = peer && drawComparisonPath(peer, lod, def.crowdSkin);
+          const peerPath = peer && drawComparisonPath(peer, lod);
           if (def.category !== 'character' || !peer || peer.category !== 'character' || !atLeast(peer.status, 'integrated') || !peerPath || !existsSync(peerPath)) {
             validation.errors.push('animated-owner draws: missing integrated character base');
           } else {

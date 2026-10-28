@@ -16,7 +16,7 @@ export function restInverses(parts: { matrixWorld: Matrix4 }[]): Float32Array {
 }
 
 /** Pack four influences: `_part_index` keeps the dominant joint, `_skin` the other three. */
-export function packSkin(indices: ArrayLike<number>, weights: ArrayLike<number>, count: number, rigid: boolean, owners?: ArrayLike<number>): { dominant: Float32Array; skin: Float32Array } {
+export function packSkin(indices: ArrayLike<number>, weights: ArrayLike<number>, count: number, owners?: ArrayLike<number>): { dominant: Float32Array; skin: Float32Array } {
   const dominant = new Float32Array(count), skin = new Float32Array(count * 4);
   for (let i = 0; i < count; i++) {
     const order = [0, 1, 2, 3].sort((a, b) => weights[i * 4 + b] - weights[i * 4 + a]);
@@ -28,7 +28,6 @@ export function packSkin(indices: ArrayLike<number>, weights: ArrayLike<number>,
     const j = order.map(k => indices[i * 4 + k]), w = order.map(k => weights[i * 4 + k]);
     const sum = w[0] + w[1] + w[2] + w[3] || 1;
     dominant[i] = j[0];
-    if (rigid) continue;
     skin[i * 4] = (w[1] > 0 ? j[1] : 0) + 32 * (w[2] > 0 ? j[2] : 0) + 1024 * (w[3] > 0 ? j[3] : 0);
     skin[i * 4 + 1] = w[1] / sum; skin[i * 4 + 2] = w[2] / sum; skin[i * 4 + 3] = w[3] / sum;
   }

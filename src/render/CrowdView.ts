@@ -39,7 +39,6 @@ import { infectedDefinitions } from '../data/infected';
 import type { EntitySnapshot } from '../sim/world/types';
 import { isOutbreakDistrict } from '../levels/districts/types';
 import type { SimWorld } from '../sim/world/SimWorld';
-import { createInfectedPlaceholder } from './characters/infectedPlaceholder';
 import type { View } from './View';
 import { bakeInfected, bakeInfectedAsync, framesPerClip, infectedClips } from './characters/bakeInfected';
 import { loadGate } from '../assets/loadGate';
@@ -229,7 +228,8 @@ export class CrowdView extends Group {
       // but no extra render-frame wait for CPU baking at each new horde LOD.
       if (!delivered) await loadGate.wait();
       if (this.disposed) return;
-      const fallback = Boolean(loaded.userData.placeholder), model = fallback ? createInfectedPlaceholder(role) : loaded;
+      if (loaded.userData.placeholder) throw new Error(`${asset} is required for the skinned crowd`);
+      const model = loaded;
       const atlas = model.userData.assetTextureMode === 'baseColor' ? crowdTexture(model) : undefined;
       const healthy = def.id.startsWith('healthy.'), human = !dogCoat(def.id) && !/^(infected|healthy)\.(dog|cat|crow|lion|gorilla|elephant|zebra|flamingo)$/.test(def.id);
       const alpha = alphaLookAssets.includes(asset), capacity = role === 'crow' ? 800 : 350;
@@ -239,7 +239,7 @@ export class CrowdView extends Group {
       const textured = model.userData.assetTextureMode === 'baseColor';
       const infectedAtlas = textured && human && !healthy;
       // Texture ownership stays with this view's registry, never the CPU geometry cache.
-      const preparedKey = fallback ? undefined : cpuKey;
+      const preparedKey = cpuKey;
       const prepared = preparedKey ? preparedBatches.get(preparedKey) : undefined;
       let baked: BakedBatch, createdCorpse: BufferGeometry | null = null, corpseClip: BakedBatch['clip'] | undefined;
       if (prepared) {
@@ -252,7 +252,7 @@ export class CrowdView extends Group {
         if (prepared.corpseClip && !this.corpseClips.has(key)) this.corpseClips.set(key, prepared.corpseClip);
       } else {
         // The finished geometry is cached below (preparedBatches), so the raw bake is not kept a second time.
-        const args = [model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback, undefined, undefined, true, textured] as const;
+        const args = [model, this.registry.definition(asset).animatedNodes, role === 'crawler', undefined, undefined, true, textured] as const;
         const bakeStarted = performance.now();
         const shipped = delivered ?? await prebuilt;
         baked = shipped ? { ...shipped, texture: atlas } : this.world.scenario === 'L8' ? await bakeInfectedAsync(() => loadGate.wait(), ...args) : bakeInfected(...args);
@@ -269,7 +269,7 @@ export class CrowdView extends Group {
       const indexed = mergeCrowdVertices(baked.geometry); baked.geometry.dispose(); baked.geometry = indexed; }
       if (this.world.scenario === 'L8') { await loadGate.wait(); if (this.disposed) { baked.geometry.dispose(); return; } }
       if (!healthy && !infectedAtlas && !baked.clip.binds) markInfectedEyeCores(baked.geometry);
-      if (lod === 'lod2' && !fallback) {
+      if (lod === 'lod2') {
         if (atlas && human && !this.registry.definition(asset).corpseGlb) {
           // The authored textured tier already meets its budget. Keep its UV
           // surface for both live actors and frozen permanent bodies.
@@ -489,7 +489,7 @@ export class CrowdView extends Group {
       mesh.userData.staticInstanceAttributes = true;
       mesh.userData.staticInstancePosition = material.positionNode;
       mesh.onAfterRender = () => probe.draw();
-      this.batches.set(`${key}:${lod}`, { animal: !!model.getObjectByName('legFL'), locomotion, probe, poses, lod, role: key, mesh, state, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), strideScale: baked.strideScale, windup: def.windup, asset, texture, count: 0, placeholders: fallback }); this.add(mesh);
+      this.batches.set(`${key}:${lod}`, { animal: !!model.getObjectByName('legFL'), locomotion, probe, poses, lod, role: key, mesh, state, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), strideScale: baked.strideScale, windup: def.windup, asset, texture, count: 0, placeholders: false }); this.add(mesh);
       if (lod === 'lod1' || lod === 'lod2') this.loadedModels.add(key);
       // Ordinary deaths use the retained far surface; Alphas keep the authored body. Warm in
       // every combat scene so the first settled blast victims cannot link it
@@ -501,7 +501,6 @@ export class CrowdView extends Group {
         for (const death of deaths) this.staticCorpses.prepare(`${key}:${death}:0`, source, material, corpseClip, infectedClips.indexOf(death) * framesPerClip + framesPerClip - 1);
       }
       if (lod === 'lod1' && regularInfectedModels.some(id => id === asset)) for (const death of corpsePoses) this.staticCorpses.prepare(`${key}:${death}:0:near`, mesh.geometry, material, baked.clip, infectedClips.indexOf(death) * framesPerClip + framesPerClip - 1, true);
-      if (fallback) model.traverse((n) => { if (n instanceof Mesh) { n.geometry.dispose(); for (const m of Array.isArray(n.material) ? n.material : [n.material]) m.dispose(); } });
   }
   private modelKey(id: string): string | undefined {
     const key = this.modelAliases.get(id);
