@@ -8,7 +8,7 @@ import type { Issue, LevelRun, SessionOptions } from './session';
  * Playtest driver: plays the campaign by real keyboard/mouse input on the QA preview build, headless.
  *
  *   E2E_PORT=4761 npm run playtest -- --levels L1-L10 --quality low [--mode campaign|continue] [--heroine female|male]
- *                                       [--zoom 1.5] [--level-minutes 25] [--out test-results/playtest/<name>]
+ *                                       [--zoom 1.5] [--weapon weapon.army-mg] [--level-minutes 25] [--out test-results/playtest/<name>]
  *
  * campaign: one browser session from a new game through every real handover.
  * continue: one browser session per level; each resumes the save through the menu (Start game → resume level),
@@ -29,6 +29,7 @@ const range = (spec: string): string[] => {
 };
 const levels = range(values.levels!);
 const quality = values.quality === 'high' ? 'high' : 'low';
+if (!Number.isFinite(Number(values.zoom))) throw new Error('--zoom must be finite');
 const mode = values.mode === 'continue' ? 'continue' : 'campaign';
 const out = resolve(values.out ?? `test-results/playtest/${mode}-${quality}-${new Date().toISOString().slice(0, 16).replace(/[:T]/g, '')}`);
 mkdirSync(out, { recursive: true });

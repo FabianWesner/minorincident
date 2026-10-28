@@ -11,6 +11,8 @@ import { campaignEndingComplete, needsZoomInput, observeWithin } from '../../too
 
 test('playtest zoom tolerates camera settling but detects overshoot', () => {
   expect(needsZoomInput(1.51, 1.5)).toBe(false);
+  expect(needsZoomInput(1.52, 1.5)).toBe(false);
+  expect(needsZoomInput(NaN, 1.5)).toBe(true);
   expect(needsZoomInput(1.53, 1.5)).toBe(true);
 });
 

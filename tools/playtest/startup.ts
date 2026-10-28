@@ -15,9 +15,9 @@ export function shouldResumePause(menu: string | null, loading: boolean): boolea
   return menu === 'pause' && !loading;
 }
 
-/** Level handovers preserve zoom; another wheel burst can reach the launcher's wider limit. */
+/** Camera observations tolerate two hundredths of settling, including floating-point boundaries. */
 export function needsZoomInput(targetZoom: number, requestedZoom: number): boolean {
-  return Math.abs(targetZoom - requestedZoom) > .02;
+  return !Number.isFinite(targetZoom) || Math.abs(targetZoom - requestedZoom) > .02 + Number.EPSILON * 4;
 }
 
 /** Never advance past the L10 Mega objective with the boss still alive. */
