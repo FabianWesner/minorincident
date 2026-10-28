@@ -9,6 +9,8 @@ import type { Issue, LevelRun, SessionOptions } from './session';
  *
  *   E2E_PORT=4761 npm run playtest -- --levels L1-L10 --quality low [--mode campaign|continue] [--heroine female|male]
  *                                       [--zoom 1.5] [--level-minutes 25] [--out test-results/playtest/<name>]
+ *   Long single-level campaigns: --session-seconds 480 releases the pool reservation,
+ *   persists the profile and resumes the normal checkpoint save through the menu.
  *
  * campaign: one browser session from a new game through every real handover.
  * continue: one browser session per level; each resumes the save through the menu (Start game → resume level),
@@ -20,6 +22,7 @@ const { values } = parseArgs({ options: {
   levels: { type: 'string', default: 'L1-L10' }, quality: { type: 'string', default: 'low' }, mode: { type: 'string', default: 'campaign' },
   heroine: { type: 'string', default: 'female' }, zoom: { type: 'string', default: '1.5' }, 'level-minutes': { type: 'string', default: '60' },
   'no-skip': { type: 'boolean', default: false },
+  'session-seconds': { type: 'string' },
   out: { type: 'string' }, entry: { type: 'string' }, 'keep-profile': { type: 'boolean', default: false },
 } });
 const range = (spec: string): string[] => {
@@ -29,6 +32,8 @@ const range = (spec: string): string[] => {
 const levels = range(values.levels!);
 const quality = values.quality === 'high' ? 'high' : 'low';
 const mode = values.mode === 'continue' ? 'continue' : 'campaign';
+const sessionSeconds = values['session-seconds'] === undefined ? undefined : Number(values['session-seconds']);
+if (sessionSeconds !== undefined && (!Number.isFinite(sessionSeconds) || sessionSeconds < 60 || sessionSeconds > 480 || levels.length !== 1 || mode !== 'campaign')) throw new Error('--session-seconds requires a single-level campaign and 60–480 seconds');
 const out = resolve(values.out ?? `test-results/playtest/${mode}-${quality}-${new Date().toISOString().slice(0, 16).replace(/[:T]/g, '')}`);
 mkdirSync(out, { recursive: true });
 const port = Number(process.env.E2E_PORT ?? 3821);
@@ -58,7 +63,13 @@ const session = (options: SessionOptions): boolean => {
 };
 const base = { origin, out, quality, zoom: Number(values.zoom), heroine: (values.heroine === 'male' ? 'male' : 'female') as 'female' | 'male', profile, levelMinutes: Number(values['level-minutes']), noSkip: values['no-skip'] } as const;
 try {
-  if (mode === 'campaign') session({ ...base, levels, entry: (values.entry as SessionOptions['entry']) ?? (levels[0] === 'L1' ? 'new' : 'debug'), stopAfterLevel: false, tag: 'campaign' });
+  if (mode === 'campaign') {
+    const deadline = Date.now() + base.levelMinutes * 60_000;
+    for (let segment = 0; ; segment++) {
+      const ok = session({ ...base, levels, entry: segment ? 'continue' : (values.entry as SessionOptions['entry']) ?? (levels[0] === 'L1' ? 'new' : 'debug'), stopAfterLevel: false, tag: segment ? `campaign-${segment + 1}` : 'campaign', sampleSeconds: sessionSeconds });
+      if (!ok || sessionSeconds === undefined || runs.some(run => run.finished) || Date.now() >= deadline) break;
+    }
+  }
   else for (const [i, level] of levels.entries()) {
     const resumed = i > 0 && runs.some(r => r.level === levels[i - 1] && r.finished);
     const entry = i === 0 ? (level === 'L1' ? 'new' : (values.entry as SessionOptions['entry']) ?? 'continue') : resumed ? 'continue' : 'debug';

@@ -1,31 +1,32 @@
 {
-  "status": "portraits reviewed; remaining runtime sheets pending",
+  "status": "final portraits reviewed; combined runtime sheets pending",
   "portraits": "96 native 120/400 px captures, front/back, old/new, low/high WebGL2/WebGPU",
   "fixes": [
     "matching semantic Mega rig fixes the detached LOD2 leg",
     "authored skull and variant horns/head hardware restored automatically",
     "white eye cores classified as emitters with the red shells",
-    "living neck collar carries UVs required by the textured bake"
+    "living neck collar carries UVs required by the textured bake",
+    "sole-anchored semantic leg islands inside fists reassigned before skinning; grounded corpse surface repaired"
   ],
   "sheets": [
     {
       "capture": "01-inf.mega-alpha.jpg",
       "reviewed": true,
-      "sha256": "40a2137296a5e89e4d6f2701dbaf8f119d3723e2d558414c5c747bcd46096ba9",
+      "sha256": "867f661c4a28d37ead3e2783e08e90462e7879ff4beb084b3c26fb3c7a91d7ba",
       "verdict": "The broad rose flesh, dark trousers and bony crown stay separated in L10 light; restored skull and independent red eye cores remain readable at 120 px. Rear legs stay connected at the far tier."
     },
     {
       "capture": "02-inf.mega-alpha-ashen.jpg",
       "reviewed": true,
-      "sha256": "c1e7979d87464e23771ade35fd8d6f38798eb814d30c9920e2951dec1ef7772b",
+      "sha256": "695a28800be366b6a80c60ad97a1aee59b8f5c58bac08ba3e4d789979ca4550e",
       "verdict": "Ash paint stays on its source surface; authored side horns meet the retained skull rather than floating above it. Pale skull is intentional bone, not exposed human skin. Both backend and quality pairs agree."
     },
     {
       "capture": "03-inf.mega-alpha-ember.jpg",
       "reviewed": true,
-      "sha256": "e4729cb491b845454c4bc6624419941728e08a243efa4c1f6649f3b1804da96b",
+      "sha256": "4607c7e8bda8258e9f7c787b18fc4cd96d4121feaed87b040fc96f1341512559",
       "verdict": "Red flesh and ivory back armour remain distinct from black trousers; authored head hardware and eye cores survive all tiers. No held weapon is baked into this body."
     }
   ],
-  "sharedL9Review": "Viewed all six L9 portrait sheets in their lane; final main import and L10 mixed crowd still pending."
+  "sharedL9Review": "Imported from main 904ae77a9. Reopened all six native old/new sheets and runtime skin/headwear/props sheet: face/limb tones agree, authored visor/cap/back of head retained; held spatula and GRILL & CHILL apron decal preserved. Final combined L10 crowd pending."
 }

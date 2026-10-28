@@ -507,7 +507,15 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         if (frame.playMs > 500) await issue(frame.playMs > 2000 ? 'P1' : 'P2', 'hitch', `Frame of ${Math.round(frame.playMs)} ms at tick ${frame.tick}`, false, frame);
       }
     }
-    if (run && o.sampleSeconds !== undefined && Date.now() - wallStart >= o.sampleSeconds * 1000) break;
+    if (run && o.sampleSeconds !== undefined && Date.now() - wallStart >= o.sampleSeconds * 1000) {
+      await press([]); await releaseAim();
+      run.wallSeconds = Math.round((Date.now() - wallStart) / 1000); run.simSeconds = Math.round((e.tick - tickStart) / 60);
+      run.weaponsEnd = e.player?.weapons ?? [];
+      run.attacks = await page.evaluate(() => ({ ...(window as unknown as { __playtestAttacks: Record<string, number> }).__playtestAttacks }));
+      log({ checkpointYield: e.checkpoint, level: e.level, tick: e.tick, finished: run.finished });
+      await capture(`${e.level}-checkpoint-yield`);
+      break;
+    }
 
     // The title screen loads L1 speculatively behind the menu: ignore levels outside the range until the first one starts.
     if (!run && e.level && !o.levels.includes(e.level)) { if (Date.now() - bootWall > 600_000) break; await hold(300); continue; }

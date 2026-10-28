@@ -48,7 +48,7 @@ def runtime():
  grid(sources,OUT/'08-pipeline-source.jpg',width=920,cols=1)
 def showcase():
  folder=Path('/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/showcase/img');folder.mkdir(parents=True,exist_ok=True)
- dest=folder/'l8-crowd-old-new.jpg';grid([(ROOT/f'crowd-{v}-high-webgpu/zoom-1.5.png',f'L10 | {v.upper()} | 30 figures | high WebGPU')for v in ['old','new']],dest,width=1400,cols=1)
+ dest=folder/'l10-crowd-old-new.jpg';grid([(ROOT/f'crowd-{v}-high-webgpu/zoom-1.5.png',f'L10 | {v.upper()} | 30 figures | high WebGPU')for v in ['old','new']],dest,width=1400,cols=1)
  im=Image.open(dest);im.thumbnail((1600,1600),Image.Resampling.LANCZOS);im.save(dest,quality=93,optimize=True)
  (OUT/'showcase.json').write_text(json.dumps({'file':str(dest),'size':list(im.size),'sha256':hashlib.sha256(dest.read_bytes()).hexdigest(),'bestCaptures':['04-crowd-old-new.jpg','01-inf.mega-alpha.jpg','02-inf.mega-alpha-ashen.jpg','03-inf.mega-alpha-ember.jpg']},indent=2)+'\n')
 if __name__=='__main__':

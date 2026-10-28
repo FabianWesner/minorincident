@@ -23,7 +23,7 @@ const groups = [
 const definition = (defs: AssetDef[], id: string) => defs.find(def => def.id === id.replace(/\.(black|cream)$/, ''))!;
 const v2 = (defs: AssetDef[], id: string) => !!definition(defs, id).crowdSkin || id.startsWith('char.courier-') && existsSync(`public/assets/models/${id}.skin.glb`);
 const population = groups.flatMap(group => group.ids.map(asset => ({ asset, role: group.role, visibility: group.visibility,
-  v2AtLaneBase: v2(before, asset), v2Current: v2(current, asset), owner: l9.has(asset) ? 'L9; import after main merge' : v2(before, asset) ? 'already v2; skip' : 'L10 build',
+  v2AtLaneBase: v2(before, asset), v2Current: v2(current, asset), owner: l9.has(asset) ? 'L9; imported from main 904ae77a9' : v2(before, asset) ? 'already v2; skip' : 'L10 build',
   states: asset === 'char.corgi' ? ['alive'] : asset.startsWith('inf.') ? ['alive', 'knockdown', 'recovery', 'corpse'] : ['alive', 'corpse'],
 })));
 const authoredSlots = Object.fromEntries((['high', 'low'] as const).map(tier => {

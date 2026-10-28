@@ -253,7 +253,7 @@ for (const lod of [0, 1, 2]) {
     await compressSkin(raw, target, basis, initialAtlas);
     // Keep detailed boss faces at 512 when the standalone LOD budget permits.
     const byteLimit = [600000, 250000, 150000][lod];
-    for (const atlas of [512, 256, 128]) {
+    for (const atlas of nativeInfected ? [] : [512, 256, 128]) {
       if (readFileSync(target).length <= byteLimit || atlas >= initialAtlas) continue;
       await compressSkin(raw, target, basis, atlas);
     }

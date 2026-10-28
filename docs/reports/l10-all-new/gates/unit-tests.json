@@ -1,8 +1,14 @@
 {
-  "command": "npm test",
-  "result": "pass",
+  "pass": true,
   "files": 24,
   "tests": 104,
-  "durationSeconds": 29.21,
-  "budgetCasesBeforeRun": "144/150; unchanged, no new tests"
+  "registeredCases": 144,
+  "caseBudget": 150,
+  "registeredFiles": 40,
+  "fileBudget": 45,
+  "newCases": 0,
+  "testedCommit": "fdd8f22d3",
+  "priorAttempt": "npm-test-prior-cleanup-race.txt",
+  "priorFailure": "process-group orphan fixture exited 1; immediate unchanged full rerun 104/104",
+  "driverChange": "bounded checkpoint resume sessions; no new test cases"
 }
