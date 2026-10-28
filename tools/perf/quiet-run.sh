@@ -58,6 +58,7 @@ if [ "${MI_PERF_LOCK_HELD:-}" != 1 ]; then
   printf 'Quiet-run: admission exceeded %s seconds; report unmeasured coverage.\n' "$MI_PERF_ADMISSION_TIMEOUT_SECONDS" >&2
   exit 75
 fi
+fi
 while :; do
   [ "$(date +%s)" -lt "$MI_PERF_WAIT_DEADLINE" ] || { printf 'Quiet-run: admission exceeded %s seconds; report unmeasured coverage.\n' "$MI_PERF_ADMISSION_TIMEOUT_SECONDS" >&2; exit 75; }
   # Match executables, not scheduler summaries quoting previous process commands.
