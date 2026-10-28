@@ -7,12 +7,13 @@ for config in ${L7_FIGURE_CONFIGS:-low-webgl2 high-webgpu high-webgl2 low-webgpu
   case "$config" in none) continue;; esac
   REVIEW_TIER=${config%%-*}; rest=${config#*-}; REVIEW_BACKEND=${rest%%-*}
   REVIEW_SKIN_TONE=0
-  FIGURES=$(node -e "console.log(require('./docs/reports/l7-all-new/census.json').review.join(','))")
-  case "$config" in *tone5) REVIEW_SKIN_TONE=5; FIGURES=$(node -e "console.log(require('./docs/reports/l7-all-new/census.json').review.filter(id=>id.startsWith('npc.')).join(','))");; esac
+  FIGURES=${L7_FIGURE_IDS:-$(node -e "console.log(require('./docs/reports/l7-all-new/census.json').review.join(','))")}
+  case "$config" in *tone5) REVIEW_SKIN_TONE=5; FIGURES=$(FIGURES="$FIGURES" node -e "console.log(process.env.FIGURES.split(',').filter(id=>id.startsWith('npc.')).join(','))");; esac
   export REVIEW_TIER REVIEW_BACKEND REVIEW_SKIN_TONE FIGURES
   L1_REVIEW_RAW="test-results/l7-all-new/figures/$config" node --import tsx tools/scenelab/l1-all-new-review.ts
 done
 for mode in ${L7_REVIEW_MODES:-portraits crowd states story}; do
+  case "$mode" in none) continue;; esac
   for config in low-webgl2 high-webgpu high-webgl2 low-webgpu; do
     case "$mode:$config" in portraits:high-webgl2|portraits:low-webgpu|states:high-webgl2|states:low-webgpu|story:high-webgl2|story:low-webgpu) continue;; esac
     REVIEW_TIER=${config%%-*} REVIEW_BACKEND=${config#*-}

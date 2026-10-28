@@ -1,6 +1,7 @@
 /** L7 production-light crowd/state and authored story captures, one shared context per job. */
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { SceneSession, readSpec, stopServer, writeJson } from './session';
 import { runSpec } from './run';
@@ -8,7 +9,7 @@ import type { ActorSpec, SceneSpec } from '../../src/debug/scenelab/spec';
 import type { AssetDef } from '../../src/assets/types';
 import type { Game } from '../../src/Game';
 
-const tier = process.env.REVIEW_TIER === 'high' ? 'high' : 'low';
+const tier: 'high' | 'low' = process.env.REVIEW_TIER === 'high' ? 'high' : 'low';
 const backend = process.env.REVIEW_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
 const mode = process.env.L7_CAPTURE ?? 'crowd', variant = process.env.REVIEW_VARIANT ?? 'new';
 const out = resolve(`test-results/l7-all-new/${mode}-${variant}-${tier}-${backend}`);
@@ -52,11 +53,47 @@ try {
     await session.page.reload(); await session.page.waitForFunction(() => !!window.__SCENE__ && !!window.__SS__);
     await session.page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.pause(); });
   }
+  if (variant === 'main') {
+    const base = '93d73c529';
+    for (const file of ['src/assets/manifest.json', 'src/assets/civilianBakes.json']) {
+      const data = execFileSync('git', ['show', `${base}:${file}`], { encoding: 'utf8' });
+      await session.page.context().route(`**/${file}*`, route => route.fulfill({ contentType: 'application/javascript', body: `export default ${data};` }));
+    }
+    const bakes = JSON.parse(execFileSync('git', ['show', `${base}:src/assets/civilianBakes.json`], { encoding: 'utf8' })) as Record<string, string>;
+    const files = [...new Set(Object.entries(bakes).filter(([key]) => key.startsWith('npc.civilian-man-b:')).map(([, path]) => `public${path}`)), ...[0, 1, 2].flatMap(lod => [false, true].map(low => `public/assets/models/skinned/npc.civilian-man-b.lod${lod}${low ? '.low' : ''}.glb`))];
+    for (const file of files) await session.page.context().route(`**/${file.replace(/^public\//, '')}`, route => route.fulfill({ contentType: 'application/octet-stream', body: execFileSync('git', ['show', `${base}:${file}`], { maxBuffer: 8 * 1024 * 1024 }) }));
+    await session.page.reload(); await session.page.waitForFunction(() => !!window.__SCENE__ && !!window.__SS__);
+    await session.page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.pause(); });
+  }
   const actual = await session.page.evaluate(() => window.__SS__!.getState().render);
   assert.equal(actual.backend, backend === 'webgl2' ? 'webgl' : 'webgpu'); assert.equal(actual.quality, tier);
-  if (mode === 'portraits') {
-    const receipts = [];
-    for (const model of people) for (const yaw of [-45, 135]) {
+  if (mode === 'population') {
+    const result = await session.page.evaluate(async (tier: 'high' | 'low') => {
+      const api = window.__SS__!, game = (window.__SCENE__ as unknown as { game: Game }).game;
+      api.settings.set({ quality: tier }); await api.loadLevel('L7', { seed: 29, progression: 'L7-default' }); api.pause();
+      api.setLoadout(['weapon.bat'], ['weapon.rocket-launcher']);
+      await api.step(2); api.teleport('player', { x: -48, z: 46 });
+      api.getState().l7!.roster.forEach((r, i) => api.teleport(r.id, { x: -45 + Math.floor(i / 3) * 1.2, z: 46 + (i % 3 - 1) * 1.2 }));
+      api.camera.cinematic({ position: [-22, 24, 68], target: [-48, 0, 46] }, true);
+      await api.step(180); api.pause(); await api.screenshotReady();
+      const textures = new Set<import('three').Texture>();
+      game.view.scene.traverse(node => {
+        const mesh = node as import('three').Mesh;
+        if (mesh.isMesh) for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) for (const value of Object.values(material)) if (value && typeof value === 'object' && 'isTexture' in value) textures.add(value as import('three').Texture);
+        for (const texture of node.userData.preRenderTextures ?? []) textures.add(texture);
+      });
+      let decodedBytes = 0;
+      for (const texture of textures) { const image = texture.image as { width?: number; height?: number; data?: { byteLength: number } }; if (image?.width && image.height) decodedBytes += (texture.mipmaps as { data?: { byteLength: number } }[]).reduce((n, m) => n + (m.data?.byteLength ?? 0), 0) || image.data?.byteLength || Math.ceil(image.width * image.height * 4 * (texture.generateMipmaps ? 4 / 3 : 1)); }
+      return { decodedBytes, textureCount: textures.size, perf: api.perf(), render: api.getState().render, population: api.query({}).filter(e => e.infected || e.appearance || e.companion || e.survivor).map(e => ({ id: e.id, model: e.appearance?.asset ?? e.infected?.variant ?? e.archetype, infected: !!e.infected, corpse: !!e.corpse })) };
+    }, tier);
+    writeJson(`${out}/resources.json`, { variant, tier, backend, ...result, errors: session.errors });
+    await session.screenshot(`${out}/population.png`);
+    assert.equal(result.perf.infected?.liveCount, tier === 'high' ? 200 : 100, 'Exercise the full L7 population cap');
+  } else if (mode === 'portraits') {
+    const selected = people.filter(id => !process.env.L7_PORTRAIT_IDS || process.env.L7_PORTRAIT_IDS.split(',').includes(id));
+    const receiptPath = `${out}/receipts.json`;
+    const receipts: unknown[] = existsSync(receiptPath) ? JSON.parse(readFileSync(receiptPath, 'utf8')).filter((r: { id: string }) => !selected.includes(r.id)) : [];
+    for (const model of selected) for (const yaw of [-45, 135]) {
       const infected = people.indexOf(model) < 5;
       await session.load({ name: 'l7-runtime-portrait', ground: 'asphalt', time: 'L6', size: 60, actors: [{ id: 'courier', kind: 'courier', at: [20, 20] }, { id: 'subject', kind: 'pedestrian', at: [0, 0], yaw, look: { model, accessories: [] }, state: 'idle' }], script: infected ? [{ frame: 1, actor: 'subject', do: { infect: { instant: true } } }] : [], camera: { mode: 'game', target: [0, .8, 0], zoom: .8 }, frames: 3 });
       await session.step(3); await session.ready();
@@ -72,7 +109,7 @@ try {
         await window.__SCENE__!.ready();
         const box = pickBodies.bounds(entity, new Box3()); if (!box) throw Error('Portrait body was not drawn');
         const target = box.getCenter(new Vector3()); let distance = 10, bounds: number[] = [];
-        for (let iteration = 0; iteration < 8; iteration++) {
+        for (let iteration = 0; iteration < 12; iteration++) {
           const position = target.clone().add(new Vector3().setFromSphericalCoords(distance, Math.PI * .3, Math.PI / 4));
           window.__SCENE__!.setCamera({ mode: 'pose', target: target.toArray(), position: position.toArray() }); await window.__SCENE__!.ready();
           const camera = game.view.camera, projection = new Matrix4().multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
@@ -80,7 +117,8 @@ try {
           bounds = [(projected.min.x + 1) * 400, (1 - projected.max.y) * 300, (projected.max.x + 1) * 400, (1 - projected.min.y) * 300];
           distance *= (bounds[3] - bounds[1]) / pixels;
         }
-        return { bounds, actualPixels: bounds[3] - bounds[1], actualState: { model: e.appearance.asset, infected: !!e.infected, bornInfected: e.appearance.bornInfected } };
+        const appearancePath = '/src/render/characters/CrowdAppearance.ts', { resolveCrowdAppearance } = await import(appearancePath);
+        return { bounds, actualPixels: bounds[3] - bounds[1], actualState: { model: e.appearance.asset, infected: !!e.infected, bornInfected: e.appearance.bornInfected, look: resolveCrowdAppearance(e) } };
       }, { entity, pixels, infected });
       const file = `${out}/${model}-${variant}-${pixels}-${yaw}.png`; await session.screenshot(file);
       receipts.push({ id: model, variant, tier, backend, file, targetPixels: pixels, yaw, ...framing }); writeJson(`${out}/receipts.json`, receipts);
@@ -88,9 +126,14 @@ try {
     }
   } else if (mode === 'story') {
     const files = ['catalog/qa-l7-entry-night-exit.json', 'catalog/qa-l7-entry-rocket.json', 'l7-rocket/qa-l7-rocket-crowd.json', 'l7-rocket/qa-l7-rocket-alpha.json', 'l7-district/plaza-w6.json', 'catalog/qa-l7-entry-corridor.json', 'l7-encounters/qa-l7-horde-passage.json', 'catalog/qa-l7-entry-bus.json', 'l7-departure/departure.json', 'l7-departure/departure-city.json'];
-    const receipts = [];
-    for (const relative of files) {
+    const selected = files.filter(file => !process.env.L7_STORY_FILES || process.env.L7_STORY_FILES.split(',').includes(file));
+    const receiptPath = `${out}/receipts.json`;
+    const receipts: unknown[] = existsSync(receiptPath) ? JSON.parse(readFileSync(receiptPath, 'utf8')).filter((r: { file: string }) => !selected.map(file => resolve('tests/scenes', file)).includes(r.file)) : [];
+    for (const relative of selected) {
       const file = resolve('tests/scenes', relative), spec = readSpec(file);
+      // The authored passage fixture has the high-tier 120 regulars. Match
+      // production low's 60 without changing the game or its director cap.
+      if (tier === 'low' && relative === 'l7-encounters/qa-l7-horde-passage.json') spec.actors = spec.actors!.filter(actor => !actor.id?.startsWith('crowd-') || Number(actor.id.slice(6)) % 2 === 0);
       const result = await runSpec(session, spec, { file, out: resolve(out, spec.name!), sheet: Math.max(60, Math.ceil((spec.frames ?? 180) / 12)) });
       receipts.push({ file, tier, ...result }); writeJson(`${out}/receipts.json`, receipts);
     }
@@ -118,8 +161,16 @@ try {
         });
         let decodedBytes = 0;
         for (const texture of textures) { const image = texture.image as { width?: number; height?: number; data?: { byteLength: number } }; if (image?.width && image.height) decodedBytes += (texture.mipmaps as { data?: { byteLength: number } }[]).reduce((n, m) => n + (m.data?.byteLength ?? 0), 0) || image.data?.byteLength || Math.ceil(image.width * image.height * 4 * (texture.generateMipmaps ? 4 / 3 : 1)); }
-        return { decodedBytes, textureCount: textures.size, heldProps: game.view.labProbes().heldProps.map(p => ({ entity: p.entity, prop: p.prop })), perf: window.__SS__!.perf(), render: window.__SS__!.getState().render };
+        const probes = game.view.labProbes();
+        const marcus = [...game.world.entities.values()].filter(e => e.appearance?.asset === 'npc.marcus.aftermath').map(e => ({ id: e.id, muzzle: probes.npcs?.muzzle(e.id)?.toArray() }));
+        const render = window.__SS__!.getState().render;
+        return { decodedBytes, textureCount: textures.size, marcus, courier: render.actions?.attachments.find(a => a.visible && !a.holstered), gunMeshes: probes.gunMeshes.map(g => ({ entity: g.entity, vertices: g.geometry.getAttribute('position').count })), heldProps: probes.heldProps.map(p => ({ entity: p.entity, prop: p.prop })), perf: window.__SS__!.perf(), render };
       });
+      writeJson(`${out}/resources.json`, resources);
+      // Idle NPC guns are excluded from the aim-only collision mesh probe.
+      // RoutineProps publishes a muzzle only for its live authored weapon path.
+      assert.equal(resources.marcus.length, 1); assert.ok(resources.marcus[0].muzzle, 'Marcus pistol has a live authored muzzle');
+      assert.equal(resources.courier?.actionId, 'weapon.rocket-launcher'); assert.ok(resources.courier?.muzzle); assert.equal(resources.courier?.source, 'glb');
       writeJson(`${out}/resources.json`, resources);
       const marcus = await session.page.evaluate(() => window.__SS__!.query({}).find(e => e.appearance?.asset === 'npc.marcus.aftermath')!.transform);
       for (const side of ['front', 'back']) {

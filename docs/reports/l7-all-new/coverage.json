@@ -1,0 +1,511 @@
+{
+  "sourceNativeFrames": [
+    {
+      "configuration": "high-webgl2",
+      "frames": 96,
+      "ids": [
+        "inf.alpha",
+        "inf.alpha-fire",
+        "inf.alpha-hoodie",
+        "inf.alpha-suit",
+        "inf.alpha-worker",
+        "npc.civilian-elderly",
+        "npc.civilian-man-a",
+        "npc.civilian-man-b",
+        "npc.civilian-man-b.aftermath",
+        "npc.civilian-woman-a",
+        "npc.civilian-woman-b",
+        "npc.civilian-woman-b.aftermath"
+      ],
+      "maxPixelError": 5.267065716907382e-08
+    },
+    {
+      "configuration": "high-webgpu",
+      "frames": 96,
+      "ids": [
+        "inf.alpha",
+        "inf.alpha-fire",
+        "inf.alpha-hoodie",
+        "inf.alpha-suit",
+        "inf.alpha-worker",
+        "npc.civilian-elderly",
+        "npc.civilian-man-a",
+        "npc.civilian-man-b",
+        "npc.civilian-man-b.aftermath",
+        "npc.civilian-woman-a",
+        "npc.civilian-woman-b",
+        "npc.civilian-woman-b.aftermath"
+      ],
+      "maxPixelError": 5.267065716907382e-08
+    },
+    {
+      "configuration": "high-webgpu-tone5",
+      "frames": 56,
+      "ids": [
+        "npc.civilian-elderly",
+        "npc.civilian-man-a",
+        "npc.civilian-man-b",
+        "npc.civilian-man-b.aftermath",
+        "npc.civilian-woman-a",
+        "npc.civilian-woman-b",
+        "npc.civilian-woman-b.aftermath"
+      ],
+      "maxPixelError": 3.2508751246496104e-10
+    },
+    {
+      "configuration": "low-webgl2",
+      "frames": 96,
+      "ids": [
+        "inf.alpha",
+        "inf.alpha-fire",
+        "inf.alpha-hoodie",
+        "inf.alpha-suit",
+        "inf.alpha-worker",
+        "npc.civilian-elderly",
+        "npc.civilian-man-a",
+        "npc.civilian-man-b",
+        "npc.civilian-man-b.aftermath",
+        "npc.civilian-woman-a",
+        "npc.civilian-woman-b",
+        "npc.civilian-woman-b.aftermath"
+      ],
+      "maxPixelError": 5.267065716907382e-08
+    },
+    {
+      "configuration": "low-webgl2-tone5",
+      "frames": 56,
+      "ids": [
+        "npc.civilian-elderly",
+        "npc.civilian-man-a",
+        "npc.civilian-man-b",
+        "npc.civilian-man-b.aftermath",
+        "npc.civilian-woman-a",
+        "npc.civilian-woman-b",
+        "npc.civilian-woman-b.aftermath"
+      ],
+      "maxPixelError": 3.2508751246496104e-10
+    },
+    {
+      "configuration": "low-webgpu",
+      "frames": 96,
+      "ids": [
+        "inf.alpha",
+        "inf.alpha-fire",
+        "inf.alpha-hoodie",
+        "inf.alpha-suit",
+        "inf.alpha-worker",
+        "npc.civilian-elderly",
+        "npc.civilian-man-a",
+        "npc.civilian-man-b",
+        "npc.civilian-man-b.aftermath",
+        "npc.civilian-woman-a",
+        "npc.civilian-woman-b",
+        "npc.civilian-woman-b.aftermath"
+      ],
+      "maxPixelError": 5.267065716907382e-08
+    }
+  ],
+  "runtimePortraits": [
+    {
+      "configuration": "low-webgl2",
+      "variant": "old",
+      "frames": 28,
+      "maxPixelError": 0.11472506276948025
+    },
+    {
+      "configuration": "low-webgl2",
+      "variant": "new",
+      "frames": 28,
+      "maxPixelError": 0.13106931501025088
+    },
+    {
+      "configuration": "high-webgpu",
+      "variant": "old",
+      "frames": 28,
+      "maxPixelError": 0.1575312744379005
+    },
+    {
+      "configuration": "high-webgpu",
+      "variant": "new",
+      "frames": 28,
+      "maxPixelError": 1.1675719593323208
+    }
+  ],
+  "nativeSourceFraming": "Exact 120/400 px; runtime motion portraits are within 2 px and labelled approximately.",
+  "crowds": [
+    {
+      "configuration": "low-webgl2",
+      "variant": "old",
+      "drawnFigures": 30,
+      "zooms": [
+        1,
+        1.5
+      ],
+      "marcus": [
+        {
+          "id": 31,
+          "muzzle": [
+            -16.71107854007434,
+            0.780793628910892,
+            3.998744708275003
+          ]
+        }
+      ],
+      "launcher": {
+        "source": "glb",
+        "muzzle": [
+          -32.806589015561016,
+          0.8495441160242915,
+          -2.79058957349542
+        ],
+        "gripDistance": 0
+      }
+    },
+    {
+      "configuration": "low-webgl2",
+      "variant": "new",
+      "drawnFigures": 30,
+      "zooms": [
+        1,
+        1.5
+      ],
+      "marcus": [
+        {
+          "id": 31,
+          "muzzle": [
+            -16.71107854007434,
+            0.780793628910892,
+            3.998744708275003
+          ]
+        }
+      ],
+      "launcher": {
+        "source": "glb",
+        "muzzle": [
+          -32.806589015561016,
+          0.8495441160242915,
+          -2.79058957349542
+        ],
+        "gripDistance": 0
+      }
+    },
+    {
+      "configuration": "high-webgpu",
+      "variant": "old",
+      "drawnFigures": 30,
+      "zooms": [
+        1,
+        1.5
+      ],
+      "marcus": [
+        {
+          "id": 31,
+          "muzzle": [
+            -16.71107854007434,
+            0.8196322538651156,
+            3.998744708275003
+          ]
+        }
+      ],
+      "launcher": {
+        "source": "glb",
+        "muzzle": [
+          -32.806589015561016,
+          0.8495441160242915,
+          -2.79058957349542
+        ],
+        "gripDistance": 0
+      }
+    },
+    {
+      "configuration": "high-webgpu",
+      "variant": "new",
+      "drawnFigures": 30,
+      "zooms": [
+        1,
+        1.5
+      ],
+      "marcus": [
+        {
+          "id": 31,
+          "muzzle": [
+            -16.71107854007434,
+            0.8196322538651156,
+            3.998744708275003
+          ]
+        }
+      ],
+      "launcher": {
+        "source": "glb",
+        "muzzle": [
+          -32.806589015561016,
+          0.8495441160242915,
+          -2.79058957349542
+        ],
+        "gripDistance": 0
+      }
+    },
+    {
+      "configuration": "high-webgl2",
+      "variant": "old",
+      "drawnFigures": 30,
+      "zooms": [
+        1,
+        1.5
+      ],
+      "marcus": [
+        {
+          "id": 31,
+          "muzzle": [
+            -16.71107854007434,
+            0.8196322538651156,
+            3.998744708275003
+          ]
+        }
+      ],
+      "launcher": {
+        "source": "glb",
+        "muzzle": [
+          -32.806589015561016,
+          0.8495441160242915,
+          -2.79058957349542
+        ],
+        "gripDistance": 0
+      }
+    },
+    {
+      "configuration": "high-webgl2",
+      "variant": "new",
+      "drawnFigures": 30,
+      "zooms": [
+        1,
+        1.5
+      ],
+      "marcus": [
+        {
+          "id": 31,
+          "muzzle": [
+            -16.71107854007434,
+            0.8196322538651156,
+            3.998744708275003
+          ]
+        }
+      ],
+      "launcher": {
+        "source": "glb",
+        "muzzle": [
+          -32.806589015561016,
+          0.8495441160242915,
+          -2.79058957349542
+        ],
+        "gripDistance": 0
+      }
+    },
+    {
+      "configuration": "low-webgpu",
+      "variant": "old",
+      "drawnFigures": 30,
+      "zooms": [
+        1,
+        1.5
+      ],
+      "marcus": [
+        {
+          "id": 31,
+          "muzzle": [
+            -16.71107854007434,
+            0.780793628910892,
+            3.998744708275003
+          ]
+        }
+      ],
+      "launcher": {
+        "source": "glb",
+        "muzzle": [
+          -32.806589015561016,
+          0.8495441160242915,
+          -2.79058957349542
+        ],
+        "gripDistance": 0
+      }
+    },
+    {
+      "configuration": "low-webgpu",
+      "variant": "new",
+      "drawnFigures": 30,
+      "zooms": [
+        1,
+        1.5
+      ],
+      "marcus": [
+        {
+          "id": 31,
+          "muzzle": [
+            -16.71107854007434,
+            0.780793628910892,
+            3.998744708275003
+          ]
+        }
+      ],
+      "launcher": {
+        "source": "glb",
+        "muzzle": [
+          -32.806589015561016,
+          0.8495441160242915,
+          -2.79058957349542
+        ],
+        "gripDistance": 0
+      }
+    }
+  ],
+  "states": [
+    {
+      "configuration": "low-webgl2",
+      "variant": "old",
+      "corpses": 12,
+      "livingInfected": 12
+    },
+    {
+      "configuration": "low-webgl2",
+      "variant": "new",
+      "corpses": 12,
+      "livingInfected": 12
+    },
+    {
+      "configuration": "high-webgpu",
+      "variant": "old",
+      "corpses": 12,
+      "livingInfected": 12
+    },
+    {
+      "configuration": "high-webgpu",
+      "variant": "new",
+      "corpses": 12,
+      "livingInfected": 12
+    }
+  ],
+  "scriptedScenes": [
+    {
+      "configuration": "low-webgl2",
+      "scene": "qa-l7-entry-night-exit",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "configuration": "low-webgl2",
+      "scene": "qa-l7-entry-rocket",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "configuration": "low-webgl2",
+      "scene": "qa-l7-rocket-crowd",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "configuration": "low-webgl2",
+      "scene": "qa-l7-rocket-alpha",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "configuration": "low-webgl2",
+      "scene": "plaza-w6",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "configuration": "low-webgl2",
+      "scene": "qa-l7-entry-corridor",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "configuration": "low-webgl2",
+      "scene": "qa-l7-horde-passage",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "configuration": "low-webgl2",
+      "scene": "qa-l7-entry-bus",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "configuration": "low-webgl2",
+      "scene": "departure",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "configuration": "low-webgl2",
+      "scene": "departure-city",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "configuration": "high-webgpu",
+      "scene": "qa-l7-entry-night-exit",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "configuration": "high-webgpu",
+      "scene": "qa-l7-entry-rocket",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "configuration": "high-webgpu",
+      "scene": "qa-l7-rocket-crowd",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "configuration": "high-webgpu",
+      "scene": "qa-l7-rocket-alpha",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "configuration": "high-webgpu",
+      "scene": "plaza-w6",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "configuration": "high-webgpu",
+      "scene": "qa-l7-entry-corridor",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "configuration": "high-webgpu",
+      "scene": "qa-l7-horde-passage",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "configuration": "high-webgpu",
+      "scene": "qa-l7-entry-bus",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "configuration": "high-webgpu",
+      "scene": "departure",
+      "pass": true,
+      "failed": []
+    },
+    {
+      "configuration": "high-webgpu",
+      "scene": "departure-city",
+      "pass": true,
+      "failed": []
+    }
+  ],
+  "lowPassageFixture": "120 high-tier regulars reduced to the production low-tier 60 for the low capture; two Alphas preserved. No gameplay values changed.",
+  "captureCount": 14
+}

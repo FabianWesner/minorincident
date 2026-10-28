@@ -1,0 +1,66 @@
+{
+  "status": "Counters pass; final quiet-window timing pending PO, as permitted.",
+  "baselineRevision": "93d73c529",
+  "timingPending": [
+    "low p95 vs main <= +1 ms",
+    "worst of five cold loads <= PROD +10%"
+  ],
+  "method": "Production L7, seed29, rocket-armed encounter cap, 180 ticks after staging courier/followers at the final horde using the existing tools/perf/l7-audit.ts placement. Fixed camera and viewport; shared headless pool, serial jobs. These are resource counters, not accepted frame or cold-load timings.",
+  "memoryMethod": "Unique render-referenced texture upload payloads, including preRenderTextures; mip/block payloads where available, RGBA upper bound otherwise; excludes driver padding/total VRAM.",
+  "hostLoad": [
+    3.21484375,
+    3.46533203125,
+    3.67578125
+  ],
+  "rows": [
+    {
+      "configuration": "low-webgl2",
+      "variant": "main",
+      "infected": 100,
+      "figures": 117,
+      "drawCalls": 108,
+      "triangles": 206922,
+      "decodedTextureBytes": 100613176,
+      "textures": 79,
+      "errors": []
+    },
+    {
+      "configuration": "low-webgl2",
+      "variant": "new",
+      "infected": 100,
+      "figures": 117,
+      "drawCalls": 108,
+      "triangles": 206922,
+      "decodedTextureBytes": 100613176,
+      "textures": 79,
+      "errors": []
+    },
+    {
+      "configuration": "high-webgpu",
+      "variant": "main",
+      "infected": 200,
+      "figures": 226,
+      "drawCalls": 195,
+      "triangles": 521253,
+      "decodedTextureBytes": 106352696,
+      "textures": 79,
+      "errors": []
+    },
+    {
+      "configuration": "high-webgpu",
+      "variant": "new",
+      "infected": 200,
+      "figures": 226,
+      "drawCalls": 195,
+      "triangles": 521253,
+      "decodedTextureBytes": 106352696,
+      "textures": 79,
+      "errors": []
+    }
+  ],
+  "delta": {
+    "drawCalls": 0,
+    "triangles": 0,
+    "decodedTextureBytes": 0
+  }
+}

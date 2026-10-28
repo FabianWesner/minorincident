@@ -1,0 +1,135 @@
+{
+  "pass": true,
+  "exit": 0,
+  "realInput": true,
+  "godMode": false,
+  "entry": "debug via the visible level menu",
+  "quality": "low",
+  "zoom": 1,
+  "wallSeconds": 129,
+  "simSeconds": 124.18333333333334,
+  "driverReportedSimSeconds": 0,
+  "simTimeSource": "Persisted campaign result; the driver observes tick 0 after the L8 handover.",
+  "skipped": [],
+  "deaths": 0,
+  "assists": 0,
+  "issues": 0,
+  "mandatorySteps": [
+    {
+      "id": "rocket",
+      "text": "",
+      "tick": 0,
+      "marker": {
+        "anchor": "l7-rocket",
+        "ring": {
+          "x": 276,
+          "y": 3.9,
+          "z": 15
+        },
+        "drawn": [
+          0,
+          0,
+          0
+        ],
+        "playerY": 4.6049999999999995,
+        "pinVisible": false
+      }
+    },
+    {
+      "id": "corridor",
+      "text": "Bring the group to the evacuation corridor \u00b7 Group 15/15 nearby \u00b7 307\u00a0m",
+      "tick": 104,
+      "marker": {
+        "anchor": "l7-corridor-east",
+        "ring": {
+          "x": -30,
+          "y": 0,
+          "z": 50
+        },
+        "drawn": [
+          -30,
+          0.13,
+          50
+        ],
+        "playerY": 4.619999885559082,
+        "pinVisible": true
+      }
+    },
+    {
+      "id": "departure",
+      "text": "Get everyone aboard the bus \u00b7 46\u00a0m",
+      "tick": 5763,
+      "marker": {
+        "anchor": "l7-bus-boarding",
+        "ring": {
+          "x": -70.5,
+          "y": 0,
+          "z": 47.5
+        },
+        "drawn": [
+          -70.5,
+          0,
+          47.5
+        ],
+        "playerY": 0.7200000286102295,
+        "pinVisible": true
+      }
+    }
+  ],
+  "attacks": {
+    "weapon.rocket-launcher": 40
+  },
+  "survivorsAtStart": 15,
+  "survivorsEscaped": 1,
+  "hardGameplayFrameGate": true,
+  "gameplayFramesOver200ms": 0,
+  "longFrames": [
+    {
+      "at": 1087.6,
+      "level": "L1",
+      "tick": 0,
+      "phase": "briefing",
+      "loading": true,
+      "x": -66.4,
+      "z": 9,
+      "ms": 233.39999999999986,
+      "playMs": 0
+    },
+    {
+      "at": 2037.6,
+      "level": "L1",
+      "tick": 0,
+      "phase": "briefing",
+      "loading": true,
+      "x": -66.4,
+      "z": 9,
+      "ms": 266.6999999999998,
+      "playMs": 0
+    },
+    {
+      "at": 4370.8,
+      "level": "L7",
+      "tick": 0,
+      "phase": "playing",
+      "loading": true,
+      "x": 273,
+      "z": 15,
+      "ms": 333.3000000000002,
+      "playMs": 0
+    },
+    {
+      "at": 7904,
+      "level": "L7",
+      "tick": 0,
+      "phase": "playing",
+      "loading": true,
+      "x": 273,
+      "z": 15,
+      "ms": 450,
+      "playMs": 0
+    }
+  ],
+  "handoverLevel": "L8",
+  "initialAttempt": "The default 1.5 zoom assertion ran while the loading card still held zoom 1, before tick 1; rerun explicitly at zoom 1.",
+  "command": "E2E_PORT=3359 PLAYTEST_GOD=0 PLAYTEST_FRAME_GATE=1 node --import tsx tools/playtest/play.ts --levels L7 --quality low --zoom 1 --mode campaign --entry debug --no-skip --level-minutes 15 --out test-results/l7-all-new/playthrough"
+}

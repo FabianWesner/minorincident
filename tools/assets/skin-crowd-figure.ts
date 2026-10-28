@@ -302,19 +302,27 @@ if (arg('--clear-headwear')) {
     }
     if (irisY.length) eyeY = Math.max(eyeY, percentile(irisY, .5));
   }
-  const crown = cap.filter(i => body.pos[i * 3 + 1] > eyeY + headHeight * (pickedEyes ? -.25 : arg('--clear-headwear') === 'brown' ? .1 : .05)), brimY = Math.min(...crown.map(i => body.pos[i * 3 + 1]));
-  const key = (i: number) => body.pos.slice(i * 3, i * 3 + 3).map(x => Math.round(x / 1e-6)).join(','), lifts = new Map<string, number>();
-  const forwardMargin = pickedEyes ? .08 : .02, clearance = pickedEyes ? .07 : .035;
-  const liftFraction = arg('--clear-headwear') === 'brown' ? pickedEyes ? .5 : .35 : pickedEyes ? .3 : .2;
+  const crown = cap.filter(i => body.pos[i * 3 + 1] > eyeY + headHeight * (arg('--brim-reach-scale') ? -.18 : pickedEyes ? -.25 : arg('--clear-headwear') === 'brown' ? .1 : .05)), brimY = Math.min(...crown.map(i => body.pos[i * 3 + 1]));
+  const key = (i: number) => body.pos.slice(i * 3, i * 3 + 3).map(x => Math.round(x / 1e-6)).join(','), lifts = new Map<string, number>(), retractions = new Map<string, number>();
+  const forwardMargin = pickedEyes ? .08 : .02, clearance = Number(arg('--brim-clearance', pickedEyes ? '.07' : '.035'));
+  const reachScale = Number(arg('--brim-reach-scale', '1'));
+  const sightline = Number(arg('--brim-sightline-degrees', '36')) * Math.PI / 180;
+  if (!Number.isFinite(clearance) || clearance <= 0 || !Number.isFinite(reachScale) || reachScale <= 0 || reachScale > 1 || !Number.isFinite(sightline) || sightline <= 0 || sightline >= Math.PI / 2) throw Error('Invalid brim clearance, reach scale or sightline');
+  const liftFraction = arg('--brim-sightline-degrees') ? .5 : arg('--clear-headwear') === 'brown' ? pickedEyes ? .5 : .35 : pickedEyes || arg('--brim-clearance') ? .3 : .2;
   for (const i of crown) {
     const x = body.pos[i * 3], y = body.pos[i * 3 + 1];
-    if (arg('--clear-headwear') !== 'brown' && y > brimY + headHeight * (pickedEyes ? .3 : .22) || x < eyeX - forwardMargin) continue;
-    const delta = Math.min(headHeight * liftFraction, Math.max(0, eyeY + Math.tan(Math.PI * .2) * (x - eyeX) + clearance - y));
+    if (arg('--clear-headwear') !== 'brown' && y > (arg('--brim-reach-scale') ? Math.max(brimY, eyeY) : brimY) + headHeight * (arg('--brim-sightline-degrees') ? .55 : pickedEyes ? .3 : .22) || x < eyeX - forwardMargin) continue;
+    // A bound civilian's head leans during infection. Shorten the forward bill
+    // around its measured face plane as well as lifting it, retaining the crown.
+    const hinge = eyeX + headWidth * .12, forward = reachScale === 1 ? x : Math.min(x, hinge + Math.max(0, x - hinge) * reachScale);
+    const delta = Math.min(headHeight * liftFraction, Math.max(0, eyeY + Math.tan(sightline) * (forward - eyeX) + clearance - y));
     lifts.set(key(i), Math.max(lifts.get(key(i)) ?? 0, delta));
+    retractions.set(key(i), Math.max(retractions.get(key(i)) ?? 0, x - forward));
   }
   const changes = body.owner.map((_, i) => lifts.get(key(i)) ?? 0);
-  for (let i = 0; i < changes.length; i++) body.pos[i * 3 + 1] += changes[i];
-  fit.headwearClearance = { eyeX, eyeY, brimY, vertices: changes.filter(x => x > 0).length, maxLift: Math.max(...changes) };
+  const shortened = body.owner.map((_, i) => retractions.get(key(i)) ?? 0);
+  for (let i = 0; i < changes.length; i++) { body.pos[i * 3] -= shortened[i]; body.pos[i * 3 + 1] += changes[i]; }
+  fit.headwearClearance = { eyeX, eyeY, brimY, vertices: changes.filter((x, i) => x > 0 || shortened[i] > 0).length, maxLift: Math.max(...changes), maxRetraction: Math.max(...shortened) };
   rmSync(directory, { recursive: true, force: true });
 }
 if (args.includes('--retain-corgi-props')) {

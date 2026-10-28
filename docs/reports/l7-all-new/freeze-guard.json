@@ -1,0 +1,21 @@
+{
+  "pass": true,
+  "shaderBuildsAfterWarmup": 0,
+  "frameAnnotation": "max 17 ms in 169",
+  "annotations": [
+    {
+      "type": "builds after warm-up",
+      "description": "{}"
+    },
+    {
+      "type": "frames",
+      "description": "max 17 ms in 169"
+    }
+  ],
+  "source": "smoke-qa.json",
+  "l7AdditionalFrameGate": {
+    "pass": true,
+    "gameplayFramesOver200ms": 0,
+    "source": "playthrough.json"
+  }
+}

@@ -1,9 +1,12 @@
-# L7 all-new figures — review in progress
+# L7 all-new figures — verified
 
-- [Production census](census.json): **24 reachable identities already v2**, including five civilian infected appearances, five Alpha looks, carried survivors, both couriers and the corgi; **zero conversions/deferred**. Temporary native runner variants are replaced before render. Inference spend **€0**.
-- Production assets, renderer and gameplay match main `93d73c529`; this lane supplies missing L7 coverage and review evidence.
-- [Delivery audit](delivery-budget.json) checks skins/weights and high/low files; inherited L1 civilian LOD0/1/2 caps **60000/9000/4000**, aftermath **6000/2500/2500**, Alpha **8000/3000/1000** triangles; file caps **600000/250000/150000 bytes**.
-- Twelve figure sheets cover retained rigid baselines versus current v2, front/back, native **120/400 px**, both renderers and tiers, plus pale/dark NPC tones in L7 lighting.
-- Runtime portrait, crowd/state/weapon and scripted-scene captures are running; the final report will contain **14 captures**.
-- Typecheck passes. Asset validator, npm test, smoke, scene gate and the real-input L7 playthrough are being finalized; no final gate claim yet.
-- Full-population low p95 (+1 ms) and worst of five cold loads (+10%) remain **perf pending** for the permitted quiet window.
+- [Census](census.json): **24 reachable identities already v2**, including civilian infected, five Alpha looks, carried survivors, both couriers and corgi; **zero migrations/deferred**, **€0 inference spend**. Temporary native runner variants are replaced before render.
+- [Cap correction](cap-fix.json): restored both man-b infected eyes at 120/400 px by shortening/lifting the bill in the build script; [15 files reproduce identically](rebuild-proof.json), zero manual asset steps; [gameplay/renderer unchanged](gameplay-frozen.json).
+- [LOD0/1/2 budgets](delivery-budget.json): review maxima **7973/2981/2326 triangles**, **443796/216376/144232 bytes**; inherited L1 civilian caps **60000/9000/4000**, aftermath **6000/2500/2500**, Alpha **8000/3000/1000**; file caps **600000/250000/150000 bytes**.
+- Reviewed [all twelve figure sheets](capture-index.json), front/back, native **120/400 px**, low/high, WebGL2/WebGPU, light/dark skin and actual L7 states; [visual verdict](visual-review.json), especially [main versus corrected eyes](04-npc.civilian-man-b.jpg), [glasses](07-npc.civilian-woman-b.aftermath.jpg) and [helmet/rebar](09-inf.alpha-worker.jpg).
+- Reviewed [30-figure street crowd, body states and weapons](13-crowd-states-weapons.jpg): zoom **1/1.5**, 30/30 drawn, **12 actual corpses** per capture configuration; Marcus live pistol and courier GLB launcher grip/muzzle verified. [Coverage](coverage.json).
+- Reviewed [scripted scenes and real-input captures](14-scripted-scenes.jpg): **20/20 scene results pass**; [L7 real-input run](playthrough.json) **129 s wall / 124.18 s sim**, zero skips/deaths/assists/issues, 40 rockets, completed L8 handover; one survivor escapes.
+- [Gates](checks.json): full validator **1262 records, zero errors** plus 136 skin deliveries; typecheck/lint and `npm test` **104/104 pass**, **144/150 cases**, no new tests; [scene:gate](scene-gate.md) green (**43 passes + five existing exceptions**, none missing).
+- Smoke **7/7 pass**, **184.2 s**; [freeze guard](freeze-guard.json) **zero warm shader builds**, max gameplay frame **17 ms/169 frames**; compiled GPU limits **13 attributes / 8 buffers** (crowd 6). L7 additionally passes its **200 ms gameplay-frame guard**.
+- [Full-population main A/B](performance.json), **100/200 infected**: low/high draws **108→108 / 195→195**, triangles **206922→206922 / 521253→521253**, decoded payloads **95.95→95.95 / 101.43→101.43 MiB**; **p95 (+1 ms) and five cold loads (+10%) perf pending** for the permitted PO quiet window.
+- [Showcase](showcase.json): requested `l7-crowd-old-new.jpg` **1600×960** written; best captures **13 crowd**, **04 cap/eyes**, **09 helmet**. **14 report captures**; shared headless serial browser jobs on private ports; no deploy.

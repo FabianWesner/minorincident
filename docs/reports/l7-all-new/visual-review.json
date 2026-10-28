@@ -1,0 +1,100 @@
+{
+  "reviewedAt": "2026-10-28T05:49:17.835394+00:00",
+  "pass": true,
+  "captureCount": 14,
+  "baselineRevision": "93d73c529",
+  "scope": "All 24 reachable production L7 identities were already v2; zero new conversions, one inherited cap quality fix. Twelve principal identities have per-figure old/new sheets.",
+  "comparison": "Retained rigid references are labelled separately from the shipped-main v2 comparison in sheet 04 and the full-population main A/B counters. No universal art-win claim over rigid figures.",
+  "sourceFrames": 496,
+  "runtimePortraitFrames": 112,
+  "mainCapComparisonFrames": 4,
+  "sourcePixels": [
+    120,
+    400
+  ],
+  "runtimePixels": "approximately 120/400, within 2 px; motion bounds recorded in receipts",
+  "configurations": [
+    "low WebGL2",
+    "high WebGPU",
+    "high WebGL2",
+    "low WebGPU"
+  ],
+  "skinTones": "Light/authored and dark source tones; source uniforms/glasses/beards are distinct from skin tint.",
+  "lighting": "Production L7 composition uses Lighting L6. Isolated figures and crowd/states use that preset; existing scripted fixtures retain their authored lighting.",
+  "changedArtwork": [
+    "npc.civilian-man-b cap bill only; build script and generated deliveries/bakes, zero manual asset steps"
+  ],
+  "gameplayAndRendererUnchanged": true,
+  "captures": [
+    {
+      "file": "01-npc.civilian-woman-a.jpg",
+      "sha256": "609fdc7fdf3ddf0582a950cbe2586316360e385de65bb34ccbf3dc562b566604",
+      "review": "Floral dress, tote and strap remain legible; face and exposed hands share each reviewed skin tone. Healthy-source hair shadows are distinguished from the actual L7 infected eyes, which remain visible."
+    },
+    {
+      "file": "02-npc.civilian-woman-b.jpg",
+      "sha256": "11b49a37c525c07a7b60ea293c5b59ebcd88aeb6c5933cb4aaccd8120411d6d2",
+      "review": "Glasses, lanyard and blouse boundaries remain distinct. The healthy textured face has finer faceting than the retained rigid reference; actual infected eye/skin treatment was reviewed separately, including the high-tier pose."
+    },
+    {
+      "file": "03-npc.civilian-man-a.jpg",
+      "sha256": "ffa0118f55fd94d622a3bdcee9a9075c34154a71665df0018eb7b5937dd4d618",
+      "review": "Polo/sleeve/arm boundaries are clean, with matching face and arm tones in the light and dark samples. The infected eyes read through the fringe; clothing is not recoloured as skin."
+    },
+    {
+      "file": "04-npc.civilian-man-b.jpg",
+      "sha256": "d9c4dc2298510b8ebe244b8bc5760e00310da4eb5095ad49159ffbce18f862b1",
+      "review": "Fixed complete eye occlusion in the inherited cap. The automatic recipe shortens and lifts the welded forward bill; both red eyes now form separate visible components at 120 and 400 px on both runtime configurations. Cap crown/back, beard and hoodie cords remain fitted."
+    },
+    {
+      "file": "05-npc.civilian-elderly.jpg",
+      "sha256": "169762ab714f3afbde773f916126d2e37c8e5c351cd378f80c452bff45698c77",
+      "review": "Flat cap and glasses fit front/back; white hair stays separate from skin tint. The old source cane is removed by prepareCivilianRig when the actual L7 handProp is null; runtime old/new both follow that lifecycle."
+    },
+    {
+      "file": "06-npc.civilian-man-b.aftermath.jpg",
+      "sha256": "6d0e8c9bed0b86f1755ac783e0648dd3e56f9d6356113b960d85d91045a659b8",
+      "review": "The healthy fallback follower keeps its fitted cap, beard, visible eyes and thin forearm dressing. Face/hands match in both source skin tones; no bright UV outline or detached wrap is visible in the level light."
+    },
+    {
+      "file": "07-npc.civilian-woman-b.aftermath.jpg",
+      "sha256": "63540ebf1054d29223da7d8ab80ded7de2aabfcc719add080ca2ff8d5b23b9dd",
+      "review": "The healthy fallback follower retains glasses, visible eyes, badge/lanyard and blouse. Fine facial/frame detail remains busier than the rigid reference, as on main; no new face or skin-tone change was introduced."
+    },
+    {
+      "file": "08-inf.alpha.jpg",
+      "sha256": "20381bd7227a32882ea18f0af9fc6e8e76a5bc581e43fbb3e47ccf5e83a32a7a",
+      "review": "Default Alpha has clear red eyes at 120 px, a continuous shoulder/arm silhouette and a readable torn shirt/back. This inherits the already-reviewed L4 v2 body; the retained rigid chest glow is not a new loss in this lane."
+    },
+    {
+      "file": "09-inf.alpha-worker.jpg",
+      "sha256": "aaa70bb02831307c140feeaeb33f741370d3302ea7d051f0a597fb6967e3d491",
+      "review": "Worker hardhat fits over the forehead and back of the skull. Shoulder rock/rebar details remain attached and distinguish the look at 120/400 px; eye emission stays clear."
+    },
+    {
+      "file": "10-inf.alpha-hoodie.jpg",
+      "sha256": "962633cae364f027f0ce0c2276e804814af6253e7be9e128aed6773d896a9248",
+      "review": "Hoodie Alpha keeps the teal headwear/garment separation, attached shoulder mass and readable red eyes. Front/back silhouettes agree across both renderers and tiers."
+    },
+    {
+      "file": "11-inf.alpha-fire.jpg",
+      "sha256": "9766212f4d52d9c4126cb1b53319827ce6bd42e125c6488850aba0c02c65f583",
+      "review": "Fire Alpha keeps the yellow headwear and torn yellow garment identity, clear eye emission and attached shoulder detail. No floating hat or broken neck seam appears."
+    },
+    {
+      "file": "12-inf.alpha-suit.jpg",
+      "sha256": "a7b7c6eb95b389b6861d483cf7dfc7604789df392b5f66d2826e108a5378a339",
+      "review": "Suit Alpha retains the dark variant identity, clear red eyes and back/shoulder detail without a new material variant or seam. The textured treatment is inherited from main."
+    },
+    {
+      "file": "13-crowd-states-weapons.jpg",
+      "sha256": "f576ab40f09afa41073bce1ce726734a02c131e9816ee4498acd048fbc0bef1a",
+      "review": "Reviewed all eight retained-rigid/v2 30-figure street panels at zoom 1.5 and all eight zoom-1 panels; crowd counts are asserted. Healthy, turned and frozen rows include 12 actual corpses per configuration. Marcus pistol has a live authored muzzle; courier rocket launcher has GLB grip/muzzle sockets and zero grip gap. Corgi backpack remains attached."
+    },
+    {
+      "file": "14-scripted-scenes.jpg",
+      "sha256": "655165eff920cfc80cc2fe37e16c36dfe6463f46e139ef093a21fb23884c0444",
+      "review": "Reviewed night exit, rocket pickup/clearance, Alpha, W6 plaza, corridor, horde passage, bus boarding, departure and receding-city scenes on low WebGL2/high WebGPU: all 20 pass. The low passage uses the production 60 regulars/two Alphas. Contact sheet selects the last visible shot before the authored end fade, retains real-input mid-route/corridor shots and excludes the driver loading-card shots."
+    }
+  ]
+}

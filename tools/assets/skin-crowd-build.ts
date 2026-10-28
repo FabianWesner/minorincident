@@ -102,6 +102,9 @@ for (const lod of [0, 1, 2]) {
   if (unbound && id === 'inf.firefighter') args.push('--clear-headwear', 'red');
   if (unbound && id === 'inf.riot-cop') args.push('--clear-headwear', 'navy');
   if (unbound && id === 'inf.crawler') args.push('--clear-headwear', 'brown');
+  // The civilian hoodie cap covers both infection eyes from the level camera.
+  // Reuse the measured brim clearance on the retained bound cast too.
+  if (id === 'npc.civilian-man-b') args.push('--clear-headwear', 'navy', '--brim-clearance', '.07', '--brim-reach-scale', '.45', '--brim-sightline-degrees', '60');
   if (id === 'char.corgi' || id === 'amb.dog') args.push('--no-eye-discs');
   const cheap = def.category === 'prop' && def.budget.triangles <= 12000;
   const triangleLimit = lod > 0 && def.authoredLodTriangles ? def.authoredLodTriangles[lod === 1 ? 'lod1' : 'lod2'] : lod > 0 && def.authoredLodRatios ? Math.ceil(def.budget.triangles * def.authoredLodRatios[lod === 1 ? 'lod1' : 'lod2']) : lod === 1 && def.tier === 'hero' ? Math.ceil(def.budget.triangles * .15) : lod === 2 && !cheap ? Math.min(4000, def.budget.triangles) : def.budget.triangles;
