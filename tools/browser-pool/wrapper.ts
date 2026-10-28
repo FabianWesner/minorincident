@@ -22,12 +22,24 @@ if (command.some(arg => /(?:^|\/)(?:playwright|cli[.]js)$/.test(arg) || /\/(?:pl
   }
 }
 if (!command.length) throw new Error('Pool wrapper needs a command');
-const admissionMs = Number(process.env.E2E_ADMISSION_TIMEOUT_SECONDS ?? 1800) * 1000;
+const admissionSeconds = Number(process.env.E2E_ADMISSION_TIMEOUT_SECONDS ?? 1800);
+if (!Number.isInteger(admissionSeconds) || admissionSeconds <= 0) {
+  console.error('E2E_ADMISSION_TIMEOUT_SECONDS must be a positive integer'); process.exit(2);
+}
+const admissionMs = admissionSeconds * 1000;
 const deadline = Date.now() + admissionMs;
 const cooldown = `${process.env.E2E_LOCK ?? '/tmp/minor-incident-e2e.lock'}.quiet-finished`;
 let token: string | undefined, started = false, cancelled = false;
 let child: ReturnType<typeof spawn> | undefined;
 let heartbeat: ReturnType<typeof setInterval> | undefined;
+let lastAdmissionLog = 0;
+const logWait = (conditions: Record<string, unknown>) => {
+  if (!quiet || Date.now() - lastAdmissionLog < 30_000) return;
+  const entry = { at: new Date().toISOString(), event: 'quiet-admission-wait', ...conditions };
+  console.error(`Quiet-run waiting: ${JSON.stringify(entry)}`);
+  if (process.env.PERF_CONDITIONS_LOG) appendFileSync(process.env.PERF_CONDITIONS_LOG, JSON.stringify(entry) + '\n');
+  lastAdmissionLog = Date.now();
+};
 process.on('SIGINT', () => { cancelled = true; child?.kill('SIGINT'); });
 process.on('SIGTERM', () => { cancelled = true; child?.kill('SIGTERM'); });
 const request = async (path: string, method = 'GET') => {
@@ -41,22 +53,26 @@ try {
     while (quiet && !cancelled) {
       let last = 0; try { last = Number(readFileSync(cooldown, 'utf8')); } catch { /* first run */ }
       if (Date.now() / 1000 - last >= 60) break;
-      if (Date.now() >= deadline) throw new Error('Exclusive cooldown exceeded admission deadline');
-      await delay(1000);
+      if (Date.now() >= deadline) throw new Error(`Quiet-run: admission exceeded ${admissionSeconds} seconds during cooldown; report unmeasured coverage.`);
+      logWait({ cooldownSeconds: Math.ceil(last + 60 - Date.now() / 1000) });
+      await delay(Math.min(1000, Math.max(1, deadline - Date.now())));
     }
     if (cancelled) throw new Error('Exclusive admission cancelled');
     token = (await request(`/exclusive?job=${encodeURIComponent(process.env.MI_SLUG ?? process.cwd().split('/').at(-1) ?? '')}`, 'POST') as { id: string }).id;
     heartbeat = setInterval(() => { void request(`/exclusive/${token}`).catch(() => { cancelled = true; child?.kill('SIGTERM'); }); }, 5000);
     while (!cancelled) {
-      const status = await request(`/exclusive/${token}?quiet=1`) as { granted: boolean; grantedAt?: number; conditions: { quiet: boolean; load: number[]; busy: unknown[] } };
+      const status = await request(`/exclusive/${token}?quiet=1`) as { granted: boolean; grantedAt?: number; conditions: { quiet: boolean; load: number[]; busy: unknown[]; ignoredIdle?: unknown[] } };
       if (status.granted && !reservedAt) reservedAt = status.grantedAt ?? Date.now();
-      if (Date.now() >= deadline || reservedAt && Date.now() - reservedAt >= capSeconds * 1000 - 5000) throw new Error('Exclusive quiet admission exceeded the 10-minute reservation cap');
+      if (Date.now() >= deadline) throw new Error(`Quiet-run: admission exceeded ${admissionSeconds} seconds; last conditions: ${JSON.stringify(status.conditions)}; report unmeasured coverage.`);
+      if (reservedAt && Date.now() - reservedAt >= capSeconds * 1000 - 5000) throw new Error(`Quiet-run: admission reached the ${capSeconds}-second reservation cap; last conditions: ${JSON.stringify(status.conditions)}; report unmeasured coverage.`);
       if (status.granted && (!quiet || status.conditions.quiet)) {
         if (process.env.PERF_CONDITIONS_LOG) appendFileSync(process.env.PERF_CONDITIONS_LOG, JSON.stringify({ at: new Date().toISOString(), pool: true, ...status.conditions }) + '\n');
         if (quiet) console.log('Quiet-run pool preflight: exclusive context admission; load < 3; no foreign headless Chrome, Blender, build or local Vitest.');
+        if (quiet && status.conditions.ignoredIdle?.length) console.log(`Quiet-run ignored old idle processes: ${JSON.stringify(status.conditions.ignoredIdle)}`);
         break;
       }
-      await delay(1000);
+      logWait({ granted: status.granted, ...status.conditions });
+      await delay(Math.min(1000, Math.max(1, deadline - Date.now())));
     }
     if (cancelled) throw new Error('Exclusive admission cancelled');
     process.env.MI_BROWSER_POOL_EXCLUSIVE = token;

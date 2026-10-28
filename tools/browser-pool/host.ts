@@ -39,20 +39,32 @@ export async function gpuAdmission(maximumMs = 600_000, alive = () => true): Pro
   }
 }
 
-export async function quietConditions(owned: Set<number>) {
-  const { stdout } = await exec('ps', ['-axo', 'pid=,ppid=,command=']);
-  const processes = stdout.split('\n').flatMap(line => {
-    const m = /^\s*(\d+)\s+(\d+)\s+(.*)$/.exec(line); return m ? [{ pid: Number(m[1]), parent: Number(m[2]), command: m[3] }] : [];
+export function classifyQuietProcesses(snapshot: string, owned: Set<number>, sessionStarted: number, now = Date.now()) {
+  const processes = snapshot.split('\n').flatMap(line => {
+    const m = /^\s*(\d+)\s+(\d+)\s+([\d:-]+)\s+([\d.]+)\s+(.*)$/.exec(line);
+    if (!m) return [];
+    const [days, clock] = m[3].includes('-') ? m[3].split('-') : ['0', m[3]];
+    const ageSeconds = Number(days) * 86400 + clock.split(':').reduce((n, part) => n * 60 + Number(part), 0);
+    return [{ pid: Number(m[1]), parent: Number(m[2]), ageSeconds, cpu: Number(m[4]), command: m[5] }];
   });
   // Include descendants of the pool's own browser roots, never foreign processes.
   const ours = new Set(owned);
   let count = -1;
   while (ours.size !== count) { count = ours.size; for (const p of processes) if (ours.has(p.parent)) ours.add(p.pid); }
-  const busy = processes.filter(p => !ours.has(p.pid) && (
+  const candidates = processes.filter(p => !ours.has(p.pid) && (
     (/^\/.*(?:chrome-headless-shell|headless_shell|Google Chrome|Chromium)/.test(p.command) && !p.command.includes('--type=') && /headless/.test(p.command)) ||
-    /^(?:\/[^ ]*\/)?(?:node|Blender|blender)(?: |$)/.test(p.command) && /(?:vitest|vite(?:[.]js)? (?:build)|(?:[/ ])tsc(?: |$)|blender|Blender)/.test(p.command)
+    /^(?:(?:\/[^ ]*\/)?(?:node|nodejs|Blender|blender)(?: |$)|npm exec )/.test(p.command) && /(?:vitest|vite(?:[.]js)? (?:build)|(?:[/ ])tsc(?: |$)|blender|Blender)/.test(p.command)
   ));
-  return { quiet: loadavg()[0] < 3 && busy.length === 0, load: loadavg(), busy: busy.map(p => ({ pid: p.pid, command: p.command.slice(0, 180) })) };
+  const stale = (p: typeof candidates[number]) => p.ageSeconds > 600 && p.cpu === 0 && now - p.ageSeconds * 1000 < sessionStarted;
+  const describe = (p: typeof candidates[number]) => ({ pid: p.pid, cpu: p.cpu, ageSeconds: p.ageSeconds, command: p.command.slice(0, 180) });
+  return { busy: candidates.filter(p => !stale(p)).map(describe), ignoredIdle: candidates.filter(stale).map(describe) };
+}
+
+export async function quietConditions(owned: Set<number>, sessionStarted = Date.now()) {
+  const { stdout } = await exec('ps', ['-axo', 'pid=,ppid=,etime=,%cpu=,command='], { env: { ...process.env, LC_ALL: 'C' } });
+  const conditions = classifyQuietProcesses(stdout, owned, sessionStarted);
+  const load = loadavg();
+  return { quiet: load[0] < 3 && conditions.busy.length === 0, load, ...conditions };
 }
 
 export async function windowServerSnapshot(): Promise<{ pid: number; seconds: number } | undefined> {

@@ -6,7 +6,7 @@ import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { promisify } from 'node:util';
 import { afterEach, expect, test } from 'vitest';
-import { backoffAdmission } from '../../tools/browser-pool/host';
+import { backoffAdmission, classifyQuietProcesses } from '../../tools/browser-pool/host';
 
 const exec = promisify(execFile), dirs: string[] = [];
 afterEach(() => { for (const dir of dirs.splice(0)) rmSync(dir, { recursive: true, force: true }); });
@@ -33,10 +33,25 @@ test('browser pool admission backs off under WindowServer pressure, keeps a one-
   state = { limit: 2, coolSamples: 0 };
   expect([15, 15, 40, 15, 15, 15].map(cpu => { state = backoffAdmission(state, 4, cpu); return state.limit; })).toEqual([2, 2, 2, 2, 2, 3]);
   for (const cpu of [NaN, Infinity, -1]) expect(backoffAdmission({ limit: 4, coolSamples: 2 }, 4, cpu)).toEqual({ limit: 1, coolSamples: 0 });
-  // Native timing waits for concurrent Vitest/tsc runs (relative and absolute node_modules paths).
-  const quiet = /vitest|typescript\/bin\/tsc|node_modules\/\.bin\/tsc/;
-  for (const command of ['node node_modules/.bin/vitest run tests/engine', '/usr/bin/node node_modules/typescript/bin/tsc --noEmit']) expect(quiet.test(command), command).toBe(true);
-  expect(quiet.test('node tools/qa/census.ts')).toBe(false);
+  // The pool and legacy quiet-run share this real ps classifier. Older idle
+  // fixtures cannot block forever; active/new work and foreign Chrome still do.
+  const now = 100_000_000, session = now - 20 * 60_000;
+  const classified = classifyQuietProcesses([
+    '1 0 05:00:00 0.0 node /tmp/fixture/npx vitest list --json=/tmp/list.json',
+    '2 0 05:00:00 1.0 node node_modules/.bin/vitest run tests/engine',
+    '3 0 05:00 0.0 node node_modules/.bin/vitest run tests/engine',
+    '4 0 15:00 0.0 node node_modules/.bin/vitest run tests/engine',
+    '5 0 05:00 2.0 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --headless',
+    '6 5 05:00 2.0 node node_modules/.bin/vitest run',
+    '7 0 05:00 0.0 /bin/sh -c "node node_modules/.bin/vitest run"',
+    '8 0 00:20 1.0 /usr/bin/node node_modules/typescript/bin/tsc --noEmit',
+    '9 0 00:20 1.0 node tools/qa/census.ts',
+    '10 0 00:20 0.0 npm exec vitest run',
+    '11 0 1-05:00:00 0.0 node /tmp/fixture/npx vitest list',
+    '12 0 10:00 0.0 node /tmp/fixture/npx vitest list',
+  ].join('\n'), new Set([5]), session, now);
+  expect(classified.busy.map(p => p.pid)).toEqual([2, 3, 4, 8, 10, 12]);
+  expect(classified.ignoredIdle.map(p => p.pid)).toEqual([1, 11]);
 });
 
 // Exercise the real runner with a tiny catalog subprocess; no browser is launched.

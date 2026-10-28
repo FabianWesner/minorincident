@@ -2,11 +2,14 @@
 # Reserve every configured browser slot: a second lane must not start midway through a timing run.
 # Use this instead of an outer e2e-lock wrapper for native performance measurements.
 root=$(cd "$(dirname "$0")/../.." && pwd)
+export MI_PERF_SESSION_STARTED="${MI_PERF_SESSION_STARTED:-$(date +%s)}"
+export MI_PERF_ADMISSION_TIMEOUT_SECONDS="${MI_PERF_ADMISSION_TIMEOUT_SECONDS:-${E2E_ADMISSION_TIMEOUT_SECONDS:-1800}}"
+case "$MI_PERF_ADMISSION_TIMEOUT_SECONDS" in ''|*[!0-9]*|0) printf '%s\n' 'E2E_ADMISSION_TIMEOUT_SECONDS must be a positive integer' >&2; exit 2;; esac
+export MI_PERF_WAIT_DEADLINE="${MI_PERF_WAIT_DEADLINE:-$(($(date +%s) + MI_PERF_ADMISSION_TIMEOUT_SECONDS))}"
 # Explicit shared admission for lanes instructed to leave the second slot free.
 # Preflight remains mandatory; this mode does not promise exclusive GPU timing.
 if [ "${MI_PERF_SHARED_BROWSER:-}" = 1 ] && [ "${MI_PERF_LOCK_HELD:-}" != 1 ]; then
   export E2E_UNITS=1 MI_PERF_LOCK_HELD=1 MI_PERF_SLOTS_HELD=1
-  export MI_PERF_WAIT_DEADLINE=$(($(date +%s) + ${E2E_ADMISSION_TIMEOUT_SECONDS:-1800}))
   exec sh "$root/tools/e2e-lock.sh" python3 "$root/tools/browser-job.py" --seconds 595 -- sh "$0" "$@"
 fi
 if [ "${MI_PERF_SHARED_BROWSER:-}" != 1 ]; then
@@ -23,10 +26,6 @@ if [ "${MI_PERF_LOCK_HELD:-}" != 1 ]; then
     printf '%s\n' 'Run quiet-run directly, without an outer e2e-lock (it owns the browser locks).' >&2
     exit 1
   fi
-  export MI_PERF_ADMISSION_TIMEOUT_SECONDS="${E2E_ADMISSION_TIMEOUT_SECONDS:-1800}"
-  case "$MI_PERF_ADMISSION_TIMEOUT_SECONDS" in ''|*[!0-9]*|0) printf '%s\n' 'E2E_ADMISSION_TIMEOUT_SECONDS must be a positive integer' >&2; exit 2;; esac
-  export MI_PERF_WAIT_DEADLINE=$(($(date +%s) + MI_PERF_ADMISSION_TIMEOUT_SECONDS))
-  export MI_PERF_SESSION_STARTED=$(date +%s)
   slots="${E2E_SLOTS:-2}"
   case "$slots" in ''|*[!0-9]*|0) printf '%s\n' 'E2E_SLOTS must be a positive integer' >&2; exit 2;; esac
   # Cover the legacy four-slot range during rollout and explicit four-unit runs too.
@@ -66,40 +65,25 @@ while :; do
   # Also catch native Chrome's --headless flag.
   # A single Vitest worker can occupy a core while loadavg is still below 3.
   # Measured during E25/E27 closure: phone transitions then exceeded 50 ms.
-  wait_reasons=$(python3 - "$MI_PERF_SESSION_STARTED" <<'PY'
-import re, subprocess, sys
-import os, time
-session = int(sys.argv[1])
-os_pid = os.getpid()
-try:
-    rows = subprocess.check_output(['ps', '-axo', 'pid=,etime=,%cpu=,command='], text=True).splitlines()
-except Exception as error:
-    print(f'process scan unavailable; admission blocked: {error}')
-    raise SystemExit(0)
-def seconds(value):
-    days, _, value = value.partition('-')
-    parts = [int(x) for x in value.split(':')]
-    n = sum(x * 60 ** i for i, x in enumerate(reversed(parts)))
-    return n + int(days or 0) * 86400
-busy = []
-for row in rows:
-    m = re.match(r'\s*(\d+)\s+(\S+)\s+([\d.]+)\s+(.*)', row)
-    if not m: continue
-    pid, age, cpu, cmd = int(m[1]), seconds(m[2]), float(m[3]), m[4]
-    if pid == os_pid or not re.search(r'vitest|typescript/bin/tsc|node_modules/\.bin/tsc|headless|Blender|vite(?:\.js)? build', cmd, re.I): continue
-    if age > 600 and cpu == 0 and int(time.time()) - age < session: continue
-    busy.append(f'{pid} cpu={cpu:g}% age={age}s {cmd}')
-print('\n'.join(busy))
-PY
-  )
-  # The collector ignores its own scanner command line.
-  wait_reasons=$(printf '%s\n' "$wait_reasons" | sed '/python3 - /d')
-  if [ -z "$wait_reasons" ] && node -e 'process.exit(require("node:os").loadavg()[0] < 3 ? 0 : 1)'; then
+  if wait_reasons=$(node --import tsx --input-type=module - "$root" "$MI_PERF_SESSION_STARTED" <<'JS'
+import { pathToFileURL } from 'node:url';
+try {
+  const { quietConditions } = await import(pathToFileURL(`${process.argv[2]}/tools/browser-pool/host.ts`));
+  const conditions = await quietConditions(new Set(), Number(process.argv[3]) * 1000);
+  console.log(JSON.stringify(conditions));
+  process.exitCode = conditions.quiet ? 0 : 1;
+} catch (error) {
+  console.log(`process scan unavailable; admission blocked: ${error.message}`);
+  process.exitCode = 1;
+}
+JS
+  ); then
     uptime
     if [ -n "${PERF_CONDITIONS_LOG:-}" ]; then
       node -e 'const fs=require("node:fs"),os=require("node:os");fs.appendFileSync(process.env.PERF_CONDITIONS_LOG,JSON.stringify({at:new Date().toISOString(),load:os.loadavg(),otherHeadlessChrome:0,localVitest:0,localTypecheck:0,localBlender:0,localBuild:0,browserSlots:Array.from({length:Number(process.env.MI_PERF_SLOTS_HELD||4)},(_,i)=>i),command:process.argv.slice(1)})+"\n")' "$@"
     fi
     printf '%s\n' 'Quiet-run preflight: load < 3; no local Vitest, typecheck, Blender, build or headless Chrome processes; all configured browser slots held.'
+    printf 'Quiet-run conditions: %s\n' "$wait_reasons"
     root=$(cd "$(dirname "$0")/../.." && pwd)
     python3 "$root/tools/mac-gpu-guard.py" 1 || { sleep 2; continue; }
     exec "$@"
