@@ -10,6 +10,8 @@
 
 # Code simplification review — pass 3
 
+2026-10-28 follow-up: P01–P03 were completed on `lane/p01-rigid-retire`; see the [retirement report](../p01-rigid-retire/README.md) for zero-caller, asset, census, pixel and check evidence. The tables below preserve the original review snapshot; P04 remains separate work.
+
 2026-10-27. Compared the current source with [pass 2](pass-2.md), the merged refactors, and [the new test strategy](../../qa/test-strategy.md). The reported behavior-neutral evidence is prior lane evidence, not a runtime verification performed here. **FIXED** means the concrete recommendation was implemented; for the six original retain/no-deletion decisions (C18, P05, P08, P10, O06, O08), it means the recommended boundary remains intact. **PARTIAL** means identifiable work remains. **OPEN** includes deliberate rollout prerequisites. A larger file after an extraction is not evidence of failure; ownership and control flow determine closure.
 
 The user’s pass-2 count refers to D01–D16, C01–C20, P01–P12, O01–O08 and S01–S07. The G01–G40 size/seam inventory is also revisited below, outside that 63-finding denominator. F01–F40 were function measurements of those same owners, not additional independent defects. Original numbering is retained: **G05 is DistrictView, G06 is GameView; O02 is packSkin’s flag**.

@@ -1,0 +1,113 @@
+[
+  {
+    "name": "crowd-infected-20",
+    "file": "tests/scenes/crowd-variety/infected-20.json",
+    "revision": "6c80e94c20135ff92ff307bcb15cd12b1f4f8953",
+    "dirtyHash": "2d4583748dc9772bc9e2959895224e6d070fea74da6a19feedb5f2fc11c32e4b",
+    "backend": "webgl2",
+    "tier": "high",
+    "seed": 1,
+    "images": [
+      {
+        "frame": 0,
+        "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/p01-rigid-retire/docs/reports/p01-rigid-retire/pixels-investigation/after/high/crowd-infected-20/shot-0000.png",
+        "sha256": "b75c96e69027e875dc949196fd539656bc5d81373f9ec84089ded48335000ed8"
+      },
+      {
+        "frame": 60,
+        "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/p01-rigid-retire/docs/reports/p01-rigid-retire/pixels-investigation/after/high/crowd-infected-20/shot-0060.png",
+        "sha256": "9db3e349a91590109e748ac12789cb19c74407ba93cb35c36b77eb999a0c50fa"
+      }
+    ],
+    "result": {
+      "name": "infected-20",
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "infectedVarietyMin",
+          "pass": true,
+          "value": 20,
+          "limit": 12
+        },
+        {
+          "name": "sameLookShareMax",
+          "pass": true,
+          "value": 0.05,
+          "limit": 0.25
+        },
+        {
+          "name": "infectedModelShareMax",
+          "pass": true,
+          "value": 0.2,
+          "limit": 0.25
+        },
+        {
+          "name": "canvas.f0.varianceMin",
+          "pass": true,
+          "value": 817.7942616507644,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f0.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f60.varianceMin",
+          "pass": true,
+          "value": 761.2244976633265,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f60.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ],
+      "backend": "webgl",
+      "actualTier": "high",
+      "frames": 60,
+      "seconds": 5.782,
+      "failed": [],
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      },
+      "files": [
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/p01-rigid-retire/docs/reports/p01-rigid-retire/pixels-investigation/after/high/crowd-infected-20/shot-0000.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/p01-rigid-retire/docs/reports/p01-rigid-retire/pixels-investigation/after/high/crowd-infected-20/shot-0060.png",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/p01-rigid-retire/docs/reports/p01-rigid-retire/pixels-investigation/after/high/crowd-infected-20/metrics.json"
+      ],
+      "consoleErrors": []
+    }
+  }
+]

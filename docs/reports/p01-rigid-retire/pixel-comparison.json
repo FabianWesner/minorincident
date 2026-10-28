@@ -1,0 +1,846 @@
+{
+  "pass": true,
+  "scenes": 6,
+  "tiers": 2,
+  "frames": 26,
+  "pixelIdentical": 14,
+  "beforeRevision": "6363147b2",
+  "backend": "WebGL2 / headless ANGLE Metal",
+  "viewport": [
+    1280,
+    720
+  ],
+  "seed": 1,
+  "noToleranceThresholdUsed": true,
+  "control": "Unchanged-base repeat. Sparse lossless patches reconstruct the full A/A images and are verified against RGBA hashes.",
+  "rows": [
+    {
+      "tier": "high",
+      "scene": "corpses",
+      "file": "shot-0080.png",
+      "before": "pixels/before/high/corpses/shot-0080.png",
+      "after": "pixels/after/high/corpses/shot-0080.png",
+      "beforeRgbaSha256": "232af9fc306fc384048edc3f36ef30af34fa5f73f811f4477175aec1407488e4",
+      "afterRgbaSha256": "b402d5a40b53687de2d4b5acca8e3a959079388c85c2dd7dcdc5d874e5766d6b",
+      "sameSimulationPositionsAndLods": true,
+      "afterEqualsUnchangedControl": true,
+      "ab": {
+        "changedPixels": 546,
+        "changedPercent": 0.05924479166666667,
+        "overOne": 455,
+        "maxChannelDelta": 40,
+        "meanAbsoluteChannelDelta": 0.002630570023148148,
+        "bounds": {
+          "x": 879,
+          "y": 218,
+          "width": 37,
+          "height": 33
+        }
+      },
+      "aa": {
+        "changedPixels": 546,
+        "changedPercent": 0.05924479166666667,
+        "overOne": 455,
+        "maxChannelDelta": 40,
+        "meanAbsoluteChannelDelta": 0.002630570023148148,
+        "bounds": {
+          "x": 879,
+          "y": 218,
+          "width": 37,
+          "height": 33
+        }
+      },
+      "explanation": "The after frame is pixel-identical to the unchanged-base A/A repeat. This difference is existing presentation variation, not a new asset or geometry change."
+    },
+    {
+      "tier": "high",
+      "scene": "crowd-infected-20",
+      "file": "shot-0000.png",
+      "before": "pixels/before/high/crowd-infected-20/shot-0000.png",
+      "after": "pixels/after/high/crowd-infected-20/shot-0000.png",
+      "beforeRgbaSha256": "6fd092f4ff0b7cf0791053fb81a59eba5d5530dd9e3cb2b30dd69d331f290314",
+      "afterRgbaSha256": "3b652e5ce75fbca2079e4997fc9d6e3668fb392ad85a3b019e0ad64ba19673c1",
+      "sameSimulationPositionsAndLods": true,
+      "afterEqualsUnchangedControl": false,
+      "ab": {
+        "changedPixels": 407,
+        "changedPercent": 0.04416232638888889,
+        "overOne": 46,
+        "maxChannelDelta": 56,
+        "meanAbsoluteChannelDelta": 0.0006423611111111111,
+        "bounds": {
+          "x": 240,
+          "y": 223,
+          "width": 50,
+          "height": 30
+        }
+      },
+      "aa": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "explanation": "Existing asynchronous LOD brow measurement changes the sun-hat stabilisation pivot by 2.8 mm. Diagnostic fits and accessory geometry are identical; only the last registered brow centre differs (LOD2 versus LOD1). No figure asset bytes changed."
+    },
+    {
+      "tier": "high",
+      "scene": "crowd-infected-20",
+      "file": "shot-0060.png",
+      "before": "pixels/before/high/crowd-infected-20/shot-0060.png",
+      "after": "pixels/after/high/crowd-infected-20/shot-0060.png",
+      "beforeRgbaSha256": "10e67a4ebe925a1f7dbfe009cac57396d6886b39363fcf0aa801562f85243892",
+      "afterRgbaSha256": "66fc7c295e3b9df08562a1a6d56397c630aeda27549e3f7c72b6793d8dbeb0bc",
+      "sameSimulationPositionsAndLods": true,
+      "afterEqualsUnchangedControl": false,
+      "ab": {
+        "changedPixels": 416,
+        "changedPercent": 0.04513888888888889,
+        "overOne": 51,
+        "maxChannelDelta": 44,
+        "meanAbsoluteChannelDelta": 0.0005841290509259259,
+        "bounds": {
+          "x": 243,
+          "y": 213,
+          "width": 47,
+          "height": 32
+        }
+      },
+      "aa": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "explanation": "Existing asynchronous LOD brow measurement changes the sun-hat stabilisation pivot by 2.8 mm. Diagnostic fits and accessory geometry are identical; only the last registered brow centre differs (LOD2 versus LOD1). No figure asset bytes changed."
+    },
+    {
+      "tier": "high",
+      "scene": "crowd-l7-rocket",
+      "file": "shot-0030.png",
+      "before": "pixels/before/high/crowd-l7-rocket/shot-0030.png",
+      "after": "pixels/after/high/crowd-l7-rocket/shot-0030.png",
+      "beforeRgbaSha256": "7c09c57dc6b8f35b17bc79a0e706e76674caf2f3f6e767a60b81cf65dbacb5d9",
+      "afterRgbaSha256": "b2cbb19e94ea5cdee3cfc5ff511fc912442c7267e1604a6925dfb1bf30a8080e",
+      "sameSimulationPositionsAndLods": true,
+      "afterEqualsUnchangedControl": false,
+      "ab": {
+        "changedPixels": 571,
+        "changedPercent": 0.06195746527777778,
+        "overOne": 222,
+        "maxChannelDelta": 57,
+        "meanAbsoluteChannelDelta": 0.001838107638888889,
+        "bounds": {
+          "x": 916,
+          "y": 303,
+          "width": 62,
+          "height": 22
+        }
+      },
+      "aa": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "explanation": "The changed headwear region was visually inspected. The existing last-completed-LOD brow pivot varies with load order, as independently reproduced by unchanged-base corpse/L4 controls. Low-tier held-pose initialisation can also differ. Scene actor positions, LODs and all figure asset hashes are unchanged."
+    },
+    {
+      "tier": "high",
+      "scene": "crowd-l7-rocket",
+      "file": "shot-0240.png",
+      "before": "pixels/before/high/crowd-l7-rocket/shot-0240.png",
+      "after": "pixels/after/high/crowd-l7-rocket/shot-0240.png",
+      "beforeRgbaSha256": "9a5bfe22b210736de7ff91738710a31167bc0bd5e61c007f28e645024f26348f",
+      "afterRgbaSha256": "1eb87494d870292c575e701bf5705f8e2f9e818732bf8bd9d44e16741041c7b0",
+      "sameSimulationPositionsAndLods": true,
+      "afterEqualsUnchangedControl": false,
+      "ab": {
+        "changedPixels": 1,
+        "changedPercent": 0.00010850694444444444,
+        "overOne": 0,
+        "maxChannelDelta": 1,
+        "meanAbsoluteChannelDelta": 3.616898148148148e-7,
+        "bounds": {
+          "x": 985,
+          "y": 531,
+          "width": 1,
+          "height": 1
+        }
+      },
+      "aa": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "explanation": "One-value raster rounding after the equivalent joint-local accessory was expressed in bind space. CPU attachment equivalence is tested at 1e-5 m."
+    },
+    {
+      "tier": "high",
+      "scene": "l10-mega-slam",
+      "file": "shot-0040.png",
+      "before": "pixels/before/high/l10-mega-slam/shot-0040.png",
+      "after": "pixels/after/high/l10-mega-slam/shot-0040.png",
+      "beforeRgbaSha256": "62aa02a9e7fb12e2eaa292d9bf609467d1f4a447710a623a0ebbd099293c0cba",
+      "afterRgbaSha256": "62aa02a9e7fb12e2eaa292d9bf609467d1f4a447710a623a0ebbd099293c0cba",
+      "sameSimulationPositionsAndLods": true,
+      "afterEqualsUnchangedControl": true,
+      "ab": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "aa": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "explanation": "pixel-identical"
+    },
+    {
+      "tier": "high",
+      "scene": "l10-mega-slam",
+      "file": "shot-0090.png",
+      "before": "pixels/before/high/l10-mega-slam/shot-0090.png",
+      "after": "pixels/after/high/l10-mega-slam/shot-0090.png",
+      "beforeRgbaSha256": "6f1457e33d9127a2439b59acc52f136fcfe933e65e8f1e379b536072fefcd5f0",
+      "afterRgbaSha256": "6f1457e33d9127a2439b59acc52f136fcfe933e65e8f1e379b536072fefcd5f0",
+      "sameSimulationPositionsAndLods": true,
+      "afterEqualsUnchangedControl": true,
+      "ab": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "aa": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "explanation": "pixel-identical"
+    },
+    {
+      "tier": "high",
+      "scene": "l10-mega-slam",
+      "file": "shot-0144.png",
+      "before": "pixels/before/high/l10-mega-slam/shot-0144.png",
+      "after": "pixels/after/high/l10-mega-slam/shot-0144.png",
+      "beforeRgbaSha256": "fc818116c862877f62c14c90703cfd896ac5099c048fbcef9a47a279b90bdb9f",
+      "afterRgbaSha256": "fc818116c862877f62c14c90703cfd896ac5099c048fbcef9a47a279b90bdb9f",
+      "sameSimulationPositionsAndLods": true,
+      "afterEqualsUnchangedControl": true,
+      "ab": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "aa": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "explanation": "pixel-identical"
+    },
+    {
+      "tier": "high",
+      "scene": "l4-breach",
+      "file": "shot-0027.png",
+      "before": "pixels/before/high/l4-breach/shot-0027.png",
+      "after": "pixels/after/high/l4-breach/shot-0027.png",
+      "beforeRgbaSha256": "fdbbe7837848ab1d75e1803c6fd020921cf2ab094f03fcfedcb35ec0fed2e2b0",
+      "afterRgbaSha256": "fdbbe7837848ab1d75e1803c6fd020921cf2ab094f03fcfedcb35ec0fed2e2b0",
+      "sameSimulationPositionsAndLods": true,
+      "afterEqualsUnchangedControl": false,
+      "ab": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "aa": {
+        "changedPixels": 350,
+        "changedPercent": 0.03797743055555556,
+        "overOne": 141,
+        "maxChannelDelta": 22,
+        "meanAbsoluteChannelDelta": 0.0009038628472222222,
+        "bounds": {
+          "x": 1020,
+          "y": 435,
+          "width": 37,
+          "height": 15
+        }
+      },
+      "explanation": "pixel-identical"
+    },
+    {
+      "tier": "high",
+      "scene": "l4-breach",
+      "file": "shot-0090.png",
+      "before": "pixels/before/high/l4-breach/shot-0090.png",
+      "after": "pixels/after/high/l4-breach/shot-0090.png",
+      "beforeRgbaSha256": "364f4f5d7c73df98d03f62133c6fb5751c10736c00efd7f151c56074108275ee",
+      "afterRgbaSha256": "364f4f5d7c73df98d03f62133c6fb5751c10736c00efd7f151c56074108275ee",
+      "sameSimulationPositionsAndLods": true,
+      "afterEqualsUnchangedControl": false,
+      "ab": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "aa": {
+        "changedPixels": 367,
+        "changedPercent": 0.03982204861111111,
+        "overOne": 146,
+        "maxChannelDelta": 27,
+        "meanAbsoluteChannelDelta": 0.0008832465277777778,
+        "bounds": {
+          "x": 1047,
+          "y": 462,
+          "width": 38,
+          "height": 15
+        }
+      },
+      "explanation": "pixel-identical"
+    },
+    {
+      "tier": "high",
+      "scene": "l4-breach",
+      "file": "shot-0450.png",
+      "before": "pixels/before/high/l4-breach/shot-0450.png",
+      "after": "pixels/after/high/l4-breach/shot-0450.png",
+      "beforeRgbaSha256": "0bae2796331fc3dddea2aea5e4011849d37a867b3bff94d5b039afa4e897befd",
+      "afterRgbaSha256": "0bae2796331fc3dddea2aea5e4011849d37a867b3bff94d5b039afa4e897befd",
+      "sameSimulationPositionsAndLods": true,
+      "afterEqualsUnchangedControl": false,
+      "ab": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "aa": {
+        "changedPixels": 232,
+        "changedPercent": 0.025173611111111112,
+        "overOne": 192,
+        "maxChannelDelta": 37,
+        "meanAbsoluteChannelDelta": 0.0008760127314814815,
+        "bounds": {
+          "x": 345,
+          "y": 122,
+          "width": 28,
+          "height": 19
+        }
+      },
+      "explanation": "pixel-identical"
+    },
+    {
+      "tier": "high",
+      "scene": "l8-zoo",
+      "file": "shot-0000.png",
+      "before": "pixels/before/high/l8-zoo/shot-0000.png",
+      "after": "pixels/after/high/l8-zoo/shot-0000.png",
+      "beforeRgbaSha256": "c3fe5e696b3a13ef50fff59a2d04a0783d2e66ff5cf800b4efed2bd71ee1f1a8",
+      "afterRgbaSha256": "c3fe5e696b3a13ef50fff59a2d04a0783d2e66ff5cf800b4efed2bd71ee1f1a8",
+      "sameSimulationPositionsAndLods": true,
+      "afterEqualsUnchangedControl": true,
+      "ab": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "aa": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "explanation": "pixel-identical"
+    },
+    {
+      "tier": "high",
+      "scene": "l8-zoo",
+      "file": "shot-0060.png",
+      "before": "pixels/before/high/l8-zoo/shot-0060.png",
+      "after": "pixels/after/high/l8-zoo/shot-0060.png",
+      "beforeRgbaSha256": "5ac726b2e1883190a59bea0572e12c45c33d21dfadb49d0117d96a45d08fc301",
+      "afterRgbaSha256": "5ac726b2e1883190a59bea0572e12c45c33d21dfadb49d0117d96a45d08fc301",
+      "sameSimulationPositionsAndLods": true,
+      "afterEqualsUnchangedControl": true,
+      "ab": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "aa": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "explanation": "pixel-identical"
+    },
+    {
+      "tier": "low",
+      "scene": "corpses",
+      "file": "shot-0080.png",
+      "before": "pixels/before/low/corpses/shot-0080.png",
+      "after": "pixels/after/low/corpses/shot-0080.png",
+      "beforeRgbaSha256": "d0628cff6d4f306b3ba4e1871c9c748c24bba742962c92a71f26ad590230fb52",
+      "afterRgbaSha256": "d0628cff6d4f306b3ba4e1871c9c748c24bba742962c92a71f26ad590230fb52",
+      "sameSimulationPositionsAndLods": true,
+      "afterEqualsUnchangedControl": false,
+      "ab": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "aa": {
+        "changedPixels": 543,
+        "changedPercent": 0.058919270833333336,
+        "overOne": 447,
+        "maxChannelDelta": 41,
+        "meanAbsoluteChannelDelta": 0.0026652922453703704,
+        "bounds": {
+          "x": 879,
+          "y": 217,
+          "width": 37,
+          "height": 33
+        }
+      },
+      "explanation": "pixel-identical"
+    },
+    {
+      "tier": "low",
+      "scene": "crowd-infected-20",
+      "file": "shot-0000.png",
+      "before": "pixels/before/low/crowd-infected-20/shot-0000.png",
+      "after": "pixels/after/low/crowd-infected-20/shot-0000.png",
+      "beforeRgbaSha256": "a5df99f71e395ea31e9f468020aee6fb96320b81ce25ed8d09860aa512e47526",
+      "afterRgbaSha256": "651573d9d02ebc35a466361da7b47a17e8810b0c46440c48b2075522568c8093",
+      "sameSimulationPositionsAndLods": true,
+      "afterEqualsUnchangedControl": false,
+      "ab": {
+        "changedPixels": 28301,
+        "changedPercent": 3.070855034722222,
+        "overOne": 25312,
+        "maxChannelDelta": 220,
+        "meanAbsoluteChannelDelta": 1.0027170138888888,
+        "bounds": {
+          "x": 330,
+          "y": 159,
+          "width": 605,
+          "height": 484
+        }
+      },
+      "aa": {
+        "changedPixels": 17472,
+        "changedPercent": 1.8958333333333335,
+        "overOne": 15129,
+        "maxChannelDelta": 242,
+        "meanAbsoluteChannelDelta": 0.6358365885416667,
+        "bounds": {
+          "x": 330,
+          "y": 113,
+          "width": 501,
+          "height": 443
+        }
+      },
+      "explanation": "Low-tier held-pose initialisation and asynchronous hat pivots vary with loading order. Unchanged-base A/A also changes these figures; simulation positions and selected LODs are checked separately. All figure asset bytes are identical."
+    },
+    {
+      "tier": "low",
+      "scene": "crowd-infected-20",
+      "file": "shot-0060.png",
+      "before": "pixels/before/low/crowd-infected-20/shot-0060.png",
+      "after": "pixels/after/low/crowd-infected-20/shot-0060.png",
+      "beforeRgbaSha256": "dfbef9565f89a2b6941776398f1e47fc9b116a33734197bb0f03df42d122b813",
+      "afterRgbaSha256": "ba5cb99ba98d2eb5f70584198bfbeb88b63bc0086594704a92df1437149e8f69",
+      "sameSimulationPositionsAndLods": true,
+      "afterEqualsUnchangedControl": false,
+      "ab": {
+        "changedPixels": 5634,
+        "changedPercent": 0.611328125,
+        "overOne": 4981,
+        "maxChannelDelta": 218,
+        "meanAbsoluteChannelDelta": 0.23992115162037037,
+        "bounds": {
+          "x": 292,
+          "y": 183,
+          "width": 593,
+          "height": 168
+        }
+      },
+      "aa": {
+        "changedPixels": 7417,
+        "changedPercent": 0.8047960069444445,
+        "overOne": 6026,
+        "maxChannelDelta": 199,
+        "meanAbsoluteChannelDelta": 0.16948857060185185,
+        "bounds": {
+          "x": 292,
+          "y": 198,
+          "width": 549,
+          "height": 277
+        }
+      },
+      "explanation": "Low-tier held-pose initialisation and asynchronous hat pivots vary with loading order. Unchanged-base A/A also changes these figures; simulation positions and selected LODs are checked separately. All figure asset bytes are identical."
+    },
+    {
+      "tier": "low",
+      "scene": "crowd-l7-rocket",
+      "file": "shot-0030.png",
+      "before": "pixels/before/low/crowd-l7-rocket/shot-0030.png",
+      "after": "pixels/after/low/crowd-l7-rocket/shot-0030.png",
+      "beforeRgbaSha256": "22c4b71d4cd1847eac3e176670184f5d2412d9e55d0e9c25762d37309ee23311",
+      "afterRgbaSha256": "7c4086ac45201772fd30c41d746682d6c06d6af2733abee9e3d37787b82e1a6c",
+      "sameSimulationPositionsAndLods": true,
+      "afterEqualsUnchangedControl": false,
+      "ab": {
+        "changedPixels": 1354,
+        "changedPercent": 0.1469184027777778,
+        "overOne": 508,
+        "maxChannelDelta": 68,
+        "meanAbsoluteChannelDelta": 0.007400896990740741,
+        "bounds": {
+          "x": 818,
+          "y": 317,
+          "width": 160,
+          "height": 260
+        }
+      },
+      "aa": {
+        "changedPixels": 915,
+        "changedPercent": 0.09928385416666666,
+        "overOne": 353,
+        "maxChannelDelta": 68,
+        "meanAbsoluteChannelDelta": 0.00607421875,
+        "bounds": {
+          "x": 721,
+          "y": 362,
+          "width": 254,
+          "height": 215
+        }
+      },
+      "explanation": "The changed headwear region was visually inspected. The existing last-completed-LOD brow pivot varies with load order, as independently reproduced by unchanged-base corpse/L4 controls. Low-tier held-pose initialisation can also differ. Scene actor positions, LODs and all figure asset hashes are unchanged."
+    },
+    {
+      "tier": "low",
+      "scene": "crowd-l7-rocket",
+      "file": "shot-0240.png",
+      "before": "pixels/before/low/crowd-l7-rocket/shot-0240.png",
+      "after": "pixels/after/low/crowd-l7-rocket/shot-0240.png",
+      "beforeRgbaSha256": "71c4748819265d61e6ed170f6d8d8fd2250c9ae52381d1c49b7539c4e9fd7889",
+      "afterRgbaSha256": "2533ca2b9e363afcc54f6e137d0f5ea6b44990605b6ed23125ff22bd51a32226",
+      "sameSimulationPositionsAndLods": true,
+      "afterEqualsUnchangedControl": false,
+      "ab": {
+        "changedPixels": 1,
+        "changedPercent": 0.00010850694444444444,
+        "overOne": 0,
+        "maxChannelDelta": 1,
+        "meanAbsoluteChannelDelta": 3.616898148148148e-7,
+        "bounds": {
+          "x": 985,
+          "y": 531,
+          "width": 1,
+          "height": 1
+        }
+      },
+      "aa": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "explanation": "One-value raster rounding after the equivalent joint-local accessory was expressed in bind space. CPU attachment equivalence is tested at 1e-5 m."
+    },
+    {
+      "tier": "low",
+      "scene": "l10-mega-slam",
+      "file": "shot-0040.png",
+      "before": "pixels/before/low/l10-mega-slam/shot-0040.png",
+      "after": "pixels/after/low/l10-mega-slam/shot-0040.png",
+      "beforeRgbaSha256": "cbacc55b65590babc49fea637579874378a45c7c2ffc3ef53c5980774e357f6c",
+      "afterRgbaSha256": "cbacc55b65590babc49fea637579874378a45c7c2ffc3ef53c5980774e357f6c",
+      "sameSimulationPositionsAndLods": true,
+      "afterEqualsUnchangedControl": true,
+      "ab": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "aa": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "explanation": "pixel-identical"
+    },
+    {
+      "tier": "low",
+      "scene": "l10-mega-slam",
+      "file": "shot-0090.png",
+      "before": "pixels/before/low/l10-mega-slam/shot-0090.png",
+      "after": "pixels/after/low/l10-mega-slam/shot-0090.png",
+      "beforeRgbaSha256": "e39de25d59ccef8bbce926d304b738b9b0851bfd2b4901d129309e2166516937",
+      "afterRgbaSha256": "e39de25d59ccef8bbce926d304b738b9b0851bfd2b4901d129309e2166516937",
+      "sameSimulationPositionsAndLods": true,
+      "afterEqualsUnchangedControl": true,
+      "ab": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "aa": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "explanation": "pixel-identical"
+    },
+    {
+      "tier": "low",
+      "scene": "l10-mega-slam",
+      "file": "shot-0144.png",
+      "before": "pixels/before/low/l10-mega-slam/shot-0144.png",
+      "after": "pixels/after/low/l10-mega-slam/shot-0144.png",
+      "beforeRgbaSha256": "4886d81b77cdc8b9bff71f9f0dd6dd8069a6241cc7591b0b52974a817c12825d",
+      "afterRgbaSha256": "4886d81b77cdc8b9bff71f9f0dd6dd8069a6241cc7591b0b52974a817c12825d",
+      "sameSimulationPositionsAndLods": true,
+      "afterEqualsUnchangedControl": true,
+      "ab": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "aa": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "explanation": "pixel-identical"
+    },
+    {
+      "tier": "low",
+      "scene": "l4-breach",
+      "file": "shot-0027.png",
+      "before": "pixels/before/low/l4-breach/shot-0027.png",
+      "after": "pixels/after/low/l4-breach/shot-0027.png",
+      "beforeRgbaSha256": "36523fc67932289bb7982db5024792eda29ff059748946f539e47b3e5ca52f1f",
+      "afterRgbaSha256": "4a10340ea233cd1f20e4434e4327a3ad07a1e4755bf4f9b485d972363ebde198",
+      "sameSimulationPositionsAndLods": true,
+      "afterEqualsUnchangedControl": false,
+      "ab": {
+        "changedPixels": 355,
+        "changedPercent": 0.038519965277777776,
+        "overOne": 130,
+        "maxChannelDelta": 24,
+        "meanAbsoluteChannelDelta": 0.0008658854166666667,
+        "bounds": {
+          "x": 1019,
+          "y": 435,
+          "width": 38,
+          "height": 15
+        }
+      },
+      "aa": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "explanation": "Helmet fit uses the same existing last-completed-LOD brow pivot. The unchanged-base A/A reproduces helmet-region changes; lossless crops were visually inspected. No body or figure asset changed."
+    },
+    {
+      "tier": "low",
+      "scene": "l4-breach",
+      "file": "shot-0090.png",
+      "before": "pixels/before/low/l4-breach/shot-0090.png",
+      "after": "pixels/after/low/l4-breach/shot-0090.png",
+      "beforeRgbaSha256": "6786cb332aacb210565d50b91f17300b685f1e15e814778704f4e4ea019538ce",
+      "afterRgbaSha256": "b4a8f409fd4937e34ae1ae45f25c09940a2af86c73704bc76cf037f23f9afc60",
+      "sameSimulationPositionsAndLods": true,
+      "afterEqualsUnchangedControl": false,
+      "ab": {
+        "changedPixels": 364,
+        "changedPercent": 0.039496527777777776,
+        "overOne": 154,
+        "maxChannelDelta": 21,
+        "meanAbsoluteChannelDelta": 0.0008626302083333333,
+        "bounds": {
+          "x": 1047,
+          "y": 462,
+          "width": 39,
+          "height": 15
+        }
+      },
+      "aa": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "explanation": "Helmet fit uses the same existing last-completed-LOD brow pivot. The unchanged-base A/A reproduces helmet-region changes; lossless crops were visually inspected. No body or figure asset changed."
+    },
+    {
+      "tier": "low",
+      "scene": "l4-breach",
+      "file": "shot-0450.png",
+      "before": "pixels/before/low/l4-breach/shot-0450.png",
+      "after": "pixels/after/low/l4-breach/shot-0450.png",
+      "beforeRgbaSha256": "8fc7aaf4c47b9af4127137dbaa1e451d841bbe619fc06fc960910b50f336f399",
+      "afterRgbaSha256": "cdd74be1b22df528137e26d5598e958b70c67f2d2780f2571c2ad8dff1843032",
+      "sameSimulationPositionsAndLods": true,
+      "afterEqualsUnchangedControl": false,
+      "ab": {
+        "changedPixels": 232,
+        "changedPercent": 0.025173611111111112,
+        "overOne": 192,
+        "maxChannelDelta": 37,
+        "meanAbsoluteChannelDelta": 0.0008760127314814815,
+        "bounds": {
+          "x": 345,
+          "y": 122,
+          "width": 28,
+          "height": 19
+        }
+      },
+      "aa": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "explanation": "Helmet fit uses the same existing last-completed-LOD brow pivot. The unchanged-base A/A reproduces helmet-region changes; lossless crops were visually inspected. No body or figure asset changed."
+    },
+    {
+      "tier": "low",
+      "scene": "l8-zoo",
+      "file": "shot-0000.png",
+      "before": "pixels/before/low/l8-zoo/shot-0000.png",
+      "after": "pixels/after/low/l8-zoo/shot-0000.png",
+      "beforeRgbaSha256": "984130d8831b4126801793f5fdc1b36fe3bd7933f585acef495bb5a7f96ba001",
+      "afterRgbaSha256": "984130d8831b4126801793f5fdc1b36fe3bd7933f585acef495bb5a7f96ba001",
+      "sameSimulationPositionsAndLods": true,
+      "afterEqualsUnchangedControl": true,
+      "ab": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "aa": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "explanation": "pixel-identical"
+    },
+    {
+      "tier": "low",
+      "scene": "l8-zoo",
+      "file": "shot-0060.png",
+      "before": "pixels/before/low/l8-zoo/shot-0060.png",
+      "after": "pixels/after/low/l8-zoo/shot-0060.png",
+      "beforeRgbaSha256": "3ab68824228a6090cdbd3f476bed60b6c9e22163fe9f113934f084ea9925610c",
+      "afterRgbaSha256": "3ab68824228a6090cdbd3f476bed60b6c9e22163fe9f113934f084ea9925610c",
+      "sameSimulationPositionsAndLods": true,
+      "afterEqualsUnchangedControl": true,
+      "ab": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "aa": {
+        "changedPixels": 0,
+        "changedPercent": 0,
+        "overOne": 0,
+        "maxChannelDelta": 0,
+        "meanAbsoluteChannelDelta": 0,
+        "bounds": null
+      },
+      "explanation": "pixel-identical"
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "pass": true,
+  "revision": "13d54708a0c93629a4da6b0972d1f8e4fce3bc1f",
+  "commands": [
+    {
+      "command": "npm run assets:validate",
+      "exitCode": 0,
+      "result": "1235 rows, zero errors",
+      "evidence": "checks/asset-validator.json.gz"
+    },
+    {
+      "command": "npm test",
+      "exitCode": 0,
+      "result": "104 tests in 24 files; 23.3 seconds",
+      "evidence": "checks/npm-test.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "result": "pass",
+      "evidence": "checks/typecheck.log"
+    },
+    {
+      "command": "npm run lint",
+      "exitCode": 0,
+      "result": "pass",
+      "evidence": "checks/lint.log"
+    },
+    {
+      "command": "E2E_PORT=4197 npm run test:smoke",
+      "exitCode": 0,
+      "result": "6 QA plus 1 public smoke test; 153.5 seconds; freeze guard and both backend GPU limits pass",
+      "evidence": "checks/smoke.log"
+    },
+    {
+      "command": "SCENE_PORT=3351 npm run scene:gate -- --jobs 2 --out test-results/p01-rigid-retire/scene-gate-final",
+      "exitCode": 0,
+      "result": "48 rows: 43 pass, 5 existing known, 0 not run; exit 0",
+      "evidence": "checks/scene-gate-summary.md"
+    },
+    {
+      "command": "npx vitest run --project nightly tests/qa/invariants/accessories.test.ts --maxWorkers=4 --configLoader runner",
+      "exitCode": 0,
+      "result": "pass",
+      "evidence": "checks/accessories.log"
+    },
+    {
+      "command": "npx tsx tools/scenelab/p01-retirement-audit.ts",
+      "exitCode": 0,
+      "result": "100% v2 across L1-L10, 370 unchanged shipped files, zero retired references and zero pending fixture actors",
+      "evidence": "retirement-audit.json"
+    },
+    {
+      "command": "npx tsx tools/scenelab/p01-ab-compare.ts",
+      "exitCode": 0,
+      "result": "6 scenes, 2 tiers, 26 frames, 14 exact, zero unexplained",
+      "evidence": "pixel-comparison.json"
+    }
+  ],
+  "gateListUnchanged": true,
+  "sceneInputs": {
+    "tests/scenes/crowd-variety/infected-20.json": "b3f2d62e02c2c65d3d2e07cf8f7a45add0a6921f50901a2113d0538918fd2835",
+    "tests/scenes/l7-rocket/qa-l7-rocket-crowd.json": "b005688c5c965fb56558396fb629b78083b02ec6153be3269d5c7234c37f21e9",
+    "tests/scenes/catalog/corpse-look-close.json": "de4a07ed26cbebc9eb6da363b72f6823d80bf20c0e02d42802f14418cd657e83",
+    "tests/scenes/l4-systems/gap.json": "eeceff4bcddad6a9025856d88d2a81517875cf560be3cd5e930ec988c516e75e",
+    "specs/scenes/catalog/animal-zoo-healthy.json": "272fbb249d7026bc93841a76a461f1221799906e4470f247d7a02921e95a31e6",
+    "tests/scenes/l10-mega-moves/l10-mega-slam.json": "a2604b5a3bc2e243a5e1f562d1391186b74a1eda4adcfd939303b09d3daefc7f"
+  }
+}
