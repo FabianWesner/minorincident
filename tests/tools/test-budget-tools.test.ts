@@ -1,5 +1,5 @@
 import { execFile, spawnSync } from 'node:child_process';
-import { chmodSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { promisify } from 'node:util';
@@ -16,25 +16,25 @@ test('test budget collection is passive, rejects missing counts and bounds colle
   expect(parsePlaywrightTotal(listed.stdout)).toBeGreaterThan(0);
   const root = mkdtempSync(join(tmpdir(), 'mi-budget-fixture-'));
   try {
-    const npx = join(root, 'npx');
+    const vitestCli = join(root, 'vitest.cjs');
     const run = (mode: string, seconds: string) => {
       const result = spawnSync(process.execPath,
       [process.env.MI_BUDGET_RUNNER ?? resolve('tools/qa/test-budget.mjs'), '--name', 'budget-fixture', '--max-seconds', seconds, '--', process.execPath, '-e', ''],
-      { env: { ...process.env, PATH: `${root}:${process.env.PATH}`, BUDGET_FIXTURE_MODE: mode, BUDGET_FIXTURE_PID: join(root, 'pid'), BUDGET_FIXTURE_ORPHAN_PID: join(root, 'orphan-pid') }, encoding: 'utf8', timeout: 35_000 });
+      { env: { ...process.env, MI_TEST_BUDGET_VITEST_CLI: vitestCli, MI_TEST_BUDGET_PLAYWRIGHT_CLI: vitestCli, BUDGET_FIXTURE_MODE: mode, BUDGET_FIXTURE_PID: join(root, 'pid'), BUDGET_FIXTURE_ORPHAN_PID: join(root, 'orphan-pid') }, encoding: 'utf8', timeout: 35_000 });
       const collectedDir = join(root, 'list-dir');
       expect(existsSync(readFileSync(collectedDir, 'utf8')), `${mode}: collection temp directory must be removed`).toBe(false);
       return result;
     };
-    writeFileSync(npx, `#!/usr/bin/env node
+    writeFileSync(vitestCli, `
 const fs = require('node:fs');
-const { spawn, execFileSync } = require('node:child_process');
+const { spawn } = require('node:child_process');
 const path = require('node:path');
 const out = process.argv.find(arg => arg.startsWith('--json='));
 if (out) fs.writeFileSync(path.join(path.dirname(process.env.BUDGET_FIXTURE_PID), 'list-dir'), path.dirname(out.slice(7)));
 if (['hang', 'kill-parent', 'kill-watchdog'].includes(process.env.BUDGET_FIXTURE_MODE)) {
   fs.writeFileSync(process.env.BUDGET_FIXTURE_PID, String(process.pid));
   process.on('SIGTERM', () => {});
-  if (process.env.BUDGET_FIXTURE_MODE === 'kill-parent') process.kill(Number(execFileSync('ps', ['-o', 'ppid=', '-p', String(process.ppid)]).toString().trim()), 'SIGTERM');
+  if (process.env.BUDGET_FIXTURE_MODE === 'kill-parent') process.kill(Number(process.env.MI_TEST_BUDGET_PROCESS_PID), 'SIGTERM');
   if (process.env.BUDGET_FIXTURE_MODE === 'kill-watchdog') process.kill(process.ppid, 'SIGTERM');
   setInterval(() => {}, 1000);
 } else {
@@ -47,7 +47,7 @@ if (['hang', 'kill-parent', 'kill-watchdog'].includes(process.env.BUDGET_FIXTURE
   if (out) fs.writeFileSync(out.slice(7), '[]');
   else console.log(process.env.BUDGET_FIXTURE_MODE === 'malformed' ? 'No total line' : 'Total: 1 test');
 }
-`); chmodSync(npx, 0o755);
+`);
     const malformed = run('malformed', '10');
     expect(malformed.status, 'unparseable collection must fail').toBe(1);
     expect(malformed.stderr).toContain('did not report a test count');

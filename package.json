@@ -9,7 +9,7 @@
     "preview": "npm run build:qa && vite preview --host 127.0.0.1 --port 3301 --strictPort --configLoader runner",
     "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.sim.json",
     "lint": "eslint src tests tools functions *.config.ts eslint.config.js",
-    "test": "node tools/qa/test-budget.mjs --name test --max-seconds 240 -- npx vitest run --project default --configLoader runner",
+    "test": "node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner",
     "test:unit": "npm test",
     "test:gate": "npm test",
     "test:smoke": "node tools/qa/test-budget.mjs --name smoke --max-seconds 240 -- sh tools/qa/smoke.sh",

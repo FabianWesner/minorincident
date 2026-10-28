@@ -104,6 +104,11 @@ for (let run = 0; run < Number(count); run++) {
     }
     const query = new URLSearchParams({ quality, audio: 'muted', dpr: '1', ...(backend === 'webgl2' ? { renderer: 'webgl' } : {}) });
     await page.goto(`${origin}/?${query}`);
+    // Menu preferences override the URL and campaign defaults at startup. Pin the
+    // requested tier through the same visible control as a player before measuring.
+    await page.getByTestId('title-settings').click();
+    await page.getByTestId('setting-quality').selectOption(quality);
+    await page.getByTestId('settings-back').click();
     await page.getByTestId('start-game').click();
     if (level === 'L1') await page.getByTestId('character-female').click();
     await page.getByTestId(`level-${level}`).waitFor();
@@ -135,7 +140,7 @@ for (let run = 0; run < Number(count); run++) {
     await page.evaluate(async () => { for (let i = 0; i < 3; i++) await new Promise<void>(resolve => requestAnimationFrame(() => resolve())); });
     const result = await page.evaluate<Record<string, unknown>>(`(() => {
       const p = window.__coldLoad;
-      return { ...p, bundle: document.querySelector('script[type=module][src]')?.src, ms: p.done - p.start, maxFrameMs: Math.max(0, ...p.frames.map(f => f.ms)),
+      return { ...p, settingsQuality: JSON.parse(localStorage.getItem('minor-incident.ui.v1') || '{}').quality, bundle: document.querySelector('script[type=module][src]')?.src, ms: p.done - p.start, maxFrameMs: Math.max(0, ...p.frames.map(f => f.ms)),
         measures: performance.getEntriesByType('measure').map(e => ({ name: e.name, at: e.startTime, ms: e.duration })),
         resources: performance.getEntriesByType('resource').filter(e => e.startTime + e.duration >= p.start).map(e => ({ name: new URL(e.name).pathname, at: e.startTime, ms: e.duration, bytes: e.transferSize })) };
     })()`);

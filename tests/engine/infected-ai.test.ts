@@ -5,6 +5,7 @@ import { animalInfected, humanInfected, infectedDefinitions, infectedRecovery, I
 import { infectedContactDistance, meleeRing } from '../../src/sim/ai/CharacterSeparation';
 import type { DamageEvent } from '../../src/sim/combat/Damage';
 import type { EntitySnapshot, GameEvent } from '../../src/sim/world/types';
+import { clickable } from '../../src/input/ClickPick';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 
 const worlds: SimWorld[] = [];
@@ -12,17 +13,24 @@ afterEach(() => { for (const w of worlds) w.dispose(); worlds.length = 0; });
 async function arena(seed = 1, god = true) { const w = new SimWorld(); worlds.push(w); await w.init(); w.loadScenario('horde-arena', seed); w.combat!.damage.god = god; return w; }
 const step = (w: SimWorld, n: number) => { for (let i = 0; i < n; i++) w.update(); };
 const spawn = (w: SimWorld, role: string, x: number, z = 0, state: 'chase' | 'idle' = 'chase') => w.entities.get(w.infected!.spawn(`infected.${role}`, { x, z }, { state }))!;
-function hit(w: SimWorld, e: EntitySnapshot, type: DamageEvent['type'] = 'melee', base = 999): number {
-  return w.combat!.damage.apply({ attackId: 1, actionId: type === 'explosive' ? 'weapon.grenade' : 'weapon.bat', sourceId: 1, targetId: e.id, origin: { x: 0, z: 0 }, direction: { x: 1, z: 0 }, base, multiplier: 1, type, knockback: 0, stagger: 0 });
+function hit(w: SimWorld, e: EntitySnapshot, type: DamageEvent['type'] = 'melee', base = 999, origin = { x: 0, z: 0 }): number {
+  return w.combat!.damage.apply({ attackId: 1, actionId: type === 'explosive' ? 'weapon.grenade' : 'weapon.bat', sourceId: 1, targetId: e.id, origin, direction: { x: 1, z: 0 }, base, multiplier: 1, type, knockback: 0, stagger: 0 });
 }
 const [lowS, highS] = infectedRecovery.downS;
 
 test('every human and animal role validates and spawns with its catalog health and speed; every attack is telegraphed', async () => {
-  validateInfected(); expect(() => validateInfected([{ ...humanInfected[0], windup: 0.1 }])).toThrow();
+  validateInfected(); expect(infectedDefinitions.every(def => def.bar)).toBe(true); expect(() => validateInfected([{ ...humanInfected[0], windup: 0.1 }])).toThrow();
   const w = await arena();
   for (const [i, def] of [...humanInfected, ...animalInfected].entries()) {
-    const e = w.entities.get(w.infected!.spawn(def.id, { x: i * 2 - 12, z: 10 }, def.id === 'infected.crow' ? { perched: false } : undefined))!;
+    const e = w.entities.get(w.infected!.spawn(def.id, { x: i * 2 - 12, z: 10 }, { perched: false }))!;
     expect(e.health.max, def.id).toBe(def.hp * INFECTED_TOUGHNESS); expect(e.infected!.speed, def.id).toBe(def.speed);
+    if (e.infected!.hidden) { w.solids.relocate(e, { x: 2, y: .7, z: 0 }, 'scripted.teleport'); step(w, 6); }
+    expect(e.combat!.radius, def.id).toBe(def.radius); expect(clickable(e), def.id).toBe(true);
+    expect(w.combat!.query.nearby(e.transform, .001), def.id).toContain(e.id);
+    expect(w.combat!.query.melee(1, e.transform, { x: 1, z: 0 }, .001, 360, 100).map(t => t.id), def.id).toContain(e.id);
+    expect(w.combat!.query.ray(1, e.transform, { x: 1, z: 0 }, .001)?.id, def.id).toBe(e.id);
+    expect(hit(w, e, 'melee', .01, e.transform), def.id).toBeGreaterThan(0);
+
   }
   for (const def of infectedDefinitions) {
     const t = await arena(1, false), e = spawn(t, def.id.slice(9), 0.9); if (def.special === 'explode') e.health.current = 0;

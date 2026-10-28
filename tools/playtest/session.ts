@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { join, resolve } from 'node:path';
 import { launchProfile } from '../browser-pool/client';
 import { EscortClearance, look, visibleGroupTarget, type Body, type Eyes } from './eyes';
-import { assertRenderedBodies, campaignEndingComplete, isMandatoryBossObjective, needsZoomInput, observeWithin, shouldResumePause } from './startup';
+import { assertRenderedBodies, campaignEndingComplete, campaignEndingWaiting, isMandatoryBossObjective, needsZoomInput, needsTargetInput, observeWithin, shouldResumePause } from './startup';
 import { rangedWeaponPattern as ranged, campaignCombatWeapon, campaignThreat, canCoverVisibleAllies, finaleDodgeGoal, fistsRetreatAttack, keepMovingWithFists, prioritizeAllyThreat, rocketAimPoint } from './combat';
 import { weaponKey } from '../../src/data/weaponKeys';
 import { PlaytestProgress } from './progress';
@@ -182,7 +182,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     escortClearance = new EscortClearance();
     if(process.env.PLAYTEST_GOD==='1'){await page.evaluate(()=>window.__SS__!.cheats.god(true));log({fixture:'god-mode',level:e.level});}
     run = { level: e.level!, entry: o.entry, heroine: o.heroine, finished: false, skipped: [], wallSeconds: 0, simSeconds: 0, maxNoProgressSeconds: 0, deaths: 0, assists: 0, attacks: {}, weaponsStart: e.player?.weapons ?? [], weaponsEnd: [], steps: [] };
-    await page.evaluate(() => {
+    await page.evaluate(audit => {
       const observation = window as unknown as { __playtestAttacks: Record<string, number>; __playtestCompleted?: unknown[]; __playtestDamage: unknown[] };
       observation.__playtestAttacks = {};
       observation.__playtestCompleted ??= [];
@@ -194,14 +194,14 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       });
       world.events.on('combat.attack', event => { if (event.type === 'combat.attack' && event.sourceId === 1) observation.__playtestAttacks[event.actionId] = (observation.__playtestAttacks[event.actionId] ?? 0) + 1; });
       observation.__playtestDamage = [];
-      if (world.scenario === 'L4') {
+      if (world.scenario === 'L4' || audit) {
         world.events.on('combat.hit', event => {
           if (event.type === 'combat.hit' && (event.sourceId === 1 || event.targetId === 1)) observation.__playtestDamage.push({ ...event, source: world.entities.get(event.sourceId)?.archetype, target: world.entities.get(event.targetId)?.archetype });
         });
         world.events.on('player.damaged', event => { if (event.type === 'player.damaged') observation.__playtestDamage.push(event); });
       }
 
-    });
+    }, process.env.PLAYTEST_COMBAT_AUDIT === '1');
     runs.push(run); lastShot = -1e9; wallStart = Date.now(); tickStart = e.tick; zoomed = false; assistMode = false; stuckLogged = new Set(); allyWatch.clear(); enemyWatch.clear(); fetchHint = null; escort = null;
     lastProgress = { key: '', tick: e.tick, wall: Date.now(), best: Infinity };
     visibleProgress = new PlaytestProgress();lastObservation=0;
@@ -312,7 +312,12 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     seen.last = now; shotAt.set(threat.id, seen);
     if (seen.ms > 8000) {
       // A target that takes no damage for 8 s is unreachable (behind a fence) or ignores hits: note it, walk on.
-      ignored.set(threat.id, Date.now() + 20_000); log({ unhittable: threat.id, d: threat.d, state: threat.state, hp: threat.hp }); await releaseAim();
+      const diagnostic = await page.evaluate(id => {
+        const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: import('../../src/Game').Game }).game;
+        const render = a.getState().render as unknown as { healthBars?: { bars: { id: number }[] } };
+        return { entity: a.getEntity(id), bar: render.healthBars?.bars.some(b => b.id === id), input: g.world.inputFrame, control: g.world.controls.snapshot(), pick: g.input.picker.last };
+      }, threat.id);
+      ignored.set(threat.id, Date.now() + 20_000); log({ unhittable: threat.id, d: threat.d, state: threat.state, hp: threat.hp, diagnostic }); await releaseAim();
       if (!reportedUnhittable.has(threat.id)) { reportedUnhittable.add(threat.id); if (threat.d < 2.2) await issue('P2', 'enemy-unhittable', `Infected #${threat.id} (${threat.state}) ${threat.d.toFixed(1)} m away took no damage from 8 s of attacks (hp ${threat.hp}/${threat.max})`); }
       return false;
     }
@@ -353,12 +358,14 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         if (now - lastCrowdKick > 1500) { lastCrowdKick = now; log({ visibleFinaleDodge: e.tick, keys, enemy: threat.id, recovery: now < dodgeDetourUntil }); }
         return true;
       }
-      // Retain the branch's passing gun policy: one body click per target, held until it changes.
-      // The unarmed chain's repeated clicks must not interrupt a firearm's target command.
+      // Keep a valid held gun command. If the body pick missed or the command was lost,
+      // moving an already-held pointer cannot acquire it: send a fresh physical click.
       await press([]);
-      if (aimHeld !== threat.id) {
+      const commanded = aimHeld === threat.id && seen.ms > 1000 ? await page.evaluate(() => (window.__SCENE__ as unknown as { game: import('../../src/Game').Game }).game.world.controls.targetId) : aimHeld;
+      if (needsTargetInput(aimHeld, commanded, threat.id, seen.ms, now - lastAimClick)) {
+        if (aimHeld === threat.id) log({ reacquireTarget: threat.id, commanded, tick: e.tick });
         await releaseAim();
-        await page.mouse.move(threat.aim.x, threat.aim.y); await page.mouse.down(); aimHeld = threat.id;
+        await page.mouse.move(threat.aim.x, threat.aim.y); await page.mouse.down(); aimHeld = threat.id; lastAimClick = now;
       }
       return true;
     }
@@ -542,6 +549,12 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         const m = window.__SS__!.missions.state()!;
         return { level: m.id, phase: m.phase, creditsFinished: !!m.states['credits-finished'], endingPhase: m.epilogue?.phase ?? null, completedLevels: window.__SS__!.campaign.state()?.completedLevels ?? 0 };
       });
+      if (!campaignEndingComplete(ending) && campaignEndingWaiting(ending.endingPhase)) {
+        // The scripted epilogue and credits are timed mission phases, not a
+        // result screen that should be clicked through or reported as stuck.
+        idleScreens = 0;
+        await press([]); await releaseAim(); await hold(200); continue;
+      }
       assert.ok(campaignEndingComplete(ending), `L10 left play without completed credits: ${JSON.stringify(ending)}`);
       await press([]); await releaseAim();
       if (!run.finished) await finishLevel(e);
@@ -549,6 +562,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     }
 
     if (e.phase === 'briefing' || e.phase === 'retry' || e.phase === 'progression') {
+      if (e.level === 'L10' && e.phase === 'progression' && e.ending) { idleScreens = 0; await press([]); await releaseAim(); await hold(200); continue; }
       if (e.phase === 'retry' && lastDeathTick !== e.tick) { lastDeathTick = e.tick; run.deaths++; await issue('P3', 'retry', `Mission failed screen: ${e.panel.heading}`); }
       await press([]); await releaseAim();
       if (e.panel.button && !e.loading) { await page.getByTestId('mission-button').click({ timeout: 5000 }).catch(() => undefined); }
@@ -653,7 +667,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     }
     if(Date.now()-lastObservation>=1000) {
       lastObservation=Date.now();log({observation:{tick:e.tick,step:e.step,checkpoint:e.checkpoint,menu:e.menu,text:e.objective,player:e.player?{x:e.player.x,z:e.player.z,hp:e.player.hp,weapon:e.player.current}:null,enemies:e.enemies.map(b=>({id:b.id,d:b.d,hp:b.hp,max:b.max})),...(e.level==='L6'?{allies:e.allies.filter(b=>b.drawn&&b.hp>0&&!b.corpse).map(b=>({id:b.id,x:b.x,z:b.z,hp:b.hp,kind:b.kind}))}:{}),marker:ring,noProgressSeconds:observed.seconds}});
-      if (e.level === 'L4' || process.env.PLAYTEST_COMBAT_AUDIT === '1' && (e.level === 'L5' || e.level === 'L9')) {
+      if (e.level === 'L4' || process.env.PLAYTEST_COMBAT_AUDIT === '1') {
         const damage = await page.evaluate(() => {
           const observation = window as unknown as { __playtestDamage?: unknown[] };
           return observation.__playtestDamage?.splice(0) ?? [];
@@ -678,7 +692,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     lastHp = e.player?.hp ?? 0;
     await watchAllies(e);
 
-    const watchingEnding = e.level === 'L10' && /Watch the cure spread|Minor Incident/.test(e.objective);
+    const watchingEnding = e.level === 'L10' && (e.ending || /Watch the cure spread|Minor Incident/.test(e.objective));
     if(o.noSkip&&observed.seconds>=90&&!watchingEnding) {
       await issue('P0','cannot-finish',`No visible progress for ${observed.seconds.toFixed(1)} s; stopping without advancing the objective`);
       log({abortedNoSkip:true,level:e.level,tick:e.tick,step:e.step});break;

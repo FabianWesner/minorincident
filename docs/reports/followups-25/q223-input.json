@@ -1,0 +1,5210 @@
+{
+  "setup": {
+    "backend": "webgpu",
+    "quality": {
+      "setting": "low",
+      "tier": "low",
+      "p90Ms": 0,
+      "slowSeconds": 0,
+      "budgets": {
+        "frameMs": 33.333333333333336,
+        "infected": 100,
+        "drawCalls": 300,
+        "triangles": 500000,
+        "simMs": 6,
+        "heapMB": 250,
+        "pixelRatio": 1.5,
+        "shadowSize": 1024,
+        "bloomMips": 2,
+        "cullDistance": 45
+      }
+    },
+    "player": {
+      "x": 1144,
+      "y": 0.7049999833106995,
+      "z": 25,
+      "yaw": 0.3205919885488634
+    }
+  },
+  "corgi": {
+    "id": 69,
+    "x": 547,
+    "z": 2,
+    "hp": 100,
+    "max": 100,
+    "d": 2,
+    "kind": "companion",
+    "archetype": "char.corgi",
+    "drawn": true,
+    "screen": {
+      "x": 511.3796567747889,
+      "y": 435.45398342461954
+    },
+    "aim": {
+      "x": 511.3796567747889,
+      "y": 417.45398342461954
+    },
+    "moving": false,
+    "speed": 0,
+    "yaw": 0,
+    "vx": 0,
+    "vz": 0,
+    "corpse": false,
+    "state": "follow",
+    "attacking": false
+  },
+  "rows": [
+    {
+      "model": "inf.common-worker",
+      "id": 75,
+      "before": {
+        "id": 75,
+        "kind": "infected",
+        "archetype": "infected.runner",
+        "faction": "infected",
+        "health": {
+          "current": 60,
+          "max": 60
+        },
+        "transform": {
+          "x": 1146.3390852076354,
+          "y": 0.702,
+          "z": 25,
+          "yaw": -3.141592653589793
+        },
+        "infected": {
+          "state": "attack",
+          "pathGrid": -1,
+          "grabNextTick": 0,
+          "combo": 0,
+          "targetId": 0,
+          "activeUntil": 171,
+          "speed": 4.2,
+          "until": 151,
+          "cooldown": 0,
+          "attackId": 1,
+          "special": "lunge",
+          "hidden": false,
+          "deadAt": -1,
+          "recoverAt": -1,
+          "downs": 0,
+          "revived": false,
+          "reviveUsed": false,
+          "legLost": false,
+          "detached": false,
+          "pack": 0,
+          "packIndex": 0,
+          "birds": 0,
+          "birdPositions": [
+            1149,
+            3,
+            25,
+            1145.5252625542023,
+            3,
+            26.35098092731253,
+            1147.174850534038,
+            3,
+            23.007657837933778,
+            1148.2168788158344,
+            3,
+            26.587200663927977,
+            1145.0305727092532,
+            3,
+            24.651637908976745,
+            1148.6875093566055,
+            3,
+            23.92654195640039,
+            1146.4807940524265,
+            3,
+            26.931430864412288,
+            1146.0781830963617,
+            3,
+            23.225104623881485,
+            1148.8786438535378,
+            3,
+            25.68607380912279,
+            1145.1513104655082,
+            3,
+            25.763116639224112,
+            1147.8476878286313,
+            3,
+            23.18852950750216,
+            1147.5985725512624,
+            3,
+            26.90832672801996,
+            1145.2695748159956,
+            3,
+            23.99718960787029,
+            1148.9533502647403,
+            3,
+            24.570555308288743,
+            1145.849746403833,
+            3,
+            26.636128559895326,
+            1146.7429717856903,
+            3,
+            23.016584638294635,
+            1148.5293027284358,
+            3,
+            26.288888344581864,
+            1145.0017082147249,
+            3,
+            25.08264345649835,
+            1148.4176529949393,
+            3,
+            23.589234255469876,
+            1146.9076258284908,
+            3,
+            26.997865614208827
+          ],
+          "birdAlive": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scatterUntil": 0,
+          "variant": "inf.common-worker",
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "dx": -1,
+          "dz": 0,
+          "grabHits": 0,
+          "grabUntil": 0,
+          "grabX": 0,
+          "grabZ": 0,
+          "perched": false,
+          "heardTargetId": 0,
+          "pathRetryAt": 0,
+          "l4ArmyApproach": false
+        },
+        "combat": {
+          "radius": 0.35,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": true,
+          "damageMultiplier": 1,
+          "statuses": []
+        },
+        "locomotion": {
+          "vx": -2.6049082454224157,
+          "vz": 0,
+          "ax": -2.604333185056574,
+          "az": 0,
+          "omega": -3.8999999999999995,
+          "updatedAt": 132
+        },
+        "motion": {
+          "velocity": {
+            "x": -2.604908245416482,
+            "z": 0
+          },
+          "speed": 2.604908245416482,
+          "moving": true,
+          "distance": 10.935914792364565
+        }
+      },
+      "after": {
+        "id": 75,
+        "kind": "infected",
+        "archetype": "infected.runner",
+        "faction": "infected",
+        "health": {
+          "current": 40,
+          "max": 60
+        },
+        "transform": {
+          "x": 1145.6883982079694,
+          "y": 0.702,
+          "z": 25,
+          "yaw": -3.141592653589793
+        },
+        "infected": {
+          "state": "attack",
+          "pathGrid": -1,
+          "grabNextTick": 0,
+          "combo": 0,
+          "targetId": 0,
+          "activeUntil": 171,
+          "speed": 4.2,
+          "until": 151,
+          "cooldown": 0,
+          "attackId": 1,
+          "special": "lunge",
+          "hidden": false,
+          "deadAt": -1,
+          "recoverAt": -1,
+          "downs": 0,
+          "revived": false,
+          "reviveUsed": false,
+          "legLost": false,
+          "detached": false,
+          "pack": 0,
+          "packIndex": 0,
+          "birds": 0,
+          "birdPositions": [
+            1149,
+            3,
+            25,
+            1145.5252625542023,
+            3,
+            26.35098092731253,
+            1147.174850534038,
+            3,
+            23.007657837933778,
+            1148.2168788158344,
+            3,
+            26.587200663927977,
+            1145.0305727092532,
+            3,
+            24.651637908976745,
+            1148.6875093566055,
+            3,
+            23.92654195640039,
+            1146.4807940524265,
+            3,
+            26.931430864412288,
+            1146.0781830963617,
+            3,
+            23.225104623881485,
+            1148.8786438535378,
+            3,
+            25.68607380912279,
+            1145.1513104655082,
+            3,
+            25.763116639224112,
+            1147.8476878286313,
+            3,
+            23.18852950750216,
+            1147.5985725512624,
+            3,
+            26.90832672801996,
+            1145.2695748159956,
+            3,
+            23.99718960787029,
+            1148.9533502647403,
+            3,
+            24.570555308288743,
+            1145.849746403833,
+            3,
+            26.636128559895326,
+            1146.7429717856903,
+            3,
+            23.016584638294635,
+            1148.5293027284358,
+            3,
+            26.288888344581864,
+            1145.0017082147249,
+            3,
+            25.08264345649835,
+            1148.4176529949393,
+            3,
+            23.589234255469876,
+            1146.9076258284908,
+            3,
+            26.997865614208827
+          ],
+          "birdAlive": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scatterUntil": 0,
+          "variant": "inf.common-worker",
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "dx": -1,
+          "dz": 0,
+          "grabHits": 1,
+          "grabUntil": 0,
+          "grabX": 0,
+          "grabZ": 0,
+          "perched": false,
+          "heardTargetId": 1,
+          "pathRetryAt": 0,
+          "l4ArmyApproach": false,
+          "provoked": {
+            "id": 1,
+            "until": 861
+          }
+        },
+        "combat": {
+          "radius": 0.35,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": true,
+          "damageMultiplier": 1,
+          "statuses": [],
+          "reaction": {
+            "index": 1,
+            "started": 141,
+            "until": 142,
+            "direction": {
+              "x": 1,
+              "z": 0
+            },
+            "from": {
+              "x": 1145.9923874430617,
+              "z": 25
+            },
+            "to": {
+              "x": 1145.9923874430617,
+              "z": 25
+            },
+            "heavy": false
+          }
+        },
+        "locomotion": {
+          "vx": -1.6439354010800873,
+          "vz": 0,
+          "ax": 5.673086310617932,
+          "az": 0,
+          "omega": -0.49999999999999817,
+          "updatedAt": 149
+        },
+        "motion": {
+          "velocity": {
+            "x": -1.643935401075396,
+            "z": 0
+          },
+          "speed": 1.643935401075396,
+          "moving": true,
+          "distance": 11.586601792030615
+        }
+      },
+      "observations": [
+        {
+          "entity": {
+            "id": 75,
+            "kind": "infected",
+            "archetype": "infected.runner",
+            "faction": "infected",
+            "health": {
+              "current": 40,
+              "max": 60
+            },
+            "transform": {
+              "x": 1145.8768626146916,
+              "y": 0.702,
+              "z": 25,
+              "yaw": -3.141592653589793
+            },
+            "infected": {
+              "state": "attack",
+              "pathGrid": -1,
+              "grabNextTick": 0,
+              "combo": 0,
+              "targetId": 0,
+              "activeUntil": 171,
+              "speed": 4.2,
+              "until": 151,
+              "cooldown": 0,
+              "attackId": 1,
+              "special": "lunge",
+              "hidden": false,
+              "deadAt": -1,
+              "recoverAt": -1,
+              "downs": 0,
+              "revived": false,
+              "reviveUsed": false,
+              "legLost": false,
+              "detached": false,
+              "pack": 0,
+              "packIndex": 0,
+              "birds": 0,
+              "birdPositions": [
+                1149,
+                3,
+                25,
+                1145.5252625542023,
+                3,
+                26.35098092731253,
+                1147.174850534038,
+                3,
+                23.007657837933778,
+                1148.2168788158344,
+                3,
+                26.587200663927977,
+                1145.0305727092532,
+                3,
+                24.651637908976745,
+                1148.6875093566055,
+                3,
+                23.92654195640039,
+                1146.4807940524265,
+                3,
+                26.931430864412288,
+                1146.0781830963617,
+                3,
+                23.225104623881485,
+                1148.8786438535378,
+                3,
+                25.68607380912279,
+                1145.1513104655082,
+                3,
+                25.763116639224112,
+                1147.8476878286313,
+                3,
+                23.18852950750216,
+                1147.5985725512624,
+                3,
+                26.90832672801996,
+                1145.2695748159956,
+                3,
+                23.99718960787029,
+                1148.9533502647403,
+                3,
+                24.570555308288743,
+                1145.849746403833,
+                3,
+                26.636128559895326,
+                1146.7429717856903,
+                3,
+                23.016584638294635,
+                1148.5293027284358,
+                3,
+                26.288888344581864,
+                1145.0017082147249,
+                3,
+                25.08264345649835,
+                1148.4176529949393,
+                3,
+                23.589234255469876,
+                1146.9076258284908,
+                3,
+                26.997865614208827
+              ],
+              "birdAlive": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "scatterUntil": 0,
+              "variant": "inf.common-worker",
+              "path": [],
+              "pathIndex": 0,
+              "goal": -1,
+              "dx": -1,
+              "dz": 0,
+              "grabHits": 1,
+              "grabUntil": 0,
+              "grabX": 0,
+              "grabZ": 0,
+              "perched": false,
+              "heardTargetId": 1,
+              "pathRetryAt": 0,
+              "l4ArmyApproach": false,
+              "provoked": {
+                "id": 1,
+                "until": 861
+              }
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": true,
+              "damageMultiplier": 1,
+              "statuses": [],
+              "reaction": {
+                "index": 1,
+                "started": 141,
+                "until": 142,
+                "direction": {
+                  "x": 1,
+                  "z": 0
+                },
+                "from": {
+                  "x": 1145.9923874430617,
+                  "z": 25
+                },
+                "to": {
+                  "x": 1145.9923874430617,
+                  "z": 25
+                },
+                "heavy": false
+              }
+            },
+            "locomotion": {
+              "vx": -2.222077753728397,
+              "vz": 0,
+              "ax": 5.430716533352984,
+              "az": 0,
+              "omega": -1.699999999999998,
+              "updatedAt": 143
+            },
+            "motion": {
+              "velocity": {
+                "x": -2.222077753731355,
+                "z": 0
+              },
+              "speed": 2.222077753731355,
+              "moving": true,
+              "distance": 11.398137385308383
+            }
+          },
+          "render": {
+            "count": 1,
+            "draws": 3,
+            "bars": [
+              {
+                "id": 75,
+                "fraction": 0.6666666666666666,
+                "x": 722.6576407320148,
+                "y": 329.24274261346585,
+                "width": 64,
+                "height": 8,
+                "gap": 2,
+                "anchor": [
+                  1145.724626292724,
+                  1.4083075015146402,
+                  24.795188655394806
+                ]
+              }
+            ]
+          },
+          "input": {
+            "move": {
+              "x": 0,
+              "z": 0
+            },
+            "aim": {
+              "x": 1,
+              "z": 0
+            },
+            "aimSource": "pointer",
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false,
+            "cancelMove": false,
+            "brake": false,
+            "aimPoint": {
+              "x": 1145.9138972439205,
+              "z": 25
+            },
+            "mouseAttack": true,
+            "pointerTarget": true,
+            "selectorSide": "RIGHT",
+            "navigation": true
+          },
+          "control": {
+            "moveTarget": null,
+            "attack": {
+              "id": 75,
+              "side": "RIGHT",
+              "started": true,
+              "mouseAttack": true
+            }
+          },
+          "pick": [
+            {
+              "id": 75,
+              "score": 0.06666236139435552,
+              "depth": 27.04544679195553,
+              "drawn": true
+            }
+          ],
+          "hits": [
+            {
+              "tick": 141,
+              "attackId": 1,
+              "actionId": "weapon.pistol",
+              "sourceId": 1,
+              "targetId": 75,
+              "position": {
+                "x": 1145.9923874430617,
+                "y": 0.702,
+                "z": 25,
+                "yaw": -3.141592653589793
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "bullet",
+              "type": "combat.hit"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "inf.jogger",
+      "id": 76,
+      "before": {
+        "id": 76,
+        "kind": "infected",
+        "archetype": "infected.runner",
+        "faction": "infected",
+        "health": {
+          "current": 60,
+          "max": 60
+        },
+        "transform": {
+          "x": 1146.382500345059,
+          "y": 0.702,
+          "z": 25,
+          "yaw": -3.141592653589793
+        },
+        "infected": {
+          "state": "attack",
+          "pathGrid": -1,
+          "grabNextTick": 0,
+          "combo": 0,
+          "targetId": 0,
+          "activeUntil": 221,
+          "speed": 4.2,
+          "until": 201,
+          "cooldown": 0,
+          "attackId": 2,
+          "special": "lunge",
+          "hidden": false,
+          "deadAt": -1,
+          "recoverAt": -1,
+          "downs": 0,
+          "revived": false,
+          "reviveUsed": false,
+          "legLost": false,
+          "detached": false,
+          "pack": 0,
+          "packIndex": 0,
+          "birds": 0,
+          "birdPositions": [
+            1149,
+            3,
+            25,
+            1145.5252625542023,
+            3,
+            26.35098092731253,
+            1147.174850534038,
+            3,
+            23.007657837933778,
+            1148.2168788158344,
+            3,
+            26.587200663927977,
+            1145.0305727092532,
+            3,
+            24.651637908976745,
+            1148.6875093566055,
+            3,
+            23.92654195640039,
+            1146.4807940524265,
+            3,
+            26.931430864412288,
+            1146.0781830963617,
+            3,
+            23.225104623881485,
+            1148.8786438535378,
+            3,
+            25.68607380912279,
+            1145.1513104655082,
+            3,
+            25.763116639224112,
+            1147.8476878286313,
+            3,
+            23.18852950750216,
+            1147.5985725512624,
+            3,
+            26.90832672801996,
+            1145.2695748159956,
+            3,
+            23.99718960787029,
+            1148.9533502647403,
+            3,
+            24.570555308288743,
+            1145.849746403833,
+            3,
+            26.636128559895326,
+            1146.7429717856903,
+            3,
+            23.016584638294635,
+            1148.5293027284358,
+            3,
+            26.288888344581864,
+            1145.0017082147249,
+            3,
+            25.08264345649835,
+            1148.4176529949393,
+            3,
+            23.589234255469876,
+            1146.9076258284908,
+            3,
+            26.997865614208827
+          ],
+          "birdAlive": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scatterUntil": 0,
+          "variant": "inf.jogger",
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "dx": -1,
+          "dz": 0,
+          "grabHits": 0,
+          "grabUntil": 0,
+          "grabX": 0,
+          "grabZ": 0,
+          "perched": false,
+          "heardTargetId": 0,
+          "pathRetryAt": 0,
+          "l4ArmyApproach": false
+        },
+        "combat": {
+          "radius": 0.35,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": true,
+          "damageMultiplier": 1,
+          "statuses": []
+        },
+        "locomotion": {
+          "vx": -2.5615026923381397,
+          "vz": 0,
+          "ax": -3.404333185056574,
+          "az": 0,
+          "omega": -4.1,
+          "updatedAt": 181
+        },
+        "motion": {
+          "velocity": {
+            "x": -2.5615026923378537,
+            "z": 0
+          },
+          "speed": 2.5615026923378537,
+          "moving": true,
+          "distance": 11.029499654940958
+        }
+      },
+      "after": {
+        "id": 76,
+        "kind": "infected",
+        "archetype": "infected.runner",
+        "faction": "infected",
+        "health": {
+          "current": 40,
+          "max": 60
+        },
+        "transform": {
+          "x": 1145.7447719119805,
+          "y": 0.702,
+          "z": 25,
+          "yaw": -3.141592653589793
+        },
+        "infected": {
+          "state": "attack",
+          "pathGrid": -1,
+          "grabNextTick": 0,
+          "combo": 0,
+          "targetId": 0,
+          "activeUntil": 221,
+          "speed": 4.2,
+          "until": 201,
+          "cooldown": 0,
+          "attackId": 2,
+          "special": "lunge",
+          "hidden": false,
+          "deadAt": -1,
+          "recoverAt": -1,
+          "downs": 0,
+          "revived": false,
+          "reviveUsed": false,
+          "legLost": false,
+          "detached": false,
+          "pack": 0,
+          "packIndex": 0,
+          "birds": 0,
+          "birdPositions": [
+            1149,
+            3,
+            25,
+            1145.5252625542023,
+            3,
+            26.35098092731253,
+            1147.174850534038,
+            3,
+            23.007657837933778,
+            1148.2168788158344,
+            3,
+            26.587200663927977,
+            1145.0305727092532,
+            3,
+            24.651637908976745,
+            1148.6875093566055,
+            3,
+            23.92654195640039,
+            1146.4807940524265,
+            3,
+            26.931430864412288,
+            1146.0781830963617,
+            3,
+            23.225104623881485,
+            1148.8786438535378,
+            3,
+            25.68607380912279,
+            1145.1513104655082,
+            3,
+            25.763116639224112,
+            1147.8476878286313,
+            3,
+            23.18852950750216,
+            1147.5985725512624,
+            3,
+            26.90832672801996,
+            1145.2695748159956,
+            3,
+            23.99718960787029,
+            1148.9533502647403,
+            3,
+            24.570555308288743,
+            1145.849746403833,
+            3,
+            26.636128559895326,
+            1146.7429717856903,
+            3,
+            23.016584638294635,
+            1148.5293027284358,
+            3,
+            26.288888344581864,
+            1145.0017082147249,
+            3,
+            25.08264345649835,
+            1148.4176529949393,
+            3,
+            23.589234255469876,
+            1146.9076258284908,
+            3,
+            26.997865614208827
+          ],
+          "birdAlive": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scatterUntil": 0,
+          "variant": "inf.jogger",
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "dx": -1,
+          "dz": 0,
+          "grabHits": 1,
+          "grabUntil": 0,
+          "grabX": 0,
+          "grabZ": 0,
+          "perched": false,
+          "heardTargetId": 1,
+          "pathRetryAt": 0,
+          "l4ArmyApproach": false,
+          "provoked": {
+            "id": 1,
+            "until": 910
+          }
+        },
+        "combat": {
+          "radius": 0.35,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": true,
+          "damageMultiplier": 1,
+          "statuses": [],
+          "reaction": {
+            "index": 2,
+            "started": 190,
+            "until": 191,
+            "direction": {
+              "x": 1,
+              "z": 0
+            },
+            "from": {
+              "x": 1146.0335899875633,
+              "z": 25
+            },
+            "to": {
+              "x": 1146.0335899875633,
+              "z": 25
+            },
+            "heavy": false
+          }
+        },
+        "locomotion": {
+          "vx": -1.83494505223338,
+          "vz": 0,
+          "ax": 5.8581571590494965,
+          "az": 0,
+          "omega": -0.8999999999999981,
+          "updatedAt": 197
+        },
+        "motion": {
+          "velocity": {
+            "x": -1.8349450522373445,
+            "z": 0
+          },
+          "speed": 1.8349450522373445,
+          "moving": true,
+          "distance": 11.667228088019522
+        }
+      },
+      "observations": [
+        {
+          "entity": {
+            "id": 76,
+            "kind": "infected",
+            "archetype": "infected.runner",
+            "faction": "infected",
+            "health": {
+              "current": 40,
+              "max": 60
+            },
+            "transform": {
+              "x": 1145.8768626146916,
+              "y": 0.702,
+              "z": 25,
+              "yaw": -3.141592653589793
+            },
+            "infected": {
+              "state": "attack",
+              "pathGrid": -1,
+              "grabNextTick": 0,
+              "combo": 0,
+              "targetId": 0,
+              "activeUntil": 221,
+              "speed": 4.2,
+              "until": 201,
+              "cooldown": 0,
+              "attackId": 2,
+              "special": "lunge",
+              "hidden": false,
+              "deadAt": -1,
+              "recoverAt": -1,
+              "downs": 0,
+              "revived": false,
+              "reviveUsed": false,
+              "legLost": false,
+              "detached": false,
+              "pack": 0,
+              "packIndex": 0,
+              "birds": 0,
+              "birdPositions": [
+                1149,
+                3,
+                25,
+                1145.5252625542023,
+                3,
+                26.35098092731253,
+                1147.174850534038,
+                3,
+                23.007657837933778,
+                1148.2168788158344,
+                3,
+                26.587200663927977,
+                1145.0305727092532,
+                3,
+                24.651637908976745,
+                1148.6875093566055,
+                3,
+                23.92654195640039,
+                1146.4807940524265,
+                3,
+                26.931430864412288,
+                1146.0781830963617,
+                3,
+                23.225104623881485,
+                1148.8786438535378,
+                3,
+                25.68607380912279,
+                1145.1513104655082,
+                3,
+                25.763116639224112,
+                1147.8476878286313,
+                3,
+                23.18852950750216,
+                1147.5985725512624,
+                3,
+                26.90832672801996,
+                1145.2695748159956,
+                3,
+                23.99718960787029,
+                1148.9533502647403,
+                3,
+                24.570555308288743,
+                1145.849746403833,
+                3,
+                26.636128559895326,
+                1146.7429717856903,
+                3,
+                23.016584638294635,
+                1148.5293027284358,
+                3,
+                26.288888344581864,
+                1145.0017082147249,
+                3,
+                25.08264345649835,
+                1148.4176529949393,
+                3,
+                23.589234255469876,
+                1146.9076258284908,
+                3,
+                26.997865614208827
+              ],
+              "birdAlive": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "scatterUntil": 0,
+              "variant": "inf.jogger",
+              "path": [],
+              "pathIndex": 0,
+              "goal": -1,
+              "dx": -1,
+              "dz": 0,
+              "grabHits": 1,
+              "grabUntil": 0,
+              "grabX": 0,
+              "grabZ": 0,
+              "perched": false,
+              "heardTargetId": 1,
+              "pathRetryAt": 0,
+              "l4ArmyApproach": false,
+              "provoked": {
+                "id": 1,
+                "until": 910
+              }
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": true,
+              "damageMultiplier": 1,
+              "statuses": [],
+              "reaction": {
+                "index": 2,
+                "started": 190,
+                "until": 191,
+                "direction": {
+                  "x": 1,
+                  "z": 0
+                },
+                "from": {
+                  "x": 1146.0335899875633,
+                  "z": 25
+                },
+                "to": {
+                  "x": 1146.0335899875633,
+                  "z": 25
+                },
+                "heavy": false
+              }
+            },
+            "locomotion": {
+              "vx": -2.222077753728397,
+              "vz": 0,
+              "ax": 5.430716533352984,
+              "az": 0,
+              "omega": -1.699999999999998,
+              "updatedAt": 193
+            },
+            "motion": {
+              "velocity": {
+                "x": -2.222077753731355,
+                "z": 0
+              },
+              "speed": 2.222077753731355,
+              "moving": true,
+              "distance": 11.535137385308383
+            }
+          },
+          "render": {
+            "count": 1,
+            "draws": 3,
+            "bars": [
+              {
+                "id": 76,
+                "fraction": 0.6666666666666666,
+                "x": 719.4998511355598,
+                "y": 316.0913039372451,
+                "width": 64,
+                "height": 8,
+                "gap": 2,
+                "anchor": [
+                  1145.4168284850962,
+                  1.3975279245600625,
+                  24.538297029102726
+                ]
+              }
+            ]
+          },
+          "input": {
+            "move": {
+              "x": 0,
+              "z": 0
+            },
+            "aim": {
+              "x": 1,
+              "z": 0
+            },
+            "aimSource": "pointer",
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false,
+            "cancelMove": false,
+            "brake": false,
+            "aimPoint": {
+              "x": 1145.9138972439205,
+              "z": 25
+            },
+            "mouseAttack": true,
+            "pointerTarget": true,
+            "selectorSide": "RIGHT",
+            "navigation": true
+          },
+          "control": {
+            "moveTarget": null,
+            "attack": {
+              "id": 76,
+              "side": "RIGHT",
+              "started": true,
+              "mouseAttack": true
+            }
+          },
+          "pick": [
+            {
+              "id": 76,
+              "score": 0.30862516991048083,
+              "depth": 26.944270215405115,
+              "drawn": true
+            }
+          ],
+          "hits": [
+            {
+              "tick": 141,
+              "attackId": 1,
+              "actionId": "weapon.pistol",
+              "sourceId": 1,
+              "targetId": 75,
+              "position": {
+                "x": 1145.9923874430617,
+                "y": 0.702,
+                "z": 25,
+                "yaw": -3.141592653589793
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "bullet",
+              "type": "combat.hit"
+            },
+            {
+              "tick": 190,
+              "attackId": 2,
+              "actionId": "weapon.pistol",
+              "sourceId": 1,
+              "targetId": 76,
+              "position": {
+                "x": 1146.0335899875633,
+                "y": 0.702,
+                "z": 25,
+                "yaw": -3.141592653589793
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "bullet",
+              "type": "combat.hit"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "inf.cashier",
+      "id": 77,
+      "before": {
+        "id": 77,
+        "kind": "infected",
+        "archetype": "infected.runner",
+        "faction": "infected",
+        "health": {
+          "current": 60,
+          "max": 60
+        },
+        "transform": {
+          "x": 1146.3390852076354,
+          "y": 0.702,
+          "z": 25,
+          "yaw": -3.141592653589793
+        },
+        "infected": {
+          "state": "attack",
+          "pathGrid": -1,
+          "grabNextTick": 0,
+          "combo": 0,
+          "targetId": 0,
+          "activeUntil": 267,
+          "speed": 4.2,
+          "until": 247,
+          "cooldown": 0,
+          "attackId": 3,
+          "special": "lunge",
+          "hidden": false,
+          "deadAt": -1,
+          "recoverAt": -1,
+          "downs": 0,
+          "revived": false,
+          "reviveUsed": false,
+          "legLost": false,
+          "detached": false,
+          "pack": 0,
+          "packIndex": 0,
+          "birds": 0,
+          "birdPositions": [
+            1149,
+            3,
+            25,
+            1145.5252625542023,
+            3,
+            26.35098092731253,
+            1147.174850534038,
+            3,
+            23.007657837933778,
+            1148.2168788158344,
+            3,
+            26.587200663927977,
+            1145.0305727092532,
+            3,
+            24.651637908976745,
+            1148.6875093566055,
+            3,
+            23.92654195640039,
+            1146.4807940524265,
+            3,
+            26.931430864412288,
+            1146.0781830963617,
+            3,
+            23.225104623881485,
+            1148.8786438535378,
+            3,
+            25.68607380912279,
+            1145.1513104655082,
+            3,
+            25.763116639224112,
+            1147.8476878286313,
+            3,
+            23.18852950750216,
+            1147.5985725512624,
+            3,
+            26.90832672801996,
+            1145.2695748159956,
+            3,
+            23.99718960787029,
+            1148.9533502647403,
+            3,
+            24.570555308288743,
+            1145.849746403833,
+            3,
+            26.636128559895326,
+            1146.7429717856903,
+            3,
+            23.016584638294635,
+            1148.5293027284358,
+            3,
+            26.288888344581864,
+            1145.0017082147249,
+            3,
+            25.08264345649835,
+            1148.4176529949393,
+            3,
+            23.589234255469876,
+            1146.9076258284908,
+            3,
+            26.997865614208827
+          ],
+          "birdAlive": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scatterUntil": 0,
+          "variant": "inf.cashier",
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "dx": -1,
+          "dz": 0,
+          "grabHits": 0,
+          "grabUntil": 0,
+          "grabX": 0,
+          "grabZ": 0,
+          "perched": false,
+          "heardTargetId": 0,
+          "pathRetryAt": 0,
+          "l4ArmyApproach": false
+        },
+        "combat": {
+          "radius": 0.35,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": true,
+          "damageMultiplier": 1,
+          "statuses": []
+        },
+        "locomotion": {
+          "vx": -2.6049082454224157,
+          "vz": 0,
+          "ax": -2.604333185056574,
+          "az": 0,
+          "omega": -3.8999999999999995,
+          "updatedAt": 228
+        },
+        "motion": {
+          "velocity": {
+            "x": -2.604908245416482,
+            "z": 0
+          },
+          "speed": 2.604908245416482,
+          "moving": true,
+          "distance": 11.209914792364566
+        }
+      },
+      "after": {
+        "id": 77,
+        "kind": "infected",
+        "archetype": "infected.runner",
+        "faction": "infected",
+        "health": {
+          "current": 40,
+          "max": 60
+        },
+        "transform": {
+          "x": 1145.7447719119805,
+          "y": 0.702,
+          "z": 25,
+          "yaw": -3.141592653589793
+        },
+        "infected": {
+          "state": "attack",
+          "pathGrid": -1,
+          "grabNextTick": 0,
+          "combo": 0,
+          "targetId": 0,
+          "activeUntil": 267,
+          "speed": 4.2,
+          "until": 247,
+          "cooldown": 0,
+          "attackId": 3,
+          "special": "lunge",
+          "hidden": false,
+          "deadAt": -1,
+          "recoverAt": -1,
+          "downs": 0,
+          "revived": false,
+          "reviveUsed": false,
+          "legLost": false,
+          "detached": false,
+          "pack": 0,
+          "packIndex": 0,
+          "birds": 0,
+          "birdPositions": [
+            1149,
+            3,
+            25,
+            1145.5252625542023,
+            3,
+            26.35098092731253,
+            1147.174850534038,
+            3,
+            23.007657837933778,
+            1148.2168788158344,
+            3,
+            26.587200663927977,
+            1145.0305727092532,
+            3,
+            24.651637908976745,
+            1148.6875093566055,
+            3,
+            23.92654195640039,
+            1146.4807940524265,
+            3,
+            26.931430864412288,
+            1146.0781830963617,
+            3,
+            23.225104623881485,
+            1148.8786438535378,
+            3,
+            25.68607380912279,
+            1145.1513104655082,
+            3,
+            25.763116639224112,
+            1147.8476878286313,
+            3,
+            23.18852950750216,
+            1147.5985725512624,
+            3,
+            26.90832672801996,
+            1145.2695748159956,
+            3,
+            23.99718960787029,
+            1148.9533502647403,
+            3,
+            24.570555308288743,
+            1145.849746403833,
+            3,
+            26.636128559895326,
+            1146.7429717856903,
+            3,
+            23.016584638294635,
+            1148.5293027284358,
+            3,
+            26.288888344581864,
+            1145.0017082147249,
+            3,
+            25.08264345649835,
+            1148.4176529949393,
+            3,
+            23.589234255469876,
+            1146.9076258284908,
+            3,
+            26.997865614208827
+          ],
+          "birdAlive": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scatterUntil": 0,
+          "variant": "inf.cashier",
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "dx": -1,
+          "dz": 0,
+          "grabHits": 1,
+          "grabUntil": 0,
+          "grabX": 0,
+          "grabZ": 0,
+          "perched": false,
+          "heardTargetId": 1,
+          "pathRetryAt": 0,
+          "l4ArmyApproach": false,
+          "provoked": {
+            "id": 1,
+            "until": 957
+          }
+        },
+        "combat": {
+          "radius": 0.35,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": true,
+          "damageMultiplier": 1,
+          "statuses": [],
+          "reaction": {
+            "index": 3,
+            "started": 237,
+            "until": 238,
+            "direction": {
+              "x": 1,
+              "z": 0
+            },
+            "from": {
+              "x": 1145.9923874430617,
+              "z": 25
+            },
+            "to": {
+              "x": 1145.9923874430617,
+              "z": 25
+            },
+            "heavy": false
+          }
+        },
+        "locomotion": {
+          "vx": -1.83494505223338,
+          "vz": 0,
+          "ax": 5.8581571590494965,
+          "az": 0,
+          "omega": -0.8999999999999981,
+          "updatedAt": 243
+        },
+        "motion": {
+          "velocity": {
+            "x": -1.8349450522373445,
+            "z": 0
+          },
+          "speed": 1.8349450522373445,
+          "moving": true,
+          "distance": 11.804228088019523
+        }
+      },
+      "observations": [
+        {
+          "entity": {
+            "id": 77,
+            "kind": "infected",
+            "archetype": "infected.runner",
+            "faction": "infected",
+            "health": {
+              "current": 40,
+              "max": 60
+            },
+            "transform": {
+              "x": 1145.8768626146916,
+              "y": 0.702,
+              "z": 25,
+              "yaw": -3.141592653589793
+            },
+            "infected": {
+              "state": "attack",
+              "pathGrid": -1,
+              "grabNextTick": 0,
+              "combo": 0,
+              "targetId": 0,
+              "activeUntil": 267,
+              "speed": 4.2,
+              "until": 247,
+              "cooldown": 0,
+              "attackId": 3,
+              "special": "lunge",
+              "hidden": false,
+              "deadAt": -1,
+              "recoverAt": -1,
+              "downs": 0,
+              "revived": false,
+              "reviveUsed": false,
+              "legLost": false,
+              "detached": false,
+              "pack": 0,
+              "packIndex": 0,
+              "birds": 0,
+              "birdPositions": [
+                1149,
+                3,
+                25,
+                1145.5252625542023,
+                3,
+                26.35098092731253,
+                1147.174850534038,
+                3,
+                23.007657837933778,
+                1148.2168788158344,
+                3,
+                26.587200663927977,
+                1145.0305727092532,
+                3,
+                24.651637908976745,
+                1148.6875093566055,
+                3,
+                23.92654195640039,
+                1146.4807940524265,
+                3,
+                26.931430864412288,
+                1146.0781830963617,
+                3,
+                23.225104623881485,
+                1148.8786438535378,
+                3,
+                25.68607380912279,
+                1145.1513104655082,
+                3,
+                25.763116639224112,
+                1147.8476878286313,
+                3,
+                23.18852950750216,
+                1147.5985725512624,
+                3,
+                26.90832672801996,
+                1145.2695748159956,
+                3,
+                23.99718960787029,
+                1148.9533502647403,
+                3,
+                24.570555308288743,
+                1145.849746403833,
+                3,
+                26.636128559895326,
+                1146.7429717856903,
+                3,
+                23.016584638294635,
+                1148.5293027284358,
+                3,
+                26.288888344581864,
+                1145.0017082147249,
+                3,
+                25.08264345649835,
+                1148.4176529949393,
+                3,
+                23.589234255469876,
+                1146.9076258284908,
+                3,
+                26.997865614208827
+              ],
+              "birdAlive": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "scatterUntil": 0,
+              "variant": "inf.cashier",
+              "path": [],
+              "pathIndex": 0,
+              "goal": -1,
+              "dx": -1,
+              "dz": 0,
+              "grabHits": 1,
+              "grabUntil": 0,
+              "grabX": 0,
+              "grabZ": 0,
+              "perched": false,
+              "heardTargetId": 1,
+              "pathRetryAt": 0,
+              "l4ArmyApproach": false,
+              "provoked": {
+                "id": 1,
+                "until": 957
+              }
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": true,
+              "damageMultiplier": 1,
+              "statuses": [],
+              "reaction": {
+                "index": 3,
+                "started": 237,
+                "until": 238,
+                "direction": {
+                  "x": 1,
+                  "z": 0
+                },
+                "from": {
+                  "x": 1145.9923874430617,
+                  "z": 25
+                },
+                "to": {
+                  "x": 1145.9923874430617,
+                  "z": 25
+                },
+                "heavy": false
+              }
+            },
+            "locomotion": {
+              "vx": -2.222077753728397,
+              "vz": 0,
+              "ax": 5.430716533352984,
+              "az": 0,
+              "omega": -1.699999999999998,
+              "updatedAt": 239
+            },
+            "motion": {
+              "velocity": {
+                "x": -2.222077753731355,
+                "z": 0
+              },
+              "speed": 2.222077753731355,
+              "moving": true,
+              "distance": 11.672137385308384
+            }
+          },
+          "render": {
+            "count": 1,
+            "draws": 3,
+            "bars": [
+              {
+                "id": 77,
+                "fraction": 0.6666666666666666,
+                "x": 711.2011802741341,
+                "y": 323.0592833981052,
+                "width": 64,
+                "height": 8,
+                "gap": 2,
+                "anchor": [
+                  1145.509718110136,
+                  1.4507711906980436,
+                  24.843335320524275
+                ]
+              }
+            ]
+          },
+          "input": {
+            "move": {
+              "x": 0,
+              "z": 0
+            },
+            "aim": {
+              "x": 1,
+              "z": 0
+            },
+            "aimSource": "pointer",
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false,
+            "cancelMove": false,
+            "brake": false,
+            "aimPoint": {
+              "x": 1145.9138972439205,
+              "z": 25
+            },
+            "mouseAttack": true,
+            "pointerTarget": true,
+            "selectorSide": "RIGHT",
+            "navigation": true
+          },
+          "control": {
+            "moveTarget": null,
+            "attack": {
+              "id": 77,
+              "side": "RIGHT",
+              "started": true,
+              "mouseAttack": true
+            }
+          },
+          "pick": [
+            {
+              "id": 77,
+              "score": 0.19774258688795318,
+              "depth": 27.18482819585722,
+              "drawn": true
+            }
+          ],
+          "hits": [
+            {
+              "tick": 141,
+              "attackId": 1,
+              "actionId": "weapon.pistol",
+              "sourceId": 1,
+              "targetId": 75,
+              "position": {
+                "x": 1145.9923874430617,
+                "y": 0.702,
+                "z": 25,
+                "yaw": -3.141592653589793
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "bullet",
+              "type": "combat.hit"
+            },
+            {
+              "tick": 190,
+              "attackId": 2,
+              "actionId": "weapon.pistol",
+              "sourceId": 1,
+              "targetId": 76,
+              "position": {
+                "x": 1146.0335899875633,
+                "y": 0.702,
+                "z": 25,
+                "yaw": -3.141592653589793
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "bullet",
+              "type": "combat.hit"
+            },
+            {
+              "tick": 237,
+              "attackId": 3,
+              "actionId": "weapon.pistol",
+              "sourceId": 1,
+              "targetId": 77,
+              "position": {
+                "x": 1145.9923874430617,
+                "y": 0.702,
+                "z": 25,
+                "yaw": -3.141592653589793
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "bullet",
+              "type": "combat.hit"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "inf.delivery-driver",
+      "id": 78,
+      "before": {
+        "id": 78,
+        "kind": "infected",
+        "archetype": "infected.runner",
+        "faction": "infected",
+        "health": {
+          "current": 60,
+          "max": 60
+        },
+        "transform": {
+          "x": 1146.382500345059,
+          "y": 0.702,
+          "z": 25,
+          "yaw": -3.141592653589793
+        },
+        "infected": {
+          "state": "attack",
+          "pathGrid": -1,
+          "grabNextTick": 0,
+          "combo": 0,
+          "targetId": 0,
+          "activeUntil": 314,
+          "speed": 4.2,
+          "until": 294,
+          "cooldown": 0,
+          "attackId": 4,
+          "special": "lunge",
+          "hidden": false,
+          "deadAt": -1,
+          "recoverAt": -1,
+          "downs": 0,
+          "revived": false,
+          "reviveUsed": false,
+          "legLost": false,
+          "detached": false,
+          "pack": 0,
+          "packIndex": 0,
+          "birds": 0,
+          "birdPositions": [
+            1149,
+            3,
+            25,
+            1145.5252625542023,
+            3,
+            26.35098092731253,
+            1147.174850534038,
+            3,
+            23.007657837933778,
+            1148.2168788158344,
+            3,
+            26.587200663927977,
+            1145.0305727092532,
+            3,
+            24.651637908976745,
+            1148.6875093566055,
+            3,
+            23.92654195640039,
+            1146.4807940524265,
+            3,
+            26.931430864412288,
+            1146.0781830963617,
+            3,
+            23.225104623881485,
+            1148.8786438535378,
+            3,
+            25.68607380912279,
+            1145.1513104655082,
+            3,
+            25.763116639224112,
+            1147.8476878286313,
+            3,
+            23.18852950750216,
+            1147.5985725512624,
+            3,
+            26.90832672801996,
+            1145.2695748159956,
+            3,
+            23.99718960787029,
+            1148.9533502647403,
+            3,
+            24.570555308288743,
+            1145.849746403833,
+            3,
+            26.636128559895326,
+            1146.7429717856903,
+            3,
+            23.016584638294635,
+            1148.5293027284358,
+            3,
+            26.288888344581864,
+            1145.0017082147249,
+            3,
+            25.08264345649835,
+            1148.4176529949393,
+            3,
+            23.589234255469876,
+            1146.9076258284908,
+            3,
+            26.997865614208827
+          ],
+          "birdAlive": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scatterUntil": 0,
+          "variant": "inf.delivery-driver",
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "dx": -1,
+          "dz": 0,
+          "grabHits": 0,
+          "grabUntil": 0,
+          "grabX": 0,
+          "grabZ": 0,
+          "perched": false,
+          "heardTargetId": 0,
+          "pathRetryAt": 0,
+          "l4ArmyApproach": false
+        },
+        "combat": {
+          "radius": 0.35,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": true,
+          "damageMultiplier": 1,
+          "statuses": []
+        },
+        "locomotion": {
+          "vx": -2.5615026923381397,
+          "vz": 0,
+          "ax": -3.404333185056574,
+          "az": 0,
+          "omega": -4.1,
+          "updatedAt": 274
+        },
+        "motion": {
+          "velocity": {
+            "x": -2.5615026923378537,
+            "z": 0
+          },
+          "speed": 2.5615026923378537,
+          "moving": true,
+          "distance": 11.303499654940957
+        }
+      },
+      "after": {
+        "id": 78,
+        "kind": "infected",
+        "archetype": "infected.runner",
+        "faction": "infected",
+        "health": {
+          "current": 40,
+          "max": 60
+        },
+        "transform": {
+          "x": 1145.8075640129325,
+          "y": 0.702,
+          "z": 25,
+          "yaw": -3.141592653589793
+        },
+        "infected": {
+          "state": "attack",
+          "pathGrid": -1,
+          "grabNextTick": 0,
+          "combo": 0,
+          "targetId": 0,
+          "activeUntil": 314,
+          "speed": 4.2,
+          "until": 294,
+          "cooldown": 0,
+          "attackId": 4,
+          "special": "lunge",
+          "hidden": false,
+          "deadAt": -1,
+          "recoverAt": -1,
+          "downs": 0,
+          "revived": false,
+          "reviveUsed": false,
+          "legLost": false,
+          "detached": false,
+          "pack": 0,
+          "packIndex": 0,
+          "birds": 0,
+          "birdPositions": [
+            1149,
+            3,
+            25,
+            1145.5252625542023,
+            3,
+            26.35098092731253,
+            1147.174850534038,
+            3,
+            23.007657837933778,
+            1148.2168788158344,
+            3,
+            26.587200663927977,
+            1145.0305727092532,
+            3,
+            24.651637908976745,
+            1148.6875093566055,
+            3,
+            23.92654195640039,
+            1146.4807940524265,
+            3,
+            26.931430864412288,
+            1146.0781830963617,
+            3,
+            23.225104623881485,
+            1148.8786438535378,
+            3,
+            25.68607380912279,
+            1145.1513104655082,
+            3,
+            25.763116639224112,
+            1147.8476878286313,
+            3,
+            23.18852950750216,
+            1147.5985725512624,
+            3,
+            26.90832672801996,
+            1145.2695748159956,
+            3,
+            23.99718960787029,
+            1148.9533502647403,
+            3,
+            24.570555308288743,
+            1145.849746403833,
+            3,
+            26.636128559895326,
+            1146.7429717856903,
+            3,
+            23.016584638294635,
+            1148.5293027284358,
+            3,
+            26.288888344581864,
+            1145.0017082147249,
+            3,
+            25.08264345649835,
+            1148.4176529949393,
+            3,
+            23.589234255469876,
+            1146.9076258284908,
+            3,
+            26.997865614208827
+          ],
+          "birdAlive": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scatterUntil": 0,
+          "variant": "inf.delivery-driver",
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "dx": -1,
+          "dz": 0,
+          "grabHits": 1,
+          "grabUntil": 0,
+          "grabX": 0,
+          "grabZ": 0,
+          "perched": false,
+          "heardTargetId": 1,
+          "pathRetryAt": 0,
+          "l4ArmyApproach": false,
+          "provoked": {
+            "id": 1,
+            "until": 1002
+          }
+        },
+        "combat": {
+          "radius": 0.35,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": true,
+          "damageMultiplier": 1,
+          "statuses": [],
+          "reaction": {
+            "index": 1,
+            "started": 282,
+            "until": 283,
+            "direction": {
+              "x": 1,
+              "z": 0
+            },
+            "from": {
+              "x": 1146.075846883958,
+              "z": 25
+            },
+            "to": {
+              "x": 1146.075846883958,
+              "z": 25
+            },
+            "heavy": false
+          }
+        },
+        "locomotion": {
+          "vx": -2.0304686831366836,
+          "vz": 0,
+          "ax": 5.818724356583385,
+          "az": 0,
+          "omega": -1.299999999999998,
+          "updatedAt": 288
+        },
+        "motion": {
+          "velocity": {
+            "x": -2.0304686831377694,
+            "z": 0
+          },
+          "speed": 2.0304686831377694,
+          "moving": true,
+          "distance": 11.878435987067483
+        }
+      },
+      "observations": [
+        {
+          "entity": {
+            "id": 78,
+            "kind": "infected",
+            "archetype": "infected.runner",
+            "faction": "infected",
+            "health": {
+              "current": 40,
+              "max": 60
+            },
+            "transform": {
+              "x": 1145.9524404055196,
+              "y": 0.702,
+              "z": 25,
+              "yaw": -3.141592653589793
+            },
+            "infected": {
+              "state": "attack",
+              "pathGrid": -1,
+              "grabNextTick": 0,
+              "combo": 0,
+              "targetId": 0,
+              "activeUntil": 314,
+              "speed": 4.2,
+              "until": 294,
+              "cooldown": 0,
+              "attackId": 4,
+              "special": "lunge",
+              "hidden": false,
+              "deadAt": -1,
+              "recoverAt": -1,
+              "downs": 0,
+              "revived": false,
+              "reviveUsed": false,
+              "legLost": false,
+              "detached": false,
+              "pack": 0,
+              "packIndex": 0,
+              "birds": 0,
+              "birdPositions": [
+                1149,
+                3,
+                25,
+                1145.5252625542023,
+                3,
+                26.35098092731253,
+                1147.174850534038,
+                3,
+                23.007657837933778,
+                1148.2168788158344,
+                3,
+                26.587200663927977,
+                1145.0305727092532,
+                3,
+                24.651637908976745,
+                1148.6875093566055,
+                3,
+                23.92654195640039,
+                1146.4807940524265,
+                3,
+                26.931430864412288,
+                1146.0781830963617,
+                3,
+                23.225104623881485,
+                1148.8786438535378,
+                3,
+                25.68607380912279,
+                1145.1513104655082,
+                3,
+                25.763116639224112,
+                1147.8476878286313,
+                3,
+                23.18852950750216,
+                1147.5985725512624,
+                3,
+                26.90832672801996,
+                1145.2695748159956,
+                3,
+                23.99718960787029,
+                1148.9533502647403,
+                3,
+                24.570555308288743,
+                1145.849746403833,
+                3,
+                26.636128559895326,
+                1146.7429717856903,
+                3,
+                23.016584638294635,
+                1148.5293027284358,
+                3,
+                26.288888344581864,
+                1145.0017082147249,
+                3,
+                25.08264345649835,
+                1148.4176529949393,
+                3,
+                23.589234255469876,
+                1146.9076258284908,
+                3,
+                26.997865614208827
+              ],
+              "birdAlive": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "scatterUntil": 0,
+              "variant": "inf.delivery-driver",
+              "path": [],
+              "pathIndex": 0,
+              "goal": -1,
+              "dx": -1,
+              "dz": 0,
+              "grabHits": 1,
+              "grabUntil": 0,
+              "grabX": 0,
+              "grabZ": 0,
+              "perched": false,
+              "heardTargetId": 1,
+              "pathRetryAt": 0,
+              "l4ArmyApproach": false,
+              "provoked": {
+                "id": 1,
+                "until": 1002
+              }
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": true,
+              "damageMultiplier": 1,
+              "statuses": [],
+              "reaction": {
+                "index": 1,
+                "started": 282,
+                "until": 283,
+                "direction": {
+                  "x": 1,
+                  "z": 0
+                },
+                "from": {
+                  "x": 1146.075846883958,
+                  "z": 25
+                },
+                "to": {
+                  "x": 1146.075846883958,
+                  "z": 25
+                },
+                "heavy": false
+              }
+            },
+            "locomotion": {
+              "vx": -2.396822252529747,
+              "vz": 0,
+              "ax": 4.519825054012716,
+              "az": 0,
+              "omega": -2.099999999999998,
+              "updatedAt": 284
+            },
+            "motion": {
+              "velocity": {
+                "x": -2.3968222525263627,
+                "z": 0
+              },
+              "speed": 2.3968222525263627,
+              "moving": true,
+              "distance": 11.73355959448039
+            }
+          },
+          "render": {
+            "count": 1,
+            "draws": 3,
+            "bars": [
+              {
+                "id": 78,
+                "fraction": 0.6666666666666666,
+                "x": 709.6704055599239,
+                "y": 314.7150816917203,
+                "width": 64,
+                "height": 8,
+                "gap": 2,
+                "anchor": [
+                  1145.4455407436694,
+                  1.573855580858492,
+                  24.816204386552823
+                ]
+              }
+            ]
+          },
+          "input": {
+            "move": {
+              "x": 0,
+              "z": 0
+            },
+            "aim": {
+              "x": 1,
+              "z": 0
+            },
+            "aimSource": "pointer",
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false,
+            "cancelMove": false,
+            "brake": false,
+            "aimPoint": {
+              "x": 1145.9923874430617,
+              "z": 25
+            },
+            "mouseAttack": true,
+            "pointerTarget": true,
+            "selectorSide": "RIGHT",
+            "navigation": true
+          },
+          "control": {
+            "moveTarget": null,
+            "attack": {
+              "id": 78,
+              "side": "RIGHT",
+              "started": true,
+              "mouseAttack": true
+            }
+          },
+          "pick": [
+            {
+              "id": 78,
+              "score": 8.224149188950336e-7,
+              "depth": 26.992582478974278,
+              "drawn": true
+            }
+          ],
+          "hits": [
+            {
+              "tick": 141,
+              "attackId": 1,
+              "actionId": "weapon.pistol",
+              "sourceId": 1,
+              "targetId": 75,
+              "position": {
+                "x": 1145.9923874430617,
+                "y": 0.702,
+                "z": 25,
+                "yaw": -3.141592653589793
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "bullet",
+              "type": "combat.hit"
+            },
+            {
+              "tick": 190,
+              "attackId": 2,
+              "actionId": "weapon.pistol",
+              "sourceId": 1,
+              "targetId": 76,
+              "position": {
+                "x": 1146.0335899875633,
+                "y": 0.702,
+                "z": 25,
+                "yaw": -3.141592653589793
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "bullet",
+              "type": "combat.hit"
+            },
+            {
+              "tick": 237,
+              "attackId": 3,
+              "actionId": "weapon.pistol",
+              "sourceId": 1,
+              "targetId": 77,
+              "position": {
+                "x": 1145.9923874430617,
+                "y": 0.702,
+                "z": 25,
+                "yaw": -3.141592653589793
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "bullet",
+              "type": "combat.hit"
+            },
+            {
+              "tick": 282,
+              "attackId": 4,
+              "actionId": "weapon.pistol",
+              "sourceId": 1,
+              "targetId": 78,
+              "position": {
+                "x": 1146.075846883958,
+                "y": 0.702,
+                "z": 25,
+                "yaw": -3.141592653589793
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "bullet",
+              "type": "combat.hit"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "inf.suburban-mom",
+      "id": 79,
+      "before": {
+        "id": 79,
+        "kind": "infected",
+        "archetype": "infected.runner",
+        "faction": "infected",
+        "health": {
+          "current": 60,
+          "max": 60
+        },
+        "transform": {
+          "x": 1146.382500345059,
+          "y": 0.702,
+          "z": 25,
+          "yaw": -3.141592653589793
+        },
+        "infected": {
+          "state": "attack",
+          "pathGrid": -1,
+          "grabNextTick": 0,
+          "combo": 0,
+          "targetId": 0,
+          "activeUntil": 359,
+          "speed": 4.2,
+          "until": 339,
+          "cooldown": 0,
+          "attackId": 5,
+          "special": "lunge",
+          "hidden": false,
+          "deadAt": -1,
+          "recoverAt": -1,
+          "downs": 0,
+          "revived": false,
+          "reviveUsed": false,
+          "legLost": false,
+          "detached": false,
+          "pack": 0,
+          "packIndex": 0,
+          "birds": 0,
+          "birdPositions": [
+            1149,
+            3,
+            25,
+            1145.5252625542023,
+            3,
+            26.35098092731253,
+            1147.174850534038,
+            3,
+            23.007657837933778,
+            1148.2168788158344,
+            3,
+            26.587200663927977,
+            1145.0305727092532,
+            3,
+            24.651637908976745,
+            1148.6875093566055,
+            3,
+            23.92654195640039,
+            1146.4807940524265,
+            3,
+            26.931430864412288,
+            1146.0781830963617,
+            3,
+            23.225104623881485,
+            1148.8786438535378,
+            3,
+            25.68607380912279,
+            1145.1513104655082,
+            3,
+            25.763116639224112,
+            1147.8476878286313,
+            3,
+            23.18852950750216,
+            1147.5985725512624,
+            3,
+            26.90832672801996,
+            1145.2695748159956,
+            3,
+            23.99718960787029,
+            1148.9533502647403,
+            3,
+            24.570555308288743,
+            1145.849746403833,
+            3,
+            26.636128559895326,
+            1146.7429717856903,
+            3,
+            23.016584638294635,
+            1148.5293027284358,
+            3,
+            26.288888344581864,
+            1145.0017082147249,
+            3,
+            25.08264345649835,
+            1148.4176529949393,
+            3,
+            23.589234255469876,
+            1146.9076258284908,
+            3,
+            26.997865614208827
+          ],
+          "birdAlive": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scatterUntil": 0,
+          "variant": "inf.suburban-mom",
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "dx": -1,
+          "dz": 0,
+          "grabHits": 0,
+          "grabUntil": 0,
+          "grabX": 0,
+          "grabZ": 0,
+          "perched": false,
+          "heardTargetId": 0,
+          "pathRetryAt": 0,
+          "l4ArmyApproach": false
+        },
+        "combat": {
+          "radius": 0.35,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": true,
+          "damageMultiplier": 1,
+          "statuses": []
+        },
+        "locomotion": {
+          "vx": -2.5615026923381397,
+          "vz": 0,
+          "ax": -3.404333185056574,
+          "az": 0,
+          "omega": -4.1,
+          "updatedAt": 319
+        },
+        "motion": {
+          "velocity": {
+            "x": -2.5615026923378537,
+            "z": 0
+          },
+          "speed": 2.5615026923378537,
+          "moving": true,
+          "distance": 11.440499654940957
+        }
+      },
+      "after": {
+        "id": 79,
+        "kind": "infected",
+        "archetype": "infected.runner",
+        "faction": "infected",
+        "health": {
+          "current": 40,
+          "max": 60
+        },
+        "transform": {
+          "x": 1145.8414051576515,
+          "y": 0.702,
+          "z": 25,
+          "yaw": -3.141592653589793
+        },
+        "infected": {
+          "state": "attack",
+          "pathGrid": -1,
+          "grabNextTick": 0,
+          "combo": 0,
+          "targetId": 0,
+          "activeUntil": 359,
+          "speed": 4.2,
+          "until": 339,
+          "cooldown": 0,
+          "attackId": 5,
+          "special": "lunge",
+          "hidden": false,
+          "deadAt": -1,
+          "recoverAt": -1,
+          "downs": 0,
+          "revived": false,
+          "reviveUsed": false,
+          "legLost": false,
+          "detached": false,
+          "pack": 0,
+          "packIndex": 0,
+          "birds": 0,
+          "birdPositions": [
+            1149,
+            3,
+            25,
+            1145.5252625542023,
+            3,
+            26.35098092731253,
+            1147.174850534038,
+            3,
+            23.007657837933778,
+            1148.2168788158344,
+            3,
+            26.587200663927977,
+            1145.0305727092532,
+            3,
+            24.651637908976745,
+            1148.6875093566055,
+            3,
+            23.92654195640039,
+            1146.4807940524265,
+            3,
+            26.931430864412288,
+            1146.0781830963617,
+            3,
+            23.225104623881485,
+            1148.8786438535378,
+            3,
+            25.68607380912279,
+            1145.1513104655082,
+            3,
+            25.763116639224112,
+            1147.8476878286313,
+            3,
+            23.18852950750216,
+            1147.5985725512624,
+            3,
+            26.90832672801996,
+            1145.2695748159956,
+            3,
+            23.99718960787029,
+            1148.9533502647403,
+            3,
+            24.570555308288743,
+            1145.849746403833,
+            3,
+            26.636128559895326,
+            1146.7429717856903,
+            3,
+            23.016584638294635,
+            1148.5293027284358,
+            3,
+            26.288888344581864,
+            1145.0017082147249,
+            3,
+            25.08264345649835,
+            1148.4176529949393,
+            3,
+            23.589234255469876,
+            1146.9076258284908,
+            3,
+            26.997865614208827
+          ],
+          "birdAlive": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scatterUntil": 0,
+          "variant": "inf.suburban-mom",
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "dx": -1,
+          "dz": 0,
+          "grabHits": 1,
+          "grabUntil": 0,
+          "grabX": 0,
+          "grabZ": 0,
+          "perched": false,
+          "heardTargetId": 1,
+          "pathRetryAt": 0,
+          "l4ArmyApproach": false,
+          "provoked": {
+            "id": 1,
+            "until": 1047
+          }
+        },
+        "combat": {
+          "radius": 0.35,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": true,
+          "damageMultiplier": 1,
+          "statuses": [],
+          "reaction": {
+            "index": 2,
+            "started": 327,
+            "until": 328,
+            "direction": {
+              "x": 1,
+              "z": 0
+            },
+            "from": {
+              "x": 1146.075846883958,
+              "z": 25
+            },
+            "to": {
+              "x": 1146.075846883958,
+              "z": 25
+            },
+            "heavy": false
+          }
+        },
+        "locomotion": {
+          "vx": -2.1274474224130735,
+          "vz": 0,
+          "ax": 5.677819878919426,
+          "az": 0,
+          "omega": -1.499999999999998,
+          "updatedAt": 332
+        },
+        "motion": {
+          "velocity": {
+            "x": -2.127447422408295,
+            "z": 0
+          },
+          "speed": 2.127447422408295,
+          "moving": true,
+          "distance": 11.981594842348521
+        }
+      },
+      "observations": [
+        {
+          "entity": {
+            "id": 79,
+            "kind": "infected",
+            "archetype": "infected.runner",
+            "faction": "infected",
+            "health": {
+              "current": 40,
+              "max": 60
+            },
+            "transform": {
+              "x": 1145.9524404055196,
+              "y": 0.702,
+              "z": 25,
+              "yaw": -3.141592653589793
+            },
+            "infected": {
+              "state": "attack",
+              "pathGrid": -1,
+              "grabNextTick": 0,
+              "combo": 0,
+              "targetId": 0,
+              "activeUntil": 359,
+              "speed": 4.2,
+              "until": 339,
+              "cooldown": 0,
+              "attackId": 5,
+              "special": "lunge",
+              "hidden": false,
+              "deadAt": -1,
+              "recoverAt": -1,
+              "downs": 0,
+              "revived": false,
+              "reviveUsed": false,
+              "legLost": false,
+              "detached": false,
+              "pack": 0,
+              "packIndex": 0,
+              "birds": 0,
+              "birdPositions": [
+                1149,
+                3,
+                25,
+                1145.5252625542023,
+                3,
+                26.35098092731253,
+                1147.174850534038,
+                3,
+                23.007657837933778,
+                1148.2168788158344,
+                3,
+                26.587200663927977,
+                1145.0305727092532,
+                3,
+                24.651637908976745,
+                1148.6875093566055,
+                3,
+                23.92654195640039,
+                1146.4807940524265,
+                3,
+                26.931430864412288,
+                1146.0781830963617,
+                3,
+                23.225104623881485,
+                1148.8786438535378,
+                3,
+                25.68607380912279,
+                1145.1513104655082,
+                3,
+                25.763116639224112,
+                1147.8476878286313,
+                3,
+                23.18852950750216,
+                1147.5985725512624,
+                3,
+                26.90832672801996,
+                1145.2695748159956,
+                3,
+                23.99718960787029,
+                1148.9533502647403,
+                3,
+                24.570555308288743,
+                1145.849746403833,
+                3,
+                26.636128559895326,
+                1146.7429717856903,
+                3,
+                23.016584638294635,
+                1148.5293027284358,
+                3,
+                26.288888344581864,
+                1145.0017082147249,
+                3,
+                25.08264345649835,
+                1148.4176529949393,
+                3,
+                23.589234255469876,
+                1146.9076258284908,
+                3,
+                26.997865614208827
+              ],
+              "birdAlive": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "scatterUntil": 0,
+              "variant": "inf.suburban-mom",
+              "path": [],
+              "pathIndex": 0,
+              "goal": -1,
+              "dx": -1,
+              "dz": 0,
+              "grabHits": 1,
+              "grabUntil": 0,
+              "grabX": 0,
+              "grabZ": 0,
+              "perched": false,
+              "heardTargetId": 1,
+              "pathRetryAt": 0,
+              "l4ArmyApproach": false,
+              "provoked": {
+                "id": 1,
+                "until": 1047
+              }
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": true,
+              "damageMultiplier": 1,
+              "statuses": [],
+              "reaction": {
+                "index": 2,
+                "started": 327,
+                "until": 328,
+                "direction": {
+                  "x": 1,
+                  "z": 0
+                },
+                "from": {
+                  "x": 1146.075846883958,
+                  "z": 25
+                },
+                "to": {
+                  "x": 1146.075846883958,
+                  "z": 25
+                },
+                "heavy": false
+              }
+            },
+            "locomotion": {
+              "vx": -2.396822252529747,
+              "vz": 0,
+              "ax": 4.519825054012716,
+              "az": 0,
+              "omega": -2.099999999999998,
+              "updatedAt": 329
+            },
+            "motion": {
+              "velocity": {
+                "x": -2.3968222525263627,
+                "z": 0
+              },
+              "speed": 2.3968222525263627,
+              "moving": true,
+              "distance": 11.87055959448039
+            }
+          },
+          "render": {
+            "count": 1,
+            "draws": 3,
+            "bars": [
+              {
+                "id": 79,
+                "fraction": 0.6666666666666666,
+                "x": 716.0394059037908,
+                "y": 305.2636026599234,
+                "width": 64,
+                "height": 8,
+                "gap": 2,
+                "anchor": [
+                  1145.5245640917653,
+                  1.7707614881607867,
+                  24.754604641997464
+                ]
+              }
+            ]
+          },
+          "input": {
+            "move": {
+              "x": 0,
+              "z": 0
+            },
+            "aim": {
+              "x": 1,
+              "z": 0
+            },
+            "aimSource": "pointer",
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false,
+            "cancelMove": false,
+            "brake": false,
+            "aimPoint": {
+              "x": 1145.9923874430617,
+              "z": 25
+            },
+            "mouseAttack": true,
+            "pointerTarget": true,
+            "selectorSide": "RIGHT",
+            "navigation": true
+          },
+          "control": {
+            "moveTarget": null,
+            "attack": {
+              "id": 79,
+              "side": "RIGHT",
+              "started": true,
+              "mouseAttack": true
+            }
+          },
+          "pick": [
+            {
+              "id": 79,
+              "score": 0.09345050188218954,
+              "depth": 26.828440463340915,
+              "drawn": true
+            }
+          ],
+          "hits": [
+            {
+              "tick": 141,
+              "attackId": 1,
+              "actionId": "weapon.pistol",
+              "sourceId": 1,
+              "targetId": 75,
+              "position": {
+                "x": 1145.9923874430617,
+                "y": 0.702,
+                "z": 25,
+                "yaw": -3.141592653589793
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "bullet",
+              "type": "combat.hit"
+            },
+            {
+              "tick": 190,
+              "attackId": 2,
+              "actionId": "weapon.pistol",
+              "sourceId": 1,
+              "targetId": 76,
+              "position": {
+                "x": 1146.0335899875633,
+                "y": 0.702,
+                "z": 25,
+                "yaw": -3.141592653589793
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "bullet",
+              "type": "combat.hit"
+            },
+            {
+              "tick": 237,
+              "attackId": 3,
+              "actionId": "weapon.pistol",
+              "sourceId": 1,
+              "targetId": 77,
+              "position": {
+                "x": 1145.9923874430617,
+                "y": 0.702,
+                "z": 25,
+                "yaw": -3.141592653589793
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "bullet",
+              "type": "combat.hit"
+            },
+            {
+              "tick": 282,
+              "attackId": 4,
+              "actionId": "weapon.pistol",
+              "sourceId": 1,
+              "targetId": 78,
+              "position": {
+                "x": 1146.075846883958,
+                "y": 0.702,
+                "z": 25,
+                "yaw": -3.141592653589793
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "bullet",
+              "type": "combat.hit"
+            },
+            {
+              "tick": 327,
+              "attackId": 5,
+              "actionId": "weapon.pistol",
+              "sourceId": 1,
+              "targetId": 79,
+              "position": {
+                "x": 1146.075846883958,
+                "y": 0.702,
+                "z": 25,
+                "yaw": -3.141592653589793
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "bullet",
+              "type": "combat.hit"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "inf.bbq-dad",
+      "id": 80,
+      "before": {
+        "id": 80,
+        "kind": "infected",
+        "archetype": "infected.runner",
+        "faction": "infected",
+        "health": {
+          "current": 60,
+          "max": 60
+        },
+        "transform": {
+          "x": 1146.382500345059,
+          "y": 0.702,
+          "z": 25,
+          "yaw": -3.141592653589793
+        },
+        "infected": {
+          "state": "attack",
+          "pathGrid": -1,
+          "grabNextTick": 0,
+          "combo": 0,
+          "targetId": 0,
+          "activeUntil": 404,
+          "speed": 4.2,
+          "until": 384,
+          "cooldown": 0,
+          "attackId": 6,
+          "special": "lunge",
+          "hidden": false,
+          "deadAt": -1,
+          "recoverAt": -1,
+          "downs": 0,
+          "revived": false,
+          "reviveUsed": false,
+          "legLost": false,
+          "detached": false,
+          "pack": 0,
+          "packIndex": 0,
+          "birds": 0,
+          "birdPositions": [
+            1149,
+            3,
+            25,
+            1145.5252625542023,
+            3,
+            26.35098092731253,
+            1147.174850534038,
+            3,
+            23.007657837933778,
+            1148.2168788158344,
+            3,
+            26.587200663927977,
+            1145.0305727092532,
+            3,
+            24.651637908976745,
+            1148.6875093566055,
+            3,
+            23.92654195640039,
+            1146.4807940524265,
+            3,
+            26.931430864412288,
+            1146.0781830963617,
+            3,
+            23.225104623881485,
+            1148.8786438535378,
+            3,
+            25.68607380912279,
+            1145.1513104655082,
+            3,
+            25.763116639224112,
+            1147.8476878286313,
+            3,
+            23.18852950750216,
+            1147.5985725512624,
+            3,
+            26.90832672801996,
+            1145.2695748159956,
+            3,
+            23.99718960787029,
+            1148.9533502647403,
+            3,
+            24.570555308288743,
+            1145.849746403833,
+            3,
+            26.636128559895326,
+            1146.7429717856903,
+            3,
+            23.016584638294635,
+            1148.5293027284358,
+            3,
+            26.288888344581864,
+            1145.0017082147249,
+            3,
+            25.08264345649835,
+            1148.4176529949393,
+            3,
+            23.589234255469876,
+            1146.9076258284908,
+            3,
+            26.997865614208827
+          ],
+          "birdAlive": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scatterUntil": 0,
+          "variant": "inf.bbq-dad",
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "dx": -1,
+          "dz": 0,
+          "grabHits": 0,
+          "grabUntil": 0,
+          "grabX": 0,
+          "grabZ": 0,
+          "perched": false,
+          "heardTargetId": 0,
+          "pathRetryAt": 0,
+          "l4ArmyApproach": false
+        },
+        "combat": {
+          "radius": 0.35,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": true,
+          "damageMultiplier": 1,
+          "statuses": []
+        },
+        "locomotion": {
+          "vx": -2.5615026923381397,
+          "vz": 0,
+          "ax": -3.404333185056574,
+          "az": 0,
+          "omega": -4.1,
+          "updatedAt": 364
+        },
+        "motion": {
+          "velocity": {
+            "x": -2.5615026923378537,
+            "z": 0
+          },
+          "speed": 2.5615026923378537,
+          "moving": true,
+          "distance": 11.577499654940958
+        }
+      },
+      "after": {
+        "id": 80,
+        "kind": "infected",
+        "archetype": "infected.runner",
+        "faction": "infected",
+        "health": {
+          "current": 40,
+          "max": 60
+        },
+        "transform": {
+          "x": 1145.8075640129325,
+          "y": 0.702,
+          "z": 25,
+          "yaw": -3.141592653589793
+        },
+        "infected": {
+          "state": "attack",
+          "pathGrid": -1,
+          "grabNextTick": 0,
+          "combo": 0,
+          "targetId": 0,
+          "activeUntil": 404,
+          "speed": 4.2,
+          "until": 384,
+          "cooldown": 0,
+          "attackId": 6,
+          "special": "lunge",
+          "hidden": false,
+          "deadAt": -1,
+          "recoverAt": -1,
+          "downs": 0,
+          "revived": false,
+          "reviveUsed": false,
+          "legLost": false,
+          "detached": false,
+          "pack": 0,
+          "packIndex": 0,
+          "birds": 0,
+          "birdPositions": [
+            1149,
+            3,
+            25,
+            1145.5252625542023,
+            3,
+            26.35098092731253,
+            1147.174850534038,
+            3,
+            23.007657837933778,
+            1148.2168788158344,
+            3,
+            26.587200663927977,
+            1145.0305727092532,
+            3,
+            24.651637908976745,
+            1148.6875093566055,
+            3,
+            23.92654195640039,
+            1146.4807940524265,
+            3,
+            26.931430864412288,
+            1146.0781830963617,
+            3,
+            23.225104623881485,
+            1148.8786438535378,
+            3,
+            25.68607380912279,
+            1145.1513104655082,
+            3,
+            25.763116639224112,
+            1147.8476878286313,
+            3,
+            23.18852950750216,
+            1147.5985725512624,
+            3,
+            26.90832672801996,
+            1145.2695748159956,
+            3,
+            23.99718960787029,
+            1148.9533502647403,
+            3,
+            24.570555308288743,
+            1145.849746403833,
+            3,
+            26.636128559895326,
+            1146.7429717856903,
+            3,
+            23.016584638294635,
+            1148.5293027284358,
+            3,
+            26.288888344581864,
+            1145.0017082147249,
+            3,
+            25.08264345649835,
+            1148.4176529949393,
+            3,
+            23.589234255469876,
+            1146.9076258284908,
+            3,
+            26.997865614208827
+          ],
+          "birdAlive": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scatterUntil": 0,
+          "variant": "inf.bbq-dad",
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "dx": -1,
+          "dz": 0,
+          "grabHits": 1,
+          "grabUntil": 0,
+          "grabX": 0,
+          "grabZ": 0,
+          "perched": false,
+          "heardTargetId": 1,
+          "pathRetryAt": 0,
+          "l4ArmyApproach": false,
+          "provoked": {
+            "id": 1,
+            "until": 1093
+          }
+        },
+        "combat": {
+          "radius": 0.35,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": true,
+          "damageMultiplier": 1,
+          "statuses": [],
+          "reaction": {
+            "index": 3,
+            "started": 373,
+            "until": 374,
+            "direction": {
+              "x": 1,
+              "z": 0
+            },
+            "from": {
+              "x": 1146.0335899875633,
+              "z": 25
+            },
+            "to": {
+              "x": 1146.0335899875633,
+              "z": 25
+            },
+            "heavy": false
+          }
+        },
+        "locomotion": {
+          "vx": -2.0304686831366836,
+          "vz": 0,
+          "ax": 5.818724356583385,
+          "az": 0,
+          "omega": -1.299999999999998,
+          "updatedAt": 378
+        },
+        "motion": {
+          "velocity": {
+            "x": -2.0304686831377694,
+            "z": 0
+          },
+          "speed": 2.0304686831377694,
+          "moving": true,
+          "distance": 12.152435987067484
+        }
+      },
+      "observations": [
+        {
+          "entity": {
+            "id": 80,
+            "kind": "infected",
+            "archetype": "infected.runner",
+            "faction": "infected",
+            "health": {
+              "current": 40,
+              "max": 60
+            },
+            "transform": {
+              "x": 1145.9138972439205,
+              "y": 0.702,
+              "z": 25,
+              "yaw": -3.141592653589793
+            },
+            "infected": {
+              "state": "attack",
+              "pathGrid": -1,
+              "grabNextTick": 0,
+              "combo": 0,
+              "targetId": 0,
+              "activeUntil": 404,
+              "speed": 4.2,
+              "until": 384,
+              "cooldown": 0,
+              "attackId": 6,
+              "special": "lunge",
+              "hidden": false,
+              "deadAt": -1,
+              "recoverAt": -1,
+              "downs": 0,
+              "revived": false,
+              "reviveUsed": false,
+              "legLost": false,
+              "detached": false,
+              "pack": 0,
+              "packIndex": 0,
+              "birds": 0,
+              "birdPositions": [
+                1149,
+                3,
+                25,
+                1145.5252625542023,
+                3,
+                26.35098092731253,
+                1147.174850534038,
+                3,
+                23.007657837933778,
+                1148.2168788158344,
+                3,
+                26.587200663927977,
+                1145.0305727092532,
+                3,
+                24.651637908976745,
+                1148.6875093566055,
+                3,
+                23.92654195640039,
+                1146.4807940524265,
+                3,
+                26.931430864412288,
+                1146.0781830963617,
+                3,
+                23.225104623881485,
+                1148.8786438535378,
+                3,
+                25.68607380912279,
+                1145.1513104655082,
+                3,
+                25.763116639224112,
+                1147.8476878286313,
+                3,
+                23.18852950750216,
+                1147.5985725512624,
+                3,
+                26.90832672801996,
+                1145.2695748159956,
+                3,
+                23.99718960787029,
+                1148.9533502647403,
+                3,
+                24.570555308288743,
+                1145.849746403833,
+                3,
+                26.636128559895326,
+                1146.7429717856903,
+                3,
+                23.016584638294635,
+                1148.5293027284358,
+                3,
+                26.288888344581864,
+                1145.0017082147249,
+                3,
+                25.08264345649835,
+                1148.4176529949393,
+                3,
+                23.589234255469876,
+                1146.9076258284908,
+                3,
+                26.997865614208827
+              ],
+              "birdAlive": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "scatterUntil": 0,
+              "variant": "inf.bbq-dad",
+              "path": [],
+              "pathIndex": 0,
+              "goal": -1,
+              "dx": -1,
+              "dz": 0,
+              "grabHits": 1,
+              "grabUntil": 0,
+              "grabX": 0,
+              "grabZ": 0,
+              "perched": false,
+              "heardTargetId": 1,
+              "pathRetryAt": 0,
+              "l4ArmyApproach": false,
+              "provoked": {
+                "id": 1,
+                "until": 1093
+              }
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": true,
+              "damageMultiplier": 1,
+              "statuses": [],
+              "reaction": {
+                "index": 3,
+                "started": 373,
+                "until": 374,
+                "direction": {
+                  "x": 1,
+                  "z": 0
+                },
+                "from": {
+                  "x": 1146.0335899875633,
+                  "z": 25
+                },
+                "to": {
+                  "x": 1146.0335899875633,
+                  "z": 25
+                },
+                "heavy": false
+              }
+            },
+            "locomotion": {
+              "vx": -2.3125896959509467,
+              "vz": 0,
+              "ax": 5.053953394728021,
+              "az": 0,
+              "omega": -1.899999999999998,
+              "updatedAt": 375
+            },
+            "motion": {
+              "velocity": {
+                "x": -2.3125896959481906,
+                "z": 0
+              },
+              "speed": 2.3125896959481906,
+              "moving": true,
+              "distance": 12.046102756079527
+            }
+          },
+          "render": {
+            "count": 1,
+            "draws": 3,
+            "bars": [
+              {
+                "id": 80,
+                "fraction": 0.6666666666666666,
+                "x": 712.6695457230597,
+                "y": 314.4395015045483,
+                "width": 64,
+                "height": 8,
+                "gap": 2,
+                "anchor": [
+                  1145.43451632389,
+                  1.5323011820745709,
+                  24.72997416385565
+                ]
+              }
+            ]
+          },
+          "input": {
+            "move": {
+              "x": 0,
+              "z": 0
+            },
+            "aim": {
+              "x": 1,
+              "z": 0
+            },
+            "aimSource": "pointer",
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false,
+            "cancelMove": false,
+            "brake": false,
+            "aimPoint": {
+              "x": 1145.9524404055196,
+              "z": 25
+            },
+            "mouseAttack": true,
+            "pointerTarget": true,
+            "selectorSide": "RIGHT",
+            "navigation": true
+          },
+          "control": {
+            "moveTarget": null,
+            "attack": {
+              "id": 80,
+              "side": "RIGHT",
+              "started": true,
+              "mouseAttack": true
+            }
+          },
+          "pick": [
+            {
+              "id": 80,
+              "score": 0.19684692892656377,
+              "depth": 26.964767002215552,
+              "drawn": true
+            }
+          ],
+          "hits": [
+            {
+              "tick": 141,
+              "attackId": 1,
+              "actionId": "weapon.pistol",
+              "sourceId": 1,
+              "targetId": 75,
+              "position": {
+                "x": 1145.9923874430617,
+                "y": 0.702,
+                "z": 25,
+                "yaw": -3.141592653589793
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "bullet",
+              "type": "combat.hit"
+            },
+            {
+              "tick": 190,
+              "attackId": 2,
+              "actionId": "weapon.pistol",
+              "sourceId": 1,
+              "targetId": 76,
+              "position": {
+                "x": 1146.0335899875633,
+                "y": 0.702,
+                "z": 25,
+                "yaw": -3.141592653589793
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "bullet",
+              "type": "combat.hit"
+            },
+            {
+              "tick": 237,
+              "attackId": 3,
+              "actionId": "weapon.pistol",
+              "sourceId": 1,
+              "targetId": 77,
+              "position": {
+                "x": 1145.9923874430617,
+                "y": 0.702,
+                "z": 25,
+                "yaw": -3.141592653589793
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "bullet",
+              "type": "combat.hit"
+            },
+            {
+              "tick": 282,
+              "attackId": 4,
+              "actionId": "weapon.pistol",
+              "sourceId": 1,
+              "targetId": 78,
+              "position": {
+                "x": 1146.075846883958,
+                "y": 0.702,
+                "z": 25,
+                "yaw": -3.141592653589793
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "bullet",
+              "type": "combat.hit"
+            },
+            {
+              "tick": 327,
+              "attackId": 5,
+              "actionId": "weapon.pistol",
+              "sourceId": 1,
+              "targetId": 79,
+              "position": {
+                "x": 1146.075846883958,
+                "y": 0.702,
+                "z": 25,
+                "yaw": -3.141592653589793
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "bullet",
+              "type": "combat.hit"
+            },
+            {
+              "tick": 373,
+              "attackId": 6,
+              "actionId": "weapon.pistol",
+              "sourceId": 1,
+              "targetId": 80,
+              "position": {
+                "x": 1146.0335899875633,
+                "y": 0.702,
+                "z": 25,
+                "yaw": -3.141592653589793
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "bullet",
+              "type": "combat.hit"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "inf.bathrobe-neighbor",
+      "id": 81,
+      "before": {
+        "id": 81,
+        "kind": "infected",
+        "archetype": "infected.runner",
+        "faction": "infected",
+        "health": {
+          "current": 60,
+          "max": 60
+        },
+        "transform": {
+          "x": 1146.3390852076354,
+          "y": 0.702,
+          "z": 25,
+          "yaw": -3.141592653589793
+        },
+        "infected": {
+          "state": "attack",
+          "pathGrid": -1,
+          "grabNextTick": 0,
+          "combo": 0,
+          "targetId": 0,
+          "activeUntil": 448,
+          "speed": 4.2,
+          "until": 428,
+          "cooldown": 0,
+          "attackId": 7,
+          "special": "lunge",
+          "hidden": false,
+          "deadAt": -1,
+          "recoverAt": -1,
+          "downs": 0,
+          "revived": false,
+          "reviveUsed": false,
+          "legLost": false,
+          "detached": false,
+          "pack": 0,
+          "packIndex": 0,
+          "birds": 0,
+          "birdPositions": [
+            1149,
+            3,
+            25,
+            1145.5252625542023,
+            3,
+            26.35098092731253,
+            1147.174850534038,
+            3,
+            23.007657837933778,
+            1148.2168788158344,
+            3,
+            26.587200663927977,
+            1145.0305727092532,
+            3,
+            24.651637908976745,
+            1148.6875093566055,
+            3,
+            23.92654195640039,
+            1146.4807940524265,
+            3,
+            26.931430864412288,
+            1146.0781830963617,
+            3,
+            23.225104623881485,
+            1148.8786438535378,
+            3,
+            25.68607380912279,
+            1145.1513104655082,
+            3,
+            25.763116639224112,
+            1147.8476878286313,
+            3,
+            23.18852950750216,
+            1147.5985725512624,
+            3,
+            26.90832672801996,
+            1145.2695748159956,
+            3,
+            23.99718960787029,
+            1148.9533502647403,
+            3,
+            24.570555308288743,
+            1145.849746403833,
+            3,
+            26.636128559895326,
+            1146.7429717856903,
+            3,
+            23.016584638294635,
+            1148.5293027284358,
+            3,
+            26.288888344581864,
+            1145.0017082147249,
+            3,
+            25.08264345649835,
+            1148.4176529949393,
+            3,
+            23.589234255469876,
+            1146.9076258284908,
+            3,
+            26.997865614208827
+          ],
+          "birdAlive": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scatterUntil": 0,
+          "variant": "inf.bathrobe-neighbor",
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "dx": -1,
+          "dz": 0,
+          "grabHits": 0,
+          "grabUntil": 0,
+          "grabX": 0,
+          "grabZ": 0,
+          "perched": false,
+          "heardTargetId": 0,
+          "pathRetryAt": 0,
+          "l4ArmyApproach": false
+        },
+        "combat": {
+          "radius": 0.35,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": true,
+          "damageMultiplier": 1,
+          "statuses": []
+        },
+        "locomotion": {
+          "vx": -2.6049082454224157,
+          "vz": 0,
+          "ax": -2.604333185056574,
+          "az": 0,
+          "omega": -3.8999999999999995,
+          "updatedAt": 409
+        },
+        "motion": {
+          "velocity": {
+            "x": -2.604908245416482,
+            "z": 0
+          },
+          "speed": 2.604908245416482,
+          "moving": true,
+          "distance": 11.757914792364566
+        }
+      },
+      "after": {
+        "id": 81,
+        "kind": "infected",
+        "archetype": "infected.runner",
+        "faction": "infected",
+        "health": {
+          "current": 40,
+          "max": 60
+        },
+        "transform": {
+          "x": 1145.7753543295178,
+          "y": 0.702,
+          "z": 25,
+          "yaw": -3.141592653589793
+        },
+        "infected": {
+          "state": "attack",
+          "pathGrid": -1,
+          "grabNextTick": 0,
+          "combo": 0,
+          "targetId": 0,
+          "activeUntil": 448,
+          "speed": 4.2,
+          "until": 428,
+          "cooldown": 0,
+          "attackId": 7,
+          "special": "lunge",
+          "hidden": false,
+          "deadAt": -1,
+          "recoverAt": -1,
+          "downs": 0,
+          "revived": false,
+          "reviveUsed": false,
+          "legLost": false,
+          "detached": false,
+          "pack": 0,
+          "packIndex": 0,
+          "birds": 0,
+          "birdPositions": [
+            1149,
+            3,
+            25,
+            1145.5252625542023,
+            3,
+            26.35098092731253,
+            1147.174850534038,
+            3,
+            23.007657837933778,
+            1148.2168788158344,
+            3,
+            26.587200663927977,
+            1145.0305727092532,
+            3,
+            24.651637908976745,
+            1148.6875093566055,
+            3,
+            23.92654195640039,
+            1146.4807940524265,
+            3,
+            26.931430864412288,
+            1146.0781830963617,
+            3,
+            23.225104623881485,
+            1148.8786438535378,
+            3,
+            25.68607380912279,
+            1145.1513104655082,
+            3,
+            25.763116639224112,
+            1147.8476878286313,
+            3,
+            23.18852950750216,
+            1147.5985725512624,
+            3,
+            26.90832672801996,
+            1145.2695748159956,
+            3,
+            23.99718960787029,
+            1148.9533502647403,
+            3,
+            24.570555308288743,
+            1145.849746403833,
+            3,
+            26.636128559895326,
+            1146.7429717856903,
+            3,
+            23.016584638294635,
+            1148.5293027284358,
+            3,
+            26.288888344581864,
+            1145.0017082147249,
+            3,
+            25.08264345649835,
+            1148.4176529949393,
+            3,
+            23.589234255469876,
+            1146.9076258284908,
+            3,
+            26.997865614208827
+          ],
+          "birdAlive": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scatterUntil": 0,
+          "variant": "inf.bathrobe-neighbor",
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "dx": -1,
+          "dz": 0,
+          "grabHits": 1,
+          "grabUntil": 0,
+          "grabX": 0,
+          "grabZ": 0,
+          "perched": false,
+          "heardTargetId": 1,
+          "pathRetryAt": 0,
+          "l4ArmyApproach": false,
+          "provoked": {
+            "id": 1,
+            "until": 1137
+          }
+        },
+        "combat": {
+          "radius": 0.35,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": true,
+          "damageMultiplier": 1,
+          "statuses": [],
+          "reaction": {
+            "index": 1,
+            "started": 417,
+            "until": 418,
+            "direction": {
+              "x": 1,
+              "z": 0
+            },
+            "from": {
+              "x": 1146.0335899875633,
+              "z": 25
+            },
+            "to": {
+              "x": 1146.0335899875633,
+              "z": 25
+            },
+            "heavy": false
+          }
+        },
+        "locomotion": {
+          "vx": -1.932581004884205,
+          "vz": 0,
+          "ax": 5.873260695148717,
+          "az": 0,
+          "omega": -1.099999999999998,
+          "updatedAt": 423
+        },
+        "motion": {
+          "velocity": {
+            "x": -1.9325810048849235,
+            "z": 0
+          },
+          "speed": 1.9325810048849235,
+          "moving": true,
+          "distance": 12.321645670482233
+        }
+      },
+      "observations": [
+        {
+          "entity": {
+            "id": 81,
+            "kind": "infected",
+            "archetype": "infected.runner",
+            "faction": "infected",
+            "health": {
+              "current": 40,
+              "max": 60
+            },
+            "transform": {
+              "x": 1145.9138972439205,
+              "y": 0.702,
+              "z": 25,
+              "yaw": -3.141592653589793
+            },
+            "infected": {
+              "state": "attack",
+              "pathGrid": -1,
+              "grabNextTick": 0,
+              "combo": 0,
+              "targetId": 0,
+              "activeUntil": 448,
+              "speed": 4.2,
+              "until": 428,
+              "cooldown": 0,
+              "attackId": 7,
+              "special": "lunge",
+              "hidden": false,
+              "deadAt": -1,
+              "recoverAt": -1,
+              "downs": 0,
+              "revived": false,
+              "reviveUsed": false,
+              "legLost": false,
+              "detached": false,
+              "pack": 0,
+              "packIndex": 0,
+              "birds": 0,
+              "birdPositions": [
+                1149,
+                3,
+                25,
+                1145.5252625542023,
+                3,
+                26.35098092731253,
+                1147.174850534038,
+                3,
+                23.007657837933778,
+                1148.2168788158344,
+                3,
+                26.587200663927977,
+                1145.0305727092532,
+                3,
+                24.651637908976745,
+                1148.6875093566055,
+                3,
+                23.92654195640039,
+                1146.4807940524265,
+                3,
+                26.931430864412288,
+                1146.0781830963617,
+                3,
+                23.225104623881485,
+                1148.8786438535378,
+                3,
+                25.68607380912279,
+                1145.1513104655082,
+                3,
+                25.763116639224112,
+                1147.8476878286313,
+                3,
+                23.18852950750216,
+                1147.5985725512624,
+                3,
+                26.90832672801996,
+                1145.2695748159956,
+                3,
+                23.99718960787029,
+                1148.9533502647403,
+                3,
+                24.570555308288743,
+                1145.849746403833,
+                3,
+                26.636128559895326,
+                1146.7429717856903,
+                3,
+                23.016584638294635,
+                1148.5293027284358,
+                3,
+                26.288888344581864,
+                1145.0017082147249,
+                3,
+                25.08264345649835,
+                1148.4176529949393,
+                3,
+                23.589234255469876,
+                1146.9076258284908,
+                3,
+                26.997865614208827
+              ],
+              "birdAlive": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "scatterUntil": 0,
+              "variant": "inf.bathrobe-neighbor",
+              "path": [],
+              "pathIndex": 0,
+              "goal": -1,
+              "dx": -1,
+              "dz": 0,
+              "grabHits": 1,
+              "grabUntil": 0,
+              "grabX": 0,
+              "grabZ": 0,
+              "perched": false,
+              "heardTargetId": 1,
+              "pathRetryAt": 0,
+              "l4ArmyApproach": false,
+              "provoked": {
+                "id": 1,
+                "until": 1137
+              }
+            },
+            "combat": {
+              "radius": 0.35,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": true,
+              "damageMultiplier": 1,
+              "statuses": [],
+              "reaction": {
+                "index": 1,
+                "started": 417,
+                "until": 418,
+                "direction": {
+                  "x": 1,
+                  "z": 0
+                },
+                "from": {
+                  "x": 1146.0335899875633,
+                  "z": 25
+                },
+                "to": {
+                  "x": 1146.0335899875633,
+                  "z": 25
+                },
+                "heavy": false
+              }
+            },
+            "locomotion": {
+              "vx": -2.3125896959509467,
+              "vz": 0,
+              "ax": 5.053953394728021,
+              "az": 0,
+              "omega": -1.899999999999998,
+              "updatedAt": 419
+            },
+            "motion": {
+              "velocity": {
+                "x": -2.3125896959481906,
+                "z": 0
+              },
+              "speed": 2.3125896959481906,
+              "moving": true,
+              "distance": 12.183102756079528
+            }
+          },
+          "render": {
+            "count": 1,
+            "draws": 3,
+            "bars": [
+              {
+                "id": 81,
+                "fraction": 0.6666666666666666,
+                "x": 719.4731840615084,
+                "y": 335.73733013223205,
+                "width": 64,
+                "height": 8,
+                "gap": 2,
+                "anchor": [
+                  1145.7189564794974,
+                  1.3077563132789471,
+                  24.86218977875274
+                ]
+              }
+            ]
+          },
+          "input": {
+            "move": {
+              "x": 0,
+              "z": 0
+            },
+            "aim": {
+              "x": 1,
+              "z": 0
+            },
+            "aimSource": "pointer",
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false,
+            "cancelMove": false,
+            "brake": false,
+            "aimPoint": {
+              "x": 1145.9524404055196,
+              "z": 25
+            },
+            "mouseAttack": true,
+            "pointerTarget": true,
+            "selectorSide": "RIGHT",
+            "navigation": true
+          },
+          "control": {
+            "moveTarget": null,
+            "attack": {
+              "id": 81,
+              "side": "RIGHT",
+              "started": true,
+              "mouseAttack": true
+            }
+          },
+          "pick": [
+            {
+              "id": 81,
+              "score": 0.16140565815012567,
+              "depth": 27.178112381583656,
+              "drawn": true
+            }
+          ],
+          "hits": [
+            {
+              "tick": 141,
+              "attackId": 1,
+              "actionId": "weapon.pistol",
+              "sourceId": 1,
+              "targetId": 75,
+              "position": {
+                "x": 1145.9923874430617,
+                "y": 0.702,
+                "z": 25,
+                "yaw": -3.141592653589793
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "bullet",
+              "type": "combat.hit"
+            },
+            {
+              "tick": 190,
+              "attackId": 2,
+              "actionId": "weapon.pistol",
+              "sourceId": 1,
+              "targetId": 76,
+              "position": {
+                "x": 1146.0335899875633,
+                "y": 0.702,
+                "z": 25,
+                "yaw": -3.141592653589793
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "bullet",
+              "type": "combat.hit"
+            },
+            {
+              "tick": 237,
+              "attackId": 3,
+              "actionId": "weapon.pistol",
+              "sourceId": 1,
+              "targetId": 77,
+              "position": {
+                "x": 1145.9923874430617,
+                "y": 0.702,
+                "z": 25,
+                "yaw": -3.141592653589793
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "bullet",
+              "type": "combat.hit"
+            },
+            {
+              "tick": 282,
+              "attackId": 4,
+              "actionId": "weapon.pistol",
+              "sourceId": 1,
+              "targetId": 78,
+              "position": {
+                "x": 1146.075846883958,
+                "y": 0.702,
+                "z": 25,
+                "yaw": -3.141592653589793
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "bullet",
+              "type": "combat.hit"
+            },
+            {
+              "tick": 327,
+              "attackId": 5,
+              "actionId": "weapon.pistol",
+              "sourceId": 1,
+              "targetId": 79,
+              "position": {
+                "x": 1146.075846883958,
+                "y": 0.702,
+                "z": 25,
+                "yaw": -3.141592653589793
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "bullet",
+              "type": "combat.hit"
+            },
+            {
+              "tick": 373,
+              "attackId": 6,
+              "actionId": "weapon.pistol",
+              "sourceId": 1,
+              "targetId": 80,
+              "position": {
+                "x": 1146.0335899875633,
+                "y": 0.702,
+                "z": 25,
+                "yaw": -3.141592653589793
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "bullet",
+              "type": "combat.hit"
+            },
+            {
+              "tick": 417,
+              "attackId": 7,
+              "actionId": "weapon.pistol",
+              "sourceId": 1,
+              "targetId": 81,
+              "position": {
+                "x": 1146.0335899875633,
+                "y": 0.702,
+                "z": 25,
+                "yaw": -3.141592653589793
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "knockback": 0,
+              "amount": 20,
+              "damageType": "bullet",
+              "type": "combat.hit"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "repair": {
+    "id": 82,
+    "heldMs": 8000,
+    "stalledDistance": 1.0799999999999985,
+    "hpBeforeRepair": 60,
+    "commanded": null,
+    "repaired": {
+      "entity": {
+        "id": 82,
+        "kind": "infected",
+        "archetype": "infected.runner",
+        "faction": "infected",
+        "health": {
+          "current": 40,
+          "max": 60
+        },
+        "transform": {
+          "x": 1146.0093699354945,
+          "y": 0.7,
+          "z": 12.336812457177244,
+          "yaw": 1.321890077676009
+        },
+        "infected": {
+          "state": "chase",
+          "pathGrid": -1,
+          "grabNextTick": 0,
+          "combo": 0,
+          "targetId": 0,
+          "activeUntil": 918,
+          "speed": 4.2,
+          "until": 898,
+          "cooldown": 966,
+          "attackId": 13,
+          "special": "lunge",
+          "hidden": false,
+          "deadAt": -1,
+          "recoverAt": -1,
+          "downs": 0,
+          "revived": false,
+          "reviveUsed": false,
+          "legLost": false,
+          "detached": false,
+          "pack": 0,
+          "packIndex": 0,
+          "birds": 0,
+          "birdPositions": [
+            1149,
+            3,
+            25,
+            1145.5252625542023,
+            3,
+            26.35098092731253,
+            1147.174850534038,
+            3,
+            23.007657837933778,
+            1148.2168788158344,
+            3,
+            26.587200663927977,
+            1145.0305727092532,
+            3,
+            24.651637908976745,
+            1148.6875093566055,
+            3,
+            23.92654195640039,
+            1146.4807940524265,
+            3,
+            26.931430864412288,
+            1146.0781830963617,
+            3,
+            23.225104623881485,
+            1148.8786438535378,
+            3,
+            25.68607380912279,
+            1145.1513104655082,
+            3,
+            25.763116639224112,
+            1147.8476878286313,
+            3,
+            23.18852950750216,
+            1147.5985725512624,
+            3,
+            26.90832672801996,
+            1145.2695748159956,
+            3,
+            23.99718960787029,
+            1148.9533502647403,
+            3,
+            24.570555308288743,
+            1145.849746403833,
+            3,
+            26.636128559895326,
+            1146.7429717856903,
+            3,
+            23.016584638294635,
+            1148.5293027284358,
+            3,
+            26.288888344581864,
+            1145.0017082147249,
+            3,
+            25.08264345649835,
+            1148.4176529949393,
+            3,
+            23.589234255469876,
+            1146.9076258284908,
+            3,
+            26.997865614208827
+          ],
+          "birdAlive": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scatterUntil": 0,
+          "variant": "inf.bbq-dad",
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "dx": 0.2791451917539892,
+          "dz": -0.9602489062324563,
+          "grabHits": 1,
+          "grabUntil": 0,
+          "grabX": 0,
+          "grabZ": 0,
+          "perched": false,
+          "heardTargetId": 0,
+          "pathRetryAt": 0,
+          "l4ArmyApproach": false,
+          "provoked": {
+            "id": 1,
+            "until": 1668
+          }
+        },
+        "combat": {
+          "radius": 0.35,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": false,
+          "damageMultiplier": 1,
+          "statuses": [],
+          "reaction": {
+            "index": 2,
+            "started": 948,
+            "until": 949,
+            "direction": {
+              "x": 0.12712928055041087,
+              "z": 0.9918861557793489
+            },
+            "from": {
+              "x": 1146.0076727483488,
+              "z": 12.323570689220668
+            },
+            "to": {
+              "x": 1146.0076727483488,
+              "z": 12.323570689220668
+            },
+            "heavy": false
+          }
+        },
+        "locomotion": {
+          "vx": 0.5750358148202003,
+          "vz": -2.435537713142222,
+          "ax": -2.104164450768655,
+          "az": 5.5708501638108405,
+          "omega": 0.20460033425308446,
+          "updatedAt": 948
+        },
+        "motion": {
+          "velocity": {
+            "x": 0.6768670435576496,
+            "z": -1.6410316357476873
+          },
+          "speed": 1.7751433249682134,
+          "moving": true,
+          "distance": 26.95226131782438
+        }
+      },
+      "bars": {
+        "count": 1,
+        "draws": 3,
+        "bars": [
+          {
+            "id": 82,
+            "fraction": 0.6666666666666666,
+            "x": 612.1342380484721,
+            "y": 279.07523610572565,
+            "width": 64,
+            "height": 8,
+            "gap": 2,
+            "anchor": [
+              1145.5420696002213,
+              1.7192723461177888,
+              11.801603959199499
+            ]
+          }
+        ]
+      },
+      "pick": [
+        {
+          "id": 82,
+          "score": 0.05434824700617277,
+          "depth": 27.56811808844048,
+          "drawn": true
+        }
+      ]
+    }
+  }
+}
