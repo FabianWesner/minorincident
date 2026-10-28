@@ -3,7 +3,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
 import { assetIO } from './io';
 import { consolidateMeshopt } from './compress';
 import type { Document } from '@gltf-transform/core';
@@ -32,9 +32,11 @@ for (const name of readdirSync(root).filter(name => /^(amb|inf)\.(lion|gorilla|e
   const file = join(root, name), before = readFileSync(file), after = await consolidateMeshopt(before, true);
   assert.deepEqual(content(await io.readBinary(after)), content(await io.readBinary(before)), `${name}: decoded content changed`);
   assert.ok(after.length <= before.length, `${name}: byte regression`);
+  const lod = Number(name.match(/\.lod([012])/)![1]);
+  assert.ok(after.length <= [600000, 250000, 150000][lod], `${name}: LOD byte budget`);
   writeFileSync(file, after);
   rows.push({ name, before: before.length, after: after.length, saved: before.length - after.length });
 }
-mkdirSync(out.slice(0, out.lastIndexOf('/')), { recursive: true });
+mkdirSync(dirname(out), { recursive: true });
 writeFileSync(out, JSON.stringify({ method: 'Lossless meshopt buffer consolidation and compact encoder; all decoded attributes, oriented triangles, nodes, bind matrices and KTX2 bytes asserted identical.', before: rows.reduce((s, r) => s + r.before, 0), after: rows.reduce((s, r) => s + r.after, 0), rows }, null, 2) + '\n');
 console.log(`${rows.length} zoo delivery files: ${rows.reduce((s, r) => s + r.saved, 0)} bytes removed; decoded content identical`);

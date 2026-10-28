@@ -44,3 +44,8 @@ export async function observeWithin<T>(operation: Promise<T>, timeoutMs = 15_000
     })]);
   } finally { clearTimeout(timer); }
 }
+
+/** A held ground click cannot turn into a body command just by moving the pointer. */
+export function needsTargetInput(held: number | null, commanded: number | null, desired: number, stalledMs: number, sinceClickMs: number): boolean {
+  return held !== desired || commanded !== desired && stalledMs > 1000 && sinceClickMs > 1000;
+}
