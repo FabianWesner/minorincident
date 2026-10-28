@@ -28,7 +28,7 @@ export function interleaveTexturedCrowd(geometry: BufferGeometry): void {
 /** Interleave the immutable per-vertex surface (whichever of position/normal/color/uv/_parts/_skin exist) into one
  * buffer. Frozen corpse pages bind placement, colour and three instance channels on top (Q-201: <= 7 buffers). */
 export function interleaveCrowdSurface(geometry: BufferGeometry): void {
-  const names = ['position', 'normal', 'color', 'uv', '_parts', '_skin', '_gripPosition'].filter(name => geometry.hasAttribute(name));
+  const names = ['position', 'normal', 'color', 'uv', '_parts', '_skin'].filter(name => geometry.hasAttribute(name));
   const attributes = names.map(name => geometry.getAttribute(name));
   const stride = attributes.reduce((sum, a) => sum + a.itemSize, 0);
   const buffer = new InterleavedBuffer(new Float32Array(attributes[0].count * stride), stride);

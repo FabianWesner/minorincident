@@ -186,6 +186,19 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean, coveredUnif
     const choices = candidates.map(rgb => lab(...rgb));
     colours[name] = original ? choices.sort((a, b) => dE(a, original) - dE(b, original))[0] : choices[0];
   }
+  if (authoredPalette?.hair && authoredPalette.hair.length > 1) {
+    // Back-of-head paint can inherit the blouse's pink/red across the neck.
+    // A named, multi-swatch hair contract identifies this full hair mass;
+    // generic woodWarm exports can also carry a cap and retain their paint.
+    // Keep the measured face and eyes outside this repair.
+    const choices = authoredPalette.hair.map(rgb => lab(...rgb));
+    for (let i = 0; i < cls.length; i++) if (owner[i] === 1 && !face[i]) {
+      const source = at(i), reference = choices.reduce((best, colour) => dE(source, colour) < dE(source, best) ? colour : best);
+      const rgb = labToSrgb([reference[0] + Math.max(-8, Math.min(8, (source[0] - reference[0]) * .3)), reference[1], reference[2]]);
+      for (let c = 0; c < 3; c++) data[i * 4 + c] = rgb[c];
+      cls[i] = crowdRegion.authored;
+    }
+  }
   // Named story people retain their authored complexion rather than the per-person crowd palette.
   if (authoredSkin) {
     for (let i = 0; i < cls.length; i++) if (cls[i] === crowdRegion.skin) cls[i] = crowdRegion.skinMask;
@@ -219,7 +232,6 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean, coveredUnif
     }
     cls.set(next);
   }
-  if (authoredPalette) for (let i = 0; i < cls.length; i++) if (cls[i] === crowdRegion.hair || cls[i] === crowdRegion.shirt || cls[i] === crowdRegion.trousers) cls[i] = crowdRegion.authored;
   if (authoredPalette) {
     // The hat fitter reads vertex skin regions, not atlas alpha. Without this
     // stream bakeInfected treats the whole head (including hair) as bare skin,
@@ -236,8 +248,14 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean, coveredUnif
       if (part.getScalar(i) === head && !eyeBounds.isEmpty()) {
         point.fromArray(position.getElement(i, [])).applyMatrix4(inverse);
         const face = point.y >= centre.y - .28 && point.y <= eyeBounds.max.y + .025 && point.x >= centre.x - .26 && point.x <= eyeBounds.max.x + .04 && Math.abs(point.z - centre.z) <= span.z * .8;
-        values[i] = Number(face);
-        faceVertices.push({ i, distance: point.distanceToSquared(centre), key: point.toArray().map(value => Math.round(value * 1e5)).join(',') });
+        // Vertex region 4 names authored hair for the covered-scalp morph;
+        // it does not replace the sculpt's uncovered RGB with a crowd tint.
+        // The cast can paint pink/bloody streaks into a ponytail. Geometry
+        // outside the measured face must yield with the rest of that crown,
+        // otherwise those unclassified locks form a floating ring under wigs.
+        const hair = kind === crowdRegion.hair || !face;
+        values[i] = hair ? 4 : 1;
+        if (!hair) faceVertices.push({ i, distance: point.distanceToSquared(centre), key: point.toArray().map(value => Math.round(value * 1e5)).join(',') });
       }
     }
     // Far meshes may have no UV sample inside a narrow facial island. Keep a
@@ -249,6 +267,7 @@ export function classifyCrowdAtlas(doc: Document, garments: boolean, coveredUnif
     }
     prim.setAttribute('_CROWD_REGION', doc.createAccessor().setType('SCALAR').setArray(values));
   }
+  if (authoredPalette) for (let i = 0; i < cls.length; i++) if (cls[i] === crowdRegion.hair || cls[i] === crowdRegion.shirt || cls[i] === crowdRegion.trousers) cls[i] = crowdRegion.authored;
   if (coveredUniform) for (let i = 0; i < cls.length; i++) if (!skinEligible[i] && cls[i] === crowdRegion.skin) cls[i] = crowdRegion.authored;
   // Gutters take their nearest island's class: whole 4x4 blocks then carry one value, which keeps the alpha slice small.
   const out = cls.slice(), queue: number[] = [];

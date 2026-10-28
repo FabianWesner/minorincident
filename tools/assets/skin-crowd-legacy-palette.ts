@@ -6,7 +6,7 @@ import { palette as gamePalette } from '../../src/assets/palette';
 
 export function legacyCrowdPalette(document: Document): AuthoredCrowdPalette {
   const palette: AuthoredCrowdPalette = {}, votes = { shirt: new Map<string, number>(), trousers: new Map<string, number>() };
-  const colours = new Map<string, [number, number, number]>();
+  const colours = new Map<string, [number, number, number]>(), namedHair: [number, number, number][] = [];
   for (const material of document.getRoot().listMaterials()) {
     // AssetMaterials resolves pal_* by token, ignoring the exporter tint.
     // Matching that tint made the new hair much darker than the actual old body.
@@ -15,7 +15,9 @@ export function legacyCrowdPalette(document: Document): AuthoredCrowdPalette {
     colours.set(material.getName(), rgb);
     if (/infectedSkin|^pal_skin/.test(material.getName())) palette.skin = [rgb];
     if (/woodWarm|hairBrown/.test(material.getName())) palette.hair = [rgb];
+    if (/^pal_hair/.test(material.getName())) namedHair.push(rgb);
   }
+  if (namedHair.length) palette.hair = namedHair;
   for (const node of document.getRoot().listNodes()) for (const primitive of node.getMesh()?.listPrimitives() ?? []) {
     const name = primitive.getMaterial()?.getName() ?? '';
     if (/blood|skin|infectedSkin|eye|woodWarm|hair/i.test(name)) continue;

@@ -97,7 +97,16 @@ try {
           const image = texture.image as { width?: number; height?: number; data?: { byteLength: number } };
           if (image?.width && image.height) decodedBytes += (texture.mipmaps as { data?: { byteLength: number } }[]).reduce((sum, mip) => sum + (mip.data?.byteLength ?? 0), 0) || image.data?.byteLength || Math.ceil(image.width * image.height * 4 * (texture.generateMipmaps ? 4 / 3 : 1));
         }
-        return { decodedBytes, textureCount: textures.size, perf: window.__SS__!.perf(), render: window.__SS__!.getState().render,
+        const surfaces: unknown[] = [];
+        game.view.scene.traverse(node => {
+          const mesh = node as import('three').InstancedMesh;
+          if (!mesh.geometry?.hasAttribute('_parts')) return;
+          const g = mesh.geometry, parts = g.getAttribute('_parts'), variant = g.getAttribute('_variant');
+          const headFlags: Record<string, number> = {};
+          for (let i = 0; i < parts.count; i++) if (parts.getX(i) === 3) { const key = `${parts.getY(i)}/${parts.getW(i)}`; headFlags[key] = (headFlags[key] ?? 0) + 1; }
+          surfaces.push({ name: mesh.name, count: mesh.count, morph: g.userData.headwearMorph, grip: g.hasAttribute('_gripPosition'), headFlags, variants: variant ? Array.from({ length: mesh.count }, (_, i) => variant.getX(i)) : [] });
+        });
+        return { decodedBytes, textureCount: textures.size, perf: window.__SS__!.perf(), render: window.__SS__!.getState().render, surfaces,
           models: [...game.world.entities.values()].filter(e => e.infected && e.health.current > 0).map(e => ({ id: e.id, model: e.appearance?.asset ?? e.infected!.model ?? e.infected!.variant, accessory: resolveCrowdAppearance(e).accessory, at: { ...e.transform } })) };
       });
       for (const model of models) assert.equal(resources.models.filter(e => e.model === model).length, 4, `${model} must have four actual L9 bodies`);
