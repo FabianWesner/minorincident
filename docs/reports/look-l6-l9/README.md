@@ -39,3 +39,11 @@ QA batch 27, verbatim: "L6, L9 and L10 read well but are dark and sparse". Base:
   frames > 200 ms are on loading cards (L9 briefing load 1083 ms, L10 handover 750 ms), none in play.
 - Quiet paired cold load (`tools/perf/l9-load-ab.ts`, public builds, 5 pairs, WebGPU low): L9 main 5192 ms -> 5227 ms (+0.7 %),
   L6 main 1993 ms -> 2042 ms (+2.5 %); both within +5 %.
+
+## Must-fix (orchestrator 10-29: no pass-through pieces for the APC)
+- L9 pieces are shoulder-only: footprint edge >= 2.2 m past every lane edge (tank half width 1.7 + 0.5), 30 m clear of every
+  route bend/fork. The real-input driver cuts across country, so they also collide: `ChunkResidency` owns each L9 decor box
+  as a physics-only static (vehicle/body collision, no nav/cover wall, no entity), nav hash and pushable ids unchanged
+  (unit guard). Scene Lab check: the APC stops against (rides up on) a suitcase instead of passing through.
+- `qa-l9-q3-stream-retire` fails vehicleSlipMaxDeg 80.1 > 20 identically with the decor colliders switched off (decor is
+  otherwise sim-neutral), so it is not caused by this lane; the other 56 L9 Scene Lab rows pass.

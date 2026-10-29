@@ -34,6 +34,11 @@ export class ChunkResidency {
     for (const c of chunks) { this.lookup.set(c.id, c); this.cells.set(this.cellKey(c.origin[0], c.origin[1]), c); }
     for (const d of world.districts!.districts) for (const c of [...d.decay.colliders, ...d.blockers.map(aabb => ({ aabb, walkable: false }))]) { const a = c.aabb; this.own({ ...a, min: [a.min[0] + d.origin[0], a.min[1], a.min[2] + d.origin[1]], max: [a.max[0] + d.origin[0], a.max[1], a.max[2] + d.origin[1]] }, c.walkable ?? false); }
     for (const a of world.districts!.boundaries) this.own(a);
+    // look-l6-l9: the render-only L9 decor (src/levels/decor.ts) gets vehicle/body collision as physics-only statics: no nav
+    // or cover wall, no entity, no district collider, so gameplay ids and the nav hash stay unchanged (no driving through luggage).
+    for (const d of world.districts!.districts) if (d.id === 'D-CROSSING') for (const p of d.decay.placements) if (p.decor) {
+      const a = p.visualAabb; this.own({ physicsOnly: true, min: [a.min[0] + d.origin[0], a.min[1], a.min[2] + d.origin[1]], max: [a.max[0] + d.origin[0], a.max[1], a.max[2] + d.origin[1]] });
+    }
   }
   private own(aabb: Aabb, walkable = false): void {
     const chunks = this.chunks.filter(c => aabb.min[0] <= c.max[0] && aabb.max[0] >= c.origin[0] && aabb.min[2] <= c.max[1] && aabb.max[2] >= c.origin[1]).map(c => c.id);
