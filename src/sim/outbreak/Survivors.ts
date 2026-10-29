@@ -25,7 +25,7 @@ export function updateSurvivor(world: SimWorld, e: EntitySnapshot): boolean {
   c.supportFeet = !!ingress;
   if (ingress) {
     s.cover = false;
-    if (c.story?.clip === 'npc-cower') c.story = null;
+    if (c.story?.clip === 'npc-cower' || c.story?.clip === 'shoot' || c.story?.clip === 'swing') c.story = null;
     if (dist(me, ingress) > .15) world.npcs!.move(e, ingress, f.runMs, c, .1);
     world.spatial.set(e.id, me.x, me.z);
     return true;

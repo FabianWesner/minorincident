@@ -217,6 +217,10 @@ export class Outbreak {
       }
       if (c.vehicleYield && c.vehicleYield.until <= tick) delete c.vehicleYield;
       if (world.scenario === 'L5') world.combat?.pickups.armSurvivor(e);
+      // The Metro queue owns rescued followers once the courier enters.
+      // Self-defence otherwise holds an armed straggler outside to finish a
+      // street fight before updateSurvivor can give it the ingress route.
+      if (c.survivor && world.missions?.state.l5?.metroAt && updateSurvivor(world, e)) continue;
       if ((!c.ally || c.survivor) && defendHuman(world, e)) continue;
       // E20 §5.2: allied fighters engage visible infected instead of fleeing (still biteable humans).
       if (c.survivor && updateSurvivor(world, e)) continue;
