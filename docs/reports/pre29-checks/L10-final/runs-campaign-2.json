@@ -1,0 +1,153 @@
+[
+  {
+    "level": "L10",
+    "entry": "continue",
+    "heroine": "female",
+    "finished": false,
+    "skipped": [],
+    "wallSeconds": 480,
+    "simSeconds": 475,
+    "maxNoProgressSeconds": 2.816666666666667,
+    "deaths": 0,
+    "assists": 0,
+    "attacks": {
+      "weapon.army-mg": 91
+    },
+    "weaponsStart": [
+      "weapon.fire-axe",
+      "weapon.fire-axe",
+      "weapon.pistol",
+      "weapon.shotgun",
+      "weapon.army-mg"
+    ],
+    "weaponsEnd": [
+      "weapon.fire-axe",
+      "weapon.pistol",
+      "weapon.shotgun",
+      "weapon.army-mg",
+      "weapon.rocket-launcher"
+    ],
+    "steps": [
+      {
+        "id": "research-campus",
+        "text": "Reach the research campus · 611 m",
+        "tick": 3,
+        "marker": {
+          "anchor": "cure-research-entry",
+          "ring": {
+            "x": 2467,
+            "y": 0,
+            "z": -5
+          },
+          "drawn": [
+            2467,
+            0,
+            -5
+          ],
+          "playerY": 0.7049999833106995,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "research",
+        "text": "Play the research recording · 246 m",
+        "tick": 9548,
+        "marker": {
+          "anchor": "cure-terminal",
+          "ring": {
+            "x": 2707,
+            "y": 0,
+            "z": 41.25
+          },
+          "drawn": [
+            2707,
+            0,
+            41.25
+          ],
+          "playerY": 0.7200000286102295,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "cure",
+        "text": "Pack the cure canister · 6 m",
+        "tick": 13624,
+        "marker": {
+          "anchor": "cure-canister",
+          "ring": {
+            "x": 2713,
+            "y": 0,
+            "z": 41
+          },
+          "drawn": [
+            2713,
+            0,
+            41
+          ],
+          "playerY": 0.7200000286102295,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "research-exit",
+        "text": "Get the cure out of the laboratory · 94 m",
+        "tick": 13755,
+        "marker": {
+          "anchor": "cure-research",
+          "ring": {
+            "x": 2807,
+            "y": 0,
+            "z": 45
+          },
+          "drawn": [
+            2807,
+            0,
+            45
+          ],
+          "playerY": 0.7200000286102295,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "destroyed-corridor",
+        "text": "Carry the cure down the corridor and grab the rocket launcher · 140 m",
+        "tick": 15076,
+        "marker": {
+          "anchor": "cure-corridor",
+          "ring": {
+            "x": 2937,
+            "y": 0,
+            "z": -5
+          },
+          "drawn": [
+            2937,
+            0,
+            -5
+          ],
+          "playerY": 0.7200000286102295,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "dispersal-complex",
+        "text": "Bring the cure to the dispersal complex · 760 m",
+        "tick": 17059,
+        "marker": {
+          "anchor": "cure-complex",
+          "ring": {
+            "x": 3697,
+            "y": 0,
+            "z": -25
+          },
+          "drawn": [
+            3697,
+            0,
+            -25
+          ],
+          "playerY": 0.7200000286102295,
+          "pinVisible": true
+        }
+      }
+    ]
+  }
+]

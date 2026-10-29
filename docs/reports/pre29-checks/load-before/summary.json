@@ -1,0 +1,140 @@
+{
+  "method": "Alternating paired cold menu loads, fresh empty contexts, native Metal WebGPU, one exclusive quiet-run reservation; low n=5 medians, high n=1; no profiler",
+  "baselineRevision": "763b56c876f1245cc21372723e3b30405497f4f2",
+  "currentRevision": "3fbd19897f6773cd699e8d36163e82a57a3879e1",
+  "summaries": [
+    {
+      "level": "L8",
+      "quality": "low",
+      "baseline": {
+        "n": 5,
+        "median": 3843,
+        "samples": [
+          3840,
+          3842.1000003814697,
+          3843,
+          3859.5,
+          3891.300000190735
+        ],
+        "bytes": [
+          12380135,
+          12157379,
+          12157379,
+          12157379,
+          12157379
+        ]
+      },
+      "current": {
+        "n": 5,
+        "median": 4194.89999961853,
+        "samples": [
+          4174.199999809265,
+          4191.39999961853,
+          4194.89999961853,
+          4210.699999809265,
+          4326.300000190735
+        ],
+        "bytes": [
+          12157379,
+          12157379,
+          12157379,
+          12157379,
+          12157379
+        ]
+      },
+      "changePercent": 9.156908655179041
+    },
+    {
+      "level": "L10",
+      "quality": "low",
+      "baseline": {
+        "n": 5,
+        "median": 4909.199999809265,
+        "samples": [
+          4876,
+          4893,
+          4909.199999809265,
+          4910.699999809265,
+          4944
+        ],
+        "bytes": [
+          14347452,
+          14370876,
+          14347452,
+          14370876,
+          14370876
+        ]
+      },
+      "current": {
+        "n": 5,
+        "median": 4992.800000190735,
+        "samples": [
+          4975.799999237061,
+          4992.700000762939,
+          4992.800000190735,
+          5059.5,
+          5127.800000190735
+        ],
+        "bytes": [
+          14386604,
+          14415078,
+          14386604,
+          14410028,
+          14410028
+        ]
+      },
+      "changePercent": 1.7029251280191948
+    },
+    {
+      "level": "L8",
+      "quality": "high",
+      "baseline": {
+        "n": 1,
+        "median": 4524.200000762939,
+        "samples": [
+          4524.200000762939
+        ],
+        "bytes": [
+          12662149
+        ]
+      },
+      "current": {
+        "n": 1,
+        "median": 4942.300000190735,
+        "samples": [
+          4942.300000190735
+        ],
+        "bytes": [
+          11860730
+        ]
+      },
+      "changePercent": 9.241412832264029
+    },
+    {
+      "level": "L10",
+      "quality": "high",
+      "baseline": {
+        "n": 1,
+        "median": 5008,
+        "samples": [
+          5008
+        ],
+        "bytes": [
+          10280758
+        ]
+      },
+      "current": {
+        "n": 1,
+        "median": 5125.300000190735,
+        "samples": [
+          5125.300000190735
+        ],
+        "bytes": [
+          10292086
+        ]
+      },
+      "changePercent": 2.3422523999747424
+    }
+  ],
+  "currentRuntimeRevision": "28e7c1a8a167a2cd600f882c6ecaae63d2fe1ba8"
+}

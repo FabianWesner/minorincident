@@ -177,7 +177,7 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
         ),
       );
       for (const scene of scenes) {
-        const clone = scene.clone(true);
+        const clone = cloneLayoutGeometry(scene);
         // Baked layout nodes never move; avoid recomposing every hidden placement marker each frame.
         clone.traverse(o => { o.updateMatrix(); o.matrixAutoUpdate = false; });
         // PO 2026-10-12: the Grove back alleys were baked in the near-black UI token and read as a hole in the ground next to the
@@ -191,7 +191,6 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
         });
         // PO 10-13 "Flowers growing on stone": baked daisies on paths/paving are dropped (shared soil rule with the sim).
         stripStrayDecorations(clone, d.layout);
-        stripLayoutMarkers(clone);
         root.add(clone);
         if (d.layout.terrainChunks?.length) parts.terrainHorizon = clone;
       }
@@ -216,7 +215,7 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
       const crowns = new Map<string, Object3D[]>();
       const base = scenes[0];
       base?.updateMatrixWorld(true);
-      base?.traverse((o) => {
+      const reference = (o: Pick<Object3D, 'userData' | 'name' | 'matrixWorld'>) => {
         if (o.userData.foliageColors && o.userData.minTier <= deps.world.composition.tier && o.userData.maxTier >= deps.world.composition.tier) {
           const key = o.userData.foliageColors.join(":"), ref = new Object3D(); o.matrixWorld.decompose(ref.position, ref.quaternion, ref.scale);
           if (!crowns.has(key)) crowns.set(key, []); crowns.get(key)!.push(ref);
@@ -240,7 +239,19 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
         if (typeof o.userData.tint === 'string') reference.userData.tint = o.userData.tint;
         if (!references.has(key)) references.set(key, []);
         references.get(key)!.push(reference);
-      });
+      };
+      const markers = base?.userData.layoutMarkers as { extras: Record<string, unknown>[]; records: [string, number, number[] | null, number[] | null, number[] | null][] } | undefined;
+      if (markers) {
+        // Exact exporter TRS values and order, without GLTF's per-marker object
+        // hierarchy/promises. Only the final instance references are allocated.
+        const transform = new Object3D();
+        for (const [name, extras, position, rotation, scale] of markers.records) {
+          transform.position.fromArray(position ?? [0, 0, 0]);
+          transform.quaternion.fromArray(rotation ?? [0, 0, 0, 1]);
+          transform.scale.fromArray(scale ?? [1, 1, 1]); transform.updateMatrix();
+          reference({ name, userData: { name, ...markers.extras[extras] }, matrixWorld: transform.matrix });
+        }
+      } else base?.traverse(reference);
       // L2/L3 author their dressing (and L3 its per-placement decay variants) in the loaded layout copy. Their
       // references must use those placements, rather than the unchanged baked GLB empties.
       if (d.layout.terrainChunks?.length || deps.world.composition.id === 'L7' || deps.world.composition.id === 'L6' || deps.world.composition.id === 'L5' || deps.world.composition.id === 'L4' || deps.world.composition.id === 'L3' || deps.world.composition.id === 'L2' || lab) {
@@ -421,10 +432,13 @@ export function freezeBatch(batch: InstancedGroup): void {
 }
 /** Placement/crown data is read from the source GLB below. Its cloned empty
  * markers draw nothing, but otherwise enter every frame's matrix/shadow walk. */
-function stripLayoutMarkers(root: Object3D): void {
-  const markers: Object3D[] = [];
-  root.traverse(node => {
-    if (!(node instanceof Mesh) && !node.children.length && (typeof node.userData.assetId === 'string' || node.userData.foliageColors)) markers.push(node);
-  });
-  for (const marker of markers) marker.removeFromParent();
+/** Keep the source markers for reference assembly without allocating a second
+ * copy of thousands of invisible leaves that would immediately be discarded. */
+function cloneLayoutGeometry<T extends Object3D>(root: T): T {
+  const clone = root.clone(false);
+  for (const child of root.children) {
+    if (!(child instanceof Mesh) && !child.children.length && (typeof child.userData.assetId === 'string' || child.userData.foliageColors)) continue;
+    clone.add(cloneLayoutGeometry(child));
+  }
+  return clone;
 }

@@ -49,10 +49,14 @@ export function rocketAimPoint(player: { x: number; z: number }, enemy: { x: num
 
 /** A defensive walking goal derived from visible courier, console and enemy positions. */
 export function finaleDodgeGoal(level: string | null, step: string | null, player: { x: number; z: number }, console: { x: number; z: number } | null, enemy: { x: number; z: number; d: number }): { x: number; z: number } | null {
-  if (level !== 'L10' || (step !== 'hold' && step !== 'mega') || !console || enemy.d > 12) return null;
+  if (level !== 'L10' || (step !== 'hold' && step !== 'mega') || enemy.d > 12) return null;
   const angle = Math.atan2(player.z - enemy.z, player.x - enemy.x);
   const goals = [angle, angle + Math.PI / 2, angle - Math.PI / 2].map(a => ({ x: player.x + Math.cos(a) * 8, z: player.z + Math.sin(a) * 8 }));
   // Charging needs the console's 25 m disc. The completed-charge boss fight
   // can retreat farther and return to the visible release marker afterwards.
-  return step === 'mega' ? goals[0] : goals.find(g => Math.hypot(g.x - console.x, g.z - console.z) < 23) ?? console;
+  // A menu resume into the boss objective has not observed the charge marker.
+  // Free retreat needs no console position; only charging is tethered to it.
+  if (step === 'mega') return goals[0];
+  if (!console) return null;
+  return goals.find(g => Math.hypot(g.x - console.x, g.z - console.z) < 23) ?? console;
 }

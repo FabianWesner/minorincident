@@ -1,0 +1,126 @@
+{
+  "runtimeRevision": "4a7d04ef1a54d8982c09d7d16cbbe3924e60ed69",
+  "runtimeTrees": {
+    "src": "41b5bad4bab81a8052a79210c446f94aba5b2a2d",
+    "public": "c82ec2806c5bbaeb3cfd35c64c970eb13254faf4"
+  },
+  "driverRevision": "78b270a5835fa72a3dbd0b714dc0d55d9f606939",
+  "driverFilesSha256": {
+    "tools/playtest/session.ts": "5fa1f8e6001f9f8774a2ad3bd9074307477a0837891a218c39454f06b7b114ec",
+    "tools/playtest/combat.ts": "d4c736903abda87dbab24ff2126a97ebb58a9546ba0ee6ac66ba3d8e5e2cdfad"
+  },
+  "backend": "webgpu",
+  "quality": "low",
+  "zoom": 1.5,
+  "frameGateMs": 200,
+  "method": "Full physical keyboard/mouse play from the level menu. No skipped objectives, god mode, teleports or world-state writes. Eight-minute pool segments resume ordinary checkpoints through the menu.",
+  "rows": [
+    {
+      "level": "L8",
+      "evidence": "L8-indexed",
+      "finished": true,
+      "segments": 1,
+      "wallSeconds": 94,
+      "deaths": 0,
+      "skips": [],
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "gameplayFramesOver200": [],
+      "observedSteps": [
+        "escape",
+        "depart"
+      ]
+    },
+    {
+      "level": "L10",
+      "evidence": "L10-final",
+      "finished": true,
+      "segments": 5,
+      "wallSeconds": 2138,
+      "deaths": 33,
+      "skips": [],
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 2,
+        "P3": 0
+      },
+      "gameplayFramesOver200": [],
+      "observedSteps": [
+        "residential-fringe",
+        "industrial-area",
+        "military-zone",
+        "research-campus",
+        "research",
+        "cure",
+        "research-exit",
+        "destroyed-corridor",
+        "dispersal-complex",
+        "install",
+        "hold",
+        "mega",
+        "release",
+        "epilogue",
+        "credits"
+      ]
+    }
+  ],
+  "completedObjectives": [
+    "crash",
+    "residential-fringe",
+    "industrial-area",
+    "military-zone",
+    "research-campus",
+    "research",
+    "cure",
+    "research-exit",
+    "destroyed-corridor",
+    "dispersal-complex",
+    "install",
+    "hold",
+    "mega",
+    "release",
+    "epilogue",
+    "credits"
+  ],
+  "endingStates": {
+    "charge-active": true,
+    "console-held": true,
+    "terminal-read": true,
+    "cure-carried": false,
+    "cure-installed": true,
+    "charge-ready": true,
+    "mega-dead": true,
+    "cure-released": true,
+    "epilogue-finished": true,
+    "credits-finished": true,
+    "anchor-unavailable": false
+  },
+  "notes": [
+    "The crash objective completed automatically at tick 1 before the first polling observation; final mission truth proves all 16 objectives completed.",
+    "Death counts use the terminal mission total, because finishLevel replaces its local counter with that cumulative value. Summing segment counters would double-count deaths.",
+    "L10 had 33 checkpoint deaths before the driver resume fix and two retained P2 enemy-unhittable diagnostics. Segment 5 retained the mandatory target, reset restored-HP observations, and allowed free retreat without a remembered console; it completed with no issues. No navigation or dressing-route blocker was reported."
+  ],
+  "validation": [
+    "npm run typecheck: pass",
+    "npm run lint: pass",
+    "npm run test:unit: 105/105 passed"
+  ],
+  "loadStatus": "PASS: L8 +3.79% low / +1.14% high; L10 +0.63% low / +2.94% high.",
+  "runtimeRevisionByLevel": {
+    "L8": "4a7d04ef1a54d8982c09d7d16cbbe3924e60ed69",
+    "L10": "01535155b91dc7e67ec323319ff9c02ea766a848"
+  },
+  "L10PackingIsolation": "The final marker-table branch is used only by D-ZOO. D-CURE still follows the original base.traverse(reference) path, with unchanged L10 assets; its complete final-render run is retained under L10-final.",
+  "heightLookupEquivalence": {
+    "runtimeRevision": "4a7d04ef1a54d8982c09d7d16cbbe3924e60ed69",
+    "referenceRevision": "3a7305e9e",
+    "evidence": "height-equivalence.json",
+    "result": "All ten production worlds have exactly identical ordered height-edge objects. The only new runtime change since the complete L10 run indexes the loading-time solid lookup; output geometry and gameplay are unchanged. Fresh L8 full input run on this revision also passes."
+  },
+  "measuredRuntimeRevision": "4a7d04ef1a54d8982c09d7d16cbbe3924e60ed69"
+}
