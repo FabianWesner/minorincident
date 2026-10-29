@@ -1016,12 +1016,33 @@ for p in l.data['placements']:
 # Q-234: join the spaced R3 barricade colliders after dressing so generated
 # IDs and clearance decisions stay stable. Both detour lanes remain open.
 l.data['colliders'].append(dict(id='r3-blocked-yard-continuous', aabb=dict(min=[1515.36,0,-26.5], max=[1518.64,1.5,66.5]), minTier=0, maxTier=6))
-# Q-240: fill the visible gaps only after dressing, so all existing placements, IDs,
-# clearance decisions and colliders stay identical. The continuous strip remains authoritative.
+# Q-240: an improvised yard line, only in the 30 gaps between the authored R3 barricades.
+# Add it after dressing so existing IDs, clearance decisions and colliders stay identical.
+# Sandbags, crate stacks, salvaged fence panels and two dumpsters break up the repeated furniture.
 _gap_colliders = len(l.data['colliders'])
-for i in range(30):
-    l.place('decay.makeshift-barricade', [1517,0,-23.5 + i*3])
+_gap_rng = random.Random(240)
+_gap_kinds = ['sacks', 'crates', 'panel', 'sacks', 'crates', 'fence',
+              'sacks', 'panel', 'crates', 'sacks', 'panel', 'crates',
+              'bin', 'sacks', 'crates', 'panel', 'sacks', 'fence',
+              'crates', 'sacks', 'panel', 'crates', 'sacks', 'crates',
+              'bin', 'panel', 'sacks', 'crates', 'fence', 'sacks']
+_gap_props = {
+    'sacks': ('prop.sandbag-pallet', 1516.3, .75),
+    'crates': ('prop.crates', 1516.25, .85),
+    'panel': ('prop.privacy-fence', 1515.72, 0),
+    'fence': ('prop.crowd-fence', 1515.98, math.pi/2),
+    'bin': ('prop.dumpster', 1516.42, 0),
+}
+for i, kind in enumerate(_gap_kinds):
+    asset, x, yaw = _gap_props[kind]
+    x += _gap_rng.uniform(-.16,.16)
+    z = -23.5 + i*3 + _gap_rng.uniform(-.12,.12)
+    yaw += _gap_rng.uniform(-.1,.1) if kind == 'crates' else _gap_rng.uniform(-.17,.17)
+    l.place(asset, [x,0,z], yaw=yaw)
     l.data['placements'][-1].update(id=f'r3-gap-visual-{i}', decor=True)
+    if kind == 'crates' and i in (1,8,14,23,27):
+        l.place(asset, [x+.03,.62,z+.04], yaw=yaw-.25, scale=(.7,.7,.7))
+        l.data['placements'][-1].update(id=f'r3-gap-visual-{i}-stack', decor=True)
 del l.data['colliders'][_gap_colliders:]
 for p in l.data['placements']: p['maxTier']=6
 for c in l.data['colliders']: c['maxTier']=6
