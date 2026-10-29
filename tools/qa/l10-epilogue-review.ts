@@ -1,5 +1,6 @@
 /** Paired Q-235 release/cast captures. Run through e2e-lock; no gameplay timing changes. */
 import { mkdirSync, writeFileSync } from 'node:fs';
+import assert from 'node:assert/strict';
 import { SceneSession, readSpec, stopServer } from '../scenelab/session';
 import type { Game } from '../../src/Game';
 
@@ -62,16 +63,25 @@ try {
       });
     }
     if (target >= 1800) {
-      await session.page.evaluate(() => window.__SCENE__!.setCamera({ mode: 'game', target: [4012, 0], zoom: 1 }));
+      await session.page.evaluate(() => {
+        const w = (window.__SCENE__ as unknown as { game: Game }).game.world;
+        const cast = w.missions!.state.epilogue!.survivors.map(id => w.entities.get(id)!.transform);
+        const x = (Math.min(...cast.map(p => p.x)) + Math.max(...cast.map(p => p.x))) / 2;
+        const z = (Math.min(...cast.map(p => p.z)) + Math.max(...cast.map(p => p.z))) / 2;
+        window.__SCENE__!.setCamera({ mode: 'game', target: [x, z], zoom: 1.5 });
+      });
       await session.screenshot(`${out}/survivors-${target}.png`);
       await session.page.evaluate(() => window.__SCENE__!.setCamera({ mode: 'game', target: 'courier', zoom: 1 }));
     }
-    frames.push(await session.page.evaluate(async () => {
-      const w = (window.__SCENE__ as unknown as { game: Game }).game.world;
+    const frame = await session.page.evaluate(async () => {
+      const game = (window.__SCENE__ as unknown as { game: Game }).game, w = game.world;
       const survivors = w.missions!.state.epilogue!.survivors.map(id => w.entities.get(id)).filter(e => !!e);
       const module = '/src/render/characters/CorpseLayout.ts', { corpseLayout } = await import(module);
-      return { scenario: w.scenario, elapsed: w.missions!.state.cureFront!.elapsed, survivors: survivors.map(e => ({ id: e.id, at: e.transform, state: e.civilian!.state, waypoints: e.civilian!.waypoints })), affected: w.missions!.state.cureFront!.affectedIds.length, bodies: corpseLayout(w).audit(), metrics: window.__SCENE__!.metrics() };
-    }));
+      return { scenario: w.scenario, renderTier: game.quality.tier, gameplayTier: w.infected!.director.tier, elapsed: w.missions!.state.cureFront!.elapsed, survivors: survivors.map(e => ({ id: e.id, at: e.transform, state: e.civilian!.state, waypoints: e.civilian!.waypoints })), affected: w.missions!.state.cureFront!.affectedIds.length, bodies: corpseLayout(w).audit(), metrics: window.__SCENE__!.metrics() };
+    });
+    assert.equal(frame.renderTier, tier); assert.equal(frame.gameplayTier, tier);
+    if (target >= 1800) assert.equal(frame.survivors.length, tier === 'low' ? 3 : 6);
+    frames.push(frame);
   }
   writeFileSync(`${out}/evidence.json`, JSON.stringify({ tier, setup, frames, errors: session.errors }, null, 2));
   console.log(JSON.stringify({ out, tier, frames: frames.length, errors: session.errors }));
