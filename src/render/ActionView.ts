@@ -115,7 +115,10 @@ export class ActionView extends Group {
     const group = new Group(); group.name = 'held-weapon-prewarm'; group.position.copy(at);
     for (const asset of this.assets.values()) {
       const clone = asset.model.clone(true);
-      clone.traverse(node => { if (node instanceof Mesh) node.material = Array.isArray(node.material) ? node.material.map(m => this.heldMaterials.get(m) ?? m) : this.heldMaterials.get(node.material) ?? node.material; });
+      clone.traverse(node => { if (node instanceof Mesh) {
+        node.material = Array.isArray(node.material) ? node.material.map(m => this.heldMaterials.get(m) ?? m) : this.heldMaterials.get(node.material) ?? node.material;
+        node.userData.preRenderShared = true;
+      } });
       group.add(clone);
     }
     if (!group.children.length) return () => {};
