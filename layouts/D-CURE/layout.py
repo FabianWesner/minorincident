@@ -411,7 +411,8 @@ for i, (a, b) in enumerate(route_segments):
     for side in (1, -1):
         n = (-uz*side, ux*side)
         p0 = (a[0]+ux*2+n[0]*4, a[1]+uz*2+n[1]*4); p1 = (a[0]+ux*(d-2)+n[0]*4, a[1]+uz*(d-2)+n[1]*4)
-        surface('shoulder-band', ccw([list(p0), list(p1), [p1[0]+n[0]*5.5, p1[1]+n[1]*5.5], [p0[0]+n[0]*5.5, p0[1]+n[1]*5.5]]), 'leather' if a[0] < 800 else 'leatherEdge', -.0015)
+        bw = 2.6 if a[0] < FINALE_X else 5.5   # look-l10-l8-2: R1-R5 keep the dark band only to 6.6 m (AC16 samples 5.5 m); the fields start there
+        surface('shoulder-band', ccw([list(p0), list(p1), [p1[0]+n[0]*bw, p1[1]+n[1]*bw], [p0[0]+n[0]*bw, p0[1]+n[1]*bw]]), 'leather' if a[0] < 800 else 'leatherEdge', -.0015)
         s = 6
         while s < d - 8:
             ln = rng.uniform(6, 18); w = rng.uniform(1.2, 2.6)
@@ -795,7 +796,7 @@ for i, (a_, b_) in fill_segments:
 # Avenue: the zoom-1 frame shows only ~7 m of road length per verge at 6 m lateral, so plots alone leave most frames bare. Crowns
 # overhanging the sidewalk (trunk 7.5-8.3 m out, crown edge >= 4.4 m from the centre line) put mass into every frame; they may
 # overhang the low runs (LOW) and keep off everything taller.
-AVENUE = {0: ('prop.tree', .55), 1: ('prop.street-tree', .95), 2: ('prop.tree', .35), 3: ('prop.tree', .3), 4: ('prop.street-tree', .9), 5: ('prop.tree', .5)}
+AVENUE = {0: ('prop.tree', .8), 1: ('prop.street-tree', .95), 2: ('prop.tree', .6), 3: ('prop.tree', .6), 4: ('prop.street-tree', .9), 5: ('prop.tree', .5)}
 for i, (a_, b_) in fill_segments:
     F = frame(a_, b_); d = F[0]
     if d < 16: continue
@@ -809,6 +810,119 @@ for i, (a_, b_) in fill_segments:
 for p in l.data['placements'][fill_before:]:
     if p['assetId'].startswith('bld.') and 2917 <= p['position'][0] <= 3700 and p.get('decorLights'): p['lightGroup'] = 'corridor-dark'
 print('world-fill placements', len(l.data['placements']) - fill_before)
+# ---- look-l10-l8-2 night fields (QA batch 20: "The night fields are mostly empty dark green apart from the courier's lamp") ----------
+# Past the world-fill belt (> 9.5 m from the centre line, the corners of the zoom-1/1.5 frame): crop fields (furrow strips plus rows
+# of standing crop blades), power lines across them, and story spots that carry their own light: abandoned camps with a campfire
+# and lantern, burning wrecks with a debris trail, flood-lit evac points and a parked evac helicopter. All solids use dress() (same
+# route/detour/anchor/encounter/console clearances, l10-dressing.test.ts) and stay before FINALE_X - 12, so R6/R7 and the calibrated
+# finale are untouched. Fires/pools come from NightAccents.cureAccents (placement `fieldLight`), >= 12.5 m from the centre line so
+# no pool reaches the E31-AC16 verge sample (5.5 m). Own random stream, appended last: every earlier placement keeps its id.
+fld = random.Random(1029)
+FIELD_TOKENS = [('trouserSeam', 'oliveSeam'), ('leatherShadow', 'khakiSeam'), ('oliveSeam', 'apronOlive')]
+def fld_put(asset, x, z, yaw, decay=None, light=None, scale=1.0):
+    if x >= FINALE_X - 12: return None
+    if decay and decay not in l.manifest[asset].get('decayVariants', []): decay = None
+    pid = dress(asset, x, z, yaw, scale=scale, decay=decay)
+    if pid:
+        l.data['placements'][-1]['fieldDressing'] = True
+        if light: l.data['placements'][-1]['fieldLight'] = light
+    return pid
+def blocked(mn, mx, pad=1.0):
+    # Buildings, kits and vehicles own their plot: no field runs underneath them.
+    return any(t[5].startswith(('bld.', 'kit.', 'veh.')) and mn[0] < t[1][0]+pad and mx[0] > t[0][0]-pad and mn[1] < t[1][1]+pad and mx[1] > t[0][1]-pad for t in taken)
+def crop_field(a_, F, s0, s1, side, l0, l1, standing, tokens=None):
+    """Furrow strips parallel to the road from l0 to l1 m out, cut around every building/kit/vehicle footprint; standing crops add
+    a blade row (Grass lawn, footprints already excluded) on every second strip."""
+    d_, ux, uz, nx, nz = F
+    dark, light = fld.choice(tokens or FIELD_TOKENS)
+    w = fld.uniform(1.4, 1.8); k = 0; lat = l0; made = 0
+    while lat + w <= l1 + .01:
+        q0 = at(a_, ux, uz, nx, nz, s0, side*lat); q1 = at(a_, ux, uz, nx, nz, s1, side*(lat+w))
+        mn = (min(q0[0], q1[0]), min(q0[1], q1[1])); mx = (max(q0[0], q1[0]), max(q0[1], q1[1]))
+        # 1D cut along the strip: the s-intervals that blockers cover (axis-aligned route segments, so strips are axis-aligned too).
+        cuts = []
+        for t in taken:
+            if not t[5].startswith(('bld.', 'kit.', 'veh.')): continue
+            b0, b1 = t[0], t[1]
+            if b0[0] < mx[0]+.8 and b1[0] > mn[0]-.8 and b0[1] < mx[1]+.8 and b1[1] > mn[1]-.8:
+                c0 = (b0[0]-a_[0])*ux + (b0[1]-a_[1])*uz; c1 = (b1[0]-a_[0])*ux + (b1[1]-a_[1])*uz
+                cuts.append((min(c0, c1)-.8, max(c0, c1)+.8))
+        pieces, cur = [], s0
+        for c0, c1 in sorted(cuts):
+            if c0 > cur: pieces.append((cur, min(c0, s1)))
+            cur = max(cur, c1)
+        if cur < s1: pieces.append((cur, s1))
+        for p0_, p1_ in pieces:
+            if p1_ - p0_ < 4: continue
+            a0 = at(a_, ux, uz, nx, nz, p0_, side*lat); a1 = at(a_, ux, uz, nx, nz, p1_, side*(lat+w))
+            pmn = (min(a0[0], a1[0]), min(a0[1], a1[1])); pmx = (max(a0[0], a1[0]), max(a0[1], a1[1]))
+            if any(seg_rect(r0, r1, pmn, pmx) < 6.5 for r0, r1 in route_segments) or any(seg_rect(r0, r1, pmn, pmx) < 4 for r0, r1 in detour_segments + shortcut_segments): continue
+            surface('field-furrow', strip(a_, F, p0_, p1_, side*lat, side*(lat+w)), dark if k % 2 else light, -.0012, cut=False)
+            if standing and k % 2 == 0: l.data['lawns'].append(dict(min=[pmn[0]+.2, pmn[1]+.2], max=[pmx[0]-.2, pmx[1]-.2]))
+            made += 1
+        lat += w; k += 1
+    return made
+def power_line(a_, F, s0, s1, side, lat):
+    d_, ux, uz, nx, nz = F
+    s = s0
+    while s <= s1:
+        x, z = at(a_, ux, uz, nx, nz, s, side*lat); fld_put('prop.utility-pole', x, z, math.atan2(-uz, ux)); s += fld.uniform(24, 30)
+def story_camp(a_, F, s, side):
+    d_, ux, uz, nx, nz = F
+    lat = fld.uniform(14, 17); x, z = at(a_, ux, uz, nx, nz, s, side*lat)
+    kit = fld.choice(['kit.shelter-camp', 'prop.tent', 'prop.tent'])
+    if not fld_put(kit, x, z, face((nx*side, nz*side)) + fld.uniform(-.4, .4), light='camp'): return False
+    camp = l.data['placements'][-1]
+    fx, fz = at(a_, ux, uz, nx, nz, s + fld.choice((-1, 1))*fld.uniform(4.5, 6), side*(lat - 1.2))
+    camp['fireAt'] = [round(fx, 2), round(fz, 2)]
+    for asset in ('prop.folding-chair', 'prop.folding-chair', 'decay.dropped-belongings', 'prop.trash-bags', 'prop.bbq'):
+        cx, cz = fx + fld.uniform(-2.6, 2.6), fz + fld.uniform(-2.6, 2.6)
+        if math.hypot(cx-fx, cz-fz) > 1.3: fld_put(asset, cx, cz, fld.uniform(0, math.tau))
+    return True
+def story_wreck(a_, F, s, side, burned=True):
+    d_, ux, uz, nx, nz = F
+    lat = fld.uniform(12.5, 15); x, z = at(a_, ux, uz, nx, nz, s, side*lat)
+    asset = fld.choice(['veh.sedan-red', 'veh.suv-dark', 'veh.pickup-red', 'veh.sedan-white', 'veh.evac-bus', 'veh.military-truck', 'veh.police-sedan'])
+    yaw = math.atan2(-uz, ux) + fld.uniform(.5, 1.2) * fld.choice((-1, 1))   # it left the road: skewed into the field
+    if not fld_put(asset, x, z, yaw, decay='burned' if burned else 'wrecked', light='wreckfire' if burned else None): return False
+    # Debris trail back towards the road: belongings, rubble, a crater where it came off.
+    for k, asset in enumerate(('decay.blown-sandbags', 'decay.dropped-belongings', 'prop.trash-bags', 'decay.dropped-belongings')):
+        tx, tz = at(a_, ux, uz, nx, nz, s - (k+1)*fld.uniform(2.2, 3.2), side*(lat - (k+1)*.9))
+        fld_put(asset, tx, tz, fld.uniform(0, math.tau))
+    return True
+def story_evac(a_, F, s, side):
+    """An overrun evac point in the field: iso tents and a generator round a flood-lit light tower, sandbags, an ambulance."""
+    d_, ux, uz, nx, nz = F
+    lat = fld.uniform(13.5, 16); x, z = at(a_, ux, uz, nx, nz, s, side*lat)
+    if not fld_put('prop.light-tower', x, z, face((nx*side, nz*side)) + fld.uniform(-.3, .3), light='flood'): return False
+    for ds, dl, asset in ((-6, 1.5, 'prop.cure-iso-tent'), (6, 1.5, 'prop.cure-iso-tent'), (-3, 4.5, 'prop.cure-generator'), (10, -1.5, 'veh.ambulance'), (-10, -2, 'prop.sandbag-pallet'), (3, -2.5, 'decay.dropped-belongings')):
+        px, pz = at(a_, ux, uz, nx, nz, s + ds + fld.uniform(-1, 1), side*(lat + dl))
+        fld_put(asset, px, pz, math.atan2(-uz, ux) + fld.uniform(-.25, .25), decay='wrecked' if asset == 'veh.ambulance' and fld.random() < .5 else None)
+    return True
+FIELD_REGIONS = {0: dict(fields=.9, standing=.6, stories=[(story_wreck, 3), (story_camp, 2), (story_evac, 1)]),   # crash outskirts: farmland
+                 1: dict(fields=.6, standing=1, tokens=[('olive', 'apronOlive')], stories=[(story_camp, 2), (story_wreck, 1)]),   # fringe: overgrown yards
+                 2: dict(fields=.6, standing=0, tokens=[('pantsCargo', 'trouserSeam'), ('khakiSeam', 'pantsCargo')], stories=[(story_wreck, 2), (story_camp, 1)]),   # depot: gravel lots
+                 3: dict(fields=.75, standing=.5, stories=[(story_evac, 2), (story_wreck, 2), (story_camp, 1)]),
+                 4: dict(fields=.7, standing=.7, stories=[(story_camp, 2), (story_evac, 1), (story_wreck, 1)])}
+fields_before, field_strips = len(l.data['placements']), 0
+for i, (a_, b_) in fill_segments:
+    F = frame(a_, b_); d = F[0]; cfg = FIELD_REGIONS[i]
+    if d < 24: continue
+    fns = [f for f, _ in cfg['stories']]; ws = [w for _, w in cfg['stories']]
+    for side in (1, -1):
+        s = fld.uniform(4, 10)
+        while s < d - 14:
+            L = min(fld.uniform(28, 46), d - 6 - s)
+            # The story spot first (fields are cut around it), a few tries along the parcel before giving up.
+            if fld.random() < .8:
+                fn = fld.choices(fns, ws)[0]
+                for _ in range(4):
+                    if fn(a_, F, s + L * fld.uniform(.2, .8), side): break
+            if fld.random() < cfg['fields']:
+                if fld.random() < .5: power_line(a_, F, s + 2, s + L - 2, side, fld.uniform(17, 21))
+                field_strips += crop_field(a_, F, s, s + L, side, 6.6, fld.uniform(14, 17), fld.random() < cfg['standing'], cfg.get('tokens'))
+            s += L + fld.uniform(6, 14)
+print('look-l10-l8-2 field placements', len(l.data['placements']) - fields_before, 'strips', field_strips)
 print('look-l10 dressing placements', len(l.data['placements']))
 for p in l.data['placements']: p['maxTier']=6
 for c in l.data['colliders']: c['maxTier']=6
