@@ -8,6 +8,7 @@ import { validateSpec, type SceneSpec } from '../../src/debug/scenelab/spec';
 import { frameInterval, type FrameState } from '../../tools/playtest/frames';
 import { PlaytestProgress, type ProgressSample } from '../../tools/playtest/progress';
 import { campaignEndingComplete, campaignEndingWaiting, needsZoomInput, needsTargetInput, observeWithin } from '../../tools/playtest/startup';
+import { hueDistance, lookStats, LOW_CHROMA } from '../../tools/scenelab/look';
 
 const sample = (seconds: number, fields: Partial<ProgressSample> = {}): ProgressSample => ({ context: 'L6|retreat', text: 'Cover the retreat · 12 m', distance: 12, player: { x: 0, z: 15 }, marker: { x: 12, z: 15 }, tick: seconds * 60, nowMs: seconds * 1000, ...fields });
 
@@ -71,10 +72,19 @@ test('playtest session: success only after real credits; an unresponsive rendere
   expect(frameInterval(playing(3300), { ...playing(4170), tick: 2965 }, 3000).playMs).toBe(870);
 });
 
-test('Scene Lab: readable validation errors, and every shipped spec validates against the manifest', () => {
+test('Scene Lab: spec validation and colour probes keep QA failures meaningful', () => {
   const assets = new Map((manifest as AssetDef[]).map(a => [a.id, a]));
   const errors = validateSpec({ props: [{ asset: 'prop.nope', at: [0, 0] }], actors: [{ kind: 'courier' }, { kind: 'courier' }], ground: 'district' }, assets).join('\n');
   expect(errors).toMatch(/unknown manifest id prop\.nope/); expect(errors).toMatch(/at most one courier/); expect(errors).toMatch(/needs layout\.district/);
   for (const file of readdirSync('specs/scenes').filter(f => f.endsWith('.json')))
     expect(validateSpec(JSON.parse(readFileSync(`specs/scenes/${file}`, 'utf8')) as SceneSpec, assets), file).toEqual([]);
+  const colour = (rgb: number[][]) => lookStats(rgb.flatMap(c => [...c, 255]), new Uint8Array(rgb.length * 4));
+  const red = colour([[255, 0, 0]]), cyan = colour([[0, 255, 255]]);
+  expect(red.hueChroma).toBeGreaterThan(LOW_CHROMA); expect(cyan.hueChroma).toBeGreaterThan(LOW_CHROMA);
+  expect(hueDistance(red.hue!, cyan.hue!)).toBe(180); // A genuine coherent colour change stays gated.
+  const mixed = colour([[255, 0, 0], [0, 254, 254]]);
+  expect(mixed.chroma).toBeGreaterThan(.9); expect(mixed.hueChroma).toBeLessThan(.01);
+  // Opposing hues have no stable aggregate angle; brightness/white checks still detect a white fallback.
+  const white = colour([[255, 255, 255]]);
+  expect(white.hueChroma).toBe(0); expect(white.whiteShare).toBe(1); expect(white.luma).toBeGreaterThan(red.luma);
 });
