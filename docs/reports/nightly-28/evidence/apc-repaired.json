@@ -1,0 +1,5335 @@
+{
+  "spec": {
+    "name": "seethrough-apc-behind-truck",
+    "note": "Positive vehicle control: tall fire engine across the camera-to-APC sightline at (3.5,3.5), yaw 45. Its transverse hull stays clear of APC and sedans while actually obscuring the APC at all zooms; the old (4,4), yaw 0 pose leaves it unobstructed. Same camera and subject as opaque-sedan control.",
+    "ground": "asphalt",
+    "size": 60,
+    "time": "L3",
+    "dof": false,
+    "vehicles": [
+      {
+        "id": "apc",
+        "asset": "vehicle.military-apc",
+        "at": [
+          0,
+          0
+        ],
+        "driven": true,
+        "floor": true
+      },
+      {
+        "id": "sedan-left",
+        "asset": "vehicle.sedan",
+        "at": [
+          -4,
+          4
+        ]
+      },
+      {
+        "id": "sedan-right",
+        "asset": "vehicle.sedan",
+        "at": [
+          4,
+          -4
+        ]
+      },
+      {
+        "id": "foreground-truck",
+        "asset": "vehicle.fire-engine",
+        "at": [
+          3.5,
+          3.5
+        ],
+        "yaw": 45
+      }
+    ],
+    "camera": {
+      "mode": "game",
+      "target": "apc",
+      "zoom": 1
+    },
+    "frames": 30,
+    "sheet": 15,
+    "expect": {
+      "consoleErrors": 0,
+      "seeThroughCutPixelsMax": 0,
+      "drawCallsMax": 300,
+      "trianglesMax": 500000,
+      "seeThroughCutInsideMin": 10
+    },
+    "actors": [
+      {
+        "id": "courier",
+        "kind": "courier",
+        "at": [
+          0,
+          0
+        ],
+        "state": "idle"
+      }
+    ],
+    "vehicleSilhouettes": [
+      "sedan-left",
+      "sedan-right",
+      "foreground-truck"
+    ]
+  },
+  "rows": [
+    {
+      "row": "seethrough-apc-behind-truck@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 127,
+          "limit": 300
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 24386,
+          "limit": 500000
+        },
+        {
+          "name": "vehicleSilhouette:sedan-left:clear",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "vehicleSilhouette:sedan-right:clear",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "vehicleSilhouette:foreground-truck:blocking",
+          "pass": true,
+          "value": 0.5510239660352979,
+          "limit": 0.3
+        },
+        {
+          "name": "seeThroughCutPixelsOutside",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "seeThroughCutPixelsInside",
+          "pass": true,
+          "value": 46430,
+          "limit": 10
+        },
+        {
+          "name": "canvas.f0.varianceMin",
+          "pass": true,
+          "value": 1656.612507623613,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f0.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f15.varianceMin",
+          "pass": true,
+          "value": 1730.1569311276962,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f15.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f30.varianceMin",
+          "pass": true,
+          "value": 1687.8611859727298,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f30.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ],
+      "seeThroughCutSamples": [
+        {
+          "frame": 0,
+          "outside": 0,
+          "inside": 48908,
+          "strength": 1,
+          "cover": 0,
+          "occluder": ""
+        },
+        {
+          "frame": 15,
+          "outside": 0,
+          "inside": 46430,
+          "strength": 1,
+          "cover": 0,
+          "occluder": ""
+        },
+        {
+          "frame": 30,
+          "outside": 0,
+          "inside": 46521,
+          "strength": 1,
+          "cover": 0,
+          "occluder": ""
+        }
+      ],
+      "vehicleSilhouettes": [
+        {
+          "frame": 0,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23595,
+          "retained": 23595,
+          "share": 1
+        },
+        {
+          "frame": 0,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27838,
+          "retained": 27838,
+          "share": 1
+        },
+        {
+          "frame": 0,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 97513,
+          "retained": 53732,
+          "share": 0.5510239660352979
+        },
+        {
+          "frame": 1,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23539,
+          "retained": 23539,
+          "share": 1
+        },
+        {
+          "frame": 1,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27857,
+          "retained": 27857,
+          "share": 1
+        },
+        {
+          "frame": 1,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 97659,
+          "retained": 63371,
+          "share": 0.6489007669544026
+        },
+        {
+          "frame": 2,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23538,
+          "retained": 23538,
+          "share": 1
+        },
+        {
+          "frame": 2,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27815,
+          "retained": 27815,
+          "share": 1
+        },
+        {
+          "frame": 2,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 96902,
+          "retained": 62875,
+          "share": 0.6488514168954201
+        },
+        {
+          "frame": 3,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23515,
+          "retained": 23515,
+          "share": 1
+        },
+        {
+          "frame": 3,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27791,
+          "retained": 27791,
+          "share": 1
+        },
+        {
+          "frame": 3,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 96893,
+          "retained": 62967,
+          "share": 0.6498611870826582
+        },
+        {
+          "frame": 4,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23522,
+          "retained": 23522,
+          "share": 1
+        },
+        {
+          "frame": 4,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27764,
+          "retained": 27764,
+          "share": 1
+        },
+        {
+          "frame": 4,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 97384,
+          "retained": 63226,
+          "share": 0.6492442290314631
+        },
+        {
+          "frame": 5,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23504,
+          "retained": 23504,
+          "share": 1
+        },
+        {
+          "frame": 5,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27723,
+          "retained": 27723,
+          "share": 1
+        },
+        {
+          "frame": 5,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 96943,
+          "retained": 62914,
+          "share": 0.6489792971127364
+        },
+        {
+          "frame": 6,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23499,
+          "retained": 23499,
+          "share": 1
+        },
+        {
+          "frame": 6,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27705,
+          "retained": 27705,
+          "share": 1
+        },
+        {
+          "frame": 6,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 96741,
+          "retained": 62805,
+          "share": 0.6492076782336341
+        },
+        {
+          "frame": 7,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23486,
+          "retained": 23486,
+          "share": 1
+        },
+        {
+          "frame": 7,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27673,
+          "retained": 27673,
+          "share": 1
+        },
+        {
+          "frame": 7,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 96886,
+          "retained": 62932,
+          "share": 0.649546890159569
+        },
+        {
+          "frame": 8,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23477,
+          "retained": 23477,
+          "share": 1
+        },
+        {
+          "frame": 8,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27659,
+          "retained": 27659,
+          "share": 1
+        },
+        {
+          "frame": 8,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 96907,
+          "retained": 62928,
+          "share": 0.6493648549640377
+        },
+        {
+          "frame": 9,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23458,
+          "retained": 23458,
+          "share": 1
+        },
+        {
+          "frame": 9,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27674,
+          "retained": 27674,
+          "share": 1
+        },
+        {
+          "frame": 9,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 96541,
+          "retained": 62695,
+          "share": 0.6494132026807263
+        },
+        {
+          "frame": 10,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23474,
+          "retained": 23474,
+          "share": 1
+        },
+        {
+          "frame": 10,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27610,
+          "retained": 27610,
+          "share": 1
+        },
+        {
+          "frame": 10,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 96369,
+          "retained": 62523,
+          "share": 0.6487874731500793
+        },
+        {
+          "frame": 11,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23454,
+          "retained": 23454,
+          "share": 1
+        },
+        {
+          "frame": 11,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27588,
+          "retained": 27588,
+          "share": 1
+        },
+        {
+          "frame": 11,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 96147,
+          "retained": 62466,
+          "share": 0.649692658117258
+        },
+        {
+          "frame": 12,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23456,
+          "retained": 23456,
+          "share": 1
+        },
+        {
+          "frame": 12,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27613,
+          "retained": 27613,
+          "share": 1
+        },
+        {
+          "frame": 12,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 96442,
+          "retained": 62634,
+          "share": 0.6494473362228075
+        },
+        {
+          "frame": 13,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23461,
+          "retained": 23461,
+          "share": 1
+        },
+        {
+          "frame": 13,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27590,
+          "retained": 27590,
+          "share": 1
+        },
+        {
+          "frame": 13,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 96992,
+          "retained": 62995,
+          "share": 0.6494865555922138
+        },
+        {
+          "frame": 14,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23456,
+          "retained": 23456,
+          "share": 1
+        },
+        {
+          "frame": 14,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27588,
+          "retained": 27588,
+          "share": 1
+        },
+        {
+          "frame": 14,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 96533,
+          "retained": 62792,
+          "share": 0.6504718593641553
+        },
+        {
+          "frame": 15,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23461,
+          "retained": 23461,
+          "share": 1
+        },
+        {
+          "frame": 15,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27571,
+          "retained": 27571,
+          "share": 1
+        },
+        {
+          "frame": 15,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 96134,
+          "retained": 62523,
+          "share": 0.6503734370774128
+        },
+        {
+          "frame": 16,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23457,
+          "retained": 23457,
+          "share": 1
+        },
+        {
+          "frame": 16,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27583,
+          "retained": 27583,
+          "share": 1
+        },
+        {
+          "frame": 16,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 96326,
+          "retained": 62643,
+          "share": 0.6503228619479684
+        },
+        {
+          "frame": 17,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23457,
+          "retained": 23457,
+          "share": 1
+        },
+        {
+          "frame": 17,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27573,
+          "retained": 27573,
+          "share": 1
+        },
+        {
+          "frame": 17,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 96391,
+          "retained": 62671,
+          "share": 0.6501748088514487
+        },
+        {
+          "frame": 18,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23459,
+          "retained": 23459,
+          "share": 1
+        },
+        {
+          "frame": 18,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27569,
+          "retained": 27569,
+          "share": 1
+        },
+        {
+          "frame": 18,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 96369,
+          "retained": 62589,
+          "share": 0.649472340690471
+        },
+        {
+          "frame": 19,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23458,
+          "retained": 23458,
+          "share": 1
+        },
+        {
+          "frame": 19,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27562,
+          "retained": 27562,
+          "share": 1
+        },
+        {
+          "frame": 19,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 96389,
+          "retained": 62592,
+          "share": 0.6493687038977477
+        },
+        {
+          "frame": 20,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23461,
+          "retained": 23461,
+          "share": 1
+        },
+        {
+          "frame": 20,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27559,
+          "retained": 27559,
+          "share": 1
+        },
+        {
+          "frame": 20,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 96375,
+          "retained": 62583,
+          "share": 0.6493696498054474
+        },
+        {
+          "frame": 21,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23464,
+          "retained": 23464,
+          "share": 1
+        },
+        {
+          "frame": 21,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27562,
+          "retained": 27562,
+          "share": 1
+        },
+        {
+          "frame": 21,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 96374,
+          "retained": 62578,
+          "share": 0.6493245066096666
+        },
+        {
+          "frame": 22,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23465,
+          "retained": 23465,
+          "share": 1
+        },
+        {
+          "frame": 22,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27560,
+          "retained": 27560,
+          "share": 1
+        },
+        {
+          "frame": 22,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 96384,
+          "retained": 62587,
+          "share": 0.6493505146082338
+        },
+        {
+          "frame": 23,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23463,
+          "retained": 23463,
+          "share": 1
+        },
+        {
+          "frame": 23,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27565,
+          "retained": 27565,
+          "share": 1
+        },
+        {
+          "frame": 23,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 96391,
+          "retained": 62587,
+          "share": 0.6493033581973421
+        },
+        {
+          "frame": 24,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23472,
+          "retained": 23472,
+          "share": 1
+        },
+        {
+          "frame": 24,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27570,
+          "retained": 27570,
+          "share": 1
+        },
+        {
+          "frame": 24,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 96391,
+          "retained": 62589,
+          "share": 0.6493241070224398
+        },
+        {
+          "frame": 25,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23476,
+          "retained": 23476,
+          "share": 1
+        },
+        {
+          "frame": 25,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27572,
+          "retained": 27572,
+          "share": 1
+        },
+        {
+          "frame": 25,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 96377,
+          "retained": 62591,
+          "share": 0.6494391815474646
+        },
+        {
+          "frame": 26,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23476,
+          "retained": 23476,
+          "share": 1
+        },
+        {
+          "frame": 26,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27577,
+          "retained": 27577,
+          "share": 1
+        },
+        {
+          "frame": 26,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 96370,
+          "retained": 62597,
+          "share": 0.6495486147141226
+        },
+        {
+          "frame": 27,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23481,
+          "retained": 23481,
+          "share": 1
+        },
+        {
+          "frame": 27,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27572,
+          "retained": 27572,
+          "share": 1
+        },
+        {
+          "frame": 27,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 96397,
+          "retained": 62659,
+          "share": 0.6500098550784775
+        },
+        {
+          "frame": 28,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23480,
+          "retained": 23480,
+          "share": 1
+        },
+        {
+          "frame": 28,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27575,
+          "retained": 27575,
+          "share": 1
+        },
+        {
+          "frame": 28,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 96323,
+          "retained": 62638,
+          "share": 0.6502912077074011
+        },
+        {
+          "frame": 29,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23490,
+          "retained": 23490,
+          "share": 1
+        },
+        {
+          "frame": 29,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27577,
+          "retained": 27577,
+          "share": 1
+        },
+        {
+          "frame": 29,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 96323,
+          "retained": 62638,
+          "share": 0.6502912077074011
+        },
+        {
+          "frame": 30,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23484,
+          "retained": 23484,
+          "share": 1
+        },
+        {
+          "frame": 30,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27576,
+          "retained": 27576,
+          "share": 1
+        },
+        {
+          "frame": 30,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 96420,
+          "retained": 62713,
+          "share": 0.6504148516905206
+        }
+      ]
+    },
+    {
+      "row": "seethrough-apc-behind-truck@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 141,
+          "limit": 300
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 208097,
+          "limit": 500000
+        },
+        {
+          "name": "vehicleSilhouette:sedan-left:clear",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "vehicleSilhouette:sedan-right:clear",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "vehicleSilhouette:foreground-truck:blocking",
+          "pass": true,
+          "value": 0.5448061714618407,
+          "limit": 0.3
+        },
+        {
+          "name": "seeThroughCutPixelsOutside",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "seeThroughCutPixelsInside",
+          "pass": true,
+          "value": 48841,
+          "limit": 10
+        },
+        {
+          "name": "canvas.f0.varianceMin",
+          "pass": true,
+          "value": 1571.820527335709,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f0.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f15.varianceMin",
+          "pass": true,
+          "value": 1664.848278234842,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f15.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f30.varianceMin",
+          "pass": true,
+          "value": 1622.2408355094867,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f30.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ],
+      "seeThroughCutSamples": [
+        {
+          "frame": 0,
+          "outside": 0,
+          "inside": 53320,
+          "strength": 1,
+          "cover": 0,
+          "occluder": ""
+        },
+        {
+          "frame": 15,
+          "outside": 0,
+          "inside": 48841,
+          "strength": 1,
+          "cover": 0,
+          "occluder": ""
+        },
+        {
+          "frame": 30,
+          "outside": 0,
+          "inside": 48877,
+          "strength": 1,
+          "cover": 0,
+          "occluder": ""
+        }
+      ],
+      "vehicleSilhouettes": [
+        {
+          "frame": 0,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23472,
+          "retained": 23472,
+          "share": 1
+        },
+        {
+          "frame": 0,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27823,
+          "retained": 27823,
+          "share": 1
+        },
+        {
+          "frame": 0,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 103055,
+          "retained": 56145,
+          "share": 0.5448061714618407
+        },
+        {
+          "frame": 1,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23423,
+          "retained": 23423,
+          "share": 1
+        },
+        {
+          "frame": 1,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27836,
+          "retained": 27836,
+          "share": 1
+        },
+        {
+          "frame": 1,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 102450,
+          "retained": 67317,
+          "share": 0.6570717423133235
+        },
+        {
+          "frame": 2,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23407,
+          "retained": 23407,
+          "share": 1
+        },
+        {
+          "frame": 2,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27799,
+          "retained": 27799,
+          "share": 1
+        },
+        {
+          "frame": 2,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 102730,
+          "retained": 67148,
+          "share": 0.6536357441837828
+        },
+        {
+          "frame": 3,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23397,
+          "retained": 23397,
+          "share": 1
+        },
+        {
+          "frame": 3,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27766,
+          "retained": 27766,
+          "share": 1
+        },
+        {
+          "frame": 3,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 102367,
+          "retained": 66997,
+          "share": 0.6544784940459327
+        },
+        {
+          "frame": 4,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23362,
+          "retained": 23362,
+          "share": 1
+        },
+        {
+          "frame": 4,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27732,
+          "retained": 27732,
+          "share": 1
+        },
+        {
+          "frame": 4,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 102714,
+          "retained": 67345,
+          "share": 0.6556555094729053
+        },
+        {
+          "frame": 5,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23342,
+          "retained": 23342,
+          "share": 1
+        },
+        {
+          "frame": 5,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27715,
+          "retained": 27715,
+          "share": 1
+        },
+        {
+          "frame": 5,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 102392,
+          "retained": 67144,
+          "share": 0.6557543558090476
+        },
+        {
+          "frame": 6,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23333,
+          "retained": 23333,
+          "share": 1
+        },
+        {
+          "frame": 6,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27680,
+          "retained": 27680,
+          "share": 1
+        },
+        {
+          "frame": 6,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 102341,
+          "retained": 66936,
+          "share": 0.6540487194770425
+        },
+        {
+          "frame": 7,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23322,
+          "retained": 23322,
+          "share": 1
+        },
+        {
+          "frame": 7,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27669,
+          "retained": 27669,
+          "share": 1
+        },
+        {
+          "frame": 7,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 102282,
+          "retained": 66863,
+          "share": 0.6537122856416574
+        },
+        {
+          "frame": 8,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23320,
+          "retained": 23320,
+          "share": 1
+        },
+        {
+          "frame": 8,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27628,
+          "retained": 27628,
+          "share": 1
+        },
+        {
+          "frame": 8,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 102451,
+          "retained": 67105,
+          "share": 0.6549960468907088
+        },
+        {
+          "frame": 9,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23299,
+          "retained": 23299,
+          "share": 1
+        },
+        {
+          "frame": 9,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27610,
+          "retained": 27610,
+          "share": 1
+        },
+        {
+          "frame": 9,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 102020,
+          "retained": 66823,
+          "share": 0.6549990198000392
+        },
+        {
+          "frame": 10,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23300,
+          "retained": 23300,
+          "share": 1
+        },
+        {
+          "frame": 10,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27586,
+          "retained": 27586,
+          "share": 1
+        },
+        {
+          "frame": 10,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 102115,
+          "retained": 66745,
+          "share": 0.6536258140331979
+        },
+        {
+          "frame": 11,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23315,
+          "retained": 23315,
+          "share": 1
+        },
+        {
+          "frame": 11,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27587,
+          "retained": 27587,
+          "share": 1
+        },
+        {
+          "frame": 11,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 102271,
+          "retained": 66965,
+          "share": 0.6547799473946672
+        },
+        {
+          "frame": 12,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23310,
+          "retained": 23310,
+          "share": 1
+        },
+        {
+          "frame": 12,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27571,
+          "retained": 27571,
+          "share": 1
+        },
+        {
+          "frame": 12,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 102187,
+          "retained": 66745,
+          "share": 0.6531652754264241
+        },
+        {
+          "frame": 13,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23262,
+          "retained": 23262,
+          "share": 1
+        },
+        {
+          "frame": 13,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27586,
+          "retained": 27586,
+          "share": 1
+        },
+        {
+          "frame": 13,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 102459,
+          "retained": 66919,
+          "share": 0.6531295445007271
+        },
+        {
+          "frame": 14,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23264,
+          "retained": 23264,
+          "share": 1
+        },
+        {
+          "frame": 14,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27569,
+          "retained": 27569,
+          "share": 1
+        },
+        {
+          "frame": 14,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 102145,
+          "retained": 66898,
+          "share": 0.6549317147192716
+        },
+        {
+          "frame": 15,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23264,
+          "retained": 23264,
+          "share": 1
+        },
+        {
+          "frame": 15,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27567,
+          "retained": 27567,
+          "share": 1
+        },
+        {
+          "frame": 15,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 102022,
+          "retained": 66793,
+          "share": 0.654692125227892
+        },
+        {
+          "frame": 16,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23248,
+          "retained": 23248,
+          "share": 1
+        },
+        {
+          "frame": 16,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27539,
+          "retained": 27539,
+          "share": 1
+        },
+        {
+          "frame": 16,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 102082,
+          "retained": 66805,
+          "share": 0.6544248741208049
+        },
+        {
+          "frame": 17,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23253,
+          "retained": 23253,
+          "share": 1
+        },
+        {
+          "frame": 17,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27536,
+          "retained": 27536,
+          "share": 1
+        },
+        {
+          "frame": 17,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 102307,
+          "retained": 67007,
+          "share": 0.6549600711583763
+        },
+        {
+          "frame": 18,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23256,
+          "retained": 23256,
+          "share": 1
+        },
+        {
+          "frame": 18,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27532,
+          "retained": 27532,
+          "share": 1
+        },
+        {
+          "frame": 18,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 101949,
+          "retained": 66929,
+          "share": 0.6564949141237285
+        },
+        {
+          "frame": 19,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23250,
+          "retained": 23250,
+          "share": 1
+        },
+        {
+          "frame": 19,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27524,
+          "retained": 27524,
+          "share": 1
+        },
+        {
+          "frame": 19,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 101911,
+          "retained": 66786,
+          "share": 0.655336519119624
+        },
+        {
+          "frame": 20,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23252,
+          "retained": 23252,
+          "share": 1
+        },
+        {
+          "frame": 20,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27530,
+          "retained": 27530,
+          "share": 1
+        },
+        {
+          "frame": 20,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 101883,
+          "retained": 66802,
+          "share": 0.655673664890119
+        },
+        {
+          "frame": 21,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23251,
+          "retained": 23251,
+          "share": 1
+        },
+        {
+          "frame": 21,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27529,
+          "retained": 27529,
+          "share": 1
+        },
+        {
+          "frame": 21,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 101893,
+          "retained": 66811,
+          "share": 0.6556976436065284
+        },
+        {
+          "frame": 22,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23253,
+          "retained": 23253,
+          "share": 1
+        },
+        {
+          "frame": 22,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27527,
+          "retained": 27527,
+          "share": 1
+        },
+        {
+          "frame": 22,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 101832,
+          "retained": 66785,
+          "share": 0.6558351009505853
+        },
+        {
+          "frame": 23,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23254,
+          "retained": 23254,
+          "share": 1
+        },
+        {
+          "frame": 23,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27524,
+          "retained": 27524,
+          "share": 1
+        },
+        {
+          "frame": 23,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 101840,
+          "retained": 66773,
+          "share": 0.6556657501963865
+        },
+        {
+          "frame": 24,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23267,
+          "retained": 23267,
+          "share": 1
+        },
+        {
+          "frame": 24,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27534,
+          "retained": 27534,
+          "share": 1
+        },
+        {
+          "frame": 24,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 101925,
+          "retained": 66895,
+          "share": 0.6563159185675742
+        },
+        {
+          "frame": 25,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23269,
+          "retained": 23269,
+          "share": 1
+        },
+        {
+          "frame": 25,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27536,
+          "retained": 27536,
+          "share": 1
+        },
+        {
+          "frame": 25,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 101937,
+          "retained": 66909,
+          "share": 0.656375996939286
+        },
+        {
+          "frame": 26,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23267,
+          "retained": 23267,
+          "share": 1
+        },
+        {
+          "frame": 26,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27531,
+          "retained": 27531,
+          "share": 1
+        },
+        {
+          "frame": 26,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 102268,
+          "retained": 67008,
+          "share": 0.655219619040169
+        },
+        {
+          "frame": 27,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23267,
+          "retained": 23267,
+          "share": 1
+        },
+        {
+          "frame": 27,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27534,
+          "retained": 27534,
+          "share": 1
+        },
+        {
+          "frame": 27,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 102237,
+          "retained": 66967,
+          "share": 0.6550172638086016
+        },
+        {
+          "frame": 28,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23271,
+          "retained": 23271,
+          "share": 1
+        },
+        {
+          "frame": 28,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27530,
+          "retained": 27530,
+          "share": 1
+        },
+        {
+          "frame": 28,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 102341,
+          "retained": 67003,
+          "share": 0.6547033935568345
+        },
+        {
+          "frame": 29,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23267,
+          "retained": 23267,
+          "share": 1
+        },
+        {
+          "frame": 29,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27523,
+          "retained": 27523,
+          "share": 1
+        },
+        {
+          "frame": 29,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 102289,
+          "retained": 66960,
+          "share": 0.6546158433458144
+        },
+        {
+          "frame": 30,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 23262,
+          "retained": 23262,
+          "share": 1
+        },
+        {
+          "frame": 30,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 27530,
+          "retained": 27530,
+          "share": 1
+        },
+        {
+          "frame": 30,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 102180,
+          "retained": 66904,
+          "share": 0.6547660990409082
+        }
+      ]
+    },
+    {
+      "row": "seethrough-apc-behind-truck@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 85,
+          "limit": 300
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 21322,
+          "limit": 500000
+        },
+        {
+          "name": "vehicleSilhouette:sedan-left:clear",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "vehicleSilhouette:sedan-right:clear",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "vehicleSilhouette:foreground-truck:blocking",
+          "pass": true,
+          "value": 0.35183601309219487,
+          "limit": 0.3
+        },
+        {
+          "name": "seeThroughCutPixelsOutside",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "seeThroughCutPixelsInside",
+          "pass": true,
+          "value": 128458,
+          "limit": 10
+        },
+        {
+          "name": "canvas.f0.varianceMin",
+          "pass": true,
+          "value": 2783.4089765086774,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f0.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f15.varianceMin",
+          "pass": true,
+          "value": 2712.5481802894064,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f15.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f30.varianceMin",
+          "pass": true,
+          "value": 2711.834415018435,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f30.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ],
+      "seeThroughCutSamples": [
+        {
+          "frame": 0,
+          "outside": 0,
+          "inside": 136301,
+          "strength": 1,
+          "cover": 0,
+          "occluder": ""
+        },
+        {
+          "frame": 15,
+          "outside": 0,
+          "inside": 128613,
+          "strength": 1,
+          "cover": 0,
+          "occluder": ""
+        },
+        {
+          "frame": 30,
+          "outside": 0,
+          "inside": 128458,
+          "strength": 1,
+          "cover": 0,
+          "occluder": ""
+        }
+      ],
+      "vehicleSilhouettes": [
+        {
+          "frame": 0,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5599,
+          "retained": 5599,
+          "share": 1
+        },
+        {
+          "frame": 0,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13332,
+          "retained": 13332,
+          "share": 1
+        },
+        {
+          "frame": 0,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 209285,
+          "retained": 73634,
+          "share": 0.35183601309219487
+        },
+        {
+          "frame": 1,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5601,
+          "retained": 5601,
+          "share": 1
+        },
+        {
+          "frame": 1,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13320,
+          "retained": 13320,
+          "share": 1
+        },
+        {
+          "frame": 1,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 209371,
+          "retained": 74145,
+          "share": 0.35413213864384274
+        },
+        {
+          "frame": 2,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5629,
+          "retained": 5629,
+          "share": 1
+        },
+        {
+          "frame": 2,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13327,
+          "retained": 13327,
+          "share": 1
+        },
+        {
+          "frame": 2,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 207792,
+          "retained": 73580,
+          "share": 0.3541041041041041
+        },
+        {
+          "frame": 3,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5643,
+          "retained": 5643,
+          "share": 1
+        },
+        {
+          "frame": 3,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13321,
+          "retained": 13321,
+          "share": 1
+        },
+        {
+          "frame": 3,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 207404,
+          "retained": 73379,
+          "share": 0.3537974195290351
+        },
+        {
+          "frame": 4,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5690,
+          "retained": 5690,
+          "share": 1
+        },
+        {
+          "frame": 4,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13314,
+          "retained": 13314,
+          "share": 1
+        },
+        {
+          "frame": 4,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 206222,
+          "retained": 72938,
+          "share": 0.35368680354181414
+        },
+        {
+          "frame": 5,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5696,
+          "retained": 5696,
+          "share": 1
+        },
+        {
+          "frame": 5,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13300,
+          "retained": 13300,
+          "share": 1
+        },
+        {
+          "frame": 5,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 205282,
+          "retained": 72595,
+          "share": 0.3536354867937764
+        },
+        {
+          "frame": 6,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5723,
+          "retained": 5723,
+          "share": 1
+        },
+        {
+          "frame": 6,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13303,
+          "retained": 13303,
+          "share": 1
+        },
+        {
+          "frame": 6,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 203860,
+          "retained": 72104,
+          "share": 0.3536937113705484
+        },
+        {
+          "frame": 7,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5724,
+          "retained": 5724,
+          "share": 1
+        },
+        {
+          "frame": 7,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13304,
+          "retained": 13304,
+          "share": 1
+        },
+        {
+          "frame": 7,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 203057,
+          "retained": 71775,
+          "share": 0.35347217776289414
+        },
+        {
+          "frame": 8,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5739,
+          "retained": 5739,
+          "share": 1
+        },
+        {
+          "frame": 8,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13300,
+          "retained": 13300,
+          "share": 1
+        },
+        {
+          "frame": 8,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 203336,
+          "retained": 71885,
+          "share": 0.3535281504504859
+        },
+        {
+          "frame": 9,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5765,
+          "retained": 5765,
+          "share": 1
+        },
+        {
+          "frame": 9,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13303,
+          "retained": 13303,
+          "share": 1
+        },
+        {
+          "frame": 9,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 201472,
+          "retained": 71243,
+          "share": 0.3536124126429479
+        },
+        {
+          "frame": 10,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5788,
+          "retained": 5788,
+          "share": 1
+        },
+        {
+          "frame": 10,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13286,
+          "retained": 13286,
+          "share": 1
+        },
+        {
+          "frame": 10,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 199880,
+          "retained": 70630,
+          "share": 0.3533620172103262
+        },
+        {
+          "frame": 11,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5800,
+          "retained": 5800,
+          "share": 1
+        },
+        {
+          "frame": 11,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13275,
+          "retained": 13275,
+          "share": 1
+        },
+        {
+          "frame": 11,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 200790,
+          "retained": 70944,
+          "share": 0.35332436874346335
+        },
+        {
+          "frame": 12,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5811,
+          "retained": 5811,
+          "share": 1
+        },
+        {
+          "frame": 12,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13280,
+          "retained": 13280,
+          "share": 1
+        },
+        {
+          "frame": 12,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 198685,
+          "retained": 70215,
+          "share": 0.35339859576716914
+        },
+        {
+          "frame": 13,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5821,
+          "retained": 5821,
+          "share": 1
+        },
+        {
+          "frame": 13,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13278,
+          "retained": 13278,
+          "share": 1
+        },
+        {
+          "frame": 13,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 199433,
+          "retained": 70453,
+          "share": 0.3532665105574303
+        },
+        {
+          "frame": 14,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5841,
+          "retained": 5841,
+          "share": 1
+        },
+        {
+          "frame": 14,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13283,
+          "retained": 13283,
+          "share": 1
+        },
+        {
+          "frame": 14,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 200044,
+          "retained": 70637,
+          "share": 0.3531073163903941
+        },
+        {
+          "frame": 15,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5843,
+          "retained": 5843,
+          "share": 1
+        },
+        {
+          "frame": 15,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13261,
+          "retained": 13261,
+          "share": 1
+        },
+        {
+          "frame": 15,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 198020,
+          "retained": 69930,
+          "share": 0.35314614685385315
+        },
+        {
+          "frame": 16,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5840,
+          "retained": 5840,
+          "share": 1
+        },
+        {
+          "frame": 16,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13276,
+          "retained": 13276,
+          "share": 1
+        },
+        {
+          "frame": 16,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 197626,
+          "retained": 69791,
+          "share": 0.3531468531468531
+        },
+        {
+          "frame": 17,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5836,
+          "retained": 5836,
+          "share": 1
+        },
+        {
+          "frame": 17,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13275,
+          "retained": 13275,
+          "share": 1
+        },
+        {
+          "frame": 17,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 198156,
+          "retained": 69952,
+          "share": 0.35301479642302025
+        },
+        {
+          "frame": 18,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5846,
+          "retained": 5846,
+          "share": 1
+        },
+        {
+          "frame": 18,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13270,
+          "retained": 13270,
+          "share": 1
+        },
+        {
+          "frame": 18,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 198848,
+          "retained": 70197,
+          "share": 0.3530183859028001
+        },
+        {
+          "frame": 19,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5844,
+          "retained": 5844,
+          "share": 1
+        },
+        {
+          "frame": 19,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13273,
+          "retained": 13273,
+          "share": 1
+        },
+        {
+          "frame": 19,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 198955,
+          "retained": 70240,
+          "share": 0.35304465833982557
+        },
+        {
+          "frame": 20,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5842,
+          "retained": 5842,
+          "share": 1
+        },
+        {
+          "frame": 20,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13279,
+          "retained": 13279,
+          "share": 1
+        },
+        {
+          "frame": 20,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 198768,
+          "retained": 70171,
+          "share": 0.3530296627223698
+        },
+        {
+          "frame": 21,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5845,
+          "retained": 5845,
+          "share": 1
+        },
+        {
+          "frame": 21,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13279,
+          "retained": 13279,
+          "share": 1
+        },
+        {
+          "frame": 21,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 198760,
+          "retained": 70165,
+          "share": 0.3530136848460455
+        },
+        {
+          "frame": 22,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5844,
+          "retained": 5844,
+          "share": 1
+        },
+        {
+          "frame": 22,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13274,
+          "retained": 13274,
+          "share": 1
+        },
+        {
+          "frame": 22,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 198762,
+          "retained": 70175,
+          "share": 0.35306044414928406
+        },
+        {
+          "frame": 23,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5848,
+          "retained": 5848,
+          "share": 1
+        },
+        {
+          "frame": 23,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13271,
+          "retained": 13271,
+          "share": 1
+        },
+        {
+          "frame": 23,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 198950,
+          "retained": 70236,
+          "share": 0.3530334254837899
+        },
+        {
+          "frame": 24,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5845,
+          "retained": 5845,
+          "share": 1
+        },
+        {
+          "frame": 24,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13270,
+          "retained": 13270,
+          "share": 1
+        },
+        {
+          "frame": 24,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 198828,
+          "retained": 70184,
+          "share": 0.3529885126843302
+        },
+        {
+          "frame": 25,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5843,
+          "retained": 5843,
+          "share": 1
+        },
+        {
+          "frame": 25,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13270,
+          "retained": 13270,
+          "share": 1
+        },
+        {
+          "frame": 25,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 198845,
+          "retained": 70192,
+          "share": 0.3529985667228243
+        },
+        {
+          "frame": 26,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5844,
+          "retained": 5844,
+          "share": 1
+        },
+        {
+          "frame": 26,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13268,
+          "retained": 13268,
+          "share": 1
+        },
+        {
+          "frame": 26,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 199050,
+          "retained": 70274,
+          "share": 0.3530469731223311
+        },
+        {
+          "frame": 27,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5842,
+          "retained": 5842,
+          "share": 1
+        },
+        {
+          "frame": 27,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13269,
+          "retained": 13269,
+          "share": 1
+        },
+        {
+          "frame": 27,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 198144,
+          "retained": 69953,
+          "share": 0.35304122254521964
+        },
+        {
+          "frame": 28,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5838,
+          "retained": 5838,
+          "share": 1
+        },
+        {
+          "frame": 28,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13274,
+          "retained": 13274,
+          "share": 1
+        },
+        {
+          "frame": 28,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 197884,
+          "retained": 69855,
+          "share": 0.35300984415111886
+        },
+        {
+          "frame": 29,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5834,
+          "retained": 5834,
+          "share": 1
+        },
+        {
+          "frame": 29,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13274,
+          "retained": 13274,
+          "share": 1
+        },
+        {
+          "frame": 29,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 197756,
+          "retained": 69811,
+          "share": 0.3530158376989826
+        },
+        {
+          "frame": 30,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 5835,
+          "retained": 5835,
+          "share": 1
+        },
+        {
+          "frame": 30,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13274,
+          "retained": 13274,
+          "share": 1
+        },
+        {
+          "frame": 30,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 197751,
+          "retained": 69808,
+          "share": 0.35300959287184386
+        }
+      ]
+    },
+    {
+      "row": "seethrough-apc-behind-truck@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 141,
+          "limit": 300
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 208097,
+          "limit": 500000
+        },
+        {
+          "name": "vehicleSilhouette:sedan-left:clear",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "vehicleSilhouette:sedan-right:clear",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "vehicleSilhouette:foreground-truck:blocking",
+          "pass": true,
+          "value": 0.5005575912059901,
+          "limit": 0.3
+        },
+        {
+          "name": "seeThroughCutPixelsOutside",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "seeThroughCutPixelsInside",
+          "pass": true,
+          "value": 18753,
+          "limit": 10
+        },
+        {
+          "name": "canvas.f0.varianceMin",
+          "pass": true,
+          "value": 716.1568708559607,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f0.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f15.varianceMin",
+          "pass": true,
+          "value": 1006.0841405862884,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f15.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f30.varianceMin",
+          "pass": true,
+          "value": 910.6095860765163,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f30.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ],
+      "seeThroughCutSamples": [
+        {
+          "frame": 0,
+          "outside": 0,
+          "inside": 20430,
+          "strength": 1,
+          "cover": 0,
+          "occluder": ""
+        },
+        {
+          "frame": 15,
+          "outside": 0,
+          "inside": 18863,
+          "strength": 1,
+          "cover": 0,
+          "occluder": ""
+        },
+        {
+          "frame": 30,
+          "outside": 0,
+          "inside": 18753,
+          "strength": 1,
+          "cover": 0,
+          "occluder": ""
+        }
+      ],
+      "vehicleSilhouettes": [
+        {
+          "frame": 0,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10057,
+          "retained": 10057,
+          "share": 1
+        },
+        {
+          "frame": 0,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11037,
+          "retained": 11037,
+          "share": 1
+        },
+        {
+          "frame": 0,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37662,
+          "retained": 18852,
+          "share": 0.5005575912059901
+        },
+        {
+          "frame": 1,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10186,
+          "retained": 10186,
+          "share": 1
+        },
+        {
+          "frame": 1,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11370,
+          "retained": 11370,
+          "share": 1
+        },
+        {
+          "frame": 1,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 38015,
+          "retained": 24184,
+          "share": 0.6361699329212153
+        },
+        {
+          "frame": 2,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10376,
+          "retained": 10376,
+          "share": 1
+        },
+        {
+          "frame": 2,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11655,
+          "retained": 11655,
+          "share": 1
+        },
+        {
+          "frame": 2,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 38161,
+          "retained": 24278,
+          "share": 0.6361992610256545
+        },
+        {
+          "frame": 3,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10430,
+          "retained": 10430,
+          "share": 1
+        },
+        {
+          "frame": 3,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11714,
+          "retained": 11714,
+          "share": 1
+        },
+        {
+          "frame": 3,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 38090,
+          "retained": 24245,
+          "share": 0.636518771331058
+        },
+        {
+          "frame": 4,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10452,
+          "retained": 10452,
+          "share": 1
+        },
+        {
+          "frame": 4,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11748,
+          "retained": 11748,
+          "share": 1
+        },
+        {
+          "frame": 4,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37958,
+          "retained": 24272,
+          "share": 0.6394435955529796
+        },
+        {
+          "frame": 5,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10488,
+          "retained": 10488,
+          "share": 1
+        },
+        {
+          "frame": 5,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11769,
+          "retained": 11769,
+          "share": 1
+        },
+        {
+          "frame": 5,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 38042,
+          "retained": 24261,
+          "share": 0.6377424951369539
+        },
+        {
+          "frame": 6,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10525,
+          "retained": 10525,
+          "share": 1
+        },
+        {
+          "frame": 6,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11778,
+          "retained": 11778,
+          "share": 1
+        },
+        {
+          "frame": 6,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 38096,
+          "retained": 24171,
+          "share": 0.6344760604787905
+        },
+        {
+          "frame": 7,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10544,
+          "retained": 10544,
+          "share": 1
+        },
+        {
+          "frame": 7,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11806,
+          "retained": 11806,
+          "share": 1
+        },
+        {
+          "frame": 7,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37814,
+          "retained": 24000,
+          "share": 0.6346855661924156
+        },
+        {
+          "frame": 8,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10552,
+          "retained": 10552,
+          "share": 1
+        },
+        {
+          "frame": 8,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11822,
+          "retained": 11822,
+          "share": 1
+        },
+        {
+          "frame": 8,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37734,
+          "retained": 24003,
+          "share": 0.6361106694228017
+        },
+        {
+          "frame": 9,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10567,
+          "retained": 10567,
+          "share": 1
+        },
+        {
+          "frame": 9,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11829,
+          "retained": 11829,
+          "share": 1
+        },
+        {
+          "frame": 9,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37606,
+          "retained": 23897,
+          "share": 0.6354571079083126
+        },
+        {
+          "frame": 10,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10573,
+          "retained": 10573,
+          "share": 1
+        },
+        {
+          "frame": 10,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11826,
+          "retained": 11826,
+          "share": 1
+        },
+        {
+          "frame": 10,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37428,
+          "retained": 23779,
+          "share": 0.6353264935342524
+        },
+        {
+          "frame": 11,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10568,
+          "retained": 10568,
+          "share": 1
+        },
+        {
+          "frame": 11,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11839,
+          "retained": 11839,
+          "share": 1
+        },
+        {
+          "frame": 11,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37707,
+          "retained": 23899,
+          "share": 0.6338080462513591
+        },
+        {
+          "frame": 12,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10569,
+          "retained": 10569,
+          "share": 1
+        },
+        {
+          "frame": 12,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11826,
+          "retained": 11826,
+          "share": 1
+        },
+        {
+          "frame": 12,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37452,
+          "retained": 23735,
+          "share": 0.6337445263270319
+        },
+        {
+          "frame": 13,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10578,
+          "retained": 10578,
+          "share": 1
+        },
+        {
+          "frame": 13,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11819,
+          "retained": 11819,
+          "share": 1
+        },
+        {
+          "frame": 13,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37555,
+          "retained": 23856,
+          "share": 0.6352283317800559
+        },
+        {
+          "frame": 14,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10590,
+          "retained": 10590,
+          "share": 1
+        },
+        {
+          "frame": 14,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11825,
+          "retained": 11825,
+          "share": 1
+        },
+        {
+          "frame": 14,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37483,
+          "retained": 23742,
+          "share": 0.633407144572206
+        },
+        {
+          "frame": 15,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10604,
+          "retained": 10604,
+          "share": 1
+        },
+        {
+          "frame": 15,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11834,
+          "retained": 11834,
+          "share": 1
+        },
+        {
+          "frame": 15,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37513,
+          "retained": 23777,
+          "share": 0.6338336043504919
+        },
+        {
+          "frame": 16,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10620,
+          "retained": 10620,
+          "share": 1
+        },
+        {
+          "frame": 16,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11844,
+          "retained": 11844,
+          "share": 1
+        },
+        {
+          "frame": 16,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37613,
+          "retained": 23797,
+          "share": 0.632680190359716
+        },
+        {
+          "frame": 17,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10624,
+          "retained": 10624,
+          "share": 1
+        },
+        {
+          "frame": 17,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11837,
+          "retained": 11837,
+          "share": 1
+        },
+        {
+          "frame": 17,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37248,
+          "retained": 23650,
+          "share": 0.6349334192439863
+        },
+        {
+          "frame": 18,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10621,
+          "retained": 10621,
+          "share": 1
+        },
+        {
+          "frame": 18,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11830,
+          "retained": 11830,
+          "share": 1
+        },
+        {
+          "frame": 18,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37244,
+          "retained": 23619,
+          "share": 0.6341692621630329
+        },
+        {
+          "frame": 19,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10627,
+          "retained": 10627,
+          "share": 1
+        },
+        {
+          "frame": 19,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11829,
+          "retained": 11829,
+          "share": 1
+        },
+        {
+          "frame": 19,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37191,
+          "retained": 23604,
+          "share": 0.6346696781479391
+        },
+        {
+          "frame": 20,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10634,
+          "retained": 10634,
+          "share": 1
+        },
+        {
+          "frame": 20,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11833,
+          "retained": 11833,
+          "share": 1
+        },
+        {
+          "frame": 20,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37148,
+          "retained": 23568,
+          "share": 0.6344352320447938
+        },
+        {
+          "frame": 21,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10628,
+          "retained": 10628,
+          "share": 1
+        },
+        {
+          "frame": 21,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11825,
+          "retained": 11825,
+          "share": 1
+        },
+        {
+          "frame": 21,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37141,
+          "retained": 23565,
+          "share": 0.6344740313938774
+        },
+        {
+          "frame": 22,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10638,
+          "retained": 10638,
+          "share": 1
+        },
+        {
+          "frame": 22,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11823,
+          "retained": 11823,
+          "share": 1
+        },
+        {
+          "frame": 22,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37165,
+          "retained": 23581,
+          "share": 0.6344948203955334
+        },
+        {
+          "frame": 23,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10640,
+          "retained": 10640,
+          "share": 1
+        },
+        {
+          "frame": 23,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11824,
+          "retained": 11824,
+          "share": 1
+        },
+        {
+          "frame": 23,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37187,
+          "retained": 23596,
+          "share": 0.6345228171135074
+        },
+        {
+          "frame": 24,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10640,
+          "retained": 10640,
+          "share": 1
+        },
+        {
+          "frame": 24,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11831,
+          "retained": 11831,
+          "share": 1
+        },
+        {
+          "frame": 24,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37165,
+          "retained": 23585,
+          "share": 0.6346024485402932
+        },
+        {
+          "frame": 25,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10640,
+          "retained": 10640,
+          "share": 1
+        },
+        {
+          "frame": 25,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11825,
+          "retained": 11825,
+          "share": 1
+        },
+        {
+          "frame": 25,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37236,
+          "retained": 23624,
+          "share": 0.6344397894510688
+        },
+        {
+          "frame": 26,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10634,
+          "retained": 10634,
+          "share": 1
+        },
+        {
+          "frame": 26,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11826,
+          "retained": 11826,
+          "share": 1
+        },
+        {
+          "frame": 26,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37180,
+          "retained": 23599,
+          "share": 0.6347229693383539
+        },
+        {
+          "frame": 27,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10639,
+          "retained": 10639,
+          "share": 1
+        },
+        {
+          "frame": 27,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11829,
+          "retained": 11829,
+          "share": 1
+        },
+        {
+          "frame": 27,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37209,
+          "retained": 23634,
+          "share": 0.6351689107473998
+        },
+        {
+          "frame": 28,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10638,
+          "retained": 10638,
+          "share": 1
+        },
+        {
+          "frame": 28,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11828,
+          "retained": 11828,
+          "share": 1
+        },
+        {
+          "frame": 28,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37238,
+          "retained": 23655,
+          "share": 0.6352381975401472
+        },
+        {
+          "frame": 29,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10642,
+          "retained": 10642,
+          "share": 1
+        },
+        {
+          "frame": 29,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11830,
+          "retained": 11830,
+          "share": 1
+        },
+        {
+          "frame": 29,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37230,
+          "retained": 23656,
+          "share": 0.6354015578834273
+        },
+        {
+          "frame": 30,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10644,
+          "retained": 10644,
+          "share": 1
+        },
+        {
+          "frame": 30,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11826,
+          "retained": 11826,
+          "share": 1
+        },
+        {
+          "frame": 30,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37255,
+          "retained": 23644,
+          "share": 0.634653066702456
+        }
+      ]
+    },
+    {
+      "row": "seethrough-apc-behind-truck@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 127,
+          "limit": 300
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 24386,
+          "limit": 500000
+        },
+        {
+          "name": "vehicleSilhouette:sedan-left:clear",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "vehicleSilhouette:sedan-right:clear",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "vehicleSilhouette:foreground-truck:blocking",
+          "pass": true,
+          "value": 0.5020930542594321,
+          "limit": 0.3
+        },
+        {
+          "name": "seeThroughCutPixelsOutside",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "seeThroughCutPixelsInside",
+          "pass": true,
+          "value": 18599,
+          "limit": 10
+        },
+        {
+          "name": "canvas.f0.varianceMin",
+          "pass": true,
+          "value": 710.4414013737951,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f0.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f15.varianceMin",
+          "pass": true,
+          "value": 1009.770847790076,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f15.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f30.varianceMin",
+          "pass": true,
+          "value": 918.9550559401523,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f30.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ],
+      "seeThroughCutSamples": [
+        {
+          "frame": 0,
+          "outside": 0,
+          "inside": 20152,
+          "strength": 1,
+          "cover": 0,
+          "occluder": ""
+        },
+        {
+          "frame": 15,
+          "outside": 0,
+          "inside": 18655,
+          "strength": 1,
+          "cover": 0,
+          "occluder": ""
+        },
+        {
+          "frame": 30,
+          "outside": 0,
+          "inside": 18599,
+          "strength": 1,
+          "cover": 0,
+          "occluder": ""
+        }
+      ],
+      "vehicleSilhouettes": [
+        {
+          "frame": 0,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10167,
+          "retained": 10167,
+          "share": 1
+        },
+        {
+          "frame": 0,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11203,
+          "retained": 11203,
+          "share": 1
+        },
+        {
+          "frame": 0,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37505,
+          "retained": 18831,
+          "share": 0.5020930542594321
+        },
+        {
+          "frame": 1,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10391,
+          "retained": 10391,
+          "share": 1
+        },
+        {
+          "frame": 1,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11484,
+          "retained": 11484,
+          "share": 1
+        },
+        {
+          "frame": 1,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37500,
+          "retained": 23274,
+          "share": 0.62064
+        },
+        {
+          "frame": 2,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10484,
+          "retained": 10484,
+          "share": 1
+        },
+        {
+          "frame": 2,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11569,
+          "retained": 11569,
+          "share": 1
+        },
+        {
+          "frame": 2,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37811,
+          "retained": 23410,
+          "share": 0.6191319986247388
+        },
+        {
+          "frame": 3,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10536,
+          "retained": 10536,
+          "share": 1
+        },
+        {
+          "frame": 3,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11650,
+          "retained": 11650,
+          "share": 1
+        },
+        {
+          "frame": 3,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37907,
+          "retained": 23459,
+          "share": 0.6188566755480518
+        },
+        {
+          "frame": 4,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10576,
+          "retained": 10576,
+          "share": 1
+        },
+        {
+          "frame": 4,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11691,
+          "retained": 11691,
+          "share": 1
+        },
+        {
+          "frame": 4,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37864,
+          "retained": 23382,
+          "share": 0.6175258821043735
+        },
+        {
+          "frame": 5,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10612,
+          "retained": 10612,
+          "share": 1
+        },
+        {
+          "frame": 5,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11707,
+          "retained": 11707,
+          "share": 1
+        },
+        {
+          "frame": 5,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37748,
+          "retained": 23393,
+          "share": 0.619714951785525
+        },
+        {
+          "frame": 6,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10626,
+          "retained": 10626,
+          "share": 1
+        },
+        {
+          "frame": 6,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11750,
+          "retained": 11750,
+          "share": 1
+        },
+        {
+          "frame": 6,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 37246,
+          "retained": 23126,
+          "share": 0.6208988884712452
+        },
+        {
+          "frame": 7,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10645,
+          "retained": 10645,
+          "share": 1
+        },
+        {
+          "frame": 7,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11771,
+          "retained": 11771,
+          "share": 1
+        },
+        {
+          "frame": 7,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 36695,
+          "retained": 22860,
+          "share": 0.6229731571058728
+        },
+        {
+          "frame": 8,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10677,
+          "retained": 10677,
+          "share": 1
+        },
+        {
+          "frame": 8,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11780,
+          "retained": 11780,
+          "share": 1
+        },
+        {
+          "frame": 8,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 36455,
+          "retained": 22779,
+          "share": 0.6248525579481553
+        },
+        {
+          "frame": 9,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10691,
+          "retained": 10691,
+          "share": 1
+        },
+        {
+          "frame": 9,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11800,
+          "retained": 11800,
+          "share": 1
+        },
+        {
+          "frame": 9,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 36136,
+          "retained": 22725,
+          "share": 0.62887425282267
+        },
+        {
+          "frame": 10,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10685,
+          "retained": 10685,
+          "share": 1
+        },
+        {
+          "frame": 10,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11802,
+          "retained": 11802,
+          "share": 1
+        },
+        {
+          "frame": 10,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 36115,
+          "retained": 22649,
+          "share": 0.6271355392496193
+        },
+        {
+          "frame": 11,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10693,
+          "retained": 10693,
+          "share": 1
+        },
+        {
+          "frame": 11,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11804,
+          "retained": 11804,
+          "share": 1
+        },
+        {
+          "frame": 11,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 35999,
+          "retained": 22612,
+          "share": 0.6281285591266424
+        },
+        {
+          "frame": 12,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10697,
+          "retained": 10697,
+          "share": 1
+        },
+        {
+          "frame": 12,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11814,
+          "retained": 11814,
+          "share": 1
+        },
+        {
+          "frame": 12,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 35855,
+          "retained": 22544,
+          "share": 0.6287547064565612
+        },
+        {
+          "frame": 13,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10697,
+          "retained": 10697,
+          "share": 1
+        },
+        {
+          "frame": 13,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11819,
+          "retained": 11819,
+          "share": 1
+        },
+        {
+          "frame": 13,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 35949,
+          "retained": 22615,
+          "share": 0.6290856491140226
+        },
+        {
+          "frame": 14,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10698,
+          "retained": 10698,
+          "share": 1
+        },
+        {
+          "frame": 14,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11820,
+          "retained": 11820,
+          "share": 1
+        },
+        {
+          "frame": 14,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 35782,
+          "retained": 22469,
+          "share": 0.6279414230618747
+        },
+        {
+          "frame": 15,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10708,
+          "retained": 10708,
+          "share": 1
+        },
+        {
+          "frame": 15,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11811,
+          "retained": 11811,
+          "share": 1
+        },
+        {
+          "frame": 15,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 36017,
+          "retained": 22596,
+          "share": 0.627370408418247
+        },
+        {
+          "frame": 16,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10702,
+          "retained": 10702,
+          "share": 1
+        },
+        {
+          "frame": 16,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11820,
+          "retained": 11820,
+          "share": 1
+        },
+        {
+          "frame": 16,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 36047,
+          "retained": 22565,
+          "share": 0.6259882930618359
+        },
+        {
+          "frame": 17,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10716,
+          "retained": 10716,
+          "share": 1
+        },
+        {
+          "frame": 17,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11828,
+          "retained": 11828,
+          "share": 1
+        },
+        {
+          "frame": 17,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 35953,
+          "retained": 22530,
+          "share": 0.626651461630462
+        },
+        {
+          "frame": 18,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10723,
+          "retained": 10723,
+          "share": 1
+        },
+        {
+          "frame": 18,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11812,
+          "retained": 11812,
+          "share": 1
+        },
+        {
+          "frame": 18,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 35968,
+          "retained": 22537,
+          "share": 0.6265847419928826
+        },
+        {
+          "frame": 19,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10729,
+          "retained": 10729,
+          "share": 1
+        },
+        {
+          "frame": 19,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11812,
+          "retained": 11812,
+          "share": 1
+        },
+        {
+          "frame": 19,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 35968,
+          "retained": 22539,
+          "share": 0.626640346975089
+        },
+        {
+          "frame": 20,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10730,
+          "retained": 10730,
+          "share": 1
+        },
+        {
+          "frame": 20,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11815,
+          "retained": 11815,
+          "share": 1
+        },
+        {
+          "frame": 20,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 35942,
+          "retained": 22514,
+          "share": 0.6263980858049079
+        },
+        {
+          "frame": 21,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10731,
+          "retained": 10731,
+          "share": 1
+        },
+        {
+          "frame": 21,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11812,
+          "retained": 11812,
+          "share": 1
+        },
+        {
+          "frame": 21,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 35964,
+          "retained": 22544,
+          "share": 0.6268490712935157
+        },
+        {
+          "frame": 22,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10734,
+          "retained": 10734,
+          "share": 1
+        },
+        {
+          "frame": 22,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11810,
+          "retained": 11810,
+          "share": 1
+        },
+        {
+          "frame": 22,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 35957,
+          "retained": 22537,
+          "share": 0.6267764273993938
+        },
+        {
+          "frame": 23,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10732,
+          "retained": 10732,
+          "share": 1
+        },
+        {
+          "frame": 23,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11807,
+          "retained": 11807,
+          "share": 1
+        },
+        {
+          "frame": 23,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 35956,
+          "retained": 22541,
+          "share": 0.6269051062409612
+        },
+        {
+          "frame": 24,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10738,
+          "retained": 10738,
+          "share": 1
+        },
+        {
+          "frame": 24,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11809,
+          "retained": 11809,
+          "share": 1
+        },
+        {
+          "frame": 24,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 35956,
+          "retained": 22542,
+          "share": 0.6269329180109022
+        },
+        {
+          "frame": 25,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10739,
+          "retained": 10739,
+          "share": 1
+        },
+        {
+          "frame": 25,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11808,
+          "retained": 11808,
+          "share": 1
+        },
+        {
+          "frame": 25,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 35956,
+          "retained": 22538,
+          "share": 0.626821670931138
+        },
+        {
+          "frame": 26,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10738,
+          "retained": 10738,
+          "share": 1
+        },
+        {
+          "frame": 26,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11810,
+          "retained": 11810,
+          "share": 1
+        },
+        {
+          "frame": 26,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 35956,
+          "retained": 22539,
+          "share": 0.6268494827010791
+        },
+        {
+          "frame": 27,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10738,
+          "retained": 10738,
+          "share": 1
+        },
+        {
+          "frame": 27,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11812,
+          "retained": 11812,
+          "share": 1
+        },
+        {
+          "frame": 27,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 35930,
+          "retained": 22525,
+          "share": 0.626913442805455
+        },
+        {
+          "frame": 28,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10735,
+          "retained": 10735,
+          "share": 1
+        },
+        {
+          "frame": 28,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11814,
+          "retained": 11814,
+          "share": 1
+        },
+        {
+          "frame": 28,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 35930,
+          "retained": 22526,
+          "share": 0.6269412747008071
+        },
+        {
+          "frame": 29,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10736,
+          "retained": 10736,
+          "share": 1
+        },
+        {
+          "frame": 29,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11813,
+          "retained": 11813,
+          "share": 1
+        },
+        {
+          "frame": 29,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 35930,
+          "retained": 22526,
+          "share": 0.6269412747008071
+        },
+        {
+          "frame": 30,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 10731,
+          "retained": 10731,
+          "share": 1
+        },
+        {
+          "frame": 30,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 11807,
+          "retained": 11807,
+          "share": 1
+        },
+        {
+          "frame": 30,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 35933,
+          "retained": 22538,
+          "share": 0.6272228870397685
+        }
+      ]
+    },
+    {
+      "row": "seethrough-apc-behind-truck@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 90,
+          "limit": 300
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 141179,
+          "limit": 500000
+        },
+        {
+          "name": "vehicleSilhouette:sedan-left:clear",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "vehicleSilhouette:sedan-right:clear",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "vehicleSilhouette:foreground-truck:blocking",
+          "pass": true,
+          "value": 0.35062017014091823,
+          "limit": 0.3
+        },
+        {
+          "name": "seeThroughCutPixelsOutside",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "seeThroughCutPixelsInside",
+          "pass": true,
+          "value": 145532,
+          "limit": 10
+        },
+        {
+          "name": "canvas.f0.varianceMin",
+          "pass": true,
+          "value": 2289.8018707549672,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f0.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f15.varianceMin",
+          "pass": true,
+          "value": 2242.543536361849,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f15.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f30.varianceMin",
+          "pass": true,
+          "value": 2244.7121333067153,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f30.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ],
+      "seeThroughCutSamples": [
+        {
+          "frame": 0,
+          "outside": 0,
+          "inside": 151078,
+          "strength": 1,
+          "cover": 0,
+          "occluder": ""
+        },
+        {
+          "frame": 15,
+          "outside": 0,
+          "inside": 146039,
+          "strength": 1,
+          "cover": 0,
+          "occluder": ""
+        },
+        {
+          "frame": 30,
+          "outside": 0,
+          "inside": 145532,
+          "strength": 1,
+          "cover": 0,
+          "occluder": ""
+        }
+      ],
+      "vehicleSilhouettes": [
+        {
+          "frame": 0,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8108,
+          "retained": 8108,
+          "share": 1
+        },
+        {
+          "frame": 0,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13031,
+          "retained": 13031,
+          "share": 1
+        },
+        {
+          "frame": 0,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 230985,
+          "retained": 80988,
+          "share": 0.35062017014091823
+        },
+        {
+          "frame": 1,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8089,
+          "retained": 8089,
+          "share": 1
+        },
+        {
+          "frame": 1,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13017,
+          "retained": 13017,
+          "share": 1
+        },
+        {
+          "frame": 1,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 231477,
+          "retained": 81645,
+          "share": 0.35271322852810433
+        },
+        {
+          "frame": 2,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8067,
+          "retained": 8067,
+          "share": 1
+        },
+        {
+          "frame": 2,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13013,
+          "retained": 13013,
+          "share": 1
+        },
+        {
+          "frame": 2,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 230185,
+          "retained": 81235,
+          "share": 0.352911788344158
+        },
+        {
+          "frame": 3,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8098,
+          "retained": 8098,
+          "share": 1
+        },
+        {
+          "frame": 3,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13026,
+          "retained": 13026,
+          "share": 1
+        },
+        {
+          "frame": 3,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 229748,
+          "retained": 81041,
+          "share": 0.3527386527847903
+        },
+        {
+          "frame": 4,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8096,
+          "retained": 8096,
+          "share": 1
+        },
+        {
+          "frame": 4,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13022,
+          "retained": 13022,
+          "share": 1
+        },
+        {
+          "frame": 4,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 229198,
+          "retained": 80862,
+          "share": 0.35280412569045105
+        },
+        {
+          "frame": 5,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8135,
+          "retained": 8135,
+          "share": 1
+        },
+        {
+          "frame": 5,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13007,
+          "retained": 13007,
+          "share": 1
+        },
+        {
+          "frame": 5,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 228337,
+          "retained": 80483,
+          "share": 0.35247463179423394
+        },
+        {
+          "frame": 6,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8158,
+          "retained": 8158,
+          "share": 1
+        },
+        {
+          "frame": 6,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13010,
+          "retained": 13010,
+          "share": 1
+        },
+        {
+          "frame": 6,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 226990,
+          "retained": 79997,
+          "share": 0.3524252169699106
+        },
+        {
+          "frame": 7,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8262,
+          "retained": 8262,
+          "share": 1
+        },
+        {
+          "frame": 7,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13004,
+          "retained": 13004,
+          "share": 1
+        },
+        {
+          "frame": 7,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 226318,
+          "retained": 79787,
+          "share": 0.35254376585158936
+        },
+        {
+          "frame": 8,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8234,
+          "retained": 8234,
+          "share": 1
+        },
+        {
+          "frame": 8,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 12997,
+          "retained": 12997,
+          "share": 1
+        },
+        {
+          "frame": 8,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 227265,
+          "retained": 80086,
+          "share": 0.3523903812729633
+        },
+        {
+          "frame": 9,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8248,
+          "retained": 8248,
+          "share": 1
+        },
+        {
+          "frame": 9,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 13002,
+          "retained": 13002,
+          "share": 1
+        },
+        {
+          "frame": 9,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 226882,
+          "retained": 79861,
+          "share": 0.3519935473065294
+        },
+        {
+          "frame": 10,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8268,
+          "retained": 8268,
+          "share": 1
+        },
+        {
+          "frame": 10,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 12986,
+          "retained": 12986,
+          "share": 1
+        },
+        {
+          "frame": 10,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 225218,
+          "retained": 79372,
+          "share": 0.3524229857293822
+        },
+        {
+          "frame": 11,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8246,
+          "retained": 8246,
+          "share": 1
+        },
+        {
+          "frame": 11,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 12980,
+          "retained": 12980,
+          "share": 1
+        },
+        {
+          "frame": 11,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 226321,
+          "retained": 79704,
+          "share": 0.35217235696201415
+        },
+        {
+          "frame": 12,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8240,
+          "retained": 8240,
+          "share": 1
+        },
+        {
+          "frame": 12,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 12987,
+          "retained": 12987,
+          "share": 1
+        },
+        {
+          "frame": 12,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 224378,
+          "retained": 78941,
+          "share": 0.3518214798242252
+        },
+        {
+          "frame": 13,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8241,
+          "retained": 8241,
+          "share": 1
+        },
+        {
+          "frame": 13,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 12989,
+          "retained": 12989,
+          "share": 1
+        },
+        {
+          "frame": 13,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 225505,
+          "retained": 79381,
+          "share": 0.352014367752378
+        },
+        {
+          "frame": 14,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8273,
+          "retained": 8273,
+          "share": 1
+        },
+        {
+          "frame": 14,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 12976,
+          "retained": 12976,
+          "share": 1
+        },
+        {
+          "frame": 14,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 224425,
+          "retained": 78935,
+          "share": 0.3517210649437451
+        },
+        {
+          "frame": 15,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8290,
+          "retained": 8290,
+          "share": 1
+        },
+        {
+          "frame": 15,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 12972,
+          "retained": 12972,
+          "share": 1
+        },
+        {
+          "frame": 15,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 224482,
+          "retained": 79014,
+          "share": 0.3519836779786353
+        },
+        {
+          "frame": 16,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8295,
+          "retained": 8295,
+          "share": 1
+        },
+        {
+          "frame": 16,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 12957,
+          "retained": 12957,
+          "share": 1
+        },
+        {
+          "frame": 16,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 224013,
+          "retained": 78784,
+          "share": 0.35169387490904547
+        },
+        {
+          "frame": 17,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8297,
+          "retained": 8297,
+          "share": 1
+        },
+        {
+          "frame": 17,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 12956,
+          "retained": 12956,
+          "share": 1
+        },
+        {
+          "frame": 17,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 224305,
+          "retained": 78944,
+          "share": 0.3519493546733243
+        },
+        {
+          "frame": 18,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8305,
+          "retained": 8305,
+          "share": 1
+        },
+        {
+          "frame": 18,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 12964,
+          "retained": 12964,
+          "share": 1
+        },
+        {
+          "frame": 18,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 223923,
+          "retained": 78800,
+          "share": 0.3519066822077232
+        },
+        {
+          "frame": 19,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8309,
+          "retained": 8309,
+          "share": 1
+        },
+        {
+          "frame": 19,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 12962,
+          "retained": 12962,
+          "share": 1
+        },
+        {
+          "frame": 19,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 223937,
+          "retained": 78835,
+          "share": 0.3520409758101609
+        },
+        {
+          "frame": 20,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8305,
+          "retained": 8305,
+          "share": 1
+        },
+        {
+          "frame": 20,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 12961,
+          "retained": 12961,
+          "share": 1
+        },
+        {
+          "frame": 20,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 224019,
+          "retained": 78892,
+          "share": 0.3521665573009432
+        },
+        {
+          "frame": 21,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8304,
+          "retained": 8304,
+          "share": 1
+        },
+        {
+          "frame": 21,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 12961,
+          "retained": 12961,
+          "share": 1
+        },
+        {
+          "frame": 21,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 224047,
+          "retained": 78897,
+          "share": 0.35214486246189414
+        },
+        {
+          "frame": 22,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8304,
+          "retained": 8304,
+          "share": 1
+        },
+        {
+          "frame": 22,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 12961,
+          "retained": 12961,
+          "share": 1
+        },
+        {
+          "frame": 22,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 224040,
+          "retained": 78879,
+          "share": 0.35207552222817357
+        },
+        {
+          "frame": 23,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8310,
+          "retained": 8310,
+          "share": 1
+        },
+        {
+          "frame": 23,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 12962,
+          "retained": 12962,
+          "share": 1
+        },
+        {
+          "frame": 23,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 224016,
+          "retained": 78864,
+          "share": 0.3520462824083994
+        },
+        {
+          "frame": 24,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8301,
+          "retained": 8301,
+          "share": 1
+        },
+        {
+          "frame": 24,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 12960,
+          "retained": 12960,
+          "share": 1
+        },
+        {
+          "frame": 24,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 224020,
+          "retained": 78852,
+          "share": 0.3519864297830551
+        },
+        {
+          "frame": 25,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8305,
+          "retained": 8305,
+          "share": 1
+        },
+        {
+          "frame": 25,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 12969,
+          "retained": 12969,
+          "share": 1
+        },
+        {
+          "frame": 25,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 224032,
+          "retained": 78855,
+          "share": 0.3519809670047136
+        },
+        {
+          "frame": 26,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8304,
+          "retained": 8304,
+          "share": 1
+        },
+        {
+          "frame": 26,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 12969,
+          "retained": 12969,
+          "share": 1
+        },
+        {
+          "frame": 26,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 223945,
+          "retained": 78824,
+          "share": 0.3519792806269397
+        },
+        {
+          "frame": 27,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8304,
+          "retained": 8304,
+          "share": 1
+        },
+        {
+          "frame": 27,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 12969,
+          "retained": 12969,
+          "share": 1
+        },
+        {
+          "frame": 27,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 224386,
+          "retained": 78995,
+          "share": 0.35204959311186973
+        },
+        {
+          "frame": 28,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8295,
+          "retained": 8295,
+          "share": 1
+        },
+        {
+          "frame": 28,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 12957,
+          "retained": 12957,
+          "share": 1
+        },
+        {
+          "frame": 28,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 224157,
+          "retained": 78909,
+          "share": 0.3520255892075643
+        },
+        {
+          "frame": 29,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8304,
+          "retained": 8304,
+          "share": 1
+        },
+        {
+          "frame": 29,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 12953,
+          "retained": 12953,
+          "share": 1
+        },
+        {
+          "frame": 29,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 224112,
+          "retained": 78872,
+          "share": 0.3519311772685086
+        },
+        {
+          "frame": 30,
+          "id": "sedan-left",
+          "blocking": false,
+          "reference": 8293,
+          "retained": 8293,
+          "share": 1
+        },
+        {
+          "frame": 30,
+          "id": "sedan-right",
+          "blocking": false,
+          "reference": 12957,
+          "retained": 12957,
+          "share": 1
+        },
+        {
+          "frame": 30,
+          "id": "foreground-truck",
+          "blocking": true,
+          "reference": 223791,
+          "retained": 78718,
+          "share": 0.35174783615069416
+        }
+      ]
+    }
+  ]
+}

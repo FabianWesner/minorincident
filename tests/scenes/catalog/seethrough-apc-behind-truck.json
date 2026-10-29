@@ -1,6 +1,6 @@
 {
   "name": "seethrough-apc-behind-truck",
-  "note": "Positive vehicle control: tall fire engine between camera and APC opens the reveal; same camera and subject as opaque-sedan control.",
+  "note": "Positive vehicle control: tall fire engine across the camera-to-APC sightline at (3.5,3.5), yaw 45. Its transverse hull stays clear of APC and sedans while actually obscuring the APC at all zooms; the old (4,4), yaw 0 pose leaves it unobstructed. Same camera and subject as opaque-sedan control.",
   "ground": "asphalt",
   "size": 60,
   "time": "L3",
@@ -36,9 +36,10 @@
       "id": "foreground-truck",
       "asset": "vehicle.fire-engine",
       "at": [
-        4,
-        4
-      ]
+        3.5,
+        3.5
+      ],
+      "yaw": 45
     }
   ],
   "camera": {
