@@ -1,0 +1,894 @@
+{
+  "spec": {
+    "name": "q231-l1-falls",
+    "seed": 1,
+    "ground": "district",
+    "time": "L1",
+    "dof": false,
+    "layout": {
+      "district": "D-GROVE",
+      "bbox": [
+        [
+          -90,
+          30
+        ],
+        [
+          -60,
+          56
+        ]
+      ]
+    },
+    "actors": [
+      {
+        "id": "courier",
+        "kind": "courier",
+        "at": [
+          -70,
+          46
+        ],
+        "god": true
+      },
+      {
+        "id": "inf.common-worker",
+        "kind": "infected",
+        "archetype": "infected.runner",
+        "at": [
+          -74,
+          42
+        ],
+        "yaw": -45,
+        "state": "idle",
+        "look": {
+          "model": "inf.common-worker"
+        }
+      },
+      {
+        "id": "inf.jogger",
+        "kind": "infected",
+        "archetype": "infected.runner",
+        "at": [
+          -72.7,
+          42
+        ],
+        "yaw": -45,
+        "state": "idle",
+        "look": {
+          "model": "inf.jogger"
+        }
+      },
+      {
+        "id": "inf.cashier",
+        "kind": "infected",
+        "archetype": "infected.runner",
+        "at": [
+          -71.4,
+          42
+        ],
+        "yaw": -45,
+        "state": "idle",
+        "look": {
+          "model": "inf.cashier"
+        }
+      },
+      {
+        "id": "inf.delivery-driver",
+        "kind": "infected",
+        "archetype": "infected.runner",
+        "at": [
+          -70.1,
+          42
+        ],
+        "yaw": -45,
+        "state": "idle",
+        "look": {
+          "model": "inf.delivery-driver"
+        }
+      },
+      {
+        "id": "inf.suburban-mom",
+        "kind": "infected",
+        "archetype": "infected.runner",
+        "at": [
+          -74,
+          43.7
+        ],
+        "yaw": -45,
+        "state": "idle",
+        "look": {
+          "model": "inf.suburban-mom"
+        }
+      },
+      {
+        "id": "inf.bbq-dad",
+        "kind": "infected",
+        "archetype": "infected.runner",
+        "at": [
+          -72.7,
+          43.7
+        ],
+        "yaw": -45,
+        "state": "idle",
+        "look": {
+          "model": "inf.bbq-dad"
+        }
+      },
+      {
+        "id": "inf.bathrobe-neighbor",
+        "kind": "infected",
+        "archetype": "infected.runner",
+        "at": [
+          -71.4,
+          43.7
+        ],
+        "yaw": -45,
+        "state": "idle",
+        "look": {
+          "model": "inf.bathrobe-neighbor"
+        }
+      }
+    ],
+    "camera": {
+      "mode": "game",
+      "target": [
+        -72,
+        0.5,
+        43
+      ],
+      "zoom": 1.5
+    },
+    "script": [
+      {
+        "frame": 5,
+        "actor": "inf.common-worker",
+        "do": {
+          "hit": {
+            "amount": 500,
+            "heavy": false
+          }
+        }
+      },
+      {
+        "frame": 5,
+        "actor": "inf.jogger",
+        "do": {
+          "hit": {
+            "amount": 500,
+            "heavy": false
+          }
+        }
+      },
+      {
+        "frame": 5,
+        "actor": "inf.cashier",
+        "do": {
+          "hit": {
+            "amount": 500,
+            "heavy": false
+          }
+        }
+      },
+      {
+        "frame": 5,
+        "actor": "inf.delivery-driver",
+        "do": {
+          "hit": {
+            "amount": 500,
+            "heavy": false
+          }
+        }
+      },
+      {
+        "frame": 5,
+        "actor": "inf.suburban-mom",
+        "do": {
+          "hit": {
+            "amount": 500,
+            "heavy": false
+          }
+        }
+      },
+      {
+        "frame": 5,
+        "actor": "inf.bbq-dad",
+        "do": {
+          "hit": {
+            "amount": 500,
+            "heavy": false
+          }
+        }
+      },
+      {
+        "frame": 5,
+        "actor": "inf.bathrobe-neighbor",
+        "do": {
+          "hit": {
+            "amount": 500,
+            "heavy": false
+          }
+        }
+      }
+    ]
+  },
+  "errors": [],
+  "metrics": {
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 8,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    },
+    "marketDoors": null,
+    "armyBoom": null,
+    "scene": "q231-l1-falls",
+    "frame": 60,
+    "tick": 60,
+    "backend": "webgpu",
+    "quality": "low",
+    "convoyOverlapFrames": 0,
+    "courierAttachments": {
+      "samples": 6,
+      "gapMaxCm": 0,
+      "frame": -1,
+      "worst": null,
+      "worstAt": null,
+      "attachments": 0
+    },
+    "animalLimbs": {
+      "samples": 0,
+      "gapMaxCm": 0,
+      "frame": -1,
+      "actor": null
+    },
+    "corgiTongue": {
+      "idleSamples": 0,
+      "idleOutFrames": 0,
+      "firstIdleOut": -1,
+      "movingSamples": 0,
+      "movingInFrames": 0,
+      "firstMovingIn": -1
+    },
+    "propPenetration": {
+      "samples": 95,
+      "framesMax": 0,
+      "pairs": []
+    },
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 60,
+      "gaps": [
+        {
+          "id": "D-GROVE/prop.crates:1290",
+          "gapCm": 0
+        }
+      ]
+    },
+    "bodies": [],
+    "attackOverlap": {
+      "depthCm": 0,
+      "frame": 0,
+      "actor": ""
+    },
+    "wheels": {},
+    "lodPlaceholders": {
+      "frames": 0,
+      "firstFrame": -1,
+      "assets": []
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 51,
+        "p95": 53,
+        "max": 53
+      },
+      "triangles": {
+        "p50": 120327,
+        "p95": 126986,
+        "max": 126986
+      },
+      "shadowDrawCalls": {
+        "p50": 23,
+        "p95": 23,
+        "max": 23
+      },
+      "shadowTriangles": {
+        "p50": 75096,
+        "p95": 75096,
+        "max": 75096
+      },
+      "stepMs": {
+        "p50": 3.1,
+        "p95": 4.5,
+        "max": 10.3
+      },
+      "lastFrame": {
+        "drawCalls": 51,
+        "triangles": 120327,
+        "shadowDrawCalls": 23,
+        "shadowTriangles": 75096,
+        "stepMs": 3,
+        "categories": {
+          "other": 34,
+          "shadows": 23,
+          "buildings": 3,
+          "props": 8,
+          "crowd": 6
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "grounding": {
+      "corpses": 7,
+      "corpseOffMaxCm": 0,
+      "pickups": 0,
+      "pickupOffMaxCm": 0,
+      "worst": [
+        {
+          "id": 6,
+          "at": [
+            -71.1,
+            0,
+            42
+          ],
+          "support": 0,
+          "offCm": 0
+        },
+        {
+          "id": 7,
+          "at": [
+            -69.8,
+            0,
+            42
+          ],
+          "support": 0,
+          "offCm": 0
+        },
+        {
+          "id": 4,
+          "at": [
+            -73.7,
+            0.4,
+            42
+          ],
+          "support": 0.4,
+          "offCm": 0
+        },
+        {
+          "id": 9,
+          "at": [
+            -72.4,
+            0.4,
+            43.7
+          ],
+          "support": 0.4,
+          "offCm": 0
+        },
+        {
+          "id": 5,
+          "at": [
+            -72.4,
+            0.4,
+            42
+          ],
+          "support": 0.4,
+          "offCm": 0
+        }
+      ]
+    },
+    "pursuit": {
+      "actors": {
+        "inf.common-worker": {
+          "stuckRunMax": 0,
+          "stuckFrame": -1,
+          "lostNearFrames": 5,
+          "overshootMaxM": 0
+        },
+        "inf.jogger": {
+          "stuckRunMax": 0,
+          "stuckFrame": -1,
+          "lostNearFrames": 5,
+          "overshootMaxM": 0
+        },
+        "inf.cashier": {
+          "stuckRunMax": 0,
+          "stuckFrame": -1,
+          "lostNearFrames": 5,
+          "overshootMaxM": 0
+        },
+        "inf.delivery-driver": {
+          "stuckRunMax": 0,
+          "stuckFrame": -1,
+          "lostNearFrames": 5,
+          "overshootMaxM": 0
+        },
+        "inf.suburban-mom": {
+          "stuckRunMax": 0,
+          "stuckFrame": -1,
+          "lostNearFrames": 5,
+          "overshootMaxM": 0
+        },
+        "inf.bbq-dad": {
+          "stuckRunMax": 0,
+          "stuckFrame": -1,
+          "lostNearFrames": 5,
+          "overshootMaxM": 0
+        },
+        "inf.bathrobe-neighbor": {
+          "stuckRunMax": 0,
+          "stuckFrame": -1,
+          "lostNearFrames": 4,
+          "overshootMaxM": 0
+        }
+      },
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "hullWindups": 0,
+      "hullHits": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "aim": {
+      "shots": 0,
+      "hitShare": 0,
+      "intentErrorMaxDeg": 0,
+      "misses": []
+    },
+    "cure": null,
+    "megaAlpha": null,
+    "minigun": null,
+    "specials": [],
+    "heldProps": {
+      "samples": 0,
+      "intersections": 0,
+      "holds": {}
+    },
+    "seeThrough": {
+      "frames": 60,
+      "solidRadiusMax": 0.153,
+      "occluders": [],
+      "cutLowProps": [],
+      "cutPlacements": []
+    },
+    "appearance": [],
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "variety": {
+      "infected": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      },
+      "pedestrian": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      }
+    },
+    "actors": {
+      "courier": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          -70,
+          46
+        ],
+        "yawDeg": 0,
+        "travelM": 0,
+        "maxX": -70,
+        "heldWeapon": null,
+        "targetId": null,
+        "state": "idle",
+        "health": 100,
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -70,
+            46
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 2.9,
+          "torsoPitchMaxDeg": 3.5,
+          "contacts": 3,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 5.4,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 10
+        }
+      },
+      "inf.common-worker": {
+        "kind": "infected",
+        "entity": 4,
+        "position": [
+          -73.7,
+          42
+        ],
+        "yawDeg": -57.2,
+        "travelM": 0.30000000000001137,
+        "maxX": -73.69999999999999,
+        "heldWeapon": null,
+        "targetId": null,
+        "state": "dead",
+        "health": 0,
+        "drawnFrames": 60,
+        "inViewFrames": 5,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 5,
+          "lod2": 55
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -74,
+            42
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": -93.6,
+          "torsoPitchMaxDeg": 46,
+          "contacts": 1,
+          "slideMaxCm": 0.1,
+          "slideP95Cm": 0.1,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 11,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "inf.jogger": {
+        "kind": "infected",
+        "entity": 5,
+        "position": [
+          -72.4,
+          42
+        ],
+        "yawDeg": -57.2,
+        "travelM": 0.30000000000001137,
+        "maxX": -72.39999999999999,
+        "heldWeapon": null,
+        "targetId": null,
+        "state": "dead",
+        "health": 0,
+        "drawnFrames": 60,
+        "inViewFrames": 5,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 5,
+          "lod2": 55
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -72.7,
+            42
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": -94.5,
+          "torsoPitchMaxDeg": 49.4,
+          "contacts": 1,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 4,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "inf.cashier": {
+        "kind": "infected",
+        "entity": 6,
+        "position": [
+          -71.1,
+          42
+        ],
+        "yawDeg": -57.2,
+        "travelM": 0.30000000000001137,
+        "maxX": -71.1,
+        "heldWeapon": null,
+        "targetId": null,
+        "state": "dead",
+        "health": 0,
+        "drawnFrames": 60,
+        "inViewFrames": 5,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 5,
+          "lod2": 55
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -71.4,
+            42
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": -94.9,
+          "torsoPitchMaxDeg": 48.2,
+          "contacts": 1,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 12.3,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "inf.delivery-driver": {
+        "kind": "infected",
+        "entity": 7,
+        "position": [
+          -69.8,
+          42
+        ],
+        "yawDeg": -57.2,
+        "travelM": 0.30000000000001137,
+        "maxX": -69.79999999999998,
+        "heldWeapon": null,
+        "targetId": null,
+        "state": "dead",
+        "health": 0,
+        "drawnFrames": 60,
+        "inViewFrames": 5,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 5,
+          "lod2": 55
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -70.1,
+            42
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": -95,
+          "torsoPitchMaxDeg": 43.2,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 4,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "inf.suburban-mom": {
+        "kind": "infected",
+        "entity": 8,
+        "position": [
+          -73.7,
+          43.7
+        ],
+        "yawDeg": -57.2,
+        "travelM": 0.30000000000001137,
+        "maxX": -73.69999999999999,
+        "heldWeapon": null,
+        "targetId": null,
+        "state": "dead",
+        "health": 0,
+        "drawnFrames": 60,
+        "inViewFrames": 5,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 5,
+          "lod2": 55
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -74,
+            43.7
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": -95,
+          "torsoPitchMaxDeg": 7.2,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 6.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "inf.bbq-dad": {
+        "kind": "infected",
+        "entity": 9,
+        "position": [
+          -72.4,
+          43.7
+        ],
+        "yawDeg": -57.2,
+        "travelM": 0.30000000000001137,
+        "maxX": -72.39999999999999,
+        "heldWeapon": null,
+        "targetId": null,
+        "state": "dead",
+        "health": 0,
+        "drawnFrames": 60,
+        "inViewFrames": 5,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 5,
+          "lod2": 55
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -72.7,
+            43.7
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": -93.6,
+          "torsoPitchMaxDeg": 47.8,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 4,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "inf.bathrobe-neighbor": {
+        "kind": "infected",
+        "entity": 10,
+        "position": [
+          -71.1,
+          43.7
+        ],
+        "yawDeg": -57.2,
+        "travelM": 0.30000000000001137,
+        "maxX": -71.1,
+        "heldWeapon": null,
+        "targetId": null,
+        "state": "dead",
+        "health": 0,
+        "drawnFrames": 60,
+        "inViewFrames": 5,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 5,
+          "lod2": 55
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -71.4,
+            43.7
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": -94.5,
+          "torsoPitchMaxDeg": 46.1,
+          "contacts": 1,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 10.6,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 60,
+      "sim": {
+        "courier": 1,
+        "infected": 0,
+        "actors": 8
+      },
+      "drawn": {
+        "vehicle": 0,
+        "infected": 7,
+        "courier": 1
+      }
+    },
+    "lods": {
+      "bld.fire-station:853": "lod1",
+      "prop.fire-hydrant:854": "lod2",
+      "prop.privacy-fence:912": "n/a",
+      "prop.privacy-fence:913": "lod2",
+      "prop.privacy-fence:914": "lod2",
+      "prop.privacy-fence:915": "lod2",
+      "prop.privacy-fence:916": "lod2",
+      "prop.privacy-fence:917": "lod2",
+      "prop.privacy-fence:918": "lod2",
+      "prop.privacy-fence:919": "lod2",
+      "prop.privacy-fence:920": "n/a",
+      "prop.privacy-fence:1004": "n/a",
+      "prop.privacy-fence:1005": "lod2",
+      "prop.privacy-fence:1006": "lod2",
+      "prop.privacy-fence:1007": "lod2",
+      "prop.privacy-fence:1008": "lod2",
+      "prop.privacy-fence:1009": "n/a",
+      "kit.edge-roadwork:1071": "lod2",
+      "prop.privacy-fence:1074": "lod2",
+      "prop.privacy-fence:1075": "lod2",
+      "prop.privacy-fence:1078": "lod2",
+      "prop.privacy-fence:1079": "lod2",
+      "prop.street-tree-blossom:1115": "lod2",
+      "prop.street-tree:1117": "lod2",
+      "prop.street-tree-blossom:1119": "lod2",
+      "prop.street-tree:1166": "lod2",
+      "prop.street-tree-blossom:1168": "lod2",
+      "prop.street-lamp:1201": "lod2",
+      "prop.street-sign:1253": "culled",
+      "prop.crates:1290": "lod2"
+    },
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 2,
+      "heldPropHits": 0,
+      "actorHits": 6,
+      "piercing": 3
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  }
+}
