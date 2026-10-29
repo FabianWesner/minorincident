@@ -34,6 +34,7 @@ export function placementColliders(placements: Placement[], fallback: StaticColl
     if (p.assetId === 'kit.highway-onramp' && p.lightGroup === 'l3-highway') return highwayColliders(p);
     if (p.collisionId === 'l5.metro-ingress') return metroIngressColliders(p);
     if (p.assetId === 'prop.flower') return [];
+    if (p.decor) return [];
     const platform = p.assetId === 'kit.dispersal-platform' && !p.collisionId;
     const shape = platform ? dispersalPlatform : sources[p.collisionId ?? p.assetId];
     if (!shape) return fallback.filter(c => c.id === p.id);
