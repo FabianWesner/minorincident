@@ -2,14 +2,18 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { gunzipSync } from 'node:zlib';
+import { execFileSync } from 'node:child_process';
 import { l5 } from '../../src/data/l5';
 
 const stage = process.argv[2] ?? 'before';
-const lines = readFileSync(process.env.Q215_TRACE ?? 'test-results/small-27/l5-before-2/log-campaign.jsonl', 'utf8').trim().split('\n').map(line => JSON.parse(line));
+const source = process.env.Q215_TRACE ?? 'docs/reports/small-27/diagnostics/l5-before-2.jsonl.gz';
+const bytes = readFileSync(source), data = source.endsWith('.gz') ? gunzipSync(bytes) : bytes;
+const lines = data.toString('utf8').trim().split('\n').map(line => JSON.parse(line));
 const observations = lines.filter(line => line.metro).map(line => line.metro);
 const arrival = observations.find(row => row.metroAt);
 const follow = process.argv.includes('--follow');
-const sample = follow ? observations.find(row => row.tick >= arrival.metroAt - 600) : arrival;
+const sample = follow ? observations.find(row => row.phase === 'metro' && row.tick >= arrival.metroAt - Number(process.env.Q215_LEAD_TICKS ?? 600)) : arrival;
 const loader = process.env.Q215_BASELINE_ROOT ? pathToFileURL(resolve(process.env.Q215_BASELINE_ROOT, 'tools/sim-runner/l5Bots.ts')).href : '../sim-runner/l5Bots';
 const { loadL5 } = await import(loader) as typeof import('../sim-runner/l5Bots');
 const { world: w, mission: m } = await loadL5(1, 'low');
@@ -76,14 +80,16 @@ try {
     w.entities.get(id)!.infected!.territory = { x: 43, z: -34, radius: l5.infected.leashM };
   }
   const start = w.tick;
-  for (let i = 0; i < 1800 && !s.shutterAt; i++) {
+  for (let i = 0; i < (follow ? arrival.metroAt - sample.tick + 1800 : 1800) && !s.shutterAt; i++) {
     if (i % 10 === 0) trace.push({ tick: i, player: { ...player.transform }, text: m.l5!.metroStatus(), followers: s.survivors.filter(r => r.status === 'following').map(r => {
       const e = w.entities.get(r.id)!;
       return { key: r.key, position: { ...e.transform }, goal: m.l5!.ingress(e), story: e.civilian?.story?.clip };
     }) });
     w.update();
   }
-  const result = { stage, combat, follow, sourceTick: sample.tick, sourceMetroAt: sample.metroAt, closedAfterS: s.shutterAt ? (s.shutterAt - (follow ? s.metroAt : start)) / 60 : null, trace };
+  const result = { stage, combat, follow, source, sourceRevision: execFileSync('git', ['-C', process.env.Q215_BASELINE_ROOT ?? '.', 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
+    sourceTick: sample.tick, sourceMetroAt: sample.metroAt, closedAfterS: s.shutterAt ? (s.shutterAt - (follow ? s.metroAt : start)) / 60 : null,
+    survivors: s.survivors.map(r => ({ key: r.key, status: r.status, hp: w.entities.get(r.id)?.health.current })), trace };
   mkdirSync('test-results/small-27/ingress', { recursive: true });
   writeFileSync(`test-results/small-27/ingress/${stage}.json`, JSON.stringify(result));
   console.log(JSON.stringify({ ...result, trace: `${trace.length} samples` }));
