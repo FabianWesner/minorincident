@@ -76,10 +76,12 @@ export class RoutineProps extends Group {
   held(prop: CivilianProp, matrix: Matrix4, entity: number, hand?: Float32Array, reach = .07, machineGun = false, groundY?: number): void {
     const key = machineGun ? 'hmg' : prop;
     // Handles start at x=.025 (.035 centre minus the 1 cm radius).
+    // A cane's wider shaft reaches x=.014 beside the lower fingers; fit that
+    // surface too, including while its length is adjusted to the floor.
     // Seat that surface against each native hand's fingertips, as the phone
     // already does, rather than cutting a fixed handle through wider palms.
     const handled = prop === 'coffee' || prop === 'bag' || prop === 'cane' || prop === 'watering-can' || prop === 'parcel';
-    this.gripMatrix.makeTranslation(prop === 'phone' ? reach - .07 : handled ? reach - .025 : 0, 0, 0).premultiply(matrix);
+    this.gripMatrix.makeTranslation(prop === 'phone' ? reach - .07 : handled ? reach - (prop === 'cane' ? .014 : .025) : 0, 0, 0).premultiply(matrix);
     if (prop === 'cane' && groundY !== undefined) {
       const bottom = this.meshes.get('cane')!.geometry.boundingBox!.min.y, m = this.gripMatrix.elements;
       // Keep the grip at the hand while the shaft meets the holder's floor,

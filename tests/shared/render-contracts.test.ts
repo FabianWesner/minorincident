@@ -74,7 +74,7 @@ test('a held cane reaches the floor across rig scales without moving its fitted 
     const mesh = props.children.find(child => (child as InstancedMesh).count === 1) as InstancedMesh;
     mesh.getMatrixAt(0, matrix);
     expect(mesh.geometry.boundingBox!.clone().applyMatrix4(matrix).min.y).toBeCloseTo(floor, 5);
-    const grip = hand.clone().multiply(new Matrix4().makeTranslation(.07 - .025, 0, 0));
+    const grip = hand.clone().multiply(new Matrix4().makeTranslation(.07 - .014, 0, 0));
     for (const axis of [12, 13, 14]) expect(matrix.elements[axis]).toBeCloseTo(grip.elements[axis], 6);
   }
   props.dispose();
