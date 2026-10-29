@@ -118,6 +118,19 @@ test('L1 handover + outbreak: no shader builds after warm-up and no frame over 2
   test.info().annotations.push({ type: 'L8 boarding shader builds', description: JSON.stringify({ carId: l8.carId, boarded: l8.boarded, builds: Object.fromEntries(lateVehicleBuilds) }) });
   expect(l8.boarded, 'L8 APC boarding exercised after warm-up').toBe(true);
   expect(lateVehicleBuilds, 'courier, weapon, or vehicle builds after L8 warm-up and APC boarding').toEqual([]);
+  // Q-227: L10 grants its guns through mission arsenal transactions, long after loading, rather than ground entities.
+  // Exercise every authored weapon checkpoint in this existing freeze guard; every held graph must already be warm.
+  const l10 = await page.evaluate(async () => {
+    const a = window.__SS__!;
+    await a.loadLevel('L10', { seed: 1 }); a.pause(); a.missions.begin(); a.cheats.god(true);
+    const loaded = { ...a.perf().nodeBuildMaterials };
+    for (const step of ['crash', 'residential-fringe', 'industrial-area', 'military-zone', 'research-campus', 'research', 'cure', 'research-exit', 'destroyed-corridor']) {
+      a.cheats.completeObjective(step); await a.step(1); await a.screenshotReady();
+    }
+    return { loaded, after: { ...a.perf().nodeBuildMaterials }, pickups: a.events(0).filter(e => e.type === 'pickup.collected' && 'actionId' in e).map(e => 'actionId' in e ? e.actionId : '') };
+  });
+  expect(l10.pickups, 'L10 checkpoint weapons were collected').toEqual(expect.arrayContaining(['weapon.pistol', 'weapon.shotgun', 'weapon.army-mg', 'weapon.rocket-launcher']));
+  expect(heldBuilds(l10.loaded, l10.after), 'L10 carried-weapon builds after level warm-up (all checkpoint pickups)').toEqual([]);
 });
 
 // P0 guard (PROD "all other players are invisible"): each on-screen pedestrian's head/torso pixels must change when that

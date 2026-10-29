@@ -91,8 +91,7 @@ export class ActionView extends Group {
     for (let i = 0; i < 32; i++) { const mesh = new Mesh(this.projectileGeometry, this.projectileMaterial); mesh.visible = false; this.projectiles.push(mesh); this.add(mesh); }
   }
   private readonly loading = new Map<string, Promise<void>>();
-  /** Loads the carried actions, pickups on the ground and the L1 essentials in parallel; every other
-   * weapon model loads on first equip/pickup instead of competing with the start. */
+  /** Loads the carried actions, pickups on the ground and any weapons the mission grants later. */
   async init(): Promise<void> {
     const loadout = this.world.combat?.runner.loadout, needed = new Set(['weapon.fists', 'weapon.kick', 'weapon.bat']);
     if (loadout) for (const side of sides) for (const slot of loadout.state[side].rack) needed.add(slot.id);
@@ -102,13 +101,18 @@ export class ActionView extends Group {
     if (this.world.missions?.l4) needed.add(l4.machineGun.id);
     // Q-211: weapons a level hands over later (L2 fire axe, L3 handgun, L5 shotgun) must be loaded and warmed up too.
     for (const id of this.world.combat?.withheld ?? []) needed.add(id);
+    // Mission arsenal transactions are deferred until the player reaches a checkpoint. Load their view assets now,
+    // while the level loading card is up; otherwise a later pickup builds held-weapon shaders during gameplay (L10 rocket).
+    for (const step of this.world.missions?.def.steps ?? []) for (const action of step.onComplete ?? []) {
+      if (action.kind === 'arsenal') for (const id of action.add) needed.add(id);
+    }
     const defs = Object.values(catalog);
     await Promise.all(defs.filter(def => needed.has(def.id)).map(def => this.load(def)));
   }
   /** Loading warm-up: a held-material clone of every loaded weapon not drawn now (rack weapons not in hand, issued guns)
    * at `at`, so their courier-fill materials compile behind the loading card instead of on the first equip. */
   prewarmHeld(at: Vector3): () => void {
-    const group = new Group(); group.position.copy(at);
+    const group = new Group(); group.name = 'held-weapon-prewarm'; group.position.copy(at);
     for (const asset of this.assets.values()) {
       const clone = asset.model.clone(true);
       clone.traverse(node => { if (node instanceof Mesh) node.material = Array.isArray(node.material) ? node.material.map(m => this.heldMaterials.get(m) ?? m) : this.heldMaterials.get(node.material) ?? node.material; });
@@ -136,8 +140,11 @@ export class ActionView extends Group {
       model.traverse((node) => {
         if (!(node instanceof Mesh)) return;
         const remap = (source: Material): Material => {
-          const material = this.materials.fromColor(`action:${def.viewAssetId}:${source.name}`, (source as import('three').MeshStandardMaterial).color);
-          const heldMaterial = this.materials.fromColor(`action-held:${def.viewAssetId}:${source.name}`, (source as import('three').MeshStandardMaterial).color);
+          // All weapons use the same shading and blood/depth controls. An identical swatch can share its graph;
+          // per-asset names used to compile the same colors again for every checkpoint weapon (Q-228).
+          const swatch = (source as import('three').MeshStandardMaterial).color;
+          const material = this.materials.fromColor('action:swatch', swatch);
+          const heldMaterial = this.materials.fromColor('action-held:swatch', swatch);
           heldMaterial.movingFigure.value = 1; heldMaterial.heroFigure.value = 1;
           heldMaterial.userData.sharedPalette = true;
           // Q-209: the courier's switchable depth before the loading warm-up compiles the held copy; applying it on attach

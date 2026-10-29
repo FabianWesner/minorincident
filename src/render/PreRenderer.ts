@@ -28,9 +28,9 @@ function warmCandidates<T extends Object3D>(leaves: T[]): T[] {
  * one leaf synchronously, then waits for its asynchronous GPU link. New graphs
  * execute the same HDR pass in isolated ordinary/instanced draws before use.
  * Every temporary scene change is restored before the normal gameplay draw. */
-export function incrementalPreRender(renderer: Renderer, scene: Scene, camera: Camera, render: () => void, compile: (root: Object3D) => Promise<void>, source: <T>(run: () => T) => T) {
+export function incrementalPreRender(renderer: Renderer, scene: Scene, camera: Camera, render: () => void, compile: (root: Object3D) => Promise<void>, source: <T>(run: () => T) => T, root: Object3D = scene) {
   let leaves: (Mesh | Sprite | LineSegments)[] = [];
-  scene.traverse(object => {
+  root.traverse(object => {
     if (!object.userData.preventPreRender && (object instanceof Mesh || object instanceof Sprite || object instanceof LineSegments) && object.geometry.hasAttribute('position')) leaves.push(object);
   });
   leaves = warmCandidates(leaves);

@@ -521,6 +521,16 @@ export class GameView implements Lifecycle {
       } else await prepare();
       if (this.lighting?.preset === 'L10-night') {
         const lighting = this.lighting, spot = !lighting.spot.visible;
+        // Every checkpoint gun must be ready under either hero lamp before input is accepted (Q-227).
+        // Other scene leaves retain the existing incremental preparation; the held copies share their swatch graphs.
+        const held = this.actions?.getObjectByName('held-weapon-prewarm');
+        if (held) {
+          const weapons = incrementalPreRender(this.renderer, this.scene, this.camera, renderWarm,
+            root => this.postFx ? this.postFx.compile(undefined, root) : this.renderer.compileAsync(root, this.camera, this.scene),
+            run => lighting.withShadowSource(spot, run), held);
+          while (!weapons.done) { weapons.step(); await new Promise(resolve => setTimeout(resolve, 0)); }
+          await this.renderer.finishWarmUp();
+        }
         this.shadowWarmup = incrementalPreRender(this.renderer, this.scene, this.camera,
           () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera),
           root => this.postFx ? this.postFx.compile(undefined, root) : this.renderer.compileAsync(root, this.camera, this.scene),
