@@ -8,16 +8,16 @@ export const stepUpM = .7;
 export function goalReach(nav: NavGrid, height: (x: number, z: number) => number, goals: { x: number; z: number }[]): Uint8Array {
   const w = nav.width, n = nav.cells.length, h = new Float32Array(n);
   for (let i = 0; i < n; i++) if (nav.cells[i]) h[i] = height(nav.min[0] + (i % w + .5) * nav.cellSize, nav.min[1] + (Math.floor(i / w) + .5) * nav.cellSize);
-  const can = new Uint8Array(n), queue: number[] = [];
-  for (const g of goals) { const i = nav.index(g.x, g.z); if (i >= 0 && nav.cells[i] && !can[i]) { can[i] = 1; queue.push(i); } }
-  for (let r = 0; r < queue.length; r++) {
+  const can = new Uint8Array(n), queue = new Int32Array(n); let write = 0;
+  for (const g of goals) { const i = nav.index(g.x, g.z); if (i >= 0 && nav.cells[i] && !can[i]) { can[i] = 1; queue[write++] = i; } }
+  for (let r = 0; r < write; r++) {
     const i = queue[r], x = i % w;
     for (let dz = -1; dz <= 1; dz++) for (let dx = -1; dx <= 1; dx++) {
       if (!dx && !dz) continue;
       const nx = x + dx, j = i + dz * w + dx;
       if (nx < 0 || nx >= w || j < 0 || j >= n || !nav.cells[j] || can[j]) continue;
       if (dx && dz && (!nav.cells[i + dx] || !nav.cells[i + dz * w])) continue;
-      if (h[i] - h[j] <= stepUpM) { can[j] = 1; queue.push(j); }
+      if (h[i] - h[j] <= stepUpM) { can[j] = 1; queue[write++] = j; }
     }
   }
   return can;

@@ -87,16 +87,14 @@ export class NavGrid {
     while (read < write) {
       const i = queue[read++],
         x = i % this.width;
-      for (const n of [
-        x > 0 ? i - 1 : -1,
-        x < this.width - 1 ? i + 1 : -1,
-        i - this.width,
-        i + this.width,
-      ])
+      // L10 visits millions of cells at load: do not allocate a four-element array for each one.
+      for (let direction = 0; direction < 4; direction++) {
+        const n = direction === 0 ? x > 0 ? i - 1 : -1 : direction === 1 ? x < this.width - 1 ? i + 1 : -1 : direction === 2 ? i - this.width : i + this.width;
         if (n >= 0 && n < this.cells.length && this.cells[n] && !reached[n]) {
           reached[n] = 1;
           queue[write++] = n;
         }
+      }
     }
     return reached;
   }
@@ -120,16 +118,50 @@ export function bakeNav(districts: NavDistrict[], seed: number, cellSize = 1): N
     for (const a of d.colliders.filter(a => a.navBlocker || (a.min[1] < 1.8 && a.max[1] > .05))) for (let z = Math.floor((a.min[2] - .4) / 4); z <= Math.floor((a.max[2] + .4) / 4); z++) for (let x = Math.floor((a.min[0] - .4) / 4); x <= Math.floor((a.max[0] + .4) / 4); x++) {
       const key = `${x},${z}`, bucket = buckets.get(key) ?? []; bucket.push(a); buckets.set(key, bucket);
     }
-    for (let z = 0; z < nav.height; z++)
-      for (let x = 0; x < nav.width; x++) {
-        const p: Point = [
-          min[0] + (x + 0.5) * nav.cellSize - d.origin[0],
-          min[1] + (z + 0.5) * nav.cellSize - d.origin[1],
-        ];
+    const bounds = d.layout.bounds, xs = bounds.map(p => p[0]), zs = bounds.map(p => p[1]);
+    const minX = Math.min(...xs), maxX = Math.max(...xs), minZ = Math.min(...zs), maxZ = Math.max(...zs);
+    // Rectangle layouts (including L10's 8.88 million cells) need no polygon test. Other outlines retain it.
+    const rectangle = bounds.length >= 4 && bounds.length <= 5 && bounds.every((p, i) =>
+      (p[0] === minX || p[0] === maxX) && (p[1] === minZ || p[1] === maxZ) &&
+      (p[0] === bounds[(i + 1) % bounds.length][0] || p[1] === bounds[(i + 1) % bounds.length][1]));
+    const x0 = Math.max(0, Math.ceil((minX + d.origin[0] - min[0]) / cellSize - .5)), x1 = Math.min(nav.width, Math.ceil((maxX + d.origin[0] - min[0]) / cellSize - .5));
+    const z0 = Math.max(0, Math.ceil((minZ + d.origin[1] - min[1]) / cellSize - .5)), z1 = Math.min(nav.height, Math.ceil((maxZ + d.origin[1] - min[1]) / cellSize - .5));
+    if (districts.length === 1 && rectangle && !excluded.length) {
+      // One rectangular district can fill open rows and rasterize its collider boxes directly. L10 otherwise
+      // queried an empty spatial bucket for most of its 8.88M cells. Multi-district unions keep the general path.
+      for (let z = z0; z < z1; z++) nav.cells.fill(1, z * nav.width + x0, z * nav.width + x1);
+      for (const a of d.colliders) {
+        if (!(a.navBlocker || a.min[1] < 1.8 && a.max[1] > .05)) continue;
+        const ranges = [0, 1].map(axis => {
+          const low = a.min[axis === 0 ? 0 : 2] - .4, high = a.max[axis === 0 ? 0 : 2] + .4;
+          const limit = axis === 0 ? nav.width : nav.height;
+          let first = Math.max(0, Math.ceil((low + d.origin[axis] - min[axis]) / cellSize - .5));
+          let last = Math.min(limit - 1, Math.floor((high + d.origin[axis] - min[axis]) / cellSize - .5));
+          // Preserve the general path's exact floating-point boundary comparisons after translating a district.
+          const coordinate = (i: number) => min[axis] + (i + .5) * cellSize - d.origin[axis];
+          if (first < limit && coordinate(first) < low) first++;
+          if (first > 0 && coordinate(first - 1) >= low) first--;
+          if (last >= 0 && coordinate(last) > high) last--;
+          if (last + 1 < limit && coordinate(last + 1) <= high) last++;
+          return [first, last];
+        });
+        if (ranges[0][0] > ranges[0][1]) continue;
+        for (let z = ranges[1][0]; z <= ranges[1][1]; z++) nav.cells.fill(0, z * nav.width + ranges[0][0], z * nav.width + ranges[0][1] + 1);
+      }
+      continue;
+    }
+    for (let z = z0; z < z1; z++) {
+      const p: Point = [0, min[1] + (z + .5) * cellSize - d.origin[1]], bz = Math.floor(p[1] / 4);
+      let previousBucket = Infinity, blockers: Aabb[] = [];
+      for (let x = x0; x < x1; x++) {
+        p[0] = min[0] + (x + .5) * cellSize - d.origin[0];
+        const bx = Math.floor(p[0] / 4);
+        // Adjacent cells share a collider bucket: build its key once per four metres, not once per cell.
+        if (bx !== previousBucket) { previousBucket = bx; blockers = buckets.get(`${bx},${bz}`) ?? []; }
         if (
-          inside(p, d.layout.bounds) &&
+          (rectangle || inside(p, bounds)) &&
           !excluded.some(box => p[0] >= box.minX && p[0] <= box.maxX && p[1] >= box.minZ && p[1] <= box.maxZ && inside(p, box.area)) &&
-          ! (buckets.get(`${Math.floor(p[0] / 4)},${Math.floor(p[1] / 4)}`) ?? []).some(
+          ! blockers.some(
             (a) =>
               p[0] >= a.min[0] - 0.4 &&
               p[0] <= a.max[0] + 0.4 &&
@@ -139,6 +171,7 @@ export function bakeNav(districts: NavDistrict[], seed: number, cellSize = 1): N
         )
           nav.cells[z * nav.width + x] = 1;
       }
+    }
   }
   let hash = (2166136261 ^ seed) >>> 0;
   for (const cell of nav.cells) hash = Math.imul(hash ^ cell, 16777619) >>> 0;

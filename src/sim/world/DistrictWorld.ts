@@ -145,8 +145,10 @@ export class DistrictWorld {
       seed,
       .5,
     );
+    let startReach: Uint8Array | undefined;
     for (const d of this.districts) {
       const result = crossValidate(d.gameplay, d.layout, this.nav, d.origin);
+      startReach ??= result.reached;
       if (result.errors.length) throw new Error(result.errors.join("\n"));
       this.warnings.push(...result.warnings);
       for (const layer of d.gameplay.decay)
@@ -166,7 +168,8 @@ export class DistrictWorld {
     this.playerStart = [p[0] + d.origin[0], p[1] + d.origin[1]];
     const start = d.gameplay.playerStart;
     this.playerStartHeight = 'anchor' in start ? d.layout.anchors[start.anchor].position[1] : 0;
-    const reached = this.nav.flood(this.playerStart);
+    // The first district's start is the composition's start; cross-validation already flooded from it.
+    const reached = startReach ?? this.nav.flood(this.playerStart);
     for (const d of this.districts)
       for (const obj of d.gameplay.objectives) {
         const p = resolvePosition(obj.position, d.layout);

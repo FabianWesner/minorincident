@@ -76,6 +76,7 @@ export function crossValidate(
       }
     }
   return {
+    reached,
     errors,
     warnings: Object.keys(layout.anchors)
       .filter((name) => !used.has(name))
