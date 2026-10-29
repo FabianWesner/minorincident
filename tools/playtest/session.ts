@@ -676,6 +676,19 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       if (e.level === 'L5' && process.env.PLAYTEST_METRO_AUDIT === '1') {
         const metro = await page.evaluate(() => {
           const g = (window.__SCENE__ as unknown as { game: Game }).game, w = g.world, s = w.missions!.state.l5!;
+          const audit = window as unknown as { __metroTicks?: unknown[] };
+          if (!audit.__metroTicks) {
+            audit.__metroTicks = [];
+            const mission = w.missions!;
+            w.events.on('sim.tick', () => {
+              if (w.missions !== mission || !s.metroAt) return;
+              const door = mission.def.anchors['l5-metro-shutter'];
+              audit.__metroTicks!.push({ tick: w.tick, metroAt: s.metroAt, shutterAt: s.shutterAt, doneAt: s.doneAt, phase: s.phase,
+                gateOpen: mission.state.gates['l5-metro-shutter'], player: { ...w.entities.get(1)!.transform },
+                companion: [...w.entities.iterate()].filter(e => e.companion).map(e => ({ transform: { ...e.transform }, hidden: e.hidden, state: structuredClone(e.companion), locomotion: structuredClone(e.locomotion) })),
+                survivors: s.survivors.map(r => { const e = w.entities.get(r.id); return { key: r.key, status: r.status, transform: e && { ...e.transform }, inside: !!e && mission.l5!.insideStation(e.transform) && e.transform.z < door.z - 1 }; }) });
+            }, 100);
+          }
           return { tick: w.tick, phase: s.phase, metroAt: s.metroAt, shutterAt: s.shutterAt, text: w.missions!.l5!.metroStatus(), input: { effective: w.inputFrame, device: w.deviceInput }, player: { ...w.entities.get(1)!.transform },
             companion: [...w.entities.iterate()].filter(actor => actor.companion).map(actor => ({ transform: { ...actor.transform }, companion: actor.companion })),
             survivors: s.survivors.map(r => { const actor = w.entities.get(r.id)!; return { key: r.key, status: r.status, transform: { ...actor.transform }, ingress: w.missions!.l5!.ingress(actor), civilian: actor.civilian, locomotion: actor.locomotion }; }) };
@@ -946,6 +959,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   await press([]).catch(() => undefined);
   writeFileSync(join(o.out, `runs-${o.tag}.json`), JSON.stringify(runs, null, 2));
   writeFileSync(join(o.out, `issues-${o.tag}.json`), JSON.stringify(issues, null, 2));
+  if (process.env.PLAYTEST_METRO_AUDIT === '1') writeFileSync(join(o.out, `metro-ticks-${o.tag}.json`), JSON.stringify(await page.evaluate('window.__metroTicks ?? []')));
   let handoverReady=true;
   if(process.env.PLAYTEST_HANDOVER_AUDIT==='1') {
     const audit=await page.evaluate('window.__playtestHandoverAudit') as {elapsedMs:number;text:string;pin:boolean;marker:boolean}[];
