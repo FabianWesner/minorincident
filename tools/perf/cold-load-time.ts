@@ -1,19 +1,23 @@
 /** Real menu click -> closed loading card, with an isolated, empty browser context for every sample.
  * Run through tools/e2e-lock.sh (one shared-pool browser). Optional LOAD_TRACE=1 captures diagnostic traces/profiles;
  * keep those samples separate from the unprofiled acceptance distributions.
+ * LOAD_FRESH_BROWSER=1 under quiet-run also starts a fresh Chrome/profile/cache for each sample.
  * Usage: tsx tools/perf/cold-load-time.ts <origin> <webgpu|webgl2> <low|high> [runs=20] [level=L1] [menuWait=0]
  */
 import { launchBrowser } from '../browser-pool/client';
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
 import assert from 'node:assert/strict';
 import { gzipSync } from 'node:zlib';
-import { loadavg } from 'node:os';
+import { loadavg, tmpdir } from 'node:os';
 import { preset } from '../../src/sim/progression/Campaign';
 import { SAVE_KEY, validateSave } from '../../src/sim/progression/Save';
 
 const [origin, backend = 'webgpu', quality = 'low', count = '20', level = 'L1', menuWait = '0'] = process.argv.slice(2);
 const out = process.env.LOAD_OUT ?? 'test-results/load-stalls';
 const diagnostic = process.env.LOAD_TRACE === '1';
+const freshBrowser = process.env.LOAD_FRESH_BROWSER === '1';
+if (freshBrowser) assert.equal(process.env.MI_PERF_LOCK_HELD, '1', 'Fresh browser samples require quiet-run exclusive admission');
 const gameplayMs = Number(process.env.LOAD_GAMEPLAY_MS ?? 0);
 const lastGameplayOnly = process.env.LOAD_GAMEPLAY_LAST === '1';
 const waits = menuWait.split(',').map(Number);
@@ -24,9 +28,13 @@ for (let run = 0; run < Number(count); run++) {
   const wait = waits[run % waits.length];
   const sampleGameplayMs = !lastGameplayOnly || run === Number(count) - 1 ? gameplayMs : 0;
   const label = `${level}-${backend}-${quality}-${run}`;
+  // An exclusive pool launch with a new cache directory has a distinct launch
+  // signature: the pool retires the previous Chrome and creates a fresh profile.
+  const diskCache = freshBrowser ? mkdtempSync(join(tmpdir(), 'mi-cold-load-')) : undefined;
   const browser = await launchBrowser({ headless: true, args: [
     '--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist',
     ...(backend === 'webgpu' ? ['--enable-unsafe-webgpu'] : []),
+    ...(diskCache ? [`--disk-cache-dir=${diskCache}`] : []),
   ] });
   try {
     const page = await browser.newPage({ viewport: { width: 1600, height: 900 } });
@@ -147,7 +155,7 @@ for (let run = 0; run < Number(count); run++) {
         measures: performance.getEntriesByType('measure').map(e => ({ name: e.name, at: e.startTime, ms: e.duration })),
         resources: performance.getEntriesByType('resource').filter(e => e.startTime + e.duration >= p.start).map(e => ({ name: new URL(e.name).pathname, at: e.startTime, ms: e.duration, bytes: e.transferSize })) };
     })()`);
-    const record = { sampledAt: new Date().toISOString(), origin, backend, quality, level, run, menuWait: wait, diagnostic, gameplayMs: sampleGameplayMs, load: loadavg(), errors, ...result };
+    const record = { sampledAt: new Date().toISOString(), origin, backend, quality, level, run, menuWait: wait, diagnostic, freshBrowser, diskCache, gameplayMs: sampleGameplayMs, load: loadavg(), errors, ...result };
     const contexts = result.contexts as string[];
     assert.ok(backend === 'webgpu' ? contexts.includes('webgpu') && !contexts.includes('webgl2') : contexts.includes('webgl2'), `Requested ${backend}, observed ${contexts.join(', ')}`);
     results.push(record);
