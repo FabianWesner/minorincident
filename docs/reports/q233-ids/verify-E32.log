@@ -1,0 +1,28 @@
+
+> verify
+> tsx tools/verify.ts E32
+
+[verify] E32 (E32): per-epic AC tests were retired; running the per-change gate.
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+> lint
+> eslint src tests tools functions *.config.ts eslint.config.js
+
+
+> test
+> node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner
+
+[test-budget] 145/150 test cases ({"vitest":124,"e2e":9,"invariantsBrowser":12}), 40/45 files
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/q233-ids
+
+
+ Test Files  24 passed (24)
+      Tests  105 passed (105)
+   Start at  17:30:11
+   Duration  20.47s (tests 89%, transform 5%, import 5%, setup 1%)
+
+[test-budget] test: 22.9 s (budget 240 s)
