@@ -203,7 +203,8 @@ export function cureAccents(placements: readonly Placement[], origin: P2 = [0, 0
   const fires: AccentFire[] = [], keyed = (key: string) => new Rng(1019, `l10-night:${key}`);
   const lines: P2[][] = [...cure.regions.map(r => r.route as P2[]), ...cure.detours.map(d => d.route as P2[]),
     [cure.regions[5].route[1] as P2, cure.anchors['corridor-breach'] as P2, cure.anchors['r6-r7-seam'] as P2, cure.regions[6].route[5] as P2]];
-  const lane = (x: number, z: number) => Math.min(...lines.map(l => lineDistance([x, z], l))) - 4;
+  // Distance past the lane edge: the carriageway is 6 m wide (l10-narrow-roads; was 8 m with the sidewalks).
+  const lane = (x: number, z: number) => Math.min(...lines.map(l => lineDistance([x, z], l))) - 3;
   const spots = cureEncounters.map(e => e.at as P2), spot = (x: number, z: number) => Math.min(...spots.map(s => Math.hypot(x - s[0], z - s[1])));
   const consoleAt = cure.anchors['cure-console'] as P2;
   const boxes = placements.map(p => [p.visualAabb.min[0], p.visualAabb.min[2], p.visualAabb.max[0], p.visualAabb.max[2]] as const);
@@ -252,7 +253,7 @@ export function cureAccents(placements: readonly Placement[], origin: P2 = [0, 0
     }
   }
   // 4) Night fields (look-l10-l8-2): abandoned field camps keep a campfire and a lantern, cars that left the road still burn. All
-  // >= 12.5 m from the route centre line (lane > 8.5), so no pool reaches the E31-AC16 verge sample; same story/console clearances.
+  // >= 11.5 m from the route centre line (lane > 8.5), so no pool reaches the E31-AC16 verge sample; same story/console clearances.
   for (const p of placements) {
     if (!p.fieldLight || p.fieldLight === 'flood') continue;
     const [x, , z] = p.position;

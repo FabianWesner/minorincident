@@ -9,6 +9,25 @@ from sslib.layout import Layout, material
 l = Layout('D-CURE', 'The Cure — crash through research and destroyed corridor', size=(3700,600))
 l.yaw_matches_collision = True
 source = json.loads((l.root / 'layouts/D-CURE/routes.json').read_text())
+# l10-narrow-roads (PO 2026-10-29 "Narrow roads + verges"): a two-lane 6 m carriageway (was 8 m: 2 x 2.5 m lanes plus kerbed
+# sidewalks to 4 m) and the verge dressing pulled in by INSET metres per region, so fields, camps, wrecks and power lines reach
+# the zoom-1/1.5 frame. Rural R1/R3/R4 lose the sidewalk (gravel shoulder from the asphalt edge); R2/R5 keep a .8 m kerbed
+# sidewalk. R6/R7 (calibrated finale) only get the narrower asphalt; their solids stay put (INSET 0).
+ROAD_HALF = 3.0
+REGION_X = [747, 1237, 1837, 2467, 2917, 3697]   # region ends along the route (routes.json)
+INSETS = [2.0, 1.5, 2.0, 2.0, 1.5, 0.0, 0.0]
+SIDEWALK = {1: (3.0, 3.8), 4: (3.0, 3.8), 5: (3.0, 3.8)}   # lateral sidewalk band per region; others have none
+def region_at(x): return next((i for i, e in enumerate(REGION_X) if x < e), 6)
+# The Mega enters 80 m west of the cure-corridor checkpoint (x 2857) and the finale calibration (tools/qa/l10-arrival-check.ts)
+# reacts to R5's last stretch: insetting it moved the high-tier arrival to 142.2 s with the cure not released. It keeps its setbacks.
+FINALE_APPROACH_X = 2800
+def inset_at(x): return 0.0 if x >= FINALE_APPROACH_X else INSETS[region_at(x)]
+def on_detour(a, ux, uz):
+    # Detours (service road, motor pool) keep their 6 m lanes and their dressing setbacks.
+    return any(list(p) == list(a) and abs((q[0]-p[0])/math.dist(p, q)-ux) < 1e-6 and abs((q[1]-p[1])/math.dist(p, q)-uz) < 1e-6 for d_ in source['detours'] for p, q in zip(d_['route'], d_['route'][1:]))
+def lane_inset(a, ux, uz, s): return 0.0 if on_detour(a, ux, uz) else inset_at(a[0] + ux*s)
+def inset_seg(a, b):
+    d = math.dist(a, b); return lane_inset(a, (b[0]-a[0])/d, (b[1]-a[1])/d, d/2)
 for obj in l.layers[0]: bpy.data.objects.remove(obj, do_unlink=True)
 l.layers[0] = []
 l.data['bounds'] = source['bounds']
@@ -126,7 +145,7 @@ route = [p for i,r in enumerate(source['regions']) for p in (r['route'] if i == 
 route = route[:route.index([3978,-25])+1]
 for i,p in enumerate(route): l.data['roads']['nodes'].append(dict(id=f'route-{i}',point=p))
 for i,(a,b) in enumerate(zip(route,route[1:])):
-    width=8; d=math.dist(a,b); nx=-(b[1]-a[1])/d*width/2; nz=(b[0]-a[0])/d*width/2
+    width=2*ROAD_HALF; d=math.dist(a,b); nx=-(b[1]-a[1])/d*width/2; nz=(b[0]-a[0])/d*width/2
     poly=[[a[0]+nx,a[1]+nz],[a[0]-nx,a[1]-nz],[b[0]-nx,b[1]-nz],[b[0]+nx,b[1]+nz]]
     l.data['roads']['edges'].append(dict(id=f'route-{i}',start=f'route-{i}',end=f'route-{i+1}',points=[a,b],laneWidth=width))
     surface('road',poly,'asphalt',.002)
@@ -151,7 +170,7 @@ for detour in source['detours']:
         l.data['surfaces'].append(dict(surface='asphalt',height=.002,polygon=poly+[poly[0]]))
 # The old through street ends at a visible rubble barrier. The route goes north around it.
 a,b=[807,25],[1057,25]
-surface('blocked-road',[[807,21],[1057,21],[1057,29],[807,29]],'asphalt',.002)
+surface('blocked-road',[[807,22],[1057,22],[1057,28],[807,28]],'asphalt',.002)
 for name,p in source['anchors'].items(): l.anchor(name,[p[0],0,p[1]])
 l.anchor('player-start',[547,0,0]); l.anchor('exit',[4002,0,-27])
 # Crash continuity: same safe position as L9 crawl-end, spent wreck behind the courier.
@@ -182,7 +201,7 @@ for x in [1367,1457,1547,1637,1727]:
     l.place('prop.cure-container-stack',[x,0,45])
     l.place('prop.cure-drum-stack',[x,0,-65])
 # Block the direct yard; northern loading yard and southern service lane stay open.
-surface('yard-road',[[1297,21],[1747,21],[1747,29],[1297,29]],'asphalt',.002)
+surface('yard-road',[[1297,22],[1747,22],[1747,28],[1297,28]],'asphalt',.002)
 for z in range(-25,66,3): l.place('decay.makeshift-barricade',[1517,0,z])
 # R4 destroyed entrance post, breached defensive line and low motor-pool shelters.
 l.place('bld.cure-guard-post',[1857,0,10])
@@ -192,7 +211,7 @@ for x,z in [(1997,-95),(2197,-95),(2327,130)]:
     l.data['buildings'].append(dict(id=pid,assetId='bld.cure-motor-shelter',aabb=l.data['placements'][-1]['visualAabb'],label='Motor pool'))
 # The shelter slab is 16 cm high; 1 mm clearance prevents quantized mesh contact.
 for x in [1997,2197,2327]: l.place('veh.military-truck',[x,.161,130 if x==2327 else -95])
-surface('checkpoint-road',[[1897,21],[2397,21],[2397,29],[1897,29]],'asphalt',.002)
+surface('checkpoint-road',[[1897,22],[2397,22],[2397,28],[1897,28]],'asphalt',.002)
 for z in range(-45,87,3): l.place('prop.cure-mil-fence',[2137,0,z],yaw=math.pi/2)
 for x,z in [(2137,-87),(2137,-63)]: l.place('prop.jersey-barrier',[x,0,z])
 for x,z in [(1850,19),(1864,19),(2127,-68),(2147,-68)]: l.place('prop.traffic-cone',[x,0,z])
@@ -215,7 +234,7 @@ for x,z in [(2929,3),(2945,3)]: l.place('prop.cure-drum-stack',[x,0,z])
 for x,z in [(3067,115),(3217,115),(3467,115),(3617,-45)]:
     l.place('veh.wreck',[x,0,z])
     l.place('decay.makeshift-barricade',[x+8,0,z])
-surface('corridor-blocked-road',[[2977,-9],[3577,-9],[3577,-1],[2977,-1]],'asphalt',.002)
+surface('corridor-blocked-road',[[2977,-8],[3577,-8],[3577,-2],[2977,-2]],'asphalt',.002)
 for i in range(110): l.place('decay.makeshift-barricade',[3317,0,-89+i*1.5])
 for x,z in [(3317,83),(3317,107)]: l.place('prop.jersey-barrier',[x,0,z])
 # R7 uses the TS finale anchors, serialized by tools/layouts/build.ts before Blender.
@@ -302,12 +321,16 @@ def dress(asset, x, z, yaw=0.0, scale=1.0, decay=None, route_clear=None, run=Fal
     else: clear = 6.0   # low verge props: fences, hedges, sandbags, barriers, drums
     b = source['bounds']
     if mn[0] < 500.2 or mx[0] > 4196 or mn[1] < -296 or mx[1] > 296: return None
-    if any(seg_rect(a, c, mn, mx) < clear for a, c in route_segments): return None
+    # l10-narrow-roads: the route verge starts INSET m closer (2 m narrower carriageway); detours keep their 6 m lanes.
+    inset = inset_at(x)
+    if any(seg_rect(a, c, mn, mx) < max(0, clear - inset) for a, c in route_segments): return None
     if any(seg_rect(a, c, mn, mx) < clear - .5 for a, c in detour_segments): return None
     if asset in ('prop.tree', 'prop.street-tree'):
-        # The validator tests the crown's visual box against every road lane (half widths 4 m route, 3 m detour).
+        # The validator tests the crown's visual box against every road lane (half widths 3 m route and detour); crowns may
+        # overhang a sidewalk or shoulder but keep .4 m off the asphalt.
         cmn, cmx = footprint('crown:tree', x, z, yaw, scale)
-        if any(seg_rect(a, c, cmn, cmx) < 4.4 for a, c in route_segments + detour_segments): return None
+        if any(seg_rect(a, c, cmn, cmx) < max(ROAD_HALF + .4, 4.4 - inset) for a, c in route_segments): return None
+        if any(seg_rect(a, c, cmn, cmx) < 4.4 for a, c in detour_segments): return None
     if any(seg_rect(a, c, mn, mx) < 6 for a, c in shortcut_segments): return None
     if any(seg_rect(a, c, mn, mx) < 2.5 for a, c in overshoot_segments): return None
     if any(rect_point(mn, mx, s) < (9 if asset.startswith(('bld.', 'kit.', 'veh.')) else 6.5) for s in spots): return None
@@ -375,6 +398,7 @@ def frontage(segments, palette, spacing, offset, sides=(1, -1), jitter=2.0, chan
                         if base and a[0]+ux*s+n[0]*(base[0] + (base[1]-base[0])*u) >= FINALE_X: off = base[0] + (base[1]-base[0])*u; clear_ = None
                         else: clear_ = clear
                     else: off = offset; clear_ = clear
+                    off -= inset_seg(a, b)   # l10-narrow-roads
                     x = a[0]+ux*s+n[0]*off; z = a[1]+uz*s+n[1]*off
                     yaw = face(n) if align else rng.uniform(0, math.tau)
                     if asset.startswith('veh.'): yaw = math.atan2(-uz, ux) + (math.pi if rng.random() < .5 else 0) + rng.uniform(-.25, .25)
@@ -400,7 +424,7 @@ def fence_run(asset, a, b, step=2.6, clear=None):
         if v is not None: group.append(v)
 
 # Roads do not end in the void: the L9 road continues west past the crash, a service road meets the console apron.
-surface('road-west', [[500, -4], [547, -4], [547, 4], [500, 4]], 'asphalt', .002)
+surface('road-west', [[500, -ROAD_HALF], [547, -ROAD_HALF], [547, ROAD_HALF], [500, ROAD_HALF]], 'asphalt', .002)
 # Gravel/dirt shoulders break the flat verge; flat surfaces only, no collision.
 # look-l9b: a continuous dark shoulder band (4..9.5 m from the centreline, as L9's leather shoulders) under the strips: the
 # E31-AC16 verge samples (5.5/7/8.5 m) read a dark verge against the silver road instead of bright strips and lawn blades.
@@ -410,13 +434,15 @@ for i, (a, b) in enumerate(route_segments):
     ux, uz = (b[0]-a[0])/d, (b[1]-a[1])/d
     for side in (1, -1):
         n = (-uz*side, ux*side)
-        p0 = (a[0]+ux*2+n[0]*4, a[1]+uz*2+n[1]*4); p1 = (a[0]+ux*(d-2)+n[0]*4, a[1]+uz*(d-2)+n[1]*4)
-        bw = 2.6 if a[0] < FINALE_X else 5.5   # look-l10-l8-2: R1-R5 keep the dark band only to 6.6 m (AC16 samples 5.5 m); the fields start there
+        # l10-narrow-roads: the band starts at the 3 m asphalt edge and ends INSET m nearer (fields follow); R6 keeps its 9.5 m edge.
+        h0 = ROAD_HALF
+        p0 = (a[0]+ux*2+n[0]*h0, a[1]+uz*2+n[1]*h0); p1 = (a[0]+ux*(d-2)+n[0]*h0, a[1]+uz*(d-2)+n[1]*h0)
+        bw = 6.6 - inset_seg(a, b) - h0 if a[0] < FINALE_X else 9.5 - h0   # look-l10-l8-2: R1-R5 keep the dark band only to 6.6 m (AC16 samples 5.5 m); the fields start there
         surface('shoulder-band', ccw([list(p0), list(p1), [p1[0]+n[0]*bw, p1[1]+n[1]*bw], [p0[0]+n[0]*bw, p0[1]+n[1]*bw]]), 'leather' if a[0] < 800 else 'leatherEdge', -.0015)
         s = 6
         while s < d - 8:
             ln = rng.uniform(6, 18); w = rng.uniform(1.2, 2.6)
-            p0 = (a[0]+ux*s+n[0]*4, a[1]+uz*s+n[1]*4); p1 = (a[0]+ux*(s+ln)+n[0]*4, a[1]+uz*(s+ln)+n[1]*4)
+            p0 = (a[0]+ux*s+n[0]*h0, a[1]+uz*s+n[1]*h0); p1 = (a[0]+ux*(s+ln)+n[0]*h0, a[1]+uz*(s+ln)+n[1]*h0)
             q1 = (p1[0]+n[0]*w, p1[1]+n[1]*w); q0 = (p0[0]+n[0]*w, p0[1]+n[1]*w)
             token = 'khakiSeam' if a[0] < 800 else 'oliveSeam'
             surface('shoulder', ccw([list(p0), list(p1), list(q1), list(q0)]), token, -.001)
@@ -514,11 +540,11 @@ frontage(complex_route, [('prop.emergency-light', 1)], 7, (5, 7), chance=.9)
 # Verge grass: blade strips beside the road through the residential fringe and the campus lawns (high 28 / low 5 blades per m2).
 for i in (1, 4):
     for a_, b_ in region_segments(i):
-        xs, zs = sorted([a_[0], b_[0]]), sorted([a_[1], b_[1]])
+        xs, zs = sorted([a_[0], b_[0]]), sorted([a_[1], b_[1]]); ins = inset_seg(a_, b_)
         if xs[1] - xs[0] > zs[1] - zs[0]:
-            for z0 in (zs[0] + 9.8, zs[0] - 11.2): l.data['lawns'].append(dict(min=[xs[0] + 5, z0], max=[xs[1] - 5, z0 + 1.4]))   # look-l9b: beyond the dark shoulder band
+            for z0 in (zs[0] + 9.8 - ins, zs[0] - 11.2 + ins): l.data['lawns'].append(dict(min=[xs[0] + 5, z0], max=[xs[1] - 5, z0 + 1.4]))   # look-l9b: beyond the dark shoulder band
         else:
-            for x0 in (xs[0] + 9.8, xs[0] - 11.2): l.data['lawns'].append(dict(min=[x0, zs[0] + 5], max=[x0 + 1.4, zs[1] - 5]))
+            for x0 in (xs[0] + 9.8 - ins, xs[0] - 11.2 + ins): l.data['lawns'].append(dict(min=[x0, zs[0] + 5], max=[x0 + 1.4, zs[1] - 5]))
 # Ground variety in the visible verge band: worn dirt, moss and gravel patches (flat surfaces, no collision).
 for a_, b_ in route_segments:
     d = math.dist(a_, b_)
@@ -557,10 +583,10 @@ l.data['lightGroups'].append(dict(id='corridor-dark', offAt=0))
 for p in l.data['placements']:
     if p['assetId'].startswith('bld.') and 2917 <= p['position'][0] <= 3700 and p.get('decorLights'): p['lightGroup'] = 'corridor-dark'
 # ---- look-l10 road life (road-life lane): kerbed sidewalks, lane-following skids and walkable ground decals ------------------
-# Everything here is a flat, collider-free overlay (cut=False) inside the existing 8 m road footprint or on the verge, so
-# navigation, the finale and the route polylines are unchanged. Own random stream: the dressing placements keep their ids.
+# Everything here is a flat, collider-free overlay (cut=False) on the 6 m carriageway or on the verge, so navigation, the
+# finale and the route polylines are unchanged. Own random stream: the dressing placements keep their ids.
 life = random.Random(1021)
-SW0, SW1 = 2.5, 4.0           # sidewalk lateral band (m from the centre line), kerb line just inside it
+RH = ROAD_HALF   # l10-narrow-roads: decal laterals scale to the 3 m lanes (the life draws are unchanged)
 def frame(a_, b_):
     d = math.dist(a_, b_); ux, uz = (b_[0]-a_[0])/d, (b_[1]-a_[1])/d
     return d, ux, uz, -uz, ux
@@ -580,59 +606,65 @@ for a_, b_ in route_segments:
     F = frame(a_, b_); d, ux, uz, nx, nz = F
     if d < 20: continue
     s0, s1 = 4.5, d - 4.5
+    walk = SIDEWALK.get(region_at((a_[0] + b_[0]) / 2))
     for side in (1, -1):
-        # kerbed sidewalk: the pale kerb line on the road side, the slab behind it, (the terrain cells are capped at 800 triangles, so no expansion joints)
-        surface('sidewalk', strip(a_, F, s0, s1, side*SW0, side*SW1), 'khakiLight', H_SW, cut=False)
-        surface('kerb', strip(a_, F, s0, s1, side*(SW0-.14), side*SW0), 'silver', H_KERB, cut=False)
-        surface('kerb-shadow', strip(a_, F, s0, s1, side*(SW0-.2), side*(SW0-.14)), 'uiDark', H_JOINT, cut=False)
+        if walk:
+            # kerbed sidewalk (R2/R5/R6): the pale kerb line on the road side, the slab behind it, (the terrain cells are capped at 800 triangles, so no expansion joints)
+            SW0, SW1 = walk
+            surface('sidewalk', strip(a_, F, s0, s1, side*SW0, side*SW1), 'khakiLight', H_SW, cut=False)
+            surface('kerb', strip(a_, F, s0, s1, side*(SW0-.14), side*SW0), 'silver', H_KERB, cut=False)
+            surface('kerb-shadow', strip(a_, F, s0, s1, side*(SW0-.2), side*(SW0-.14)), 'uiDark', H_JOINT, cut=False)
+        else:
+            # rural two-lane road: a worn edge line, then the gravel shoulder
+            surface('edge-line', strip(a_, F, s0, s1, side*(RH-.32), side*(RH-.2)), 'silver', H_KERB, cut=False)
     # crosswalk-style stripes in the gaps at each end, so the sidewalk break reads as a crossing
-    for end_s, sgn in ((0, 1), (d, -1)):
+    for end_s, sgn in ((0, 1), (d, -1)) if walk else ():
         for k in range(5):
             t = end_s + sgn*(.8 + k*.8)
-            surface('crosswalk', strip(a_, F, min(t, t+sgn*.4), max(t, t+sgn*.4), -3.6, 3.6), 'silver', H_DECAL2, cut=False)
+            surface('crosswalk', strip(a_, F, min(t, t+sgn*.4), max(t, t+sgn*.4), -(RH-.2), RH-.2), 'silver', H_DECAL2, cut=False)
     # --- lane-following skid marks: a swerving pair of tracks that stays in one lane and fades out ---
     t = life.uniform(10, 40)
     while t < d - 24:
-        lane_lat = life.choice((-1.25, 1.25)); L = life.uniform(9, 17); sway = life.uniform(-.7, .7)
+        lane_lat = life.choice((-1.5, 1.5)); L = life.uniform(9, 17); sway = life.uniform(-.7, .7)
         n = 7
         for track in (-.55, .55):
             for k in range(n):
                 sa, sb = t+L*k/n, t+L*(k+1)/n
                 la = lane_lat+track+sway*(k/n)**2; lb = lane_lat+track+sway*((k+1)/n)**2
-                la, lb = max(-2.2, min(2.2, la)), max(-2.2, min(2.2, lb))
+                la, lb = max(-(RH-.6), min(RH-.6, la)), max(-(RH-.6), min(RH-.6, lb))
                 wa, wb = .13*(1-.7*k/n)/2, .13*(1-.7*(k+1)/n)/2
                 surface('skid', ccw([at(a_, ux, uz, nx, nz, sa, la-wa), at(a_, ux, uz, nx, nz, sb, lb-wb), at(a_, ux, uz, nx, nz, sb, lb+wb), at(a_, ux, uz, nx, nz, sa, la+wa)]), 'pantsDark', H_DECAL, cut=False)
         t += life.uniform(45, 110)
     # --- tar cracks along the lane (short, mostly parallel) ---
     t = life.uniform(3, 10)
     while t < d - 6:
-        lat = life.uniform(-2.2, 2.2); L = life.uniform(1.5, 4.5); ca = life.choice((life.uniform(-.3, .3), life.uniform(1.2, 1.9)))
+        lat = life.uniform(-(RH-.6), RH-.6); L = life.uniform(1.5, 4.5); ca = life.choice((life.uniform(-.3, .3), life.uniform(1.2, 1.9)))
         cx, cz = a_[0]+ux*t+nx*lat, a_[1]+uz*t+nz*lat; ang = math.atan2(uz, ux)+ca
         surface('road-crack', rquad(cx, cz, L, .07, ang), 'pantsDark', H_DECAL, cut=False)
         t += life.uniform(9, 20)
     # --- ground life: oil stains, manholes, drain grates, lane arrows, litter and glass ---
     t = life.uniform(6, 20)
     while t < d - 8:
-        lat = life.uniform(-2.0, 2.0); surface('oil-stain', blob(a_[0]+ux*t+nx*lat, a_[1]+uz*t+nz*lat, life.uniform(.4, .8)), 'pantsDark', H_DECAL, cut=False)
+        lat = life.uniform(-(RH-.8), RH-.8); surface('oil-stain', blob(a_[0]+ux*t+nx*lat, a_[1]+uz*t+nz*lat, life.uniform(.4, .8)), 'pantsDark', H_DECAL, cut=False)
         if life.random() < .55:   # a smaller second pool beside it
             surface('oil-stain', blob(a_[0]+ux*(t+life.uniform(.5, 1.3))+nx*(lat+life.uniform(-.5, .5)), a_[1]+uz*(t+.9)+nz*lat, life.uniform(.2, .4)), 'leather', H_DECAL2, cut=False)
         t += life.uniform(22, 48)
     t = life.uniform(14, 40)
     while t < d - 10:
-        lat = life.choice((-.35, .35)) if life.random() < .6 else life.choice((-1.7, 1.7)); cx, cz = a_[0]+ux*t+nx*lat, a_[1]+uz*t+nz*lat
+        lat = life.choice((-.35, .35)) if life.random() < .6 else life.choice((-2.0, 2.0)); cx, cz = a_[0]+ux*t+nx*lat, a_[1]+uz*t+nz*lat
         surface('manhole', blob(cx, cz, .5, 10, .02), 'uiDark', H_DECAL, cut=False)
         surface('manhole-ring', blob(cx, cz, .4, 10, .02), 'pantsCargo', H_DECAL2, cut=False)
         for q in (0,): surface('manhole-bar', rquad(cx+ux*q, cz+uz*q, .62, .04, math.atan2(nz, nx)), 'uiDark', H_DECAL2+.0003, cut=False)
         t += life.uniform(55, 130)
     t = life.uniform(9, 30)
     while t < d - 8:
-        side = life.choice((1, -1)); cx, cz = a_[0]+ux*t+nx*side*2.18, a_[1]+uz*t+nz*side*2.18
+        side = life.choice((1, -1)); cx, cz = a_[0]+ux*t+nx*side*(RH-.32), a_[1]+uz*t+nz*side*(RH-.32)
         surface('drain', rquad(cx, cz, .95, .32, math.atan2(uz, ux)), 'uiDark', H_DECAL, cut=False)
         for q in (-2, 0, 2): surface('drain-bar', rquad(cx+ux*q*.13, cz+uz*q*.13, .04, .28, math.atan2(uz, ux)), 'pantsLight', H_DECAL2, cut=False)
         t += life.uniform(40, 90)
     t = life.uniform(25, 60)
     while t < d - 14:
-        for side, lat in ((1, 1.25), (-1, -1.25)):   # right-hand traffic: arrows point along each lane's travel direction
+        for side, lat in ((1, 1.5), (-1, -1.5)):   # right-hand traffic: arrows point along each lane's travel direction
             cx, cz = at(a_, ux, uz, nx, nz, t, lat)
             L_, W_, hw = 2.7, .75, .32; fx, fz = ux*side, uz*side; gx, gz = nx, nz
             def pt(f, g): return [cx+fx*f+gx*g, cz+fz*f+gz*g]
@@ -641,13 +673,13 @@ for a_, b_ in route_segments:
     t = life.uniform(3, 9)
     while t < d - 4:
         for _ in range(life.randint(1, 3)):   # litter drifted against the kerbs and across the lanes
-            lat = life.choice((life.uniform(-3.9, -2.55), life.uniform(2.55, 3.9), life.uniform(-2.3, 2.3)))
-            surface('litter', rquad(a_[0]+ux*(t+life.uniform(-3, 3))+nx*lat, a_[1]+uz*(t+life.uniform(-3, 3))+nz*lat, life.uniform(.18, .5), life.uniform(.12, .3), life.uniform(0, 3.14)), life.choice(('shirt', 'picketWhite', 'canvasTan', 'shirtLight', 'bandage')), (H_DECAL2+.0004) if abs(lat) < 2.5 else (H_JOINT+.0004), cut=False)
+            lat = life.choice((life.uniform(-(RH+.9), -(RH-.45)), life.uniform(RH-.45, RH+.9), life.uniform(-(RH-.7), RH-.7)))
+            surface('litter', rquad(a_[0]+ux*(t+life.uniform(-3, 3))+nx*lat, a_[1]+uz*(t+life.uniform(-3, 3))+nz*lat, life.uniform(.18, .5), life.uniform(.12, .3), life.uniform(0, 3.14)), life.choice(('shirt', 'picketWhite', 'canvasTan', 'shirtLight', 'bandage')), (H_DECAL2+.0004) if abs(lat) < RH else (H_JOINT+.0004), cut=False)
         t += life.uniform(9, 18)
     t = life.uniform(20, 70)
     while t < d - 10:   # glass shards: a small glittering cluster, more of it at the crash scar
         if a_[0] < 800 or life.random() < .35:
-            cx, cz = at(a_, ux, uz, nx, nz, t, life.uniform(-2.3, 2.3))
+            cx, cz = at(a_, ux, uz, nx, nz, t, life.uniform(-(RH-.7), RH-.7))
             for _ in range(life.randint(5, 9)):
                 px, pz = cx+life.uniform(-.8, .8), cz+life.uniform(-.8, .8); ang = life.uniform(0, 6.28); r = life.uniform(.05, .13)
                 surface('glass', ccw([[px+math.cos(ang)*r, pz+math.sin(ang)*r], [px+math.cos(ang+2.3)*r*.6, pz+math.sin(ang+2.3)*r*.6], [px+math.cos(ang+4.0)*r*.8, pz+math.sin(ang+4.0)*r*.8]]), 'lavenderLight', H_DECAL2+.0006, cut=False)
@@ -656,16 +688,16 @@ for a_, b_ in route_segments:
 for a_, b_ in region_segments(4):
     if math.dist(a_, b_) < 100: continue
     F = frame(a_, b_); d, ux, uz, nx, nz = F
-    side = 1 if nz > 0 else -1; s0, s1 = 14, d-14
-    surface('bay-pad', strip(a_, F, s0, s1, side*5.0, side*12.4), 'pantsDark', .0004, cut=False)
+    side = 1 if nz > 0 else -1; s0, s1 = 14, d-14; bi = inset_seg(a_, b_)   # l10-narrow-roads: the bays move in with the verge
+    surface('bay-pad', strip(a_, F, s0, s1, side*(5.0-bi), side*(12.4-bi)), 'pantsDark', .0004, cut=False)
     s = s0 + 1.2
     while s < s1:
-        surface('bay-line', strip(a_, F, s, s+.14, side*5.2, side*11.8), 'silver', .0009, cut=False)
+        surface('bay-line', strip(a_, F, s, s+.14, side*(5.2-bi), side*(11.8-bi)), 'silver', .0009, cut=False)
         s += 2.9
-    surface('bay-line', strip(a_, F, s0+1.2, s1, side*11.7, side*11.85), 'silver', .0009, cut=False)
-    surface('bay-line', strip(a_, F, s0+1.2, s1, side*5.15, side*5.3), 'silver', .0009, cut=False)
+    surface('bay-line', strip(a_, F, s0+1.2, s1, side*(11.7-bi), side*(11.85-bi)), 'silver', .0009, cut=False)
+    surface('bay-line', strip(a_, F, s0+1.2, s1, side*(5.15-bi), side*(5.3-bi)), 'silver', .0009, cut=False)
     for k, s in enumerate(range(int(s0+5), int(s1-5), 29)):
-        x, z = a_[0]+ux*(s+1.4)+nx*side*9.6, a_[1]+uz*(s+1.4)+nz*side*9.6
+        x, z = a_[0]+ux*(s+1.4)+nx*side*(9.6-bi), a_[1]+uz*(s+1.4)+nz*side*(9.6-bi)
         dress(['veh.sedan-white', 'veh.suv-dark', 'veh.pickup-red'][k % 3], x, z, math.atan2(-nz*side, nx*side)+life.uniform(-.06, .06), decay='wrecked' if k % 2 else None)
 # ---- roadside light points just outside the 6 m clearance (render-only lights come from NightAccents.cureAccents) ----
 def place_life(i, frac, side, asset, lat, decay=None):
@@ -681,7 +713,8 @@ def place_life(i, frac, side, asset, lat, decay=None):
             if t < 12 or t > d_ - 12: break
             for extra in (0, 1.6, 3.2, -1.2):
                 for sd in (side, -side):
-                    x, z = p[0]+ux*t+nx*sd*(lat+extra), p[1]+uz*t+nz*sd*(lat+extra)
+                    lat_ = lat + extra - inset_at(p[0]+ux*t)   # l10-narrow-roads
+                    x, z = p[0]+ux*t+nx*sd*lat_, p[1]+uz*t+nz*sd*lat_
                     if asset.startswith('veh.'): yaw = math.atan2(-uz, ux)+(math.pi if life.random() < .5 else 0)+life.uniform(-.3, .3)
                     elif asset == 'bld.bus-stop': yaw = face((nx*sd, nz*sd))
                     else: yaw = life.uniform(0, 6.28)
@@ -707,6 +740,7 @@ fill = random.Random(1034)
 FILL_TREE = ('prop.tree', 'prop.street-tree')
 def fill_put(asset, a_, F, s, lat, side, yaw=None, decay=None, scale=1.0):
     d_, ux, uz, nx, nz = F
+    lat -= lane_inset(a_, ux, uz, s)   # l10-narrow-roads
     x, z = at(a_, ux, uz, nx, nz, s, side*lat)
     if decay and decay not in l.manifest[asset].get('decayVariants', []): decay = None
     if x >= FINALE_X - 12: return None
@@ -720,6 +754,7 @@ def fill_put(asset, a_, F, s, lat, side, yaw=None, decay=None, scale=1.0):
 def fill_run(asset, a_, F, s0, s1, lat, side, step, skip=0.0):
     """Runs of 2-4 pieces; each run is drawn in +x/+z order so fence_run merges its pieces into one collider per unbroken stretch."""
     d_, ux, uz, nx, nz = F
+    lat -= lane_inset(a_, ux, uz, s0)   # l10-narrow-roads
     s = s0
     while s + step <= s1 + .01:
         n = min(fill.randint(2, 4), int((s1 - s + .01) // step))
@@ -841,6 +876,7 @@ def crop_field(a_, F, s0, s1, side, l0, l1, standing, tokens=None):
     """Furrow strips parallel to the road from l0 to l1 m out, cut around every building/kit/vehicle footprint; standing crops add
     a blade row (Grass lawn, footprints already excluded) on every second strip."""
     d_, ux, uz, nx, nz = F
+    ins = lane_inset(a_, ux, uz, s0); l0 -= ins; l1 -= ins   # l10-narrow-roads
     dark, light = fld.choice(tokens or FIELD_TOKENS)
     w = fld.uniform(1.4, 1.8); k = 0; lat = l0; made = 0
     while lat + w <= l1 + .01:
@@ -863,7 +899,7 @@ def crop_field(a_, F, s0, s1, side, l0, l1, standing, tokens=None):
             if p1_ - p0_ < 4: continue
             a0 = at(a_, ux, uz, nx, nz, p0_, side*lat); a1 = at(a_, ux, uz, nx, nz, p1_, side*(lat+w))
             pmn = (min(a0[0], a1[0]), min(a0[1], a1[1])); pmx = (max(a0[0], a1[0]), max(a0[1], a1[1]))
-            if any(seg_rect(r0, r1, pmn, pmx) < 6.5 for r0, r1 in route_segments) or any(seg_rect(r0, r1, pmn, pmx) < 4 for r0, r1 in detour_segments + shortcut_segments): continue
+            if any(seg_rect(r0, r1, pmn, pmx) < 6.5 - ins for r0, r1 in route_segments) or any(seg_rect(r0, r1, pmn, pmx) < 4 for r0, r1 in detour_segments + shortcut_segments): continue
             surface('field-furrow', strip(a_, F, p0_, p1_, side*lat, side*(lat+w)), dark if k % 2 else light, -.0012, cut=False)
             if standing and k % 2 == 0: l.data['lawns'].append(dict(min=[pmn[0]+.2, pmn[1]+.2], max=[pmx[0]-.2, pmx[1]-.2]))
             made += 1
@@ -871,12 +907,17 @@ def crop_field(a_, F, s0, s1, side, l0, l1, standing, tokens=None):
     return made
 def power_line(a_, F, s0, s1, side, lat):
     d_, ux, uz, nx, nz = F
+    # l10-narrow-roads: the pole line follows the road at the field edge (7.5-9.5 m, was 17-21 m) instead of off-frame.
+    if not on_detour(a_, ux, uz): lat = 7.5 + (lat - 17) / 2 + (2.0 - lane_inset(a_, ux, uz, s0))
     s = s0
     while s <= s1:
         x, z = at(a_, ux, uz, nx, nz, s, side*lat); fld_put('prop.utility-pole', x, z, math.atan2(-uz, ux)); s += fld.uniform(24, 30)
+# l10-narrow-roads: story spots move in by the 1 m the asphalt lost (at most): their fires stay >= 8.5 m past the new 3 m lane edge
+# (NightAccents.cureAccents), clear of the E31-AC16 verge samples.
+def story_in(a_, F, s): return min(1.0, lane_inset(a_, F[1], F[2], s))
 def story_camp(a_, F, s, side):
     d_, ux, uz, nx, nz = F
-    lat = fld.uniform(14, 17); x, z = at(a_, ux, uz, nx, nz, s, side*lat)
+    lat = fld.uniform(14, 17) - story_in(a_, F, s); x, z = at(a_, ux, uz, nx, nz, s, side*lat)
     kit = fld.choice(['kit.shelter-camp', 'prop.tent', 'prop.tent'])
     if not fld_put(kit, x, z, face((nx*side, nz*side)) + fld.uniform(-.4, .4), light='camp'): return False
     camp = l.data['placements'][-1]
@@ -888,7 +929,7 @@ def story_camp(a_, F, s, side):
     return True
 def story_wreck(a_, F, s, side, burned=True):
     d_, ux, uz, nx, nz = F
-    lat = fld.uniform(12.5, 15); x, z = at(a_, ux, uz, nx, nz, s, side*lat)
+    lat = fld.uniform(12.5, 15) - story_in(a_, F, s); x, z = at(a_, ux, uz, nx, nz, s, side*lat)
     asset = fld.choice(['veh.sedan-red', 'veh.suv-dark', 'veh.pickup-red', 'veh.sedan-white', 'veh.evac-bus', 'veh.military-truck', 'veh.police-sedan'])
     yaw = math.atan2(-uz, ux) + fld.uniform(.5, 1.2) * fld.choice((-1, 1))   # it left the road: skewed into the field
     if not fld_put(asset, x, z, yaw, decay='burned' if burned else 'wrecked', light='wreckfire' if burned else None): return False
@@ -941,6 +982,25 @@ _gone = set().union(*[_empty_ids(i) for i in _r3]) if _r3 else set()
 for ob in [o for o in l.empties if o.name.split('.')[0] in _gone or any(o.name.startswith(f'crown:{i}:') for i in _r3)]:
     l.empties.remove(ob); bpy.data.objects.remove(ob, do_unlink=True)
 print('look-l10-l8-2 field placements', len(l.data['placements']) - fields_before, 'strips', field_strips)
+# l10-narrow-roads: every pushable prop is a sim entity (PropSystem) created before the infected and the Mega, so their COUNT
+# shifts every later entity id, and the seed-32 finale calibration (tools/qa/l10-arrival-check.ts, high tier) follows those ids:
+# four extra trash bags 1.3 km west of the finale turned the high arrival 143.15 s into 142.85 s with the cure not released, while
+# moving R1-R5 colliders, adding static colliders or narrowing the road paving changed nothing. Keep the authored count (97 on
+# main 28e7c1a8a): surplus verge/field pushables in R1-R4 come out, last placed first. A shortfall fails the build.
+PUSHABLE_COUNT = 97
+_phys = (l.root / 'src/data/physicsAssets.ts').read_text()
+_phys = json.loads(_phys[_phys.index('{'):_phys.rindex('}') + 1])
+PUSHABLE = {k for k, v in _phys.items() if k.startswith(('prop.', 'haz.')) and v.get('pushable') and v.get('class') != 'fixed' and v.get('mass', 0) > 0 and v.get('boxes')}
+_push = [p for p in l.data['placements'] if p['assetId'] in PUSHABLE]
+_spare = [p['id'] for p in _push if (p.get('worldFill') or p.get('fieldDressing')) and p['position'][0] < 2467]
+assert len(_push) >= PUSHABLE_COUNT, f'D-CURE has {len(_push)} pushable props, the finale calibration expects {PUSHABLE_COUNT}'
+_cut = set(_spare[len(_spare) - (len(_push) - PUSHABLE_COUNT):]) if len(_push) > PUSHABLE_COUNT else set()
+l.data['placements'] = [p for p in l.data['placements'] if p['id'] not in _cut]
+l.data['colliders'] = [c for c in l.data['colliders'] if c['id'] not in _cut]
+_gone = set().union(*[_empty_ids(i) for i in _cut]) if _cut else set()
+for ob in [o for o in l.empties if o.name.split('.')[0] in _gone]:
+    l.empties.remove(ob); bpy.data.objects.remove(ob, do_unlink=True)
+print('pushable props', len(_push), '->', len(_push) - len(_cut), 'removed', sorted(_cut))
 print('look-l10 dressing placements', len(l.data['placements']))
 for p in l.data['placements']: p['maxTier']=6
 for c in l.data['colliders']: c['maxTier']=6
