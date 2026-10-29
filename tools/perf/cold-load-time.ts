@@ -175,7 +175,11 @@ for (let run = 0; run < Number(count); run++) {
       await cdp.send('IO.close', { handle });
       writeFileSync(`${out}/${label}.trace.json.gz`, gzipSync(trace));
     }
-  } finally { await browser.close(); }
+  } finally {
+    // Finish releasing the pool lease before a fresh sample changes launch flags.
+    try { for (const context of browser.contexts()) await context.close(); }
+    finally { await browser.close(); }
+  }
 }
 const sorted = results.map(result => result.ms as number).sort((a, b) => a - b);
 const gameplaySamples = results.filter(result => Number(result.gameplayMs) >= 10_000);
