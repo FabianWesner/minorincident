@@ -230,7 +230,7 @@ export class CrowdView extends Group {
       const model = loaded;
       const atlas = model.userData.assetTextureMode === 'baseColor' ? crowdTexture(model) : undefined;
       const healthy = def.id.startsWith('healthy.'), human = !dogCoat(def.id) && !/^(infected|healthy)\.(dog|cat|crow|lion|gorilla|elephant|zebra|flamingo)$/.test(def.id);
-      const alpha = alphaLookAssets.includes(asset), capacity = role === 'crow' ? 800 : 350;
+      const alpha = alphaLookAssets.includes(asset), regularAlpha = alphaLooks['inf.alpha'].includes(asset), capacity = role === 'crow' ? 800 : 350;
       // Level handover (10-20): the finished batch geometry (baked, merged, simplified, packed, appearance-marked) is
       // immutable CPU data that depends only on the model, LOD and tier. Reusing it across levels skips ~1 s of main-thread
       // work per level at 1x (bake + mergeVertices + marking), four times that on a throttled CPU; the scene gets clones.
@@ -353,7 +353,7 @@ export class CrowdView extends Group {
       // intermediate living band joins the zoo's shared shader path.
       const zooSurface = this.world.scenario === 'L8' && /^(infected|healthy)\.(lion|gorilla|elephant|zebra|flamingo)$/.test(def.id);
       const sharedSurface = this.world.scenario === 'L4' && infectedAtlas || zooSurface || this.world.scenario === 'L8' && alpha && lod === 'lod1';
-      const materialKey = sharedSurface && baked.texture ? `${baked.clip.parts.join('|')}:${poses.bindRow}:${baked.doubleSided}:${inlineAccessories}:${asset.startsWith('npc.')}:${baked.geometry.hasAttribute('_skin')}:${human}:${healthy}:${infectedAtlas}:${dogPalette}` : undefined;
+      const materialKey = sharedSurface && baked.texture ? `${baked.clip.parts.join('|')}:${poses.bindRow}:${baked.doubleSided}:${inlineAccessories}:${asset.startsWith('npc.')}:${baked.geometry.hasAttribute('_skin')}:${human}:${healthy}:${infectedAtlas}:${dogPalette}:${regularAlpha}` : undefined;
       let sharedSkin = materialKey ? this.sharedSkinMaterials.get(materialKey) : undefined;
       let material = sharedSkin?.material, surfaceAtlas = sharedSkin?.atlas;
       if (!material) {
@@ -387,11 +387,13 @@ export class CrowdView extends Group {
       // night-lit body at the 0.45 peak), easing off on pale swatches (bone, teeth) so they do not clip to white.
       // A flat white add (0.45 on every channel, then bloom) turned the dark Alpha into a grey-white mass; any
       // white constant still dominates its near-black albedo.
-      const atlasFill = infectedAtlas ? albedo.mul(.18).mul(eye.oneMinus()) : vec3(0);
+      // Alphas have authored bruised skin and dark outfits. The ordinary crowd's
+      // additive atlas/figure fills washed those swatches pale lavender at night.
+      const atlasFill = infectedAtlas ? albedo.mul(regularAlpha ? .04 : .18).mul(eye.oneMinus()) : vec3(0);
       const glow = emission.mul(eye).add(atlasFill).add(feedbackState.w.mod(2).mul(base.mul(base.oneMinus().mul(1.1))).mul(figureMask ?? 1));
       material = this.shading?.shaded(base, glow, undefined, undefined, undefined, healthy ? undefined : eye, figureMask, shadowReceiver, healthy ? undefined : float(1)) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
       // E25 night readability: crowd silhouettes take the preset's moonlit rim.
-      if (material instanceof PaletteMaterial) { material.figureRim.value = .25; material.figureFill.value = 1; }
+      if (material instanceof PaletteMaterial) { material.figureRim.value = .25; material.figureFill.value = regularAlpha ? .25 : 1; }
       // The Alpha-sized Mega retains its silhouette at contact, like a regular Alpha.
       // Instances cannot be sorted independently in the transparent render list.
       // A shared 4x4 screen-door threshold keeps every surface of a corpse at

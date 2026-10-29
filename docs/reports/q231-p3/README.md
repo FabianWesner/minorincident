@@ -30,8 +30,27 @@ The production L1 cast was loaded first; each model reuses the nearest campaign 
 | `npc.civilian-woman-b` | [sheet](evidence/l1/attempt-1-npc.civilian-woman-b.jpg) | [sheet](evidence/l1/attempt-2-npc.civilian-woman-b.jpg) | [sheet](evidence/l1/attempt-3-npc.civilian-woman-b.jpg) |
 | `npc.civilian-elderly` | [sheet](evidence/l1/attempt-1-npc.civilian-elderly.jpg) | [sheet](evidence/l1/attempt-2-npc.civilian-elderly.jpg) | [sheet](evidence/l1/attempt-3-npc.civilian-elderly.jpg) |
 
-The earlier seven-native-model probe was not evidence of seven distinct drawn meshes: L1's born-infected appearance assignment can replace its named variant with a civilian model. The new receipts explicitly verify the **drawn** model against each requested campaign model at every tick. The exact original campaign actor and animation frame still cannot be recovered from its crop; reopen with that full frame/ID if it recurs.
+Initial native-model probes on this lane was not evidence of seven distinct drawn meshes: L1's born-infected appearance assignment can replace its named variant with a civilian model. The new receipts explicitly verify the **drawn** model against each requested campaign model at every tick. The exact original campaign actor and animation frame still cannot be recovered from its crop; reopen with that full frame/ID if it recurs.
 
 Reproduce each bounded attempt through the shared pool: `SCENE_PORT=4347 E2E_UNITS=1 sh tools/e2e-lock.sh npx tsx tools/scenelab/q231-probes.ts l1 <1|2|3> test-results/q231-p3/l1-campaign-models-<n>`.
 
-L10 matched palette review and final checks are in progress.
+## L10: pale Alphas reproduced and corrected
+
+The authored research-approach encounter at the D-CURE campus contains actor 18, `infected.alpha`, drawing `inf.alpha-worker`, LOD1 on low. At tick 90 it remains at `(2614.8,0.702,47.2)`. Viewed the matched campus [before](evidence/l10/campus-before.png) and [after](evidence/l10/campus-after.png), plus all five Alpha variants under identical `L10-night` lighting on uniform asphalt. The source models/atlases are correct; the ordinary infected material's additive atlas fill (0.18) and moon figure fill (1) wash their authored dark swatches pale lavender. Bypassing region recoloring alone did not remove the veil; lowering figure fill alone left the separate atlas emission.
+
+`CrowdView` now gives only the five regular Alpha assets atlas fill 0.04 and figure fill 0.25, keeping rim 0.25 and their eye emission. Shared material keys include this distinction. Ordinary infected (including the Q-179 worker) and Mega Alpha retain their existing treatment. No source palette, global grading, mesh or animation changed.
+
+| Matched review | Before | After |
+| --- | --- | --- |
+| Low, night | [capture](evidence/l10/low-L10-night-before.png) | [capture](evidence/l10/low-L10-night-after.png) |
+| High, night | [capture](evidence/l10/high-L10-night-before.png) | [capture](evidence/l10/high-L10-night-after.png) |
+| Low, daylight control | [capture](evidence/l10/low-L1-before.png) | [capture](evidence/l10/low-L1-after.png) |
+| High, daylight control | [capture](evidence/l10/high-L1-before.png) | [capture](evidence/l10/high-L1-after.png) |
+
+Reviewed both quality tiers and daylight controls: bruised skin, dark trousers and colored outfits remain distinct, with a cool night tint and visible silhouettes. [Static atlas reference under night lighting](evidence/l10/low-static-reference-night.png). The existing crowd-isolation look measurement gives low night luma 78.6 → 49.2 and white share 3.09% → 0.72%; this mask includes contact shadows and its threshold changes the measured pixel count, so these are supporting measurements rather than a pixel-identical mask. [Specs, runtime models, measurements and parameters](evidence/l10/comparison.json).
+
+Campus [before](evidence/l10/campus-before-trace.json) and [after](evidence/l10/campus-after-trace.json) receipts retain every tick. Simulation entities match at every tick; independent loads have slightly different animation phases. Both runs have zero console errors. The five existing low-tier Alpha hit/corpse scenes pass unchanged; all five contact sheets were viewed ([base](evidence/l10/corpse-base.jpg), [worker](evidence/l10/corpse-worker.jpg), [hoodie](evidence/l10/corpse-hoodie.jpg), [fire](evidence/l10/corpse-fire.jpg), [suit](evidence/l10/corpse-suit.jpg)).
+
+Reproduce campus: `SCENE_PORT=4347 E2E_UNITS=1 sh tools/e2e-lock.sh npx tsx tools/scenelab/q231-probes.ts l10 1 <out>`. Matched variants: same command with `palette 2` (low) or `palette 3` (high). Before captures used the original 0.18/1 material values; after captures use the scoped values above.
+
+Final smoke and 48-row gate checks are in progress.
