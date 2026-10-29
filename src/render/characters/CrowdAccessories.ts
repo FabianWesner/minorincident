@@ -235,10 +235,12 @@ export class CrowdAccessories extends Group {
     const hair = definitions.get(id)?.slot === 'hair';
     if (this.measuredModels.has(model) && (hair || definitions.get(id)?.slot === 'hat')) {
       const scale = new Vector3().setFromMatrixScale(skull), centre = new Vector3(referenceSkull.centre.x, referenceSkull.centre.y, referenceSkull.centre.z).applyMatrix4(skull);
-      const brow = this.brows.get(model), limit = hair ? 1.2 : 1.15;
+      const brow = this.brows.get(model), afro = id === 'acc.hair-afro', limit = afro ? 1.1 : hair ? 1.2 : 1.15;
       // Authored hair can enlarge the measured head envelope. Fit added hair to the bare brow instead.
       const skullWidth = brow?.width ?? referenceSkull.size.z * scale.z;
-      const skullDepth = hair && brow ? Math.max(brow.depth, brow.width * .8) : brow?.depth ?? referenceSkull.size.x * scale.x;
+      // A broad but shallow skull (L1's spectacled woman/elderly) is not a deep head. Inferring depth from width
+      // enlarged the afro/long-hair shell into a dark blob over the face after infection (Q-229).
+      const skullDepth = brow?.depth ?? referenceSkull.size.x * scale.x;
       if (hair && brow) { centre.x = brow.centre.x; centre.z = brow.centre.z; }
       let width = 0, depth = 0, height = 0;
       for (const lod of ['lod0', 'lod1']) {
@@ -247,7 +249,10 @@ export class CrowdAccessories extends Group {
         depth = Math.max(depth, geometry.boundingBox!.clone().applyMatrix4(this.fitTransform).getSize(new Vector3()).x);
         height = Math.max(height, geometry.boundingBox!.clone().applyMatrix4(this.fitTransform).getSize(new Vector3()).y);
       }
-      this.fitTransform.premultiply(new Matrix4().makeTranslation(centre.x, 0, centre.z).multiply(new Matrix4().makeScale(Math.min(1, skullDepth * limit / depth), Math.min(1, referenceSkull.size.y * scale.y * (hair ? .9 : .42) / height), Math.min(1, skullWidth * limit / width))).multiply(new Matrix4().makeTranslation(-centre.x, 0, -centre.z)));
+      // Keep the afro's volume around the crown, with its hairline fixed at the brow; scaling about the neck
+      // let a tall dark shell overwhelm the narrow spectacled face (Q-229). Long styles retain their tails.
+      const pivotY = afro ? brow?.y ?? centre.y : 0;
+      this.fitTransform.premultiply(new Matrix4().makeTranslation(centre.x, pivotY, centre.z).multiply(new Matrix4().makeScale(Math.min(1, skullDepth * limit / depth), Math.min(1, referenceSkull.size.y * scale.y * (afro ? .55 : hair ? .9 : .42) / height), Math.min(1, skullWidth * limit / width))).multiply(new Matrix4().makeTranslation(-centre.x, -pivotY, -centre.z)));
       const bounds = new Box3();
       for (const lod of ['lod0', 'lod1']) {
         const geometry = this.batches.get(`${id}:${lod}`)?.geometry; if (geometry?.boundingBox) bounds.union(geometry.boundingBox.clone().applyMatrix4(this.fitTransform));
