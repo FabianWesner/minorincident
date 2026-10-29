@@ -491,7 +491,7 @@ export class CrowdView extends Group {
   }
   async ready(): Promise<void> { await Promise.all(this.pending.values()); }
   update(view?: View, alpha = 1): void {
-    this.deadFeet.clear(); this.staticCorpses.begin(id => this.world.entities.get(id), e => this.corpsePosition(e, e.infected!.deadAt), this.world.entities.get(1)?.transform);
+    this.deadFeet.clear(); this.staticCorpses.begin(id => this.world.entities.get(id), e => this.corpsePosition(e, e.infected!.deadAt), this.world.entities.get(1)?.transform, this.world.missions?.state.cureFront);
     // Membership changes cover pooled ID reuse, checkpoint restore and streamed unload.
     // Frozen figures stay in StaticCorpses; the animated passes need only the rest.
     if (this.entityRevision !== this.world.entities.revision || this.frozenRevision !== this.staticCorpses.revision) {

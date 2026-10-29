@@ -37,6 +37,7 @@ export class CorpseLayout {
   private readonly neighbors: number[] = [];
   private readonly query = { x: 0, z: 0, r: 5 };
   private revision = -1;
+  private epilogue = false;
   constructor(private readonly world: SimWorld) {}
   audit() {
     const bodies = [...this.bodies.values()], player = this.world.entities.get(1)?.transform;
@@ -55,6 +56,10 @@ export class CorpseLayout {
       courierClear: !player || bodies.every(p => pointDistance(player.x, player.z, p.ax, p.az, p.bx, p.bz) >= .949) };
   }
   place(e: EntitySnapshot, deadAt = e.infected?.deadAt ?? 0, prone?: number): RestingPose | EntitySnapshot['transform'] {
+    const epilogue = this.world.missions?.def.id === 'L10' && !!this.world.missions.state.cureFront;
+    if (epilogue !== this.epilogue) {
+      this.epilogue = epilogue; this.bodies.clear(); this.spatial.reset();
+    }
     if (this.revision !== this.world.entities.revision) {
       for (const [id, pose] of this.bodies) if (this.world.entities.get(id) !== pose.body || pose.body.health.current > 0 || pose.body.hidden) { this.bodies.delete(id); this.spatial.delete(id); }
       this.revision = this.world.entities.revision;
@@ -94,9 +99,10 @@ export class CorpseLayout {
     };
     let best: RestingPose | undefined;
     // First prefer an unoccupied footprint, nearest to the death position.
-    // When all are occupied, choose the lowest supported heap layer within 1 m.
-    for (let ring = 0; ring <= 5; ring++) {
-      const distance = ring * .2, samples = ring ? Math.max(16, ring * 8) : 1;
+    // Combat bodies stay within 1 m. Once the L10 fight ends, use the surrounding
+    // floor (up to 4 m) so the final collapsed crowd reads as individual people.
+    for (let ring = 0; ring <= (epilogue ? 10 : 5); ring++) {
+      const distance = ring * (epilogue ? .4 : .2), samples = ring ? Math.max(16, Math.min(48, ring * 8)) : 1;
       for (let i = 0; i < samples; i++) {
         const angle = initialYaw + i * Math.PI * 2 / samples, x = e.transform.x + Math.cos(angle) * distance, z = e.transform.z + Math.sin(angle) * distance;
         for (let turn = 0; turn < 4; turn++) {

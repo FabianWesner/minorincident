@@ -82,7 +82,7 @@ const slowGait = { frail: clipOr('infected-frail', 'shamble'), average: clipOr('
 const infectedIdle = clipOr('infected-idle', 'idle'), infectedSearch = clipOr('infected-search', 'idle');
 /** One human crowd draw regardless of density; poses, veins, eyes and clothing vary per instance. */
 class CivilianBatch extends Group {
-  private readonly corpses: StaticCorpses;
+  private readonly corpses = new StaticCorpses();
   private readonly probe = new CrowdFigureProbe();
   private locomotion!: CrowdLocomotion;
   private gunAim!: CrowdGunAim;
@@ -116,7 +116,7 @@ class CivilianBatch extends Group {
   source = 'glb';
   /** lod2 = the far band; lod1 = the near band; lod0 = the few closest figures (CrowdVisibility heroes). */
   get distant(): boolean { return this.lod === 'lod2'; }
-  constructor(readonly world: SimWorld, readonly model: string, readonly lod: 'lod0' | 'lod1' | 'lod2', private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps, private readonly gait = new GaitPhase(), private readonly footwork = new CrowdFootwork(), private readonly moves = new InfectedMoves(), private readonly presentation = new MotionPresentation(crowdTurnRate), private readonly accessories?: CrowdAccessories, private readonly sharedRegistry?: AssetRegistry) { super(); this.corpses = new StaticCorpses(id => world.missions?.state.cureFront?.affectedIds.includes(id) ?? false); this.registry = sharedRegistry;
+  constructor(readonly world: SimWorld, readonly model: string, readonly lod: 'lod0' | 'lod1' | 'lod2', private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps, private readonly gait = new GaitPhase(), private readonly footwork = new CrowdFootwork(), private readonly moves = new InfectedMoves(), private readonly presentation = new MotionPresentation(crowdTurnRate), private readonly accessories?: CrowdAccessories, private readonly sharedRegistry?: AssetRegistry) { super(); this.registry = sharedRegistry;
     if (world.scenario === 'L4') { this.matrixAutoUpdate = this.matrixWorldAutoUpdate = false; this.corpses.matrixAutoUpdate = this.corpses.matrixWorldAutoUpdate = false; }
     // L7 has a strict infected pool plus at most 35 incoming survivors. Size
     // every model's mutable pose rows for that population instead of 350.
@@ -191,7 +191,7 @@ class CivilianBatch extends Group {
     this.add(this.mesh); this.update();
   }
   update(alpha = 1, low = false, shotId?: number, figures?: readonly EntitySnapshot[]): void {
-    this.probe.begin(); this.deadFeet.clear(); this.corpses.begin(id => this.world.entities.get(id), e => corpseLayout(this.world).place(e), this.world.entities.get(1)?.transform);
+    this.probe.begin(); this.deadFeet.clear(); this.corpses.begin(id => this.world.entities.get(id), e => corpseLayout(this.world).place(e), this.world.entities.get(1)?.transform, this.world.missions?.state.cureFront);
     if (!this.mesh) return; let index = 0, shadowPixels = 0;
     const renderTick = Math.max(0, this.world.tick + alpha - 1);
     const shot = shotId === undefined ? undefined : this.world.entities.get(shotId);

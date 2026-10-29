@@ -6,8 +6,8 @@ export const epilogueTicks = 150 * 60;
 export const pulloutTicks = 36 * 60;
 export const titleTicks = 5 * 60;
 export const creditsTicks = 12 * 60;
-// Give each resident room to stand and walk around the refuge. The old 1.3 m
-// grid frequently quantized adjacent actors onto the same nav cells.
+// Give residents individual walking routes and room to pause at each end,
+// rather than keeping the small epilogue cast in a tight formation.
 const survivorSpread = [
   [-5, -2], [-2.5, 3], [0, -4], [2.5, 1.5], [5, -2.5], [5, 3.5],
 ] as const;

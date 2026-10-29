@@ -145,7 +145,9 @@ export class Blasts extends Group {
         const bump = mx_noise_float(positionGeometry.mul(1.4).add(seed)).mul(.3).add(1);
         // Rise decelerates; wind bends the column more the higher (older) a puff is.
         const drift = m.xyz.mul(age.mul(float(1).sub(progress.mul(.35)))).add(this.windNode.mul(age.mul(progress.mul(1.5).add(.2))));
-        return o.xyz.add(drift).add(positionGeometry.mul(size).mul(bump));
+        // Cure is a low ground mist: upright survivors remain above the bank.
+        const shape = positionGeometry.mul(vec3(1, st.z.lessThan(-1.5).select(.14, 1), 1));
+        return o.xyz.add(drift).add(shape.mul(size).mul(bump));
       })();
       puffMaterial.outputNode = Fn(() => {
         const ray = cameraPosition.sub(this.playerNode), length = ray.length().max(.001), direction = ray.div(length);
@@ -171,7 +173,7 @@ export class Blasts extends Group {
         // and bloom while keeping the final measured coverage below the 40% cap.
         const dither = fract(fract(dot(screenCoordinate.xy.floor(), vec2(.06711056, .00583715))).mul(52.9829189));
         nearRay.and(dither.greaterThanEqual(.2)).discard();
-        return vec4(color, edge.mul(grain).mul(fade).mul(st.z.lessThan(-1.5).select(.32, .97)).mul(alive).mul(mix(.38, 1, seeThroughHole(1.15))));
+        return vec4(color, edge.mul(grain).mul(fade).mul(st.z.lessThan(-1.5).select(.2, .97)).mul(alive).mul(mix(.38, 1, seeThroughHole(1.15))));
       })();
       this.puffs.renderOrder = 3;
     }
