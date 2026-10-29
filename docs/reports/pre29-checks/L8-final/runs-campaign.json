@@ -1,0 +1,65 @@
+[
+  {
+    "level": "L8",
+    "entry": "debug",
+    "heroine": "female",
+    "finished": true,
+    "skipped": [],
+    "wallSeconds": 94,
+    "simSeconds": 0,
+    "maxNoProgressSeconds": 8.35,
+    "deaths": 0,
+    "assists": 0,
+    "attacks": {},
+    "weaponsStart": [
+      "weapon.bat",
+      "weapon.fire-axe",
+      "weapon.rocket-launcher",
+      "weapon.army-mg",
+      "weapon.shotgun",
+      "weapon.handgun"
+    ],
+    "weaponsEnd": [
+      "weapon.bat",
+      "weapon.fire-axe",
+      "weapon.rocket-launcher",
+      "weapon.army-mg",
+      "weapon.shotgun",
+      "weapon.handgun"
+    ],
+    "steps": [
+      {
+        "id": "escape",
+        "text": "Bring the survivors to the armored vehicle and board · 97 m",
+        "tick": 12,
+        "marker": {
+          "anchor": "exit",
+          "ring": {
+            "x": 96.71,
+            "y": 0,
+            "z": 76.275
+          },
+          "drawn": [
+            96.71,
+            0.12,
+            76.28
+          ],
+          "playerY": 0.8399999737739563,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "depart",
+        "text": "Wait for the breach · 37 s",
+        "tick": 1410,
+        "marker": {
+          "anchor": "exit",
+          "ring": null,
+          "drawn": null,
+          "playerY": 0.9954345226287842,
+          "pinVisible": false
+        }
+      }
+    ]
+  }
+]

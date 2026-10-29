@@ -70,6 +70,10 @@
   },
   "validation": [
     "npm run typecheck: pass",
-    "npm run lint: pass"
-  ]
+    "npm run lint: pass",
+    "npm run test:unit: 104/104 passed"
+  ],
+  "finalL8Evidence": "L8-final/summary.json",
+  "finalL8FrameGateEvidence": "L8-final/campaign-frames.json",
+  "L10UnaffectedByFix": "No runtime source or L10 asset changes; L8 JSON decoded data and GLB binary are unchanged. See delivery-proof.json."
 }
