@@ -327,7 +327,10 @@ export class LevelFiveAftermath {
     // Route to the actual queue position. The grid already rounds the entrance
     // corner; a second X-dependent side-step goal fought that route and could
     // repeatedly send a straggler back across the same threshold.
-    return { x: door.x + side, z: door.z - 4.4 + slot * .75 };
+    // The rear wall is only 23 cm behind the former last slot: Dale's idle
+    // forearm crossed it after turning toward the courier. Keep the front
+    // slot and both lanes fixed, and fit the queue inside the rear clearance.
+    return { x: door.x + side, z: door.z - 3.8 + slot * .6 };
   }
   private metro(): void {
     const { world } = this.mission, s = this.s, tick = world.tick, player = world.entities.get(1)!;
