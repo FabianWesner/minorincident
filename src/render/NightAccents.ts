@@ -281,8 +281,8 @@ export function subwayAccents(origin: P2 = [0, 0]): AccentSet {
     if ([90, 150, 210].some(g => Math.abs(x - g) < 3.5)) { rng.next(); continue; }
     flare(x, .58, z);
   }
-  // On the track-facing edge of each camp, clear of the bedroll and wall piers. The frame's base rests on the .87 m walkway.
-  for (const cx of l6Camps) put({ kind: 'storm-lantern', x: cx + .7, y: 1.11, z: 17.15, yaw: 0, color: '#ffb35c', glow: 4, flicker: 1, strobe: false, pool: { color: '#ff9a48', intensity: 5, range: 3.4 } });
+  // Beside the chair, clear of the bedroll and projected wall piers. The frame's base rests on the .87 m walkway.
+  for (const cx of l6Camps) put({ kind: 'storm-lantern', x: cx - 1, y: 1.11, z: 17.8, yaw: 0, color: '#ffb35c', glow: 4, flicker: 1, strobe: false, pool: { color: '#ff9a48', intensity: 5, range: 3.4 } });
   for (const [x, z] of [[261.5, 13.6], [266.5, 17.6], [271.5, 13.4]] as const) flare(x, 3.93, z);
   fires.push({ x: 283 + origin[0], z: 8 + origin[1], radius: 1.4, car: true }, { x: 280.2 + origin[0], z: 21.2 + origin[1], radius: .8, car: false });
   return { points, fires };

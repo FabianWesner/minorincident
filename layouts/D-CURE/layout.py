@@ -1020,7 +1020,7 @@ l.data['colliders'].append(dict(id='r3-blocked-yard-continuous', aabb=dict(min=[
 # clearance decisions and colliders stay identical. The continuous strip remains authoritative.
 _gap_colliders = len(l.data['colliders'])
 for i in range(30):
-    l.place('decay.makeshift-barricade', [1517,0,-23.5 + i*3], allowed=True)
+    l.place('decay.makeshift-barricade', [1517,0,-23.5 + i*3])
     l.data['placements'][-1].update(id=f'r3-gap-visual-{i}', decor=True)
 del l.data['colliders'][_gap_colliders:]
 for p in l.data['placements']: p['maxTier']=6
