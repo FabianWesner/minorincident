@@ -1,0 +1,338 @@
+[
+  {
+    "path": "test-results/scene-nightly/webgpu-high-23/collision-l5-metro-ingress@high-z1.5/metrics.json",
+    "backend": "webgpu",
+    "tier": "high",
+    "frames": 720,
+    "failed": [
+      {
+        "name": "clipping",
+        "pass": false,
+        "value": 3,
+        "limit": 0
+      }
+    ],
+    "clipping": {
+      "static": [],
+      "actors": [
+        {
+          "bone": "foreArmL",
+          "prop": "bld.metro-entrance:225",
+          "asset": "bld.metro-entrance",
+          "crossing": true,
+          "clearanceCm": 0.2,
+          "at": [
+            38.188,
+            1.149,
+            -51.76
+          ],
+          "actor": "follower-0",
+          "frame": 501,
+          "count": 16
+        },
+        {
+          "bone": "thighL",
+          "prop": "bld.metro-entrance:225",
+          "asset": "bld.metro-entrance",
+          "crossing": false,
+          "clearanceCm": 3.9,
+          "actor": "follower-0",
+          "frame": 369,
+          "count": 2
+        }
+      ],
+      "gunBodies": [],
+      "heldProps": [
+        {
+          "a": "follower-2/handR",
+          "b": "follower-2/cane",
+          "assetA": "handR",
+          "assetB": "cane",
+          "intersectingTriangles": 6,
+          "region": {
+            "min": [
+              37.38743209838867,
+              0.9885480403900146,
+              -50.7170524597168
+            ],
+            "max": [
+              37.394798278808594,
+              1.0311719179153442,
+              -50.68691635131836
+            ]
+          },
+          "regionCm": [
+            1,
+            4,
+            3
+          ],
+          "actor": "follower-2",
+          "frame": 522
+        }
+      ],
+      "summary": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 1,
+        "actorHits": 2,
+        "piercing": 1
+      }
+    },
+    "actors": {
+      "courier": {
+        "position": [
+          38.167,
+          -50.328
+        ],
+        "state": "idle",
+        "travelM": 6.828635022388559,
+        "health": 100,
+        "lod": {
+          "lod0": 720
+        }
+      },
+      "follower-0": {
+        "position": [
+          37.921,
+          -51.338
+        ],
+        "state": "calm",
+        "travelM": 8.833358200580468,
+        "health": 100,
+        "lod": {
+          "lod2": 720
+        }
+      },
+      "follower-2": {
+        "position": [
+          37.186,
+          -51.237
+        ],
+        "state": "calm",
+        "travelM": 9.393767554323489,
+        "health": 100,
+        "lod": {
+          "lod1": 11,
+          "lod2": 709
+        }
+      }
+    }
+  },
+  {
+    "path": "test-results/scene-nightly/webgpu-high-23/collision-l5-metro-ingress@high-z1/metrics.json",
+    "backend": "webgpu",
+    "tier": "high",
+    "frames": 720,
+    "failed": [
+      {
+        "name": "clipping",
+        "pass": false,
+        "value": 2,
+        "limit": 0
+      }
+    ],
+    "clipping": {
+      "static": [],
+      "actors": [
+        {
+          "bone": "foreArmL",
+          "prop": "bld.metro-entrance:225",
+          "asset": "bld.metro-entrance",
+          "crossing": true,
+          "clearanceCm": 0.2,
+          "at": [
+            38.223,
+            1.147,
+            -51.76
+          ],
+          "actor": "follower-0",
+          "frame": 492,
+          "count": 20
+        }
+      ],
+      "gunBodies": [],
+      "heldProps": [
+        {
+          "a": "follower-2/handR",
+          "b": "follower-2/cane",
+          "assetA": "handR",
+          "assetB": "cane",
+          "intersectingTriangles": 6,
+          "region": {
+            "min": [
+              37.79550552368164,
+              1.5402566194534302,
+              -49.118900299072266
+            ],
+            "max": [
+              37.826812744140625,
+              1.5812405347824097,
+              -49.109657287597656
+            ]
+          },
+          "regionCm": [
+            3,
+            4,
+            1
+          ],
+          "actor": "follower-2",
+          "frame": 303
+        }
+      ],
+      "summary": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 1,
+        "actorHits": 1,
+        "piercing": 1
+      }
+    },
+    "actors": {
+      "courier": {
+        "position": [
+          38.167,
+          -50.328
+        ],
+        "state": "idle",
+        "travelM": 6.828635022388559,
+        "health": 100,
+        "lod": {
+          "lod0": 720
+        }
+      },
+      "follower-0": {
+        "position": [
+          37.921,
+          -51.338
+        ],
+        "state": "calm",
+        "travelM": 8.833358200580468,
+        "health": 100,
+        "lod": {
+          "lod1": 720
+        }
+      },
+      "follower-2": {
+        "position": [
+          37.186,
+          -51.237
+        ],
+        "state": "calm",
+        "travelM": 9.393767554323489,
+        "health": 100,
+        "lod": {
+          "lod1": 720
+        }
+      }
+    }
+  },
+  {
+    "path": "test-results/scene-nightly/webgpu-high-23/collision-l5-metro-ingress@high-z0.5/metrics.json",
+    "backend": "webgpu",
+    "tier": "high",
+    "frames": 720,
+    "failed": [
+      {
+        "name": "clipping",
+        "pass": false,
+        "value": 2,
+        "limit": 0
+      }
+    ],
+    "clipping": {
+      "static": [],
+      "actors": [
+        {
+          "bone": "foreArmL",
+          "prop": "bld.metro-entrance:225",
+          "asset": "bld.metro-entrance",
+          "crossing": true,
+          "clearanceCm": 0.2,
+          "at": [
+            38.223,
+            1.147,
+            -51.76
+          ],
+          "actor": "follower-0",
+          "frame": 492,
+          "count": 20
+        }
+      ],
+      "gunBodies": [],
+      "heldProps": [
+        {
+          "a": "follower-2/handR",
+          "b": "follower-2/cane",
+          "assetA": "handR",
+          "assetB": "cane",
+          "intersectingTriangles": 5,
+          "region": {
+            "min": [
+              37.44178771972656,
+              1.1795576810836792,
+              -50.821529388427734
+            ],
+            "max": [
+              37.4492301940918,
+              1.2186700105667114,
+              -50.80016326904297
+            ]
+          },
+          "regionCm": [
+            1,
+            4,
+            2
+          ],
+          "actor": "follower-2",
+          "frame": 528
+        }
+      ],
+      "summary": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 1,
+        "actorHits": 1,
+        "piercing": 1
+      }
+    },
+    "actors": {
+      "courier": {
+        "position": [
+          38.167,
+          -50.328
+        ],
+        "state": "idle",
+        "travelM": 6.828635022388559,
+        "health": 100,
+        "lod": {
+          "lod0": 720
+        }
+      },
+      "follower-0": {
+        "position": [
+          37.921,
+          -51.338
+        ],
+        "state": "calm",
+        "travelM": 8.833358200580468,
+        "health": 100,
+        "lod": {
+          "lod0": 185,
+          "lod1": 535
+        }
+      },
+      "follower-2": {
+        "position": [
+          37.186,
+          -51.237
+        ],
+        "state": "calm",
+        "travelM": 9.393767554323489,
+        "health": 100,
+        "lod": {
+          "lod0": 683
+        }
+      }
+    }
+  }
+]
