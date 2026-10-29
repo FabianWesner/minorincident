@@ -2,7 +2,7 @@ import { premultiplyRow, skinnedVertexMatrix, skinnedWoundNormal } from './skinn
 import { interleaveCrowdSurface, crowdSurfaceBindings } from './crowdTexture';
 import { writeCrowdAppearance, renderedCrowdLook, resolveCrowdAppearance } from './CrowdAppearance';
 import { BufferAttribute, BufferGeometry, Color, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Sphere, type Frustum, Vector3, Uint16BufferAttribute, Uint32BufferAttribute, MeshLambertNodeMaterial } from 'three/webgpu';
-import { normalViewGeometry } from 'three/tsl';
+import { attribute, normalViewGeometry } from 'three/tsl';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import type { CrowdClip } from '../../assets/crowd';
 import type { EntitySnapshot } from '../../sim/world/types';
@@ -15,8 +15,11 @@ import { seeThroughKeepCorpse } from '../SeeThrough';
 import type { Node } from 'three/webgpu';
 
 const CELL = 40;
-/** Every frozen body carries the courier cut from its first compile (Q-209); SeeThrough.corpse switches it, no rebuild. */
-const corpseMask = (surface?: Node<'bool'>) => surface ? surface.and(seeThroughKeepCorpse()) : seeThroughKeepCorpse();
+/** Cured figures remain solid in the epilogue; ordinary corpses still yield the courier's footprint. */
+const corpseMask = (surface?: Node<'bool'>) => {
+  const keep = attribute('_overlay', 'vec4').w.greaterThan(.5).or(seeThroughKeepCorpse());
+  return surface ? surface.and(keep) : keep;
+};
 // Civilian model/LOD pools already share their source material. Keep one frozen
 // graph too: copies per pool rebuilt identical shaders as new blast victims
 // settled. Pages still own their geometry and per-instance appearance buffers.
@@ -31,6 +34,7 @@ interface DetailBody {
 /** Frozen, baked death geometry in growing 128-body pages within 40 m cells. No per-frame pose
  * texture uploads, AI, physics or population cap for settled bodies. */
 export class StaticCorpses extends Group {
+  constructor(private readonly cured: (id: number) => boolean = () => false) { super(); }
   /** Frozen membership invalidates caller actor lists after placement, unload or restore. */
   revision = 0;
   private readonly bodies = new Map<string, EntitySnapshot>();
@@ -96,12 +100,13 @@ export class StaticCorpses extends Group {
   place(e: EntitySnapshot, key: string, source: BufferGeometry, material: MeshLambertNodeMaterial, clip: CrowdClip, frame: number, instance: Matrix4, tint: Color, overlay: number[], instanceKey = String(e.id), hiddenParts: readonly string[] = [], look?: ReturnType<typeof resolveCrowdAppearance>, near?: CorpseSurface): void {
     if (this.bodies.has(instanceKey)) return;
     this.bodies.set(instanceKey, e); this.revision++;
+    const bodyOverlay = [...overlay]; bodyOverlay[3] = this.cured(e.id) ? 1 : 0;
     if (near) {
       const x = instance.elements[12], z = instance.elements[14];
-      this.detailBodies.set(e.id, { e, key, far: { source, material, clip, frame }, near, x, z, detailed: false, tint: tint.clone(), overlay: overlay.slice(), hiddenParts, look });
+      this.detailBodies.set(e.id, { e, key, far: { source, material, clip, frame }, near, x, z, detailed: false, tint: tint.clone(), overlay: bodyOverlay, hiddenParts, look });
       this.detailSpatial.set(e.id, x, z); this.detailDirty = true;
     }
-    this.insert(e, key, source, material, clip, frame, instance, tint, overlay, instanceKey, hiddenParts, look);
+    this.insert(e, key, source, material, clip, frame, instance, tint, bodyOverlay, instanceKey, hiddenParts, look);
   }
   private insert(e: EntitySnapshot, key: string, source: BufferGeometry, material: MeshLambertNodeMaterial, clip: CrowdClip, frame: number, instance: Matrix4, tint: Color, overlay: number[], instanceKey: string, hiddenParts: readonly string[], look?: ReturnType<typeof resolveCrowdAppearance>): void {
     // Keep distant bodies in separate bounds so ordinary frustum culling skips their geometry. 40 m cells (l4-collapse-2; was 16 m): every
@@ -124,6 +129,7 @@ export class StaticCorpses extends Group {
     page.mesh.setMatrixAt(index, instance); writeCrowdAppearance(page.tint, index, e.id, tint, 1, look?.slot, look?.hidesHair);
     if (page.mesh.instanceColor) { page.mesh.instanceColor.setXYZ(index, .64, .64, .64); page.mesh.instanceColor.needsUpdate = true; }
     page.overlay.setXYZ(index, overlay[0], overlay[1], overlay[2]);
+    page.overlay.setW(index, overlay[3] ?? 0);
     page.mesh.instanceMatrix.needsUpdate = page.tint.needsUpdate = page.overlay.needsUpdate = true;
     // Frozen pages need no per-frame bounds work. Cover every joining body's
     // final death vertices so culling cannot drop a visible body.
