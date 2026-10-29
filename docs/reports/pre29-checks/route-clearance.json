@@ -1,0 +1,37 @@
+{
+  "method": "Every added/changed collider AABB versus every original road segment, subtracting half lane width and requiring another 0.45 m for the courier. All tiers and physicsOnly boxes included conservatively.",
+  "rows": [
+    {
+      "district": "D-ZOO",
+      "baselineColliderCount": 458,
+      "currentColliderCount": 524,
+      "addedOrChangedColliderAABBs": 66,
+      "roadsIdentical": true,
+      "walkableIdentical": true,
+      "anchorsIdentical": true,
+      "courierRadiusM": 0.45,
+      "closest": {
+        "collider": "prop.garden-bush-small:1212",
+        "road": "p-24:-64--p-24:0",
+        "clearanceM": 3.2383018542781272
+      },
+      "overlaps": []
+    },
+    {
+      "district": "D-CURE",
+      "baselineColliderCount": 2166,
+      "currentColliderCount": 2267,
+      "addedOrChangedColliderAABBs": 111,
+      "roadsIdentical": true,
+      "walkableIdentical": true,
+      "anchorsIdentical": true,
+      "courierRadiusM": 0.45,
+      "closest": {
+        "collider": "prop.utility-pole:3347",
+        "road": "route-24",
+        "clearanceM": 1.9457359096908249
+      },
+      "overlaps": []
+    }
+  ]
+}
