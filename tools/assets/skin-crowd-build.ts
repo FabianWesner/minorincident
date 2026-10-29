@@ -1,4 +1,5 @@
 import { restoreCrowdGlasses } from './skin-crowd-glasses';
+import { restoreClerkApron } from './restore-clerk-apron';
 import { restoreFireHelmet } from './restore-fire-helmet';
 import { restoreMegaSkull } from './restore-mega-skull';
 import { paintAnimalDetails, restoreElephantTail, type TuskRecipe } from './skin-crowd-animal-details';
@@ -227,6 +228,11 @@ for (const lod of [0, 1, 2]) {
     if (shelter && /\.(bandaged|sitting)$/.test(id)) paintCrowdShirt(document, '#f2b630');
     const regions = classifyCrowdAtlas(document, id.startsWith('npc.civilian-'), id === 'npc.national-guard', alignment?.authored_skin, alignment?.covered_legs ?? (derivedTemplate && sourceId === 'npc.civilian-man-a'));
     if (regions) { await io.write(raw, document); writeFileSync(join(report, `lod${lod}.regions.json`), JSON.stringify(regions, null, 2) + '\n'); }
+    if (id === 'npc.depot-clerk') {
+      const apron = restoreClerkApron(document);
+      await io.write(raw, document);
+      writeFileSync(join(report, `lod${lod}.apron.json`), JSON.stringify(apron, null, 2) + '\n');
+    }
     const dressings: CrowdWrap[] = shelter || id === 'npc.civilian-man-a.aftermath' ? [
       { joint: 'foreArmL', colour: '#e7dfce', stain: true },
       ...(/\.(bandaged|sitting)$/.test(id) ? [{ joint: 'head', colour: '#b6aa93', stain: true }] : []),
