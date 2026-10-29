@@ -203,33 +203,6 @@ for x in [1367,1457,1547,1637,1727]:
 # Block the direct yard; northern loading yard and southern service lane stay open.
 surface('yard-road',[[1297,22],[1747,22],[1747,28],[1297,28]],'asphalt',.002)
 for z in range(-25,66,3): l.place('decay.makeshift-barricade',[1517,0,z])
-# Q-241: preserve the authored R3 collider geometry, but break up the repeated render silhouettes.
-# Small rotations/settling offsets stay inside the continuous yard blocker; four units become sandbags
-# and two become crate stacks. Only placement/render data changes: all colliders are left untouched.
-_r3_assets = {manifest['id']: manifest for manifest in l.manifest.values()}
-_r3_units = [p for p in l.data['placements'] if p['assetId'] == 'decay.makeshift-barricade'
-             and abs(p['position'][0] - 1517) < .01 and -25 <= p['position'][2] <= 65]
-assert len(_r3_units) == 31, f'expected 31 authored R3 barricade units, got {len(_r3_units)}'
-_r3_rng = random.Random(241)
-for i, p in enumerate(_r3_units):
-    yaw = _r3_rng.uniform(-.13, .13) * (1 if i % 2 else -1)
-    settle = _r3_rng.choice([0, .025, .045, .07])
-    p['yaw'] = yaw
-    p['position'][1] = settle
-    empty_name = f"inst:{p['assetId']}:{int(p['id'].rsplit(':', 1)[1]) + 1}"
-    ob = next((o for o in l.empties if o.name == empty_name), None)
-    if ob:
-        ob.rotation_euler.z = -yaw
-        ob.location.z = settle
-    if i in (4, 11, 18, 25, 8, 22):
-        asset = 'prop.sandbag-pallet' if i in (4, 11, 18, 25) else 'prop.crates'
-        p['assetId'] = asset
-        dims = _r3_assets[asset]['dimensions']
-        p['visualAabb'] = dict(min=[p['position'][0]-dims['x']/2,p['position'][1],p['position'][2]-dims['z']/2],
-                               max=[p['position'][0]+dims['x']/2,p['position'][1]+dims['y'],p['position'][2]+dims['z']/2])
-        if ob:
-            ob['assetId'] = asset
-            ob.name = f"inst:{asset}:{int(p['id'].rsplit(':', 1)[1]) + 1}"
 # R4 destroyed entrance post, breached defensive line and low motor-pool shelters.
 l.place('bld.cure-guard-post',[1857,0,10])
 l.place('veh.military-truck',[1877,0,42]); l.data['placements'][-1]['decay']='wrecked'
@@ -1071,6 +1044,30 @@ for i, kind in enumerate(_gap_kinds):
         l.place(asset, [x+.03,.62,z+.04], yaw=yaw-.25, scale=(.7,.7,.7))
         l.data['placements'][-1].update(id=f'r3-gap-visual-{i}-stack', decor=True)
 del l.data['colliders'][_gap_colliders:]
+# Q-241: vary only the 31 base-unit visuals after dressing, preserving all collider records,
+# clearance decisions, placement IDs and random draws used by the rest of the level.
+_r3_units = [p for p in l.data['placements'] if p['assetId'] == 'decay.makeshift-barricade'
+             and abs(p['position'][0] - 1517) < .01 and -25 <= p['position'][2] <= 65]
+assert len(_r3_units) == 31, f'expected 31 authored R3 barricade units, got {len(_r3_units)}'
+_r3_rng = random.Random(241)
+for i, p in enumerate(_r3_units):
+    old_asset = p['assetId']
+    yaw = _r3_rng.uniform(-.13, .13) * (1 if i % 2 else -1)
+    settle = _r3_rng.choice([0, -.025, -.045, -.07])
+    asset = 'prop.sandbag-pallet' if i in (4, 11, 18, 25) else 'prop.dumpster' if i in (8, 22) else old_asset
+    p.update(assetId=asset, yaw=yaw)
+    p['position'][1] = settle
+    dims = l.manifest[asset]['dimensions']
+    sx = abs(math.cos(yaw))*dims['x'] + abs(math.sin(yaw))*dims['z']
+    sz = abs(math.sin(yaw))*dims['x'] + abs(math.cos(yaw))*dims['z']
+    x, y, z = p['position']
+    # Replace the visual AABB rather than mutating the original shared collider AABB.
+    p['visualAabb'] = dict(min=[x-sx/2,y,z-sz/2], max=[x+sx/2,y+dims['y'],z+sz/2])
+    marker = next(o for o in l.empties if o.name == f"inst:{old_asset}:{int(p['id'].rsplit(':', 1)[1]) + 1}")
+    marker.rotation_euler.z = yaw
+    marker.location.z = settle
+    marker['assetId'] = asset
+    marker.name = f"inst:{asset}:{int(p['id'].rsplit(':', 1)[1]) + 1}"
 for p in l.data['placements']: p['maxTier']=6
 for c in l.data['colliders']: c['maxTier']=6
 # Semantic pavement shares the renderer's level top, no raised seam at the region/chunk boundary.
