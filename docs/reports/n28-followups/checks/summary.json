@@ -1,0 +1,84 @@
+{
+  "branch": "lane/n28-followups",
+  "base": "b7251477d",
+  "codeCommit": "a5a96c23b2ed82cee5136530b853c8be3e2dff24",
+  "codeCommits": [
+    "7af355e4f",
+    "f2d96e9e5",
+    "a5a96c23b"
+  ],
+  "required": {
+    "metroMatrix": {
+      "passed": 6,
+      "total": 6,
+      "clipping": 0,
+      "bodyOverlapMaxCm": 0,
+      "collisionFailures": 0,
+      "collisionPending": 0
+    },
+    "convoyBikeMatrix": {
+      "passed": 12,
+      "total": 12,
+      "outsideAllowedMaskPixels": 0,
+      "unexpectedLensPlacements": 0
+    },
+    "injection": {
+      "normalControlsPassed": 4,
+      "injectedCutsRejected": 4,
+      "convoyForbiddenPixels": [
+        197238,
+        74292
+      ],
+      "bikeForbiddenPixelsAtFrame240": 48734
+    },
+    "npmTest": {
+      "status": 0,
+      "defaultPassed": 104,
+      "defaultTotal": 104,
+      "budgetedCaseCensus": 144,
+      "newCases": 0
+    },
+    "smoke": {
+      "status": 0,
+      "seconds": 138.9,
+      "budgetSeconds": 240,
+      "qaCasesPassed": 6,
+      "publicCasesPassed": 1,
+      "productionQaHooksAbsent": true
+    },
+    "sceneGate": {
+      "status": 0,
+      "passed": 48,
+      "total": 48,
+      "knownFailures": 0,
+      "missing": 0
+    },
+    "verifyE23": {
+      "status": 0,
+      "includes": [
+        "npm run typecheck",
+        "npm run lint",
+        "npm test"
+      ]
+    }
+  },
+  "additional": {
+    "webgl2CriticalMaskRows": {
+      "passed": 4,
+      "total": 4,
+      "outsideAllowedMaskPixels": 0
+    },
+    "latestTypecheckStatus": 0,
+    "latestLintStatus": 0
+  },
+  "validationCommands": [
+    "npm run verify -- E23",
+    "npm run typecheck",
+    "npm run lint",
+    "E2E_PORT=4345 SCENE_PORT=4346 E2E_UNITS=2 npm run test:smoke",
+    "SCENE_PORT=4344 E2E_UNITS=1 npm run scene:gate -- --jobs 1 --out test-results/n28-followups/scene-gate",
+    "SCENE_PORT=4344 E2E_UNITS=1 sh tools/e2e-lock.sh node --import tsx tools/scenelab/n28-lens-proof.ts"
+  ],
+  "sourceDigestsMatch": true,
+  "publication": "local commits only"
+}

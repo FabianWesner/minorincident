@@ -1,0 +1,18 @@
+{
+  "reviewed": [
+    "metro-wide.jpg",
+    "metro-close.jpg",
+    "convoy-normal.png",
+    "convoy-unbounded.png",
+    "bike-normal.png",
+    "bike-unbounded.png"
+  ],
+  "observations": [
+    "The Metro sheets retain separate bodies and stair contacts; triangle probes provide the exact arm and grip clearance evidence.",
+    "The normal convoy frame retains the whole player bus and opaque neighboring vehicles. The injected frame removes unrelated foreground shells and fails the mask.",
+    "The normal bike frame keeps the fence outside the bounded subject disc. The injected frame clears the unrelated fence span and fails by 48,734 forbidden pixels.",
+    "The close Metro sheet crops upper bodies at the frame edge; it alone does not prove millimeter grip clearance."
+  ],
+  "strictContactEvidence": "matrix.json",
+  "strictCutEvidence": "lens-proof.json"
+}

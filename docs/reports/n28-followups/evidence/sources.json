@@ -1,0 +1,37 @@
+{
+  "base": "b7251477d",
+  "codeCommit": "a5a96c23b2ed82cee5136530b853c8be3e2dff24",
+  "branch": "lane/n28-followups",
+  "sha256": {
+    "src/render/npc/RoutineProps.ts": "d0b3243638a66905d925a2a53ba2d23ca338a304b0d2203074bc5cd64aae8c28",
+    "src/sim/missions/LevelFiveAftermath.ts": "075ec46e3a55c056a783c50aabb303cb799f26e413265a39b12761031447cd5e",
+    "src/debug/scenelab/SceneLab.ts": "da9605fb726a8ecd621231ad586f6f3146e88da8e8b822d5ef26911332ed6261",
+    "src/debug/scenelab/spec.ts": "d53445f5e142b19c27736d61492b486127febf6c9b8722754a991804f2b004a4",
+    "src/render/GameView.ts": "c09afcc1290df7a89fb0491dd4e3faa56886262b01ad64f4972790af17460dfa",
+    "src/render/RenderProbes.ts": "7541c19cb68c82db95e9fe29ed27dc92ee251e5a44718b875860283ada462677",
+    "src/render/district/DistrictOcclusion.ts": "d03ae07577eee103f9f83eb93c3e028257b4e08fdeb3c7a51fae9d3d30c2a653",
+    "tools/scenelab/run.ts": "2310e1aab8d564fed0d3ef005f823b9d786ed7c534d728c08b7f040657d2d055",
+    "tests/scenes/catalog/collision-l5-metro-ingress.json": "bfb4d704819f95fa36f1dab95f26fc6a61317ba056fbdee2980c7fdf4ac85760",
+    "tests/scenes/catalog/seethrough-scripted-convoy.json": "e4f77650a807e73715a84a472883226be101b24544be30f7374cf66d9679368a",
+    "tests/scenes/catalog/seethrough-bike-ride.json": "d5e93d446bebf5be0e636c61c4821f9213b0f132e32f26e2b9f55a2c42f140a3",
+    "tools/scenelab/n28-lens-proof.ts": "9b37e5b17ec04f5c0b2dde8d871834b0d5386e5557f0215e2c6d94a881819207",
+    "tools/scenelab/n28-metro-timing.ts": "d1c755bf669bdcdabe7cd955fd36dcfb7d1b44faf137b7f079a25d7e9509532b",
+    "tests/shared/render-contracts.test.ts": "64acabcc3387706cf8829a74d532cc3a3ae1bce8e3a4afadf2884b42e37cc304"
+  },
+  "frozenL5TuningSha256": "bf2e7d4985f252ff2883477050b2889f23fd818d2e5b76f07db927c11e1c56dd",
+  "queue": {
+    "oldRearOffsetM": -4.4,
+    "newRearOffsetM": -3.8,
+    "oldGapM": 0.75,
+    "newGapM": 0.6,
+    "frontOffsetM": -1.4,
+    "laneSideM": 0.45,
+    "corgiLaneAndArrivalToleranceUnchanged": true
+  },
+  "cane": {
+    "oldGripSurfaceX": 0.025,
+    "newGripSurfaceX": 0.014,
+    "translationOutwardM": 0.011,
+    "floorScalingAndArmPoseUnchanged": true
+  }
+}

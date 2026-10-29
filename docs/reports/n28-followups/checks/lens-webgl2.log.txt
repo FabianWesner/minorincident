@@ -1,0 +1,11 @@
+
+> scene:catalog
+> sh tools/e2e-lock.sh tsx tools/scenelab/catalog.ts --matrix --jobs 1 --backend webgl2 --only seethrough-scripted-convoy@high-z1.5,seethrough-bike-ride@high-z0.5,seethrough-scripted-convoy@low-z1.5,seethrough-bike-ride@low-z0.5 --out test-results/n28-followups/lens-webgl2
+
+[catalog] 2 scenes, 1 browser(s), 960x540, webgl2, high
+[catalog] 1/4 pass seethrough-bike-ride@high-z0.5 (48.8 s)
+[catalog] 2/4 pass seethrough-scripted-convoy@high-z1.5 (31.3 s)
+[catalog] 2 scenes, 1 browser(s), 960x540, webgl2, low
+[catalog] 3/4 pass seethrough-bike-ride@low-z0.5 (46.8 s)
+[catalog] 4/4 pass seethrough-scripted-convoy@low-z1.5 (28.7 s)
+4/4 pass in 158 s -> test-results/n28-followups/lens-webgl2/index.md
