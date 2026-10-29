@@ -1,7 +1,7 @@
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon folio-2025 Ligthing.js / Fog.js (MIT).
 import { Color, DataTexture, RGBAFormat, UnsignedByteType, type WebGPURenderer, SpotLight, DirectionalLight, Fog, HemisphereLight, Scene, Vector2, Vector3, Plane, Ray, type DepthTexture, type Node } from 'three/webgpu';
-import { renderGroup, uniform, mix, vec2, viewportUV, Fn, texture, reference, float, pmremTexture } from 'three/tsl';
+import { renderGroup, uniform, mix, vec2, viewportUV, Fn, If, texture, reference, float, pmremTexture, PCFShadowFilter } from 'three/tsl';
 import { cameraFraming } from '../data/cameraFraming';
 import { timeOfDay, type TimeOfDay } from '../data/timeOfDay';
 import type { View } from './View';
@@ -16,9 +16,8 @@ import type { PaletteMaterial } from './PaletteMaterial';
 
 // r186's default PCF rotates five taps with per-pixel noise. A fixed weighted
 // grid keeps the soft penumbra without stipple, including the WebGL2 fallback.
-const stableSunShadow = Fn(({ depthTexture, shadowCoord, shadow, depthLayer }: {
-  depthTexture: DepthTexture; shadowCoord: Node<'vec3'>; shadow: DirectionalLight['shadow']; depthLayer: Node<'float'>;
-}) => {
+type ShadowFilterInputs = { depthTexture: DepthTexture; shadowCoord: Node<'vec3'>; shadow: DirectionalLight['shadow']; depthLayer: Node<'float'> };
+const stableSunShadow = Fn(({ depthTexture, shadowCoord, shadow, depthLayer }: ShadowFilterInputs) => {
   const step = reference('radius', 'float', shadow).div(reference('mapSize', 'vec2', shadow));
   let filtered: Node<'float'> = float(0);
   for (const x of [-1, 0, 1]) for (const y of [-1, 0, 1]) {
@@ -29,6 +28,17 @@ const stableSunShadow = Fn(({ depthTexture, shadowCoord, shadow, depthLayer }: {
   }
   return filtered;
 });
+
+// L10 retains both light nodes so a lamp promotion changes uniforms rather than every material graph.
+// Skip the inactive map's taps, preserving the exact active sun/spot filters and one refreshed shadow map.
+const activeShadowFilter = (filter: (inputs: ShadowFilterInputs) => Node<'float'>) => Fn(({ depthTexture, shadowCoord, shadow, depthLayer }: ShadowFilterInputs) => {
+  const visibility = float(1).toVar(), weight = reference('intensity', 'float', shadow);
+  (weight as typeof weight & { setGroup(group: typeof renderGroup): unknown }).setGroup(renderGroup);
+  If(weight.greaterThan(0), () => { visibility.assign(filter({ depthTexture, shadowCoord, shadow, depthLayer })); });
+  return visibility;
+});
+const activeSunShadow = activeShadowFilter(stableSunShadow);
+const activeSpotShadow = activeShadowFilter(PCFShadowFilter as unknown as (inputs: ShadowFilterInputs) => Node<'float'>);
 
 /** One sun, a hemisphere and shared stylized lighting uniforms. Shadows follow the visible ground region. */
 export class Lighting {
@@ -167,6 +177,8 @@ export class Lighting {
     this.promoted = null; this.promotedAt = -Infinity; this.heroLight = null; this.promotionChanges = 0; this.heroTime = -1; this.spot.visible = name === 'L6-subway'; this.sun.visible = !this.spot.visible;
     this.worldPaletteEnabled.value = Number(name === 'L1');
     this.preset = name; const p = timeOfDay[name];
+    (this.sun.shadow as typeof this.sun.shadow & { filterNode: typeof stableSunShadow }).filterNode = name === 'L10-night' ? activeSunShadow : stableSunShadow;
+    (this.spot.shadow as typeof this.spot.shadow & { filterNode: typeof activeSpotShadow | null }).filterNode = name === 'L10-night' ? activeSpotShadow : null;
     this.look.setPreset(p.look ?? {});
     this.roadLiftColor.value.set(p.roadColor ?? '#86a8c0');
     if (this.environment) {
@@ -201,9 +213,8 @@ export class Lighting {
   private spotSource = false;
   private setShadowSource(spot: boolean): void {
     this.spotSource = spot;
-    const stable = this.preset === 'L5' || this.preset === 'L6-subway' || this.preset === 'L6' || this.preset === 'L8-zoo';
-    if (this.preset === 'L10-night') this.scene.userData.shadowVariant = spot ? 'L10:spot' : 'L10:sun';
-    else delete this.scene.userData.shadowVariant;
+    const stable = this.preset === 'L5' || this.preset === 'L6-subway' || this.preset === 'L6' || this.preset === 'L8-zoo' || this.preset === 'L10-night';
+    delete this.scene.userData.shadowVariant;
     const spotOff = this.spotShadowOff();
     this.spot.visible = stable || spot; this.sun.visible = stable || !spot;
     this.spot.shadow.intensity = spotOff ? 0 : stable ? Number(spot) : 1;

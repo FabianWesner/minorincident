@@ -266,6 +266,16 @@ test('materials: palette program keys match Three through weather and node chang
     for (const node of [first.emissivePower, first.hitFlash, first.figureRim]) expect(node.groupNode).toBe(group);
     expect(second.fade.groupNode).not.toBe(group);
     first.fade.value = .2; expect(second.fade.value).toBe(1);
+    // Q-227/Q-228: L10 lamps keep the same light list and shadow filters through promotion.
+    lighting.set('L10-night');
+    const filters = [lighting.sun.shadow, lighting.spot.shadow].map(shadow => (shadow as typeof shadow & { filterNode: unknown }).filterNode);
+    expect(filters.every(Boolean)).toBe(true);
+    for (const spot of [false, true, false]) lighting.withShadowSource(spot, () => {
+      expect(lighting.sun.visible && lighting.spot.visible).toBe(true);
+      expect(lighting.sun.shadow.autoUpdate).toBe(!spot); expect(lighting.spot.shadow.autoUpdate).toBe(spot);
+      expect(lighting.sun.shadow.intensity).toBe(Number(!spot)); expect(lighting.spot.shadow.intensity).toBe(Number(spot));
+      expect([lighting.sun.shadow, lighting.spot.shadow].map(shadow => (shadow as typeof shadow & { filterNode: unknown }).filterNode)).toEqual(filters);
+    });
   } finally { materials.dispose(); lighting.dispose(); }
 });
 

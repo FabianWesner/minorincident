@@ -3,6 +3,7 @@
  */
 import assert from 'node:assert/strict';
 import { mkdirSync, writeFileSync } from 'node:fs';
+import { gzipSync } from 'node:zlib';
 import { SceneSession, stopServer } from '../scenelab/session';
 import type { Game } from '../../src/Game';
 const timing = process.argv.includes('--timing');
@@ -11,6 +12,8 @@ const out = process.env.L10_PICKUP_OUT ?? 'test-results/l10-perf/corridor'; mkdi
 const session = new SceneSession({ backend: 'webgpu', tier: 'high', nativeFrameTiming: timing, viewport: { width: 1600, height: 900 }, query: { loadProfile: '2' } });
 try {
   await session.open();
+  const profiler = process.env.L10_PICKUP_PROFILE ? await session.page.context().newCDPSession(session.page) : undefined;
+  if (profiler) { await profiler.send('Profiler.enable'); await profiler.send('Profiler.start'); }
   await session.page.evaluate('globalThis.__name = fn => fn');
   await session.page.evaluate(async () => {
     const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: Game }).game;
@@ -24,10 +27,10 @@ try {
     a.pause(); a.cheats.god(true); g.ui.show(null); a.camera.zoom(1.5);
     const trace = window as unknown as { pickupTrace: { frames: object[]; running: boolean; loaded: Record<string, number>; startTick: number } };
     trace.pickupTrace = { frames: [], running: true, loaded: { ...g.view.renderer.nodeBuildMaterials }, startTick: a.tick() };
-    let last = performance.now();
+    let last: number | undefined;
     const sample = (now: number) => {
       const p = g.world.entities.get(1)!.transform;
-      trace.pickupTrace.frames.push({ ms: now - last, tick: g.world.tick, x: p.x, z: p.z, builds: g.view.renderer.nodeBuilds, update: g.view.updateCpuMs, render: g.view.renderCpuMs }); last = now;
+      trace.pickupTrace.frames.push({ ms: last === undefined ? 0 : now - last, tick: g.world.tick, x: p.x, z: p.z, builds: g.view.renderer.nodeBuilds, update: g.view.updateCpuMs, render: g.view.renderCpuMs }); last = now;
       if (trace.pickupTrace.running) requestAnimationFrame(sample);
     };
     requestAnimationFrame(sample); a.resume();
@@ -47,11 +50,12 @@ try {
     trace.running = false; a.pause();
     const after = { ...g.view.renderer.nodeBuildMaterials }, heldBuilds = Object.entries(after).filter(([key, n]) => key.startsWith('action-held:') && n !== trace.loaded[key]);
     const frames = trace.frames.map(f => f.ms).sort((a, b) => a - b);
-    return { ...trace, after, heldBuilds, backend: a.perf().backend, quality: a.getState().render.quality, player: a.getEntity(1), actions: a.getState().render.actions,
+    return { ...trace, after, heldBuilds, backend: a.perf().backend, quality: a.getState().render.quality, lighting: a.getState().render.lighting, player: a.getEntity(1), actions: a.getState().render.actions,
       pickup: a.events(trace.startTick).filter(e => e.type === 'pickup.collected' && 'actionId' in e && e.actionId === 'weapon.rocket-launcher'),
       max: Math.max(...frames), p95: frames[Math.ceil(frames.length * .95) - 1], hitches: trace.frames.filter(f => f.ms > 200) };
   });
   await session.screenshot(`${out}/pickup.png`);
+  if (profiler) writeFileSync(`${out}/cpu-profile.json.gz`, gzipSync(JSON.stringify((await profiler.send('Profiler.stop')).profile)));
   writeFileSync(`${out}/evidence.json`, JSON.stringify({ timing, ...result, errors: session.errors }, null, 2));
   console.log(JSON.stringify({ timing, frames: result.frames.length, max: result.max, p95: result.p95, pickup: result.pickup, heldBuilds: result.heldBuilds, errors: session.errors }));
   assert.equal(result.backend, 'webgpu'); assert.equal(result.quality, 'high'); assert.equal(result.pickup.length, 1);

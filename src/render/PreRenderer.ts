@@ -118,7 +118,7 @@ export function incrementalPreRender(renderer: Renderer, scene: Scene, camera: C
     },
   };
 }
-export async function preRender(renderer: Renderer, scene: Scene, camera: Camera, render: () => void, compile: (partitions: CompilePartitions) => Promise<unknown> = partitions => Promise.all(partitions.map(apply => { apply(); return renderer.compileAsync(scene, camera); })), pause?: () => Promise<void>, progress?: (completed: number, total: number) => void, background = false, budgetedWarmUp = false, cooperative = false): Promise<void> {
+export async function preRender(renderer: Renderer, scene: Scene, camera: Camera, render: () => void, compile: (partitions: CompilePartitions) => Promise<unknown> = partitions => Promise.all(partitions.map(apply => { apply(); return renderer.compileAsync(scene, camera); })), pause?: () => Promise<void>, progress?: (completed: number, total: number) => void, background = false, budgetedWarmUp = false, cooperative = false, foregroundLanes = compileLanes): Promise<void> {
   const saved: { object: Object3D; visible: boolean; culled: boolean; count?: number; matrices?: Matrix4[]; position?: Vector3 }[] = [];
   scene.updateMatrixWorld(true);
   const focus = camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(camera.position);
@@ -176,7 +176,7 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
       performance.measure('Texture atlas upload', { start, end: performance.now() });
     }
     progress?.(0, 1);
-    const lanes = cooperative ? 1 : compileLanes;
+    const lanes = cooperative ? 1 : foregroundLanes;
     const partitions = Array.from({ length: lanes }, (_, lane) => () => { leaves.forEach(leaf => { leaf.visible = false; }); candidates.forEach((leaf, i) => { leaf.visible = i % lanes === lane; }); });
     // Compile foreground WebGPU pipelines asynchronously before drawing on every level.
     // Synchronous creation defers compilation to Dawn's GPU-process command flush,
