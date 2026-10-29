@@ -1,9 +1,37 @@
-/** L10 finale timing check after a D-CURE dressing change (the deleted tests/sim/levels/l10-arrival.test.ts as a script).
- * usage: npx tsx tools/qa/l10-arrival-check.ts   -> one line per tier: Mega arrival (s), released, deaths, peak infected.
- * Pins before look-l10-l8-2: high 143.15 s, low 143.48 s (band 135-145, PO 2026-10-16 / E32-AC21). */
+/** L10 finale timing after dressing changes. --variants compares the shipped allocator with 0 / ±4 props.
+ * Run under tools/sim-lock.sh (Mac CPU slot) or tools/remote/run.sh. */
+import { deepStrictEqual, equal } from 'node:assert';
+import { createHash } from 'node:crypto';
+import { mkdirSync, writeFileSync } from 'node:fs';
 import { runFinaleCalibration } from '../sim-runner/l10-finale-calibration';
+import { withLegacyPropIds } from '../sim-runner/propVariants';
 
-for (const tier of (process.argv[2] ? [process.argv[2]] : ['high', 'low']) as ('high' | 'low')[]) {
-  const r = await runFinaleCalibration(tier);
-  console.log(JSON.stringify({ tier, arrival: r.arrival, released: r.released, deaths: r.deaths, peak: r.peak, fullChargeBossGate: r.fullChargeBossGate, bossIdChanged: r.bossIdChanged }));
+const args = process.argv.slice(2), variants = args.includes('--variants');
+const positional = args.filter(arg => !arg.startsWith('--'));
+const tiers = (positional[0] ? [positional[0]] : ['high', 'low']) as ('high' | 'low')[];
+if (tiers.some(tier => tier !== 'high' && tier !== 'low')) throw new Error('Tier must be high or low');
+const delta = Number(positional[1] ?? 0) as -4 | 0 | 4;
+if (![-4, 0, 4].includes(delta)) throw new Error('Prop delta must be -4, 0 or 4');
+const rows: object[] = [];
+try {
+  for (const tier of tiers) {
+    let baseline: Awaited<ReturnType<typeof runFinaleCalibration>> | undefined;
+    for (const props of variants ? [0, 0, -4, 4] as const : [delta]) {
+      const legacy = variants && baseline === undefined;
+      const run = () => runFinaleCalibration(tier, props);
+      const r = legacy ? await withLegacyPropIds(run) : await run();
+      const mode = legacy ? 'main' : 'candidate';
+      const row = { mode, tier, props, arrival: r.arrival, released: r.released, deaths: r.deaths, peak: r.peak,
+        fullChargeBossGate: r.fullChargeBossGate, bossIdChanged: r.bossIdChanged,
+        outcomeHash: createHash('sha256').update(JSON.stringify(r)).digest('hex').slice(0, 16) };
+      rows.push({ ...row, result: r }); console.log(JSON.stringify(row));
+      equal(r.released, true, `${tier}/${props}: cure must release`);
+      equal(r.deaths, 0, `${tier}/${props}: no deaths`);
+      if (legacy) baseline = r;
+      else if (baseline) deepStrictEqual(r, baseline, `${tier}/${props}: finale differs from main`);
+    }
+  }
+} finally {
+  mkdirSync('test-results/prop-invariance', { recursive: true });
+  writeFileSync('test-results/prop-invariance/l10.json', JSON.stringify(rows, null, 2) + '\n');
 }

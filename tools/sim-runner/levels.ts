@@ -20,6 +20,7 @@ import type { MissionResult } from '../../src/sim/missions/types';
 import { LevelSevenBot } from '../../src/debug/bot/LevelSevenBot';
 import { runL1, Walker } from './l1Bots';
 import { runTen, type CureRegionTiming } from './l10';
+import { propVariant } from './propVariants';
 
 export type RunnerLevel = MissionId;
 /** Playable campaign order; L7 now participates in the ordinary mission graph. */
@@ -39,11 +40,11 @@ export interface LevelReport {
   outcome: 'complete' | 'stalled' | 'tick-budget' | 'load-error' | 'mission-failed';
   blocker: null | { objective: string | null; detail: string; player?: { x: number; z: number }; distance?: number; actors?: Record<string, { x: number; z: number; hp: number; state?: string; driver?: number | null; speed?: number; yaw?: number }> };
 }
-export async function loadLevel(level: RunnerLevel, seed: number, campaign?: CampaignSave): Promise<SimWorld> {
+export async function loadLevel(level: RunnerLevel, seed: number, campaign?: CampaignSave, props: -4 | 0 | 4 = 0): Promise<SimWorld> {
   const world = new SimWorld();
   try {
     await world.init(); const composition = compositions[level];
-    world.loadComposition(composition, composition.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), seed, level === 'L2' ? campaign?.world?.L1 ?? null : null, level === 'L7' ? campaign?.results?.L6?.escapedSurvivors : level === 'L8' ? campaign?.results?.L7?.escapedSurvivors : undefined, level === 'L8' ? campaign?.results?.L7?.companion : undefined, reservedCampaignIds(level, campaign));
+    world.loadComposition(composition, propVariant(composition.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), props), seed, level === 'L2' ? campaign?.world?.L1 ?? null : null, level === 'L7' ? campaign?.results?.L6?.escapedSurvivors : level === 'L8' ? campaign?.results?.L7?.escapedSurvivors : undefined, level === 'L8' ? campaign?.results?.L7?.companion : undefined, reservedCampaignIds(level, campaign));
     if(campaign)applyCampaign(world,campaign);
     if (!campaign && level === 'L10') applyCampaign(world, preset('L10-default'));
     if (!campaign && level === 'L8') applyCampaign(world, preset('L8-default'));
@@ -64,10 +65,10 @@ function findDrive(t: Trigger): Extract<Trigger, { kind: 'drive' }> | undefined 
   if (t.kind === 'all' || t.kind === 'any') return t.triggers.map(findDrive).find(Boolean);
 }
 /** Inputs and ordinary Begin/Retry/Skip menu actions only; no teleport, loadout injection or cheats. */
-export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, seed: number, maxSeconds = level === 'L10' ? 3600 : 1200, street: L3StreetChoice = 'auto', campaign?: CampaignSave, onComplete?: (world: SimWorld, result: MissionResult) => void): Promise<LevelReport> {
+export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, seed: number, maxSeconds = level === 'L10' ? 3600 : 1200, street: L3StreetChoice = 'auto', campaign?: CampaignSave, onComplete?: (world: SimWorld, result: MissionResult) => void, props: -4 | 0 | 4 = 0): Promise<LevelReport> {
   const report: LevelReport = { level, policy, seed, completed: false, time: 0, deaths: 0, kills: 0, damageTaken: 0, failures: {}, objectiveTimeline: [], furthestObjective: null, activeObjectives: [], outcome: 'tick-budget', blocker: null };
   let world: SimWorld;
-  try { world = await loadLevel(level, seed, campaign); }
+  try { world = await loadLevel(level, seed, campaign, props); }
   catch (error) { report.outcome = 'load-error'; report.failures['load-error'] = 1; report.blocker = { objective: null, detail: String(error) }; return report; }
   try {
     if (level === 'L7') return runSeven(world, report, maxSeconds, onComplete);

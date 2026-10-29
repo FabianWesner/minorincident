@@ -8,8 +8,8 @@ import { cure } from '../../src/levels/L10/district';
 import { emptyInput } from '../../src/input/InputFrame';
 import { cureFinaleText } from '../../src/sim/missions/LevelTenFinale';
 import type { EntitySnapshot } from '../../src/sim/world/types';
-export async function runFinaleCalibration(tier: 'high' | 'low' = 'high') {
-  const w = await loadLevel('L10', 32), m = w.missions!, walker = new Walker();
+export async function runFinaleCalibration(tier: 'high' | 'low' = 'high', props: -4 | 0 | 4 = 0) {
+  const w = await loadLevel('L10', 32, undefined, props), m = w.missions!, walker = new Walker();
   try {
     w.chunks!.setQuality(tier);
     m.loadCheckpoint('cure-corridor');
