@@ -1,0 +1,56 @@
+{
+  "branch": "lane/l9-vehicle",
+  "implementationCommits": [
+    "25df02671",
+    "ca1a45376"
+  ],
+  "stream": {
+    "pass": 6,
+    "total": 6,
+    "slipMaxDeg": 0.4,
+    "limitDeg": 20,
+    "frames": 4200,
+    "pathM": 520
+  },
+  "lamp": {
+    "originalAbsent": true,
+    "removedFromBypasses": 21,
+    "otherLayoutFieldsChanged": false,
+    "visualAndPhysicsPlacements": 26
+  },
+  "realInput": {
+    "finished": 3,
+    "issues": 0,
+    "wallSeconds": [
+      136,
+      184,
+      162
+    ]
+  },
+  "commands": {
+    "npm test": {
+      "exit": 0,
+      "passed": 107
+    },
+    "npm run typecheck": {
+      "exit": 0
+    },
+    "npm run lint": {
+      "exit": 0
+    },
+    "npm run test:smoke": {
+      "exit": 0,
+      "qaPassed": 6,
+      "publicPassed": 1,
+      "seconds": 128.9
+    },
+    "npm run scene:gate": {
+      "exit": 0,
+      "passed": 48,
+      "total": 48,
+      "known": 0,
+      "notRun": 0
+    }
+  },
+  "runtimePhysicsDriverRoutesSpecsChanged": false
+}
