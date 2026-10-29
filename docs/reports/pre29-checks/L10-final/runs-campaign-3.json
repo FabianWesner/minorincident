@@ -1,0 +1,113 @@
+[
+  {
+    "level": "L10",
+    "entry": "continue",
+    "heroine": "female",
+    "finished": false,
+    "skipped": [],
+    "wallSeconds": 480,
+    "simSeconds": 476,
+    "maxNoProgressSeconds": 6.003,
+    "deaths": 5,
+    "assists": 0,
+    "attacks": {
+      "weapon.rocket-launcher": 108
+    },
+    "weaponsStart": [
+      "weapon.fire-axe",
+      "weapon.pistol",
+      "weapon.shotgun",
+      "weapon.army-mg",
+      "weapon.rocket-launcher"
+    ],
+    "weaponsEnd": [
+      "weapon.fire-axe",
+      "weapon.pistol",
+      "weapon.shotgun",
+      "weapon.army-mg",
+      "weapon.rocket-launcher"
+    ],
+    "steps": [
+      {
+        "id": "dispersal-complex",
+        "text": "Bring the cure to the dispersal complex · 761 m",
+        "tick": 9,
+        "marker": {
+          "anchor": "cure-complex",
+          "ring": {
+            "x": 3697,
+            "y": 0,
+            "z": -25
+          },
+          "drawn": [
+            3697,
+            0,
+            -25
+          ],
+          "playerY": 0.7049999833106995,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "install",
+        "text": "Install the cure in the dispersal device · 311 m",
+        "tick": 11962,
+        "marker": {
+          "anchor": "cure-install",
+          "ring": {
+            "x": 4006.5,
+            "y": 0,
+            "z": -39
+          },
+          "drawn": [
+            4006.5,
+            0,
+            -39
+          ],
+          "playerY": 0.7200000286102295,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "hold",
+        "text": "Activate the dispersal console · 13 m",
+        "tick": 16380,
+        "marker": {
+          "anchor": "cure-console",
+          "ring": {
+            "x": 4002,
+            "y": 0,
+            "z": -27
+          },
+          "drawn": [
+            4002,
+            0,
+            -27
+          ],
+          "playerY": 0.7200000286102295,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "mega",
+        "text": "Kill the Mega Alpha · 1378 m",
+        "tick": 20180,
+        "marker": {
+          "anchor": "cure-mega",
+          "ring": {
+            "x": 2623.267499997645,
+            "y": 0.7,
+            "z": 45
+          },
+          "drawn": [
+            3959.12,
+            0.7,
+            -21.13
+          ],
+          "playerY": 0.7099999785423279,
+          "pinVisible": true
+        }
+      }
+    ]
+  }
+]

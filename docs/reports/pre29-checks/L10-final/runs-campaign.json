@@ -1,0 +1,108 @@
+[
+  {
+    "level": "L10",
+    "entry": "debug",
+    "heroine": "female",
+    "finished": false,
+    "skipped": [],
+    "wallSeconds": 480,
+    "simSeconds": 476,
+    "maxNoProgressSeconds": 2.033333333333333,
+    "deaths": 0,
+    "assists": 0,
+    "attacks": {},
+    "weaponsStart": [
+      "weapon.fire-axe",
+      "weapon.fire-axe"
+    ],
+    "weaponsEnd": [
+      "weapon.fire-axe",
+      "weapon.fire-axe",
+      "weapon.pistol",
+      "weapon.shotgun",
+      "weapon.army-mg"
+    ],
+    "steps": [
+      {
+        "id": "residential-fringe",
+        "text": "Recover the handgun at the checkpoint · 221 m",
+        "tick": 5,
+        "marker": {
+          "anchor": "cure-residential",
+          "ring": {
+            "x": 767,
+            "y": 0,
+            "z": 25
+          },
+          "drawn": [
+            767,
+            0,
+            25
+          ],
+          "playerY": 0.7049999833106995,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "industrial-area",
+        "text": "Recover the shotgun at the checkpoint · 490 m",
+        "tick": 3344,
+        "marker": {
+          "anchor": "cure-industrial",
+          "ring": {
+            "x": 1257,
+            "y": 0,
+            "z": 25
+          },
+          "drawn": [
+            1257,
+            0,
+            25
+          ],
+          "playerY": 0.7200000286102295,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "military-zone",
+        "text": "Recover the machine gun at the checkpoint · 600 m",
+        "tick": 10912,
+        "marker": {
+          "anchor": "cure-military",
+          "ring": {
+            "x": 1857,
+            "y": 0,
+            "z": 25
+          },
+          "drawn": [
+            1857,
+            0,
+            25
+          ],
+          "playerY": 0.7200000286102295,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "research-campus",
+        "text": "Reach the research campus · 611 m",
+        "tick": 19341,
+        "marker": {
+          "anchor": "cure-research-entry",
+          "ring": {
+            "x": 2467,
+            "y": 0,
+            "z": -5
+          },
+          "drawn": [
+            2467,
+            0,
+            -5
+          ],
+          "playerY": 0.7200000286102295,
+          "pinVisible": true
+        }
+      }
+    ]
+  }
+]

@@ -1,42 +1,56 @@
 {
-  "runtimeRevision": "28e7c1a8a167a2cd600f882c6ecaae63d2fe1ba8",
-  "sourceTree": "bb728ded946186581334d348c7875b3aba9174e3",
-  "publicTree": "a5899461e2f8bc339ee2b8d52da242299b129142",
+  "runtimeRevision": "01535155b91dc7e67ec323319ff9c02ea766a848",
+  "runtimeTrees": {
+    "src": "193382c866302b404b478545a09f7e21809c93c9",
+    "public": "2c3039716bcb67e169000c7d99e775c18b5dff2d"
+  },
+  "driverRevision": "78b270a5835fa72a3dbd0b714dc0d55d9f606939",
+  "driverFilesSha256": {
+    "tools/playtest/session.ts": "5fa1f8e6001f9f8774a2ad3bd9074307477a0837891a218c39454f06b7b114ec",
+    "tools/playtest/combat.ts": "d4c736903abda87dbab24ff2126a97ebb58a9546ba0ee6ac66ba3d8e5e2cdfad"
+  },
   "backend": "webgpu",
   "quality": "low",
   "zoom": 1.5,
   "frameGateMs": 200,
-  "commands": [
-    "PLAYTEST_BACKEND=webgpu PLAYTEST_FRAME_GATE=1 E2E_PORT=4193 node --import tsx tools/playtest/play.ts --levels L8 --entry debug --quality low --zoom 1.5 --no-skip --session-seconds 480 --level-minutes 30 --out test-results/pre29-checks/L8",
-    "PLAYTEST_BACKEND=webgpu PLAYTEST_FRAME_GATE=1 E2E_PORT=4193 node --import tsx tools/playtest/play.ts --levels L10 --entry debug --quality low --zoom 1.5 --no-skip --session-seconds 480 --level-minutes 60 --out test-results/pre29-checks/L10"
-  ],
-  "method": "Full real keyboard/mouse runs from the level menu. L10 releases its pool lease every eight minutes and resumes the ordinary checkpoint through the menu. No god mode, skips, teleports, equipment or mission-state writes.",
+  "method": "Full physical keyboard/mouse play from the level menu. No skipped objectives, god mode, teleports or world-state writes. Eight-minute pool segments resume ordinary checkpoints through the menu.",
   "rows": [
     {
       "level": "L8",
+      "evidence": "L8-render-final",
       "finished": true,
       "segments": 1,
-      "wallSeconds": 94,
-      "skips": [],
+      "wallSeconds": 95,
       "deaths": 0,
-      "issues": 0,
+      "skips": [],
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
       "gameplayFramesOver200": [],
-      "steps": [
+      "observedSteps": [
         "escape",
         "depart"
       ]
     },
     {
       "level": "L10",
+      "evidence": "L10-final",
       "finished": true,
-      "segments": 4,
-      "wallSeconds": 1611,
+      "segments": 5,
+      "wallSeconds": 2138,
+      "deaths": 33,
       "skips": [],
-      "deaths": 0,
-      "issues": 0,
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 2,
+        "P3": 0
+      },
       "gameplayFramesOver200": [],
-      "steps": [
-        "crash",
+      "observedSteps": [
         "residential-fringe",
         "industrial-area",
         "military-zone",
@@ -55,6 +69,24 @@
       ]
     }
   ],
+  "completedObjectives": [
+    "crash",
+    "residential-fringe",
+    "industrial-area",
+    "military-zone",
+    "research-campus",
+    "research",
+    "cure",
+    "research-exit",
+    "destroyed-corridor",
+    "dispersal-complex",
+    "install",
+    "hold",
+    "mega",
+    "release",
+    "epilogue",
+    "credits"
+  ],
   "endingStates": {
     "charge-active": true,
     "console-held": true,
@@ -68,12 +100,15 @@
     "credits-finished": true,
     "anchor-unavailable": false
   },
+  "notes": [
+    "The crash objective completed automatically at tick 1 before the first polling observation; final mission truth proves all 16 objectives completed.",
+    "Death counts use the terminal mission total, because finishLevel replaces its local counter with that cumulative value. Summing segment counters would double-count deaths.",
+    "L10 had 33 checkpoint deaths before the driver resume fix and two retained P2 enemy-unhittable diagnostics. Segment 5 retained the mandatory target, reset restored-HP observations, and allowed free retreat without a remembered console; it completed with no issues. No navigation or dressing-route blocker was reported."
+  ],
   "validation": [
     "npm run typecheck: pass",
     "npm run lint: pass",
-    "npm run test:unit: 104/104 passed"
+    "npm run test:unit: 105/105 passed"
   ],
-  "finalL8Evidence": "L8-final/summary.json",
-  "finalL8FrameGateEvidence": "L8-final/campaign-frames.json",
-  "L10UnaffectedByFix": "No runtime source or L10 asset changes; L8 JSON decoded data and GLB binary are unchanged. See delivery-proof.json."
+  "loadStatus": "Final quiet paired A/B pending"
 }

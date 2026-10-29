@@ -1,0 +1,97 @@
+[
+  {
+    "level": "L10",
+    "entry": "continue",
+    "heroine": "female",
+    "finished": true,
+    "skipped": [],
+    "wallSeconds": 218,
+    "simSeconds": 214,
+    "maxNoProgressSeconds": 147.497,
+    "deaths": 33,
+    "assists": 0,
+    "attacks": {
+      "weapon.rocket-launcher": 30
+    },
+    "weaponsStart": [
+      "weapon.fire-axe",
+      "weapon.pistol",
+      "weapon.shotgun",
+      "weapon.army-mg",
+      "weapon.rocket-launcher"
+    ],
+    "weaponsEnd": [
+      "weapon.fire-axe",
+      "weapon.pistol",
+      "weapon.shotgun",
+      "weapon.army-mg",
+      "weapon.rocket-launcher"
+    ],
+    "steps": [
+      {
+        "id": "mega",
+        "text": "Kill the Mega Alpha · 1378 m",
+        "tick": 7,
+        "marker": {
+          "anchor": "cure-mega",
+          "ring": {
+            "x": 2623.5299999976437,
+            "y": 0.7,
+            "z": 45
+          },
+          "drawn": [
+            2624.47,
+            0.7,
+            45
+          ],
+          "playerY": 0.7049999833106995,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "release",
+        "text": "Release the cure at the console · 23 m",
+        "tick": 2369,
+        "marker": {
+          "anchor": "cure-console",
+          "ring": {
+            "x": 4002,
+            "y": 0,
+            "z": -27
+          },
+          "drawn": [
+            4002,
+            0,
+            -27
+          ],
+          "playerY": 1.0199999809265137,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "epilogue",
+        "text": "Watch the cure spread",
+        "tick": 2930,
+        "marker": {
+          "anchor": "cure-console",
+          "ring": null,
+          "drawn": null,
+          "playerY": 0.7049999833106995,
+          "pinVisible": false
+        }
+      },
+      {
+        "id": "credits",
+        "text": "Minor Incident",
+        "tick": 11895,
+        "marker": {
+          "anchor": "cure-console",
+          "ring": null,
+          "drawn": null,
+          "playerY": 0.7049999833106995,
+          "pinVisible": false
+        }
+      }
+    ]
+  }
+]
