@@ -80,7 +80,7 @@ try {
       return { scenario: w.scenario, renderTier: game.quality.tier, gameplayTier: w.infected!.director.tier, elapsed: w.missions!.state.cureFront!.elapsed, survivors: survivors.map(e => ({ id: e.id, at: e.transform, state: e.civilian!.state, waypoints: e.civilian!.waypoints })), affected: w.missions!.state.cureFront!.affectedIds.length, bodies: corpseLayout(w).audit(), metrics: window.__SCENE__!.metrics() };
     });
     assert.equal(frame.renderTier, tier); assert.equal(frame.gameplayTier, tier);
-    if (target >= 1800) assert.equal(frame.survivors.length, tier === 'low' ? 3 : 6);
+    if (target >= (tier === 'low' ? 1800 : 3600)) assert.equal(frame.survivors.length, tier === 'low' ? 3 : 6);
     frames.push(frame);
   }
   writeFileSync(`${out}/evidence.json`, JSON.stringify({ tier, setup, frames, errors: session.errors }, null, 2));

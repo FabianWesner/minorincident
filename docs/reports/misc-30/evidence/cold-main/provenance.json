@@ -1,0 +1,62 @@
+{
+  "mainRevision": "1eb327524e1ad3dd1d7fdcfe0b039fed5b35b4b3",
+  "toolRevision": "8b9e88897",
+  "method": "Exclusive quiet-run; fresh pooled Chrome process/profile and unique empty disk cache per first L10 load; headless native Metal WebGPU low; real menu click to loading-card closure; zero menu wait; no trace instrumentation",
+  "samplesMs": [
+    4960.5,
+    4877.89999961853,
+    4844.699999809265,
+    4844.10000038147,
+    4945.89999961853
+  ],
+  "interruptedSampleMs": 4893.199999809265,
+  "events": [
+    {
+      "at": "2026-10-29T19:34:28.157Z",
+      "kind": "exclusive-granted",
+      "id": "b186db34-2e62-4d5e-8110-3ec811ae33c8",
+      "job": "misc-30",
+      "waitMs": 3614
+    },
+    {
+      "at": "2026-10-29T19:34:39.231Z",
+      "kind": "browser-start",
+      "backend": "gpu",
+      "pid": 38887,
+      "channel": "headless-shell"
+    },
+    {
+      "at": "2026-10-29T19:34:55.688Z",
+      "kind": "browser-start",
+      "backend": "gpu",
+      "pid": 39247,
+      "channel": "headless-shell"
+    },
+    {
+      "at": "2026-10-29T19:35:12.074Z",
+      "kind": "browser-start",
+      "backend": "gpu",
+      "pid": 39438,
+      "channel": "headless-shell"
+    },
+    {
+      "at": "2026-10-29T19:35:28.422Z",
+      "kind": "browser-start",
+      "backend": "gpu",
+      "pid": 39589,
+      "channel": "headless-shell"
+    },
+    {
+      "at": "2026-10-29T19:35:44.755Z",
+      "kind": "browser-start",
+      "backend": "gpu",
+      "pid": 39774,
+      "channel": "headless-shell"
+    },
+    {
+      "at": "2026-10-29T19:35:51.111Z",
+      "kind": "browsers-released",
+      "reason": "exclusive-finished"
+    }
+  ]
+}
