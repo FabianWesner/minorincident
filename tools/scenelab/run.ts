@@ -52,6 +52,19 @@ export async function measureCut(session: SceneSession) {
   return { outside, inside, strength: hole.strength, cover: hole.cover, occluder: hole.occluder };
 }
 
+/** The courier ID pass marks only her body, without directional or contact shadows. */
+export function courierBodyPixels(all: PNG, hidden: PNG, clear: PNG, empty: PNG, mask: PNG) {
+  const body = (i: number) => mask.data[i] > 200 && mask.data[i + 1] < 60 && mask.data[i + 2] > 200;
+  let hasBody = false;
+  for (let i = 0; i < mask.data.length; i += 4) if (body(i)) { hasBody = true; break; }
+  let visible = 0, reference = 0;
+  for (let i = 0; i < clear.data.length; i += 4) {
+    if (hasBody ? !body(i) : !changedPixel(clear, empty, i)) continue;
+    reference++; if (changedPixel(all, hidden, i)) visible++;
+  }
+  return { visible, reference };
+}
+
 /** Same-frame redraws: courier visible share against her unobstructed silhouette; boss bodies compared with the courier hidden,
  * outside her intended reveal disc. No sim step, so pose and the boss hole's dither pattern stay identical. */
 export async function measureCourierShare(session: SceneSession, compareAlpha = false) {
@@ -65,13 +78,18 @@ export async function measureCourierShare(session: SceneSession, compareAlpha = 
   };
   const all = await shot(false, false), noCourier = await shot(true, false), clear = await shot(false, true, true), none = await shot(true, true, true);
   const noBodies = await shot(true, true);
-  await session.page.evaluate(() => window.__SCENE__!.hideProbe(false, false));
-  // Count visible pixels only inside the unobstructed subject silhouette: ground shadows and HUD changes are not body pixels.
-  let visible = 0, reference = 0;
-  for (let i = 0; i < clear.png.data.length; i += 4) {
-    if (!changedPixel(clear.png, none.png, i)) continue;
-    reference++; if (changedPixel(all.png, noCourier.png, i)) visible++;
+  // The colour-difference reference includes the courier's cast shadow. Restrict it
+  // to her existing shadow-free ID mask; keep normal colour visibility and its
+  // threshold. A driven vehicle has no courier ID pixels and keeps its reference.
+  let mask: PNG;
+  try {
+    await session.page.evaluate(() => window.__SS__!.settings.set({ idPass: true }));
+    mask = (await shot(false, true, true)).png;
+  } finally {
+    await session.page.evaluate(() => { window.__SS__!.settings.set({ idPass: false }); window.__SCENE__!.hideProbe(false, false); });
+    await session.ready();
   }
+  const { visible, reference } = courierBodyPixels(all.png, noCourier.png, clear.png, none.png, mask);
   const mega = bodyPixels(noCourier.png, noBodies.png, hole);
   // The old viewport-area minimum forced the boss to be wider than the PO allows.
   // Compare identical camera distance, pose and lighting instead; never enlarge the asset to pass.
