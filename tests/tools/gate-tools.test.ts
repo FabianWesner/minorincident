@@ -125,6 +125,17 @@ test('scene gate rejects invalid arguments and empty selections before running c
   f.select([]); expect(f.run().status, 'empty selection').not.toBe(0);
 });
 
+test('catalog list flushes the full matrix when stdout is piped to the gate runner', () => {
+  const output = execFileSync(process.execPath, ['--import', resolve('node_modules/tsx/dist/loader.mjs'),
+    resolve('tools/scenelab/catalog.ts'), '--matrix', '--list'], { encoding: 'utf8', maxBuffer: 1 << 26 });
+  expect(Buffer.byteLength(output)).toBeGreaterThan(65_536);
+  expect(output.endsWith('\n')).toBe(true);
+  const rows = output.trimEnd().split('\n');
+  expect(rows.every(row => /@(?:high|low)(?:-z[\d.]+)?$/.test(row))).toBe(true);
+  // The final authored scene must survive the subprocess's immediate exit.
+  expect(rows).toContain('world-fill-l9-road@low-z0.5');
+});
+
 function buildCacheFixture() {
   const root = mkdtempSync(join(tmpdir(), 'mi-build-cache-')); dirs.push(root);
   for (const dir of ['tools/qa', 'node_modules/.bin', 'dist']) mkdirSync(join(root, dir), { recursive: true });

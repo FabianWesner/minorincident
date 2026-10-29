@@ -44,7 +44,12 @@ if (only) {
   for (let i = entries.length - 1; i >= 0; i--) if (!only.includes(entries[i].name)) entries.splice(i, 1);
 }
 if (!entries.length) { console.error(`no catalog scene matches ${flag('filter')}; names: ${dirs.flatMap(dir => readdirSync(dir).filter(f => f.endsWith('.json')).map(f => basename(f, '.json'))).join(' ')}`); process.exit(2); }
-if (args.includes('--list')) { console.log(entries.map(e => e.name).join('\n')); process.exit(0); }
+// The full matrix exceeds a pipe buffer. Wait for stdout before exiting so
+// gate-run never receives a truncated final scene name from this subprocess.
+if (args.includes('--list')) {
+  await new Promise<void>((done, reject) => process.stdout.write(entries.map(e => e.name).join('\n') + '\n', error => error ? reject(error) : done()));
+  process.exit(0);
+}
 
 type Row = { name: string; file: string; pass: boolean; seconds: number; frames: number; gates: string; failed: string[]; sheet?: string; sheetKb?: number; error?: string; errors: number; note?: string; requestedTier?: string; actualTier?: string };
 const rows: Row[] = [], started = Date.now();
