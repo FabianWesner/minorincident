@@ -100,6 +100,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   if (webgpu && backend !== 'webgpu') throw new Error(`WebGPU playtest requested but renderer selected ${backend}`);
   log({ renderer: backend });
   const cpu = process.env.PLAYTEST_CPU_PROFILE === '1' ? await context.newCDPSession(page) : null;
+  const shaderGuard = process.env.PLAYTEST_SHADER_GUARD === '1';
   let cpuStartedAt = 0, cpuNavigationStartMs: number | undefined;
   if (cpu) {
     await cpu.send('Performance.enable');
@@ -107,6 +108,9 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     const { metrics } = await cpu.send('Performance.getMetrics');
     const navigationStart = metrics.find(metric => metric.name === 'NavigationStart');
     if (navigationStart) cpuNavigationStartMs = navigationStart.value * 1000;
+  }
+  // Shader acceptance can record builds without the CPU profiler's timing overhead.
+  if (cpu || shaderGuard) {
     cpuStartedAt = await page.evaluate(() => {
       const g = (window.__SCENE__ as unknown as { game: Game }).game, previous = g.input.tap;
       const clicks: unknown[] = [], builds: unknown[] = [], inputs: unknown[] = [];
@@ -119,7 +123,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         const draw = object as unknown as { object: import('three/webgpu').Mesh; material: import('three/webgpu').Material };
         const path: string[] = []; let asset: string | undefined;
         for (let node: import('three/webgpu').Object3D | null = draw.object; node; node = node.parent) { path.push(node.name || node.type); asset ??= node.userData.assetId; }
-        builds.push({ at: performance.now(), tick: g.world.tick, asset, path, material: draw.material.name });
+        const card = document.querySelector<HTMLElement>('[data-testid=level-transition]');
+        builds.push({ at: performance.now(), tick: g.world.tick, level: g.world.scenario, phase: g.world.missions?.state.phase, loading: (g as unknown as { loading: boolean }).loading || !!(card && !card.hidden), asset, path, material: draw.material.name });
       };
       g.input.tap = (frame, scheme) => {
         previous?.(frame, scheme);
@@ -940,6 +945,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     const cpuEndedAt = await page.evaluate(() => performance.now());
     const { profile } = await cpu.send('Profiler.stop');
     writeFileSync(join(o.out, `${o.tag}.cpuprofile`), JSON.stringify({ ...profile, performanceStartedAt: cpuStartedAt, performanceEndedAt: cpuEndedAt, performanceNavigationStartMs: cpuNavigationStartMs })); await cpu.detach();
+  }
+  if (cpu || shaderGuard) {
     writeFileSync(join(o.out, `${o.tag}-clicks.json`), JSON.stringify(await page.evaluate(() => (window as unknown as { __playtestClicks: unknown[] }).__playtestClicks), null, 2));
     writeFileSync(join(o.out, `${o.tag}-builds.json`), JSON.stringify(await page.evaluate(() => (window as unknown as { __playtestBuilds: unknown[] }).__playtestBuilds), null, 2));
     writeFileSync(join(o.out, `${o.tag}-inputs.json`), JSON.stringify(await page.evaluate(() => (window as unknown as { __playtestInputs: unknown[] }).__playtestInputs)));
@@ -952,6 +959,10 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     backend: window.__SS__!.getState().render.backend, quality: window.__SS__!.getState().render.quality, camera: window.__SS__!.getState().render.camera,
   })), null, 2));
   if (process.env.PLAYTEST_FRAME_GATE === '1') assert.deepEqual(longFrames.filter(f => f.playMs > 200 && f.level && o.levels.includes(f.level)), [], 'No gameplay frame may exceed 200 ms');
+  if (shaderGuard) {
+    const builds = await page.evaluate(() => (window as unknown as { __playtestBuilds: { level: string; phase: string; loading: boolean }[] }).__playtestBuilds);
+    assert.deepEqual(builds.filter(b => o.levels.includes(b.level) && b.phase === 'playing' && !b.loading), [], 'No node builds after level warm-up');
+  }
   assert.ok(handoverReady,'L8 objective, destination pin and minimap marker must appear within 2 s of control returning');
   return { runs, issues };
   } finally {
