@@ -1,6 +1,7 @@
 import { infectedDefinitions } from '../../data/infected';
 import { isWorldTier } from '../../levels/districts/types';
 import { vehicleDecayFallback } from '../../assets/vehicleDecay';
+import { districtDecor } from '../../levels/decor';
 import type { TimeOfDay } from '../../data/timeOfDay';
 import type { DistrictGameplay, DistrictId, DistrictLayout, LevelComposition, Placement, Point, Tier } from '../../levels/districts/types';
 import type { AssetDef } from '../../assets/types';
@@ -452,6 +453,10 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
   const playerStart: Point = start ? [start[0] + shift[0], start[2] + shift[1]] : courier?.at ? [courier.at[0], courier.at[1]] : [x1 - 2, z1 - 2];
   const district: DistrictId = spec.layout?.district ?? 'D-GROVE';
   const solid = kept.filter(p => assets.get(p.assetId)?.world?.solid);
+  // look-l6-l9 render-only decor (DistrictWorld skips Scene Lab layouts): the same pieces as the game, cropped and shifted like the layout.
+  if (source && spec.layout) for (const p of districtDecor(source.district, source.placements)) if (!spec.layout.ids && !spec.layout.assets && (!bbox || p.position[0] >= Math.min(bbox[0][0], bbox[1][0]) && p.position[0] <= Math.max(bbox[0][0], bbox[1][0]) && p.position[2] >= Math.min(bbox[0][1], bbox[1][1]) && p.position[2] <= Math.max(bbox[0][1], bbox[1][1]))) {
+    const q = structuredClone(p); q.position[0] += shift[0]; q.position[2] += shift[1]; for (const k of ['min', 'max'] as const) { q.visualAabb[k][0] += shift[0]; q.visualAabb[k][2] += shift[1]; } kept.push(q);
+  }
   const layout: DistrictLayout = {
     version: 1, district, title: `Scene Lab: ${spec.name ?? 'scene'}`, geometryHash: 'scene-lab', bounds,
     roads: { nodes: [], edges: [] }, placements: kept, anchors: {}, zones: {}, buildings: [],

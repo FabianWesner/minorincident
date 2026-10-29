@@ -106,3 +106,18 @@ test('explosions: every class follows its damage curve, full cover shields, rail
   expect(fires().length).toBeGreaterThan(0);
   step(f, 18 * 30 + 30 * 60 + 2); expect(fires()).toHaveLength(0);
 });
+
+test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables match the layout without it, a re-preparation adds none, L9 has none', async () => {
+  const { DistrictWorld } = await import('../../src/sim/world/DistrictWorld');
+  const { compositions } = await import('../../src/levels/compositions');
+  const { districtDecor } = await import('../../src/levels/decor');
+  const layout = (await import('../../public/assets/layouts/D-SUBWAY.layout.json')).default;
+  const build = (skip: boolean) => { const copy = structuredClone(layout) as unknown as { geometryHash: string }; if (skip) copy.geometryHash = 'scene-lab'; return new DistrictWorld(compositions.L6, [copy as never], 1); };
+  const plain = build(true), dressed = build(false), d = dressed.districts[0], p = plain.districts[0];
+  expect(d.decay.placements.filter(q => q.decor).length).toBeGreaterThan(60);
+  expect(dressed.nav.hash).toBe(plain.nav.hash);
+  expect(d.decay.colliders).toEqual(p.decay.colliders);
+  expect(d.pushables.map(q => q.id)).toEqual(p.pushables.map(q => q.id));
+  expect(new DistrictWorld(compositions.L6, dressed.districts.map(x => x.layout), 1).districts[0].decay.placements.length).toBe(d.decay.placements.length);
+  expect(districtDecor('D-CROSSING', [])).toEqual([]);
+});

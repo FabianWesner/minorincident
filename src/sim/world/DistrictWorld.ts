@@ -1,5 +1,6 @@
 import { wreckRoofHeight } from '../../levels/districts/wreckRoofHeight';
 import { closeBarrierJoints } from '../../levels/barrierJoints';
+import { districtDecor } from '../../levels/decor';
 import { l4BreakableLine } from '../../levels/L4/layout';
 import { isWorldTier } from '../../levels/districts/types';
 import type {
@@ -61,7 +62,8 @@ export class DistrictWorld {
     this.districts = composition.districts.map((d) => {
       const source = layouts.find((l) => l.district === d.id);
       if (!source) throw new Error(`Missing layout: ${d.id}`);
-      const layout = { ...source, placements: closeBarrierJoints(source.placements) };
+      // look-l6-l9: render-only decor joins the placements (no collider, pushable or nav footprint; Scene Lab adds its own crop).
+      const layout = { ...source, placements: [...closeBarrierJoints(source.placements), ...(source.geometryHash === 'scene-lab' || source.placements.some(p => p.decor) ? [] : districtDecor(source.district, source.placements))] };
       const gameplay = { ...(d.gameplay ?? districtGameplay[d.id]), ...d.overrides };
       if (gameplay.decay.some(layer => !isWorldTier(layer.tier))) throw new RangeError(`Invalid gameplay decay tier: ${d.id}`);
       const decay = resolveDecay(layout, composition.tier),
@@ -74,7 +76,7 @@ export class DistrictWorld {
         decay.colliders = decay.colliders.filter(c => !replaced.has(c.id.split('/')[0]));
       }
       // Pushable props are dynamic bodies (PropSystem): no static collider, no nav-grid footprint.
-      const pushables = decay.placements.filter((p) => pushableProps[p.assetId]);
+      const pushables = decay.placements.filter((p) => pushableProps[p.assetId] && !p.decor);
       const pushed = new Set(pushables.map((p) => p.id));
       decay.colliders = placementColliders(decay.placements, decay.colliders).filter((c) => !pushed.has(c.id.split("/")[0]));
       const off = new Set(gameplayLayers.flatMap((l) => l.powerOut));

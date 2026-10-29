@@ -46,6 +46,8 @@ export interface Placement extends PlacementTransform {
   navBlocker?: boolean;
   /** Set dressing (L10): its light anchors render (pools, emissives) but are not sim lamps, so infected sight and the sim cost stay unchanged. */
   decorLights?: boolean;
+  /** Render-only decor (look-l6-l9, src/levels/decor.ts): drawn, but no collider, pushable body or nav footprint. */
+  decor?: boolean;
   /** Road-life dressing (L10): its night light points are drawn by NightAccents.cureAccents. */
   roadLife?: boolean;
   /** Field dressing (L10 look-l10-l8-2): `camp` lights a campfire at `fireAt` and a lantern, `wreckfire` keeps the wreck burning; drawn by NightAccents.cureAccents. */
