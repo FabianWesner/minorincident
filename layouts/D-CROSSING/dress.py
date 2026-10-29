@@ -1090,11 +1090,14 @@ for i, p in enumerate(l.data['placements']):
         crown = (b['min'][0] + mx, b['min'][2] + mz, b['max'][0] - mx, b['max'][2] - mz)
         if any(box_gap(crown, (a['min'][0], a['min'][2], a['max'][0], a['max'][2])) < 0 for a in solids):
             drop.append(i)
-    elif p['assetId'] == 'prop.pallet':
+    elif p['assetId'] in ('prop.pallet', 'prop.street-lamp'):
         # Q-231: unlike the route and detour centre lines, the driveable bypass
         # between them is also part of the APC's swept footprint. The pallets at
         # (48.76,-21.04) and (50.58,-21.26) visually touch its rear on the Q-221
         # run, so keep their full footprints out of the same corridor as trees.
+        # Q-239: the pole at (185.15, -21.81) also sits in this bypass strip.
+        # Steering off the shortcut can trap the APC between it and the shrubs;
+        # keep fixed lamps out of the driveable strip on every route as well.
         b = p['visualAabb']
         if any(lane_hit((b['min'][0], b['min'][2], b['max'][0], b['max'][2]), a, c, clearance)
                for a, c, clearance in bypass_corridors):
