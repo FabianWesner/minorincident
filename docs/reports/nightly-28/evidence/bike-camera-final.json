@@ -1,0 +1,2960 @@
+[
+  {
+    "row": "seethrough-bike-ride@low-z0.5",
+    "pass": false,
+    "checks": {
+      "pass": false,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.977,
+          "limit": 0.6
+        },
+        {
+          "name": "courierShareSampled",
+          "pass": true,
+          "value": 22,
+          "limit": 1
+        },
+        {
+          "name": "seeThroughCutPixelsOutside",
+          "pass": false,
+          "value": 65229,
+          "limit": 0
+        },
+        {
+          "name": "canvas.f0.varianceMin",
+          "pass": true,
+          "value": 6763.544682041556,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f0.variedTilesMin",
+          "pass": true,
+          "value": 62,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f30.varianceMin",
+          "pass": true,
+          "value": 4559.9809944314475,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f30.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f60.varianceMin",
+          "pass": true,
+          "value": 3909.8310724906187,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f60.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f90.varianceMin",
+          "pass": true,
+          "value": 3865.6595980318707,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f90.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f120.varianceMin",
+          "pass": true,
+          "value": 3898.29302694901,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f120.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f150.varianceMin",
+          "pass": true,
+          "value": 3681.732687590793,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f150.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f180.varianceMin",
+          "pass": true,
+          "value": 3337.0193609819726,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f180.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f210.varianceMin",
+          "pass": true,
+          "value": 2671.178297841885,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f210.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f240.varianceMin",
+          "pass": true,
+          "value": 2385.830173822098,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f240.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f270.varianceMin",
+          "pass": true,
+          "value": 2493.0041813223434,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f270.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f300.varianceMin",
+          "pass": true,
+          "value": 2576.740667454167,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f300.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f330.varianceMin",
+          "pass": true,
+          "value": 2835.1792374192664,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f330.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f360.varianceMin",
+          "pass": true,
+          "value": 3613.4010260279756,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f360.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f390.varianceMin",
+          "pass": true,
+          "value": 3965.7545567915367,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f390.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f420.varianceMin",
+          "pass": true,
+          "value": 3709.74863123041,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f420.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f450.varianceMin",
+          "pass": true,
+          "value": 3307.5352098990115,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f450.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f480.varianceMin",
+          "pass": true,
+          "value": 3137.7348122583353,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f480.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f510.varianceMin",
+          "pass": true,
+          "value": 3257.4630819612867,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f510.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f540.varianceMin",
+          "pass": true,
+          "value": 2733.6338849772837,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f540.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f570.varianceMin",
+          "pass": true,
+          "value": 2638.757848117053,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f570.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f600.varianceMin",
+          "pass": true,
+          "value": 2610.3815698811486,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f600.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f620.varianceMin",
+          "pass": true,
+          "value": 2587.9526999244154,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f620.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    "cut": [
+      {
+        "frame": 0,
+        "outside": 65229,
+        "inside": 30586,
+        "strength": 1,
+        "cover": 1,
+        "occluder": "bld.cafe-corner@-72.7,15.8"
+      },
+      {
+        "frame": 30,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 60,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 90,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 120,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 150,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 180,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 210,
+        "outside": 0,
+        "inside": 16306,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,12.0"
+      },
+      {
+        "frame": 240,
+        "outside": 0,
+        "inside": 36080,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,12.0"
+      },
+      {
+        "frame": 270,
+        "outside": 0,
+        "inside": 34959,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,12.0"
+      },
+      {
+        "frame": 300,
+        "outside": 0,
+        "inside": 31044,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,12.0"
+      },
+      {
+        "frame": 330,
+        "outside": 0,
+        "inside": 21100,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,9.1"
+      },
+      {
+        "frame": 360,
+        "outside": 0,
+        "inside": 34915,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,9.1"
+      },
+      {
+        "frame": 390,
+        "outside": 0,
+        "inside": 22869,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,6.1"
+      },
+      {
+        "frame": 420,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 450,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 480,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 510,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 540,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 570,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 600,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 620,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      }
+    ]
+  },
+  {
+    "row": "seethrough-bike-ride@high-z0.5",
+    "pass": false,
+    "checks": {
+      "pass": false,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.977,
+          "limit": 0.6
+        },
+        {
+          "name": "courierShareSampled",
+          "pass": true,
+          "value": 22,
+          "limit": 1
+        },
+        {
+          "name": "seeThroughCutPixelsOutside",
+          "pass": false,
+          "value": 65104,
+          "limit": 0
+        },
+        {
+          "name": "canvas.f0.varianceMin",
+          "pass": true,
+          "value": 6836.060379993265,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f0.variedTilesMin",
+          "pass": true,
+          "value": 62,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f30.varianceMin",
+          "pass": true,
+          "value": 4567.868501953566,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f30.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f60.varianceMin",
+          "pass": true,
+          "value": 3929.4781070011086,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f60.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f90.varianceMin",
+          "pass": true,
+          "value": 3892.909242225902,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f90.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f120.varianceMin",
+          "pass": true,
+          "value": 3911.4377160001713,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f120.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f150.varianceMin",
+          "pass": true,
+          "value": 3685.372096304738,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f150.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f180.varianceMin",
+          "pass": true,
+          "value": 3404.332663090481,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f180.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f210.varianceMin",
+          "pass": true,
+          "value": 3449.9539257556135,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f210.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f240.varianceMin",
+          "pass": true,
+          "value": 3153.7638858479586,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f240.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f270.varianceMin",
+          "pass": true,
+          "value": 3256.2621494839877,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f270.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f300.varianceMin",
+          "pass": true,
+          "value": 3332.4048788129803,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f300.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f330.varianceMin",
+          "pass": true,
+          "value": 3736.750122136491,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f330.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f360.varianceMin",
+          "pass": true,
+          "value": 4271.419611030142,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f360.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f390.varianceMin",
+          "pass": true,
+          "value": 4558.595465568022,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f390.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f420.varianceMin",
+          "pass": true,
+          "value": 4104.500427369974,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f420.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f450.varianceMin",
+          "pass": true,
+          "value": 3562.650310168028,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f450.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f480.varianceMin",
+          "pass": true,
+          "value": 3271.047572910109,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f480.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f510.varianceMin",
+          "pass": true,
+          "value": 3299.0855424922083,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f510.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f540.varianceMin",
+          "pass": true,
+          "value": 2774.564054396942,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f540.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f570.varianceMin",
+          "pass": true,
+          "value": 2679.1246134805697,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f570.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f600.varianceMin",
+          "pass": true,
+          "value": 2651.8729243183807,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f600.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f620.varianceMin",
+          "pass": true,
+          "value": 2627.5763146960307,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f620.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    "cut": [
+      {
+        "frame": 0,
+        "outside": 65104,
+        "inside": 30543,
+        "strength": 1,
+        "cover": 1,
+        "occluder": "bld.cafe-corner@-72.7,15.8"
+      },
+      {
+        "frame": 30,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 60,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 90,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 120,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 150,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 180,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 210,
+        "outside": 0,
+        "inside": 15956,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,12.0"
+      },
+      {
+        "frame": 240,
+        "outside": 0,
+        "inside": 35338,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,12.0"
+      },
+      {
+        "frame": 270,
+        "outside": 0,
+        "inside": 34303,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,12.0"
+      },
+      {
+        "frame": 300,
+        "outside": 0,
+        "inside": 30341,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,12.0"
+      },
+      {
+        "frame": 330,
+        "outside": 0,
+        "inside": 35693,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,9.1"
+      },
+      {
+        "frame": 360,
+        "outside": 0,
+        "inside": 34524,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,9.1"
+      },
+      {
+        "frame": 390,
+        "outside": 0,
+        "inside": 22815,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,6.1"
+      },
+      {
+        "frame": 420,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 450,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 480,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 510,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 540,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 570,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 600,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 620,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      }
+    ]
+  },
+  {
+    "row": "seethrough-bike-ride@low-z1",
+    "pass": true,
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.976,
+          "limit": 0.6
+        },
+        {
+          "name": "courierShareSampled",
+          "pass": true,
+          "value": 22,
+          "limit": 1
+        },
+        {
+          "name": "seeThroughCutPixelsOutside",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "canvas.f0.varianceMin",
+          "pass": true,
+          "value": 4076.2569092006124,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f0.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f30.varianceMin",
+          "pass": true,
+          "value": 3926.9811016428393,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f30.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f60.varianceMin",
+          "pass": true,
+          "value": 3746.9166925474856,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f60.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f90.varianceMin",
+          "pass": true,
+          "value": 3750.8531832838016,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f90.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f120.varianceMin",
+          "pass": true,
+          "value": 3771.643474693261,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f120.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f150.varianceMin",
+          "pass": true,
+          "value": 3666.8530155364097,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f150.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f180.varianceMin",
+          "pass": true,
+          "value": 3294.95383893681,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f180.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f210.varianceMin",
+          "pass": true,
+          "value": 3073.981199178528,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f210.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f240.varianceMin",
+          "pass": true,
+          "value": 2968.3120822851415,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f240.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f270.varianceMin",
+          "pass": true,
+          "value": 2937.456099874311,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f270.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f300.varianceMin",
+          "pass": true,
+          "value": 2912.6651778098967,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f300.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f330.varianceMin",
+          "pass": true,
+          "value": 2924.5497270993765,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f330.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f360.varianceMin",
+          "pass": true,
+          "value": 3087.0952088074846,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f360.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f390.varianceMin",
+          "pass": true,
+          "value": 3276.425965749302,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f390.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f420.varianceMin",
+          "pass": true,
+          "value": 3448.365684712444,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f420.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f450.varianceMin",
+          "pass": true,
+          "value": 3641.37900091357,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f450.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f480.varianceMin",
+          "pass": true,
+          "value": 3777.682365170069,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f480.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f510.varianceMin",
+          "pass": true,
+          "value": 3785.6585150864485,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f510.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f540.varianceMin",
+          "pass": true,
+          "value": 3773.4947521741524,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f540.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f570.varianceMin",
+          "pass": true,
+          "value": 3656.599169522495,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f570.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f600.varianceMin",
+          "pass": true,
+          "value": 3637.16732997667,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f600.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f620.varianceMin",
+          "pass": true,
+          "value": 3627.837563108711,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f620.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    "cut": [
+      {
+        "frame": 0,
+        "outside": 0,
+        "inside": 3319,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "bld.cafe-corner@-72.7,15.8"
+      },
+      {
+        "frame": 30,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 60,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 90,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 120,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 150,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 180,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 210,
+        "outside": 0,
+        "inside": 4120,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,12.0"
+      },
+      {
+        "frame": 240,
+        "outside": 0,
+        "inside": 8661,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,12.0"
+      },
+      {
+        "frame": 270,
+        "outside": 0,
+        "inside": 8317,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,12.0"
+      },
+      {
+        "frame": 300,
+        "outside": 0,
+        "inside": 7365,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,12.0"
+      },
+      {
+        "frame": 330,
+        "outside": 0,
+        "inside": 8661,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,9.1"
+      },
+      {
+        "frame": 360,
+        "outside": 0,
+        "inside": 8250,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,9.1"
+      },
+      {
+        "frame": 390,
+        "outside": 0,
+        "inside": 5444,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,6.1"
+      },
+      {
+        "frame": 420,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 450,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 480,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 510,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 540,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 570,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 600,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 620,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      }
+    ]
+  },
+  {
+    "row": "seethrough-bike-ride@low-z1.5",
+    "pass": true,
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.976,
+          "limit": 0.6
+        },
+        {
+          "name": "courierShareSampled",
+          "pass": true,
+          "value": 22,
+          "limit": 1
+        },
+        {
+          "name": "seeThroughCutPixelsOutside",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "canvas.f0.varianceMin",
+          "pass": true,
+          "value": 3834.8904584104966,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f0.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f30.varianceMin",
+          "pass": true,
+          "value": 3571.3509128983023,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f30.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f60.varianceMin",
+          "pass": true,
+          "value": 3255.289199729399,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f60.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f90.varianceMin",
+          "pass": true,
+          "value": 3232.849556374258,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f90.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f120.varianceMin",
+          "pass": true,
+          "value": 3210.4254202065276,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f120.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f150.varianceMin",
+          "pass": true,
+          "value": 3229.9548921327078,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f150.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f180.varianceMin",
+          "pass": true,
+          "value": 3260.3630875860763,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f180.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f210.varianceMin",
+          "pass": true,
+          "value": 3072.9346223707726,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f210.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f240.varianceMin",
+          "pass": true,
+          "value": 2964.73806555022,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f240.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f270.varianceMin",
+          "pass": true,
+          "value": 2948.4413725362065,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f270.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f300.varianceMin",
+          "pass": true,
+          "value": 2951.798207384767,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f300.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f330.varianceMin",
+          "pass": true,
+          "value": 2996.1611367561236,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f330.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f360.varianceMin",
+          "pass": true,
+          "value": 3091.9758040451525,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f360.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f390.varianceMin",
+          "pass": true,
+          "value": 3118.7650777530325,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f390.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f420.varianceMin",
+          "pass": true,
+          "value": 3076.2899601752397,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f420.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f450.varianceMin",
+          "pass": true,
+          "value": 3103.1486710980244,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f450.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f480.varianceMin",
+          "pass": true,
+          "value": 3174.7080227236293,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f480.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f510.varianceMin",
+          "pass": true,
+          "value": 3208.8611385070726,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f510.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f540.varianceMin",
+          "pass": true,
+          "value": 3533.892471602794,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f540.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f570.varianceMin",
+          "pass": true,
+          "value": 3629.9306904441255,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f570.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f600.varianceMin",
+          "pass": true,
+          "value": 3632.091129485667,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f600.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f620.varianceMin",
+          "pass": true,
+          "value": 3629.7692356037987,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f620.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    "cut": [
+      {
+        "frame": 0,
+        "outside": 0,
+        "inside": 813,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "bld.cafe-corner@-72.7,15.8"
+      },
+      {
+        "frame": 30,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 60,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 90,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 120,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 150,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 180,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 210,
+        "outside": 0,
+        "inside": 1810,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,12.0"
+      },
+      {
+        "frame": 240,
+        "outside": 0,
+        "inside": 3806,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,12.0"
+      },
+      {
+        "frame": 270,
+        "outside": 0,
+        "inside": 3637,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,12.0"
+      },
+      {
+        "frame": 300,
+        "outside": 0,
+        "inside": 3219,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,12.0"
+      },
+      {
+        "frame": 330,
+        "outside": 0,
+        "inside": 3805,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,9.1"
+      },
+      {
+        "frame": 360,
+        "outside": 0,
+        "inside": 3613,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,9.1"
+      },
+      {
+        "frame": 390,
+        "outside": 0,
+        "inside": 2377,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,6.1"
+      },
+      {
+        "frame": 420,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 450,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 480,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 510,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 540,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 570,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 600,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 620,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      }
+    ]
+  },
+  {
+    "row": "seethrough-bike-ride@high-z1.5",
+    "pass": true,
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.976,
+          "limit": 0.6
+        },
+        {
+          "name": "courierShareSampled",
+          "pass": true,
+          "value": 22,
+          "limit": 1
+        },
+        {
+          "name": "seeThroughCutPixelsOutside",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "canvas.f0.varianceMin",
+          "pass": true,
+          "value": 4063.1799451170846,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f0.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f30.varianceMin",
+          "pass": true,
+          "value": 3776.55951677584,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f30.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f60.varianceMin",
+          "pass": true,
+          "value": 3460.146144909457,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f60.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f90.varianceMin",
+          "pass": true,
+          "value": 3436.0144757318194,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f90.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f120.varianceMin",
+          "pass": true,
+          "value": 3416.979121642031,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f120.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f150.varianceMin",
+          "pass": true,
+          "value": 3495.172221514378,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f150.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f180.varianceMin",
+          "pass": true,
+          "value": 3794.4151006943066,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f180.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f210.varianceMin",
+          "pass": true,
+          "value": 3608.0255625205355,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f210.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f240.varianceMin",
+          "pass": true,
+          "value": 3485.9538556423577,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f240.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f270.varianceMin",
+          "pass": true,
+          "value": 3464.874104147377,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f270.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f300.varianceMin",
+          "pass": true,
+          "value": 3469.011124574179,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f300.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f330.varianceMin",
+          "pass": true,
+          "value": 3530.7452823640015,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f330.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f360.varianceMin",
+          "pass": true,
+          "value": 3611.3053912751457,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f360.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f390.varianceMin",
+          "pass": true,
+          "value": 3499.320736453985,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f390.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f420.varianceMin",
+          "pass": true,
+          "value": 3302.2374468716916,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f420.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f450.varianceMin",
+          "pass": true,
+          "value": 3275.6067851068183,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f450.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f480.varianceMin",
+          "pass": true,
+          "value": 3329.0114290075217,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f480.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f510.varianceMin",
+          "pass": true,
+          "value": 3377.0434286405944,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f510.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f540.varianceMin",
+          "pass": true,
+          "value": 3775.7725725287164,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f540.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f570.varianceMin",
+          "pass": true,
+          "value": 3879.9673083524867,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f570.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f600.varianceMin",
+          "pass": true,
+          "value": 3885.802925858039,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f600.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f620.varianceMin",
+          "pass": true,
+          "value": 3886.4074979946236,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f620.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    "cut": [
+      {
+        "frame": 0,
+        "outside": 0,
+        "inside": 774,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "bld.cafe-corner@-72.7,15.8"
+      },
+      {
+        "frame": 30,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 60,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 90,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 120,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 150,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 180,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 210,
+        "outside": 0,
+        "inside": 1774,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,12.0"
+      },
+      {
+        "frame": 240,
+        "outside": 0,
+        "inside": 3723,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,12.0"
+      },
+      {
+        "frame": 270,
+        "outside": 0,
+        "inside": 3560,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,12.0"
+      },
+      {
+        "frame": 300,
+        "outside": 0,
+        "inside": 3154,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,12.0"
+      },
+      {
+        "frame": 330,
+        "outside": 0,
+        "inside": 3761,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,9.1"
+      },
+      {
+        "frame": 360,
+        "outside": 0,
+        "inside": 3584,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,9.1"
+      },
+      {
+        "frame": 390,
+        "outside": 0,
+        "inside": 2373,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,6.1"
+      },
+      {
+        "frame": 420,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 450,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 480,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 510,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 540,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 570,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 600,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 620,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      }
+    ]
+  },
+  {
+    "row": "seethrough-bike-ride@high-z1",
+    "pass": true,
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.976,
+          "limit": 0.6
+        },
+        {
+          "name": "courierShareSampled",
+          "pass": true,
+          "value": 22,
+          "limit": 1
+        },
+        {
+          "name": "seeThroughCutPixelsOutside",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "canvas.f0.varianceMin",
+          "pass": true,
+          "value": 4125.201973814717,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f0.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f30.varianceMin",
+          "pass": true,
+          "value": 4100.92514987944,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f30.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f60.varianceMin",
+          "pass": true,
+          "value": 3958.325090690003,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f60.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f90.varianceMin",
+          "pass": true,
+          "value": 3962.7138213731596,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f90.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f120.varianceMin",
+          "pass": true,
+          "value": 3975.306878582727,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f120.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f150.varianceMin",
+          "pass": true,
+          "value": 3834.0135482669684,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f150.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f180.varianceMin",
+          "pass": true,
+          "value": 3389.269518911904,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f180.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f210.varianceMin",
+          "pass": true,
+          "value": 3238.218283549537,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f210.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f240.varianceMin",
+          "pass": true,
+          "value": 3378.4393565311257,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f240.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f270.varianceMin",
+          "pass": true,
+          "value": 3387.211103527894,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f270.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f300.varianceMin",
+          "pass": true,
+          "value": 3332.728094921633,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f300.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f330.varianceMin",
+          "pass": true,
+          "value": 3237.4990626923645,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f330.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f360.varianceMin",
+          "pass": true,
+          "value": 3371.9332554969587,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f360.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f390.varianceMin",
+          "pass": true,
+          "value": 3632.4098911768815,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f390.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f420.varianceMin",
+          "pass": true,
+          "value": 3806.643350125025,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f420.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f450.varianceMin",
+          "pass": true,
+          "value": 3960.3377721882716,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f450.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f480.varianceMin",
+          "pass": true,
+          "value": 4063.4246561918917,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f480.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f510.varianceMin",
+          "pass": true,
+          "value": 4094.2432959578837,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f510.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f540.varianceMin",
+          "pass": true,
+          "value": 4005.1169754914845,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f540.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f570.varianceMin",
+          "pass": true,
+          "value": 3826.8509458045155,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f570.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f600.varianceMin",
+          "pass": true,
+          "value": 3795.3294783218153,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f600.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f620.varianceMin",
+          "pass": true,
+          "value": 3785.5150203945996,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f620.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    "cut": [
+      {
+        "frame": 0,
+        "outside": 0,
+        "inside": 3261,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "bld.cafe-corner@-72.7,15.8"
+      },
+      {
+        "frame": 30,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 60,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 90,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 120,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 150,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 180,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 210,
+        "outside": 0,
+        "inside": 4035,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,12.0"
+      },
+      {
+        "frame": 240,
+        "outside": 0,
+        "inside": 8444,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,12.0"
+      },
+      {
+        "frame": 270,
+        "outside": 0,
+        "inside": 8139,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,12.0"
+      },
+      {
+        "frame": 300,
+        "outside": 0,
+        "inside": 7222,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,12.0"
+      },
+      {
+        "frame": 330,
+        "outside": 0,
+        "inside": 8544,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,9.1"
+      },
+      {
+        "frame": 360,
+        "outside": 0,
+        "inside": 8154,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,9.1"
+      },
+      {
+        "frame": 390,
+        "outside": 0,
+        "inside": 5422,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "prop.privacy-fence@-59.5,6.1"
+      },
+      {
+        "frame": 420,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 450,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 480,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 510,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 540,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 570,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 600,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      {
+        "frame": 620,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      }
+    ]
+  }
+]

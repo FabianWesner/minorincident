@@ -30,6 +30,16 @@ test('placement: never inside the courier radius, the expanded camera volume (al
 
   const z = await arena(), director = z.infected!.director, view = new View();
   view.resize(1600, 900); view.reset({ x: 0, z: 0 });
+  const defaultRadius = view.getState().radius;
+  view.zoom(Math.log(.5), true);
+  expect(view.getState().radius).toBeCloseTo(defaultRadius / 2, 8);
+  const closePosition = view.camera.position.toArray(); view.present(0);
+  expect(view.camera.position.toArray()).toEqual(closePosition);
+  view.zoom(Math.log(2), true);
+  expect(view.getState().radius).toBeCloseTo(defaultRadius, 8);
+  expect(view.camera.position.distanceTo(new Vector3(...view.getState().focus))).toBeCloseTo(defaultRadius, 8);
+  const widePosition = view.camera.position.toArray(); view.present(0);
+  expect(view.camera.position.toArray()).toEqual(widePosition);
   const projection = new Matrix4();
   const sync = () => director.setFrustum(projection.multiplyMatrices(view.simCamera.projectionMatrix, view.simCamera.matrixWorldInverse).elements, view.simCamera.position);
   const at = { x: -19, z: 0 };

@@ -44,7 +44,12 @@ export class View {
   /** Wheel down zooms out; pinch spread zooms in. Default framing is unchanged. */
   zoom(delta: number, instant = false): void {
     if (Number.isFinite(delta) && !this.blendTarget && !this.scripted) this.targetZoom = Math.max(zoomLimits[0], Math.min(this.maxZoom, this.targetZoom * Math.exp(delta)));
-    if (instant) this.zoomRatio = this.targetZoom;
+    if (instant) {
+      this.zoomRatio = this.targetZoom;
+      // An instant request must also snap the radius and both interpolation poses.
+      // Scene Lab can present frame zero before the next simulation tick.
+      this.update({ x: this.focus.x, y: this.focus.y + feetOffset, z: this.focus.z }, 0);
+    }
   }
   inspectionPose: CameraPose | null = null;
   inspectionGameLod = false;
