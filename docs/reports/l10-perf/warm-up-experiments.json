@@ -1,0 +1,795 @@
+[
+  {
+    "name": "load-both-draws",
+    "ms": 12792.20000076294,
+    "errors": [],
+    "measures": [
+      {
+        "name": "view:warm-up",
+        "at": 528.5999994277954,
+        "ms": 149.60000038146973
+      },
+      {
+        "name": "view:warm-up",
+        "at": 3603.8999996185303,
+        "ms": 10301.199999809265
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "at": 3609.7999992370605,
+        "ms": 6653.800000190735
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 3638.3999996185303,
+        "ms": 2245.1000003814697
+      },
+      {
+        "name": "L1 warm-up draw",
+        "at": 10264.39999961853,
+        "ms": 3523.199999809265
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "at": 13787.599999427795,
+        "ms": 50
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "at": 13837.599999427795,
+        "ms": 0
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 13871.199999809265,
+        "ms": 6.5
+      },
+      {
+        "name": "L1 warm-up draw",
+        "at": 13877.699999809265,
+        "ms": 8.699999809265137
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "at": 13886.39999961853,
+        "ms": 17.800000190734863
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "at": 13904.199999809265,
+        "ms": 0
+      }
+    ]
+  },
+  {
+    "name": "load-parallel-shared",
+    "ms": 9727.39999961853,
+    "errors": [],
+    "measures": [
+      {
+        "name": "view:warm-up",
+        "at": 465.8999996185303,
+        "ms": 128.19999980926514
+      },
+      {
+        "name": "view:warm-up",
+        "at": 3522.0999994277954,
+        "ms": 7204.300000190735
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "at": 3527.5999994277954,
+        "ms": 4410.300000190735
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 3556.5,
+        "ms": 2176.7999992370605
+      },
+      {
+        "name": "L1 warm-up draw",
+        "at": 7939.299999237061,
+        "ms": 169.70000076293945
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "at": 8109,
+        "ms": 50
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "at": 8159,
+        "ms": 0
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "at": 8161,
+        "ms": 2198.5999994277954
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 8164.5,
+        "ms": 2109.199999809265
+      },
+      {
+        "name": "L1 warm-up draw",
+        "at": 10360,
+        "ms": 32.19999980926514
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "at": 10392.29999923706,
+        "ms": 33.20000076293945
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "at": 10425.5,
+        "ms": 0
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 10692.599999427795,
+        "ms": 4.100000381469727
+      },
+      {
+        "name": "L1 warm-up draw",
+        "at": 10696.699999809265,
+        "ms": 12.199999809265137
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "at": 10708.89999961853,
+        "ms": 16.600000381469727
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "at": 10725.5,
+        "ms": 0
+      }
+    ]
+  },
+  {
+    "name": "load-resident-final",
+    "ms": 7277.900000572205,
+    "errors": [],
+    "measures": [
+      {
+        "name": "view:warm-up",
+        "at": 506.5,
+        "ms": 149.69999980926514
+      },
+      {
+        "name": "view:warm-up",
+        "at": 3646.8999996185303,
+        "ms": 4793.800000190735
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "at": 3652.0999994277954,
+        "ms": 4412.700000762939
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 3680.199999809265,
+        "ms": 2233.1000003814697
+      },
+      {
+        "name": "L1 warm-up draw",
+        "at": 8066.199999809265,
+        "ms": 107.10000038146973
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "at": 8173.300000190735,
+        "ms": 49.89999961853027
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "at": 8223.199999809265,
+        "ms": 0
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "at": 8225.39999961853,
+        "ms": 104.69999980926514
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 8229.199999809265,
+        "ms": 13.600000381469727
+      },
+      {
+        "name": "L1 warm-up draw",
+        "at": 8330.39999961853,
+        "ms": 26.199999809265137
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "at": 8356.599999427795,
+        "ms": 33.30000019073486
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "at": 8389.89999961853,
+        "ms": 0
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 8406.599999427795,
+        "ms": 6.600000381469727
+      },
+      {
+        "name": "L1 warm-up draw",
+        "at": 8413.199999809265,
+        "ms": 8.300000190734863
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "at": 8421.5,
+        "ms": 18.399999618530273
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "at": 8439.89999961853,
+        "ms": 0
+      }
+    ]
+  },
+  {
+    "name": "load-shared-draws",
+    "ms": 7960.199999809265,
+    "errors": [],
+    "measures": [
+      {
+        "name": "view:warm-up",
+        "at": 527.5,
+        "ms": 156.10000038146973
+      },
+      {
+        "name": "view:warm-up",
+        "at": 3796,
+        "ms": 5233.200000762939
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "at": 3801.4000005722046,
+        "ms": 2432.5999994277954
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 3832.2000007629395,
+        "ms": 2309.7999992370605
+      },
+      {
+        "name": "L1 warm-up draw",
+        "at": 6234.60000038147,
+        "ms": 43.80000019073486
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "at": 6278.400000572205,
+        "ms": 33.30000019073486
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "at": 6311.700000762939,
+        "ms": 0
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "at": 6313.700000762939,
+        "ms": 2300.699999809265
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 6317.200000762939,
+        "ms": 2191.5
+      },
+      {
+        "name": "L1 warm-up draw",
+        "at": 8614.70000076294,
+        "ms": 63.69999980926514
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "at": 8678.400000572205,
+        "ms": 33.30000019073486
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "at": 8711.70000076294,
+        "ms": 0
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 8995.300000190735,
+        "ms": 4.40000057220459
+      },
+      {
+        "name": "L1 warm-up draw",
+        "at": 8999.70000076294,
+        "ms": 12.09999942779541
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "at": 9011.800000190735,
+        "ms": 16.600000381469727
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "at": 9028.400000572205,
+        "ms": 0
+      }
+    ]
+  },
+  {
+    "name": "load-source-cache-final",
+    "ms": 7144.800000190735,
+    "errors": [],
+    "measures": [
+      {
+        "name": "view:warm-up",
+        "at": 470.8999996185303,
+        "ms": 131.60000038146973
+      },
+      {
+        "name": "view:warm-up",
+        "at": 3600.8999996185303,
+        "ms": 4657.5
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "at": 3606.199999809265,
+        "ms": 4360.099999427795
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 3635.0999994277954,
+        "ms": 2200.800000190735
+      },
+      {
+        "name": "L1 warm-up draw",
+        "at": 7967.5,
+        "ms": 90
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "at": 8057.5,
+        "ms": 34.79999923706055
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "at": 8092.299999237061,
+        "ms": 0
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "at": 8094.299999237061,
+        "ms": 45.20000076293945
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 8097.799999237061,
+        "ms": 14.100000381469727
+      },
+      {
+        "name": "L1 warm-up draw",
+        "at": 8139.699999809265,
+        "ms": 36
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "at": 8175.699999809265,
+        "ms": 33.19999980926514
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "at": 8208.89999961853,
+        "ms": 0
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 8225.89999961853,
+        "ms": 4.600000381469727
+      },
+      {
+        "name": "L1 warm-up draw",
+        "at": 8230.599999427795,
+        "ms": 11.600000381469727
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "at": 8242.29999923706,
+        "ms": 15.100000381469727
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "at": 8257.39999961853,
+        "ms": 0
+      }
+    ]
+  },
+  {
+    "name": "corridor-both-draws",
+    "max": 21.799999999999272,
+    "p95": 3.5,
+    "frames": 3549,
+    "heldBuilds": [],
+    "hitches": [],
+    "errors": []
+  },
+  {
+    "name": "corridor-both-lights",
+    "max": 236.89999999999418,
+    "p95": 3.6000000000058208,
+    "frames": 3370,
+    "heldBuilds": [
+      [
+        "action-held:swatch:mesh_1_2:m3517:c10:o23301",
+        2
+      ],
+      [
+        "action-held:swatch:mesh_1_1:m3556:c10:o23300",
+        2
+      ],
+      [
+        "action-held:swatch:mesh_1_4:m3477:c10:o23303",
+        2
+      ],
+      [
+        "action-held:swatch:mesh_1_3:m3493:c10:o23302",
+        2
+      ],
+      [
+        "action-held:swatch:mesh_0:m3479:c10:o23287",
+        1
+      ],
+      [
+        "action-held:swatch:mesh_1:m3515:c10:o23299",
+        1
+      ]
+    ],
+    "hitches": [
+      {
+        "ms": 236.89999999999418,
+        "tick": 40,
+        "x": 2911.594970703125,
+        "z": -5,
+        "builds": 676,
+        "update": 3.8000001907348633,
+        "render": 2.1999998092651367
+      },
+      {
+        "ms": 202.89999999999418,
+        "tick": 226,
+        "x": 2924.775634765625,
+        "z": -5,
+        "builds": 683,
+        "update": 1.3999996185302734,
+        "render": 2.3999996185302734
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "corridor-diagnostic",
+    "max": 216.60000000000036,
+    "p95": 16.700000000000728,
+    "frames": 522,
+    "heldBuilds": [],
+    "hitches": [
+      {
+        "ms": 216.60000000000036,
+        "tick": 39,
+        "x": 2911.525390625,
+        "z": -5,
+        "builds": 414,
+        "update": 4.199999809265137,
+        "render": 2.1000003814697266
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "corridor-first-quiet-failed",
+    "max": 4359,
+    "p95": 7.600000000000364,
+    "frames": 2649,
+    "heldBuilds": [],
+    "hitches": [
+      {
+        "ms": 4359,
+        "tick": 77,
+        "x": 2914.31787109375,
+        "z": -5,
+        "builds": 410,
+        "update": 1.3000001907348633,
+        "render": 3.1999998092651367
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "corridor-parallel-shared",
+    "max": 126.90000000000146,
+    "p95": 3.6999999999970896,
+    "frames": 3476,
+    "heldBuilds": [],
+    "hitches": [],
+    "errors": []
+  },
+  {
+    "name": "corridor-profile",
+    "max": 180.10000000000036,
+    "p95": 9.800000000001091,
+    "frames": 2429,
+    "heldBuilds": [],
+    "hitches": [],
+    "errors": []
+  },
+  {
+    "name": "corridor-resident-final",
+    "max": 21.5,
+    "p95": 3.5,
+    "frames": 3589,
+    "heldBuilds": [],
+    "hitches": [],
+    "errors": []
+  },
+  {
+    "name": "corridor-shared-draws",
+    "max": 125.90000000000146,
+    "p95": 3.7999999999992724,
+    "frames": 3310,
+    "heldBuilds": [],
+    "hitches": [],
+    "errors": []
+  },
+  {
+    "name": "corridor-source-cache-final",
+    "max": 21.80000000000109,
+    "p95": 3.5,
+    "frames": 3576,
+    "heldBuilds": [],
+    "hitches": [],
+    "errors": []
+  },
+  {
+    "name": "load-light-arrays",
+    "ms": 7062.699999809265,
+    "errors": [],
+    "measures": [
+      {
+        "name": "view:warm-up",
+        "at": 466.19999980926514,
+        "ms": 126.10000038146973
+      },
+      {
+        "name": "view:warm-up",
+        "at": 3585.8999996185303,
+        "ms": 4590.60000038147
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "at": 3591,
+        "ms": 4340.39999961853
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 3619.8999996185303,
+        "ms": 4210.300000190735
+      },
+      {
+        "name": "L1 warm-up draw",
+        "at": 7932,
+        "ms": 44.80000019073486
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "at": 7976.800000190735,
+        "ms": 33.19999980926514
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "at": 8010,
+        "ms": 0
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "at": 8011.800000190735,
+        "ms": 47.69999980926514
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 8015.39999961853,
+        "ms": 14.100000381469727
+      },
+      {
+        "name": "L1 warm-up draw",
+        "at": 8059.800000190735,
+        "ms": 33.59999942779541
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "at": 8093.39999961853,
+        "ms": 32.30000019073486
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "at": 8125.699999809265,
+        "ms": 0
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 8143.699999809265,
+        "ms": 4.800000190734863
+      },
+      {
+        "name": "L1 warm-up draw",
+        "at": 8148.5,
+        "ms": 11.59999942779541
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "at": 8160.099999427795,
+        "ms": 15.700000762939453
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "at": 8175.800000190735,
+        "ms": 0
+      }
+    ]
+  },
+  {
+    "name": "load-stable-light",
+    "ms": 6410.700000762939,
+    "errors": [],
+    "measures": [
+      {
+        "name": "view:warm-up",
+        "at": 471.8999996185303,
+        "ms": 126.30000019073486
+      },
+      {
+        "name": "view:warm-up",
+        "at": 3634.7999992370605,
+        "ms": 3908.4000005722046
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "at": 3641.5,
+        "ms": 3738.2999992370605
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 3668.8999996185303,
+        "ms": 3603
+      },
+      {
+        "name": "L1 warm-up draw",
+        "at": 7380.5,
+        "ms": 61.69999980926514
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "at": 7442.199999809265,
+        "ms": 50
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "at": 7492.299999237061,
+        "ms": 0
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 7509.199999809265,
+        "ms": 4.699999809265137
+      },
+      {
+        "name": "L1 warm-up draw",
+        "at": 7513.89999961853,
+        "ms": 10.100000381469727
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "at": 7524,
+        "ms": 18.199999809265137
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "at": 7542.199999809265,
+        "ms": 0
+      }
+    ]
+  },
+  {
+    "name": "load-stable-24",
+    "ms": 5044.299999237061,
+    "errors": [],
+    "measures": [
+      {
+        "name": "view:warm-up",
+        "at": 467.6000003814697,
+        "ms": 125.19999980926514
+      },
+      {
+        "name": "view:warm-up",
+        "at": 3548.6000003814697,
+        "ms": 2611.199999809265
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "at": 3553.699999809265,
+        "ms": 2475.5
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 3581.5,
+        "ms": 2342.300000190735
+      },
+      {
+        "name": "L1 warm-up draw",
+        "at": 6029.89999961853,
+        "ms": 45.90000057220459
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "at": 6075.89999961853,
+        "ms": 32
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "at": 6107.89999961853,
+        "ms": 0
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 6124.199999809265,
+        "ms": 4.600000381469727
+      },
+      {
+        "name": "L1 warm-up draw",
+        "at": 6128.800000190735,
+        "ms": 13.699999809265137
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "at": 6142.5,
+        "ms": 16.600000381469727
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "at": 6159.10000038147,
+        "ms": 0
+      }
+    ]
+  },
+  {
+    "name": "corridor-light-arrays",
+    "max": 130.20000000000073,
+    "p95": 3.6999999999989086,
+    "frames": 3523,
+    "heldBuilds": [],
+    "hitches": [],
+    "errors": []
+  },
+  {
+    "name": "corridor-stable-24",
+    "max": 24.5,
+    "p95": 3.600000000000364,
+    "frames": 3531,
+    "heldBuilds": [],
+    "hitches": [],
+    "errors": []
+  },
+  {
+    "name": "corridor-stable-light",
+    "max": 184.60000000000036,
+    "p95": 3.7999999999992724,
+    "frames": 3389,
+    "heldBuilds": [],
+    "hitches": [],
+    "errors": []
+  }
+]

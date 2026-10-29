@@ -1,0 +1,1185 @@
+{
+  "method": "Paired alternating order, fresh isolated browser contexts, native Metal WebGPU low, real level menu click to loading-card closure; one exclusive quiet reservation",
+  "mainRevision": "edd0288e9e8d733b9ba1b1758f7b180b53195385",
+  "candidateRevision": "90d617a2d7ce24ff7f8010b769133a1f9d83c9f5",
+  "summaries": {
+    "main": {
+      "n": 5,
+      "median": 5643.799999237061,
+      "min": 5477.39999961853,
+      "max": 5677.39999961853,
+      "samples": [
+        5477.39999961853,
+        5578,
+        5643.799999237061,
+        5644.5,
+        5677.39999961853
+      ]
+    },
+    "candidate": {
+      "n": 5,
+      "median": 5261.10000038147,
+      "min": 5176,
+      "max": 5293.5,
+      "samples": [
+        5176,
+        5225.89999961853,
+        5261.10000038147,
+        5261.300000190735,
+        5293.5
+      ]
+    }
+  },
+  "rows": [
+    {
+      "variant": "main",
+      "run": 0,
+      "ms": 5477.39999961853,
+      "bytes": 14652485,
+      "bundle": "http://127.0.0.1:4733/build/index-7s_K_QaH.js",
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "measures": [
+        {
+          "name": "view:actors",
+          "at": 395.30000019073486,
+          "ms": 64.59999942779541
+        },
+        {
+          "name": "view:lod-ready",
+          "at": 459.8999996185303,
+          "ms": 5.199999809265137
+        },
+        {
+          "name": "view:warm-up",
+          "at": 465.0999994277954,
+          "ms": 126
+        },
+        {
+          "name": "level:layouts",
+          "at": 1258.3000001907349,
+          "ms": 16.399999618530273
+        },
+        {
+          "name": "level:sim",
+          "at": 1274.6999998092651,
+          "ms": 1294.1000003814697
+        },
+        {
+          "name": "level:boot-audio-wait",
+          "at": 1274.8999996185303,
+          "ms": 0
+        },
+        {
+          "name": "level:world+nav",
+          "at": 1276.8000001907349,
+          "ms": 831.3999996185303
+        },
+        {
+          "name": "level:mission+cast",
+          "at": 2108.199999809265,
+          "ms": 454.19999980926514
+        },
+        {
+          "name": "level:physics-prepare",
+          "at": 2562.3999996185303,
+          "ms": 6.300000190734863
+        },
+        {
+          "name": "level:view",
+          "at": 2568.800000190735,
+          "ms": 4036.199999809265
+        },
+        {
+          "name": "view:districts+character",
+          "at": 2578.3999996185303,
+          "ms": 1532.3000001907349
+        },
+        {
+          "name": "view:civilian-crowd",
+          "at": 2593.0999994277954,
+          "ms": 1565.4000005722046
+        },
+        {
+          "name": "view:infected-crowd",
+          "at": 2593.3999996185303,
+          "ms": 1432.8000001907349
+        },
+        {
+          "name": "view:actors",
+          "at": 4145.800000190735,
+          "ms": 44.69999980926514
+        },
+        {
+          "name": "view:lod-ready",
+          "at": 4190.5,
+          "ms": 9.300000190734863
+        },
+        {
+          "name": "view:warm-up",
+          "at": 4199.800000190735,
+          "ms": 2392.2999992370605
+        },
+        {
+          "name": "L1 shader compilation",
+          "at": 4232.300000190735,
+          "ms": 2133.8999996185303
+        },
+        {
+          "name": "L1 shader compilation",
+          "at": 6558.39999961853,
+          "ms": 4.5
+        },
+        {
+          "name": "level:audio",
+          "at": 6605.099999427795,
+          "ms": 68.40000057220459
+        },
+        {
+          "name": "level:hud",
+          "at": 6679.800000190735,
+          "ms": 3.3999996185302734
+        }
+      ]
+    },
+    {
+      "variant": "candidate",
+      "run": 0,
+      "ms": 5261.10000038147,
+      "bytes": 14456772,
+      "bundle": "http://127.0.0.1:4744/build/index-DAOG6y6C.js",
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "measures": [
+        {
+          "name": "view:actors",
+          "at": 403.0999994277954,
+          "ms": 66
+        },
+        {
+          "name": "view:lod-ready",
+          "at": 469.0999994277954,
+          "ms": 5.40000057220459
+        },
+        {
+          "name": "view:warm-up",
+          "at": 474.5,
+          "ms": 128.5
+        },
+        {
+          "name": "level:layouts",
+          "at": 1258.3999996185303,
+          "ms": 16.5
+        },
+        {
+          "name": "level:sim",
+          "at": 1274.8999996185303,
+          "ms": 684.6999998092651
+        },
+        {
+          "name": "level:boot-audio-wait",
+          "at": 1275,
+          "ms": 0.09999942779541016
+        },
+        {
+          "name": "level:world+nav",
+          "at": 1276.8999996185303,
+          "ms": 225.60000038146973
+        },
+        {
+          "name": "level:mission+cast",
+          "at": 1502.5,
+          "ms": 450.3999996185303
+        },
+        {
+          "name": "level:physics-prepare",
+          "at": 1952.8999996185303,
+          "ms": 6.600000381469727
+        },
+        {
+          "name": "level:view",
+          "at": 1959.5999994277954,
+          "ms": 4444.5
+        },
+        {
+          "name": "view:districts+character",
+          "at": 1969.5,
+          "ms": 1492.8999996185303
+        },
+        {
+          "name": "view:civilian-crowd",
+          "at": 1982.3999996185303,
+          "ms": 1580.3000001907349
+        },
+        {
+          "name": "view:infected-crowd",
+          "at": 1982.6999998092651,
+          "ms": 1426.1000003814697
+        },
+        {
+          "name": "view:actors",
+          "at": 3497.5999994277954,
+          "ms": 97.20000076293945
+        },
+        {
+          "name": "view:lod-ready",
+          "at": 3594.800000190735,
+          "ms": 9.5
+        },
+        {
+          "name": "view:warm-up",
+          "at": 3604.300000190735,
+          "ms": 2787.8999996185303
+        },
+        {
+          "name": "L1 shader compilation",
+          "at": 3637.699999809265,
+          "ms": 2485.199999809265
+        },
+        {
+          "name": "L1 shader compilation",
+          "at": 6358.300000190735,
+          "ms": 4.699999809265137
+        },
+        {
+          "name": "level:audio",
+          "at": 6404.099999427795,
+          "ms": 69.20000076293945
+        },
+        {
+          "name": "level:hud",
+          "at": 6477,
+          "ms": 3.1999998092651367
+        }
+      ]
+    },
+    {
+      "variant": "candidate",
+      "run": 1,
+      "ms": 5176,
+      "bytes": 14628486,
+      "bundle": "http://127.0.0.1:4744/build/index-DAOG6y6C.js",
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "measures": [
+        {
+          "name": "view:actors",
+          "at": 399.1000003814697,
+          "ms": 66.5
+        },
+        {
+          "name": "view:lod-ready",
+          "at": 465.6000003814697,
+          "ms": 5.300000190734863
+        },
+        {
+          "name": "view:warm-up",
+          "at": 470.9000005722046,
+          "ms": 127.5
+        },
+        {
+          "name": "level:layouts",
+          "at": 1173.4000005722046,
+          "ms": 16.5
+        },
+        {
+          "name": "level:sim",
+          "at": 1189.9000005722046,
+          "ms": 689.5
+        },
+        {
+          "name": "level:boot-audio-wait",
+          "at": 1190,
+          "ms": 0
+        },
+        {
+          "name": "level:world+nav",
+          "at": 1191.8000001907349,
+          "ms": 225.80000019073486
+        },
+        {
+          "name": "level:mission+cast",
+          "at": 1417.6000003814697,
+          "ms": 455.5
+        },
+        {
+          "name": "level:physics-prepare",
+          "at": 1873.1000003814697,
+          "ms": 6.199999809265137
+        },
+        {
+          "name": "level:view",
+          "at": 1879.4000005722046,
+          "ms": 4354.699999809265
+        },
+        {
+          "name": "view:districts+character",
+          "at": 1889.1999998092651,
+          "ms": 1533.7000007629395
+        },
+        {
+          "name": "view:civilian-crowd",
+          "at": 1901.6000003814697,
+          "ms": 1564.8000001907349
+        },
+        {
+          "name": "view:infected-crowd",
+          "at": 1901.9000005722046,
+          "ms": 1430
+        },
+        {
+          "name": "view:actors",
+          "at": 3454,
+          "ms": 44.90000057220459
+        },
+        {
+          "name": "view:lod-ready",
+          "at": 3498.9000005722046,
+          "ms": 9.59999942779541
+        },
+        {
+          "name": "view:warm-up",
+          "at": 3508.5,
+          "ms": 2713.9000005722046
+        },
+        {
+          "name": "L1 shader compilation",
+          "at": 3543.199999809265,
+          "ms": 2417
+        },
+        {
+          "name": "L1 shader compilation",
+          "at": 6188.60000038147,
+          "ms": 4.699999809265137
+        },
+        {
+          "name": "level:audio",
+          "at": 6234.10000038147,
+          "ms": 67.59999942779541
+        },
+        {
+          "name": "level:hud",
+          "at": 6305.199999809265,
+          "ms": 3.3000001907348633
+        }
+      ]
+    },
+    {
+      "variant": "main",
+      "run": 1,
+      "ms": 5578,
+      "bytes": 14410988,
+      "bundle": "http://127.0.0.1:4733/build/index-7s_K_QaH.js",
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "measures": [
+        {
+          "name": "view:actors",
+          "at": 389.6000003814697,
+          "ms": 65.80000019073486
+        },
+        {
+          "name": "view:lod-ready",
+          "at": 455.4000005722046,
+          "ms": 5.5
+        },
+        {
+          "name": "view:warm-up",
+          "at": 460.9000005722046,
+          "ms": 128.5
+        },
+        {
+          "name": "level:layouts",
+          "at": 1223.9000005722046,
+          "ms": 16.699999809265137
+        },
+        {
+          "name": "level:boot-audio-wait",
+          "at": 1240.6000003814697,
+          "ms": 0
+        },
+        {
+          "name": "level:sim",
+          "at": 1240.6000003814697,
+          "ms": 1306.3999996185303
+        },
+        {
+          "name": "level:world+nav",
+          "at": 1242.5,
+          "ms": 837.9000005722046
+        },
+        {
+          "name": "level:mission+cast",
+          "at": 2080.4000005722046,
+          "ms": 460
+        },
+        {
+          "name": "level:physics-prepare",
+          "at": 2540.4000005722046,
+          "ms": 6.59999942779541
+        },
+        {
+          "name": "level:view",
+          "at": 2547,
+          "ms": 4123.900000572205
+        },
+        {
+          "name": "view:districts+character",
+          "at": 2557,
+          "ms": 1514.6000003814697
+        },
+        {
+          "name": "view:civilian-crowd",
+          "at": 2571.9000005722046,
+          "ms": 1590.3999996185303
+        },
+        {
+          "name": "view:infected-crowd",
+          "at": 2572.300000190735,
+          "ms": 1450.6999998092651
+        },
+        {
+          "name": "view:actors",
+          "at": 4114.700000762939,
+          "ms": 79.09999942779541
+        },
+        {
+          "name": "view:lod-ready",
+          "at": 4193.800000190735,
+          "ms": 9.5
+        },
+        {
+          "name": "view:warm-up",
+          "at": 4203.300000190735,
+          "ms": 2454.4000005722046
+        },
+        {
+          "name": "L1 shader compilation",
+          "at": 4236.5,
+          "ms": 2172.1000003814697
+        },
+        {
+          "name": "L1 shader compilation",
+          "at": 6623.800000190735,
+          "ms": 4.5
+        },
+        {
+          "name": "level:audio",
+          "at": 6671,
+          "ms": 68.80000019073486
+        },
+        {
+          "name": "level:hud",
+          "at": 6746.10000038147,
+          "ms": 3.5
+        }
+      ]
+    },
+    {
+      "variant": "main",
+      "run": 2,
+      "ms": 5677.39999961853,
+      "bytes": 14376276,
+      "bundle": "http://127.0.0.1:4733/build/index-7s_K_QaH.js",
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "measures": [
+        {
+          "name": "view:actors",
+          "at": 405.8999996185303,
+          "ms": 63.40000057220459
+        },
+        {
+          "name": "view:lod-ready",
+          "at": 469.30000019073486,
+          "ms": 5.299999237060547
+        },
+        {
+          "name": "view:warm-up",
+          "at": 474.5999994277954,
+          "ms": 132.9000005722046
+        },
+        {
+          "name": "level:layouts",
+          "at": 1238.8000001907349,
+          "ms": 16.09999942779541
+        },
+        {
+          "name": "level:sim",
+          "at": 1254.8999996185303,
+          "ms": 1323.3000001907349
+        },
+        {
+          "name": "level:boot-audio-wait",
+          "at": 1255,
+          "ms": 0
+        },
+        {
+          "name": "level:world+nav",
+          "at": 1256.8000001907349,
+          "ms": 851.1999998092651
+        },
+        {
+          "name": "level:mission+cast",
+          "at": 2108,
+          "ms": 463.5999994277954
+        },
+        {
+          "name": "level:physics-prepare",
+          "at": 2571.5999994277954,
+          "ms": 6.600000381469727
+        },
+        {
+          "name": "level:view",
+          "at": 2578.199999809265,
+          "ms": 4207.800000190735
+        },
+        {
+          "name": "view:districts+character",
+          "at": 2588.0999994277954,
+          "ms": 1520.8000001907349
+        },
+        {
+          "name": "view:civilian-crowd",
+          "at": 2603.300000190735,
+          "ms": 1613
+        },
+        {
+          "name": "view:infected-crowd",
+          "at": 2603.5999994277954,
+          "ms": 1455
+        },
+        {
+          "name": "view:actors",
+          "at": 4146,
+          "ms": 103.69999980926514
+        },
+        {
+          "name": "view:lod-ready",
+          "at": 4249.699999809265,
+          "ms": 9.600000381469727
+        },
+        {
+          "name": "view:warm-up",
+          "at": 4259.300000190735,
+          "ms": 2513.2999992370605
+        },
+        {
+          "name": "L1 shader compilation",
+          "at": 4295.099999427795,
+          "ms": 2216.2000007629395
+        },
+        {
+          "name": "L1 shader compilation",
+          "at": 6738.699999809265,
+          "ms": 4.5
+        },
+        {
+          "name": "level:audio",
+          "at": 6786,
+          "ms": 70.69999980926514
+        },
+        {
+          "name": "level:hud",
+          "at": 6863.099999427795,
+          "ms": 3.40000057220459
+        }
+      ]
+    },
+    {
+      "variant": "candidate",
+      "run": 2,
+      "ms": 5293.5,
+      "bytes": 14579502,
+      "bundle": "http://127.0.0.1:4744/build/index-DAOG6y6C.js",
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "measures": [
+        {
+          "name": "view:actors",
+          "at": 398,
+          "ms": 68
+        },
+        {
+          "name": "view:lod-ready",
+          "at": 466,
+          "ms": 5.300000190734863
+        },
+        {
+          "name": "view:warm-up",
+          "at": 471.30000019073486,
+          "ms": 132.30000019073486
+        },
+        {
+          "name": "level:layouts",
+          "at": 1258,
+          "ms": 16.600000381469727
+        },
+        {
+          "name": "level:sim",
+          "at": 1274.6000003814697,
+          "ms": 696.7999992370605
+        },
+        {
+          "name": "level:boot-audio-wait",
+          "at": 1274.6999998092651,
+          "ms": 0
+        },
+        {
+          "name": "level:world+nav",
+          "at": 1276.6999998092651,
+          "ms": 228.80000019073486
+        },
+        {
+          "name": "level:mission+cast",
+          "at": 1505.5,
+          "ms": 459.1000003814697
+        },
+        {
+          "name": "level:physics-prepare",
+          "at": 1964.6000003814697,
+          "ms": 6.699999809265137
+        },
+        {
+          "name": "level:view",
+          "at": 1971.3999996185303,
+          "ms": 4464.60000038147
+        },
+        {
+          "name": "view:districts+character",
+          "at": 1981.6999998092651,
+          "ms": 1573.1000003814697
+        },
+        {
+          "name": "view:civilian-crowd",
+          "at": 1994.3999996185303,
+          "ms": 1632.1000003814697
+        },
+        {
+          "name": "view:infected-crowd",
+          "at": 1994.6999998092651,
+          "ms": 1496.6000003814697
+        },
+        {
+          "name": "view:actors",
+          "at": 3593,
+          "ms": 67.30000019073486
+        },
+        {
+          "name": "view:lod-ready",
+          "at": 3660.300000190735,
+          "ms": 9.59999942779541
+        },
+        {
+          "name": "view:warm-up",
+          "at": 3669.8999996185303,
+          "ms": 2754.300000190735
+        },
+        {
+          "name": "L1 shader compilation",
+          "at": 3703.6000003814697,
+          "ms": 2469.0999994277954
+        },
+        {
+          "name": "L1 shader compilation",
+          "at": 6389.699999809265,
+          "ms": 4.699999809265137
+        },
+        {
+          "name": "level:audio",
+          "at": 6436,
+          "ms": 70.39999961853027
+        },
+        {
+          "name": "level:hud",
+          "at": 6510.10000038147,
+          "ms": 3.3999996185302734
+        }
+      ]
+    },
+    {
+      "variant": "candidate",
+      "run": 3,
+      "ms": 5225.89999961853,
+      "bytes": 14376276,
+      "bundle": "http://127.0.0.1:4744/build/index-DAOG6y6C.js",
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "measures": [
+        {
+          "name": "view:actors",
+          "at": 390.5999994277954,
+          "ms": 64.5
+        },
+        {
+          "name": "view:lod-ready",
+          "at": 455.0999994277954,
+          "ms": 5.40000057220459
+        },
+        {
+          "name": "view:warm-up",
+          "at": 460.5,
+          "ms": 131.39999961853027
+        },
+        {
+          "name": "level:layouts",
+          "at": 1224.3000001907349,
+          "ms": 16.59999942779541
+        },
+        {
+          "name": "level:sim",
+          "at": 1240.8999996185303,
+          "ms": 693.1000003814697
+        },
+        {
+          "name": "level:boot-audio-wait",
+          "at": 1241,
+          "ms": 0
+        },
+        {
+          "name": "level:world+nav",
+          "at": 1242.8999996185303,
+          "ms": 228.5
+        },
+        {
+          "name": "level:mission+cast",
+          "at": 1471.3999996185303,
+          "ms": 456.1000003814697
+        },
+        {
+          "name": "level:physics-prepare",
+          "at": 1927.5,
+          "ms": 6.5
+        },
+        {
+          "name": "level:view",
+          "at": 1934,
+          "ms": 4402
+        },
+        {
+          "name": "view:districts+character",
+          "at": 1944,
+          "ms": 1519.5999994277954
+        },
+        {
+          "name": "view:civilian-crowd",
+          "at": 1956.5999994277954,
+          "ms": 1594.6000003814697
+        },
+        {
+          "name": "view:infected-crowd",
+          "at": 1956.8999996185303,
+          "ms": 1447.8000001907349
+        },
+        {
+          "name": "view:actors",
+          "at": 3502.3999996185303,
+          "ms": 82.80000019073486
+        },
+        {
+          "name": "view:lod-ready",
+          "at": 3585.199999809265,
+          "ms": 9.800000190734863
+        },
+        {
+          "name": "view:warm-up",
+          "at": 3595,
+          "ms": 2729.5999994277954
+        },
+        {
+          "name": "L1 shader compilation",
+          "at": 3628.8999996185303,
+          "ms": 2452.6000003814697
+        },
+        {
+          "name": "L1 shader compilation",
+          "at": 6290.89999961853,
+          "ms": 4.800000190734863
+        },
+        {
+          "name": "level:audio",
+          "at": 6336,
+          "ms": 69.89999961853027
+        },
+        {
+          "name": "level:hud",
+          "at": 6409.5,
+          "ms": 3.1999998092651367
+        }
+      ]
+    },
+    {
+      "variant": "main",
+      "run": 3,
+      "ms": 5643.799999237061,
+      "bytes": 14376276,
+      "bundle": "http://127.0.0.1:4733/build/index-7s_K_QaH.js",
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "measures": [
+        {
+          "name": "view:actors",
+          "at": 393.1000003814697,
+          "ms": 67
+        },
+        {
+          "name": "view:lod-ready",
+          "at": 460.1000003814697,
+          "ms": 5.5
+        },
+        {
+          "name": "view:warm-up",
+          "at": 465.6000003814697,
+          "ms": 132.0999994277954
+        },
+        {
+          "name": "level:layouts",
+          "at": 1173.6000003814697,
+          "ms": 16.799999237060547
+        },
+        {
+          "name": "level:sim",
+          "at": 1190.3999996185303,
+          "ms": 1319.8000001907349
+        },
+        {
+          "name": "level:boot-audio-wait",
+          "at": 1190.5,
+          "ms": 0
+        },
+        {
+          "name": "level:world+nav",
+          "at": 1192.3999996185303,
+          "ms": 847
+        },
+        {
+          "name": "level:mission+cast",
+          "at": 2039.3999996185303,
+          "ms": 463.9000005722046
+        },
+        {
+          "name": "level:physics-prepare",
+          "at": 2503.300000190735,
+          "ms": 6.800000190734863
+        },
+        {
+          "name": "level:view",
+          "at": 2510.199999809265,
+          "ms": 4176.699999809265
+        },
+        {
+          "name": "view:districts+character",
+          "at": 2520,
+          "ms": 1521.3999996185303
+        },
+        {
+          "name": "view:civilian-crowd",
+          "at": 2535.3999996185303,
+          "ms": 1615.3000001907349
+        },
+        {
+          "name": "view:infected-crowd",
+          "at": 2535.699999809265,
+          "ms": 1457.5
+        },
+        {
+          "name": "view:actors",
+          "at": 4099.5,
+          "ms": 90.10000038146973
+        },
+        {
+          "name": "view:lod-ready",
+          "at": 4189.60000038147,
+          "ms": 9.59999942779541
+        },
+        {
+          "name": "view:warm-up",
+          "at": 4199.199999809265,
+          "ms": 2474.6000003814697
+        },
+        {
+          "name": "L1 shader compilation",
+          "at": 4232.199999809265,
+          "ms": 2208.9000005722046
+        },
+        {
+          "name": "L1 shader compilation",
+          "at": 6640.10000038147,
+          "ms": 4.5
+        },
+        {
+          "name": "level:audio",
+          "at": 6686.89999961853,
+          "ms": 70.20000076293945
+        },
+        {
+          "name": "level:hud",
+          "at": 6763.300000190735,
+          "ms": 3.3999996185302734
+        }
+      ]
+    },
+    {
+      "variant": "main",
+      "run": 4,
+      "ms": 5644.5,
+      "bytes": 14628486,
+      "bundle": "http://127.0.0.1:4733/build/index-7s_K_QaH.js",
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "measures": [
+        {
+          "name": "view:actors",
+          "at": 398.0999994277954,
+          "ms": 66.10000038146973
+        },
+        {
+          "name": "view:lod-ready",
+          "at": 464.19999980926514,
+          "ms": 5.59999942779541
+        },
+        {
+          "name": "view:warm-up",
+          "at": 469.79999923706055,
+          "ms": 135.80000019073486
+        },
+        {
+          "name": "level:layouts",
+          "at": 1258,
+          "ms": 16.59999942779541
+        },
+        {
+          "name": "level:boot-audio-wait",
+          "at": 1274.5999994277954,
+          "ms": 0.10000038146972656
+        },
+        {
+          "name": "level:sim",
+          "at": 1274.5999994277954,
+          "ms": 1318.6000003814697
+        },
+        {
+          "name": "level:world+nav",
+          "at": 1276.5999994277954,
+          "ms": 844.8000001907349
+        },
+        {
+          "name": "level:mission+cast",
+          "at": 2121.3999996185303,
+          "ms": 464.8999996185303
+        },
+        {
+          "name": "level:physics-prepare",
+          "at": 2586.2999992370605,
+          "ms": 6.800000190734863
+        },
+        {
+          "name": "level:view",
+          "at": 2593.199999809265,
+          "ms": 4178.699999809265
+        },
+        {
+          "name": "view:districts+character",
+          "at": 2603.2999992370605,
+          "ms": 1516.4000005722046
+        },
+        {
+          "name": "view:civilian-crowd",
+          "at": 2619.2999992370605,
+          "ms": 1590
+        },
+        {
+          "name": "view:infected-crowd",
+          "at": 2619.699999809265,
+          "ms": 1428.6999998092651
+        },
+        {
+          "name": "view:actors",
+          "at": 4155.89999961853,
+          "ms": 86.39999961853027
+        },
+        {
+          "name": "view:lod-ready",
+          "at": 4242.299999237061,
+          "ms": 9.800000190734863
+        },
+        {
+          "name": "view:warm-up",
+          "at": 4252.099999427795,
+          "ms": 2506.800000190735
+        },
+        {
+          "name": "L1 shader compilation",
+          "at": 4286.39999961853,
+          "ms": 2210.5
+        },
+        {
+          "name": "L1 shader compilation",
+          "at": 6723.099999427795,
+          "ms": 4.5
+        },
+        {
+          "name": "level:audio",
+          "at": 6771.89999961853,
+          "ms": 70.30000019073486
+        },
+        {
+          "name": "level:hud",
+          "at": 6848.39999961853,
+          "ms": 3.3000001907348633
+        }
+      ]
+    },
+    {
+      "variant": "candidate",
+      "run": 4,
+      "ms": 5261.300000190735,
+      "bytes": 14534314,
+      "bundle": "http://127.0.0.1:4744/build/index-DAOG6y6C.js",
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "measures": [
+        {
+          "name": "view:actors",
+          "at": 396.19999980926514,
+          "ms": 67.10000038146973
+        },
+        {
+          "name": "view:lod-ready",
+          "at": 463.30000019073486,
+          "ms": 5.300000190734863
+        },
+        {
+          "name": "view:warm-up",
+          "at": 468.6000003814697,
+          "ms": 133.5999994277954
+        },
+        {
+          "name": "level:layouts",
+          "at": 1173,
+          "ms": 16.399999618530273
+        },
+        {
+          "name": "level:boot-audio-wait",
+          "at": 1189.3999996185303,
+          "ms": 0
+        },
+        {
+          "name": "level:sim",
+          "at": 1189.3999996185303,
+          "ms": 693.2000007629395
+        },
+        {
+          "name": "level:world+nav",
+          "at": 1191.3000001907349,
+          "ms": 227.89999961853027
+        },
+        {
+          "name": "level:mission+cast",
+          "at": 1419.1999998092651,
+          "ms": 456.5
+        },
+        {
+          "name": "level:physics-prepare",
+          "at": 1875.6999998092651,
+          "ms": 6.800000190734863
+        },
+        {
+          "name": "level:view",
+          "at": 1882.6000003814697,
+          "ms": 4435.89999961853
+        },
+        {
+          "name": "view:districts+character",
+          "at": 1892.8000001907349,
+          "ms": 1589.8000001907349
+        },
+        {
+          "name": "view:civilian-crowd",
+          "at": 1905.3999996185303,
+          "ms": 1616.1000003814697
+        },
+        {
+          "name": "view:infected-crowd",
+          "at": 1905.8000001907349,
+          "ms": 1445.8000001907349
+        },
+        {
+          "name": "view:actors",
+          "at": 3514.699999809265,
+          "ms": 41.10000038146973
+        },
+        {
+          "name": "view:lod-ready",
+          "at": 3555.800000190735,
+          "ms": 9.5
+        },
+        {
+          "name": "view:warm-up",
+          "at": 3565.300000190735,
+          "ms": 2741.300000190735
+        },
+        {
+          "name": "L1 shader compilation",
+          "at": 3601.6000003814697,
+          "ms": 2452.3999996185303
+        },
+        {
+          "name": "L1 shader compilation",
+          "at": 6272.89999961853,
+          "ms": 4.600000381469727
+        },
+        {
+          "name": "level:audio",
+          "at": 6318.5,
+          "ms": 69.60000038146973
+        },
+        {
+          "name": "level:hud",
+          "at": 6392,
+          "ms": 3.3999996185302734
+        }
+      ]
+    }
+  ]
+}
