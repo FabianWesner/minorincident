@@ -368,6 +368,7 @@ def zoo_put(asset, x, z, yaw=0.0, sc=1.0, path=3.0, solid_pad=.4):
     rx, rz = (.6, .6) if tree else (ex, ez)   # trees: trunk footprint; the crown only has to stay inside the wall and off buildings
     if abs(x) + ex > 114.5 or abs(z) + ez > 84.5: return None
     if _path_clear(x, z) - max(rx, rz) < path: return None
+    if _path_clear(x, z) - max(ex, ez) < .3: return None   # validate.ts: no visual box (tree crowns included) over a path lane
     if any(math.hypot(x-ax, z-az) < 4.0 for ax, az in _anchors): return None
     if any(x+ex > mn[0]-1.5 and x-ex < mx[0]+1.5 and z+ez > mn[2]-1.5 and z-ez < mx[2]+1.5 for mn, mx in _keep): return None
     if any(x+rx > t[0]-solid_pad and x-rx < t[2]+solid_pad and z+rz > t[1]-solid_pad and z-rz < t[3]+solid_pad for t in _zoo_taken): return None

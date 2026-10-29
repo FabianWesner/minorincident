@@ -796,7 +796,7 @@ for i, (a_, b_) in fill_segments:
 # Avenue: the zoom-1 frame shows only ~7 m of road length per verge at 6 m lateral, so plots alone leave most frames bare. Crowns
 # overhanging the sidewalk (trunk 7.5-8.3 m out, crown edge >= 4.4 m from the centre line) put mass into every frame; they may
 # overhang the low runs (LOW) and keep off everything taller.
-AVENUE = {0: ('prop.tree', .8), 1: ('prop.street-tree', .95), 2: ('prop.tree', .6), 3: ('prop.tree', .6), 4: ('prop.street-tree', .9), 5: ('prop.tree', .5)}
+AVENUE = {0: ('prop.tree', .55), 1: ('prop.street-tree', .95), 2: ('prop.tree', .35), 3: ('prop.tree', .3), 4: ('prop.street-tree', .9), 5: ('prop.tree', .5)}
 for i, (a_, b_) in fill_segments:
     F = frame(a_, b_); d = F[0]
     if d < 16: continue
@@ -821,11 +821,18 @@ fld = random.Random(1029)
 FIELD_TOKENS = [('trouserSeam', 'oliveSeam'), ('leatherShadow', 'khakiSeam'), ('oliveSeam', 'apronOlive')]
 def fld_put(asset, x, z, yaw, decay=None, light=None, scale=1.0):
     if x >= FINALE_X - 12: return None
+    # R3/R4 (depot, military zone) keep their fields as ground only: solid field pieces there moved the seed-32 finale
+    # (tools/qa/l10-arrival-check.ts: high arrival null + courier death from R4, low -1.5 s from R3) although none touches the route.
+    if 1837 < x <= 2467: return None
     if decay and decay not in l.manifest[asset].get('decayVariants', []): decay = None
     pid = dress(asset, x, z, yaw, scale=scale, decay=decay)
     if pid:
         l.data['placements'][-1]['fieldDressing'] = True
         if light: l.data['placements'][-1]['fieldLight'] = light
+        # Field dressing blocks the player but is no AI nav/cover wall (as the first look-l10 verge dressing): the seed-32 finale
+        # calibration (tools/qa/l10-arrival-check.ts) stalled at high when these ~250 pieces became crowd walls.
+        for c in l.data['colliders']:
+            if c['id'] == pid: c['aabb']['physicsOnly'] = True
     return pid
 def blocked(mn, mx, pad=1.0):
     # Buildings, kits and vehicles own their plot: no field runs underneath them.
@@ -922,6 +929,17 @@ for i, (a_, b_) in fill_segments:
                 if fld.random() < .5: power_line(a_, F, s + 2, s + L - 2, side, fld.uniform(17, 21))
                 field_strips += crop_field(a_, F, s, s + L, side, 6.6, fld.uniform(14, 17), fld.random() < cfg['standing'], cfg.get('tokens'))
             s += L + fld.uniform(6, 14)
+# ...and R3's solid field pieces come out after the stream ran (pulled here, not skipped above, so the R5 pieces keep the exact
+# random draws the finale calibration accepted: low tier 141.6 s with them, 143.2 s without; main 143.2 s).
+_r3 = {p['id'] for p in l.data['placements'][fields_before:] if p.get('fieldDressing') and 1237 <= p['position'][0] <= 1837}
+l.data['placements'] = [p for p in l.data['placements'] if p['id'] not in _r3]
+l.data['colliders'] = [c for c in l.data['colliders'] if c['id'] not in _r3]
+def _empty_ids(pid):
+    asset, n = pid.rsplit(':', 1)
+    return {f'inst:{asset}:{int(n) + 1}'}
+_gone = set().union(*[_empty_ids(i) for i in _r3]) if _r3 else set()
+for ob in [o for o in l.empties if o.name.split('.')[0] in _gone or any(o.name.startswith(f'crown:{i}:') for i in _r3)]:
+    l.empties.remove(ob); bpy.data.objects.remove(ob, do_unlink=True)
 print('look-l10-l8-2 field placements', len(l.data['placements']) - fields_before, 'strips', field_strips)
 print('look-l10 dressing placements', len(l.data['placements']))
 for p in l.data['placements']: p['maxTier']=6

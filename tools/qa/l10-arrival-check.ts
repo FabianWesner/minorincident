@@ -3,7 +3,7 @@
  * Pins before look-l10-l8-2: high 143.15 s, low 143.48 s (band 135-145, PO 2026-10-16 / E32-AC21). */
 import { runFinaleCalibration } from '../sim-runner/l10-finale-calibration';
 
-for (const tier of ['high', 'low'] as const) {
+for (const tier of (process.argv[2] ? [process.argv[2]] : ['high', 'low']) as ('high' | 'low')[]) {
   const r = await runFinaleCalibration(tier);
   console.log(JSON.stringify({ tier, arrival: r.arrival, released: r.released, deaths: r.deaths, peak: r.peak, fullChargeBossGate: r.fullChargeBossGate, bossIdChanged: r.bossIdChanged }));
 }
