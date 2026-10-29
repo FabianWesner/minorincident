@@ -13,7 +13,7 @@ import { EntityStore } from '../../src/sim/world/EntityStore';
 // must preserve the actor sequence even when prop records have different counts and placement order.
 test('authored prop keys and actor sequences survive prop insertions, streaming reservation and checkpoint restore', () => {
   const record = () => ({ kind: 'identity-probe', archetype: 'probe', faction: 'environment', health: { current: 1, max: 1 }, transform: { x: 0, y: 0, z: 0, yaw: 0 } });
-  for (const [level, firstActor] of Object.entries({ L1: 80, L4: 26, L5: 18, L10: 99 })) {
+  for (const [level, firstActor] of Object.entries({ L1: 80, L4: 26, L5: 18, L10: 99, 'scene:seat-bench-l1-start': 5 })) {
     const sharedIds: number[] = [];
     for (const delta of [-4, 0, 4]) {
       const store = new EntityStore(), player = store.create(record());

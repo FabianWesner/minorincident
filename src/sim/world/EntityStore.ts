@@ -2,9 +2,10 @@ import type { EntitySnapshot } from './types';
 import { fnv1a } from '../../core/Rng';
 
 /** Actor sequence epochs from the pre-namespace replay baseline. These preserve existing AI/RNG phases;
- * they are fixed per level and must not be recalculated when authored dressing changes. */
+ * they are fixed per authored level/scene key and must not be recalculated when dressing changes. */
 const actorSequenceEpochs: Readonly<Record<string, number>> = {
   L1: 78, L2: 102, L3: 21, L4: 24, L5: 16, L6: 13, L7: 18, L8: 352, L9: 665, L10: 97,
+  'scene:seat-bench-l1-start': 3,
 };
 
 /** A small component map with stable numeric IDs, reset per scenario. */
