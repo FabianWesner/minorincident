@@ -1,0 +1,75 @@
+{
+  "runtimeRevision": "28e7c1a8a167a2cd600f882c6ecaae63d2fe1ba8",
+  "sourceTree": "bb728ded946186581334d348c7875b3aba9174e3",
+  "publicTree": "a5899461e2f8bc339ee2b8d52da242299b129142",
+  "backend": "webgpu",
+  "quality": "low",
+  "zoom": 1.5,
+  "frameGateMs": 200,
+  "commands": [
+    "PLAYTEST_BACKEND=webgpu PLAYTEST_FRAME_GATE=1 E2E_PORT=4193 node --import tsx tools/playtest/play.ts --levels L8 --entry debug --quality low --zoom 1.5 --no-skip --session-seconds 480 --level-minutes 30 --out test-results/pre29-checks/L8",
+    "PLAYTEST_BACKEND=webgpu PLAYTEST_FRAME_GATE=1 E2E_PORT=4193 node --import tsx tools/playtest/play.ts --levels L10 --entry debug --quality low --zoom 1.5 --no-skip --session-seconds 480 --level-minutes 60 --out test-results/pre29-checks/L10"
+  ],
+  "method": "Full real keyboard/mouse runs from the level menu. L10 releases its pool lease every eight minutes and resumes the ordinary checkpoint through the menu. No god mode, skips, teleports, equipment or mission-state writes.",
+  "rows": [
+    {
+      "level": "L8",
+      "finished": true,
+      "segments": 1,
+      "wallSeconds": 94,
+      "skips": [],
+      "deaths": 0,
+      "issues": 0,
+      "gameplayFramesOver200": [],
+      "steps": [
+        "escape",
+        "depart"
+      ]
+    },
+    {
+      "level": "L10",
+      "finished": true,
+      "segments": 4,
+      "wallSeconds": 1611,
+      "skips": [],
+      "deaths": 0,
+      "issues": 0,
+      "gameplayFramesOver200": [],
+      "steps": [
+        "crash",
+        "residential-fringe",
+        "industrial-area",
+        "military-zone",
+        "research-campus",
+        "research",
+        "cure",
+        "research-exit",
+        "destroyed-corridor",
+        "dispersal-complex",
+        "install",
+        "hold",
+        "mega",
+        "release",
+        "epilogue",
+        "credits"
+      ]
+    }
+  ],
+  "endingStates": {
+    "charge-active": true,
+    "console-held": true,
+    "terminal-read": true,
+    "cure-carried": false,
+    "cure-installed": true,
+    "charge-ready": true,
+    "mega-dead": true,
+    "cure-released": true,
+    "epilogue-finished": true,
+    "credits-finished": true,
+    "anchor-unavailable": false
+  },
+  "validation": [
+    "npm run typecheck: pass",
+    "npm run lint: pass"
+  ]
+}

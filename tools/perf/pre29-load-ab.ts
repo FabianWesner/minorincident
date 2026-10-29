@@ -1,4 +1,5 @@
 /** L8/L10 dressing acceptance: run after gameplay checks, under quiet-run.sh.
+ * cold-load-time.ts uses launchBrowser; children retain the exclusive pool token.
  * Usage: tsx tools/perf/pre29-load-ab.ts <batch28-origin> <current-origin>
  */
 import assert from 'node:assert/strict';
@@ -50,6 +51,7 @@ writeFileSync(`${out}/summary.json`, JSON.stringify({
   method: 'Alternating paired cold menu loads, fresh empty contexts, native Metal WebGPU, one exclusive quiet-run reservation; low n=5 medians, high n=1; no profiler',
   baselineRevision: '763b56c876f1245cc21372723e3b30405497f4f2',
   currentRevision: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), summaries,
+  currentRuntimeRevision: process.env.PRE29_RUNTIME_REVISION ?? execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
 }, null, 2));
 console.log(JSON.stringify(summaries));
-for (const row of summaries.filter(r => r.quality === 'low')) assert.ok(row.changePercent <= 5, `${row.level} low: +${row.changePercent.toFixed(2)}% exceeds +5%`);
+for (const row of summaries) assert.ok(row.changePercent <= 5, `${row.level} ${row.quality}: +${row.changePercent.toFixed(2)}% exceeds +5%`);
