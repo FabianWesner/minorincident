@@ -1597,10 +1597,10 @@ export class SceneLab {
   /** Screenshot readiness: streamed LOD0 and pending assets resolved, two presented frames. */
   ready(): Promise<void> { return this.game.screenshotReady(); }
   /** Cut-pixel gate: force the solid-occluder cut off (or back on) and report the hole as last drawn (centre in screen UV, top-left origin). */
-  cutProbe(off: boolean): { center: [number, number]; solidRadius: number; strength: number; cover: number; occluder: string } | null {
+  cutProbe(off: boolean, lensPlacements: string[] | null = null, raw = false) {
     const audit = this.game.view.labProbes().districts?.seeThroughAudit() ?? null;
-    this.game.view.probeSolidCut(off);
-    return audit && { center: audit.center, solidRadius: audit.solidRadius, strength: audit.strength, cover: audit.cover, occluder: audit.occluder };
+    this.game.view.probeSolidCut(off, lensPlacements, raw);
+    return audit && { center: audit.center, solidRadius: audit.solidRadius, strength: audit.strength, cover: audit.cover, occluder: audit.occluder, lensPlacements: audit.lensPlacements };
   }
   /** Isolate a named vehicle's body coverage without advancing simulation. */
   vehicleSilhouetteProbe(name: string, mode: 'normal' | 'full' | 'hidden' | 'restore'): boolean {

@@ -114,6 +114,18 @@ export class DistrictOcclusion {
   private static readonly footFrames = new WeakMap<Object3D, { entry: Pick<LodBatch, 'foot' | 'origin'>; px: number; pz: number; qy: number; qw: number; sx: number; sz: number; frame: [number, number, number, number] }>();
   private readonly cutPlacements = new Set<Object3D>();
   private readonly lensPlacements = new Set<Object3D>();
+  /** QA reference: retain the production enclosure selection, but clear only
+   * explicitly allowed placements. Called after interior visibility is settled. */
+  probeLensCut(allowed: readonly string[]): void {
+    for (const entry of this.parts.lodBatches) {
+      if (entry.height < occluderMinHeight || worldAssets[entry.id].foliage) continue;
+      for (const ref of entry.refs) {
+        const id = `${entry.id}@${(ref.position.x + entry.origin[0]).toFixed(1)},${(ref.position.z + entry.origin[1]).toFixed(1)}`;
+        const lens = seeThrough.cover.value === 1 && this.lensPlacements.has(ref) && allowed.includes(id);
+        for (const batch of [entry.hero, entry.near, entry.far]) batch.seeThrough(lens, ref, lens);
+      }
+    }
+  }
   private updateCutPlacements(all = false): void {
     for (const entry of this.parts.lodBatches) {
       if (entry.height < occluderMinHeight || worldAssets[entry.id].foliage) continue;
@@ -315,14 +327,17 @@ export class DistrictOcclusion {
   }
   /** Scene Lab: the courier hole's live state, and placements lower than an occluder whose drawn batch would still be cut
    * by it (must stay empty: PO 10-13 bench without planks at zoom 0.66). */
-  seeThroughAudit(): { strength: number; cover: number; solidRadius: number; center: [number, number]; occluder: string; cutLowProps: string[]; cutPlacements: string[] } {
-    const cut = new Set<string>(), eligible = new Set<string>();
-    for (const entry of this.parts.lodBatches) for (const ref of entry.refs) if (ref.userData.occluder === true) eligible.add(`${entry.id}@${(ref.position.x + entry.origin[0]).toFixed(1)},${(ref.position.z + entry.origin[1]).toFixed(1)}`);
+  seeThroughAudit(): { strength: number; cover: number; solidRadius: number; center: [number, number]; occluder: string; cutLowProps: string[]; cutPlacements: string[]; lensPlacements: string[] } {
+    const cut = new Set<string>(), eligible = new Set<string>(), lens = new Set<string>();
+    for (const entry of this.parts.lodBatches) for (const ref of entry.refs) if (ref.userData.occluder === true) {
+      const id = `${entry.id}@${(ref.position.x + entry.origin[0]).toFixed(1)},${(ref.position.z + entry.origin[1]).toFixed(1)}`;
+      eligible.add(id); if (ref.userData.lensOccluder) lens.add(id);
+    }
     for (const entry of this.parts.lodBatches) {
       if (entry.height >= occluderMinHeight || worldAssets[entry.id].foliage) continue;
       for (const batch of [entry.hero, entry.near, entry.far]) batch.traverse(node => {
         if (node instanceof Mesh && (Array.isArray(node.material) ? node.material : [node.material]).some(m => m.userData.seeThrough)) cut.add(entry.id);
       });
     }
-    return { strength: seeThrough.strength.value, cover: seeThrough.cover.value, solidRadius: seeThrough.solidRadius.value, center: seeThrough.center.value.toArray() as [number, number], occluder: this.occluderId, cutLowProps: [...cut].sort(), cutPlacements: [...eligible].sort() };
+    return { strength: seeThrough.strength.value, cover: seeThrough.cover.value, solidRadius: seeThrough.solidRadius.value, center: seeThrough.center.value.toArray() as [number, number], occluder: this.occluderId, cutLowProps: [...cut].sort(), cutPlacements: [...eligible].sort(), lensPlacements: [...lens].sort() };
   }}

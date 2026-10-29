@@ -255,8 +255,13 @@ export interface Expectations {
   seeThroughNeverCut?: string[];
   /** Minimum frames the solid-occluder hole was open, so a cutaway fixture cannot pass without exercising it. */
   seeThroughOpenFramesMin?: number;
-  /** PO 10-14: pixels that differ between the frame and the same frame with the solid-occluder cut forced off, outside the hole disc around the courier (radius = solidRadius, screen heights): buildings and vehicles that are not in the way must stay opaque. Use 0. */
+  /** PO 10-14: changed production surface pixels outside the subject disc and any explicit lens-placement mask. Measured before bloom/DOF so compositor spread cannot masquerade as a geometry cut. Use 0. */
   seeThroughCutPixelsMax?: number;
+  /** Exact placement IDs allowed to clear the enclosing lens when cover=1.
+   * A separate same-frame reference masks their foreground pixels; every cut
+   * pixel outside that mask and the subject disc still has the zero bound,
+   * even when seeThroughCutPixelsMax is omitted. */
+  seeThroughLensPlacements?: string[];
   /** Minimum differing pixels inside the hole disc: a real occluder must still be cut. */
   seeThroughCutInsideMin?: number;
   /** Maximum changed pixels inside the reveal cone; 0 proves an adjacent building stays completely opaque. */

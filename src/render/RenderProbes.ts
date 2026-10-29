@@ -38,6 +38,10 @@ export class RenderProbes {
   infectedIdPass = false;
   /** Disable only solid discard, retaining placement eligibility and interior visibility. */
   solidCutOff = false;
+  /** Reference frame: only named enclosing placements may clear the lens. */
+  solidCutLensPlacements: string[] | null = null;
+  /** Surface differences exclude bloom/DOF pixels spread by the compositor. */
+  solidCutRaw = false;
   weatherAsset: string | null = null;
   hide = { courier: false, crowd: false, environment: false, bars: false };
   private visibilityPending = false;
@@ -75,6 +79,7 @@ export class RenderProbes {
   /** Draw the active probe pass instead of the production frame; false when no pass is active. */
   render(): boolean {
     const t = this.targets, scene = t.scene, renderer = t.renderer, camera = t.camera;
+    if (this.solidCutRaw) { renderer.render(scene, camera); return true; }
     if (this.weatherAsset) {
       const saved = new Map<Mesh, boolean>(), background = scene.background, backgroundNode = scene.backgroundNode;
       scene.background = new Color(0); scene.backgroundNode = null;
@@ -205,7 +210,7 @@ export class RenderProbes {
   }
   /** Level change: every pass off, its cached mask materials released (the hide state is kept, as before). */
   reset(): void {
-    this.solidCutOff = false; this.weatherAsset = null;
+    this.solidCutOff = false; this.solidCutLensPlacements = null; this.solidCutRaw = false; this.weatherAsset = null;
     this.windowMask = false; this.foliageMask = false;
     for (const material of this.foliageMasks.values()) material.dispose(); this.foliageMasks.clear();
     for (const masks of this.infectedIdMasks.values()) for (const material of masks) material?.dispose(); this.infectedIdMasks.clear(); this.infectedIdPass = false;

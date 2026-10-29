@@ -29,27 +29,40 @@ export function sheetFrames(sheet: number, frames: number): number[] {
   return Array.from({ length: maxSheetCells }, (_, i) => all[Math.round(i * (all.length - 1) / (maxSheetCells - 1))]);
 }
 
-/** Cut-pixel gate (PO 10-14): the frame as played against the same frame with the solid-occluder cut forced off. Pixels that differ outside the
- * hole disc around the courier are buildings or vehicles opened with nothing in the way; inside the disc a real occluder must differ. */
-export async function measureCut(session: SceneSession) {
+/** Cut-pixel gate (PO 10-14): production surfaces against the same frame with
+ * solid discard off. Outside the subject disc, only an explicitly named
+ * enclosing placement's foreground may differ. */
+export async function measureCut(session: SceneSession, lensPlacements?: string[]) {
+  // Measure the production surfaces before bloom/DOF spread their colour over
+  // neighboring pixels. The ordinary screenshots still use the compositor.
+  await session.page.evaluate(() => window.__SCENE__!.cutProbe(false, null, true));
   // The sim is paused, but presentation easing (gate hinges, ...) still moves a little with every redraw. Let it converge first so both captures
   // show the same state and only the cut itself can differ.
   for (let i = 0; i < 20; i++) await session.ready();
   const cut = PNG.sync.read(await session.page.screenshot({ type: 'png' }));
-  const hole = await session.page.evaluate(() => window.__SCENE__!.cutProbe(true));
+  const hole = await session.page.evaluate(() => window.__SCENE__!.cutProbe(true, null, true));
   await session.ready();
   const full = PNG.sync.read(await session.page.screenshot({ type: 'png' }));
+  let lens: PNG | undefined;
+  if (lensPlacements?.length && hole?.cover === 1) {
+    await session.page.evaluate(placements => window.__SCENE__!.cutProbe(false, placements, true), lensPlacements);
+    await session.ready();
+    lens = PNG.sync.read(await session.page.screenshot({ type: 'png' }));
+  }
   await session.page.evaluate(() => window.__SCENE__!.cutProbe(false));
-  if (!hole || cut.width !== full.width || cut.height !== full.height) return { outside: Infinity, inside: 0, strength: 0, cover: 0, occluder: '' };
+  if (!hole || cut.width !== full.width || cut.height !== full.height) return { outside: Infinity, inside: 0, allowedLens: 0, unexpectedLensPlacements: [], strength: 0, cover: 0, occluder: '' };
   const cx = hole.center[0] * cut.width, cy = hole.center[1] * cut.height, radius = hole.solidRadius * cut.height;
-  let outside = 0, inside = 0;
+  let outside = 0, inside = 0, allowedLens = 0;
   for (let y = 0; y < cut.height; y++) for (let x = 0; x < cut.width; x++) {
     const i = (y * cut.width + x) * 4;
     if (Math.abs(cut.data[i] - full.data[i]) + Math.abs(cut.data[i + 1] - full.data[i + 1]) + Math.abs(cut.data[i + 2] - full.data[i + 2]) < 36) continue;
     // The dither rim reaches full opacity exactly at the radius: a pixel whose centre lies within 1.5 px (one diagonal) of it is the disc edge, not a stray cut.
-    if (Math.hypot(x + .5 - cx, y + .5 - cy) <= radius + 1.5) inside++; else outside++;
+    if (Math.hypot(x + .5 - cx, y + .5 - cy) <= radius + 1.5) inside++;
+    else if (lens && changedPixel(lens, full, i)) allowedLens++;
+    else outside++;
   }
-  return { outside, inside, strength: hole.strength, cover: hole.cover, occluder: hole.occluder };
+  const unexpectedLensPlacements = lensPlacements ? hole.lensPlacements.filter(id => !lensPlacements.includes(id)) : [];
+  return { outside, inside, allowedLens, unexpectedLensPlacements, strength: hole.strength, cover: hole.cover, occluder: hole.occluder };
 }
 
 /** The courier ID pass marks only her body, without directional or contact shadows. */
@@ -165,14 +178,14 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   const shares: ({ frame: number } & Awaited<ReturnType<typeof measureCourierShare>>)[] = [];
   const foreground: { frame: number; active: boolean; occluder: string }[] = [];
   const barCounts: { frame: number; count: number }[] = [];
-  const cutExpected = spec.expect?.seeThroughCutPixelsMax !== undefined || spec.expect?.seeThroughCutInsideMin !== undefined || spec.expect?.seeThroughCutInsideMax !== undefined;
+  const cutExpected = spec.expect?.seeThroughLensPlacements !== undefined || spec.expect?.seeThroughCutPixelsMax !== undefined || spec.expect?.seeThroughCutInsideMin !== undefined || spec.expect?.seeThroughCutInsideMax !== undefined;
   const cuts: ({ frame: number } & Awaited<ReturnType<typeof measureCut>>)[] = [];
   const silhouettes: ({ frame: number } & Awaited<ReturnType<typeof measureVehicleSilhouette>>)[] = [];
   const lookSamples: ({ frame: number } & Awaited<ReturnType<typeof measureLook>>)[] = [];
   const contrast: { frame: number; result: ContrastResult }[] = [], measure = async (f: number) => {
     if (spec.look) lookSamples.push({ frame: f, ...await measureLook(session) });
     if (spec.expect?.courierVisibleShareMin !== undefined || spec.expect?.megaAlphaVisibleRatioMin !== undefined) shares.push({ frame: f, ...await measureCourierShare(session, spec.expect?.megaAlphaVisibleRatioMin !== undefined) });
-    if (cutExpected) cuts.push({ frame: f, ...await measureCut(session) });
+    if (cutExpected) cuts.push({ frame: f, ...await measureCut(session, spec.expect?.seeThroughLensPlacements) });
     if (spec.expect?.healthBarsMax !== undefined || spec.expect?.healthBarsMin !== undefined) barCounts.push({ frame: f, count: await session.page.evaluate(() => window.__SS__!.getState().render.healthBars?.count ?? 0) });
     if (spec.expect?.courierForegroundFramesMax !== undefined) foreground.push({ frame: f, ...await session.page.evaluate(() => { const r = window.__SS__!.getState().render; return { active: !!r.courierForeground, occluder: r.courierOccluder ?? '' }; }) });
     if (!spec.contrast || f === 0) return; // frame 0: the follow camera has not settled on a driven vehicle yet
@@ -196,7 +209,7 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   if (jpegs.length) { const path = `${out}/video.webm`; encodeWebm(jpegs, path); written.push(path); }
   let sheetInfo: { path: string; cells: number; kb: number } | undefined;
   if (cells.length) { sheetInfo = await session.makeSheet(cells, `${out}/sheet.jpg`); written.push(sheetInfo.path); }
-  const cutPixels = cuts.length ? { ...cuts[0], outside: Math.max(...cuts.map(c => c.outside)), inside: Math.min(...cuts.map(c => c.inside)), insideMax: Math.max(...cuts.map(c => c.inside)) } : null;
+  const cutPixels = cuts.length ? { ...cuts[0], outside: Math.max(...cuts.map(c => c.outside)), allowedLens: Math.max(...cuts.map(c => c.allowedLens)), inside: Math.min(...cuts.map(c => c.inside)), insideMax: Math.max(...cuts.map(c => c.inside)) } : null;
   const clipping = await session.clipping(), metrics = await session.metrics(), errors = session.errors.slice(errorsBefore);
   const actualTier = await session.page.evaluate(() => window.__SS__!.getState().render.quality);
   const result = evaluate(spec, metrics, clipping, errors);
@@ -278,8 +291,15 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
     result.checks.push({ name: `vehicleSilhouette:${id}:${blocking ? 'blocking' : 'clear'}`, pass: value >= limit, value, limit });
   }
   if (cutPixels) {
+    if (spec.expect?.seeThroughLensPlacements) {
+      const unexpected = new Set(cuts.flatMap(c => c.unexpectedLensPlacements));
+      result.checks.push({ name: 'seeThroughUnexpectedLensPlacements', pass: unexpected.size === 0, value: unexpected.size, limit: 0 });
+    }
     if (spec.expect?.seeThroughCutInsideMax !== undefined) result.checks.push({ name: 'seeThroughCutPixelsInsideMax', pass: cutPixels.insideMax <= spec.expect.seeThroughCutInsideMax, value: cutPixels.insideMax, limit: spec.expect.seeThroughCutInsideMax });
-    if (spec.expect?.seeThroughCutPixelsMax !== undefined) result.checks.push({ name: 'seeThroughCutPixelsOutside', pass: cutPixels.outside <= spec.expect.seeThroughCutPixelsMax, value: cutPixels.outside, limit: spec.expect.seeThroughCutPixelsMax });
+    if (spec.expect?.seeThroughCutPixelsMax !== undefined || spec.expect?.seeThroughLensPlacements) {
+      const limit = spec.expect.seeThroughCutPixelsMax ?? 0;
+      result.checks.push({ name: 'seeThroughCutPixelsOutside', pass: cutPixels.outside <= limit, value: cutPixels.outside, limit });
+    }
     if (spec.expect?.seeThroughCutInsideMin !== undefined) result.checks.push({ name: 'seeThroughCutPixelsInside', pass: cutPixels.inside >= spec.expect.seeThroughCutInsideMin, value: cutPixels.inside, limit: spec.expect.seeThroughCutInsideMin });
   }
   result.checks.push(...pixels.flatMap(p => canvasFrameChecks(p.pixels, `canvas.f${p.frame}`)));

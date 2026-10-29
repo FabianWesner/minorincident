@@ -805,7 +805,10 @@ export class GameView implements Lifecycle {
     return best;
   }
   /** Scene Lab reference: disable only solid discard, retaining placement eligibility and interior visibility. */
-  probeSolidCut(off: boolean): void { if (this.probes) this.probes.solidCutOff = off; this.update(1); }
+  probeSolidCut(off: boolean, lensPlacements: string[] | null = null, raw = false): void {
+    if (this.probes) { this.probes.solidCutOff = off; this.probes.solidCutLensPlacements = lensPlacements; this.probes.solidCutRaw = raw; }
+    this.update(1);
+  }
   /** Scene Lab: hide the courier / the crowd (Mega included) and redraw, for the courier-visible-share probe. */
   probeVisibility(hide: { courier: boolean; crowd: boolean; environment?: boolean; bars?: boolean }): number {
     this.probes?.setHidden(hide); this.update(1);
@@ -994,6 +997,12 @@ export class GameView implements Lifecycle {
       seeThrough.cover.value = 0;
       seeThrough.strength.value = subject ? 1 : 0;
       if (subject) projectReveal(this.camera, subject); else seeThrough.center.value.set(-10, -10);
+    }
+    if (this.probes?.solidCutLensPlacements) {
+      this.districts?.occlusion.probeLensCut(this.probes.solidCutLensPlacements);
+      // The reference contains only the allowed enclosing foreground: no
+      // subject disc, neighboring vehicles or small corpses may enlarge it.
+      seeThrough.solidRadius.value = 0;
     }
     if (this.probes?.solidCutOff) seeThrough.strength.value = 0;
     // Q-209: small-corpse piles dissolve around the courier on foot (vehicles keep their own .35 silhouette rule).
