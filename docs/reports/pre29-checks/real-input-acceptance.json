@@ -1,7 +1,7 @@
 {
-  "runtimeRevision": "01535155b91dc7e67ec323319ff9c02ea766a848",
+  "runtimeRevision": "4a7d04ef1a54d8982c09d7d16cbbe3924e60ed69",
   "runtimeTrees": {
-    "src": "afdd3cbfd88590ce2eb25c0d122987bf02d95c47",
+    "src": "41b5bad4bab81a8052a79210c446f94aba5b2a2d",
     "public": "c82ec2806c5bbaeb3cfd35c64c970eb13254faf4"
   },
   "driverRevision": "78b270a5835fa72a3dbd0b714dc0d55d9f606939",
@@ -17,7 +17,7 @@
   "rows": [
     {
       "level": "L8",
-      "evidence": "L8-packed",
+      "evidence": "L8-indexed",
       "finished": true,
       "segments": 1,
       "wallSeconds": 94,
@@ -110,10 +110,17 @@
     "npm run lint: pass",
     "npm run test:unit: 105/105 passed"
   ],
-  "loadStatus": "RED: L8 +7.62% low / +8.68% high; L10 passes +3.05% / +3.53%. Two-hour timebox exhausted; goal remains active.",
+  "loadStatus": "PASS: L8 +3.79% low / +1.14% high; L10 +0.63% low / +2.94% high.",
   "runtimeRevisionByLevel": {
-    "L8": "4b55bc1eb760784606a9420d3a32f5436cf561fb",
+    "L8": "4a7d04ef1a54d8982c09d7d16cbbe3924e60ed69",
     "L10": "01535155b91dc7e67ec323319ff9c02ea766a848"
   },
-  "L10PackingIsolation": "The final marker-table branch is used only by D-ZOO. D-CURE still follows the original base.traverse(reference) path, with unchanged L10 assets; its complete final-render run is retained under L10-final."
+  "L10PackingIsolation": "The final marker-table branch is used only by D-ZOO. D-CURE still follows the original base.traverse(reference) path, with unchanged L10 assets; its complete final-render run is retained under L10-final.",
+  "heightLookupEquivalence": {
+    "runtimeRevision": "4a7d04ef1a54d8982c09d7d16cbbe3924e60ed69",
+    "referenceRevision": "3a7305e9e",
+    "evidence": "height-equivalence.json",
+    "result": "All ten production worlds have exactly identical ordered height-edge objects. The only new runtime change since the complete L10 run indexes the loading-time solid lookup; output geometry and gameplay are unchanged. Fresh L8 full input run on this revision also passes."
+  },
+  "measuredRuntimeRevision": "4a7d04ef1a54d8982c09d7d16cbbe3924e60ed69"
 }

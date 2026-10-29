@@ -1,6 +1,6 @@
 | Level | WebGPU low n=5 median ms (28 → final) | WebGPU high n=1 ms (28 → final) |
 | --- | --- | --- |
-| L8 | 3943.6 → 4244.2 (+7.62%) | 4225.8 → 4592.7 (+8.68%) |
-| L10 | 4942.8 → 5093.5 (+3.05%) | 4693.8 → 4859.5 (+3.53%) |
+| L8 | 3959.5 → 4109.5 (+3.79%) | 4259.3 → 4307.7 (+1.14%) |
+| L10 | 4993.7 → 5025.1 (+0.63%) | 4559.3 → 4693.5 (+2.94%) |
 
-Full real-input frame/route gates pass (L10: 33 pre-fix checkpoint deaths, 2 P2 driver notes). L8 assets −812,093 B; six pixel-identical pairs; fixes committed on lane/pre29-checks. L8 load gate remains RED; two-hour timebox exhausted, goal active.
+Complete: full real-input frame/route gates pass (L10: 33 pre-fix checkpoint deaths, 2 P2 driver notes). L8 delivery −812,093 B; six pixel-identical pairs; exact height-edge collider index; validation 105/105. Committed on lane/pre29-checks; both temporary copies removed.
