@@ -13,6 +13,21 @@ export function heightSteps(world: DistrictWorld): HeightStep[] {
       const { min, max } = c.aabb;
       boundaries.push({ source: `${d.id}/${c.id}`, polygon: [[min[0], min[2]], [max[0], min[2]], [max[0], max[2]], [min[0], max[2]], [min[0], min[2]]] });
     }
+    if (!boundaries.length) continue;
+    // Only nearby solids can hide a boundary sample. Keep the original strict
+    // AABB test below; inclusive buckets also cover negative coordinates/seams.
+    const solids = new Map<number, Map<number, typeof d.decay.colliders>>();
+    for (const c of d.decay.colliders) if (!c.walkable) {
+      for (let x = Math.floor(c.aabb.min[0] / 8); x <= Math.floor(c.aabb.max[0] / 8); x++) {
+        let column = solids.get(x);
+        if (!column) solids.set(x, column = new Map());
+        for (let z = Math.floor(c.aabb.min[2] / 8); z <= Math.floor(c.aabb.max[2] / 8); z++) {
+          let bucket = column.get(z);
+          if (!bucket) column.set(z, bucket = []);
+          bucket.push(c);
+        }
+      }
+    }
     for (const { polygon, source } of boundaries) for (let i = 0; i < polygon.length; i++) {
       const a = polygon[i], b = polygon[(i + 1) % polygon.length], dx = b[0] - a[0], dz = b[1] - a[1], length = Math.hypot(dx, dz);
       if (length < 1e-6) continue;
@@ -29,7 +44,7 @@ export function heightSteps(world: DistrictWorld): HeightStep[] {
         const plus = world.pavingHeight(wx + nx * .08, wz + nz * .08), minus = world.pavingHeight(wx - nx * .08, wz - nz * .08);
         if (Math.abs(plus - minus) <= .30001) continue;
         // A step under a solid building is not an exposed walking edge.
-        if (d.decay.colliders.some(c => !c.walkable && c.aabb.max[1] > Math.max(plus, minus) + .3 && x > c.aabb.min[0] && x < c.aabb.max[0] && z > c.aabb.min[2] && z < c.aabb.max[2])) continue;
+        if (solids.get(Math.floor(x / 8))?.get(Math.floor(z / 8))?.some(c => c.aabb.max[1] > Math.max(plus, minus) + .3 && x > c.aabb.min[0] && x < c.aabb.max[0] && z > c.aabb.min[2] && z < c.aabb.max[2])) continue;
         const p: Point = [a[0] + dx * j / count + d.origin[0], a[1] + dz * j / count + d.origin[1]];
         const q: Point = [a[0] + dx * (j + 1) / count + d.origin[0], a[1] + dz * (j + 1) / count + d.origin[1]];
         const key = [p.map(n => n.toFixed(3)).join(','), q.map(n => n.toFixed(3)).join(',')].sort().join(':');

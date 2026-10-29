@@ -1,0 +1,76 @@
+{
+  "method": "Construct all ten production DistrictWorld compositions with their level-specific layout adapters and seed 2; deepStrictEqual optimized heightSteps(world) against the unmodified implementation from 3a7305e9e in the same process. Timings diagnostic only (Node), not load acceptance. Includes complete ordered segment objects, endpoints, heights, outward normals and sources.",
+  "referenceRevision": "3a7305e9e",
+  "rows": [
+    {
+      "level": "L1",
+      "segments": 821,
+      "exact": true,
+      "originalMs": 40.868041000000005,
+      "indexedMs": 3.662666999999999
+    },
+    {
+      "level": "L2",
+      "segments": 952,
+      "exact": true,
+      "originalMs": 50.418957999999975,
+      "indexedMs": 6.333208000000013
+    },
+    {
+      "level": "L3",
+      "segments": 2172,
+      "exact": true,
+      "originalMs": 326.3647500000002,
+      "indexedMs": 29.840999999999894
+    },
+    {
+      "level": "L4",
+      "segments": 1055,
+      "exact": true,
+      "originalMs": 46.548041999999896,
+      "indexedMs": 6.511833000000024
+    },
+    {
+      "level": "L5",
+      "segments": 1143,
+      "exact": true,
+      "originalMs": 55.53166699999997,
+      "indexedMs": 6.9191249999998945
+    },
+    {
+      "level": "L6",
+      "segments": 1664,
+      "exact": true,
+      "originalMs": 79.04337499999997,
+      "indexedMs": 60.09483400000022
+    },
+    {
+      "level": "L7",
+      "segments": 1995,
+      "exact": true,
+      "originalMs": 60.7335420000004,
+      "indexedMs": 15.42416699999967
+    },
+    {
+      "level": "L8",
+      "segments": 4943,
+      "exact": true,
+      "originalMs": 358.93829099999994,
+      "indexedMs": 27.52691700000014
+    },
+    {
+      "level": "L9",
+      "segments": 1832,
+      "exact": true,
+      "originalMs": 410.33387500000026,
+      "indexedMs": 179.13287500000024
+    },
+    {
+      "level": "L10",
+      "segments": 1666,
+      "exact": true,
+      "originalMs": 75.73708399999941,
+      "indexedMs": 4.253916000000572
+    }
+  ]
+}
