@@ -1055,7 +1055,9 @@ for i, p in enumerate(_r3_units):
     yaw = _r3_rng.uniform(-.13, .13) * (1 if i % 2 else -1)
     settle = _r3_rng.choice([0, -.025, -.045, -.07])
     asset = 'prop.sandbag-pallet' if i in (4, 11, 18, 25) else 'prop.dumpster' if i in (8, 22) else old_asset
-    p.update(assetId=asset, yaw=yaw)
+    # The continuous yard collider already contains every original compound box. Keep the
+    # replacement visuals out of compound/dynamic-prop collision so their transforms add no solids.
+    p.update(assetId=asset, yaw=yaw, decor=True)
     p['position'][1] = settle
     dims = l.manifest[asset]['dimensions']
     sx = abs(math.cos(yaw))*dims['x'] + abs(math.sin(yaw))*dims['z']
