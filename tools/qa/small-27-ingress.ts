@@ -5,7 +5,7 @@ import { pathToFileURL } from 'node:url';
 import { l5 } from '../../src/data/l5';
 
 const stage = process.argv[2] ?? 'before';
-const lines = readFileSync('test-results/small-27/l5-before-2/log-campaign.jsonl', 'utf8').trim().split('\n').map(line => JSON.parse(line));
+const lines = readFileSync(process.env.Q215_TRACE ?? 'test-results/small-27/l5-before-2/log-campaign.jsonl', 'utf8').trim().split('\n').map(line => JSON.parse(line));
 const sample = lines.find(line => line.metro?.metroAt)?.metro;
 const loader = process.env.Q215_BASELINE_ROOT ? pathToFileURL(resolve(process.env.Q215_BASELINE_ROOT, 'tools/sim-runner/l5Bots.ts')).href : '../sim-runner/l5Bots';
 const { loadL5 } = await import(loader) as typeof import('../sim-runner/l5Bots');
@@ -35,6 +35,12 @@ try {
   w.physics.playerBody!.setTranslation(player.transform, true); w.physics.playerBody!.setNextKinematicTranslation(player.transform);
   Object.assign(w.previousPlayer!, player.transform); w.spatial.set(1, player.transform.x, player.transform.z);
   s.metroAt = w.tick; s.phase = 'metro';
+  if (process.argv.includes('--queue')) {
+    const dog = w.entities.get(w.npcs!.companion.spawn())!;
+    Object.assign(dog.transform, { x: 37.77191, z: -49.34055, y: .975 });
+    Object.assign(dog.companion!, { state: 'follow', following: false, velocity: { x: 0, z: 0 }, pickup: null });
+    w.spatial.set(dog.id, dog.transform.x, dog.transform.z);
+  }
   if (combat) {
     const id = w.infected!.spawn('infected.alpha', { x: 43, z: -34 });
     w.entities.get(id)!.infected!.territory = { x: 43, z: -34, radius: l5.infected.leashM };

@@ -672,7 +672,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         const metro = await page.evaluate(() => {
           const g = (window.__SCENE__ as unknown as { game: Game }).game, w = g.world, s = w.missions!.state.l5!;
           return { tick: w.tick, phase: s.phase, metroAt: s.metroAt, shutterAt: s.shutterAt, text: w.missions!.l5!.metroStatus(), player: { ...w.entities.get(1)!.transform },
-            survivors: s.survivors.map(r => { const actor = w.entities.get(r.id)!; return { key: r.key, status: r.status, transform: { ...actor.transform }, civilian: actor.civilian, locomotion: actor.locomotion }; }) };
+            companion: [...w.entities.iterate()].filter(actor => actor.companion).map(actor => ({ transform: { ...actor.transform }, companion: actor.companion })),
+            survivors: s.survivors.map(r => { const actor = w.entities.get(r.id)!; return { key: r.key, status: r.status, transform: { ...actor.transform }, ingress: w.missions!.l5!.ingress(actor), civilian: actor.civilian, locomotion: actor.locomotion }; }) };
         });
         log({ metro });
         const shot = metro.shutterAt ? 'closed' : metro.metroAt ? metro.tick - metro.metroAt >= 600 ? 'waiting-10s' : 'arrival' : null;
