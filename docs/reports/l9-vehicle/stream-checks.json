@@ -1,0 +1,564 @@
+{
+  "baseline": {
+    "apc": {
+      "entity": 2,
+      "position": [
+        370.984,
+        -327.855
+      ],
+      "yawDeg": 156.9,
+      "yawRateMaxDegS": 82.72454459110197,
+      "bodyOverlaps": 2137,
+      "tiltMaxDeg": 1.8,
+      "tiltFrame": 2816,
+      "slipMaxDeg": 80.1,
+      "slipFrame": 1575,
+      "driven": true,
+      "headlightsDarkFrames": 0,
+      "firstDarkFrame": -1,
+      "rideRemainingM": null,
+      "health": 990,
+      "decay": null,
+      "speed": 0.49
+    },
+    "consoleErrors": [],
+    "checks": {
+      "pass": false,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "clipping",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 64,
+          "limit": 300
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 162307,
+          "limit": 500000
+        },
+        {
+          "name": "wheelSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 2
+        },
+        {
+          "name": "wheelFloatMaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 2.5
+        },
+        {
+          "name": "wheelSpikeMaxCm",
+          "pass": true,
+          "value": 0.7,
+          "limit": 3
+        },
+        {
+          "name": "vehicleTiltMaxDeg",
+          "pass": true,
+          "value": 1.8,
+          "limit": 8
+        },
+        {
+          "name": "vehicleSlipMaxDeg",
+          "pass": false,
+          "value": 80.1,
+          "limit": 20
+        },
+        {
+          "name": "headlightsDarkFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "canvas.f0.varianceMin",
+          "pass": true,
+          "value": 938.1392528335009,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f0.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f300.varianceMin",
+          "pass": true,
+          "value": 1330.8606674739913,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f300.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f600.varianceMin",
+          "pass": true,
+          "value": 1333.5130428192515,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f600.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f900.varianceMin",
+          "pass": true,
+          "value": 1378.3728273738752,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f900.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f1200.varianceMin",
+          "pass": true,
+          "value": 1289.9747365771545,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f1200.variedTilesMin",
+          "pass": true,
+          "value": 62,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f1500.varianceMin",
+          "pass": true,
+          "value": 1492.4018639295791,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f1500.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f1800.varianceMin",
+          "pass": true,
+          "value": 1276.2614706063732,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f1800.variedTilesMin",
+          "pass": true,
+          "value": 61,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f2100.varianceMin",
+          "pass": true,
+          "value": 1146.561490266491,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f2100.variedTilesMin",
+          "pass": true,
+          "value": 62,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f2400.varianceMin",
+          "pass": true,
+          "value": 1257.404063788148,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f2400.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f2700.varianceMin",
+          "pass": true,
+          "value": 1319.1888199908644,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f2700.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f3000.varianceMin",
+          "pass": true,
+          "value": 1506.2933719134471,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f3000.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f3300.varianceMin",
+          "pass": true,
+          "value": 1102.0609052291366,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f3300.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f3600.varianceMin",
+          "pass": true,
+          "value": 862.2501670725578,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f3600.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f3900.varianceMin",
+          "pass": true,
+          "value": 886.8295236938643,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f3900.variedTilesMin",
+          "pass": true,
+          "value": 61,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f4200.varianceMin",
+          "pass": true,
+          "value": 1099.8272191765118,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f4200.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    }
+  },
+  "stream-fixed": {
+    "apc": {
+      "entity": 2,
+      "position": [
+        250.921,
+        -329.943
+      ],
+      "yawDeg": 0.8,
+      "yawRateMaxDegS": 4.155243779125707,
+      "bodyOverlaps": 22,
+      "tiltMaxDeg": 1.9,
+      "tiltFrame": 1912,
+      "slipMaxDeg": 0.4,
+      "slipFrame": 1899,
+      "driven": true,
+      "headlightsDarkFrames": 0,
+      "firstDarkFrame": -1,
+      "rideRemainingM": null,
+      "health": 990,
+      "decay": null,
+      "speed": 0
+    },
+    "consoleErrors": [],
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "clipping",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 65,
+          "limit": 300
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 164707,
+          "limit": 500000
+        },
+        {
+          "name": "wheelSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 2
+        },
+        {
+          "name": "wheelFloatMaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 2.5
+        },
+        {
+          "name": "wheelSpikeMaxCm",
+          "pass": true,
+          "value": 0.4,
+          "limit": 3
+        },
+        {
+          "name": "vehicleTiltMaxDeg",
+          "pass": true,
+          "value": 1.9,
+          "limit": 8
+        },
+        {
+          "name": "vehicleSlipMaxDeg",
+          "pass": true,
+          "value": 0.4,
+          "limit": 20
+        },
+        {
+          "name": "headlightsDarkFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "canvas.f0.varianceMin",
+          "pass": true,
+          "value": 967.9980327641815,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f0.variedTilesMin",
+          "pass": true,
+          "value": 56,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f300.varianceMin",
+          "pass": true,
+          "value": 1446.4829373427629,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f300.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f600.varianceMin",
+          "pass": true,
+          "value": 1539.6277173496665,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f600.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f900.varianceMin",
+          "pass": true,
+          "value": 1364.4936069937412,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f900.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f1200.varianceMin",
+          "pass": true,
+          "value": 1461.2092055389394,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f1200.variedTilesMin",
+          "pass": true,
+          "value": 62,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f1500.varianceMin",
+          "pass": true,
+          "value": 1309.5724025779982,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f1500.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f1800.varianceMin",
+          "pass": true,
+          "value": 1302.1627845159246,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f1800.variedTilesMin",
+          "pass": true,
+          "value": 62,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f2100.varianceMin",
+          "pass": true,
+          "value": 1413.2464642424084,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f2100.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f2400.varianceMin",
+          "pass": true,
+          "value": 1415.5785998853153,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f2400.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f2700.varianceMin",
+          "pass": true,
+          "value": 1412.7150784971072,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f2700.variedTilesMin",
+          "pass": true,
+          "value": 62,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f3000.varianceMin",
+          "pass": true,
+          "value": 1416.9167424544657,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f3000.variedTilesMin",
+          "pass": true,
+          "value": 61,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f3300.varianceMin",
+          "pass": true,
+          "value": 1412.1506874689067,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f3300.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f3600.varianceMin",
+          "pass": true,
+          "value": 1416.845918618359,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f3600.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f3900.varianceMin",
+          "pass": true,
+          "value": 1414.2658279530833,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f3900.variedTilesMin",
+          "pass": true,
+          "value": 63,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f4200.varianceMin",
+          "pass": true,
+          "value": 1417.5509266771523,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f4200.variedTilesMin",
+          "pass": true,
+          "value": 62,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    }
+  }
+}
