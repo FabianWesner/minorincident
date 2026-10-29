@@ -1,10 +1,13 @@
-import { InstancedMesh, Matrix4, type BufferGeometry, type Material } from 'three/webgpu';
+import { InstancedBufferAttribute, InstancedMesh, Matrix4, type BufferGeometry, type Material } from 'three/webgpu';
+import { PaletteMaterial } from './PaletteMaterial';
+import { staticInstanceAttributes } from './StaticInstanceAttributes';
 
 /** Keep every perimeter post, but traverse/cull nearby posts together. Spatial
  * batches avoid submitting the whole town's fence at one camera.
  * Cell size (10-20, level handover): three builds one node graph per InstancedMesh (its cache key carries the object
  * uuid), so every cell costs a shader build at level load: 16 m cells meant 252 builds in L9 and 536 in L10, about a
- * third of those levels' loading-screen time. 128 m cells draw the same posts with 4-8x fewer builds and still skip far fences. */
+ * third of those levels' loading-screen time. 128 m cells retain spatial culling;
+ * named placement attributes now let every cell share its material's node graph. */
 export const perimeterCellSize = 128;
 export function batchPerimeterPosts(points: readonly [number, number, number][], geometry: BufferGeometry, material: Material): InstancedMesh[] {
   const cells = new Map<string, [number, number, number][]>();
@@ -14,10 +17,15 @@ export function batchPerimeterPosts(points: readonly [number, number, number][],
     cell.push(point);
   }
   const matrix = new Matrix4();
+  if (material instanceof PaletteMaterial) material.userData.batchFeatures = 'perimeter-posts';
   return [...cells.values()].map(cell => {
     const mesh = new InstancedMesh(geometry, material, cell.length);
     mesh.name = 'perimeter-posts'; mesh.castShadow = false; mesh.receiveShadow = true;
     cell.forEach((point, i) => mesh.setMatrixAt(i, matrix.makeTranslation(...point)));
+    if (material instanceof PaletteMaterial) {
+      mesh.instanceColor = new InstancedBufferAttribute(new Float32Array(cell.length * 3).fill(1), 3);
+      staticInstanceAttributes(mesh);
+    }
     mesh.instanceMatrix.needsUpdate = true; mesh.computeBoundingSphere(); mesh.matrixAutoUpdate = false;
     return mesh;
   });

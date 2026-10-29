@@ -63,7 +63,7 @@ export class DistrictParts {
     for (const b of this.batches) b.dispose();
     for (const b of this.dressingBatches) b.dispose(); this.dressingBatches.length = 0;
     for (const g of this.grass) g.dispose();
-    for (const mesh of this.perimeterPosts) mesh.dispose(); this.perimeterPosts.length = 0;
+    for (const mesh of this.perimeterPosts) { if (mesh.userData.staticInstanceAttributes) mesh.geometry.dispose(); mesh.dispose(); } this.perimeterPosts.length = 0;
     for (const g of this.ownedGeometry) g.dispose();
     for (const m of this.ownedMaterials) m.dispose();
     for (const t of this.textures) t.dispose();

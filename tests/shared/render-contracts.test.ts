@@ -26,6 +26,7 @@ import { installTextureBindingIdentity } from '../../src/render/Renderer';
 import { crowdSurfaceBindings } from '../../src/render/characters/crowdTexture';
 import { addHighwayRailJoints } from '../../src/assets/highwayRailJoints';
 import { InstancedGroup } from '../../src/render/InstancedGroup';
+import { batchPerimeterPosts } from '../../src/render/PerimeterPosts';
 import { skinnedBrow } from '../../src/render/characters/headMeasurements';
 import { characterNodes } from '../../src/data/survivor';
 
@@ -33,10 +34,12 @@ import { characterNodes } from '../../src/data/survivor';
 const CROWD = { attributes: 14, buffers: 7 };
 const deathFrame = () => infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1;
 
-test('streamed highway joints reuse the static placement and shadow graph across LODs', () => {
+test('highway joints and perimeter cells reuse the static placement and shadow graph', () => {
   const lighting = new Lighting(new Scene()), shading = new Materials(lighting), material = shading.fromColor('joint', new Color('#999996'), 0, true);
   const root = new Group(), geometries = addHighwayRailJoints(root, material);
   const a = new InstancedGroup(root, [new Object3D()]), b = new InstancedGroup(root, [new Object3D()]);
+  const postGeometry = new BoxGeometry(.16, 1.05, .16), points: [number, number, number][] = [[-129, .525, 3], [-128, .525, 3], [-127, .525, 3], [128, .525, -3]];
+  const posts = batchPerimeterPosts(points, postGeometry, shading.get('woodWarm'));
   try {
     expect(a.children).toHaveLength(2);
     a.children.forEach((child, index) => {
@@ -48,7 +51,19 @@ test('streamed highway joints reuse the static placement and shadow graph across
       expect(mesh.castShadow && mesh.receiveShadow).toBe(true);
       expect(mesh.geometry.index!.count).toBe(36);
     });
-  } finally { a.dispose(); b.dispose(); for (const geometry of geometries) geometry.dispose(); shading.dispose(); lighting.dispose(); }
+    expect(posts.map(mesh => mesh.count)).toEqual([1, 2, 1]);
+    expect(new Set(posts.map(mesh => mesh.material)).size).toBe(1);
+    let index = 0;
+    for (const mesh of posts) {
+      expect(mesh.userData.staticInstanceAttributes).toBe(true);
+      expect(mesh.castShadow).toBe(false); expect(mesh.receiveShadow).toBe(true);
+      expect(mesh.geometry.index!.array).toBe(postGeometry.index!.array);
+      const placement = mesh.geometry.getAttribute('_placement3');
+      for (let i = 0; i < mesh.count; i++) expect([placement.getX(i), placement.getY(i), placement.getZ(i)]).toEqual(points[index++].map(Math.fround));
+      expect(Array.from(mesh.instanceColor!.array)).toEqual(Array(mesh.count * 3).fill(1));
+    }
+    expect(posts[0].geometry.getAttribute('_placement0')).not.toBe(posts[1].geometry.getAttribute('_placement0'));
+  } finally { a.dispose(); b.dispose(); for (const mesh of posts) { mesh.geometry.dispose(); mesh.dispose(); } postGeometry.dispose(); for (const geometry of geometries) geometry.dispose(); shading.dispose(); lighting.dispose(); }
 });
 
 test('a held cane reaches the floor across rig scales without moving its fitted grip', () => {
