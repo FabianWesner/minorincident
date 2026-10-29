@@ -4,6 +4,7 @@ import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { ContactCells } from '../spatial/SpatialHash';
 import { SimPhase } from '../../core/EventBus';
+import { FIXED_DT } from '../../core/Clock';
 
 /** Human-sized infected contact spacing; larger bodies reserve their extra radius as well. */
 export const meleeRing = 1.08;
@@ -45,7 +46,11 @@ export function installCharacterSeparation(world: SimWorld): void {
     let bodyCount = 0, maximumRadius = 0;
     // The stationary courier may yield to her own followers at the Metro mouth.
     // Otherwise her solid body seals the only route around a stationary intruder.
-    const yieldCourier = !!world.missions?.state.l5?.metroAt && !world.inputFrame.move.x && !world.inputFrame.move.z && !world.inputFrame.moveTarget && !world.inputFrame.attackTarget;
+    const courier = world.entities.get(1)!, previous = world.previousPlayer;
+    // A blocked click route still supplies movement intent. Use the resolved
+    // physical step so that command cannot pin the courier across the queue.
+    const courierMoving = !previous || Math.hypot(courier.transform.x - previous.x, courier.transform.z - previous.z) > .1 * FIXED_DT;
+    const yieldCourier = !!world.missions?.state.l5?.metroAt && !courierMoving && !world.inputFrame.attackTarget;
     const drivenHull = world.vehicles?.active == null ? undefined : world.vehicles.cars.get(world.vehicles.active)?.physics;
     for (const e of world.entities.iterate()) {
       const r = spacingRadius(e, world); if (!r) continue;

@@ -25,7 +25,7 @@ export function updateSurvivor(world: SimWorld, e: EntitySnapshot): boolean {
   c.supportFeet = !!ingress;
   if (ingress) {
     s.cover = false;
-    if (c.story?.clip === 'npc-cower') c.story = null;
+    if (c.story?.clip === 'npc-cower' || c.story?.clip === 'shoot' || c.story?.clip === 'swing') c.story = null;
     if (dist(me, ingress) > .15) world.npcs!.move(e, ingress, f.runMs, c, .1);
     world.spatial.set(e.id, me.x, me.z);
     return true;
@@ -57,7 +57,10 @@ export function updateSurvivor(world: SimWorld, e: EntitySnapshot): boolean {
     const length = Math.hypot(toward.x, toward.z) || 1;
     const hx = toward.x / length, hz = toward.z / length, back = f.minM + .3 + .55 * slot, side = (slot % 2 ? 1 : -1) * (.9 + .5 * Math.floor(slot / 2));
     const target = { x: p.x - hx * back - hz * side, z: p.z - hz * back + hx * side };
-    if (world.infected!.nav.clear(target.x, target.z, .35)) { goal = target; reach = .5; }
+    const nav = world.infected!.nav;
+    // Match allied followers: a clear slot beyond a wreck is not a reachable
+    // formation slot. Follow the courier's line until both segments are clear.
+    if (nav.clear(target.x, target.z, .35) && nav.visible(me, target, .35) && nav.visible(target, p, .35)) { goal = target; reach = .5; }
   }
   if (goal === p ? d > stop + .8 : dist(me, goal) > reach + .4) {
     const toGoal = dist(me, goal), speedMs = d > f.maxM || toGoal > 3 ? f.runMs : f.walkMs;

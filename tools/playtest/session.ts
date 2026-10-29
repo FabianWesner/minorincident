@@ -63,6 +63,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   })();`);
   const issues: Issue[] = [], runs: LevelRun[] = [], consoleSeen = new Set<string>();
   let eyes: Eyes | null = null;
+  const metroShots = new Set<string>();
   const capture = async (name: string): Promise<string> => {
     const file = `captures/${o.tag}-${name.replace(/[^a-z0-9-]+/gi, '-')}.jpg`;
     try { await page.screenshot({ path: join(o.out, file), type: 'jpeg', quality: 72 }); } catch { /* page busy */ }
@@ -672,6 +673,17 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     }
     if(Date.now()-lastObservation>=1000) {
       lastObservation=Date.now();log({observation:{tick:e.tick,step:e.step,checkpoint:e.checkpoint,menu:e.menu,text:e.objective,player:e.player?{x:e.player.x,z:e.player.z,hp:e.player.hp,weapon:e.player.current}:null,enemies:e.enemies.map(b=>({id:b.id,d:b.d,hp:b.hp,max:b.max})),...(e.level==='L6'?{allies:e.allies.filter(b=>b.drawn&&b.hp>0&&!b.corpse).map(b=>({id:b.id,x:b.x,z:b.z,hp:b.hp,kind:b.kind}))}:{}),marker:ring,noProgressSeconds:observed.seconds}});
+      if (e.level === 'L5' && process.env.PLAYTEST_METRO_AUDIT === '1') {
+        const metro = await page.evaluate(() => {
+          const g = (window.__SCENE__ as unknown as { game: Game }).game, w = g.world, s = w.missions!.state.l5!;
+          return { tick: w.tick, phase: s.phase, metroAt: s.metroAt, shutterAt: s.shutterAt, text: w.missions!.l5!.metroStatus(), input: { effective: w.inputFrame, device: w.deviceInput }, player: { ...w.entities.get(1)!.transform },
+            companion: [...w.entities.iterate()].filter(actor => actor.companion).map(actor => ({ transform: { ...actor.transform }, companion: actor.companion })),
+            survivors: s.survivors.map(r => { const actor = w.entities.get(r.id)!; return { key: r.key, status: r.status, transform: { ...actor.transform }, ingress: w.missions!.l5!.ingress(actor), civilian: actor.civilian, locomotion: actor.locomotion }; }) };
+        });
+        log({ metro });
+        const shot = metro.shutterAt ? 'closed' : metro.metroAt ? metro.tick - metro.metroAt >= 600 ? 'waiting-10s' : 'arrival' : null;
+        if (shot && !metroShots.has(shot)) { metroShots.add(shot); await capture(`metro-${shot}`); }
+      }
       if (e.level === 'L4' || process.env.PLAYTEST_COMBAT_AUDIT === '1') {
         const damage = await page.evaluate(() => {
           const observation = window as unknown as { __playtestDamage?: unknown[] };
