@@ -52,7 +52,8 @@ function subwayDecor(): Spot[] {
     out.push({ asset: k < .6 ? 'decay.dropped-belongings' : 'prop.pallet', x, z: 15 + side * (1.8 + o * .3), y: L6Y.bed, yaw, scale: .85 });
   }
   for (const cx of l6Camps) out.push(
-    { asset: 'prop.carpet', x: cx, z: 17.75, y: L6Y.walk, yaw: Math.PI / 2, scale: 1.3 },
+    // Rolled sleeping bag: keep it low and compact beside the luggage.
+    { asset: 'prop.carpet', x: cx, z: 17.75, y: L6Y.walk, yaw: Math.PI / 2, scale: .7 },
     { asset: 'decay.dropped-belongings', x: cx + 1.5, z: 17.95, y: L6Y.walk, yaw: Math.PI + .3 },
     { asset: 'prop.folding-chair', x: cx - 1.4, z: 17.6, y: L6Y.walk, yaw: -.6 },
     { asset: 'prop.medical-cooler', x: cx + 2.6, z: 18.05, y: L6Y.walk, yaw: Math.PI });

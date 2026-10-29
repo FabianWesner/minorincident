@@ -305,13 +305,15 @@ export function accentPulse(a: Pick<Accent, 'flicker' | 'strobe' | 'seed'>, time
   return k;
 }
 
-const sizes: Record<Accent['kind'], [number, number, number]> = { stud: [.3, .05, .16], flare: [.34, .06, .06], lantern: [.16, .24, .16], hazard: [.2, .14, .2], beacon: [.22, .22, .22] };
+const sizes: Record<Accent['kind'], [number, number, number]> = { stud: [.3, .05, .16], flare: [.34, .06, .06], lantern: [.2, .3, .2], hazard: [.2, .14, .2], beacon: [.22, .22, .22] };
 
 /** All accent emitters in two instanced draws: studs (glint with the local light field, so headlights wake them) and the
  * self-lit flares, lanterns, hazard and beacon lamps (HDR for the bloom; colours pulse with their pools). */
 export class NightAccents extends Group {
   private readonly studs?: InstancedMesh;
   private readonly lamps?: InstancedMesh;
+  private readonly lanternBody?: InstancedMesh;
+  private readonly lanternHandle?: InstancedMesh;
   private readonly animated: { index: number; accent: Accent }[] = [];
   private readonly color = new Color();
   constructor(readonly set: AccentSet, field: LightField) {
@@ -335,6 +337,19 @@ export class NightAccents extends Group {
     if (lamps.length) {
       const material = new MeshBasicNodeMaterial({ fog: false }); material.name = 'keep_accentLamp';
       this.lamps = build(lamps, material);
+      const lanterns = lamps.filter(a => a.kind === 'lantern');
+      const detail = (geometry: BoxGeometry, dims: [number, number, number], y: number, color: string) => {
+        if (!lanterns.length) return undefined;
+        const mesh = new InstancedMesh(geometry, material, lanterns.length); mesh.count = lanterns.length;
+        lanterns.forEach((a, i) => {
+          mesh.setMatrixAt(i, matrix.compose(new Vector3(a.x, a.y + y, a.z), q.setFromAxisAngle(up, a.yaw), new Vector3(...dims)));
+          mesh.setColorAt(i, this.color.set(color).multiplyScalar(1.15));
+        });
+        mesh.computeBoundingSphere(); mesh.castShadow = mesh.receiveShadow = false; this.add(mesh); return mesh;
+      };
+      // Distinct dark frame and handle make the warm glass read as a storm lantern at gameplay zoom.
+      this.lanternBody = detail(geometry, [.3, .06, .27], -.16, '#28201a');
+      this.lanternHandle = detail(geometry, [.27, .035, .035], .19, '#51402b');
       lamps.forEach((accent, index) => { if (accent.flicker || accent.strobe) this.animated.push({ index, accent }); });
     }
   }
@@ -346,7 +361,8 @@ export class NightAccents extends Group {
   }
   snapshot() { return { studs: this.studs?.count ?? 0, lamps: this.lamps?.count ?? 0, fires: this.set.fires.length }; }
   dispose(): void {
-    for (const mesh of [this.studs, this.lamps]) if (mesh) { (mesh.material as MeshBasicNodeMaterial).dispose(); mesh.dispose(); }
+    for (const mesh of [this.studs, this.lamps, this.lanternBody, this.lanternHandle]) if (mesh) mesh.dispose();
+    ((this.lamps ?? this.studs)?.material as MeshBasicNodeMaterial | undefined)?.dispose();
     (this.studs ?? this.lamps)?.geometry.dispose(); this.clear();
   }
 }
