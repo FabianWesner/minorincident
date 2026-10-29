@@ -1,6 +1,8 @@
 # N28-01 / N28-02: L5 metro visual contacts
 
-Base: main `ee620be74`, frozen QA build; WebGPU high, all three catalog zooms. Scene: `tests/scenes/catalog/collision-l5-metro-ingress.json` (five production aftermath followers, production queue coordinates, shutter closure, 720 fixed ticks).
+Base: main `ee620be74`, frozen QA build; WebGPU high and low, all three catalog zooms. Scene: `tests/scenes/catalog/collision-l5-metro-ingress.json` (five production aftermath followers, production queue coordinates, shutter closure, 720 fixed ticks).
+
+Tracked as [GitHub #1](https://github.com/FabianWesner/minorincident/issues/1) (arm/wall) and [GitHub #2](https://github.com/FabianWesner/minorincident/issues/2) (cane/hand).
 
 | Follow-up | Classification | Evidence | Scope of repair |
 | --- | --- | --- | --- |
@@ -9,7 +11,7 @@ Base: main `ee620be74`, frozen QA build; WebGPU high, all three catalog zooms. S
 
 [Exact per-row receipts](../evidence/l5-metro-clipping.json), [reviewed contact sheet](../evidence/l5-metro-sheet.jpg). Full local metrics and sheets remain under `test-results/scene-nightly/webgpu-high-23/collision-l5-metro-ingress@high-z*/`.
 
-All three rows fail only `clippingMax: 0`. Their travel, body-overlap, collision-failure/pending, rendering and console gates pass. The same semantic contacts occur at all three zooms, so this is not classified as a flaky browser failure. These records do not claim a full campaign timing failure.
+All six rows fail only `clippingMax: 0`. Their travel, body-overlap, collision-failure/pending, rendering and console gates pass. The low-tier run exactly reproduces the high-tier bone coordinates and frame counts. The same semantic contacts occur at all three zooms, so this is not classified as a flaky browser failure. These records do not claim a full campaign timing failure.
 
 Reproduce (headless, shared pool, private port):
 
