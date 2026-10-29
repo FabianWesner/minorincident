@@ -251,6 +251,18 @@ export function cureAccents(placements: readonly Placement[], origin: P2 = [0, 0
       for (const [i, lz] of [-.38, .38].entries()) put({ kind: 'beacon', x: x + lz * s, y: h * .98, z: z + lz * c, yaw: p.yaw, color: i ? '#2f6bff' : '#ff2a1a', glow: 9, flicker: 0, strobe: true, seed: ph + i * .5, pool: { color: i ? 'light_siren_blue' : 'light_siren_red', intensity: 2.8, range: 4.2 } });
     }
   }
+  // 4) Night fields (look-l10-l8-2): abandoned field camps keep a campfire and a lantern, cars that left the road still burn. All
+  // >= 12.5 m from the route centre line (lane > 8.5), so no pool reaches the E31-AC16 verge sample; same story/console clearances.
+  for (const p of placements) {
+    if (!p.fieldLight || p.fieldLight === 'flood') continue;
+    const [x, , z] = p.position;
+    if (p.fieldLight === 'wreckfire') { if (ok(x, z, 8.5)) fires.push({ x: x + origin[0], z: z + origin[1], radius: 1.3, car: true }); continue; }
+    const [fx, fz] = p.fireAt ?? [x, z];
+    if (!ok(fx, fz, 8.5)) continue;
+    fires.push({ x: fx + origin[0], z: fz + origin[1], radius: .6, car: false, life: true });
+    const h = (dims.get(p.assetId)?.y ?? 1) * p.scale[1];
+    if (ok(x, z, 9)) put({ kind: 'lantern', x, y: Math.min(1.6, h * .8), z, yaw: 0, color: '#ffc070', glow: 8, flicker: 1, strobe: false, pool: { color: 'light_window_warm', intensity: 3.8, range: 4.5 } });
+  }
   return { points, fires };
 }
 

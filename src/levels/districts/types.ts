@@ -48,6 +48,9 @@ export interface Placement extends PlacementTransform {
   decorLights?: boolean;
   /** Road-life dressing (L10): its night light points are drawn by NightAccents.cureAccents. */
   roadLife?: boolean;
+  /** Field dressing (L10 look-l10-l8-2): `camp` lights a campfire at `fireAt` and a lantern, `wreckfire` keeps the wreck burning; drawn by NightAccents.cureAccents. */
+  fieldLight?: 'camp' | 'wreckfire' | 'flood';
+  fireAt?: [number, number];
   id: string;
   assetId: string;
   /** Optional baked collision record; visuals still use assetId (L2 annex rubble opts in without rebaking L5). */

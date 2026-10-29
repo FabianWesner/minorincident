@@ -1,0 +1,63 @@
+{
+ "name": "look-l8-habitats-lion",
+ "note": "look-l10-l8-2 (QA batch 26: \"L8 is mostly APC and dark lawn\"): L8 central path along the lion paddock: sand floor, river-kit rocks, shade tree; grass verges, park trees, shrubs and flower drifts on the public lawn. Look for: ground that reads as a place, warm pools off the route verge, nothing floating or sunk, no clipping, no flicker.",
+ "seed": 8,
+ "ground": "district",
+ "time": "L8-zoo",
+ "dof": false,
+ "layout": {
+  "district": "D-ZOO",
+  "bbox": [
+   [
+    -142,
+    -77
+   ],
+   [
+    38,
+    63
+   ]
+  ]
+ },
+ "camera": {
+  "mode": "game",
+  "target": "courier",
+  "zoom": 1.5
+ },
+ "frames": 200,
+ "shots": [
+  199
+ ],
+ "sheet": 50,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -62,
+    -7
+   ]
+  }
+ ],
+ "script": [
+  {
+   "frame": 0,
+   "actor": "courier",
+   "do": {
+    "run": [
+     [
+      -42,
+      -7
+     ]
+    ]
+   }
+  }
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000
+ }
+}

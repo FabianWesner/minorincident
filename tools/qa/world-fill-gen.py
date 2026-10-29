@@ -20,9 +20,17 @@ L9 = [
     ('l9-countryside', (100, 240), (140, 240), 'L9 countryside gravel lane: hedgerows, field fences, farm stock, trees.'),
     ('l9-dry', (-205, -30), (-165, -30), 'L9 dry shortcut: scrub, wrecks, barriers, poles beside the gravel.'),
 ]
+L8 = [  # look-l10-l8-2: inside the sanctuary, the courier walks the public paths (the L8 level is all on foot until boarding)
+    ('l8-zoo-plaza', (-30, 64), (10, 64), 'L8 arrival plaza and the south loop: lawns, beds, kiosks and lamps either side of the path.'),
+    ('l8-zoo-west', (-96, 20), (-96, -20), 'L8 west loop between the wall and the lion/elephant enclosures: lawn, trees, enclosure dressing.'),
+    ('l8-zoo-centre', (-30, 0), (10, 0), 'L8 central path past the reptile house and the flamingo pond.'),
+    ('l8-zoo-north', (-40, -64), (0, -64), 'L8 north loop past the lion and flamingo enclosures.'),
+    ('l8-zoo-east', (96, -10), (96, 30), 'L8 east loop past the gorilla/zebra enclosures towards the staff lodge.'),
+    ('l8-zoo-vehicle', (60, 64), (92, 70), 'L8 walk to the armored vehicle at the east gate.'),
+]
 COMMON = 'Look for roadside mass in every frame within ~4-12 m of the road edge (no flat dark plane), nothing on the lane, no floating or sunk props, no clipping, no flicker.'
 os.makedirs(out, exist_ok=True)
-for district, time, seed, stations, actor in (('D-CURE', 'L10-night', 32, L10, 'courier'), ('D-CROSSING', 'L9-crossing', 31, L9, 'apc')):
+for district, time, seed, stations, actor in (('D-CURE', 'L10-night', 32, L10, 'courier'), ('D-CROSSING', 'L9-crossing', 31, L9, 'apc'), ('D-ZOO', 'L8-zoo', 8, L8, 'courier')):
     for name, (x, z), (tx, tz), note in stations:
         d = math.hypot(tx - x, tz - z); ux, uz = (tx - x) / d, (tz - z) / d
         for zoom in zooms:
@@ -42,4 +50,4 @@ for district, time, seed, stations, actor in (('D-CURE', 'L10-night', 32, L10, '
                 spec['vehicles'] = [{'id': 'apc', 'asset': 'vehicle.military-apc', 'at': [x, z], 'yaw': round(math.degrees(math.atan2(-uz, ux)), 2), 'path': [[tx, tz]], 'health': 1000, 'floor': True, 'driven': True}]
             json.dump(spec, open(os.path.join(out, spec['name'] + '.json'), 'w'), indent=1)
             open(os.path.join(out, spec['name'] + '.json'), 'a').write('\n')
-print((len(L10) + len(L9)) * len(zooms), 'specs in', out)
+print((len(L10) + len(L9) + len(L8)) * len(zooms), 'specs in', out)
