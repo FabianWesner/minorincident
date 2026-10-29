@@ -1,0 +1,564 @@
+{
+  "high": {
+    "spec": {
+      "name": "q231-l1-falls",
+      "seed": 1,
+      "ground": "district",
+      "time": "L1",
+      "dof": false,
+      "layout": {
+        "district": "D-GROVE",
+        "bbox": [
+          [
+            -90,
+            30
+          ],
+          [
+            -60,
+            56
+          ]
+        ]
+      },
+      "actors": [
+        {
+          "id": "courier",
+          "kind": "courier",
+          "at": [
+            -70,
+            46
+          ],
+          "god": true
+        },
+        {
+          "id": "inf.common-worker",
+          "kind": "infected",
+          "archetype": "infected.runner",
+          "at": [
+            -74,
+            42
+          ],
+          "yaw": -45,
+          "state": "idle",
+          "look": {
+            "model": "inf.common-worker"
+          }
+        },
+        {
+          "id": "inf.jogger",
+          "kind": "infected",
+          "archetype": "infected.runner",
+          "at": [
+            -72.7,
+            42
+          ],
+          "yaw": -45,
+          "state": "idle",
+          "look": {
+            "model": "inf.jogger"
+          }
+        },
+        {
+          "id": "inf.cashier",
+          "kind": "infected",
+          "archetype": "infected.runner",
+          "at": [
+            -71.4,
+            42
+          ],
+          "yaw": -45,
+          "state": "idle",
+          "look": {
+            "model": "inf.cashier"
+          }
+        },
+        {
+          "id": "inf.delivery-driver",
+          "kind": "infected",
+          "archetype": "infected.runner",
+          "at": [
+            -70.1,
+            42
+          ],
+          "yaw": -45,
+          "state": "idle",
+          "look": {
+            "model": "inf.delivery-driver"
+          }
+        },
+        {
+          "id": "inf.suburban-mom",
+          "kind": "infected",
+          "archetype": "infected.runner",
+          "at": [
+            -74,
+            43.7
+          ],
+          "yaw": -45,
+          "state": "idle",
+          "look": {
+            "model": "inf.suburban-mom"
+          }
+        },
+        {
+          "id": "inf.bbq-dad",
+          "kind": "infected",
+          "archetype": "infected.runner",
+          "at": [
+            -72.7,
+            43.7
+          ],
+          "yaw": -45,
+          "state": "idle",
+          "look": {
+            "model": "inf.bbq-dad"
+          }
+        },
+        {
+          "id": "inf.bathrobe-neighbor",
+          "kind": "infected",
+          "archetype": "infected.runner",
+          "at": [
+            -71.4,
+            43.7
+          ],
+          "yaw": -45,
+          "state": "idle",
+          "look": {
+            "model": "inf.bathrobe-neighbor"
+          }
+        }
+      ],
+      "camera": {
+        "mode": "game",
+        "target": [
+          -72,
+          0.5,
+          43
+        ],
+        "zoom": 0.5
+      },
+      "script": [
+        {
+          "frame": 5,
+          "actor": "inf.common-worker",
+          "do": {
+            "hit": {
+              "amount": 500,
+              "heavy": false
+            }
+          }
+        },
+        {
+          "frame": 5,
+          "actor": "inf.jogger",
+          "do": {
+            "hit": {
+              "amount": 500,
+              "heavy": false
+            }
+          }
+        },
+        {
+          "frame": 5,
+          "actor": "inf.cashier",
+          "do": {
+            "hit": {
+              "amount": 500,
+              "heavy": false
+            }
+          }
+        },
+        {
+          "frame": 5,
+          "actor": "inf.delivery-driver",
+          "do": {
+            "hit": {
+              "amount": 500,
+              "heavy": false
+            }
+          }
+        },
+        {
+          "frame": 5,
+          "actor": "inf.suburban-mom",
+          "do": {
+            "hit": {
+              "amount": 500,
+              "heavy": false
+            }
+          }
+        },
+        {
+          "frame": 5,
+          "actor": "inf.bbq-dad",
+          "do": {
+            "hit": {
+              "amount": 500,
+              "heavy": false
+            }
+          }
+        },
+        {
+          "frame": 5,
+          "actor": "inf.bathrobe-neighbor",
+          "do": {
+            "hit": {
+              "amount": 500,
+              "heavy": false
+            }
+          }
+        }
+      ]
+    },
+    "errors": [],
+    "actors": {
+      "courier": {
+        "state": "idle",
+        "health": 100,
+        "drawnFrames": 90,
+        "lod": {
+          "lod0": 90
+        }
+      },
+      "inf.common-worker": {
+        "state": "dead",
+        "health": 0,
+        "drawnFrames": 90,
+        "lod": {
+          "lod1": 90
+        }
+      },
+      "inf.jogger": {
+        "state": "dead",
+        "health": 0,
+        "drawnFrames": 90,
+        "lod": {
+          "lod1": 90
+        }
+      },
+      "inf.cashier": {
+        "state": "dead",
+        "health": 0,
+        "drawnFrames": 90,
+        "lod": {
+          "lod0": 5,
+          "lod1": 85
+        }
+      },
+      "inf.delivery-driver": {
+        "state": "dead",
+        "health": 0,
+        "drawnFrames": 90,
+        "lod": {
+          "lod0": 5,
+          "lod1": 85
+        }
+      },
+      "inf.suburban-mom": {
+        "state": "dead",
+        "health": 0,
+        "drawnFrames": 90,
+        "lod": {
+          "lod1": 90
+        }
+      },
+      "inf.bbq-dad": {
+        "state": "dead",
+        "health": 0,
+        "drawnFrames": 90,
+        "lod": {
+          "lod0": 5,
+          "lod1": 85
+        }
+      },
+      "inf.bathrobe-neighbor": {
+        "state": "dead",
+        "health": 0,
+        "drawnFrames": 90,
+        "lod": {
+          "lod0": 5,
+          "lod1": 85
+        }
+      }
+    }
+  },
+  "low": {
+    "spec": {
+      "name": "q231-l1-falls",
+      "seed": 1,
+      "ground": "district",
+      "time": "L1",
+      "dof": false,
+      "layout": {
+        "district": "D-GROVE",
+        "bbox": [
+          [
+            -90,
+            30
+          ],
+          [
+            -60,
+            56
+          ]
+        ]
+      },
+      "actors": [
+        {
+          "id": "courier",
+          "kind": "courier",
+          "at": [
+            -70,
+            46
+          ],
+          "god": true
+        },
+        {
+          "id": "inf.common-worker",
+          "kind": "infected",
+          "archetype": "infected.runner",
+          "at": [
+            -74,
+            42
+          ],
+          "yaw": -45,
+          "state": "idle",
+          "look": {
+            "model": "inf.common-worker"
+          }
+        },
+        {
+          "id": "inf.jogger",
+          "kind": "infected",
+          "archetype": "infected.runner",
+          "at": [
+            -72.7,
+            42
+          ],
+          "yaw": -45,
+          "state": "idle",
+          "look": {
+            "model": "inf.jogger"
+          }
+        },
+        {
+          "id": "inf.cashier",
+          "kind": "infected",
+          "archetype": "infected.runner",
+          "at": [
+            -71.4,
+            42
+          ],
+          "yaw": -45,
+          "state": "idle",
+          "look": {
+            "model": "inf.cashier"
+          }
+        },
+        {
+          "id": "inf.delivery-driver",
+          "kind": "infected",
+          "archetype": "infected.runner",
+          "at": [
+            -70.1,
+            42
+          ],
+          "yaw": -45,
+          "state": "idle",
+          "look": {
+            "model": "inf.delivery-driver"
+          }
+        },
+        {
+          "id": "inf.suburban-mom",
+          "kind": "infected",
+          "archetype": "infected.runner",
+          "at": [
+            -74,
+            43.7
+          ],
+          "yaw": -45,
+          "state": "idle",
+          "look": {
+            "model": "inf.suburban-mom"
+          }
+        },
+        {
+          "id": "inf.bbq-dad",
+          "kind": "infected",
+          "archetype": "infected.runner",
+          "at": [
+            -72.7,
+            43.7
+          ],
+          "yaw": -45,
+          "state": "idle",
+          "look": {
+            "model": "inf.bbq-dad"
+          }
+        },
+        {
+          "id": "inf.bathrobe-neighbor",
+          "kind": "infected",
+          "archetype": "infected.runner",
+          "at": [
+            -71.4,
+            43.7
+          ],
+          "yaw": -45,
+          "state": "idle",
+          "look": {
+            "model": "inf.bathrobe-neighbor"
+          }
+        }
+      ],
+      "camera": {
+        "mode": "game",
+        "target": [
+          -72,
+          0.5,
+          43
+        ],
+        "zoom": 0.5
+      },
+      "script": [
+        {
+          "frame": 5,
+          "actor": "inf.common-worker",
+          "do": {
+            "hit": {
+              "amount": 500,
+              "heavy": false
+            }
+          }
+        },
+        {
+          "frame": 5,
+          "actor": "inf.jogger",
+          "do": {
+            "hit": {
+              "amount": 500,
+              "heavy": false
+            }
+          }
+        },
+        {
+          "frame": 5,
+          "actor": "inf.cashier",
+          "do": {
+            "hit": {
+              "amount": 500,
+              "heavy": false
+            }
+          }
+        },
+        {
+          "frame": 5,
+          "actor": "inf.delivery-driver",
+          "do": {
+            "hit": {
+              "amount": 500,
+              "heavy": false
+            }
+          }
+        },
+        {
+          "frame": 5,
+          "actor": "inf.suburban-mom",
+          "do": {
+            "hit": {
+              "amount": 500,
+              "heavy": false
+            }
+          }
+        },
+        {
+          "frame": 5,
+          "actor": "inf.bbq-dad",
+          "do": {
+            "hit": {
+              "amount": 500,
+              "heavy": false
+            }
+          }
+        },
+        {
+          "frame": 5,
+          "actor": "inf.bathrobe-neighbor",
+          "do": {
+            "hit": {
+              "amount": 500,
+              "heavy": false
+            }
+          }
+        }
+      ]
+    },
+    "errors": [],
+    "actors": {
+      "courier": {
+        "state": "idle",
+        "health": 100,
+        "drawnFrames": 90,
+        "lod": {
+          "lod0": 90
+        }
+      },
+      "inf.common-worker": {
+        "state": "dead",
+        "health": 0,
+        "drawnFrames": 90,
+        "lod": {
+          "lod1": 90
+        }
+      },
+      "inf.jogger": {
+        "state": "dead",
+        "health": 0,
+        "drawnFrames": 90,
+        "lod": {
+          "lod1": 90
+        }
+      },
+      "inf.cashier": {
+        "state": "dead",
+        "health": 0,
+        "drawnFrames": 90,
+        "lod": {
+          "lod1": 90
+        }
+      },
+      "inf.delivery-driver": {
+        "state": "dead",
+        "health": 0,
+        "drawnFrames": 90,
+        "lod": {
+          "lod1": 90
+        }
+      },
+      "inf.suburban-mom": {
+        "state": "dead",
+        "health": 0,
+        "drawnFrames": 90,
+        "lod": {
+          "lod1": 90
+        }
+      },
+      "inf.bbq-dad": {
+        "state": "dead",
+        "health": 0,
+        "drawnFrames": 90,
+        "lod": {
+          "lod1": 90
+        }
+      },
+      "inf.bathrobe-neighbor": {
+        "state": "dead",
+        "health": 0,
+        "drawnFrames": 90,
+        "lod": {
+          "lod1": 90
+        }
+      }
+    }
+  }
+}

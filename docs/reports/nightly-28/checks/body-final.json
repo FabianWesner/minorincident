@@ -1,0 +1,2499 @@
+{
+  "rows": 146,
+  "coverageRowsPassed": 146,
+  "rawWholeRowsPassed": 140,
+  "rawWholeRowsFailed": 6,
+  "cameraRerun": "../evidence/bike-camera-final.json",
+  "afterBikeCameraReruns": {
+    "pass": 140,
+    "filedLensAssertions": 6
+  },
+  "results": [
+    {
+      "row": "fix-p1-l1-shutter-courier-depth@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.2
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-1/fix-p1-l1-shutter-courier-depth@high-z0.5/metrics.json",
+      "sha256": "10aec6648640a7d66b9fda90387955ba47d26bb38a29034c21d2824412766052"
+    },
+    {
+      "row": "fix-p1-l1-shutter-courier-depth@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.2
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-1/fix-p1-l1-shutter-courier-depth@high-z1/metrics.json",
+      "sha256": "578ec5a8c7f0a134fd199a42be2f54275eeb0eed8c5b6c4360581f473873173d"
+    },
+    {
+      "row": "fix-p1-l1-shutter-courier-depth@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.2
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-1/fix-p1-l1-shutter-courier-depth@high-z1.5/metrics.json",
+      "sha256": "825b6100857252e679f8d05422e99eb9e209a2b5b05b382ee569285f0290924c"
+    },
+    {
+      "row": "l10-cure-install-defend@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.999,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-1/l10-cure-install-defend@high-z0.5/metrics.json",
+      "sha256": "ed6db5636f7e9c4e4911820ad816c210b0594731d534ca0920bf48a4fbc0e828"
+    },
+    {
+      "row": "l10-cure-install-defend@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-1/l10-cure-install-defend@high-z1/metrics.json",
+      "sha256": "a1233b0e2909e17d2733570ca3ac6586c3bc62cb19a347690d8d45804bc0cbe8"
+    },
+    {
+      "row": "l10-cure-install-defend@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-1/l10-cure-install-defend@high-z1.5/metrics.json",
+      "sha256": "529d08f396750aaeaa0755efab4ddb76bc6604a75eab312e9123fe595397f4ae"
+    },
+    {
+      "row": "l10-e3b-mega-arrival@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "megaAlphaVisibleRatio",
+          "pass": true,
+          "value": 1.3378,
+          "limit": 0.9
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-1/l10-e3b-mega-arrival@high-z0.5/metrics.json",
+      "sha256": "1ea3dd5ba1df68e399c17aa27baf1ffdb1dbef4908aeb8cc595471983210c92d"
+    },
+    {
+      "row": "l10-e3b-mega-arrival@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "megaAlphaVisibleRatio",
+          "pass": true,
+          "value": 1.4103,
+          "limit": 0.9
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-1/l10-e3b-mega-arrival@high-z1/metrics.json",
+      "sha256": "da57e7db2e9670e92a824aa7cf20edbd3f7127be37d9d5c53b25e4e61c01ff47"
+    },
+    {
+      "row": "l10-e3b-mega-arrival@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "megaAlphaVisibleRatio",
+          "pass": true,
+          "value": 1.3368,
+          "limit": 0.9
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-1/l10-e3b-mega-arrival@high-z1.5/metrics.json",
+      "sha256": "569b5792f5939613cd442b5bdb9a1c2211eb7a4d8176f91f4e3ae76072e6cf32"
+    },
+    {
+      "row": "l10-mega-close-contact@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "megaAlphaVisibleRatio",
+          "pass": true,
+          "value": 1.6111,
+          "limit": 0.9
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-1/l10-mega-close-contact@high-z1/metrics.json",
+      "sha256": "f0ea54c0be90257140938952b958fb9728334286866a84e5f2c0fbff0f105ac1"
+    },
+    {
+      "row": "l10-mega-close-contact@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "megaAlphaVisibleRatio",
+          "pass": true,
+          "value": 1.639,
+          "limit": 0.9
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-1/l10-mega-close-contact@high-z1.5/metrics.json",
+      "sha256": "8bbc57fc804b2c34edfb37e35e6e560141d6e87451e5f742db81ca2441a9d57c"
+    },
+    {
+      "row": "l10-mega-close-contact@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "megaAlphaVisibleRatio",
+          "pass": true,
+          "value": 1.6495,
+          "limit": 0.9
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-2/l10-mega-close-contact@high-z0.5/metrics.json",
+      "sha256": "e34c149fb078e349edaf4622764df5e7c74d4f803605e58c886aef9a06c4106e"
+    },
+    {
+      "row": "l10-mega-speed-r6@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "megaAlphaVisibleRatio",
+          "pass": true,
+          "value": 1.4341,
+          "limit": 0.9
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-2/l10-mega-speed-r6@high-z0.5/metrics.json",
+      "sha256": "934805f1a55fc33389d65f605a034e650188fe49d796a012bc41a9966cfb3d7e"
+    },
+    {
+      "row": "l10-mega-speed-r6@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "megaAlphaVisibleRatio",
+          "pass": true,
+          "value": 1.61,
+          "limit": 0.9
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-2/l10-mega-speed-r6@high-z1/metrics.json",
+      "sha256": "ad55d81efee8d47f90bdd5d71525aa4b9e65348417712acf61fa6f6e46931b1d"
+    },
+    {
+      "row": "l10-mega-speed-r6@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "megaAlphaVisibleRatio",
+          "pass": true,
+          "value": 1.5685,
+          "limit": 0.9
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-2/l10-mega-speed-r6@high-z1.5/metrics.json",
+      "sha256": "dc01efc96180f118a307c13689d75ebe6e0a327947a98a551512b62bfe6db215"
+    },
+    {
+      "row": "l10-q1-mega-charge-wall@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-2/l10-q1-mega-charge-wall@high-z0.5/metrics.json",
+      "sha256": "90f05afce5c9c5ac0d41d8ee21f34f53e2d6d27221a6134f57132a74a2b23ef5"
+    },
+    {
+      "row": "l10-q1-mega-charge-wall@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-2/l10-q1-mega-charge-wall@high-z1/metrics.json",
+      "sha256": "d0425a71b546297fb252609998cb67c89434ae5aef1ab2c329c9903d254ad293"
+    },
+    {
+      "row": "l10-q1-mega-charge-wall@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-2/l10-q1-mega-charge-wall@high-z1.5/metrics.json",
+      "sha256": "e73d56870e75a589756ab1e12646e9e31f3c7fbc42b7cfa9a2563e9dff2b63a4"
+    },
+    {
+      "row": "l3-highway-entry-medkit@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.983,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-2/l3-highway-entry-medkit@high-z0.5/metrics.json",
+      "sha256": "06c98d62d2da3643ff34c0bbfe75350a76efdbc3454a4dc7dedef0b17dc8a9ce"
+    },
+    {
+      "row": "l3-highway-entry-medkit@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.982,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-2/l3-highway-entry-medkit@high-z1/metrics.json",
+      "sha256": "020d02740c32136873602f4cfbb69a6305a0598b5bc59145ea1f1534fba86e89"
+    },
+    {
+      "row": "l3-highway-entry-medkit@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.982,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-2/l3-highway-entry-medkit@high-z1.5/metrics.json",
+      "sha256": "7cf56a8168475feb4f90ad47f7c16810c3c733f9fc8b6c0ffbc779355a79cbf7"
+    },
+    {
+      "row": "l3-highway-melee-escape@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-2/l3-highway-melee-escape@high-z1.5/metrics.json",
+      "sha256": "1c667eb6e5c5b34313ec75bbccd13184457fc18134c2a670c114787e613fd68d"
+    },
+    {
+      "row": "l3-highway-melee-escape@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-3/l3-highway-melee-escape@high-z0.5/metrics.json",
+      "sha256": "e5b5f60847e3d819897ee71f2a1eeef5c76a83c78f3e8ecdb9a72c76c34f3f1a"
+    },
+    {
+      "row": "l3-highway-melee-escape@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-3/l3-highway-melee-escape@high-z1/metrics.json",
+      "sha256": "f5f8cd7de7de79774226f5d71594933061a96083284118ed3c18ed0a11477915"
+    },
+    {
+      "row": "perf-heap-reveal@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-3/perf-heap-reveal@high-z0.5/metrics.json",
+      "sha256": "e18f7a7ee603546e9d5c2bba7e9b2fc4577363d26186fc4eaadf54f21d3b094a"
+    },
+    {
+      "row": "perf-heap-reveal@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-3/perf-heap-reveal@high-z1/metrics.json",
+      "sha256": "0a8f0af4b118224b5790360b16570ffd08a94f4a14fb3d3573016bd96f2597bc"
+    },
+    {
+      "row": "perf-heap-reveal@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-3/perf-heap-reveal@high-z1.5/metrics.json",
+      "sha256": "c09bd893113bae6bc7dd9065fb258a556aa2b08ff35a5e471ad2cf604192500b"
+    },
+    {
+      "row": "seethrough-bike-ride@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.977,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-3/seethrough-bike-ride@high-z0.5/metrics.json",
+      "sha256": "1337d9bd4f51118f1c4c10a7fa01aae4377777107c8318da8d2a3dd5c44d5914"
+    },
+    {
+      "row": "seethrough-bike-ride@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.976,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [
+        {
+          "name": "seeThroughCutPixelsOutside",
+          "pass": false,
+          "value": 65104,
+          "limit": 0
+        }
+      ],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-3/seethrough-bike-ride@high-z1/metrics.json",
+      "sha256": "41aacc0e7ba90c4050f06475c5c2ba0c1124cfdc0b3772f3efccc4e8a650856f"
+    },
+    {
+      "row": "seethrough-bike-ride@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.976,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-3/seethrough-bike-ride@high-z1.5/metrics.json",
+      "sha256": "4cc1d2cb27d30be3b5b1606ebc25fd9ab063c291385327fbb5fb43783fd7401f"
+    },
+    {
+      "row": "seethrough-building-first-frame@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.976,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-3/seethrough-building-first-frame@high-z0.5/metrics.json",
+      "sha256": "2d71122a4a0910a27aace2106b67138f3384ddd124de0842c575daea754fba57"
+    },
+    {
+      "row": "seethrough-building-first-frame@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.977,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-3/seethrough-building-first-frame@high-z1/metrics.json",
+      "sha256": "056eb6085cfc68f82f9b8b7f9e8507a7d633715f912db9023566636c9229cf15"
+    },
+    {
+      "row": "seethrough-building-first-frame@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.974,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-3/seethrough-building-first-frame@high-z1.5/metrics.json",
+      "sha256": "51f593afe7df4929505533647471c9543e1ce5e34c23c4a1448957df2018a09c"
+    },
+    {
+      "row": "seethrough-companion-clean-z05@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.85
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-4/seethrough-companion-clean-z05@high-z0.5/metrics.json",
+      "sha256": "82cb8ba279426a362905211b5635ee5da06ec9eb8da4132a67afe827fecefc2c"
+    },
+    {
+      "row": "seethrough-companion-clean-z05@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.85
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-4/seethrough-companion-clean-z05@high-z1/metrics.json",
+      "sha256": "64f235d13247e6dd4b89dcbb2e4c1b0307af99c22f89462e2f56fa75278ee4aa"
+    },
+    {
+      "row": "seethrough-companion-clean-z05@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.85
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-4/seethrough-companion-clean-z05@high-z1.5/metrics.json",
+      "sha256": "0fc366e6ee25427cf6f3516b821dec4165c7ab0b1315c6f787c7b91c12cb1f44"
+    },
+    {
+      "row": "seethrough-companion-clean-z1@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.85
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-4/seethrough-companion-clean-z1@high-z0.5/metrics.json",
+      "sha256": "8518cc48495ceda29ea4ef63ebad4dd0bb8967247907f7b9420592b5e251778f"
+    },
+    {
+      "row": "seethrough-companion-clean-z1@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.85
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-4/seethrough-companion-clean-z1@high-z1/metrics.json",
+      "sha256": "4511961859ffe4776a1d577441139eff67de786dc3a304d167c7814c0c6ef0be"
+    },
+    {
+      "row": "seethrough-companion-clean-z1@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.85
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-4/seethrough-companion-clean-z1@high-z1.5/metrics.json",
+      "sha256": "18a470bc26de49b8a5d4286012cdc61bf1fe94b43fee6d138524c2457fe6b4ae"
+    },
+    {
+      "row": "seethrough-door-gate-original@high",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.975,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-4/seethrough-door-gate-original@high/metrics.json",
+      "sha256": "a5f41530407f2737e1f30480ac3e4c565c28e002c454073b8aac464e30339871"
+    },
+    {
+      "row": "seethrough-door-gate@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.952,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-4/seethrough-door-gate@high-z0.5/metrics.json",
+      "sha256": "f0eba5703e8fa117b4f5cdef788663a3d6d4d6eabf5b285e02854106eb58c7db"
+    },
+    {
+      "row": "seethrough-door-gate@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.946,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-4/seethrough-door-gate@high-z1/metrics.json",
+      "sha256": "9b400168fb2a6390be6755164567074457254c3d3212b7fe9babd559d61e6168"
+    },
+    {
+      "row": "seethrough-door-gate@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.936,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-4/seethrough-door-gate@high-z1.5/metrics.json",
+      "sha256": "2fce9576116bd673f6680b8c101a491270e2273394c589f73414cfd0bbed2403"
+    },
+    {
+      "row": "seethrough-l5-supermarket-beside@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-4/seethrough-l5-supermarket-beside@high-z1.5/metrics.json",
+      "sha256": "1bbf78a6958cc40501a43e4d76cd325737cc26a81b90e4b74c3bb076fe4e3ff4"
+    },
+    {
+      "row": "seethrough-l5-supermarket-beside@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-5/seethrough-l5-supermarket-beside@high-z0.5/metrics.json",
+      "sha256": "ed7517a7b757a7fd323da5e9a342a89b81a95fb72b551bbe674efa5343f330b3"
+    },
+    {
+      "row": "seethrough-l5-supermarket-beside@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-5/seethrough-l5-supermarket-beside@high-z1/metrics.json",
+      "sha256": "3d29dfd95f8ce6a28df031a978799e0662818e1aae25c39471f44903a88db458"
+    },
+    {
+      "row": "seethrough-lamp-head-foreground-z05@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.85
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-5/seethrough-lamp-head-foreground-z05@high-z0.5/metrics.json",
+      "sha256": "1e7d80d67d68ecc0a79f85e6feec6c071261504104c08356a248a2db58c6c17d"
+    },
+    {
+      "row": "seethrough-lamp-head-foreground-z05@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.85
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-5/seethrough-lamp-head-foreground-z05@high-z1/metrics.json",
+      "sha256": "77adaf144838bbb89997557185d7c0209b7edbd70a0c76166705b1ac034632c4"
+    },
+    {
+      "row": "seethrough-lamp-head-foreground-z05@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.85
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-5/seethrough-lamp-head-foreground-z05@high-z1.5/metrics.json",
+      "sha256": "a76d1dd5efc7343012367c4d718a4972f6aa76476811eef12cd379f1cd7fea1f"
+    },
+    {
+      "row": "seethrough-lamp-head-foreground-z1@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.85
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-5/seethrough-lamp-head-foreground-z1@high-z0.5/metrics.json",
+      "sha256": "1236da799afd83613ed5dfc7dbeccf44c258c0a30a366ec9a21c43ab43831a02"
+    },
+    {
+      "row": "seethrough-lamp-head-foreground-z1@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.85
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-5/seethrough-lamp-head-foreground-z1@high-z1/metrics.json",
+      "sha256": "a15e2ba8c57181637d7a6753e81163eeb8d24aa7e5d9d76fa17462bde0277bcc"
+    },
+    {
+      "row": "seethrough-lamp-head-foreground-z1@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.85
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-5/seethrough-lamp-head-foreground-z1@high-z1.5/metrics.json",
+      "sha256": "24670bd99f989270a42fea8ae2b1bfcbefee3622c7d7571d6ae2bc77cd82a9df"
+    },
+    {
+      "row": "seethrough-not-in-the-way@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-5/seethrough-not-in-the-way@high-z0.5/metrics.json",
+      "sha256": "c29f6a08db15cf1df1de0834e922bd8eed9a9db54cd75cb74f2f0ea5fcd9851a"
+    },
+    {
+      "row": "seethrough-not-in-the-way@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-5/seethrough-not-in-the-way@high-z1/metrics.json",
+      "sha256": "476c256eb62d8be7e39c6e28097ad0498e1460007ce8d09bfb190a9eadeda84c"
+    },
+    {
+      "row": "seethrough-not-in-the-way@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-5/seethrough-not-in-the-way@high-z1.5/metrics.json",
+      "sha256": "6e757a6a31c5330a3d60b12844c709cd64127429f1e0e1a2d4e08062d60afe8c"
+    },
+    {
+      "row": "seethrough-scripted-convoy@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.958,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-6/seethrough-scripted-convoy@high-z0.5/metrics.json",
+      "sha256": "2d5d9a015463908c8c67a1940072334981afec3fcb21f6ae451ad6648f2aee05"
+    },
+    {
+      "row": "seethrough-scripted-convoy@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.955,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [
+        {
+          "name": "seeThroughCutPixelsOutside",
+          "pass": false,
+          "value": 122917,
+          "limit": 0
+        }
+      ],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-6/seethrough-scripted-convoy@high-z1/metrics.json",
+      "sha256": "dfa767cdd124f99ca8bbe9fcdc23e6a2da2e4e8d7f835ca2d153bae637175057"
+    },
+    {
+      "row": "seethrough-scripted-convoy@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.956,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [
+        {
+          "name": "seeThroughCutPixelsOutside",
+          "pass": false,
+          "value": 195986,
+          "limit": 0
+        }
+      ],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-6/seethrough-scripted-convoy@high-z1.5/metrics.json",
+      "sha256": "afaa6097ee52562ae411ff4cd7d805e6da0a9eccc3494dff4ee557a247039585"
+    },
+    {
+      "row": "seethrough-sedan-silhouette@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-6/seethrough-sedan-silhouette@high-z0.5/metrics.json",
+      "sha256": "60f1846cb7b038fce1d37e645d4465dce5cad5fca6f713127e55e4e16153ec10"
+    },
+    {
+      "row": "seethrough-sedan-silhouette@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-6/seethrough-sedan-silhouette@high-z1/metrics.json",
+      "sha256": "0be18c0f6a99b1329c4ae05407d9d45d82cb3a79c78caeff467846a206abd62a"
+    },
+    {
+      "row": "seethrough-sedan-silhouette@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-6/seethrough-sedan-silhouette@high-z1.5/metrics.json",
+      "sha256": "6749c10f188652db65a80cbff32681b53c35d66de8d408e8718d8533681dac18"
+    },
+    {
+      "row": "stunning-cut-l3-supermarket@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.978,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-6/stunning-cut-l3-supermarket@high-z0.5/metrics.json",
+      "sha256": "b9d448a6acc64de71c95c29e6ceeb23da4ebb883b219fd25697b9cecc277475d"
+    },
+    {
+      "row": "stunning-cut-l3-supermarket@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.977,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-6/stunning-cut-l3-supermarket@high-z1/metrics.json",
+      "sha256": "80ff07445855d80d34a189721f8ed23513d8b59f94a8c37f7ebd5980d3d58066"
+    },
+    {
+      "row": "stunning-cut-l3-supermarket@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.975,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-6/stunning-cut-l3-supermarket@high-z1.5/metrics.json",
+      "sha256": "c12607ed9fbcc2e9d76285a4d13c96727db091b6e2c39590771a0e0eeb668ae1"
+    },
+    {
+      "row": "stunning-cut-l5-pharmacy@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-6/stunning-cut-l5-pharmacy@high-z1/metrics.json",
+      "sha256": "9a134195f93f7134eb3d51fd1a761b7efc757bbdba7731d25837cfbda15b511d"
+    },
+    {
+      "row": "stunning-cut-l5-pharmacy@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-6/stunning-cut-l5-pharmacy@high-z1.5/metrics.json",
+      "sha256": "01a460ce6ff908063cbaf6806bb865435effb2f1a203d1aa175ce24b5e0ca230"
+    },
+    {
+      "row": "stunning-cut-l5-pharmacy@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-7/stunning-cut-l5-pharmacy@high-z0.5/metrics.json",
+      "sha256": "9d77c6c0742d26cb31b831f177d07899af74bef3e3e228788166a9963702259b"
+    },
+    {
+      "row": "stunning-l6-tunnel-gate@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.935,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-7/stunning-l6-tunnel-gate@high-z0.5/metrics.json",
+      "sha256": "2d84efb1b6351a32be82d697996a0bca473516e1c61072ffe7cfc40a1dc9be12"
+    },
+    {
+      "row": "stunning-l6-tunnel-gate@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.914,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-7/stunning-l6-tunnel-gate@high-z1/metrics.json",
+      "sha256": "5357d10208620ade5f042c509b8443fe373ea0e752e2b48e103c3f9275cc6e9b"
+    },
+    {
+      "row": "stunning-l6-tunnel-gate@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.909,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-7/stunning-l6-tunnel-gate@high-z1.5/metrics.json",
+      "sha256": "1c2fe99414a2421e63b60990b9435d349fa3b80774a699133d1b75d2cd4faf7b"
+    },
+    {
+      "row": "vfx-hud-telegraphs@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.7
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-7/vfx-hud-telegraphs@high-z0.5/metrics.json",
+      "sha256": "e32a29c8697f85684c6e7d8f2c14625ed0736f6ecda537dfdef2aa5a8e73494d"
+    },
+    {
+      "row": "vfx-hud-telegraphs@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.7
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-7/vfx-hud-telegraphs@high-z1/metrics.json",
+      "sha256": "0cf6f0eadb4ff7de8d771e78fac66e94ce5363833f6c02ac3d7b7b3fafc9ffb8"
+    },
+    {
+      "row": "vfx-hud-telegraphs@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.7
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-high-7/vfx-hud-telegraphs@high-z1.5/metrics.json",
+      "sha256": "10e063321112b1a8cb9a4d28853b173d3304f1c824e40ab57d98a5dd47c61802"
+    },
+    {
+      "row": "fix-p1-l1-shutter-courier-depth@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.2
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-1/fix-p1-l1-shutter-courier-depth@low-z0.5/metrics.json",
+      "sha256": "9e22c66ad87bb4f153b8173e9b3107a25d3f818ea382a30eff1361c395f339f7"
+    },
+    {
+      "row": "fix-p1-l1-shutter-courier-depth@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.2
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-1/fix-p1-l1-shutter-courier-depth@low-z1/metrics.json",
+      "sha256": "3fb5126a95d824bc8609607e0043da1967d69fbf7011b117eedcb613531ccc72"
+    },
+    {
+      "row": "fix-p1-l1-shutter-courier-depth@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.2
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-1/fix-p1-l1-shutter-courier-depth@low-z1.5/metrics.json",
+      "sha256": "383fa721f394b4509ba87dcb38053652ac08127970443c0b7eeb7e88eae41166"
+    },
+    {
+      "row": "l10-cure-install-defend@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-1/l10-cure-install-defend@low-z0.5/metrics.json",
+      "sha256": "0102b7bece6549fb6cca29f945d87bae88d4e29c2bec2cc082b6cd45271eb963"
+    },
+    {
+      "row": "l10-cure-install-defend@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-1/l10-cure-install-defend@low-z1/metrics.json",
+      "sha256": "d6b00ac4578ead19e749ef196d4e5f0d0a35c2c592a975b3bb508e8f40c23ac0"
+    },
+    {
+      "row": "l10-cure-install-defend@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-1/l10-cure-install-defend@low-z1.5/metrics.json",
+      "sha256": "18ac85181923c2367cfe2997062caa299ee872065f00f96f33ea5aa299132241"
+    },
+    {
+      "row": "l10-e3b-mega-arrival@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "megaAlphaVisibleRatio",
+          "pass": true,
+          "value": 1.3576,
+          "limit": 0.9
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-1/l10-e3b-mega-arrival@low-z0.5/metrics.json",
+      "sha256": "3578a51127d3801383e54721776c6defc3472da9cde02372e9a13c2c7ed209df"
+    },
+    {
+      "row": "l10-e3b-mega-arrival@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "megaAlphaVisibleRatio",
+          "pass": true,
+          "value": 1.4236,
+          "limit": 0.9
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-1/l10-e3b-mega-arrival@low-z1/metrics.json",
+      "sha256": "782cfe45dd72563278a1dba1b8365942fe6003476f489daf1efc4269d1d1d112"
+    },
+    {
+      "row": "l10-e3b-mega-arrival@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "megaAlphaVisibleRatio",
+          "pass": true,
+          "value": 1.3501,
+          "limit": 0.9
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-1/l10-e3b-mega-arrival@low-z1.5/metrics.json",
+      "sha256": "81a61addb922608129bda0bbbbdaa474b755cfdd05e8a3105de567f5b9f86be5"
+    },
+    {
+      "row": "l10-mega-close-contact@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "megaAlphaVisibleRatio",
+          "pass": true,
+          "value": 1.6111,
+          "limit": 0.9
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-1/l10-mega-close-contact@low-z1/metrics.json",
+      "sha256": "4eb6d10009c7ed1bedbb151d6e64fe13f65a2e59f5536cedef1f69fc55195481"
+    },
+    {
+      "row": "l10-mega-close-contact@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "megaAlphaVisibleRatio",
+          "pass": true,
+          "value": 1.6364,
+          "limit": 0.9
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-1/l10-mega-close-contact@low-z1.5/metrics.json",
+      "sha256": "91048a60b0647b17783689ad5daa0b0421264ffe03ff8bdf0c30b6be05be70a2"
+    },
+    {
+      "row": "l10-mega-close-contact@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "megaAlphaVisibleRatio",
+          "pass": true,
+          "value": 1.661,
+          "limit": 0.9
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-2/l10-mega-close-contact@low-z0.5/metrics.json",
+      "sha256": "e3e03739a92e64f37e19cde08f18932570da28458868461a367c229a5c179b48"
+    },
+    {
+      "row": "l10-mega-speed-r6@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "megaAlphaVisibleRatio",
+          "pass": true,
+          "value": 1.4379,
+          "limit": 0.9
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-2/l10-mega-speed-r6@low-z0.5/metrics.json",
+      "sha256": "7b1392b248f9f701febbbddc63a103f9bdb2e7b97f84daefd2f85f56e6115a52"
+    },
+    {
+      "row": "l10-mega-speed-r6@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "megaAlphaVisibleRatio",
+          "pass": true,
+          "value": 1.6096,
+          "limit": 0.9
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-2/l10-mega-speed-r6@low-z1/metrics.json",
+      "sha256": "c4aa07d77defac8d23c2170287f5b197af3e76aca89c4349384ae28716447b29"
+    },
+    {
+      "row": "l10-mega-speed-r6@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        },
+        {
+          "name": "megaAlphaVisibleRatio",
+          "pass": true,
+          "value": 1.5685,
+          "limit": 0.9
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-2/l10-mega-speed-r6@low-z1.5/metrics.json",
+      "sha256": "cf49004094f9c808030dea942ec3d7b7c8ee640ba01fffddda9902687c32718d"
+    },
+    {
+      "row": "l10-q1-mega-charge-wall@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-2/l10-q1-mega-charge-wall@low-z0.5/metrics.json",
+      "sha256": "85e5f1c3e366ef7bfa014cb2a2a9f8d3e87a476de4d2e83d5532e7747c715341"
+    },
+    {
+      "row": "l10-q1-mega-charge-wall@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-2/l10-q1-mega-charge-wall@low-z1/metrics.json",
+      "sha256": "4ada2c512186b17ad199da6fd34e059c2b66c3bb1228d4c97e627c502689df87"
+    },
+    {
+      "row": "l10-q1-mega-charge-wall@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-2/l10-q1-mega-charge-wall@low-z1.5/metrics.json",
+      "sha256": "be26de108087cf61546d8c936f123e81a9971c49be14316850fe95bd9aac358e"
+    },
+    {
+      "row": "l3-highway-entry-medkit@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.982,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-2/l3-highway-entry-medkit@low-z0.5/metrics.json",
+      "sha256": "31f01b61944d8e4aec28cbf8c1efa1caae7e0d0eb59187fa8865bf6f5e2e7462"
+    },
+    {
+      "row": "l3-highway-entry-medkit@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.983,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-2/l3-highway-entry-medkit@low-z1/metrics.json",
+      "sha256": "ea58dab30e28bf3abe594476816eb754cb4e29709ea632d03bc044aa729f086f"
+    },
+    {
+      "row": "l3-highway-entry-medkit@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.982,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-2/l3-highway-entry-medkit@low-z1.5/metrics.json",
+      "sha256": "0113014acc457d405e490d559155352191b0c5448f31bdaa19ee5717b2148b56"
+    },
+    {
+      "row": "l3-highway-melee-escape@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-2/l3-highway-melee-escape@low-z1.5/metrics.json",
+      "sha256": "9320af578289c6abee7bbf6bd671fc66505a8117c8a1ce8b51a9c88c8ccbf41d"
+    },
+    {
+      "row": "l3-highway-melee-escape@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-3/l3-highway-melee-escape@low-z0.5/metrics.json",
+      "sha256": "9a214d4a4b32cdc5069646e12f27c1d0609b97061aecd0140e812ee269af543f"
+    },
+    {
+      "row": "l3-highway-melee-escape@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-3/l3-highway-melee-escape@low-z1/metrics.json",
+      "sha256": "6f8b6e8f3b5af29ca989329c83a62c5cef58003195ffa867d5bee2fe92fc257b"
+    },
+    {
+      "row": "perf-heap-reveal@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-3/perf-heap-reveal@low-z0.5/metrics.json",
+      "sha256": "0185248294876dfb272d2e33b163ebbe8598309075e2f4e19db50ef08ed930d6"
+    },
+    {
+      "row": "perf-heap-reveal@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-3/perf-heap-reveal@low-z1/metrics.json",
+      "sha256": "31c8cd5322ad852a0528d7459160d7850b6b94f3303d934ff1f14bbb9b6cbfb8"
+    },
+    {
+      "row": "perf-heap-reveal@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-3/perf-heap-reveal@low-z1.5/metrics.json",
+      "sha256": "a8475d3ccdd211a851482ec4b39aae9b00518f3d8d6b8635572f161da78953e9"
+    },
+    {
+      "row": "seethrough-bike-ride@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.977,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-3/seethrough-bike-ride@low-z0.5/metrics.json",
+      "sha256": "39fd2ed9c07537e9a64c673109df6a7fe016930892a92221b39779a6fdde7b70"
+    },
+    {
+      "row": "seethrough-bike-ride@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.976,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [
+        {
+          "name": "seeThroughCutPixelsOutside",
+          "pass": false,
+          "value": 65229,
+          "limit": 0
+        }
+      ],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-3/seethrough-bike-ride@low-z1/metrics.json",
+      "sha256": "f388426696fbda9d1715dc94f5641c3e7176430952733b2085640ea3b9c998d9"
+    },
+    {
+      "row": "seethrough-bike-ride@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.976,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-3/seethrough-bike-ride@low-z1.5/metrics.json",
+      "sha256": "b57af351ec49ddf372f80b60415869f4999fd9e9fefab842aaf15ff97d08377d"
+    },
+    {
+      "row": "seethrough-building-first-frame@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.976,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-3/seethrough-building-first-frame@low-z0.5/metrics.json",
+      "sha256": "88f0883b7b2f74408c1e7239b61325dfded78721a004378acbd35eeac6427678"
+    },
+    {
+      "row": "seethrough-building-first-frame@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.977,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-3/seethrough-building-first-frame@low-z1/metrics.json",
+      "sha256": "48a0038e49690f53fd603609328e00326d870b8170abab6a99899e9b8980044b"
+    },
+    {
+      "row": "seethrough-building-first-frame@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.974,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-3/seethrough-building-first-frame@low-z1.5/metrics.json",
+      "sha256": "1fa0fbe18b360d81d44271f86c211b5dd089e1e784c3c0f0323073ee22d3c431"
+    },
+    {
+      "row": "seethrough-companion-clean-z05@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.85
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-4/seethrough-companion-clean-z05@low-z0.5/metrics.json",
+      "sha256": "0a38d8f082f5006bb7ad5c4f6cacb935816ce350b0dcb2e6cbeb0d4eaabf8603"
+    },
+    {
+      "row": "seethrough-companion-clean-z05@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.85
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-4/seethrough-companion-clean-z05@low-z1/metrics.json",
+      "sha256": "e8be0efd83f52551caeed5c301771c556cf29c1b8ec15c1e412108c0ce0d20b3"
+    },
+    {
+      "row": "seethrough-companion-clean-z05@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.85
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-4/seethrough-companion-clean-z05@low-z1.5/metrics.json",
+      "sha256": "fe8a9e7b6ccd0dca4c9196e498dae5d359d9c83f3e018dcf7ef5aa23e7241b06"
+    },
+    {
+      "row": "seethrough-companion-clean-z1@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.85
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-4/seethrough-companion-clean-z1@low-z0.5/metrics.json",
+      "sha256": "444c31c3b2415dda940d80051843efe3ec95615519863081468406d0c5c55973"
+    },
+    {
+      "row": "seethrough-companion-clean-z1@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.85
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-4/seethrough-companion-clean-z1@low-z1/metrics.json",
+      "sha256": "a0bff3ab9c82156390ab39385691fc941bf8fee929db8d141ef2b259caf00759"
+    },
+    {
+      "row": "seethrough-companion-clean-z1@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.85
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-4/seethrough-companion-clean-z1@low-z1.5/metrics.json",
+      "sha256": "bca7afd33ea4f611d394e1b43b8cec9bae050b2c4550a9cdc506fb6e5cc95518"
+    },
+    {
+      "row": "seethrough-door-gate-original@low",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.991,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-4/seethrough-door-gate-original@low/metrics.json",
+      "sha256": "25e2ec5c706b89396ce8f64c394f85def95ec0a84f082f14ad0b0fc87d7270a0"
+    },
+    {
+      "row": "seethrough-door-gate@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.975,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-4/seethrough-door-gate@low-z0.5/metrics.json",
+      "sha256": "4d6640c0ef8d1c136968f44d3e1bdcf4768fd8e366c910ad0b917ce3452e896d"
+    },
+    {
+      "row": "seethrough-door-gate@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.973,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-4/seethrough-door-gate@low-z1/metrics.json",
+      "sha256": "3bf8baccf58580ba5b56bf9e7ba3f536a0b6ec3e91eba1ca9de2d4c89994c068"
+    },
+    {
+      "row": "seethrough-door-gate@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.974,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-4/seethrough-door-gate@low-z1.5/metrics.json",
+      "sha256": "c82b89189859259c4158963020bc3dc887685030878cf1a46de2c073b4877a7c"
+    },
+    {
+      "row": "seethrough-l5-supermarket-beside@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-4/seethrough-l5-supermarket-beside@low-z1.5/metrics.json",
+      "sha256": "fe6da286da1e4fdf3f60a2ba30b76cc793d5c21b882f3bf471ad7f49c0e55ad7"
+    },
+    {
+      "row": "seethrough-l5-supermarket-beside@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-5/seethrough-l5-supermarket-beside@low-z0.5/metrics.json",
+      "sha256": "59b7af3c1323a2d48bce7bc25b0bcc9699ca011096dbc1dc9f125cd3329d8840"
+    },
+    {
+      "row": "seethrough-l5-supermarket-beside@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-5/seethrough-l5-supermarket-beside@low-z1/metrics.json",
+      "sha256": "7ed817cf4d9cb9ff07c0a32c3ce91f1e8e0f3293904c8b1441da581612fa6616"
+    },
+    {
+      "row": "seethrough-lamp-head-foreground-z05@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.85
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-5/seethrough-lamp-head-foreground-z05@low-z0.5/metrics.json",
+      "sha256": "a3600d2e157dc503bf017d98b758607f3c5fca2cdd7733b2f19912f955d645bb"
+    },
+    {
+      "row": "seethrough-lamp-head-foreground-z05@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.85
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-5/seethrough-lamp-head-foreground-z05@low-z1/metrics.json",
+      "sha256": "7a250acb33f157276df9ef5f9b7342b6ea421486f2848c592b027612ddbb0b1a"
+    },
+    {
+      "row": "seethrough-lamp-head-foreground-z05@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.85
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-5/seethrough-lamp-head-foreground-z05@low-z1.5/metrics.json",
+      "sha256": "c62ba407b4a7d59561ead5f7d53ef9da095949beace107840a2bbb31ca3ffa38"
+    },
+    {
+      "row": "seethrough-lamp-head-foreground-z1@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.85
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-5/seethrough-lamp-head-foreground-z1@low-z0.5/metrics.json",
+      "sha256": "f1e03a9c0eb3aed42a9c8cf8f8f9e463bd5c8f6a4953e3d74fea3264e7519c3a"
+    },
+    {
+      "row": "seethrough-lamp-head-foreground-z1@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.85
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-5/seethrough-lamp-head-foreground-z1@low-z1/metrics.json",
+      "sha256": "6f5196e774cca528ae39b0aaf96ab8ed0dcd0307ff23844e0e5eff036b3b17a3"
+    },
+    {
+      "row": "seethrough-lamp-head-foreground-z1@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.85
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-5/seethrough-lamp-head-foreground-z1@low-z1.5/metrics.json",
+      "sha256": "6f1e505644fae90f2ffdc7cb31eca21da3178d437608093271c465f3cb7bde93"
+    },
+    {
+      "row": "seethrough-not-in-the-way@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-5/seethrough-not-in-the-way@low-z0.5/metrics.json",
+      "sha256": "d26492d735cebf78dd4882342692bf9cd8491d79fdb1ab1a9d375a561a903c9a"
+    },
+    {
+      "row": "seethrough-not-in-the-way@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-5/seethrough-not-in-the-way@low-z1/metrics.json",
+      "sha256": "bb6ccb92883398bb6ebc850f0e6e1ab3392a3173036c2395c4817c777cdef8ae"
+    },
+    {
+      "row": "seethrough-not-in-the-way@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-5/seethrough-not-in-the-way@low-z1.5/metrics.json",
+      "sha256": "b6e4176074e2b71c786131ba5f2fcf96c57afdf96629b0b406571305444623a0"
+    },
+    {
+      "row": "seethrough-scripted-convoy@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.958,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-6/seethrough-scripted-convoy@low-z0.5/metrics.json",
+      "sha256": "9762ade1d29ce8476c148847094f5d251cb6a80e9f6540e59810099b6cf8c6d1"
+    },
+    {
+      "row": "seethrough-scripted-convoy@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.95,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [
+        {
+          "name": "seeThroughCutPixelsOutside",
+          "pass": false,
+          "value": 122569,
+          "limit": 0
+        }
+      ],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-6/seethrough-scripted-convoy@low-z1/metrics.json",
+      "sha256": "2f6a652eb52661ba64ce3debef6c863f7dcfc10bb87a77d751a9173c785e8299"
+    },
+    {
+      "row": "seethrough-scripted-convoy@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.951,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [
+        {
+          "name": "seeThroughCutPixelsOutside",
+          "pass": false,
+          "value": 205231,
+          "limit": 0
+        }
+      ],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-6/seethrough-scripted-convoy@low-z1.5/metrics.json",
+      "sha256": "3ab1fcd79df8b2edc349c52ae9b84ee8cc893d2899a44a52cfed316dfce61f3e"
+    },
+    {
+      "row": "seethrough-sedan-silhouette@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-6/seethrough-sedan-silhouette@low-z0.5/metrics.json",
+      "sha256": "2392fc9add35af9b831494d770e4ffebc99f8cb708e3903d0edff40d45546376"
+    },
+    {
+      "row": "seethrough-sedan-silhouette@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-6/seethrough-sedan-silhouette@low-z1/metrics.json",
+      "sha256": "2544e240c3b2b1a1485c19acb643a83f95772a4570c08872658a190a22c3bb5c"
+    },
+    {
+      "row": "seethrough-sedan-silhouette@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-6/seethrough-sedan-silhouette@low-z1.5/metrics.json",
+      "sha256": "3e6e1e5090158ee770d1f6606d77cc5a842efe293e0ce09d929aec539b722006"
+    },
+    {
+      "row": "stunning-cut-l3-supermarket@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.978,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-6/stunning-cut-l3-supermarket@low-z0.5/metrics.json",
+      "sha256": "6762e63e0ff6d7e1bb66f57dfc90da3787d16ba2b4982ec0c648fce9dd6e63c7"
+    },
+    {
+      "row": "stunning-cut-l3-supermarket@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.977,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-6/stunning-cut-l3-supermarket@low-z1/metrics.json",
+      "sha256": "45bb8e620b061c09ee68daf226e2464308e807fa980d8ece6221885c52783322"
+    },
+    {
+      "row": "stunning-cut-l3-supermarket@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.975,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-6/stunning-cut-l3-supermarket@low-z1.5/metrics.json",
+      "sha256": "c7e7324b88f874322fec70a176c75245bcc0a88bd345e867292238551c92b134"
+    },
+    {
+      "row": "stunning-cut-l5-pharmacy@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-6/stunning-cut-l5-pharmacy@low-z1/metrics.json",
+      "sha256": "843eaee325f46e4168a013229441487bbe24184b5d77d3c1e4c0912aaeaa24e2"
+    },
+    {
+      "row": "stunning-cut-l5-pharmacy@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-6/stunning-cut-l5-pharmacy@low-z1.5/metrics.json",
+      "sha256": "39b9b2bf0391474f05450610b226bf4f61415e34d978c725e5e8318c9e6b132f"
+    },
+    {
+      "row": "stunning-cut-l5-pharmacy@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-7/stunning-cut-l5-pharmacy@low-z0.5/metrics.json",
+      "sha256": "b8fe49094f7926450428689b237242bb3bdb9ddb6458e40ea28d0dff4aedfd6a"
+    },
+    {
+      "row": "stunning-l6-tunnel-gate@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.88,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-7/stunning-l6-tunnel-gate@low-z0.5/metrics.json",
+      "sha256": "9a5b0a7548cd47960d3cde40efba11bb1484c727d31572029886f93c62841baf"
+    },
+    {
+      "row": "stunning-l6-tunnel-gate@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.855,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-7/stunning-l6-tunnel-gate@low-z1/metrics.json",
+      "sha256": "6d4e0325b62371e8a4f1431f33e7e7063fc5e747be9edea1f8497e55e497641c"
+    },
+    {
+      "row": "stunning-l6-tunnel-gate@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 0.841,
+          "limit": 0.6
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-7/stunning-l6-tunnel-gate@low-z1.5/metrics.json",
+      "sha256": "d587af1d695e1c068951db2a5fc6edfd16a31d08a79e8b4d5e727bbaaaba3aa4"
+    },
+    {
+      "row": "vfx-hud-telegraphs@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.7
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-7/vfx-hud-telegraphs@low-z0.5/metrics.json",
+      "sha256": "51e0d03507cd0980c289966ce95e1fb3e1ae5ed84969cbb4e5f28e37ebb55f36"
+    },
+    {
+      "row": "vfx-hud-telegraphs@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.7
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-7/vfx-hud-telegraphs@low-z1/metrics.json",
+      "sha256": "9d439b6b529020b7216ca674252f7374869c6e34abb272ef4989bd9e92727b4c"
+    },
+    {
+      "row": "vfx-hud-telegraphs@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "coverageChecks": [
+        {
+          "name": "courierVisibleShare",
+          "pass": true,
+          "value": 1,
+          "limit": 0.7
+        }
+      ],
+      "rawOtherFailures": [],
+      "metrics": "test-results/nightly-28/body-final/webgpu-low-7/vfx-hud-telegraphs@low-z1.5/metrics.json",
+      "sha256": "ddd0a2860c417bf2efe6286d8f592bb50dfdfc17208219909ae397fd61dabab0"
+    }
+  ]
+}
