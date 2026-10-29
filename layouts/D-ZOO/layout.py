@@ -341,4 +341,116 @@ for _z in (-84.2, 84.2): _stripe(-113.0, 113.0, _z - 1.2, _z + 1.2, 'foliageDark
 for _x, _z in [(-78, -64), (-42, -64), (42, -64), (78, -64), (-78, 0), (-42, 0), (42, 0), (78, 0), (-78, 64), (-42, 64), (78, 64)]:
     l.place('prop.street-lamp', [_x, 0, _z + 4])
 
+# ---- look-l10-l8-2: the sanctuary lawns and enclosures (QA batch 26: "L8 is mostly APC and dark lawn") ------------------------
+# Inside the wall the camera saw flat mown stripes between the paths. Now: grass verges along every path edge (real blades that
+# catch the lamp pools), blossom/park trees, flower beds and shrub clusters on the public lawns, and enclosures that read as
+# habitats (sand, mud, savanna, jungle floor) with the reviewed river-kit rocks, a water hole and hay feeders. Paths, gates, gate
+# paths, doors, outlets and anchors keep a clear margin; trees and flower beds are non-solid (asset `world.solid` false), only the
+# rocks and the few shrubs collide, and none stands on a public path or within 4 m of an anchor.
+from mathutils import Vector
+_zr = random.Random(1029)
+def _seg_d(a, b, p):
+    dx, dz = b[0]-a[0], b[1]-a[1]; d2 = dx*dx+dz*dz
+    t = 0 if d2 == 0 else max(0, min(1, ((p[0]-a[0])*dx+(p[1]-a[1])*dz)/d2))
+    return math.hypot(a[0]+t*dx-p[0], a[1]+t*dz-p[1])
+def _path_clear(x, z):
+    """Distance from (x, z) to the nearest paved path edge."""
+    return min(_seg_d(e['points'][0], e['points'][1], (x, z)) - e['laneWidth'] / 2 for e in l.data['roads']['edges'])
+_encl = {'lion': (-60, -32, 44, 40), 'gorilla': (60, -32, 44, 40), 'elephant': (-60, 32, 44, 40), 'zebra': (60, 32, 44, 40), 'flamingo': (0, -32, 28, 40)}
+def _in_encl(x, z, pad):
+    return next((k for k, (cx, cz, w, d) in _encl.items() if abs(x-cx) < w/2+pad and abs(z-cz) < d/2+pad), None)
+_keep = [(b['aabb']['min'], b['aabb']['max']) for b in l.data['buildings']] + [(p['visualAabb']['min'], p['visualAabb']['max']) for p in l.data['placements'] if p['assetId'].startswith('kit.')]
+_anchors = [(a['position'][0], a['position'][2]) for a in l.data['anchors'].values()]
+_zoo_taken = [(p['visualAabb']['min'][0], p['visualAabb']['min'][2], p['visualAabb']['max'][0], p['visualAabb']['max'][2], p['assetId']) for p in l.data['placements'] if abs(p['position'][0]) < 116 and abs(p['position'][2]) < 86]
+def zoo_put(asset, x, z, yaw=0.0, sc=1.0, path=3.0, solid_pad=.4):
+    d = l.manifest[asset]['dimensions']; tree = 'tree' in asset
+    ex = (abs(math.cos(yaw))*d['x'] + abs(math.sin(yaw))*d['z'])*sc/2; ez = (abs(math.sin(yaw))*d['x'] + abs(math.cos(yaw))*d['z'])*sc/2
+    rx, rz = (.6, .6) if tree else (ex, ez)   # trees: trunk footprint; the crown only has to stay inside the wall and off buildings
+    if abs(x) + ex > 114.5 or abs(z) + ez > 84.5: return None
+    if _path_clear(x, z) - max(rx, rz) < path: return None
+    if any(math.hypot(x-ax, z-az) < 4.0 for ax, az in _anchors): return None
+    if any(x+ex > mn[0]-1.5 and x-ex < mx[0]+1.5 and z+ez > mn[2]-1.5 and z-ez < mx[2]+1.5 for mn, mx in _keep): return None
+    if any(x+rx > t[0]-solid_pad and x-rx < t[2]+solid_pad and z+rz > t[1]-solid_pad and z-rz < t[3]+solid_pad for t in _zoo_taken): return None
+    pid = l.place(asset, [x, 0, z], yaw=yaw, scale=(sc, sc, sc))
+    _zoo_taken.append((x-rx, z-rz, x+rx, z+rz, asset))
+    return pid
+# 1) Grass verges: blade strips 0.3-1.7 m beyond every path edge (Grass skips paving, footprints and the tile surfaces itself).
+for e in list(l.data['roads']['edges']):
+    (x0, z0), (x1, z1) = e['points']; h = e['laneWidth'] / 2 + .3
+    if abs(x1 - x0) > abs(z1 - z0):
+        for zz in (z0 - h - 1.4, z0 + h): l.data['lawns'].append(dict(min=[min(x0, x1), zz], max=[max(x0, x1), zz + 1.4]))
+    else:
+        for xx in (x0 - h - 1.4, x0 + h): l.data['lawns'].append(dict(min=[xx, min(z0, z1)], max=[xx + 1.4, max(z0, z1)]))
+# 2) Habitat floors: one slab per enclosure, 3 cm proud (above the 2 cm mown stripes, below the 12 cm gate paving), visual only.
+HABITAT = {'lion': 'gloveKhaki', 'elephant': 'trouserSeam', 'zebra': 'khakiSeam', 'gorilla': 'foliageDark', 'flamingo': 'apronOlive'}
+for k, (cx, cz, w, d) in _encl.items():
+    l.box('habitat-floor', HABITAT[k], [w - 1.2, .03, d - 1.2], [cx, .015, cz])
+# Savanna tufts in the zebra paddock (grass blades, non-solid); the gate line (enclosure centre x) stays open.
+for k in range(9):
+    tx, tz = 60 + _zr.uniform(-18, 18), 32 + _zr.uniform(-16, 16)
+    if abs(tx - 60) < 4: continue
+    l.data['lawns'].append(dict(min=[tx - 2.2, tz - 1.6], max=[tx + 2.2, tz + 1.6]))
+# 3) Rocks from the reviewed river kit (as L9's dry rocks): lion, gorilla and elephant outcrops, solid; gate lines and anchors stay clear.
+_before = set(bpy.data.objects)
+bpy.ops.import_scene.gltf(filepath=str(l.root / 'assets/kit.river-terrain/model.glb'))
+_imported = set(bpy.data.objects) - _before
+_rocks = sorted([o for o in _imported if o.name.startswith('rocks_pal_') and o.type == 'MESH'], key=lambda o: o.name)
+assert _rocks
+bpy.context.view_layer.update()
+_verts = [o.matrix_world @ v.co for o in _rocks for v in o.data.vertices]
+_lo = Vector(tuple(min(v[i] for v in _verts) for i in range(3))); _hi = Vector(tuple(max(v[i] for v in _verts) for i in range(3)))
+_center = (_lo + _hi) / 2
+print('look-l10-l8-2 river-kit rocks extent', tuple(round(v, 2) for v in (_hi - _lo)))
+for (x, z, sc, yaw) in [(-47, -43, .55, .4), (-73, -21, .5, 2.1), (73, -43, .5, 1.2), (-48, 21.5, .4, 2.8)]:
+    for rock in _rocks:
+        ob = bpy.data.objects.new('zoo-rocks', rock.data.copy()); bpy.context.collection.objects.link(ob)
+        for i, m in enumerate(ob.data.materials): ob.data.materials[i] = material(m.name.removeprefix('pal_').split('.')[0])
+        c, s_ = math.cos(yaw), math.sin(yaw)
+        for v in ob.data.vertices:
+            p = rock.matrix_world @ v.co; px, py = (p.x - _center.x) * sc, (p.y - _center.y) * sc
+            v.co = (px * c - py * s_, px * s_ + py * c, (p.z - _lo.z) * sc)
+        ob.location = (x, -z, 0); l.layers[0].append(ob)
+    r = max(_hi.x - _lo.x, _hi.y - _lo.y) * sc / 2 * .8
+    l.data['colliders'].append(dict(id=f'zoo-rocks-{x}-{z}', aabb=dict(min=[x - r, 0, z - r], max=[x + r, (_hi.z - _lo.z) * sc, z + r]), minTier=0, maxTier=5))
+for obj in _imported: bpy.data.objects.remove(obj, do_unlink=True)
+# 4) Elephant water hole and hay feeders (zebra, elephant): visual boxes/ellipsoid, the animals' ground is unchanged.
+bpy.ops.mesh.primitive_uv_sphere_add(segments=20, ring_count=6, location=(-70, 42, -.1))
+_hole = bpy.context.object; _hole.name = 'elephant-water'; _hole.scale = (5.5, 3.6, .15)
+_hole.data.materials.append(material('backpackTealDark')); l.layers[0].append(_hole)
+for (fx, fz) in [(-48, 44), (72, 44), (49, 20)]:
+    l.box('feeder-trough', 'woodWarm', [2.6, .55, .9], [fx, .275, fz])
+    l.box('feeder-hay', 'mustard', [2.3, .18, .7], [fx, .62, fz])
+    for k in range(3):
+        l.box('hay-bale', 'mustardLight' if k % 2 else 'mustard', [1.2, .5, .6], [fx + 3 + (k % 2) * .05, .25 + (k // 2) * .5, fz - .9 + (k % 2) * .7])
+# 5) Public lawns: park-tree groves, shrub clusters and flower drifts on a jittered 7 m grid (no blossom trees: the pink crowns read
+#    purple under the zoo's teal grade, the 10-19 "purple blobs" finding), and planters only where a planter belongs, along the paths.
+_placed = 0
+for gx in range(-112, 113, 7):
+    for gz in range(-82, 83, 7):
+        x, z = gx + _zr.uniform(-2.5, 2.5), gz + _zr.uniform(-2.5, 2.5)
+        roll = _zr.random(); pid = None
+        if _in_encl(x, z, 2.5): continue
+        if roll < .26: pid = zoo_put(_zr.choice(['prop.tree', 'prop.street-tree']), x, z, _zr.uniform(0, math.tau), _zr.uniform(.65, .9), path=1.6)
+        elif roll < .40:
+            for k in range(3):
+                a = _zr.uniform(0, math.tau); pid = zoo_put('prop.tree', x + math.cos(a) * 2.6 * (k > 0), z + math.sin(a) * 2.6 * (k > 0), _zr.uniform(0, math.tau), _zr.uniform(.55, .8), path=1.6) or pid
+        elif roll < .58:
+            for k in range(_zr.randint(2, 3)): pid = zoo_put(_zr.choice(['prop.garden-bush', 'prop.garden-bush-small']), x + _zr.uniform(-1.8, 1.8), z + _zr.uniform(-1.8, 1.8), _zr.uniform(0, math.tau), 1.0, path=3.0, solid_pad=.1) or pid
+        elif roll < .80:
+            for k in range(6): pid = zoo_put('prop.flower', x + _zr.uniform(-1.8, 1.8), z + _zr.uniform(-1.8, 1.8), _zr.uniform(0, math.tau), 1.0, path=.5, solid_pad=.05) or pid
+        if pid: _placed += 1
+for e in list(l.data['roads']['edges']):
+    (x0, z0), (x1, z1) = e['points']; length = math.dist((x0, z0), (x1, z1))
+    if e['laneWidth'] != 5 or length < 20: continue
+    ux, uz = (x1 - x0) / length, (z1 - z0) / length; yaw = math.atan2(-uz, ux) + math.pi / 2   # long side (z) along the path
+    for t in range(9, int(length) - 8, 17):
+        for side in (-1, 1):
+            px, pz = x0 + ux * t - uz * side * 4.3, z0 + uz * t + ux * side * 4.3
+            if zoo_put('prop.flower-bed.large', px, pz, yaw, 1.0, path=.6, solid_pad=.3): _placed += 1
+# Enclosure planting: jungle trees and shrubs for the gorillas, a shade tree each for lion, elephant and zebra (corners, off the gate line).
+for asset, x, z, sc in [('prop.tree', 47, -22, .9), ('prop.tree', 76, -46, .85), ('prop.street-tree', 52, -46, .8), ('prop.garden-bush', 70, -20, 1), ('prop.garden-bush', 46, -36, 1), ('prop.garden-bush-small', 75, -33, 1),
+                        ('prop.street-tree', -46, -24, .8), ('prop.tree', -75, 46, .8), ('prop.street-tree', 74, 20, .75)]:
+    if zoo_put(asset, x, z, _zr.uniform(0, math.tau), sc, path=1.5): _placed += 1
+print('look-l10-l8-2 zoo dressing placements', _placed, 'lawns', len(l.data['lawns']))
+
 l.export()
