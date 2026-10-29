@@ -215,7 +215,7 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
       const crowns = new Map<string, Object3D[]>();
       const base = scenes[0];
       base?.updateMatrixWorld(true);
-      base?.traverse((o) => {
+      const reference = (o: Pick<Object3D, 'userData' | 'name' | 'matrixWorld'>) => {
         if (o.userData.foliageColors && o.userData.minTier <= deps.world.composition.tier && o.userData.maxTier >= deps.world.composition.tier) {
           const key = o.userData.foliageColors.join(":"), ref = new Object3D(); o.matrixWorld.decompose(ref.position, ref.quaternion, ref.scale);
           if (!crowns.has(key)) crowns.set(key, []); crowns.get(key)!.push(ref);
@@ -239,7 +239,19 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
         if (typeof o.userData.tint === 'string') reference.userData.tint = o.userData.tint;
         if (!references.has(key)) references.set(key, []);
         references.get(key)!.push(reference);
-      });
+      };
+      const markers = base?.userData.layoutMarkers as { extras: Record<string, unknown>[]; records: [string, number, number[] | null, number[] | null, number[] | null][] } | undefined;
+      if (markers) {
+        // Exact exporter TRS values and order, without GLTF's per-marker object
+        // hierarchy/promises. Only the final instance references are allocated.
+        const transform = new Object3D();
+        for (const [name, extras, position, rotation, scale] of markers.records) {
+          transform.position.fromArray(position ?? [0, 0, 0]);
+          transform.quaternion.fromArray(rotation ?? [0, 0, 0, 1]);
+          transform.scale.fromArray(scale ?? [1, 1, 1]); transform.updateMatrix();
+          reference({ name, userData: { name, ...markers.extras[extras] }, matrixWorld: transform.matrix });
+        }
+      } else base?.traverse(reference);
       // L2/L3 author their dressing (and L3 its per-placement decay variants) in the loaded layout copy. Their
       // references must use those placements, rather than the unchanged baked GLB empties.
       if (d.layout.terrainChunks?.length || deps.world.composition.id === 'L7' || deps.world.composition.id === 'L6' || deps.world.composition.id === 'L5' || deps.world.composition.id === 'L4' || deps.world.composition.id === 'L3' || deps.world.composition.id === 'L2' || lab) {

@@ -4,7 +4,7 @@ The outbreak/animal population and occluded outlet interiors belong to later lan
 """
 import math
 import random
-import json
+import runpy
 from sslib.layout import Layout, empty
 
 l = Layout('D-ZOO', 'Sunset Grove Zoo', size=(300, 240))
@@ -459,5 +459,5 @@ print('look-l10-l8-2 zoo dressing placements', _placed, 'lawns', len(l.data['law
 # PreRenderer still draws every piece, including its shadows, during warm-up.
 for _piece in l.layers[0]: _piece['preRenderShared'] = True
 l.export()
-# Delivery keeps the complete layout data; whitespace need not travel to the browser.
-(l.root/'public/assets/layouts/D-ZOO.layout.json').write_text(json.dumps(l.data, sort_keys=True, separators=(',', ':')) + '\n')
+# Keep exact marker order/TRS in the compact delivery reference table.
+runpy.run_path(str(l.root/'tools/assets/compact-zoo-delivery.py'), run_name='__main__')
