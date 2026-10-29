@@ -291,6 +291,7 @@ export class DistrictAssets {
           let material = this.sharedMaterials.get('window-light:unlit');
           if (!material) {
             material = this.materials.shaded(this.materials.sample(attribute('_palette', 'float')).mul(.08)).seeThrough();
+            material.userData.batchFeatures = 'unlit-windows';
             material.name = 'emi_static-windows'; this.sharedMaterials.set('window-light:unlit', material); this.batchMaterials.add(material);
           }
           node.material = material;

@@ -308,7 +308,12 @@ export class GameView implements Lifecycle {
     }
     // Native soft-particle depth samplers must compile with the actual MSAA target
     // bound. The first update below warms those programs in their render context.
-    this.districts?.updateLods(this.view); this.crowd?.update(this.view); await Promise.all([this.crowd?.ready(), this.npcs?.ready(), this.districts?.ready()]);
+    this.districts?.updateLods(this.view); this.crowd?.update(this.view);
+    // Instantiate each resident pet/escort before warming, including its own
+    // skinned shadow bindings. Their first update can request an escort model.
+    this.npcs?.update(this.camera);
+    await Promise.all([this.crowd?.ready(), this.npcs?.ready(), this.districts?.ready()]);
+    this.npcs?.update(this.camera);
     // The resident mounted gun used to load only in update()/screenshotReady(),
     // after the full warm-up. Its white vertex-colour mesh then linked on first
     // camera entry (especially low WebGL). Include it in the same loading pass.
