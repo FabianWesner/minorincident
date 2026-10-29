@@ -382,7 +382,7 @@ for e in list(l.data['roads']['edges']):
     else:
         for xx in (x0 - h - 1.4, x0 + h): l.data['lawns'].append(dict(min=[xx, min(z0, z1)], max=[xx + 1.4, max(z0, z1)]))
 # 2) Habitat floors: one slab per enclosure, 3 cm proud (above the 2 cm mown stripes, below the 12 cm gate paving), visual only.
-HABITAT = {'lion': 'gloveKhaki', 'elephant': 'trouserSeam', 'zebra': 'khakiSeam', 'gorilla': 'foliageDark', 'flamingo': 'apronOlive'}
+HABITAT = {'lion': 'khaki', 'elephant': 'trouserSeam', 'zebra': 'gloveKhaki', 'gorilla': 'foliageDark', 'flamingo': 'apronOlive'}
 for k, (cx, cz, w, d) in _encl.items():
     l.box('habitat-floor', HABITAT[k], [w - 1.2, .03, d - 1.2], [cx, .015, cz])
 # Savanna tufts in the zebra paddock (grass blades, non-solid); the gate line (enclosure centre x) stays open.
