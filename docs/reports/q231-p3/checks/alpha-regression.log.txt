@@ -1,0 +1,111 @@
+
+> scene
+> sh tools/e2e-lock.sh tsx tools/scenelab/cli.ts tests/scenes/catalog/alpha-hit-corpse-base.json tests/scenes/catalog/alpha-hit-corpse-worker.json tests/scenes/catalog/alpha-hit-corpse-hoodie.json tests/scenes/catalog/alpha-hit-corpse-fire.json tests/scenes/catalog/alpha-hit-corpse-suit.json --tier low --backend webgl2 --out test-results/q231-p3/alpha-regression
+
+[
+  {
+    "scene": "alpha-hit-corpse-base",
+    "pass": true,
+    "backend": "webgl",
+    "frames": 240,
+    "seconds": 19.193,
+    "failed": [],
+    "clipping": {
+      "gunBodyHits": 1,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/q231-p3/test-results/q231-p3/alpha-regression/alpha-hit-corpse-base-low/sheet.jpg",
+    "files": [
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/q231-p3/test-results/q231-p3/alpha-regression/alpha-hit-corpse-base-low/shot-0000.png",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/q231-p3/test-results/q231-p3/alpha-regression/alpha-hit-corpse-base-low/sheet.jpg",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/q231-p3/test-results/q231-p3/alpha-regression/alpha-hit-corpse-base-low/metrics.json"
+    ]
+  },
+  {
+    "scene": "alpha-hit-corpse-worker",
+    "pass": true,
+    "backend": "webgl",
+    "frames": 240,
+    "seconds": 16.14,
+    "failed": [],
+    "clipping": {
+      "gunBodyHits": 1,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/q231-p3/test-results/q231-p3/alpha-regression/alpha-hit-corpse-worker-low/sheet.jpg",
+    "files": [
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/q231-p3/test-results/q231-p3/alpha-regression/alpha-hit-corpse-worker-low/shot-0000.png",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/q231-p3/test-results/q231-p3/alpha-regression/alpha-hit-corpse-worker-low/sheet.jpg",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/q231-p3/test-results/q231-p3/alpha-regression/alpha-hit-corpse-worker-low/metrics.json"
+    ]
+  },
+  {
+    "scene": "alpha-hit-corpse-hoodie",
+    "pass": true,
+    "backend": "webgl",
+    "frames": 240,
+    "seconds": 16.381,
+    "failed": [],
+    "clipping": {
+      "gunBodyHits": 1,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/q231-p3/test-results/q231-p3/alpha-regression/alpha-hit-corpse-hoodie-low/sheet.jpg",
+    "files": [
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/q231-p3/test-results/q231-p3/alpha-regression/alpha-hit-corpse-hoodie-low/shot-0000.png",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/q231-p3/test-results/q231-p3/alpha-regression/alpha-hit-corpse-hoodie-low/sheet.jpg",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/q231-p3/test-results/q231-p3/alpha-regression/alpha-hit-corpse-hoodie-low/metrics.json"
+    ]
+  },
+  {
+    "scene": "alpha-hit-corpse-fire",
+    "pass": true,
+    "backend": "webgl",
+    "frames": 240,
+    "seconds": 15.887,
+    "failed": [],
+    "clipping": {
+      "gunBodyHits": 1,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/q231-p3/test-results/q231-p3/alpha-regression/alpha-hit-corpse-fire-low/sheet.jpg",
+    "files": [
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/q231-p3/test-results/q231-p3/alpha-regression/alpha-hit-corpse-fire-low/shot-0000.png",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/q231-p3/test-results/q231-p3/alpha-regression/alpha-hit-corpse-fire-low/sheet.jpg",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/q231-p3/test-results/q231-p3/alpha-regression/alpha-hit-corpse-fire-low/metrics.json"
+    ]
+  },
+  {
+    "scene": "alpha-hit-corpse-suit",
+    "pass": true,
+    "backend": "webgl",
+    "frames": 240,
+    "seconds": 14.558,
+    "failed": [],
+    "clipping": {
+      "gunBodyHits": 1,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/q231-p3/test-results/q231-p3/alpha-regression/alpha-hit-corpse-suit-low/sheet.jpg",
+    "files": [
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/q231-p3/test-results/q231-p3/alpha-regression/alpha-hit-corpse-suit-low/shot-0000.png",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/q231-p3/test-results/q231-p3/alpha-regression/alpha-hit-corpse-suit-low/sheet.jpg",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/q231-p3/test-results/q231-p3/alpha-regression/alpha-hit-corpse-suit-low/metrics.json"
+    ]
+  }
+]

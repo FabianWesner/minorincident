@@ -53,4 +53,20 @@ Campus [before](evidence/l10/campus-before-trace.json) and [after](evidence/l10/
 
 Reproduce campus: `SCENE_PORT=4347 E2E_UNITS=1 sh tools/e2e-lock.sh npx tsx tools/scenelab/q231-probes.ts l10 1 <out>`. Matched variants: same command with `palette 2` (low) or `palette 3` (high). Before captures used the original 0.18/1 material values; after captures use the scoped values above.
 
-Final smoke and 48-row gate checks are in progress.
+## Completed checks
+
+No test cases or gate criteria were added or changed. All browser work used the shared headless pool, at most two contexts; no port 3300, deployment or GitHub publication.
+
+| Check | Result | Receipt |
+| --- | --- | --- |
+| D-CROSSING generated rebuild | Pass | [log](checks/layout-build.log.txt) |
+| `npm run typecheck` | Pass | [log](checks/typecheck.log.txt) |
+| `npm run lint` | Pass | [log](checks/lint.log.txt) |
+| `npm test` | 104/104, 24 files, 33.7 s total | [log](checks/test.log.txt) |
+| Existing five Alpha corpse scenes, low WebGL2 | 5/5 | [log](checks/alpha-regression.log.txt) |
+| `npm run test:smoke` | 6 QA + 1 public build, 134.2 s | [log](checks/smoke.log.txt) |
+| `npm run scene:gate` | **48/48**, 0 known, 0 not run, 6.0 min | [summary](checks/scene-gate-summary.md), [state](checks/scene-gate-state.json), [log](checks/scene-gate.log.txt) |
+
+Smoke used `E2E_PORT=4351 SCENE_PORT=4352 E2E_UNITS=1`; the gate used `SCENE_PORT=4352 E2E_UNITS=1` and `--out test-results/q231-p3/scene-gate`, without selection filters or resume. Gate source identity is `afe62b18f` (the exact full revision is in its retained state); subsequent changes only document results and preserve appearance metadata in receipts. L9 fix: `228576c4f`; L1 attempts: `fc1a1a20f`; L10 fix: `ab8530d03`.
+
+Outcome: L9 and L10 corrected with reviewed before/after evidence. L1 remains unresolved after the requested three targeted attempts; model/actor/tick/LOD evidence is retained for a future exact reproduction.
