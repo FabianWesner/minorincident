@@ -13,5 +13,93 @@
   "authoredRunSpeedMps": 3.8,
   "earliestPossibleArrivalSecondsIgnoringXAndAllObstacles": 5.48194222907334,
   "actualShutterSeconds": 6.5,
-  "notes": "Follower continues moving at the authored speed. This bound ignores X travel, corners, contacts and acceleration; it already exceeds five seconds."
+  "notes": "Follower continues moving at the authored speed. This bound ignores X travel, corners, contacts and acceleration; it already exceeds five seconds.",
+  "finalApproachSamples": [
+    {
+      "tick": 7335,
+      "x": 50.17813188182409,
+      "z": 17.283465652145793,
+      "state": "flee",
+      "story": null
+    },
+    {
+      "tick": 7400,
+      "x": 49.18364033459239,
+      "z": 13.590554032223165,
+      "state": "flee",
+      "story": null
+    },
+    {
+      "tick": 7465,
+      "x": 48.57257049689848,
+      "z": 9.823440256179584,
+      "state": "flee",
+      "story": null
+    },
+    {
+      "tick": 7530,
+      "x": 48.40558507959732,
+      "z": 6.0072366985076835,
+      "state": "flee",
+      "story": null
+    },
+    {
+      "tick": 7595,
+      "x": 48.441645397647356,
+      "z": 2.185884683581074,
+      "state": "flee",
+      "story": null
+    },
+    {
+      "tick": 7670,
+      "x": 48.53807128487848,
+      "z": -2.2227008474763608,
+      "state": "flee",
+      "story": null
+    },
+    {
+      "tick": 7737,
+      "x": 48.45016148465343,
+      "z": -6.1604887336694505,
+      "state": "flee",
+      "story": null
+    },
+    {
+      "tick": 7799,
+      "x": 48.16315857594552,
+      "z": -9.793803844662328,
+      "state": "flee",
+      "story": null
+    },
+    {
+      "tick": 7861,
+      "x": 47.771888772696734,
+      "z": -13.566251158090763,
+      "state": "calm",
+      "story": null
+    },
+    {
+      "tick": 7927,
+      "x": 47.37707188738728,
+      "z": -17.725134846353352,
+      "state": "calm",
+      "story": null
+    },
+    {
+      "tick": 7990,
+      "x": 47.00800569800447,
+      "z": -21.69801246806696,
+      "state": "calm",
+      "story": null
+    },
+    {
+      "tick": 8055,
+      "x": 46.62749631044624,
+      "z": -25.79705575684408,
+      "state": "calm",
+      "story": null
+    }
+  ],
+  "minimumObservedFinalApproachSpeedMps": 3.522787666106944,
+  "finalApproachDurationSeconds": 12.0
 }
