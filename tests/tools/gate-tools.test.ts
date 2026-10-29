@@ -123,9 +123,7 @@ test('scene gate rejects invalid arguments and empty selections before running c
   expect(f.calls(), 'invalid input must not launch work').toBe(0);
   expect(f.run(['--batch', '1', '--shard', '1/2']).status, 'valid shard').toBe(0);
   f.select([]); expect(f.run().status, 'empty selection').not.toBe(0);
-});
-
-test('catalog list flushes the full matrix when stdout is piped to the gate runner', () => {
+  // Catalog selection must also survive a piped list larger than one OS buffer.
   const output = execFileSync(process.execPath, ['--import', resolve('node_modules/tsx/dist/loader.mjs'),
     resolve('tools/scenelab/catalog.ts'), '--matrix', '--list'], { encoding: 'utf8', maxBuffer: 1 << 26 });
   expect(Buffer.byteLength(output)).toBeGreaterThan(65_536);

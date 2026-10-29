@@ -44,7 +44,9 @@ function summarize(root: Object3D): Summary {
       const name = materials[g.materialIndex ?? 0]?.name ?? '?';
       for (let t = g.start; t < g.start + g.count; t += 3) {
         const at = (k: number) => index ? index.getX(t + k) : t + k;
-        a.fromBufferAttribute(p, at(0)).applyMatrix4(node.matrixWorld); b.fromBufferAttribute(p, at(1)).applyMatrix4(node.matrixWorld); c.fromBufferAttribute(p, at(2)).applyMatrix4(node.matrixWorld);
+        // V2 figures can use different skin bind frames at each LOD. Compare
+        // the posed surface drawn by Three.js, including skin/morph transforms.
+        node.getVertexPosition(at(0), a).applyMatrix4(node.matrixWorld); node.getVertexPosition(at(1), b).applyMatrix4(node.matrixWorld); node.getVertexPosition(at(2), c).applyMatrix4(node.matrixWorld);
         box.expandByPoint(a).expandByPoint(b).expandByPoint(c);
         const s = new Vector3().subVectors(b, a).cross(new Vector3().subVectors(c, a)).length() / 2;
         area.set(name, (area.get(name) ?? 0) + s); total += s;
