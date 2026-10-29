@@ -203,6 +203,9 @@ for x in [1367,1457,1547,1637,1727]:
 # Block the direct yard; northern loading yard and southern service lane stay open.
 surface('yard-road',[[1297,22],[1747,22],[1747,28],[1297,28]],'asphalt',.002)
 for z in range(-25,66,3): l.place('decay.makeshift-barricade',[1517,0,z])
+# Q-240: visible sections fill the ~1.3 m openings left between the existing barricades.
+# Keep the continuous gameplay collider below unchanged; these matching meshes only make its blocked line legible.
+for z in [-23.5 + i * 3 for i in range(30)]: l.place('decay.makeshift-barricade',[1517,0,z])
 # R4 destroyed entrance post, breached defensive line and low motor-pool shelters.
 l.place('bld.cure-guard-post',[1857,0,10])
 l.place('veh.military-truck',[1877,0,42]); l.data['placements'][-1]['decay']='wrecked'
