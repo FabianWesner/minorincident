@@ -107,24 +107,17 @@ test('explosions: every class follows its damage curve, full cover shields, rail
   step(f, 18 * 30 + 30 * 60 + 2); expect(fires()).toHaveLength(0);
 });
 
-test('look-l6-l9 decor is render-only: L6/L9 nav hash, colliders and pushables match the layout without it, and a re-preparation adds none', async () => {
+test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables match the layout without it, a re-preparation adds none, L9 has none', async () => {
   const { DistrictWorld } = await import('../../src/sim/world/DistrictWorld');
   const { compositions } = await import('../../src/levels/compositions');
-  const layouts = { L6: (await import('../../public/assets/layouts/D-SUBWAY.layout.json')).default, L9: (await import('../../public/assets/layouts/D-CROSSING.layout.json')).default };
-  for (const level of ['L6', 'L9'] as const) {
-    const build = (skip: boolean) => { const layout = structuredClone(layouts[level]) as unknown as { geometryHash: string }; if (skip) layout.geometryHash = 'scene-lab'; return new DistrictWorld(compositions[level], [layout as never], 1); };
-    const plain = build(true), dressed = build(false), d = dressed.districts[0], p = plain.districts[0];
-    expect(d.decay.placements.filter(q => q.decor).length).toBeGreaterThan(60);
-    expect(dressed.nav.hash).toBe(plain.nav.hash);
-    expect(d.decay.colliders).toEqual(p.decay.colliders);
-    expect(d.pushables.map(q => q.id)).toEqual(p.pushables.map(q => q.id));
-    expect(new DistrictWorld(compositions[level], dressed.districts.map(x => x.layout), 1).districts[0].decay.placements.length).toBe(d.decay.placements.length);
-  }
-  // L9 pieces stay outside the swept envelope of a vehicle anywhere on any lane (they also collide: ChunkResidency physics-only statics).
-  const { crossing } = await import('../../src/levels/L9/district'), { VEHICLE_ENVELOPE, districtDecor } = await import('../../src/levels/decor'), { worldAssets } = await import('../../src/assets/worldDefinitions');
-  const seg = (p: number[], a: number[], b: number[]) => { const dx = b[0] - a[0], dz = b[1] - a[1], t = Math.max(0, Math.min(1, ((p[0] - a[0]) * dx + (p[1] - a[1]) * dz) / (dx * dx + dz * dz))); return Math.hypot(p[0] - a[0] - t * dx, p[1] - a[1] - t * dz); };
-  for (const p of districtDecor('D-CROSSING', layouts.L9.placements as never)) {
-    const dims = worldAssets[p.assetId].dimensions, r = Math.hypot(dims.x, dims.z) / 2;   // footprint circle of the piece
-    for (const route of crossing.routes) expect(Math.min(...route.points.slice(1).map((b, i) => seg([p.position[0], p.position[2]], route.points[i], b))) - route.width / 2 - r).toBeGreaterThanOrEqual(VEHICLE_ENVELOPE - 1e-6);
-  }
+  const { districtDecor } = await import('../../src/levels/decor');
+  const layout = (await import('../../public/assets/layouts/D-SUBWAY.layout.json')).default;
+  const build = (skip: boolean) => { const copy = structuredClone(layout) as unknown as { geometryHash: string }; if (skip) copy.geometryHash = 'scene-lab'; return new DistrictWorld(compositions.L6, [copy as never], 1); };
+  const plain = build(true), dressed = build(false), d = dressed.districts[0], p = plain.districts[0];
+  expect(d.decay.placements.filter(q => q.decor).length).toBeGreaterThan(60);
+  expect(dressed.nav.hash).toBe(plain.nav.hash);
+  expect(d.decay.colliders).toEqual(p.decay.colliders);
+  expect(d.pushables.map(q => q.id)).toEqual(p.pushables.map(q => q.id));
+  expect(new DistrictWorld(compositions.L6, dressed.districts.map(x => x.layout), 1).districts[0].decay.placements.length).toBe(d.decay.placements.length);
+  expect(districtDecor('D-CROSSING', [])).toEqual([]);
 });

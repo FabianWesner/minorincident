@@ -1,13 +1,12 @@
 // look-l6-l9 (QA batch 27: "L6, L9 and L10 read well but are dark and sparse"): render-only storytelling dressing along the
-// walked/driven routes of L6 (D-SUBWAY) and L9 (D-CROSSING), inside the ~±6 m the game camera frames around the courier.
+// walked route of L6 (D-SUBWAY), inside the ~±6 m the game camera frames around the courier.
 // Every piece is `decor`: no collider, no pushable body, no nav footprint (DistrictWorld/placementColliders skip it), so the
 // sim, its entity ids, routes, triggers and timings stay byte-identical. Pieces are low (belongings, glass, bags, crates,
 // chairs) or stand against walls and off the lanes, so nothing a body walks through reads as a solid obstacle.
 import { Rng } from '../core/Rng';
 import { worldAssets } from '../assets/worldDefinitions';
-import { crossing } from './L9/district';
 import { l6, l6Doors } from '../data/l6';
-import type { DistrictId, Placement, Point } from './districts/types';
+import type { DistrictId, Placement } from './districts/types';
 
 type Spot = { asset: string; x: number; z: number; y?: number; yaw?: number; scale?: number };
 
@@ -70,64 +69,14 @@ function subwayDecor(): Spot[] {
   return out;
 }
 
-const segDistance = (p: Point, a: Point, b: Point) => {
-  const dx = b[0] - a[0], dz = b[1] - a[1], l = dx * dx + dz * dz, t = l ? Math.max(0, Math.min(1, ((p[0] - a[0]) * dx + (p[1] - a[1]) * dz) / l)) : 0;
-  return Math.hypot(p[0] - a[0] - t * dx, p[1] - a[1] - t * dz);
-};
-/** Distance past the nearest lane edge (negative inside a lane). */
-const laneDistance = (p: Point) => Math.min(...crossing.routes.map(r => Math.min(...r.points.slice(1).map((b, i) => segDistance(p, r.points[i], b))) - r.width / 2));
-
-/** Decor has no vehicle collision: every L9 piece keeps its footprint this far past every lane edge, i.e. outside the swept
- * envelope of the widest vehicle (tank 3.35 m: half width 1.7 m) driven anywhere on a lane, plus 0.5 m (orchestrator P1, 10-29). */
-export const VEHICLE_ENVELOPE = 2.2;
-/** The exodus left its road: every ~20 m a spill of luggage, bags, carts, chairs and cones over one shoulder (never on a lane), and every few spills a roadside camp (bedroll, chair, cooler). */
-function crossingDecor(placements: readonly Placement[]): Spot[] {
-  const out: Spot[] = [], boxes = placements.map(p => [p.visualAabb.min[0], p.visualAabb.min[2], p.visualAabb.max[0], p.visualAabb.max[2]] as const);
-  // Footprint radius (half diagonal): pieces never overlap each other or a placed prop (Scene Lab static clipping gate).
-  const radius = (asset: string) => Math.hypot(worldAssets[asset].dimensions.x, worldAssets[asset].dimensions.z) / 2 ;
-  const free = (x: number, z: number, asset: string) => { const m = radius(asset) + .1; return boxes.every(b => x < b[0] - m || x > b[2] + m || z < b[1] - m || z > b[3] + m) && out.every(s => Math.hypot(s.x - x, s.z - z) > m + radius(s.asset)); };
-  // Forks and every route bend stay clear: drivers (and the stream/route fixtures) cut corners straight across the verge.
-  const corners: Point[] = crossing.routes.flatMap(r => r.points.slice(1, -1) as Point[]), nearFork = (x: number, z: number) => corners.some(f => Math.hypot(x - f[0], z - f[1]) < 30);
-  const road = crossing.routes.find(r => r.id === 'road')!;
-  const shared = (a: Point, b: Point) => road.points.some(q => q[0] === a[0] && q[1] === a[1]) && road.points.some(q => q[0] === b[0] && q[1] === b[1]);
-  const lowPieces = ['decay.dropped-belongings', 'prop.pallet', 'decay.dropped-belongings', 'prop.carpet', 'prop.pallet'];
-  const shoulderPieces = ['prop.trash-bags', 'decay.dropped-belongings', 'prop.crates', 'prop.broken-chair', 'prop.shopping-cart', 'prop.traffic-cone', 'prop.trash-bags', 'prop.crates', 'decay.dropped-belongings', 'prop.folding-chair'];
-  const camp = [['prop.carpet', 0, 1.1], ['prop.folding-chair', -1.3, 1.6], ['prop.trash-bags', 1.4, 1.9], ['prop.crates', 2.6, 1.2]] as const;
-  for (const route of crossing.routes) {
-    const hw = route.width / 2;
-    for (const [i, b] of route.points.slice(1).entries()) {
-      const a = route.points[i];
-      if (route.id !== 'road' && shared(a, b)) continue;
-      const d = Math.hypot(b[0] - a[0], b[1] - a[1]), ux = (b[0] - a[0]) / d, uz = (b[1] - a[1]) / d, rng = new Rng(931, `look-l6-l9:${route.id}:${i}`);
-      let side = rng.next() < .5 ? -1 : 1;
-      for (let s = 10 + rng.next() * 6, n = 0; s < d - 10; s += 16 + rng.next() * 8, n++) {
-        // Every draw of a spill happens before any rejection, so a Scene Lab crop (fewer placements) keeps the same pieces in frame.
-        const r = Array.from({ length: 40 }, () => rng.next());
-        side = r[0] < .75 ? -side : side;
-        const pieces = 4 + Math.floor(r[1] * 4), at = (t: number, o: number): Point => [a[0] + ux * t - uz * side * o, a[1] + uz * t + ux * side * o];
-        for (let k = 0; k < pieces; k++) {
-          // Shoulder only, outside the swept envelope of a vehicle anywhere on any lane (footprint edge >= VEHICLE_ENVELOPE past it).
-          const low = r[2 + k * 4] < .4, list = low ? lowPieces : shoulderPieces, asset = list[Math.floor(r[5 + k * 4] * list.length)];
-          const o = hw + VEHICLE_ENVELOPE + radius(asset) + r[3 + k * 4] * 1.6, [x, z] = at(s + (r[4 + k * 4] - .5) * 7, o);
-          if (nearFork(x, z) || x > 500 || !free(x, z, asset) || laneDistance([x, z]) - radius(asset) < VEHICLE_ENVELOPE) continue;
-          out.push({ asset, x, z, yaw: -Math.atan2(uz, ux) + (r[5 + k * 4] - .5) * 7, scale: 1 });
-        }
-        if (n % 4 === 2) for (const [k, [asset, dt, dz]] of camp.entries()) {
-          const [x, z] = at(s + 9 + dt, hw + VEHICLE_ENVELOPE + .8 + dz);
-          if (!nearFork(x, z) && x <= 500 && laneDistance([x, z]) - radius(asset) >= VEHICLE_ENVELOPE && free(x, z, asset)) out.push({ asset, x, z, yaw: -Math.atan2(uz, ux) + r[36 + k] * 2 - 1 });
-        }
-      }
-    }
-  }
-  return out;
-}
-
 const cache = new Map<string, Placement[]>();
 /** Render-only decor of a district (empty for districts without a look-l6-l9 pass). Deterministic and cached per layout. */
 export function districtDecor(district: DistrictId, placements: readonly Placement[]): Placement[] {
-  if (district !== 'D-SUBWAY' && district !== 'D-CROSSING') return [];
+  // L9 roadside pieces were removed (orchestrator 10-29): without vehicle collision they were pass-through, with it the APC
+  // stopped on luggage. L9 keeps its existing dressing.
+  if (district !== 'D-SUBWAY') return [];
   const key = `${district}:${placements.length}`, hit = cache.get(key); if (hit) return hit;
-  const spots = district === 'D-SUBWAY' ? subwayDecor() : crossingDecor(placements);
+  const spots = subwayDecor();
   const list = spots.map((s, i) => placement(district, i, s));
   cache.set(key, list);
   return list;
