@@ -911,14 +911,7 @@ def power_line(a_, F, s0, s1, side, lat):
     if not on_detour(a_, ux, uz): lat = 7.5 + (lat - 17) / 2 + (2.0 - lane_inset(a_, ux, uz, s0))
     s = s0
     while s <= s1:
-        x, z = at(a_, ux, uz, nx, nz, s, side*lat)
-        # The pulled-in R1 line put its first crossarm over the player-start camera
-        # (the previous 17–21 m setback kept it out of that composition). Keep the
-        # pole line, but move that station downstream before dressing it.
-        if math.hypot(x - 547, z) < 18 and s + 14 <= s1:
-            s += 14
-            x, z = at(a_, ux, uz, nx, nz, s, side*lat)
-        fld_put('prop.utility-pole', x, z, math.atan2(-uz, ux)); s += fld.uniform(24, 30)
+        x, z = at(a_, ux, uz, nx, nz, s, side*lat); fld_put('prop.utility-pole', x, z, math.atan2(-uz, ux)); s += fld.uniform(24, 30)
 # l10-narrow-roads: story spots move in by the 1 m the asphalt lost (at most): their fires stay >= 8.5 m past the new 3 m lane edge
 # (NightAccents.cureAccents), clear of the E31-AC16 verge samples.
 def story_in(a_, F, s): return min(1.0, lane_inset(a_, F[1], F[2], s))
@@ -1008,6 +1001,18 @@ for ob in [o for o in l.empties if o.name.split('.')[0] in _gone]:
     l.empties.remove(ob); bpy.data.objects.remove(ob, do_unlink=True)
 print('pushable props', len(_push), '->', len(_push) - len(_cut), 'removed', sorted(_cut))
 print('look-l10 dressing placements', len(l.data['placements']))
+# Q-236: the foreground field pole's crossarm projects over player-start at
+# high z1. Move that one station downstream after dressing so every other
+# placement, clearance decision and random draw stays identical.
+for p in l.data['placements']:
+    if p['assetId'] != 'prop.utility-pole' or not p.get('fieldDressing') or p['position'][2] <= 0 or math.hypot(p['position'][0] - 547, p['position'][2]) >= 18: continue
+    p['position'][0] += 18
+    for edge in ('min', 'max'): p['visualAabb'][edge][0] += 18
+    for c in l.data['colliders']:
+        if c['id'] == p['id']:
+            for edge in ('min', 'max'): c['aabb'][edge][0] += 18
+    for ob in l.empties:
+        if ob.name in _empty_ids(p['id']): ob.location.x += 18
 for p in l.data['placements']: p['maxTier']=6
 for c in l.data['colliders']: c['maxTier']=6
 # Semantic pavement shares the renderer's level top, no raised seam at the region/chunk boundary.

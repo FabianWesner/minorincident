@@ -32,14 +32,14 @@ export function placedLights(world: import('../sim/world/DistrictWorld').Distric
     for (const placement of district.decay.placements) {
       if (removed.has(placement.id) || placement.assetId.startsWith('veh.')) continue;
       for (const authored of anchorsFor(placement.assetId)) {
-        const anchor = placement.fieldLight === 'flood' && placement.assetId === 'prop.light-tower' && authored.type === 'spot'
+        const anchor = district.id === 'D-CURE' && placement.position[0] < 747 && placement.fieldLight === 'flood' && placement.assetId === 'prop.light-tower' && authored.type === 'spot'
           ? { ...authored, color: 'light_window_warm' as const, intensity: 3.2, range: 14 }
           : authored;
         lights.push({
-        id: placedLightId(district.id, district.origin, placement.id, anchor.name), placementId: placement.id, assetId: placement.assetId,
-        group: anchor.powerGroup === 'self' ? placement.lightGroup : anchor.powerGroup, anchor,
-        ...placeAnchor(anchor, [placement.position[0] + district.origin[0], placement.position[1], placement.position[2] + district.origin[1]], placement.yaw, placement.scale),
-        ground: placement.position[1], ...(placement.decorLights ? { decor: true } : {}), on: lit.has(world.composition.id === 'L6' && ['metro-main', 'metro-emergency', 'shelter-camp'].includes(anchor.powerGroup) ? anchor.powerGroup : placement.lightGroup),
+          id: placedLightId(district.id, district.origin, placement.id, anchor.name), placementId: placement.id, assetId: placement.assetId,
+          group: anchor.powerGroup === 'self' ? placement.lightGroup : anchor.powerGroup, anchor,
+          ...placeAnchor(anchor, [placement.position[0] + district.origin[0], placement.position[1], placement.position[2] + district.origin[1]], placement.yaw, placement.scale),
+          ground: placement.position[1], ...(placement.decorLights ? { decor: true } : {}), on: lit.has(world.composition.id === 'L6' && ['metro-main', 'metro-emergency', 'shelter-camp'].includes(anchor.powerGroup) ? anchor.powerGroup : placement.lightGroup),
         });
       }
     }
