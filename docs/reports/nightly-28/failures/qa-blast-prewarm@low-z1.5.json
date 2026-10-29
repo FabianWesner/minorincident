@@ -1,0 +1,1359 @@
+{
+  "spec": "tests/scenes/catalog/qa-blast-prewarm.json",
+  "backend": "webgpu",
+  "requestedBackend": "webgpu",
+  "tier": "low",
+  "actualTier": "low",
+  "frames": 420,
+  "timing": {
+    "openMs": 0,
+    "loadMs": 4874,
+    "runMs": 4205,
+    "sceneMs": 9079
+  },
+  "checks": {
+    "pass": false,
+    "checks": [
+      {
+        "name": "health.victim-0.min",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "health.victim-0.max",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "health.victim-1.min",
+        "pass": true,
+        "value": 6.348380613447183,
+        "limit": 0
+      },
+      {
+        "name": "health.victim-1.max",
+        "pass": false,
+        "value": 6.348380613447183,
+        "limit": 0
+      },
+      {
+        "name": "health.victim-2.min",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "health.victim-2.max",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "health.victim-3.min",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "health.victim-3.max",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "health.victim-4.min",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "health.victim-4.max",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "drawCallsMax",
+        "pass": true,
+        "value": 55,
+        "limit": 300
+      },
+      {
+        "name": "trianglesMax",
+        "pass": true,
+        "value": 78341,
+        "limit": 500000
+      },
+      {
+        "name": "canvas.f0.varianceMin",
+        "pass": true,
+        "value": 458.6140896978668,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f0.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f20.varianceMin",
+        "pass": true,
+        "value": 504.536216925384,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f20.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f40.varianceMin",
+        "pass": true,
+        "value": 494.1357527776854,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f40.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f60.varianceMin",
+        "pass": true,
+        "value": 482.587233767179,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f60.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f80.varianceMin",
+        "pass": true,
+        "value": 499.55417873906663,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f80.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f100.varianceMin",
+        "pass": true,
+        "value": 508.4793776481911,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f100.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f120.varianceMin",
+        "pass": true,
+        "value": 480.7004594203536,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f120.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f140.varianceMin",
+        "pass": true,
+        "value": 544.5236823304222,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f140.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f160.varianceMin",
+        "pass": true,
+        "value": 524.9850160630122,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f160.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f180.varianceMin",
+        "pass": true,
+        "value": 595.8998365922762,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f180.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f200.varianceMin",
+        "pass": true,
+        "value": 2776.60371363163,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f200.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f220.varianceMin",
+        "pass": true,
+        "value": 3025.9471376927686,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f220.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f240.varianceMin",
+        "pass": true,
+        "value": 3822.656158582904,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f240.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f260.varianceMin",
+        "pass": true,
+        "value": 3140.9312594566836,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f260.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f280.varianceMin",
+        "pass": true,
+        "value": 2803.100964014615,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f280.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f300.varianceMin",
+        "pass": true,
+        "value": 2298.7397617574134,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f300.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f320.varianceMin",
+        "pass": true,
+        "value": 2113.777321149595,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f320.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f340.varianceMin",
+        "pass": true,
+        "value": 2110.197798933921,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f340.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f360.varianceMin",
+        "pass": true,
+        "value": 1895.3326305651844,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f360.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f380.varianceMin",
+        "pass": true,
+        "value": 1874.501844278686,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f380.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f400.varianceMin",
+        "pass": true,
+        "value": 1953.7702499714087,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f400.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f420.varianceMin",
+        "pass": true,
+        "value": 1869.5933590491768,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f420.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "requestedBackend",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      },
+      {
+        "name": "requestedQuality",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      }
+    ]
+  },
+  "seeThroughCut": null,
+  "seeThroughCutSamples": [],
+  "courierShares": [],
+  "courierForeground": [],
+  "vehicleSilhouettes": [],
+  "pixels": [
+    {
+      "frame": 0,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          104.37972415123457,
+          89.0259837962963,
+          101.45385416666667
+        ],
+        "variance": 458.6140896978668,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 20,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          107.80053047839506,
+          90.92798611111111,
+          101.77357638888888
+        ],
+        "variance": 504.536216925384,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 40,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          107.22000964506172,
+          90.77891010802469,
+          101.7268113425926
+        ],
+        "variance": 494.1357527776854,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 60,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          107.16944444444445,
+          90.68315200617283,
+          101.84032600308642
+        ],
+        "variance": 482.587233767179,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 80,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          107.12916473765432,
+          90.67220486111111,
+          101.6525
+        ],
+        "variance": 499.55417873906663,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 100,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          107.42394483024691,
+          90.55992091049383,
+          101.29598186728396
+        ],
+        "variance": 508.4793776481911,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 120,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          106.47486689814815,
+          90.37470100308641,
+          101.27448688271605
+        ],
+        "variance": 480.7004594203536,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 140,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          106.90606674382715,
+          90.43915316358024,
+          101.11853202160493
+        ],
+        "variance": 544.5236823304222,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 160,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          106.18825810185186,
+          90.10060570987655,
+          100.91333912037037
+        ],
+        "variance": 524.9850160630122,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 180,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          106.92798225308643,
+          90.15251929012345,
+          100.79088541666667
+        ],
+        "variance": 595.8998365922762,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 200,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          190.59457561728394,
+          131.90136188271606,
+          103.6478125
+        ],
+        "variance": 2776.60371363163,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 220,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          187.26501157407407,
+          130.16302083333332,
+          94.44255208333334
+        ],
+        "variance": 3025.9471376927686,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 240,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          184.12690972222222,
+          117.35884452160494,
+          88.4403838734568
+        ],
+        "variance": 3822.656158582904,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 260,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          154.04487847222222,
+          103.64744791666666,
+          89.38746527777778
+        ],
+        "variance": 3140.9312594566836,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 280,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          146.12197145061728,
+          96.1451388888889,
+          87.95196180555556
+        ],
+        "variance": 2803.100964014615,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 300,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          132.21838927469136,
+          91.71146219135802,
+          89.49567515432099
+        ],
+        "variance": 2298.7397617574134,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 320,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          130.79135802469136,
+          92.40846064814815,
+          90.2569598765432
+        ],
+        "variance": 2113.777321149595,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 340,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          129.69015625,
+          92.40706790123457,
+          90.79783371913581
+        ],
+        "variance": 2110.197798933921,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 360,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          125.12687114197531,
+          90.58184992283951,
+          90.98718557098765
+        ],
+        "variance": 1895.3326305651844,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 380,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          122.54543016975309,
+          89.95759259259259,
+          91.00634066358025
+        ],
+        "variance": 1874.501844278686,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 400,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          120.89802854938272,
+          89.70940393518518,
+          91.07833333333333
+        ],
+        "variance": 1953.7702499714087,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 420,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          118.24407986111112,
+          88.86801504629629,
+          91.35744984567901
+        ],
+        "variance": 1869.5933590491768,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    }
+  ],
+  "edgeSamples": [],
+  "lookSamples": [],
+  "ring": null,
+  "contrast": [],
+  "consoleErrors": [],
+  "scene": {
+    "name": "qa-blast-prewarm",
+    "frame": 0,
+    "placements": [],
+    "actors": [
+      {
+        "id": "victim-0",
+        "kind": "infected",
+        "entity": 4
+      },
+      {
+        "id": "victim-1",
+        "kind": "infected",
+        "entity": 5
+      },
+      {
+        "id": "victim-2",
+        "kind": "infected",
+        "entity": 6
+      },
+      {
+        "id": "victim-3",
+        "kind": "infected",
+        "entity": 7
+      },
+      {
+        "id": "victim-4",
+        "kind": "infected",
+        "entity": 8
+      }
+    ],
+    "vehicles": {
+      "car": 3
+    }
+  },
+  "metrics": {
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 6,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    },
+    "marketDoors": null,
+    "armyBoom": null,
+    "scene": "qa-blast-prewarm",
+    "frame": 420,
+    "tick": 420,
+    "backend": "webgpu",
+    "quality": "low",
+    "convoyOverlapFrames": 0,
+    "courierAttachments": {
+      "samples": 0,
+      "gapMaxCm": 0,
+      "frame": -1,
+      "worst": null,
+      "worstAt": null,
+      "attachments": 0
+    },
+    "animalLimbs": {
+      "samples": 0,
+      "gapMaxCm": 0,
+      "frame": -1,
+      "actor": null
+    },
+    "corgiTongue": {
+      "idleSamples": 0,
+      "idleOutFrames": 0,
+      "firstIdleOut": -1,
+      "movingSamples": 0,
+      "movingInFrames": 0,
+      "firstMovingIn": -1
+    },
+    "propPenetration": {
+      "samples": 1187,
+      "framesMax": 0,
+      "pairs": []
+    },
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "bodies": [],
+    "attackOverlap": {
+      "depthCm": 0,
+      "frame": 0,
+      "actor": ""
+    },
+    "wheels": {
+      "car": [
+        {
+          "vehicle": "car",
+          "wheel": 0,
+          "gapMinCm": 0.1,
+          "gapMaxCm": 0.1,
+          "minFrame": 3,
+          "maxFrame": 3,
+          "at": [
+            1.61,
+            0.12
+          ],
+          "samples": 418,
+          "surface": "asphalt",
+          "rayCheckCm": 0,
+          "hubSpikeCm": 0.1,
+          "hubSpikeFrame": 208,
+          "hubStepCm": 1.1,
+          "hubStepFrame": 240
+        },
+        {
+          "vehicle": "car",
+          "wheel": 1,
+          "gapMinCm": 0.1,
+          "gapMaxCm": 0.1,
+          "minFrame": 3,
+          "maxFrame": 3,
+          "at": [
+            0.7,
+            -1.45
+          ],
+          "samples": 418,
+          "surface": "asphalt",
+          "rayCheckCm": 0,
+          "hubSpikeCm": 0.2,
+          "hubSpikeFrame": 239,
+          "hubStepCm": 0.9,
+          "hubStepFrame": 252
+        },
+        {
+          "vehicle": "car",
+          "wheel": 2,
+          "gapMinCm": 0.1,
+          "gapMaxCm": 0.1,
+          "minFrame": 3,
+          "maxFrame": 3,
+          "at": [
+            -0.7,
+            1.45
+          ],
+          "samples": 418,
+          "surface": "asphalt",
+          "rayCheckCm": 0,
+          "hubSpikeCm": 0.2,
+          "hubSpikeFrame": 239,
+          "hubStepCm": 0.9,
+          "hubStepFrame": 252
+        },
+        {
+          "vehicle": "car",
+          "wheel": 3,
+          "gapMinCm": 0.1,
+          "gapMaxCm": 0.1,
+          "minFrame": 3,
+          "maxFrame": 3,
+          "at": [
+            -1.61,
+            -0.12
+          ],
+          "samples": 418,
+          "surface": "asphalt",
+          "rayCheckCm": 0,
+          "hubSpikeCm": 0.2,
+          "hubSpikeFrame": 239,
+          "hubStepCm": 0.9,
+          "hubStepFrame": 252
+        }
+      ]
+    },
+    "lodPlaceholders": {
+      "frames": 0,
+      "firstFrame": -1,
+      "assets": []
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 47,
+        "p95": 49,
+        "max": 55
+      },
+      "triangles": {
+        "p50": 72958,
+        "p95": 78341,
+        "max": 78341
+      },
+      "shadowDrawCalls": {
+        "p50": 10,
+        "p95": 10,
+        "max": 10
+      },
+      "shadowTriangles": {
+        "p50": 403,
+        "p95": 403,
+        "max": 403
+      },
+      "stepMs": {
+        "p50": 2.4,
+        "p95": 3.6,
+        "max": 28.2
+      },
+      "lastFrame": {
+        "drawCalls": 47,
+        "triangles": 78341,
+        "shadowDrawCalls": 10,
+        "shadowTriangles": 403,
+        "stepMs": 1.8999996185302734,
+        "categories": {
+          "other": 41,
+          "shadows": 10,
+          "crowd": 6
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {
+      "car": {
+        "entity": 3,
+        "position": [
+          -0.576,
+          0.902
+        ],
+        "yawDeg": 30,
+        "yawRateMaxDegS": 0.009836626245809593,
+        "bodyOverlaps": 31,
+        "tiltMaxDeg": 0.4,
+        "tiltFrame": 264,
+        "slipMaxDeg": 0,
+        "slipFrame": -1,
+        "driven": false,
+        "headlightsDarkFrames": 0,
+        "firstDarkFrame": -1,
+        "rideRemainingM": null,
+        "health": 0,
+        "decay": "burned",
+        "speed": 0
+      }
+    },
+    "grounding": {
+      "corpses": 4,
+      "corpseOffMaxCm": 0,
+      "pickups": 0,
+      "pickupOffMaxCm": 0,
+      "worst": [
+        {
+          "id": 8,
+          "at": [
+            2.48,
+            0,
+            -3.83
+          ],
+          "support": 0,
+          "offCm": 0
+        },
+        {
+          "id": 4,
+          "at": [
+            3.36,
+            0,
+            4.91
+          ],
+          "support": 0,
+          "offCm": 0
+        },
+        {
+          "id": 7,
+          "at": [
+            6.7,
+            0,
+            -3.21
+          ],
+          "support": 0,
+          "offCm": 0
+        },
+        {
+          "id": 6,
+          "at": [
+            -2.31,
+            0,
+            3.82
+          ],
+          "support": 0,
+          "offCm": 0
+        }
+      ]
+    },
+    "pursuit": {
+      "actors": {
+        "victim-0": {
+          "stuckRunMax": 3,
+          "stuckFrame": 32,
+          "lostNearFrames": 0,
+          "overshootMaxM": 0
+        },
+        "victim-1": {
+          "stuckRunMax": 3,
+          "stuckFrame": 49,
+          "lostNearFrames": 0,
+          "overshootMaxM": 0
+        },
+        "victim-2": {
+          "stuckRunMax": 4,
+          "stuckFrame": 35,
+          "lostNearFrames": 0,
+          "overshootMaxM": 0
+        },
+        "victim-3": {
+          "stuckRunMax": 4,
+          "stuckFrame": 30,
+          "lostNearFrames": 0,
+          "overshootMaxM": 0
+        },
+        "victim-4": {
+          "stuckRunMax": 3,
+          "stuckFrame": 42,
+          "lostNearFrames": 0,
+          "overshootMaxM": 0
+        }
+      },
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "hullWindups": 0,
+      "hullHits": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "aim": {
+      "shots": 0,
+      "hitShare": 0,
+      "intentErrorMaxDeg": 0,
+      "misses": []
+    },
+    "cure": null,
+    "megaAlpha": null,
+    "minigun": null,
+    "specials": [],
+    "heldProps": {
+      "samples": 0,
+      "intersections": 0,
+      "holds": {}
+    },
+    "seeThrough": {
+      "frames": 420,
+      "solidRadiusMax": 0.796,
+      "occluders": [],
+      "cutLowProps": [],
+      "cutPlacements": []
+    },
+    "appearance": [],
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "variety": {
+      "infected": {
+        "figures": 1,
+        "distinct": 1,
+        "per20": [
+          {
+            "figures": 1,
+            "distinct": 1
+          }
+        ],
+        "largestSameLookShare": 1,
+        "largestModelShare": 1
+      },
+      "pedestrian": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      }
+    },
+    "actors": {
+      "victim-0": {
+        "kind": "infected",
+        "entity": 4,
+        "position": [
+          3.364,
+          4.911
+        ],
+        "yawDeg": -84.4,
+        "travelM": 5.21697637004454,
+        "maxX": 3.4164728559386157,
+        "heldWeapon": null,
+        "targetId": null,
+        "state": "dead",
+        "health": 0,
+        "drawnFrames": 420,
+        "inViewFrames": 203,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 324,
+          "lod1": 96
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            2.125,
+            0.217
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 420,
+          "torsoPitchMinDeg": -95,
+          "torsoPitchMaxDeg": 60.6,
+          "contacts": 8,
+          "slideMaxCm": 4.5,
+          "slideP95Cm": 1.7,
+          "yawDriftMaxDeg": 12,
+          "liftMaxCm": 22,
+          "sinkMaxCm": 0.2,
+          "jitterRunMax": 4,
+          "worstSlideFrame": 40
+        }
+      },
+      "victim-1": {
+        "kind": "infected",
+        "entity": 5,
+        "position": [
+          -5.554,
+          5.259
+        ],
+        "yawDeg": -115.3,
+        "travelM": 7.8141942684552115,
+        "maxX": -1.225,
+        "heldWeapon": null,
+        "targetId": null,
+        "state": "idle",
+        "health": 6.348380613447183,
+        "drawnFrames": 420,
+        "inViewFrames": 420,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 420
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -1.225,
+            -0.736
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 420,
+          "torsoPitchMinDeg": -158,
+          "torsoPitchMaxDeg": 64.9,
+          "contacts": 13,
+          "slideMaxCm": 5.9,
+          "slideP95Cm": 4.9,
+          "yawDriftMaxDeg": 31,
+          "liftMaxCm": 27.9,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 63
+        }
+      },
+      "victim-2": {
+        "kind": "infected",
+        "entity": 6,
+        "position": [
+          -2.306,
+          3.82
+        ],
+        "yawDeg": -120.3,
+        "travelM": 3.199985425055437,
+        "maxX": 0.07653668647301798,
+        "heldWeapon": null,
+        "targetId": null,
+        "state": "dead",
+        "health": 0,
+        "drawnFrames": 420,
+        "inViewFrames": 187,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 308,
+          "lod1": 112
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            0,
+            2
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 420,
+          "torsoPitchMinDeg": -94.5,
+          "torsoPitchMaxDeg": 84.7,
+          "contacts": 6,
+          "slideMaxCm": 39,
+          "slideP95Cm": 10,
+          "yawDriftMaxDeg": 45.3,
+          "liftMaxCm": 26.2,
+          "sinkMaxCm": 0.4,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 32
+        }
+      },
+      "victim-3": {
+        "kind": "infected",
+        "entity": 7,
+        "position": [
+          6.7,
+          -3.209
+        ],
+        "yawDeg": -39.4,
+        "travelM": 3.940490803582806,
+        "maxX": 6.699601916064363,
+        "heldWeapon": null,
+        "targetId": null,
+        "state": "dead",
+        "health": 0,
+        "drawnFrames": 420,
+        "inViewFrames": 190,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 310,
+          "lod1": 110
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            4,
+            -6
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 420,
+          "torsoPitchMinDeg": -93.6,
+          "torsoPitchMaxDeg": 76,
+          "contacts": 7,
+          "slideMaxCm": 31.5,
+          "slideP95Cm": 1.2,
+          "yawDriftMaxDeg": 4.2,
+          "liftMaxCm": 19.1,
+          "sinkMaxCm": 0.4,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 25
+        }
+      },
+      "victim-4": {
+        "kind": "infected",
+        "entity": 8,
+        "position": [
+          2.482,
+          -3.834
+        ],
+        "yawDeg": 2.4,
+        "travelM": 3.859167837408513,
+        "maxX": 2.481541162058491,
+        "heldWeapon": null,
+        "targetId": null,
+        "state": "dead",
+        "health": 0,
+        "drawnFrames": 420,
+        "inViewFrames": 187,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 308,
+          "lod1": 112
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -1,
+            -3
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 420,
+          "torsoPitchMinDeg": -94.9,
+          "torsoPitchMaxDeg": 82.7,
+          "contacts": 10,
+          "slideMaxCm": 6.9,
+          "slideP95Cm": 2.9,
+          "yawDriftMaxDeg": 36.9,
+          "liftMaxCm": 10.6,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 54
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 420,
+      "sim": {
+        "infected": 1,
+        "actors": 5
+      },
+      "drawn": {
+        "vehicle": 1,
+        "infected": 5
+      }
+    },
+    "lods": {},
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [],
+    "actors": [],
+    "gunBodies": [],
+    "heldProps": [],
+    "summary": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}
