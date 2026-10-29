@@ -16,6 +16,7 @@ R1 evac-tower flood spots were authored at intensity 6 and range 24. Flood-marke
 
 - `npm test`: 106 passed.
 - `npm run typecheck`: passed.
+- `tools/qa/l10-arrival-check.ts`: high 143.15 s and low 143.22 s; cure released, zero deaths. Script unchanged.
 - `npm run test:smoke`: blocked before browser tests; browser-pool daemon could not bind its Unix socket (`EPERM`).
 - `npm run scene:gate`: blocked before launch by the same sandbox Unix-socket restriction; 48/48 and post-change captures remain unverified.
 - `npm run layouts:build -- D-CURE`: likewise blocked at tsx startup by the sandbox Unix-socket restriction. Runtime placement applies the pole move to the current generated layout; the authoring source will carry it into future layout builds.
