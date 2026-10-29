@@ -1,0 +1,1741 @@
+{
+  "spec": "tests/scenes/catalog/night-read-l10-r1.json",
+  "backend": "webgl",
+  "requestedBackend": "webgl2",
+  "tier": "low",
+  "actualTier": "low",
+  "frames": 240,
+  "timing": {
+    "openMs": 11572,
+    "loadMs": 4997,
+    "runMs": 2940,
+    "sceneMs": 7937
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "clipping",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "drawCallsMax",
+        "pass": true,
+        "value": 43,
+        "limit": 300
+      },
+      {
+        "name": "trianglesMax",
+        "pass": true,
+        "value": 60267,
+        "limit": 500000
+      },
+      {
+        "name": "navContrastMin",
+        "pass": true,
+        "value": 3.9100925446887844,
+        "limit": 2.5
+      },
+      {
+        "name": "navContrastFloor",
+        "pass": true,
+        "value": 3,
+        "limit": 2
+      },
+      {
+        "name": "playerContrastMin",
+        "pass": true,
+        "value": 7.363281856027363,
+        "limit": 3
+      },
+      {
+        "name": "contrastSampled",
+        "pass": true,
+        "value": 6,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f0.varianceMin",
+        "pass": true,
+        "value": 1494.1143416213781,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f0.variedTilesMin",
+        "pass": true,
+        "value": 63,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f40.varianceMin",
+        "pass": true,
+        "value": 1666.3780194204755,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f40.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f80.varianceMin",
+        "pass": true,
+        "value": 1359.7544027007953,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f80.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f120.varianceMin",
+        "pass": true,
+        "value": 1448.8822960127836,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f120.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f160.varianceMin",
+        "pass": true,
+        "value": 1418.622343118397,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f160.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f200.varianceMin",
+        "pass": true,
+        "value": 1376.031333425447,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f200.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f240.varianceMin",
+        "pass": true,
+        "value": 1293.868161282011,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f240.variedTilesMin",
+        "pass": true,
+        "value": 63,
+        "limit": 8
+      },
+      {
+        "name": "requestedBackend",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      },
+      {
+        "name": "requestedQuality",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      }
+    ]
+  },
+  "seeThroughCut": null,
+  "seeThroughCutSamples": [],
+  "courierShares": [],
+  "courierForeground": [],
+  "vehicleSilhouettes": [],
+  "pixels": [
+    {
+      "frame": 0,
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "mean": [
+          91.60254340277778,
+          80.79337456597223,
+          82.46658203125
+        ],
+        "variance": 1494.1143416213781,
+        "variedTiles": 63,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 40,
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "mean": [
+          90.67697699652778,
+          81.81090494791667,
+          85.59471028645834
+        ],
+        "variance": 1666.3780194204755,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 80,
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "mean": [
+          99.471923828125,
+          89.77779405381945,
+          92.55444227430556
+        ],
+        "variance": 1359.7544027007953,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 120,
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "mean": [
+          106.006162109375,
+          96.0393967013889,
+          97.59335069444444
+        ],
+        "variance": 1448.8822960127836,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 160,
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "mean": [
+          93.50077582465278,
+          85.80814670138889,
+          91.18895724826389
+        ],
+        "variance": 1418.622343118397,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 200,
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "mean": [
+          88.75782660590278,
+          80.03682725694445,
+          84.16376085069444
+        ],
+        "variance": 1376.031333425447,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 240,
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "mean": [
+          78.83289279513889,
+          71.62896592881944,
+          77.29921875
+        ],
+        "variance": 1293.868161282011,
+        "variedTiles": 63,
+        "tiles": 64
+      }
+    }
+  ],
+  "edgeSamples": [],
+  "lookSamples": [],
+  "ring": null,
+  "contrast": [
+    {
+      "frame": 40,
+      "candidates": 226,
+      "pairs": 12,
+      "median": 3,
+      "wcag05": 3,
+      "min": 2.45,
+      "routeL": 0.192,
+      "vergeL": 0.0299,
+      "player": 9.56
+    },
+    {
+      "frame": 80,
+      "candidates": 226,
+      "pairs": 12,
+      "median": 3.62,
+      "wcag05": 3,
+      "min": 2.6,
+      "routeL": 0.2136,
+      "vergeL": 0.0446,
+      "player": 7.36
+    },
+    {
+      "frame": 120,
+      "candidates": 226,
+      "pairs": 12,
+      "median": 3.91,
+      "wcag05": 3.01,
+      "min": 3,
+      "routeL": 0.2487,
+      "vergeL": 0.0384,
+      "player": 8.19
+    },
+    {
+      "frame": 160,
+      "candidates": 226,
+      "pairs": 12,
+      "median": 4.69,
+      "wcag05": 3.33,
+      "min": 3,
+      "routeL": 0.258,
+      "vergeL": 0.031,
+      "player": 9.75
+    },
+    {
+      "frame": 200,
+      "candidates": 226,
+      "pairs": 12,
+      "median": 4.24,
+      "wcag05": 3.14,
+      "min": 3.12,
+      "routeL": 0.2468,
+      "vergeL": 0.0208,
+      "player": 11.04
+    },
+    {
+      "frame": 240,
+      "candidates": 226,
+      "pairs": 12,
+      "median": 3.92,
+      "wcag05": 2.73,
+      "min": 2.64,
+      "routeL": 0.1913,
+      "vergeL": 0.0203,
+      "player": 10.88
+    }
+  ],
+  "consoleErrors": [],
+  "scene": {
+    "name": "night-read-l10-r1",
+    "frame": 0,
+    "placements": [
+      {
+        "id": "prop.tree:3",
+        "asset": "prop.tree",
+        "at": [
+          697,
+          -35
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:5",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          718,
+          43
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "bld.cure-security-post:6",
+        "asset": "bld.cure-security-post",
+        "at": [
+          767,
+          16
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "veh.police-sedan:24",
+        "asset": "veh.police-sedan",
+        "at": [
+          779,
+          33
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:25",
+        "asset": "prop.street-lamp",
+        "at": [
+          758,
+          19
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.traffic-cone:27",
+        "asset": "prop.traffic-cone",
+        "at": [
+          759,
+          19
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.traffic-cone:28",
+        "asset": "prop.traffic-cone",
+        "at": [
+          773,
+          19
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "veh.police-sedan:393",
+        "asset": "veh.police-sedan",
+        "at": [
+          612,
+          15
+        ],
+        "yawDeg": -17.2
+      },
+      {
+        "id": "prop.street-lamp:396",
+        "asset": "prop.street-lamp",
+        "at": [
+          612,
+          42
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.emergency-light:397",
+        "asset": "prop.emergency-light",
+        "at": [
+          720,
+          -26
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.tree:399",
+        "asset": "prop.tree",
+        "at": [
+          676,
+          50
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.tree:400",
+        "asset": "prop.tree",
+        "at": [
+          705,
+          56
+        ],
+        "yawDeg": 57.3
+      },
+      {
+        "id": "prop.picket-fence:412",
+        "asset": "prop.picket-fence",
+        "at": [
+          641.3,
+          34
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:413",
+        "asset": "prop.picket-fence",
+        "at": [
+          662.1,
+          34
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:414",
+        "asset": "prop.picket-fence",
+        "at": [
+          664.7,
+          34
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:415",
+        "asset": "prop.picket-fence",
+        "at": [
+          667.3,
+          34
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.emergency-light:421",
+        "asset": "prop.emergency-light",
+        "at": [
+          632,
+          -6
+        ],
+        "yawDeg": 326.6
+      },
+      {
+        "id": "prop.emergency-light:422",
+        "asset": "prop.emergency-light",
+        "at": [
+          655,
+          12
+        ],
+        "yawDeg": 17
+      },
+      {
+        "id": "prop.emergency-light:423",
+        "asset": "prop.emergency-light",
+        "at": [
+          690,
+          32
+        ],
+        "yawDeg": 328.9
+      },
+      {
+        "id": "prop.emergency-light:424",
+        "asset": "prop.emergency-light",
+        "at": [
+          725,
+          17
+        ],
+        "yawDeg": 96.6
+      },
+      {
+        "id": "prop.utility-pole:426",
+        "asset": "prop.utility-pole",
+        "at": [
+          628.1999218716226,
+          -17
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "prop.utility-pole:427",
+        "asset": "prop.utility-pole",
+        "at": [
+          659.6834988770438,
+          20.5
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "prop.utility-pole:428",
+        "asset": "prop.utility-pole",
+        "at": [
+          688.5207755640469,
+          20.5
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "prop.utility-pole:429",
+        "asset": "prop.utility-pole",
+        "at": [
+          715.845788664428,
+          20.5
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "prop.jersey-barrier:434",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          605.8083246890935,
+          10.663306583069584
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.tree:437",
+        "asset": "prop.tree",
+        "at": [
+          606.8817810286729,
+          -7.6698677554441055
+        ],
+        "yawDeg": 286.6
+      },
+      {
+        "id": "prop.sandbag-pallet:438",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          629.1999564680623,
+          -7.794422182723807
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "decay.blown-sandbags:439",
+        "asset": "decay.blown-sandbags",
+        "at": [
+          637.2976951124987,
+          -6.442890810130569
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.tree:440",
+        "asset": "prop.tree",
+        "at": [
+          626.4060357924543,
+          -22.25281844849428
+        ],
+        "yawDeg": 79.9
+      },
+      {
+        "id": "decay.blown-sandbags:441",
+        "asset": "decay.blown-sandbags",
+        "at": [
+          637.188215903159,
+          -21.719649400855214
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "prop.tree:442",
+        "asset": "prop.tree",
+        "at": [
+          645.0486902017823,
+          -22.74568255235583
+        ],
+        "yawDeg": 317.8
+      },
+      {
+        "id": "prop.jersey-barrier:443",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          639.1223642696892,
+          -2.062774970236534
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.blown-sandbags:444",
+        "asset": "decay.blown-sandbags",
+        "at": [
+          638.9829198943606,
+          7.715222112805211
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.sandbag-pallet:445",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          636.0736363465165,
+          18.537123204714394
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.blown-sandbags:446",
+        "asset": "decay.blown-sandbags",
+        "at": [
+          653.6506569237889,
+          6.355135375418051
+        ],
+        "yawDeg": -180
+      },
+      {
+        "id": "prop.tree:447",
+        "asset": "prop.tree",
+        "at": [
+          655.2847823412353,
+          14.849797337237113
+        ],
+        "yawDeg": 20.4
+      },
+      {
+        "id": "veh.sedan-white:448",
+        "asset": "veh.sedan-white",
+        "at": [
+          680.631814421708,
+          34.14041832744408
+        ],
+        "yawDeg": 2
+      },
+      {
+        "id": "prop.jersey-barrier:449",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          689.697791451133,
+          34.911008218128956
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.jersey-barrier:450",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          699.4380936627944,
+          31.92931210802174
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "veh.pickup-red:451",
+        "asset": "veh.pickup-red",
+        "at": [
+          666.3264405449286,
+          16.33761964023632
+        ],
+        "yawDeg": 3.4
+      },
+      {
+        "id": "prop.jersey-barrier:452",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          734.1240592619969,
+          14.733710816621514
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "bld.garage-detached:588",
+        "asset": "bld.garage-detached",
+        "at": [
+          780.7688184892453,
+          16.036337886695872
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "prop.hedge:600",
+        "asset": "prop.hedge",
+        "at": [
+          783.832007243147,
+          30.925463160783696
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.tree:2505",
+        "asset": "prop.tree",
+        "at": [
+          607.9880140071932,
+          -20.59811711771735
+        ],
+        "yawDeg": 66.1
+      },
+      {
+        "id": "prop.tree:2506",
+        "asset": "prop.tree",
+        "at": [
+          630.1622922401676,
+          10.871854895586615
+        ],
+        "yawDeg": 253
+      },
+      {
+        "id": "prop.street-tree:2507",
+        "asset": "prop.street-tree",
+        "at": [
+          632.8662345161478,
+          -39.246297128661304
+        ],
+        "yawDeg": 234.2
+      },
+      {
+        "id": "prop.street-tree:2508",
+        "asset": "prop.street-tree",
+        "at": [
+          665.357733883454,
+          -9.73628692139584
+        ],
+        "yawDeg": 262.7
+      },
+      {
+        "id": "prop.tree:2509",
+        "asset": "prop.tree",
+        "at": [
+          670.6367203988654,
+          1.9374761762465695
+        ],
+        "yawDeg": 224
+      },
+      {
+        "id": "prop.street-tree:2510",
+        "asset": "prop.street-tree",
+        "at": [
+          647.0816456317715,
+          48.243773730751464
+        ],
+        "yawDeg": 141.2
+      },
+      {
+        "id": "prop.tree:2511",
+        "asset": "prop.tree",
+        "at": [
+          661.8971740630874,
+          52.172282689915654
+        ],
+        "yawDeg": 353.6
+      },
+      {
+        "id": "prop.tree:2512",
+        "asset": "prop.tree",
+        "at": [
+          689.120946409218,
+          54.54716885497014
+        ],
+        "yawDeg": 32.4
+      },
+      {
+        "id": "prop.street-tree:2513",
+        "asset": "prop.street-tree",
+        "at": [
+          713.4765849463345,
+          44.08079264349209
+        ],
+        "yawDeg": 148.3
+      },
+      {
+        "id": "prop.tree:2514",
+        "asset": "prop.tree",
+        "at": [
+          727.7058133145408,
+          52.9622214646881
+        ],
+        "yawDeg": 245.6
+      },
+      {
+        "id": "prop.tree:2515",
+        "asset": "prop.tree",
+        "at": [
+          740.8290347310221,
+          45.33945577220362
+        ],
+        "yawDeg": 297.4
+      },
+      {
+        "id": "prop.street-tree:2516",
+        "asset": "prop.street-tree",
+        "at": [
+          659.1113878192433,
+          -0.29752463281173647
+        ],
+        "yawDeg": 113.3
+      },
+      {
+        "id": "prop.street-tree:2517",
+        "asset": "prop.street-tree",
+        "at": [
+          683.1672421895186,
+          5.383963302040026
+        ],
+        "yawDeg": 203
+      },
+      {
+        "id": "prop.tree:2518",
+        "asset": "prop.tree",
+        "at": [
+          695.1209494980758,
+          -1.7330046094340794
+        ],
+        "yawDeg": 248.8
+      },
+      {
+        "id": "prop.tree:2519",
+        "asset": "prop.tree",
+        "at": [
+          708.2807699375568,
+          3.019641017439948
+        ],
+        "yawDeg": 212.9
+      },
+      {
+        "id": "prop.tree:2520",
+        "asset": "prop.tree",
+        "at": [
+          723.010193647736,
+          -3.05475190505841
+        ],
+        "yawDeg": 90.3
+      },
+      {
+        "id": "prop.street-tree:2521",
+        "asset": "prop.street-tree",
+        "at": [
+          734.8340984536338,
+          -1.1988742085443107
+        ],
+        "yawDeg": 35.3
+      },
+      {
+        "id": "prop.tree:2522",
+        "asset": "prop.tree",
+        "at": [
+          757.9364921085667,
+          52.85681566647903
+        ],
+        "yawDeg": 109.3
+      },
+      {
+        "id": "prop.tree:2523",
+        "asset": "prop.tree",
+        "at": [
+          770.9190420552167,
+          54.487601402766586
+        ],
+        "yawDeg": 302.5
+      },
+      {
+        "id": "prop.tree:2524",
+        "asset": "prop.tree",
+        "at": [
+          782.5711074351605,
+          51.18224907687723
+        ],
+        "yawDeg": 207.2
+      },
+      {
+        "id": "prop.tree:2526",
+        "asset": "prop.tree",
+        "at": [
+          747.0998832192324,
+          1.2521869590606158
+        ],
+        "yawDeg": 318.6
+      },
+      {
+        "id": "prop.tree:2527",
+        "asset": "prop.tree",
+        "at": [
+          759.5747808965112,
+          5.320882916066143
+        ],
+        "yawDeg": 53.5
+      },
+      {
+        "id": "prop.tree:2528",
+        "asset": "prop.tree",
+        "at": [
+          771.278938780651,
+          4.4681903173863695
+        ],
+        "yawDeg": 93.7
+      },
+      {
+        "id": "prop.street-tree:2530",
+        "asset": "prop.street-tree",
+        "at": [
+          779.0278770333114,
+          65.00239547740892
+        ],
+        "yawDeg": 341.1
+      },
+      {
+        "id": "prop.street-tree:2531",
+        "asset": "prop.street-tree",
+        "at": [
+          781.5822175646912,
+          77.22887824558805
+        ],
+        "yawDeg": 274.3
+      },
+      {
+        "id": "veh.sedan-white:2744",
+        "asset": "veh.sedan-white",
+        "at": [
+          663.5,
+          31
+        ],
+        "yawDeg": 181.2
+      },
+      {
+        "id": "prop.cure-drum-stack:2745",
+        "asset": "prop.cure-drum-stack",
+        "at": [
+          680.5,
+          18.7
+        ],
+        "yawDeg": 278.5
+      },
+      {
+        "id": "prop.tree:2772",
+        "asset": "prop.tree",
+        "at": [
+          614,
+          7.5
+        ],
+        "yawDeg": 47.1
+      },
+      {
+        "id": "prop.trash-bags:2776",
+        "asset": "prop.trash-bags",
+        "at": [
+          614.3454831663103,
+          -4
+        ],
+        "yawDeg": 69.5
+      },
+      {
+        "id": "prop.picket-fence:2777",
+        "asset": "prop.picket-fence",
+        "at": [
+          643,
+          8.227081759616361
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.picket-fence:2778",
+        "asset": "prop.picket-fence",
+        "at": [
+          643,
+          10.867081759616362
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.picket-fence:2779",
+        "asset": "prop.picket-fence",
+        "at": [
+          643,
+          13.507081759616362
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.tree:2780",
+        "asset": "prop.tree",
+        "at": [
+          639.5668822962386,
+          16.443163283808147
+        ],
+        "yawDeg": 13.1
+      },
+      {
+        "id": "prop.trash-bags:2781",
+        "asset": "prop.trash-bags",
+        "at": [
+          651,
+          17.5
+        ],
+        "yawDeg": 168.3
+      },
+      {
+        "id": "prop.picket-fence:2782",
+        "asset": "prop.picket-fence",
+        "at": [
+          659.632270000973,
+          29
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "veh.pickup-red:2783",
+        "asset": "veh.pickup-red",
+        "at": [
+          672.1707717537694,
+          29.9
+        ],
+        "yawDeg": 179.7
+      },
+      {
+        "id": "prop.picket-fence:2784",
+        "asset": "prop.picket-fence",
+        "at": [
+          690.542762256104,
+          29
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.tree:2785",
+        "asset": "prop.tree",
+        "at": [
+          693.0001365148188,
+          32.53767300457885
+        ],
+        "yawDeg": 61.3
+      },
+      {
+        "id": "prop.tree:2786",
+        "asset": "prop.tree",
+        "at": [
+          723.6773302667499,
+          32.00680589440194
+        ],
+        "yawDeg": 352.3
+      },
+      {
+        "id": "prop.utility-pole:2787",
+        "asset": "prop.utility-pole",
+        "at": [
+          724.4853921470004,
+          35.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.utility-pole:2788",
+        "asset": "prop.utility-pole",
+        "at": [
+          661.3539038905533,
+          14.5
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "prop.picket-fence:2789",
+        "asset": "prop.picket-fence",
+        "at": [
+          673.699253119132,
+          21
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:2790",
+        "asset": "prop.picket-fence",
+        "at": [
+          676.339253119132,
+          21
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.tree:2791",
+        "asset": "prop.tree",
+        "at": [
+          675.7858038401681,
+          17.21870172660223
+        ],
+        "yawDeg": 99.9
+      },
+      {
+        "id": "prop.trash-bags:2792",
+        "asset": "prop.trash-bags",
+        "at": [
+          697.1904523900159,
+          21
+        ],
+        "yawDeg": 8.9
+      },
+      {
+        "id": "prop.tree:2793",
+        "asset": "prop.tree",
+        "at": [
+          696.6904523900159,
+          17.5
+        ],
+        "yawDeg": 290.3
+      },
+      {
+        "id": "bld.shed:2794",
+        "asset": "bld.shed",
+        "at": [
+          708.904117001781,
+          14.5
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "veh.pickup-red:2795",
+        "asset": "veh.pickup-red",
+        "at": [
+          720.8476818493015,
+          20.1
+        ],
+        "yawDeg": 3.9
+      },
+      {
+        "id": "prop.picket-fence:2796",
+        "asset": "prop.picket-fence",
+        "at": [
+          733.2853557217092,
+          21
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:2797",
+        "asset": "prop.picket-fence",
+        "at": [
+          735.9253557217091,
+          21
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.tree:2798",
+        "asset": "prop.tree",
+        "at": [
+          738.7277971200447,
+          17.867352440841636
+        ],
+        "yawDeg": 195
+      },
+      {
+        "id": "prop.privacy-fence:2799",
+        "asset": "prop.privacy-fence",
+        "at": [
+          753.7894669749068,
+          29.25
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.recycling-bin:2800",
+        "asset": "prop.recycling-bin",
+        "at": [
+          777.3319180312736,
+          29.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:2803",
+        "asset": "prop.privacy-fence",
+        "at": [
+          777.158021816543,
+          20.75
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:2804",
+        "asset": "prop.privacy-fence",
+        "at": [
+          779.7180218165431,
+          20.75
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:2805",
+        "asset": "prop.privacy-fence",
+        "at": [
+          782.2780218165431,
+          20.75
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:2806",
+        "asset": "prop.privacy-fence",
+        "at": [
+          784.8380218165431,
+          20.75
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.light-tower:3246",
+        "asset": "prop.light-tower",
+        "at": [
+          637.598443013126,
+          -28.047294444626967
+        ],
+        "yawDeg": -73.4
+      },
+      {
+        "id": "prop.cure-generator:3247",
+        "asset": "prop.cure-generator",
+        "at": [
+          635.2670432033769,
+          -32.54729444462697
+        ],
+        "yawDeg": -4.4
+      },
+      {
+        "id": "prop.sandbag-pallet:3248",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          626.8410583900053,
+          -26.047294444626967
+        ],
+        "yawDeg": 4
+      },
+      {
+        "id": "prop.light-tower:3249",
+        "asset": "prop.light-tower",
+        "at": [
+          680.3729686778959,
+          40.31245600725928
+        ],
+        "yawDeg": 77.6
+      },
+      {
+        "id": "prop.cure-generator:3250",
+        "asset": "prop.cure-generator",
+        "at": [
+          676.4470984684204,
+          44.81245600725928
+        ],
+        "yawDeg": -8.6
+      },
+      {
+        "id": "prop.sandbag-pallet:3251",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          669.6311580938377,
+          38.31245600725928
+        ],
+        "yawDeg": 4.5
+      },
+      {
+        "id": "prop.light-tower:3252",
+        "asset": "prop.light-tower",
+        "at": [
+          666.3687678537661,
+          10.753901574235918
+        ],
+        "yawDeg": -84.2
+      },
+      {
+        "id": "decay.dropped-belongings:3253",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          669.5762690983494,
+          13.253901574235918
+        ],
+        "yawDeg": 1.3
+      },
+      {
+        "id": "prop.tent:3254",
+        "asset": "prop.tent",
+        "at": [
+          760.2134713439962,
+          40.16912832341191
+        ],
+        "yawDeg": 97
+      },
+      {
+        "id": "prop.folding-chair:3255",
+        "asset": "prop.folding-chair",
+        "at": [
+          757.4509620820442,
+          36.465420549486595
+        ],
+        "yawDeg": 36.6
+      },
+      {
+        "id": "decay.dropped-belongings:3256",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          754.8876531104112,
+          41.46436167087874
+        ],
+        "yawDeg": 201
+      },
+      {
+        "id": "prop.trash-bags:3257",
+        "asset": "prop.trash-bags",
+        "at": [
+          752.566890453151,
+          38.14989181045291
+        ],
+        "yawDeg": 40.3
+      }
+    ],
+    "actors": [
+      {
+        "id": "courier",
+        "kind": "courier",
+        "entity": 1
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 0,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    },
+    "marketDoors": null,
+    "armyBoom": null,
+    "scene": "night-read-l10-r1",
+    "frame": 240,
+    "tick": 240,
+    "backend": "webgl",
+    "quality": "low",
+    "convoyOverlapFrames": 0,
+    "courierAttachments": {
+      "samples": 24,
+      "gapMaxCm": 0,
+      "frame": -1,
+      "worst": null,
+      "worstAt": null,
+      "attachments": 0
+    },
+    "animalLimbs": {
+      "samples": 0,
+      "gapMaxCm": 0,
+      "frame": -1,
+      "actor": null
+    },
+    "corgiTongue": {
+      "idleSamples": 0,
+      "idleOutFrames": 0,
+      "firstIdleOut": -1,
+      "movingSamples": 0,
+      "movingInFrames": 0,
+      "firstMovingIn": -1
+    },
+    "propPenetration": {
+      "samples": 240,
+      "framesMax": 0,
+      "pairs": []
+    },
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 10,
+      "gaps": []
+    },
+    "bodies": [],
+    "attackOverlap": {
+      "depthCm": 0,
+      "frame": 0,
+      "actor": ""
+    },
+    "wheels": {},
+    "lodPlaceholders": {
+      "frames": 0,
+      "firstFrame": -1,
+      "assets": []
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 40,
+        "p95": 42,
+        "max": 43
+      },
+      "triangles": {
+        "p50": 51929,
+        "p95": 59971,
+        "max": 60267
+      },
+      "shadowDrawCalls": {
+        "p50": 13,
+        "p95": 14,
+        "max": 14
+      },
+      "shadowTriangles": {
+        "p50": 19583,
+        "p95": 24357,
+        "max": 24357
+      },
+      "stepMs": {
+        "p50": 2.4,
+        "p95": 3.6,
+        "max": 8.2
+      },
+      "lastFrame": {
+        "drawCalls": 35,
+        "triangles": 42605,
+        "shadowDrawCalls": 11,
+        "shadowTriangles": 8349,
+        "stepMs": 3.90000057220459,
+        "categories": {
+          "other": 32,
+          "shadows": 11,
+          "props": 3
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "grounding": {
+      "corpses": 0,
+      "corpseOffMaxCm": 0,
+      "pickups": 0,
+      "pickupOffMaxCm": 0,
+      "worst": []
+    },
+    "pursuit": {
+      "actors": {},
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "hullWindups": 0,
+      "hullHits": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "aim": {
+      "shots": 0,
+      "hitShare": 0,
+      "intentErrorMaxDeg": 0,
+      "misses": []
+    },
+    "cure": null,
+    "megaAlpha": null,
+    "minigun": null,
+    "specials": [],
+    "heldProps": {
+      "samples": 0,
+      "intersections": 0,
+      "holds": {}
+    },
+    "seeThrough": {
+      "frames": 240,
+      "solidRadiusMax": 0.211,
+      "occluders": [],
+      "cutLowProps": [],
+      "cutPlacements": []
+    },
+    "appearance": [],
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "variety": {
+      "infected": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      },
+      "pedestrian": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      }
+    },
+    "actors": {
+      "courier": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          687.758,
+          25
+        ],
+        "yawDeg": 0,
+        "travelM": 17.74786376953125,
+        "maxX": 687.7578735351562,
+        "heldWeapon": null,
+        "targetId": null,
+        "state": "run",
+        "health": 100,
+        "drawnFrames": 240,
+        "inViewFrames": 240,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 240
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            670.01,
+            25
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 240,
+          "torsoPitchMinDeg": 2.9,
+          "torsoPitchMaxDeg": 11,
+          "contacts": 25,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 43.4,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 230
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 240,
+      "sim": {
+        "courier": 1,
+        "actors": 1
+      },
+      "drawn": {
+        "vehicle": 0,
+        "courier": 1
+      }
+    },
+    "lods": {
+      "prop.tree:3": "culled",
+      "decay.makeshift-barricade:5": "culled",
+      "bld.cure-security-post:6": "culled",
+      "veh.police-sedan:24": "culled",
+      "prop.street-lamp:25": "culled",
+      "prop.traffic-cone:27": "culled",
+      "prop.traffic-cone:28": "culled",
+      "veh.police-sedan:393": "culled",
+      "prop.street-lamp:396": "culled",
+      "prop.emergency-light:397": "culled",
+      "prop.tree:399": "culled",
+      "prop.tree:400": "culled",
+      "prop.picket-fence:412": "culled",
+      "prop.picket-fence:413": "culled",
+      "prop.picket-fence:414": "culled",
+      "prop.picket-fence:415": "culled",
+      "prop.emergency-light:421": "culled",
+      "prop.emergency-light:422": "culled",
+      "prop.emergency-light:423": "culled",
+      "prop.emergency-light:424": "culled",
+      "prop.utility-pole:426": "culled",
+      "prop.utility-pole:427": "culled",
+      "prop.utility-pole:428": "lod2",
+      "prop.utility-pole:429": "culled",
+      "prop.jersey-barrier:434": "culled",
+      "prop.tree:437": "culled",
+      "prop.sandbag-pallet:438": "culled",
+      "decay.blown-sandbags:439": "culled",
+      "prop.tree:440": "culled",
+      "decay.blown-sandbags:441": "culled",
+      "prop.tree:442": "culled",
+      "prop.jersey-barrier:443": "culled",
+      "decay.blown-sandbags:444": "culled",
+      "prop.sandbag-pallet:445": "culled",
+      "decay.blown-sandbags:446": "culled",
+      "prop.tree:447": "culled",
+      "veh.sedan-white:448": "culled",
+      "prop.jersey-barrier:449": "culled",
+      "prop.jersey-barrier:450": "culled",
+      "veh.pickup-red:451": "culled",
+      "prop.jersey-barrier:452": "culled",
+      "bld.garage-detached:588": "culled",
+      "prop.hedge:600": "culled",
+      "prop.tree:2505": "culled",
+      "prop.tree:2506": "culled",
+      "prop.street-tree:2507": "culled",
+      "prop.street-tree:2508": "culled",
+      "prop.tree:2509": "culled",
+      "prop.street-tree:2510": "culled",
+      "prop.tree:2511": "culled",
+      "prop.tree:2512": "culled",
+      "prop.street-tree:2513": "culled",
+      "prop.tree:2514": "culled",
+      "prop.tree:2515": "culled",
+      "prop.street-tree:2516": "culled",
+      "prop.street-tree:2517": "culled",
+      "prop.tree:2518": "culled",
+      "prop.tree:2519": "culled",
+      "prop.tree:2520": "culled",
+      "prop.street-tree:2521": "culled",
+      "prop.tree:2522": "culled",
+      "prop.tree:2523": "culled",
+      "prop.tree:2524": "culled",
+      "prop.tree:2526": "culled",
+      "prop.tree:2527": "culled",
+      "prop.tree:2528": "culled",
+      "prop.street-tree:2530": "culled",
+      "prop.street-tree:2531": "culled",
+      "veh.sedan-white:2744": "culled",
+      "prop.cure-drum-stack:2745": "lod2",
+      "prop.tree:2772": "culled",
+      "prop.trash-bags:2776": "culled",
+      "prop.picket-fence:2777": "culled",
+      "prop.picket-fence:2778": "culled",
+      "prop.picket-fence:2779": "culled",
+      "prop.tree:2780": "culled",
+      "prop.trash-bags:2781": "culled",
+      "prop.picket-fence:2782": "culled",
+      "veh.pickup-red:2783": "culled",
+      "prop.picket-fence:2784": "lod2",
+      "prop.tree:2785": "culled",
+      "prop.tree:2786": "culled",
+      "prop.utility-pole:2787": "culled",
+      "prop.utility-pole:2788": "culled",
+      "prop.picket-fence:2789": "lod2",
+      "prop.picket-fence:2790": "lod2",
+      "prop.tree:2791": "culled",
+      "prop.trash-bags:2792": "culled",
+      "prop.tree:2793": "culled",
+      "bld.shed:2794": "culled",
+      "veh.pickup-red:2795": "culled",
+      "prop.picket-fence:2796": "culled",
+      "prop.picket-fence:2797": "culled",
+      "prop.tree:2798": "culled",
+      "prop.privacy-fence:2799": "culled",
+      "prop.recycling-bin:2800": "culled",
+      "prop.privacy-fence:2803": "culled",
+      "prop.privacy-fence:2804": "culled",
+      "prop.privacy-fence:2805": "culled",
+      "prop.privacy-fence:2806": "culled",
+      "prop.light-tower:3246": "culled",
+      "prop.cure-generator:3247": "culled",
+      "prop.sandbag-pallet:3248": "culled",
+      "prop.light-tower:3249": "culled",
+      "prop.cure-generator:3250": "culled",
+      "prop.sandbag-pallet:3251": "culled",
+      "prop.light-tower:3252": "culled",
+      "decay.dropped-belongings:3253": "culled",
+      "prop.tent:3254": "culled",
+      "prop.folding-chair:3255": "culled",
+      "decay.dropped-belongings:3256": "culled",
+      "prop.trash-bags:3257": "culled"
+    },
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [],
+    "actors": [],
+    "gunBodies": [],
+    "heldProps": [],
+    "summary": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "runtimeRevision": "85a03687100c05ec07835684293dd44245339284",
+  "branch": "lane/l10-epilogue",
+  "runtimeFileSha256": {
+    "layouts/D-CURE/layout.py": "ea63387fe8f681cfa9278e60cff10b88f9de38db725654a6a1c2687d32bd9d7f",
+    "public/assets/layouts/D-CURE.base.glb": "ab8bbdcf77752dff5a03fe59582c8fbe37ab9969867222108be51328a54000fc",
+    "public/assets/layouts/D-CURE.layout.json": "83b567340982cc7646c75fcb6c1c892bc539aedd828a078533e982b4b82507db",
+    "src/data/placedLights.ts": "a5de887e1d9a147f6bd48a1bbf34fb743d7a55e27c8fc412ac7d74f072460e33",
+    "src/render/CrowdView.ts": "e39fe6e138e39faeaa695320c432d316274590d902deb10c76961ac2aa21a7cb",
+    "src/render/characters/CorpseLayout.ts": "22638df2ea684d1ed7cbf6a59f470e5ae1f434d74b491a18844119e167a23986",
+    "src/render/characters/StaticCorpses.ts": "a16f6eb38745702b03ca775e89c37ef6521516fe8e4eef91bcb56e564776b60c",
+    "src/render/npc/CivilianCrowd.ts": "5c6c1fee99452d3d7c3fb25747b25da2820f322f320489948b7d31f12510bbb2",
+    "src/render/vfx/Blasts.ts": "571347db2f757ea834d1643f3209659140b710e383ca96ceaaa0fb8e6b8c23b9",
+    "src/sim/missions/LevelTenEpilogue.ts": "c9a9d959c55fd43ec542bee7e9e4dd6d46bc95ab75206689f17dd2edb54a58fd"
+  },
+  "unitTestsPassed": 106,
+  "newTestCases": 0,
+  "smokeQaPassed": 6,
+  "smokePublicPassed": 1,
+  "sceneGatePassed": 48,
+  "sceneGateMissing": 0,
+  "contrastNavigationMedianMin": 3,
+  "contrastPlayerMin": 7.09,
+  "finaleScriptUnchanged": true,
+  "arrival": [
+    {
+      "tier": "high",
+      "seconds": 143.14999999999998,
+      "released": true,
+      "deaths": 0,
+      "outcomeHash": "d23478b9b16dd471"
+    },
+    {
+      "tier": "low",
+      "seconds": 143.21666666666664,
+      "released": true,
+      "deaths": 0,
+      "outcomeHash": "162c72fc08608d6f"
+    }
+  ]
+}

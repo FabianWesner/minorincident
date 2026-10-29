@@ -36,11 +36,13 @@ try {
       await session.page.evaluate(() => { (window.__SCENE__ as unknown as { game: Game }).game.view.vfx!.blasts.visible = false; });
       await session.screenshot(`${out}/no-mist.png`);
       const masks = await session.page.evaluate(() => {
-        const game = (window.__SCENE__ as unknown as { game: Game }).game, rows: unknown[] = [];
+        const game = (window.__SCENE__ as unknown as { game: Game }).game, rows: unknown[] = [], seen = new Set<import('three').Material>();
         game.view.scene.traverse(o => {
           const mesh = o as import('three').Mesh;
           if (!o.name.startsWith('corpses:') || !mesh.material || Array.isArray(mesh.material)) return;
           const material = mesh.material as import('../../src/render/PaletteMaterial').PaletteMaterial;
+          if (seen.has(material)) return;
+          seen.add(material);
           rows.push({ name: o.name, transparent: material.transparent, opacity: material.opacity, fade: material.fade?.value });
           material.userData.reviewMask = material.maskNode; material.maskNode = null; material.needsUpdate = true;
         });
