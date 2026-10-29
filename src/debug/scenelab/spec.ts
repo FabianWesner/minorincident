@@ -492,7 +492,7 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
   gameplay.barricades = spec.barricadeSlots;
   const composition: LevelComposition = {
     id: spec.layout?.level === 'L1' ? 'L1' : 'scene-lab', tier, timeOfDay: spec.time ?? 'L1', districts: [{ id: district, origin: [0, 0], gameplay }],
-    scene: { glb: spec.ground === 'district', ground: spec.ground === 'asphalt' || spec.ground === 'sidewalk' ? spec.ground : 'grass', perimeter: false, courier: true },
+    scene: { glb: spec.ground === 'district', ground: spec.ground === 'asphalt' || spec.ground === 'sidewalk' ? spec.ground : 'grass', perimeter: false, courier: true, actorKey: spec.layout?.level === 'L1' ? 'L1' : `scene:${spec.name}` },
   };
   return { composition, layout, placements: kept, center, playerStart };
 }

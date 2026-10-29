@@ -982,18 +982,17 @@ _gone = set().union(*[_empty_ids(i) for i in _r3]) if _r3 else set()
 for ob in [o for o in l.empties if o.name.split('.')[0] in _gone or any(o.name.startswith(f'crown:{i}:') for i in _r3)]:
     l.empties.remove(ob); bpy.data.objects.remove(ob, do_unlink=True)
 print('look-l10-l8-2 field placements', len(l.data['placements']) - fields_before, 'strips', field_strips)
-# l10-narrow-roads: every pushable prop is a sim entity (PropSystem) created before the infected and the Mega, so their COUNT
-# shifts every later entity id, and the seed-32 finale calibration (tools/qa/l10-arrival-check.ts, high tier) follows those ids:
-# four extra trash bags 1.3 km west of the finale turned the high arrival 143.15 s into 142.85 s with the cure not released, while
-# moving R1-R5 colliders, adding static colliders or narrowing the road paving changed nothing. Keep the authored count (97 on
-# main 28e7c1a8a): surplus verge/field pushables in R1-R4 come out, last placed first. A shortfall fails the build.
+# Preserve the reviewed narrow-roads bake's surplus pruning. The census is now only a diagnostic:
+# EntityStore gives props placement-keyed auxiliary IDs and actors a fixed level sequence, so fewer props
+# no longer shift infected/Mega timing. Do not fail a dressing build on this historical census.
 PUSHABLE_COUNT = 97
 _phys = (l.root / 'src/data/physicsAssets.ts').read_text()
 _phys = json.loads(_phys[_phys.index('{'):_phys.rindex('}') + 1])
 PUSHABLE = {k for k, v in _phys.items() if k.startswith(('prop.', 'haz.')) and v.get('pushable') and v.get('class') != 'fixed' and v.get('mass', 0) > 0 and v.get('boxes')}
 _push = [p for p in l.data['placements'] if p['assetId'] in PUSHABLE]
 _spare = [p['id'] for p in _push if (p.get('worldFill') or p.get('fieldDressing')) and p['position'][0] < 2467]
-assert len(_push) >= PUSHABLE_COUNT, f'D-CURE has {len(_push)} pushable props, the finale calibration expects {PUSHABLE_COUNT}'
+if len(_push) < PUSHABLE_COUNT:
+    print(f'WARNING: D-CURE has {len(_push)} pushables (reviewed bake: {PUSHABLE_COUNT}); gameplay IDs are independent')
 _cut = set(_spare[len(_spare) - (len(_push) - PUSHABLE_COUNT):]) if len(_push) > PUSHABLE_COUNT else set()
 l.data['placements'] = [p for p in l.data['placements'] if p['id'] not in _cut]
 l.data['colliders'] = [c for c in l.data['colliders'] if c['id'] not in _cut]

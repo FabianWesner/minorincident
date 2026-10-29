@@ -7,6 +7,33 @@ import { emptyInput, type InputFrame } from '../../src/input/InputFrame';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import { stateHash } from '../../src/sim/world/stateHash';
 import { loadLevel, type RunnerLevel } from '../../tools/sim-runner/levels';
+import { EntityStore } from '../../src/sim/world/EntityStore';
+
+// Replaces the D-CURE build assertion that required exactly 97 pushables. Stream/save reservations
+// must preserve the actor sequence even when prop records have different counts and placement order.
+test('authored prop keys and actor sequences survive prop insertions, streaming reservation and checkpoint restore', () => {
+  const record = () => ({ kind: 'identity-probe', archetype: 'probe', faction: 'environment', health: { current: 1, max: 1 }, transform: { x: 0, y: 0, z: 0, yaw: 0 } });
+  for (const [level, firstActor] of Object.entries({ L1: 80, L4: 26, L5: 18, L10: 99, 'scene:seat-bench-l1-start': 5 })) {
+    const sharedIds: number[] = [];
+    for (const delta of [-4, 0, 4]) {
+      const store = new EntityStore(), player = store.create(record());
+      store.beginActorSequence(level);
+      for (let i = 0; i < 4 + delta; i++) store.createAuxiliary(record(), `prop:${level}/extra-${i}`);
+      const shared = store.createAuxiliary(record(), `prop:${level}/shared`); sharedIds.push(shared.id);
+      expect(store.create(record()).id, `${level}/${delta}: first actor`).toBe(firstActor);
+      store.reserveIds(store.values().map(e => e.id));
+      expect(store.create(record()).id, `${level}/${delta}: streamed actor`).toBe(firstActor + 1);
+      store.restore(structuredClone(store.values()), player);
+      const pooled = { ...record(), id: 0 }; store.adopt(pooled);
+      expect(pooled.id, `${level}/${delta}: restored actor`).toBe(firstActor + 2);
+      expect(store.get(shared.id)?.kind).toBe('identity-probe');
+      store.reset(); store.create(record()); store.beginActorSequence(level);
+      expect(store.createAuxiliary(record(), `prop:${level}/shared`).id).toBe(shared.id);
+      expect(store.create(record()).id, `${level}/${delta}: reset actor`).toBe(firstActor);
+    }
+    expect(new Set(sharedIds).size, `${level}: stable authored key`).toBe(1);
+  }
+});
 
 /** A square walk with periodic attacks, rack changes and interact presses: enough to touch movement, combat and props. */
 function scripted(tick: number, frame: InputFrame = emptyInput()): InputFrame {
