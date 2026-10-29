@@ -203,6 +203,11 @@ for x in [1367,1457,1547,1637,1727]:
 # Block the direct yard; northern loading yard and southern service lane stay open.
 surface('yard-road',[[1297,22],[1747,22],[1747,28],[1297,28]],'asphalt',.002)
 for z in range(-25,66,3): l.place('decay.makeshift-barricade',[1517,0,z])
+# The props are spaced for the broken barricade silhouette, but their baked
+# colliders leave gaps wide enough for a survivor to walk through. Keep the
+# direct yard closed with one continuous collision strip; the north and south
+# lanes remain outside this span.
+l.data['colliders'].append(dict(id='r3-blocked-yard-continuous', aabb=dict(min=[1515.36,0,-26.5], max=[1518.64,1.5,66.5]), minTier=0, maxTier=6))
 # R4 destroyed entrance post, breached defensive line and low motor-pool shelters.
 l.place('bld.cure-guard-post',[1857,0,10])
 l.place('veh.military-truck',[1877,0,42]); l.data['placements'][-1]['decay']='wrecked'
