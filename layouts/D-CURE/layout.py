@@ -911,7 +911,14 @@ def power_line(a_, F, s0, s1, side, lat):
     if not on_detour(a_, ux, uz): lat = 7.5 + (lat - 17) / 2 + (2.0 - lane_inset(a_, ux, uz, s0))
     s = s0
     while s <= s1:
-        x, z = at(a_, ux, uz, nx, nz, s, side*lat); fld_put('prop.utility-pole', x, z, math.atan2(-uz, ux)); s += fld.uniform(24, 30)
+        x, z = at(a_, ux, uz, nx, nz, s, side*lat)
+        # The pulled-in R1 line put its first crossarm over the player-start camera
+        # (the previous 17–21 m setback kept it out of that composition). Keep the
+        # pole line, but move that station downstream before dressing it.
+        if math.hypot(x - 547, z) < 18 and s + 14 <= s1:
+            s += 14
+            x, z = at(a_, ux, uz, nx, nz, s, side*lat)
+        fld_put('prop.utility-pole', x, z, math.atan2(-uz, ux)); s += fld.uniform(24, 30)
 # l10-narrow-roads: story spots move in by the 1 m the asphalt lost (at most): their fires stay >= 8.5 m past the new 3 m lane edge
 # (NightAccents.cureAccents), clear of the E31-AC16 verge samples.
 def story_in(a_, F, s): return min(1.0, lane_inset(a_, F[1], F[2], s))

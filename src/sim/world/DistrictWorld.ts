@@ -32,6 +32,16 @@ function insideXZ(px: number, pz: number, polygon: readonly (readonly [number, n
   return result;
 }
 const none: readonly never[] = [];
+function clearR1StartPole(placements: Placement[]): Placement[] {
+  return placements.map(p => {
+    if (p.assetId !== 'prop.utility-pole' || p.position[0] < 550 || Math.hypot(p.position[0] - 547, p.position[2]) >= 12) return p;
+    // The narrow-road field line now follows the verge; keep its first crossarm
+    // out of the R1 start camera while retaining the pole and its collision.
+    const moved = { ...p, position: [p.position[0] + 18, p.position[1], p.position[2]] as [number, number, number], visualAabb: { min: [...p.visualAabb.min] as [number, number, number], max: [...p.visualAabb.max] as [number, number, number] } };
+    moved.visualAabb.min[0] += 18; moved.visualAabb.max[0] += 18;
+    return moved;
+  });
+}
 export class DistrictWorld {
   readonly districts;
   readonly nav;
@@ -61,7 +71,8 @@ export class DistrictWorld {
     this.districts = composition.districts.map((d) => {
       const source = layouts.find((l) => l.district === d.id);
       if (!source) throw new Error(`Missing layout: ${d.id}`);
-      const layout = { ...source, placements: closeBarrierJoints(source.placements) };
+      const placements = d.id === 'D-CURE' ? clearR1StartPole(source.placements) : source.placements;
+      const layout = { ...source, placements: closeBarrierJoints(placements) };
       const gameplay = { ...(d.gameplay ?? districtGameplay[d.id]), ...d.overrides };
       if (gameplay.decay.some(layer => !isWorldTier(layer.tier))) throw new RangeError(`Invalid gameplay decay tier: ${d.id}`);
       const decay = resolveDecay(layout, composition.tier),
