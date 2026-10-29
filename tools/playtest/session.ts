@@ -314,8 +314,17 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     if (!threat) { if (keysDown.has('Space')||keysDown.has('KeyJ')||keysDown.has('KeyK')) await press([]); await releaseAim(); return false; }
     // Time spent on a target without hurting it accumulates across target switches.
     const now = Date.now(), seen = shotAt.get(threat.id) ?? { hp: threat.hp, ms: 0, last: now };
-    if (threat.hp < seen.hp) { seen.hp = threat.hp; seen.ms = 0; } else seen.ms += Math.min(500, now - seen.last);
+    // Checkpoint retries restore HP on the same actor ID; that begins a new
+    // damage observation rather than inheriting the previous attempt's minimum.
+    if (threat.hp !== seen.hp) { seen.hp = threat.hp; seen.ms = 0; } else seen.ms += Math.min(500, now - seen.last);
     seen.last = now; shotAt.set(threat.id, seen);
+    if (seen.ms > 8000 && isMandatoryBossObjective(e.level, e.step) && threat.max >= 1000) {
+      // Walking toward this objective marker means walking into the boss.
+      // Keep the visible target, make space and retry the ordinary aim input.
+      log({ mandatoryBossRetarget: threat.id, hp: threat.hp, tick: e.tick });
+      seen.ms = 0;
+      await releaseAim();
+    }
     if (seen.ms > 8000) {
       // A target that takes no damage for 8 s is unreachable (behind a fence) or ignores hits: note it, walk on.
       const diagnostic = await page.evaluate(id => {
