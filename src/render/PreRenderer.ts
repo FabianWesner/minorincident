@@ -19,7 +19,8 @@ function warmCandidates<T extends Object3D>(leaves: T[]): T[] {
       !(leaf.userData.preRenderShared || leaf instanceof InstancedMesh && leaf.material.userData.batchFeatures !== undefined) || Object.keys(leaf.geometry.morphAttributes).length) return true;
     const attributes = Object.keys(leaf.geometry.attributes).map(name => {
       const a = leaf.geometry.getAttribute(name) as import('three').BufferAttribute | import('three').InterleavedBufferAttribute;
-      return `${name}:${a.itemSize}:${a.normalized}:${a.array.constructor.name}:${'isInstancedBufferAttribute' in a ? a.count : ''}`;
+      const layout = 'isInterleavedBufferAttribute' in a ? `${a.data.stride}:${a.offset}` : 'packed';
+      return `${name}:${a.itemSize}:${a.normalized}:${a.array.constructor.name}:${layout}:${'isInstancedBufferAttribute' in a ? a.count : ''}`;
     }).sort().join('|');
     const instances = leaf instanceof InstancedMesh ? `${leaf.instanceMatrix.count}:${!!leaf.instanceColor}` : 'rigid';
     const key = `${leaf.material.uuid}:${leaf.material.customProgramCacheKey()}:${instances}:${+leaf.castShadow}:${+leaf.receiveShadow}:${attributes}`;

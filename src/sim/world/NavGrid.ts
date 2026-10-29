@@ -121,7 +121,7 @@ export function bakeNav(districts: NavDistrict[], seed: number, cellSize = 1): N
     const bounds = d.layout.bounds, xs = bounds.map(p => p[0]), zs = bounds.map(p => p[1]);
     const minX = Math.min(...xs), maxX = Math.max(...xs), minZ = Math.min(...zs), maxZ = Math.max(...zs);
     // Rectangle layouts (including L10's 8.88 million cells) need no polygon test. Other outlines retain it.
-    const rectangle = bounds.length >= 4 && bounds.length <= 5 && bounds.every((p, i) =>
+    const rectangle = bounds.length >= 4 && bounds.length <= 5 && new Set(bounds.map(p => p.join(','))).size === 4 && bounds.every((p, i) =>
       (p[0] === minX || p[0] === maxX) && (p[1] === minZ || p[1] === maxZ) &&
       (p[0] === bounds[(i + 1) % bounds.length][0] || p[1] === bounds[(i + 1) % bounds.length][1]));
     const x0 = Math.max(0, Math.ceil((minX + d.origin[0] - min[0]) / cellSize - .5)), x1 = Math.min(nav.width, Math.ceil((maxX + d.origin[0] - min[0]) / cellSize - .5));
