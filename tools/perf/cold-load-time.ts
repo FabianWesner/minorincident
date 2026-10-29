@@ -37,6 +37,9 @@ for (let run = 0; run < Number(count); run++) {
     await page.addInitScript(`(() => {
       window.__name = fn => fn;
       const p = window.__coldLoad = { stages: [], tasks: [], frames: [], contexts: [], adapter: null, glRenderer: null, start: null, done: null, playing: null };
+      // The public build ignores QA renderer overrides. Exercise its real
+      // WebGL fallback as a browser without WebGPU, using the same artifact.
+      if ('${backend}' === 'webgl2') Object.defineProperty(navigator, 'gpu', { value: undefined });
       if (navigator.gpu) {
         const request = navigator.gpu.requestAdapter;
         navigator.gpu.requestAdapter = function(...args) { return request.apply(this, args).then(adapter => {
