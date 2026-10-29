@@ -1,0 +1,52 @@
+[
+  {
+    "level": "L5",
+    "tick": 2348,
+    "x": -33.3,
+    "z": -2.6,
+    "severity": "P2",
+    "kind": "console-error",
+    "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    "captures": [],
+    "step": "look",
+    "objective": "Look for anyone still alive"
+  },
+  {
+    "level": "L5",
+    "tick": 8161,
+    "x": 37.3,
+    "z": -49.2,
+    "severity": "P2",
+    "kind": "console-error",
+    "text": "Level load failed TypeError: Failed to fetch\n    at http://127.0.0.1:4326/build/index-D1O2a1MN.js:12:38983\n    at http://127.0.0.1:4326/build/index-D1O2a1MN.js:9:747864\n    at Array.map (<anonymous>)\n    at Du (http://127.0.0.1:4326/build/index-D1O2a1MN.js:9:747829)\n    at http://127.0.0.1:4326/buil",
+    "captures": [],
+    "step": "metro",
+    "objective": "Lead the survivors down into the Metro · Everyone is in · shutter closing · 1 m"
+  },
+  {
+    "level": "L5",
+    "tick": 8161,
+    "x": 37.3,
+    "z": -49.2,
+    "severity": "P1",
+    "kind": "page-error",
+    "text": "Failed to fetch",
+    "captures": [],
+    "step": "metro",
+    "objective": "Lead the survivors down into the Metro · Everyone is in · shutter closing · 1 m"
+  },
+  {
+    "level": "L5",
+    "tick": 8162,
+    "x": 37.3,
+    "z": -49.2,
+    "severity": "P0",
+    "kind": "stuck-screen",
+    "text": "Stuck on the progression screen for ~60 s (button null)",
+    "captures": [
+      "captures/campaign-L5-8162-stuck-screen.jpg"
+    ],
+    "step": null,
+    "objective": "Lead the survivors down into the Metro · Everyone is in · shutter closing · 1 m"
+  }
+]

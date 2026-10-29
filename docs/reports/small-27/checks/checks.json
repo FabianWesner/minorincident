@@ -1,0 +1,34 @@
+{
+  "runtimeCommit": "e70692729a45f747c8626f15e90add525e96603a",
+  "typecheck": {
+    "exitCode": 0,
+    "log": "typecheck.txt"
+  },
+  "lint": {
+    "exitCode": 0,
+    "log": "lint.txt"
+  },
+  "npm test": {
+    "exitCode": 0,
+    "passedTests": 104,
+    "passedFiles": 24,
+    "caseBudget": "144/150",
+    "log": "npm-test.txt"
+  },
+  "npm run scene:gate": {
+    "exitCode": 0,
+    "passedRows": 48,
+    "totalRows": 48,
+    "known": 0,
+    "notRun": 0,
+    "log": "scene-gate.txt"
+  },
+  "npm run test:smoke": {
+    "exitCode": 0,
+    "qaTestsPassed": 6,
+    "publicTestsPassed": 1,
+    "wallSeconds": 129.9,
+    "budgetSeconds": 240,
+    "log": "smoke.txt"
+  }
+}
