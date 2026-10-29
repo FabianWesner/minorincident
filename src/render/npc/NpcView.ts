@@ -1,5 +1,5 @@
 import { clone as cloneSkeleton } from 'three/addons/utils/SkeletonUtils.js';
-import { dogCoat } from '../../data/dogAppearance';
+import { dogCoat, dogCoats } from '../../data/dogAppearance';
 import type { CrowdAccessories } from '../characters/CrowdAccessories';
 // World-anchored badges and transient bark messages adapt Bruno InteractivePoints.js/Bubble.js (MIT).
 import { BoxGeometry, Color, Group, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, Vector3, type Camera, type Object3D, type Material } from 'three/webgpu';
@@ -51,19 +51,22 @@ export class NpcView extends Group {
   setQuality(tier: 'high' | 'low'): void { this.civilians.setQuality(tier); }
   /** Wait for civilian batches and attached escort skins to finish streaming. */
   ready(): Promise<void> { return Promise.all([this.civilians.ready(), ...this.humanLoads.values(), ...this.petLoads.values()]).then(() => {}); }
-  /** A hiding/late-arriving corgi still needs its rigid material programs warmed
-   * before it first becomes visible. Clones share the actual hero geometry and
-   * materials, without adding a simulated companion or changing its state. */
+  /** Hidden companions and replenished pets need their skin/shadow programs
+   * before appearing. Clones borrow the actual rigs without adding sim actors. */
   prewarmCorgi(at: Vector3): () => void {
-    const root = this.dog.getObjectByName('skin_body') ? cloneSkeleton(this.dog) : this.dog.clone(true);
-    root.position.copy(at);
-    this.add(root);
-    return () => root.removeFromParent();
+    const copies = [this.dog, ...this.pets.values()].map((model, i) => {
+      const root = model.getObjectByName('skin_body') ? cloneSkeleton(model) : model.clone(true);
+      root.position.copy(at); root.position.x += i * .4; this.add(root); return root;
+    });
+    return () => { for (const root of copies) root.removeFromParent(); };
   }
   async init(camera?: import('three').Camera): Promise<void> {
     await this.civilians.init(camera); const loaded = await this.registry.loadAsset('char.corgi', 'lod1');
     this.dog = loaded.userData.placeholder ? createCorgiPlaceholder() : loaded as Group; this.dogSource = loaded.userData.placeholder ? 'placeholder' : 'glb'; if (loaded.userData.placeholder) this.placeholders.push(this.dog);
-    await Promise.all([...new Set([...this.world.entities.iterate()].flatMap(e => e.civilian?.pet === 'dog' ? [e.civilian.model ?? 'amb.dog'] : []))].map(model => this.loadPet(model)));
+    const pets = new Set([...this.world.entities.iterate()].flatMap(e => e.civilian?.pet === 'dog' ? [e.civilian.model ?? 'amb.dog'] : []));
+    // L9 replenishes its ambient walkers after loading; their pets can use any coat.
+    if (this.world.scenario === 'L9') for (const coat of dogCoats) pets.add(`amb.dog${coat ? `.${coat}` : ''}`);
+    await Promise.all([...pets].map(model => this.loadPet(model)));
     if (this.world.scenario !== 'L1' || [...this.world.entities.iterate()].some(e => e.escort && !e.escort.child)) await this.loadHuman('npc.civilian-man-a');
     this.child = await this.registry.loadAsset('npc.brother', 'lod1') as Group;
     fitCivilianHeight(this.child, 'npc.brother');
