@@ -12,7 +12,7 @@ const out = process.env.L9_LOAD_OUT ?? 'test-results/l9-load/quiet-load';
 mkdirSync(out, { recursive: true });
 const cases = [
   ['L1', 'webgpu', 'low'], ['L9', 'webgpu', 'low'], ['L10', 'webgpu', 'low'],
-  ['L9', 'webgpu', 'high'], ['L9', 'webgl2', 'low'],
+  ['L9', 'webgpu', 'high'], ['L9', 'webgl2', 'low'], ['L6', 'webgpu', 'low'],
 ].filter(row => !process.env.L9_LOAD_CASES || process.env.L9_LOAD_CASES.split(',').includes(row.join('-')));
 assert.ok(cases.length, 'Select at least one load case');
 interface Sample {

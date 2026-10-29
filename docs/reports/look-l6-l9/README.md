@@ -31,3 +31,11 @@ QA batch 27, verbatim: "L6, L9 and L10 read well but are dark and sparse". Base:
 - Not "stunning >= 7". What would move it: road-edge wrecks/checkpoints with real colliders (sim change, so out of scope
   here), a narrower L9 carriageway like L10, wet-road reflections (no shader support today), and wall-mounted lit
   signage/flicker in the L6 tunnel.
+
+## Gates
+- `npm test` 106/106 before the added decor sim-identity case (world-systems file 5/5 after); `npm run typecheck`, `npm run lint` clean.
+- `npm run test:smoke` 6/6 + public 1/1; `npm run scene:gate` 48/48; catalog L6/L9 look/night-read/world-fill/tunnel 24/24.
+- Real-input playtest (`tools/playtest/play.ts`, low, zoom 1.5): L6 finished (241 s), L9 finished (137 s), 0 issues; the only
+  frames > 200 ms are on loading cards (L9 briefing load 1083 ms, L10 handover 750 ms), none in play.
+- Quiet paired cold load (`tools/perf/l9-load-ab.ts`, public builds, 5 pairs, WebGPU low): L9 main 5192 ms -> 5227 ms (+0.7 %),
+  L6 main 1993 ms -> 2042 ms (+2.5 %); both within +5 %.
