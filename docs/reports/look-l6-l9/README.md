@@ -40,10 +40,11 @@ QA batch 27, verbatim: "L6, L9 and L10 read well but are dark and sparse". Base:
 - Quiet paired cold load (`tools/perf/l9-load-ab.ts`, public builds, 5 pairs, WebGPU low): L9 main 5192 ms -> 5227 ms (+0.7 %),
   L6 main 1993 ms -> 2042 ms (+2.5 %); both within +5 %.
 
-## Must-fix (orchestrator 10-29: no pass-through pieces for the APC)
-- L9 pieces are shoulder-only: footprint edge >= 2.2 m past every lane edge (tank half width 1.7 + 0.5), 30 m clear of every
-  route bend/fork. The real-input driver cuts across country, so they also collide: `ChunkResidency` owns each L9 decor box
-  as a physics-only static (vehicle/body collision, no nav/cover wall, no entity), nav hash and pushable ids unchanged
-  (unit guard). Scene Lab check: the APC stops against (rides up on) a suitcase instead of passing through.
-- `qa-l9-q3-stream-retire` fails vehicleSlipMaxDeg 80.1 > 20 identically with the decor colliders switched off (decor is
-  otherwise sim-neutral), so it is not caused by this lane; the other 56 L9 Scene Lab rows pass.
+## Orchestrator decision (10-29): L9 roadside pieces removed
+- Render-only pieces could be driven through; with vehicle colliders the APC stopped on luggage and the real-input L9 run took
+  185 s instead of 137 s. `districtDecor` now returns nothing for D-CROSSING and the colliders are gone: L9 source differs
+  from main only by a no-op guard, and L9 looks as before (score ~5.5). The L9 rows of the sheets above are history only.
+- `qa-l9-q3-stream-retire` (vehicleSlipMaxDeg 80.1 > 20) fails identically on plain main 1eb327524: pre-existing.
+- After the removal: `npm test` 107/107; L6/L9 Scene Lab catalog 80/81 (only that row); L9 real-input run finished in 142 s,
+  0 issues. One earlier attempt stalled with the APC wedged on an existing street lamp at (187, -20) (driver variance; the
+  L9 sim is identical to main).
