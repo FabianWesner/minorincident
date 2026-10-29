@@ -83,9 +83,10 @@ test('Scene Lab: spec validation and colour probes keep QA failures meaningful',
   const pixels = (...rgb: number[][]) => { const png = new PNG({ width: rgb.length, height: 1 }); png.data.set(rgb.flatMap(c => [...c, 255])); return png; };
   const empty = pixels([0, 0, 0], [0, 0, 0]), clear = pixels([100, 100, 100], [100, 100, 100]);
   const mask = pixels([255, 0, 255], [0, 0, 0]); // body, then its cast shadow
-  expect(courierBodyPixels(pixels([100, 100, 100], [0, 0, 0]), empty, clear, empty, mask)).toEqual({ visible: 1, reference: 1 });
-  expect(courierBodyPixels(pixels([0, 0, 0], [100, 100, 100]), empty, clear, empty, mask)).toEqual({ visible: 0, reference: 1 }); // A shadow cannot hide a genuinely occluded body.
-  expect(courierBodyPixels(clear, empty, clear, empty, empty)).toEqual({ visible: 2, reference: 2 }); // Driven-vehicle reference.
+  expect(courierBodyPixels(pixels([100, 100, 100], [0, 0, 0]), empty, clear, empty, mask, mask)).toEqual({ visible: 1, reference: 1 });
+  expect(courierBodyPixels(pixels([0, 0, 0], [100, 100, 100]), empty, clear, empty, mask, empty)).toEqual({ visible: 0, reference: 1 }); // A shadow cannot hide a genuinely occluded body.
+  expect(courierBodyPixels(clear, empty, clear, empty, empty, empty)).toEqual({ visible: 2, reference: 2 }); // Driven-vehicle reference.
+  expect(courierBodyPixels(empty, empty, empty, empty, mask, mask)).toEqual({ visible: 1, reference: 1 }); // Fog/DOF does not occlude geometry.
   const colour = (rgb: number[][]) => lookStats(rgb.flatMap(c => [...c, 255]), new Uint8Array(rgb.length * 4));
   const red = colour([[255, 0, 0]]), cyan = colour([[0, 255, 255]]);
   expect(red.hueChroma).toBeGreaterThan(LOW_CHROMA); expect(cyan.hueChroma).toBeGreaterThan(LOW_CHROMA);

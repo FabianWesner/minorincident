@@ -1,0 +1,9 @@
+# Courier coverage: shadows, presentation state and real depth
+
+The original colour-difference silhouette counted cast shadows as body pixels. The first correction intersected the reference with the courier ID mask, but full consumer validation found another deterministic presentation-state dependency: the same unobstructed lamp scene scored about 0.69 with inherited player zoom 0.5 and 0.94 with zoom 1.5. The normal frames differ in fog/DOF; the courier geometry stays visible. [Alternating-state receipts](../evidence/visibility-presentation-zoom.json), [intermediate failed sheet](../evidence/intermediate-fog-failure.jpg).
+
+The final probe compares the ordinary and unobstructed courier geometry ID masks. The ID pass now keeps production depth testing, including the shared courier foreground depth node. Its former building-blocker override disabled depth and could report a courier visible through an opaque wall. Uncut-wall controls therefore accompany the fix.
+
+[Eight adversarial controls](../evidence/id-visibility-controls.json), two repeats: lamp at each inherited zoom and companion behind a correctly opened wall score **1.0**; the same wall forced opaque scores **0.0**, with a real 815-pixel reference. [Fog-positive frame](../evidence/id-fog-positive.png), [opaque-negative frame](../evidence/id-opaque-negative.png). Existing 0.85 coverage thresholds remain. Driven vehicles retain their existing colour-difference coverage fallback, and Mega/Alpha body comparisons retain their existing measurements and limits. Normal production rendering is unchanged when the QA ID pass is off.
+
+The final report records the complete 146-row consumer rerun, the fresh 48-row gate, and unchanged test census (104 default tests, 144 total budgeted cases). This supersedes the intermediate mask-only coverage result.

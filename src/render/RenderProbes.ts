@@ -171,8 +171,10 @@ export class RenderProbes {
           }
         }
       });
-      // Depth against the world unless a faded building hides the courier (the foreground slice is in the shared depth node).
-      this.idPlayer.depthTest = this.idPass === 'skyline' || !t.occlusion.getState().some((building) => building.blocked);
+      // Match production depth, including its shared near-camera slice. Building
+      // reveal holes already clear the subject; disabling depth here would make
+      // an opaque, uncut wall falsely report a fully visible courier.
+      this.idPlayer.depthTest = true;
       renderer.render(scene, t.camera);
     } finally {
       this.restoreMaterials(); scene.background = background; scene.backgroundNode = backgroundNode; scene.fog = fog; renderer.shadowMap.enabled = shadow;

@@ -53,14 +53,14 @@ export async function measureCut(session: SceneSession) {
 }
 
 /** The courier ID pass marks only her body, without directional or contact shadows. */
-export function courierBodyPixels(all: PNG, hidden: PNG, clear: PNG, empty: PNG, mask: PNG) {
+export function courierBodyPixels(all: PNG, hidden: PNG, clear: PNG, empty: PNG, mask: PNG, visibleMask: PNG) {
   const body = (i: number) => mask.data[i] > 200 && mask.data[i + 1] < 60 && mask.data[i + 2] > 200;
   let hasBody = false;
   for (let i = 0; i < mask.data.length; i += 4) if (body(i)) { hasBody = true; break; }
   let visible = 0, reference = 0;
   for (let i = 0; i < clear.data.length; i += 4) {
     if (hasBody ? !body(i) : !changedPixel(clear, empty, i)) continue;
-    reference++; if (changedPixel(all, hidden, i)) visible++;
+    reference++; if (hasBody ? visibleMask.data[i] > 200 && visibleMask.data[i + 1] < 60 && visibleMask.data[i + 2] > 200 : changedPixel(all, hidden, i)) visible++;
   }
   return { visible, reference };
 }
@@ -78,18 +78,19 @@ export async function measureCourierShare(session: SceneSession, compareAlpha = 
   };
   const all = await shot(false, false), noCourier = await shot(true, false), clear = await shot(false, true, true), none = await shot(true, true, true);
   const noBodies = await shot(true, true);
-  // The colour-difference reference includes the courier's cast shadow. Restrict it
-  // to her existing shadow-free ID mask; keep normal colour visibility and its
-  // threshold. A driven vehicle has no courier ID pixels and keeps its reference.
-  let mask: PNG;
+  // Compare the normal and unobstructed courier ID masks at production depth.
+  // Cast shadows, fog and DOF are not occlusion. Driven vehicles have no courier
+  // ID pixels, so retain their existing colour-difference coverage measurement.
+  let mask: PNG, visibleMask: PNG;
   try {
     await session.page.evaluate(() => window.__SS__!.settings.set({ idPass: true }));
+    visibleMask = (await shot(false, false)).png;
     mask = (await shot(false, true, true)).png;
   } finally {
     await session.page.evaluate(() => { window.__SS__!.settings.set({ idPass: false }); window.__SCENE__!.hideProbe(false, false); });
     await session.ready();
   }
-  const { visible, reference } = courierBodyPixels(all.png, noCourier.png, clear.png, none.png, mask);
+  const { visible, reference } = courierBodyPixels(all.png, noCourier.png, clear.png, none.png, mask, visibleMask);
   const mega = bodyPixels(noCourier.png, noBodies.png, hole);
   // The old viewport-area minimum forced the boss to be wider than the PO allows.
   // Compare identical camera distance, pose and lighting instead; never enlarge the asset to pass.
