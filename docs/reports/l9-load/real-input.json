@@ -1,0 +1,34 @@
+{
+  "codeRevision": "a2afc8308a8b07a19c94011d438fda6495e6996b",
+  "entry": "continue; valid L9-default campaign preset",
+  "realDeviceInput": true,
+  "browser": "pool, headless, Metal, WebGPU low",
+  "viewport": "1280x720 DPR1, zoom1.5",
+  "quiet": "input-quiet-conditions.jsonl",
+  "profiler": false,
+  "finished": true,
+  "wallSeconds": 159,
+  "simCompletionSeconds": 154.05,
+  "steps": [
+    {
+      "id": "approach",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "id": "reach-outskirts",
+      "optional": false,
+      "status": "completed"
+    }
+  ],
+  "deaths": 0,
+  "assists": 0,
+  "skips": [],
+  "issues": [],
+  "lateL9NodeBuilds": 0,
+  "l9GameplayFramesOver200ms": 0,
+  "rawLongFrameRecords": 4,
+  "frameProbe": "Only gaps over 200 ms are retained, including loading intervals with playMs=0; no maximum under 200 ms is inferred.",
+  "handover": "L10; campaign completedLevels9, crossingHandover.applied true, fire-axe retained",
+  "rawEvidence": "real-input-records.json.gz"
+}

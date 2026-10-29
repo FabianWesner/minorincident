@@ -1,0 +1,4059 @@
+{
+  "method": "Single shared diagnostic captures with CPU/trace profiling, for phase diagnosis only; subphases overlap. Not quiet acceptance.",
+  "main": {
+    "ms": 5997.60000038147,
+    "load": [
+      5.787109375,
+      2.86181640625,
+      2.19873046875
+    ],
+    "bytes": 13508919,
+    "measures": [
+      {
+        "name": "view:actors",
+        "at": 339.80000019073486,
+        "ms": 76.40000057220459
+      },
+      {
+        "name": "view:lod-ready",
+        "at": 416.20000076293945,
+        "ms": 5.299999237060547
+      },
+      {
+        "name": "view:warm-up",
+        "at": 421.5,
+        "ms": 145.70000076293945
+      },
+      {
+        "name": "level:layouts",
+        "at": 1209.6000003814697,
+        "ms": 11.399999618530273
+      },
+      {
+        "name": "level:sim",
+        "at": 1221,
+        "ms": 770.9000005722046
+      },
+      {
+        "name": "level:boot-audio-wait",
+        "at": 1221.1000003814697,
+        "ms": 0
+      },
+      {
+        "name": "level:world+nav",
+        "at": 1223.3000001907349,
+        "ms": 518.1999998092651
+      },
+      {
+        "name": "level:mission+cast",
+        "at": 1741.5,
+        "ms": 237.5
+      },
+      {
+        "name": "level:physics-prepare",
+        "at": 1979,
+        "ms": 12.800000190734863
+      },
+      {
+        "name": "level:view",
+        "at": 1991.9000005722046,
+        "ms": 5164
+      },
+      {
+        "name": "view:districts+character",
+        "at": 2004.4000005722046,
+        "ms": 1779.0999994277954
+      },
+      {
+        "name": "view:civilian-crowd",
+        "at": 2023.3000001907349,
+        "ms": 1855.6999998092651
+      },
+      {
+        "name": "view:infected-crowd",
+        "at": 2023.6000003814697,
+        "ms": 1738.1999998092651
+      },
+      {
+        "name": "view:actors",
+        "at": 3838.5,
+        "ms": 81.90000057220459
+      },
+      {
+        "name": "view:lod-ready",
+        "at": 3920.4000005722046,
+        "ms": 22.300000190734863
+      },
+      {
+        "name": "view:warm-up",
+        "at": 3942.7000007629395,
+        "ms": 3201.5
+      },
+      {
+        "name": "Texture atlas upload",
+        "at": 3948.6000003814697,
+        "ms": 41.19999980926514
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 3989.9000005722046,
+        "ms": 2677.199999809265
+      },
+      {
+        "name": "Texture atlas upload",
+        "at": 6894.700000762939,
+        "ms": 2.8999996185302734
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 6897.60000038147,
+        "ms": 64.39999961853027
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 7109.200000762939,
+        "ms": 6.699999809265137
+      },
+      {
+        "name": "level:audio",
+        "at": 7155.900000572205,
+        "ms": 0.39999961853027344
+      },
+      {
+        "name": "level:hud",
+        "at": 7159.200000762939,
+        "ms": 6.399999618530273
+      }
+    ],
+    "resources": [
+      {
+        "name": "/assets/layouts/D-CROSSING.layout.json",
+        "at": 1209.8000001907349,
+        "ms": 3.90000057220459,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/char.courier-female.skin.low.glb",
+        "at": 2015.8000001907349,
+        "ms": 4.800000190734863,
+        "bytes": 404344
+      },
+      {
+        "name": "/assets/models/acc.hair-afro.glb",
+        "at": 2019.9000005722046,
+        "ms": 4.09999942779541,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-afro.lod1.glb",
+        "at": 2020,
+        "ms": 5.5,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-bun.glb",
+        "at": 2020.2000007629395,
+        "ms": 10.799999237060547,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-bun.lod1.glb",
+        "at": 2020.2000007629395,
+        "ms": 11.699999809265137,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-long-straight.glb",
+        "at": 2020.3000001907349,
+        "ms": 11.800000190734863,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-long-straight.lod1.glb",
+        "at": 2020.4000005722046,
+        "ms": 13,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-ponytail.lod1.glb",
+        "at": 2020.5,
+        "ms": 12,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-ponytail.glb",
+        "at": 2020.5,
+        "ms": 14.40000057220459,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-short-crop.glb",
+        "at": 2020.7000007629395,
+        "ms": 17.5,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-short-crop.lod1.glb",
+        "at": 2020.8000001907349,
+        "ms": 18.699999809265137,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-side-part.glb",
+        "at": 2020.9000005722046,
+        "ms": 20.09999942779541,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-side-part.lod1.glb",
+        "at": 2021.1000003814697,
+        "ms": 15.100000381469727,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-baseball-cap.glb",
+        "at": 2021.1000003814697,
+        "ms": 15.899999618530273,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-beanie.glb",
+        "at": 2021.2000007629395,
+        "ms": 21.5,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-baseball-cap.lod1.glb",
+        "at": 2021.2000007629395,
+        "ms": 27.699999809265137,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-beanie.lod1.glb",
+        "at": 2021.3000001907349,
+        "ms": 23.199999809265137,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-bucket-hat.glb",
+        "at": 2021.5,
+        "ms": 26.40000057220459,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-bucket-hat.lod1.glb",
+        "at": 2021.5,
+        "ms": 32.20000076293945,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-flat-cap.glb",
+        "at": 2021.6000003814697,
+        "ms": 28.100000381469727,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-flat-cap.lod1.glb",
+        "at": 2021.6000003814697,
+        "ms": 29,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-hard-hat.glb",
+        "at": 2022.7000007629395,
+        "ms": 29.399999618530273,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-hard-hat.lod1.glb",
+        "at": 2022.9000005722046,
+        "ms": 37.89999961853027,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-sun-hat.glb",
+        "at": 2023,
+        "ms": 32.20000076293945,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-sun-hat.lod1.glb",
+        "at": 2023.1000003814697,
+        "ms": 33.69999980926514,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/wpn.machine-gun.lod1.glb",
+        "at": 2023.5,
+        "ms": 40.5,
+        "bytes": 27820
+      },
+      {
+        "name": "/assets/models/skinned/inf.dog.lod1.low.black.glb",
+        "at": 2024.9000005722046,
+        "ms": 41.89999961853027,
+        "bytes": 97844
+      },
+      {
+        "name": "/assets/models/skinned/inf.dog.lod2.low.black.glb",
+        "at": 2025,
+        "ms": 42.60000038146973,
+        "bytes": 82016
+      },
+      {
+        "name": "/assets/models/skinned/inf.dog.lod1.low.cream.glb",
+        "at": 2025.1000003814697,
+        "ms": 41.89999961853027,
+        "bytes": 86044
+      },
+      {
+        "name": "/assets/models/skinned/inf.dog.lod2.low.cream.glb",
+        "at": 2025.2000007629395,
+        "ms": 41.89999961853027,
+        "bytes": 70216
+      },
+      {
+        "name": "/assets/models/skinned/inf.common-worker.lod1.low.glb",
+        "at": 2025.3000001907349,
+        "ms": 42.5,
+        "bytes": 182704
+      },
+      {
+        "name": "/assets/models/skinned/inf.common-worker.lod2.low.glb",
+        "at": 2025.4000005722046,
+        "ms": 42.5,
+        "bytes": 146380
+      },
+      {
+        "name": "/assets/models/skinned/inf.crawler.lod2.low.glb",
+        "at": 2025.5,
+        "ms": 52.20000076293945,
+        "bytes": 94788
+      },
+      {
+        "name": "/assets/models/skinned/inf.crawler.lod1.low.glb",
+        "at": 2025.5,
+        "ms": 52.70000076293945,
+        "bytes": 134860
+      },
+      {
+        "name": "/assets/models/skinned/inf.riot-cop.lod1.low.glb",
+        "at": 2025.7000007629395,
+        "ms": 52.5,
+        "bytes": 161776
+      },
+      {
+        "name": "/assets/models/skinned/inf.riot-cop.lod2.low.glb",
+        "at": 2025.7000007629395,
+        "ms": 52.29999923706055,
+        "bytes": 116548
+      },
+      {
+        "name": "/assets/models/skinned/inf.firefighter.lod1.low.glb",
+        "at": 2025.8000001907349,
+        "ms": 52.69999980926514,
+        "bytes": 174068
+      },
+      {
+        "name": "/assets/models/skinned/inf.firefighter.lod2.low.glb",
+        "at": 2025.9000005722046,
+        "ms": 52.30000019073486,
+        "bytes": 121200
+      },
+      {
+        "name": "/assets/models/skinned/inf.hazmat.lod1.low.glb",
+        "at": 2025.9000005722046,
+        "ms": 60.69999980926514,
+        "bytes": 155224
+      },
+      {
+        "name": "/assets/models/skinned/inf.hazmat.lod2.low.glb",
+        "at": 2026,
+        "ms": 60.60000038146973,
+        "bytes": 101788
+      },
+      {
+        "name": "/assets/models/skinned/inf.nurse.lod1.low.glb",
+        "at": 2026.1000003814697,
+        "ms": 60.69999980926514,
+        "bytes": 206928
+      },
+      {
+        "name": "/assets/models/skinned/inf.nurse.lod2.low.glb",
+        "at": 2026.1000003814697,
+        "ms": 60.60000038146973,
+        "bytes": 96268
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha.lod1.low.glb",
+        "at": 2026.2000007629395,
+        "ms": 61,
+        "bytes": 177636
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha.lod2.low.glb",
+        "at": 2026.4000005722046,
+        "ms": 60.5,
+        "bytes": 105492
+      },
+      {
+        "name": "/assets/models/skinned/inf.dog.lod1.low.glb",
+        "at": 2026.4000005722046,
+        "ms": 73.19999980926514,
+        "bytes": 98988
+      },
+      {
+        "name": "/assets/models/skinned/inf.dog.lod2.low.glb",
+        "at": 2026.5,
+        "ms": 72.90000057220459,
+        "bytes": 83160
+      },
+      {
+        "name": "/assets/models/skinned/inf.lion.lod1.low.glb",
+        "at": 2026.6000003814697,
+        "ms": 73.30000019073486,
+        "bytes": 178480
+      },
+      {
+        "name": "/assets/models/skinned/inf.lion.lod2.low.glb",
+        "at": 2026.7000007629395,
+        "ms": 73.09999942779541,
+        "bytes": 117912
+      },
+      {
+        "name": "/assets/models/skinned/inf.gorilla.lod1.low.glb",
+        "at": 2026.7000007629395,
+        "ms": 73.5,
+        "bytes": 190352
+      },
+      {
+        "name": "/assets/models/skinned/inf.gorilla.lod2.low.glb",
+        "at": 2026.8000001907349,
+        "ms": 73.19999980926514,
+        "bytes": 112144
+      },
+      {
+        "name": "/assets/models/skinned/inf.elephant.lod1.low.glb",
+        "at": 2026.9000005722046,
+        "ms": 79.59999942779541,
+        "bytes": 130864
+      },
+      {
+        "name": "/assets/models/skinned/inf.elephant.lod2.low.glb",
+        "at": 2026.9000005722046,
+        "ms": 79.89999961853027,
+        "bytes": 78184
+      },
+      {
+        "name": "/assets/models/skinned/inf.zebra.lod2.low.glb",
+        "at": 2027.1000003814697,
+        "ms": 79.69999980926514,
+        "bytes": 107876
+      },
+      {
+        "name": "/assets/models/skinned/inf.zebra.lod1.low.glb",
+        "at": 2027.1000003814697,
+        "ms": 79.80000019073486,
+        "bytes": 133820
+      },
+      {
+        "name": "/assets/models/skinned/inf.flamingo.lod1.low.glb",
+        "at": 2027.2000007629395,
+        "ms": 79.69999980926514,
+        "bytes": 79836
+      },
+      {
+        "name": "/assets/models/skinned/inf.flamingo.lod2.low.glb",
+        "at": 2027.3000001907349,
+        "ms": 79.40000057220459,
+        "bytes": 68432
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha-worker.lod1.low.glb",
+        "at": 2027.5,
+        "ms": 87.30000019073486,
+        "bytes": 190492
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha-worker.lod2.low.glb",
+        "at": 2027.5,
+        "ms": 87.20000076293945,
+        "bytes": 120812
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha-hoodie.lod2.low.glb",
+        "at": 2027.6000003814697,
+        "ms": 87,
+        "bytes": 120416
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha-hoodie.lod1.low.glb",
+        "at": 2027.6000003814697,
+        "ms": 87.30000019073486,
+        "bytes": 191868
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha-fire.lod1.low.glb",
+        "at": 2027.8000001907349,
+        "ms": 87.10000038146973,
+        "bytes": 198372
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha-fire.lod2.low.glb",
+        "at": 2027.9000005722046,
+        "ms": 86.89999961853027,
+        "bytes": 126440
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha-suit.lod1.low.glb",
+        "at": 2027.9000005722046,
+        "ms": 92.89999961853027,
+        "bytes": 196900
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha-suit.lod2.low.glb",
+        "at": 2028,
+        "ms": 92.5,
+        "bytes": 125592
+      },
+      {
+        "name": "/assets/models/skinned/inf.jogger.lod1.low.glb",
+        "at": 2028,
+        "ms": 92.90000057220459,
+        "bytes": 177776
+      },
+      {
+        "name": "/assets/models/skinned/inf.jogger.lod2.low.glb",
+        "at": 2028.1000003814697,
+        "ms": 92.89999961853027,
+        "bytes": 149452
+      },
+      {
+        "name": "/assets/models/skinned/inf.suburban-mom.lod1.low.glb",
+        "at": 2028.2000007629395,
+        "ms": 93.29999923706055,
+        "bytes": 211628
+      },
+      {
+        "name": "/assets/models/skinned/inf.suburban-mom.lod2.low.glb",
+        "at": 2028.3000001907349,
+        "ms": 92.90000057220459,
+        "bytes": 129052
+      },
+      {
+        "name": "/assets/models/skinned/inf.delivery-driver.lod1.low.glb",
+        "at": 2028.4000005722046,
+        "ms": 103.69999980926514,
+        "bytes": 172836
+      },
+      {
+        "name": "/assets/models/skinned/inf.delivery-driver.lod2.low.glb",
+        "at": 2028.4000005722046,
+        "ms": 103.69999980926514,
+        "bytes": 146156
+      },
+      {
+        "name": "/assets/models/skinned/inf.bbq-dad.lod1.low.glb",
+        "at": 2028.5,
+        "ms": 103.5,
+        "bytes": 121092
+      },
+      {
+        "name": "/assets/models/skinned/inf.bbq-dad.lod2.low.glb",
+        "at": 2028.5,
+        "ms": 103.80000019073486,
+        "bytes": 121092
+      },
+      {
+        "name": "/assets/models/skinned/inf.cashier.lod1.low.glb",
+        "at": 2028.7000007629395,
+        "ms": 103.79999923706055,
+        "bytes": 180956
+      },
+      {
+        "name": "/assets/models/skinned/inf.cashier.lod2.low.glb",
+        "at": 2028.9000005722046,
+        "ms": 103.80000019073486,
+        "bytes": 147416
+      },
+      {
+        "name": "/assets/models/skinned/inf.bathrobe-neighbor.lod2.low.glb",
+        "at": 2029,
+        "ms": 110.60000038146973,
+        "bytes": 149252
+      },
+      {
+        "name": "/assets/models/skinned/inf.bathrobe-neighbor.lod1.low.glb",
+        "at": 2029,
+        "ms": 110.70000076293945,
+        "bytes": 179344
+      },
+      {
+        "name": "/assets/models/skinned/inf.mega-alpha.lod1.low.glb",
+        "at": 2029.2000007629395,
+        "ms": 110.69999980926514,
+        "bytes": 246112
+      },
+      {
+        "name": "/assets/models/skinned/inf.mega-alpha.lod2.low.glb",
+        "at": 2029.2000007629395,
+        "ms": 110.59999942779541,
+        "bytes": 138116
+      },
+      {
+        "name": "/assets/models/skinned/inf.mega-alpha-ashen.lod1.low.glb",
+        "at": 2029.2000007629395,
+        "ms": 110.69999980926514,
+        "bytes": 244772
+      },
+      {
+        "name": "/assets/models/skinned/inf.mega-alpha-ashen.lod2.low.glb",
+        "at": 2029.3000001907349,
+        "ms": 110.19999980926514,
+        "bytes": 132044
+      },
+      {
+        "name": "/assets/models/skinned/inf.mega-alpha-ember.lod1.low.glb",
+        "at": 2029.4000005722046,
+        "ms": 115.5,
+        "bytes": 246960
+      },
+      {
+        "name": "/assets/models/skinned/inf.mega-alpha-ember.lod2.low.glb",
+        "at": 2029.5,
+        "ms": 114.90000057220459,
+        "bytes": 135020
+      },
+      {
+        "name": "/assets/models/veh.military-apc.unarmed.lod1.glb",
+        "at": 2029.8000001907349,
+        "ms": 114.69999980926514,
+        "bytes": 38976
+      },
+      {
+        "name": "/assets/statics/bld.house-a.lod1.base.bfa9647b5a04abe0.bin.gz",
+        "at": 2353.2000007629395,
+        "ms": 13.5,
+        "bytes": 87782
+      },
+      {
+        "name": "/assets/models/bld.shed.lod1.glb",
+        "at": 2353.6000003814697,
+        "ms": 10.600000381469727,
+        "bytes": 52836
+      },
+      {
+        "name": "/assets/statics/veh.pickup-red.lod1.base.afc2ace39d9fa100.bin.gz",
+        "at": 2353.800000190735,
+        "ms": 12.800000190734863,
+        "bytes": 51723
+      },
+      {
+        "name": "/assets/models/bld.garage-detached.lod1.glb",
+        "at": 2353.800000190735,
+        "ms": 10.90000057220459,
+        "bytes": 113592
+      },
+      {
+        "name": "/assets/models/bld.gas-station.lod1.glb",
+        "at": 2353.9000005722046,
+        "ms": 11,
+        "bytes": 102580
+      },
+      {
+        "name": "/assets/models/veh.sedan-green.wrecked.lod1.glb",
+        "at": 2353.9000005722046,
+        "ms": 10.59999942779541,
+        "bytes": 52404
+      },
+      {
+        "name": "/assets/models/bld.apartment-block-a.lod1.glb",
+        "at": 2354.1000003814697,
+        "ms": 21.699999809265137,
+        "bytes": 77544
+      },
+      {
+        "name": "/assets/models/veh.military-truck.wrecked.lod1.glb",
+        "at": 2354.1000003814697,
+        "ms": 21.399999618530273,
+        "bytes": 57296
+      },
+      {
+        "name": "/assets/models/veh.school-bus.wrecked.lod1.glb",
+        "at": 2354.2000007629395,
+        "ms": 22.399999618530273,
+        "bytes": 145756
+      },
+      {
+        "name": "/assets/statics/veh.sedan-red.lod1.wrecked.6d404d5ad32b5b00.bin.gz",
+        "at": 2354.300000190735,
+        "ms": 23.300000190734863,
+        "bytes": 71119
+      },
+      {
+        "name": "/assets/models/veh.police-sedan.wrecked.lod1.glb",
+        "at": 2354.4000005722046,
+        "ms": 21.699999809265137,
+        "bytes": 60140
+      },
+      {
+        "name": "/assets/models/veh.pickup-red.wrecked.lod1.glb",
+        "at": 2354.5,
+        "ms": 22.5,
+        "bytes": 140384
+      },
+      {
+        "name": "/assets/statics/veh.pickup-white.lod1.base.dddcb3a51b7f5b74.bin.gz",
+        "at": 2354.9000005722046,
+        "ms": 28.899999618530273,
+        "bytes": 40772
+      },
+      {
+        "name": "/assets/models/bld.house-b.lod1.glb",
+        "at": 2355.1000003814697,
+        "ms": 27,
+        "bytes": 78772
+      },
+      {
+        "name": "/assets/statics/bld.house-d.lod1.base.07b658783d46ea0e.bin.gz",
+        "at": 2355.2000007629395,
+        "ms": 28.399999618530273,
+        "bytes": 90743
+      },
+      {
+        "name": "/assets/statics/bld.house-e.lod1.base.00118bfa8e19327e.bin.gz",
+        "at": 2355.2000007629395,
+        "ms": 27.799999237060547,
+        "bytes": 63265
+      },
+      {
+        "name": "/assets/models/veh.pickup-red.burned.lod1.glb",
+        "at": 2355.300000190735,
+        "ms": 26.90000057220459,
+        "bytes": 102248
+      },
+      {
+        "name": "/assets/statics/veh.sedan-red.lod1.burned.2ed761ee1123b2d2.bin.gz",
+        "at": 2355.300000190735,
+        "ms": 28.800000190734863,
+        "bytes": 183962
+      },
+      {
+        "name": "/assets/models/bld.joes-diner.lod1.glb",
+        "at": 2355.5,
+        "ms": 32.70000076293945,
+        "bytes": 107520
+      },
+      {
+        "name": "/assets/models/bld.supermarket.lod1.glb",
+        "at": 2355.6000003814697,
+        "ms": 38.19999980926514,
+        "bytes": 227576
+      },
+      {
+        "name": "/assets/models/kit.army-checkpoint.lod1.glb",
+        "at": 2355.6000003814697,
+        "ms": 36.5,
+        "bytes": 102564
+      },
+      {
+        "name": "/assets/models/bld.apartment-block-b.lod1.glb",
+        "at": 2355.7000007629395,
+        "ms": 36.59999942779541,
+        "bytes": 74524
+      },
+      {
+        "name": "/assets/models/bld.town-hall.lod1.glb",
+        "at": 2355.800000190735,
+        "ms": 34.60000038146973,
+        "bytes": 60792
+      },
+      {
+        "name": "/assets/models/bld.mainstreet-brick.lod1.glb",
+        "at": 2355.9000005722046,
+        "ms": 38.09999942779541,
+        "bytes": 123832
+      },
+      {
+        "name": "/assets/models/bld.church.lod1.glb",
+        "at": 2356.1000003814697,
+        "ms": 40.89999961853027,
+        "bytes": 67236
+      },
+      {
+        "name": "/assets/models/bld.hospital-exterior.lod1.glb",
+        "at": 2356.1000003814697,
+        "ms": 43.10000038146973,
+        "bytes": 114144
+      },
+      {
+        "name": "/assets/statics/veh.sedan-white.lod1.burned.dcfb851343c64403.bin.gz",
+        "at": 2356.2000007629395,
+        "ms": 46.5,
+        "bytes": 254523
+      },
+      {
+        "name": "/assets/models/veh.suv-dark.wrecked.lod1.glb",
+        "at": 2356.300000190735,
+        "ms": 43.19999980926514,
+        "bytes": 127676
+      },
+      {
+        "name": "/assets/statics/veh.sedan-blue.lod1.wrecked.91ff406610a650d5.bin.gz",
+        "at": 2356.4000005722046,
+        "ms": 44.89999961853027,
+        "bytes": 42516
+      },
+      {
+        "name": "/assets/statics/veh.suv-dark.lod1.burned.152c94f255169f05.bin.gz",
+        "at": 2356.5,
+        "ms": 45.90000057220459,
+        "bytes": 212612
+      },
+      {
+        "name": "/assets/models/veh.ambulance.wrecked.lod1.glb",
+        "at": 2356.7000007629395,
+        "ms": 47,
+        "bytes": 128964
+      },
+      {
+        "name": "/assets/models/veh.school-bus.burned.lod1.glb",
+        "at": 2356.800000190735,
+        "ms": 52,
+        "bytes": 112088
+      },
+      {
+        "name": "/assets/models/veh.police-sedan.burned.lod1.glb",
+        "at": 2356.9000005722046,
+        "ms": 57.09999942779541,
+        "bytes": 97596
+      },
+      {
+        "name": "/assets/statics/bld.house-a.lod2.base.7e47b21e0aac91a7.bin.gz",
+        "at": 2357.1000003814697,
+        "ms": 46.89999961853027,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.shed.lod2.glb",
+        "at": 2357.2000007629395,
+        "ms": 47.79999923706055,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.garage-detached.lod2.glb",
+        "at": 2357.300000190735,
+        "ms": 49.30000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/veh.pickup-red.lod2.base.8d47813f6e851e27.bin.gz",
+        "at": 2357.300000190735,
+        "ms": 52.40000057220459,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.garden-bush.lod2.base.9883da87953f0176.bin.gz",
+        "at": 2357.4000005722046,
+        "ms": 52.5,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.gas-station.lod2.glb",
+        "at": 2357.5,
+        "ms": 50.40000057220459,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/prop.street-tree.lod2.glb",
+        "at": 2357.6000003814697,
+        "ms": 54.30000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/veh.sedan-green.wrecked.lod2.glb",
+        "at": 2357.6000003814697,
+        "ms": 56.39999961853027,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.street-sign.lod2.base.5d0774a759779f1d.bin.gz",
+        "at": 2357.800000190735,
+        "ms": 54.80000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.apartment-block-a.lod2.glb",
+        "at": 2357.9000005722046,
+        "ms": 57.19999980926514,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/kit.crossing-crash.lod2.glb",
+        "at": 2357.9000005722046,
+        "ms": 58.19999980926514,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/veh.military-truck.lod2.glb",
+        "at": 2358,
+        "ms": 74.20000076293945,
+        "bytes": 31688
+      },
+      {
+        "name": "/assets/models/veh.school-bus.lod2.glb",
+        "at": 2358.1000003814697,
+        "ms": 64.30000019073486,
+        "bytes": 49284
+      },
+      {
+        "name": "/assets/statics/veh.sedan-red.lod2.base.11706267fbfcf734.bin.gz",
+        "at": 2358.2000007629395,
+        "ms": 64.69999980926514,
+        "bytes": 18212
+      },
+      {
+        "name": "/assets/models/veh.police-sedan.lod2.glb",
+        "at": 2358.2000007629395,
+        "ms": 74,
+        "bytes": 35764
+      },
+      {
+        "name": "/assets/models/prop.barricade.lod2.glb",
+        "at": 2358.300000190735,
+        "ms": 63.60000038146973,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.traffic-cone.lod2.base.6327029429a6c3d4.bin.gz",
+        "at": 2358.5,
+        "ms": 61.70000076293945,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.pallet.lod2.base.a18bdedbd67c09c7.bin.gz",
+        "at": 2358.5,
+        "ms": 66.90000057220459,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.garden-bush-small.lod2.base.9883da87953f0176.bin.gz",
+        "at": 2358.6000003814697,
+        "ms": 69,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.hedge.lod2.base.9883da87953f0176.bin.gz",
+        "at": 2358.6000003814697,
+        "ms": 73.89999961853027,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.sandbag-pallet.lod2.base.d77ae35efd00d189.bin.gz",
+        "at": 2358.7000007629395,
+        "ms": 70.29999923706055,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/prop.crowd-fence.lod2.glb",
+        "at": 2358.7000007629395,
+        "ms": 74,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/prop.dumpster.lod2.glb",
+        "at": 2358.800000190735,
+        "ms": 75.30000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.wheelbarrow.lod2.base.81dfca0601dff48a.bin.gz",
+        "at": 2358.9000005722046,
+        "ms": 74.39999961853027,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.trash-bags.lod2.base.32327e9ed59c7ca1.bin.gz",
+        "at": 2358.9000005722046,
+        "ms": 76.59999942779541,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.crates.lod2.base.3ef2ddbe8eab5787.bin.gz",
+        "at": 2359.1000003814697,
+        "ms": 76.69999980926514,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/veh.pickup-white.lod2.base.aae59518b2c1e300.bin.gz",
+        "at": 2359.1000003814697,
+        "ms": 77.10000038146973,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/bld.house-e.lod2.base.d3171fb1ce6a2901.bin.gz",
+        "at": 2359.2000007629395,
+        "ms": 75.5,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.house-b.lod2.glb",
+        "at": 2359.2000007629395,
+        "ms": 77.89999961853027,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/bld.house-d.lod2.base.4aa4dafaf18f992d.bin.gz",
+        "at": 2359.300000190735,
+        "ms": 75.90000057220459,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/prop.utility-pole.lod2.glb",
+        "at": 2359.4000005722046,
+        "ms": 79,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.joes-diner.lod2.glb",
+        "at": 2359.5,
+        "ms": 80,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.supermarket.lod2.glb",
+        "at": 2359.5,
+        "ms": 81.5,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/prop.gas-pump.lod2.glb",
+        "at": 2359.6000003814697,
+        "ms": 82.89999961853027,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.street-lamp.lod2.base.155ba700ada93a74.bin.gz",
+        "at": 2359.800000190735,
+        "ms": 83.30000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/kit.army-checkpoint.lod2.base.ad8e463112147d5a.bin.gz",
+        "at": 2359.800000190735,
+        "ms": 83.90000057220459,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/prop.light-tower.lod2.glb",
+        "at": 2359.800000190735,
+        "ms": 87.60000038146973,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/prop.tent.lod2.glb",
+        "at": 2359.9000005722046,
+        "ms": 84.80000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/prop.jersey-barrier.lod2.glb",
+        "at": 2360,
+        "ms": 85.5,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.apartment-block-b.lod2.glb",
+        "at": 2360.2000007629395,
+        "ms": 86.39999961853027,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.mainstreet-brick.lod2.glb",
+        "at": 2360.300000190735,
+        "ms": 87.80000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.town-hall.lod2.glb",
+        "at": 2360.300000190735,
+        "ms": 90.69999980926514,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.church.lod2.glb",
+        "at": 2360.5,
+        "ms": 88.5,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.hospital-exterior.lod2.glb",
+        "at": 2360.5,
+        "ms": 89.40000057220459,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.picket-fence.lod2.base.34d16940362176dd.bin.gz",
+        "at": 2360.6000003814697,
+        "ms": 89.60000038146973,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.broken-chair.lod2.base.48e569c6b820c93a.bin.gz",
+        "at": 2360.7000007629395,
+        "ms": 91.09999942779541,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.privacy-fence.lod2.base.2e16769d02382ed4.bin.gz",
+        "at": 2360.7000007629395,
+        "ms": 92.19999980926514,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.carpet.lod2.base.33c56104f4861bbf.bin.gz",
+        "at": 2360.800000190735,
+        "ms": 91.60000038146973,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/veh.suv-dark.lod2.base.3d1d376670667a1a.bin.gz",
+        "at": 2360.9000005722046,
+        "ms": 98.5,
+        "bytes": 21858
+      },
+      {
+        "name": "/assets/statics/veh.sedan-white.lod2.base.54e77c10ae182db3.bin.gz",
+        "at": 2360.9000005722046,
+        "ms": 97.89999961853027,
+        "bytes": 23724
+      },
+      {
+        "name": "/assets/statics/prop.recycling-bin.lod2.base.0586a14bba4b55a0.bin.gz",
+        "at": 2361,
+        "ms": 92.60000038146973,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/prop.shopping-cart.lod2.glb",
+        "at": 2361,
+        "ms": 93.90000057220459,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/veh.sedan-blue.lod2.base.f239269d3b252584.bin.gz",
+        "at": 2361.1000003814697,
+        "ms": 98.19999980926514,
+        "bytes": 24299
+      },
+      {
+        "name": "/assets/statics/veh.sedan-green.lod2.base.03e70c5ababbc722.bin.gz",
+        "at": 2361.300000190735,
+        "ms": 98.19999980926514,
+        "bytes": 25526
+      },
+      {
+        "name": "/assets/models/veh.ambulance.lod2.glb",
+        "at": 2361.300000190735,
+        "ms": 96.60000038146973,
+        "bytes": 37032
+      },
+      {
+        "name": "/assets/layouts/D-CROSSING.horizon.glb",
+        "at": 2362,
+        "ms": 96.70000076293945,
+        "bytes": 250452
+      },
+      {
+        "name": "/build/civilianBake.worker-D9D3u1oi.js",
+        "at": 2371,
+        "ms": -225.5,
+        "bytes": 300
+      },
+      {
+        "name": "/build/civilianBake.worker-D9D3u1oi.js",
+        "at": 2371,
+        "ms": -226,
+        "bytes": 5342
+      },
+      {
+        "name": "/build/civilianBake.worker-D9D3u1oi.js",
+        "at": 2371.1000003814697,
+        "ms": -225.39999961853027,
+        "bytes": 300
+      },
+      {
+        "name": "/build/civilianBake.worker-D9D3u1oi.js",
+        "at": 2371.5,
+        "ms": -225.5,
+        "bytes": 300
+      },
+      {
+        "name": "/build/civilianBake.worker-D9D3u1oi.js",
+        "at": 2371.9000005722046,
+        "ms": -225.60000038146973,
+        "bytes": 300
+      },
+      {
+        "name": "/build/civilianBake.worker-D9D3u1oi.js",
+        "at": 2372.2000007629395,
+        "ms": -225.60000038146973,
+        "bytes": 300
+      },
+      {
+        "name": "/build/civilianBake.worker-D9D3u1oi.js",
+        "at": 2373.4000005722046,
+        "ms": -226.5,
+        "bytes": 300
+      },
+      {
+        "name": "/build/civilianBake.worker-D9D3u1oi.js",
+        "at": 2373.9000005722046,
+        "ms": -226.80000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/wpn.assault-rifle.lod1.glb",
+        "at": 2396.6000003814697,
+        "ms": 67.19999980926514,
+        "bytes": 23144
+      },
+      {
+        "name": "/assets/models/veh.military-apc.unarmed.lod2.glb",
+        "at": 2461.7000007629395,
+        "ms": 17.899999618530273,
+        "bytes": 27424
+      },
+      {
+        "name": "/assets/basis/basis_transcoder.js",
+        "at": 2818.5,
+        "ms": 1,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/basis/basis_transcoder.wasm",
+        "at": 2818.5,
+        "ms": 1.3000001907348633,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/layouts/D-CROSSING.chunks/crossing-0-3.glb",
+        "at": 3129.800000190735,
+        "ms": 3.3000001907348633,
+        "bytes": 12760
+      },
+      {
+        "name": "/assets/layouts/D-CROSSING.chunks/crossing-0-4.glb",
+        "at": 3130,
+        "ms": 3.1000003814697266,
+        "bytes": 13860
+      },
+      {
+        "name": "/assets/models/wpn.pistol.lod1.glb",
+        "at": 3137,
+        "ms": 2.700000762939453,
+        "bytes": 19236
+      },
+      {
+        "name": "/assets/models/char.courier-female.skin.glb",
+        "at": 3147.4000005722046,
+        "ms": 2.59999942779541,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/layouts/D-CROSSING.chunks/crossing-1-3.glb",
+        "at": 3154.5,
+        "ms": 16.100000381469727,
+        "bytes": 23108
+      },
+      {
+        "name": "/assets/layouts/D-CROSSING.chunks/crossing-1-4.glb",
+        "at": 3156.1000003814697,
+        "ms": 14.699999809265137,
+        "bytes": 25020
+      },
+      {
+        "name": "/assets/models/wpn.shotgun.lod1.glb",
+        "at": 3160.800000190735,
+        "ms": 10.100000381469727,
+        "bytes": 20336
+      },
+      {
+        "name": "/assets/models/acc.courier-gear.female.tiers.low.glb",
+        "at": 3174.9000005722046,
+        "ms": 9.199999809265137,
+        "bytes": 146076
+      },
+      {
+        "name": "/assets/layouts/D-CROSSING.chunks/crossing-0-5.glb",
+        "at": 3181.5,
+        "ms": 31.40000057220459,
+        "bytes": 6864
+      },
+      {
+        "name": "/assets/layouts/D-CROSSING.chunks/crossing-1-5.glb",
+        "at": 3183.1000003814697,
+        "ms": 29.600000381469727,
+        "bytes": 7648
+      },
+      {
+        "name": "/assets/models/wpn.hunting-rifle.lod1.glb",
+        "at": 3187.1000003814697,
+        "ms": 26,
+        "bytes": 22716
+      },
+      {
+        "name": "/assets/models/char.courier-male.skin.low.glb",
+        "at": 3217.2000007629395,
+        "ms": 14,
+        "bytes": 412284
+      },
+      {
+        "name": "/assets/models/veh.military-truck.wrecked.lod2.glb",
+        "at": 3244.9000005722046,
+        "ms": 13.300000190734863,
+        "bytes": 26956
+      },
+      {
+        "name": "/assets/models/veh.school-bus.wrecked.lod2.glb",
+        "at": 3245.1000003814697,
+        "ms": 13.199999809265137,
+        "bytes": 56112
+      },
+      {
+        "name": "/assets/statics/veh.sedan-red.lod2.wrecked.fd6a1b7fa1cfa994.bin.gz",
+        "at": 3245.2000007629395,
+        "ms": 14,
+        "bytes": 18203
+      },
+      {
+        "name": "/assets/models/veh.police-sedan.wrecked.lod2.glb",
+        "at": 3245.300000190735,
+        "ms": 13.199999809265137,
+        "bytes": 38544
+      },
+      {
+        "name": "/assets/models/veh.pickup-red.wrecked.lod2.glb",
+        "at": 3245.4000005722046,
+        "ms": 13.09999942779541,
+        "bytes": 56672
+      },
+      {
+        "name": "/assets/models/veh.pickup-red.burned.lod2.glb",
+        "at": 3245.6000003814697,
+        "ms": 13,
+        "bytes": 42432
+      },
+      {
+        "name": "/assets/statics/veh.sedan-red.lod2.burned.acdde498f625d501.bin.gz",
+        "at": 3245.7000007629395,
+        "ms": 18.899999618530273,
+        "bytes": 72026
+      }
+    ]
+  },
+  "compile24": {
+    "ms": 6063,
+    "load": [
+      4.359375,
+      3.09716796875,
+      2.34130859375
+    ],
+    "bytes": 13508919,
+    "measures": [
+      {
+        "name": "view:actors",
+        "at": 319.6000003814697,
+        "ms": 70.89999961853027
+      },
+      {
+        "name": "view:lod-ready",
+        "at": 390.5,
+        "ms": 5.600000381469727
+      },
+      {
+        "name": "view:warm-up",
+        "at": 396.1000003814697,
+        "ms": 139.89999961853027
+      },
+      {
+        "name": "level:layouts",
+        "at": 1226.5,
+        "ms": 11
+      },
+      {
+        "name": "level:sim",
+        "at": 1237.5,
+        "ms": 799.9000005722046
+      },
+      {
+        "name": "level:boot-audio-wait",
+        "at": 1237.6000003814697,
+        "ms": 0
+      },
+      {
+        "name": "level:world+nav",
+        "at": 1239.8000001907349,
+        "ms": 548.1000003814697
+      },
+      {
+        "name": "level:mission+cast",
+        "at": 1787.9000005722046,
+        "ms": 236.79999923706055
+      },
+      {
+        "name": "level:physics-prepare",
+        "at": 2024.6999998092651,
+        "ms": 12.600000381469727
+      },
+      {
+        "name": "level:view",
+        "at": 2037.4000005722046,
+        "ms": 5185.099999427795
+      },
+      {
+        "name": "view:districts+character",
+        "at": 2050.1000003814697,
+        "ms": 1777.6999998092651
+      },
+      {
+        "name": "view:civilian-crowd",
+        "at": 2068.6000003814697,
+        "ms": 1862.3999996185303
+      },
+      {
+        "name": "view:infected-crowd",
+        "at": 2068.9000005722046,
+        "ms": 1729.6999998092651
+      },
+      {
+        "name": "view:actors",
+        "at": 3887.699999809265,
+        "ms": 84.70000076293945
+      },
+      {
+        "name": "view:lod-ready",
+        "at": 3972.4000005722046,
+        "ms": 23.299999237060547
+      },
+      {
+        "name": "view:warm-up",
+        "at": 3995.699999809265,
+        "ms": 3215
+      },
+      {
+        "name": "Texture atlas upload",
+        "at": 4001.1000003814697,
+        "ms": 42.19999980926514
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 4043.5,
+        "ms": 2672
+      },
+      {
+        "name": "Texture atlas upload",
+        "at": 6944.800000190735,
+        "ms": 3
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 6947.800000190735,
+        "ms": 70.80000019073486
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 7176.199999809265,
+        "ms": 5.200000762939453
+      },
+      {
+        "name": "level:audio",
+        "at": 7222.5,
+        "ms": 0.40000057220458984
+      },
+      {
+        "name": "level:hud",
+        "at": 7226.199999809265,
+        "ms": 5.700000762939453
+      }
+    ],
+    "resources": [
+      {
+        "name": "/assets/layouts/D-CROSSING.layout.json",
+        "at": 1226.6999998092651,
+        "ms": 3.6000003814697266,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/char.courier-female.skin.low.glb",
+        "at": 2061.4000005722046,
+        "ms": 4.5,
+        "bytes": 404344
+      },
+      {
+        "name": "/assets/models/acc.hair-afro.glb",
+        "at": 2066.5,
+        "ms": 3.3000001907348633,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-afro.lod1.glb",
+        "at": 2066.699999809265,
+        "ms": 8.200000762939453,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-bun.glb",
+        "at": 2066.699999809265,
+        "ms": 10.40000057220459,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-bun.lod1.glb",
+        "at": 2066.9000005722046,
+        "ms": 10.5,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-long-straight.glb",
+        "at": 2066.9000005722046,
+        "ms": 10.699999809265137,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-long-straight.lod1.glb",
+        "at": 2067,
+        "ms": 11.100000381469727,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-ponytail.glb",
+        "at": 2067,
+        "ms": 17.100000381469727,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-ponytail.lod1.glb",
+        "at": 2067.1000003814697,
+        "ms": 12.09999942779541,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-short-crop.glb",
+        "at": 2067.199999809265,
+        "ms": 13.5,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-short-crop.lod1.glb",
+        "at": 2067.300000190735,
+        "ms": 14.5,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-side-part.glb",
+        "at": 2067.4000005722046,
+        "ms": 15.199999809265137,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-side-part.lod1.glb",
+        "at": 2067.4000005722046,
+        "ms": 24.399999618530273,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-baseball-cap.glb",
+        "at": 2067.5,
+        "ms": 17.5,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-baseball-cap.lod1.glb",
+        "at": 2067.6000003814697,
+        "ms": 18.800000190734863,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-beanie.glb",
+        "at": 2067.6000003814697,
+        "ms": 20.399999618530273,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-beanie.lod1.glb",
+        "at": 2067.800000190735,
+        "ms": 21.899999618530273,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-bucket-hat.lod1.glb",
+        "at": 2067.9000005722046,
+        "ms": 27.399999618530273,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-bucket-hat.glb",
+        "at": 2067.9000005722046,
+        "ms": 31.09999942779541,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-flat-cap.glb",
+        "at": 2068,
+        "ms": 28.600000381469727,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-flat-cap.lod1.glb",
+        "at": 2068.1000003814697,
+        "ms": 29.699999809265137,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-hard-hat.glb",
+        "at": 2068.199999809265,
+        "ms": 35.90000057220459,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-hard-hat.lod1.glb",
+        "at": 2068.300000190735,
+        "ms": 32.10000038146973,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-sun-hat.glb",
+        "at": 2068.5,
+        "ms": 33.30000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-sun-hat.lod1.glb",
+        "at": 2068.5,
+        "ms": 34.69999980926514,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/wpn.machine-gun.lod1.glb",
+        "at": 2068.800000190735,
+        "ms": 42.80000019073486,
+        "bytes": 27820
+      },
+      {
+        "name": "/assets/models/skinned/inf.dog.lod1.low.black.glb",
+        "at": 2070.4000005722046,
+        "ms": 43.29999923706055,
+        "bytes": 97844
+      },
+      {
+        "name": "/assets/models/skinned/inf.dog.lod2.low.black.glb",
+        "at": 2070.5,
+        "ms": 42.90000057220459,
+        "bytes": 82016
+      },
+      {
+        "name": "/assets/models/skinned/inf.dog.lod1.low.cream.glb",
+        "at": 2070.6000003814697,
+        "ms": 43,
+        "bytes": 86044
+      },
+      {
+        "name": "/assets/models/skinned/inf.dog.lod2.low.cream.glb",
+        "at": 2070.699999809265,
+        "ms": 42.80000019073486,
+        "bytes": 70216
+      },
+      {
+        "name": "/assets/models/skinned/inf.common-worker.lod1.low.glb",
+        "at": 2070.800000190735,
+        "ms": 43.30000019073486,
+        "bytes": 182704
+      },
+      {
+        "name": "/assets/models/skinned/inf.common-worker.lod2.low.glb",
+        "at": 2070.9000005722046,
+        "ms": 47.79999923706055,
+        "bytes": 146380
+      },
+      {
+        "name": "/assets/models/skinned/inf.crawler.lod1.low.glb",
+        "at": 2071,
+        "ms": 49.40000057220459,
+        "bytes": 134860
+      },
+      {
+        "name": "/assets/models/skinned/inf.riot-cop.lod1.low.glb",
+        "at": 2071.1000003814697,
+        "ms": 49.5,
+        "bytes": 161776
+      },
+      {
+        "name": "/assets/models/skinned/inf.crawler.lod2.low.glb",
+        "at": 2071.1000003814697,
+        "ms": 49.19999980926514,
+        "bytes": 94788
+      },
+      {
+        "name": "/assets/models/skinned/inf.riot-cop.lod2.low.glb",
+        "at": 2071.199999809265,
+        "ms": 49.40000057220459,
+        "bytes": 116548
+      },
+      {
+        "name": "/assets/models/skinned/inf.firefighter.lod1.low.glb",
+        "at": 2071.300000190735,
+        "ms": 56.39999961853027,
+        "bytes": 174068
+      },
+      {
+        "name": "/assets/models/skinned/inf.firefighter.lod2.low.glb",
+        "at": 2071.4000005722046,
+        "ms": 59,
+        "bytes": 121200
+      },
+      {
+        "name": "/assets/models/skinned/inf.hazmat.lod1.low.glb",
+        "at": 2071.4000005722046,
+        "ms": 59.5,
+        "bytes": 155224
+      },
+      {
+        "name": "/assets/models/skinned/inf.nurse.lod1.low.glb",
+        "at": 2071.5,
+        "ms": 60.30000019073486,
+        "bytes": 206928
+      },
+      {
+        "name": "/assets/models/skinned/inf.hazmat.lod2.low.glb",
+        "at": 2071.5,
+        "ms": 59.19999980926514,
+        "bytes": 101788
+      },
+      {
+        "name": "/assets/models/skinned/inf.nurse.lod2.low.glb",
+        "at": 2071.6000003814697,
+        "ms": 59.19999980926514,
+        "bytes": 96268
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha.lod1.low.glb",
+        "at": 2071.699999809265,
+        "ms": 66.70000076293945,
+        "bytes": 177636
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha.lod2.low.glb",
+        "at": 2071.800000190735,
+        "ms": 67.89999961853027,
+        "bytes": 105492
+      },
+      {
+        "name": "/assets/models/skinned/inf.dog.lod1.low.glb",
+        "at": 2071.9000005722046,
+        "ms": 67.89999961853027,
+        "bytes": 98988
+      },
+      {
+        "name": "/assets/models/skinned/inf.dog.lod2.low.glb",
+        "at": 2071.9000005722046,
+        "ms": 68,
+        "bytes": 83160
+      },
+      {
+        "name": "/assets/models/skinned/inf.lion.lod1.low.glb",
+        "at": 2072,
+        "ms": 73,
+        "bytes": 178480
+      },
+      {
+        "name": "/assets/models/skinned/inf.lion.lod2.low.glb",
+        "at": 2072,
+        "ms": 70,
+        "bytes": 117912
+      },
+      {
+        "name": "/assets/models/skinned/inf.gorilla.lod1.low.glb",
+        "at": 2072.199999809265,
+        "ms": 75.40000057220459,
+        "bytes": 190352
+      },
+      {
+        "name": "/assets/models/skinned/inf.gorilla.lod2.low.glb",
+        "at": 2072.300000190735,
+        "ms": 75.10000038146973,
+        "bytes": 112144
+      },
+      {
+        "name": "/assets/models/skinned/inf.elephant.lod1.low.glb",
+        "at": 2072.4000005722046,
+        "ms": 75.09999942779541,
+        "bytes": 130864
+      },
+      {
+        "name": "/assets/models/skinned/inf.elephant.lod2.low.glb",
+        "at": 2072.4000005722046,
+        "ms": 75.29999923706055,
+        "bytes": 78184
+      },
+      {
+        "name": "/assets/models/skinned/inf.zebra.lod1.low.glb",
+        "at": 2072.5,
+        "ms": 76.5,
+        "bytes": 133820
+      },
+      {
+        "name": "/assets/models/skinned/inf.zebra.lod2.low.glb",
+        "at": 2072.5,
+        "ms": 76.69999980926514,
+        "bytes": 107876
+      },
+      {
+        "name": "/assets/models/skinned/inf.flamingo.lod1.low.glb",
+        "at": 2072.699999809265,
+        "ms": 82.90000057220459,
+        "bytes": 79836
+      },
+      {
+        "name": "/assets/models/skinned/inf.flamingo.lod2.low.glb",
+        "at": 2072.699999809265,
+        "ms": 82.80000019073486,
+        "bytes": 68432
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha-worker.lod1.low.glb",
+        "at": 2072.800000190735,
+        "ms": 83.30000019073486,
+        "bytes": 190492
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha-worker.lod2.low.glb",
+        "at": 2072.9000005722046,
+        "ms": 82.89999961853027,
+        "bytes": 120812
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha-hoodie.lod1.low.glb",
+        "at": 2072.9000005722046,
+        "ms": 83.5,
+        "bytes": 191868
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha-hoodie.lod2.low.glb",
+        "at": 2073,
+        "ms": 83,
+        "bytes": 120416
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha-fire.lod1.low.glb",
+        "at": 2073.1000003814697,
+        "ms": 90.19999980926514,
+        "bytes": 198372
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha-fire.lod2.low.glb",
+        "at": 2073.199999809265,
+        "ms": 89.60000038146973,
+        "bytes": 126440
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha-suit.lod1.low.glb",
+        "at": 2073.199999809265,
+        "ms": 89.90000057220459,
+        "bytes": 196900
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha-suit.lod2.low.glb",
+        "at": 2073.300000190735,
+        "ms": 89.60000038146973,
+        "bytes": 125592
+      },
+      {
+        "name": "/assets/models/skinned/inf.jogger.lod1.low.glb",
+        "at": 2073.4000005722046,
+        "ms": 89.79999923706055,
+        "bytes": 177776
+      },
+      {
+        "name": "/assets/models/skinned/inf.jogger.lod2.low.glb",
+        "at": 2073.4000005722046,
+        "ms": 89.89999961853027,
+        "bytes": 149452
+      },
+      {
+        "name": "/assets/models/skinned/inf.suburban-mom.lod1.low.glb",
+        "at": 2073.5,
+        "ms": 97.69999980926514,
+        "bytes": 211628
+      },
+      {
+        "name": "/assets/models/skinned/inf.suburban-mom.lod2.low.glb",
+        "at": 2073.5,
+        "ms": 97.10000038146973,
+        "bytes": 129052
+      },
+      {
+        "name": "/assets/models/skinned/inf.delivery-driver.lod1.low.glb",
+        "at": 2073.6000003814697,
+        "ms": 97.39999961853027,
+        "bytes": 172836
+      },
+      {
+        "name": "/assets/models/skinned/inf.delivery-driver.lod2.low.glb",
+        "at": 2073.699999809265,
+        "ms": 97.40000057220459,
+        "bytes": 146156
+      },
+      {
+        "name": "/assets/models/skinned/inf.bbq-dad.lod1.low.glb",
+        "at": 2073.699999809265,
+        "ms": 97.10000038146973,
+        "bytes": 121092
+      },
+      {
+        "name": "/assets/models/skinned/inf.bbq-dad.lod2.low.glb",
+        "at": 2073.800000190735,
+        "ms": 97.10000038146973,
+        "bytes": 121092
+      },
+      {
+        "name": "/assets/models/skinned/inf.cashier.lod1.low.glb",
+        "at": 2073.9000005722046,
+        "ms": 104.5,
+        "bytes": 180956
+      },
+      {
+        "name": "/assets/models/skinned/inf.cashier.lod2.low.glb",
+        "at": 2074,
+        "ms": 104.60000038146973,
+        "bytes": 147416
+      },
+      {
+        "name": "/assets/models/skinned/inf.bathrobe-neighbor.lod1.low.glb",
+        "at": 2074.1000003814697,
+        "ms": 104.5,
+        "bytes": 179344
+      },
+      {
+        "name": "/assets/models/skinned/inf.bathrobe-neighbor.lod2.low.glb",
+        "at": 2074.199999809265,
+        "ms": 104.40000057220459,
+        "bytes": 149252
+      },
+      {
+        "name": "/assets/models/skinned/inf.mega-alpha.lod1.low.glb",
+        "at": 2074.199999809265,
+        "ms": 104.70000076293945,
+        "bytes": 246112
+      },
+      {
+        "name": "/assets/models/skinned/inf.mega-alpha.lod2.low.glb",
+        "at": 2074.300000190735,
+        "ms": 104.39999961853027,
+        "bytes": 138116
+      },
+      {
+        "name": "/assets/models/skinned/inf.mega-alpha-ashen.lod1.low.glb",
+        "at": 2074.4000005722046,
+        "ms": 111.5,
+        "bytes": 244772
+      },
+      {
+        "name": "/assets/models/skinned/inf.mega-alpha-ashen.lod2.low.glb",
+        "at": 2074.5,
+        "ms": 110.19999980926514,
+        "bytes": 132044
+      },
+      {
+        "name": "/assets/models/skinned/inf.mega-alpha-ember.lod1.low.glb",
+        "at": 2074.5,
+        "ms": 111.60000038146973,
+        "bytes": 246960
+      },
+      {
+        "name": "/assets/models/skinned/inf.mega-alpha-ember.lod2.low.glb",
+        "at": 2074.6000003814697,
+        "ms": 111.30000019073486,
+        "bytes": 135020
+      },
+      {
+        "name": "/assets/models/veh.military-apc.unarmed.lod1.glb",
+        "at": 2075,
+        "ms": 110.10000038146973,
+        "bytes": 38976
+      },
+      {
+        "name": "/assets/statics/bld.house-a.lod1.base.bfa9647b5a04abe0.bin.gz",
+        "at": 2398.1000003814697,
+        "ms": 16.199999809265137,
+        "bytes": 87782
+      },
+      {
+        "name": "/assets/models/bld.shed.lod1.glb",
+        "at": 2398.5,
+        "ms": 12.699999809265137,
+        "bytes": 52836
+      },
+      {
+        "name": "/assets/models/bld.garage-detached.lod1.glb",
+        "at": 2398.6000003814697,
+        "ms": 13.59999942779541,
+        "bytes": 113592
+      },
+      {
+        "name": "/assets/statics/veh.pickup-red.lod1.base.afc2ace39d9fa100.bin.gz",
+        "at": 2398.6000003814697,
+        "ms": 15.59999942779541,
+        "bytes": 51723
+      },
+      {
+        "name": "/assets/models/bld.gas-station.lod1.glb",
+        "at": 2398.699999809265,
+        "ms": 13.90000057220459,
+        "bytes": 102580
+      },
+      {
+        "name": "/assets/models/veh.sedan-green.wrecked.lod1.glb",
+        "at": 2398.800000190735,
+        "ms": 13.600000381469727,
+        "bytes": 52404
+      },
+      {
+        "name": "/assets/models/bld.apartment-block-a.lod1.glb",
+        "at": 2398.9000005722046,
+        "ms": 27.199999809265137,
+        "bytes": 77544
+      },
+      {
+        "name": "/assets/models/veh.military-truck.wrecked.lod1.glb",
+        "at": 2399,
+        "ms": 26.699999809265137,
+        "bytes": 57296
+      },
+      {
+        "name": "/assets/models/veh.school-bus.wrecked.lod1.glb",
+        "at": 2399,
+        "ms": 27.800000190734863,
+        "bytes": 145756
+      },
+      {
+        "name": "/assets/statics/veh.sedan-red.lod1.wrecked.6d404d5ad32b5b00.bin.gz",
+        "at": 2399.199999809265,
+        "ms": 28.300000190734863,
+        "bytes": 71119
+      },
+      {
+        "name": "/assets/models/veh.police-sedan.wrecked.lod1.glb",
+        "at": 2399.199999809265,
+        "ms": 27,
+        "bytes": 60140
+      },
+      {
+        "name": "/assets/models/veh.pickup-red.wrecked.lod1.glb",
+        "at": 2399.300000190735,
+        "ms": 27.800000190734863,
+        "bytes": 140384
+      },
+      {
+        "name": "/assets/models/bld.house-b.lod1.glb",
+        "at": 2399.9000005722046,
+        "ms": 31.699999809265137,
+        "bytes": 78772
+      },
+      {
+        "name": "/assets/statics/veh.pickup-white.lod1.base.dddcb3a51b7f5b74.bin.gz",
+        "at": 2399.9000005722046,
+        "ms": 33.5,
+        "bytes": 40772
+      },
+      {
+        "name": "/assets/statics/bld.house-e.lod1.base.00118bfa8e19327e.bin.gz",
+        "at": 2400,
+        "ms": 32.69999980926514,
+        "bytes": 63265
+      },
+      {
+        "name": "/assets/statics/bld.house-d.lod1.base.07b658783d46ea0e.bin.gz",
+        "at": 2400.1000003814697,
+        "ms": 33.09999942779541,
+        "bytes": 90743
+      },
+      {
+        "name": "/assets/models/veh.pickup-red.burned.lod1.glb",
+        "at": 2400.199999809265,
+        "ms": 31.600000381469727,
+        "bytes": 102248
+      },
+      {
+        "name": "/assets/statics/veh.sedan-red.lod1.burned.2ed761ee1123b2d2.bin.gz",
+        "at": 2400.4000005722046,
+        "ms": 33.29999923706055,
+        "bytes": 183962
+      },
+      {
+        "name": "/assets/models/bld.joes-diner.lod1.glb",
+        "at": 2400.4000005722046,
+        "ms": 38.29999923706055,
+        "bytes": 107520
+      },
+      {
+        "name": "/assets/models/bld.supermarket.lod1.glb",
+        "at": 2400.5,
+        "ms": 38.60000038146973,
+        "bytes": 227576
+      },
+      {
+        "name": "/assets/models/kit.army-checkpoint.lod1.glb",
+        "at": 2400.6000003814697,
+        "ms": 38.30000019073486,
+        "bytes": 102564
+      },
+      {
+        "name": "/assets/models/bld.apartment-block-b.lod1.glb",
+        "at": 2400.699999809265,
+        "ms": 38.40000057220459,
+        "bytes": 74524
+      },
+      {
+        "name": "/assets/models/bld.town-hall.lod1.glb",
+        "at": 2400.800000190735,
+        "ms": 38,
+        "bytes": 60792
+      },
+      {
+        "name": "/assets/models/bld.mainstreet-brick.lod1.glb",
+        "at": 2400.9000005722046,
+        "ms": 38.39999961853027,
+        "bytes": 123832
+      },
+      {
+        "name": "/assets/models/bld.church.lod1.glb",
+        "at": 2401,
+        "ms": 45.90000057220459,
+        "bytes": 67236
+      },
+      {
+        "name": "/assets/models/bld.hospital-exterior.lod1.glb",
+        "at": 2401,
+        "ms": 46.10000038146973,
+        "bytes": 114144
+      },
+      {
+        "name": "/assets/statics/veh.sedan-white.lod1.burned.dcfb851343c64403.bin.gz",
+        "at": 2401.199999809265,
+        "ms": 48.80000019073486,
+        "bytes": 254523
+      },
+      {
+        "name": "/assets/models/veh.suv-dark.wrecked.lod1.glb",
+        "at": 2401.300000190735,
+        "ms": 45.89999961853027,
+        "bytes": 127676
+      },
+      {
+        "name": "/assets/statics/veh.sedan-blue.lod1.wrecked.91ff406610a650d5.bin.gz",
+        "at": 2401.300000190735,
+        "ms": 47.60000038146973,
+        "bytes": 42516
+      },
+      {
+        "name": "/assets/statics/veh.suv-dark.lod1.burned.152c94f255169f05.bin.gz",
+        "at": 2401.4000005722046,
+        "ms": 48.39999961853027,
+        "bytes": 212612
+      },
+      {
+        "name": "/assets/models/veh.ambulance.wrecked.lod1.glb",
+        "at": 2401.5,
+        "ms": 63.10000038146973,
+        "bytes": 128964
+      },
+      {
+        "name": "/assets/models/veh.school-bus.burned.lod1.glb",
+        "at": 2401.6000003814697,
+        "ms": 62.80000019073486,
+        "bytes": 112088
+      },
+      {
+        "name": "/assets/models/veh.police-sedan.burned.lod1.glb",
+        "at": 2401.699999809265,
+        "ms": 72,
+        "bytes": 97596
+      },
+      {
+        "name": "/assets/statics/bld.house-a.lod2.base.7e47b21e0aac91a7.bin.gz",
+        "at": 2401.9000005722046,
+        "ms": 50,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.shed.lod2.glb",
+        "at": 2402,
+        "ms": 51.10000038146973,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.garage-detached.lod2.glb",
+        "at": 2402.1000003814697,
+        "ms": 52.59999942779541,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/veh.pickup-red.lod2.base.8d47813f6e851e27.bin.gz",
+        "at": 2402.199999809265,
+        "ms": 53.40000057220459,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.garden-bush.lod2.base.9883da87953f0176.bin.gz",
+        "at": 2402.199999809265,
+        "ms": 53.80000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.gas-station.lod2.glb",
+        "at": 2402.300000190735,
+        "ms": 61,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/veh.sedan-green.wrecked.lod2.glb",
+        "at": 2402.4000005722046,
+        "ms": 58.79999923706055,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/prop.street-tree.lod2.glb",
+        "at": 2402.5,
+        "ms": 60,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.street-sign.lod2.base.5d0774a759779f1d.bin.gz",
+        "at": 2402.6000003814697,
+        "ms": 63.30000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.apartment-block-a.lod2.glb",
+        "at": 2402.6000003814697,
+        "ms": 64.69999980926514,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/kit.crossing-crash.lod2.glb",
+        "at": 2402.699999809265,
+        "ms": 75.5,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/veh.military-truck.lod2.glb",
+        "at": 2402.800000190735,
+        "ms": 77.60000038146973,
+        "bytes": 31688
+      },
+      {
+        "name": "/assets/statics/veh.sedan-red.lod2.base.11706267fbfcf734.bin.gz",
+        "at": 2403,
+        "ms": 78,
+        "bytes": 18212
+      },
+      {
+        "name": "/assets/models/veh.school-bus.lod2.glb",
+        "at": 2403,
+        "ms": 79,
+        "bytes": 49284
+      },
+      {
+        "name": "/assets/models/prop.barricade.lod2.glb",
+        "at": 2403.1000003814697,
+        "ms": 77.09999942779541,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/veh.police-sedan.lod2.glb",
+        "at": 2403.1000003814697,
+        "ms": 77.80000019073486,
+        "bytes": 35764
+      },
+      {
+        "name": "/assets/statics/prop.traffic-cone.lod2.base.6327029429a6c3d4.bin.gz",
+        "at": 2403.199999809265,
+        "ms": 76.40000057220459,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.pallet.lod2.base.a18bdedbd67c09c7.bin.gz",
+        "at": 2403.300000190735,
+        "ms": 78.10000038146973,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.garden-bush-small.lod2.base.9883da87953f0176.bin.gz",
+        "at": 2403.300000190735,
+        "ms": 78.5,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.hedge.lod2.base.9883da87953f0176.bin.gz",
+        "at": 2403.5,
+        "ms": 80.19999980926514,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/prop.crowd-fence.lod2.glb",
+        "at": 2403.6000003814697,
+        "ms": 81,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/prop.dumpster.lod2.glb",
+        "at": 2403.699999809265,
+        "ms": 79.30000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.sandbag-pallet.lod2.base.d77ae35efd00d189.bin.gz",
+        "at": 2403.699999809265,
+        "ms": 81.40000057220459,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.wheelbarrow.lod2.base.81dfca0601dff48a.bin.gz",
+        "at": 2403.800000190735,
+        "ms": 79.60000038146973,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.trash-bags.lod2.base.32327e9ed59c7ca1.bin.gz",
+        "at": 2403.9000005722046,
+        "ms": 85.59999942779541,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.crates.lod2.base.3ef2ddbe8eab5787.bin.gz",
+        "at": 2404,
+        "ms": 81.90000057220459,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/veh.pickup-white.lod2.base.aae59518b2c1e300.bin.gz",
+        "at": 2404,
+        "ms": 82.69999980926514,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.house-b.lod2.glb",
+        "at": 2404.1000003814697,
+        "ms": 83.59999942779541,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/bld.house-e.lod2.base.d3171fb1ce6a2901.bin.gz",
+        "at": 2404.199999809265,
+        "ms": 84.70000076293945,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/bld.house-d.lod2.base.4aa4dafaf18f992d.bin.gz",
+        "at": 2404.199999809265,
+        "ms": 91.10000038146973,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/prop.utility-pole.lod2.glb",
+        "at": 2404.300000190735,
+        "ms": 86.60000038146973,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.joes-diner.lod2.glb",
+        "at": 2404.5,
+        "ms": 87.80000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.supermarket.lod2.glb",
+        "at": 2404.5,
+        "ms": 89,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/prop.gas-pump.lod2.glb",
+        "at": 2404.6000003814697,
+        "ms": 89.89999961853027,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.street-lamp.lod2.base.155ba700ada93a74.bin.gz",
+        "at": 2404.699999809265,
+        "ms": 93.70000076293945,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/prop.light-tower.lod2.glb",
+        "at": 2404.800000190735,
+        "ms": 91,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/kit.army-checkpoint.lod2.base.ad8e463112147d5a.bin.gz",
+        "at": 2404.800000190735,
+        "ms": 91.60000038146973,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/prop.tent.lod2.glb",
+        "at": 2404.9000005722046,
+        "ms": 92.09999942779541,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/prop.jersey-barrier.lod2.glb",
+        "at": 2405.1000003814697,
+        "ms": 92.69999980926514,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.apartment-block-b.lod2.glb",
+        "at": 2405.1000003814697,
+        "ms": 94.30000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.town-hall.lod2.glb",
+        "at": 2405.199999809265,
+        "ms": 95.5,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.mainstreet-brick.lod2.glb",
+        "at": 2405.300000190735,
+        "ms": 96.5,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.church.lod2.glb",
+        "at": 2405.300000190735,
+        "ms": 98.10000038146973,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.hospital-exterior.lod2.glb",
+        "at": 2405.4000005722046,
+        "ms": 102,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.picket-fence.lod2.base.34d16940362176dd.bin.gz",
+        "at": 2405.5,
+        "ms": 103.80000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.privacy-fence.lod2.base.2e16769d02382ed4.bin.gz",
+        "at": 2405.6000003814697,
+        "ms": 104.09999942779541,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/veh.sedan-white.lod2.base.54e77c10ae182db3.bin.gz",
+        "at": 2405.699999809265,
+        "ms": 102.5,
+        "bytes": 23724
+      },
+      {
+        "name": "/assets/statics/prop.broken-chair.lod2.base.48e569c6b820c93a.bin.gz",
+        "at": 2405.699999809265,
+        "ms": 105,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.carpet.lod2.base.33c56104f4861bbf.bin.gz",
+        "at": 2405.699999809265,
+        "ms": 105.20000076293945,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/veh.suv-dark.lod2.base.3d1d376670667a1a.bin.gz",
+        "at": 2405.800000190735,
+        "ms": 102.80000019073486,
+        "bytes": 21858
+      },
+      {
+        "name": "/assets/models/prop.shopping-cart.lod2.glb",
+        "at": 2405.9000005722046,
+        "ms": 105.89999961853027,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.recycling-bin.lod2.base.0586a14bba4b55a0.bin.gz",
+        "at": 2405.9000005722046,
+        "ms": 106.29999923706055,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/veh.sedan-blue.lod2.base.f239269d3b252584.bin.gz",
+        "at": 2406,
+        "ms": 102.60000038146973,
+        "bytes": 24299
+      },
+      {
+        "name": "/assets/statics/veh.sedan-green.lod2.base.03e70c5ababbc722.bin.gz",
+        "at": 2406.1000003814697,
+        "ms": 102.59999942779541,
+        "bytes": 25526
+      },
+      {
+        "name": "/assets/models/veh.ambulance.lod2.glb",
+        "at": 2406.199999809265,
+        "ms": 101.5,
+        "bytes": 37032
+      },
+      {
+        "name": "/assets/layouts/D-CROSSING.horizon.glb",
+        "at": 2406.800000190735,
+        "ms": 107.60000038146973,
+        "bytes": 250452
+      },
+      {
+        "name": "/build/civilianBake.worker-D9D3u1oi.js",
+        "at": 2418.699999809265,
+        "ms": -233.0999994277954,
+        "bytes": 5342
+      },
+      {
+        "name": "/build/civilianBake.worker-D9D3u1oi.js",
+        "at": 2419,
+        "ms": -232.39999961853027,
+        "bytes": 300
+      },
+      {
+        "name": "/build/civilianBake.worker-D9D3u1oi.js",
+        "at": 2419.699999809265,
+        "ms": -232.39999961853027,
+        "bytes": 300
+      },
+      {
+        "name": "/build/civilianBake.worker-D9D3u1oi.js",
+        "at": 2420,
+        "ms": -232.30000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/build/civilianBake.worker-D9D3u1oi.js",
+        "at": 2420.6000003814697,
+        "ms": -232.19999980926514,
+        "bytes": 300
+      },
+      {
+        "name": "/build/civilianBake.worker-D9D3u1oi.js",
+        "at": 2421.4000005722046,
+        "ms": -232.5,
+        "bytes": 300
+      },
+      {
+        "name": "/build/civilianBake.worker-D9D3u1oi.js",
+        "at": 2422,
+        "ms": -232.5999994277954,
+        "bytes": 300
+      },
+      {
+        "name": "/build/civilianBake.worker-D9D3u1oi.js",
+        "at": 2422.5,
+        "ms": -232.69999980926514,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/wpn.assault-rifle.lod1.glb",
+        "at": 2442.6000003814697,
+        "ms": 73.39999961853027,
+        "bytes": 23144
+      },
+      {
+        "name": "/assets/models/veh.military-apc.unarmed.lod2.glb",
+        "at": 2506.800000190735,
+        "ms": 23.5,
+        "bytes": 27424
+      },
+      {
+        "name": "/assets/basis/basis_transcoder.js",
+        "at": 2822.4000005722046,
+        "ms": 1.3999996185302734,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/basis/basis_transcoder.wasm",
+        "at": 2822.5,
+        "ms": 1.5,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/layouts/D-CROSSING.chunks/crossing-0-3.glb",
+        "at": 3168.1000003814697,
+        "ms": 3.5,
+        "bytes": 12760
+      },
+      {
+        "name": "/assets/layouts/D-CROSSING.chunks/crossing-0-4.glb",
+        "at": 3168.199999809265,
+        "ms": 3.5,
+        "bytes": 13860
+      },
+      {
+        "name": "/assets/models/wpn.pistol.lod1.glb",
+        "at": 3176.800000190735,
+        "ms": 2.6000003814697266,
+        "bytes": 19236
+      },
+      {
+        "name": "/assets/models/char.courier-female.skin.glb",
+        "at": 3185.5,
+        "ms": 3.1999998092651367,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/layouts/D-CROSSING.chunks/crossing-1-3.glb",
+        "at": 3192.800000190735,
+        "ms": 20.5,
+        "bytes": 23108
+      },
+      {
+        "name": "/assets/layouts/D-CROSSING.chunks/crossing-1-4.glb",
+        "at": 3194.800000190735,
+        "ms": 18.699999809265137,
+        "bytes": 25020
+      },
+      {
+        "name": "/assets/models/wpn.shotgun.lod1.glb",
+        "at": 3199.699999809265,
+        "ms": 13.700000762939453,
+        "bytes": 20336
+      },
+      {
+        "name": "/assets/models/acc.courier-gear.female.tiers.low.glb",
+        "at": 3213.699999809265,
+        "ms": 13.300000190734863,
+        "bytes": 146076
+      },
+      {
+        "name": "/assets/layouts/D-CROSSING.chunks/crossing-0-5.glb",
+        "at": 3218.800000190735,
+        "ms": 31.899999618530273,
+        "bytes": 6864
+      },
+      {
+        "name": "/assets/models/wpn.hunting-rifle.lod1.glb",
+        "at": 3222.800000190735,
+        "ms": 28.100000381469727,
+        "bytes": 22716
+      },
+      {
+        "name": "/assets/layouts/D-CROSSING.chunks/crossing-1-5.glb",
+        "at": 3224.5,
+        "ms": 26.300000190734863,
+        "bytes": 7648
+      },
+      {
+        "name": "/assets/models/char.courier-male.skin.low.glb",
+        "at": 3256.9000005722046,
+        "ms": 10.399999618530273,
+        "bytes": 412284
+      },
+      {
+        "name": "/assets/models/veh.military-truck.wrecked.lod2.glb",
+        "at": 3285.9000005722046,
+        "ms": 11,
+        "bytes": 26956
+      },
+      {
+        "name": "/assets/models/veh.school-bus.wrecked.lod2.glb",
+        "at": 3286,
+        "ms": 11.100000381469727,
+        "bytes": 56112
+      },
+      {
+        "name": "/assets/statics/veh.sedan-red.lod2.wrecked.fd6a1b7fa1cfa994.bin.gz",
+        "at": 3286.1000003814697,
+        "ms": 11.800000190734863,
+        "bytes": 18203
+      },
+      {
+        "name": "/assets/models/veh.police-sedan.wrecked.lod2.glb",
+        "at": 3286.1000003814697,
+        "ms": 11.09999942779541,
+        "bytes": 38544
+      },
+      {
+        "name": "/assets/models/veh.pickup-red.wrecked.lod2.glb",
+        "at": 3286.199999809265,
+        "ms": 11.100000381469727,
+        "bytes": 56672
+      },
+      {
+        "name": "/assets/models/veh.pickup-red.burned.lod2.glb",
+        "at": 3286.4000005722046,
+        "ms": 11,
+        "bytes": 42432
+      },
+      {
+        "name": "/assets/statics/veh.sedan-red.lod2.burned.acdde498f625d501.bin.gz",
+        "at": 3286.4000005722046,
+        "ms": 16.59999942779541,
+        "bytes": 72026
+      }
+    ]
+  },
+  "posts": {
+    "ms": 7653,
+    "load": [
+      5.21630859375,
+      3.5703125,
+      2.677734375
+    ],
+    "bytes": 14129170,
+    "measures": [
+      {
+        "name": "view:actors",
+        "at": 380.79999923706055,
+        "ms": 91.90000057220459
+      },
+      {
+        "name": "view:lod-ready",
+        "at": 472.69999980926514,
+        "ms": 6.399999618530273
+      },
+      {
+        "name": "view:warm-up",
+        "at": 479.0999994277954,
+        "ms": 185.5
+      },
+      {
+        "name": "level:layouts",
+        "at": 1281.3999996185303,
+        "ms": 19.100000381469727
+      },
+      {
+        "name": "level:sim",
+        "at": 1300.5,
+        "ms": 850.2999992370605
+      },
+      {
+        "name": "level:boot-audio-wait",
+        "at": 1300.5999994277954,
+        "ms": 0
+      },
+      {
+        "name": "level:world+nav",
+        "at": 1303.5,
+        "ms": 586.2999992370605
+      },
+      {
+        "name": "level:mission+cast",
+        "at": 1889.7999992370605,
+        "ms": 246.4000005722046
+      },
+      {
+        "name": "level:physics-prepare",
+        "at": 2136.199999809265,
+        "ms": 14.300000190734863
+      },
+      {
+        "name": "level:view",
+        "at": 2150.7999992370605,
+        "ms": 6712.400000572205
+      },
+      {
+        "name": "view:districts+character",
+        "at": 2167.0999994277954,
+        "ms": 2109.800000190735
+      },
+      {
+        "name": "view:civilian-crowd",
+        "at": 2186.5999994277954,
+        "ms": 2283.699999809265
+      },
+      {
+        "name": "view:infected-crowd",
+        "at": 2186.8999996185303,
+        "ms": 2036.8000001907349
+      },
+      {
+        "name": "view:actors",
+        "at": 4346.299999237061,
+        "ms": 175.70000076293945
+      },
+      {
+        "name": "view:lod-ready",
+        "at": 4522,
+        "ms": 27
+      },
+      {
+        "name": "view:warm-up",
+        "at": 4549,
+        "ms": 4299
+      },
+      {
+        "name": "Texture atlas upload",
+        "at": 4556.299999237061,
+        "ms": 58.30000019073486
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 4614.699999809265,
+        "ms": 3450.300000190735
+      },
+      {
+        "name": "Texture atlas upload",
+        "at": 8402.29999923706,
+        "ms": 3.5
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 8405.79999923706,
+        "ms": 212.4000005722046
+      },
+      {
+        "name": "L1 shader compilation",
+        "at": 8778.39999961853,
+        "ms": 27.800000190734863
+      },
+      {
+        "name": "level:audio",
+        "at": 8863.29999923706,
+        "ms": 0.40000057220458984
+      },
+      {
+        "name": "level:hud",
+        "at": 8867,
+        "ms": 8.799999237060547
+      }
+    ],
+    "resources": [
+      {
+        "name": "/assets/layouts/D-CROSSING.layout.json",
+        "at": 1281.5,
+        "ms": 5.5,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/char.courier-female.skin.low.glb",
+        "at": 2180.0999994277954,
+        "ms": 76.80000019073486,
+        "bytes": 404344
+      },
+      {
+        "name": "/assets/models/acc.hair-afro.glb",
+        "at": 2184.3999996185303,
+        "ms": 11.5,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-afro.lod1.glb",
+        "at": 2184.5,
+        "ms": 13.399999618530273,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-bun.glb",
+        "at": 2184.5999994277954,
+        "ms": 16.90000057220459,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-bun.lod1.glb",
+        "at": 2184.699999809265,
+        "ms": 20.899999618530273,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-long-straight.glb",
+        "at": 2184.7999992370605,
+        "ms": 22.100000381469727,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-long-straight.lod1.glb",
+        "at": 2184.8999996185303,
+        "ms": 34.5,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-ponytail.glb",
+        "at": 2185,
+        "ms": 24.299999237060547,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-ponytail.lod1.glb",
+        "at": 2185.199999809265,
+        "ms": 27.800000190734863,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-short-crop.glb",
+        "at": 2185.2999992370605,
+        "ms": 32.20000076293945,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-short-crop.lod1.glb",
+        "at": 2185.2999992370605,
+        "ms": 46.30000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-side-part.glb",
+        "at": 2185.5,
+        "ms": 36.39999961853027,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hair-side-part.lod1.glb",
+        "at": 2185.5,
+        "ms": 39.39999961853027,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-baseball-cap.glb",
+        "at": 2185.5999994277954,
+        "ms": 41.60000038146973,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-baseball-cap.lod1.glb",
+        "at": 2185.5999994277954,
+        "ms": 44.30000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-beanie.glb",
+        "at": 2185.699999809265,
+        "ms": 47.89999961853027,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-beanie.lod1.glb",
+        "at": 2185.7999992370605,
+        "ms": 51.30000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-bucket-hat.lod1.glb",
+        "at": 2185.8999996185303,
+        "ms": 59.80000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-bucket-hat.glb",
+        "at": 2185.8999996185303,
+        "ms": 62.19999980926514,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-flat-cap.glb",
+        "at": 2186,
+        "ms": 66.09999942779541,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-flat-cap.lod1.glb",
+        "at": 2186.0999994277954,
+        "ms": 68,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-hard-hat.glb",
+        "at": 2186.199999809265,
+        "ms": 75.39999961853027,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-hard-hat.lod1.glb",
+        "at": 2186.2999992370605,
+        "ms": 80.10000038146973,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-sun-hat.glb",
+        "at": 2186.3999996185303,
+        "ms": 81.30000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/acc.hat-sun-hat.lod1.glb",
+        "at": 2186.3999996185303,
+        "ms": 83.39999961853027,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/wpn.machine-gun.lod1.glb",
+        "at": 2186.7999992370605,
+        "ms": 61.5,
+        "bytes": 27820
+      },
+      {
+        "name": "/assets/models/skinned/inf.dog.lod1.low.black.glb",
+        "at": 2188.5999994277954,
+        "ms": 68.60000038146973,
+        "bytes": 97844
+      },
+      {
+        "name": "/assets/models/skinned/inf.dog.lod2.low.black.glb",
+        "at": 2188.699999809265,
+        "ms": 68.89999961853027,
+        "bytes": 82016
+      },
+      {
+        "name": "/assets/models/skinned/inf.dog.lod1.low.cream.glb",
+        "at": 2188.8999996185303,
+        "ms": 73,
+        "bytes": 86044
+      },
+      {
+        "name": "/assets/models/skinned/inf.dog.lod2.low.cream.glb",
+        "at": 2188.8999996185303,
+        "ms": 92.19999980926514,
+        "bytes": 70216
+      },
+      {
+        "name": "/assets/models/skinned/inf.common-worker.lod1.low.glb",
+        "at": 2189,
+        "ms": 94.19999980926514,
+        "bytes": 182704
+      },
+      {
+        "name": "/assets/models/skinned/inf.common-worker.lod2.low.glb",
+        "at": 2189.0999994277954,
+        "ms": 95.40000057220459,
+        "bytes": 146380
+      },
+      {
+        "name": "/assets/models/skinned/inf.crawler.lod1.low.glb",
+        "at": 2189.199999809265,
+        "ms": 93.5,
+        "bytes": 134860
+      },
+      {
+        "name": "/assets/models/skinned/inf.crawler.lod2.low.glb",
+        "at": 2189.2999992370605,
+        "ms": 93.80000019073486,
+        "bytes": 94788
+      },
+      {
+        "name": "/assets/models/skinned/inf.riot-cop.lod1.low.glb",
+        "at": 2189.3999996185303,
+        "ms": 95.19999980926514,
+        "bytes": 161776
+      },
+      {
+        "name": "/assets/models/skinned/inf.riot-cop.lod2.low.glb",
+        "at": 2189.5,
+        "ms": 107.79999923706055,
+        "bytes": 116548
+      },
+      {
+        "name": "/assets/models/skinned/inf.firefighter.lod1.low.glb",
+        "at": 2189.5999994277954,
+        "ms": 113.30000019073486,
+        "bytes": 174068
+      },
+      {
+        "name": "/assets/models/skinned/inf.firefighter.lod2.low.glb",
+        "at": 2189.699999809265,
+        "ms": 107.89999961853027,
+        "bytes": 121200
+      },
+      {
+        "name": "/assets/models/skinned/inf.hazmat.lod1.low.glb",
+        "at": 2189.699999809265,
+        "ms": 115.89999961853027,
+        "bytes": 155224
+      },
+      {
+        "name": "/assets/models/skinned/inf.hazmat.lod2.low.glb",
+        "at": 2189.7999992370605,
+        "ms": 113.40000057220459,
+        "bytes": 101788
+      },
+      {
+        "name": "/assets/models/skinned/inf.nurse.lod1.low.glb",
+        "at": 2189.8999996185303,
+        "ms": 124.19999980926514,
+        "bytes": 206928
+      },
+      {
+        "name": "/assets/models/skinned/inf.nurse.lod2.low.glb",
+        "at": 2190,
+        "ms": 120.79999923706055,
+        "bytes": 96268
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha.lod1.low.glb",
+        "at": 2190,
+        "ms": 126.89999961853027,
+        "bytes": 177636
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha.lod2.low.glb",
+        "at": 2190.0999994277954,
+        "ms": 127,
+        "bytes": 105492
+      },
+      {
+        "name": "/assets/models/skinned/inf.dog.lod1.low.glb",
+        "at": 2190.199999809265,
+        "ms": 129,
+        "bytes": 98988
+      },
+      {
+        "name": "/assets/models/skinned/inf.dog.lod2.low.glb",
+        "at": 2190.199999809265,
+        "ms": 133.0999994277954,
+        "bytes": 83160
+      },
+      {
+        "name": "/assets/models/skinned/inf.lion.lod1.low.glb",
+        "at": 2190.3999996185303,
+        "ms": 139.60000038146973,
+        "bytes": 178480
+      },
+      {
+        "name": "/assets/models/skinned/inf.lion.lod2.low.glb",
+        "at": 2190.3999996185303,
+        "ms": 139.39999961853027,
+        "bytes": 117912
+      },
+      {
+        "name": "/assets/models/skinned/inf.gorilla.lod1.low.glb",
+        "at": 2190.5,
+        "ms": 140.19999980926514,
+        "bytes": 190352
+      },
+      {
+        "name": "/assets/models/skinned/inf.gorilla.lod2.low.glb",
+        "at": 2190.5999994277954,
+        "ms": 140.69999980926514,
+        "bytes": 112144
+      },
+      {
+        "name": "/assets/models/skinned/inf.elephant.lod1.low.glb",
+        "at": 2190.699999809265,
+        "ms": 140.80000019073486,
+        "bytes": 130864
+      },
+      {
+        "name": "/assets/models/skinned/inf.elephant.lod2.low.glb",
+        "at": 2190.699999809265,
+        "ms": 140.89999961853027,
+        "bytes": 78184
+      },
+      {
+        "name": "/assets/models/skinned/inf.zebra.lod1.low.glb",
+        "at": 2190.7999992370605,
+        "ms": 156.80000019073486,
+        "bytes": 133820
+      },
+      {
+        "name": "/assets/models/skinned/inf.flamingo.lod1.low.glb",
+        "at": 2190.8999996185303,
+        "ms": 156.89999961853027,
+        "bytes": 79836
+      },
+      {
+        "name": "/assets/models/skinned/inf.zebra.lod2.low.glb",
+        "at": 2190.8999996185303,
+        "ms": 157,
+        "bytes": 107876
+      },
+      {
+        "name": "/assets/models/skinned/inf.flamingo.lod2.low.glb",
+        "at": 2191.0999994277954,
+        "ms": 156.19999980926514,
+        "bytes": 68432
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha-worker.lod1.low.glb",
+        "at": 2191.0999994277954,
+        "ms": 157.4000005722046,
+        "bytes": 190492
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha-worker.lod2.low.glb",
+        "at": 2191.199999809265,
+        "ms": 157,
+        "bytes": 120812
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha-hoodie.lod1.low.glb",
+        "at": 2191.2999992370605,
+        "ms": 175.30000019073486,
+        "bytes": 191868
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha-hoodie.lod2.low.glb",
+        "at": 2191.3999996185303,
+        "ms": 175.10000038146973,
+        "bytes": 120416
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha-fire.lod1.low.glb",
+        "at": 2191.3999996185303,
+        "ms": 185.19999980926514,
+        "bytes": 198372
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha-fire.lod2.low.glb",
+        "at": 2191.5,
+        "ms": 175.19999980926514,
+        "bytes": 126440
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha-suit.lod1.low.glb",
+        "at": 2191.5,
+        "ms": 185.39999961853027,
+        "bytes": 196900
+      },
+      {
+        "name": "/assets/models/skinned/inf.alpha-suit.lod2.low.glb",
+        "at": 2191.5999994277954,
+        "ms": 175.4000005722046,
+        "bytes": 125592
+      },
+      {
+        "name": "/assets/models/skinned/inf.jogger.lod1.low.glb",
+        "at": 2191.699999809265,
+        "ms": 190.80000019073486,
+        "bytes": 177776
+      },
+      {
+        "name": "/assets/models/skinned/inf.jogger.lod2.low.glb",
+        "at": 2191.699999809265,
+        "ms": 191,
+        "bytes": 149452
+      },
+      {
+        "name": "/assets/models/skinned/inf.suburban-mom.lod1.low.glb",
+        "at": 2191.7999992370605,
+        "ms": 191.5,
+        "bytes": 211628
+      },
+      {
+        "name": "/assets/models/skinned/inf.suburban-mom.lod2.low.glb",
+        "at": 2191.8999996185303,
+        "ms": 190.39999961853027,
+        "bytes": 129052
+      },
+      {
+        "name": "/assets/models/skinned/inf.delivery-driver.lod1.low.glb",
+        "at": 2191.8999996185303,
+        "ms": 192.19999980926514,
+        "bytes": 172836
+      },
+      {
+        "name": "/assets/models/skinned/inf.delivery-driver.lod2.low.glb",
+        "at": 2192,
+        "ms": 192.0999994277954,
+        "bytes": 146156
+      },
+      {
+        "name": "/assets/models/skinned/inf.bbq-dad.lod1.low.glb",
+        "at": 2192.2999992370605,
+        "ms": 205.80000019073486,
+        "bytes": 121092
+      },
+      {
+        "name": "/assets/models/skinned/inf.bbq-dad.lod2.low.glb",
+        "at": 2192.2999992370605,
+        "ms": 206,
+        "bytes": 121092
+      },
+      {
+        "name": "/assets/models/skinned/inf.cashier.lod1.low.glb",
+        "at": 2192.3999996185303,
+        "ms": 206,
+        "bytes": 180956
+      },
+      {
+        "name": "/assets/models/skinned/inf.cashier.lod2.low.glb",
+        "at": 2192.5,
+        "ms": 206.69999980926514,
+        "bytes": 147416
+      },
+      {
+        "name": "/assets/models/skinned/inf.bathrobe-neighbor.lod1.low.glb",
+        "at": 2192.5999994277954,
+        "ms": 215.30000019073486,
+        "bytes": 179344
+      },
+      {
+        "name": "/assets/models/skinned/inf.bathrobe-neighbor.lod2.low.glb",
+        "at": 2192.5999994277954,
+        "ms": 215.60000038146973,
+        "bytes": 149252
+      },
+      {
+        "name": "/assets/models/skinned/inf.mega-alpha.lod1.low.glb",
+        "at": 2192.7999992370605,
+        "ms": 225.80000019073486,
+        "bytes": 246112
+      },
+      {
+        "name": "/assets/models/skinned/inf.mega-alpha.lod2.low.glb",
+        "at": 2192.7999992370605,
+        "ms": 226.20000076293945,
+        "bytes": 138116
+      },
+      {
+        "name": "/assets/models/skinned/inf.mega-alpha-ashen.lod1.low.glb",
+        "at": 2192.8999996185303,
+        "ms": 227,
+        "bytes": 244772
+      },
+      {
+        "name": "/assets/models/skinned/inf.mega-alpha-ashen.lod2.low.glb",
+        "at": 2193,
+        "ms": 226.39999961853027,
+        "bytes": 132044
+      },
+      {
+        "name": "/assets/models/skinned/inf.mega-alpha-ember.lod1.low.glb",
+        "at": 2193.0999994277954,
+        "ms": 229,
+        "bytes": 246960
+      },
+      {
+        "name": "/assets/models/skinned/inf.mega-alpha-ember.lod2.low.glb",
+        "at": 2193.199999809265,
+        "ms": 229.19999980926514,
+        "bytes": 135020
+      },
+      {
+        "name": "/assets/models/veh.military-apc.unarmed.lod1.glb",
+        "at": 2193.699999809265,
+        "ms": 229.0999994277954,
+        "bytes": 38976
+      },
+      {
+        "name": "/assets/statics/bld.house-a.lod1.base.bfa9647b5a04abe0.bin.gz",
+        "at": 2551.5999994277954,
+        "ms": 14.300000190734863,
+        "bytes": 87782
+      },
+      {
+        "name": "/assets/models/bld.shed.lod1.glb",
+        "at": 2551.7999992370605,
+        "ms": 11.300000190734863,
+        "bytes": 52836
+      },
+      {
+        "name": "/assets/models/bld.garage-detached.lod1.glb",
+        "at": 2551.8999996185303,
+        "ms": 11.600000381469727,
+        "bytes": 113592
+      },
+      {
+        "name": "/assets/statics/veh.pickup-red.lod1.base.afc2ace39d9fa100.bin.gz",
+        "at": 2552,
+        "ms": 13.699999809265137,
+        "bytes": 51723
+      },
+      {
+        "name": "/assets/models/bld.gas-station.lod1.glb",
+        "at": 2552.0999994277954,
+        "ms": 11.5,
+        "bytes": 102580
+      },
+      {
+        "name": "/assets/models/veh.sedan-green.wrecked.lod1.glb",
+        "at": 2552.2999992370605,
+        "ms": 11.100000381469727,
+        "bytes": 52404
+      },
+      {
+        "name": "/assets/models/bld.apartment-block-a.lod1.glb",
+        "at": 2552.3999996185303,
+        "ms": 30.600000381469727,
+        "bytes": 77544
+      },
+      {
+        "name": "/assets/models/veh.military-truck.wrecked.lod1.glb",
+        "at": 2552.3999996185303,
+        "ms": 27.600000381469727,
+        "bytes": 57296
+      },
+      {
+        "name": "/assets/models/veh.school-bus.wrecked.lod1.glb",
+        "at": 2552.5999994277954,
+        "ms": 30.699999809265137,
+        "bytes": 145756
+      },
+      {
+        "name": "/assets/statics/veh.sedan-red.lod1.wrecked.6d404d5ad32b5b00.bin.gz",
+        "at": 2552.699999809265,
+        "ms": 27.899999618530273,
+        "bytes": 71119
+      },
+      {
+        "name": "/assets/models/veh.police-sedan.wrecked.lod1.glb",
+        "at": 2552.7999992370605,
+        "ms": 27.300000190734863,
+        "bytes": 60140
+      },
+      {
+        "name": "/assets/models/veh.pickup-red.wrecked.lod1.glb",
+        "at": 2552.7999992370605,
+        "ms": 33.80000019073486,
+        "bytes": 140384
+      },
+      {
+        "name": "/assets/statics/veh.pickup-white.lod1.base.dddcb3a51b7f5b74.bin.gz",
+        "at": 2553.2999992370605,
+        "ms": 37.80000019073486,
+        "bytes": 40772
+      },
+      {
+        "name": "/assets/models/bld.house-b.lod1.glb",
+        "at": 2553.3999996185303,
+        "ms": 38.19999980926514,
+        "bytes": 78772
+      },
+      {
+        "name": "/assets/statics/bld.house-e.lod1.base.00118bfa8e19327e.bin.gz",
+        "at": 2553.5,
+        "ms": 39.89999961853027,
+        "bytes": 63265
+      },
+      {
+        "name": "/assets/statics/bld.house-d.lod1.base.07b658783d46ea0e.bin.gz",
+        "at": 2553.5,
+        "ms": 43,
+        "bytes": 90743
+      },
+      {
+        "name": "/assets/models/veh.pickup-red.burned.lod1.glb",
+        "at": 2553.5999994277954,
+        "ms": 43.60000038146973,
+        "bytes": 102248
+      },
+      {
+        "name": "/assets/statics/veh.sedan-red.lod1.burned.2ed761ee1123b2d2.bin.gz",
+        "at": 2553.699999809265,
+        "ms": 53.89999961853027,
+        "bytes": 183962
+      },
+      {
+        "name": "/assets/models/bld.joes-diner.lod1.glb",
+        "at": 2553.699999809265,
+        "ms": 55.59999942779541,
+        "bytes": 107520
+      },
+      {
+        "name": "/assets/models/bld.supermarket.lod1.glb",
+        "at": 2553.7999992370605,
+        "ms": 61.70000076293945,
+        "bytes": 227576
+      },
+      {
+        "name": "/assets/models/kit.army-checkpoint.lod1.glb",
+        "at": 2553.8999996185303,
+        "ms": 58.69999980926514,
+        "bytes": 102564
+      },
+      {
+        "name": "/assets/models/bld.apartment-block-b.lod1.glb",
+        "at": 2554,
+        "ms": 59.09999942779541,
+        "bytes": 74524
+      },
+      {
+        "name": "/assets/models/bld.town-hall.lod1.glb",
+        "at": 2554.199999809265,
+        "ms": 59.19999980926514,
+        "bytes": 60792
+      },
+      {
+        "name": "/assets/models/bld.mainstreet-brick.lod1.glb",
+        "at": 2554.199999809265,
+        "ms": 65.89999961853027,
+        "bytes": 123832
+      },
+      {
+        "name": "/assets/models/bld.church.lod1.glb",
+        "at": 2554.2999992370605,
+        "ms": 67.20000076293945,
+        "bytes": 67236
+      },
+      {
+        "name": "/assets/models/bld.hospital-exterior.lod1.glb",
+        "at": 2554.3999996185303,
+        "ms": 68.10000038146973,
+        "bytes": 114144
+      },
+      {
+        "name": "/assets/statics/veh.sedan-white.lod1.burned.dcfb851343c64403.bin.gz",
+        "at": 2554.5,
+        "ms": 71.19999980926514,
+        "bytes": 254523
+      },
+      {
+        "name": "/assets/models/veh.suv-dark.wrecked.lod1.glb",
+        "at": 2554.5999994277954,
+        "ms": 68.5,
+        "bytes": 127676
+      },
+      {
+        "name": "/assets/statics/veh.sedan-blue.lod1.wrecked.91ff406610a650d5.bin.gz",
+        "at": 2554.699999809265,
+        "ms": 69.89999961853027,
+        "bytes": 42516
+      },
+      {
+        "name": "/assets/statics/veh.suv-dark.lod1.burned.152c94f255169f05.bin.gz",
+        "at": 2554.7999992370605,
+        "ms": 109.5,
+        "bytes": 212612
+      },
+      {
+        "name": "/assets/models/veh.ambulance.wrecked.lod1.glb",
+        "at": 2554.8999996185303,
+        "ms": 82.5,
+        "bytes": 128964
+      },
+      {
+        "name": "/assets/models/veh.school-bus.burned.lod1.glb",
+        "at": 2555,
+        "ms": 85.19999980926514,
+        "bytes": 112088
+      },
+      {
+        "name": "/assets/models/veh.police-sedan.burned.lod1.glb",
+        "at": 2555.0999994277954,
+        "ms": 85.40000057220459,
+        "bytes": 97596
+      },
+      {
+        "name": "/assets/statics/bld.house-a.lod2.base.7e47b21e0aac91a7.bin.gz",
+        "at": 2555.199999809265,
+        "ms": 77.39999961853027,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.shed.lod2.glb",
+        "at": 2555.2999992370605,
+        "ms": 78.90000057220459,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.garage-detached.lod2.glb",
+        "at": 2555.2999992370605,
+        "ms": 81.40000057220459,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/veh.pickup-red.lod2.base.8d47813f6e851e27.bin.gz",
+        "at": 2555.5,
+        "ms": 79.79999923706055,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.garden-bush.lod2.base.9883da87953f0176.bin.gz",
+        "at": 2555.5,
+        "ms": 82.69999980926514,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.gas-station.lod2.glb",
+        "at": 2555.5999994277954,
+        "ms": 85.10000038146973,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/veh.sedan-green.wrecked.lod2.glb",
+        "at": 2555.5999994277954,
+        "ms": 108.90000057220459,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/prop.street-tree.lod2.glb",
+        "at": 2555.699999809265,
+        "ms": 104.59999942779541,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.street-sign.lod2.base.5d0774a759779f1d.bin.gz",
+        "at": 2555.7999992370605,
+        "ms": 105.90000057220459,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.apartment-block-a.lod2.glb",
+        "at": 2555.8999996185303,
+        "ms": 110.69999980926514,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/kit.crossing-crash.lod2.glb",
+        "at": 2556,
+        "ms": 112.09999942779541,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/veh.military-truck.lod2.glb",
+        "at": 2556.0999994277954,
+        "ms": 121.40000057220459,
+        "bytes": 31688
+      },
+      {
+        "name": "/assets/models/veh.school-bus.lod2.glb",
+        "at": 2556.0999994277954,
+        "ms": 121.60000038146973,
+        "bytes": 49284
+      },
+      {
+        "name": "/assets/statics/veh.sedan-red.lod2.base.11706267fbfcf734.bin.gz",
+        "at": 2556.199999809265,
+        "ms": 123.39999961853027,
+        "bytes": 18212
+      },
+      {
+        "name": "/assets/models/veh.police-sedan.lod2.glb",
+        "at": 2556.2999992370605,
+        "ms": 123,
+        "bytes": 35764
+      },
+      {
+        "name": "/assets/models/prop.barricade.lod2.glb",
+        "at": 2556.3999996185303,
+        "ms": 115.60000038146973,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.traffic-cone.lod2.base.6327029429a6c3d4.bin.gz",
+        "at": 2556.3999996185303,
+        "ms": 120.80000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.pallet.lod2.base.a18bdedbd67c09c7.bin.gz",
+        "at": 2556.5,
+        "ms": 118.89999961853027,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.garden-bush-small.lod2.base.9883da87953f0176.bin.gz",
+        "at": 2556.5999994277954,
+        "ms": 122.30000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.hedge.lod2.base.9883da87953f0176.bin.gz",
+        "at": 2556.5999994277954,
+        "ms": 123.40000057220459,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/prop.crowd-fence.lod2.glb",
+        "at": 2556.699999809265,
+        "ms": 125.19999980926514,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.sandbag-pallet.lod2.base.d77ae35efd00d189.bin.gz",
+        "at": 2556.699999809265,
+        "ms": 126,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/prop.dumpster.lod2.glb",
+        "at": 2556.7999992370605,
+        "ms": 126.90000057220459,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.wheelbarrow.lod2.base.81dfca0601dff48a.bin.gz",
+        "at": 2556.8999996185303,
+        "ms": 127.60000038146973,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.trash-bags.lod2.base.32327e9ed59c7ca1.bin.gz",
+        "at": 2557,
+        "ms": 131.5,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/veh.pickup-white.lod2.base.aae59518b2c1e300.bin.gz",
+        "at": 2557.0999994277954,
+        "ms": 128,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.house-b.lod2.glb",
+        "at": 2557.0999994277954,
+        "ms": 129.80000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.crates.lod2.base.3ef2ddbe8eab5787.bin.gz",
+        "at": 2557.0999994277954,
+        "ms": 132.30000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/bld.house-e.lod2.base.d3171fb1ce6a2901.bin.gz",
+        "at": 2557.199999809265,
+        "ms": 130.69999980926514,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/bld.house-d.lod2.base.4aa4dafaf18f992d.bin.gz",
+        "at": 2557.2999992370605,
+        "ms": 145.5,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/prop.utility-pole.lod2.glb",
+        "at": 2557.3999996185303,
+        "ms": 133.30000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.joes-diner.lod2.glb",
+        "at": 2557.5,
+        "ms": 137.69999980926514,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.supermarket.lod2.glb",
+        "at": 2557.5999994277954,
+        "ms": 140.80000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/prop.gas-pump.lod2.glb",
+        "at": 2557.5999994277954,
+        "ms": 144.4000005722046,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/prop.light-tower.lod2.glb",
+        "at": 2557.699999809265,
+        "ms": 146,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.street-lamp.lod2.base.155ba700ada93a74.bin.gz",
+        "at": 2557.699999809265,
+        "ms": 149.5,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/kit.army-checkpoint.lod2.base.ad8e463112147d5a.bin.gz",
+        "at": 2557.7999992370605,
+        "ms": 146.60000038146973,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/prop.tent.lod2.glb",
+        "at": 2557.8999996185303,
+        "ms": 147.39999961853027,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/prop.jersey-barrier.lod2.glb",
+        "at": 2558,
+        "ms": 148.39999961853027,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.apartment-block-b.lod2.glb",
+        "at": 2558.0999994277954,
+        "ms": 157.9000005722046,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.town-hall.lod2.glb",
+        "at": 2558.199999809265,
+        "ms": 150.0999994277954,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.mainstreet-brick.lod2.glb",
+        "at": 2558.2999992370605,
+        "ms": 151.80000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.church.lod2.glb",
+        "at": 2558.3999996185303,
+        "ms": 154.30000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/bld.hospital-exterior.lod2.glb",
+        "at": 2558.5,
+        "ms": 160.69999980926514,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.picket-fence.lod2.base.34d16940362176dd.bin.gz",
+        "at": 2558.5999994277954,
+        "ms": 165.80000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.privacy-fence.lod2.base.2e16769d02382ed4.bin.gz",
+        "at": 2558.5999994277954,
+        "ms": 166.4000005722046,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.broken-chair.lod2.base.48e569c6b820c93a.bin.gz",
+        "at": 2558.699999809265,
+        "ms": 168,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.carpet.lod2.base.33c56104f4861bbf.bin.gz",
+        "at": 2558.699999809265,
+        "ms": 171.19999980926514,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/veh.sedan-white.lod2.base.54e77c10ae182db3.bin.gz",
+        "at": 2558.7999992370605,
+        "ms": 164.10000038146973,
+        "bytes": 23724
+      },
+      {
+        "name": "/assets/statics/veh.suv-dark.lod2.base.3d1d376670667a1a.bin.gz",
+        "at": 2558.8999996185303,
+        "ms": 164.89999961853027,
+        "bytes": 21858
+      },
+      {
+        "name": "/assets/models/prop.shopping-cart.lod2.glb",
+        "at": 2558.8999996185303,
+        "ms": 172.89999961853027,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/prop.recycling-bin.lod2.base.0586a14bba4b55a0.bin.gz",
+        "at": 2558.8999996185303,
+        "ms": 174.30000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/statics/veh.sedan-blue.lod2.base.f239269d3b252584.bin.gz",
+        "at": 2559.0999994277954,
+        "ms": 164.30000019073486,
+        "bytes": 24299
+      },
+      {
+        "name": "/assets/statics/veh.sedan-green.lod2.base.03e70c5ababbc722.bin.gz",
+        "at": 2559.199999809265,
+        "ms": 164.39999961853027,
+        "bytes": 25526
+      },
+      {
+        "name": "/assets/models/veh.ambulance.lod2.glb",
+        "at": 2559.199999809265,
+        "ms": 163.19999980926514,
+        "bytes": 37032
+      },
+      {
+        "name": "/assets/layouts/D-CROSSING.horizon.glb",
+        "at": 2559.8999996185303,
+        "ms": 162.89999961853027,
+        "bytes": 250452
+      },
+      {
+        "name": "/build/civilianBake.worker-D9D3u1oi.js",
+        "at": 2575.5999994277954,
+        "ms": -152.30000019073486,
+        "bytes": 5342
+      },
+      {
+        "name": "/build/civilianBake.worker-D9D3u1oi.js",
+        "at": 2576,
+        "ms": -150.9000005722046,
+        "bytes": 300
+      },
+      {
+        "name": "/build/civilianBake.worker-D9D3u1oi.js",
+        "at": 2576.5999994277954,
+        "ms": -150.5999994277954,
+        "bytes": 300
+      },
+      {
+        "name": "/build/civilianBake.worker-D9D3u1oi.js",
+        "at": 2577.3999996185303,
+        "ms": -150.30000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/build/civilianBake.worker-D9D3u1oi.js",
+        "at": 2578.699999809265,
+        "ms": -150.19999980926514,
+        "bytes": 300
+      },
+      {
+        "name": "/build/civilianBake.worker-D9D3u1oi.js",
+        "at": 2580.199999809265,
+        "ms": -149.80000019073486,
+        "bytes": 300
+      },
+      {
+        "name": "/build/civilianBake.worker-D9D3u1oi.js",
+        "at": 2581.5999994277954,
+        "ms": -149,
+        "bytes": 300
+      },
+      {
+        "name": "/build/civilianBake.worker-D9D3u1oi.js",
+        "at": 2582.5,
+        "ms": -149,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/models/wpn.assault-rifle.lod1.glb",
+        "at": 2599.199999809265,
+        "ms": 140.69999980926514,
+        "bytes": 23144
+      },
+      {
+        "name": "/assets/models/veh.military-apc.unarmed.lod2.glb",
+        "at": 2684,
+        "ms": 56.79999923706055,
+        "bytes": 27424
+      },
+      {
+        "name": "/assets/basis/basis_transcoder.js",
+        "at": 2855.7999992370605,
+        "ms": 1.5,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/basis/basis_transcoder.wasm",
+        "at": 2855.8999996185303,
+        "ms": 1.8999996185302734,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/layouts/D-CROSSING.chunks/crossing-0-4.glb",
+        "at": 3471,
+        "ms": 3.59999942779541,
+        "bytes": 13860
+      },
+      {
+        "name": "/assets/layouts/D-CROSSING.chunks/crossing-0-3.glb",
+        "at": 3471,
+        "ms": 3.799999237060547,
+        "bytes": 12760
+      },
+      {
+        "name": "/assets/models/wpn.pistol.lod1.glb",
+        "at": 3487.0999994277954,
+        "ms": 2.3000001907348633,
+        "bytes": 19236
+      },
+      {
+        "name": "/assets/models/char.courier-female.skin.glb",
+        "at": 3493.0999994277954,
+        "ms": 7.90000057220459,
+        "bytes": 300
+      },
+      {
+        "name": "/assets/layouts/D-CROSSING.chunks/crossing-1-3.glb",
+        "at": 3501.8999996185303,
+        "ms": 55.69999980926514,
+        "bytes": 23108
+      },
+      {
+        "name": "/assets/layouts/D-CROSSING.chunks/crossing-1-4.glb",
+        "at": 3503.8999996185303,
+        "ms": 54.19999980926514,
+        "bytes": 25020
+      },
+      {
+        "name": "/assets/models/wpn.shotgun.lod1.glb",
+        "at": 3515.199999809265,
+        "ms": 42.5,
+        "bytes": 20336
+      },
+      {
+        "name": "/assets/models/acc.courier-gear.female.tiers.low.glb",
+        "at": 3521.2999992370605,
+        "ms": 37.60000038146973,
+        "bytes": 146076
+      },
+      {
+        "name": "/assets/layouts/D-CROSSING.chunks/crossing-0-5.glb",
+        "at": 3563.5999994277954,
+        "ms": 43.19999980926514,
+        "bytes": 6864
+      },
+      {
+        "name": "/assets/models/wpn.hunting-rifle.lod1.glb",
+        "at": 3568.199999809265,
+        "ms": 48.69999980926514,
+        "bytes": 22716
+      },
+      {
+        "name": "/assets/layouts/D-CROSSING.chunks/crossing-1-5.glb",
+        "at": 3571.3999996185303,
+        "ms": 46.60000038146973,
+        "bytes": 7648
+      },
+      {
+        "name": "/assets/models/char.courier-male.skin.low.glb",
+        "at": 3606.699999809265,
+        "ms": 29.300000190734863,
+        "bytes": 412284
+      },
+      {
+        "name": "/assets/models/skinned/npc.lab-tech-a.lod1.low.glb",
+        "at": 3696.699999809265,
+        "ms": 39,
+        "bytes": 146964
+      },
+      {
+        "name": "/assets/models/skinned/npc.lab-tech-a.lod2.low.glb",
+        "at": 3696.8999996185303,
+        "ms": 38.19999980926514,
+        "bytes": 119884
+      },
+      {
+        "name": "/assets/models/skinned/npc.lab-tech-b.lod1.low.glb",
+        "at": 3697,
+        "ms": 39,
+        "bytes": 134308
+      },
+      {
+        "name": "/assets/models/skinned/npc.lab-tech-b.lod2.low.glb",
+        "at": 3697,
+        "ms": 38.5,
+        "bytes": 106568
+      },
+      {
+        "name": "/assets/models/skinned/npc.lab-guard.lod1.low.glb",
+        "at": 3697.0999994277954,
+        "ms": 39.10000038146973,
+        "bytes": 140340
+      },
+      {
+        "name": "/assets/models/skinned/npc.civilian-man-a.lod1.low.glb",
+        "at": 3697.2999992370605,
+        "ms": 55,
+        "bytes": 166900
+      },
+      {
+        "name": "/assets/models/skinned/npc.civilian-man-a.lod2.low.glb",
+        "at": 3697.3999996185303,
+        "ms": 53.80000019073486,
+        "bytes": 116232
+      }
+    ]
+  }
+}

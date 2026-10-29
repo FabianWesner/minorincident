@@ -1,0 +1,44 @@
+{
+  "mainRevision": "2c391e65fb8f95e8945f5088224af8d7189b2d8b",
+  "fixRevision": "818ed50cca05ff75ab907dcad24838ca0e016999",
+  "sources": {
+    "src/assets/DistrictAssets.ts": "dc24b15761a507a1b229f64d4910be7690a687ce76222df4d00b1ddb98f10750",
+    "src/render/GameView.ts": "d39d7ac7d2c7474039c38ad98c4d353e1b856b1be01175faa30f6006e409b332",
+    "src/render/PerimeterPosts.ts": "7d8c427ebda6d47e1440eae485313acab98effe5a1c515a3ae5dc6d9a8532d36",
+    "src/render/district/DistrictBuild.ts": "f3bbe2c5649b698eb5053c5641b4588ee4b61294f7e374baa9878176cde1a10e",
+    "src/render/npc/NpcView.ts": "56e2d78cecd41ca0c0f15f676388774f13ea8d5ab481125ff84fedd9410f3027",
+    "tests/shared/render-contracts.test.ts": "7613579ede8a45e3b5c49420f16aeddd81bb5856f908d366aa7fd120640019a3",
+    "tools/perf/l9-load-ab.ts": "ec26affa3a929ea13f300c4a3b6651dc2401b9399b576ac1e1fa40cc9d75afff",
+    "tools/playtest/session.ts": "f0a41a98037330099aec4a35e06508ed3debf02943c751f63d19ada2d40dbe28"
+  },
+  "builds": {
+    "main": {
+      "index": "b239f2ee8415f35d7d37fff0324144792f7b26e3129ed7eb50ebc6beb7c9c3ed",
+      "files": {
+        "/build/index-D76oQJ4H.js": "885ed8a4805e40efe93e7811b68d9a2918ab7f7cd9f2290330135e9138e04f0c",
+        "/build/three-core-BzgDqAAS.js": "970b578a775451d0e16d32b3535b752f0bae0ebcba6e113e07792190ea7e6dcc",
+        "/build/three-webgpu-p0IadyXU.js": "f3ce193f8b018c5b20c672776d1444d5ccecfa266dae12da873e69323f1e9df7",
+        "/build/light-anchors-DQGCSUUw.js": "169558671c4726d1b04b173f181d2bb8cb7ad6a89197e78d8c6b95932874c4f3",
+        "/build/character-clips-CGKWtM3S.js": "b0864fb63b17c5b3688da7a41cd19f6c79527bd16b6ceae8309d242000aab4c0",
+        "/build/rapier-ykuY6d4E.js": "dc38ebdc3b12afe68b7461602ea514ec0b012adedc3d423cd2f351906a638b9a",
+        "/build/wreck-roofs-GAckelu8.js": "d4dfa46196cfcb7cc57943f48f9dc4b5818ba129d9b1f810046a929997e3c845",
+        "/build/index-CUk1QJun.css": "f4418e5c7885bb3af207fc43595f939b14a50250ff2b3a04f93491097b90222c"
+      }
+    },
+    "fix": {
+      "index": "4ab079ce70f751890a0973f93ad12bfbe1dbe2004f4e223d3ff11e8031f04b8f",
+      "files": {
+        "/build/index-B0e0oObl.js": "c652a4fcb2fd3ac03f595e84af5e36e27dd927df25e333423b8feb02bb987a85",
+        "/build/three-core-BzgDqAAS.js": "970b578a775451d0e16d32b3535b752f0bae0ebcba6e113e07792190ea7e6dcc",
+        "/build/three-webgpu-p0IadyXU.js": "f3ce193f8b018c5b20c672776d1444d5ccecfa266dae12da873e69323f1e9df7",
+        "/build/light-anchors-DQGCSUUw.js": "169558671c4726d1b04b173f181d2bb8cb7ad6a89197e78d8c6b95932874c4f3",
+        "/build/character-clips-CGKWtM3S.js": "b0864fb63b17c5b3688da7a41cd19f6c79527bd16b6ceae8309d242000aab4c0",
+        "/build/rapier-ykuY6d4E.js": "dc38ebdc3b12afe68b7461602ea514ec0b012adedc3d423cd2f351906a638b9a",
+        "/build/wreck-roofs-GAckelu8.js": "d4dfa46196cfcb7cc57943f48f9dc4b5818ba129d9b1f810046a929997e3c845",
+        "/build/index-CUk1QJun.css": "f4418e5c7885bb3af207fc43595f939b14a50250ff2b3a04f93491097b90222c"
+      }
+    }
+  },
+  "publicDiff": "",
+  "assetMethod": "Build snapshots link the unchanged public/assets and public/ui from this worktree; independent JavaScript/CSS bundles are retained."
+}

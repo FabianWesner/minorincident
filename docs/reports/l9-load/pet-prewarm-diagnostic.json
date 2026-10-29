@@ -1,0 +1,103 @@
+{
+  "method": "Fast paused bot traversal with rendered updates at 60-tick intervals; diagnostic only, not real-input or frame-time acceptance",
+  "builds": [],
+  "heroes": [
+    {
+      "id": 712,
+      "model": "char.corgi"
+    },
+    {
+      "id": 1169,
+      "model": "amb.dog.black"
+    },
+    {
+      "id": 1176,
+      "model": "amb.dog"
+    },
+    {
+      "id": 1183,
+      "model": "amb.dog.black"
+    },
+    {
+      "id": 1190,
+      "model": "amb.dog"
+    },
+    {
+      "id": 1197,
+      "model": "amb.dog.black"
+    },
+    {
+      "id": 1204,
+      "model": "amb.dog"
+    }
+  ],
+  "mission": {
+    "id": "L9",
+    "phase": "progression",
+    "completedObjectives": [
+      "approach",
+      "reach-outskirts"
+    ],
+    "volumes": [
+      true
+    ],
+    "killedBosses": [],
+    "deadlineTicks": null,
+    "steps": {
+      "approach": {
+        "status": "completed",
+        "started": 0,
+        "kills": [],
+        "events": {
+          "l9.crash-approach:*": 1
+        },
+        "interaction": 0
+      },
+      "reach-outskirts": {
+        "status": "completed",
+        "started": 6848,
+        "kills": [],
+        "events": {
+          "l9.bridge-collapse:*": 1,
+          "vehicle.exited:*": 1,
+          "l9.crash-impact:*": 1,
+          "l9.crawl-finished:*": 1
+        },
+        "interaction": 37
+      }
+    },
+    "actors": {},
+    "items": [],
+    "states": {
+      "crash-started": true,
+      "crash-finished": true
+    },
+    "counters": {},
+    "gates": {},
+    "marker": null,
+    "checkpoint": "outskirts-approach",
+    "tier": 0,
+    "timeOfDay": null,
+    "subtitle": null,
+    "cinematic": null,
+    "failure": null,
+    "stats": {
+      "time": 128.13333333333333,
+      "kills": 0,
+      "knockdowns": 0,
+      "damage": 0,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": []
+    },
+    "result": {
+      "time": 128.13333333333333,
+      "kills": 0,
+      "knockdowns": 0,
+      "damage": 0,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": []
+    }
+  }
+}

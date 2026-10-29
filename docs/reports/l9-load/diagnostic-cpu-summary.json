@@ -1,0 +1,17 @@
+{
+  "method": "Aggregates from the initial main CPU profile, captured before deleting evaluated profiler files to conserve disk",
+  "windowMs": [
+    3989,
+    6667
+  ],
+  "totalSampleMs": 2692,
+  "threeWebgpuSelfMs": 2243,
+  "garbageCollectionSelfMs": 257,
+  "idleSelfMs": 7,
+  "topFunctionsSelfMs": {
+    "build": 571,
+    "_getChildren": 158,
+    "getChildren": 142
+  },
+  "conclusion": "CPU node graph building dominates; increasing compile lanes from 6 to 24 did not reduce shader phase time"
+}
