@@ -1,8 +1,8 @@
 {
   "runtimeRevision": "01535155b91dc7e67ec323319ff9c02ea766a848",
   "runtimeTrees": {
-    "src": "193382c866302b404b478545a09f7e21809c93c9",
-    "public": "2c3039716bcb67e169000c7d99e775c18b5dff2d"
+    "src": "afdd3cbfd88590ce2eb25c0d122987bf02d95c47",
+    "public": "c82ec2806c5bbaeb3cfd35c64c970eb13254faf4"
   },
   "driverRevision": "78b270a5835fa72a3dbd0b714dc0d55d9f606939",
   "driverFilesSha256": {
@@ -17,10 +17,10 @@
   "rows": [
     {
       "level": "L8",
-      "evidence": "L8-render-final",
+      "evidence": "L8-packed",
       "finished": true,
       "segments": 1,
-      "wallSeconds": 95,
+      "wallSeconds": 94,
       "deaths": 0,
       "skips": [],
       "issues": {
@@ -110,5 +110,10 @@
     "npm run lint: pass",
     "npm run test:unit: 105/105 passed"
   ],
-  "loadStatus": "Final quiet paired A/B pending"
+  "loadStatus": "RED: L8 +7.62% low / +8.68% high; L10 passes +3.05% / +3.53%. Two-hour timebox exhausted; goal remains active.",
+  "runtimeRevisionByLevel": {
+    "L8": "4b55bc1eb760784606a9420d3a32f5436cf561fb",
+    "L10": "01535155b91dc7e67ec323319ff9c02ea766a848"
+  },
+  "L10PackingIsolation": "The final marker-table branch is used only by D-ZOO. D-CURE still follows the original base.traverse(reference) path, with unchanged L10 assets; its complete final-render run is retained under L10-final."
 }
