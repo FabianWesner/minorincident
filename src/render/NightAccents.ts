@@ -16,7 +16,7 @@ import type { Placement } from '../levels/districts/types';
 type P2 = [number, number];
 /** One small emitter. `flicker` 1 = fire (LightField), `strobe` = the field's 1 Hz on/off; `pool` lights the ground around it. */
 export interface Accent {
-  kind: 'stud' | 'flare' | 'lantern' | 'hazard' | 'beacon';
+  kind: 'stud' | 'flare' | 'lantern' | 'storm-lantern' | 'hazard' | 'beacon';
   x: number; y: number; z: number; yaw: number; seed: number;
   color: string; glow: number; flicker: 0 | 1; strobe: boolean;
   pool?: { color: string; intensity: number; range: number };
@@ -281,7 +281,8 @@ export function subwayAccents(origin: P2 = [0, 0]): AccentSet {
     if ([90, 150, 210].some(g => Math.abs(x - g) < 3.5)) { rng.next(); continue; }
     flare(x, .58, z);
   }
-  for (const cx of l6Camps) put({ kind: 'lantern', x: cx + .6, y: 1.05, z: 18.15, yaw: 0, color: '#ffb35c', glow: 9, flicker: 1, strobe: false, pool: { color: '#ff9a48', intensity: 5, range: 3.4 } });
+  // On the track-facing edge of each camp, clear of the bedroll and wall piers. The frame's base rests on the .87 m walkway.
+  for (const cx of l6Camps) put({ kind: 'storm-lantern', x: cx + .7, y: 1.11, z: 17.15, yaw: 0, color: '#ffb35c', glow: 4, flicker: 1, strobe: false, pool: { color: '#ff9a48', intensity: 5, range: 3.4 } });
   for (const [x, z] of [[261.5, 13.6], [266.5, 17.6], [271.5, 13.4]] as const) flare(x, 3.93, z);
   fires.push({ x: 283 + origin[0], z: 8 + origin[1], radius: 1.4, car: true }, { x: 280.2 + origin[0], z: 21.2 + origin[1], radius: .8, car: false });
   return { points, fires };
@@ -305,15 +306,14 @@ export function accentPulse(a: Pick<Accent, 'flicker' | 'strobe' | 'seed'>, time
   return k;
 }
 
-const sizes: Record<Accent['kind'], [number, number, number]> = { stud: [.3, .05, .16], flare: [.34, .06, .06], lantern: [.2, .3, .2], hazard: [.2, .14, .2], beacon: [.22, .22, .22] };
+const sizes: Record<Accent['kind'], [number, number, number]> = { stud: [.3, .05, .16], flare: [.34, .06, .06], lantern: [.16, .24, .16], 'storm-lantern': [.24, .34, .24], hazard: [.2, .14, .2], beacon: [.22, .22, .22] };
 
-/** All accent emitters in two instanced draws: studs (glint with the local light field, so headlights wake them) and the
- * self-lit flares, lanterns, hazard and beacon lamps (HDR for the bloom; colours pulse with their pools). */
+/** Two instanced emitter draws: reflective studs and self-lit lamps. L6 storm lanterns add one shared frame draw.
+ * HDR glass pulses with its light-field pool; all frame instances/materials exist before loading warm-up. */
 export class NightAccents extends Group {
   private readonly studs?: InstancedMesh;
   private readonly lamps?: InstancedMesh;
-  private readonly lanternBody?: InstancedMesh;
-  private readonly lanternHandle?: InstancedMesh;
+  private readonly lanternFrame?: InstancedMesh;
   private readonly animated: { index: number; accent: Accent }[] = [];
   private readonly color = new Color();
   constructor(readonly set: AccentSet, field: LightField) {
@@ -337,19 +337,22 @@ export class NightAccents extends Group {
     if (lamps.length) {
       const material = new MeshBasicNodeMaterial({ fog: false }); material.name = 'keep_accentLamp';
       this.lamps = build(lamps, material);
-      const lanterns = lamps.filter(a => a.kind === 'lantern');
-      const detail = (geometry: BoxGeometry, dims: [number, number, number], y: number, color: string) => {
-        if (!lanterns.length) return undefined;
-        const mesh = new InstancedMesh(geometry, material, lanterns.length); mesh.count = lanterns.length;
-        lanterns.forEach((a, i) => {
-          mesh.setMatrixAt(i, matrix.compose(new Vector3(a.x, a.y + y, a.z), q.setFromAxisAngle(up, a.yaw), new Vector3(...dims)));
-          mesh.setColorAt(i, this.color.set(color).multiplyScalar(1.15));
-        });
-        mesh.computeBoundingSphere(); mesh.castShadow = mesh.receiveShadow = false; this.add(mesh); return mesh;
-      };
-      // Distinct dark frame and handle make the warm glass read as a storm lantern at gameplay zoom.
-      this.lanternBody = detail(geometry, [.3, .06, .27], -.16, '#28201a');
-      this.lanternHandle = detail(geometry, [.27, .035, .035], .19, '#51402b');
+      const lanterns = lamps.filter(a => a.kind === 'storm-lantern');
+      if (lanterns.length) {
+        // Fuel base, cap, four cage rails and raised carrying handle surround (rather than hide) the glass.
+        const frame: [number, number, number, number, number, number][] = [
+          [0, -.2, 0, .34, .07, .34], [0, .2, 0, .32, .08, .32],
+          ...[-.14, .14].flatMap(x => [-.14, .14].map(z => [x, 0, z, .035, .36, .035] as [number, number, number, number, number, number])),
+          [-.12, .31, 0, .03, .18, .03], [.12, .31, 0, .03, .18, .03], [0, .4, 0, .27, .03, .03],
+        ];
+        const mesh = new InstancedMesh(geometry, material, lanterns.length * frame.length);
+        lanterns.forEach((a, i) => frame.forEach(([x, y, z, w, h, d], j) => {
+          const c = Math.cos(a.yaw), s = Math.sin(a.yaw), index = i * frame.length + j;
+          mesh.setMatrixAt(index, matrix.compose(new Vector3(a.x + x * c + z * s, a.y + y, a.z - x * s + z * c), q.setFromAxisAngle(up, a.yaw), new Vector3(w, h, d)));
+          mesh.setColorAt(index, this.color.set('#71553d').multiplyScalar(1.4));
+        }));
+        mesh.computeBoundingSphere(); mesh.castShadow = mesh.receiveShadow = false; this.add(mesh); this.lanternFrame = mesh;
+      }
       lamps.forEach((accent, index) => { if (accent.flicker || accent.strobe) this.animated.push({ index, accent }); });
     }
   }
@@ -361,8 +364,8 @@ export class NightAccents extends Group {
   }
   snapshot() { return { studs: this.studs?.count ?? 0, lamps: this.lamps?.count ?? 0, fires: this.set.fires.length }; }
   dispose(): void {
-    for (const mesh of [this.studs, this.lamps, this.lanternBody, this.lanternHandle]) if (mesh) mesh.dispose();
-    ((this.lamps ?? this.studs)?.material as MeshBasicNodeMaterial | undefined)?.dispose();
+    for (const mesh of [this.studs, this.lamps]) if (mesh) (mesh.material as MeshBasicNodeMaterial).dispose();
+    for (const mesh of [this.studs, this.lamps, this.lanternFrame]) mesh?.dispose();
     (this.studs ?? this.lamps)?.geometry.dispose(); this.clear();
   }
 }

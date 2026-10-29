@@ -203,9 +203,6 @@ for x in [1367,1457,1547,1637,1727]:
 # Block the direct yard; northern loading yard and southern service lane stay open.
 surface('yard-road',[[1297,22],[1747,22],[1747,28],[1297,28]],'asphalt',.002)
 for z in range(-25,66,3): l.place('decay.makeshift-barricade',[1517,0,z])
-# Q-240: visible sections fill the ~1.3 m openings left between the existing barricades.
-# Keep the continuous gameplay collider below unchanged; these matching meshes only make its blocked line legible.
-for z in [-23.5 + i * 3 for i in range(30)]: l.place('decay.makeshift-barricade',[1517,0,z])
 # R4 destroyed entrance post, breached defensive line and low motor-pool shelters.
 l.place('bld.cure-guard-post',[1857,0,10])
 l.place('veh.military-truck',[1877,0,42]); l.data['placements'][-1]['decay']='wrecked'
@@ -1019,6 +1016,13 @@ for p in l.data['placements']:
 # Q-234: join the spaced R3 barricade colliders after dressing so generated
 # IDs and clearance decisions stay stable. Both detour lanes remain open.
 l.data['colliders'].append(dict(id='r3-blocked-yard-continuous', aabb=dict(min=[1515.36,0,-26.5], max=[1518.64,1.5,66.5]), minTier=0, maxTier=6))
+# Q-240: fill the visible gaps only after dressing, so all existing placements, IDs,
+# clearance decisions and colliders stay identical. The continuous strip remains authoritative.
+_gap_colliders = len(l.data['colliders'])
+for i in range(30):
+    l.place('decay.makeshift-barricade', [1517,0,-23.5 + i*3], allowed=True)
+    l.data['placements'][-1].update(id=f'r3-gap-visual-{i}', decor=True)
+del l.data['colliders'][_gap_colliders:]
 for p in l.data['placements']: p['maxTier']=6
 for c in l.data['colliders']: c['maxTier']=6
 # Semantic pavement shares the renderer's level top, no raised seam at the region/chunk boundary.
