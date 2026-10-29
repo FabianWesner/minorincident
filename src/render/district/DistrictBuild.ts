@@ -177,7 +177,7 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
         ),
       );
       for (const scene of scenes) {
-        const clone = scene.clone(true);
+        const clone = cloneLayoutGeometry(scene);
         // Baked layout nodes never move; avoid recomposing every hidden placement marker each frame.
         clone.traverse(o => { o.updateMatrix(); o.matrixAutoUpdate = false; });
         // PO 2026-10-12: the Grove back alleys were baked in the near-black UI token and read as a hole in the ground next to the
@@ -191,7 +191,6 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
         });
         // PO 10-13 "Flowers growing on stone": baked daisies on paths/paving are dropped (shared soil rule with the sim).
         stripStrayDecorations(clone, d.layout);
-        stripLayoutMarkers(clone);
         root.add(clone);
         if (d.layout.terrainChunks?.length) parts.terrainHorizon = clone;
       }
@@ -421,10 +420,13 @@ export function freezeBatch(batch: InstancedGroup): void {
 }
 /** Placement/crown data is read from the source GLB below. Its cloned empty
  * markers draw nothing, but otherwise enter every frame's matrix/shadow walk. */
-function stripLayoutMarkers(root: Object3D): void {
-  const markers: Object3D[] = [];
-  root.traverse(node => {
-    if (!(node instanceof Mesh) && !node.children.length && (typeof node.userData.assetId === 'string' || node.userData.foliageColors)) markers.push(node);
-  });
-  for (const marker of markers) marker.removeFromParent();
+/** Keep the source markers for reference assembly without allocating a second
+ * copy of thousands of invisible leaves that would immediately be discarded. */
+function cloneLayoutGeometry<T extends Object3D>(root: T): T {
+  const clone = root.clone(false);
+  for (const child of root.children) {
+    if (!(child instanceof Mesh) && !child.children.length && (typeof child.userData.assetId === 'string' || child.userData.foliageColors)) continue;
+    clone.add(cloneLayoutGeometry(child));
+  }
+  return clone;
 }

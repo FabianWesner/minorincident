@@ -83,6 +83,9 @@ export class Grass extends Mesh {
     geometry.computeVertexNormals(); geometry.computeBoundingSphere();
     super(geometry, material); this.fullCount = positions.length / 3; this.sparseCount = sparseCount;
     this.name = 'grass-gpu-wind'; this.receiveShadow = true;
+    // Every tile uses the same material and attribute layout. PreRenderer draws
+    // all tiles, but only needs one representative to compile that program.
+    this.userData.preRenderShared = true;
   }
   setQuality(low: boolean, density: number = low ? worldLook.grassDensityLow : worldLook.grassDensity): void {
     const maximum = low ? this.sparseCount : this.fullCount, ratio = density / (low ? 5 : 28);
