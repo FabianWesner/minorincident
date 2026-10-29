@@ -5,6 +5,7 @@ import { BoxGeometry, Color, Group, InstancedMesh, Matrix4, MeshBasicNodeMateria
 import { float, luminance, vec3 } from 'three/tsl';
 import manifest from '../assets/manifest.json' with { type: 'json' };
 import { crossing } from '../levels/L9/district';
+import { l6Camps } from '../levels/decor';
 import { cure } from '../levels/L10/district';
 import { cureEncounters } from '../levels/L10/encounters';
 import { Rng } from '../core/Rng';
@@ -40,9 +41,10 @@ const laneDistance = (p: P2) => Math.min(...crossing.routes.map(r => lineDistanc
 export function nightAccents(world: DistrictWorld | null | undefined): AccentSet {
   if (!world) return empty;
   const hit = cache.get(world); if (hit) return hit;
-  const district = world.districts.find(d => d.id === 'D-CROSSING'), cureDistrict = world.districts.find(d => d.id === 'D-CURE');
+  const district = world.districts.find(d => d.id === 'D-CROSSING'), cureDistrict = world.districts.find(d => d.id === 'D-CURE'), subway = world.districts.find(d => d.id === 'D-SUBWAY');
   const set = district ? crossingAccents(district.decay.placements.filter(p => !district.decay.removed.includes(p.id)), district.origin as P2)
-    : cureDistrict ? cureAccents(cureDistrict.decay.placements.filter(p => !cureDistrict.decay.removed.includes(p.id)), cureDistrict.origin as P2) : empty;
+    : cureDistrict ? cureAccents(cureDistrict.decay.placements.filter(p => !cureDistrict.decay.removed.includes(p.id)), cureDistrict.origin as P2)
+    : subway ? subwayAccents(subway.origin as P2) : empty;
   cache.set(world, set);
   return set;
 }
@@ -264,6 +266,24 @@ export function cureAccents(placements: readonly Placement[], origin: P2 = [0, 0
     const h = (dims.get(p.assetId)?.y ?? 1) * p.scale[1];
     if (ok(x, z, 9)) put({ kind: 'lantern', x, y: Math.min(1.6, h * .8), z, yaw: 0, color: '#ffc070', glow: 8, flicker: 1, strobe: false, pool: { color: 'light_window_warm', intensity: 3.8, range: 4.5 } });
   }
+  return { points, fires };
+}
+
+/** L6 (look-l6-l9, QA batch 27 "dark and sparse"): the retreat route is marked. Red road flares on the track bed edge (one every
+ * ~17 m, alternating sides, never at a service gate), a storm lantern at each abandoned tunnel camp (src/levels/decor.ts), and on
+ * the night street the fuel-truck crater and the wreck still burn, with flares leading from the escalator. Render-only. */
+export function subwayAccents(origin: P2 = [0, 0]): AccentSet {
+  const points: Accent[] = [], fires: AccentFire[] = [], rng = new Rng(624, 'l6-night:flares');
+  const put = (a: Omit<Accent, 'seed'>) => points.push({ ...a, x: a.x + origin[0], z: a.z + origin[1], seed: Math.abs(a.x * 12.9898 + a.z * 78.233) % 6.283 });
+  const flare = (x: number, y: number, z: number) => put({ kind: 'flare', x, y, z, yaw: rng.next() * 6.28, color: '#ff4a2a', glow: 14, flicker: 1, strobe: false, pool: { color: '#ff5a32', intensity: 4.4, range: 3.6 } });
+  for (let x = 38, n = 0; x < 244; x += 10 + rng.next() * 4, n++) {
+    const side = n % 2 ? 1 : -1, z = 15 + side * (1.15 + rng.next() * .3);
+    if ([90, 150, 210].some(g => Math.abs(x - g) < 3.5)) { rng.next(); continue; }
+    flare(x, .58, z);
+  }
+  for (const cx of l6Camps) put({ kind: 'lantern', x: cx + .6, y: 1.05, z: 18.15, yaw: 0, color: '#ffb35c', glow: 9, flicker: 1, strobe: false, pool: { color: '#ff9a48', intensity: 5, range: 3.4 } });
+  for (const [x, z] of [[261.5, 13.6], [266.5, 17.6], [271.5, 13.4]] as const) flare(x, 3.93, z);
+  fires.push({ x: 283 + origin[0], z: 8 + origin[1], radius: 1.4, car: true }, { x: 280.2 + origin[0], z: 21.2 + origin[1], radius: .8, car: false });
   return { points, fires };
 }
 
