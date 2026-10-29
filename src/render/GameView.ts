@@ -972,6 +972,7 @@ export class GameView implements Lifecycle {
     const locked = this.world.controls.snapshot()?.attack;
     const lockedEntity = locked ? this.world.entities.get(locked.id) : undefined;
     let subject: Box3 | undefined;
+    seeThrough.solidSilhouette.value = this.world.scenario === 'L6' && this.world.missions?.state.l6?.phase === 'retreat' ? 1 : 0;
     if (current) {
       const feet = current.y - .7;
       this.revealSubject.min.set(current.x - .55, feet, current.z - .55);

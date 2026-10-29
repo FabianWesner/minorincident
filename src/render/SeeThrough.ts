@@ -22,6 +22,8 @@ export const seeThrough = {
   /** Frozen corpses (StaticCorpses) dissolve inside the subject disc while the courier is on foot (Q-209): a small-corpse pile
    * at her feet buried her (L4 west breach). A uniform switch: the corpse programs compile once with the cut. */
   corpse: uniform(0).setGroup(renderGroup),
+  /** Tight L6 tunnel retreat uses a clean silhouette cut instead of fragment dither. */
+  solidSilhouette: uniform(0).setGroup(renderGroup),
   /** Legacy boss-mask diagnostic: the current Alpha-sized Mega stays opaque. */
   bossStrength: uniform(0).setGroup(renderGroup),
   /** Boss hole radius in screen heights (the boss hole is about a courier wide, not a survivor group). */
@@ -57,10 +59,11 @@ export const seeThroughKeep = (eligible?: Node<'float'>) => {
   const lens = eligible?.greaterThan(1.5).and(seeThrough.strength.greaterThan(.5))
     .and(positionView.z.greaterThan(seeThrough.depth)).and(positionWorld.y.greaterThan(seeThrough.floor.add(.08)));
   // Buildings (placements): fully clear the centre. A retained opaque core stacked foreground walls into a dark floating blob.
-  const keep = hole.greaterThan(noise);
+  const keep = seeThrough.solidSilhouette.greaterThan(.5).select(hole.greaterThan(.5), hole.greaterThan(noise));
   // Vehicles and props retain a screen-stable share of their surface inside the disc (retain = .35 while the player drives or
   // rides, 0 for the courier and her corgi on foot: PO #45 no dither dots over the figures). Shared noise across layers keeps the rest open.
-  const silhouette = hole.mul(seeThrough.retain.oneMinus()).add(seeThrough.retain).greaterThan(noise);
+  const retained = hole.mul(seeThrough.retain.oneMinus()).add(seeThrough.retain);
+  const silhouette = seeThrough.solidSilhouette.greaterThan(.5).select(retained.greaterThan(.5), retained.greaterThan(noise));
   return eligible ? eligible.lessThan(.5).or(keep.and(lens!.not())) : silhouette;
 };
 
