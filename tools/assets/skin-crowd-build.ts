@@ -1,4 +1,3 @@
-import { calibrateFigure, measureFigure } from './figure-proportions';
 import { restoreCrowdGlasses } from './skin-crowd-glasses';
 import { restoreClerkApron } from './restore-clerk-apron';
 import { restoreFireHelmet } from './restore-fire-helmet';
@@ -85,7 +84,7 @@ if (metadata?.class === 'quadruped' && ['amb.lion', 'inf.lion', 'amb.gorilla', '
   delete def.authoredLodRatios;
 }
 const io = await assetIO(), started = Date.now(), receipts = [];
-type ProtectedDetailLod = { lod: number; props?: { name: string; parent: string; triangles: number }[]; spatula_triangles?: number; spatula_parent?: string; decal_triangles?: number; text_parent?: string };
+type ProtectedDetailLod = { lod: number; spatula_triangles?: number; spatula_parent?: string; decal_triangles?: number; text_parent?: string };
 const protectedDetailsPath = join(source, 'protected-details.json');
 const protectedDetails = existsSync(protectedDetailsPath) ? JSON.parse(readFileSync(protectedDetailsPath, 'utf8')) as { lods?: ProtectedDetailLod[] } : undefined;
 // A carried object fused into the body cannot follow the game's prop lifecycle.
@@ -107,15 +106,6 @@ if (metadata?.class !== 'quadruped' && metadata?.class !== 'mega' && !def.animat
       return triangles === propContract.spatula_triangles && node.listParents().some(parent => parent.getName() === propContract.spatula_parent);
     });
     if (matching.length !== 1 || candidates.length !== 1) throw Error(`${id}: protected spatula contract does not match one separate source mesh`);
-    separateProps.add(matching[0].getName());
-  }
-  for (const prop of propContract?.props ?? []) {
-    const candidates = document.getRoot().listNodes().filter(node => node.getName() === prop.name);
-    const matching = candidates.filter(node => {
-      const triangles = (node.getMesh()?.listPrimitives() ?? []).reduce((sum, primitive) => sum + (primitive.getIndices()?.getCount() ?? primitive.getAttribute('POSITION')!.getCount()) / 3, 0);
-      return triangles === prop.triangles && node.listParents().some(parent => parent.getName() === prop.parent);
-    });
-    if (matching.length !== 1) throw Error(`${id}: protected prop ${prop.name} does not match its exact owner/triangle contract`);
     separateProps.add(matching[0].getName());
   }
   const bounds = getBounds(document.getRoot().listScenes()[0]), reach = (bounds.max[1] - bounds.min[1]) * .25;
@@ -155,21 +145,19 @@ for (const lod of [0, 1, 2]) {
   }
   if (protectedDetails?.lods) {
     const lodDetails = protectedDetails.lods.find(item => item.lod === sourceLod);
-    const protectedProps: ({ name: string; triangles: number; owner: string } | { pattern: RegExp; triangles: number; owner: string })[] = [
-      ...(lodDetails?.props ?? []).map(prop => ({ name: prop.name, triangles: prop.triangles, owner: prop.parent })),
-      ...(lodDetails?.spatula_triangles && lodDetails.spatula_parent ? [{ pattern: /spatula/i, triangles: lodDetails.spatula_triangles, owner: lodDetails.spatula_parent }] : []),
-      ...(lodDetails?.decal_triangles && lodDetails.text_parent ? [{ pattern: /decal/i, triangles: lodDetails.decal_triangles, owner: lodDetails.text_parent }] : []),
-    ];
+    const protectedProps: { pattern: RegExp; triangles?: number; owner?: string }[] = [
+      { pattern: /spatula/i, triangles: lodDetails?.spatula_triangles, owner: lodDetails?.spatula_parent },
+      { pattern: /decal/i, triangles: lodDetails?.decal_triangles, owner: lodDetails?.text_parent },
+    ].filter(prop => prop.triangles && prop.owner);
     if (protectedProps.length) {
       const sourceDocument = await io.read(rig);
       const entries = protectedProps.map(prop => {
-        const detailName = 'name' in prop ? prop.name : prop.pattern;
-        const candidates = sourceDocument.getRoot().listNodes().filter(node => node.getName() && ('name' in prop ? node.getName() === prop.name : prop.pattern.test(node.getName())));
+        const candidates = sourceDocument.getRoot().listNodes().filter(node => node.getName() && prop.pattern.test(node.getName()));
         const matching = candidates.filter(node => {
           const triangles = (node.getMesh()?.listPrimitives() ?? []).reduce((sum, primitive) => sum + (primitive.getIndices()?.getCount() ?? primitive.getAttribute('POSITION')!.getCount()) / 3, 0);
           return triangles === prop.triangles && node.listParents().some(parent => parent.getName() === prop.owner);
         });
-        if (matching.length !== 1 || candidates.length !== 1) throw Error(`${id}: protected detail ${detailName} does not match one separate source mesh at LOD${lod}`);
+        if (matching.length !== 1 || candidates.length !== 1) throw Error(`${id}: protected detail ${prop.pattern} does not match one separate source mesh at LOD${lod}`);
         return { name: matching[0].getName(), intended_owner: prop.owner, exact_owner: true };
       });
       const recipe = join(report, 'protected-props.json');
@@ -262,13 +250,6 @@ for (const lod of [0, 1, 2]) {
     if (!regions) throw Error(`${id}: regional readability pass requires a decoded body atlas`);
     await io.write(raw, document);
     writeFileSync(join(report, `lod${lod}.regions.json`), JSON.stringify({ ...regions, authoredPalette: palette }, null, 2) + '\n');
-  }
-  if (id !== 'char.courier-female' && !['quadruped', 'bird', 'prop'].includes(metadata?.class ?? '') && id !== 'npc.civilian-kid') {
-    const document = await io.read(raw);
-    const target = measureFigure(await io.read('public/assets/models/char.courier-female.skin.glb')).ratios;
-    const proportions = calibrateFigure(document, target);
-    await io.write(raw, document);
-    writeFileSync(join(report, `lod${lod}.proportions.json`), JSON.stringify(proportions, null, 2) + '\n');
   }
   const tiers = [];
   for (const low of [false, true]) {
