@@ -1,0 +1,13 @@
+{
+  "name": "q94-shelter",
+  "seed": 32,
+  "ground": "district",
+  "time": "L10-night",
+  "dof": false,
+  "layout": { "district": "D-CURE", "bbox": [[2672, 20], [2712, 60]] },
+  "actors": [{ "id": "courier", "kind": "courier", "at": [2692, 46], "god": true }],
+  "camera": { "mode": "game", "target": "courier", "zoom": 1 },
+  "frames": 1,
+  "sheet": 1,
+  "expect": { "consoleErrors": 0, "drawCallsMax": 300, "trianglesMax": 500000 }
+}

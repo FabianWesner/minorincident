@@ -342,7 +342,8 @@ class Bus:
         for sy in (-1, 1):
             x1 = DOOR_X0 - .03 if sy > 0 else 4.0
             self.box('stripe', ((X_REAR + .35 + x1) / 2, sy * (HW + .012), 1.29), (x1 - X_REAR - .35, .024, .14), 'policeBlue')
-        if L < 1:
+        # Q-94: low quality uses LOD1 nearby; keep the identifying livery there.
+        if L < 2:
             for sy, face in ((1, 'left'), (-1, 'right')):
                 self._text('EVAC', .46, 'blueTrim', Vector((.3, sy * (HW + .016), .83)), self.s.body, face=face, extrude=.02)
         # wheel arch lips

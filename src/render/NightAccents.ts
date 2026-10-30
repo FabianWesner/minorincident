@@ -253,7 +253,8 @@ export function cureAccents(placements: readonly Placement[], origin: P2 = [0, 0
     const h = (dims.get(p.assetId)?.y ?? 1) * p.scale[1];
     if (p.assetId === 'prop.cure-drum-stack') { if (l > 1 && l < 6) fires.push({ x: x + origin[0], z: z + origin[1], radius: .85, car: false, life: true }); }
     else if (p.decay === 'burned' && p.assetId.startsWith('veh.') && l > 3 && l < 8.5) fires.push({ x: x + origin[0], z: z + origin[1], radius: 1.2, car: true, life: true });
-    else if (p.assetId === 'bld.bus-stop') put({ kind: 'lantern', x, y: h * .92, z, yaw: 0, color: '#cfe4ff', glow: 9, flicker: 0, strobe: false, pool: { color: '#bcd8ff', intensity: 4.6, range: 6.5 } });
+    // Keep the whole emitter below the curved canopy, including its low edge.
+    else if (p.assetId === 'bld.bus-stop') put({ kind: 'lantern', x, y: h * .72, z, yaw: 0, color: '#cfe4ff', glow: 9, flicker: 0, strobe: false, pool: { color: '#bcd8ff', intensity: 4.6, range: 6.5 } });
     else if (p.assetId === 'veh.police-sedan' && !p.decay) {
       const c = Math.cos(p.yaw), s = Math.sin(p.yaw), ph = k.next() * 2;
       // Two road flares on the verge side of the lane, a few metres ahead of and behind the car (flat, drive-over safe).
