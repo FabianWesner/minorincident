@@ -76,7 +76,17 @@ try {
   }
   await fixture('q92', 'specs/scenes/catalog/qa-l3-ramp-west.json', 40);
   await fixture('q92-east', 'specs/scenes/catalog/qa-l3-ramp-east.json', 40);
-  await fixture('q35-l4', 'specs/scenes/catalog/dress-l8-cellar-l4.json', 60, s => { s.camera = { mode: 'game', target: 'courier', zoom: 1 }; });
+  if (wanted('q35-l4')) {
+    await session.open();
+    await session.page.evaluate(async () => {
+      const a = window.__SS__!; await a.loadLevel('L4', { seed: 1 }); a.missions.begin(); a.pause(); a.cheats.god(true);
+      const w = (window.__SCENE__ as unknown as { game: Game }).game.world, m = w.missions!;
+      m.state.l4!.phase = 'cellar'; m.state.l4!.descendAt = w.tick;
+      w.solids.admit(w.entities.get(1)!, 'l4.cellar');
+      const at = m.def.anchors['l4-cellar-in']; a.teleport('player', at); a.camera.follow(); await a.step(11);
+    });
+    await shots('q35-l4'); await session.close();
+  }
   await fixture('q145', 'tests/scenes/catalog/l5-po-metro-ingress.json', 330);
   await fixture('q215', 'specs/scenes/qa-l5-group.json', 90, s => {
     s.camera = { mode: 'game', target: 'courier', zoom: 1 }; s.weather = 'fog'; s.weatherWarmup = 60;
@@ -124,11 +134,16 @@ try {
   if (wanted('q175')) {
     await session.open();
     const spec = readSpec('tests/scenes/zoo-s3/qa-zoo-zebra-kick.json');
+    spec.actors![0].god = true;
     spec.camera = { mode: 'close', target: 'animal', radius: 3, azimuth: 45 };
     await session.load(spec);
     await session.page.evaluate(() => window.__SCENE__!.command('animal', { special: 'zebra.kick', target: 'courier' }));
     const cells = []; const dir = `${root}/q175-close`; mkdirSync(dir, { recursive: true });
     for (let frame = 0; frame <= 180; frame += 10) {
+      if (frame === 90) await session.page.evaluate(() => {
+        window.__SS__!.teleport('player', { x: 7, z: 0 });
+        window.__SCENE__!.command('animal', { chase: 'courier' });
+      });
       if (frame) await session.step(10);
       const jpeg = await session.snapshot(); cells.push({ frame, jpeg });
       writeFileSync(`${dir}/f${frame}.jpg`, jpeg);
