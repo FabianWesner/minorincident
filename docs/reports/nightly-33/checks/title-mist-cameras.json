@@ -1,0 +1,479 @@
+{
+  "sourceRevision": "165e05cd21a156b956dbb36f1c41f0b10bc7b1b9",
+  "rows": [
+    {
+      "row": "qa-l10-title-credits@high-z0.5",
+      "backend": "webgpu",
+      "actualTier": "high",
+      "checks": [
+        {
+          "name": "cure.titleFrames.min",
+          "pass": true,
+          "value": 300,
+          "limit": 300
+        },
+        {
+          "name": "cure.titleFrames.max",
+          "pass": true,
+          "value": 300,
+          "limit": 300
+        },
+        {
+          "name": "cure.creditsFrames.min",
+          "pass": true,
+          "value": 121,
+          "limit": 110
+        },
+        {
+          "name": "cure.creditsFrames.max",
+          "pass": true,
+          "value": 121,
+          "limit": 130
+        },
+        {
+          "name": "cure.pullScale.min",
+          "pass": true,
+          "value": 7,
+          "limit": 6.9
+        },
+        {
+          "name": "cure.pullScale.max",
+          "pass": true,
+          "value": 7,
+          "limit": 7.1
+        },
+        {
+          "name": "cure.fanFrames.min",
+          "pass": true,
+          "value": 479,
+          "limit": 400
+        },
+        {
+          "name": "cure.fanFrames.max",
+          "pass": true,
+          "value": 479,
+          "limit": 480
+        },
+        {
+          "name": "cure.mistPuffs.min",
+          "pass": true,
+          "value": 22,
+          "limit": 10
+        },
+        {
+          "name": "cure.mistPuffs.max",
+          "pass": true,
+          "value": 22,
+          "limit": 400
+        },
+        {
+          "name": "cure.smokeOverBudget.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.smokeOverBudget.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    },
+    {
+      "row": "qa-l10-title-credits@high-z1",
+      "backend": "webgpu",
+      "actualTier": "high",
+      "checks": [
+        {
+          "name": "cure.titleFrames.min",
+          "pass": true,
+          "value": 300,
+          "limit": 300
+        },
+        {
+          "name": "cure.titleFrames.max",
+          "pass": true,
+          "value": 300,
+          "limit": 300
+        },
+        {
+          "name": "cure.creditsFrames.min",
+          "pass": true,
+          "value": 121,
+          "limit": 110
+        },
+        {
+          "name": "cure.creditsFrames.max",
+          "pass": true,
+          "value": 121,
+          "limit": 130
+        },
+        {
+          "name": "cure.pullScale.min",
+          "pass": true,
+          "value": 7,
+          "limit": 6.9
+        },
+        {
+          "name": "cure.pullScale.max",
+          "pass": true,
+          "value": 7,
+          "limit": 7.1
+        },
+        {
+          "name": "cure.fanFrames.min",
+          "pass": true,
+          "value": 479,
+          "limit": 400
+        },
+        {
+          "name": "cure.fanFrames.max",
+          "pass": true,
+          "value": 479,
+          "limit": 480
+        },
+        {
+          "name": "cure.mistPuffs.min",
+          "pass": true,
+          "value": 78,
+          "limit": 10
+        },
+        {
+          "name": "cure.mistPuffs.max",
+          "pass": true,
+          "value": 78,
+          "limit": 400
+        },
+        {
+          "name": "cure.smokeOverBudget.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.smokeOverBudget.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    },
+    {
+      "row": "qa-l10-title-credits@high-z1.5",
+      "backend": "webgpu",
+      "actualTier": "high",
+      "checks": [
+        {
+          "name": "cure.titleFrames.min",
+          "pass": true,
+          "value": 300,
+          "limit": 300
+        },
+        {
+          "name": "cure.titleFrames.max",
+          "pass": true,
+          "value": 300,
+          "limit": 300
+        },
+        {
+          "name": "cure.creditsFrames.min",
+          "pass": true,
+          "value": 121,
+          "limit": 110
+        },
+        {
+          "name": "cure.creditsFrames.max",
+          "pass": true,
+          "value": 121,
+          "limit": 130
+        },
+        {
+          "name": "cure.pullScale.min",
+          "pass": true,
+          "value": 7,
+          "limit": 6.9
+        },
+        {
+          "name": "cure.pullScale.max",
+          "pass": true,
+          "value": 7,
+          "limit": 7.1
+        },
+        {
+          "name": "cure.fanFrames.min",
+          "pass": true,
+          "value": 479,
+          "limit": 400
+        },
+        {
+          "name": "cure.fanFrames.max",
+          "pass": true,
+          "value": 479,
+          "limit": 480
+        },
+        {
+          "name": "cure.mistPuffs.min",
+          "pass": true,
+          "value": 164,
+          "limit": 10
+        },
+        {
+          "name": "cure.mistPuffs.max",
+          "pass": true,
+          "value": 164,
+          "limit": 400
+        },
+        {
+          "name": "cure.smokeOverBudget.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.smokeOverBudget.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    },
+    {
+      "row": "qa-l10-title-credits@low-z0.5",
+      "backend": "webgpu",
+      "actualTier": "low",
+      "checks": [
+        {
+          "name": "cure.titleFrames.min",
+          "pass": true,
+          "value": 300,
+          "limit": 300
+        },
+        {
+          "name": "cure.titleFrames.max",
+          "pass": true,
+          "value": 300,
+          "limit": 300
+        },
+        {
+          "name": "cure.creditsFrames.min",
+          "pass": true,
+          "value": 121,
+          "limit": 110
+        },
+        {
+          "name": "cure.creditsFrames.max",
+          "pass": true,
+          "value": 121,
+          "limit": 130
+        },
+        {
+          "name": "cure.pullScale.min",
+          "pass": true,
+          "value": 7,
+          "limit": 6.9
+        },
+        {
+          "name": "cure.pullScale.max",
+          "pass": true,
+          "value": 7,
+          "limit": 7.1
+        },
+        {
+          "name": "cure.fanFrames.min",
+          "pass": true,
+          "value": 479,
+          "limit": 400
+        },
+        {
+          "name": "cure.fanFrames.max",
+          "pass": true,
+          "value": 479,
+          "limit": 480
+        },
+        {
+          "name": "cure.mistPuffs.min",
+          "pass": false,
+          "value": 7,
+          "limit": 10
+        },
+        {
+          "name": "cure.mistPuffs.max",
+          "pass": true,
+          "value": 7,
+          "limit": 400
+        },
+        {
+          "name": "cure.smokeOverBudget.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.smokeOverBudget.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    },
+    {
+      "row": "qa-l10-title-credits@low-z1",
+      "backend": "webgpu",
+      "actualTier": "low",
+      "checks": [
+        {
+          "name": "cure.titleFrames.min",
+          "pass": true,
+          "value": 300,
+          "limit": 300
+        },
+        {
+          "name": "cure.titleFrames.max",
+          "pass": true,
+          "value": 300,
+          "limit": 300
+        },
+        {
+          "name": "cure.creditsFrames.min",
+          "pass": true,
+          "value": 121,
+          "limit": 110
+        },
+        {
+          "name": "cure.creditsFrames.max",
+          "pass": true,
+          "value": 121,
+          "limit": 130
+        },
+        {
+          "name": "cure.pullScale.min",
+          "pass": true,
+          "value": 7,
+          "limit": 6.9
+        },
+        {
+          "name": "cure.pullScale.max",
+          "pass": true,
+          "value": 7,
+          "limit": 7.1
+        },
+        {
+          "name": "cure.fanFrames.min",
+          "pass": true,
+          "value": 479,
+          "limit": 400
+        },
+        {
+          "name": "cure.fanFrames.max",
+          "pass": true,
+          "value": 479,
+          "limit": 480
+        },
+        {
+          "name": "cure.mistPuffs.min",
+          "pass": true,
+          "value": 29,
+          "limit": 10
+        },
+        {
+          "name": "cure.mistPuffs.max",
+          "pass": true,
+          "value": 29,
+          "limit": 400
+        },
+        {
+          "name": "cure.smokeOverBudget.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.smokeOverBudget.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    },
+    {
+      "row": "qa-l10-title-credits@low-z1.5",
+      "backend": "webgpu",
+      "actualTier": "low",
+      "checks": [
+        {
+          "name": "cure.titleFrames.min",
+          "pass": true,
+          "value": 300,
+          "limit": 300
+        },
+        {
+          "name": "cure.titleFrames.max",
+          "pass": true,
+          "value": 300,
+          "limit": 300
+        },
+        {
+          "name": "cure.creditsFrames.min",
+          "pass": true,
+          "value": 121,
+          "limit": 110
+        },
+        {
+          "name": "cure.creditsFrames.max",
+          "pass": true,
+          "value": 121,
+          "limit": 130
+        },
+        {
+          "name": "cure.pullScale.min",
+          "pass": true,
+          "value": 7,
+          "limit": 6.9
+        },
+        {
+          "name": "cure.pullScale.max",
+          "pass": true,
+          "value": 7,
+          "limit": 7.1
+        },
+        {
+          "name": "cure.fanFrames.min",
+          "pass": true,
+          "value": 479,
+          "limit": 400
+        },
+        {
+          "name": "cure.fanFrames.max",
+          "pass": true,
+          "value": 479,
+          "limit": 480
+        },
+        {
+          "name": "cure.mistPuffs.min",
+          "pass": true,
+          "value": 61,
+          "limit": 10
+        },
+        {
+          "name": "cure.mistPuffs.max",
+          "pass": true,
+          "value": 61,
+          "limit": 400
+        },
+        {
+          "name": "cure.smokeOverBudget.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.smokeOverBudget.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "completedAt": "2026-10-30T03:39:24.230332+00:00",
+  "checkedRevision": "2e1fe3ae118f44e571fbf4c11003ea5e671f8b3a",
+  "branch": "lane/nightly-33",
+  "nightly": {
+    "exitCode": 0,
+    "testsPassed": 35,
+    "seconds": 214.99212529200003,
+    "campaign": "L1 through credits; all 10 levels complete",
+    "content": "passed",
+    "simBudget": "passed"
+  },
+  "unit": {
+    "localPassed": 107,
+    "localSkipped": 0,
+    "remotePassed": 106,
+    "remoteSkipped": 1,
+    "remoteSkipReason": "Mac-only legacy browser lock case; passed in the local 107-case run",
+    "exitCode": 0,
+    "seconds": 29.421368208
+  },
+  "typecheck": {
+    "exitCode": 0
+  },
+  "lint": {
+    "exitCode": 0
+  },
+  "smoke": {
+    "passed": 7,
+    "qaPassed": 6,
+    "publicPassed": 1,
+    "exitCode": 0,
+    "seconds": 143.543746125
+  },
+  "sceneGate": {
+    "passed": 48,
+    "failed": 0,
+    "missing": 0,
+    "exitCode": 0
+  },
+  "matrix": {
+    "basePassed": 2176,
+    "baseFailed": 14,
+    "rows": 2190,
+    "missing": 0,
+    "abnormalChildren": 0,
+    "all14FailuresReproducedTwice": true,
+    "affectedConsumersPassed": 60,
+    "reconciledPassed": 2182,
+    "filedFailures": 8,
+    "untriagedPriorPassRegressions": 0
+  },
+  "temporaryWorktreeRemoved": true,
+  "probeFixReachable": true,
+  "publication": "none"
+}

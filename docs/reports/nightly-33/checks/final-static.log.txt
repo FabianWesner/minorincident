@@ -1,0 +1,90 @@
+[runner] queued FIFO 01793331078208614000-68643.json; remote preferred, eligible Mac CPU fallback
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/nightly-33 -> 94.130.181.173:/srv/mi/ws/nightly-33-735451
+[remote] cache-gc deleted:none
+[remote] sync 44s, 19936 files; job /srv/mi/jobs/nightly-33-735451-68643-1793331077; queueing for a slot
+[runner] slot 0 acquired; load 0.57 0.22 0.08
+
+> test
+> node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner
+
+[test-budget] 147/150 test cases ({"vitest":126,"e2e":9,"invariantsBrowser":12}), 41/45 files
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/nightly-33-735451-68643-1793331077[39m
+
+[90mstdout[2m | tests/engine/save-progression.test.ts[2m > [22m[2mselection fallback: lost or empty weapons fall back to the best usable owned weapon, never an empty finite gun
+[22m[39m[campaign] selected action weapon.shotgun unavailable (not in destination rack); falling back to weapon.rocket-launcher
+
+[90mstdout[2m | tests/engine/save-progression.test.ts[2m > [22m[2mbare hands are innate: key 1 selects fists without them entering the carried racks
+[22m[39m[campaign] selected action weapon.fists unavailable (not in destination rack); falling back to weapon.rocket-launcher
+
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/save-progression.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 72[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/shared/render-contracts.test.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 638[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/combat.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 745[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/tools/qa-drivers.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 81[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/input.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 76[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/infected-ai.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 1410[2mms[22m[39m
+   [33m[2m✓[22m[39m every human and animal role validates and spawns with its catalog health and speed; every attack is telegraphed[33m 660[2mms[22m[39m
+   [33m[2m✓[22m[39m melee knocks down for a seeded 10-20 s (a ground hit restarts it) then up at full HP; explosives and burns kill for good[33m 515[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/shared/asset-contract.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 10180[2mms[22m[39m
+   [33m[2m✓[22m[39m crowd atlas cleanup preserves enclosed eye paint and its authored alpha class[33m 580[2mms[22m[39m
+   [33m[2m✓[22m[39m uniform and civilian faces and yellow bare arms share the per-person skin class[33m 401[2mms[22m[39m
+   [33m[2m✓[22m[39m the asset validator rejects every contract violation, and every production asset passes it[33m 9198[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/tools/gate-tools.test.ts [2m([22m[2m8 tests[22m[2m | [22m[33m1 skipped[39m[2m)[22m[33m 11182[2mms[22m[39m
+   [33m[2m✓[22m[39m scene gate resume requires identical rows, revision and backend identities[33m 1916[2mms[22m[39m
+   [33m[2m✓[22m[39m scene gate rejects stale, failed, malformed and incomplete child results[33m 2604[2mms[22m[39m
+   [33m[2m✓[22m[39m scene gate rejects invalid arguments and empty selections before running children[33m 5492[2mms[22m[39m
+   [33m[2m✓[22m[39m build-cache publication never leaves an interrupted copy looking complete[33m 958[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/collision.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 566[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/world-systems.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 816[2mms[22m[39m
+   [33m[2m✓[22m[39m explosions: every class follows its damage curve, full cover shields, rails take damage, chains are paced and capped, fires burn out[33m 315[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/aim-assist.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 414[2mms[22m[39m
+   [33m[2m✓[22m[39m keyboard fire at all eight facings: Off shoots along the facing, Default lands on the zombie in front[33m 373[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/input-log-codec.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 1577[2mms[22m[39m
+   [32m✓[39m input log codec [2m(2)[22m
+     [33m[2m✓[22m[39m round-trips every InputFrame field and scheme exactly, with float64 precision and commands at their sample index[33m 541[2mms[22m[39m
+     [33m[2m✓[22m[39m cuts independent chunks under the upload cap, decodes them in order, survives gzip and rejects gaps and garbage[33m 1030[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/navigation.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 2429[2mms[22m[39m
+   [33m[2m✓[22m[39m A*: budgeted search resumes across ticks within its expansion budget; connectivity tells a long route from an enclosed yard[33m 2029[2mms[22m[39m
+   [33m[2m✓[22m[39m chasers path through a maze and an offset district without ever overlapping a static collider[33m 331[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/spawn-director.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 7780[2mms[22m[39m
+   [33m[2m✓[22m[39m a 150-infected migration follows its spline on time and fans out at the goal[33m 1064[2mms[22m[39m
+   [33m[2m✓[22m[39m pooling: spawn/kill cycles reuse prewarmed records, keep every corpse, and refresh borrowed collision radii[33m 6350[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/core.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 123[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/director-pressure.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 331[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/missions.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 16641[2mms[22m[39m
+   [33m[2m✓[22m[39m every objective type completes through the real sim exactly once[33m 551[2mms[22m[39m
+   [33m[2m✓[22m[39m graph timing: parallel tasks join in any order; a timeout fires exactly at 120 s, retry restores the timer, completion cancels it[33m 1606[2mms[22m[39m
+   [33m[2m✓[22m[39m interactions: ring, input and view predicates agree for every interact step of every level[33m 14415[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/npcs.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 1296[2mms[22m[39m
+   [33m[2m✓[22m[39m civilians: seeded grab → bite → down → glowing eyes → rising → infected cycle in place; panic flees; a kill during the grab saves[33m 529[2mms[22m[39m
+   [33m[2m✓[22m[39m escort: follows through a maze without crossing walls, a 2 s stand revives to 50 %, unattended 20 s down fails the mission[33m 762[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/vehicles.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 300[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/player.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 914[2mms[22m[39m
+   [33m[2m✓[22m[39m walls: a 72-direction capsule sweep never penetrates the wall ring; sliding keeps 60 % tangential speed[33m 754[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/tools/browser-pool-client.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/tools/playtest-finale-retreat.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 3[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/shared/architecture.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 3013[2mms[22m[39m
+   [33m[2m✓[22m[39m the sim import graph never reaches renderer, UI, debug or DOM code (only three math classes and Rapier)[33m 1984[2mms[22m[39m
+   [33m[2m✓[22m[39m lint rejects unseeded randomness, DOM and renderer imports in the sim[33m 1027[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/determinism.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 14208[2mms[22m[39m
+   [33m[2m✓[22m[39m a serialized recording replays the identical state hash at every tick; snapshots are copies; reset frees everything[33m 654[2mms[22m[39m
+   [33m[2m✓[22m[39m real levels replay deterministically: same seed and script give the same hash on L1, L4 and L10[33m 13322[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/tools/test-budget-tools.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 24681[2mms[22m[39m
+   [33m[2m✓[22m[39m test budget collection is passive, rejects missing counts and bounds collection with child cleanup[33m 24680[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m25 passed[39m[22m[90m (25)[39m
+[2m      Tests [22m [1m[32m106 passed[39m[22m[2m | [22m[33m1 skipped[39m[90m (107)[39m
+[2m   Start at [22m 03:32:09
+[2m   Duration [22m 42.97s[2m (tests 82%, transform 9%, import 7%, setup 1%)[22m
+
+[test-budget] test: 49.0 s (budget 240 s)
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+> lint
+> eslint src tests tools functions *.config.ts eslint.config.js
+
+[remote] pulled test-results/timings/test.json
+[remote] done exit=0 (runner 94.130.181.173, sync 44s, remote total 109s)

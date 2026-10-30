@@ -1,0 +1,41 @@
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { SceneSession, readSpec, stopServer } from '../../tools/scenelab/session';
+import { runSpec } from '../../tools/scenelab/run';
+const rows = process.argv.slice(2); if (!rows.length) throw new Error('Provide exact foot rows');
+const source = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+try {
+  for (const row of rows) {
+    const match = /^(.+)@(high|low)-z([\d.]+)$/.exec(row); if (!match) throw new Error('Bad row ' + row);
+    const [, name, tier, zoom] = match, file = `tests/scenes/catalog/${name}.json`, out = `test-results/nightly-33/foot-depth/${row}`;
+    const session = new SceneSession({ backend: 'webgpu', tier: tier as 'high' | 'low', viewport: { width: 960, height: 540 } });
+    try {
+      await session.open();
+      await session.page.evaluate(async () => {
+        const { pickBodies } = await import('/src/render/characters/PickBodies.ts') as any;
+        const lab = window.__SCENE__ as any, original = lab.sample.bind(lab), box = pickBodies.topBounds.clone();
+        (window as any).__N33FOOT__ = [];
+        lab.sample = () => {
+          original(); const actor = lab.actors.get('follower-4'); if (!actor) return;
+          const f = actor.track.at(-1); if (!f || f.frame < 3 || !f.feet.length || /death|knockdown|flung|get-up|crawl|collapse|rise|sit|stand-up|grabbed|bitten|down/.test(f.clip ?? '')) return;
+          const anchor = Math.min(...f.feet.flatMap((foot: any) => [foot.heel[1], foot.toe[1]])); if (anchor >= f.floor - .0001) return;
+          const bounds = pickBodies.bounds(actor.entity, box); if (!bounds) return;
+          const entry = pickBodies.entries.get(actor.entity), parts = entry.geometry.getAttribute('_parts'), skin = entry.geometry.getAttribute('_skin');
+          let footY = Infinity, worst: any = null;
+          for (const i of pickBodies.skinSupport(entry.geometry, entry.cutMask)) {
+            const y = entry.vertices[i * 3 + 1], primary = entry.palette.clip.parts[parts.getX(i)];
+            if (!['footL', 'footR'].includes(primary)) continue;
+            if (y < footY) { footY = y; worst = { vertex: i, primary, position: Array.from(entry.vertices.slice(i * 3, i * 3 + 3)), skin: [skin.getX(i), skin.getY(i), skin.getZ(i), skin.getW(i)] }; }
+          }
+          (window as any).__N33FOOT__.push({ frame: f.frame, clip: f.clip, floor: f.floor, anchorY: anchor, meshY: bounds.min.y, footY: Number.isFinite(footY) ? footY : null, worstFootVertex: worst, oldSinkCm: (f.floor - anchor) * 100, meshSinkCm: Math.max(0, f.floor - bounds.min.y) * 100, footSinkCm: Number.isFinite(footY) ? Math.max(0, f.floor - footY) * 100 : null });
+        };
+      });
+      const spec = readSpec(file); spec.camera = { ...spec.camera!, zoom: Number(zoom) } as typeof spec.camera;
+      const result = await runSpec(session, spec, { file, out, shots: [], sheet: 100 });
+      const samples = await session.page.evaluate(() => (window as any).__N33FOOT__);
+      const evidence = { sourceRevision: source, row, backend: result.backend, rawPass: result.pass, failed: result.failed, samples };
+      mkdirSync(out, { recursive: true }); writeFileSync(`${out}/vertex-depth.json`, JSON.stringify(evidence, null, 2) + '\n');
+      console.log(row, 'rawPass', result.pass, 'samples', samples.length, 'maxFootSinkCm', Math.max(0, ...samples.map((s: any) => s.footSinkCm ?? 0)));
+    } finally { await session.close(); }
+  }
+} finally { stopServer(); }

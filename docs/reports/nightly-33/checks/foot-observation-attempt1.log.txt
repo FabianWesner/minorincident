@@ -1,0 +1,13 @@
+[scene] starting vite dev on http://127.0.0.1:3343
+/Users/wesner/Workspace/minorincident/.claude/worktrees/nightly-33/tools/browser-pool/client.ts:25
+  if (!health) throw new Error('Pool disappeared after admission; refusing an unguarded browser launch');
+                     ^
+
+Error: Pool disappeared after admission; refusing an unguarded browser launch
+    at poolEndpoint (/Users/wesner/Workspace/minorincident/.claude/worktrees/nightly-33/tools/browser-pool/client.ts:25:22)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async launchBrowser (/Users/wesner/Workspace/minorincident/.claude/worktrees/nightly-33/tools/browser-pool/client.ts:37:20)
+    at async SceneSession.open (/Users/wesner/Workspace/minorincident/.claude/worktrees/nightly-33/tools/scenelab/session.ts:77:31)
+    at async <anonymous> (/Users/wesner/Workspace/minorincident/.claude/worktrees/nightly-33/test-results/nightly-33/foot-depth.ts:13:7)
+
+Node.js v26.0.0

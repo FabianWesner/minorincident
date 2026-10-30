@@ -1,0 +1,22 @@
+{
+  "seconds": 11.576,
+  "rows": [
+    {
+      "name": "qa-l10-title-credits@low-z0.5",
+      "file": "tests/scenes/catalog/qa-l10-title-credits.json",
+      "pass": false,
+      "seconds": 9.924,
+      "frames": 480,
+      "errors": 0,
+      "requestedTier": "low",
+      "actualTier": "low",
+      "gates": "ok cure.titleFrames.min 300/300; ok cure.titleFrames.max 300/300; ok cure.creditsFrames.min 121/110; ok cure.creditsFrames.max 121/130; ok cure.pullScale.min 7/6.9; ok cure.pullScale.max 7/7.1; ok cure.fanFrames.min 479/400; ok cure.fanFrames.max 479/480; FAIL cure.mistPuffs.min 7/10; ok cure.mistPuffs.max 7/400; ok cure.smokeOverBudget.min 0/0; ok cure.smokeOverBudget.max 0/0; ok consoleErrors 0/0; ok drawCallsMax 50/300; ok trianglesMax 54237/500000; ok lodPlaceholderFramesMax 0/0; ok canvas.f0.varianceMin 966.7/1; ok canvas.f0.variedTilesMin 62/8; ok canvas.f60.varianceMin 998.7/1; ok canvas.f60.variedTilesMin 62/8; ok canvas.f120.varianceMin 1015.3/1; ok canvas.f120.variedTilesMin 61/8; ok canvas.f180.varianceMin 972.9/1; ok canvas.f180.variedTilesMin 63/8; ok canvas.f240.varianceMin 954.9/1; ok canvas.f240.variedTilesMin 62/8; ok canvas.f300.varianceMin 963.7/1; ok canvas.f300.variedTilesMin 61/8; ok canvas.f360.varianceMin 956.4/1; ok canvas.f360.variedTilesMin 62/8; ok canvas.f420.varianceMin 996.7/1; ok canvas.f420.variedTilesMin 62/8; ok canvas.f480.varianceMin 994.1/1; ok canvas.f480.variedTilesMin 62/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+      "failed": [
+        "cure.mistPuffs.min 7 > 10"
+      ],
+      "sheet": "qa-l10-title-credits@low-z0.5/sheet.jpg",
+      "sheetKb": 73,
+      "note": "Last second of playable epilogue, five-second Minor Incident title then credits. Exact release-relative clock; game camera with production fan/mist, bounded survivor cast and title/credits phase gates."
+    }
+  ]
+}

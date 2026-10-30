@@ -1,0 +1,123 @@
+{
+  "baseRevision": "165e05cd21a156b956dbb36f1c41f0b10bc7b1b9",
+  "fixedRevision": "c73c367891a99a48ec95fa75fb2d193b89799132",
+  "consumerScenes": 10,
+  "consumerRows": 60,
+  "thresholdChanges": 0,
+  "scenes": [
+    {
+      "scene": "alpha-hit-corpse-base",
+      "thresholds": {
+        "look": {
+          "whiteShareMax": 0.03,
+          "lumaRiseMax": 2.2,
+          "hueDriftMaxDeg": 60
+        }
+      },
+      "unchanged": true
+    },
+    {
+      "scene": "alpha-hit-corpse-fire",
+      "thresholds": {
+        "look": {
+          "whiteShareMax": 0.03,
+          "lumaRiseMax": 2.2,
+          "hueDriftMaxDeg": 60
+        }
+      },
+      "unchanged": true
+    },
+    {
+      "scene": "alpha-hit-corpse-hoodie",
+      "thresholds": {
+        "look": {
+          "whiteShareMax": 0.03,
+          "lumaRiseMax": 2.2,
+          "hueDriftMaxDeg": 60
+        }
+      },
+      "unchanged": true
+    },
+    {
+      "scene": "alpha-hit-corpse-mega",
+      "thresholds": {
+        "look": {
+          "whiteShareMax": 0.03,
+          "lumaRiseMax": 2.2,
+          "hueDriftMaxDeg": 60
+        }
+      },
+      "unchanged": true
+    },
+    {
+      "scene": "alpha-hit-corpse-mega-ashen",
+      "thresholds": {
+        "look": {
+          "whiteShareMax": 0.03,
+          "lumaRiseMax": 2.2,
+          "hueDriftMaxDeg": 60
+        }
+      },
+      "unchanged": true
+    },
+    {
+      "scene": "alpha-hit-corpse-mega-ember",
+      "thresholds": {
+        "look": {
+          "whiteShareMax": 0.03,
+          "lumaRiseMax": 2.2,
+          "hueDriftMaxDeg": 60
+        }
+      },
+      "unchanged": true
+    },
+    {
+      "scene": "alpha-hit-corpse-suit",
+      "thresholds": {
+        "look": {
+          "whiteShareMax": 0.03,
+          "lumaRiseMax": 2.2,
+          "hueDriftMaxDeg": 60
+        }
+      },
+      "unchanged": true
+    },
+    {
+      "scene": "alpha-hit-corpse-worker",
+      "thresholds": {
+        "look": {
+          "whiteShareMax": 0.03,
+          "lumaRiseMax": 2.2,
+          "hueDriftMaxDeg": 60
+        }
+      },
+      "unchanged": true
+    },
+    {
+      "scene": "fix-l5-alpha-fire",
+      "thresholds": {
+        "look": {
+          "whiteShareMax": 0.03,
+          "lumaRiseMax": 1.6
+        }
+      },
+      "unchanged": true
+    },
+    {
+      "scene": "l10-q1-alpha-silhouette",
+      "thresholds": {
+        "edgeNoise": {
+          "rect": [
+            0.25,
+            0.05,
+            0.75,
+            0.95
+          ],
+          "extremeEdgeShareMax": 0.1,
+          "silhouetteRoughnessMax": 15.5
+        }
+      },
+      "unchanged": true
+    }
+  ]
+}

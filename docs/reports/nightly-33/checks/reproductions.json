@@ -1,0 +1,434 @@
+[
+  {
+    "run": 1,
+    "sourceRevision": "165e05cd21a156b956dbb36f1c41f0b10bc7b1b9",
+    "rows": [
+      {
+        "row": "collision-l7-departure@high-z1.5",
+        "pass": false,
+        "backend": "webgpu",
+        "actualTier": "high",
+        "failedChecks": [
+          {
+            "name": "footSinkMaxCm",
+            "pass": false,
+            "value": 0.1,
+            "limit": 0
+          }
+        ],
+        "metricsSha256": "94c82f2c5cc4df89b30e72b397e9626e43d47b6df000ac0c64c7198f27de2d13"
+      },
+      {
+        "row": "collision-l7-departure@low-z1.5",
+        "pass": false,
+        "backend": "webgpu",
+        "actualTier": "low",
+        "failedChecks": [
+          {
+            "name": "footSinkMaxCm",
+            "pass": false,
+            "value": 0.1,
+            "limit": 0
+          }
+        ],
+        "metricsSha256": "3c09008eb75db5a7f5c273e2f70e24eec54da730457bf944246ff83e00dff956"
+      },
+      {
+        "row": "fix-l5-alpha-fire@high-z0.5",
+        "pass": false,
+        "backend": "webgpu",
+        "actualTier": "high",
+        "failedChecks": [
+          {
+            "name": "lookLumaRise",
+            "pass": false,
+            "value": 1.81,
+            "limit": 1.6
+          }
+        ],
+        "metricsSha256": "64b7df333243c3e714c676e79bc6d2cdee0df9120baa017813714aa7b34c5aea"
+      },
+      {
+        "row": "fix-l5-alpha-fire@high-z1",
+        "pass": false,
+        "backend": "webgpu",
+        "actualTier": "high",
+        "failedChecks": [
+          {
+            "name": "lookLumaRise",
+            "pass": false,
+            "value": 1.68,
+            "limit": 1.6
+          }
+        ],
+        "metricsSha256": "798094c2a71b7157dc69ae8fdc2d8d4b6f0fc30d33e263ccad64907ec0254a7d"
+      },
+      {
+        "row": "fix-l5-alpha-fire@low-z0.5",
+        "pass": false,
+        "backend": "webgpu",
+        "actualTier": "low",
+        "failedChecks": [
+          {
+            "name": "lookLumaRise",
+            "pass": false,
+            "value": 1.81,
+            "limit": 1.6
+          }
+        ],
+        "metricsSha256": "2d955b50323f8406fd5a13faed45b5b45e4dd0bf64bb28368e0fb48ab63bc58a"
+      },
+      {
+        "row": "fix-l5-alpha-fire@low-z1",
+        "pass": false,
+        "backend": "webgpu",
+        "actualTier": "low",
+        "failedChecks": [
+          {
+            "name": "lookLumaRise",
+            "pass": false,
+            "value": 1.68,
+            "limit": 1.6
+          }
+        ],
+        "metricsSha256": "9bf782e8be49a8f076ba98736e0179b9509c4812f770bc3fedcf8823ff9078b2"
+      },
+      {
+        "row": "l10-q1-alpha-silhouette@high-z0.5",
+        "pass": false,
+        "backend": "webgpu",
+        "actualTier": "high",
+        "failedChecks": [
+          {
+            "name": "alphaSilhouetteRoughness",
+            "pass": false,
+            "value": 16.748601042179423,
+            "limit": 15.5
+          }
+        ],
+        "metricsSha256": "7cdf99c4053cfaf4384b8a9d383ea32c7811a303fa0404d413cc0f3ce6f549a1"
+      },
+      {
+        "row": "l10-q1-alpha-silhouette@low-z0.5",
+        "pass": false,
+        "backend": "webgpu",
+        "actualTier": "low",
+        "failedChecks": [
+          {
+            "name": "alphaSilhouetteRoughness",
+            "pass": false,
+            "value": 16.79609276540171,
+            "limit": 15.5
+          }
+        ],
+        "metricsSha256": "d070e92821ef6f856c08b966baa367df80f8eadf01979a185f986325e155c6f6"
+      },
+      {
+        "row": "qa-l10-title-credits@low-z0.5",
+        "pass": false,
+        "backend": "webgpu",
+        "actualTier": "low",
+        "failedChecks": [
+          {
+            "name": "cure.mistPuffs.min",
+            "pass": false,
+            "value": 7,
+            "limit": 10
+          }
+        ],
+        "metricsSha256": "4bdabcbfd9aa77fe94401ce3e35794766160cb90340d535bd94287910eefbd9c"
+      },
+      {
+        "row": "qa-l7-entry-bus@high-z1.5",
+        "pass": false,
+        "backend": "webgpu",
+        "actualTier": "high",
+        "failedChecks": [
+          {
+            "name": "footSinkMaxCm",
+            "pass": false,
+            "value": 0.1,
+            "limit": 0
+          }
+        ],
+        "metricsSha256": "5f8879de567861d22e721ca4ce865d3d773467785d255a51ccfadbd7c5fcf40d"
+      },
+      {
+        "row": "qa-l7-entry-bus@low-z1",
+        "pass": false,
+        "backend": "webgpu",
+        "actualTier": "low",
+        "failedChecks": [
+          {
+            "name": "footSinkMaxCm",
+            "pass": false,
+            "value": 0.1,
+            "limit": 0
+          }
+        ],
+        "metricsSha256": "1a6ccaf75d4e8665b8120e9af915763bbe105dd137776d1760e108ae8081c6a4"
+      },
+      {
+        "row": "qa-l7-entry-bus@low-z1.5",
+        "pass": false,
+        "backend": "webgpu",
+        "actualTier": "low",
+        "failedChecks": [
+          {
+            "name": "footSinkMaxCm",
+            "pass": false,
+            "value": 0.1,
+            "limit": 0
+          }
+        ],
+        "metricsSha256": "4326b3ca99812015db2c4e40bfd2926c50f6f2bb90eccdfdc049137e231b4abc"
+      },
+      {
+        "row": "qa-late-bus-departure@high-z1.5",
+        "pass": false,
+        "backend": "webgpu",
+        "actualTier": "high",
+        "failedChecks": [
+          {
+            "name": "footSinkMaxCm",
+            "pass": false,
+            "value": 0.1,
+            "limit": 0
+          }
+        ],
+        "metricsSha256": "a6fd620646a2e1441d355509ba84044fd3f8ec7260de9f400fbc3c29811cbdb9"
+      },
+      {
+        "row": "qa-late-bus-departure@low-z1.5",
+        "pass": false,
+        "backend": "webgpu",
+        "actualTier": "low",
+        "failedChecks": [
+          {
+            "name": "footSinkMaxCm",
+            "pass": false,
+            "value": 0.1,
+            "limit": 0
+          }
+        ],
+        "metricsSha256": "8c67b93a83d32d23a0db801b1a1466611eff1f8db01542a70ffed90878d9eb13"
+      }
+    ]
+  },
+  {
+    "run": 2,
+    "sourceRevision": "165e05cd21a156b956dbb36f1c41f0b10bc7b1b9",
+    "rows": [
+      {
+        "row": "collision-l7-departure@high-z1.5",
+        "pass": false,
+        "backend": "webgpu",
+        "actualTier": "high",
+        "failedChecks": [
+          {
+            "name": "footSinkMaxCm",
+            "pass": false,
+            "value": 0.1,
+            "limit": 0
+          }
+        ],
+        "metricsSha256": "9c1f739ba8f6f1f7343c91bd57aa80607fc51f20a60184332ccd8b60dab85bcb"
+      },
+      {
+        "row": "collision-l7-departure@low-z1.5",
+        "pass": false,
+        "backend": "webgpu",
+        "actualTier": "low",
+        "failedChecks": [
+          {
+            "name": "footSinkMaxCm",
+            "pass": false,
+            "value": 0.1,
+            "limit": 0
+          }
+        ],
+        "metricsSha256": "4198a2dffc8115c66b806efd07f0948ec41c9d0998cb2989f241f994879b886f"
+      },
+      {
+        "row": "fix-l5-alpha-fire@high-z0.5",
+        "pass": false,
+        "backend": "webgpu",
+        "actualTier": "high",
+        "failedChecks": [
+          {
+            "name": "lookLumaRise",
+            "pass": false,
+            "value": 1.81,
+            "limit": 1.6
+          }
+        ],
+        "metricsSha256": "4e7913273cfeef9f78ee064d7dc6f8e6f2b95f5bf3f6639484429c54aa9182ca"
+      },
+      {
+        "row": "fix-l5-alpha-fire@high-z1",
+        "pass": false,
+        "backend": "webgpu",
+        "actualTier": "high",
+        "failedChecks": [
+          {
+            "name": "lookLumaRise",
+            "pass": false,
+            "value": 1.68,
+            "limit": 1.6
+          }
+        ],
+        "metricsSha256": "dbeb57de6ff2bc66bd0a85d060ba809d539e7d7e938c631e42aaa0541f8e9fe3"
+      },
+      {
+        "row": "fix-l5-alpha-fire@low-z0.5",
+        "pass": false,
+        "backend": "webgpu",
+        "actualTier": "low",
+        "failedChecks": [
+          {
+            "name": "lookLumaRise",
+            "pass": false,
+            "value": 1.81,
+            "limit": 1.6
+          }
+        ],
+        "metricsSha256": "bcad5cc3d33bf9e9d8f1a0d5f3ac991df8ce5441fa3353a66c50b3164a4512a2"
+      },
+      {
+        "row": "fix-l5-alpha-fire@low-z1",
+        "pass": false,
+        "backend": "webgpu",
+        "actualTier": "low",
+        "failedChecks": [
+          {
+            "name": "lookLumaRise",
+            "pass": false,
+            "value": 1.68,
+            "limit": 1.6
+          }
+        ],
+        "metricsSha256": "5564ab13428e784f3d4f56d675cc45e92ae97f73663d1c86edfb2ec1ae4c4885"
+      },
+      {
+        "row": "l10-q1-alpha-silhouette@high-z0.5",
+        "pass": false,
+        "backend": "webgpu",
+        "actualTier": "high",
+        "failedChecks": [
+          {
+            "name": "alphaSilhouetteRoughness",
+            "pass": false,
+            "value": 16.748601042179423,
+            "limit": 15.5
+          }
+        ],
+        "metricsSha256": "d23d683b3e862a5187a8031872c968a8788b71931664a64b65aa920b8f0aae3d"
+      },
+      {
+        "row": "l10-q1-alpha-silhouette@low-z0.5",
+        "pass": false,
+        "backend": "webgpu",
+        "actualTier": "low",
+        "failedChecks": [
+          {
+            "name": "alphaSilhouetteRoughness",
+            "pass": false,
+            "value": 16.79609276540171,
+            "limit": 15.5
+          }
+        ],
+        "metricsSha256": "47e9c32eeccd54551dacbbe05fcfe77ee99c90a9fa7937d394d03604403f0d15"
+      },
+      {
+        "row": "qa-l10-title-credits@low-z0.5",
+        "pass": false,
+        "backend": "webgpu",
+        "actualTier": "low",
+        "failedChecks": [
+          {
+            "name": "cure.mistPuffs.min",
+            "pass": false,
+            "value": 7,
+            "limit": 10
+          }
+        ],
+        "metricsSha256": "1f9ccd186a1ac4247b23a05ab7d840f7434bccc19114121d7f1bd1d22d9416fd"
+      },
+      {
+        "row": "qa-l7-entry-bus@high-z1.5",
+        "pass": false,
+        "backend": "webgpu",
+        "actualTier": "high",
+        "failedChecks": [
+          {
+            "name": "footSinkMaxCm",
+            "pass": false,
+            "value": 0.1,
+            "limit": 0
+          }
+        ],
+        "metricsSha256": "e9e0bef9ad15b38011cf27cbd3734c51295cdc1260ec25acc50f6c739f01a9ce"
+      },
+      {
+        "row": "qa-l7-entry-bus@low-z1",
+        "pass": false,
+        "backend": "webgpu",
+        "actualTier": "low",
+        "failedChecks": [
+          {
+            "name": "footSinkMaxCm",
+            "pass": false,
+            "value": 0.1,
+            "limit": 0
+          }
+        ],
+        "metricsSha256": "3399709e0e3bb074c8ce7d2bad675a12a2ce6ef4cebee5c087853ab9fa3027c4"
+      },
+      {
+        "row": "qa-l7-entry-bus@low-z1.5",
+        "pass": false,
+        "backend": "webgpu",
+        "actualTier": "low",
+        "failedChecks": [
+          {
+            "name": "footSinkMaxCm",
+            "pass": false,
+            "value": 0.1,
+            "limit": 0
+          }
+        ],
+        "metricsSha256": "a90f37fbfa48d4e6f31d22563bddd763f5cd134c9fe32b9ca68ecae5e14e1153"
+      },
+      {
+        "row": "qa-late-bus-departure@high-z1.5",
+        "pass": false,
+        "backend": "webgpu",
+        "actualTier": "high",
+        "failedChecks": [
+          {
+            "name": "footSinkMaxCm",
+            "pass": false,
+            "value": 0.1,
+            "limit": 0
+          }
+        ],
+        "metricsSha256": "751220fe8291fdff47e1e4d11e49d3df49ba3cd81f1bd70088755813cb816f3d"
+      },
+      {
+        "row": "qa-late-bus-departure@low-z1.5",
+        "pass": false,
+        "backend": "webgpu",
+        "actualTier": "low",
+        "failedChecks": [
+          {
+            "name": "footSinkMaxCm",
+            "pass": false,
+            "value": 0.1,
+            "limit": 0
+          }
+        ],
+        "metricsSha256": "fc16f14480d40d9099887165538c40c6f92edb6cce50833fd8420970f87df232"
+      }
+    ]
+  }
+]

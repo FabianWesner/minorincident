@@ -1,0 +1,107 @@
+{
+  "seconds": 94.511,
+  "rows": [
+    {
+      "name": "collision-l7-departure@high-z1.5",
+      "file": "tests/scenes/catalog/collision-l7-departure.json",
+      "pass": false,
+      "seconds": 16.189,
+      "frames": 1100,
+      "errors": 0,
+      "requestedTier": "high",
+      "actualTier": "high",
+      "gates": "ok collisionFailures 0/0; ok collisionPending 0/0; ok consoleErrors 0/0; FAIL footSinkMaxCm 0.1/0; ok undrawnFramesMax 0/0; ok drawCallsMax 83/900; ok canvas.f0.varianceMin 4421.8/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f100.varianceMin 4619.1/1; ok canvas.f100.variedTilesMin 64/8; ok canvas.f200.varianceMin 4901.2/1; ok canvas.f200.variedTilesMin 64/8; ok canvas.f300.varianceMin 5099.0/1; ok canvas.f300.variedTilesMin 64/8; ok canvas.f400.varianceMin 5107.7/1; ok canvas.f400.variedTilesMin 64/8; ok canvas.f500.varianceMin 535.0/1; ok canvas.f500.variedTilesMin 64/8; ok canvas.f600.varianceMin 1867.1/1; ok canvas.f600.variedTilesMin 64/8; ok canvas.f700.varianceMin 1155.0/1; ok canvas.f700.variedTilesMin 64/8; ok canvas.f800.varianceMin 811.3/1; ok canvas.f800.variedTilesMin 64/8; ok canvas.f900.varianceMin 621.1/1; ok canvas.f900.variedTilesMin 64/8; ok canvas.f1000.varianceMin 590.3/1; ok canvas.f1000.variedTilesMin 64/8; ok canvas.f1100.varianceMin 617.1/1; ok canvas.f1100.variedTilesMin 64/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+      "failed": [
+        "footSinkMaxCm 0.1 > 0"
+      ],
+      "sheet": "collision-l7-departure@high-z1.5/sheet.jpg",
+      "sheetKb": 85,
+      "note": "Production L7 group boarding and departure. Explicit passenger entry animations have no free-actor footprint; waiting survivors retain theirs. Inspect the queue, smooth entry and the departing hull on both tiers and game zooms."
+    },
+    {
+      "name": "fix-l5-alpha-fire@high-z0.5",
+      "file": "tests/scenes/catalog/fix-l5-alpha-fire.json",
+      "pass": false,
+      "seconds": 13.683,
+      "frames": 200,
+      "errors": 0,
+      "requestedTier": "high",
+      "actualTier": "high",
+      "gates": "ok consoleErrors 0/0; ok lookWhiteShare 0/0.03; FAIL lookLumaRise 1.8/1.6; ok canvas.f0.varianceMin 1256.1/1; ok canvas.f0.variedTilesMin 56/8; ok canvas.f6.varianceMin 1244.7/1; ok canvas.f6.variedTilesMin 56/8; ok canvas.f18.varianceMin 1256.9/1; ok canvas.f18.variedTilesMin 56/8; ok canvas.f24.varianceMin 1275.4/1; ok canvas.f24.variedTilesMin 56/8; ok canvas.f36.varianceMin 1271.2/1; ok canvas.f36.variedTilesMin 56/8; ok canvas.f42.varianceMin 1271.3/1; ok canvas.f42.variedTilesMin 56/8; ok canvas.f54.varianceMin 1527.1/1; ok canvas.f54.variedTilesMin 63/8; ok canvas.f60.varianceMin 1549.4/1; ok canvas.f60.variedTilesMin 63/8; ok canvas.f66.varianceMin 1598.0/1; ok canvas.f66.variedTilesMin 63/8; ok canvas.f78.varianceMin 1588.5/1; ok canvas.f78.variedTilesMin 62/8; ok canvas.f84.varianceMin 1671.3/1; ok canvas.f84.variedTilesMin 62/8; ok canvas.f96.varianceMin 1739.8/1; ok canvas.f96.variedTilesMin 62/8; ok canvas.f102.varianceMin 1203.2/1; ok canvas.f102.variedTilesMin 53/8; ok canvas.f114.varianceMin 672.9/1; ok canvas.f114.variedTilesMin 49/8; ok canvas.f120.varianceMin 480.2/1; ok canvas.f120.variedTilesMin 48/8; ok canvas.f132.varianceMin 477.7/1; ok canvas.f132.variedTilesMin 51/8; ok canvas.f138.varianceMin 468.2/1; ok canvas.f138.variedTilesMin 52/8; ok canvas.f144.varianceMin 382.4/1; ok canvas.f144.variedTilesMin 51/8; ok canvas.f156.varianceMin 445.2/1; ok canvas.f156.variedTilesMin 53/8; ok canvas.f162.varianceMin 480.9/1; ok canvas.f162.variedTilesMin 56/8; ok canvas.f174.varianceMin 712.5/1; ok canvas.f174.variedTilesMin 53/8; ok canvas.f180.varianceMin 687.9/1; ok canvas.f180.variedTilesMin 52/8; ok canvas.f192.varianceMin 509.8/1; ok canvas.f192.variedTilesMin 52/8; ok canvas.f198.varianceMin 535.2/1; ok canvas.f198.variedTilesMin 56/8; ok canvas.f200.varianceMin 1836.4/1; ok canvas.f200.variedTilesMin 64/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+      "failed": [
+        "lookLumaRise 1.8 > 1.6"
+      ],
+      "sheet": "fix-l5-alpha-fire@high-z0.5/sheet.jpg",
+      "sheetKb": 143,
+      "note": "PO #29 / Opus QA 13c2: the live L5 Alpha under sustained fire from the courier's MG and two allied rifles at zoom 0.5 (check low and high tier): it keeps its dark, textured look instead of a pale blown-out faceted mass."
+    },
+    {
+      "name": "fix-l5-alpha-fire@high-z1",
+      "file": "tests/scenes/catalog/fix-l5-alpha-fire.json",
+      "pass": false,
+      "seconds": 14.102,
+      "frames": 200,
+      "errors": 0,
+      "requestedTier": "high",
+      "actualTier": "high",
+      "gates": "ok consoleErrors 0/0; ok lookWhiteShare 0/0.03; FAIL lookLumaRise 1.7/1.6; ok canvas.f0.varianceMin 1278.6/1; ok canvas.f0.variedTilesMin 61/8; ok canvas.f6.varianceMin 1277.0/1; ok canvas.f6.variedTilesMin 61/8; ok canvas.f18.varianceMin 1278.3/1; ok canvas.f18.variedTilesMin 61/8; ok canvas.f24.varianceMin 1279.9/1; ok canvas.f24.variedTilesMin 61/8; ok canvas.f36.varianceMin 1278.0/1; ok canvas.f36.variedTilesMin 61/8; ok canvas.f42.varianceMin 1279.5/1; ok canvas.f42.variedTilesMin 61/8; ok canvas.f54.varianceMin 1442.8/1; ok canvas.f54.variedTilesMin 64/8; ok canvas.f60.varianceMin 1435.2/1; ok canvas.f60.variedTilesMin 64/8; ok canvas.f66.varianceMin 1449.9/1; ok canvas.f66.variedTilesMin 64/8; ok canvas.f78.varianceMin 1530.0/1; ok canvas.f78.variedTilesMin 64/8; ok canvas.f84.varianceMin 1587.5/1; ok canvas.f84.variedTilesMin 64/8; ok canvas.f96.varianceMin 1602.3/1; ok canvas.f96.variedTilesMin 64/8; ok canvas.f102.varianceMin 1247.6/1; ok canvas.f102.variedTilesMin 62/8; ok canvas.f114.varianceMin 1004.1/1; ok canvas.f114.variedTilesMin 63/8; ok canvas.f120.varianceMin 909.3/1; ok canvas.f120.variedTilesMin 61/8; ok canvas.f132.varianceMin 679.0/1; ok canvas.f132.variedTilesMin 62/8; ok canvas.f138.varianceMin 611.0/1; ok canvas.f138.variedTilesMin 61/8; ok canvas.f144.varianceMin 557.7/1; ok canvas.f144.variedTilesMin 62/8; ok canvas.f156.varianceMin 447.7/1; ok canvas.f156.variedTilesMin 53/8; ok canvas.f162.varianceMin 408.0/1; ok canvas.f162.variedTilesMin 53/8; ok canvas.f174.varianceMin 380.6/1; ok canvas.f174.variedTilesMin 52/8; ok canvas.f180.varianceMin 371.7/1; ok canvas.f180.variedTilesMin 52/8; ok canvas.f192.varianceMin 351.1/1; ok canvas.f192.variedTilesMin 53/8; ok canvas.f198.varianceMin 353.7/1; ok canvas.f198.variedTilesMin 53/8; ok canvas.f200.varianceMin 896.1/1; ok canvas.f200.variedTilesMin 62/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+      "failed": [
+        "lookLumaRise 1.7 > 1.6"
+      ],
+      "sheet": "fix-l5-alpha-fire@high-z1/sheet.jpg",
+      "sheetKb": 173,
+      "note": "PO #29 / Opus QA 13c2: the live L5 Alpha under sustained fire from the courier's MG and two allied rifles at zoom 0.5 (check low and high tier): it keeps its dark, textured look instead of a pale blown-out faceted mass."
+    },
+    {
+      "name": "l10-q1-alpha-silhouette@high-z0.5",
+      "file": "tests/scenes/catalog/l10-q1-alpha-silhouette.json",
+      "pass": false,
+      "seconds": 12.717,
+      "frames": 30,
+      "errors": 0,
+      "requestedTier": "high",
+      "actualTier": "high",
+      "gates": "ok consoleErrors 0/0; ok undrawnFramesMax 0/0; ok drawCallsMax 10/300; ok trianglesMax 16566/500000; ok alphaSilhouetteBlackWhiteEdgeNoise 0/0.1; FAIL alphaSilhouetteRoughness 16.7/15.5; ok canvas.f0.varianceMin 196.6/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f30.varianceMin 196.9/1; ok canvas.f30.variedTilesMin 64/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+      "failed": [
+        "alphaSilhouetteRoughness 16.7 > 15.5"
+      ],
+      "sheet": "l10-q1-alpha-silhouette@high-z0.5/sheet.jpg",
+      "sheetKb": 7,
+      "note": "E32-AC09/30: regular Alpha centered at true high/low and zoom 0.5/1/1.5. Gates abrupt black/white edges and silhouette roughness (outline pixels per sqrt area of the dark body); the old LOD2 hair-lock spikes (before 577e83c6) exceed the roughness limit at the close zoom rows. Look at the sheet too."
+    },
+    {
+      "name": "qa-l7-entry-bus@high-z1.5",
+      "file": "tests/scenes/catalog/qa-l7-entry-bus.json",
+      "pass": false,
+      "seconds": 16.884,
+      "frames": 1100,
+      "errors": 0,
+      "requestedTier": "high",
+      "actualTier": "high",
+      "gates": "ok consoleErrors 0/0; FAIL footSinkMaxCm 0.1/0; ok undrawnFramesMax 0/0; ok drawCallsMax 83/900; ok canvas.f0.varianceMin 5135.3/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f100.varianceMin 5978.5/1; ok canvas.f100.variedTilesMin 64/8; ok canvas.f200.varianceMin 6650.2/1; ok canvas.f200.variedTilesMin 64/8; ok canvas.f300.varianceMin 6579.1/1; ok canvas.f300.variedTilesMin 64/8; ok canvas.f400.varianceMin 6526.2/1; ok canvas.f400.variedTilesMin 64/8; ok canvas.f500.varianceMin 5188.7/1; ok canvas.f500.variedTilesMin 64/8; ok canvas.f600.varianceMin 2368.7/1; ok canvas.f600.variedTilesMin 64/8; ok canvas.f700.varianceMin 1930.9/1; ok canvas.f700.variedTilesMin 64/8; ok canvas.f800.varianceMin 1933.3/1; ok canvas.f800.variedTilesMin 64/8; ok canvas.f900.varianceMin 1839.9/1; ok canvas.f900.variedTilesMin 64/8; ok canvas.f1000.varianceMin 1592.9/1; ok canvas.f1000.variedTilesMin 64/8; ok canvas.f1100.varianceMin 1642.0/1; ok canvas.f1100.variedTilesMin 64/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+      "failed": [
+        "footSinkMaxCm 0.1 > 0"
+      ],
+      "sheet": "qa-l7-entry-bus@high-z1.5/sheet.jpg",
+      "sheetKb": 96,
+      "note": "L7 entry/checkpoint recovery visual regression; production death path is covered by T-E29-16-browser. Follow the courier during the approach so close zoom does not crop the subject; the bus departure retains its authored cinematic."
+    },
+    {
+      "name": "qa-late-bus-departure@high-z1.5",
+      "file": "tests/scenes/catalog/qa-late-bus-departure.json",
+      "pass": false,
+      "seconds": 16.265,
+      "frames": 1100,
+      "errors": 0,
+      "requestedTier": "high",
+      "actualTier": "high",
+      "gates": "ok consoleErrors 0/0; FAIL footSinkMaxCm 0.1/0; ok undrawnFramesMax 0/0; ok drawCallsMax 83/300; ok trianglesMax 247969/500000; ok canvas.f0.varianceMin 5400.7/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f100.varianceMin 6052.7/1; ok canvas.f100.variedTilesMin 64/8; ok canvas.f200.varianceMin 6670.5/1; ok canvas.f200.variedTilesMin 64/8; ok canvas.f300.varianceMin 6972.1/1; ok canvas.f300.variedTilesMin 64/8; ok canvas.f400.varianceMin 6900.0/1; ok canvas.f400.variedTilesMin 64/8; ok canvas.f500.varianceMin 1296.8/1; ok canvas.f500.variedTilesMin 64/8; ok canvas.f600.varianceMin 2330.0/1; ok canvas.f600.variedTilesMin 64/8; ok canvas.f700.varianceMin 1928.8/1; ok canvas.f700.variedTilesMin 64/8; ok canvas.f800.varianceMin 1912.8/1; ok canvas.f800.variedTilesMin 64/8; ok canvas.f900.varianceMin 1842.6/1; ok canvas.f900.variedTilesMin 64/8; ok canvas.f1000.varianceMin 1596.2/1; ok canvas.f1000.variedTilesMin 64/8; ok canvas.f1100.varianceMin 1639.9/1; ok canvas.f1100.variedTilesMin 64/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+      "failed": [
+        "footSinkMaxCm 0.1 > 0"
+      ],
+      "sheet": "qa-late-bus-departure@high-z1.5/sheet.jpg",
+      "sheetKb": 92,
+      "note": "E29-AC15: physical boarding and departure with the production scripted bus engine events. Sim regression asserts positional cab audio and one stop before handover; inspect the real departure camera and wheel contact on both tiers/backends/zooms."
+    }
+  ]
+}
