@@ -1,0 +1,727 @@
+{
+  "levels": [
+    {
+      "level": "L3",
+      "tick": 12480,
+      "result": {
+        "time": 208,
+        "kills": 0,
+        "knockdowns": 48,
+        "damage": 11,
+        "deaths": 0,
+        "rescued": 0,
+        "optionalObjectives": []
+      },
+      "steps": [
+        {
+          "id": "armory",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "defend",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "checkpoint",
+          "optional": false,
+          "status": "completed"
+        }
+      ]
+    }
+  ],
+  "campaign": {
+    "version": 2,
+    "seed": 1,
+    "character": "female",
+    "unlockedLevel": 4,
+    "completedLevels": 3,
+    "ownedActions": [
+      "weapon.fists",
+      "weapon.kick",
+      "weapon.bat",
+      "weapon.fire-axe",
+      "weapon.molotov",
+      "ability.corgi-lure",
+      "weapon.handgun"
+    ],
+    "upgrades": [
+      "upgrade.handling.1",
+      "upgrade.melee.1",
+      "upgrade.melee.2",
+      "upgrade.specials.1",
+      "upgrade.handling.2",
+      "upgrade.knockback.1"
+    ],
+    "racks": {
+      "LEFT": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick"
+      ],
+      "RIGHT": [
+        "weapon.handgun",
+        "ability.corgi-lure",
+        "weapon.molotov"
+      ]
+    },
+    "settings": {
+      "muted": false,
+      "captions": false,
+      "noiseRings": false,
+      "mono": false,
+      "haptics": true,
+      "tinnitus": true,
+      "gore": "Full",
+      "textSize": 1,
+      "aimAssist": "Default",
+      "cameraShake": true,
+      "flashReduction": false,
+      "colorblind": false,
+      "quality": "low",
+      "slowMotion": true
+    },
+    "usage": {
+      "weapon.fire-axe": 67,
+      "weapon.handgun": 168
+    },
+    "selectedAction": "weapon.handgun",
+    "world": {
+      "L1": {
+        "version": 1,
+        "props": [
+          {
+            "id": "D-GROVE/prop.carpet:1296",
+            "p": [
+              28.5578,
+              0,
+              47.6819
+            ],
+            "q": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "id": "D-GROVE/prop.bench:1301",
+            "p": [
+              -67.8915,
+              0,
+              11.6146
+            ],
+            "q": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "id": "D-GROVE/prop.bench:1302",
+            "p": [
+              -68.8866,
+              0,
+              20.4902
+            ],
+            "q": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "id": "D-GROVE/prop.bench:1308",
+            "p": [
+              -20.1561,
+              0,
+              25.9447
+            ],
+            "q": [
+              0,
+              -0.7071,
+              0,
+              0.7071
+            ]
+          },
+          {
+            "id": "D-GROVE/prop.bench:1309",
+            "p": [
+              29.7191,
+              0,
+              34.1035
+            ],
+            "q": [
+              0,
+              0.7071,
+              0,
+              0.7071
+            ]
+          }
+        ],
+        "dumpsters": [],
+        "gatesClosed": [],
+        "bodies": [
+          {
+            "x": -69.62,
+            "z": 5.91,
+            "yaw": -26.51,
+            "model": "npc.civilian-man-a",
+            "tint": "#ac7a91"
+          },
+          {
+            "x": -68.43,
+            "z": 16.75,
+            "yaw": -20.03,
+            "model": "npc.civilian-man-b",
+            "tint": "#3178ac"
+          },
+          {
+            "x": -69.4,
+            "z": 15.8,
+            "yaw": -1.01,
+            "model": "npc.civilian-man-a",
+            "tint": "#a86645"
+          },
+          {
+            "x": -69,
+            "z": 18.76,
+            "yaw": 0.14,
+            "model": "npc.civilian-man-b",
+            "tint": "#e07fa0"
+          },
+          {
+            "x": -69.88,
+            "z": 5.26,
+            "yaw": -0.18,
+            "model": "npc.civilian-woman-a",
+            "tint": "#6d5aa8"
+          },
+          {
+            "x": -64,
+            "z": 19.53,
+            "yaw": -1.73,
+            "model": "npc.civilian-woman-a",
+            "tint": "#3178ac"
+          },
+          {
+            "x": -16.11,
+            "z": 4.22,
+            "yaw": 34.36,
+            "model": "npc.civilian-woman-b",
+            "tint": "#e07fa0"
+          },
+          {
+            "x": 10.96,
+            "z": 31.48,
+            "yaw": 9.27,
+            "model": "npc.civilian-man-b",
+            "tint": "#ac7a91"
+          },
+          {
+            "x": 11.6,
+            "z": 32.06,
+            "yaw": -18.62,
+            "model": "npc.civilian-elderly",
+            "tint": "#c4473d"
+          },
+          {
+            "x": 37.76,
+            "z": 26.14,
+            "yaw": -2.29,
+            "model": "npc.civilian-woman-a",
+            "tint": "#c4473d"
+          },
+          {
+            "x": 37.71,
+            "z": 27.72,
+            "yaw": 18.97,
+            "model": "npc.civilian-woman-a",
+            "tint": "#a86645"
+          },
+          {
+            "x": 36.87,
+            "z": 30.1,
+            "yaw": 17.2,
+            "model": "npc.civilian-woman-b",
+            "tint": "#79865b"
+          }
+        ],
+        "bike": {
+          "x": -41.2,
+          "z": -34.6,
+          "yaw": 0
+        }
+      }
+    },
+    "results": {
+      "L1": {
+        "time": 138.81666666666666,
+        "kills": 0,
+        "knockdowns": 12,
+        "damage": 150,
+        "deaths": 1,
+        "rescued": 3,
+        "optionalObjectives": [],
+        "delivered": true,
+        "infected": 24,
+        "turned": 0,
+        "escaped": 7
+      },
+      "L2": {
+        "time": 149.06666666666666,
+        "kills": 0,
+        "knockdowns": 20,
+        "damage": 198.46666666666312,
+        "deaths": 1,
+        "rescued": 2,
+        "optionalObjectives": []
+      },
+      "L3": {
+        "time": 208,
+        "kills": 0,
+        "knockdowns": 48,
+        "damage": 11,
+        "deaths": 0,
+        "rescued": 0,
+        "optionalObjectives": []
+      }
+    }
+  },
+  "mission": {
+    "id": "L4",
+    "phase": "playing",
+    "completedObjectives": [],
+    "volumes": [],
+    "killedBosses": [],
+    "deadlineTicks": null,
+    "steps": {
+      "ride": {
+        "status": "active",
+        "started": 0,
+        "kills": [],
+        "events": {},
+        "interaction": 0
+      },
+      "quartermaster": {
+        "status": "pending",
+        "started": 0,
+        "kills": [],
+        "events": {},
+        "interaction": 0
+      },
+      "hold": {
+        "status": "pending",
+        "started": 0,
+        "kills": [],
+        "events": {},
+        "interaction": 0
+      },
+      "hide": {
+        "status": "pending",
+        "started": 0,
+        "kills": [],
+        "events": {},
+        "interaction": 0
+      },
+      "bar": {
+        "status": "pending",
+        "started": 0,
+        "kills": [],
+        "events": {},
+        "interaction": 0
+      },
+      "wait": {
+        "status": "pending",
+        "started": 0,
+        "kills": [],
+        "events": {},
+        "interaction": 0
+      }
+    },
+    "actors": {},
+    "items": [],
+    "states": {
+      "arrived": false,
+      "gun": false,
+      "turned": false,
+      "line-broken": false,
+      "descended": false,
+      "barred": false,
+      "done": false
+    },
+    "counters": {},
+    "gates": {},
+    "marker": "l4-plaza",
+    "checkpoint": null,
+    "tier": 0,
+    "timeOfDay": null,
+    "subtitle": {
+      "id": "L4.briefing",
+      "text": "Fairhaven. A city the outbreak has not reached: clean streets, open shops, an organized army. For the first time all day, it feels like it is over.",
+      "until": 300
+    },
+    "cinematic": null,
+    "failure": null,
+    "stats": {
+      "time": 0.1,
+      "kills": 0,
+      "knockdowns": 0,
+      "damage": 0,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": []
+    },
+    "result": null,
+    "l4": {
+      "phase": "convoy",
+      "rideAt": 0,
+      "arrivedAt": 0,
+      "gunAt": 0,
+      "turnDueAt": 0,
+      "turnAt": 0,
+      "warAt": 0,
+      "lineBreakAt": 0,
+      "lineCause": "",
+      "descendAt": 0,
+      "barredAt": 0,
+      "doneAt": 0,
+      "markerAt": 0,
+      "convoyIds": [
+        30,
+        31,
+        32,
+        33,
+        34
+      ],
+      "convoyS": [
+        48.44600000000004,
+        39.13600000000004,
+        27.991000000000028,
+        16.846000000000018,
+        5.701000000000007
+      ],
+      "convoyV": 0.36000000000000004,
+      "seated": true,
+      "evacueeIds": [
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46
+      ],
+      "turnerIds": [],
+      "soldierIds": [
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76
+      ],
+      "qmId": 67,
+      "hmgIds": [
+        72,
+        73
+      ],
+      "residentIds": [
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66
+      ],
+      "medkitIds": [
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97
+      ],
+      "armed": [
+        {
+          "id": 51,
+          "weapon": "pistol",
+          "armedAt": 0
+        },
+        {
+          "id": 54,
+          "weapon": "hunting-rifle",
+          "armedAt": 0
+        },
+        {
+          "id": 43,
+          "weapon": "pistol",
+          "armedAt": 0
+        },
+        {
+          "id": 50,
+          "weapon": "pipe",
+          "armedAt": 0
+        },
+        {
+          "id": 57,
+          "weapon": "hunting-rifle",
+          "armedAt": 0
+        },
+        {
+          "id": 62,
+          "weapon": "bat",
+          "armedAt": 0
+        },
+        {
+          "id": 39,
+          "weapon": "pistol",
+          "armedAt": 0
+        },
+        {
+          "id": 41,
+          "weapon": "crowbar",
+          "armedAt": 0
+        },
+        {
+          "id": 64,
+          "weapon": "hunting-rifle",
+          "armedAt": 0
+        },
+        {
+          "id": 44,
+          "weapon": "pipe",
+          "armedAt": 0
+        },
+        {
+          "id": 38,
+          "weapon": "pistol",
+          "armedAt": 0
+        },
+        {
+          "id": 59,
+          "weapon": "hunting-rifle",
+          "armedAt": 0
+        },
+        {
+          "id": 49,
+          "weapon": "pistol",
+          "armedAt": 0
+        }
+      ],
+      "soldiersAtTurn": 0,
+      "civiliansAtTurn": 0,
+      "infectedAtT30": -1,
+      "killsAtBreak": 0,
+      "infectedAtBreak": 0,
+      "soldiersAtBreak": 0,
+      "soldiersAtCellar": 0,
+      "alphaIds": [],
+      "alphaAnchors": [],
+      "wave": 0,
+      "waveAt": 0,
+      "pend": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "carIds": [
+        77,
+        78,
+        79,
+        80,
+        81,
+        82
+      ],
+      "emergedIds": [],
+      "collapseWaveAt": 0,
+      "collapseIds": [],
+      "collapseWaves": 0,
+      "collapseEdgeCursor": 0,
+      "pendingDoor": [],
+      "pockets": [],
+      "pocketSpawned": {},
+      "edgeNext": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "edgeCursor": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "perimeterAt": 0,
+      "perimeterCursor": 0,
+      "perimeterPending": 0,
+      "origin": {},
+      "alarmPending": 0,
+      "alarmCursor": 0,
+      "gateIds": [],
+      "barkAt": 0,
+      "tankId": 0,
+      "tankS": 0,
+      "tankFireAt": 0,
+      "tankShots": 0,
+      "tankPhase": "off",
+      "heliId": 0,
+      "heliAngle": 0,
+      "heliPhase": "off",
+      "heliAt": 0,
+      "heliBurstAt": 0,
+      "heliBurst": 0,
+      "heliShots": 0,
+      "heliTarget": null,
+      "hmgBursts": 0,
+      "hmgLastAt": {},
+      "fuelId": 98,
+      "craterId": 0,
+      "burning": [],
+      "fires": 0,
+      "glass": [],
+      "scorch": 0,
+      "lastShot": {},
+      "kills": {
+        "player": 0,
+        "soldiers": 0,
+        "armedCivilians": 0,
+        "unarmedCivilians": 0,
+        "heli": 0,
+        "tank": 0,
+        "other": 0
+      },
+      "director": {
+        "lines": [
+          {
+            "id": "line-1",
+            "soldierIds": [
+              68,
+              69,
+              70,
+              71
+            ],
+            "size": 0,
+            "brokeAt": 0,
+            "cause": "",
+            "pushAt": 0,
+            "pushes": 0
+          },
+          {
+            "id": "nests",
+            "soldierIds": [
+              72,
+              73
+            ],
+            "size": 0,
+            "brokeAt": 0,
+            "cause": "",
+            "pushAt": 0,
+            "pushes": 0
+          },
+          {
+            "id": "armor",
+            "soldierIds": [
+              67,
+              74
+            ],
+            "size": 0,
+            "brokeAt": 0,
+            "cause": "",
+            "pushAt": 0,
+            "pushes": 0
+          }
+        ],
+        "alphaJobs": [],
+        "knockdowns": 0,
+        "barricades": 0,
+        "turnedInside": 0,
+        "spawned": 0,
+        "cutOff": [],
+        "swarmedAt": 0,
+        "fallBackAt": 0,
+        "settled": 0,
+        "burnAt": 0,
+        "gapUntil": 0,
+        "refugees": []
+      }
+    }
+  },
+  "backend": "webgl",
+  "quality": "low",
+  "camera": {
+    "zoom": 1.5,
+    "targetZoom": 1.5,
+    "zoomLimits": [
+      0.5,
+      1.5
+    ],
+    "fov": 25,
+    "azimuth": 0.7853981633974483,
+    "polar": 0.9424777960769379,
+    "radius": 30.389399751833043,
+    "regionScale": 1,
+    "focus": [
+      -57.510028580799165,
+      0,
+      43.88947107526352
+    ],
+    "target": [
+      -57.510028580799165,
+      0,
+      43.88947107526352
+    ],
+    "position": [
+      -40.24489773962944,
+      17.740826065189538,
+      61.157962645707954
+    ],
+    "spot": null
+  }
+}

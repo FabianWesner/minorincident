@@ -1,0 +1,217 @@
+{
+  "fixtureOnly": true,
+  "tier": "low",
+  "actors": {
+    "courier": {
+      "kind": "courier",
+      "entity": 1,
+      "position": [
+        -4,
+        4
+      ],
+      "yawDeg": 0,
+      "travelM": 0,
+      "maxX": -4,
+      "heldWeapon": null,
+      "targetId": null,
+      "state": "idle",
+      "health": 100,
+      "drawnFrames": 180,
+      "inViewFrames": 0,
+      "missedInViewFrames": 0,
+      "lod": {
+        "lod0": 180
+      },
+      "firstDrawn": {
+        "frame": 1,
+        "at": [
+          -4,
+          4
+        ]
+      },
+      "farLodCloseFrames": 0,
+      "motion": {
+        "frames": 180,
+        "torsoPitchMinDeg": 2.4,
+        "torsoPitchMaxDeg": 3.5,
+        "contacts": 3,
+        "slideMaxCm": 0,
+        "slideP95Cm": 0,
+        "yawDriftMaxDeg": 0,
+        "liftMaxCm": 5.4,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 0,
+        "worstSlideFrame": 10
+      }
+    },
+    "healthy-live": {
+      "kind": "pedestrian",
+      "entity": 3,
+      "position": [
+        -10.025,
+        -3
+      ],
+      "yawDeg": -180,
+      "travelM": 8.524991528359877,
+      "maxX": -1.5,
+      "heldWeapon": null,
+      "targetId": null,
+      "state": "flee",
+      "health": 100,
+      "drawnFrames": 180,
+      "inViewFrames": 78,
+      "missedInViewFrames": 0,
+      "lod": {
+        "lod1": 180
+      },
+      "firstDrawn": {
+        "frame": 1,
+        "at": [
+          -1.5,
+          -3
+        ]
+      },
+      "farLodCloseFrames": 0,
+      "motion": {
+        "frames": 180,
+        "torsoPitchMinDeg": -4.8,
+        "torsoPitchMaxDeg": 5.7,
+        "contacts": 14,
+        "slideMaxCm": 0.7,
+        "slideP95Cm": 0.4,
+        "yawDriftMaxDeg": 0.1,
+        "liftMaxCm": 18.4,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 4,
+        "worstSlideFrame": 8
+      }
+    },
+    "infected-live": {
+      "kind": "infected",
+      "entity": 4,
+      "position": [
+        2.8,
+        -1.707
+      ],
+      "yawDeg": -44.8,
+      "travelM": 1.8335337827457274,
+      "maxX": 2.8001219919313196,
+      "heldWeapon": null,
+      "targetId": null,
+      "state": "idle",
+      "health": 60,
+      "drawnFrames": 180,
+      "inViewFrames": 180,
+      "missedInViewFrames": 0,
+      "lod": {
+        "lod1": 180
+      },
+      "firstDrawn": {
+        "frame": 1,
+        "at": [
+          1.5,
+          -3
+        ]
+      },
+      "farLodCloseFrames": 0,
+      "motion": {
+        "frames": 180,
+        "torsoPitchMinDeg": 15.9,
+        "torsoPitchMaxDeg": 77,
+        "contacts": 8,
+        "slideMaxCm": 17,
+        "slideP95Cm": 16.1,
+        "yawDriftMaxDeg": 40.5,
+        "liftMaxCm": 18.5,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 0,
+        "worstSlideFrame": 20
+      }
+    },
+    "healthy-dead": {
+      "kind": "pedestrian",
+      "entity": 5,
+      "position": [
+        -1.5,
+        1
+      ],
+      "yawDeg": 0,
+      "travelM": 0,
+      "maxX": -1.5,
+      "heldWeapon": null,
+      "targetId": null,
+      "state": "finished",
+      "health": 0,
+      "drawnFrames": 180,
+      "inViewFrames": 0,
+      "missedInViewFrames": 0,
+      "lod": {
+        "lod1": 180
+      },
+      "firstDrawn": {
+        "frame": 1,
+        "at": [
+          -1.5,
+          1
+        ]
+      },
+      "farLodCloseFrames": 0,
+      "motion": {
+        "frames": 180,
+        "torsoPitchMinDeg": 7.4,
+        "torsoPitchMaxDeg": 128.2,
+        "contacts": 0,
+        "slideMaxCm": 0,
+        "slideP95Cm": null,
+        "yawDriftMaxDeg": 0,
+        "liftMaxCm": 0,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 0,
+        "worstSlideFrame": null
+      }
+    },
+    "infected-dead": {
+      "kind": "infected",
+      "entity": 6,
+      "position": [
+        1.5,
+        1
+      ],
+      "yawDeg": 0,
+      "travelM": 0,
+      "maxX": 1.5,
+      "heldWeapon": null,
+      "targetId": null,
+      "state": "dead",
+      "health": 0,
+      "drawnFrames": 180,
+      "inViewFrames": 0,
+      "missedInViewFrames": 0,
+      "lod": {
+        "lod2": 180
+      },
+      "firstDrawn": {
+        "frame": 1,
+        "at": [
+          1.5,
+          1
+        ]
+      },
+      "farLodCloseFrames": 180,
+      "motion": {
+        "frames": 180,
+        "torsoPitchMinDeg": null,
+        "torsoPitchMaxDeg": null,
+        "contacts": 0,
+        "slideMaxCm": 0,
+        "slideP95Cm": null,
+        "yawDriftMaxDeg": 0,
+        "liftMaxCm": 0,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 0,
+        "worstSlideFrame": null
+      }
+    }
+  },
+  "errors": []
+}

@@ -1,0 +1,600 @@
+{
+  "levels": [
+    {
+      "level": "L4",
+      "tick": 15573,
+      "result": {
+        "time": 259.55,
+        "kills": 0,
+        "knockdowns": 43,
+        "damage": 11,
+        "deaths": 0,
+        "rescued": 10,
+        "optionalObjectives": []
+      },
+      "steps": [
+        {
+          "id": "ride",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "quartermaster",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "hold",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "hide",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "bar",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "wait",
+          "optional": false,
+          "status": "completed"
+        }
+      ]
+    }
+  ],
+  "campaign": {
+    "version": 2,
+    "seed": 1,
+    "character": "female",
+    "unlockedLevel": 5,
+    "completedLevels": 4,
+    "ownedActions": [
+      "weapon.fists",
+      "weapon.kick",
+      "weapon.bat",
+      "weapon.fire-axe",
+      "weapon.molotov",
+      "ability.corgi-lure",
+      "weapon.handgun",
+      "weapon.army-mg",
+      "weapon.rocket-launcher",
+      "weapon.pipe-bomb"
+    ],
+    "upgrades": [
+      "upgrade.handling.1",
+      "upgrade.melee.1",
+      "upgrade.melee.2",
+      "upgrade.specials.1",
+      "upgrade.handling.2",
+      "upgrade.knockback.1",
+      "upgrade.throwables.1",
+      "upgrade.handling.3"
+    ],
+    "racks": {
+      "LEFT": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick"
+      ],
+      "RIGHT": [
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ]
+    },
+    "settings": {
+      "muted": false,
+      "captions": false,
+      "noiseRings": false,
+      "mono": false,
+      "haptics": true,
+      "tinnitus": true,
+      "gore": "Full",
+      "textSize": 1,
+      "aimAssist": "Default",
+      "cameraShake": true,
+      "flashReduction": false,
+      "colorblind": false,
+      "quality": "low",
+      "slowMotion": true
+    },
+    "usage": {
+      "weapon.fire-axe": 77,
+      "weapon.handgun": 168,
+      "weapon.army-mg": 1537,
+      "ability.corgi-lure": 1
+    },
+    "selectedAction": "ability.corgi-lure",
+    "world": {
+      "L1": {
+        "version": 1,
+        "props": [
+          {
+            "id": "D-GROVE/prop.carpet:1296",
+            "p": [
+              28.5578,
+              0,
+              47.6819
+            ],
+            "q": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "id": "D-GROVE/prop.bench:1301",
+            "p": [
+              -67.8915,
+              0,
+              11.6146
+            ],
+            "q": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "id": "D-GROVE/prop.bench:1302",
+            "p": [
+              -68.8866,
+              0,
+              20.4902
+            ],
+            "q": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "id": "D-GROVE/prop.bench:1308",
+            "p": [
+              -20.1561,
+              0,
+              25.9447
+            ],
+            "q": [
+              0,
+              -0.7071,
+              0,
+              0.7071
+            ]
+          },
+          {
+            "id": "D-GROVE/prop.bench:1309",
+            "p": [
+              29.7191,
+              0,
+              34.1035
+            ],
+            "q": [
+              0,
+              0.7071,
+              0,
+              0.7071
+            ]
+          }
+        ],
+        "dumpsters": [],
+        "gatesClosed": [],
+        "bodies": [
+          {
+            "x": -69.62,
+            "z": 5.91,
+            "yaw": -26.51,
+            "model": "npc.civilian-man-a",
+            "tint": "#ac7a91"
+          },
+          {
+            "x": -68.43,
+            "z": 16.75,
+            "yaw": -20.03,
+            "model": "npc.civilian-man-b",
+            "tint": "#3178ac"
+          },
+          {
+            "x": -69.4,
+            "z": 15.8,
+            "yaw": -1.01,
+            "model": "npc.civilian-man-a",
+            "tint": "#a86645"
+          },
+          {
+            "x": -69,
+            "z": 18.76,
+            "yaw": 0.14,
+            "model": "npc.civilian-man-b",
+            "tint": "#e07fa0"
+          },
+          {
+            "x": -69.88,
+            "z": 5.26,
+            "yaw": -0.18,
+            "model": "npc.civilian-woman-a",
+            "tint": "#6d5aa8"
+          },
+          {
+            "x": -64,
+            "z": 19.53,
+            "yaw": -1.73,
+            "model": "npc.civilian-woman-a",
+            "tint": "#3178ac"
+          },
+          {
+            "x": -16.11,
+            "z": 4.22,
+            "yaw": 34.36,
+            "model": "npc.civilian-woman-b",
+            "tint": "#e07fa0"
+          },
+          {
+            "x": 10.96,
+            "z": 31.48,
+            "yaw": 9.27,
+            "model": "npc.civilian-man-b",
+            "tint": "#ac7a91"
+          },
+          {
+            "x": 11.6,
+            "z": 32.06,
+            "yaw": -18.62,
+            "model": "npc.civilian-elderly",
+            "tint": "#c4473d"
+          },
+          {
+            "x": 37.76,
+            "z": 26.14,
+            "yaw": -2.29,
+            "model": "npc.civilian-woman-a",
+            "tint": "#c4473d"
+          },
+          {
+            "x": 37.71,
+            "z": 27.72,
+            "yaw": 18.97,
+            "model": "npc.civilian-woman-a",
+            "tint": "#a86645"
+          },
+          {
+            "x": 36.87,
+            "z": 30.1,
+            "yaw": 17.2,
+            "model": "npc.civilian-woman-b",
+            "tint": "#79865b"
+          }
+        ],
+        "bike": {
+          "x": -41.2,
+          "z": -34.6,
+          "yaw": 0
+        }
+      }
+    },
+    "results": {
+      "L1": {
+        "time": 138.81666666666666,
+        "kills": 0,
+        "knockdowns": 12,
+        "damage": 150,
+        "deaths": 1,
+        "rescued": 3,
+        "optionalObjectives": [],
+        "delivered": true,
+        "infected": 24,
+        "turned": 0,
+        "escaped": 7
+      },
+      "L2": {
+        "time": 149.06666666666666,
+        "kills": 0,
+        "knockdowns": 20,
+        "damage": 198.46666666666312,
+        "deaths": 1,
+        "rescued": 2,
+        "optionalObjectives": []
+      },
+      "L3": {
+        "time": 208,
+        "kills": 0,
+        "knockdowns": 48,
+        "damage": 11,
+        "deaths": 0,
+        "rescued": 0,
+        "optionalObjectives": []
+      },
+      "L4": {
+        "time": 259.55,
+        "kills": 0,
+        "knockdowns": 43,
+        "damage": 11,
+        "deaths": 0,
+        "rescued": 10,
+        "optionalObjectives": []
+      }
+    },
+    "shelterEntry": {
+      "x": -79.29999999999998,
+      "z": -45.2801,
+      "yaw": -1.5707963267948966
+    }
+  },
+  "mission": {
+    "id": "L5",
+    "phase": "playing",
+    "completedObjectives": [],
+    "volumes": [],
+    "killedBosses": [],
+    "deadlineTicks": null,
+    "steps": {
+      "emerge": {
+        "status": "active",
+        "started": 0,
+        "kills": [],
+        "events": {},
+        "interaction": 0
+      },
+      "look": {
+        "status": "pending",
+        "started": 0,
+        "kills": [],
+        "events": {},
+        "interaction": 0
+      },
+      "metro": {
+        "status": "pending",
+        "started": 0,
+        "kills": [],
+        "events": {},
+        "interaction": 0
+      }
+    },
+    "actors": {},
+    "items": [],
+    "states": {
+      "emerged": false,
+      "searching": false,
+      "accounted": false,
+      "at-metro": false,
+      "sheltered": false
+    },
+    "counters": {},
+    "gates": {
+      "l5-metro-shutter": true
+    },
+    "marker": "l5-brace",
+    "checkpoint": null,
+    "tier": 5,
+    "timeOfDay": null,
+    "subtitle": {
+      "id": "L5.hours",
+      "text": "Hours later.",
+      "until": 300
+    },
+    "cinematic": null,
+    "failure": null,
+    "stats": {
+      "time": 0.1,
+      "kills": 0,
+      "knockdowns": 0,
+      "damage": 0,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": []
+    },
+    "result": null,
+    "l5": {
+      "phase": "cellar",
+      "startAt": 0,
+      "emergedAt": 0,
+      "searchAt": 0,
+      "accountedAt": 0,
+      "metroAt": 0,
+      "shutterAt": 0,
+      "doneAt": 0,
+      "survivors": [
+        {
+          "key": "dale",
+          "id": 28,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "rosa",
+          "id": 29,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "okafor",
+          "id": 30,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "mia",
+          "id": 31,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "sam",
+          "id": 32,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        }
+      ],
+      "found": 0,
+      "lookoutId": 33,
+      "stationIds": [
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148
+      ],
+      "infectedIds": [
+        84,
+        86,
+        88,
+        90,
+        92,
+        94,
+        96,
+        97,
+        99,
+        101,
+        103,
+        104,
+        106,
+        108,
+        110,
+        112,
+        114,
+        116
+      ],
+      "medkitIds": [
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124
+      ],
+      "corpseIds": [
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70
+      ],
+      "fireIds": [
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83
+      ],
+      "gloom": 1,
+      "cue": null,
+      "lastShot": {},
+      "waitedAt": 0,
+      "infectedMax": 0,
+      "deadAtMetro": 0
+    }
+  },
+  "backend": "webgl",
+  "quality": "low",
+  "camera": {
+    "zoom": 1.5,
+    "targetZoom": 1.5,
+    "zoomLimits": [
+      0.5,
+      1.5
+    ],
+    "fov": 25,
+    "azimuth": 0.7853981633974483,
+    "polar": 0.9424777960769379,
+    "radius": 28.5,
+    "regionScale": 1,
+    "focus": [
+      75.30000192907886,
+      0,
+      -5.4000000602837135
+    ],
+    "target": [
+      75.30000192907886,
+      0,
+      -5.4000000602837135
+    ],
+    "position": [
+      91.60375170577335,
+      16.751879690335485,
+      10.903749926383089
+    ],
+    "spot": null
+  }
+}

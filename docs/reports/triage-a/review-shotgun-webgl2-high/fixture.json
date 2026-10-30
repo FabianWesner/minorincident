@@ -1,0 +1,62 @@
+{
+  "name": "shotgun-fall",
+  "seed": 1,
+  "ground": "asphalt",
+  "time": "L5",
+  "dof": false,
+  "size": 30,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -3,
+        0
+      ],
+      "loadout": [
+        "weapon.shotgun",
+        "weapon.fire-axe"
+      ],
+      "state": {
+        "attack": "victim",
+        "seconds": 1,
+        "side": "LEFT",
+        "inPlace": true
+      }
+    },
+    {
+      "id": "victim",
+      "kind": "infected",
+      "at": [
+        0,
+        0
+      ],
+      "archetype": "infected.runner",
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "close",
+    "target": [
+      0,
+      0.7,
+      0
+    ],
+    "radius": 10,
+    "azimuth": 135
+  },
+  "frames": 120,
+  "sheet": 5,
+  "shots": [
+    1,
+    10,
+    20,
+    40,
+    80,
+    120
+  ],
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0
+  }
+}

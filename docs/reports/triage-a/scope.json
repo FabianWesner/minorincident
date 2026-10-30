@@ -96,7 +96,7 @@
       "id": "16",
       "scope": "in",
       "status": "fixed",
-      "evidence": "c6f78509a plus 3b85692f fixes route starvation/pocket escape; docs/reports/sim-triage.md records max unintended stop 8.4\u21923.2 s on the reported L2 family, and current inf-chase-l3 gate covers L3 motion."
+      "evidence": "c6f78509a plus 3b85692f fixes route starvation/pocket escape; docs/reports/sim-triage.md records max unintended stop 8.4→3.2 s on the reported L2 family, and current inf-chase-l3 gate covers L3 motion."
     },
     {
       "id": "17",
@@ -120,7 +120,7 @@
       "id": "20",
       "scope": "in",
       "status": "fixed",
-      "evidence": "8ddb5c387/de436991c/7decc332a replace wrong-way keyboard targeting with face-direction ray-closest assist and real-key \u00b125-degree cone checks (Q-196)."
+      "evidence": "8ddb5c387/de436991c/7decc332a replace wrong-way keyboard targeting with face-direction ray-closest assist and real-key ±25-degree cone checks (Q-196)."
     },
     {
       "id": "21",
@@ -150,7 +150,7 @@
       "id": "25",
       "scope": "in",
       "status": "fixed",
-      "evidence": "QA13a measured polar 53.9\u201354.0 degrees in 1,331 samples; shared HUD row repaired in vfx-hud-polish. Corpse persistence is retained by 5a0b1927e and current StaticCorpses pages; no corpse deletion is introduced by this lane."
+      "evidence": "QA13a measured polar 53.9–54.0 degrees in 1,331 samples; shared HUD row repaired in vfx-hud-polish. Corpse persistence is retained by 5a0b1927e and current StaticCorpses pages; no corpse deletion is introduced by this lane."
     },
     {
       "id": "26",
@@ -192,7 +192,7 @@
       "id": "32",
       "scope": "in",
       "status": "fixed",
-      "evidence": "docs/reports/visual-polish/README.md: droplets 1.8\u20133.5 cm, \u2264180 ms; lasting blood uses supported decals/splats. Q-143 retains the separate later square-shape concern."
+      "evidence": "docs/reports/visual-polish/README.md: droplets 1.8–3.5 cm, ≤180 ms; lasting blood uses supported decals/splats. Q-143 retains the separate later square-shape concern."
     },
     {
       "id": "33",
@@ -203,13 +203,13 @@
     {
       "id": "34",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "35",
       "scope": "in",
       "status": "open",
-      "evidence": "Old L4-end/L5-cellar capture shows a lone building on bare map-edge ground. No later evidence explicitly closes surrounding-environment composition. Proposed fix: inspect current cellar ending, then dress reachable road/garden edges and extend visible environment coverage without changing camera values; authored environment work is larger than a safe local bug fix."
+      "evidence": "Partial historical fix f221d744c dresses the exterior yard, but the current actual L5 start capture (playtest/captures/continue-L5-L5-t11.jpg) still shows the cellar staging set beside bare map-edge ground. The post-emergence Harbor Street fixture is dressed and does not close the starting shot. Proposed fix: extend the visible cellar-stage ground/yard dressing and boundary coverage, then review L4 ending plus L5 start with unchanged camera; authored environment work exceeds a safe local edit."
     },
     {
       "id": "36",
@@ -268,7 +268,7 @@
     {
       "id": "46",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "47",
@@ -279,8 +279,8 @@
     {
       "id": "48",
       "scope": "in",
-      "status": "open",
-      "evidence": "Pharmacy parapet crossing the courier's feet is an occlusion/support-plane ambiguity in the old L5 shot. No exact closeout evidence found. Proposed fix: matched current pharmacy cut capture, then floor-aware parapet cut geometry; preserve support surfaces and camera. Cross-building cut validation exceeds a small isolated edit."
+      "status": "fixed",
+      "evidence": "5f0749fbf directly fixes #48: only upward-facing support surfaces retain the foot-level band; foreground vertical wall bases are cut. Targeted current fixture stunning-cut-l5-pharmacy.json retains the exact PO location."
     },
     {
       "id": "49",
@@ -291,13 +291,13 @@
     {
       "id": "50",
       "scope": "in",
-      "status": "open",
-      "evidence": "Roof removal exposes dark hollow interiors in L3 supermarket/L5 pharmacy. The cut itself works; the exposed interior art lacks believable surfaces/light. Proposed fix: authored cutaway ceiling/wall/interior dressing, with matched building shots; larger environment-art work."
+      "status": "fixed",
+      "evidence": "5f0749fbf directly fixes #50: pharmacy and supermarket near-black roof decks use asphalt; low pharmacy statics are rebaked. Both exact-location stunning-cut fixtures remain in the catalog."
     },
     {
       "id": "51",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "52",
@@ -314,8 +314,8 @@
     {
       "id": "54",
       "scope": "in",
-      "status": "fixed",
-      "evidence": "Current heavy-hit/shotgun knockback goes through the shared hurt/knockdown pose and continuous displacement; docs/reports/visual-polish/README.md and alpha-white/README.md cover hit/death presentation instead of rigid body teleport."
+      "status": "open",
+      "evidence": "Current shotgun probe reproduces a 1.8 m single-tick move at frame 7, followed by death-back frames 8–32 (review-shotgun-webgl2-high/metrics.json; sheet viewed). Damage/SimWorld.knockback applies the swept endpoint immediately; CivilianCrowd places the fall at final corpseLayout coordinates. Proposed fix: retain and animate the actual swept path through both crowd renderers, with body-picking/grounding/corner-clearance checks. Simple endpoint interpolation can cross clipped corners; shared pose/placement work exceeds a safe local edit. L5 combat values remain frozen."
     },
     {
       "id": "55",
@@ -357,7 +357,7 @@
       "id": "61",
       "scope": "in",
       "status": "fixed",
-      "evidence": "8b0a695c1 and docs/reports/weapon-carryover.md preserve all acquired weapon racks through each campaign boundary, including shotgun L5\u2192L6."
+      "evidence": "8b0a695c1 and docs/reports/weapon-carryover.md preserve all acquired weapon racks through each campaign boundary, including shotgun L5→L6."
     },
     {
       "id": "62",
@@ -374,27 +374,27 @@
     {
       "id": "63",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "63b",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "64",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "65",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "66",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "67",
@@ -406,13 +406,13 @@
       "id": "68",
       "scope": "in",
       "status": "fixed",
-      "evidence": "Current ground picking reads the drawn support height instead of a fixed flat ray plane; objective-clarity/README.md preserves exact clear destinations and correct blocked-cell fallback."
+      "evidence": "115052f63d retains the direct PO #68 ground-height correction in GameView: destination ring uses the district support height rather than y=0. RayCursor resolves that same height field; 9b57bb3fa adds corrected objective-ring picking and reachable fallback."
     },
     {
       "id": "69",
       "scope": "in",
       "status": "fixed",
-      "evidence": "Shared HUD portion only: HealthBars caps large follower groups at six hurt bars; dead/finished followers are ineligible. The L7 terrain-edge portion is assigned to the L6\u2013L10 level lane."
+      "evidence": "Shared HUD portion only: HealthBars caps large follower groups at six hurt bars; dead/finished followers are ineligible. The L7 terrain-edge portion is assigned to the L6–L10 level lane."
     },
     {
       "id": "70",
@@ -460,7 +460,7 @@
       "id": "77",
       "scope": "in",
       "status": "obsolete",
-      "evidence": "Source explicitly retracts the P0 as a stale driver ring. The residual gate-panel filtering is included in lane/p3-ui, retained by 05f1d022e/objective-clarity; no hidden seven-minute game soft-lock is established."
+      "evidence": "Source explicitly retracts the P0 as a stale driver ring. The residual gate-panel filtering is included in lane/p3-ui, retained by docs/reports/objective-clarity/README.md; no hidden seven-minute game soft-lock is established."
     },
     {
       "id": "78",
@@ -490,12 +490,12 @@
       "id": "82",
       "scope": "in",
       "status": "fixed",
-      "evidence": "QA13e2 verifies low\u2192high switching on both backends with zero errors and correct picture; stable light/shadow lists retain valid depth resources."
+      "evidence": "QA13e2 verifies low→high switching on both backends with zero errors and correct picture; stable light/shadow lists retain valid depth resources."
     },
     {
       "id": "83",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "84",
@@ -513,34 +513,34 @@
       "id": "86",
       "scope": "in",
       "status": "fixed",
-      "evidence": "QA13f/13g confirm keys 1\u20139, selected rack/HUD and held model; key 1 provides innate fists from any rack."
+      "evidence": "QA13f/13g confirm keys 1–9, selected rack/HUD and held model; key 1 provides innate fists from any rack."
     },
     {
       "id": "86b",
       "scope": "in",
       "status": "fixed",
-      "evidence": "Current src/ui/weaponIcons.ts supplies distinct handgun, MG, shotgun and rocket silhouettes; real-key QA13f/13g verifies rack icons and held models."
+      "evidence": "Current src/assets/icons.ts and public/assets/icons/ supplies distinct handgun, MG, shotgun and rocket silhouettes; real-key QA13f/13g verifies rack icons and held models."
     },
     {
       "id": "87",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "88",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "87b",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "89",
       "scope": "in",
       "status": "fixed",
-      "evidence": "QA13g confirms fresh debug L10 and L9\u2192Continue flow; debug save persistence now satisfies campaign invariants instead of writing invalid partial saves."
+      "evidence": "QA13g confirms fresh debug L10 and L9→Continue flow; debug save persistence now satisfies campaign invariants instead of writing invalid partial saves."
     },
     {
       "id": "90",
@@ -558,7 +558,7 @@
       "id": "92",
       "scope": "in",
       "status": "open",
-      "evidence": "Low-tier L3 parapet decimation remains a reported warped silhouette with no explicit asset closeout. Proposed fix: retain the barrier's planar/corner surfaces in its low export and inspect both ramp sides at gameplay zoom; asset rebuild/matrix work exceeds a safe small code edit."
+      "evidence": "Low-tier L3 parapets remain a reported warped silhouette. assets/kit.highway-onramp/build.py applies DECIMATE at 0.12/0.035 to LOD1/2, including Jersey barrier meshes; no planar/corner guard is retained. Proposed fix: retain the barrier's planar/corner surfaces in its low export and inspect both ramp sides at gameplay zoom; asset rebuild/matrix work exceeds a safe small code edit."
     },
     {
       "id": "93",
@@ -569,8 +569,9 @@
     {
       "id": "94",
       "scope": "in",
-      "status": "open",
-      "evidence": "L4-only portion: EVAC bus lettering was reported missing at low. No targeted current proof or source fix found. Proposed fix: inspect the low export and preserve the sign face/UV/material in the far tier, then review the L4 bus shot; treat as asset work rather than changing general LOD budgets."
+      "status": "fixed",
+      "evidence": "Fixed this lane 659138661: low quality uses LOD1, but the builder omitted side letters there. Retained EVAC text in LOD1 (4,966/6,000 triangles, no extra draw); viewed matched bus/before and bus/after captures. LOD0/LOD2 and decay exports retain identical hashes. L10 shelter-lamp portion belongs to triage-b.",
+      "fixedByLane": "triage-a"
     },
     {
       "id": "95",
@@ -581,7 +582,7 @@
     {
       "id": "96",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "97",
@@ -598,7 +599,7 @@
     {
       "id": "99",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "100",
@@ -609,12 +610,12 @@
     {
       "id": "101",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "102",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "103",
@@ -625,13 +626,14 @@
     {
       "id": "104",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "105",
       "scope": "in",
       "status": "fixed",
-      "evidence": "Current home control is separate from vitals and hidden in briefings/cinematics; vfx-hud-polish desktop/phone layout checks reserve debug/HUD rows."
+      "evidence": "Fixed this lane 92bba92ff. Reproduced actual touch/debug UI at 844×390: Home/portrait overlap 1,120 CSS pixels. Add Home to the existing debug-row margin selector. Viewed before/after landscape captures; bounding receipts prove 1,120→0, zero errors (review-phone-webgl2-low/).",
+      "fixedByLane": "triage-a"
     },
     {
       "id": "106",
@@ -703,7 +705,7 @@
       "id": "116",
       "scope": "in",
       "status": "fixed",
-      "evidence": "d36352ae8 moves the tank route and stop pose clear of military wall, parked cars and props and adds a route guard; no tank balance or camera change here."
+      "evidence": "d36352ae8 moves the tank route/stop clear of walls and parked props and adds a route guard. Current production controls-l4-tank-cadence also passes: viewed tank/shot-0180.png, hull clear of the military wall, zero console errors and convoy overlap frames. The fixture advances the route before sampling the firing post; no tank/camera change here."
     },
     {
       "id": "117",
@@ -726,7 +728,7 @@
     {
       "id": "120",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "121",
@@ -737,12 +739,12 @@
     {
       "id": "122",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "123",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "124",
@@ -760,7 +762,7 @@
       "id": "126",
       "scope": "in",
       "status": "fixed",
-      "evidence": "docs/reports/fixes-13k-visual/profiles/after-summary.json: three real-input L1 maxima 16.8 ms and L2 33.3\u201333.4 ms, zero >200 ms; d841b6059 and 94d02693e warm the actual L2 occupants."
+      "evidence": "docs/reports/fixes-13k-visual/profiles/after-summary.json: three real-input L1 maxima 16.8 ms and L2 33.3–33.4 ms, zero >200 ms; d841b6059 and 94d02693e warm the actual L2 occupants."
     },
     {
       "id": "127",
@@ -771,7 +773,7 @@
     {
       "id": "128",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "129",
@@ -788,12 +790,12 @@
     {
       "id": "131",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "132",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "133",
@@ -811,12 +813,12 @@
       "id": "135",
       "scope": "in",
       "status": "fixed",
-      "evidence": "e90965331 / docs/reports/gameplay-13l.md: explicit one-second search prompts and first-frame pharmacy/bus arrow pixel checks; 52e43db3f separately moves Sam's bus ring. L5 tuning unchanged."
+      "evidence": "docs/reports/gameplay-13l.md: explicit one-second search prompts and first-frame pharmacy/bus arrow pixel checks; 52e43db3f separately moves Sam's bus ring. L5 tuning unchanged."
     },
     {
       "id": "136",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "137",
@@ -833,7 +835,7 @@
     {
       "id": "139",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "140",
@@ -850,13 +852,14 @@
     {
       "id": "142",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "143",
       "scope": "in",
-      "status": "open",
-      "evidence": "L7 red-square gore is a corpse VFX/readability issue in the shared rendering scope; no fix is recorded. Proposed fix: replace the flat square scatter with ground-conforming varied blood marks and inspect L7/L5 captures at gameplay zoom."
+      "status": "fixed",
+      "evidence": "Fixed this lane 38822dba5. Real launcher reproduction identifies full-bright red BoxGeometry gibs, not blood alpha, as the squares. Faceted Lambert-lit clots replace generic boxes; viewed matched L7-preset before/after captures, draw max 33→33, zero errors. Corpses/physics/cap/lifetime unchanged (review-rocket-webgpu-high/README.md).",
+      "fixedByLane": "triage-a"
     },
     {
       "id": "144",
@@ -868,37 +871,37 @@
       "id": "145",
       "scope": "in",
       "status": "open",
-      "evidence": "L5 Metro finale merge/red-shaft complaint has no later closeout in the backlog. Proposed fix: review current L5 finale framing and survivor spacing; root cause/evidence beyond the original capture is not established."
+      "evidence": "Current l5-po-metro-ingress capture still shows crowded silhouettes and a bare red shaft. Queue pitch is 0.6 m in LevelFiveAftermath.ingress, constrained by the short rear-wall clearance and the corgi’s opposite lane. Proposed fix: re-stage/widen ingress slots while preserving companion clearance and shutter completion, then dress the shaft interior. Coupled layout/collision/ending review exceeds a safe small edit; no L5 combat tuning."
     },
     {
       "id": "146",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "147",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "148",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "149",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "150",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "151",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "152",
@@ -921,19 +924,20 @@
     {
       "id": "156",
       "scope": "in",
-      "status": "open",
-      "evidence": "Triage-a code removes duplicate aboard count and orders objective missing names by the same distance rule as the minimap cue. Visible boarding capture pending; do not close from source alone."
+      "status": "fixed",
+      "evidence": "Fixed this lane in 055ef7fa2; verified 350456050. Viewed boarding/guidance.png: exactly one 0/13 aboard count, nearest missing name matches the Find cue and minimap pin. boarding/evidence.json records physical E boarding request and zero errors.",
+      "fixedByLane": "triage-a"
     },
     {
       "id": "157",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "158",
       "scope": "in",
       "status": "fixed",
-      "evidence": "08e67ba4f / docs/reports/weapon-carryover.md: physical key-4 handgun at L3 end remains selected in L4 handover and normal Continue; 78 progression tests cover every boundary/fallback."
+      "evidence": "8224f0b28 / docs/reports/weapon-carryover.md: physical key-4 handgun at L3 end remains selected in L4 handover and normal Continue; 78 progression tests cover every boundary/fallback."
     },
     {
       "id": "159",
@@ -945,31 +949,33 @@
       "id": "160",
       "scope": "in",
       "status": "fixed",
-      "evidence": "`ce63f4ed6` replaces the unexplained tent-origin attack with announced Alpha wall breaches; L4 no-tents report records the west breach at 19.9 s and mixed attackers at the front. `0b6b1bcb1` records completed route pacing (254.5 s, zero deaths). Evidence: `docs/reports/l4-no-tents/report.md` and reviewed opening/breach captures."
+      "evidence": "`ce63f4ed6` replaces the unexplained tent-origin attack with announced Alpha wall breaches; L4 no-tents report records the west breach at 19.9 s and mixed attackers at the front. `0b6b1bcb3` records completed route pacing (254.5 s, zero deaths). Evidence: `docs/reports/l4-no-tents/report.md` and reviewed opening/breach captures."
     },
     {
       "id": "161",
       "scope": "in",
       "status": "fixed",
-      "evidence": "`d16bfd1a3` adds carried-gun firing while moving and empty-weapon fallback; addresses the MG selected across the L4\u2192L5 handover with no damage."
+      "evidence": "`d16bfd1a3` adds carried-gun firing while moving and empty-weapon fallback; addresses the MG selected across the L4→L5 handover with no damage."
     },
     {
       "id": "166",
       "scope": "in",
       "status": "fixed",
-      "evidence": "L4 redesign and `645de9b5f` reduce the corpse carpet; `docs/reports/l4-no-tents/report.md` records only 37/50 bodies within 14 m at 150 s (low/high), courier visibility, and completed no-skip playthrough. Captures were reviewed in `docs/reports/l4-no-tents/review.md`."
+      "evidence": "L4 redesign and `6459bde5f` reduce the corpse carpet; `docs/reports/l4-no-tents/report.md` records only 37/50 bodies within 14 m at 150 s (low/high), courier visibility, and completed no-skip playthrough. Captures were reviewed in `docs/reports/l4-no-tents/review.md`."
     },
     {
       "id": "167",
       "scope": "in",
-      "status": "open",
-      "evidence": "e140344a8 retires the vehicle onboarding lesson after 180 ticks while still in interaction range. Retain open until an actually visible HUD capture validates it."
+      "status": "fixed",
+      "evidence": "Fixed this lane e140344a8, verified 4c12304a4. Viewed hud/hint-visible.png and hint-retired.png: instruction disappears after 180 active ticks while canInteract remains true; no other HUD overlap; zero console errors.",
+      "fixedByLane": "triage-a"
     },
     {
       "id": "168",
       "scope": "in",
-      "status": "open",
-      "evidence": "Triage-a splits the two high-tier pairs into six solitary homes. High remains six, low gains two (four\u2192six); cap/bridge quota unchanged. Collision clearance, actual spawned population and viewed Juniper/Elm captures pending."
+      "status": "fixed",
+      "evidence": "Fixed this lane 055ef7fa2, verified f9941fe79. Six solitary L2 route homes replace two pairs: high stays six, low four→six, caps/bridge quota unchanged. route/evidence.json proves static clearance and six actual low arrivals; viewed Juniper/Elm captures.",
+      "fixedByLane": "triage-a"
     },
     {
       "id": "169",
@@ -1004,20 +1010,21 @@
     {
       "id": "174",
       "scope": "in",
-      "status": "fixed",
-      "evidence": "Backlog records the batch14-fix run at a 9 s maximum for the final escort, down from 56 s; generic survivor-name fallback is unchanged from PROD and is not a new candidate regression."
+      "status": "open",
+      "evidence": "Shared HUD-name portion only: generic Survivor N fallback remains, with no targeted identity closeout found. The 9 s batch14-fix comparison predates the reported 56 s wait and cannot prove it fixed. Preserve known names through the passenger identity pipeline and check a named/unnamed mixed roster; L7 boarding/navigation itself belongs to triage-b. This needs a multi-level identity/boarding trace, beyond a safe isolated label edit."
     },
     {
       "id": "175",
       "scope": "in",
       "status": "open",
-      "evidence": "Textured zebra close-camera leg slivers/inside-out faces have no subsequent zebra-specific closure. Root cause: deformed skinned leg topology at extreme 3 m close view; proposed fix: repair leg mesh/skin weights and review close-motion captures."
+      "evidence": "Original 3 m close capture shows torn leg slivers/inside-out faces; gameplay-zoom zebra deliveries do not close that extreme view. Suspected source: skinned leg topology/weight ownership; exact bad faces still need isolation. Proposed fix: inspect the 3 m kick/run sequence, repair affected mesh/weights and rebuild both tiers, preserving gameplay. Asset/motion matrix work exceeds a safe local edit."
     },
     {
       "id": "176",
       "scope": "in",
-      "status": "open",
-      "evidence": "Same shared blood-decal square/rectangle concern as Q-143, observed at L10 console. Inspect current textured ground decal under both night presets; if reproduced, repair shape/alpha sampling and review real kill piles. No corpse removal or gameplay tuning."
+      "status": "fixed",
+      "evidence": "Shared fix 38822dba5, item-specific verification 129229796. Viewed matched real-rocket L10-night before/after captures: shaded irregular clots replace red rectangles; draw max 34→34, zero errors (review-rocket-webgpu-high/Q-176.md). Full corpses persist; no L10 gameplay claim is inferred from this isolated effect.",
+      "fixedByLane": "triage-a"
     },
     {
       "id": "178",
@@ -1035,7 +1042,7 @@
       "id": "183",
       "scope": "in",
       "status": "fixed",
-      "evidence": "`87102e52f`, `a25110b50`, and `f82481767` replace glove-band appearance with textured garment shells and retain enough low-tier glove geometry; evidence and captures are recorded in `626f5ea3e`/`a681480f6`."
+      "evidence": "`87102e52b`, `a25110b50`, and `f82481767` replace glove-band appearance with textured garment shells and retain enough low-tier glove geometry; evidence and captures are recorded in `626f5ea3e`/`a681480f6`."
     },
     {
       "id": "192",
@@ -1059,13 +1066,13 @@
       "id": "195",
       "scope": "in",
       "status": "fixed",
-      "evidence": "The Q-192\u2013195 merge `54a880c59` adds Alpha contact clearance; reviewed capture at z1/1.5 shows full courier visible alongside retained Alpha, with movement stopped 1.351 m away."
+      "evidence": "The Q-192–195 merge `54a880c59` adds Alpha contact clearance; reviewed capture at z1/1.5 shows full courier visible alongside retained Alpha, with movement stopped 1.351 m away."
     },
     {
       "id": "196",
       "scope": "in",
       "status": "fixed",
-      "evidence": "`8ddb5c387` changes keyboard fire to face-direction ray-closest assist; `de436991c` and `7decc332a` add browser/Scene Lab checks for the \u00b125\u00b0 target cone."
+      "evidence": "`8ddb5c387` changes keyboard fire to face-direction ray-closest assist; `de436991c` and `7decc332a` add browser/Scene Lab checks for the ±25° target cone."
     },
     {
       "id": "197",
@@ -1082,13 +1089,13 @@
     {
       "id": "199",
       "scope": "in",
-      "status": "open",
-      "evidence": "Backlog records 34 courier-gear draws against a budget of 33; no closure commit/check found in the available refs. Root cause: tier gear adds one over-budget draw in the high WebGPU scene. Proposed fix: merge compatible gear material draws or adjust the established budget only if measured platform cost supports it; verify the scene gate."
+      "status": "fixed",
+      "evidence": "Replayed the exact retired webgpu-canvas reload check on current code: seethrough-gear-four → seethrough-door-gate, 250 ticks, WebGPU high. Gear 4→0 and 19 draws ≤ original 33 limit, zero errors (review-reload-webgpu-high/evidence.json). No budget was relaxed and no source fix was needed."
     },
     {
       "id": "200",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "201",
@@ -1099,7 +1106,7 @@
     {
       "id": "202",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "203",
@@ -1171,7 +1178,7 @@
       "id": "214",
       "scope": "in",
       "status": "fixed",
-      "evidence": "Explicitly recorded as fixed 10-29 by `a890e409c` (\u201cFix Q-214 blocked shared chase destination\u201d)."
+      "evidence": "Explicitly recorded as fixed 10-29 by `a890e409c` (“Fix Q-214 blocked shared chase destination”)."
     },
     {
       "id": "215",
@@ -1189,7 +1196,7 @@
       "id": "217",
       "scope": "in",
       "status": "fixed",
-      "evidence": "Explicitly closed 10-28 after a quiet-window rerun: 0/7 long frames; the prior 1\u20133 s samples were GPU contention."
+      "evidence": "Explicitly closed 10-28 after a quiet-window rerun: 0/7 long frames; the prior 1–3 s samples were GPU contention."
     },
     {
       "id": "218",
@@ -1212,17 +1219,17 @@
     {
       "id": "221",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "222",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "223",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "224",
@@ -1252,40 +1259,40 @@
       "id": "228",
       "scope": "in",
       "status": "fixed",
-      "evidence": "Backlog records L10 cold load reduced to 5.26 s; later five cold loads were 4.84\u20134.96 s, closing the >6 s load issue."
+      "evidence": "Backlog records L10 cold load reduced to 5.26 s; later five cold loads were 4.84–4.96 s, closing the >6 s load issue."
     },
     {
       "id": "229",
       "scope": "in",
-      "status": "fixed",
-      "evidence": "L1 oversized infected hair was fixed 10-29 (explicit backlog note); L4 tent-roof concealment was not reproduced, and the subsequent L4 redesign changes that tent layout (`54a880c59`), resolving the original observation."
+      "status": "open",
+      "evidence": "L1 oversized hair has an explicit 10-29 fix, but L4 tent-roof concealment was only not reproduced. Current L4 still has tent roofs, so the no-tents redesign alone cannot close this mixed item. Proposed fix: recreate the exact L4 tent walk at z1.5 and inspect material/cut eligibility, then add the missing reveal coverage if reproduced. Root cause remains unisolated; do not change camera framing."
     },
     {
       "id": "230",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "231",
       "scope": "in",
       "status": "open",
-      "evidence": "L1 stretched triangle was not reproduced in three targeted attempts (`fc1a1a20f`, `32dfe7803`); this is insufficient to prove the transient corpse-hair artifact fixed. L9 pallets and L10 lighting are outside this report\u2019s level scope. Proposed fix: retain as intermittent until the exact L1 fall sequence is captured cleanly or a render-side cause is found."
+      "evidence": "L1 stretched triangle was not reproduced in three targeted attempts (`fc1a1a20f`, `32dfe7803`); this is insufficient to prove the transient corpse-hair artifact fixed. L9 pallets and L10 lighting are outside this report’s level scope. Proposed fix: retain as intermittent until the exact L1 fall sequence is captured cleanly or a render-side cause is found."
     },
     {
       "id": "232",
       "scope": "in",
       "status": "fixed",
-      "evidence": "`829167fc1` records five L5 Metro timing runs; shutter closed 0\u20131.45 s after final boarding, with the 7.4 s observation explained by the authored resident-view pause."
+      "evidence": "`829167fc1` records five L5 Metro timing runs; shutter closed 0–1.45 s after final boarding, with the 7.4 s observation explained by the authored resident-view pause."
     },
     {
       "id": "233",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "234",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "235",
@@ -1296,27 +1303,27 @@
     {
       "id": "236",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "237",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "238",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "239",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "240",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "241",
@@ -1327,7 +1334,7 @@
     {
       "id": "242",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "243",
@@ -1344,18 +1351,25 @@
     {
       "id": "245",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "246",
       "scope": "out",
-      "reason": "L6\u2013L10 environment/vehicle/mission flow or process-only scheduling"
+      "reason": "L6–L10 environment/vehicle/mission flow or process-only scheduling"
     },
     {
       "id": "247",
       "scope": "in",
       "status": "open",
-      "evidence": "Latest source observation is readable but low-contrast L8 night corpses, plus unmeasured L4/healthy-versus-infected distinction. No fix is inferred from old corpse gates. Root cause not yet isolated; capture matched living/healthy-dead/infected-dead bodies under L4/L8 lighting, then tune corpse illumination/material contrast without deleting bodies."
+      "evidence": "Viewed matched-appearance fixture controls at L4 and L8-zoo (review-corpses-webgl2-low/): complete healthy/infected bodies retain clothes and green infected skin, but night lower-body edges remain low-contrast. These are controlled death states, not a natural-kill proof. Candidate cause: frozen/dead shading has less silhouette separation than the live body; exact material/light contribution needs isolation. Proposed fix: measure body/ground masks across real L4/L8 deaths, then tune corpse fill/rim without deleting bodies; lighting/art matrix work exceeds a safe local edit."
     }
-  ]
+  ],
+  "counts": {
+    "inScope": 185,
+    "fixedBefore": 162,
+    "fixedNow": 7,
+    "obsolete": 5,
+    "open": 11
+  }
 }

@@ -4,6 +4,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { SceneSession, readSpec, stopServer } from '../scenelab/session';
 import { runSpec } from '../scenelab/run';
+import type { Game } from '../../src/Game';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 
 const mode = process.argv[2] ?? 'blood';
@@ -51,6 +52,48 @@ try {
     writeFileSync(`${out}/fixture.json`, JSON.stringify(spec, null, 2));
     const result = await runSpec(session, spec, { out, sheet: 5, shots: spec.shots });
     assert.ok(result.pass, JSON.stringify(result.failed));
+  } else if (mode === 'figures') {
+    const cases = [
+      ['tests/scenes/catalog/courier-gear-tier4-female.json', 'courier', 8],
+      ['tests/scenes/catalog/courier-gear-tier4-swing-female.json', 'courier', 8],
+      ['specs/scenes/catalog/dog-pet-trot.json', 'dog-run', 5],
+      ['tests/scenes/zoo-s3/qa-zoo-zebra-kick.json', 'animal', 3],
+    ] as const;
+    const results = [];
+    for (const [file, target, radius] of cases) {
+      const spec = readSpec(file); spec.camera = { mode: 'close', target, radius, azimuth: 45 };
+      results.push(await runSpec(session, spec, { out: `${out}/${spec.name}`, sheet: Math.max(5, Math.floor((spec.frames ?? 120) / 20)), shots: spec.shots }));
+    }
+    writeFileSync(`${out}/summary.json`, JSON.stringify(results.map(r => ({ pass: r.pass, failed: r.failed, files: r.files, sheet: r.sheet })), null, 2));
+  } else if (mode === 'corpses') {
+    for (const time of ['L4', 'L8-zoo'] as const) {
+      const spec: SceneSpec = { name: `corpse-contrast-${time}`, ground: 'asphalt', time, size: 35, dof: false,
+        actors: [{ id: 'courier', kind: 'courier', at: [-4, 4], god: true },
+          { id: 'healthy-live', kind: 'pedestrian', at: [-1.5, -3], look: { model: 'npc.civilian-man-b' }, state: 'idle' },
+          { id: 'infected-live', kind: 'infected', at: [1.5, -3], look: { model: 'npc.civilian-man-b' }, state: 'idle' },
+          { id: 'healthy-dead', kind: 'pedestrian', at: [-1.5, 1], look: { model: 'npc.civilian-man-b' }, state: 'idle' },
+          { id: 'infected-dead', kind: 'infected', at: [1.5, 1], look: { model: 'npc.civilian-man-b' }, state: 'idle' }],
+        camera: { mode: 'close', target: [0, .5, 0], radius: 14, azimuth: 45 }, expect: { consoleErrors: 0 } };
+      writeFileSync(`${out}/${time}-fixture.json`, JSON.stringify(spec, null, 2));
+      await session.load(spec);
+      await session.page.evaluate(async () => {
+        const lab = window.__SCENE__!, g = (lab as unknown as { game: Game }).game;
+        const actors = (await lab.metrics()).actors;
+        const e = g.world.entities.get(actors['healthy-dead'].entity)!;
+        // Match the complete authored appearance, not only a variant hint (infected spawn randomizes that hint).
+        for (const key of ['healthy-live', 'infected-live', 'infected-dead']) {
+          const other = g.world.entities.get(actors[key].entity)!;
+          other.appearance = { ...structuredClone(e.appearance!), entityId: other.id };
+        }
+        e.health.current = 0; e.civilian!.state = 'finished'; e.civilian!.entered = g.world.tick;
+        lab.command('infected-dead', { corpse: true }); await lab.step(180); await lab.ready();
+      });
+      await session.screenshot(`${out}/${time}.png`);
+      const quality = await session.page.evaluate(() => window.__SS__!.getState().render.quality);
+      // Resolve the metrics promise in the page before crossing the serialization boundary.
+      const metrics = await session.page.evaluate(() => window.__SCENE__!.metrics());
+      writeFileSync(`${out}/${time}.json`, JSON.stringify({ fixtureOnly: true, tier: quality, actors: metrics.actors, errors: session.errors }, null, 2));
+    }
   } else if (mode === 'environment') {
     const results = [];
     for (const name of ['stunning-cut-l3-supermarket', 'stunning-cut-l5-pharmacy', 'l5-po-cellar-return', 'l5-po-metro-ingress', 'l4-convoy-gate-stop']) {
