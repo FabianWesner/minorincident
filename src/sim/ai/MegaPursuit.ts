@@ -196,7 +196,7 @@ export class MegaPursuit {
     if (tick >= audio.next) {
       emit('roar'); emit('impact');
       // First audible roar, once the opening line is gone: say what it is (story audit, finding 11).
-      const m = this.world.mission;
+      const m = this.world.mission && 'subtitle' in this.world.mission ? this.world.mission : null;
       if (!this.state.introduced && m && (!m.subtitle || m.subtitle.until <= tick)) {
         this.state.introduced = true;
         m.subtitle = { id: 'L10.mega-roar', text: dialogue['L10.mega-roar'], until: tick + 300 };

@@ -165,3 +165,10 @@ test('rewards: a saved reward screen round-trips at each phase and cannot be cla
   expect(() => beginRewards(save, 1)).toThrow();
   expect([2, 3, 4, 5, 6].map(level => gearTier(preset(`L${level as 2 | 3 | 4 | 5 | 6}-default`)))).toEqual([0, 1, 2, 3, 4]);
 });
+
+test('ending credits name the L8 survivors who got out and remember the ones lost', async () => {
+  const { epilogueSurvivorLines } = await import('../../src/data/epilogueSurvivors');
+  expect(epilogueSurvivorLines(['dale', 'rosa', 'okafor', 'mia', 'sam'])).toEqual(['Dale, Rosa, Mr. Okafor, Mia, Sam: safe at the evacuation point, waiting for the cure.']);
+  expect(epilogueSurvivorLines(['rosa', 'mia'])).toEqual(['Rosa, Mia: safe at the evacuation point, waiting for the cure.', 'Remembered: Dale, Mr. Okafor, Sam.']);
+  expect(epilogueSurvivorLines(undefined)).toEqual([]);
+});

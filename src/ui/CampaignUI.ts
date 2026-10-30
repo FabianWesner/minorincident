@@ -3,6 +3,7 @@ import { revealCards,pickUpgrades,finishRewards,rackSize,nextLevelAfter,lastLeve
 import { SAVE_ERROR,type SaveResult } from '../sim/progression/Save';
 import { upgrades } from '../data/upgrades';
 import { madeBy } from '../data/madeBy';
+import { epilogueSurvivorLines } from '../data/epilogueSurvivors';
 import './campaign.css';
 const label=(id:string)=>id.split('.').at(-1)!.replaceAll('-',' ');
 /** Campaign-only screens. E12 retains briefing/results and E14 retains the gameplay HUD. */
@@ -71,7 +72,7 @@ export class CampaignUI {
   credits(save:CampaignSave, ending = false):void {
     clearTimeout(this.creditsTimer);
     this.screen('Credits');const credits=document.createElement('div');credits.className='credits-roll';this.content.append(credits);
-    for(const line of ['Minor Incident',madeBy.headline,`${madeBy.author.name}: ${madeBy.author.role.toLowerCase()}`,...madeBy.groups.map(g=>`${g.heading}: ${g.names.join(', ')}`),'Built with three.js and Rapier. Technology reference: Bruno Simon (MIT).',madeBy.thanks]){const p=document.createElement('p');p.textContent=line;credits.append(p);}
+    for(const line of ['Minor Incident',...(ending?epilogueSurvivorLines(save.results?.L8?.survivors):[]),madeBy.headline,`${madeBy.author.name}: ${madeBy.author.role.toLowerCase()}`,...madeBy.groups.map(g=>`${g.heading}: ${g.names.join(', ')}`),'Built with three.js and Rapier. Technology reference: Bruno Simon (MIT).',madeBy.thanks]){const p=document.createElement('p');p.textContent=line;credits.append(p);}
     if (ending) { credits.style.animationPlayState = 'paused'; credits.style.animationDelay = `-${(this.game.world.missions?.state.epilogue?.phaseTicks ?? 0) / 60}s`; }
     else this.creditsTimer=setTimeout(()=>{if(!this.root.hidden)this.showMenu({status:'ok',save});},12000);
     const back = this.button(ending ? 'Skip / Main menu' : 'Main menu',()=>{
