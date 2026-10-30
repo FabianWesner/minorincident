@@ -22,8 +22,12 @@ export const seeThrough = {
   /** Frozen corpses (StaticCorpses) dissolve inside the subject disc while the courier is on foot (Q-209): a small-corpse pile
    * at her feet buried her (L4 west breach). A uniform switch: the corpse programs compile once with the cut. */
   corpse: uniform(0).setGroup(renderGroup),
-  /** Tight L6 tunnel retreat uses a clean silhouette cut instead of fragment dither. */
+  /** L6 (metro tunnel and station) uses a clean silhouette cut instead of fragment dither (Q-241: stipple on the arches). */
   solidSilhouette: uniform(0).setGroup(renderGroup),
+  /** Height above her feet that solid occluders always keep (vertical faces; support faces keep .08 m more). 0.22 everywhere
+   * (QA #48, PO #5); 0.42 in the L6 metro, whose rails rise 0.4 m above the track bed she walks on: a lower band sliced the
+   * rail web and crown into a saw-tooth around her (Q-241). */
+  keepBand: uniform(.22).setGroup(renderGroup),
   /** Legacy boss-mask diagnostic: the current Alpha-sized Mega stays opaque. */
   bossStrength: uniform(0).setGroup(renderGroup),
   /** Boss hole radius in screen heights (the boss hole is about a courier wide, not a survivor group). */
@@ -49,8 +53,8 @@ export const seeThroughHole = (scale = 1, radius: Node<'float'> = seeThrough.rad
 export const seeThroughKeep = (eligible?: Node<'float'>) => {
   // QA #48 (L5 pharmacy): the kept 0.3 m band of a wall standing right in front of her drew its top edge across her feet, so she read as
   // standing on the roof edge. Support surfaces (facing up) keep the 0.3 m band; vertical faces keep 0.22 m, so 20 cm kerbs stay whole (PO #5).
-  const cuttable = positionWorld.y.greaterThan(seeThrough.floor.add(.3))
-    .or(normalWorld.y.lessThan(.5).and(positionWorld.y.greaterThan(seeThrough.floor.add(.22))));
+  const cuttable = positionWorld.y.greaterThan(seeThrough.floor.add(seeThrough.keepBand).add(.08))
+    .or(normalWorld.y.lessThan(.5).and(positionWorld.y.greaterThan(seeThrough.floor.add(seeThrough.keepBand))));
   const hole = cuttable.select(mix(1, seeThroughHole(1, seeThrough.solidRadius, .85), seeThrough.strength), 1);
   const noise = fract(fract(dot(screenCoordinate.xy.floor(), vec2(.06711056, .00583715))).mul(52.9829189));
   // A placement enclosing most of the lens cannot leave a roof across the

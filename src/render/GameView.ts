@@ -990,7 +990,10 @@ export class GameView implements Lifecycle {
     const locked = this.world.controls.snapshot()?.attack;
     const lockedEntity = locked ? this.world.entities.get(locked.id) : undefined;
     let subject: Box3 | undefined;
-    seeThrough.solidSilhouette.value = this.world.scenario === 'L6' && this.world.missions?.state.l6?.phase === 'retreat' ? 1 : 0;
+    // Q-241: the whole L6 metro reveals with the clean cut (was the retreat only) and keeps its track rails whole.
+    const metro = this.world.scenario === 'L6' || !!this.world.districts?.composition.districts.some(d => d.id === 'D-SUBWAY');
+    seeThrough.solidSilhouette.value = metro ? 1 : 0;
+    seeThrough.keepBand.value = metro ? .42 : .22;
     if (current) {
       const feet = current.y - .7;
       this.revealSubject.min.set(current.x - .55, feet, current.z - .55);
