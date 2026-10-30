@@ -2,7 +2,7 @@ import { cureRecordingText } from './megaPresentation';
 /** Stable line IDs used by mission scripts; subtitles do not require voice assets. */
 export const dialogue: Record<string, string> = {
   'L10.research': cureRecordingText,
-  'L1.briefing': 'Morning! One cold-chain parcel for the Medical Annex on Larch Street. Easy one.',
+  'L1.briefing': 'Morning! One cold-chain parcel for the Medical Annex on Larch Street. Easy one, and your corgi can ride along as always.',
   'L1.pickedUp': 'Sealed and signed. Your cargo bike is at the rack out front; it is quicker to the Annex.',
   'L1.delivered': 'Delivered ✓',
   'L1.bang': 'What was that bang? …Hey, are you okay? Get off the street and grab anything you can!',
