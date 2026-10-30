@@ -1611,6 +1611,8 @@ export class SceneLab {
     if (id === undefined || !vehicles) throw new Error(`Vehicle silhouette probe: unknown vehicle ${name}`);
     return vehicles.silhouetteProbe(id, mode);
   }
+  /** Draw the production infected geometry as an unlit ID mask, preserving pose and depth. */
+  crowdMaskProbe(enabled: boolean): void { this.game.view.probeCrowdMask(enabled); }
   /** Courier-visible-share probe: redraw with the courier and/or the crowd (Mega included) hidden; returns the courier-to-Mega distance in metres (Infinity when none). */
   hideProbe(courier: boolean, crowd: boolean, environment = false, bars = false): number { return this.game.view.probeVisibility({ courier, crowd, environment, bars }); }
   /** Exact screen disc used by the boss shader, for comparing body pixels outside the intended courier reveal. */

@@ -11,6 +11,7 @@ import { campaignEndingComplete, campaignEndingWaiting, needsZoomInput, needsTar
 import { PNG } from 'pngjs';
 import { courierBodyPixels } from '../../tools/scenelab/run';
 import { hueDistance, lookStats, LOW_CHROMA } from '../../tools/scenelab/look';
+import { edgeNoise } from '../../tools/scenelab/edge-noise';
 
 const sample = (seconds: number, fields: Partial<ProgressSample> = {}): ProgressSample => ({ context: 'L6|retreat', text: 'Cover the retreat · 12 m', distance: 12, player: { x: 0, z: 15 }, marker: { x: 12, z: 15 }, tick: seconds * 60, nowMs: seconds * 1000, ...fields });
 
@@ -96,4 +97,29 @@ test('Scene Lab: spec validation and colour probes keep QA failures meaningful',
   // Opposing hues have no stable aggregate angle; brightness/white checks still detect a white fallback.
   const white = colour([[255, 255, 255]]);
   expect(white.hueChroma).toBe(0); expect(white.whiteShare).toBe(1); expect(white.luma).toBeGreaterThan(red.luma);
+
+  // Exact body selection retains low-contrast pixels and excludes a bright non-body pixel.
+  const body = lookStats(pixels([50, 50, 50], [255, 255, 255]).data, pixels([50, 50, 50], [0, 0, 0]).data, mask.data);
+  expect(body).toMatchObject({ pixels: 1, whiteShare: 0 }); expect(body.luma).toBeCloseTo(50);
+  expect(lookStats(pixels([50, 50, 50], [255, 255, 255]).data, null, mask.data)).toEqual(body);
+  expect(lookStats(clear.data, null).pixels).toBe(0);
+  const flash = lookStats(pixels([100, 100, 100], [0, 0, 0]).data, empty.data, mask.data);
+  expect(flash.luma / body.luma).toBeGreaterThan(1.6); // A real body brightening remains a failure.
+  expect(lookStats(pixels([255, 255, 255], [0, 0, 0]).data, empty.data, mask.data).whiteShare).toBe(1);
+  const shape = (inside: (x: number, y: number) => boolean, painted = false) => {
+    const png = new PNG({ width: 128, height: 128 });
+    for (let y = 0; y < 128; y++) for (let x = 0; x < 128; x++) {
+      const selected = inside(x, y), value = selected && (x + y) % 2 ? 220 : selected ? 0 : 100;
+      png.data.set(painted ? [value, value, value, 255] : selected ? [255, 0, 255, 255] : [0, 0, 0, 255], (y * 128 + x) * 4);
+    }
+    return png;
+  };
+  const square = (x: number, y: number) => x >= 20 && x < 108 && y >= 20 && y < 108;
+  const geometry = shape(square), painted = shape(square, true), rect = [0, 0, 1, 1];
+  const compact = edgeNoise(painted.data, 128, 128, rect, geometry.data);
+  expect(compact.silhouetteRoughness).toBeLessThan(15.5); // Paint perforations do not change the geometric outline.
+  expect(compact.extremeEdgeShare).toBeGreaterThan(.1); // Real black/white pixel noise is still measured on the normal frame.
+  const spiky = shape((x, y) => x >= 20 && x < 108 && (y >= 70 && y < 108 || y >= 20 && y < 70 && x % 4 < 2));
+  expect(edgeNoise(painted.data, 128, 128, rect, spiky.data).silhouetteRoughness).toBeGreaterThan(15.5);
+  expect(edgeNoise(painted.data, 128, 128, rect, new Uint8Array(128 * 128 * 4)).silhouetteRoughness).toBe(Infinity);
 });
