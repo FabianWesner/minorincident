@@ -36,3 +36,4 @@ Check each item at low quality, zoom 1.5, WebGPU, with a progressed save, A/B ag
 - Turned v2 faces read as tinted skin with eyes, not a triangle mosaic (Q-189).
 - Firefighters seen from behind read as a helmet over a head, not a jack-o'-lantern (Q-190).
 - [ ] Q-249 (PO 10-30): every human figure shares the heroine's proportions (head size, legs); hand props (mugs) hand-sized and held; caps sit on heads; bench sitters sit on the bench.
+- [ ] Q-250 (PO 10-30): starting/replaying level N (level select, continue, fresh, after a later level) offers only the weapons the story has given before or in level N.
