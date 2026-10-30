@@ -1,0 +1,6 @@
+L10 R1–R5 roadside belt: `0044d60ad` + warm-up fix `a57062154` on `lane/q246`; 253 existing supply/evacuation props and 105 framed storm lanterns, instanced through the existing decor and fake-light paths.\
+Focal spacing 25–35 m; prop footprints 3.32–10.00 m from road edges; five obstructed preferred verges use the other side. Zero solid overlaps; simulation colliders unchanged.\
+Inspected R1–R5 at zoom 1/1.5, high/low: [before high](before-high.jpg), [after high](after-high.jpg), [before low](before-low.jpg), [after low](after-low.jpg). Honest score **5.5 → 6.5/10**; broad road and repeated crates still limit the scene.\
+Peak 124 draws / 242,017 triangles; AC16 route minimum 2.623 (20/20 required zoom/tier views; catalog 30/30); real light budget unchanged; zero late shader builds across both backends/tiers (nonempty counters). All measurements: [evidence](evidence.json).\
+80 fresh native WebGPU profiles: median high 4.561 → 4.645 s, low 4.795 → 4.953 s; median/p90/max deltas <0.3 s; one noisy 20-profile high batch retained as rejected evidence. Finale result objects identical (143.150/143.217 s); arrival checker unchanged.\
+`npm test`: 110 passed; typecheck/lint/E32 verification passed; smoke 6 QA + 1 public passed; scene gate **48/48**, zero known/not run. No new test cases, models or dependencies; baseline worktree and 140 temporary caches removed.
