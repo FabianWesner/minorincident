@@ -22,19 +22,25 @@ const receipts=[];
 for(const id of ids){
  if(id==='npc.civilian-man-a'||id==='char.courier-female')throw Error('Approved figures must not be recalibrated');
  const def=manifest.find(d=>d.id===id)!,old=oldManifest.find(d=>d.id===id)!;
- const inputs=[...new Set([old.sourceGlb!,old.glb,...Object.values(old.lods??{}),...[old.glb,...Object.values(old.lods??{})].map(p=>p.replace('.glb','.low.glb')).filter(existsSync)])];
+ const inputs=[...new Set([old.sourceGlb!,old.glb,...Object.values(old.lods??{}),...[old.glb,...Object.values(old.lods??{})].map(p=>p.replace('.glb','.low.glb')).filter(existsSync),
+  ...id==='char.courier-male'?['assets/char.courier-male-skin/model.skin.glb','public/assets/models/char.courier-male.skin.glb','public/assets/models/char.courier-male.skin.low.glb']:[]])];
  const prepared=[];
  try{
   for(const path of inputs){
-   const bytes=original(path),doc=await io.readBinary(bytes),before=measureFigure(doc),plan=planHeadScale(before,target);
-   if(!plan.feasible)throw Error(`${path}: no uniform head shrink meets all ratios with fixed body (${plan.minimum} > ${plan.maximum})`);
+   const bytes=original(path),doc=await io.readBinary(bytes);
+   const roots=id==='npc.survivor-group'?doc.getRoot().listNodes().filter(n=>/^survivor\d+_root$/.test(n.getName())).map(n=>n.getName()):[undefined];
    const textures=doc.getRoot().listTextures().map(t=>sha(t.getImage()!));
-   const receipt=calibrateFigure(doc,target,{headScale:plan.scale});
-   for(const key of ['headHeight','headShoulder'] as const)if(receipt.after[key]/target[key]>1.10001)throw Error(`${path}: ${key} exceeds heroine × 1.1`);
+   const figures=[];
+   for(const rootName of roots){
+    const before=measureFigure(doc,rootName),plan=planHeadScale(before,target);
+    const receipt=calibrateFigure(doc,target,{headScale:plan.scale,rootName});
+    for(const key of ['headHeight','headShoulder'] as const)if(receipt.after[key]/target[key]>1.10001)throw Error(`${path}: ${key} exceeds heroine × 1.1`);
+    figures.push({rootName,plan,...receipt});
+   }
    if(JSON.stringify(textures)!==JSON.stringify(doc.getRoot().listTextures().map(t=>sha(t.getImage()!))))throw Error('Texture changed');
    await doc.transform(prune({keepLeaves:true,keepAttributes:true}));
    const output=await io.writeBinary(doc);
-   prepared.push({path,output,document:doc,receipt:{path,sourceSha256:sha(bytes),outputSha256:sha(output),texturesUnchanged:true,plan,...receipt}});
+   prepared.push({path,output,document:doc,receipt:{path,sourceSha256:sha(bytes),outputSha256:sha(output),texturesUnchanged:true,figures}});
   }
   for(const p of prepared)writeFileSync(p.path,p.output);
   const high=prepared.find(p=>p.path===old.glb)!.document,b=getBounds(high.getRoot().listNodes().find(n=>n.getName()==='skin_body')??high.getRoot().listScenes()[0]);
