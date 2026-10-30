@@ -47,7 +47,7 @@ export function objectiveText(mission: Mission, fallback: string): string {
   }
   if (mission.def.l8) {
     const zoo=mission.l8!, seated=w.vehicles!.active===zoo.state.carId;
-    if(seated&&!zoo.state.breachedAt)return `Wait for the breach · ${Math.max(0,Math.ceil((zoo.state.startedAt+3600-w.tick)/60))} s`;
+    if(seated&&!zoo.state.breachedAt)return `Waiting for departure · ${Math.max(0,Math.ceil((zoo.state.startedAt+3600-w.tick)/60))} s`;
     if(s.steps.depart?.status==='active') {
       const ids=zoo.passengers(),car=w.vehicles!.cars.get(zoo.state.carId)!.entity.vehicle!;
       const missing=ids.filter(id=>!car.passengers?.some(p=>p.id===id&&p.phase==='seated'));

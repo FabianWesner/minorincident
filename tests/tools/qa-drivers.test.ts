@@ -23,8 +23,8 @@ test('playtest stuck detection: following a moving ring is progress; a parked co
   const loop = new PlaytestProgress(); loop.update(sample(0)); loop.update(sample(1, { player: { x: 3, z: 15 }, marker: { x: 15, z: 15 } }));
   for (let t = 2; t <= 35; t++) loop.update(sample(t, { player: { x: t % 2 ? 3 : 0, z: 15 }, marker: { x: t % 2 ? 15 : 12, z: 15 } }));
   expect(loop.update(sample(36)).seconds).toBeGreaterThan(30);
-  const bring = new PlaytestProgress(); bring.update(sample(0, { text: 'Wait for the breach · 42 s' }));
-  expect(bring.update(sample(10, { text: 'Wait for the breach · 32 s' })).seconds).toBe(0);
+  const bring = new PlaytestProgress(); bring.update(sample(0, { text: 'Waiting for departure · 42 s' }));
+  expect(bring.update(sample(10, { text: 'Waiting for departure · 32 s' })).seconds).toBe(0);
   bring.update(sample(11, { text: 'Bring the injured survivor · 0 m', distance: 0 }));
   expect(bring.update(sample(42, { text: 'Bring the injured survivor · 0 m', distance: 0 })).seconds).toBe(31);
   const respawn = new PlaytestProgress(); respawn.update(sample(0, { player: { x: 50, z: 15 }, marker: { x: 62, z: 15 } }));
