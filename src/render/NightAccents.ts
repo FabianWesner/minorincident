@@ -46,6 +46,17 @@ export function nightAccents(world: DistrictWorld | null | undefined): AccentSet
   const set = district ? crossingAccents(district.decay.placements.filter(p => !district.decay.removed.includes(p.id)), district.origin as P2)
     : cureDistrict ? cureAccents(cureDistrict.decay.placements.filter(p => !cureDistrict.decay.removed.includes(p.id)), cureDistrict.origin as P2)
     : subway ? subwayAccents(subway.origin as P2) : empty;
+  if (world.composition.id === 'L7') {
+    const fair = world.districts.find(d => d.id === 'D-FAIR');
+    const truck = fair?.decay.placements.find(p => p.id === 'l7-rocket-wreck');
+    if (truck && fair) {
+      const [x, y, z] = truck.position;
+      const entry: AccentSet = { points: [{ kind: 'storm-lantern', x: x - 2.8 + fair.origin[0], y: y + .17, z: z + 1.95 + fair.origin[1],
+        yaw: 0, seed: 142, color: '#ffdfac', glow: 5, flicker: 0, strobe: false,
+        pool: { color: '#ffdfac', intensity: 18, range: 7 } }], fires: [] };
+      cache.set(world, entry); return entry;
+    }
+  }
   cache.set(world, set);
   return set;
 }
