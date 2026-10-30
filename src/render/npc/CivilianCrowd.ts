@@ -30,6 +30,13 @@ import type { CivilianProp } from '../../sim/npc/types';
 /** E22 weapons carried by soldiers and armed civilians: drawn at the hand whatever the routine or fight clip is. */
 /** Prop offsets from the hand (RoutineProps shapes): mug body centre, phone. */
 const phoneSocket: [number, number, number] = [.08, -.03, 0];
+// Measured native finger/handle clearances after q249's hand reduction. The
+// maximum hand X is on the palm for these two silhouettes; bring only coffee
+// handles back to the fingertip band, retaining about a 1 mm skin margin.
+const coffeeGripInset: Record<string, readonly [number, number]> = {
+  'npc.civilian-man-b': [.005, .0075],
+  'npc.civilian-woman-a': [.002, .002],
+};
 const weaponProps = new Set<string>(['rifle', 'pistol', 'shotgun', 'hunting-rifle', 'pipe', 'bat', 'crowbar']);
 import type { CrowdClip } from '../../assets/crowd';
 import { CrowdPosePalette } from '../characters/CrowdPosePalette';
@@ -98,6 +105,7 @@ class CivilianBatch extends Group {
   private readonly spoutPoint = new Vector3();
   private gripTriangles: Float32Array = new Float32Array();
   private gripReach = .07;
+  private coffeeReach = .07;
   private texture!: DataTexture;
   private readonly transform = new Matrix4();
   private readonly lean = new Matrix4().makeRotationZ(-.34);
@@ -170,6 +178,7 @@ class CivilianBatch extends Group {
       }
     }
     this.gripTriangles = baked.gripTriangles!; this.gripReach = baked.gripReach!;
+    this.coffeeReach = this.gripReach - (this.lod === 'lod2' ? 0 : coffeeGripInset[this.model]?.[this.lod === 'lod0' ? 0 : 1] ?? 0);
     baked.geometry.userData.crowdLod = this.lod;
     this.accessories?.registerSkull(this.model, baked.geometry);
     baked.geometry.setAttribute('_clip_frame', this.frame); baked.geometry.setAttribute('_variant', this.tint); baked.geometry.setAttribute('_overlay', this.overlay);
@@ -326,7 +335,7 @@ class CivilianBatch extends Group {
         const pour = handProp === 'watering-can' && c.state === 'calm' && activity?.activity === 'water' && !!activity.facing && !!c.activityUntil ? Math.min(1, Math.max(0, (this.world.tick - (c.activityStarted ?? 0) - 20) / 20)) : 0;
         if (pour > 0) { this.hand.multiply(this.tilt.makeRotationZ(-.75 * pour)); this.props!.spouts.set(e.id, this.spoutPoint.set(.36, -.13, 0).applyMatrix4(this.hand).clone()); }
         else this.props!.spouts.delete(e.id);
-        this.props!.held(handProp!, this.hand, e.id, weaponProps.has(handProp!) ? undefined : this.gripTriangles, this.gripReach, c.ally?.weapon === 'hmg', authoredCane ? presented.y - .7 : undefined);
+        this.props!.held(handProp!, this.hand, e.id, weaponProps.has(handProp!) ? undefined : this.gripTriangles, handProp === 'coffee' ? this.coffeeReach : this.gripReach, c.ally?.weapon === 'hmg', authoredCane ? presented.y - .7 : undefined);
       }
       this.tintOf(e, index, blend[0] * 2 + blend[1]);
       const glow = c.eyesGlow ? e.infection ? Math.min(1, (this.world.tick - (e.infection.endsTick - 78)) / 30) : Math.min(1, Math.max(0, (c.veins - .12) / .65)) : 0;

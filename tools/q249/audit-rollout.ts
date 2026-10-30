@@ -6,6 +6,7 @@ import {assetIO} from '../assets/io';
 import{prepareHeadProfile}from'./head-profiles';
 import {measureFigure} from '../assets/figure-proportions';
 const io=await assetIO(),baseline='4698e5aa0',original=(p:string)=>execFileSync('git',['show',`${baseline}:${p}`],{maxBuffer:64*1024*1024}),sha=(b:Uint8Array)=>createHash('sha256').update(b).digest('hex');
+const output=process.argv[2]??'docs/reports/q249/rollout/export-audit.json';
 const census=JSON.parse(readFileSync('docs/reports/q249/rollout/census.json','utf8')) as {rows:{id:string;rootName?:string;child?:boolean;path:string}[]};
 const target=measureFigure(await io.read('public/assets/models/char.courier-female.skin.glb')).ratios;
 const batches=[1,2,3,4,5].map(n=>JSON.parse(readFileSync(`docs/reports/q249/rollout/batch-${n}.json`,'utf8')));
@@ -34,4 +35,4 @@ for(const row of census.rows)if(!row.child&&!completed.has(row.id))errors.push(`
 if(!readFileSync('public/assets/models/char.courier-female.skin.glb').equals(original('public/assets/models/char.courier-female.skin.glb')))errors.push('Heroine changed');
 for(const id of ['npc.civilian-kid','npc.brother'])for(const path of [census.rows.find(r=>r.id===id)!.path])if(!readFileSync(path).equals(original(path)))errors.push(`${id}: child anatomy changed`);
 const report={baseline,target,policy:'Head-size upper limits win; uniform head shrink; body fixed; lower head ratios permitted by PO',variants:completed.size,figures:census.rows.filter(r=>!r.child).length,files:rows.length,errors,rows};
-writeFileSync('docs/reports/q249/rollout/export-audit.json',JSON.stringify(report,null,2)+'\n');console.log(`${report.variants} adult variants / ${report.figures} figures / ${rows.length} files / ${errors.length} errors`);if(errors.length){console.log(errors.join('\n'));process.exitCode=1;}
+writeFileSync(output,JSON.stringify(report,null,2)+'\n');console.log(`${report.variants} adult variants / ${report.figures} figures / ${rows.length} files / ${errors.length} errors (${output})`);if(errors.length){console.log(errors.join('\n'));process.exitCode=1;}
