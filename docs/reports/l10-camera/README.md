@@ -27,6 +27,10 @@ A higher pitch (smaller polar) was not tried: with the 45° azimuth it shortens 
 - Draws/triangles max over all stations and zooms: high 113/169k → 119/193k, low 98/94k → 101/99k, WebGL2 106/169k → 112/193k (budget 300/500k). 0 console errors.
 - AC16 night read at the new framing (follow rig, zoom 1.3 = new zoom 1): navContrast R1 3.0, R2 3.0, R3 3.25, R4 3.26, R5 3.0
   (gate 2.5; floor passes); playerContrast 4.4–7.5 (gate 3). R6 is unchanged.
+- Real-input L10 run (`npm run playtest -- --levels L10 --mode campaign --session-seconds 480 --quality low --zoom 1`, WebGPU, 4 segments): finished to the credits, 0 deaths,
+  no play frame > 200 ms (0 hitch records; only the loading frames before tick 0 are over 200 ms), Mega killed, cure released. One P1 "stuck 120 s on 'Watch the cure spread'" is the existing epilogue
+  length: the prior l10-all-new runs show the same 146–149 s no-progress there, and R7 keeps the normal framing.
+- `npm test` 109 passed / 1 skipped; `npm run test:smoke` 6 + 1 passed; `npm run scene:gate` 48/48; typecheck and lint clean.
 - Finale calibration `tools/qa/l10-arrival-check.ts`: high 143.15 s, low 143.22 s, released, 0 deaths (identical to main).
 
 ## Honest look score
