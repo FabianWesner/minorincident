@@ -47,6 +47,7 @@ export class Blasts extends Group {
   private readonly heat = uniform(1);
   private readonly windNode = uniform(new Vector3(wind.x, 0, wind.z));
   private readonly playerNode = uniform(new Vector3(-1000, 1, -1000));
+  private readonly softCureMist = uniform(0);
   private readonly sunNode = uniform(new Vector3(.45, .78, .43).normalize());
   private readonly fireballs; private readonly fb;
   private readonly puffs; private readonly pf;
@@ -173,7 +174,13 @@ export class Blasts extends Group {
         // and bloom while keeping the final measured coverage below the 40% cap.
         const dither = fract(fract(dot(screenCoordinate.xy.floor(), vec2(.06711056, .00583715))).mul(52.9829189));
         nearRay.and(dither.greaterThanEqual(.2)).discard();
-        return vec4(color, edge.mul(grain).mul(fade).mul(st.z.lessThan(-1.5).select(.2, .97)).mul(alive).mul(mix(.38, 1, seeThroughHole(1.15))));
+        // The playable epilogue mist is a ground-plane cloud. A radial feather
+        // hides the low-poly puff silhouette without changing title/credits mist.
+        const playableMist = st.z.lessThan(-1.5).and(this.softCureMist.greaterThan(.5));
+        const groundRadius = positionGeometry.x.mul(positionGeometry.x).add(positionGeometry.z.mul(positionGeometry.z)).sqrt();
+        const groundFeather = float(1).sub(smoothstep(.52, 1, groundRadius));
+        const mistOpacity = playableMist.select(.13, .2);
+        return vec4(color, edge.mul(grain).mul(fade).mul(st.z.lessThan(-1.5).select(mistOpacity, .97)).mul(playableMist.select(groundFeather, float(1))).mul(alive).mul(mix(.38, 1, seeThroughHole(1.15))));
       })();
       this.puffs.renderOrder = 3;
     }
@@ -393,6 +400,7 @@ export class Blasts extends Group {
   }
   /** Explicit render clock (Vfx time). Columns emit puffs; fires refresh at 4 Hz from the sim. */
   advance(now: number, seconds: number): void {
+    this.softCureMist.value = this.world.missions?.state.epilogue?.phase === 'playable' ? 1 : 0;
     const camera = this.host.camera?.();
     if (camera) this.frustum.setFromProjectionMatrix(this.projection.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse));
     const weather = this.world.weather;
