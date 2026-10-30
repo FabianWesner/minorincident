@@ -52,7 +52,7 @@ export class MissionUI {
     this.routePin.className = 'mission-map-pin'; this.routePin.dataset.testid = 'mission-route-pin'; this.routePin.setAttribute('aria-label', 'Next turn on the cellar route'); this.routePin.style.background = '#64d9ee'; this.routePin.hidden = true; this.map.append(this.routePin);
     this.panel.className = 'mission-panel'; this.panel.setAttribute('aria-label','Mission');
     this.button.type = 'button'; this.button.addEventListener('click',this.accept);
-    for (const [key,label] of [['time','Time (seconds)'],['knockdowns','Knockdowns'],['kills','Kills'],['damage','Damage taken'],['deaths','Deaths'],['rescued','Survivors out'],['survivorsIn','Survivors in'],['optionalObjectives','Optional objectives'],['delivered','Delivery'],['infected','Infected now'],['turned','Pedestrians turned'],['escaped','Pedestrians escaped']] as const) {
+    for (const [key,label] of [['time','Time (seconds)'],['knockdowns','Knockdowns'],['kills','Kills'],['damage','Damage taken'],['deaths','Deaths'],['rescued','Survivors out'],['survivorsIn','Group at start'],['survivorsLost','Lost or turned'],['optionalObjectives','Optional objectives'],['delivered','Delivery'],['infected','Infected now'],['turned','Pedestrians turned'],['escaped','Pedestrians escaped']] as const) {
       const title=document.createElement('dt'), value=document.createElement('dd'); title.textContent=label; title.dataset.testid=`result-label-${key}`; value.dataset.testid=`result-${key}`; value.dataset.stat=key; this.result.append(title,value); this.rows.set(key,value);
     }
     this.panel.append(this.heading,this.detail,this.result,this.button);
@@ -149,7 +149,13 @@ export class MissionUI {
   private campaignSummary():string {
     const result=this.world.missions?.state.result,previous=this.world.progression?.campaign?.results??{};
     const results={...previous,...(result?{L6:result}:{})},all=Object.values(results);
-    return `Campaign summary · ${all.length} levels · Time ${all.reduce((n,r)=>n+r.time,0).toFixed(1)} s · Deaths ${all.reduce((n,r)=>n+r.deaths,0)} · Rescued ${all.reduce((n,r)=>n+r.rescued,0)}`;
+    // A survivor carried through several level handovers is one campaign rescue, not a new person per level.
+    const identityResults=all.filter(r=>r.survivors),rescued=new Set(identityResults.flatMap(r=>r.survivors??[]));
+    // Earlier missions/legacy saves can record rescue events without identities. Preserve those events explicitly;
+    // neither adding them to the evacuees nor taking a maximum can establish a unique person count.
+    const events=all.filter(r=>!r.survivors).reduce((n,r)=>n+r.rescued,0);
+    const rescueText=identityResults.length?`Distinct group evacuees ${rescued.size}${events?` · Other level rescue events ${events}`:''}`:`Level rescue events ${events} (people may repeat)`;
+    return `Campaign summary · ${all.length} levels · Time ${all.reduce((n,r)=>n+r.time,0).toFixed(1)} s · Deaths ${all.reduce((n,r)=>n+r.deaths,0)} · ${rescueText}`;
   }
   dispose(): void {this.subtitleLayout.disconnect();window.removeEventListener('resize',this.positionCaptions);style(document.documentElement,'--mission-caption-bottom','0px');this.button.removeEventListener('click',this.accept);this.root.remove();}
 }

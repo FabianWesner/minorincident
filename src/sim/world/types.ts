@@ -15,6 +15,8 @@ export interface EntitySnapshot {
   /** Cosmetic fixed-step blast flight; no collider, brain, or contact damage.
    * Relative delay and velocity survive checkpoints without tick rebasing. */
   corpseBlast?: { delay: number; x: number; y: number; z: number };
+  /** Remaining shotgun displacement, swept in equal fixed steps; relative ticks survive snapshots. */
+  knockbackSlide?: { x: number; z: number; ticks: number };
   droppedProp?: import('../npc/types').CivilianProp;
   /** Actual fixed-step motion, including collision/avoidance, for NPC locomotion clips. */
   locomotion?: import('../locomotion/MotionResponse').MotionResponse;

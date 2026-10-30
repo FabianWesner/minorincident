@@ -3,7 +3,7 @@ import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { CoverWall } from '../combat/HitQuery';
 import type { MissionResult } from './types';
-import { l5Survivors } from '../../data/l5';
+import { survivorName } from './survivorName';
 import { l7Departure as cfg } from '../../data/l7';
 import { l7Bus, l7CorridorAnchors } from '../../levels/L7/corridor';
 import { spawnSetPiece } from './L4Spectacle';
@@ -199,14 +199,19 @@ export class LevelSevenDeparture {
     w.events.emit({ type: 'mission.signal', tick: w.tick, name: 'l7.survivor-recovered', actorId: e.id });
   }
   /** The departure wait shares the existing objective HUD with the L5 metro status. */
-  boardingStatus(): { count: string; waiting: string } {
+  boardingStatus(): { count: string; waiting: string; target?: { x: number; z: number; id: number; name: string } } {
     const w = this.world, s = this.state;
     const living = w.l7Encounters!.state.roster.filter(r => r.status === 'following');
     const waiting = living.filter(r => !s.boarded.includes(r.id));
     const missing = waiting.map(r => ({ r, distance: distance(w.entities.get(r.id)!.transform, this.door) })).sort((a, b) => a.distance - b.distance)[0];
     const count = `Aboard ${living.length - waiting.length}/${living.length}`;
-    const name = missing && (l5Survivors.find(r => r.key === missing.r.key)?.name ?? (missing.r.key === 'shelter-0' ? 'Marcus' : `Survivor ${w.entities.get(missing.r.id)!.civilian!.survivor!.slot + 1}`));
-    return { count: missing ? count : `${count} · Everyone aboard`, waiting: missing ? `Waiting for ${name} · ${Math.ceil(missing.distance)} m` : '' };
+    const name = missing && survivorName(w.entities.get(missing.r.id)!);
+    const entity = missing && w.entities.get(missing.r.id)!;
+    return {
+      count: missing ? count : `${count} · Everyone aboard`,
+      waiting: missing && entity ? `Waiting for ${name} · ${Math.ceil(distance(entity.transform, w.entities.get(1)!.transform))} m` : '',
+      ...(missing && entity ? { target: { x: entity.transform.x, z: entity.transform.z, id: entity.id, name: name! } } : {}),
+    };
   }
   private depart(): void {
     const w = this.world, s = this.state, player = w.entities.get(1)!;

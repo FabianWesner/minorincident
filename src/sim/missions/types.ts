@@ -87,6 +87,8 @@ export interface MissionResult {
   /** L5: the survivors that reached the station alive (keys of `l5Survivors`), carried into L6. */
   survivors?: string[];
   survivorsIn?: number;
+  /** Members of the starting level roster who died or turned before the exit. */
+  survivorsLost?: number;
   escapedSurvivors?: EntitySnapshot[];
   /** Protected companion carried separately from the rescued human roster. */
   companion?: EntitySnapshot;

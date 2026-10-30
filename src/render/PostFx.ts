@@ -1,6 +1,6 @@
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from folio-2025 Rendering.js / Passes/cheapDOF.js by Bruno Simon (MIT), commit 41046b5.
-import { ColorManagement, NoToneMapping, RenderPipeline, Vector4, type Node, type Camera, type Scene, type WebGPURenderer, type RenderTarget, type Object3D } from 'three/webgpu';
+import { DepthTexture, DepthStencilFormat, UnsignedInt248Type, ColorManagement, NoToneMapping, RenderPipeline, Vector4, type Node, type Camera, type Scene, type WebGPURenderer, type RenderTarget, type Object3D } from 'three/webgpu';
 import { pass, uv, uniform, uniformArray, mix, vec2, vec3, vec4, rtt, float, sin, luminance, max, min } from 'three/tsl';
 import { bloom } from 'three/addons/tsl/display/BloomNode.js';
 import { hashBlur } from 'three/addons/tsl/display/hashBlur.js';
@@ -28,7 +28,8 @@ export class PostFx {
   readonly heatAspect = uniform(16 / 9);
   readonly haze: boolean;
   constructor(private readonly renderer: WebGPURenderer, scene: Scene, camera: Camera, tier: QualityTier = 'high', readonly look = new LookUniforms()) {
-    this.scenePass = pass(scene, camera); const scene0 = this.scenePass.getTextureNode('output');
+    const depthTexture = new DepthTexture(1, 1, UnsignedInt248Type); depthTexture.format = DepthStencilFormat;
+    this.scenePass = pass(scene, camera, { stencilBuffer: true, depthTexture }); const scene0 = this.scenePass.getTextureNode('output');
     // Heat haze: one dependent fetch of the scene colour with a small rippling UV offset inside each source's disc.
     // Low tier builds no haze node at all. Bloom keeps reading the undistorted scene.
     this.haze = tier === 'high';

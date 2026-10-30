@@ -1,5 +1,5 @@
 // Adapted from Bruno Simon folio-2025 Confetti.js, Leaves.js, Trails.js and Noises.js (MIT, 41046b5).
-import { Color, CustomBlending, OneFactor, OneMinusSrcAlphaFactor, DoubleSide, DynamicDrawUsage, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBufferAttribute, InstancedMesh, Matrix4, MeshBasicNodeMaterial, PlaneGeometry, type Node, DepthTexture, ViewportDepthTextureNode, TextureLoader, SRGBColorSpace, type Texture } from 'three/webgpu';
+import { Color, CustomBlending, OneFactor, OneMinusSrcAlphaFactor, DoubleSide, DynamicDrawUsage, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBufferAttribute, InstancedMesh, Matrix4, MeshBasicNodeMaterial, PlaneGeometry, type Node, DepthTexture, DepthStencilFormat, UnsignedInt248Type, ViewportDepthTextureNode, TextureLoader, SRGBColorSpace, type Texture } from 'three/webgpu';
 import manifest from '../../assets/manifest.json' with { type: 'json' };
 import type { AssetDef } from '../../assets/types';
 import { atan, texture, attribute, cameraWorldMatrix, cos, float, Fn, mix, positionGeometry, sin, uniform, uv, vec2, vec3, vec4, linearDepth } from 'three/tsl';
@@ -9,11 +9,13 @@ export const tracerLaunchS = 1 / 120;
 /** Shared quad silhouettes. Spark/drop aspect is trail length in metres; gravity remains ballistic. */
 export const particleShape = { tracer: 11, spark: 12, flash: 13, smoke: 14, drop: 15 } as const;
 export const groundShape = { pressure: 12, scorch: 13 } as const;
+// The canvas and HDR scene pass both carry the living-figure stencil. WebGPU depth copies must match that format.
+const depthCopy = () => Object.assign(new DepthTexture(1, 1, UnsignedInt248Type), { format: DepthStencilFormat });
 
 /** Track every canvas/render-target depth copy, including compiler-created node clones. */
 class OwnedDepth extends ViewportDepthTextureNode {
   private readonly copies = new Set<Texture>();
-  constructor(uvNode?: Node, levelNode?: Node | null, source: Texture = new DepthTexture(1, 1)) {
+  constructor(uvNode?: Node, levelNode?: Node | null, source: Texture = depthCopy()) {
     super(uvNode, levelNode, source as DepthTexture); this.copies.add(source);
   }
   override getTextureForReference(reference?: Parameters<ViewportDepthTextureNode['getTextureForReference']>[0]): Texture {

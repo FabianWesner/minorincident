@@ -1,3 +1,4 @@
+import { livingStencil } from '../characters/figureStencil';
 import { clone as cloneSkeleton } from 'three/addons/utils/SkeletonUtils.js';
 import { dogCoat, dogCoats } from '../../data/dogAppearance';
 import type { CrowdAccessories } from '../characters/CrowdAccessories';
@@ -78,17 +79,17 @@ export class NpcView extends Group {
       const remap = (old: Material) => {
         if (this.dog.userData.assetTextureMode === 'baseColor' && (old as import('three').MeshStandardMaterial).map) {
           const material = old as import('../PaletteMaterial').PaletteMaterial;
-          material.movingFigure.value = 1;
+          material.movingFigure.value = 1; livingStencil(material);
           if (this.world.scenario === 'L7' || this.world.scenario === 'L6') { material.figureFill.value = this.world.scenario === 'L6' ? 8 : 4; material.figureRim.value = .5; material.companion.value = 1; }
           return material;
         }
         const color = (old as import('three').MeshBasicMaterial).color ?? new Color('#e5d9b9');
-        const material = this.materials.fromColor(`npc:${old.name}:${old.side}`, old.name === 'emi_eyes' ? new Color('#302539') : color); material.movingFigure.value = 1; material.side = old.side; material.userData.sharedPalette = true; return material;
+        const material = this.materials.fromColor(`npc:${old.name}:${old.side}`, old.name === 'emi_eyes' ? new Color('#302539') : color); material.movingFigure.value = 1; livingStencil(material); material.side = old.side; material.userData.sharedPalette = true; return material;
       };
       const old = node.material; node.material = Array.isArray(old) ? old.map(remap) : remap(old); if (this.dogSource === 'placeholder') for (const m of Array.isArray(old) ? old : [old]) m.dispose(); node.castShadow = node.receiveShadow = true;
     });
     if (this.world.scenario === 'L7' || this.world.scenario === 'L6') {
-      const material = this.materials.fromVertexColors(`npc:${this.world.scenario.toLowerCase()}-corgi`); material.movingFigure.value = 1;
+      const material = this.materials.fromVertexColors(`npc:${this.world.scenario.toLowerCase()}-corgi`); material.movingFigure.value = 1; livingStencil(material);
       // Continuous moon bounce keeps the companion legible beyond the courier/lamp pools.
       material.figureFill.value = this.world.scenario === 'L6' ? 8 : 4; material.figureRim.value = .5; material.companion.value = 1;
       material.userData.sharedPalette = true;
@@ -125,7 +126,7 @@ export class NpcView extends Group {
             const remap = (old: Material) => {
               const color = (old as import('three').MeshBasicMaterial).color ?? new Color('#e5d9b9');
               const material = this.materials.fromColor(`npc:${old.name}:${old.side}`, old.name === 'emi_eyes' ? new Color('#302539') : color);
-              material.movingFigure.value = 1; material.side = old.side; material.userData.sharedPalette = true; old.dispose(); return material;
+              material.movingFigure.value = 1; livingStencil(material); material.side = old.side; material.userData.sharedPalette = true; old.dispose(); return material;
             };
             node.material = Array.isArray(node.material) ? node.material.map(remap) : remap(node.material);
           }

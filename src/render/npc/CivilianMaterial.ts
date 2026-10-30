@@ -1,3 +1,4 @@
+import { livingStencil } from '../characters/figureStencil';
 import { paintedSkinMask } from '../characters/paintedSkin';
 import { crowdRegionOf, crowdRegionSkin, crowdRegionTint } from '../characters/crowdRegions';
 import { crowdAppearanceColor, crowdSkinColor, crowdHeadwearVisibility, crowdCoveredScalp } from '../characters/CrowdAppearance';
@@ -59,6 +60,7 @@ export function civilianMaterial(shading: Materials | undefined, doubleSided: bo
       .add(vec3(.22, .4, .08).mul(turning).mul(pulse.mul(.7).add(.3)).mul(skinMask));
     const material = shading?.shaded(base, glow, undefined, undefined, undefined, eye.mul(eyeGlow), undefined, undefined, eyeGlow.clamp(0, 1)) ?? Object.assign(new MeshLambertNodeMaterial(), { colorNode: base, emissiveNode: glow });
     // E25 night readability: crowd silhouettes take the preset's moonlit rim.
+    livingStencil(material);
     if ('figureRim' in material) { material.figureRim.value = .25; material.figureFill.value = 1; }
     material.side = doubleSided ? DoubleSide : FrontSide;
     const instance = mat4(attribute('_crowd0', 'vec4'), attribute('_crowd1', 'vec4'), attribute('_crowd2', 'vec4'), attribute('_crowd3', 'vec4')), part = parts.x;

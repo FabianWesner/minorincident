@@ -1,3 +1,4 @@
+import { livingStencil } from './figureStencil';
 import { skinnedBrow } from './headMeasurements';
 import { crowdSurfaceBindings } from './crowdTexture';
 export { skinnedBrow } from './headMeasurements';
@@ -143,6 +144,7 @@ export class CrowdAccessories extends Group {
   }
   private async load(id: string, lod: 'lod0' | 'lod1'): Promise<void> {
     const material = this.shading?.shaded(attribute('color', 'vec3').mul(instanceColor)) ?? new MeshLambertNodeMaterial({ vertexColors: true });
+    livingStencil(material);
     let geometry: BufferGeometry;
     if (id.startsWith('acc.placeholder-')) {
       geometry = new BoxGeometry(.27, id.endsWith('hair') ? .1 : .06, .28); geometry.translate(0, .4, 0);

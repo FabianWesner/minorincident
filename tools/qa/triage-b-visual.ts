@@ -9,11 +9,13 @@ import type { Game } from '../../src/Game';
 const mode = process.argv[2] ?? 'vfx', label = process.argv[3] ?? 'before';
 const tier = process.env.TRIAGE_TIER === 'low' ? 'low' : 'high';
 const backend = process.env.TRIAGE_BACKEND === 'webgl2' ? 'webgl2' : 'webgpu';
-const out = resolve(`docs/reports/triage-b/captures/${label}-${backend}-${tier}`);
+const out = resolve(process.env.FIX_FLOW_OUT ?? `docs/reports/triage-b/captures/${label}-${backend}-${tier}`);
 mkdirSync(out, { recursive: true });
-const session = new SceneSession({ backend, tier, viewport: { width: 1280, height: 720 }, query: mode === 'boarding' ? { ui: '1' } : {} });
+const session = new SceneSession({ backend, tier, viewport: { width: 1280, height: 720 }, query: mode === 'boarding' || mode === 'fix-flow' ? { ui: '1' } : {} });
 try {
-  if (mode === 'variant') {
+  if (mode === 'fix-flow') {
+    await captureFixFlow();
+  } else if (mode === 'variant') {
     await session.open();
     await session.page.evaluate(async () => { const a = window.__SS__!; await a.loadLevel('L1', { seed: 1 }); a.pause(); a.cheats.god(true); });
     await session.page.addStyleTag({ content: '[data-testid=mission-button]{visibility:visible!important}' });
@@ -122,3 +124,156 @@ try {
     }
   } else throw new Error(`Unknown mode ${mode}`);
 } finally { await session.close(); stopServer(); }
+
+/** Matched production HUD and gameplay fixtures for the fix-flow brief; no campaign saves are written. */
+async function captureFixFlow(): Promise<void> {
+  const selected = process.env.FIX_FLOW_CASES?.split(',') ?? ['results', 'corridor', 'bus', 'apc', 'apc-wait', 'navigation', 'epilogue', 'shotgun', 'shotgun-native', 'corpses'];
+  for (const name of selected) {
+    await session.open();
+    const dir = `${out}/${name}`; mkdirSync(dir, { recursive: true });
+    if (name.startsWith('shotgun') || name === 'corpses') {
+      const spec: SceneSpec = name.startsWith('shotgun') ? {
+        name, seed: 1, ground: 'asphalt', time: 'L5', dof: false, size: 30,
+        actors: [{ id: 'courier', kind: 'courier', at: [-3, 0], god: true, loadout: ['weapon.shotgun', 'weapon.fire-axe'], state: { attack: 'victim', seconds: .25, side: 'LEFT', inPlace: true } },
+          { id: 'victim', kind: 'infected', at: [0, 0], archetype: 'infected.runner', state: 'idle', look: { model: 'npc.civilian-man-b' } }],
+        camera: { mode: 'game', target: [0, 0], zoom: 1 }, frames: 40, trace: true, expect: { consoleErrors: 0 },
+      } : {
+        name, seed: 1, ground: 'asphalt', time: 'L4', dof: false, size: 30,
+        actors: [{ id: 'courier', kind: 'courier', at: [-4, 3], god: true },
+          { id: 'body', kind: 'infected', at: [0, 0], archetype: 'infected.runner', state: 'idle', look: { model: 'npc.civilian-man-b' } },
+          { id: 'living', kind: 'infected', at: [3, 0], archetype: 'infected.runner', state: 'idle', look: { model: 'npc.civilian-woman-b' } },
+          { id: 'large-living', kind: 'infected', at: [6, -4], archetype: 'infected.runner', state: 'idle' },
+          { id: 'alpha', kind: 'infected', at: [3, -4], archetype: 'infected.alpha', state: 'idle' },
+          { id: 'healthy', kind: 'pedestrian', at: [1, 4], look: { model: 'npc.civilian-man-b' }, state: 'idle' },
+          { id: 'healthy-living', kind: 'infected', at: [4, 4], archetype: 'infected.runner', state: 'idle' }],
+        camera: { mode: 'game', target: [0, 0], zoom: 1 }, expect: { consoleErrors: 0 },
+      };
+      if (name === 'shotgun-native') { delete spec.actors![1].look; spec.actors![1].archetype = 'infected.alpha'; }
+      writeFileSync(`${dir}/fixture.json`, JSON.stringify(spec, null, 2));
+      if (name.startsWith('shotgun')) {
+        await session.page.evaluate(() => {
+          const lab = window.__SCENE__!, load = lab.load.bind(lab), step = lab.step.bind(lab);
+          const diagnostic = lab as typeof lab & { flowBuilds: { baseline: number; late: number } };
+          diagnostic.flowBuilds = { baseline: 0, late: 0 };
+          lab.load = async spec => { const result = await load(spec); await lab.ready(); diagnostic.flowBuilds = { baseline: window.__SS__!.perf().nodeBuilds, late: 0 }; return result; };
+          lab.step = async frames => { const result = await step(frames); diagnostic.flowBuilds.late = window.__SS__!.perf().nodeBuilds - diagnostic.flowBuilds.baseline; return result; };
+        });
+        for (const zoom of [1, 1.5]) {
+          spec.camera = { mode: 'game', target: [0, 0], zoom };
+          await runSpec(session, spec, { out: `${dir}/z${zoom}`, shots: [6, 7, 10, 14, 40], sheet: 2 });
+          const builds = await session.page.evaluate(() => (window.__SCENE__ as unknown as { flowBuilds: { baseline: number; late: number } }).flowBuilds);
+          await session.step(140);
+          const settled = await session.page.evaluate(() => (window.__SCENE__ as unknown as { flowBuilds: { baseline: number; late: number } }).flowBuilds);
+          await session.screenshot(`${dir}/z${zoom}/settled.png`);
+          writeFileSync(`${dir}/z${zoom}/builds.json`, JSON.stringify({ impact: builds, settled, throughFrame: 180 }));
+        }
+      } else {
+        await session.load(spec);
+        const builds = await session.page.evaluate(async () => {
+          const lab = window.__SCENE__!;
+          await lab.ready();
+          const baseline = window.__SS__!.perf().nodeBuilds;
+          const g = (lab as unknown as { game: Game }).game, actors = (await lab.metrics()).actors;
+          const healthy = g.world.entities.get(actors.healthy.entity)!;
+          healthy.health.current = 0; healthy.civilian!.state = 'finished'; healthy.civilian!.entered = g.world.tick;
+          lab.command('body', { corpse: true }); lab.command('alpha', { corpse: true });
+          await lab.step(180); await lab.ready();
+          const feet = g.view.labProbes().drawnCorpses();
+          for (const [dead, living] of [['body', 'living'], ['alpha', 'large-living'], ['healthy', 'healthy-living']]) {
+            const body = feet.find(p => p.id === actors[dead].entity) ?? g.world.entities.get(actors[dead].entity)!.transform;
+            let nearest = .05, center = { x: body.x, z: body.z };
+            g.view.scene.traverse(node => {
+              if (dead === 'healthy') return;
+              const mesh = node as import('three').InstancedMesh;
+              if (!mesh.instanceMatrix || !mesh.name.startsWith('corpses:')) return;
+              mesh.geometry.computeBoundingBox(); const box = mesh.geometry.boundingBox!;
+              const c = [(box.min.x + box.max.x) / 2, (box.min.y + box.max.y) / 2, (box.min.z + box.max.z) / 2];
+              const a = mesh.instanceMatrix.array;
+              for (let i = 0; i < mesh.count; i++) { const o = i * 16, d = Math.hypot(a[o + 12] - body.x, a[o + 14] - body.z); if (d >= nearest) continue;
+                nearest = d; center = { x: a[o] * c[0] + a[o + 4] * c[1] + a[o + 8] * c[2] + a[o + 12], z: a[o + 2] * c[0] + a[o + 6] * c[1] + a[o + 10] * c[2] + a[o + 14] };
+              }
+            });
+            const live = g.world.entities.get(actors[living].entity)!;
+            Object.assign(live.transform, center); live.combat!.staggerUntil = g.world.tick + 600;
+          }
+          g.world.tick++; g.view.update(1);
+          return { baseline, late: window.__SS__!.perf().nodeBuilds - baseline };
+        });
+        for (const zoom of [1, 1.5]) {
+          await session.page.evaluate(zoom => window.__SCENE__!.setCamera({ mode: 'game', target: [0, 0], zoom }), zoom);
+          await session.screenshot(`${dir}/z${zoom}.png`);
+        }
+        writeFileSync(`${dir}/metrics.json`, JSON.stringify({ ...await session.metrics(), builds }, null, 2));
+      }
+    } else {
+      const level = name === 'results' ? 'L6' : name.startsWith('apc') ? 'L8' : name === 'epilogue' || name === 'navigation' ? 'L10' : 'L7';
+      const staged = await session.page.evaluate(async ({ level, name, tier }) => {
+        const a = window.__SS__!; a.settings.set({ quality: tier === 'low' ? 'low' : 'high' }); await a.loadLevel(level, { seed: 1 }); a.pause(); a.cheats.god(true);
+        const g = (window.__SCENE__ as unknown as { game: Game }).game, w = g.world, m = w.missions!, s = m.state;
+        g.ui.show(null);
+        for (const step of Object.values(s.steps)) step.status = 'pending';
+        s.phase = 'playing';
+        if (name === 'results') {
+          s.l6!.phase = 'done';
+          s.l6!.survivors.forEach((r, i) => { r.status = i < 11 ? 'out' : 'dead'; });
+          s.result = { ...s.stats, ...m.l6!.result() }; s.phase = 'result';
+          const result = s.result;
+          w.progression ??= { pickups: [] }; w.progression.campaign ??= {} as NonNullable<typeof w.progression>['campaign'];
+          w.progression.campaign!.results = { L5: { ...result, rescued: 5, survivors: result.survivors!.slice(0, 5) }, L6: result };
+        } else if (name === 'bus' || name === 'corridor') {
+          const roster = w.l7Encounters!.state.roster;
+          for (const r of roster.slice(3)) w.entities.get(r.id)!.hidden = true;
+          roster.splice(3);
+          const keys = ['shelter-0', 'dale', 'shelter-2'];
+          const at = name === 'bus' ? (w.l7Departure as unknown as { door: { x: number; z: number } }).door : m.def.anchors['l7-corridor-east'];
+          const ring = at ?? Object.values(m.def.anchors)[0];
+          a.teleport(1, ring);
+          roster.forEach((r, i) => { r.key = keys[i]; const e = w.entities.get(r.id)!; e.civilian!.survivor!.key = keys[i]; e.civilian!.survivor!.slot = i; Object.assign(e.transform, { x: ring.x + (name === 'corridor' ? 25 : 8) + i * 3, z: ring.z + 4 }); });
+          s.steps[name === 'bus' ? 'departure' : 'corridor'].status = 'active';
+        } else if (name.startsWith('apc')) {
+          const zoo = m.l8!; s.steps.depart.status = 'active'; zoo.state.breachedAt = w.tick || 1;
+          const ring = m.def.anchors.exit; a.teleport(1, ring);
+          zoo.passengers().forEach((id, i) => { const e = w.entities.get(id)!; Object.assign(e.transform, { x: ring.x + 8 + i * 2, z: ring.z + 4 }); if (e.civilian?.survivor && i === 1) e.civilian.survivor.key = 'shelter-0'; });
+          if (name === 'apc-wait') {
+            s.steps.depart.status = 'pending'; zoo.state.breachedAt = 0; zoo.state.startedAt = w.tick - 360;
+            w.vehicles!.active = zoo.state.carId; w.entities.get(zoo.state.carId)!.vehicle!.driver = 1;
+          }
+        } else if (name === 'navigation') {
+          s.steps['dispersal-complex'].status = 'active'; s.steps['dispersal-complex'].started = w.tick - 360;
+          a.teleport(1, { x: 3314.9, z: -90.9 });
+        } else {
+          s.steps.epilogue.status = 'active'; s.states['cure-released'] = true;
+          m.l10!.cure.release(); s.cureFront!.elapsed = 30 * 60; s.cureFront!.radius = 300;
+          s.epilogue = { phase: 'playable', phaseTicks: 0, survivors: [], approaching: [], groupsAuthored: true };
+          a.teleport(1, m.def.anchors['cure-console']);
+        }
+        const active = m.def.steps.find(step => s.steps[step.id].status === 'active');
+        s.marker = active?.anchor ?? null;
+        document.documentElement.setAttribute('data-scene-hud', ''); document.querySelector('.hud')?.setAttribute('data-scene-hud', '');
+        a.camera.follow(); g.view.update(1); g.ui.hud.update(); await a.screenshotReady();
+        const ui = (g.view as unknown as { missionUI: { campaignSummary(): string } }).missionUI;
+        const campaignSummary = name === 'results' ? ui.campaignSummary() : null;
+        let summaryCases;
+        if (name === 'results') {
+          const campaign = w.progression!.campaign!, results = campaign.results, result = s.result!;
+          campaign.results = { ...results, L2: { ...result, rescued: 3, survivors: undefined } };
+          const withUnidentifiedEvents = ui.campaignSummary();
+          campaign.results = { L2: { ...result, rescued: 3, survivors: undefined } }; s.result = { ...result, survivors: undefined };
+          summaryCases = { withUnidentifiedEvents, withoutIdentities: ui.campaignSummary() };
+          campaign.results = results; s.result = result;
+        }
+        const quality = a.getState().render.quality;
+        if (quality !== tier) throw new Error(`HUD quality ${quality}, requested ${tier}`);
+        return { level, quality, result: s.result ? { rescued: s.result.rescued, survivorsIn: s.result.survivorsIn, survivorsLost: s.result.survivorsLost, survivors: s.result.survivors } : null, campaignSummary, summaryCases };
+      }, { level, name, tier });
+      for (const zoom of [1, 1.5]) {
+        await session.page.evaluate(zoom => { const a = window.__SS__!; a.camera.zoom(zoom); a.camera.follow(); }, zoom);
+        await session.screenshot(`${dir}/z${zoom}.png`);
+      }
+      const hud = await session.page.evaluate(() => ({ tracker: document.querySelector('[data-testid=objective-text]')?.parentElement?.textContent, result: document.querySelector('[data-testid=mission-result]')?.textContent, cue: document.querySelector('.hud-pin-cue')?.outerHTML }));
+      writeFileSync(`${dir}/receipt.json`, JSON.stringify({ staged, hud, errors: session.errors }, null, 2));
+    }
+    console.log(`${name}: captured ${tier}`);
+    await session.close();
+  }
+}

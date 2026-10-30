@@ -41,6 +41,7 @@ import { loadCivilianBake } from '../../assets/civilianBake';
 import { keepsLook } from '../../sim/outbreak/appearance';
 import type { EntitySnapshot } from '../../sim/world/types';
 import { prepareCivilianGeometry, prepareCivilianRig, type PreparedCivilian } from './prepareCivilianGeometry';
+const finishedPose = (e: EntitySnapshot) => ({ ...e.transform, y: e.transform.y - .7 });
 // Cache prepared CPU geometry, including LOD simplification; each scene owns a clone.
 const preparedCrowds = new Map<string, PreparedCivilian>();
 // Retain at most the twelve core models' two common tiers. Different campaign casts
@@ -188,10 +189,11 @@ class CivilianBatch extends Group {
     // while desktop and L6 freeze LOD1. Warming a different band left the first
     // phone corpse baking geometry and compiling its shader during combat.
     if (['L4', 'L6', 'L7'].includes(this.world.scenario ?? '') && this.lod === this.corpseLod) for (const death of corpsePoses) this.corpses.prepare(`${this.model}:${death}`, baked.geometry, material, baked.clip, civilianClips.indexOf(death) * framesPerClip + framesPerClip - 1, true);
+    if (this.lod === this.corpseLod) this.corpses.prepare(`${this.model}:death-side`, baked.geometry, material, baked.clip, civilianClips.indexOf('death-side') * framesPerClip + framesPerClip - 1, true);
     this.add(this.mesh); this.update();
   }
   update(alpha = 1, low = false, shotId?: number, figures?: readonly EntitySnapshot[]): void {
-    this.probe.begin(); this.deadFeet.clear(); this.corpses.begin(id => this.world.entities.get(id), e => corpseLayout(this.world).place(e), this.world.entities.get(1)?.transform, this.world.missions?.state.cureFront);
+    this.probe.begin(); this.deadFeet.clear(); this.corpses.begin(id => this.world.entities.get(id), e => e.civilian?.state === 'finished' && !e.infected ? finishedPose(e) : corpseLayout(this.world).place(e), this.world.entities.get(1)?.transform, this.world.missions?.state.cureFront);
     if (!this.mesh) return; let index = 0, shadowPixels = 0;
     const renderTick = Math.max(0, this.world.tick + alpha - 1);
     const shot = shotId === undefined ? undefined : this.world.entities.get(shotId);
@@ -202,6 +204,19 @@ class CivilianBatch extends Group {
       const c = e.civilian;
       const model = crowdModelOf(e);
       if (model !== this.model) continue;
+      // Permanently dead civilians use the same ground-body layer as settled infected. Keep their final fall pose,
+      // appearance and position; leaving them in the living batch lets them cover a passer-by's legs.
+      if (c?.state === 'finished' && !e.infected && e.health.current <= 0 && this.world.tick - c.entered >= 120) {
+        if (this.lod === this.corpseLod && !e.hidden && !this.corpses.has(e.id)) {
+          const pose = finishedPose(e);
+          this.transform.makeRotationY(pose.yaw).setPosition(pose.x, pose.y, pose.z);
+          this.tintOf(e, index, 1);
+          const source = this.accessories?.corpseSource(e, this.mesh.geometry, this.model, this.bakedClip.parts.indexOf('head')) ?? this.mesh.geometry;
+          if (this.surface) crowdSurfaceBindings.set(source, this.surface);
+          this.corpses.place(e, `${this.model}:death-side`, source, this.mesh.material as MeshLambertNodeMaterial, this.bakedClip, civilianClips.indexOf('death-side') * framesPerClip + framesPerClip - 1, this.transform, this.shirt, [c.veins, 0, 0], String(e.id), [], resolveCrowdAppearance(e));
+        }
+        continue;
+      }
       // Settled corpses become static instances once, wherever the camera is; they are never culled or LOD-switched.
       if (e.corpse) { if (this.lod === this.corpseLod && !e.civilian && e.infected && keepsLook(e)) this.place(e, index, alpha); continue; }
       // Conservative animated bounds retain limbs, falling bodies and interpolated motion.
@@ -377,10 +392,11 @@ class CivilianBatch extends Group {
     // The baked walking hunch also reaches beyond the roots while approaching a
     // neighbour. Yield that upper-body pose before two otherwise clear feet meet.
     if (contact && !still && !heavy && !b.specialAttack && b.state !== 'dead') { layers.lean = -.15; layers.lurch = 0; }
-    const resting = b.state === 'dead' ? corpseLayout(this.world).place(e) : presented;
+    const resting = b.state === 'dead' && !e.knockbackSlide ? corpseLayout(this.world).place(e) : presented;
+    const settle = b.state === 'dead' && !e.knockbackSlide ? reaction?.groundDeath ? 1 : Math.max(0, Math.min(1, (tick - b.deadAt - 8) / 52)) : 0;
     if (b.state === 'dead') this.transform.makeRotationY(resting.yaw);
-    this.transform.setPosition(resting.x, b.state === 'dead' ? resting.y : presented.y - .7, resting.z);
-    if (b.state === 'dead') this.deadFeet.set(e.id, { id: e.id, x: presented.x, y: presented.y - .7, z: presented.z });
+    this.transform.setPosition(presented.x + (resting.x - presented.x) * settle, (presented.y - .7) * (1 - settle) + (b.state === 'dead' ? resting.y : presented.y - .7) * settle, presented.z + (resting.z - presented.z) * settle);
+    if (b.state === 'dead') this.deadFeet.set(e.id, { id: e.id, x: this.transform.elements[12], y: this.transform.elements[13], z: this.transform.elements[14] });
     let frame = civilianClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
     const sourceFrame = frame;
     const blend = this.poses.sample(e.id, clip, frame, renderTick / 60);

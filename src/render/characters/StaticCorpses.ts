@@ -13,6 +13,7 @@ import { SpatialHash } from '../../sim/spatial/SpatialHash';
 import { corpseLod } from '../lodPolicy';
 import { seeThroughKeepCorpse } from '../SeeThrough';
 import type { Node } from 'three/webgpu';
+import { corpseStencil } from './figureStencil';
 
 const CELL = 40;
 /** Every frozen body carries the courier cut from its first compile (Q-209); SeeThrough.corpse switches it, no rebuild. */
@@ -322,6 +323,7 @@ export class StaticCorpses extends Group {
           frozenMaterial.positionNode = null; frozenMaterial.normalNode = null; frozenMaterial.maskNode = corpseMask(material.userData.frozenSurfaceMask);
         }
         frozenMaterial.normalNode = skinnedWoundNormal(normalViewGeometry);
+        corpseStencil(frozenMaterial);
         this.frozenMaterials.set(material, frozenMaterial);
       }
       frozen = { geometry, material: frozenMaterial }; this.frozen.set(frozenKey, frozen);
@@ -347,6 +349,9 @@ export class StaticCorpses extends Group {
     const stains = new InstancedBufferAttribute(new Float32Array(128 * 4), 4); // crowd overlay layout (w: pose row, unused when frozen)
     geometry.setAttribute('_state', state); geometry.setAttribute('_variant', colors); geometry.setAttribute('_overlay', stains);
     const mesh = new InstancedMesh(geometry, frozen.material, 128); mesh.count = 0; mesh.visible = false; mesh.name = `corpses:${key}`;
+    // World and living figures draw first. The stencil keeps corpses off visible living silhouettes;
+    // ordinary depth still orders each corpse's own surfaces and the surrounding walls/ground.
+    mesh.renderOrder = 2;
     if (frozen.material instanceof PaletteMaterial) {
       // Spatial/death/gore pages share the layout, while their matrices,
       // appearance and bounds remain independent. Avoid a node build per UUID.

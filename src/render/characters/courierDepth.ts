@@ -1,5 +1,6 @@
 import { depth, Fn, positionView, select, uniform } from 'three/tsl';
 import type { Material, Node, NodeMaterial } from 'three/webgpu';
+import { livingStencil } from './figureStencil';
 
 /** 1 while the courier draws in the near-camera depth slice (CharacterView.setForeground). */
 export const courierForegroundOn = uniform(0);
@@ -17,6 +18,7 @@ const courierDepth = perPass();
 
 /** Give a courier material (body, gear, carried weapon) the switchable depth before its first compile. True when it changed. */
 export function useCourierDepth(material: Material): boolean {
+  livingStencil(material);
   const node = material as NodeMaterial;
   if (node.depthNode === courierDepth) return false;
   node.depthTest = true; node.depthNode = courierDepth; node.needsUpdate = true;

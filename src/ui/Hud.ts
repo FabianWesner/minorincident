@@ -1,3 +1,4 @@
+import { survivorName } from '../sim/missions/survivorName';
 import { objectiveText } from '../sim/missions/objectiveText';
 import { devicePrompt } from './devicePrompt';
 import { l5Survivors } from '../data/l5';
@@ -382,12 +383,27 @@ export class Hud {
         attribute(card.root, 'aria-label', `${card.def.name}, health ${Math.round(fraction * 100)}%`);
       }
     }
+    const world = this.game.world;
+    if (world.l7Encounters && mission?.state.steps.corridor?.status === 'active') {
+      const missing = world.l7Encounters.corridorGroup().missing[0];
+      const target = missing && world.entities.get(missing.id);
+      setHidden(this.survivorText, true);
+      this.waitCue(target ? { ...target.transform, name: survivorName(target), id: String(target.id) } : undefined, px, pz);
+      // The shared objective line already includes this person's name and distance.
+      setHidden(this.cueText, true);
+      return;
+    }
     const departure = this.game.world.l7Departure;
     if (departure && mission?.state.steps.departure?.status === 'active') {
       const status = departure.boardingStatus();
       setHidden(this.survivorText, false); text(this.survivorText, ` · ${status.count}`);
-      setHidden(this.cuePin, true); setHidden(this.cueText, !status.waiting);
+      setHidden(this.cuePin, !status.target); setHidden(this.cueText, !status.waiting);
       text(this.cueText, status.waiting ? ` · ${status.waiting}` : '');
+      if (status.target) {
+        this.place(this.cuePin, status.target.x, status.target.z, px, pz, true);
+        attribute(this.cuePin, 'aria-label', `Find ${status.target.name}`);
+        attribute(this.cuePin, 'data-survivor', String(status.target.id));
+      }
       return;
     }
     if (mission?.def.l8 && mission.state.steps.depart?.status === 'active') {
@@ -400,11 +416,29 @@ export class Hud {
       setHidden(this.cuePin, !target);
       setHidden(this.cueText, !target);
       if (target) {
-        const name = target.companion ? 'Corgi' : l5Survivors.find(s => s.key === target.civilian?.survivor?.key)?.name ?? `Survivor ${(target.civilian?.survivor?.slot ?? 0) + 1}`;
+        const name = survivorName(target);
         this.place(this.cuePin, target.transform.x, target.transform.z, px, pz, true);
         attribute(this.cuePin, 'aria-label', `Find ${name}`); attribute(this.cuePin, 'data-survivor', String(target.id));
         text(this.cueText, ` · Find ${name} · ${Math.ceil(Math.hypot(target.transform.x - px, target.transform.z - pz))} m`);
       }
+      return;
+    }
+    if (mission?.def.l8 && !mission.l8!.state.breachedAt && world.vehicles?.active === mission.l8!.state.carId && world.tick - mission.l8!.state.startedAt >= 300) {
+      const car = world.entities.get(mission.l8!.state.carId)!;
+      setHidden(this.tracker, false); text(this.trackerText, objectiveText(mission, 'Waiting for departure'));
+      setHidden(this.survivorText, true);
+      this.waitCue({ ...car.transform, name: 'Armored vehicle', id: String(car.id) }, px, pz);
+      return;
+    }
+    if (mission?.def.id === 'L10') {
+      const active = mission.def.steps.find(step => mission.state.steps[step.id].status === 'active');
+      const target = markerAnchor(mission);
+      const ending = active?.id === 'epilogue';
+      const waiting = active && (ending || world.tick - mission.state.steps[active.id].started >= 300);
+      setHidden(this.survivorText, true);
+      this.waitCue(waiting && target ? { ...target, name: ending ? 'Cure dispersal' : active.text, id: active.id } : undefined, px, pz);
+      // Navigation/console objectives already name their destination and distance in the shared tracker.
+      if (!ending) setHidden(this.cueText, true);
       return;
     }
     const l5 = mission?.state.l5, show = !!mission && !!l5 && l5.phase !== 'cellar';
@@ -436,6 +470,16 @@ export class Hud {
       if (r.status === 'hidden' && ring && Math.hypot(ring.x - px, ring.z - pz) <= ring.radius && (l5.phase === 'search' || l5.phase === 'metro')) cueLabel = ` · ${l5Survivors.find(s => s.key === r.key)!.prompt}`;
     }
     setHidden(this.cueText, !cueLabel); if (cueLabel) text(this.cueText, cueLabel);
+  }
+  /** The same persistent cue locates people, a waiting transport, or a long finale objective. */
+  private waitCue(target: { x: number; z: number; name: string; id: string } | undefined, px: number, pz: number): void {
+    setHidden(this.cuePin, !target); setHidden(this.cueText, !target);
+    if (!target) return;
+    const distance = Math.ceil(Math.hypot(target.x - px, target.z - pz));
+    this.place(this.cuePin, target.x, target.z, px, pz, true);
+    attribute(this.cuePin, 'aria-label', `${target.name}, ${distance} meters`);
+    attribute(this.cuePin, 'data-survivor', target.id);
+    text(this.cueText, ` · ${target.name} · ${distance} m`);
   }
   /** Story bubble from the mission state (L1/L2/L6): fades in over 10 ticks, out over 15 after its reading time. */
   private updateStory(): void {

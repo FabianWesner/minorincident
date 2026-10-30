@@ -1,0 +1,98 @@
+{
+  "name": "corpses",
+  "seed": 1,
+  "ground": "asphalt",
+  "time": "L4",
+  "dof": false,
+  "size": 30,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -4,
+        3
+      ],
+      "god": true
+    },
+    {
+      "id": "body",
+      "kind": "infected",
+      "at": [
+        0,
+        0
+      ],
+      "archetype": "infected.runner",
+      "state": "idle",
+      "look": {
+        "model": "npc.civilian-man-b"
+      }
+    },
+    {
+      "id": "living",
+      "kind": "infected",
+      "at": [
+        3,
+        0
+      ],
+      "archetype": "infected.runner",
+      "state": "idle",
+      "look": {
+        "model": "npc.civilian-woman-b"
+      }
+    },
+    {
+      "id": "large-living",
+      "kind": "infected",
+      "at": [
+        6,
+        -4
+      ],
+      "archetype": "infected.runner",
+      "state": "idle"
+    },
+    {
+      "id": "alpha",
+      "kind": "infected",
+      "at": [
+        3,
+        -4
+      ],
+      "archetype": "infected.alpha",
+      "state": "idle"
+    },
+    {
+      "id": "healthy",
+      "kind": "pedestrian",
+      "at": [
+        1,
+        4
+      ],
+      "look": {
+        "model": "npc.civilian-man-b"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "healthy-living",
+      "kind": "infected",
+      "at": [
+        4,
+        4
+      ],
+      "archetype": "infected.runner",
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "expect": {
+    "consoleErrors": 0
+  }
+}

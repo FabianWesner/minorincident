@@ -74,6 +74,11 @@ export class CorpseLayout {
     const pose: RestingPose = { x: e.transform.x, y: feet, z: e.transform.z, yaw: initialYaw, sourceX: e.transform.x, sourceZ: e.transform.z, deadAt,
       ax: 0, az: 0, bx: 0, bz: 0, radius, height, body: e };
     const evaluate = (x: number, z: number, yaw: number, supported = true): RestingPose | undefined => {
+      if (nav) {
+        const swept = { x: e.transform.x, z: e.transform.z };
+        nav.move(swept, x - swept.x, z - swept.z, Math.min(.3, e.combat?.radius ?? .3));
+        if (Math.hypot(swept.x - x, swept.z - z) > .01) return;
+      }
       const dx = -Math.cos(yaw) * direction, dz = Math.sin(yaw) * direction;
       Object.assign(pose, { x, z, yaw, ax: x - dx * .15, az: z - dz * .15, bx: x + dx * length, bz: z + dz * length });
       if (!safePlayer(pose)) return;

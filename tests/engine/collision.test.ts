@@ -69,6 +69,20 @@ test('the courier: knockback and post-physics writes never cross a thin solid; s
   k.knockback(alpha, { x: 1, z: 0 }, .6);
   expect(alpha.transform.x + alpha.combat!.radius).toBeLessThanOrEqual(9.9 + .02);
 
+  // The shotgun keeps its authored distance, but death positions advance over eight collision-tested ticks.
+  for (const blocked of [false, true]) {
+    const s = await arena(), runner = s.entities.get(s.infected!.spawn('infected.runner', { x: 10, z: 8 }, { state: 'idle' }))!;
+    if (blocked) s.infected!.infectedNav.setBlocker(987655, { x: 11, z: 8, y: .7, halfX: .1, halfZ: 3, halfY: .7 }, true);
+    s.combat!.damage.apply({ attackId: 1, actionId: 'weapon.shotgun', sourceId: 1, targetId: runner.id, origin: { x: 8, z: 8 }, direction: { x: 1, z: 0 }, base: 1000, multiplier: 1, type: 'bullet', knockback: 1.8, stagger: .5 });
+    const positions = [10, runner.transform.x];
+    expect(runner.knockbackSlide?.ticks).toBe(7);
+    for (let i = 0; i < 7; i++) { tick(s); positions.push(runner.transform.x); }
+    expect(runner.knockbackSlide).toBeUndefined();
+    expect(Math.max(...positions.slice(1).map((x, i) => x - positions[i]))).toBeLessThanOrEqual(.22501);
+    if (blocked) expect(runner.transform.x + runner.combat!.radius).toBeLessThanOrEqual(10.92);
+    else expect(runner.transform.x).toBeCloseTo(11.8, 5);
+  }
+
   const p = await arena(), courier = p.entities.get(1)!, start = { ...courier.transform };
   for (let i = 0; i < 8; i++) {
     const angle = i * Math.PI / 4;

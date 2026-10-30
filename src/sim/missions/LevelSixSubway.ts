@@ -358,7 +358,7 @@ export class LevelSixSubway {
       if(r.injured&&e.civilian?.l1)e.civilian.l1.walkSpeed=Math.min(e.civilian.l1.walkSpeed,1.4);
       return e;
     });
-    return {rescued:out.length,survivors:out.map(r=>r.key),survivorsIn:s.survivors.length,escapedSurvivors};
+    return {rescued:out.length,survivors:out.map(r=>r.key),survivorsIn:s.survivors.length,survivorsLost:s.survivors.filter(r=>r.status==='dead'||r.status==='turned').length,escapedSurvivors};
   }
   /** PO 10-20 #65: objective text while the courier is away from the retreating group. */
   static text(mission: Pick<Mission,'state'> | null | undefined): string | null {

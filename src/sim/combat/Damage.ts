@@ -148,7 +148,7 @@ export class Damage {
       if (target.civilian && target.health.current === 0) { target.civilian.state = 'finished'; target.civilian.entered = this.world.tick; target.civilian.story = null; }
       if (target.combat && stagger > 0) { target.combat.staggerUntil = Math.max(target.combat.staggerUntil, this.world.tick + Math.ceil(stagger * 60)); target.combat.attacking = false; }
       const from = { x: target.transform.x, z: target.transform.z };
-      if (knockback > 0 && target.faction !== 'environment') this.world.knockback(target, hit.direction, knockback);
+      if (knockback > 0 && target.faction !== 'environment') this.world.knockback(target, hit.direction, knockback, hit.actionId === 'weapon.shotgun' ? 8 : 1);
       if (target.combat && target.faction === 'infected' && (!mega || megaReact || target.health.current === 0)) {
         const heavy = target.health.current === 0 || !mega && ( (!!special && target.archetype !== 'infected.alpha') || (!normal && (hit.type === 'explosive' || hit.type === 'vehicle')));
         const downed = target.combat.reaction?.heavy && target.combat.reaction.until > this.world.tick;

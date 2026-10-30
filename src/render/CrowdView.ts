@@ -1,3 +1,4 @@
+import { livingStencil } from './characters/figureStencil';
 import { paintedSkinMask } from './characters/paintedSkin';
 import { crowdRegionOf, crowdRegionSkin, crowdRegionTint } from './characters/crowdRegions';
 import { crowdLimbParts } from '../assets/crowdParts';
@@ -393,6 +394,7 @@ export class CrowdView extends Group {
       const glow = emission.mul(eye).add(atlasFill).add(feedbackState.w.mod(2).mul(base.mul(base.oneMinus().mul(1.1))).mul(figureMask ?? 1));
       material = this.shading?.shaded(base, glow, undefined, undefined, undefined, healthy ? undefined : eye, figureMask, shadowReceiver, healthy ? undefined : float(1)) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
       // E25 night readability: crowd silhouettes take the preset's moonlit rim.
+      livingStencil(material);
       if (material instanceof PaletteMaterial) { material.figureRim.value = .25; material.figureFill.value = regularAlpha ? .25 : 1; }
       // The Alpha-sized Mega retains its silhouette at contact, like a regular Alpha.
       // Instances cannot be sorted independently in the transparent render list.
@@ -611,8 +613,8 @@ export class CrowdView extends Group {
       let frame = infectedClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
       const tint = batch.animal ? batch.role === 'inf.dog' && batch.lod === 'lod1' ? this.dogCoatTints[Number(key === 'inf.dog.cream')] : batch.shirt : crowdShirt(e.id);
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
-      const resting = b.state === 'dead' ? this.corpsePosition(e, b.deadAt, proneReach.get(batch.poses.clip)) : e.transform;
-      const settle = b.state === 'dead' ? reaction?.groundDeath ? 1 : Math.min(1, (this.world.tick - b.deadAt) / 60) : 0;
+      const resting = b.state === 'dead' && !e.knockbackSlide ? this.corpsePosition(e, b.deadAt, proneReach.get(batch.poses.clip)) : { ...e.transform, y: e.transform.y - .7 };
+      const settle = b.state === 'dead' && !e.knockbackSlide ? reaction?.groundDeath ? 1 : Math.max(0, Math.min(1, (this.world.tick - b.deadAt - 8) / 52)) : 0;
       const x = presented.x + (resting.x - e.transform.x) * settle, z = presented.z + (resting.z - e.transform.z) * settle;
       const blend = batch.poses.sample(e.id, clip, frame, renderTick / 60);
       const fade = 0;
