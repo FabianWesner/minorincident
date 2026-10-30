@@ -151,7 +151,10 @@ export class FxPool {
           // +X is the locked charge direction; repeating open chevrons sweep toward its end.
           const windup = age.div(motion.y.max(.001)).clamp(0, 1);
           const stroke = float(.12).div(style.x).min(.12);
-          const rim = r.lessThan(1).and(r.greaterThan(float(1).sub(stroke.mul(2)))).select(1, 0);
+          // Q-147: a feathered inward pressure band reads as danger on the
+          // ground instead of a debug wire circle; its outer radius stays exact.
+          const rim = r.smoothstep(float(1).sub(stroke.mul(4)), float(1).sub(stroke.mul(2)))
+            .mul(float(1).sub(r.smoothstep(float(1).sub(stroke), 1)));
           const fill = r.lessThan(windup).select(.18, .045);
           const ringWarning = rim.mul(.65).add(r.lessThan(1).select(fill, 0));
           const across = p.y.abs();

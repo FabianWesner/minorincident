@@ -1,0 +1,104 @@
+{
+  "productionRevision": "9efa1498c",
+  "reviewRevision": "56e58612a52339c525c324d2084c386c2248ed96",
+  "sourceSha256": "a7e19cdfb8f4f7476ca5eff1619a7971736e73574d6c82c887ee438dbeb1d4a1",
+  "scopedItems": 203,
+  "fixedBefore": 173,
+  "fixedNow": [
+    "94",
+    "146",
+    "147",
+    "148",
+    "156",
+    "185"
+  ],
+  "obsolete": 9,
+  "open": [
+    "22",
+    "50",
+    "142",
+    "144",
+    "145",
+    "150",
+    "153",
+    "177",
+    "212",
+    "215",
+    "229",
+    "231",
+    "241",
+    "247",
+    "248"
+  ],
+  "sourceIds": 235,
+  "referencedOnlyIds": [
+    "179",
+    "180",
+    "181",
+    "182",
+    "184",
+    "185",
+    "186",
+    "187",
+    "188",
+    "189",
+    "190",
+    "191"
+  ],
+  "sourcePartitionComplete": true,
+  "duplicateRows": 0,
+  "citedCommitsVerifiedOnLaneOrMain": 143,
+  "newOrModifiedTestFiles": 0,
+  "newTestCases": 0,
+  "protectedPathChanges": 0,
+  "playthroughJpgFrames": 63,
+  "temporaryBaselineRemoved": true,
+  "note": "Shared-host checks; scoped debug-L6 to ordinary Continue credits, not a fresh L1 input run. Q50 current reveal flaw remains open.",
+  "checks": {
+    "npm test": {
+      "exitCode": 0,
+      "files": 26,
+      "tests": 110,
+      "seconds": 22.4
+    },
+    "npm run typecheck": {
+      "exitCode": 0
+    },
+    "npm run lint": {
+      "exitCode": 0
+    },
+    "npm run test:smoke": {
+      "exitCode": 0,
+      "qa": 6,
+      "public": 1,
+      "seconds": 130.3,
+      "budgetSeconds": 240
+    },
+    "npm run scene:gate": {
+      "exitCode": 0,
+      "passed": 48,
+      "known": 0,
+      "notRun": 0,
+      "minutes": 5.6
+    },
+    "deterministicSimCampaign": {
+      "completed": 10,
+      "deaths": 0,
+      "collisionFailures": 0,
+      "revision": "9fd194de0",
+      "note": "Later changes are rendering, visual assets and reports only."
+    },
+    "npm run build:qa": {
+      "exitCode": 0,
+      "purpose": "Restore QA hooks after public smoke"
+    }
+  },
+  "fixedNowCommits": {
+    "94": "e0e3b4176",
+    "146": "07c94cfad",
+    "147": "ee607fcf8",
+    "148": "9fd194de0",
+    "156": "3ec6f6cc3",
+    "185": "585f2c268"
+  }
+}

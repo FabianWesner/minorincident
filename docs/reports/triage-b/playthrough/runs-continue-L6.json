@@ -1,0 +1,100 @@
+[
+  {
+    "level": "L6",
+    "entry": "debug",
+    "heroine": "female",
+    "finished": true,
+    "skipped": [],
+    "wallSeconds": 283,
+    "simSeconds": 274,
+    "maxNoProgressSeconds": 18.512,
+    "deaths": 0,
+    "assists": 0,
+    "attacks": {
+      "weapon.army-mg": 93,
+      "weapon.fire-axe": 25,
+      "weapon.kick": 7,
+      "weapon.fists": 34
+    },
+    "weaponsStart": [
+      "weapon.fire-axe",
+      "weapon.bat",
+      "weapon.army-mg",
+      "weapon.handgun",
+      "weapon.kick"
+    ],
+    "weaponsEnd": [
+      "weapon.fire-axe",
+      "weapon.bat",
+      "weapon.army-mg",
+      "weapon.handgun",
+      "weapon.kick"
+    ],
+    "steps": [
+      {
+        "id": "shelter",
+        "text": "Look around the shelter · 0:34 remaining",
+        "tick": 10,
+        "marker": {
+          "anchor": null,
+          "ring": null,
+          "drawn": null,
+          "playerY": 1.3200000524520874,
+          "pinVisible": false
+        }
+      },
+      {
+        "id": "stop",
+        "text": "Stop the infected · Retreat in 0:36",
+        "tick": 1998,
+        "marker": {
+          "anchor": null,
+          "ring": null,
+          "drawn": null,
+          "playerY": 1.3200000524520874,
+          "pinVisible": false
+        }
+      },
+      {
+        "id": "retreat",
+        "text": "Cover the retreat through the tunnel · 15 m",
+        "tick": 4157,
+        "marker": {
+          "anchor": "l6-next",
+          "ring": {
+            "x": 6,
+            "y": 0.6,
+            "z": 15
+          },
+          "drawn": [
+            6,
+            0.6,
+            15
+          ],
+          "playerY": 1.3200000524520874,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "exit",
+        "text": "Bring the survivors into the night · 10/11 out · 27 m",
+        "tick": 15566,
+        "marker": {
+          "anchor": "night-exit",
+          "ring": {
+            "x": 273,
+            "y": 3.9,
+            "z": 15
+          },
+          "drawn": [
+            273,
+            3.9,
+            15
+          ],
+          "playerY": 1.3033547401428223,
+          "pinVisible": true
+        }
+      }
+    ]
+  }
+]

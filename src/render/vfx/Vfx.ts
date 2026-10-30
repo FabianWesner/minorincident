@@ -354,6 +354,9 @@ export class Vfx extends Group {
   private readonly onExplosion = (event: GameEvent): void => {
     if (!(event.type === 'explosion')) return;
     this.explosionOnce(event.tick, event.position.x, event.position.z, event.radius); this.blasts.play(event);
+    // The data-driven rocket owns its capped screen pulse. Its deduplicated
+    // legacy combat.exploded feedback must not add the old 60% white wash.
+    if (event.defId === 'explosion.rocket') this.flashUntil = this.time;
   };
   private readonly onCombatEffect = (event: GameEvent): void => {
     if (!(event.type === 'combat.effect')) return;

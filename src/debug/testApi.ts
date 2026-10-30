@@ -93,7 +93,8 @@ export interface SSTestApi {
   interact: { giveItem(id: string): void; refuel(id: number, seconds: number): void; barricade(id: number, on: boolean): void; hit(id: number, amount: number, type: import('../sim/combat/Damage').DamageEvent['type']): number };
   teleport(entityId: number | 'player', pos: { x: number; z: number }): void;
   /** E04: cosmetic selection and sim entry points; weapon and mission resolution remain separate. */
-  survivor: { select(variant: SurvivorVariant, tier?: GearTier): void; damage(amount: number): number; act(action: ActionState): void; checkpoint(pos: { x: number; y: number; z: number }): void;
+  /** Live cosmetic selection resolves after the chosen character is loaded and warmed. */
+  survivor: { select(variant: SurvivorVariant, tier?: GearTier): Promise<void>; damage(amount: number): number; act(action: ActionState): void; checkpoint(pos: { x: number; y: number; z: number }): void;
     /** E19 presentation hooks (normally set by the bicycle/mission sims). */
     present(patch: { riding?: boolean; carrying?: string | null }): void };
   setLoadout(left: string[], right: string[]): void;
@@ -218,7 +219,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
     },
     teleport,
     survivor: {
-      select: (variant, tier = 0) => { if (!game.world.player) throw new Error('Load a survivor scenario first'); game.world.player.select(variant, tier); game.view.update(1); },
+      select: async (variant, tier = 0) => { if (!game.world.player) throw new Error('Load a survivor scenario first'); game.world.player.select(variant, tier); await game.view.prepareCharacterVariant(); game.view.update(1); },
       damage: (amount) => { if (!game.world.player) throw new Error('Load a survivor scenario first'); const taken = game.world.player.damage(amount, game.world.tick); game.view.update(1); return taken; },
       act: (action) => { if (!game.world.player) throw new Error('Load a survivor scenario first'); game.world.player.act(action, game.world.tick); game.view.update(1); },
       checkpoint: (pos) => { if (!game.world.player) throw new Error('Load a survivor scenario first'); game.world.player.setCheckpoint(pos); },

@@ -1,0 +1,84 @@
+{
+  "runtime": "9fd194de0",
+  "finalRenderFixRuntime": "9efa1498c (Q94, Q143/Q176 separately captured and viewed)",
+  "method": "Debug L6 preset then normal Continue to L10 credits; L10 releases shared pool at 480 s and resumes saved checkpoints. No god mode, objective skips or state-location assists.",
+  "backend": "webgpu",
+  "quality": "low",
+  "playerZoom": 1.5,
+  "campaign": {
+    "unlockedLevel": 10,
+    "completedLevels": 10
+  },
+  "mission": {
+    "id": "L10",
+    "phase": "progression",
+    "states": {
+      "charge-active": true,
+      "console-held": true,
+      "terminal-read": true,
+      "cure-carried": false,
+      "cure-installed": true,
+      "charge-ready": true,
+      "mega-dead": true,
+      "cure-released": true,
+      "epilogue-finished": true,
+      "credits-finished": true,
+      "anchor-unavailable": false
+    },
+    "counters": {
+      "charge-ticks": 3600,
+      "epilogue-ticks": 9000
+    },
+    "killedBosses": [],
+    "items": [
+      "cure-canister"
+    ],
+    "epilogue": {
+      "phase": "done",
+      "phaseTicks": 0,
+      "survivors": [
+        398,
+        399,
+        400
+      ],
+      "approaching": [
+        395,
+        396,
+        397
+      ],
+      "groupsAuthored": true
+    }
+  },
+  "steps": {
+    "crash": "completed",
+    "residential-fringe": "completed",
+    "industrial-area": "completed",
+    "military-zone": "completed",
+    "research-campus": "completed",
+    "research": "completed",
+    "cure": "completed",
+    "research-exit": "completed",
+    "destroyed-corridor": "completed",
+    "dispersal-complex": "completed",
+    "install": "completed",
+    "hold": "completed",
+    "mega": "completed",
+    "release": "completed",
+    "epilogue": "completed",
+    "credits": "completed"
+  },
+  "sourcesSha256": {
+    "log-campaign.jsonl": "d772ede2f84fadbdd7128f70064e1019260e971e74d345bd05a98d07b6c9ef43",
+    "campaign-completion.json": "7f4bcfb0ee1c8b27ee80aa25710e85614efcbcfe4fa3e4bf283e6f3f41f87b5a",
+    "log-campaign-2.jsonl": "3d859794482e34fea0ad87a40c95429f71877bb5e95512a4dc3cb275f0746cab",
+    "campaign-2-completion.json": "ebbeb691d9473d105d321f512246b7e0789f40cfdf1757b9a2399ecc188114d4",
+    "log-campaign-3.jsonl": "1adf826be4a2c53061c2ca6aed207dc2c3a9a8871fc36a0100d975435cf65a7b",
+    "campaign-3-completion.json": "8c4c6b20ba29891a4d55dbe54e9bbc199089dc0186107cdaf8d8d433ff5c753c",
+    "log-campaign-4.jsonl": "c59334dd2ad939d5fe7861a625352214e12ce1913157c6167073432127b9ec01",
+    "campaign-4-completion.json": "132d1be97643b3bcaad5e4b3536abaeae0038dad68b13459b130dfa6d2112f9a",
+    "log-continue-L8.jsonl": "4620ea77fc10ae6693b5acc8da2eea91952cbcbe2619e23cde3708dc67499de4",
+    "log-continue-L9.jsonl": "946d4e7662ce95f8460d6e1f4270236b05a7c9cdf665de087655d51eff6ffb20",
+    "log-continue-L7.jsonl": "efd76ddf568c8497d82a85bc504d196b945eae78b9bcd220951cba25dbf8799f",
+    "log-continue-L6.jsonl": "2a8c9d401e529eaf26294007298c27b9907c3ecb842500eb4a163c540c0fbf22"
+  }
+}

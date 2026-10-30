@@ -1,0 +1,82 @@
+{
+  "name": "pointblank-rocket",
+  "note": "Actual rocket into a dense crowd; identical game camera before/after. Review launcher grip/clipping, feet, facing, no invisible active targets or jitter, readable launch/impact and a wide permanent opening.",
+  "ground": "asphalt",
+  "size": 40,
+  "time": "L6",
+  "dof": false,
+  "infectedCap": 200,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "loadout": [
+        "weapon.rocket-launcher",
+        "weapon.kick"
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "front",
+      "kind": "infected",
+      "at": [
+        2,
+        0
+      ],
+      "state": "idle",
+      "archetype": "infected.alpha"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "script": [
+    {
+      "frame": 5,
+      "actor": "courier",
+      "do": {
+        "attack": "front",
+        "seconds": 2
+      }
+    }
+  ],
+  "frames": 100,
+  "shots": [
+    0,
+    5,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    30,
+    50,
+    100
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000
+  },
+  "sheet": 5
+}

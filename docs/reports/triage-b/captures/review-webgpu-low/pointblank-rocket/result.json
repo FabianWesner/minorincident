@@ -1,0 +1,477 @@
+{
+  "name": "pointblank-rocket",
+  "pass": true,
+  "checks": [
+    {
+      "name": "consoleErrors",
+      "pass": true,
+      "value": 0,
+      "limit": 0
+    },
+    {
+      "name": "undrawnFramesMax",
+      "pass": true,
+      "value": 0,
+      "limit": 0
+    },
+    {
+      "name": "drawCallsMax",
+      "pass": true,
+      "value": 37,
+      "limit": 600
+    },
+    {
+      "name": "trianglesMax",
+      "pass": true,
+      "value": 81394,
+      "limit": 1500000
+    },
+    {
+      "name": "canvas.f0.varianceMin",
+      "pass": true,
+      "value": 232.55325859307175,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f0.variedTilesMin",
+      "pass": true,
+      "value": 49,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f5.varianceMin",
+      "pass": true,
+      "value": 231.35277733289934,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f5.variedTilesMin",
+      "pass": true,
+      "value": 49,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f10.varianceMin",
+      "pass": true,
+      "value": 224.62844875571182,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f10.variedTilesMin",
+      "pass": true,
+      "value": 49,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f13.varianceMin",
+      "pass": true,
+      "value": 379.85851647180516,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f13.variedTilesMin",
+      "pass": true,
+      "value": 49,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f14.varianceMin",
+      "pass": true,
+      "value": 281.1407482367043,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f14.variedTilesMin",
+      "pass": true,
+      "value": 49,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f15.varianceMin",
+      "pass": true,
+      "value": 230.79167110465607,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f15.variedTilesMin",
+      "pass": true,
+      "value": 49,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f16.varianceMin",
+      "pass": true,
+      "value": 215.8888862020599,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f16.variedTilesMin",
+      "pass": true,
+      "value": 49,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f17.varianceMin",
+      "pass": true,
+      "value": 2450.5742453335224,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f17.variedTilesMin",
+      "pass": true,
+      "value": 64,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f18.varianceMin",
+      "pass": true,
+      "value": 2912.7298932181984,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f18.variedTilesMin",
+      "pass": true,
+      "value": 64,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f19.varianceMin",
+      "pass": true,
+      "value": 2631.844807310088,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f19.variedTilesMin",
+      "pass": true,
+      "value": 64,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f20.varianceMin",
+      "pass": true,
+      "value": 2508.057571974594,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f20.variedTilesMin",
+      "pass": true,
+      "value": 64,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f21.varianceMin",
+      "pass": true,
+      "value": 2908.488975683751,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f21.variedTilesMin",
+      "pass": true,
+      "value": 64,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f22.varianceMin",
+      "pass": true,
+      "value": 3672.1226079883527,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f22.variedTilesMin",
+      "pass": true,
+      "value": 64,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f23.varianceMin",
+      "pass": true,
+      "value": 3966.0556986951997,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f23.variedTilesMin",
+      "pass": true,
+      "value": 64,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f24.varianceMin",
+      "pass": true,
+      "value": 3764.2384709779253,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f24.variedTilesMin",
+      "pass": true,
+      "value": 64,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f25.varianceMin",
+      "pass": true,
+      "value": 3679.17782842636,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f25.variedTilesMin",
+      "pass": true,
+      "value": 64,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f26.varianceMin",
+      "pass": true,
+      "value": 3606.9634646395425,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f26.variedTilesMin",
+      "pass": true,
+      "value": 64,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f27.varianceMin",
+      "pass": true,
+      "value": 3505.1202167933698,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f27.variedTilesMin",
+      "pass": true,
+      "value": 64,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f30.varianceMin",
+      "pass": true,
+      "value": 3584.8006044676913,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f30.variedTilesMin",
+      "pass": true,
+      "value": 64,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f35.varianceMin",
+      "pass": true,
+      "value": 4667.605430087449,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f35.variedTilesMin",
+      "pass": true,
+      "value": 64,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f40.varianceMin",
+      "pass": true,
+      "value": 4936.577940555657,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f40.variedTilesMin",
+      "pass": true,
+      "value": 64,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f45.varianceMin",
+      "pass": true,
+      "value": 4661.6379499495615,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f45.variedTilesMin",
+      "pass": true,
+      "value": 64,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f50.varianceMin",
+      "pass": true,
+      "value": 3493.1217566850355,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f50.variedTilesMin",
+      "pass": true,
+      "value": 64,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f55.varianceMin",
+      "pass": true,
+      "value": 2167.3146082096764,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f55.variedTilesMin",
+      "pass": true,
+      "value": 64,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f60.varianceMin",
+      "pass": true,
+      "value": 956.7834685735816,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f60.variedTilesMin",
+      "pass": true,
+      "value": 62,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f65.varianceMin",
+      "pass": true,
+      "value": 362.93754337309724,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f65.variedTilesMin",
+      "pass": true,
+      "value": 55,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f70.varianceMin",
+      "pass": true,
+      "value": 334.9365336893295,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f70.variedTilesMin",
+      "pass": true,
+      "value": 56,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f75.varianceMin",
+      "pass": true,
+      "value": 316.53097465510905,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f75.variedTilesMin",
+      "pass": true,
+      "value": 56,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f80.varianceMin",
+      "pass": true,
+      "value": 305.88047308386217,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f80.variedTilesMin",
+      "pass": true,
+      "value": 56,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f85.varianceMin",
+      "pass": true,
+      "value": 301.70173217433853,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f85.variedTilesMin",
+      "pass": true,
+      "value": 56,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f90.varianceMin",
+      "pass": true,
+      "value": 299.3400522229183,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f90.variedTilesMin",
+      "pass": true,
+      "value": 57,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f95.varianceMin",
+      "pass": true,
+      "value": 408.94286917134946,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f95.variedTilesMin",
+      "pass": true,
+      "value": 58,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f100.varianceMin",
+      "pass": true,
+      "value": 680.8335397438286,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f100.variedTilesMin",
+      "pass": true,
+      "value": 60,
+      "limit": 8
+    },
+    {
+      "name": "requestedBackend",
+      "pass": true,
+      "value": 1,
+      "limit": 1
+    },
+    {
+      "name": "requestedQuality",
+      "pass": true,
+      "value": 1,
+      "limit": 1
+    }
+  ],
+  "backend": "webgpu",
+  "actualTier": "low",
+  "frames": 100,
+  "seconds": 14.771,
+  "failed": [],
+  "clipping": {
+    "gunBodyHits": 0,
+    "staticPairs": 0,
+    "heldPropHits": 0,
+    "actorHits": 0,
+    "piercing": 0
+  },
+  "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/review-webgpu-low/pointblank-rocket/sheet.jpg",
+  "sheetKb": 108,
+  "files": [
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/review-webgpu-low/pointblank-rocket/shot-0000.png",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/review-webgpu-low/pointblank-rocket/shot-0005.png",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/review-webgpu-low/pointblank-rocket/shot-0013.png",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/review-webgpu-low/pointblank-rocket/shot-0014.png",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/review-webgpu-low/pointblank-rocket/shot-0015.png",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/review-webgpu-low/pointblank-rocket/shot-0016.png",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/review-webgpu-low/pointblank-rocket/shot-0017.png",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/review-webgpu-low/pointblank-rocket/shot-0018.png",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/review-webgpu-low/pointblank-rocket/shot-0019.png",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/review-webgpu-low/pointblank-rocket/shot-0020.png",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/review-webgpu-low/pointblank-rocket/shot-0021.png",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/review-webgpu-low/pointblank-rocket/shot-0022.png",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/review-webgpu-low/pointblank-rocket/shot-0023.png",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/review-webgpu-low/pointblank-rocket/shot-0024.png",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/review-webgpu-low/pointblank-rocket/shot-0025.png",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/review-webgpu-low/pointblank-rocket/shot-0026.png",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/review-webgpu-low/pointblank-rocket/shot-0027.png",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/review-webgpu-low/pointblank-rocket/shot-0030.png",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/review-webgpu-low/pointblank-rocket/shot-0050.png",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/review-webgpu-low/pointblank-rocket/shot-0100.png",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/review-webgpu-low/pointblank-rocket/sheet.jpg",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/review-webgpu-low/pointblank-rocket/metrics.json"
+  ],
+  "consoleErrors": []
+}
