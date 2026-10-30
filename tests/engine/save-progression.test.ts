@@ -1,6 +1,7 @@
 // Save, load, Continue and the level handovers: one code path carries the courier's arsenal, upgrades and
 // world state through all ten levels. A regression here costs players their weapons (P1 10-20: "I lost the shotgun").
 import { expect, test, vi } from 'vitest';
+import { epilogueSurvivorLines } from '../../src/data/epilogueSurvivors';
 import { action, catalog } from '../../src/data/actions/catalog';
 import { emptyInput } from '../../src/input/InputFrame';
 import { Loadout } from '../../src/sim/combat/Loadout';
@@ -164,10 +165,7 @@ test('rewards: a saved reward screen round-trips at each phase and cannot be cla
   finishRewards(save, save.racks);
   expect(() => beginRewards(save, 1)).toThrow();
   expect([2, 3, 4, 5, 6].map(level => gearTier(preset(`L${level as 2 | 3 | 4 | 5 | 6}-default`)))).toEqual([0, 1, 2, 3, 4]);
-});
-
-test('ending credits name the L8 survivors who got out and remember the ones lost', async () => {
-  const { epilogueSurvivorLines } = await import('../../src/data/epilogueSurvivors');
+  // Ending credits name the L8 survivors who got out and remember the ones lost.
   expect(epilogueSurvivorLines(['dale', 'rosa', 'okafor', 'mia', 'sam'])).toEqual(['Dale, Rosa, Mr. Okafor, Mia, Sam: safe at the evacuation point, waiting for the cure.']);
   expect(epilogueSurvivorLines(['rosa', 'mia'])).toEqual(['Rosa, Mia: safe at the evacuation point, waiting for the cure.', 'Remembered: Dale, Mr. Okafor, Sam.']);
   expect(epilogueSurvivorLines(undefined)).toEqual([]);

@@ -68,6 +68,6 @@ export const dialogue: Record<string, string> = {
   'L9.briefing': 'The zoo is lost behind you. The armored vehicle’s radio loops one army broadcast: the research campus past the next city has a cure. Cross the countryside toward it; every hit costs armor.',
   'L7.start': 'Night. While you were underground, Fairhaven was overrun. The rocket launcher in the wrecked army truck by the exit is your way through.',
   'L10.crash': 'The crash took everything but the axe. The others made it to the evacuation point while you fell behind. Find the research campus and the cure.',
-  'L10.mega-roar': 'That roar again. Whatever it is, it is following you.',
+  'L10.mega-roar': 'That roar. Whatever it is, it is following you.',
   'L10.briefing': 'The crash took the vehicle, the others and every weapon but the axe. Find the research campus and the cure. Something huge is on your trail: you will hear it long before you see it.',
 };
