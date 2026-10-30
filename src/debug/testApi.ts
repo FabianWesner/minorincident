@@ -148,6 +148,11 @@ function pending(epic: string, method: string): never { throw new NotImplemented
 /** Called only by the query-gated dynamic import in main.ts. */
 export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
   let physicalPlanner: LevelThreeBot | LevelFourBot | LevelSixBot | null = null, plannerLevel = '';
+  const teleport: SSTestApi['teleport'] = (id, pos) => {
+    missionControls(game.world).teleport(id, pos);
+    if (id === 1 || id === 'player') game.view.snapCamera();
+    game.view.update(1);
+  };
   const api: SSTestApi = {
     look: { get: () => structuredClone({ worldLook: game.view.look.values, palette: game.view.look.palette }), set: patch => game.view.setLook(patch), export: () => game.view.look.export(), reset: () => game.view.resetLook() },
     inspect: { enable: (...args) => game.inspect!.enable(...args), setCamera: pose => game.inspect!.setCamera(pose), follow: id => game.inspect!.follow(id), timeScale: x => game.inspect!.timeScale(x), anchors: () => game.inspect!.anchors(), state: () => game.inspect!.state(), jump: id => game.inspect!.jump(id), lod: mode => game.inspect!.lod(mode) },
@@ -158,7 +163,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
         e.health.current = current;
       },
       l1Outbreak: setup => { installL1Outbreak(game.world, setup); return { civilians: game.world.npcs!.civilians.outbreak!.liveCivilians() }; },
-      l1Stats: () => ({ ...game.world.npcs?.civilians.outbreak?.stats, live: game.world.npcs?.civilians.outbreak?.liveCivilians() ?? 0 }) }, missions: { ...missionControls(game.world), load: (def) => { game.ui.reset(); missionControls(game.world).load(def); game.ui.loaded(); } },
+      l1Stats: () => ({ ...game.world.npcs?.civilians.outbreak?.stats, live: game.world.npcs?.civilians.outbreak?.liveCivilians() ?? 0 }) }, missions: { ...missionControls(game.world), teleport, load: (def) => { game.ui.reset(); missionControls(game.world).load(def); game.ui.loaded(); } },
     campaign: {state:()=>structuredClone(game.campaign),menu:()=>game.campaignUI.showMenu(game.saves.load()),save:()=>game.saveCampaign(),restore:save=>{if(!validateSave(save))throw new Error('Invalid campaign');game.campaign=structuredClone(save);game.applyCampaign();}},
     pause: () => game.clock.pause(), resume: () => game.clock.resume(),
     step: (ticks) => game.step(ticks), setTimeScale: (scale) => game.clock.setTimeScale(scale), tick: () => game.world.tick,
@@ -211,7 +216,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       giveItem: id => game.world.interactables!.giveItem(id), refuel: (id, seconds) => game.world.interactables!.refuel(id, seconds),
       barricade: (id, on) => game.world.interactables!.barricade(id, on), hit: (id, amount, type) => game.world.hazards!.hit(id, amount, type),
     },
-    teleport: (id,pos) => { missionControls(game.world).teleport(id,pos); game.view.update(1); },
+    teleport,
     survivor: {
       select: (variant, tier = 0) => { if (!game.world.player) throw new Error('Load a survivor scenario first'); game.world.player.select(variant, tier); game.view.update(1); },
       damage: (amount) => { if (!game.world.player) throw new Error('Load a survivor scenario first'); const taken = game.world.player.damage(amount, game.world.tick); game.view.update(1); return taken; },

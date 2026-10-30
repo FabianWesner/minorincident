@@ -92,6 +92,10 @@ export class GameView implements Lifecycle {
   private companionSearch = 0;
   private readonly storyFocus = new Vector3();
   private readonly storyOffset = new Vector3();
+  private cameraSnap = false;
+  private cameraStops: (() => void)[] = [];
+  /** Queue an explicit relocation; consume it after the simulation finishes restoring its pose and flags. */
+  snapCamera(): void { this.cameraSnap = true; }
   readonly view = new View();
   readonly camera = this.view.camera;
   renderer: Renderer;
@@ -248,6 +252,7 @@ export class GameView implements Lifecycle {
     const player = this.world.entities.get(1);
     this.view.framing = this.world.scenario === 'L10' ? this.l10Framing() : null;
     this.view.reset(player?.transform ?? { x: 0, z: 0 }, true);
+    for (const type of ['checkpoint.restored', 'player.respawned'] as const) this.cameraStops.push(this.world.events.on(type, () => this.snapCamera()));
     let actors: Promise<unknown> | null = null;
     if (this.world.districts) {
       ({ actors } = await this.loadDistrictScene(player));
@@ -702,7 +707,8 @@ export class GameView implements Lifecycle {
       // the courier and her group stay in frame next to the surge.
       if (this.world.scenario === 'L3') this.view.pull(202, 0, rescue ? (this.view.camera.aspect < 1 ? .45 : .8) : 0, rescue ? 1.6 : undefined);
       this.updateEnding();
-      this.view.update(player.transform, seconds);
+      if (this.cameraSnap) { this.cameraSnap = false; this.view.snapTo(player.transform); }
+      else this.view.update(player.transform, seconds);
       this.playerPosition.set(player.transform.x, player.transform.y - 0.5, player.transform.z);
       if (__QA_HOOKS__ && this.labView) this.occlusion.update(this.camera, this.playerPosition, seconds, this.labView.playerMeshes);
     }
@@ -925,6 +931,7 @@ export class GameView implements Lifecycle {
     }
     const profileStart = __QA_HOOKS__ && this.renderer.profile ? performance.now() : 0;
     // The rig steps with the sim; render it between the last two tick poses like every other transform.
+    if (this.cameraSnap) this.advance(0);
     this.view.present(alpha);
     this.syncMission();
     if (this.view.inspectionPose) this.view.present(alpha);
@@ -1137,6 +1144,7 @@ export class GameView implements Lifecycle {
   }
   /** Same-district transitions reuse decoded prototypes; leaving the district retires the cache. */
   reset(nextDistricts?: string): void {
+    for (const stop of this.cameraStops) stop(); this.cameraStops = []; this.cameraSnap = false;
     this.probes?.reset();
     const retain = !!nextDistricts && nextDistricts === this.resourceDistricts;
     this.weatherPowerRevision = 0;

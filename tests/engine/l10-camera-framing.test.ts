@@ -15,8 +15,8 @@ describe('L10 road camera (PO 10-30 "Wider L10 camera")', () => {
       const [x, z] = cure.anchors[name];
       expect(l10RoadWeight(x + 2, z, false)).toBe(0);
     }
-  });
-  it('blends continuously along the route (no snap at a seam)', () => {
+
+    // The authored route remains continuous at every seam.
     const route = cure.regions.flatMap(r => r.route);
     for (let i = 1; i < route.length; i++) {
       const [a, b] = [route[i - 1], route[i]], steps = Math.ceil(Math.hypot(b[0] - a[0], b[1] - a[1]) / .25);
@@ -47,5 +47,33 @@ describe('L10 road camera (PO 10-30 "Wider L10 camera")', () => {
     for (let i = 0; i < 300; i++) view.update({ x: cx, z: cz }, 1 / 60);
     expect(view.regionScale).toBeCloseTo(1, 3);
     expect(view.camera.fov).toBe(cameraFraming.fovDeg);
+  });
+  it('snaps framing on level load, checkpoint/respawn poses and teleports before the first presented frame', () => {
+    const view = new View();
+    let finale = false;
+    view.framing = (x, z) => l10Framing(x, z, finale);
+    const road = { x: 640, z: 8 };
+    view.reset(road);
+    expect(view.regionScale).toBeCloseTo(1.3, 6);
+    // A checkpoint can change framing flags without moving the courier at all.
+    finale = true;
+    view.snapTo(road);
+    expect(view.regionScale).toBe(1);
+    expect(view.radius).toBeCloseTo(cameraFraming.radiusM, 6);
+    finale = false;
+    view.snapTo(road);
+    expect(view.regionScale).toBeCloseTo(1.3, 6);
+    // A short explicit relocation must snap as well as the automatic >20 m teleport.
+    const [cx, cz] = cure.anchors['cure-residential'];
+    view.reset({ x: cx - 18, z: cz });
+    view.snapTo({ x: cx, z: cz });
+    expect(view.regionScale).toBe(1);
+    expect(view.focus.x).toBe(cx);
+    view.present(.1);
+    expect(view.camera.position.distanceTo(view.simCamera.position)).toBeLessThan(1e-6);
+    view.update(road, 1 / 60);
+    expect(view.regionScale).toBeCloseTo(1.3, 6);
+    view.present(.1);
+    expect(view.camera.position.distanceTo(view.simCamera.position)).toBeLessThan(1e-6);
   });
 });

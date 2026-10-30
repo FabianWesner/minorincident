@@ -124,6 +124,12 @@ export class View {
     this.driving = false; this.driverWide = false; this.driveScale = 1; this.focus.set(player.x, Math.max(0, (player.y ?? feetOffset) - feetOffset), player.z); this.spot = null; this.blend = this.blendTarget = 0; this.shakeStrength = this.shakeTime = 0; this.rollAngle = this.rollSpeed = 0; this.pullWeight = 0;
     this.update(player, 0);
   }
+  /** Re-pose at an authored restore point (checkpoint or respawn) before it is presented. */
+  snapTo(player: { x: number; z: number; y?: number }): void {
+    this.focus.set(player.x, Math.max(0, (player.y ?? feetOffset) - feetOffset), player.z);
+    this.update(player, 0);
+    this.snapped = true;
+  }
   /** Named deterministic photo pose (instant); cinematic poses can blend over 1 s. */
   preset(name: string, pose: CameraPose): void {
     this.spot = name; this.cinematic(pose, true);
