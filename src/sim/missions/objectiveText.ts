@@ -43,7 +43,9 @@ export function objectiveText(mission: Mission, fallback: string): string {
   if (w.l7Encounters && s.steps.corridor?.status === 'active') {
     const group = w.l7Encounters.corridorGroup(), missing = group.missing[0];
     const name = missing && survivorName(w.entities.get(missing.id)!);
-    return `${fallback} · Group ${group.near}/${group.total} nearby${name ? ` · Waiting for ${name}` : ''}`;
+    const target = missing && w.entities.get(missing.id)!;
+    const player = w.entities.get(1)!.transform;
+    return `${fallback} · Group ${group.near}/${group.total} nearby${target ? ` · Waiting for ${name} (${Math.ceil(Math.hypot(target.transform.x-player.x,target.transform.z-player.z))} m away)` : ''}`;
   }
   if (mission.def.l8) {
     const zoo=mission.l8!, seated=w.vehicles!.active===zoo.state.carId;

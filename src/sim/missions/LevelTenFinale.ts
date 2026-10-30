@@ -65,6 +65,7 @@ export function cureFinaleText(mission: Mission | null): string | null {
   if (!mission) return null;
   const { state, world, def } = mission;
   if (def.id !== 'L10') return null;
+  if (state.steps.epilogue?.status === 'active' && state.cureFront) return `Watch the cure spread · ${Math.min(150, Math.floor(state.cureFront.elapsed / 60))}/150 s`;
   if (state.steps.mega.status === 'active' && !state.states['mega-dead']) return 'Kill the Mega Alpha';
   if (state.steps.hold.status !== 'active') return null;
   if (!state.states['charge-active']) return 'Activate the dispersal console';
