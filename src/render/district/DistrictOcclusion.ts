@@ -46,7 +46,7 @@ export class DistrictOcclusion {
     projectReveal(view.camera, box);
     if (this.seeThroughReference) { this.updateCutPlacements(true); this.updateInteriors(view, player); seeThrough.solidRadius.value = 3; seeThrough.strength.value = 1; return; }
     // Only the placements that actually sit between the lens and some part of the subject (courier or whole player vehicle) are eligible for the cut.
-    this.occludedSubject(view, box);
+    this.occludedSubject(view, box, player);
     // Clear only the foreground of placements that enclose most of the lens.
     // The normal courier disc stays bounded; player angle and zoom stay fixed.
     seeThrough.cover.value = +(this.lensPlacements.size > 0);
@@ -212,14 +212,17 @@ export class DistrictOcclusion {
   }
   /** Segments from the camera to the centre and corners of the subject (courier or whole player vehicle) against the same boxes.
    * Every placement hit by any segment is marked for the per-placement cut; the rest stay opaque. */
-  private occludedSubject(view: View, subject: Box3): boolean {
+  private occludedSubject(view: View, subject: Box3, courier?: { x: number; z: number }): boolean {
     const points = this.subjectPoints, centre = subject.getCenter(this.holeTarget);
     let n = 0;
     points[n++].copy(centre);
     for (const x of [subject.min.x, subject.max.x]) for (const y of [subject.min.y, subject.max.y]) for (const z of [subject.min.z, subject.max.z]) points[n++].set(x, y, z);
-    return this.cutBlockers(view, centre, points, n);
+    return this.cutBlockers(view, centre, points, n, courier);
   }
-  private cutBlockers(view: View, player: { x: number; z: number }, points: Vector3[], count: number): boolean {
+  /** Q-50 (L10 dispersal console): the corgi's generous box corner inside a prop's conservative box is contact, not cover; the
+   * cut carved the uncovered console beside them into dark slivers. A subject point inside a non-building box only counts while
+   * the courier herself stands within its footprint (tent, shelter); otherwise the segment must pass through the box in front of it. */
+  private cutBlockers(view: View, player: { x: number; z: number }, points: Vector3[], count: number, courier?: { x: number; z: number }): boolean {
     const o = view.camera.position;
     let blocked = false;
     for (const entry of this.parts.lodBatches) {
@@ -234,6 +237,11 @@ export class DistrictOcclusion {
         // Slab test in the placement's local frame (oriented footprint, real height).
         const ox = o.x - x, oz = o.z - z, sx = ref.scale.x, sz = ref.scale.z;
         const lox = (ox * c - oz * sn) / sx, loz = (ox * sn + oz * c) / sz;
+        let contact = false;
+        if (courier && !entry.id.startsWith('bld.')) {
+          const cx = courier.x - x, cz = courier.z - z;
+          contact = Math.abs((cx * c - cz * sn) / sx) >= entry.foot.hx || Math.abs((cx * sn + cz * c) / sz) >= entry.foot.hz;
+        }
         for (let i = 0; i < count; i++) {
           const point = points[i], dx = point.x - o.x, dy = point.y - o.y, dz = point.z - o.z, ldx = (dx * c - dz * sn) / sx, ldz = (dx * sn + dz * c) / sz;
           let enter = 0, exit = 1;
@@ -247,7 +255,7 @@ export class DistrictOcclusion {
             enter = Math.max(enter, Math.min(a, b)); exit = Math.min(exit, Math.max(a, b));
             if (enter > exit) break;
           }
-          if (enter <= exit && enter < .98) { this.cutPlacements.add(ref); if (entry.id.startsWith('bld.') && this.coversLens(view, entry, ref)) this.lensPlacements.add(ref); this.occluderId = `${entry.id}@${(x).toFixed(1)},${(z).toFixed(1)}`; blocked = true; break; }
+          if (enter <= exit && enter < .98 && (!contact || exit < 1)) { this.cutPlacements.add(ref); if (entry.id.startsWith('bld.') && this.coversLens(view, entry, ref)) this.lensPlacements.add(ref); this.occluderId = `${entry.id}@${(x).toFixed(1)},${(z).toFixed(1)}`; blocked = true; break; }
         }
       }
     }
