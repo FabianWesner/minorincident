@@ -1,0 +1,48 @@
+{
+  "branch": "lane/n33",
+  "baseRevision": "0ccfaa42b",
+  "soleFixCommit": "8dbea7457",
+  "runtimeSourceSha256": {
+    "src/render/characters/CrowdLocomotion.ts": "f2ca950caf51872d1c304ddc19ed7bac423fc2c733144802469e89f65e63144a",
+    "src/render/vfx/Blasts.ts": "1b3532d0843dc6c524f182587be011e9249c5c7ac5dda8a5393604532955acdb",
+    "tools/qa/l10-arrival-check.ts": "c463dbc81af2197a88ed58ae741134b9b13a696e22a186a55c7162b21063eeab"
+  },
+  "arrivalCheckerUnchanged": true,
+  "newTestCases": 0,
+  "npm test": {
+    "exitCode": 0,
+    "filesPassed": 25,
+    "testsPassed": 107,
+    "seconds": 21.9
+  },
+  "npm run typecheck": {
+    "exitCode": 0
+  },
+  "npm run lint": {
+    "exitCode": 0
+  },
+  "npm run test:smoke": {
+    "exitCode": 0,
+    "qaPassed": 6,
+    "publicPassed": 1,
+    "seconds": 141.8
+  },
+  "npm run scene:gate": {
+    "exitCode": 0,
+    "passed": 48,
+    "total": 48,
+    "knownFailures": 0,
+    "notRun": 0
+  },
+  "relatedRows": {
+    "passed": 120,
+    "total": 120,
+    "l7": 96,
+    "qaL10": 24,
+    "backend": "webgpu"
+  },
+  "visualReview": {
+    "titleBeforeAfter": "Inspected both low-z0.5 sheets: mist coverage increases, title and credits remain legible. Peak mist puffs 7 -> 16 with minimum 10 retained.",
+    "epilogueBeforeAfter": "Inspected both 1280x720 low-z1.5 corpse-field captures at release-relative tick 1800. Same low bank, 75 bodies, no new body-height mist veil. Three healthy survivors, zero sunk pairs, courier footprint clear."
+  }
+}

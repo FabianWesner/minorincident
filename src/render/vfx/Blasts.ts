@@ -456,7 +456,11 @@ export class Blasts extends Group {
   private cureMist(now: number): void {
     const front = this.world.missions?.state.cureFront;
     if (!front) return;
-    const focus = this.host.focus?.() ?? this.world.entities.get(1)!.transform, count = this.quality === 'low' ? 8 : 24;
+    const focus = this.host.focus?.() ?? this.world.entities.get(1)!.transform;
+    const ending = this.world.missions?.state.epilogue?.phase;
+    // The playable cure spread keeps its deliberately sparse low-tier mist, so bodies
+    // remain legible. Title and credits get denser coverage after gameplay has ended.
+    const count = this.quality === 'low' ? ending === 'title' || ending === 'credits' ? 16 : 8 : 24;
     const pull = epiloguePull(this.world.missions!.state.counters['epilogue-ticks'] ?? 0);
     for (let i = 0; i < count; i++) {
       const angle = this.mistRng.next() * Math.PI * 2, distance = Math.sqrt(this.mistRng.next()) * Math.max(1, Math.min(48 + 96 * pull, front.radius));

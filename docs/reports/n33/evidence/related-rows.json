@@ -1,0 +1,4602 @@
+{
+  "sourceIdentity": {
+    "revision": "8dbea745713af2a4fa6ab9d0d7112643b73e776f",
+    "inputs": "70c523459ee11dc7dcc5c45b35a579b8beb3bffd7fee65c23e13c549721a57dc",
+    "mode": "nightly",
+    "rows": [
+      [
+        "webgpu",
+        "high",
+        "collision-l7-courier-queue@high-z1.5"
+      ],
+      [
+        "webgpu",
+        "high",
+        "collision-l7-courier-queue@high-z1"
+      ],
+      [
+        "webgpu",
+        "high",
+        "collision-l7-courier-queue@high-z0.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "collision-l7-courier-queue@low-z1.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "collision-l7-courier-queue@low-z1"
+      ],
+      [
+        "webgpu",
+        "low",
+        "collision-l7-courier-queue@low-z0.5"
+      ],
+      [
+        "webgpu",
+        "high",
+        "collision-l7-departure@high-z1.5"
+      ],
+      [
+        "webgpu",
+        "high",
+        "collision-l7-departure@high-z1"
+      ],
+      [
+        "webgpu",
+        "high",
+        "collision-l7-departure@high-z0.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "collision-l7-departure@low-z1.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "collision-l7-departure@low-z1"
+      ],
+      [
+        "webgpu",
+        "low",
+        "collision-l7-departure@low-z0.5"
+      ],
+      [
+        "webgpu",
+        "high",
+        "qa-l10-charge-radius@high-z1.5"
+      ],
+      [
+        "webgpu",
+        "high",
+        "qa-l10-charge-radius@high-z1"
+      ],
+      [
+        "webgpu",
+        "high",
+        "qa-l10-charge-radius@high-z0.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "qa-l10-charge-radius@low-z1.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "qa-l10-charge-radius@low-z1"
+      ],
+      [
+        "webgpu",
+        "low",
+        "qa-l10-charge-radius@low-z0.5"
+      ],
+      [
+        "webgpu",
+        "high",
+        "qa-l10-epilogue@high-z1.5"
+      ],
+      [
+        "webgpu",
+        "high",
+        "qa-l10-epilogue@high-z1"
+      ],
+      [
+        "webgpu",
+        "high",
+        "qa-l10-epilogue@high-z0.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "qa-l10-epilogue@low-z1.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "qa-l10-epilogue@low-z1"
+      ],
+      [
+        "webgpu",
+        "low",
+        "qa-l10-epilogue@low-z0.5"
+      ],
+      [
+        "webgpu",
+        "high",
+        "qa-l10-final-release@high-z1.5"
+      ],
+      [
+        "webgpu",
+        "high",
+        "qa-l10-final-release@high-z1"
+      ],
+      [
+        "webgpu",
+        "high",
+        "qa-l10-final-release@high-z0.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "qa-l10-final-release@low-z1.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "qa-l10-final-release@low-z1"
+      ],
+      [
+        "webgpu",
+        "low",
+        "qa-l10-final-release@low-z0.5"
+      ],
+      [
+        "webgpu",
+        "high",
+        "qa-l10-title-credits@high-z1.5"
+      ],
+      [
+        "webgpu",
+        "high",
+        "qa-l10-title-credits@high-z1"
+      ],
+      [
+        "webgpu",
+        "high",
+        "qa-l10-title-credits@high-z0.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "qa-l10-title-credits@low-z1.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "qa-l10-title-credits@low-z1"
+      ],
+      [
+        "webgpu",
+        "low",
+        "qa-l10-title-credits@low-z0.5"
+      ],
+      [
+        "webgpu",
+        "high",
+        "qa-l7-entry-bus@high-z1.5"
+      ],
+      [
+        "webgpu",
+        "high",
+        "qa-l7-entry-bus@high-z1"
+      ],
+      [
+        "webgpu",
+        "high",
+        "qa-l7-entry-bus@high-z0.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "qa-l7-entry-bus@low-z1.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "qa-l7-entry-bus@low-z1"
+      ],
+      [
+        "webgpu",
+        "low",
+        "qa-l7-entry-bus@low-z0.5"
+      ],
+      [
+        "webgpu",
+        "high",
+        "qa-l7-entry-corridor@high-z1.5"
+      ],
+      [
+        "webgpu",
+        "high",
+        "qa-l7-entry-corridor@high-z1"
+      ],
+      [
+        "webgpu",
+        "high",
+        "qa-l7-entry-corridor@high-z0.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "qa-l7-entry-corridor@low-z1.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "qa-l7-entry-corridor@low-z1"
+      ],
+      [
+        "webgpu",
+        "low",
+        "qa-l7-entry-corridor@low-z0.5"
+      ],
+      [
+        "webgpu",
+        "high",
+        "qa-l7-entry-night-exit@high-z1.5"
+      ],
+      [
+        "webgpu",
+        "high",
+        "qa-l7-entry-night-exit@high-z1"
+      ],
+      [
+        "webgpu",
+        "high",
+        "qa-l7-entry-night-exit@high-z0.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "qa-l7-entry-night-exit@low-z1.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "qa-l7-entry-night-exit@low-z1"
+      ],
+      [
+        "webgpu",
+        "low",
+        "qa-l7-entry-night-exit@low-z0.5"
+      ],
+      [
+        "webgpu",
+        "high",
+        "qa-l7-entry-rocket@high-z1.5"
+      ],
+      [
+        "webgpu",
+        "high",
+        "qa-l7-entry-rocket@high-z1"
+      ],
+      [
+        "webgpu",
+        "high",
+        "qa-l7-entry-rocket@high-z0.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "qa-l7-entry-rocket@low-z1.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "qa-l7-entry-rocket@low-z1"
+      ],
+      [
+        "webgpu",
+        "low",
+        "qa-l7-entry-rocket@low-z0.5"
+      ],
+      [
+        "webgpu",
+        "high",
+        "qa-late-bus-departure@high-z1.5"
+      ],
+      [
+        "webgpu",
+        "high",
+        "qa-late-bus-departure@high-z1"
+      ],
+      [
+        "webgpu",
+        "high",
+        "qa-late-bus-departure@high-z0.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "qa-late-bus-departure@low-z1.5"
+      ],
+      [
+        "webgpu",
+        "low",
+        "qa-late-bus-departure@low-z1"
+      ],
+      [
+        "webgpu",
+        "low",
+        "qa-late-bus-departure@low-z0.5"
+      ]
+    ],
+    "maxRows": 12,
+    "filter": "collision-l7-*,qa-l7-*,qa-late-bus-departure,qa-l10-*",
+    "backend": "webgpu"
+  },
+  "passed": 66,
+  "failed": 0,
+  "notRun": 0,
+  "checkSelection": "All original checks were verified passing; selectedChecks preserves grounding, cure, console and requested renderer/tier values. Raw metrics remain in the corresponding test-results/n33 batch.",
+  "rows": [
+    {
+      "name": "collision-l7-courier-queue@high-z0.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 51,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "collision-l7-courier-queue@high-z1",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 51,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "collision-l7-courier-queue@high-z1.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 51,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "collision-l7-departure@high-z0.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 32,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "collision-l7-departure@high-z1",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 32,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "collision-l7-departure@high-z1.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 32,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l10-charge-radius@high-z0.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 38,
+      "selectedChecks": [
+        {
+          "name": "cure.boundaryFrames.min",
+          "pass": true,
+          "value": 188,
+          "limit": 180
+        },
+        {
+          "name": "cure.boundaryFrames.max",
+          "pass": true,
+          "value": 188,
+          "limit": 200
+        },
+        {
+          "name": "cure.outsideFrames.min",
+          "pass": true,
+          "value": 487,
+          "limit": 350
+        },
+        {
+          "name": "cure.outsideFrames.max",
+          "pass": true,
+          "value": 487,
+          "limit": 500
+        },
+        {
+          "name": "cure.outsideAdvance.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.outsideAdvance.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.chargeTicks.min",
+          "pass": true,
+          "value": 813,
+          "limit": 800
+        },
+        {
+          "name": "cure.chargeTicks.max",
+          "pass": true,
+          "value": 813,
+          "limit": 950
+        },
+        {
+          "name": "cure.releaseCount.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.releaseCount.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.insideMisses.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.insideMisses.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l10-charge-radius@high-z1",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 38,
+      "selectedChecks": [
+        {
+          "name": "cure.boundaryFrames.min",
+          "pass": true,
+          "value": 188,
+          "limit": 180
+        },
+        {
+          "name": "cure.boundaryFrames.max",
+          "pass": true,
+          "value": 188,
+          "limit": 200
+        },
+        {
+          "name": "cure.outsideFrames.min",
+          "pass": true,
+          "value": 487,
+          "limit": 350
+        },
+        {
+          "name": "cure.outsideFrames.max",
+          "pass": true,
+          "value": 487,
+          "limit": 500
+        },
+        {
+          "name": "cure.outsideAdvance.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.outsideAdvance.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.chargeTicks.min",
+          "pass": true,
+          "value": 813,
+          "limit": 800
+        },
+        {
+          "name": "cure.chargeTicks.max",
+          "pass": true,
+          "value": 813,
+          "limit": 950
+        },
+        {
+          "name": "cure.releaseCount.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.releaseCount.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.insideMisses.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.insideMisses.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l10-charge-radius@high-z1.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 38,
+      "selectedChecks": [
+        {
+          "name": "cure.boundaryFrames.min",
+          "pass": true,
+          "value": 188,
+          "limit": 180
+        },
+        {
+          "name": "cure.boundaryFrames.max",
+          "pass": true,
+          "value": 188,
+          "limit": 200
+        },
+        {
+          "name": "cure.outsideFrames.min",
+          "pass": true,
+          "value": 487,
+          "limit": 350
+        },
+        {
+          "name": "cure.outsideFrames.max",
+          "pass": true,
+          "value": 487,
+          "limit": 500
+        },
+        {
+          "name": "cure.outsideAdvance.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.outsideAdvance.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.chargeTicks.min",
+          "pass": true,
+          "value": 813,
+          "limit": 800
+        },
+        {
+          "name": "cure.chargeTicks.max",
+          "pass": true,
+          "value": 813,
+          "limit": 950
+        },
+        {
+          "name": "cure.releaseCount.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.releaseCount.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.insideMisses.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.insideMisses.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l10-epilogue@high-z1",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 42,
+      "selectedChecks": [
+        {
+          "name": "cure.playableTravel.min",
+          "pass": true,
+          "value": 7.77880859375,
+          "limit": 4
+        },
+        {
+          "name": "cure.playableTravel.max",
+          "pass": true,
+          "value": 7.77880859375,
+          "limit": 20
+        },
+        {
+          "name": "cure.survivors.min",
+          "pass": true,
+          "value": 6,
+          "limit": 3
+        },
+        {
+          "name": "cure.survivors.max",
+          "pass": true,
+          "value": 6,
+          "limit": 6
+        },
+        {
+          "name": "cure.radius.min",
+          "pass": true,
+          "value": 1506.6666666666667,
+          "limit": 1500
+        },
+        {
+          "name": "cure.radius.max",
+          "pass": true,
+          "value": 1506.6666666666667,
+          "limit": 1510
+        },
+        {
+          "name": "cure.titleFrames.min",
+          "pass": true,
+          "value": 41,
+          "limit": 1
+        },
+        {
+          "name": "cure.titleFrames.max",
+          "pass": true,
+          "value": 41,
+          "limit": 60
+        },
+        {
+          "name": "cure.pullScale.min",
+          "pass": true,
+          "value": 7,
+          "limit": 6.9
+        },
+        {
+          "name": "cure.pullScale.max",
+          "pass": true,
+          "value": 7,
+          "limit": 7.1
+        },
+        {
+          "name": "cure.fanFrames.min",
+          "pass": true,
+          "value": 2199,
+          "limit": 2000
+        },
+        {
+          "name": "cure.fanFrames.max",
+          "pass": true,
+          "value": 2199,
+          "limit": 2200
+        },
+        {
+          "name": "cure.healthyDamage.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.healthyDamage.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.lateDeaths.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.lateDeaths.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.mistPuffs.min",
+          "pass": true,
+          "value": 83,
+          "limit": 10
+        },
+        {
+          "name": "cure.mistPuffs.max",
+          "pass": true,
+          "value": 83,
+          "limit": 400
+        },
+        {
+          "name": "cure.smokeOverBudget.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.smokeOverBudget.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l10-epilogue@high-z1.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 42,
+      "selectedChecks": [
+        {
+          "name": "cure.playableTravel.min",
+          "pass": true,
+          "value": 7.77880859375,
+          "limit": 4
+        },
+        {
+          "name": "cure.playableTravel.max",
+          "pass": true,
+          "value": 7.77880859375,
+          "limit": 20
+        },
+        {
+          "name": "cure.survivors.min",
+          "pass": true,
+          "value": 6,
+          "limit": 3
+        },
+        {
+          "name": "cure.survivors.max",
+          "pass": true,
+          "value": 6,
+          "limit": 6
+        },
+        {
+          "name": "cure.radius.min",
+          "pass": true,
+          "value": 1506.6666666666667,
+          "limit": 1500
+        },
+        {
+          "name": "cure.radius.max",
+          "pass": true,
+          "value": 1506.6666666666667,
+          "limit": 1510
+        },
+        {
+          "name": "cure.titleFrames.min",
+          "pass": true,
+          "value": 41,
+          "limit": 1
+        },
+        {
+          "name": "cure.titleFrames.max",
+          "pass": true,
+          "value": 41,
+          "limit": 60
+        },
+        {
+          "name": "cure.pullScale.min",
+          "pass": true,
+          "value": 7,
+          "limit": 6.9
+        },
+        {
+          "name": "cure.pullScale.max",
+          "pass": true,
+          "value": 7,
+          "limit": 7.1
+        },
+        {
+          "name": "cure.fanFrames.min",
+          "pass": true,
+          "value": 2199,
+          "limit": 2000
+        },
+        {
+          "name": "cure.fanFrames.max",
+          "pass": true,
+          "value": 2199,
+          "limit": 2200
+        },
+        {
+          "name": "cure.healthyDamage.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.healthyDamage.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.lateDeaths.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.lateDeaths.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.mistPuffs.min",
+          "pass": true,
+          "value": 152,
+          "limit": 10
+        },
+        {
+          "name": "cure.mistPuffs.max",
+          "pass": true,
+          "value": 152,
+          "limit": 400
+        },
+        {
+          "name": "cure.smokeOverBudget.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.smokeOverBudget.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l10-epilogue@high-z0.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 42,
+      "selectedChecks": [
+        {
+          "name": "cure.playableTravel.min",
+          "pass": true,
+          "value": 7.77880859375,
+          "limit": 4
+        },
+        {
+          "name": "cure.playableTravel.max",
+          "pass": true,
+          "value": 7.77880859375,
+          "limit": 20
+        },
+        {
+          "name": "cure.survivors.min",
+          "pass": true,
+          "value": 6,
+          "limit": 3
+        },
+        {
+          "name": "cure.survivors.max",
+          "pass": true,
+          "value": 6,
+          "limit": 6
+        },
+        {
+          "name": "cure.radius.min",
+          "pass": true,
+          "value": 1506.6666666666667,
+          "limit": 1500
+        },
+        {
+          "name": "cure.radius.max",
+          "pass": true,
+          "value": 1506.6666666666667,
+          "limit": 1510
+        },
+        {
+          "name": "cure.titleFrames.min",
+          "pass": true,
+          "value": 41,
+          "limit": 1
+        },
+        {
+          "name": "cure.titleFrames.max",
+          "pass": true,
+          "value": 41,
+          "limit": 60
+        },
+        {
+          "name": "cure.pullScale.min",
+          "pass": true,
+          "value": 7,
+          "limit": 6.9
+        },
+        {
+          "name": "cure.pullScale.max",
+          "pass": true,
+          "value": 7,
+          "limit": 7.1
+        },
+        {
+          "name": "cure.fanFrames.min",
+          "pass": true,
+          "value": 2199,
+          "limit": 2000
+        },
+        {
+          "name": "cure.fanFrames.max",
+          "pass": true,
+          "value": 2199,
+          "limit": 2200
+        },
+        {
+          "name": "cure.healthyDamage.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.healthyDamage.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.lateDeaths.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.lateDeaths.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.mistPuffs.min",
+          "pass": true,
+          "value": 24,
+          "limit": 10
+        },
+        {
+          "name": "cure.mistPuffs.max",
+          "pass": true,
+          "value": 24,
+          "limit": 400
+        },
+        {
+          "name": "cure.smokeOverBudget.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.smokeOverBudget.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l10-final-release@high-z0.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 36,
+      "selectedChecks": [
+        {
+          "name": "cure.chargeTicks.min",
+          "pass": true,
+          "value": 3600,
+          "limit": 3600
+        },
+        {
+          "name": "cure.chargeTicks.max",
+          "pass": true,
+          "value": 3600,
+          "limit": 3600
+        },
+        {
+          "name": "cure.releaseCount.min",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "cure.releaseCount.max",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "cure.radius.min",
+          "pass": true,
+          "value": 26.5,
+          "limit": 25
+        },
+        {
+          "name": "cure.radius.max",
+          "pass": true,
+          "value": 26.5,
+          "limit": 30
+        },
+        {
+          "name": "cure.fanFrames.min",
+          "pass": true,
+          "value": 160,
+          "limit": 80
+        },
+        {
+          "name": "cure.fanFrames.max",
+          "pass": true,
+          "value": 160,
+          "limit": 180
+        },
+        {
+          "name": "cure.healthyDamage.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.healthyDamage.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.lateDeaths.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.lateDeaths.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.mistPuffs.min",
+          "pass": true,
+          "value": 53,
+          "limit": 10
+        },
+        {
+          "name": "cure.mistPuffs.max",
+          "pass": true,
+          "value": 53,
+          "limit": 400
+        },
+        {
+          "name": "cure.smokeOverBudget.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.smokeOverBudget.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l10-final-release@high-z1",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 36,
+      "selectedChecks": [
+        {
+          "name": "cure.chargeTicks.min",
+          "pass": true,
+          "value": 3600,
+          "limit": 3600
+        },
+        {
+          "name": "cure.chargeTicks.max",
+          "pass": true,
+          "value": 3600,
+          "limit": 3600
+        },
+        {
+          "name": "cure.releaseCount.min",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "cure.releaseCount.max",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "cure.radius.min",
+          "pass": true,
+          "value": 26.5,
+          "limit": 25
+        },
+        {
+          "name": "cure.radius.max",
+          "pass": true,
+          "value": 26.5,
+          "limit": 30
+        },
+        {
+          "name": "cure.fanFrames.min",
+          "pass": true,
+          "value": 160,
+          "limit": 80
+        },
+        {
+          "name": "cure.fanFrames.max",
+          "pass": true,
+          "value": 160,
+          "limit": 180
+        },
+        {
+          "name": "cure.healthyDamage.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.healthyDamage.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.lateDeaths.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.lateDeaths.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.mistPuffs.min",
+          "pass": true,
+          "value": 150,
+          "limit": 10
+        },
+        {
+          "name": "cure.mistPuffs.max",
+          "pass": true,
+          "value": 150,
+          "limit": 400
+        },
+        {
+          "name": "cure.smokeOverBudget.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.smokeOverBudget.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l10-final-release@high-z1.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 36,
+      "selectedChecks": [
+        {
+          "name": "cure.chargeTicks.min",
+          "pass": true,
+          "value": 3600,
+          "limit": 3600
+        },
+        {
+          "name": "cure.chargeTicks.max",
+          "pass": true,
+          "value": 3600,
+          "limit": 3600
+        },
+        {
+          "name": "cure.releaseCount.min",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "cure.releaseCount.max",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "cure.radius.min",
+          "pass": true,
+          "value": 26.5,
+          "limit": 25
+        },
+        {
+          "name": "cure.radius.max",
+          "pass": true,
+          "value": 26.5,
+          "limit": 30
+        },
+        {
+          "name": "cure.fanFrames.min",
+          "pass": true,
+          "value": 160,
+          "limit": 80
+        },
+        {
+          "name": "cure.fanFrames.max",
+          "pass": true,
+          "value": 160,
+          "limit": 180
+        },
+        {
+          "name": "cure.healthyDamage.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.healthyDamage.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.lateDeaths.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.lateDeaths.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.mistPuffs.min",
+          "pass": true,
+          "value": 202,
+          "limit": 10
+        },
+        {
+          "name": "cure.mistPuffs.max",
+          "pass": true,
+          "value": 202,
+          "limit": 400
+        },
+        {
+          "name": "cure.smokeOverBudget.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.smokeOverBudget.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l10-title-credits@high-z0.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 36,
+      "selectedChecks": [
+        {
+          "name": "cure.titleFrames.min",
+          "pass": true,
+          "value": 300,
+          "limit": 300
+        },
+        {
+          "name": "cure.titleFrames.max",
+          "pass": true,
+          "value": 300,
+          "limit": 300
+        },
+        {
+          "name": "cure.creditsFrames.min",
+          "pass": true,
+          "value": 121,
+          "limit": 110
+        },
+        {
+          "name": "cure.creditsFrames.max",
+          "pass": true,
+          "value": 121,
+          "limit": 130
+        },
+        {
+          "name": "cure.pullScale.min",
+          "pass": true,
+          "value": 7,
+          "limit": 6.9
+        },
+        {
+          "name": "cure.pullScale.max",
+          "pass": true,
+          "value": 7,
+          "limit": 7.1
+        },
+        {
+          "name": "cure.fanFrames.min",
+          "pass": true,
+          "value": 479,
+          "limit": 400
+        },
+        {
+          "name": "cure.fanFrames.max",
+          "pass": true,
+          "value": 479,
+          "limit": 480
+        },
+        {
+          "name": "cure.mistPuffs.min",
+          "pass": true,
+          "value": 22,
+          "limit": 10
+        },
+        {
+          "name": "cure.mistPuffs.max",
+          "pass": true,
+          "value": 22,
+          "limit": 400
+        },
+        {
+          "name": "cure.smokeOverBudget.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.smokeOverBudget.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l10-title-credits@high-z1",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 36,
+      "selectedChecks": [
+        {
+          "name": "cure.titleFrames.min",
+          "pass": true,
+          "value": 300,
+          "limit": 300
+        },
+        {
+          "name": "cure.titleFrames.max",
+          "pass": true,
+          "value": 300,
+          "limit": 300
+        },
+        {
+          "name": "cure.creditsFrames.min",
+          "pass": true,
+          "value": 121,
+          "limit": 110
+        },
+        {
+          "name": "cure.creditsFrames.max",
+          "pass": true,
+          "value": 121,
+          "limit": 130
+        },
+        {
+          "name": "cure.pullScale.min",
+          "pass": true,
+          "value": 7,
+          "limit": 6.9
+        },
+        {
+          "name": "cure.pullScale.max",
+          "pass": true,
+          "value": 7,
+          "limit": 7.1
+        },
+        {
+          "name": "cure.fanFrames.min",
+          "pass": true,
+          "value": 479,
+          "limit": 400
+        },
+        {
+          "name": "cure.fanFrames.max",
+          "pass": true,
+          "value": 479,
+          "limit": 480
+        },
+        {
+          "name": "cure.mistPuffs.min",
+          "pass": true,
+          "value": 78,
+          "limit": 10
+        },
+        {
+          "name": "cure.mistPuffs.max",
+          "pass": true,
+          "value": 78,
+          "limit": 400
+        },
+        {
+          "name": "cure.smokeOverBudget.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.smokeOverBudget.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l10-title-credits@high-z1.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 36,
+      "selectedChecks": [
+        {
+          "name": "cure.titleFrames.min",
+          "pass": true,
+          "value": 300,
+          "limit": 300
+        },
+        {
+          "name": "cure.titleFrames.max",
+          "pass": true,
+          "value": 300,
+          "limit": 300
+        },
+        {
+          "name": "cure.creditsFrames.min",
+          "pass": true,
+          "value": 121,
+          "limit": 110
+        },
+        {
+          "name": "cure.creditsFrames.max",
+          "pass": true,
+          "value": 121,
+          "limit": 130
+        },
+        {
+          "name": "cure.pullScale.min",
+          "pass": true,
+          "value": 7,
+          "limit": 6.9
+        },
+        {
+          "name": "cure.pullScale.max",
+          "pass": true,
+          "value": 7,
+          "limit": 7.1
+        },
+        {
+          "name": "cure.fanFrames.min",
+          "pass": true,
+          "value": 479,
+          "limit": 400
+        },
+        {
+          "name": "cure.fanFrames.max",
+          "pass": true,
+          "value": 479,
+          "limit": 480
+        },
+        {
+          "name": "cure.mistPuffs.min",
+          "pass": true,
+          "value": 164,
+          "limit": 10
+        },
+        {
+          "name": "cure.mistPuffs.max",
+          "pass": true,
+          "value": 164,
+          "limit": 400
+        },
+        {
+          "name": "cure.smokeOverBudget.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.smokeOverBudget.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l7-entry-bus@high-z0.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 30,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l7-entry-bus@high-z1",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 30,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l7-entry-bus@high-z1.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 30,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l7-entry-corridor@high-z1.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 21,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l7-entry-corridor@high-z0.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 21,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l7-entry-corridor@high-z1",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 21,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l7-entry-night-exit@high-z0.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 19,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l7-entry-night-exit@high-z1",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 19,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l7-entry-night-exit@high-z1.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 19,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l7-entry-rocket@high-z0.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 36,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l7-entry-rocket@high-z1",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 36,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l7-entry-rocket@high-z1.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 36,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-late-bus-departure@high-z0.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 31,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-late-bus-departure@high-z1",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 31,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-late-bus-departure@high-z1.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 31,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "collision-l7-courier-queue@low-z0.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 51,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "collision-l7-courier-queue@low-z1",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 51,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "collision-l7-courier-queue@low-z1.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 51,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "collision-l7-departure@low-z0.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 32,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "collision-l7-departure@low-z1",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 32,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "collision-l7-departure@low-z1.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 32,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l10-charge-radius@low-z0.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 38,
+      "selectedChecks": [
+        {
+          "name": "cure.boundaryFrames.min",
+          "pass": true,
+          "value": 188,
+          "limit": 180
+        },
+        {
+          "name": "cure.boundaryFrames.max",
+          "pass": true,
+          "value": 188,
+          "limit": 200
+        },
+        {
+          "name": "cure.outsideFrames.min",
+          "pass": true,
+          "value": 487,
+          "limit": 350
+        },
+        {
+          "name": "cure.outsideFrames.max",
+          "pass": true,
+          "value": 487,
+          "limit": 500
+        },
+        {
+          "name": "cure.outsideAdvance.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.outsideAdvance.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.chargeTicks.min",
+          "pass": true,
+          "value": 813,
+          "limit": 800
+        },
+        {
+          "name": "cure.chargeTicks.max",
+          "pass": true,
+          "value": 813,
+          "limit": 950
+        },
+        {
+          "name": "cure.releaseCount.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.releaseCount.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.insideMisses.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.insideMisses.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l10-charge-radius@low-z1",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 38,
+      "selectedChecks": [
+        {
+          "name": "cure.boundaryFrames.min",
+          "pass": true,
+          "value": 188,
+          "limit": 180
+        },
+        {
+          "name": "cure.boundaryFrames.max",
+          "pass": true,
+          "value": 188,
+          "limit": 200
+        },
+        {
+          "name": "cure.outsideFrames.min",
+          "pass": true,
+          "value": 487,
+          "limit": 350
+        },
+        {
+          "name": "cure.outsideFrames.max",
+          "pass": true,
+          "value": 487,
+          "limit": 500
+        },
+        {
+          "name": "cure.outsideAdvance.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.outsideAdvance.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.chargeTicks.min",
+          "pass": true,
+          "value": 813,
+          "limit": 800
+        },
+        {
+          "name": "cure.chargeTicks.max",
+          "pass": true,
+          "value": 813,
+          "limit": 950
+        },
+        {
+          "name": "cure.releaseCount.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.releaseCount.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.insideMisses.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.insideMisses.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l10-charge-radius@low-z1.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 38,
+      "selectedChecks": [
+        {
+          "name": "cure.boundaryFrames.min",
+          "pass": true,
+          "value": 188,
+          "limit": 180
+        },
+        {
+          "name": "cure.boundaryFrames.max",
+          "pass": true,
+          "value": 188,
+          "limit": 200
+        },
+        {
+          "name": "cure.outsideFrames.min",
+          "pass": true,
+          "value": 487,
+          "limit": 350
+        },
+        {
+          "name": "cure.outsideFrames.max",
+          "pass": true,
+          "value": 487,
+          "limit": 500
+        },
+        {
+          "name": "cure.outsideAdvance.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.outsideAdvance.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.chargeTicks.min",
+          "pass": true,
+          "value": 813,
+          "limit": 800
+        },
+        {
+          "name": "cure.chargeTicks.max",
+          "pass": true,
+          "value": 813,
+          "limit": 950
+        },
+        {
+          "name": "cure.releaseCount.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.releaseCount.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.insideMisses.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.insideMisses.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l10-epilogue@low-z1",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 42,
+      "selectedChecks": [
+        {
+          "name": "cure.playableTravel.min",
+          "pass": true,
+          "value": 7.77880859375,
+          "limit": 4
+        },
+        {
+          "name": "cure.playableTravel.max",
+          "pass": true,
+          "value": 7.77880859375,
+          "limit": 20
+        },
+        {
+          "name": "cure.survivors.min",
+          "pass": true,
+          "value": 3,
+          "limit": 3
+        },
+        {
+          "name": "cure.survivors.max",
+          "pass": true,
+          "value": 3,
+          "limit": 6
+        },
+        {
+          "name": "cure.radius.min",
+          "pass": true,
+          "value": 1506.6666666666667,
+          "limit": 1500
+        },
+        {
+          "name": "cure.radius.max",
+          "pass": true,
+          "value": 1506.6666666666667,
+          "limit": 1510
+        },
+        {
+          "name": "cure.titleFrames.min",
+          "pass": true,
+          "value": 41,
+          "limit": 1
+        },
+        {
+          "name": "cure.titleFrames.max",
+          "pass": true,
+          "value": 41,
+          "limit": 60
+        },
+        {
+          "name": "cure.pullScale.min",
+          "pass": true,
+          "value": 7,
+          "limit": 6.9
+        },
+        {
+          "name": "cure.pullScale.max",
+          "pass": true,
+          "value": 7,
+          "limit": 7.1
+        },
+        {
+          "name": "cure.fanFrames.min",
+          "pass": true,
+          "value": 2199,
+          "limit": 2000
+        },
+        {
+          "name": "cure.fanFrames.max",
+          "pass": true,
+          "value": 2199,
+          "limit": 2200
+        },
+        {
+          "name": "cure.healthyDamage.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.healthyDamage.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.lateDeaths.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.lateDeaths.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.mistPuffs.min",
+          "pass": true,
+          "value": 32,
+          "limit": 10
+        },
+        {
+          "name": "cure.mistPuffs.max",
+          "pass": true,
+          "value": 32,
+          "limit": 400
+        },
+        {
+          "name": "cure.smokeOverBudget.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.smokeOverBudget.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l10-epilogue@low-z1.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 42,
+      "selectedChecks": [
+        {
+          "name": "cure.playableTravel.min",
+          "pass": true,
+          "value": 7.77880859375,
+          "limit": 4
+        },
+        {
+          "name": "cure.playableTravel.max",
+          "pass": true,
+          "value": 7.77880859375,
+          "limit": 20
+        },
+        {
+          "name": "cure.survivors.min",
+          "pass": true,
+          "value": 3,
+          "limit": 3
+        },
+        {
+          "name": "cure.survivors.max",
+          "pass": true,
+          "value": 3,
+          "limit": 6
+        },
+        {
+          "name": "cure.radius.min",
+          "pass": true,
+          "value": 1506.6666666666667,
+          "limit": 1500
+        },
+        {
+          "name": "cure.radius.max",
+          "pass": true,
+          "value": 1506.6666666666667,
+          "limit": 1510
+        },
+        {
+          "name": "cure.titleFrames.min",
+          "pass": true,
+          "value": 41,
+          "limit": 1
+        },
+        {
+          "name": "cure.titleFrames.max",
+          "pass": true,
+          "value": 41,
+          "limit": 60
+        },
+        {
+          "name": "cure.pullScale.min",
+          "pass": true,
+          "value": 7,
+          "limit": 6.9
+        },
+        {
+          "name": "cure.pullScale.max",
+          "pass": true,
+          "value": 7,
+          "limit": 7.1
+        },
+        {
+          "name": "cure.fanFrames.min",
+          "pass": true,
+          "value": 2199,
+          "limit": 2000
+        },
+        {
+          "name": "cure.fanFrames.max",
+          "pass": true,
+          "value": 2199,
+          "limit": 2200
+        },
+        {
+          "name": "cure.healthyDamage.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.healthyDamage.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.lateDeaths.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.lateDeaths.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.mistPuffs.min",
+          "pass": true,
+          "value": 53,
+          "limit": 10
+        },
+        {
+          "name": "cure.mistPuffs.max",
+          "pass": true,
+          "value": 53,
+          "limit": 400
+        },
+        {
+          "name": "cure.smokeOverBudget.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.smokeOverBudget.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l10-epilogue@low-z0.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 42,
+      "selectedChecks": [
+        {
+          "name": "cure.playableTravel.min",
+          "pass": true,
+          "value": 7.77880859375,
+          "limit": 4
+        },
+        {
+          "name": "cure.playableTravel.max",
+          "pass": true,
+          "value": 7.77880859375,
+          "limit": 20
+        },
+        {
+          "name": "cure.survivors.min",
+          "pass": true,
+          "value": 3,
+          "limit": 3
+        },
+        {
+          "name": "cure.survivors.max",
+          "pass": true,
+          "value": 3,
+          "limit": 6
+        },
+        {
+          "name": "cure.radius.min",
+          "pass": true,
+          "value": 1506.6666666666667,
+          "limit": 1500
+        },
+        {
+          "name": "cure.radius.max",
+          "pass": true,
+          "value": 1506.6666666666667,
+          "limit": 1510
+        },
+        {
+          "name": "cure.titleFrames.min",
+          "pass": true,
+          "value": 41,
+          "limit": 1
+        },
+        {
+          "name": "cure.titleFrames.max",
+          "pass": true,
+          "value": 41,
+          "limit": 60
+        },
+        {
+          "name": "cure.pullScale.min",
+          "pass": true,
+          "value": 7,
+          "limit": 6.9
+        },
+        {
+          "name": "cure.pullScale.max",
+          "pass": true,
+          "value": 7,
+          "limit": 7.1
+        },
+        {
+          "name": "cure.fanFrames.min",
+          "pass": true,
+          "value": 2199,
+          "limit": 2000
+        },
+        {
+          "name": "cure.fanFrames.max",
+          "pass": true,
+          "value": 2199,
+          "limit": 2200
+        },
+        {
+          "name": "cure.healthyDamage.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.healthyDamage.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.lateDeaths.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.lateDeaths.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.mistPuffs.min",
+          "pass": true,
+          "value": 12,
+          "limit": 10
+        },
+        {
+          "name": "cure.mistPuffs.max",
+          "pass": true,
+          "value": 12,
+          "limit": 400
+        },
+        {
+          "name": "cure.smokeOverBudget.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.smokeOverBudget.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l10-final-release@low-z0.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 36,
+      "selectedChecks": [
+        {
+          "name": "cure.chargeTicks.min",
+          "pass": true,
+          "value": 3600,
+          "limit": 3600
+        },
+        {
+          "name": "cure.chargeTicks.max",
+          "pass": true,
+          "value": 3600,
+          "limit": 3600
+        },
+        {
+          "name": "cure.releaseCount.min",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "cure.releaseCount.max",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "cure.radius.min",
+          "pass": true,
+          "value": 26.5,
+          "limit": 25
+        },
+        {
+          "name": "cure.radius.max",
+          "pass": true,
+          "value": 26.5,
+          "limit": 30
+        },
+        {
+          "name": "cure.fanFrames.min",
+          "pass": true,
+          "value": 160,
+          "limit": 80
+        },
+        {
+          "name": "cure.fanFrames.max",
+          "pass": true,
+          "value": 160,
+          "limit": 180
+        },
+        {
+          "name": "cure.healthyDamage.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.healthyDamage.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.lateDeaths.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.lateDeaths.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.mistPuffs.min",
+          "pass": true,
+          "value": 12,
+          "limit": 10
+        },
+        {
+          "name": "cure.mistPuffs.max",
+          "pass": true,
+          "value": 12,
+          "limit": 400
+        },
+        {
+          "name": "cure.smokeOverBudget.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.smokeOverBudget.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l10-final-release@low-z1",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 36,
+      "selectedChecks": [
+        {
+          "name": "cure.chargeTicks.min",
+          "pass": true,
+          "value": 3600,
+          "limit": 3600
+        },
+        {
+          "name": "cure.chargeTicks.max",
+          "pass": true,
+          "value": 3600,
+          "limit": 3600
+        },
+        {
+          "name": "cure.releaseCount.min",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "cure.releaseCount.max",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "cure.radius.min",
+          "pass": true,
+          "value": 26.5,
+          "limit": 25
+        },
+        {
+          "name": "cure.radius.max",
+          "pass": true,
+          "value": 26.5,
+          "limit": 30
+        },
+        {
+          "name": "cure.fanFrames.min",
+          "pass": true,
+          "value": 160,
+          "limit": 80
+        },
+        {
+          "name": "cure.fanFrames.max",
+          "pass": true,
+          "value": 160,
+          "limit": 180
+        },
+        {
+          "name": "cure.healthyDamage.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.healthyDamage.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.lateDeaths.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.lateDeaths.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.mistPuffs.min",
+          "pass": true,
+          "value": 52,
+          "limit": 10
+        },
+        {
+          "name": "cure.mistPuffs.max",
+          "pass": true,
+          "value": 52,
+          "limit": 400
+        },
+        {
+          "name": "cure.smokeOverBudget.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.smokeOverBudget.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l10-final-release@low-z1.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 36,
+      "selectedChecks": [
+        {
+          "name": "cure.chargeTicks.min",
+          "pass": true,
+          "value": 3600,
+          "limit": 3600
+        },
+        {
+          "name": "cure.chargeTicks.max",
+          "pass": true,
+          "value": 3600,
+          "limit": 3600
+        },
+        {
+          "name": "cure.releaseCount.min",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "cure.releaseCount.max",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "cure.radius.min",
+          "pass": true,
+          "value": 26.5,
+          "limit": 25
+        },
+        {
+          "name": "cure.radius.max",
+          "pass": true,
+          "value": 26.5,
+          "limit": 30
+        },
+        {
+          "name": "cure.fanFrames.min",
+          "pass": true,
+          "value": 160,
+          "limit": 80
+        },
+        {
+          "name": "cure.fanFrames.max",
+          "pass": true,
+          "value": 160,
+          "limit": 180
+        },
+        {
+          "name": "cure.healthyDamage.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.healthyDamage.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.lateDeaths.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.lateDeaths.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.mistPuffs.min",
+          "pass": true,
+          "value": 63,
+          "limit": 10
+        },
+        {
+          "name": "cure.mistPuffs.max",
+          "pass": true,
+          "value": 63,
+          "limit": 400
+        },
+        {
+          "name": "cure.smokeOverBudget.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.smokeOverBudget.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l10-title-credits@low-z0.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 36,
+      "selectedChecks": [
+        {
+          "name": "cure.titleFrames.min",
+          "pass": true,
+          "value": 300,
+          "limit": 300
+        },
+        {
+          "name": "cure.titleFrames.max",
+          "pass": true,
+          "value": 300,
+          "limit": 300
+        },
+        {
+          "name": "cure.creditsFrames.min",
+          "pass": true,
+          "value": 121,
+          "limit": 110
+        },
+        {
+          "name": "cure.creditsFrames.max",
+          "pass": true,
+          "value": 121,
+          "limit": 130
+        },
+        {
+          "name": "cure.pullScale.min",
+          "pass": true,
+          "value": 7,
+          "limit": 6.9
+        },
+        {
+          "name": "cure.pullScale.max",
+          "pass": true,
+          "value": 7,
+          "limit": 7.1
+        },
+        {
+          "name": "cure.fanFrames.min",
+          "pass": true,
+          "value": 479,
+          "limit": 400
+        },
+        {
+          "name": "cure.fanFrames.max",
+          "pass": true,
+          "value": 479,
+          "limit": 480
+        },
+        {
+          "name": "cure.mistPuffs.min",
+          "pass": true,
+          "value": 16,
+          "limit": 10
+        },
+        {
+          "name": "cure.mistPuffs.max",
+          "pass": true,
+          "value": 16,
+          "limit": 400
+        },
+        {
+          "name": "cure.smokeOverBudget.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.smokeOverBudget.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l10-title-credits@low-z1",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 36,
+      "selectedChecks": [
+        {
+          "name": "cure.titleFrames.min",
+          "pass": true,
+          "value": 300,
+          "limit": 300
+        },
+        {
+          "name": "cure.titleFrames.max",
+          "pass": true,
+          "value": 300,
+          "limit": 300
+        },
+        {
+          "name": "cure.creditsFrames.min",
+          "pass": true,
+          "value": 121,
+          "limit": 110
+        },
+        {
+          "name": "cure.creditsFrames.max",
+          "pass": true,
+          "value": 121,
+          "limit": 130
+        },
+        {
+          "name": "cure.pullScale.min",
+          "pass": true,
+          "value": 7,
+          "limit": 6.9
+        },
+        {
+          "name": "cure.pullScale.max",
+          "pass": true,
+          "value": 7,
+          "limit": 7.1
+        },
+        {
+          "name": "cure.fanFrames.min",
+          "pass": true,
+          "value": 479,
+          "limit": 400
+        },
+        {
+          "name": "cure.fanFrames.max",
+          "pass": true,
+          "value": 479,
+          "limit": 480
+        },
+        {
+          "name": "cure.mistPuffs.min",
+          "pass": true,
+          "value": 56,
+          "limit": 10
+        },
+        {
+          "name": "cure.mistPuffs.max",
+          "pass": true,
+          "value": 56,
+          "limit": 400
+        },
+        {
+          "name": "cure.smokeOverBudget.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.smokeOverBudget.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l10-title-credits@low-z1.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 36,
+      "selectedChecks": [
+        {
+          "name": "cure.titleFrames.min",
+          "pass": true,
+          "value": 300,
+          "limit": 300
+        },
+        {
+          "name": "cure.titleFrames.max",
+          "pass": true,
+          "value": 300,
+          "limit": 300
+        },
+        {
+          "name": "cure.creditsFrames.min",
+          "pass": true,
+          "value": 121,
+          "limit": 110
+        },
+        {
+          "name": "cure.creditsFrames.max",
+          "pass": true,
+          "value": 121,
+          "limit": 130
+        },
+        {
+          "name": "cure.pullScale.min",
+          "pass": true,
+          "value": 7,
+          "limit": 6.9
+        },
+        {
+          "name": "cure.pullScale.max",
+          "pass": true,
+          "value": 7,
+          "limit": 7.1
+        },
+        {
+          "name": "cure.fanFrames.min",
+          "pass": true,
+          "value": 479,
+          "limit": 400
+        },
+        {
+          "name": "cure.fanFrames.max",
+          "pass": true,
+          "value": 479,
+          "limit": 480
+        },
+        {
+          "name": "cure.mistPuffs.min",
+          "pass": true,
+          "value": 112,
+          "limit": 10
+        },
+        {
+          "name": "cure.mistPuffs.max",
+          "pass": true,
+          "value": 112,
+          "limit": 400
+        },
+        {
+          "name": "cure.smokeOverBudget.min",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "cure.smokeOverBudget.max",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l7-entry-bus@low-z0.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 30,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l7-entry-bus@low-z1",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 30,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l7-entry-bus@low-z1.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 30,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l7-entry-corridor@low-z1.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 21,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l7-entry-corridor@low-z0.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 21,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l7-entry-corridor@low-z1",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 21,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l7-entry-night-exit@low-z0.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 19,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l7-entry-night-exit@low-z1",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 19,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l7-entry-night-exit@low-z1.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 19,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l7-entry-rocket@low-z0.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 36,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l7-entry-rocket@low-z1",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 36,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-l7-entry-rocket@low-z1.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 36,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-late-bus-departure@low-z0.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 31,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-late-bus-departure@low-z1",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 31,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "name": "qa-late-bus-departure@low-z1.5",
+      "backend": "webgpu",
+      "actualBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "totalChecks": 31,
+      "selectedChecks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    }
+  ]
+}
