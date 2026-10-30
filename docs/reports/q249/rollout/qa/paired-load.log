@@ -1,0 +1,42 @@
+Quiet-run waiting: {"at":"2026-10-30T21:14:59.312Z","event":"quiet-admission-wait","granted":true,"quiet":false,"load":[3.20361328125,3.61865234375,3.22998046875],"busy":[]}
+Quiet-run pool preflight: exclusive context admission; load < 3; no foreign headless Chrome, Blender, build or local Vitest.
+before 0 2128 ms
+after 0 2094 ms
+after 1 2124 ms
+before 1 2128 ms
+before 2 2128 ms
+after 2 2126 ms
+after 3 2127 ms
+before 3 2127 ms
+before 4 2145 ms
+after 4 2144 ms
+after 5 2193 ms
+before 5 2145 ms
+before 6 2127 ms
+after 6 2143 ms
+after 7 2141 ms
+before 7 2110 ms
+before 8 2110 ms
+after 8 2143 ms
+after 9 2127 ms
+before 9 2160 ms
+{
+  before: {
+    n: 10,
+    median: 2127.9500002861023,
+    p90: 2145.300000190735,
+    max: 2160.300000190735
+  },
+  after: {
+    n: 10,
+    median: 2133.949999809265,
+    p90: 2144,
+    max: 2192.5999994277954
+  },
+  delta: {
+    median: 5.999999523162842,
+    p90: -1.3000001907348633,
+    max: 32.29999923706055
+  },
+  pass: true
+}

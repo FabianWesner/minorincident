@@ -1,6 +1,6 @@
 # q249 — approved heroine proportions across the cast
 
-PO approved pilot 2 on 10-30: **“Go, roll out.”** Geometry is complete; final browser checks and evidence review are in progress.
+PO approved pilot 2 on 10-30: **“Go, roll out.”** Rollout, visual review and final validation are complete. Both head-size upper limits pass for all adult figures; bodies and shoulders remain unchanged.
 
 ## Accepted policy
 
@@ -99,7 +99,7 @@ The first civilian batch retains the approved pilot scale where it is already sm
 - [Studio front before/after, all 68 figures](rollout/sheets/) — `studio-01.jpg` through `studio-17.jpg`; heroine is on the right within each pair, in the same game metres.
 - [Game camera, high and low](rollout/lineup/) — zoom 1.5 and zoom 1 before/after; fixed camera/placement from the baseline. Contact pages are `game15-*`, `game1-*`, `low-game15-*`, `low-game1-*`.
 - [L1 depot / PO bench / actual production bench](rollout/l1/) — same camera, seed and frames before/after; [L1 contact pages](rollout/sheets/l1-1.jpg). The morning sitter is already seated at the paused intro. Mugs are 10 cm, held by the updated grip. Caps have a crown and seat on the scalp.
-- [Infected and retained corpse views](rollout/corpses/) — actual converted pedestrians and native infected at both quality tiers.
+- [Infected and retained corpse views](rollout/corpses/) — all 46 skinned adult variants at both quality tiers. The two original-main corpse comparisons retain the same authored folded poses; this anatomy change does not alter the body pose.
 - The approved [pilot-2 studio and idle/walk close sheets](pilot-2/README.md) retain front, 3/4, side, zoom 1.5 and literal 3 m high-tier views. Full-cast extra close files retain a minimum 3 m radius, increased for large monsters; they are not all literal 3 m shots.
 
 ## Verification

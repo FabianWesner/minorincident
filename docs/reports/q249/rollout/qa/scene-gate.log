@@ -1,0 +1,70 @@
+
+> scene:gate
+> tsx tools/scenelab/gate-run.ts gate
+
+[scene-gate] 48 rows in 4 batches (<= 15 rows each)
+[scene-gate] webgl2-low-1: 12 rows (webgl2, low)
+[catalog] 12 scenes, 1 browser(s), 960x540, webgl2, low
+[catalog] 1/12 pass inf-attack-knockdown@low (6.3 s)
+[catalog] 2/12 pass inf-chase-l1@low-z1.5 (9.4 s)
+[catalog] 3/12 pass ped-bitten@low (5.8 s)
+[catalog] 4/12 pass ped-newchars-sit@low (6.9 s)
+[catalog] 5/12 pass ped-newchars-walk-1@low-z0.5 (6.2 s)
+[catalog] 6/12 pass seat-bench-tipped@low (5.9 s)
+[catalog] 7/12 pass corpse-look-close@low-z1.5 (3.7 s)
+[catalog] 8/12 pass courier-gear-tier4-female@low-z1.5 (7.2 s)
+[catalog] 9/12 pass l10-d2-military-breach@low-z0.5 (4.3 s)
+[catalog] 10/12 pass l10-mega-close-contact@low-z1.5 (18.4 s)
+[catalog] 11/12 pass mega-alpha-variants-lineup@low-z0.5 (3.9 s)
+[catalog] 12/12 pass seethrough-gear-four@low-z1.5 (3.8 s)
+12/12 pass in 89 s -> test-results/scene-gate/webgl2-low-1/index.md
+[scene-gate] webgpu-high-1: 8 rows (webgpu, high)
+[catalog] 8 scenes, 1 browser(s), 960x540, webgpu, high
+[catalog] 1/8 pass fight-army-line-zoom06@high-z1.5 (8.8 s)
+[catalog] 2/8 pass inf-chase-l3@high-z0.5 (11.5 s)
+[catalog] 3/8 pass inf-mega-arrival@high-z0.5 (7.5 s)
+[catalog] 4/8 pass ped-zoo-staff@high (5.2 s)
+[catalog] 5/8 pass seat-bench-l1-start@high-z1.5 (6.0 s)
+[catalog] 6/8 pass corpse-look-alpha@high-z0.5 (3.6 s)
+[catalog] 7/8 pass courier-gear-tier4-male@high-z0.5 (7.0 s)
+[catalog] 8/8 pass wave3-zoo-routines@high-z1.5 (5.1 s)
+8/8 pass in 59 s -> test-results/scene-gate/webgpu-high-1/index.md
+[scene-gate] webgl2-high-1: 14 rows (webgl2, high)
+[catalog] 14 scenes, 1 browser(s), 960x540, webgl2, high
+[catalog] 1/14 pass courier-locomotion-f@high-z1.5 (6.5 s)
+[catalog] 2/14 pass courier-turns@high-z1.5 (5.8 s)
+[catalog] 3/14 pass inf-horde-headwear@high-z1.5 (5.6 s)
+[catalog] 4/14 pass ped-hats-spots-l1@high-z0.5 (5.9 s)
+[catalog] 5/14 pass ped-sit-all@high (6.2 s)
+[catalog] 6/14 pass ped-walk-all@high (6.7 s)
+[catalog] 7/14 pass ped-water-flowerbed@high (5.8 s)
+[catalog] 8/14 pass veh-bus-hero@high-z0.5 (5.6 s)
+[catalog] 9/14 pass alpha-hit-corpse-suit@high-z1.5 (11.3 s)
+[catalog] 10/14 pass collision-vehicle-admission@high-z0.5 (5.7 s)
+[catalog] 11/14 pass corgi-tongue-female@high-z1.5 (8.5 s)
+[catalog] 12/14 pass courier-gear-tier2-female@high-z1.5 (7.8 s)
+[catalog] 13/14 pass e18-courier-armed-male@high-z1.5 (6.3 s)
+[catalog] 14/14 pass l4-broken-army-line@high-z0.5 (5.5 s)
+14/14 pass in 100 s -> test-results/scene-gate/webgl2-high-1/index.md
+[scene-gate] webgpu-low-1: 14 rows (webgpu, low)
+[catalog] 14 scenes, 1 browser(s), 960x540, webgpu, low
+[catalog] 1/14 pass animal-zoo-healthy@low-z0.5 (5.3 s)
+[catalog] 2/14 pass dog-pet-trot@low-z1.5 (5.1 s)
+[catalog] 3/14 pass inf-looks@low (6.1 s)
+[catalog] 4/14 pass ped-hats-glasses@low-z1.5 (5.3 s)
+[catalog] 5/14 pass ped-sit-all@low (5.6 s)
+[catalog] 6/14 pass ped-walk-all@low (5.8 s)
+[catalog] 7/14 pass seethrough-open-sidewalk-l4@low-z0.5 (8.2 s)
+[catalog] 8/14 pass veh-apc-damage-250@low-z1.5 (3.9 s)
+[catalog] 9/14 pass alpha-variants-close@low-z1.5 (3.9 s)
+[catalog] 10/14 pass corpse-placement-pile@low-z0.5 (3.8 s)
+[catalog] 11/14 pass courier-gear-tier4-swing-female@low-z0.5 (6.6 s)
+[catalog] 12/14 pass e18-courier-armed-female@low-z0.5 (6.4 s)
+[catalog] 13/14 pass ped-l1-staged-cast@low-z1.5 (3.9 s)
+[catalog] 14/14 pass seat-grip-coffee-game@low-z1.5 (3.4 s)
+14/14 pass in 81 s -> test-results/scene-gate/webgpu-low-1/index.md
+# scene-gate
+
+48/48 rows pass, 0 known, 0 not run; 5.5 min this run (batch s: webgl2-low-1=89 webgpu-high-1=60 webgl2-high-1=101 webgpu-low-1=82).
+
+sheets: /Users/wesner/Workspace/minorincident/.claude/worktrees/q249/test-results/scene-gate/<batch>/<row>/sheet.jpg

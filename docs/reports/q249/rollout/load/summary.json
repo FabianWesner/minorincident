@@ -1,0 +1,304 @@
+{
+  "method": "Paired, alternating order, fresh Chrome profile/cache per sample; native WebGPU, low, public menu to closed L1 loading card, audio muted, DPR1, 1600x900; exclusive pool quiet admission",
+  "before": {
+    "n": 10,
+    "median": 2127.9500002861023,
+    "p90": 2145.300000190735,
+    "max": 2160.300000190735
+  },
+  "after": {
+    "n": 10,
+    "median": 2133.949999809265,
+    "p90": 2144,
+    "max": 2192.5999994277954
+  },
+  "delta": {
+    "median": 5.999999523162842,
+    "p90": -1.3000001907348633,
+    "max": 32.29999923706055
+  },
+  "limitMs": 300,
+  "pass": true,
+  "samples": [
+    {
+      "phase": "before",
+      "run": 0,
+      "ms": 2128.300000190735,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:3374/build/index-frLV-XFP.js",
+      "cache": "/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-cold-load-d4lmJg"
+    },
+    {
+      "phase": "after",
+      "run": 0,
+      "ms": 2093.5,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:3375/build/index-e7PXUjg_.js",
+      "cache": "/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-cold-load-h91p0N"
+    },
+    {
+      "phase": "after",
+      "run": 1,
+      "ms": 2124.300000190735,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:3375/build/index-e7PXUjg_.js",
+      "cache": "/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-cold-load-gASDqd"
+    },
+    {
+      "phase": "before",
+      "run": 1,
+      "ms": 2128.2000007629395,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:3374/build/index-frLV-XFP.js",
+      "cache": "/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-cold-load-qrTLtt"
+    },
+    {
+      "phase": "before",
+      "run": 2,
+      "ms": 2127.699999809265,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:3374/build/index-frLV-XFP.js",
+      "cache": "/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-cold-load-m1kVrO"
+    },
+    {
+      "phase": "after",
+      "run": 2,
+      "ms": 2125.5,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:3375/build/index-e7PXUjg_.js",
+      "cache": "/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-cold-load-dALsJN"
+    },
+    {
+      "phase": "after",
+      "run": 3,
+      "ms": 2126.6000003814697,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:3375/build/index-e7PXUjg_.js",
+      "cache": "/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-cold-load-0eIlLE"
+    },
+    {
+      "phase": "before",
+      "run": 3,
+      "ms": 2127.3999996185303,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:3374/build/index-frLV-XFP.js",
+      "cache": "/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-cold-load-siYB87"
+    },
+    {
+      "phase": "before",
+      "run": 4,
+      "ms": 2144.800000190735,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:3374/build/index-frLV-XFP.js",
+      "cache": "/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-cold-load-OabRq5"
+    },
+    {
+      "phase": "after",
+      "run": 4,
+      "ms": 2144,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:3375/build/index-e7PXUjg_.js",
+      "cache": "/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-cold-load-e7OI8q"
+    },
+    {
+      "phase": "after",
+      "run": 5,
+      "ms": 2192.5999994277954,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:3375/build/index-e7PXUjg_.js",
+      "cache": "/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-cold-load-BCpkvS"
+    },
+    {
+      "phase": "before",
+      "run": 5,
+      "ms": 2145.300000190735,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:3374/build/index-frLV-XFP.js",
+      "cache": "/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-cold-load-ZJauDk"
+    },
+    {
+      "phase": "before",
+      "run": 6,
+      "ms": 2126.800000190735,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:3374/build/index-frLV-XFP.js",
+      "cache": "/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-cold-load-CAoH7p"
+    },
+    {
+      "phase": "after",
+      "run": 6,
+      "ms": 2143.3999996185303,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:3375/build/index-e7PXUjg_.js",
+      "cache": "/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-cold-load-vot7SG"
+    },
+    {
+      "phase": "after",
+      "run": 7,
+      "ms": 2141.2999992370605,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:3375/build/index-e7PXUjg_.js",
+      "cache": "/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-cold-load-Drzf5V"
+    },
+    {
+      "phase": "before",
+      "run": 7,
+      "ms": 2109.5999994277954,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:3374/build/index-frLV-XFP.js",
+      "cache": "/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-cold-load-tq06sn"
+    },
+    {
+      "phase": "before",
+      "run": 8,
+      "ms": 2109.8999996185303,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:3374/build/index-frLV-XFP.js",
+      "cache": "/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-cold-load-IpE6oH"
+    },
+    {
+      "phase": "after",
+      "run": 8,
+      "ms": 2142.5999994277954,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:3375/build/index-e7PXUjg_.js",
+      "cache": "/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-cold-load-sIdOem"
+    },
+    {
+      "phase": "after",
+      "run": 9,
+      "ms": 2126.6000003814697,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:3375/build/index-e7PXUjg_.js",
+      "cache": "/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-cold-load-KTvUKB"
+    },
+    {
+      "phase": "before",
+      "run": 9,
+      "ms": 2160.300000190735,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:3374/build/index-frLV-XFP.js",
+      "cache": "/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-cold-load-oRGet5"
+    }
+  ]
+}
