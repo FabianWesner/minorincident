@@ -6,6 +6,7 @@ import { getBounds,prune } from '@gltf-transform/functions';
 import type { AssetDef } from '../../src/assets/types';
 import { assetIO } from '../assets/io';
 import { measureFigure,calibrateFigure,planHeadScale } from '../assets/figure-proportions';
+import {prepareHeadProfile}from'./head-profiles';
 import { skinCrowdBakes } from '../assets/skin-crowd-bakes';
 const base='4698e5aa0',batch=process.argv[2]??'batch-1',ids=process.argv.slice(3);
 if(!ids.length)throw Error('Pass an explicit reviewed batch of IDs');
@@ -30,6 +31,7 @@ for(const id of ids){
  try{
   for(const path of inputs){
    const bytes=original(path),doc=await io.readBinary(bytes);
+   await prepareHeadProfile(doc,id);
    const roots=id==='npc.survivor-group'?doc.getRoot().listNodes().filter(n=>/^survivor\d+_root$/.test(n.getName())).map(n=>n.getName()):[undefined];
    const textures=doc.getRoot().listTextures().map(t=>sha(t.getImage()!));
    const figures=[];
@@ -37,7 +39,12 @@ for(const id of ids){
     const before=measureFigure(doc,rootName),plan=planHeadScale(before,target);
     const prior=previous.find((p:{id:string})=>p.id===id)?.files?.find((p:{path:string})=>p.path===path);
     const priorFigure=prior?.figures?.find((p:{rootName?:string})=>p.rootName===rootName)??prior;
-    const scale=priorFigure?.headScale??plan.scale;
+    let scale=['inf.crawler','inf.suburban-mom'].includes(id)?plan.scale:priorFigure?.headScale??plan.scale;
+    if(['inf.crawler','inf.suburban-mom'].includes(id))for(let attempt=0;attempt<16;attempt++){
+      const trial=await io.readBinary(bytes);await prepareHeadProfile(trial,id);const r=calibrateFigure(trial,target,{headScale:scale,rootName});
+      const excess=Math.max(r.after.headHeight/(target.headHeight*1.098),r.after.headShoulder/(target.headShoulder*1.098));
+      if(excess<=1)break;scale/=excess*1.005;
+    }
     const receipt=calibrateFigure(doc,target,{headScale:scale,rootName});
     for(const key of ['headHeight','headShoulder'] as const)if(receipt.after[key]/target[key]>1.10001)throw Error(`${path}: ${key} exceeds heroine × 1.1`);
     figures.push({rootName,plan,...receipt});

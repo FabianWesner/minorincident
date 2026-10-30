@@ -3,7 +3,7 @@ import { Matrix3, Matrix4, Vector3 } from 'three';
 import { adoptStandingBind } from './skin-crowd-standing';
 
 export interface FigureRatios { headHeight: number; headShoulder: number; legHeight: number; shoulderHeight: number }
-interface Vertex { point: Vector3; owner: string; influences?: { name: string; weight: number }[] }
+interface Vertex { profileHead?:boolean;profileWeight?:number; point: Vector3; owner: string; influences?: { name: string; weight: number }[] }
 const ignored = /stump|skin_eyes|iris|pupil|clipboard|rifle|weapon|shield|baton|cane|spatula|cushion|restOnly/i;
 const headOwner = (name: string) => /head|neck|eye|pony|hair|iris/.test(name);
 const shortName = (name: string) => name.replace(/^survivor\d+_/, '');
@@ -37,7 +37,7 @@ function primitiveVertices(node: Node, primitive: Primitive): Vertex[] {
       owner = shortName(skin!.listJoints()[j[dominant]].getName());
       influences = j.map((part,k) => ({ name: shortName(skin!.listJoints()[part].getName()), weight:w[k] }));
     }
-    vertices.push({ point, owner, influences });
+    vertices.push({ point, owner, influences,profileWeight:primitive.getAttribute('_Q249_WEIGHT')?.getScalar(i),profileHead:primitive.getAttribute('_Q249_HEAD')?!!primitive.getAttribute('_Q249_HEAD')!.getScalar(i):undefined });
   }
   return vertices;
 }
@@ -48,9 +48,11 @@ export function measureFigure(document: Document, rootName?: string, shoulderRef
   const body = nodes.filter(n => n.getMesh() && !ignored.test(n.getName()) && !n.getExtras().hidden).flatMap(n => n.getMesh()!.listPrimitives().flatMap(p => primitiveVertices(n, p)));
   const extent = (vertices: Vertex[], axis: 'x' | 'y' | 'z') => { let min = Infinity, max = -Infinity; for (const v of vertices) { min = Math.min(min, v.point[axis]); max = Math.max(max, v.point[axis]); } return { min, max, size: max - min }; };
   const vertical = extent(body, 'y');
-  const fullHead = body.filter(v => v.owner === 'head');
-  const headBottom = extent(fullHead, 'y').min - .005;
-  const skull = fullHead.filter(v => v.point.y >= head.y);
+  const profile=nodes.find(n=>shortName(n.getName())==='root')?.getExtras().q249HeadProfile;
+  const fullHead = body.filter(v => profile?v.profileHead:v.owner === 'head');
+  const authoredBottom=nodes.find(n=>shortName(n.getName())==='root')?.getExtras().q249HeadBottom as number|undefined;
+  const headBottom = authoredBottom??(profile==='long-hair'?1.13:extent(fullHead, 'y').min - .005);
+  const skull = fullHead.filter(v => profile?v.point.y>=headBottom:v.point.y >= head.y);
   const crown = extent(skull, 'y').max;
   const skullWidth = extent(skull, 'z');
   // The old rig's arm pivots sit above its shirt shoulders. Include the upper
@@ -60,7 +62,10 @@ export function measureFigure(document: Document, rootName?: string, shoulderRef
   const shoulders = extent(body.filter(v => /^(torso|chest|spine|clavicle[LR]|arm[LR])$/.test(v.owner) && v.point.y >= shoulderY - bandHeight * .10 && v.point.y <= shoulderY + bandHeight * .017), 'z');
   const ratios: FigureRatios = { headHeight: (crown - headBottom) / vertical.size, headShoulder: skullWidth.size / shoulders.size, legHeight: (hip.y - vertical.min) / vertical.size, shoulderHeight: shoulders.size / vertical.size };
   if (!Object.values(ratios).every(v => Number.isFinite(v) && v > 0)) throw Error('Cannot measure anatomy');
-  return { ratios, ground: vertical.min, height: vertical.size, crown, head, headBottom, jointHeadHeight: (crown-head.y)/vertical.size, hip, shoulderY, shoulderWidth: shoulders.size, headCentreZ: (skullWidth.min + skullWidth.max) / 2, headCentreX: (extent(skull, 'x').min + extent(skull, 'x').max) / 2 };
+  const pivotOverride=nodes.find(n=>shortName(n.getName())==='root')?.getExtras().q249HeadPivot as number[]|undefined;
+  const headPivot=pivotOverride?new Vector3().fromArray(pivotOverride):new Vector3(head.x,headBottom,head.z);
+  const fixed=body.filter(v=>profile?!v.profileHead:!headOwner(v.owner));const fixedMin=extent(fixed,'y').min,fixedMax=extent(fixed,'y').max;const headMin=extent(fullHead,'y').min;
+  return { headPivot,fixedMin,fixedMax,headMin,ratios, ground: vertical.min, height: vertical.size, crown, head, headBottom, jointHeadHeight: (crown-head.y)/vertical.size, hip, shoulderY, shoulderWidth: shoulders.size, headCentreZ: (skullWidth.min + skullWidth.max) / 2, headCentreX: (extent(skull, 'x').min + extent(skull, 'x').max) / 2 };
 }
 
 /** Pilot-2: preserve the original body and uniformly shrink the complete head
@@ -81,8 +86,15 @@ export function planHeadScale(before: ReturnType<typeof measureFigure>, target: 
   // widen the body or enlarge a head to meet a lower ratio bound. Use 1.099
   // for a small serialization margin under the explicit heroine × 1.1 cap.
   const limits={headHeight:heightScale(target.headHeight*1.099),headShoulder:target.headShoulder*1.099/before.ratios.headShoulder};
-  const binding=limits.headHeight<limits.headShoulder?'headHeight':'headShoulder';
+  
+  // The fixed torso can stay higher than the head in a crouch. Solve the
+  // actual fixed-body envelope around the neck pivot instead of assuming the
+  // shrunken crown remains the figure's tallest point.
+  const ratioAt=(s:number)=>{const low=before.headPivot.y+(before.headMin-before.headPivot.y)*s;const high=before.headPivot.y+(before.crown-before.headPivot.y)*s;return (high-low+.005)/(Math.max(before.fixedMax,high)-Math.min(before.fixedMin,low));};
+  let lo=0,hi=1;for(let i=0;i<48;i++){const mid=(lo+hi)/2;if(ratioAt(mid)<=target.headHeight*1.099)lo=mid;else hi=mid;}
+  limits.headHeight=lo;
   const scale=Math.min(1,limits.headHeight,limits.headShoulder);
+  const binding=limits.headHeight<limits.headShoulder?'headHeight':'headShoulder';
   return {feasible:true,strictThreeRatioIntervalFeasible:minimum<=maximum,minimum,maximum,intervals,limits,binding:scale===1?'already-small-enough':binding,scale};
 }
 
@@ -90,9 +102,11 @@ export function calibrateFigure(document: Document, target: FigureRatios, option
   const before = measureFigure(document,options.rootName);
   const nodes = figureNodes(document,options.rootName);
   const anatomy = nodes.filter(n => n.getMesh() && !ignored.test(n.getName()) && !n.getExtras().hidden).flatMap(n => n.getMesh()!.listPrimitives().flatMap(p => primitiveVertices(n,p)));
-  const headPoints = anatomy.filter(v => v.owner === 'head');
+  const profile=nodes.find(n=>shortName(n.getName())==='root')?.getExtras().q249HeadProfile;
+  const blendNeck=nodes.find(n=>shortName(n.getName())==='root')?.getExtras().q249NeckBlend;
+  const headPoints = anatomy.filter(v => profile?v.profileHead:v.owner === 'head');
   const headBottom = Math.min(...headPoints.map(v => v.point.y));
-  const plane = headBottom - .005, pivot = new Vector3(before.head.x,plane,before.head.z);
+  const plane = headBottom - .005, pivot = before.headPivot.clone();
   // Match width first, retaining enough complete chin-to-crown height to stay
   // inside the heroine's 10% interval. Both constraints use one XYZ scalar.
   const minimumHeadHeight = target.headHeight * .903;
@@ -103,7 +117,16 @@ export function calibrateFigure(document: Document, target: FigureRatios, option
   const smooth = (t:number) => {t=Math.max(0,Math.min(1,t));return t*t*(3-2*t);};
   const deform = (vertex: Vertex) => {
     const {point:p,owner,influences}=vertex;
-    if(headOwner(owner)) return p.clone().sub(pivot).multiplyScalar(headScale).add(pivot);
+    if(profile){
+      // A continuous spatial neck field avoids opening the welded TRELLIS
+      // surface at the source rig's arbitrary dominant-weight boundary.
+      const weight=profile==='long-hair'?(vertex.profileWeight??smooth((p.y-1.13)/.12)):smooth((p.x-.18)/.20)*smooth((p.y-.36)/.08)*(Math.abs(p.z)>.25?smooth((p.y-.59)/.08):1);
+      if(weight)return p.clone().lerp(p.clone().sub(pivot).multiplyScalar(headScale).add(pivot),weight);
+    }else if(influences&&blendNeck){
+      const influence=influences.filter(j=>headOwner(j.name)).reduce((s,j)=>s+j.weight,0);
+      const weight=smooth((influence-.05)/.55);
+      if(weight)return p.clone().lerp(p.clone().sub(pivot).multiplyScalar(headScale).add(pivot),weight);
+    }else if(headOwner(owner)) return p.clone().sub(pivot).multiplyScalar(headScale).add(pivot);
     const result=p.clone();
     // Blend only the slender neck under the beard; the shoulders and shirt
     // silhouette are outside this 8 cm radius and remain exactly as authored.
@@ -152,7 +175,9 @@ export function calibrateFigure(document: Document, target: FigureRatios, option
     vertices.forEach((v,i)=>{
       const neck=v.owner==='torso' && v.point.y>plane-.035 && Math.hypot(v.point.x-pivot.x,v.point.z-pivot.z)<.08;
       const hand=/^hand[LR]$/.test(v.owner)||wrists.some((w,i)=>v.owner===(i?'foreArmR':'foreArmL')&&v.point.distanceTo(w)<.12&&v.influences?.some(j=>j.name===(i?'handR':'handL')&&j.weight>0));
-      if(headOwner(v.owner)||neck||hand)return;
+      const profileNeck=profile==='long-hair'?(v.profileWeight??0)>0:profile==='crawler'?v.point.x>.18&&v.point.y>.36:false;
+      const headSeam=v.influences?.filter(j=>headOwner(j.name)).reduce((s,j)=>s+j.weight,0)??0;
+      if(headOwner(v.owner)||neck||hand||profileNeck||headSeam>.05)return;
       unchangedBodyVertices++;
       unchangedBodyMaxDisplacementM=Math.max(unchangedBodyMaxDisplacementM,v.point.distanceTo(current[i].point));
     });
