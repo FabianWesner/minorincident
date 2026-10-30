@@ -113,7 +113,12 @@ export function calibrateFigure(document: Document, target: FigureRatios, option
       result.lerp(p.clone().sub(pivot).multiplyScalar(headScale).add(pivot),weight);
     }
     for(let side=0;side<2;side++){
-      const name=side?'handR':'handL', weight=influences?.filter(v=>v.name===name).reduce((sum,v)=>sum+v.weight,0) ?? Number(owner===name);
+      const name=side?'handR':'handL';
+      // A few source rigs have tiny hand weights on the upper arm/torso.
+      // They are not hand geometry: retain that body surface exactly.
+      const wristSeam=owner===(side?'foreArmR':'foreArmL')&&p.distanceTo(wrists[side])<.12;
+      if(owner!==name&&!wristSeam)continue;
+      const weight=influences?.filter(v=>v.name===name).reduce((sum,v)=>sum+v.weight,0) ?? Number(owner===name);
       if(weight) result.add(p.clone().sub(wrists[side]).multiplyScalar((handScale-1)*weight));
     }
     return result;
@@ -121,7 +126,12 @@ export function calibrateFigure(document: Document, target: FigureRatios, option
   const oldWorld=new Map(nodes.map(n=>[n,world(n)]));
   const newWorld=new Map(nodes.map(n=>{const m=oldWorld.get(n)!.clone(),p=new Vector3().setFromMatrixPosition(m);return [n,m.setPosition(deform({point:p,owner:ownerName(n)}))] as const;}));
   const surfaces=nodes.flatMap(node=>node.getMesh()?.listPrimitives().map(primitive=>({node,primitive,vertices:primitiveVertices(node,primitive)})) ?? []);
-  for(const node of nodes){const parent=node.getParentNode();node.setMatrix((parent?(newWorld.get(parent)??world(parent)).clone().invert().multiply(newWorld.get(node)!):newWorld.get(node)!).toArray());}
+  for(const node of nodes){
+    const parent=node.getParentNode(),matrix=(parent?(newWorld.get(parent)??world(parent)).clone().invert().multiply(newWorld.get(node)!):newWorld.get(node)!).toArray();
+    // Retain authored body TRS exactly. Decomposing an unchanged matrix can
+    // normalize a quantized quaternion and move a shoulder on serialization.
+    if(matrix.some((v,i)=>Math.abs(v-node.getMatrix()[i])>1e-10))node.setMatrix(matrix);
+  }
   for(const {node,primitive,vertices} of surfaces){
     const position=primitive.getAttribute('POSITION')!,output=position.clone().setArray(new Float32Array(position.getCount()*3)).setNormalized(false),index=primitive.getIndices();
     const ids=index?[...new Set(Array.from({length:index.getCount()},(_,i)=>index.getScalar(i)))]:Array.from({length:position.getCount()},(_,i)=>i);
@@ -141,7 +151,7 @@ export function calibrateFigure(document: Document, target: FigureRatios, option
     const current=primitiveVertices(node,primitive);
     vertices.forEach((v,i)=>{
       const neck=v.owner==='torso' && v.point.y>plane-.035 && Math.hypot(v.point.x-pivot.x,v.point.z-pivot.z)<.08;
-      const hand=v.influences?.some(w=>/^hand[LR]$/.test(w.name)&&w.weight>0) ?? /^hand[LR]$/.test(v.owner);
+      const hand=/^hand[LR]$/.test(v.owner)||wrists.some((w,i)=>v.owner===(i?'foreArmR':'foreArmL')&&v.point.distanceTo(w)<.12&&v.influences?.some(j=>j.name===(i?'handR':'handL')&&j.weight>0));
       if(headOwner(v.owner)||neck||hand)return;
       unchangedBodyVertices++;
       unchangedBodyMaxDisplacementM=Math.max(unchangedBodyMaxDisplacementM,v.point.distanceTo(current[i].point));

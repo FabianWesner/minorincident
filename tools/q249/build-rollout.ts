@@ -18,6 +18,8 @@ if(!readFileSync(heroinePath).equals(original(heroinePath)))throw Error('Heroine
 const target=measureFigure(await io.read(heroinePath)).ratios;
 const bakes=JSON.parse(readFileSync('src/assets/civilianBakes.json','utf8')) as Record<string,string>;
 const directory='docs/reports/q249/rollout';mkdirSync(directory,{recursive:true});
+const previousPath=`${directory}/${batch}.json`;
+const previous=existsSync(previousPath)?JSON.parse(readFileSync(previousPath,'utf8')).receipts:[];
 const receipts=[];
 for(const id of ids){
  if(id==='npc.civilian-man-a'||id==='char.courier-female')throw Error('Approved figures must not be recalibrated');
@@ -33,7 +35,10 @@ for(const id of ids){
    const figures=[];
    for(const rootName of roots){
     const before=measureFigure(doc,rootName),plan=planHeadScale(before,target);
-    const receipt=calibrateFigure(doc,target,{headScale:plan.scale,rootName});
+    const prior=previous.find((p:{id:string})=>p.id===id)?.files?.find((p:{path:string})=>p.path===path);
+    const priorFigure=prior?.figures?.find((p:{rootName?:string})=>p.rootName===rootName)??prior;
+    const scale=priorFigure?.headScale??plan.scale;
+    const receipt=calibrateFigure(doc,target,{headScale:scale,rootName});
     for(const key of ['headHeight','headShoulder'] as const)if(receipt.after[key]/target[key]>1.10001)throw Error(`${path}: ${key} exceeds heroine × 1.1`);
     figures.push({rootName,plan,...receipt});
    }
