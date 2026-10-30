@@ -181,3 +181,5 @@ A living record, updated after every lane or experiment. Short entries with evid
 
 ### L10 camera (2026-10-30)
 - A per-place framing multiplier on the follow radius (View.framing, eased about 1.5 s, instant on reset/teleport) widens the L10 road by 1.3× without locking player zoom. Radius beats FOV: fog, haze, the shadow frustum and the hero rim already follow the radius, so a wider FOV gives the same coverage with edge stretch and mismatched fog. Keep base × max zoom ≤ the tested rocket view (2.0). Scene Lab `game` cameras are presets at the base radius, so they never show a level framing: check it with `follow` courier cameras or tools/qa/l10-look.ts (`L10CAM=` override).
+
+- 10-30 (q249 figure proportions): a ratio-only audit passed while 8 adults shrank as a whole (a new "keep authored size" flag disabled their load-time height normalisation); the lane's own L1 capture already showed the depot clerk shorter than the heroine, and nobody compared heights. Figure/asset rollouts must audit absolute in-game height against PROD and the heroine, not only ratios, and the orchestrator compares a side-view height lineup before merging.
