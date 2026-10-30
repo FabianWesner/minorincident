@@ -1,6 +1,6 @@
-# q249 pilot 2 — awaiting PO review
+# q249 pilot 2 — PO approved 2026-10-30
 
-Only `npc.civilian-man-a` has revised anatomy. **Mass rollout is stopped.** Pilot 1 was rejected; its images remain in `../pilot/` for history. The original shared adult-m files and every other figure's manifest/bakes are unchanged from `4698e5aa0`.
+Historical pilot checkpoint: only `npc.civilian-man-a` had revised anatomy. The PO subsequently approved this pilot (“Go, roll out”); see [the rollout report](../README.md). Pilot 1 was rejected; its images remain in `../pilot/` for history. The original shared adult-m files and every other figure's manifest/bakes are unchanged from `4698e5aa0`.
 
 ## Review sheets (rendered and visually inspected)
 

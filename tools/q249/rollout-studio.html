@@ -1,0 +1,24 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:#d9dbde;width:100%;height:100%;overflow:hidden}canvas{display:block}</style></head><body><script type="module">
+import * as THREE from 'three';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+import {KTX2Loader} from 'three/addons/loaders/KTX2Loader.js';
+import {MeshoptDecoder} from 'three/addons/libs/meshopt_decoder.module.js';
+const renderer=new THREE.WebGLRenderer({antialias:true});renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(1);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.1;document.body.append(renderer.domElement);
+const scene=new THREE.Scene();scene.background=new THREE.Color('#d9dbde');scene.add(new THREE.HemisphereLight(0xffffff,0x777b83,2));const light=new THREE.DirectionalLight(0xffffff,2.5);light.position.set(4,7,3);scene.add(light);
+const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.MeshStandardMaterial({color:'#d9dbde',roughness:1}));floor.rotation.x=-Math.PI/2;scene.add(floor);
+const camera=new THREE.OrthographicCamera(-2,2,2*innerHeight/innerWidth,-2*innerHeight/innerWidth,.01,100);
+const loader=new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).setKTX2Loader(new KTX2Loader().setTranscoderPath('/assets/basis/').detectSupport(renderer));
+const cache=new Map();
+function boundsOf(root){root.updateMatrixWorld(true);const box=new THREE.Box3();root.traverseVisible(n=>{if(n.isMesh){const b=new THREE.Box3().setFromObject(n);box.union(b);}});return box;}
+async function load(path){if(cache.has(path))return cache.get(path);const root=(await loader.loadAsync(path)).scene;
+ root.traverse(n=>{if(n.userData.ss_standingPose){const poses=JSON.parse(n.userData.ss_standingPose);for(const [name,p]of Object.entries(poses)){const joint=root.getObjectByName(name);if(joint){joint.position.fromArray(p.translation);joint.quaternion.fromArray(p.rotation);joint.scale.fromArray(p.scale);}}}if(n.name.startsWith('stump_')||n.userData.hidden)n.visible=false;});
+ if(root.getObjectByName('skin_body'))root.traverse(n=>{if(n.isMesh&&n.name!=='skin_body'&&n.name!=='skin_eyes')n.visible=false;});
+ root.traverse(n=>{if(!n.isMesh||path.includes('courier-female'))return;for(const m of Array.isArray(n.material)?n.material:[n.material]){if(!m.map)continue;m.onBeforeCompile=shader=>{shader.uniforms.reviewSkin={value:new THREE.Color(path.includes('/inf.')?'#919c7f':'#d69a78')};shader.fragmentShader='uniform vec3 reviewSkin;\n'+shader.fragmentShader;shader.fragmentShader=shader.fragmentShader.replace('#include <map_fragment>',`#include <map_fragment>
+#ifdef USE_MAP
+float region=floor(texture2D(map,vMapUv).a*7.0+.5)-1.0;
+if(abs(region-1.0)<.1||abs(region-4.0)<.1){float shade=clamp(dot(diffuseColor.rgb,vec3(.2126,.7152,.0722))/.38,.5,1.7);diffuseColor.rgb=reviewSkin*shade;}
+#endif`);};}});cache.set(path,root);return root;}
+const heroine=await load('/assets/models/char.courier-female.skin.glb');let active=null;
+window.__ROLLOUT__={async show(path,member,frozen){if(active)active.removeFromParent();heroine.removeFromParent();const root=await load(path);root.traverse(n=>{if(/^survivor\d+_root$/.test(n.name))n.visible=!member||n.name===member;});root.position.set(0,0,0);const box=boundsOf(root),heroBox=boundsOf(heroine);root.position.set(-box.getCenter(new THREE.Vector3()).x,-box.min.y,.5);heroine.position.set(0,-heroBox.min.y,-box.getSize(new THREE.Vector3()).z*.5-.55);active=root;scene.add(root,heroine);scene.updateMatrixWorld(true);
+ const union=boundsOf(root).union(boundsOf(heroine)),size=union.getSize(new THREE.Vector3()),centre=union.getCenter(new THREE.Vector3());const halfHeight=Math.max(size.y*.5+.16,(size.z*.5+.16)*innerHeight/innerWidth);const frame=frozen??{rootPosition:root.position.toArray(),heroPosition:heroine.position.toArray(),centre:centre.toArray(),halfHeight};root.position.fromArray(frame.rootPosition);heroine.position.fromArray(frame.heroPosition);const h=frame.halfHeight;centre.fromArray(frame.centre);camera.left=-h*innerWidth/innerHeight;camera.right=-camera.left;camera.top=h;camera.bottom=-h;camera.updateProjectionMatrix();camera.position.set(centre.x+8,centre.y,centre.z);camera.lookAt(centre);await renderer.compileAsync(scene,camera);renderer.render(scene,camera);await new Promise(r=>requestAnimationFrame(()=>{renderer.render(scene,camera);r();}));return {path,member,bodyScale:1,view:'front',metresToPixels:innerHeight/(h*2),size:size.toArray(),frame};}};
+</script></body></html>

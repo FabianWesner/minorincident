@@ -1,0 +1,3122 @@
+{
+  "baseline": "4698e5aa0",
+  "target": {
+    "headHeight": 0.2725332952860014,
+    "headShoulder": 0.8719292459362036,
+    "legHeight": 0.42752737512725963,
+    "shoulderHeight": 0.29371322861237686
+  },
+  "policy": "PO: head size wins; both head ratios <= heroine x 1.1; smaller heads allowed; bodies fixed; children retain child proportions",
+  "rows": [
+    {
+      "id": "char.survivor-male",
+      "path": "public/assets/models/char.survivor-male.glb",
+      "dimensions": {
+        "x": 0.7027,
+        "y": 1.8,
+        "z": 1.0621,
+        "tolerance": 0.1
+      },
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.2635268386088578,
+        "headShoulder": 0.5831384434772139,
+        "legHeight": 0.45047705530334176,
+        "shoulderHeight": 0.5051262266198083
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.3457118633154337,
+        "maximum": 1,
+        "intervals": {
+          "headHeight": [
+            0.9069565011500059,
+            1.1995066683767495
+          ],
+          "headShoulder": [
+            1.3457118633154337,
+            1.6447589440521968
+          ],
+          "legHeight": [
+            0.8402095649038792,
+            1.647962781368016
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 1.643263708648513
+        },
+        "binding": "headHeight",
+        "scale": 0.9999999999999964
+      }
+    },
+    {
+      "id": "char.survivor-female",
+      "path": "public/assets/models/char.survivor-female.glb",
+      "dimensions": {
+        "x": 0.7787,
+        "y": 1.8,
+        "z": 0.9497,
+        "tolerance": 0.1
+      },
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3747132476682171,
+        "headShoulder": 1.3838244711285768,
+        "legHeight": 0.43971659636014676,
+        "shoulderHeight": 0.38113538376993034
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 0.8265606422792672,
+        "maximum": 0.6930952519921929,
+        "intervals": {
+          "headHeight": [
+            0.5377802784134895,
+            0.7113778404955663
+          ],
+          "headShoulder": [
+            0.5670779334481578,
+            0.6930952519921929
+          ],
+          "legHeight": [
+            0.8265606422792672,
+            1.3810646416342691
+          ]
+        },
+        "limits": {
+          "headHeight": 0.7104419310672974,
+          "headShoulder": 0.6924651653994727
+        },
+        "binding": "headShoulder",
+        "scale": 0.6924651653994727
+      }
+    },
+    {
+      "id": "inf.common-worker",
+      "path": "public/assets/models/skinned/inf.common-worker.lod0.glb",
+      "dimensions": {
+        "x": 0.898840606212616,
+        "y": 1.8331796560612617,
+        "z": 1.4120743870735168,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3794399969959724,
+        "headShoulder": 0.5412644208929197,
+        "legHeight": 0.4036703021615023,
+        "shoulderHeight": 0.6146138879916466
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.4498206256528183,
+        "maximum": 0.6970910782851814,
+        "intervals": {
+          "headHeight": [
+            0.527011733928055,
+            0.6970910782851814
+          ],
+          "headShoulder": [
+            1.4498206256528183,
+            1.7720029869090002
+          ],
+          "legHeight": [
+            0.6267167727182937,
+            1.1294233462402283
+          ]
+        },
+        "limits": {
+          "headHeight": 0.6961741581578167,
+          "headShoulder": 1.7703920751027191
+        },
+        "binding": "headHeight",
+        "scale": 0.6961741581578167
+      }
+    },
+    {
+      "id": "inf.alpha",
+      "path": "public/assets/models/skinned/inf.alpha.lod0.glb",
+      "dimensions": {
+        "x": 1.6225914359092712,
+        "y": 2.3343770503997803,
+        "z": 2.0986995697021484,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.2497884576043497,
+        "headShoulder": 0.5929960607647372,
+        "legHeight": 0.3925672655140333,
+        "shoulderHeight": 0.8049646581630824
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.3233415418149233,
+        "maximum": 1,
+        "intervals": {
+          "headHeight": [
+            0.9758100158851685,
+            1.2894026766314695
+          ],
+          "headShoulder": [
+            1.3233415418149233,
+            1.6174174399960173
+          ],
+          "legHeight": [
+            0.3384482228984971,
+            1.0810783934909958
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 1.6159470605051116
+        },
+        "binding": "headHeight",
+        "scale": 0.9999999999999964
+      }
+    },
+    {
+      "id": "inf.alpha-worker",
+      "path": "public/assets/models/skinned/inf.alpha-worker.lod0.glb",
+      "dimensions": {
+        "x": 0.954327180981636,
+        "y": 2.372283458709717,
+        "z": 1.9888299703598022,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.2767576314477132,
+        "headShoulder": 0.5922318809102789,
+        "legHeight": 0.38629448432464547,
+        "shoulderHeight": 0.6681890835428627
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.3250491009305663,
+        "maximum": 1,
+        "intervals": {
+          "headHeight": [
+            0.8477625165456526,
+            1.120141833093742
+          ],
+          "headShoulder": [
+            1.3250491009305663,
+            1.6195044566929144
+          ],
+          "legHeight": [
+            0.3547191794642767,
+            1.0142722927329348
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 1.6180321799141024
+        },
+        "binding": "headHeight",
+        "scale": 0.9999999999999964
+      }
+    },
+    {
+      "id": "inf.alpha-hoodie",
+      "path": "public/assets/models/skinned/inf.alpha-hoodie.lod0.glb",
+      "dimensions": {
+        "x": 1.6225914359092712,
+        "y": 2.3343770503997803,
+        "z": 2.0986995697021484,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.2801816489030246,
+        "headShoulder": 0.6573035418043646,
+        "legHeight": 0.3766632553460942,
+        "shoulderHeight": 0.7723532632942465
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.193872041505212,
+        "maximum": 0.9247600073600165,
+        "intervals": {
+          "headHeight": [
+            0.8333281440819519,
+            1.1009879605544224
+          ],
+          "headShoulder": [
+            1.193872041505212,
+            1.4591769396174814
+          ],
+          "legHeight": [
+            0.2895103472449572,
+            0.9247600073600165
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 1.45785041512692
+        },
+        "binding": "headHeight",
+        "scale": 0.9999999999999964
+      }
+    },
+    {
+      "id": "inf.alpha-fire",
+      "path": "public/assets/models/skinned/inf.alpha-fire.lod0.glb",
+      "dimensions": {
+        "x": 1.6225914359092712,
+        "y": 2.3343770503997803,
+        "z": 2.0986995697021484,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.2736242968677858,
+        "headShoulder": 0.6573035418043646,
+        "legHeight": 0.380094556535178,
+        "shoulderHeight": 0.7793891942833184
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.193872041505212,
+        "maximum": 0.9555479002110175,
+        "intervals": {
+          "headHeight": [
+            0.8613534503279666,
+            1.1380440824779323
+          ],
+          "headShoulder": [
+            1.193872041505212,
+            1.4591769396174814
+          ],
+          "legHeight": [
+            0.29914897075732094,
+            0.9555479002110175
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 1.45785041512692
+        },
+        "binding": "headHeight",
+        "scale": 0.9999999999999964
+      }
+    },
+    {
+      "id": "inf.alpha-suit",
+      "path": "public/assets/models/skinned/inf.alpha-suit.lod0.glb",
+      "dimensions": {
+        "x": 1.6225914359092712,
+        "y": 2.3343770503997803,
+        "z": 2.0986995697021484,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.2497884576043497,
+        "headShoulder": 0.5929960607647372,
+        "legHeight": 0.3925672655140333,
+        "shoulderHeight": 0.8049646581630824
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.3233415418149233,
+        "maximum": 1,
+        "intervals": {
+          "headHeight": [
+            0.9758100158851685,
+            1.2894026766314695
+          ],
+          "headShoulder": [
+            1.3233415418149233,
+            1.6174174399960173
+          ],
+          "legHeight": [
+            0.3384482228984971,
+            1.0810783934909958
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 1.6159470605051116
+        },
+        "binding": "headHeight",
+        "scale": 0.9999999999999964
+      }
+    },
+    {
+      "id": "inf.jogger",
+      "path": "public/assets/models/skinned/inf.jogger.lod0.glb",
+      "dimensions": {
+        "x": 1.1817037463188171,
+        "y": 1.799788624521966,
+        "z": 1.2234529256820679,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.5354009988674507,
+        "headShoulder": 1.4688550694400888,
+        "legHeight": 0.24474105673406638,
+        "shoulderHeight": 0.4627930356152839
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 0.534250340737644,
+        "maximum": 0.3202541267874756,
+        "intervals": {
+          "headHeight": [
+            0.2770465751900041,
+            0.3668268915739476
+          ],
+          "headShoulder": [
+            0.534250340737644,
+            0.6529726386793427
+          ],
+          "legHeight": [
+            0.10425175172773864,
+            0.3202541267874756
+          ]
+        },
+        "limits": {
+          "headHeight": 0.36634297505301205,
+          "headShoulder": 0.6523790271896341
+        },
+        "binding": "headHeight",
+        "scale": 0.36634297505301205
+      }
+    },
+    {
+      "id": "inf.baseball-cap",
+      "path": "public/assets/models/inf.baseball-cap.glb",
+      "dimensions": {
+        "x": 0.8168,
+        "y": 1.8,
+        "z": 1.1174,
+        "tolerance": 0.1
+      },
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.42933839785179195,
+        "headShoulder": 0.8950886497346145,
+        "legHeight": 0.40662375957180164,
+        "shoulderHeight": 0.4181634610022629
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 0.8767135205828498,
+        "maximum": 0.5650445982748128,
+        "intervals": {
+          "headHeight": [
+            0.42705993483237287,
+            0.5650445982748128
+          ],
+          "headShoulder": [
+            0.8767135205828498,
+            1.0715387473790388
+          ],
+          "legHeight": [
+            0.6847279947819324,
+            1.1322597872216562
+          ]
+        },
+        "limits": {
+          "headHeight": 0.564300760655339,
+          "headShoulder": 1.0705646212450577
+        },
+        "binding": "headHeight",
+        "scale": 0.564300760655339
+      }
+    },
+    {
+      "id": "inf.suburban-mom",
+      "path": "public/assets/models/skinned/inf.suburban-mom.lod0.glb",
+      "dimensions": {
+        "x": 0.8682342618703842,
+        "y": 1.8000049553870021,
+        "z": 1.3428131937980652,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3722239493047034,
+        "headShoulder": 1.0843097104380475,
+        "legHeight": 0.41791227713412754,
+        "shoulderHeight": 0.512766820075972
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 0.7237197212091364,
+        "maximum": 0.7190810169011015,
+        "intervals": {
+          "headHeight": [
+            0.5436084618252088,
+            0.7190810169011015
+          ],
+          "headShoulder": [
+            0.7237197212091364,
+            0.884546325922278
+          ],
+          "legHeight": [
+            0.7008398808254916,
+            1.2313720096249219
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9828039531152335,
+          "headShoulder": 0.8837421928987121
+        },
+        "binding": "headShoulder",
+        "scale": 0.8837421928987121
+      }
+    },
+    {
+      "id": "inf.delivery-driver",
+      "path": "public/assets/models/skinned/inf.delivery-driver.lod0.glb",
+      "dimensions": {
+        "x": 1.2841450572013855,
+        "y": 1.7994079740124107,
+        "z": 1.103926956653595,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.43598466722812157,
+        "headShoulder": 0.8069379867603356,
+        "legHeight": 0.2900993290047537,
+        "shoulderHeight": 0.5658771977680497
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 0.9724865283553117,
+        "maximum": 0.4356362956414012,
+        "intervals": {
+          "headHeight": [
+            0.415496176289213,
+            0.5497639012572476
+          ],
+          "headShoulder": [
+            0.9724865283553117,
+            1.1885946457676033
+          ],
+          "legHeight": [
+            0.12121903415500236,
+            0.4356362956414012
+          ]
+        },
+        "limits": {
+          "headHeight": 0.5490401079346583,
+          "headShoulder": 1.1875141051805418
+        },
+        "binding": "headHeight",
+        "scale": 0.5490401079346583
+      }
+    },
+    {
+      "id": "inf.skater",
+      "path": "public/assets/models/inf.skater.glb",
+      "dimensions": {
+        "x": 0.7974,
+        "y": 1.8,
+        "z": 1.3486,
+        "tolerance": 0.1
+      },
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.4448171204500146,
+        "headShoulder": 0.7153248527749813,
+        "legHeight": 0.32405546198096263,
+        "shoulderHeight": 0.5576875131578735
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.0970348902297073,
+        "maximum": 0.5301729703155291,
+        "intervals": {
+          "headHeight": [
+            0.4006716591494133,
+            0.5301729703155291
+          ],
+          "headShoulder": [
+            1.0970348902297073,
+            1.3408204213918646
+          ],
+          "legHeight": [
+            0.300991455330048,
+            0.6452373139391053
+          ]
+        },
+        "limits": {
+          "headHeight": 0.5294748805417697,
+          "headShoulder": 1.3396014937360539
+        },
+        "binding": "headHeight",
+        "scale": 0.5294748805417697
+      }
+    },
+    {
+      "id": "inf.college-student",
+      "path": "public/assets/models/inf.college-student.glb",
+      "dimensions": {
+        "x": 0.5514,
+        "y": 1.8,
+        "z": 0.8899,
+        "tolerance": 0.1
+      },
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.34048402935769484,
+        "headShoulder": 0.9646811315447892,
+        "legHeight": 0.4616015033443051,
+        "shoulderHeight": 0.445587338901918
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 0.9458003130876451,
+        "maximum": 0.8272852930320385,
+        "intervals": {
+          "headHeight": [
+            0.6254644692449925,
+            0.8272852930320385
+          ],
+          "headShoulder": [
+            0.8134670573331813,
+            0.9942375145183328
+          ],
+          "legHeight": [
+            0.9458003130876451,
+            1.5864215643899886
+          ]
+        },
+        "limits": {
+          "headHeight": 0.8261971398034547,
+          "headShoulder": 0.9933336622324069
+        },
+        "binding": "headHeight",
+        "scale": 0.8261971398034547
+      }
+    },
+    {
+      "id": "inf.bbq-dad",
+      "path": "public/assets/models/skinned/inf.bbq-dad.lod0.glb",
+      "dimensions": {
+        "x": 0.7766779661178589,
+        "y": 1.799997086302028,
+        "z": 1.3954452276229858,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.38433229659672186,
+        "headShoulder": 0.6427692472980016,
+        "legHeight": 0.3603216221969183,
+        "shoulderHeight": 0.6638960277885425
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.2208678692102435,
+        "maximum": 0.682561097448054,
+        "intervals": {
+          "headHeight": [
+            0.5159785998681506,
+            0.682561097448054
+          ],
+          "headShoulder": [
+            1.2208678692102435,
+            1.4921718401458532
+          ],
+          "legHeight": [
+            0.3916335237873749,
+            0.8346443256431575
+          ]
+        },
+        "limits": {
+          "headHeight": 0.6816630255858911,
+          "headShoulder": 1.4908153202911751
+        },
+        "binding": "headHeight",
+        "scale": 0.6816630255858911
+      }
+    },
+    {
+      "id": "inf.cashier",
+      "path": "public/assets/models/skinned/inf.cashier.lod0.glb",
+      "dimensions": {
+        "x": 0.8243665993213654,
+        "y": 1.8007847919361666,
+        "z": 0.9151637554168701,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.4918848597719339,
+        "headShoulder": 0.9119150426931275,
+        "legHeight": 0.25319902502538283,
+        "shoulderHeight": 0.4426885831557476
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 0.8605366559422556,
+        "maximum": 0.3048068124019699,
+        "intervals": {
+          "headHeight": [
+            0.3307124161372362,
+            0.4377301999749045
+          ],
+          "headShoulder": [
+            0.8605366559422556,
+            1.0517670239294237
+          ],
+          "legHeight": [
+            0.06156991981659858,
+            0.3048068124019699
+          ]
+        },
+        "limits": {
+          "headHeight": 0.4371533459999313,
+          "headShoulder": 1.0508108720894878
+        },
+        "binding": "headHeight",
+        "scale": 0.4371533459999313
+      }
+    },
+    {
+      "id": "inf.bathrobe-neighbor",
+      "path": "public/assets/models/skinned/inf.bathrobe-neighbor.lod0.glb",
+      "dimensions": {
+        "x": 0.9710331559181213,
+        "y": 1.7975277726605228,
+        "z": 1.5126383304595947,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.48746450668214786,
+        "headShoulder": 0.6894243815556189,
+        "legHeight": 0.30033303463420474,
+        "shoulderHeight": 0.7091701369894629
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.1382485771273452,
+        "maximum": 0.4456380759204714,
+        "intervals": {
+          "headHeight": [
+            0.3366944775226542,
+            0.4456380759204714
+          ],
+          "headShoulder": [
+            1.1382485771273452,
+            1.3911927053778665
+          ],
+          "legHeight": [
+            0.2586657092338788,
+            0.5497984022748287
+          ]
+        },
+        "limits": {
+          "headHeight": 0.4450508375350495,
+          "headShoulder": 1.3899279847366137
+        },
+        "binding": "headHeight",
+        "scale": 0.4450508375350495
+      }
+    },
+    {
+      "id": "inf.construction-worker",
+      "path": "public/assets/models/inf.construction-worker.glb",
+      "dimensions": {
+        "x": 0.801,
+        "y": 1.8,
+        "z": 1.3358,
+        "tolerance": 0.1
+      },
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.41394450467819466,
+        "headShoulder": 0.7367352759117602,
+        "legHeight": 0.35115624213413227,
+        "shoulderHeight": 0.559725942666559
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.0651537221038023,
+        "maximum": 0.6023367119387543,
+        "intervals": {
+          "headHeight": [
+            0.45527849494322997,
+            0.6023367119387543
+          ],
+          "headShoulder": [
+            1.0651537221038023,
+            1.3018545492379807
+          ],
+          "legHeight": [
+            0.38807237322226823,
+            0.7889290705684657
+          ]
+        },
+        "limits": {
+          "headHeight": 0.6015439413467725,
+          "headShoulder": 1.3006710451023098
+        },
+        "binding": "headHeight",
+        "scale": 0.6015439413467725
+      }
+    },
+    {
+      "id": "inf.crawler",
+      "path": "public/assets/models/skinned/inf.crawler.lod0.glb",
+      "dimensions": {
+        "x": 1.5013813972473145,
+        "y": 1.0134821236133575,
+        "z": 1.0567171573638916,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.49201650258386875,
+        "headShoulder": 0.7455888234475668,
+        "legHeight": 0.2717694165909828,
+        "shoulderHeight": 0.8586973141083906
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.0525054784405166,
+        "maximum": 0.37975186855407406,
+        "intervals": {
+          "headHeight": [
+            0.2855162907148847,
+            0.37975186855407406
+          ],
+          "headShoulder": [
+            1.0525054784405166,
+            1.2863955847606314
+          ],
+          "legHeight": [
+            0.2667961677531124,
+            0.5278029455485457
+          ]
+        },
+        "limits": {
+          "headHeight": 0.6047852121239607,
+          "headShoulder": 1.2852261342290308
+        },
+        "binding": "headHeight",
+        "scale": 0.6047852121239607
+      }
+    },
+    {
+      "id": "inf.riot-cop",
+      "path": "public/assets/models/skinned/inf.riot-cop.lod0.glb",
+      "dimensions": {
+        "x": 0.8152983486652374,
+        "y": 1.7999984567709362,
+        "z": 1.8126385807991028,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.38380689147977154,
+        "headShoulder": 0.6074074558453514,
+        "legHeight": 0.3962714031782592,
+        "shoulderHeight": 0.6671740205374306
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.2919438406471924,
+        "maximum": 0.6840974473860457,
+        "intervals": {
+          "headHeight": [
+            0.5171409843196872,
+            0.6840974473860457
+          ],
+          "headShoulder": [
+            1.2919438406471924,
+            1.579042471902124
+          ],
+          "legHeight": [
+            0.5899720620046459,
+            1.0778496150159649
+          ]
+        },
+        "limits": {
+          "headHeight": 0.6924821715229825,
+          "headShoulder": 1.5776069787458493
+        },
+        "binding": "headHeight",
+        "scale": 0.6924821715229825
+      }
+    },
+    {
+      "id": "inf.hazmat",
+      "path": "public/assets/models/skinned/inf.hazmat.lod0.glb",
+      "dimensions": {
+        "x": 1.0048820674419403,
+        "y": 1.6826449325308204,
+        "z": 1.214302897453308,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3965199229721265,
+        "headShoulder": 0.6631174920575889,
+        "legHeight": 0.4040148458816953,
+        "shoulderHeight": 0.5712094515056191
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.18340464659984,
+        "maximum": 0.6478289642317567,
+        "intervals": {
+          "headHeight": [
+            0.48955432776898,
+            0.6478289642317567
+          ],
+          "headShoulder": [
+            1.18340464659984,
+            1.4463834569553602
+          ],
+          "legHeight": [
+            0.6446434507597708,
+            1.1261067455102363
+          ]
+        },
+        "limits": {
+          "headHeight": 0.6469756575248091,
+          "headShoulder": 1.4450685629035824
+        },
+        "binding": "headHeight",
+        "scale": 0.6469756575248091
+      }
+    },
+    {
+      "id": "inf.firefighter",
+      "path": "public/assets/models/skinned/inf.firefighter.lod0.glb",
+      "dimensions": {
+        "x": 1.0730183124542236,
+        "y": 1.799413543078117,
+        "z": 1.3797299265861511,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.41464447017306316,
+        "headShoulder": 0.6438790056838383,
+        "legHeight": 0.27264500501404304,
+        "shoulderHeight": 0.709463401444795
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.2187636410184643,
+        "maximum": 0.29718975532347736,
+        "intervals": {
+          "headHeight": [
+            0.45394790290244375,
+            0.6005790877127
+          ],
+          "headShoulder": [
+            1.2187636410184643,
+            1.4896000056892342
+          ],
+          "legHeight": [
+            -0.013518319769102406,
+            0.29718975532347736
+          ]
+        },
+        "limits": {
+          "headHeight": 0.599788619946171,
+          "headShoulder": 1.4882458238658802
+        },
+        "binding": "headHeight",
+        "scale": 0.599788619946171
+      }
+    },
+    {
+      "id": "inf.bloated",
+      "path": "public/assets/models/inf.bloated.glb",
+      "dimensions": {
+        "x": 0.9947,
+        "y": 1.8,
+        "z": 1.374,
+        "tolerance": 0.1
+      },
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3594935517661523,
+        "headShoulder": 0.4630263497579367,
+        "legHeight": 0.35490202734208265,
+        "shoulderHeight": 0.6977971487052915
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.6947984099670172,
+        "maximum": 0.7601596049456678,
+        "intervals": {
+          "headHeight": [
+            0.5746856226627062,
+            0.7601596049456678
+          ],
+          "headShoulder": [
+            1.6947984099670172,
+            2.071420278848577
+          ],
+          "legHeight": [
+            0.3175425027264839,
+            0.7840388505704862
+          ]
+        },
+        "limits": {
+          "headHeight": 0.7591596338883804,
+          "headShoulder": 2.069537169504169
+        },
+        "binding": "headHeight",
+        "scale": 0.7591596338883804
+      }
+    },
+    {
+      "id": "inf.screamer",
+      "path": "public/assets/models/inf.screamer.glb",
+      "dimensions": {
+        "x": 0.8182,
+        "y": 1.8,
+        "z": 1.0249,
+        "tolerance": 0.1
+      },
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.4031436515476914,
+        "headShoulder": 0.6024328258883155,
+        "legHeight": 0.4049138900522053,
+        "shoulderHeight": 0.5770762042332034
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.3026121546173262,
+        "maximum": 0.6302190622018129,
+        "intervals": {
+          "headHeight": [
+            0.4763758399706048,
+            0.6302190622018129
+          ],
+          "headShoulder": [
+            1.3026121546173262,
+            1.5920815223100655
+          ],
+          "legHeight": [
+            0.655224061157743,
+            1.129830605524138
+          ]
+        },
+        "limits": {
+          "headHeight": 0.6319638348833791,
+          "headShoulder": 1.5906341754716018
+        },
+        "binding": "headHeight",
+        "scale": 0.6319638348833791
+      }
+    },
+    {
+      "id": "inf.sprinter",
+      "path": "public/assets/models/inf.sprinter.glb",
+      "dimensions": {
+        "x": 1.031,
+        "y": 1.8,
+        "z": 1.251,
+        "tolerance": 0.1
+      },
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.4079848557880061,
+        "headShoulder": 0.7668390182530893,
+        "legHeight": 0.35956577639987763,
+        "shoulderHeight": 0.5012869586076346
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.023339061606783,
+        "maximum": 0.6175371488917418,
+        "intervals": {
+          "headHeight": [
+            0.4667800850825809,
+            0.6175371488917418
+          ],
+          "headShoulder": [
+            1.023339061606783,
+            1.250747741963846
+          ],
+          "legHeight": [
+            0.4229636068556822,
+            0.8394158242530567
+          ]
+        },
+        "limits": {
+          "headHeight": 0.6167244299960153,
+          "headShoulder": 1.2496106985620605
+        },
+        "binding": "headHeight",
+        "scale": 0.6167244299960153
+      }
+    },
+    {
+      "id": "inf.armored-football",
+      "path": "public/assets/models/inf.armored-football.glb",
+      "dimensions": {
+        "x": 0.752,
+        "y": 1.8,
+        "z": 1.1508,
+        "tolerance": 0.1
+      },
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.36583814998664077,
+        "headShoulder": 0.5868624634197547,
+        "legHeight": 0.3844475859546607,
+        "shoulderHeight": 0.5704708818719492
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.3371724556547397,
+        "maximum": 0.7393255021264461,
+        "intervals": {
+          "headHeight": [
+            0.5589242215550777,
+            0.7393255021264461
+          ],
+          "headShoulder": [
+            1.3371724556547397,
+            1.6343218902446819
+          ],
+          "legHeight": [
+            0.501108285319895,
+            0.9976766163565205
+          ]
+        },
+        "limits": {
+          "headHeight": 0.73835289387074,
+          "headShoulder": 1.6328361430717322
+        },
+        "binding": "headHeight",
+        "scale": 0.73835289387074
+      }
+    },
+    {
+      "id": "inf.butcher",
+      "path": "public/assets/models/inf.butcher.glb",
+      "dimensions": {
+        "x": 0.8894,
+        "y": 1.8,
+        "z": 1.1643,
+        "tolerance": 0.1
+      },
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3905576482475619,
+        "headShoulder": 0.4866801819912873,
+        "legHeight": 0.37390718453098937,
+        "shoulderHeight": 0.601401016800192
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.6124271141096758,
+        "maximum": 0.6646753088070335,
+        "intervals": {
+          "headHeight": [
+            0.5024462659837692,
+            0.6646753088070335
+          ],
+          "headShoulder": [
+            1.6124271141096758,
+            1.9707442505784927
+          ],
+          "legHeight": [
+            0.4752973061576733,
+            0.927683701429088
+          ]
+        },
+        "limits": {
+          "headHeight": 0.6638007176337446,
+          "headShoulder": 1.9689526648961484
+        },
+        "binding": "headHeight",
+        "scale": 0.6638007176337446
+      }
+    },
+    {
+      "id": "inf.nurse",
+      "path": "public/assets/models/skinned/inf.nurse.lod0.glb",
+      "dimensions": {
+        "x": 0.8639602363109589,
+        "y": 1.800002215173663,
+        "z": 1.18299001455307,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.4821881956268199,
+        "headShoulder": 0.7145248024048614,
+        "legHeight": 0.28154950073248863,
+        "shoulderHeight": 0.5100649771972564
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.0982632355117867,
+        "maximum": 0.4436316001283859,
+        "intervals": {
+          "headHeight": [
+            0.3439976802441609,
+            0.4552849344621174
+          ],
+          "headShoulder": [
+            1.0982632355117867,
+            1.3423217322921839
+          ],
+          "legHeight": [
+            0.1677205717266604,
+            0.4436316001283859
+          ]
+        },
+        "limits": {
+          "headHeight": 0.45468505966701045,
+          "headShoulder": 1.341101439808282
+        },
+        "binding": "headHeight",
+        "scale": 0.45468505966701045
+      }
+    },
+    {
+      "id": "inf.brute",
+      "path": "public/assets/models/inf.brute.glb",
+      "dimensions": {
+        "x": 0.9560014605522156,
+        "y": 2.2042266838252544,
+        "z": 2.0100095570087433,
+        "tolerance": 0.1
+      },
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.2690546708406687,
+        "headShoulder": 0.3081109518097606,
+        "legHeight": 0.38109052148820943,
+        "shoulderHeight": 0.7686143531180722
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 2.5469277113755733,
+        "maximum": 0.964413413066459,
+        "intervals": {
+          "headHeight": [
+            0.8815957017691749,
+            1.165112542566881
+          ],
+          "headShoulder": [
+            2.5469277113755733,
+            3.112911647236812
+          ],
+          "legHeight": [
+            0.2951170209840055,
+            0.964413413066459
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 3.110081727557506
+        },
+        "binding": "headHeight",
+        "scale": 0.9999999999999964
+      }
+    },
+    {
+      "id": "npc.civilian-adult-m",
+      "path": "public/assets/models/skinned/npc.civilian-man-a.lod0.glb",
+      "dimensions": {
+        "x": 0.6107770204544067,
+        "y": 1.799998577535007,
+        "z": 0.9524039328098297,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.29223126467498384,
+        "headShoulder": 1.1380749448398177,
+        "legHeight": 0.4156007954001798,
+        "shoulderHeight": 0.3174938154821244
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": true,
+        "minimum": 0.7844045609957483,
+        "maximum": 0.8427583568890702,
+        "intervals": {
+          "headHeight": [
+            0.7844045609957483,
+            1.0374312243602952
+          ],
+          "headShoulder": [
+            0.689529564727421,
+            0.8427583568890702
+          ],
+          "legHeight": [
+            0.6021312843694272,
+            1.2741487573492918
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 0.8419922129282619
+        },
+        "binding": "headShoulder",
+        "scale": 0.8419922129282619
+      }
+    },
+    {
+      "id": "npc.civilian-adult-f",
+      "path": "public/assets/models/skinned/npc.civilian-woman-a.lod0.glb",
+      "dimensions": {
+        "x": 0.6775166392326355,
+        "y": 1.7999991976281535,
+        "z": 1.0451307594776154,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.34119111802370516,
+        "headShoulder": 0.8697319634564472,
+        "legHeight": 0.4808865171583422,
+        "shoulderHeight": 0.4234536071412418
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.0661018868119556,
+        "maximum": 0.8246529339697247,
+        "intervals": {
+          "headHeight": [
+            0.6234732425347235,
+            0.8246529339697247
+          ],
+          "headShoulder": [
+            0.9022737513565923,
+            1.102779029435835
+          ],
+          "legHeight": [
+            1.0661018868119556,
+            1.7321042288996296
+          ]
+        },
+        "limits": {
+          "headHeight": 0.8235682394448709,
+          "headShoulder": 1.1017765030454387
+        },
+        "binding": "headHeight",
+        "scale": 0.8235682394448709
+      }
+    },
+    {
+      "id": "npc.civilian-kid",
+      "path": "public/assets/models/skinned/npc.civilian-kid.lod0.glb",
+      "dimensions": {
+        "x": 0.571837306022644,
+        "y": 1.4744024276733398,
+        "z": 0.795772910118103,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": true,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3992090544577927,
+        "headShoulder": 1.129384716094456,
+        "legHeight": 0.4408565558209677,
+        "shoulderHeight": 0.33612219263555587
+      },
+      "plan": {
+        "binding": "child-proportions-retained",
+        "scale": 1
+      }
+    },
+    {
+      "id": "npc.civilian-elderly",
+      "path": "public/assets/models/skinned/npc.civilian-elderly.lod0.glb",
+      "dimensions": {
+        "x": 0.5267418026924133,
+        "y": 1.3990000486373901,
+        "z": 0.7994961142539978,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.31246777791761743,
+        "headShoulder": 1.0486083329130331,
+        "legHeight": 0.43388132396098966,
+        "shoulderHeight": 0.304527681989505
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": true,
+        "minimum": 0.7523005293850039,
+        "maximum": 0.9146619766651894,
+        "intervals": {
+          "headHeight": [
+            0.710711228172453,
+            0.9410782219008226
+          ],
+          "headShoulder": [
+            0.7483597990897004,
+            0.9146619766651894
+          ],
+          "legHeight": [
+            0.7523005293850039,
+            1.408440644392537
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9398357274083935,
+          "headShoulder": 0.913830465777312
+        },
+        "binding": "headShoulder",
+        "scale": 0.913830465777312
+      }
+    },
+    {
+      "id": "npc.patient-zero-courier",
+      "path": "public/assets/models/npc.patient-zero-courier.glb",
+      "dimensions": {
+        "x": 0.9137,
+        "y": 1.8,
+        "z": 0.7562,
+        "tolerance": 0.1
+      },
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.31811787308858624,
+        "headShoulder": 0.7507383614921842,
+        "legHeight": 0.47943235145265845,
+        "shoulderHeight": 0.40533137671041947
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.0611762229781256,
+        "maximum": 0.9166657656381366,
+        "intervals": {
+          "headHeight": [
+            0.6930713013120816,
+            0.9166657656381366
+          ],
+          "headShoulder": [
+            1.0452860298530955,
+            1.2775718142648944
+          ],
+          "legHeight": [
+            1.0611762229781256,
+            1.7733240260267327
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9154601432921297,
+          "headShoulder": 1.2764103853428355
+        },
+        "binding": "headHeight",
+        "scale": 0.9154601432921297
+      }
+    },
+    {
+      "id": "npc.brother",
+      "path": "public/assets/models/npc.brother.glb",
+      "dimensions": {
+        "x": 0.6756,
+        "y": 1.4265,
+        "z": 0.6681,
+        "tolerance": 0.1
+      },
+      "crowdSkin": false,
+      "child": true,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3444821400521776,
+        "headShoulder": 0.7145372513746556,
+        "legHeight": 0.399567491902445,
+        "shoulderHeight": 0.4163645842196851
+      },
+      "plan": {
+        "binding": "child-proportions-retained",
+        "scale": 1
+      }
+    },
+    {
+      "id": "npc.mrs-alvarez",
+      "path": "public/assets/models/npc.mrs-alvarez.glb",
+      "dimensions": {
+        "x": 0.6338,
+        "y": 1.8,
+        "z": 0.9636,
+        "tolerance": 0.1
+      },
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.34051479525908335,
+        "headShoulder": 0.7557693174670375,
+        "legHeight": 0.393360274446021,
+        "shoulderHeight": 0.45014894637584174
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.038327837881311,
+        "maximum": 0.8271705263866279,
+        "intervals": {
+          "headHeight": [
+            0.6253776541266951,
+            0.8271705263866279
+          ],
+          "headShoulder": [
+            1.038327837881311,
+            1.2690673574104914
+          ],
+          "legHeight": [
+            0.5196633090969958,
+            1.0655284793152746
+          ]
+        },
+        "limits": {
+          "headHeight": 0.8260825239474876,
+          "headShoulder": 1.2679136598128453
+        },
+        "binding": "headHeight",
+        "scale": 0.8260825239474876
+      }
+    },
+    {
+      "id": "npc.police-officer",
+      "path": "public/assets/models/skinned/npc.police-officer.lod0.glb",
+      "dimensions": {
+        "x": 0.4764045774936676,
+        "y": 1.4179394245147705,
+        "z": 0.9326343536376953,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.2728284225919493,
+        "headShoulder": 0.6560110840010298,
+        "legHeight": 0.45135918688056653,
+        "shoulderHeight": 0.45833150476294243
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.196224180476425,
+        "maximum": 1,
+        "intervals": {
+          "headHeight": [
+            0.8638794779921232,
+            1.143767979423699
+          ],
+          "headShoulder": [
+            1.196224180476425,
+            1.462051776137853
+          ],
+          "legHeight": [
+            0.8525325549126329,
+            1.6342747375839792
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 1.4607226381595457
+        },
+        "binding": "headHeight",
+        "scale": 0.9999999999999964
+      }
+    },
+    {
+      "id": "npc.paramedic",
+      "path": "public/assets/models/npc.paramedic.glb",
+      "dimensions": {
+        "x": 0.591,
+        "y": 1.8,
+        "z": 1.0941,
+        "tolerance": 0.1
+      },
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.2960997526576288,
+        "headShoulder": 0.7560492702117934,
+        "legHeight": 0.45409558104465947,
+        "shoulderHeight": 0.43381338469099556
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.0379433619752767,
+        "maximum": 1,
+        "intervals": {
+          "headHeight": [
+            0.7697280394556396,
+            1.0180238469948444
+          ],
+          "headShoulder": [
+            1.0379433619752767,
+            1.268597442414227
+          ],
+          "legHeight": [
+            0.8837734152157921,
+            1.6084431165779491
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 1.2674441720120322
+        },
+        "binding": "headHeight",
+        "scale": 0.9999999999999964
+      }
+    },
+    {
+      "id": "npc.firefighter-alive",
+      "path": "public/assets/models/skinned/npc.firefighter-alive.lod0.glb",
+      "dimensions": {
+        "x": 0.5868440568447113,
+        "y": 1.4557309448719025,
+        "z": 0.7463776171207428,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.35638140224756365,
+        "headShoulder": 1.0186696271025892,
+        "legHeight": 0.3982705930703959,
+        "shoulderHeight": 0.35110707392376417
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 0.7703540976033765,
+        "maximum": 0.7700411894274494,
+        "intervals": {
+          "headHeight": [
+            0.5815916130917279,
+            0.7700411894274494
+          ],
+          "headShoulder": [
+            0.7703540976033765,
+            0.9415438970707936
+          ],
+          "legHeight": [
+            0.5703465854633517,
+            1.0984197292644249
+          ]
+        },
+        "limits": {
+          "headHeight": 0.7690249716197677,
+          "headShoulder": 0.9406879480734565
+        },
+        "binding": "headHeight",
+        "scale": 0.7690249716197677
+      }
+    },
+    {
+      "id": "npc.national-guard",
+      "path": "public/assets/models/skinned/npc.national-guard.lod0.glb",
+      "dimensions": {
+        "x": 0.5239206999540329,
+        "y": 1.4286228399723768,
+        "z": 0.9128534495830536,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.30401558864342676,
+        "headShoulder": 0.9620507776009626,
+        "legHeight": 0.44798386664783746,
+        "shoulderHeight": 0.39805563764056323
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": true,
+        "minimum": 0.8440521898335772,
+        "maximum": 0.9798020513362077,
+        "intervals": {
+          "headHeight": [
+            0.7400466494114991,
+            0.9798020513362077
+          ],
+          "headShoulder": [
+            0.8156911668420006,
+            0.9969558705846675
+          ],
+          "legHeight": [
+            0.8440521898335772,
+            1.540353790642368
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9785089098858393,
+          "headShoulder": 0.996049547065954
+        },
+        "binding": "headHeight",
+        "scale": 0.9785089098858393
+      }
+    },
+    {
+      "id": "npc.survivor-group",
+      "rootName": "survivor01_root",
+      "path": "public/assets/models/npc.survivor-group.glb",
+      "dimensions": {
+        "x": 0.8809,
+        "y": 1.8,
+        "z": 2.5012,
+        "tolerance": 0.1
+      },
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3105310997783507,
+        "headShoulder": 0.6268136995371749,
+        "legHeight": 0.4204195069804556,
+        "shoulderHeight": 0.3892402534484519
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.2519450706358441,
+        "maximum": 0.9499465974428375,
+        "intervals": {
+          "headHeight": [
+            0.7182426170593778,
+            0.9499465974428375
+          ],
+          "headShoulder": [
+            1.2519450706358441,
+            1.5301550863326985
+          ],
+          "legHeight": [
+            0.6585745938975104,
+            1.2983221416659931
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9486972205260251,
+          "headShoulder": 1.528764036254214
+        },
+        "binding": "headHeight",
+        "scale": 0.9486972205260251
+      }
+    },
+    {
+      "id": "npc.survivor-group",
+      "rootName": "survivor02_root",
+      "path": "public/assets/models/npc.survivor-group.glb",
+      "dimensions": {
+        "x": 0.8809,
+        "y": 1.8,
+        "z": 2.5012,
+        "tolerance": 0.1
+      },
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3105378991793334,
+        "headShoulder": 0.6263835032450359,
+        "legHeight": 0.42041764482253985,
+        "shoulderHeight": 0.3893897944249643
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.2528048987196923,
+        "maximum": 0.949916039021456,
+        "intervals": {
+          "headHeight": [
+            0.7182195317151671,
+            0.949916039021456
+          ],
+          "headShoulder": [
+            1.2528048987196923,
+            1.5312059873240684
+          ],
+          "legHeight": [
+            0.6585693185672691,
+            1.298300025143065
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9486667024368884,
+          "headShoulder": 1.5298139818810463
+        },
+        "binding": "headHeight",
+        "scale": 0.9486667024368884
+      }
+    },
+    {
+      "id": "npc.survivor-group",
+      "rootName": "survivor03_root",
+      "path": "public/assets/models/npc.survivor-group.glb",
+      "dimensions": {
+        "x": 0.8809,
+        "y": 1.8,
+        "z": 2.5012,
+        "tolerance": 0.1
+      },
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.29728995761369165,
+        "headShoulder": 0.627207742108554,
+        "legHeight": 0.4284954272717915,
+        "shoulderHeight": 0.3963378864545641
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.2511585375276904,
+        "maximum": 1,
+        "intervals": {
+          "headHeight": [
+            0.7652338214383797,
+            1.0121589793975958
+          ],
+          "headShoulder": [
+            1.2511585375276904,
+            1.5291937680893994
+          ],
+          "legHeight": [
+            0.7011314037733399,
+            1.382209361774263
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 1.5278035919365907
+        },
+        "binding": "headHeight",
+        "scale": 0.9999999999999964
+      }
+    },
+    {
+      "id": "npc.survivor-group",
+      "rootName": "survivor04_root",
+      "path": "public/assets/models/npc.survivor-group.glb",
+      "dimensions": {
+        "x": 0.8809,
+        "y": 1.8,
+        "z": 2.5012,
+        "tolerance": 0.1
+      },
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.30722406513093825,
+        "headShoulder": 0.6302410665477207,
+        "legHeight": 0.422437041952565,
+        "shoulderHeight": 0.3890296386659056
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.2451367627329382,
+        "maximum": 0.96497246825817,
+        "intervals": {
+          "headHeight": [
+            0.7295927053195729,
+            0.96497246825817
+          ],
+          "headShoulder": [
+            1.2451367627329382,
+            1.5218338211180356
+          ],
+          "legHeight": [
+            0.6688633879618383,
+            1.3186004408432843
+          ]
+        },
+        "limits": {
+          "headHeight": 0.963703252414259,
+          "headShoulder": 1.5204503358261099
+        },
+        "binding": "headHeight",
+        "scale": 0.963703252414259
+      }
+    },
+    {
+      "id": "npc.helicopter-pilot",
+      "path": "public/assets/models/npc.helicopter-pilot.glb",
+      "dimensions": {
+        "x": 0.6216,
+        "y": 1.8,
+        "z": 0.9091,
+        "tolerance": 0.1
+      },
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3279591443291706,
+        "headShoulder": 0.9107710356937002,
+        "legHeight": 0.4102669051568828,
+        "shoulderHeight": 0.40230804698515055
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": true,
+        "minimum": 0.8616175642266433,
+        "maximum": 0.875817366156564,
+        "intervals": {
+          "headHeight": [
+            0.6621748478021587,
+            0.875817366156564
+          ],
+          "headShoulder": [
+            0.8616175642266433,
+            1.0530881340547864
+          ],
+          "legHeight": [
+            0.6108917126575653,
+            1.2020143801649106
+          ]
+        },
+        "limits": {
+          "headHeight": 0.8746654364620312,
+          "headShoulder": 1.0521307812056455
+        },
+        "binding": "headHeight",
+        "scale": 0.8746654364620312
+      }
+    },
+    {
+      "id": "npc.civilian-man-a",
+      "path": "public/assets/models/skinned/npc.civilian-man-a.lod0.glb",
+      "dimensions": {
+        "x": 0.6107770204544067,
+        "y": 1.799998577535007,
+        "z": 0.9524039328098297,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": true,
+      "before": {
+        "headHeight": 0.29223126467498384,
+        "headShoulder": 1.1380749448398177,
+        "legHeight": 0.4156007954001798,
+        "shoulderHeight": 0.3174938154821244
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": true,
+        "minimum": 0.7844045609957483,
+        "maximum": 0.8427583568890702,
+        "intervals": {
+          "headHeight": [
+            0.7844045609957483,
+            1.0374312243602952
+          ],
+          "headShoulder": [
+            0.689529564727421,
+            0.8427583568890702
+          ],
+          "legHeight": [
+            0.6021312843694272,
+            1.2741487573492918
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 0.8419922129282619
+        },
+        "binding": "headShoulder",
+        "scale": 0.8419922129282619
+      }
+    },
+    {
+      "id": "npc.civilian-man-b",
+      "path": "public/assets/models/skinned/npc.civilian-man-b.lod0.glb",
+      "dimensions": {
+        "x": 0.5770168900489807,
+        "y": 1.8236378737249197,
+        "z": 1.0899359583854675,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.32159731944765285,
+        "headShoulder": 0.5798532917148819,
+        "legHeight": 0.40506382828008647,
+        "shoulderHeight": 0.4584635511790308
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.3533359774879812,
+        "maximum": 0.90195015672128,
+        "intervals": {
+          "headHeight": [
+            0.681976795526478,
+            0.90195015672128
+          ],
+          "headShoulder": [
+            1.3533359774879812,
+            1.6540773058186438
+          ],
+          "legHeight": [
+            0.5687917931067062,
+            1.1639630035706514
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9007640851086229,
+          "headShoulder": 1.6525735991769905
+        },
+        "binding": "headHeight",
+        "scale": 0.9007640851086229
+      }
+    },
+    {
+      "id": "npc.civilian-woman-a",
+      "path": "public/assets/models/skinned/npc.civilian-woman-a.lod0.glb",
+      "dimensions": {
+        "x": 0.6775166392326355,
+        "y": 1.7999991976281535,
+        "z": 1.0451307594776154,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.34119111802370516,
+        "headShoulder": 0.8697319634564472,
+        "legHeight": 0.4808865171583422,
+        "shoulderHeight": 0.4234536071412418
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.0661018868119556,
+        "maximum": 0.8246529339697247,
+        "intervals": {
+          "headHeight": [
+            0.6234732425347235,
+            0.8246529339697247
+          ],
+          "headShoulder": [
+            0.9022737513565923,
+            1.102779029435835
+          ],
+          "legHeight": [
+            1.0661018868119556,
+            1.7321042288996296
+          ]
+        },
+        "limits": {
+          "headHeight": 0.8235682394448709,
+          "headShoulder": 1.1017765030454387
+        },
+        "binding": "headHeight",
+        "scale": 0.8235682394448709
+      }
+    },
+    {
+      "id": "npc.civilian-woman-b",
+      "path": "public/assets/models/skinned/npc.civilian-woman-b.lod0.glb",
+      "dimensions": {
+        "x": 0.6254254281520844,
+        "y": 1.7999973617791056,
+        "z": 0.9184211492538452,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3364718283419847,
+        "headShoulder": 0.833591186679861,
+        "legHeight": 0.47517113599189215,
+        "shoulderHeight": 0.3267774967294981
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.0309096732945167,
+        "maximum": 0.8424339526109585,
+        "intervals": {
+          "headHeight": [
+            0.636923394320127,
+            0.8424339526109585
+          ],
+          "headShoulder": [
+            0.941392296226327,
+            1.150590584276622
+          ],
+          "legHeight": [
+            1.0309096732945167,
+            1.6982267158638804
+          ]
+        },
+        "limits": {
+          "headHeight": 0.8413258942018516,
+          "headShoulder": 1.1495445928363706
+        },
+        "binding": "headHeight",
+        "scale": 0.8413258942018516
+      }
+    },
+    {
+      "id": "inf.teen-skater",
+      "path": "public/assets/models/inf.teen-skater.glb",
+      "dimensions": {
+        "x": 0.9556333422660828,
+        "y": 1.6637544706463814,
+        "z": 1.217635691165924,
+        "tolerance": 0.1
+      },
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.4168169562268138,
+        "headShoulder": 0.7138641276634753,
+        "legHeight": 0.3486100755249473,
+        "shoulderHeight": 0.5632875406587932
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.0992796681226682,
+        "maximum": 0.594848259999996,
+        "intervals": {
+          "headHeight": [
+            0.4494517547718154,
+            0.594848259999996
+          ],
+          "headShoulder": [
+            1.0992796681226682,
+            1.3435640388165946
+          ],
+          "legHeight": [
+            0.3793001375864828,
+            0.7745078668863662
+          ]
+        },
+        "limits": {
+          "headHeight": 0.594064406520495,
+          "headShoulder": 1.342342616963125
+        },
+        "binding": "headHeight",
+        "scale": 0.594064406520495
+      }
+    },
+    {
+      "id": "char.courier-male",
+      "path": "public/assets/models/char.courier-male.glb",
+      "dimensions": {
+        "x": 0.618,
+        "y": 1.398,
+        "z": 0.812,
+        "tolerance": 0.3
+      },
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.32761384911551755,
+        "headShoulder": 0.6524635415902555,
+        "legHeight": 0.4506434918402436,
+        "shoulderHeight": 0.4516314413902911
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.2027282312662835,
+        "maximum": 0.8767742195672587,
+        "intervals": {
+          "headHeight": [
+            0.6621232234312469,
+            0.8767742195672587
+          ],
+          "headShoulder": [
+            1.2027282312662835,
+            1.4700011715476797
+          ],
+          "legHeight": [
+            0.8725476381822566,
+            1.5225302277821555
+          ]
+        },
+        "limits": {
+          "headHeight": 0.875616553824635,
+          "headShoulder": 1.4686648068462727
+        },
+        "binding": "headHeight",
+        "scale": 0.875616553824635
+      }
+    },
+    {
+      "id": "npc.lab-tech-a",
+      "path": "public/assets/models/skinned/npc.lab-tech-a.lod0.glb",
+      "dimensions": {
+        "x": 0.5120624005794525,
+        "y": 1.3650687058237736,
+        "z": 0.9063678681850433,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3833238120278831,
+        "headShoulder": 1.1040691988391467,
+        "legHeight": 0.36921291314245563,
+        "shoulderHeight": 0.3426625185180238
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 0.710767334300857,
+        "maximum": 0.6844624639479826,
+        "intervals": {
+          "headHeight": [
+            0.5167197709152099,
+            0.6844624639479826
+          ],
+          "headShoulder": [
+            0.710767334300857,
+            0.8687156308121586
+          ],
+          "legHeight": [
+            0.43935517224832527,
+            0.8944919769827832
+          ]
+        },
+        "limits": {
+          "headHeight": 0.6835579162314964,
+          "headShoulder": 0.8679258893296021
+        },
+        "binding": "headHeight",
+        "scale": 0.6835579162314964
+      }
+    },
+    {
+      "id": "npc.lab-tech-b",
+      "path": "public/assets/models/skinned/npc.lab-tech-b.lod0.glb",
+      "dimensions": {
+        "x": 0.5549028366804123,
+        "y": 1.379550131109113,
+        "z": 0.7052275836467743,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.40274136263332827,
+        "headShoulder": 1.4813160755261483,
+        "legHeight": 0.3653372082329455,
+        "shoulderHeight": 0.26993739066316846
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": true,
+        "minimum": 0.5297561636626761,
+        "maximum": 0.6301654360995236,
+        "intervals": {
+          "headHeight": [
+            0.47570994885516193,
+            0.6301654360995236
+          ],
+          "headShoulder": [
+            0.5297561636626761,
+            0.6474797555877152
+          ],
+          "legHeight": [
+            0.445922862008289,
+            0.8745686329493885
+          ]
+        },
+        "limits": {
+          "headHeight": 0.6293325880202616,
+          "headShoulder": 0.6468911376280899
+        },
+        "binding": "headHeight",
+        "scale": 0.6293325880202616
+      }
+    },
+    {
+      "id": "npc.lab-guard",
+      "path": "public/assets/models/skinned/npc.lab-guard.lod0.glb",
+      "dimensions": {
+        "x": 0.5804823637008667,
+        "y": 1.3863473424959238,
+        "z": 1.0332542657852173,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.38876220397063993,
+        "headShoulder": 0.5598554904932932,
+        "legHeight": 0.36354478134266005,
+        "shoulderHeight": 0.5788101915282399
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.4016765659494483,
+        "maximum": 0.6687553930853803,
+        "intervals": {
+          "headHeight": [
+            0.5048922489046677,
+            0.6687553930853803
+          ],
+          "headShoulder": [
+            1.4016765659494483,
+            1.713160247271548
+          ],
+          "legHeight": [
+            0.4161953452804695,
+            0.8580757589211937
+          ]
+        },
+        "limits": {
+          "headHeight": 0.6678717916181078,
+          "headShoulder": 1.7116028288649374
+        },
+        "binding": "headHeight",
+        "scale": 0.6678717916181078
+      }
+    },
+    {
+      "id": "npc.depot-clerk",
+      "path": "public/assets/models/skinned/npc.depot-clerk.lod0.glb",
+      "dimensions": {
+        "x": 0.5089016407728195,
+        "y": 1.423680933263654,
+        "z": 0.7825035154819489,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3600339608394027,
+        "headShoulder": 1.2092428124027377,
+        "legHeight": 0.35401260334464313,
+        "shoulderHeight": 0.32996676481771364
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": true,
+        "minimum": 0.6489485100046452,
+        "maximum": 0.7576423745745224,
+        "intervals": {
+          "headHeight": [
+            0.5721532068493773,
+            0.7576423745745224
+          ],
+          "headShoulder": [
+            0.6489485100046452,
+            0.7931592900056774
+          ],
+          "legHeight": [
+            0.31331385137145135,
+            0.7779426536721262
+          ]
+        },
+        "limits": {
+          "headHeight": 0.7566421084933026,
+          "headShoulder": 0.7924382361056722
+        },
+        "binding": "headHeight",
+        "scale": 0.7566421084933026
+      }
+    },
+    {
+      "id": "npc.dale.aftermath",
+      "path": "public/assets/models/skinned/npc.dale.aftermath.lod0.glb",
+      "dimensions": {
+        "x": 0.44338709115982056,
+        "y": 1.433998942375183,
+        "z": 0.8476592898368835,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.2926808052535256,
+        "headShoulder": 0.6995079903311024,
+        "legHeight": 0.42538386624940616,
+        "shoulderHeight": 0.42148701228795965
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.1218403966638595,
+        "maximum": 1,
+        "intervals": {
+          "headHeight": [
+            0.7819701895622602,
+            1.0352729699106156
+          ],
+          "headShoulder": [
+            1.1218403966638595,
+            1.3711382625891617
+          ],
+          "legHeight": [
+            0.6738186108514319,
+            1.360598620662052
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 1.369891773259535
+        },
+        "binding": "headHeight",
+        "scale": 0.9999999999999964
+      }
+    },
+    {
+      "id": "npc.rosa.aftermath",
+      "path": "public/assets/models/skinned/npc.rosa.aftermath.lod0.glb",
+      "dimensions": {
+        "x": 0.6287437975406647,
+        "y": 1.4425980001688004,
+        "z": 0.7631127834320068,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3054347729686776,
+        "headShoulder": 1.131989195976688,
+        "legHeight": 0.450575968484114,
+        "shoulderHeight": 0.3248646258203849
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 0.8628226263506423,
+        "maximum": 0.8472891560615001,
+        "intervals": {
+          "headHeight": [
+            0.7350612754841614,
+            0.9731556415820499
+          ],
+          "headShoulder": [
+            0.6932365822321365,
+            0.8472891560615001
+          ],
+          "legHeight": [
+            0.8628226263506423,
+            1.5598990890166973
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9718714814403491,
+          "headShoulder": 0.8465188931923533
+        },
+        "binding": "headShoulder",
+        "scale": 0.8465188931923533
+      }
+    },
+    {
+      "id": "npc.mr-okafor.aftermath",
+      "path": "public/assets/models/skinned/npc.mr-okafor.aftermath.lod0.glb",
+      "dimensions": {
+        "x": 0.5982792377471924,
+        "y": 1.5889999270439148,
+        "z": 0.908076673746109,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.2489789311262483,
+        "headShoulder": 1.0915684620051451,
+        "legHeight": 0.5015733338784901,
+        "shoulderHeight": 0.29254259209696387
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.2672582121440104,
+        "maximum": 0.878664237667672,
+        "intervals": {
+          "headHeight": [
+            0.9799799186513599,
+            1.2967882233256505
+          ],
+          "headShoulder": [
+            0.718907103546277,
+            0.878664237667672
+          ],
+          "legHeight": [
+            1.2672582121440104,
+            2.2191831705864877
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 0.8778654519970649
+        },
+        "binding": "headShoulder",
+        "scale": 0.8778654519970649
+      }
+    },
+    {
+      "id": "npc.mia.aftermath",
+      "path": "public/assets/models/skinned/npc.mia.aftermath.lod0.glb",
+      "dimensions": {
+        "x": 0.6561400294303894,
+        "y": 1.416086919605732,
+        "z": 0.7077917456626892,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.35174865068718,
+        "headShoulder": 1.1936451173832137,
+        "legHeight": 0.4801965226770572,
+        "shoulderHeight": 0.2979822861638757
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.0599467195874324,
+        "maximum": 0.7859603750228292,
+        "intervals": {
+          "headHeight": [
+            0.5935392825017751,
+            0.7859603750228292
+          ],
+          "headShoulder": [
+            0.6574285019176663,
+            0.8035237245660367
+          ],
+          "legHeight": [
+            1.0599467195874324,
+            1.7050324620680977
+          ]
+        },
+        "limits": {
+          "headHeight": 0.784922696951746,
+          "headShoulder": 0.8027932484527949
+        },
+        "binding": "headHeight",
+        "scale": 0.784922696951746
+      }
+    },
+    {
+      "id": "npc.sam.aftermath",
+      "path": "public/assets/models/skinned/npc.sam.aftermath.lod0.glb",
+      "dimensions": {
+        "x": 0.6857486367225647,
+        "y": 1.4509999752044678,
+        "z": 0.6823000311851501,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3130254463775903,
+        "headShoulder": 0.9039130650302065,
+        "legHeight": 0.4203997413708822,
+        "shoulderHeight": 0.3323094972259809
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": true,
+        "minimum": 0.8681546397566001,
+        "maximum": 0.9386349261258407,
+        "intervals": {
+          "headHeight": [
+            0.7089979215926403,
+            0.9386349261258407
+          ],
+          "headShoulder": [
+            0.8681546397566001,
+            1.0610778930358447
+          ],
+          "legHeight": [
+            0.6611609774340836,
+            1.2957808526309533
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9373964251649447,
+          "headShoulder": 1.0601132767694483
+        },
+        "binding": "headHeight",
+        "scale": 0.9373964251649447
+      }
+    },
+    {
+      "id": "npc.civilian-man-a.aftermath",
+      "path": "public/assets/models/skinned/npc.civilian-man-a.aftermath.lod0.glb",
+      "dimensions": {
+        "x": 0.4857945293188095,
+        "y": 1.4316673297435045,
+        "z": 0.7575148046016693,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.29294596927538535,
+        "headShoulder": 1.13807495553129,
+        "legHeight": 0.41559932150915896,
+        "shoulderHeight": 0.31749380833945834
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": true,
+        "minimum": 0.7809464339281017,
+        "maximum": 0.8427583489719049,
+        "intervals": {
+          "headHeight": [
+            0.7809464339281017,
+            1.0339263951489623
+          ],
+          "headShoulder": [
+            0.6895295582497404,
+            0.8427583489719049
+          ],
+          "legHeight": [
+            0.6030912720819307,
+            1.2734668366894544
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 0.841992205018294
+        },
+        "binding": "headShoulder",
+        "scale": 0.841992205018294
+      }
+    },
+    {
+      "id": "npc.civilian-man-b.aftermath",
+      "path": "public/assets/models/skinned/npc.civilian-man-b.aftermath.lod0.glb",
+      "dimensions": {
+        "x": 0.5771472752094269,
+        "y": 1.8004037255664684,
+        "z": 1.0901823043823242,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.30501704500044213,
+        "headShoulder": 0.6132425233641142,
+        "legHeight": 0.4102920455643427,
+        "shoulderHeight": 0.43919510002597767
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.2796508582570099,
+        "maximum": 0.9751877435171411,
+        "intervals": {
+          "headHeight": [
+            0.737333207679553,
+            0.9751877435171411
+          ],
+          "headShoulder": [
+            1.2796508582570099,
+            1.5640177156474566
+          ],
+          "legHeight": [
+            0.5817998872825566,
+            1.2174232632365207
+          ]
+        },
+        "limits": {
+          "headHeight": 0.973905180503337,
+          "headShoulder": 1.5625958813605043
+        },
+        "binding": "headHeight",
+        "scale": 0.973905180503337
+      }
+    },
+    {
+      "id": "npc.civilian-woman-b.aftermath",
+      "path": "public/assets/models/skinned/npc.civilian-woman-b.aftermath.lod0.glb",
+      "dimensions": {
+        "x": 0.6254263520240784,
+        "y": 1.7999999843834757,
+        "z": 0.918422520160675,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3584239938724762,
+        "headShoulder": 0.8335911778564804,
+        "legHeight": 0.47517044366638733,
+        "shoulderHeight": 0.3267775007624194
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.0290124609653002,
+        "maximum": 0.763745233657309,
+        "intervals": {
+          "headHeight": [
+            0.5773981746574423,
+            0.763745233657309
+          ],
+          "headShoulder": [
+            0.941392306190759,
+            1.1505905964553722
+          ],
+          "legHeight": [
+            1.0290124609653002,
+            1.655457849917905
+          ]
+        },
+        "limits": {
+          "headHeight": 0.7627405530350835,
+          "headShoulder": 1.149544605004049
+        },
+        "binding": "headHeight",
+        "scale": 0.7627405530350835
+      }
+    },
+    {
+      "id": "npc.marcus.aftermath",
+      "path": "public/assets/models/skinned/npc.marcus.aftermath.lod0.glb",
+      "dimensions": {
+        "x": 0.6154400408267975,
+        "y": 1.81374088696462,
+        "z": 0.9596751928329468,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3097598481971248,
+        "headShoulder": 1.1063600175203934,
+        "legHeight": 0.41245029368407776,
+        "shoulderHeight": 0.32659508697082745
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": true,
+        "minimum": 0.7208967935622315,
+        "maximum": 0.866916876370349,
+        "intervals": {
+          "headHeight": [
+            0.7208967935622315,
+            0.9534268940388102
+          ],
+          "headShoulder": [
+            0.7092956261211946,
+            0.866916876370349
+          ],
+          "legHeight": [
+            0.603018657260169,
+            1.2322022182530887
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9521730686083032,
+          "headShoulder": 0.8661287701191032
+        },
+        "binding": "headShoulder",
+        "scale": 0.8661287701191032
+      }
+    },
+    {
+      "id": "npc.shelter-survivor.bandaged",
+      "path": "public/assets/models/skinned/npc.shelter-survivor.bandaged.lod0.glb",
+      "dimensions": {
+        "x": 0.4857945293188095,
+        "y": 1.4316673297435045,
+        "z": 0.7575148046016693,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.29294596927538535,
+        "headShoulder": 1.13807495553129,
+        "legHeight": 0.41559932150915896,
+        "shoulderHeight": 0.31749380833945834
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": true,
+        "minimum": 0.7809464339281017,
+        "maximum": 0.8427583489719049,
+        "intervals": {
+          "headHeight": [
+            0.7809464339281017,
+            1.0339263951489623
+          ],
+          "headShoulder": [
+            0.6895295582497404,
+            0.8427583489719049
+          ],
+          "legHeight": [
+            0.6030912720819307,
+            1.2734668366894544
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 0.841992205018294
+        },
+        "binding": "headShoulder",
+        "scale": 0.841992205018294
+      }
+    },
+    {
+      "id": "npc.shelter-survivor.lying",
+      "path": "public/assets/models/skinned/npc.shelter-survivor.lying.lod0.glb",
+      "dimensions": {
+        "x": 0.4857945293188095,
+        "y": 1.4316673297435045,
+        "z": 0.7575148046016693,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.29294596927538535,
+        "headShoulder": 1.13807495553129,
+        "legHeight": 0.41559932150915896,
+        "shoulderHeight": 0.31749380833945834
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": true,
+        "minimum": 0.7809464339281017,
+        "maximum": 0.8427583489719049,
+        "intervals": {
+          "headHeight": [
+            0.7809464339281017,
+            1.0339263951489623
+          ],
+          "headShoulder": [
+            0.6895295582497404,
+            0.8427583489719049
+          ],
+          "legHeight": [
+            0.6030912720819307,
+            1.2734668366894544
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 0.841992205018294
+        },
+        "binding": "headShoulder",
+        "scale": 0.841992205018294
+      }
+    },
+    {
+      "id": "npc.shelter-survivor.sitting",
+      "path": "public/assets/models/skinned/npc.shelter-survivor.sitting.lod0.glb",
+      "dimensions": {
+        "x": 0.4857945293188095,
+        "y": 1.4316673297435045,
+        "z": 0.7575148046016693,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.29294596927538535,
+        "headShoulder": 1.13807495553129,
+        "legHeight": 0.41559932150915896,
+        "shoulderHeight": 0.31749380833945834
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": true,
+        "minimum": 0.7809464339281017,
+        "maximum": 0.8427583489719049,
+        "intervals": {
+          "headHeight": [
+            0.7809464339281017,
+            1.0339263951489623
+          ],
+          "headShoulder": [
+            0.6895295582497404,
+            0.8427583489719049
+          ],
+          "legHeight": [
+            0.6030912720819307,
+            1.2734668366894544
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 0.841992205018294
+        },
+        "binding": "headShoulder",
+        "scale": 0.841992205018294
+      }
+    },
+    {
+      "id": "inf.mega-alpha",
+      "path": "public/assets/models/skinned/inf.mega-alpha.lod0.glb",
+      "dimensions": {
+        "x": 1.809944748878479,
+        "y": 2.6473909012559034,
+        "z": 2.938337206840515,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3398130267233443,
+        "headShoulder": 0.23383010504309307,
+        "legHeight": 0.41919392718326765,
+        "shoulderHeight": 0.8886401341045095
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 3.3560106437020263,
+        "maximum": 0.7952555981878069,
+        "intervals": {
+          "headHeight": [
+            0.601974566500684,
+            0.7952555981878069
+          ],
+          "headShoulder": [
+            3.3560106437020263,
+            4.101790786746921
+          ],
+          "legHeight": [
+            0.7618420963573547,
+            1.3447579024267582
+          ]
+        },
+        "limits": {
+          "headHeight": 0.8807456987141329,
+          "headShoulder": 4.098061886031696
+        },
+        "binding": "headHeight",
+        "scale": 0.8807456987141329
+      }
+    },
+    {
+      "id": "inf.mega-alpha-ashen",
+      "path": "public/assets/models/skinned/inf.mega-alpha-ashen.lod0.glb",
+      "dimensions": {
+        "x": 1.809944748878479,
+        "y": 2.6473909012559034,
+        "z": 2.938337206840515,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3819863059182658,
+        "headShoulder": 0.5526694067597058,
+        "legHeight": 0.41919392718326765,
+        "shoulderHeight": 0.8886401341045095
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.4199018649204467,
+        "maximum": 0.6904937516137529,
+        "intervals": {
+          "headHeight": [
+            0.5226801696976263,
+            0.6904937516137529
+          ],
+          "headShoulder": [
+            1.4199018649204467,
+            1.7354356126805461
+          ],
+          "legHeight": [
+            0.7156199879864417,
+            1.2341788507423908
+          ]
+        },
+        "limits": {
+          "headHeight": 0.7830236163456306,
+          "headShoulder": 1.7338579439417456
+        },
+        "binding": "headHeight",
+        "scale": 0.7830236163456306
+      }
+    },
+    {
+      "id": "inf.mega-alpha-ember",
+      "path": "public/assets/models/skinned/inf.mega-alpha-ember.lod0.glb",
+      "dimensions": {
+        "x": 1.7735825777053833,
+        "y": 2.5942042288750145,
+        "z": 2.879305362701416,
+        "tolerance": 0.15
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.36931338146400317,
+        "headShoulder": 0.24037477478879762,
+        "legHeight": 0.4277894771889893,
+        "shoulderHeight": 0.8620447507894888
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 3.2646367408230845,
+        "maximum": 0.7291208905780245,
+        "intervals": {
+          "headHeight": [
+            0.5519037510265657,
+            0.7291208905780245
+          ],
+          "headShoulder": [
+            3.2646367408230845,
+            3.990111572117103
+          ],
+          "legHeight": [
+            0.7553520569690056,
+            1.3027030701654734
+          ]
+        },
+        "limits": {
+          "headHeight": 0.8100110282089119,
+          "headShoulder": 3.986484197960633
+        },
+        "binding": "headHeight",
+        "scale": 0.8100110282089119
+      }
+    }
+  ]
+}
