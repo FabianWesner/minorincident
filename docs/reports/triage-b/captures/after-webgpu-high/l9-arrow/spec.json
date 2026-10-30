@@ -1,0 +1,43 @@
+{
+  "name": "l9-arrow",
+  "seed": 31,
+  "ground": "district",
+  "time": "L9-crossing",
+  "dof": false,
+  "layout": {
+    "district": "D-CROSSING",
+    "bbox": [
+      [
+        -470,
+        -45
+      ],
+      [
+        -400,
+        45
+      ]
+    ]
+  },
+  "vehicles": [
+    {
+      "id": "apc",
+      "asset": "vehicle.military-apc",
+      "at": [
+        -439,
+        0
+      ],
+      "driven": true,
+      "floor": true,
+      "health": 1000
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "apc",
+    "zoom": 1
+  },
+  "frames": 1,
+  "shots": [
+    0,
+    1
+  ]
+}

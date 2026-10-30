@@ -1,0 +1,66 @@
+{
+  "name": "l9-arrow",
+  "pass": true,
+  "checks": [
+    {
+      "name": "consoleErrors",
+      "pass": true,
+      "value": 0,
+      "limit": 0
+    },
+    {
+      "name": "canvas.f0.varianceMin",
+      "pass": true,
+      "value": 3505.740925688284,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f0.variedTilesMin",
+      "pass": true,
+      "value": 63,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f1.varianceMin",
+      "pass": true,
+      "value": 3505.8924025869674,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f1.variedTilesMin",
+      "pass": true,
+      "value": 63,
+      "limit": 8
+    },
+    {
+      "name": "requestedBackend",
+      "pass": true,
+      "value": 1,
+      "limit": 1
+    },
+    {
+      "name": "requestedQuality",
+      "pass": true,
+      "value": 1,
+      "limit": 1
+    }
+  ],
+  "backend": "webgpu",
+  "actualTier": "high",
+  "frames": 1,
+  "seconds": 3.88,
+  "failed": [],
+  "clipping": {
+    "gunBodyHits": 0,
+    "staticPairs": 0,
+    "heldPropHits": 0,
+    "actorHits": 0,
+    "piercing": 0
+  },
+  "files": [
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/before-webgpu-high/l9-arrow/shot-0000.png",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/before-webgpu-high/l9-arrow/shot-0001.png",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/before-webgpu-high/l9-arrow/metrics.json"
+  ],
+  "consoleErrors": []
+}

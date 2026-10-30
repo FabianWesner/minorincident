@@ -240,13 +240,13 @@ for x,z in [(-310,-110),(-100,-120),(100,-120),(310,-110),(-45,-62),(65,-65),(-2
         ob.location=(x,-z,0); l.layers[0].append(ob)
     l.data['colliders'].append(dict(id=f'rocks-{x}',aabb=dict(min=[x-(hi.x-lo.x)/2,0,z-(hi.y-lo.y)/2],max=[x+(hi.x-lo.x)/2,hi.z-lo.z,z+(hi.y-lo.y)/2]),minTier=0,maxTier=6))
 for obj in imported: bpy.data.objects.remove(obj,do_unlink=True)
-# Visible fork direction arrows: three traces branch towards the skyline, no route rails.
+# Road-sized painted arrows at the fork, rather than a vehicle-sized white slab.
 for z in [-16,0,16]:
-    surface('outskirts-arrow',[[-445,z-2],[-438,z-2],[-438,z-4],[-432,z],[-438,z+4],[-438,z+2],[-445,z+2]],'picketWhite',.01)
+    surface('outskirts-arrow',[[-441,z-.22],[-438.5,z-.22],[-438.5,z-.7],[-437,z],[-438.5,z+.7],[-438.5,z+.22],[-441,z+.22]],'canvasTan',.01)
 # All three routes merge at x=450; painted chevrons and verge stock point into the authored crash.
 # The existing full-width mission trigger owns off-road bypasses as well as the road approach.
 for x in [450,458]:
-    surface('crash-direction',[[x,-2],[x+4,-2],[x+4,-4],[x+10,0],[x+4,4],[x+4,2],[x,2]],'picketWhite',.01)
+    surface('crash-direction',[[x,-.22],[x+2.5,-.22],[x+2.5,-.7],[x+4,0],[x+2.5,.7],[x+2.5,.22],[x,.22]],'canvasTan',.01)
 # ---- L9-A2 crash site: gully terrain, collapsed road/bridge kit, wrecks, anchors --------------------
 def gully():
     """Banks and floor of the gully as terrain-chunk meshes (z<0 belongs to chunk row 3, z>=0 to row 4)."""
