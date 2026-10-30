@@ -344,7 +344,7 @@ export class GameView implements Lifecycle {
       prewarmed.corgi = this.npcs?.prewarmCorgi(corgiFocus); corgiPrewarmed = !!prewarmed.corgi;
       // Issued and racked weapons the courier is not holding yet: their held (courier-fill) materials.
       prewarmed.held = this.actions?.prewarmHeld(this.camera.getWorldDirection(new Vector3()).multiplyScalar(10).add(this.camera.position));
-      prewarmed.medkits = this.world.scenario === 'L5' ? await this.interactions?.prewarmMedkits(corgiFocus) : undefined;
+      prewarmed.medkits = this.world.scenario === 'L5' || this.world.scenario === 'L10' ? await this.interactions?.prewarmMedkits(corgiFocus) : undefined;
       prewarmed.gates = this.world.scenario === 'L6' ? await this.interactions?.prewarmServiceGates() : undefined;
     } catch (error) { restorePrewarmed(); throw error; }
     if (this.world.scenario === 'L6') this.districts?.metroPower(true, false);

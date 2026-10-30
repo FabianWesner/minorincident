@@ -128,13 +128,12 @@ export class InteractionView extends Group {
     for (const model of models) { this.prepareGate(model); model.visible = false; this.add(model); }
     return () => { for (const model of models) model.removeFromParent(); };
   }
-  /** L5's bus-side medkit changes from distant to close detail on approach. Warm the
+  /** L5's bus-side and L10's roadside medkits change detail on approach. Warm the
    * actual cached prototypes and cover pixels, so Metal finishes their first draw at load. */
   async prewarmMedkits(at: Vector3): Promise<() => void> {
-    const entity = [...this.world.entities.iterate()].find(e => e.archetype === 'pickup.medkit');
-    if (!entity) return () => {};
+    // L10 creates its distant kits only when their chunks become resident.
     const lods: AssetQuality[] = this.low ? ['lod1', 'lod2'] : ['lod0', 'lod1', 'lod2'];
-    const models = await Promise.all(lods.map(lod => this.create(entity, lod)));
+    const models = await Promise.all(lods.map(lod => this.asset('pick.medkit', lod)));
     models.forEach((model, i) => { model.position.copy(this.worldToLocal(at.clone())); model.position.x += i * .8; model.scale.multiplyScalar(4); model.visible = false; this.add(model); });
     return () => { for (const model of models) model.removeFromParent(); };
   }
@@ -244,6 +243,18 @@ export class InteractionView extends Group {
       const hinge = object.getObjectByName('gate'); if (hinge) hinge.rotation.y += ((e.interactable.open ? -Math.PI / 2 : 0) - hinge.rotation.y) * .25;
     }
   }
+  /** Cached static pickup/prop graph shared by live objects and loading representatives. */
+  private async asset(id: string, lod: AssetQuality): Promise<Object3D> {
+    const def = this.registry.definition(id), canonical = (lod === 'lod1' || lod === 'lod2') && !def.lods?.[lod] ? 'lod0' : lod;
+    const key = `${id}:${canonical}`;
+    if (!this.prototypes.has(key)) this.prototypes.set(key, this.registry.loadAsset(id, canonical).then(source => {
+      if (this.disposed) return source as Group;
+      const prototype = staticBatch(source, true, this.materials, false, this.materialGraphs); prototype.userData = { ...source.userData };
+      prototype.traverse(node => { if (node instanceof Mesh) { this.geometries.add(node.geometry); this.batchMaterials.add(node.material as Material); } });
+      return prototype;
+    }));
+    return (await this.prototypes.get(key)!).clone(true);
+  }
   private async create(e: EntitySnapshot, lod: AssetQuality): Promise<Object3D> {
     if (e.archetype === 'l6.service-gate') { const model = await this.registry.loadAsset('prop.service-gate', lod); this.prepareGate(model); return model; }
     // PO 10-20 #64: the entry hatch itself is drawn by entryHatches; its close prompt has no body of its own.
@@ -261,17 +272,7 @@ export class InteractionView extends Group {
     }
     if (e.toy || this.world.toys?.gateIds.includes(e.id)) { const object = this.toyObject(e); await this.attachModels(e, object); return object; }
     const pickup = e.pickup && 'kind' in e.pickup ? e.pickup : undefined, id = this.assetId(e);
-    if (id) {
-      const def = this.registry.definition(id), canonical = (lod === 'lod1' || lod === 'lod2') && !def.lods?.[lod] ? 'lod0' : lod;
-    const key = `${id}:${canonical}`;
-      if (!this.prototypes.has(key)) this.prototypes.set(key, this.registry.loadAsset(id, canonical).then(source => {
-        if (this.disposed) return source as Group;
-        const prototype = staticBatch(source, true, this.materials, false, this.materialGraphs); prototype.userData = { ...source.userData };
-        prototype.traverse(node => { if (node instanceof Mesh) { this.geometries.add(node.geometry); this.batchMaterials.add(node.material as Material); } });
-        return prototype;
-      }));
-      return (await this.prototypes.get(key)!).clone(true);
-    }
+    if (id) return this.asset(id, lod);
     // E27 draws fire hazards (flame cards, light pools, smoke): no placeholder slab.
     if (e.hazard?.kind === 'fire' || e.hazard?.kind === 'tear-gas') return new Group();
     if (e.hazard?.kind === 'toxic') {
