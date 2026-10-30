@@ -44,7 +44,7 @@ export interface VfxTargets {
 const eventTypes = ['ally.attack', 'combat.hit', 'combat.kill', 'combat.attack', 'combat.exploded', 'combat.effect', 'combat.hit-stop', 'telegraph', 'infected.special', 'attack.resolved', 'vfx.effect', 'vehicle.feedback', 'vehicle.durability-hit', 'hazard.exploded', 'hazard.electrified', 'prop.ignited', 'vehicle.exploded', 'noise', 'pickup.collected', 'explosion', 'explosion.slowmo', 'outbreak.infection'] as const;
 const limbs = 5;
 const heavyBlade = /machete|axe|katana|shovel/;
-const telegraphShapes = { lunge: 3, charge: 2, splash: 1, bloated: 4 } as const;
+const telegraphShapes = { lunge: 1, charge: 2, splash: 1, bloated: 4 } as const;
 const effectColors = { fire: 0xff923a, smoke: 0x665f73, toxic: 0x96d354, objective: 0xffe18e, pickup: 0x84e7ff, ash: 0xbcb0c8, 'vehicle-smoke': 0x535360, 'vehicle-fire': 0xff8c32 } as const;
 /** Seconds between two hit flashes on one target: a 0.1 s pulse, then at least 0.25 s in its own colours. */
 export const hitFlashRest = 0.35;
