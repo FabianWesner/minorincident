@@ -1,0 +1,1 @@
+- Q-248 fixed: triage-b “28 m stations” replaced with seeded 25–34 m spacing, eight compositions and sparse single-prop stops; lantern cadence retained. Viewed R1–R5 before/after, high/low, z1/z1.5 ([captures](captures/), [determinism](checks/q248-layout.json)); zero late shader builds.
