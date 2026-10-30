@@ -7,9 +7,9 @@
   "frames": 82,
   "timing": {
     "openMs": 0,
-    "loadMs": 4109,
-    "runMs": 584,
-    "sceneMs": 4693
+    "loadMs": 3921,
+    "runMs": 589,
+    "sceneMs": 4510
   },
   "checks": {
     "pass": true,
@@ -35,7 +35,7 @@
       {
         "name": "canvas.f80.varianceMin",
         "pass": true,
-        "value": 418.44742399637835,
+        "value": 417.50445956709245,
         "limit": 1
       },
       {
@@ -47,7 +47,7 @@
       {
         "name": "canvas.f82.varianceMin",
         "pass": true,
-        "value": 418.3245193451221,
+        "value": 417.38418731334514,
         "limit": 1
       },
       {
@@ -97,11 +97,11 @@
         "width": 960,
         "height": 540,
         "mean": [
-          86.78539351851852,
-          69.19895640432098,
-          77.28309799382716
+          86.92760223765433,
+          69.2389274691358,
+          77.28676697530864
         ],
-        "variance": 418.44742399637835,
+        "variance": 417.50445956709245,
         "variedTiles": 64,
         "tiles": 64
       }
@@ -112,11 +112,11 @@
         "width": 960,
         "height": 540,
         "mean": [
-          86.77613811728395,
-          69.18947916666667,
-          77.27156635802469
+          86.91834683641976,
+          69.22945023148148,
+          77.27523533950617
         ],
-        "variance": 418.3245193451221,
+        "variance": 417.38418731334514,
         "variedTiles": 64,
         "tiles": 64
       }
@@ -248,8 +248,8 @@
         "max": 23
       },
       "triangles": {
-        "p50": 39856,
-        "p95": 39856,
+        "p50": 33936,
+        "p95": 33936,
         "max": 50691
       },
       "shadowDrawCalls": {
@@ -264,15 +264,15 @@
       },
       "stepMs": {
         "p50": 1.9,
-        "p95": 3.2,
-        "max": 13
+        "p95": 3.4,
+        "max": 11.9
       },
       "lastFrame": {
         "drawCalls": 20,
-        "triangles": 39856,
+        "triangles": 33936,
         "shadowDrawCalls": 15,
         "shadowTriangles": 6015,
-        "stepMs": 2.299999237060547,
+        "stepMs": 2.1000003814697266,
         "categories": {
           "other": 14,
           "crowd": 6,
@@ -663,7 +663,8 @@
         "inViewFrames": 5,
         "missedInViewFrames": 0,
         "lod": {
-          "lod0": 82
+          "lod0": 5,
+          "lod2": 77
         },
         "firstDrawn": {
           "frame": 1,
@@ -672,7 +673,7 @@
             1.5
           ]
         },
-        "farLodCloseFrames": 0,
+        "farLodCloseFrames": 77,
         "motion": {
           "frames": 82,
           "torsoPitchMinDeg": 21.5,

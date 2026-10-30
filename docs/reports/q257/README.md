@@ -2,7 +2,7 @@
 
 ## Changes
 
-Healthy adults now share the heroine’s measured height class: women **1.454 m**, men **1.570 m** (+8%), elderly man **1.492 m** (male × 0.95). Both children retain their PROD heights. Mia, Sam, Rosa, Dale and Mr. Okafor were 1.800 m on PROD, outside the requested heroine-relative class, so they use the corresponding adult class. Lab-tech A is male; lab-tech B and the depot clerk are female, as authored in their build scripts.
+Healthy adults now share the heroine’s measured height class: women **1.454 m**, men **1.570 m** (+8%), elderly man **1.492 m** (male × 0.95). After orchestrator review, both children preserve their PROD child/adult ratios against the new women’s class: child **1.191 m** (0.819 × 1.454), brother **1.152 m** (0.793 × 1.454). Both are shorter than every adult class. Mia, Sam, Rosa, Dale and Mr. Okafor were 1.800 m on PROD, outside the requested heroine-relative class, so they use the corresponding adult class. Lab-tech A is male; lab-tech B and the depot clerk are female, as authored in their build scripts.
 
 The q249 authored-size flag bypassed the old civilian fitter. Restored uniform fitting and rebuilt all **78 delivered civilian GPU bakes** (26 figures × 3 LODs); changing the loader alone does not change those already delivered files. CharacterView applies the same female/male class to playable outfits. Uniform whole-figure scaling preserves the approved head ratios, shoulders and anatomy; no GLB, UV or texture pixels were changed.
 
@@ -12,7 +12,7 @@ Coffee reach now accounts for the reduced fingertip envelope on woman-a and man-
 
 ## Height census
 
-[Every human figure: PROD / main / after](height-census.md) and [exact values, ground planes, delivery paths and all LODs](height-census.json). PROD batch 40 is `fd8f56ca3`; pre-fix main is `73a855ef6`. The census reads the actual encoded delivery geometry, including offline normalization, and covers **71 figures**, with **zero healthy adult class or child preservation errors**. Infected archetypes retain their authored size/pose distinctions; unused legacy models are identified separately.
+[Every human figure: PROD / main / after](height-census.md) and [exact values, ground planes, delivery paths and all LODs](height-census.json). PROD batch 40 is `fd8f56ca3`; pre-fix main is `73a855ef6`. The census reads the actual encoded delivery geometry, including offline normalization, and covers **71 figures**, with **zero healthy adult class or child ratio errors**. Infected archetypes retain their authored size/pose distinctions; unused legacy models are identified separately.
 
 | Figure | PROD 40 (m) | main (m) | after (m) |
 |---|---:|---:|---:|
@@ -23,11 +23,11 @@ Coffee reach now accounts for the reduced fingertip envelope on woman-a and man-
 | Mia / Sam | 1.800 / 1.800 | 1.285 / 1.444 | 1.454 / 1.570 |
 | Rosa / Mr. Okafor | 1.800 / 1.800 | 1.371 / 1.529 | 1.454 / 1.570 |
 | Elderly man | 1.800 | 1.339 | 1.492 |
-| Child / brother | 1.474 / 1.427 | 1.474 / 1.427 | 1.474 / 1.427 |
+| Child / brother | 1.474 / 1.427 | 1.474 / 1.427 | 1.191 / 1.152 |
 
 ## Visual review
 
-Opened the supplied batch-41 lineup, depot and Dale evidence. Captured exact main and final output through the headless shared browser pool. Inspected all five final side lineups with the heroine, both quality tiers, and the corpse lineups. [Lineup 1 comparison](visual/lineup-1-main-vs-after.jpg), [lineup 2 comparison](visual/lineup-2-main-vs-after.jpg), [L1 depot comparison](visual/l1-depot-main-vs-after.jpg) show main above after. The clerk now belongs to the heroine’s class; men consistently exceed it. Original children are preserved.
+Opened the supplied batch-41 lineup, depot and Dale evidence. Captured exact main and final output through the headless shared browser pool. Inspected all five final side lineups with the heroine, both quality tiers, and the corpse lineups. [Lineup 1 comparison](visual/lineup-1-main-vs-after.jpg), [lineup 2 comparison](visual/lineup-2-main-vs-after.jpg), [L1 depot comparison](visual/l1-depot-main-vs-after.jpg) show main above after. The clerk now belongs to the heroine’s class; men consistently exceed it. Those earlier five-group captures precede the child follow-up. The updated [high child lineup](visual/children-high/lineup.jpg) and [low child lineup](visual/children-low/lineup.jpg) supersede their child group: adult woman, child, brother and heroine. The brother uses his real escort renderer, including its load-time scaling.
 
 Inspected Dale alone at LOD0/1/2 in [high](visual/after-high/dale-lod1.jpg) and [low](visual/after-low/dale-lod1.jpg), then in the actual L5 mixed survivor scene ([high](visual/after-high/l5-dale-45.jpg), [low](visual/after-low/l5-dale-45.jpg)). His blue shirt and dark hair are intact. Coffee captures at all three LODs are in both final quality folders; near/normal contacts are measured above.
 
@@ -35,18 +35,22 @@ All 26 resized adult figures were infected and killed through Scene Lab, then al
 
 ## Validation
 
+Child follow-up complete: npm test **110/110**, typecheck/lint, smoke **7/7** and scene gate **48/48** pass. The latest high/low child lineups were opened and visually reviewed. Children remain below every adult height class.
+
 - `npm test`: **110/110**, 26 files; repository case budget **150/150** ([log](qa/npm-test.log)).
 - `npm run typecheck` and `npm run lint`: pass ([typecheck](qa/typecheck.log), [lint](qa/lint.log)).
 - Height census: **71 figures, 0 errors** ([log](qa/height-census.log)).
 - Rerun q249 audit: **65 adult variants / 68 figures / 394 files / 0 errors** ([audit](q249-audit.json), [log](qa/head-audit.log)); caps remain head/height ≤ 0.299787 and head width/shoulders ≤ 0.959122.
 - Headless high/low screenshots: no browser errors; [grounding summary](visual/grounding-summary.json) records 26 corpses per tier, maximum offset **0 cm**.
-- `npm run test:smoke`: **6 QA cases + 1 public case pass**, 147.8 s / 240 s. Portable GPU limits pass on WebGL2 and WebGPU; the handover/outbreak/gear shader warm-up guard passes with no late builds ([log](qa/smoke.log)).
-- `npm run scene:gate`: **48/48 pass, 0 known failures, 0 not run**, 3.6 min across WebGL2/WebGPU and high/low ([summary](qa/scene-gate/summary.md), [log](qa/scene-gate.log)).
+- `npm run test:smoke`: **6 QA cases + 1 public case pass**, 136.3 s / 240 s. Portable GPU limits pass on WebGL2 and WebGPU; the handover/outbreak/gear shader warm-up guard passes with no late builds ([log](qa/smoke.log)).
+- `npm run scene:gate`: **48/48 pass, 0 known failures, 0 not run**, across WebGL2/WebGPU and high/low ([summary](qa/scene-gate/summary.md), [log](qa/scene-gate.log)).
 
 ## Reproduce
 
 ```sh
 node --import tsx tools/q257/rebuild-civilians.ts
+SCENE_PORT=3373 node --import tsx tools/q257/children-lineup.ts high
+SCENE_PORT=3374 node --import tsx tools/q257/children-lineup.ts low
 node --import tsx tools/q257/height-census.ts
 node --import tsx tools/q249/audit-rollout.ts docs/reports/q257/q249-audit.json
 npm run build:qa

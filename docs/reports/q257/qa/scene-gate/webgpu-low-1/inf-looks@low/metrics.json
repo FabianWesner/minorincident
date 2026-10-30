@@ -7,9 +7,9 @@
   "frames": 360,
   "timing": {
     "openMs": 0,
-    "loadMs": 3911,
-    "runMs": 3070,
-    "sceneMs": 6981
+    "loadMs": 3971,
+    "runMs": 3083,
+    "sceneMs": 7054
   },
   "checks": {
     "pass": true,
@@ -35,7 +35,7 @@
       {
         "name": "canvas.f0.varianceMin",
         "pass": true,
-        "value": 566.243736354616,
+        "value": 566.1114153495655,
         "limit": 1
       },
       {
@@ -47,7 +47,7 @@
       {
         "name": "canvas.f23.varianceMin",
         "pass": true,
-        "value": 507.0107652069146,
+        "value": 507.32638051089634,
         "limit": 1
       },
       {
@@ -59,7 +59,7 @@
       {
         "name": "canvas.f46.varianceMin",
         "pass": true,
-        "value": 515.1166439243807,
+        "value": 515.1088034035765,
         "limit": 1
       },
       {
@@ -71,7 +71,7 @@
       {
         "name": "canvas.f69.varianceMin",
         "pass": true,
-        "value": 499.4065375790651,
+        "value": 499.39230922639035,
         "limit": 1
       },
       {
@@ -83,7 +83,7 @@
       {
         "name": "canvas.f92.varianceMin",
         "pass": true,
-        "value": 515.0040153344416,
+        "value": 514.9885023121005,
         "limit": 1
       },
       {
@@ -262,11 +262,11 @@
         "width": 960,
         "height": 540,
         "mean": [
-          124.89521412037037,
-          88.19105516975308,
-          84.47838927469135
+          124.89007330246913,
+          88.18807484567901,
+          84.47825617283951
         ],
-        "variance": 566.243736354616,
+        "variance": 566.1114153495655,
         "variedTiles": 64,
         "tiles": 64
       }
@@ -277,11 +277,11 @@
         "width": 960,
         "height": 540,
         "mean": [
-          125.64619212962963,
-          88.7365162037037,
-          84.93239390432099
+          125.63731288580247,
+          88.73011766975308,
+          84.92572530864197
         ],
-        "variance": 507.0107652069146,
+        "variance": 507.32638051089634,
         "variedTiles": 64,
         "tiles": 64
       }
@@ -292,11 +292,11 @@
         "width": 960,
         "height": 540,
         "mean": [
-          125.6288136574074,
-          88.76338927469136,
-          84.98001736111111
+          125.62820216049383,
+          88.76318672839506,
+          84.98030092592593
         ],
-        "variance": 515.1166439243807,
+        "variance": 515.1088034035765,
         "variedTiles": 64,
         "tiles": 64
       }
@@ -307,11 +307,11 @@
         "width": 960,
         "height": 540,
         "mean": [
-          125.47317901234568,
-          88.6621199845679,
-          84.83161651234568
+          125.47296489197531,
+          88.66208912037037,
+          84.83162615740741
         ],
-        "variance": 499.4065375790651,
+        "variance": 499.39230922639035,
         "variedTiles": 64,
         "tiles": 64
       }
@@ -322,11 +322,11 @@
         "width": 960,
         "height": 540,
         "mean": [
-          126.1003125,
-          88.73443672839507,
-          84.71888888888888
+          126.10005208333334,
+          88.73431712962963,
+          84.71898148148148
         ],
-        "variance": 515.0040153344416,
+        "variance": 514.9885023121005,
         "variedTiles": 64,
         "tiles": 64
       }
@@ -703,16 +703,16 @@
         "max": 6010
       },
       "stepMs": {
-        "p50": 2.6,
-        "p95": 3.7,
-        "max": 8.4
+        "p50": 2.7,
+        "p95": 3.9,
+        "max": 9.2
       },
       "lastFrame": {
         "drawCalls": 19,
         "triangles": 15717,
         "shadowDrawCalls": 10,
         "shadowTriangles": 6010,
-        "stepMs": 1.5999994277954102,
+        "stepMs": 1.6000003814697266,
         "categories": {
           "other": 16,
           "shadows": 10,
@@ -1069,12 +1069,12 @@
           "frames": 360,
           "torsoPitchMinDeg": 14.2,
           "torsoPitchMaxDeg": 78.9,
-          "contacts": 29,
+          "contacts": 27,
           "slideMaxCm": 6,
-          "slideP95Cm": 2.9,
+          "slideP95Cm": 5.1,
           "yawDriftMaxDeg": 31.2,
-          "liftMaxCm": 15.3,
-          "sinkMaxCm": 0.2,
+          "liftMaxCm": 15.4,
+          "sinkMaxCm": 0.4,
           "jitterRunMax": 3,
           "worstSlideFrame": 50
         }
