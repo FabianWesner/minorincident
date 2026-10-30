@@ -8,6 +8,7 @@ import { crossing } from '../levels/L9/district';
 import { l6Camps } from '../levels/decor';
 import { cure } from '../levels/L10/district';
 import { cureEncounters } from '../levels/L10/encounters';
+import { cureBeltGroundLantern } from '../levels/L10/roadsideBelt';
 import { Rng } from '../core/Rng';
 import { footprint, type FieldLight, type LightField } from './LightField';
 import type { DistrictWorld } from '../sim/world/DistrictWorld';
@@ -239,6 +240,13 @@ export function cureAccents(placements: readonly Placement[], origin: P2 = [0, 0
   // a burning car per region, lit bus stops and police light bars; render-only, kept off the encounter spots and the console.
   const points: Accent[] = [], put = (a: Omit<Accent, 'seed'> & { seed?: number }) => points.push({ ...a, x: a.x + origin[0], z: a.z + origin[1], seed: a.seed ?? Math.abs(a.x * 12.9898 + a.z * 78.233) % 6.283 });
   for (const p of placements) {
+    if (p.decor && p.roadLife) {
+      const [x, , z] = p.position;
+      put({ kind: 'storm-lantern', x, y: p.visualAabb.max[1] + .235, z, yaw: p.yaw,
+        color: '#ffb35c', glow: 5, flicker: 1, strobe: false,
+        pool: { color: '#ff9a48', intensity: 4.6, range: Math.min(2.4, lane(x, z) - 1.6) } });
+      continue;
+    }
     if (!p.roadLife) continue;
     const [x, , z] = p.position, k = keyed(`life:${p.id}`), clearOfStory = spot(x, z) > 9 && Math.hypot(x - consoleAt[0], z - consoleAt[1]) > 70, l = lane(x, z);
     if (!clearOfStory || x > 3940) continue;
@@ -254,6 +262,10 @@ export function cureAccents(placements: readonly Placement[], origin: P2 = [0, 0
       for (const [i, lz] of [-.38, .38].entries()) put({ kind: 'beacon', x: x + lz * s, y: h * .98, z: z + lz * c, yaw: p.yaw, color: i ? '#2f6bff' : '#ff2a1a', glow: 9, flicker: 0, strobe: true, seed: ph + i * .5, pool: { color: i ? 'light_siren_blue' : 'light_siren_red', intensity: 2.8, range: 4.2 } });
     }
   }
+  // The substation's existing stacks leave room for a lantern, with no extra supply footprint.
+  const [lx, ly, lz] = cureBeltGroundLantern;
+  put({ kind: 'storm-lantern', x: lx, y: ly, z: lz, yaw: 0, color: '#ffb35c', glow: 5,
+    flicker: 1, strobe: false, pool: { color: '#ff9a48', intensity: 4.6, range: 2.4 } });
   // 4) Night fields (look-l10-l8-2): abandoned field camps keep a campfire and a lantern, cars that left the road still burn. All
   // >= 11.5 m from the route centre line (lane > 8.5), so no pool reaches the E31-AC16 verge sample; same story/console clearances.
   for (const p of placements) {

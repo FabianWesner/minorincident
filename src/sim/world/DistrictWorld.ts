@@ -63,7 +63,7 @@ export class DistrictWorld {
       const source = layouts.find((l) => l.district === d.id);
       if (!source) throw new Error(`Missing layout: ${d.id}`);
       // look-l6-l9: render-only decor joins the placements (no collider, pushable or nav footprint; Scene Lab adds its own crop).
-      const layout = { ...source, placements: [...closeBarrierJoints(source.placements), ...(source.geometryHash === 'scene-lab' || source.placements.some(p => p.decor) ? [] : districtDecor(source.district, source.placements))] };
+      const layout = { ...source, placements: [...closeBarrierJoints(source.placements), ...(source.geometryHash === 'scene-lab' || source.placements.some(p => p.decor && p.id.startsWith('decor-')) ? [] : districtDecor(source.district, source.placements))] };
       const gameplay = { ...(d.gameplay ?? districtGameplay[d.id]), ...d.overrides };
       if (gameplay.decay.some(layer => !isWorldTier(layer.tier))) throw new RangeError(`Invalid gameplay decay tier: ${d.id}`);
       const decay = resolveDecay(layout, composition.tier),

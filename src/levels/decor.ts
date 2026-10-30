@@ -6,6 +6,7 @@
 import { Rng } from '../core/Rng';
 import { worldAssets } from '../assets/worldDefinitions';
 import { l6, l6Doors } from '../data/l6';
+import { cureRoadsideBelt } from './L10/roadsideBelt';
 import type { DistrictId, Placement } from './districts/types';
 
 type Spot = { asset: string; x: number; z: number; y?: number; yaw?: number; scale?: number };
@@ -75,8 +76,11 @@ const cache = new Map<string, Placement[]>();
 export function districtDecor(district: DistrictId, placements: readonly Placement[]): Placement[] {
   // L9 roadside pieces were removed (orchestrator 10-29): without vehicle collision they were pass-through, with it the APC
   // stopped on luggage. L9 keeps its existing dressing.
-  if (district !== 'D-SUBWAY') return [];
+  if (district !== 'D-SUBWAY' && district !== 'D-CURE') return [];
   const key = `${district}:${placements.length}`, hit = cache.get(key); if (hit) return hit;
+  if (district === 'D-CURE') {
+    const list = cureRoadsideBelt(placements); cache.set(key, list); return list;
+  }
   const spots = subwayDecor();
   const list = spots.map((s, i) => placement(district, i, s));
   cache.set(key, list);
