@@ -1,6 +1,6 @@
 import { action } from '../../data/actions/catalog';
 import { dialogue } from '../../data/dialogue';
-import { l5, l5Fires, l5Loadout, l5Survivors, l5Wanderers } from '../../data/l5';
+import { l5, l5DroppedWeapons, l5Fires, l5Loadout, l5Survivors, l5Wanderers, l5WeaponPickup } from '../../data/l5';
 import { l5Dressing } from '../../levels/L5/layout';
 import { Outbreak } from '../outbreak/Outbreak';
 import type { Mission } from './Mission';
@@ -65,15 +65,14 @@ export class LevelFiveAftermath {
       // Keep a recorded campaign selection; legacy/default entries retain the authored machine-gun opening.
       if (!world.progression?.campaign?.selectedAction) combat.runner.loadout.state.selectedSide = 'RIGHT';
     }
-    combat?.withholdPickups('weapon.shotgun');
+    combat?.withholdPickups(l5WeaponPickup);
     this.placeInCellar();
     const shelf = this.anchor('l5-shotgun');
-    const pickup = world.combat?.pickups.spawn('weapon.shotgun', shelf, false, { retain: true, interactTicks: 36, surfaceY: .385 });
+    const pickup = world.combat?.pickups.spawn(l5WeaponPickup, shelf, false, { retain: true, interactTicks: 36, surfaceY: .385 });
     if (pickup !== undefined) world.entities.get(pickup)!.transform.yaw = Math.PI / 2;
     // Materialize the eight existing dropped street weapons once; their scenery meshes are omitted by the layout.
-    for (const e of l5Dressing) if (e.kind === 'weapon') {
-      const actionId = e.assetId === 'wpn.pistol' ? 'weapon.handgun' : e.assetId === 'wpn.machine-gun' ? 'weapon.army-mg' : e.assetId.replace('wpn.', 'weapon.');
-      const id = combat?.pickups.spawn(actionId, { x: e.x, z: e.z }, false, { survivorOnly: true });
+    for (const e of l5DroppedWeapons) {
+      const id = combat?.pickups.spawn(e.actionId, { x: e.x, z: e.z }, false, { survivorOnly: true });
       if (id !== undefined) world.entities.get(id)!.transform.yaw = e.yaw ?? 0;
     }
     this.spawnSurvivors();

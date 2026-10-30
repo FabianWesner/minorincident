@@ -7,6 +7,7 @@
 type P = readonly [number, number];
 /** Behaviour of a trapped person at the glass (see `l2.rescue.atGlass`). */
 export type GlassRole = 'bang' | 'press' | 'plead' | 'look' | 'cower' | 'hug' | 'child';
+export const l2WeaponPickup = 'weapon.fire-axe' as const;
 export const l2 = {
   /** Beat 1-2: the calm in the bay, then the alarm when the fire axe is taken. */
   calm: { crewToTruckMaxS: 8, crewRunMs: 4.2, civiliansOnBenches: 4 },

@@ -1,5 +1,5 @@
 import { L2TruckDrive } from '../vehicles/L2TruckDrive';
-import { l2, l2Station, l2StationLooks, l2Truck, l2TruckRoute, type GlassRole } from '../../data/l2';
+import { l2, l2Station, l2StationLooks, l2Truck, l2TruckRoute, l2WeaponPickup, type GlassRole } from '../../data/l2';
 import { Outbreak } from '../outbreak/Outbreak';
 import { allyState } from '../outbreak/Allies';
 import { seatAnchor } from '../npc/seats';
@@ -101,7 +101,7 @@ export class LevelTwoRescue {
     // L2-default progression: the bat from L1 is in hand (a campaign load has already applied its racks).
     if (!world.progression || !world.entities.get(1)!.weapons) world.combat?.setLoadout(['weapon.bat'], ['weapon.fists']);
     // The axe is only owned after the rack pickup, even when a replay/Continue save already carries it.
-    world.combat?.withholdPickups('weapon.fire-axe');
+    world.combat?.withholdPickups(l2WeaponPickup);
     this.spawnTruck();
     this.spawnStation();
     this.spawnCheckpoint();
@@ -262,11 +262,11 @@ export class LevelTwoRescue {
   private takeAxe(): void {
     const combat = this.world.combat; if (!combat || this.s.axe) return;
     this.s.axe = true;
-    const left = combat.runner.loadout.state.LEFT.rack.map(s => s.id).filter(id => id !== 'weapon.fire-axe' && id !== 'weapon.kick');
+    const left = combat.runner.loadout.state.LEFT.rack.map(s => s.id).filter(id => id !== l2WeaponPickup && id !== 'weapon.kick');
     const right = combat.runner.loadout.state.RIGHT.rack.map(s => s.id);
-    combat.setLoadout(['weapon.fire-axe', ...left].slice(0, Math.max(2, combat.rackCapacity)), right);
+    combat.setLoadout([l2WeaponPickup, ...left].slice(0, Math.max(2, combat.rackCapacity)), right);
     combat.runner.loadout.state.selectedSide = 'LEFT';
-    this.world.events.emit({ type: 'pickup.collected', tick: this.world.tick, sourceId: 1, pickupId: 0, side: 'LEFT', actionId: 'weapon.fire-axe', replaced: null });
+    this.world.events.emit({ type: 'pickup.collected', tick: this.world.tick, sourceId: 1, pickupId: 0, side: 'LEFT', actionId: l2WeaponPickup, replaced: null });
     this.alarm();
   }
   private board(): void {

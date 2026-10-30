@@ -1,0 +1,15 @@
+Implementation HEAD: 4848f7efe58f825bc5af232ed13ed30d5bf88dfa
+
+npm run verify -- E13 (all command statuses 0; see verify-E13.json)
+ Test Files  26 passed (26)
+      Tests  110 passed (110)
+[test-budget] test: 25.8 s (budget 240 s)
+
+E2E_PORT=4352 npm run test:smoke
+  6 passed (1.8m)
+  1 passed (7.1s)
+[test-budget] smoke: 137.0 s (budget 240 s)
+
+SCENE_PORT=4353 npm run scene:gate
+48/48 rows pass, 0 known, 0 not run; 5.8 min this run (batch s: webgl2-low-1=89 webgpu-high-1=60 webgl2-high-1=106 webgpu-low-1=91).
+48 exact gate-list identities matched to passing index.json rows.

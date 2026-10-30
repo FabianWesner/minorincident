@@ -8,6 +8,10 @@ import { l4ConvoyStations, l4PhotoSpots, l4Route, l4RoutePose } from './l4';
 
 type P = readonly [number, number];
 
+export const l5WeaponPickup = 'weapon.shotgun' as const;
+/** Street pickups share their positions/assets with the W5 dressing and their action ids with campaign carry-over. */
+export const l5DroppedWeapons = ([[-26.2, -11.4, 'wpn.assault-rifle'], [-24.6, 16, 'wpn.assault-rifle'], [-13.4, -2.6, 'wpn.assault-rifle'], [-31.6, 5.4, 'wpn.machine-gun'], [-9, 12.4, 'wpn.assault-rifle'], [7, -8.4, 'wpn.pistol'], [-20, 4, 'wpn.shotgun'], [-72, 44.8, 'wpn.assault-rifle']] as const)
+  .map(([x, z, assetId], i) => ({ x, z, assetId, yaw: i * 2.1, actionId: assetId === 'wpn.pistol' ? 'weapon.handgun' : assetId === 'wpn.machine-gun' ? 'weapon.army-mg' : assetId.replace('wpn.', 'weapon.') }));
 export const l5 = {
   /** Beat 1: caption, then ~10 s without an objective, then "Look for anyone still alive". */
   emerge: { interactS: 1.0, objectiveAfterS: 10, captionS: 6, /** PO #33: the 150 m cellar-to-street jump hides behind a black dip: fade out, move while black, fade in. */ fadeOutS: .4, fadeHoldS: .25, fadeInS: 1 },

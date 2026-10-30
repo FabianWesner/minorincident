@@ -1,7 +1,7 @@
 import { moveFairhavenCellar } from '../fairhavenCellar';
 import { l4, l4FuelCrater, l4Anchors, l4Cars, l4ConvoyStations, l4Line, l4Route, l4RoutePose } from '../../data/l4';
 import subwayLayout from '../../../public/assets/layouts/D-SUBWAY.layout.json' with { type: 'json' };
-import { l5, l5Anchors, l5Survivors } from '../../data/l5';
+import { l5, l5Anchors, l5DroppedWeapons, l5Survivors } from '../../data/l5';
 import { findClearSpot, footprints, moveOffSolids, freestanding, obstaclesOf } from '../placementClearance';
 import type { DistrictLayout, Placement } from '../districts/types';
 import { l4Dressing } from '../L4/layout';
@@ -77,8 +77,7 @@ export const l5Dressing: readonly L5Dressing[] = [
   corpse(12.4, 6, 'npc.civilian-woman-b', 5.7), corpse(14.8, 36, 'npc.civilian-man-a', 0.2), corpse(-6, 45.2, 'npc.civilian-woman-a', 2.9), corpse(26, 44.2, 'npc.civilian-man-b', 4.6),
   corpse(48.6, 8, 'npc.civilian-man-a', 1.0), corpse(51.8, -20, 'npc.civilian-woman-b', 3.0), corpse(62.4, 29.6, 'npc.civilian-elderly', 5.0),
   ...([[-22, 7], [-14.4, -8], [-30, 0.4], [-8, 8.6], [6, 20], [16, -20], [-47, 2.4], [-16, 38], [34, -42], [58, 30.6]] as const).map(([x, z], i) => d('belongings', 'decay.dropped-belongings', x, z, { yaw: i * 1.9 })),
-  ...([[-26.2, -11.4, 'wpn.assault-rifle'], [-24.6, 16, 'wpn.assault-rifle'], [-13.4, -2.6, 'wpn.assault-rifle'], [-31.6, 5.4, 'wpn.machine-gun'], [-9, 12.4, 'wpn.assault-rifle'], [7, -8.4, 'wpn.pistol'], [-20, 4, 'wpn.shotgun'], [-72, 44.8, 'wpn.assault-rifle']] as const)
-    .map(([x, z, assetId], i) => d('weapon', assetId, x, z, { yaw: i * 2.1 })),
+  ...l5DroppedWeapons.map(e => d('weapon', e.assetId, e.x, e.z, { yaw: e.yaw })),
   // ---------------------------------------------------------------- signs of life (visible cues): the chalk sign and a flashlight + radio at the hiding places
   d('cue', 'decay.damaged-sign', -74.6, -45.6, { yaw: 3.0 }), d('cue', 'util.flashlight', -47.4, 43.3, { yaw: 1.3 }), d('cue', 'util.radio', -79.6, -45.2, { yaw: .4 }),
 ];

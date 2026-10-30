@@ -6,6 +6,7 @@
  */
 type P = readonly [number, number];
 /** PO 2026-10-11: checkpoint compound translated east, preserving its internal layout. */
+export const l3WeaponPickup = 'weapon.handgun' as const;
 export const l3ArmyOffset = 76;
 export const l3 = {
   /** Section 5.1: the corridor. Streets are E-W lines (z); segments are X ranges of the corridor proper. */

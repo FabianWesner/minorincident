@@ -3,6 +3,7 @@
 import homePlaceholders from '../../public/ui/home/placeholders.json';
 import type { Game } from '../Game';
 import { debugCampaign, newCampaign, type CampaignSave, type Level } from '../sim/progression/Campaign';
+import { campaignLoadout } from '../sim/progression/apply';
 import { defaultBindings, type Action } from '../data/bindings';
 import { Hud } from './Hud';
 import { debugEntityCounts } from './debugEntityCounts';
@@ -242,7 +243,11 @@ export class GameUI {
       if (__QA_HOOKS__ && this.debugEnabled && !resume) this.game.campaign = debugCampaign(Number(id.slice(1)) as Level, this.game.campaign);
       if (this.game.campaign) await this.game.continueCampaign(this.game.campaign, resume ? undefined : Number(id.slice(1)) as Level);
       else { await this.game.loadLevel(id); this.game.world.player?.select(this.variant, 0); }
-      if (racks && left.length && right.length) this.game.world.combat?.setLoadout(left, right);
+      if (racks && left.length && right.length && this.game.world.combat) {
+        const loadout = campaignLoadout({ ...(this.game.campaign ?? newCampaign()), racks: { LEFT: left, RIGHT: right } }, Number(id.slice(1)));
+        this.game.world.combat.rackCapacity = loadout.size;
+        this.game.world.combat.setLoadout(loadout.LEFT, loadout.RIGHT);
+      }
       else if (id === 'L1') this.game.world.combat?.clearLoadout();
       this.applySettings(false); this.show(null);
       if (!this.game.audio.snapshot().background) this.game.clock.resume();
