@@ -1,3 +1,4 @@
+import { survivorName } from '../sim/missions/survivorName';
 import { objectiveText } from '../sim/missions/objectiveText';
 import { devicePrompt } from './devicePrompt';
 import { l5Survivors } from '../data/l5';
@@ -400,7 +401,7 @@ export class Hud {
       setHidden(this.cuePin, !target);
       setHidden(this.cueText, !target);
       if (target) {
-        const name = target.companion ? 'Corgi' : l5Survivors.find(s => s.key === target.civilian?.survivor?.key)?.name ?? `Survivor ${(target.civilian?.survivor?.slot ?? 0) + 1}`;
+        const name = survivorName(target);
         this.place(this.cuePin, target.transform.x, target.transform.z, px, pz, true);
         attribute(this.cuePin, 'aria-label', `Find ${name}`); attribute(this.cuePin, 'data-survivor', String(target.id));
         text(this.cueText, ` · Find ${name} · ${Math.ceil(Math.hypot(target.transform.x - px, target.transform.z - pz))} m`);

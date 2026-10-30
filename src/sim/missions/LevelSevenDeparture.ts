@@ -3,7 +3,7 @@ import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { CoverWall } from '../combat/HitQuery';
 import type { MissionResult } from './types';
-import { l5Survivors } from '../../data/l5';
+import { survivorName } from './survivorName';
 import { l7Departure as cfg } from '../../data/l7';
 import { l7Bus, l7CorridorAnchors } from '../../levels/L7/corridor';
 import { spawnSetPiece } from './L4Spectacle';
@@ -205,7 +205,7 @@ export class LevelSevenDeparture {
     const waiting = living.filter(r => !s.boarded.includes(r.id));
     const missing = waiting.map(r => ({ r, distance: distance(w.entities.get(r.id)!.transform, this.door) })).sort((a, b) => a.distance - b.distance)[0];
     const count = `Aboard ${living.length - waiting.length}/${living.length}`;
-    const name = missing && (l5Survivors.find(r => r.key === missing.r.key)?.name ?? (missing.r.key === 'shelter-0' ? 'Marcus' : `Survivor ${w.entities.get(missing.r.id)!.civilian!.survivor!.slot + 1}`));
+    const name = missing && survivorName(w.entities.get(missing.r.id)!);
     return { count: missing ? count : `${count} · Everyone aboard`, waiting: missing ? `Waiting for ${name} · ${Math.ceil(missing.distance)} m` : '' };
   }
   private depart(): void {

@@ -3,7 +3,7 @@ import { l3EvacuationText } from './LevelThreeCollapse';
 import { cureFinaleText } from './LevelTenFinale';
 import { LevelSixSubway } from './LevelSixSubway';
 import { l4 } from '../../data/l4';
-import { l5Survivors } from '../../data/l5';
+import { survivorName } from './survivorName';
 
 const clock = (ticks: number) => {
   const seconds = Math.max(0, Math.ceil(ticks / 60));
@@ -42,7 +42,7 @@ export function objectiveText(mission: Mission, fallback: string): string {
   if (metro) return `${fallback} · ${metro}`;
   if (w.l7Encounters && s.steps.corridor?.status === 'active') {
     const group = w.l7Encounters.corridorGroup(), missing = group.missing[0];
-    const name = missing && (l5Survivors.find(s=>s.key===missing.key)?.name ?? `Survivor ${w.entities.get(missing.id)!.civilian!.survivor!.slot+1}`);
+    const name = missing && survivorName(w.entities.get(missing.id)!);
     return `${fallback} · Group ${group.near}/${group.total} nearby${name ? ` · Waiting for ${name}` : ''}`;
   }
   if (mission.def.l8) {
@@ -55,7 +55,7 @@ export function objectiveText(mission: Mission, fallback: string): string {
       const player=w.entities.get(1)!.transform;
       const distance=(id:number)=>{const p=w.entities.get(id)!.transform;return Math.hypot(p.x-player.x,p.z-player.z);};
       const missing=ids.filter(id=>!car.passengers?.some(p=>p.id===id&&p.phase==='seated')).sort((a,b)=>distance(a)-distance(b));
-      const names=missing.map(id=>{const e=w.entities.get(id)!;return e.companion?'Corgi':l5Survivors.find(s=>s.key===e.civilian?.survivor?.key)?.name??`Survivor ${(e.civilian?.survivor?.slot??0)+1}`;});
+      const names=missing.map(id=>{const e=w.entities.get(id)!;return survivorName(e);});
       const text=seated?fallback:'Return to the armored vehicle and board';
       const waiting=names.length?` · ${names.slice(0,2).join(', ')} missing${names.length>2?` (+${names.length-2} others)`:''}`:'';
       return `${text} · ${ids.length-missing.length}/${ids.length} aboard${waiting}`;
