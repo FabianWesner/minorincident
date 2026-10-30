@@ -35,3 +35,4 @@ Check each item at low quality, zoom 1.5, WebGPU, with a progressed save, A/B ag
 - v2 crowd hats: live and turned peds show their eyes at zoom 1.5; no hat wider than ~1.2× the head, none tipped into a disc in front of the face; A/B against PROD at the same seed (Q-187, Q-188).
 - Turned v2 faces read as tinted skin with eyes, not a triangle mosaic (Q-189).
 - Firefighters seen from behind read as a helmet over a head, not a jack-o'-lantern (Q-190).
+- [ ] Q-249 (PO 10-30): every human figure shares the heroine's proportions (head size, legs); hand props (mugs) hand-sized and held; caps sit on heads; bench sitters sit on the bench.
