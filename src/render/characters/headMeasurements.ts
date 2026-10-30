@@ -1,5 +1,7 @@
 import { Box3, Matrix4, Vector3, type BufferGeometry } from 'three';
 import { characterNodes } from '../../data/survivor';
+/** Authored bare-skull width of the accessory reference, in head-local metres. */
+export const referenceSkullWidth = .381;
 
 /** Bare skull envelope from exposed skin, narrowed by the brow cross-section. Hair never enlarges the fit. */
 export function skinnedBrow(geometry: BufferGeometry): { width: number; depth: number; y: number; centre: Vector3 } | null {

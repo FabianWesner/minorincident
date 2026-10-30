@@ -1,0 +1,15 @@
+{
+  "name": "q249-blue-shirt-pilot",
+  "ground": "sidewalk",
+  "time": "L1",
+  "size": 12,
+  "dof": false,
+  "trace": true,
+  "actors": [
+    { "id": "heroine", "kind": "courier", "at": [-0.4, 0.4], "yaw": 315, "look": { "model": "female" }, "state": "idle" },
+    { "id": "pilot", "kind": "pedestrian", "at": [0.4, -0.4], "yaw": 315, "look": { "model": "npc.civilian-man-a", "tint": "#3178ac", "accessories": [], "handProp": "coffee" }, "state": "idle" }
+  ],
+  "camera": { "mode": "game", "target": [0, 0.7, 0], "zoom": 1.5 },
+  "frames": 72,
+  "expect": { "consoleErrors": 0 }
+}

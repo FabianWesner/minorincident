@@ -1,0 +1,54 @@
+{
+  "name": "q249-pilot-2-body-preserved",
+  "ground": "sidewalk",
+  "time": "L1",
+  "size": 12,
+  "dof": false,
+  "trace": true,
+  "actors": [
+    {
+      "id": "heroine",
+      "kind": "courier",
+      "at": [
+        1.7,
+        2.3
+      ],
+      "yaw": 315,
+      "look": {
+        "model": "female"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "pilot",
+      "kind": "pedestrian",
+      "at": [
+        2.3,
+        1.7
+      ],
+      "yaw": 315,
+      "look": {
+        "model": "npc.civilian-man-a",
+        "tint": "#3178ac",
+        "accessories": [
+          "none"
+        ],
+        "handProp": "coffee"
+      },
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      2,
+      0.7,
+      2
+    ],
+    "zoom": 1.5
+  },
+  "frames": 72,
+  "expect": {
+    "consoleErrors": 0
+  }
+}

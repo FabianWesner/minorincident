@@ -1,4 +1,4 @@
-import { skinnedBrow } from './headMeasurements';
+import { skinnedBrow, referenceSkullWidth } from './headMeasurements';
 import { Box3, Color, Matrix4, Vector3, type BufferGeometry, type InstancedBufferAttribute, type InterleavedBufferAttribute } from 'three';
 import type { Node } from 'three/webgpu';
 import { attribute, varying, vec3, vec4 } from 'three/tsl';
@@ -15,7 +15,8 @@ export function resolveCrowdAppearance(e: EntitySnapshot, ids: readonly string[]
   const selected = e.appearance?.asset ?? e.civilian?.model ?? e.infected?.model ?? e.infected?.variant ?? e.archetype;
   const model = selected.startsWith('infected.') ? infectedDefinitions.find(def => def.id === selected)?.asset ?? selected : selected;
   const uniform = /firefighter|police|guard|hazmat|riot|armored|lab-|patient-zero|infected\.(dog|cat|crow|lion|gorilla|elephant|zebra|flamingo)/.test(model);
-  const eligible = !uniform && !e.civilian?.zooAnimal && !e.archetype.startsWith('healthy.') && (!e.infected || ['infected.runner', 'infected.sprinter'].includes(e.archetype));
+  // Explicit bare-head fixtures retain authored hair for anatomy review.
+  const eligible = !e.appearance?.accessories.includes('none') && !uniform && !e.civilian?.zooAnimal && !e.archetype.startsWith('healthy.') && (!e.infected || ['infected.runner', 'infected.sprinter'].includes(e.archetype));
   const channels = crowdAppearance(e.id), explicit = e.appearance?.accessories.find(id => ids.includes(id));
   // A person who turned keeps the head piece they wore alive (story-true); infected generated as infected are capped.
   const turnedPerson = !!e.infected && e.appearance?.entityId === e.id && !e.appearance.bornInfected;
@@ -103,12 +104,15 @@ export function markCrowdAppearance(geometry: BufferGeometry): void {
       if (parts.getZ(i) > 1.5) eyes.expandByPoint(point);
       else if (parts.getY(i) === -1) skin.expandByPoint(point);
     }
-    const eye = eyes.getCenter(new Vector3()), front = eye.x - .025, back = skin.min.x;
-    const centre = new Vector3((front + back) * .5, brow.y - .09, brow.centre.z);
-    const radii = new Vector3(Math.max(.08, (front - back) * .5), .21, brow.width * .5), alternate = new Vector3();
+    const unit = brow.width / referenceSkullWidth;
+    const eye = eyes.getCenter(new Vector3()), front = eye.x - .025 * unit, back = skin.min.x;
+    const centre = new Vector3((front + back) * .5, brow.y - .09 * unit, brow.centre.z);
+    // The covered scalp belongs inside the cap, not at the old chibi hair
+    // crown. Its reduced dome prevents a tuft piercing a shallow flat cap.
+    const radii = new Vector3(Math.max(.08 * unit, (front - back) * .5), .10 * unit, brow.width * .5), alternate = new Vector3();
     for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getY(i) !== -6 && parts.getW(i) < 1024 && !parts.getZ(i)) {
       point.fromBufferAttribute(position, i).applyMatrix4(inverse);
-      const t = Math.max(0, Math.min(1, (point.y - (brow.y - .045)) / .065)), weight = t * t * (3 - 2 * t);
+      const t = Math.max(0, Math.min(1, (point.y - (brow.y - .045 * unit)) / (.065 * unit))), weight = t * t * (3 - 2 * t);
       alternate.copy(point).sub(centre).divide(radii);
       if (alternate.length() > 1) alternate.normalize();
       alternate.multiply(radii).add(centre);

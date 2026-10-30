@@ -1,0 +1,2854 @@
+{
+  "baseline": "4698e5aa0",
+  "target": {
+    "headHeight": 0.2725332952860014,
+    "headShoulder": 0.8719292459362036,
+    "legHeight": 0.42752737512725963,
+    "shoulderHeight": 0.29371322861237686
+  },
+  "receipts": [
+    {
+      "id": "char.survivor-male",
+      "status": "built",
+      "files": [
+        {
+          "path": "assets/char.survivor-male/model.glb",
+          "sourceSha256": "23ffad6617e8ba28cb7262aa111db73be80aa8b3955e33c4de8dca9a37f7de1f",
+          "outputSha256": "6377014dae4ff503cc89c9a5a3d1b2eca635cc80ecfbb5ffa947ad94cf9f5465",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.3457109009494588,
+                "maximum": 1,
+                "intervals": {
+                  "headHeight": [
+                    0.9027919172724684,
+                    1.1953741995268419
+                  ],
+                  "headShoulder": [
+                    1.3457109009494588,
+                    1.6447577678271164
+                  ],
+                  "legHeight": [
+                    0.8406869180443096,
+                    1.6460012522794973
+                  ]
+                },
+                "limits": {
+                  "headHeight": 1.1937957941818358,
+                  "headShoulder": 1.643262533492728
+                },
+                "binding": "already-small-enough",
+                "scale": 1
+              },
+              "before": {
+                "headHeight": 0.264324568708696,
+                "headShoulder": 0.5831388605003622,
+                "legHeight": 0.4504764470069377,
+                "shoulderHeight": 0.5051264189204739
+              },
+              "after": {
+                "headHeight": 0.264324568708696,
+                "headShoulder": 0.5831388605003622,
+                "legHeight": 0.4504764470069377,
+                "shoulderHeight": 0.5051264189204739
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 1.0288562726974488,
+              "headScale": 1,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.27065718915444825,
+              "jointHeadHeightAfter": 0.27065718915444825,
+              "shoulderWidthBefore": 0.7064290344715118,
+              "shoulderWidthAfter": 0.7064290344715118,
+              "bodyScale": 1,
+              "heightBefore": 1.3985192775726318,
+              "heightAfter": 1.3985192775726318,
+              "unchangedBodyVertices": 20656,
+              "unchangedBodyMaxDisplacementM": 0,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        },
+        {
+          "path": "public/assets/models/char.survivor-male.glb",
+          "sourceSha256": "0c0136ef248168b8e9c9d804df5cf49fc9ad2012c826c395b37cc946950bfa39",
+          "outputSha256": "1a8436fb45e12ac60e77a0e872f7e01487ed4d9dc99a535821bcc11fb4147342",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.3457118633154337,
+                "maximum": 1,
+                "intervals": {
+                  "headHeight": [
+                    0.9069565011500059,
+                    1.1995066683767495
+                  ],
+                  "headShoulder": [
+                    1.3457118633154337,
+                    1.6447589440521968
+                  ],
+                  "legHeight": [
+                    0.8402095649038792,
+                    1.647962781368016
+                  ]
+                },
+                "limits": {
+                  "headHeight": 1.1979289359149063,
+                  "headShoulder": 1.643263708648513
+                },
+                "binding": "already-small-enough",
+                "scale": 1
+              },
+              "before": {
+                "headHeight": 0.2635268386088578,
+                "headShoulder": 0.5831384434772139,
+                "legHeight": 0.45047705530334176,
+                "shoulderHeight": 0.5051262266198083
+              },
+              "after": {
+                "headHeight": 0.2635268353327342,
+                "headShoulder": 0.5831384389761514,
+                "legHeight": 0.45047705566158197,
+                "shoulderHeight": 0.5051262320661917
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 1.3256497047413867,
+              "headScale": 1,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.2706568864490256,
+              "jointHeadHeightAfter": 0.27065688523646897,
+              "shoulderWidthBefore": 0.9092272063624478,
+              "shoulderWidthAfter": 0.9092272133804871,
+              "bodyScale": 1,
+              "heightBefore": 1.7999999969251108,
+              "heightAfter": 1.7999999914107452,
+              "unchangedBodyVertices": 17745,
+              "unchangedBodyMaxDisplacementM": 1.1083029558136778e-8,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        },
+        {
+          "path": "public/assets/models/char.survivor-male.lod1.glb",
+          "sourceSha256": "df4f04aaef05424ade5dd8ab0dcfea4c367a457f1c4079fd0c59bd8be309bb25",
+          "outputSha256": "50c95a7655e88980f7d20547b3437c692a7a02d8cf0109e6786f48a433d14f5d",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.2005244157920607,
+                "maximum": 1,
+                "intervals": {
+                  "headHeight": [
+                    0.9069542895410652,
+                    1.1995037425866055
+                  ],
+                  "headShoulder": [
+                    1.2005244157920607,
+                    1.4673076193014076
+                  ],
+                  "legHeight": [
+                    0.8402100932904826,
+                    1.647961934372718
+                  ]
+                },
+                "limits": {
+                  "headHeight": 1.1979260139796972,
+                  "headShoulder": 1.4659737032838607
+                },
+                "binding": "already-small-enough",
+                "scale": 1
+              },
+              "before": {
+                "headHeight": 0.2635273051231425,
+                "headShoulder": 0.653661275872381,
+                "legHeight": 0.4504770857303602,
+                "shoulderHeight": 0.45062949240612776
+              },
+              "after": {
+                "headHeight": 0.2635273018470142,
+                "headShoulder": 0.6536612814218381,
+                "legHeight": 0.45047708608860204,
+                "shoulderHeight": 0.4506294899608925
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 1.3256488754538844,
+              "headScale": 1,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.27065689134495174,
+              "jointHeadHeightAfter": 0.27065689013239264,
+              "shoulderWidthBefore": 0.8111331876886712,
+              "shoulderWidthAfter": 0.8111331808023081,
+              "bodyScale": 1,
+              "heightBefore": 1.800000224924562,
+              "heightAfter": 1.800000219410189,
+              "unchangedBodyVertices": 2781,
+              "unchangedBodyMaxDisplacementM": 1.1053967357500824e-8,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        },
+        {
+          "path": "public/assets/models/char.survivor-male.lod2.glb",
+          "sourceSha256": "b47e220fa5446269028670d747348e1f3e32caa27121278d9701c785c2a3bd6f",
+          "outputSha256": "eec27115de1d26c8ac8bf1aff784b755d3654c5d589dd6eec61fdd677b379d41",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.2005244157920607,
+                "maximum": 1,
+                "intervals": {
+                  "headHeight": [
+                    0.9069542895410652,
+                    1.1995037425866055
+                  ],
+                  "headShoulder": [
+                    1.2005244157920607,
+                    1.4673076193014076
+                  ],
+                  "legHeight": [
+                    0.8402100932904826,
+                    1.647961934372718
+                  ]
+                },
+                "limits": {
+                  "headHeight": 1.1979260139796972,
+                  "headShoulder": 1.4659737032838607
+                },
+                "binding": "already-small-enough",
+                "scale": 1
+              },
+              "before": {
+                "headHeight": 0.2635273051231425,
+                "headShoulder": 0.653661275872381,
+                "legHeight": 0.4504770857303602,
+                "shoulderHeight": 0.45062949240612776
+              },
+              "after": {
+                "headHeight": 0.2635273018470142,
+                "headShoulder": 0.6536612814218381,
+                "legHeight": 0.45047708608860204,
+                "shoulderHeight": 0.4506294899608925
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 1.3256488754538844,
+              "headScale": 1,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.27065689134495174,
+              "jointHeadHeightAfter": 0.27065689013239264,
+              "shoulderWidthBefore": 0.8111331876886712,
+              "shoulderWidthAfter": 0.8111331808023081,
+              "bodyScale": 1,
+              "heightBefore": 1.800000224924562,
+              "heightAfter": 1.800000219410189,
+              "unchangedBodyVertices": 1704,
+              "unchangedBodyMaxDisplacementM": 1.1053967357500824e-8,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "char.survivor-female",
+      "status": "built",
+      "files": [
+        {
+          "path": "assets/char.survivor-female/model.glb",
+          "sourceSha256": "280b4fd47dbb9c2d6dfa88de71e056d1d2184eff5af6967bd9445100a4e216fa",
+          "outputSha256": "243c7a7b19a906e2f8b45a98a0cff026dfa338dedcd5e89b56363e0ddf2eccbe",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 0.826917910489119,
+                "maximum": 0.6930950691313674,
+                "intervals": {
+                  "headHeight": [
+                    0.5347318540573872,
+                    0.7081700740996386
+                  ],
+                  "headShoulder": [
+                    0.5670777838347552,
+                    0.6930950691313674
+                  ],
+                  "legHeight": [
+                    0.826917910489119,
+                    1.380293128495272
+                  ]
+                },
+                "limits": {
+                  "headHeight": 0.7072348243663074,
+                  "headShoulder": 0.6924649827048843
+                },
+                "binding": "headShoulder",
+                "scale": 0.6924649827048843
+              },
+              "before": {
+                "headHeight": 0.3754781850038537,
+                "headShoulder": 1.3838248362260883,
+                "legHeight": 0.4397172905776816,
+                "shoulderHeight": 0.38113611227613475
+              },
+              "after": {
+                "headHeight": 0.29518142296849326,
+                "headShoulder": 0.95825021339632,
+                "legHeight": 0.4971212233757638,
+                "shoulderHeight": 0.4308924267191676
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 0.8805738043785095,
+              "headScale": 0.6924649827048843,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.3163105481902832,
+              "jointHeadHeightAfter": 0.24762826879459587,
+              "shoulderWidthBefore": 0.5374007225036621,
+              "shoulderWidthAfter": 0.5374007225036621,
+              "bodyScale": 1,
+              "heightBefore": 1.4099968625232577,
+              "heightAfter": 1.2471807095693304,
+              "unchangedBodyVertices": 7963,
+              "unchangedBodyMaxDisplacementM": 0,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        },
+        {
+          "path": "public/assets/models/char.survivor-female.glb",
+          "sourceSha256": "e57bbd3415cd36524509bf5f8eafe3bf38b873a15e9697e11e34a40437cd3895",
+          "outputSha256": "7f6f24d2041e164e3341c3c772c2299184dac3ef63b50e35499406827a03a7c1",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 0.8265606422792672,
+                "maximum": 0.6930952519921929,
+                "intervals": {
+                  "headHeight": [
+                    0.5377802784134895,
+                    0.7113778404955663
+                  ],
+                  "headShoulder": [
+                    0.5670779334481578,
+                    0.6930952519921929
+                  ],
+                  "legHeight": [
+                    0.8265606422792672,
+                    1.3810646416342691
+                  ]
+                },
+                "limits": {
+                  "headHeight": 0.7104419310672995,
+                  "headShoulder": 0.6924651653994727
+                },
+                "binding": "headShoulder",
+                "scale": 0.6924651653994727
+              },
+              "before": {
+                "headHeight": 0.3747132476682171,
+                "headShoulder": 1.3838244711285768,
+                "legHeight": 0.43971659636014676,
+                "shoulderHeight": 0.38113538376993034
+              },
+              "after": {
+                "headHeight": 0.2942374007997301,
+                "headShoulder": 0.9582502702106597,
+                "legHeight": 0.49698821292398954,
+                "shoulderHeight": 0.4307769929513269
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 1.1253636923175052,
+              "headScale": 0.6924651653994727,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.3163117731054785,
+              "jointHeadHeightAfter": 0.24756344875908431,
+              "shoulderWidthBefore": 0.6859510437305415,
+              "shoulderWidthAfter": 0.6859510435483803,
+              "bodyScale": 1,
+              "heightBefore": 1.799756918251943,
+              "heightAfter": 1.5923576578424312,
+              "unchangedBodyVertices": 7407,
+              "unchangedBodyMaxDisplacementM": 9.476672923803225e-9,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        },
+        {
+          "path": "public/assets/models/char.survivor-female.lod1.glb",
+          "sourceSha256": "d82c458c17b39a324da2e446a77e626c269b9605ba48eb818885a562f8f120b1",
+          "outputSha256": "adc1c2d4bbab324d61f0782fad7091fe0f38804a362a0e411f7e022da3c998a3",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 0.8265604568932783,
+                "maximum": 0.6930953389795848,
+                "intervals": {
+                  "headHeight": [
+                    0.5377807886914363,
+                    0.7113785151186557
+                  ],
+                  "headShoulder": [
+                    0.5670780046196603,
+                    0.6930953389795848
+                  ],
+                  "legHeight": [
+                    0.8265604568932783,
+                    1.3810647625135648
+                  ]
+                },
+                "limits": {
+                  "headHeight": 0.7104426048038992,
+                  "headShoulder": 0.6924652523077851
+                },
+                "binding": "headShoulder",
+                "scale": 0.6924652523077851
+              },
+              "before": {
+                "headHeight": 0.37471302812608226,
+                "headShoulder": 1.3838242974507653,
+                "legHeight": 0.439716581598384,
+                "shoulderHeight": 0.38113520648786403
+              },
+              "after": {
+                "headHeight": 0.2942372314179885,
+                "headShoulder": 0.9582502324271615,
+                "legHeight": 0.4969881402704873,
+                "shoulderHeight": 0.4307767440662983
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 1.1253640971253556,
+              "headScale": 0.6924652523077851,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.31631177553488316,
+              "jointHeadHeightAfter": 0.24756345334992363,
+              "shoulderWidthBefore": 0.6859506899922553,
+              "shoulderWidthAfter": 0.6859506898101055,
+              "bodyScale": 1,
+              "heightBefore": 1.7997568272772437,
+              "heightAfter": 1.5923577566771685,
+              "unchangedBodyVertices": 864,
+              "unchangedBodyMaxDisplacementM": 8.67643017514144e-9,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        },
+        {
+          "path": "public/assets/models/char.survivor-female.lod2.glb",
+          "sourceSha256": "15fc8df2f580ab1147a60f81bc1ea0f6a8b8435c46d2dde72daead458a9acb31",
+          "outputSha256": "580e8c2af2c1b81984c37863f242ffe7588c9b30c899a8f6c9c8066036f2ecba",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 0.8265612715038447,
+                "maximum": 0.6927428217723852,
+                "intervals": {
+                  "headHeight": [
+                    0.5377865925678308,
+                    0.7113861945803125
+                  ],
+                  "headShoulder": [
+                    0.5667895814501334,
+                    0.6927428217723852
+                  ],
+                  "legHeight": [
+                    0.8265612715038447,
+                    1.3810697168140564
+                  ]
+                },
+                "limits": {
+                  "headHeight": 0.7104502741469745,
+                  "headShoulder": 0.692113055570774
+                },
+                "binding": "headShoulder",
+                "scale": 0.692113055570774
+              },
+              "before": {
+                "headHeight": 0.374710526882478,
+                "headShoulder": 1.3845284864531777,
+                "legHeight": 0.4397169291625236,
+                "shoulderHeight": 0.3925590930962225
+              },
+              "after": {
+                "headHeight": 0.294130833439576,
+                "headShoulder": 0.9582502194058587,
+                "legHeight": 0.4970622441152145,
+                "shoulderHeight": 0.44375436061910023
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 1.1253670698209393,
+              "headScale": 0.692113055570774,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.31631076804532454,
+              "jointHeadHeightAfter": 0.24747344727455683,
+              "shoulderWidthBefore": 0.7065089968546161,
+              "shoulderWidthAfter": 0.7065089990072414,
+              "bodyScale": 1,
+              "heightBefore": 1.799751959080055,
+              "heightAfter": 1.592117310174848,
+              "unchangedBodyVertices": 454,
+              "unchangedBodyMaxDisplacementM": 7.499758832969694e-9,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "npc.patient-zero-courier",
+      "status": "built",
+      "files": [
+        {
+          "path": "assets/npc.patient-zero-courier/model.glb",
+          "sourceSha256": "019e36adbafae8f805e52560649a3a6f4e89aef79c5db945e1ae76edb5103ed6",
+          "outputSha256": "7aadfc38ea44401354a767d545c1944ee2f44d28ccb008e4b07290e561a7094e",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.0610281026929358,
+                "maximum": 0.9131217864262505,
+                "intervals": {
+                  "headHeight": [
+                    0.6896286717107717,
+                    0.9131217864262505
+                  ],
+                  "headShoulder": [
+                    1.0452918035189052,
+                    1.2775788709675509
+                  ],
+                  "legHeight": [
+                    1.0610281026929358,
+                    1.7714779968651118
+                  ]
+                },
+                "limits": {
+                  "headHeight": 0.9119164114915665,
+                  "headShoulder": 1.2764174356303075
+                },
+                "binding": "headHeight",
+                "scale": 0.9119164114915665
+              },
+              "before": {
+                "headHeight": 0.3188779149355728,
+                "headShoulder": 0.7507342147913345,
+                "legHeight": 0.47943200542139947,
+                "shoulderHeight": 0.4053302407444193
+              },
+              "after": {
+                "headHeight": 0.29951409908716836,
+                "headShoulder": 0.6846068273879595,
+                "legHeight": 0.4932874154137816,
+                "shoulderHeight": 0.41704413678039354
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 0.9634378504753113,
+              "headScale": 0.9119164114915665,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.27210329785224835,
+              "jointHeadHeightAfter": 0.25530649361957936,
+              "shoulderWidthBefore": 0.5733340680599213,
+              "shoulderWidthAfter": 0.5733340680599213,
+              "bodyScale": 1,
+              "heightBefore": 1.414486289024353,
+              "heightAfter": 1.3747563327135963,
+              "unchangedBodyVertices": 16888,
+              "unchangedBodyMaxDisplacementM": 0,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        },
+        {
+          "path": "public/assets/models/npc.patient-zero-courier.glb",
+          "sourceSha256": "efe4231f58463c2a00cd11095234512e33d6a0b0575042b2b3c3d3be4bfb3179",
+          "outputSha256": "d7d771dcf6fbb3d858c9e6272a7951b7105914fe6d69f1c9d8e26577fbcfb1e4",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.0611762229781256,
+                "maximum": 0.9166657656381366,
+                "intervals": {
+                  "headHeight": [
+                    0.6930713013120816,
+                    0.9166657656381366
+                  ],
+                  "headShoulder": [
+                    1.0452860298530955,
+                    1.2775718142648944
+                  ],
+                  "legHeight": [
+                    1.0611762229781256,
+                    1.7733240260267327
+                  ]
+                },
+                "limits": {
+                  "headHeight": 0.9154601432921318,
+                  "headShoulder": 1.2764103853428355
+                },
+                "binding": "headHeight",
+                "scale": 0.9154601432921318
+              },
+              "before": {
+                "headHeight": 0.31811787308858624,
+                "headShoulder": 0.7507383614921842,
+                "legHeight": 0.47943235145265845,
+                "shoulderHeight": 0.40533137671041947
+              },
+              "after": {
+                "headHeight": 0.2995140937740522,
+                "headShoulder": 0.6872710454699799,
+                "legHeight": 0.4926823739297712,
+                "shoulderHeight": 0.4165334743402871
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 1.2273850743668957,
+              "headScale": 0.9154601432921318,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.27210216913343716,
+              "jointHeadHeightAfter": 0.25598300606556584,
+              "shoulderWidthBefore": 0.7295935952874608,
+              "shoulderWidthAfter": 0.7295935921904715,
+              "bodyScale": 1,
+              "heightBefore": 1.7999928878160936,
+              "heightAfter": 1.7515845355430664,
+              "unchangedBodyVertices": 14880,
+              "unchangedBodyMaxDisplacementM": 1.6219282800903998e-8,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        },
+        {
+          "path": "public/assets/models/npc.patient-zero-courier.lod1.glb",
+          "sourceSha256": "dc77f519d9e05564c6534ddf7cdb3e071890df483462cbf5563a4cd1f6859eb6",
+          "outputSha256": "f58e170d0e7c2819a3e0dac47f43ab8b80dc48cd1c34a655d4474c7c8d37c313",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.061176233270849,
+                "maximum": 0.9166655802565826,
+                "intervals": {
+                  "headHeight": [
+                    0.6930711611251736,
+                    0.9166655802565826
+                  ],
+                  "headShoulder": [
+                    1.045286571151328,
+                    1.2775724758516231
+                  ],
+                  "legHeight": [
+                    1.061176233270849,
+                    1.7733239435066805
+                  ]
+                },
+                "limits": {
+                  "headHeight": 0.9154599581544284,
+                  "headShoulder": 1.2764110463281215
+                },
+                "binding": "headHeight",
+                "scale": 0.9154599581544284
+              },
+              "before": {
+                "headHeight": 0.3181179163967177,
+                "headShoulder": 0.7507379727247788,
+                "legHeight": 0.4794323542384697,
+                "shoulderHeight": 0.40533164231071667
+              },
+              "after": {
+                "headHeight": 0.29951408870285134,
+                "headShoulder": 0.6872705312162266,
+                "legHeight": 0.4926824099343184,
+                "shoulderHeight": 0.4165337753003291
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 1.227384994795608,
+              "headScale": 0.9154599581544284,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.272102168664141,
+              "jointHeadHeightAfter": 0.2559829680927008,
+              "shoulderWidthBefore": 0.7295940801683221,
+              "shoulderWidthAfter": 0.7295940770713281,
+              "bodyScale": 1,
+              "heightBefore": 1.7999929045979446,
+              "heightAfter": 1.7515844340480584,
+              "unchangedBodyVertices": 1954,
+              "unchangedBodyMaxDisplacementM": 1.593695104189326e-8,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        },
+        {
+          "path": "public/assets/models/npc.patient-zero-courier.lod2.glb",
+          "sourceSha256": "f52eea2baab82c5eebafc187a0cd4f59fefa8477e0488c18fc22823fa6d58d2f",
+          "outputSha256": "7a3d507d0809b0c1dc7fd3ded283fd1d69f70e5cf6f7425f5c6cb5527a3b9962",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.061176233270849,
+                "maximum": 0.9166655802565826,
+                "intervals": {
+                  "headHeight": [
+                    0.6930711611251736,
+                    0.9166655802565826
+                  ],
+                  "headShoulder": [
+                    1.0514183941715525,
+                    1.2850669262096752
+                  ],
+                  "legHeight": [
+                    1.061176233270849,
+                    1.7733239435066805
+                  ]
+                },
+                "limits": {
+                  "headHeight": 0.9154599581544284,
+                  "headShoulder": 1.2838986835494846
+                },
+                "binding": "headHeight",
+                "scale": 0.9154599581544284
+              },
+              "before": {
+                "headHeight": 0.3181179163967177,
+                "headShoulder": 0.7463597038939984,
+                "legHeight": 0.4794323542384697,
+                "shoulderHeight": 0.40533164231071667
+              },
+              "after": {
+                "headHeight": 0.29951408870285134,
+                "headShoulder": 0.68326241343857,
+                "legHeight": 0.4926824099343184,
+                "shoulderHeight": 0.4165337753003291
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 1.227384994795608,
+              "headScale": 0.9154599581544284,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.272102168664141,
+              "jointHeadHeightAfter": 0.2559829680927008,
+              "shoulderWidthBefore": 0.7295940801683221,
+              "shoulderWidthAfter": 0.7295940770713281,
+              "bodyScale": 1,
+              "heightBefore": 1.7999929045979446,
+              "heightAfter": 1.7515844340480584,
+              "unchangedBodyVertices": 1027,
+              "unchangedBodyMaxDisplacementM": 1.593695104189326e-8,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "npc.mrs-alvarez",
+      "status": "built",
+      "files": [
+        {
+          "path": "assets/npc.mrs-alvarez/model.glb",
+          "sourceSha256": "a62ff7d3c1bbaf43428f19e4570a0c6d267e37244a16b09b2a6e6ad39f090786",
+          "outputSha256": "ce68b34d146f9bada5a0e8ca32cf102ebfd36cc8c8235539c48285dc06c9fd41",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.038333472302354,
+                "maximum": 0.8241589859350503,
+                "intervals": {
+                  "headHeight": [
+                    0.6224815449524823,
+                    0.8241589859350503
+                  ],
+                  "headShoulder": [
+                    1.038333472302354,
+                    1.2690742439250995
+                  ],
+                  "legHeight": [
+                    0.5206058515652209,
+                    1.0653904547426785
+                  ]
+                },
+                "limits": {
+                  "headHeight": 0.8230713821100895,
+                  "headShoulder": 1.2679205400669857
+                },
+                "binding": "headHeight",
+                "scale": 0.8230713821100895
+              },
+              "before": {
+                "headHeight": 0.34118923098813764,
+                "headShoulder": 0.7557652163543799,
+                "legHeight": 0.3933591594652915,
+                "shoulderHeight": 0.45014906664355264
+              },
+              "after": {
+                "headHeight": 0.29951409749895447,
+                "headShoulder": 0.6220487109748181,
+                "legHeight": 0.41863024726659626,
+                "shoulderHeight": 0.4790685828492719
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 0.9546579149365425,
+              "headScale": 0.8230713821100895,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.2788443808737914,
+              "jointHeadHeightAfter": 0.24425347637433392,
+              "shoulderWidthBefore": 0.6522974371910095,
+              "shoulderWidthAfter": 0.6522974371910095,
+              "bodyScale": 1,
+              "heightBefore": 1.4490698426961899,
+              "heightAfter": 1.3615951046329418,
+              "unchangedBodyVertices": 13049,
+              "unchangedBodyMaxDisplacementM": 0,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        },
+        {
+          "path": "public/assets/models/npc.mrs-alvarez.glb",
+          "sourceSha256": "530043a48048821309cc6b4ed44c5bc3fc78aae771d670d30925ffda4847d5af",
+          "outputSha256": "e5735559d839db8594118a61c5a21923f0004d7632b83f3442b8811ef8254b47",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.038327837881311,
+                "maximum": 0.8271705263866279,
+                "intervals": {
+                  "headHeight": [
+                    0.6253776541266951,
+                    0.8271705263866279
+                  ],
+                  "headShoulder": [
+                    1.038327837881311,
+                    1.2690673574104914
+                  ],
+                  "legHeight": [
+                    0.5196633090969958,
+                    1.0655284793152746
+                  ]
+                },
+                "limits": {
+                  "headHeight": 0.8260825239474903,
+                  "headShoulder": 1.2679136598128453
+                },
+                "binding": "headHeight",
+                "scale": 0.8260825239474903
+              },
+              "before": {
+                "headHeight": 0.34051479525908335,
+                "headShoulder": 0.7557693174670375,
+                "legHeight": 0.393360274446021,
+                "shoulderHeight": 0.45014894637584174
+              },
+              "after": {
+                "headHeight": 0.29951409331038137,
+                "headShoulder": 0.6243278056844999,
+                "legHeight": 0.4181220785868226,
+                "shoulderHeight": 0.47848556873878667
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 1.1870648593401283,
+              "headScale": 0.8260825239474903,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.2788434552439174,
+              "jointHeadHeightAfter": 0.2448479635401728,
+              "shoulderWidthBefore": 0.8102681010983532,
+              "shoulderWidthAfter": 0.8102681029326683,
+              "bodyScale": 1,
+              "heightBefore": 1.7999999947169445,
+              "heightAfter": 1.6934013392888914,
+              "unchangedBodyVertices": 13062,
+              "unchangedBodyMaxDisplacementM": 1.4379243466765695e-8,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        },
+        {
+          "path": "public/assets/models/npc.mrs-alvarez.lod1.glb",
+          "sourceSha256": "dac7a14a8c965935f34d692734cf8314f926caf7324d35c0859a3dfcc28a39a7",
+          "outputSha256": "d8f0de2dfa03cf974a9b4f3cbf332fbe1592fa27d46d5bf4e97b818272c5f265",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.0383269363947658,
+                "maximum": 0.8271689632003181,
+                "intervals": {
+                  "headHeight": [
+                    0.6253764720030174,
+                    0.8271689632003181
+                  ],
+                  "headShoulder": [
+                    1.0383269363947658,
+                    1.2690662555936028
+                  ],
+                  "legHeight": [
+                    0.5196627862879494,
+                    1.065527036991043
+                  ]
+                },
+                "limits": {
+                  "headHeight": 0.8260809628170155,
+                  "headShoulder": 1.2679125589976086
+                },
+                "binding": "headHeight",
+                "scale": 0.8260809628170155
+              },
+              "before": {
+                "headHeight": 0.3405152144211039,
+                "headShoulder": 0.7557699736340375,
+                "legHeight": 0.3933600960389903,
+                "shoulderHeight": 0.45014911470950114
+              },
+              "after": {
+                "headHeight": 0.2995140955929484,
+                "headShoulder": 0.6243271820597599,
+                "legHeight": 0.4181221570483352,
+                "shoulderHeight": 0.4784860544733324
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 1.1870644884216335,
+              "headScale": 0.8260809628170155,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.2788436763789468,
+              "jointHeadHeightAfter": 0.2448478533396255,
+              "shoulderWidthBefore": 0.8102685097168334,
+              "shoulderWidthAfter": 0.8102685115511418,
+              "bodyScale": 1,
+              "heightBefore": 1.8000002293456279,
+              "heightAfter": 1.693400474216539,
+              "unchangedBodyVertices": 3027,
+              "unchangedBodyMaxDisplacementM": 1.3516414036985978e-8,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        },
+        {
+          "path": "public/assets/models/npc.mrs-alvarez.lod2.glb",
+          "sourceSha256": "f18ba3e2dc53c70eb4cbe4c73086b13e76353accbf2150ae22793c6677a0c032",
+          "outputSha256": "1b931ebecfb900de3d8f9f83ea92e3f431edea32c42eec91185f40e6fbcad1f6",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.0383269363947658,
+                "maximum": 0.8271689632003181,
+                "intervals": {
+                  "headHeight": [
+                    0.6253764720030174,
+                    0.8271689632003181
+                  ],
+                  "headShoulder": [
+                    1.0383269363947658,
+                    1.2690662555936028
+                  ],
+                  "legHeight": [
+                    0.5196627862879494,
+                    1.065527036991043
+                  ]
+                },
+                "limits": {
+                  "headHeight": 0.8260809628170155,
+                  "headShoulder": 1.2679125589976086
+                },
+                "binding": "headHeight",
+                "scale": 0.8260809628170155
+              },
+              "before": {
+                "headHeight": 0.3405152144211039,
+                "headShoulder": 0.7557699736340375,
+                "legHeight": 0.3933600960389903,
+                "shoulderHeight": 0.45014911470950114
+              },
+              "after": {
+                "headHeight": 0.2995140955929484,
+                "headShoulder": 0.6243271820597599,
+                "legHeight": 0.4181221570483352,
+                "shoulderHeight": 0.4784860544733324
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 1.1870644884216335,
+              "headScale": 0.8260809628170155,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.2788436763789468,
+              "jointHeadHeightAfter": 0.2448478533396255,
+              "shoulderWidthBefore": 0.8102685097168334,
+              "shoulderWidthAfter": 0.8102685115511418,
+              "bodyScale": 1,
+              "heightBefore": 1.8000002293456279,
+              "heightAfter": 1.693400474216539,
+              "unchangedBodyVertices": 2539,
+              "unchangedBodyMaxDisplacementM": 1.3516414036985978e-8,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "npc.paramedic",
+      "status": "built",
+      "files": [
+        {
+          "path": "assets/npc.paramedic/model.glb",
+          "sourceSha256": "2ddc957f611c8174c00ec6dc38180e0fcda0ebbfc2d169a6a4bbadffbfa334c6",
+          "outputSha256": "88968861d4bd274f02ad5c7351784a4ecaaf8952a88dc3de6abbd74803cc707e",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.0379592624766631,
+                "maximum": 1,
+                "intervals": {
+                  "headHeight": [
+                    0.7662868908610004,
+                    1.0145233340489381
+                  ],
+                  "headShoulder": [
+                    1.0379592624766631,
+                    1.268616876360366
+                  ],
+                  "legHeight": [
+                    0.8840461021831986,
+                    1.6069581190775095
+                  ]
+                },
+                "limits": {
+                  "headHeight": 1.013184413042876,
+                  "headShoulder": 1.2674635882909475
+                },
+                "binding": "already-small-enough",
+                "scale": 1
+              },
+              "before": {
+                "headHeight": 0.29681887571078486,
+                "headShoulder": 0.756037688290514,
+                "legHeight": 0.4540943382930521,
+                "shoulderHeight": 0.43381360425088816
+              },
+              "after": {
+                "headHeight": 0.29681887571078486,
+                "headShoulder": 0.756037688290514,
+                "legHeight": 0.4540943382930521,
+                "shoulderHeight": 0.43381360425088816
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 1.0065479230880738,
+              "headScale": 1,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.2629699666043739,
+              "jointHeadHeightAfter": 0.2629699666043739,
+              "shoulderWidthBefore": 0.6209697127342224,
+              "shoulderWidthAfter": 0.6209697127342224,
+              "bodyScale": 1,
+              "heightBefore": 1.431420560926199,
+              "heightAfter": 1.431420560926199,
+              "unchangedBodyVertices": 22493,
+              "unchangedBodyMaxDisplacementM": 0,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        },
+        {
+          "path": "public/assets/models/npc.paramedic.glb",
+          "sourceSha256": "a18eb0aa4b40e4160a3a966ec12555334286b6cd9410a96f1ea8e15ed36cc8f7",
+          "outputSha256": "d35a378ac05c16b430cf918aabfb4484f0118c6d6ff59659c5da9410a369792c",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.0379433619752767,
+                "maximum": 1,
+                "intervals": {
+                  "headHeight": [
+                    0.7697280394556396,
+                    1.0180238469948444
+                  ],
+                  "headShoulder": [
+                    1.0379433619752767,
+                    1.268597442414227
+                  ],
+                  "legHeight": [
+                    0.8837734152157921,
+                    1.6084431165779491
+                  ]
+                },
+                "limits": {
+                  "headHeight": 1.0166849434545113,
+                  "headShoulder": 1.2674441720120322
+                },
+                "binding": "already-small-enough",
+                "scale": 1
+              },
+              "before": {
+                "headHeight": 0.2960997526576288,
+                "headShoulder": 0.7560492702117934,
+                "legHeight": 0.45409558104465947,
+                "shoulderHeight": 0.43381338469099556
+              },
+              "after": {
+                "headHeight": 0.296099746637437,
+                "headShoulder": 0.7560492531464303,
+                "legHeight": 0.45409558232616437,
+                "shoulderHeight": 0.4338133854473314
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 1.2670196242060245,
+              "headScale": 1,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.2629682342197675,
+              "jointHeadHeightAfter": 0.26296823170896677,
+              "shoulderWidthBefore": 0.7808640904486741,
+              "shoulderWidthAfter": 0.7808640884173947,
+              "bodyScale": 1,
+              "heightBefore": 1.7999999954009767,
+              "heightAfter": 1.79999998758037,
+              "unchangedBodyVertices": 19288,
+              "unchangedBodyMaxDisplacementM": 1.3952342117403395e-8,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        },
+        {
+          "path": "public/assets/models/npc.paramedic.lod1.glb",
+          "sourceSha256": "a27ac817062d33d106c930aa0abbb3af3008c6eb9bf22df111e079d14b9ed034",
+          "outputSha256": "d696853b9cd0849f6180994c3220d21eb311703e32825b95c7afd129b5f546b7",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.0379747860425124,
+                "maximum": 1,
+                "intervals": {
+                  "headHeight": [
+                    0.7697271159510957,
+                    1.018022623846287
+                  ],
+                  "headShoulder": [
+                    1.0379747860425124,
+                    1.2686358496075152
+                  ],
+                  "legHeight": [
+                    0.8837725147261,
+                    1.6084413897804737
+                  ]
+                },
+                "limits": {
+                  "headHeight": 1.0166837219234905,
+                  "headShoulder": 1.2674825442896902
+                },
+                "binding": "already-small-enough",
+                "scale": 1
+              },
+              "before": {
+                "headHeight": 0.29609999971698725,
+                "headShoulder": 0.7560263812713103,
+                "legHeight": 0.45409544214749265,
+                "shoulderHeight": 0.43381363120784827
+              },
+              "after": {
+                "headHeight": 0.2960999936967911,
+                "headShoulder": 0.7560263649108258,
+                "legHeight": 0.45409544342899855,
+                "shoulderHeight": 0.43381363196418576
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 1.2670196474515467,
+              "headScale": 1,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.2629685102516209,
+              "jointHeadHeightAfter": 0.2629685077408189,
+              "shoulderWidthBefore": 0.7808649126518608,
+              "shoulderWidthAfter": 0.7808649106205793,
+              "bodyScale": 1,
+              "heightBefore": 1.800000867832882,
+              "heightAfter": 1.8000008600122666,
+              "unchangedBodyVertices": 2694,
+              "unchangedBodyMaxDisplacementM": 1.2430754892936796e-8,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        },
+        {
+          "path": "public/assets/models/npc.paramedic.lod2.glb",
+          "sourceSha256": "941632384bc0552955a69a91b0afaf8a6644e0edfefb04faa461e5d988114693",
+          "outputSha256": "25cf9048d44517750641919c00cc27bd60bee17d8876186e080b8b8ed55fc764",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.0379747860425124,
+                "maximum": 1,
+                "intervals": {
+                  "headHeight": [
+                    0.7697271159510957,
+                    1.018022623846287
+                  ],
+                  "headShoulder": [
+                    1.0379747860425124,
+                    1.2686358496075152
+                  ],
+                  "legHeight": [
+                    0.8837725147261,
+                    1.6084413897804737
+                  ]
+                },
+                "limits": {
+                  "headHeight": 1.0166837219234905,
+                  "headShoulder": 1.2674825442896902
+                },
+                "binding": "already-small-enough",
+                "scale": 1
+              },
+              "before": {
+                "headHeight": 0.29609999971698725,
+                "headShoulder": 0.7560263812713103,
+                "legHeight": 0.45409544214749265,
+                "shoulderHeight": 0.43381363120784827
+              },
+              "after": {
+                "headHeight": 0.2960999936967911,
+                "headShoulder": 0.7560263649108258,
+                "legHeight": 0.45409544342899855,
+                "shoulderHeight": 0.43381363196418576
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 1.2670196474515467,
+              "headScale": 1,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.2629685102516209,
+              "jointHeadHeightAfter": 0.2629685077408189,
+              "shoulderWidthBefore": 0.7808649126518608,
+              "shoulderWidthAfter": 0.7808649106205793,
+              "bodyScale": 1,
+              "heightBefore": 1.800000867832882,
+              "heightAfter": 1.8000008600122666,
+              "unchangedBodyVertices": 1858,
+              "unchangedBodyMaxDisplacementM": 1.2430754892936796e-8,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "npc.survivor-group",
+      "status": "built",
+      "files": [
+        {
+          "path": "assets/npc.survivor-group/model.glb",
+          "sourceSha256": "6a0d9c67021989e46513d17db98d53d11b322d30cc4e4e9ba8c9186a46f5c2c1",
+          "outputSha256": "0b59cb5629e56852ade44749ad83ace9f268347d493ca02d77bb0db175be59d4",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "rootName": "survivor01_root",
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.2519649658443897,
+                "maximum": 0.946772206819493,
+                "intervals": {
+                  "headHeight": [
+                    0.7151466517485144,
+                    0.946772206819493
+                  ],
+                  "headShoulder": [
+                    1.2519649658443897,
+                    1.5301794026986983
+                  ],
+                  "legHeight": [
+                    0.6593097438486082,
+                    1.2976780187339363
+                  ]
+                },
+                "limits": {
+                  "headHeight": 0.9455229724198616,
+                  "headShoulder": 1.5287883305144268
+                },
+                "binding": "headHeight",
+                "scale": 0.9455229724198616
+              },
+              "before": {
+                "headHeight": 0.3112019481666043,
+                "headShoulder": 0.6268037387238841,
+                "legHeight": 0.4204193825507258,
+                "shoulderHeight": 0.38924068156714364
+              },
+              "after": {
+                "headHeight": 0.2995141248574774,
+                "headShoulder": 0.592657320327763,
+                "legHeight": 0.4276698090860199,
+                "shoulderHeight": 0.3959534095796536
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 0.999399299621582,
+              "headScale": 0.9455229724198616,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.28666554043483006,
+              "jointHeadHeightAfter": 0.2757233107432641,
+              "shoulderWidthBefore": 0.5647618852253089,
+              "shoulderWidthAfter": 0.5647618852253089,
+              "bodyScale": 1,
+              "heightBefore": 1.4509323202073574,
+              "heightAfter": 1.4263341887240304,
+              "unchangedBodyVertices": 6302,
+              "unchangedBodyMaxDisplacementM": 1.1123893155135927e-16,
+              "unchangedJointMaxDisplacementM": 0
+            },
+            {
+              "rootName": "survivor02_root",
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.2528309597014389,
+                "maximum": 0.9467578840037137,
+                "intervals": {
+                  "headHeight": [
+                    0.7151358451401996,
+                    0.9467578840037137
+                  ],
+                  "headShoulder": [
+                    1.2528309597014389,
+                    1.531237839635092
+                  ],
+                  "legHeight": [
+                    0.6592994554891917,
+                    1.297658120981287
+                  ]
+                },
+                "limits": {
+                  "headHeight": 0.9455086685898044,
+                  "headShoulder": 1.5298458052354238
+                },
+                "binding": "headHeight",
+                "scale": 0.9455086685898044
+              },
+              "before": {
+                "headHeight": 0.3112051396752185,
+                "headShoulder": 0.6263704734193295,
+                "legHeight": 0.4204173654693712,
+                "shoulderHeight": 0.38939206543095306
+              },
+              "after": {
+                "headHeight": 0.29951407353418963,
+                "headShoulder": 0.5922386932863325,
+                "legHeight": 0.42766979989125053,
+                "shoulderHeight": 0.39610929609478457
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 0.9993993592262268,
+              "headScale": 0.9455086685898044,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.28666884307069246,
+              "jointHeadHeightAfter": 0.2757235618425232,
+              "shoulderWidthBefore": 0.564984091821793,
+              "shoulderWidthAfter": 0.564984091821793,
+              "bodyScale": 1,
+              "heightBefore": 1.450938891619444,
+              "heightAfter": 1.426333836120318,
+              "unchangedBodyVertices": 5833,
+              "unchangedBodyMaxDisplacementM": 5.551115123125783e-17,
+              "unchangedJointMaxDisplacementM": 0
+            },
+            {
+              "rootName": "survivor03_root",
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.2511469827143344,
+                "maximum": 1,
+                "intervals": {
+                  "headHeight": [
+                    0.7619787107705706,
+                    1.0088491537419269
+                  ],
+                  "headShoulder": [
+                    1.2511469827143344,
+                    1.5291796455397422
+                  ],
+                  "legHeight": [
+                    0.7018104524590077,
+                    1.381329872853069
+                  ]
+                },
+                "limits": {
+                  "headHeight": 1.0075175978965543,
+                  "headShoulder": 1.5277894822256148
+                },
+                "binding": "already-small-enough",
+                "scale": 1
+              },
+              "before": {
+                "headHeight": 0.2979713864288374,
+                "headShoulder": 0.6272135346081529,
+                "legHeight": 0.42849480622218383,
+                "shoulderHeight": 0.3963399674861394
+              },
+              "after": {
+                "headHeight": 0.2979713864288374,
+                "headShoulder": 0.6272135346081529,
+                "legHeight": 0.42849480622218383,
+                "shoulderHeight": 0.3963399674861394
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 0.9993993592262268,
+              "headScale": 1,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.2729636761806451,
+              "jointHeadHeightAfter": 0.2729636761806451,
+              "shoulderWidthBefore": 0.564224675556302,
+              "shoulderWidthAfter": 0.564224675556302,
+              "bodyScale": 1,
+              "heightBefore": 1.4235876314342022,
+              "heightAfter": 1.4235876314342022,
+              "unchangedBodyVertices": 6175,
+              "unchangedBodyMaxDisplacementM": 1.1102230246251565e-16,
+              "unchangedJointMaxDisplacementM": 0
+            },
+            {
+              "rootName": "survivor04_root",
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.2451253261963744,
+                "maximum": 0.9617752788163556,
+                "intervals": {
+                  "headHeight": [
+                    0.7264659139530169,
+                    0.9617752788163556
+                  ],
+                  "headShoulder": [
+                    1.2451253261963744,
+                    1.521819843128902
+                  ],
+                  "legHeight": [
+                    0.6695893311322259,
+                    1.3179109812067187
+                  ]
+                },
+                "limits": {
+                  "headHeight": 0.9605061532079175,
+                  "headShoulder": 1.5204363705442394
+                },
+                "binding": "headHeight",
+                "scale": 0.9605061532079175
+              },
+              "before": {
+                "headHeight": 0.3078952254055903,
+                "headShoulder": 0.630246855342511,
+                "legHeight": 0.4224376385953428,
+                "shoulderHeight": 0.38903094233219504
+              },
+              "after": {
+                "headHeight": 0.2995140951180964,
+                "headShoulder": 0.6053559619723543,
+                "legHeight": 0.42763770276298535,
+                "shoulderHeight": 0.39381978139031626
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 0.9993993592262268,
+              "headScale": 0.9605061532079175,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.28324102391626305,
+              "jointHeadHeightAfter": 0.2754036388703522,
+              "shoulderWidthBefore": 0.5617606815044893,
+              "shoulderWidthAfter": 0.5617606815044893,
+              "bodyScale": 1,
+              "heightBefore": 1.4440000019967556,
+              "heightAfter": 1.426440996745479,
+              "unchangedBodyVertices": 6152,
+              "unchangedBodyMaxDisplacementM": 2.237726045655905e-16,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        },
+        {
+          "path": "public/assets/models/npc.survivor-group.glb",
+          "sourceSha256": "1dae14cd0b3442ded7a31757c78058f46a3b570e74c3d948b4f399055babea5a",
+          "outputSha256": "1d8b099550341767119ccd65935de452857940bc208399a8a56e5f6b8dc16065",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "rootName": "survivor01_root",
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.2519450706358441,
+                "maximum": 0.9499465974428375,
+                "intervals": {
+                  "headHeight": [
+                    0.7182426170593778,
+                    0.9499465974428375
+                  ],
+                  "headShoulder": [
+                    1.2519450706358441,
+                    1.5301550863326985
+                  ],
+                  "legHeight": [
+                    0.6585745938975104,
+                    1.2983221416659931
+                  ]
+                },
+                "limits": {
+                  "headHeight": 0.9486972205260282,
+                  "headShoulder": 1.528764036254214
+                },
+                "binding": "headHeight",
+                "scale": 0.9486972205260282
+              },
+              "before": {
+                "headHeight": 0.3105310997783507,
+                "headShoulder": 0.6268136995371749,
+                "legHeight": 0.4204195069804556,
+                "shoulderHeight": 0.3892402534484519
+              },
+              "after": {
+                "headHeight": 0.29951408720190614,
+                "headShoulder": 0.5946564100737082,
+                "legHeight": 0.42722568648974746,
+                "shoulderHeight": 0.39554167190617956
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 1.2410366334066905,
+              "headScale": 0.9486972205260282,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.28666461174298713,
+              "jointHeadHeightAfter": 0.27636065018870615,
+              "shoulderWidthBefore": 0.7006272784190573,
+              "shoulderWidthAfter": 0.7006272781495498,
+              "bodyScale": 1,
+              "heightBefore": 1.7999866977063386,
+              "heightAfter": 1.771310908337706,
+              "unchangedBodyVertices": 5371,
+              "unchangedBodyMaxDisplacementM": 1.2349314221154489e-8,
+              "unchangedJointMaxDisplacementM": 0
+            },
+            {
+              "rootName": "survivor02_root",
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.2528048987196923,
+                "maximum": 0.949916039021456,
+                "intervals": {
+                  "headHeight": [
+                    0.7182195317151671,
+                    0.949916039021456
+                  ],
+                  "headShoulder": [
+                    1.2528048987196923,
+                    1.5312059873240684
+                  ],
+                  "legHeight": [
+                    0.6585693185672691,
+                    1.298300025143065
+                  ]
+                },
+                "limits": {
+                  "headHeight": 0.948666702436892,
+                  "headShoulder": 1.5298139818810463
+                },
+                "binding": "headHeight",
+                "scale": 0.948666702436892
+              },
+              "before": {
+                "headHeight": 0.3105378991793334,
+                "headShoulder": 0.6263835032450359,
+                "legHeight": 0.42041764482253985,
+                "shoulderHeight": 0.3893897944249643
+              },
+              "after": {
+                "headHeight": 0.2995140895641009,
+                "headShoulder": 0.5942291592588163,
+                "legHeight": 0.4272280608470158,
+                "shoulderHeight": 0.39569758294007085
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 1.2410321737464671,
+              "headScale": 0.948666702436892,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.28666911066754014,
+              "jointHeadHeightAfter": 0.2763588571810709,
+              "shoulderWidthBefore": 0.7009028578645008,
+              "shoulderWidthAfter": 0.7009028575951946,
+              "bodyScale": 1,
+              "heightBefore": 1.8000031533943175,
+              "heightAfter": 1.771309423695286,
+              "unchangedBodyVertices": 5044,
+              "unchangedBodyMaxDisplacementM": 1.2430114361984013e-8,
+              "unchangedJointMaxDisplacementM": 0
+            },
+            {
+              "rootName": "survivor03_root",
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.2511585375276904,
+                "maximum": 1,
+                "intervals": {
+                  "headHeight": [
+                    0.7652338214383797,
+                    1.0121589793975958
+                  ],
+                  "headShoulder": [
+                    1.2511585375276904,
+                    1.5291937680893994
+                  ],
+                  "legHeight": [
+                    0.7011314037733399,
+                    1.382209361774263
+                  ]
+                },
+                "limits": {
+                  "headHeight": 1.010827447006206,
+                  "headShoulder": 1.5278035919365907
+                },
+                "binding": "already-small-enough",
+                "scale": 1
+              },
+              "before": {
+                "headHeight": 0.29728995761369165,
+                "headShoulder": 0.627207742108554,
+                "legHeight": 0.4284954272717915,
+                "shoulderHeight": 0.3963378864545641
+              },
+              "after": {
+                "headHeight": 0.2972899569702851,
+                "headShoulder": 0.6272077258556488,
+                "legHeight": 0.428495428508664,
+                "shoulderHeight": 0.39633788544479986
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 1.241033618943512,
+              "headScale": 1,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.2729633795534475,
+              "jointHeadHeightAfter": 0.2729633789626895,
+              "shoulderWidthBefore": 0.6999606087926691,
+              "shoulderWidthAfter": 0.6999606085242364,
+              "bodyScale": 1,
+              "heightBefore": 1.7660703977965833,
+              "heightAfter": 1.7660704016187816,
+              "unchangedBodyVertices": 5264,
+              "unchangedBodyMaxDisplacementM": 1.1565429527925466e-8,
+              "unchangedJointMaxDisplacementM": 0
+            },
+            {
+              "rootName": "survivor04_root",
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.2451367627329382,
+                "maximum": 0.96497246825817,
+                "intervals": {
+                  "headHeight": [
+                    0.7295927053195729,
+                    0.96497246825817
+                  ],
+                  "headShoulder": [
+                    1.2451367627329382,
+                    1.5218338211180356
+                  ],
+                  "legHeight": [
+                    0.6688633879618383,
+                    1.3186004408432843
+                  ]
+                },
+                "limits": {
+                  "headHeight": 0.9637032524142617,
+                  "headShoulder": 1.5204503358261099
+                },
+                "binding": "headHeight",
+                "scale": 0.9637032524142617
+              },
+              "before": {
+                "headHeight": 0.30722406513093825,
+                "headShoulder": 0.6302410665477207,
+                "legHeight": 0.422437041952565,
+                "shoulderHeight": 0.3890296386659056
+              },
+              "after": {
+                "headHeight": 0.29951409756611685,
+                "headShoulder": 0.6073653776158349,
+                "legHeight": 0.4272008569799136,
+                "shoulderHeight": 0.39341671948264456
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 1.2410336189435123,
+              "headScale": 0.9637032524142617,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.2832413165144698,
+              "jointHeadHeightAfter": 0.2760387534173354,
+              "shoulderWidthBefore": 0.6969036965033393,
+              "shoulderWidthAfter": 0.6969036962366424,
+              "bodyScale": 1,
+              "heightBefore": 1.7913897226268474,
+              "heightAfter": 1.7714135208922814,
+              "unchangedBodyVertices": 5256,
+              "unchangedBodyMaxDisplacementM": 1.2438579823578566e-8,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        },
+        {
+          "path": "public/assets/models/npc.survivor-group.lod1.glb",
+          "sourceSha256": "2b017d408c6b3ec60a127131b6521eca04188c48c797fc04379366c101e947c0",
+          "outputSha256": "f4f78ce52dc521075e1ad10441d3c2cbf4a8bb5f2f2655f3399fd4760a1f5a1b",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "rootName": "survivor01_root",
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.1899777751487464,
+                "maximum": 0.9499462635145991,
+                "intervals": {
+                  "headHeight": [
+                    0.7182423633484089,
+                    0.9499462635145991
+                  ],
+                  "headShoulder": [
+                    1.1899777751487464,
+                    1.4544172807373568
+                  ],
+                  "legHeight": [
+                    0.6585746651658747,
+                    1.2983220577154588
+                  ]
+                },
+                "limits": {
+                  "headHeight": 0.9486968870301421,
+                  "headShoulder": 1.4530950832094136
+                },
+                "binding": "headHeight",
+                "scale": 0.9486968870301421
+              },
+              "before": {
+                "headHeight": 0.31053117400535396,
+                "headShoulder": 0.6594546030445751,
+                "legHeight": 0.420419505469946,
+                "shoulderHeight": 0.369974187928842
+              },
+              "after": {
+                "headHeight": 0.2995140945568407,
+                "headShoulder": 0.6256225380593293,
+                "legHeight": 0.42722572972031797,
+                "shoulderHeight": 0.37596374843391345
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 1.241036308720803,
+              "headScale": 0.9486968870301421,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.2866644960368428,
+              "jointHeadHeightAfter": 0.27636047477519216,
+              "shoulderWidthBefore": 0.6659483502729197,
+              "shoulderWidthAfter": 0.6659483524674384,
+              "bodyScale": 1,
+              "heightBefore": 1.7999859774028426,
+              "heightAfter": 1.771310013908158,
+              "unchangedBodyVertices": 1594,
+              "unchangedBodyMaxDisplacementM": 1.1963367871718039e-8,
+              "unchangedJointMaxDisplacementM": 0
+            },
+            {
+              "rootName": "survivor02_root",
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.1917569523992875,
+                "maximum": 0.9499161549306893,
+                "intervals": {
+                  "headHeight": [
+                    0.718219619153364,
+                    0.9499161549306893
+                  ],
+                  "headShoulder": [
+                    1.1917569523992875,
+                    1.4565918307102401
+                  ],
+                  "legHeight": [
+                    0.6585697142925632,
+                    1.2983005682544646
+                  ]
+                },
+                "limits": {
+                  "headHeight": 0.9486668181924164,
+                  "headShoulder": 1.4552676563186853
+                },
+                "binding": "headHeight",
+                "scale": 0.9486668181924164
+              },
+              "before": {
+                "headHeight": 0.31053787338212296,
+                "headShoulder": 0.6584701014436913,
+                "legHeight": 0.4204177067563852,
+                "shoulderHeight": 0.37041518272163804
+              },
+              "after": {
+                "headHeight": 0.29951409131241497,
+                "headShoulder": 0.6246687450747401,
+                "legHeight": 0.4272281071638477,
+                "shoulderHeight": 0.3764155852343305
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 1.2410320708942444,
+              "headScale": 0.9486668181924164,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.28666902586694576,
+              "jointHeadHeightAfter": 0.27635879942850483,
+              "shoulderWidthBefore": 0.6667484449132786,
+              "shoulderWidthAfter": 0.6667484472387984,
+              "bodyScale": 1,
+              "heightBefore": 1.8000030128741535,
+              "heightAfter": 1.7713093543236968,
+              "unchangedBodyVertices": 1526,
+              "unchangedBodyMaxDisplacementM": 1.1982054831610403e-8,
+              "unchangedJointMaxDisplacementM": 0
+            },
+            {
+              "rootName": "survivor03_root",
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.1917907621596995,
+                "maximum": 1,
+                "intervals": {
+                  "headHeight": [
+                    0.765232264304138,
+                    1.012156919073477
+                  ],
+                  "headShoulder": [
+                    1.1917907621596995,
+                    1.4566331537507438
+                  ],
+                  "legHeight": [
+                    0.7011311692585163,
+                    1.3822080204318918
+                  ]
+                },
+                "limits": {
+                  "headHeight": 1.0108253893977723,
+                  "headShoulder": 1.4553089417927885
+                },
+                "binding": "already-small-enough",
+                "scale": 1
+              },
+              "before": {
+                "headHeight": 0.29729037709050715,
+                "headShoulder": 0.6584514213892093,
+                "legHeight": 0.4284953355260448,
+                "shoulderHeight": 0.3775320966667577
+              },
+              "after": {
+                "headHeight": 0.29729037644710055,
+                "headShoulder": 0.6584514015666189,
+                "legHeight": 0.42849533676291585,
+                "shoulderHeight": 0.377532097287427
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 1.241033175279004,
+              "headScale": 1,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.27296355460266025,
+              "jointHeadHeightAfter": 0.27296355401190264,
+              "shoulderWidthBefore": 0.6667484461874456,
+              "shoulderWidthAfter": 0.6667484487265927,
+              "bodyScale": 1,
+              "heightBefore": 1.7660708905923173,
+              "heightAfter": 1.7660708944145118,
+              "unchangedBodyVertices": 1556,
+              "unchangedBodyMaxDisplacementM": 1.1565435975443992e-8,
+              "unchangedJointMaxDisplacementM": 0
+            },
+            {
+              "rootName": "survivor04_root",
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.1878726378372344,
+                "maximum": 0.9649710870579599,
+                "intervals": {
+                  "headHeight": [
+                    0.7295916602306135,
+                    0.9649710870579599
+                  ],
+                  "headShoulder": [
+                    1.1878726378372344,
+                    1.4518443351343977
+                  ],
+                  "legHeight": [
+                    0.6688630228433725,
+                    1.3185992867926979
+                  ]
+                },
+                "limits": {
+                  "headHeight": 0.9637018730274102,
+                  "headShoulder": 1.4505244766479117
+                },
+                "binding": "headHeight",
+                "scale": 0.9637018730274102
+              },
+              "before": {
+                "headHeight": 0.30722436575981754,
+                "headShoulder": 0.6606232826200598,
+                "legHeight": 0.4224369423836756,
+                "shoulderHeight": 0.37113844239686433
+              },
+              "after": {
+                "headHeight": 0.29951408418367764,
+                "headShoulder": 0.6366438888972178,
+                "legHeight": 0.42720094744561704,
+                "shoulderHeight": 0.37532393163026195
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 1.241033175279004,
+              "headScale": 0.9637018730274102,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.28324136534381894,
+              "jointHeadHeightAfter": 0.2760385215474504,
+              "shoulderWidthBefore": 0.6648534767641522,
+              "shoulderWidthAfter": 0.6648534750881919,
+              "bodyScale": 1,
+              "heightBefore": 1.7913894138005073,
+              "heightAfter": 1.7714124228644992,
+              "unchangedBodyVertices": 1601,
+              "unchangedBodyMaxDisplacementM": 1.2438579843260646e-8,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        },
+        {
+          "path": "public/assets/models/npc.survivor-group.lod2.glb",
+          "sourceSha256": "e96e2cade7d58ce3f26c9b85c96b46108176b0718f5df215bdc5b57eb0682d56",
+          "outputSha256": "dae8dd9a0178507db01e580047f4fda49d977ea3cc9a63d561782600612d1d59",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "rootName": "survivor01_root",
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.1899777751487464,
+                "maximum": 0.9499462635145991,
+                "intervals": {
+                  "headHeight": [
+                    0.7182423633484089,
+                    0.9499462635145991
+                  ],
+                  "headShoulder": [
+                    1.1899777751487464,
+                    1.4544172807373568
+                  ],
+                  "legHeight": [
+                    0.6585746651658747,
+                    1.2983220577154588
+                  ]
+                },
+                "limits": {
+                  "headHeight": 0.9486968870301421,
+                  "headShoulder": 1.4530950832094136
+                },
+                "binding": "headHeight",
+                "scale": 0.9486968870301421
+              },
+              "before": {
+                "headHeight": 0.31053117400535396,
+                "headShoulder": 0.6594546030445751,
+                "legHeight": 0.420419505469946,
+                "shoulderHeight": 0.369974187928842
+              },
+              "after": {
+                "headHeight": 0.2995140945568407,
+                "headShoulder": 0.6256225380593293,
+                "legHeight": 0.42722572972031797,
+                "shoulderHeight": 0.37596374843391345
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 1.241036308720803,
+              "headScale": 0.9486968870301421,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.2866644960368428,
+              "jointHeadHeightAfter": 0.27636047477519216,
+              "shoulderWidthBefore": 0.6659483502729197,
+              "shoulderWidthAfter": 0.6659483524674384,
+              "bodyScale": 1,
+              "heightBefore": 1.7999859774028426,
+              "heightAfter": 1.771310013908158,
+              "unchangedBodyVertices": 1366,
+              "unchangedBodyMaxDisplacementM": 1.1963367871718039e-8,
+              "unchangedJointMaxDisplacementM": 0
+            },
+            {
+              "rootName": "survivor02_root",
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.1917569523992875,
+                "maximum": 0.9499161549306893,
+                "intervals": {
+                  "headHeight": [
+                    0.718219619153364,
+                    0.9499161549306893
+                  ],
+                  "headShoulder": [
+                    1.1917569523992875,
+                    1.4565918307102401
+                  ],
+                  "legHeight": [
+                    0.6585697142925632,
+                    1.2983005682544646
+                  ]
+                },
+                "limits": {
+                  "headHeight": 0.9486668181924164,
+                  "headShoulder": 1.4552676563186853
+                },
+                "binding": "headHeight",
+                "scale": 0.9486668181924164
+              },
+              "before": {
+                "headHeight": 0.31053787338212296,
+                "headShoulder": 0.6584701014436913,
+                "legHeight": 0.4204177067563852,
+                "shoulderHeight": 0.37041518272163804
+              },
+              "after": {
+                "headHeight": 0.29951409131241497,
+                "headShoulder": 0.6246687450747401,
+                "legHeight": 0.4272281071638477,
+                "shoulderHeight": 0.3764155852343305
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 1.2410320708942444,
+              "headScale": 0.9486668181924164,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.28666902586694576,
+              "jointHeadHeightAfter": 0.27635879942850483,
+              "shoulderWidthBefore": 0.6667484449132786,
+              "shoulderWidthAfter": 0.6667484472387984,
+              "bodyScale": 1,
+              "heightBefore": 1.8000030128741535,
+              "heightAfter": 1.7713093543236968,
+              "unchangedBodyVertices": 1321,
+              "unchangedBodyMaxDisplacementM": 1.1982054831610403e-8,
+              "unchangedJointMaxDisplacementM": 0
+            },
+            {
+              "rootName": "survivor03_root",
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.1917907621596995,
+                "maximum": 1,
+                "intervals": {
+                  "headHeight": [
+                    0.765232264304138,
+                    1.012156919073477
+                  ],
+                  "headShoulder": [
+                    1.1917907621596995,
+                    1.4566331537507438
+                  ],
+                  "legHeight": [
+                    0.7011311692585163,
+                    1.3822080204318918
+                  ]
+                },
+                "limits": {
+                  "headHeight": 1.0108253893977723,
+                  "headShoulder": 1.4553089417927885
+                },
+                "binding": "already-small-enough",
+                "scale": 1
+              },
+              "before": {
+                "headHeight": 0.29729037709050715,
+                "headShoulder": 0.6584514213892093,
+                "legHeight": 0.4284953355260448,
+                "shoulderHeight": 0.3775320966667577
+              },
+              "after": {
+                "headHeight": 0.29729037644710055,
+                "headShoulder": 0.6584514015666189,
+                "legHeight": 0.42849533676291585,
+                "shoulderHeight": 0.377532097287427
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 1.241033175279004,
+              "headScale": 1,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.27296355460266025,
+              "jointHeadHeightAfter": 0.27296355401190264,
+              "shoulderWidthBefore": 0.6667484461874456,
+              "shoulderWidthAfter": 0.6667484487265927,
+              "bodyScale": 1,
+              "heightBefore": 1.7660708905923173,
+              "heightAfter": 1.7660708944145118,
+              "unchangedBodyVertices": 1331,
+              "unchangedBodyMaxDisplacementM": 1.1565435975443992e-8,
+              "unchangedJointMaxDisplacementM": 0
+            },
+            {
+              "rootName": "survivor04_root",
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.1878726378372344,
+                "maximum": 0.9649710870579599,
+                "intervals": {
+                  "headHeight": [
+                    0.7295916602306135,
+                    0.9649710870579599
+                  ],
+                  "headShoulder": [
+                    1.1878726378372344,
+                    1.4518443351343977
+                  ],
+                  "legHeight": [
+                    0.6688630228433725,
+                    1.3185992867926979
+                  ]
+                },
+                "limits": {
+                  "headHeight": 0.9637018730274102,
+                  "headShoulder": 1.4505244766479117
+                },
+                "binding": "headHeight",
+                "scale": 0.9637018730274102
+              },
+              "before": {
+                "headHeight": 0.30722436575981754,
+                "headShoulder": 0.6606232826200598,
+                "legHeight": 0.4224369423836756,
+                "shoulderHeight": 0.37113844239686433
+              },
+              "after": {
+                "headHeight": 0.29951408418367764,
+                "headShoulder": 0.6366438888972178,
+                "legHeight": 0.42720094744561704,
+                "shoulderHeight": 0.37532393163026195
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 1.241033175279004,
+              "headScale": 0.9637018730274102,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.28324136534381894,
+              "jointHeadHeightAfter": 0.2760385215474504,
+              "shoulderWidthBefore": 0.6648534767641522,
+              "shoulderWidthAfter": 0.6648534750881919,
+              "bodyScale": 1,
+              "heightBefore": 1.7913894138005073,
+              "heightAfter": 1.7714124228644992,
+              "unchangedBodyVertices": 1382,
+              "unchangedBodyMaxDisplacementM": 1.2438579843260646e-8,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "char.courier-male",
+      "status": "built",
+      "files": [
+        {
+          "path": "assets/char.courier-male/model.glb",
+          "sourceSha256": "9210826b2967ce8c5a85d88cb0cb01359a00df2f17121a3f3f1e3abc8820e95a",
+          "outputSha256": "b5555678f01626818842e4f568e951b62add8d791f208deda285db8abfaab914",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.2027282312662835,
+                "maximum": 0.8767742195672587,
+                "intervals": {
+                  "headHeight": [
+                    0.6621232234312469,
+                    0.8767742195672587
+                  ],
+                  "headShoulder": [
+                    1.2027282312662835,
+                    1.4700011715476797
+                  ],
+                  "legHeight": [
+                    0.8725476381822566,
+                    1.5225302277821555
+                  ]
+                },
+                "limits": {
+                  "headHeight": 0.8756165538246365,
+                  "headShoulder": 1.4686648068462727
+                },
+                "binding": "headHeight",
+                "scale": 0.8756165538246365
+              },
+              "before": {
+                "headHeight": 0.32761384911551755,
+                "headShoulder": 0.6524635415902555,
+                "legHeight": 0.4506434918402436,
+                "shoulderHeight": 0.4516314413902911
+              },
+              "after": {
+                "headHeight": 0.29951409618517716,
+                "headShoulder": 0.571307875277159,
+                "legHeight": 0.46978719603713665,
+                "shoulderHeight": 0.4708171135183806
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 0.9399971841161229,
+              "headScale": 0.8756165538246365,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.2703874176128694,
+              "jointHeadHeightAfter": 0.2468132776947443,
+              "shoulderWidthBefore": 0.6313826931015152,
+              "shoulderWidthAfter": 0.6313826903633029,
+              "bodyScale": 1,
+              "heightBefore": 1.3980042911934614,
+              "heightAfter": 1.3410359824115734,
+              "unchangedBodyVertices": 9347,
+              "unchangedBodyMaxDisplacementM": 9.063094189825404e-9,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        },
+        {
+          "path": "public/assets/models/char.courier-male.glb",
+          "sourceSha256": "7513b79a17455365624e64755ac0d058ec6198cef870b5a0d6b12788d8ad985a",
+          "outputSha256": "6197a51ffc9a2845f7c5910c6c4e97107fec22021df4dacccee732ce1ad84f2c",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.2027282312662835,
+                "maximum": 0.8767742195672587,
+                "intervals": {
+                  "headHeight": [
+                    0.6621232234312469,
+                    0.8767742195672587
+                  ],
+                  "headShoulder": [
+                    1.2027282312662835,
+                    1.4700011715476797
+                  ],
+                  "legHeight": [
+                    0.8725476381822566,
+                    1.5225302277821555
+                  ]
+                },
+                "limits": {
+                  "headHeight": 0.8756165538246365,
+                  "headShoulder": 1.4686648068462727
+                },
+                "binding": "headHeight",
+                "scale": 0.8756165538246365
+              },
+              "before": {
+                "headHeight": 0.32761384911551755,
+                "headShoulder": 0.6524635415902555,
+                "legHeight": 0.4506434918402436,
+                "shoulderHeight": 0.4516314413902911
+              },
+              "after": {
+                "headHeight": 0.29951409618517716,
+                "headShoulder": 0.571307875277159,
+                "legHeight": 0.46978719603713665,
+                "shoulderHeight": 0.4708171135183806
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 0.9399971841161229,
+              "headScale": 0.8756165538246365,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.2703874176128694,
+              "jointHeadHeightAfter": 0.2468132776947443,
+              "shoulderWidthBefore": 0.6313826931015152,
+              "shoulderWidthAfter": 0.6313826903633029,
+              "bodyScale": 1,
+              "heightBefore": 1.3980042911934614,
+              "heightAfter": 1.3410359824115734,
+              "unchangedBodyVertices": 9347,
+              "unchangedBodyMaxDisplacementM": 9.063094189825404e-9,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        },
+        {
+          "path": "public/assets/models/char.courier-male.lod1.glb",
+          "sourceSha256": "26acce341594363a65d076c6e943d652fcb117997192a1e830609ae2df6bab66",
+          "outputSha256": "785d86ceb9e31d9dba77c7d0aa0fbd999ed3cca1526ae588186ea57ad57603a5",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.2570624447518577,
+                "maximum": 0.9028202377273818,
+                "intervals": {
+                  "headHeight": [
+                    0.6817695454389409,
+                    0.9028202377273818
+                  ],
+                  "headShoulder": [
+                    1.2570624447518577,
+                    1.536409654696715
+                  ],
+                  "legHeight": [
+                    0.898037329479649,
+                    1.567015582425966
+                  ]
+                },
+                "limits": {
+                  "headHeight": 0.9016280166024432,
+                  "headShoulder": 1.5350129186469907
+                },
+                "binding": "headHeight",
+                "scale": 0.9016280166024432
+              },
+              "before": {
+                "headHeight": 0.3212990961661649,
+                "headShoulder": 0.6242620043409928,
+                "legHeight": 0.4548734944819428,
+                "shoulderHeight": 0.4580208345809373
+              },
+              "after": {
+                "headHeight": 0.2995140921404823,
+                "headShoulder": 0.5628521017190294,
+                "legHeight": 0.46971985016668527,
+                "shoulderHeight": 0.4729699172619866
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 0.9400005965784456,
+              "headScale": 0.9016280166024432,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.26353774063788404,
+              "jointHeadHeightAfter": 0.24536832526714764,
+              "shoulderWidthBefore": 0.6343581179829321,
+              "shoulderWidthAfter": 0.6343581238793672,
+              "bodyScale": 1,
+              "heightBefore": 1.384998388912446,
+              "heightAfter": 1.3412229842262562,
+              "unchangedBodyVertices": 838,
+              "unchangedBodyMaxDisplacementM": 8.851283188606898e-9,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        },
+        {
+          "path": "public/assets/models/char.courier-male.lod2.glb",
+          "sourceSha256": "e44dcaae41f100df5e75296cfc38e7aee91540613700d3393b3d84a0a5a3dd4c",
+          "outputSha256": "71fd27c82024186211ee3fc08b84c35bd6d837bac2e2c9c63fa259ccbc5df1ff",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": false,
+                "minimum": 1.2570624447518577,
+                "maximum": 0.9028202377273818,
+                "intervals": {
+                  "headHeight": [
+                    0.6817695454389409,
+                    0.9028202377273818
+                  ],
+                  "headShoulder": [
+                    1.2570624447518577,
+                    1.536409654696715
+                  ],
+                  "legHeight": [
+                    0.898037329479649,
+                    1.567015582425966
+                  ]
+                },
+                "limits": {
+                  "headHeight": 0.9016280166024432,
+                  "headShoulder": 1.5350129186469907
+                },
+                "binding": "headHeight",
+                "scale": 0.9016280166024432
+              },
+              "before": {
+                "headHeight": 0.3212990961661649,
+                "headShoulder": 0.6242620043409928,
+                "legHeight": 0.4548734944819428,
+                "shoulderHeight": 0.4580208345809373
+              },
+              "after": {
+                "headHeight": 0.2995140921404823,
+                "headShoulder": 0.5628521017190294,
+                "legHeight": 0.46971985016668527,
+                "shoulderHeight": 0.4729699172619866
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 0.9400005965784456,
+              "headScale": 0.9016280166024432,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.26353774063788404,
+              "jointHeadHeightAfter": 0.24536832526714764,
+              "shoulderWidthBefore": 0.6343581179829321,
+              "shoulderWidthAfter": 0.6343581238793672,
+              "bodyScale": 1,
+              "heightBefore": 1.384998388912446,
+              "heightAfter": 1.3412229842262562,
+              "unchangedBodyVertices": 398,
+              "unchangedBodyMaxDisplacementM": 7.742333946193927e-9,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        },
+        {
+          "path": "assets/char.courier-male-skin/model.skin.glb",
+          "sourceSha256": "979ad3efb9e0b4c66bc23776f9af69dab928f1a69ed991aaad6bf6db2d5becac",
+          "outputSha256": "8e0856ef8378eb76d656c9485a0aeabd913f2be06c2aaa8fc7aec8f2e62ca663",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": true,
+                "minimum": 0.8607731368126161,
+                "maximum": 1,
+                "intervals": {
+                  "headHeight": [
+                    0.7657393667882997,
+                    1.013921605172406
+                  ],
+                  "headShoulder": [
+                    0.8607731368126161,
+                    1.0520560561043086
+                  ],
+                  "legHeight": [
+                    0.5777117501377493,
+                    1.2322395407198619
+                  ]
+                },
+                "limits": {
+                  "headHeight": 1.0125829373302295,
+                  "headShoulder": 1.0510996415078502
+                },
+                "binding": "already-small-enough",
+                "scale": 1
+              },
+              "before": {
+                "headHeight": 0.2969417987179282,
+                "headShoulder": 0.9116645115673659,
+                "legHeight": 0.41130932263536835,
+                "shoulderHeight": 0.37714435979385297
+              },
+              "after": {
+                "headHeight": 0.29694175663650624,
+                "headShoulder": 0.9116645132003418,
+                "legHeight": 0.4113093225651122,
+                "shoulderHeight": 0.3771443596256904
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 0.982887949156032,
+              "headScale": 1,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.28468878473098186,
+              "jointHeadHeightAfter": 0.28468878473437936,
+              "shoulderWidthBefore": 0.527254546013679,
+              "shoulderWidthAfter": 0.5272545456626265,
+              "bodyScale": 1,
+              "heightBefore": 1.3980178473353713,
+              "heightAfter": 1.3980178470279074,
+              "unchangedBodyVertices": 3638,
+              "unchangedBodyMaxDisplacementM": 1.2402579806414547e-7,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        },
+        {
+          "path": "public/assets/models/char.courier-male.skin.glb",
+          "sourceSha256": "e799f98ff4965fc7000d93e02fba638deff17ff04407b1c5aa37e3e438580b7a",
+          "outputSha256": "774d48c04982ac7fd57bf471f8b4374ee0c4a04665ed7d762f327f374529a4f3",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": true,
+                "minimum": 0.8607731345380519,
+                "maximum": 1,
+                "intervals": {
+                  "headHeight": [
+                    0.7657392528715437,
+                    1.0139214545316089
+                  ],
+                  "headShoulder": [
+                    0.8607731345380519,
+                    1.0520560533242858
+                  ],
+                  "legHeight": [
+                    0.5777116670077419,
+                    1.2322393622810164
+                  ]
+                },
+                "limits": {
+                  "headHeight": 1.012582786887642,
+                  "headShoulder": 1.0510996387303546
+                },
+                "binding": "already-small-enough",
+                "scale": 1
+              },
+              "before": {
+                "headHeight": 0.2969418292051019,
+                "headShoulder": 0.9116645139764089,
+                "legHeight": 0.4113093049720462,
+                "shoulderHeight": 0.3771443693287913
+              },
+              "after": {
+                "headHeight": 0.29694182934403873,
+                "headShoulder": 0.9116645632947039,
+                "legHeight": 0.41130930469660165,
+                "shoulderHeight": 0.37714435034972255
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 0.9828879189491267,
+              "headScale": 1,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.2846887932423256,
+              "jointHeadHeightAfter": 0.2846887933755296,
+              "shoulderWidthBefore": 0.5272545434706924,
+              "shoulderWidthAfter": 0.5272545166909175,
+              "bodyScale": 1,
+              "heightBefore": 1.3980178052480385,
+              "heightAfter": 1.3980178045939151,
+              "unchangedBodyVertices": 3638,
+              "unchangedBodyMaxDisplacementM": 5.2095422474224835e-8,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        },
+        {
+          "path": "public/assets/models/char.courier-male.skin.low.glb",
+          "sourceSha256": "e799f98ff4965fc7000d93e02fba638deff17ff04407b1c5aa37e3e438580b7a",
+          "outputSha256": "774d48c04982ac7fd57bf471f8b4374ee0c4a04665ed7d762f327f374529a4f3",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "plan": {
+                "feasible": true,
+                "strictThreeRatioIntervalFeasible": true,
+                "minimum": 0.8607731345380519,
+                "maximum": 1,
+                "intervals": {
+                  "headHeight": [
+                    0.7657392528715437,
+                    1.0139214545316089
+                  ],
+                  "headShoulder": [
+                    0.8607731345380519,
+                    1.0520560533242858
+                  ],
+                  "legHeight": [
+                    0.5777116670077419,
+                    1.2322393622810164
+                  ]
+                },
+                "limits": {
+                  "headHeight": 1.012582786887642,
+                  "headShoulder": 1.0510996387303546
+                },
+                "binding": "already-small-enough",
+                "scale": 1
+              },
+              "before": {
+                "headHeight": 0.2969418292051019,
+                "headShoulder": 0.9116645139764089,
+                "legHeight": 0.4113093049720462,
+                "shoulderHeight": 0.3771443693287913
+              },
+              "after": {
+                "headHeight": 0.29694182934403873,
+                "headShoulder": 0.9116645632947039,
+                "legHeight": 0.41130930469660165,
+                "shoulderHeight": 0.37714435034972255
+              },
+              "target": {
+                "headHeight": 0.2725332952860014,
+                "headShoulder": 0.8719292459362036,
+                "legHeight": 0.42752737512725963,
+                "shoulderHeight": 0.29371322861237686
+              },
+              "headBottomPlane": 0.9828879189491267,
+              "headScale": 1,
+              "handScale": 0.75,
+              "jointHeadHeightBefore": 0.2846887932423256,
+              "jointHeadHeightAfter": 0.2846887933755296,
+              "shoulderWidthBefore": 0.5272545434706924,
+              "shoulderWidthAfter": 0.5272545166909175,
+              "bodyScale": 1,
+              "heightBefore": 1.3980178052480385,
+              "heightAfter": 1.3980178045939151,
+              "unchangedBodyVertices": 3638,
+              "unchangedBodyMaxDisplacementM": 5.2095422474224835e-8,
+              "unchangedJointMaxDisplacementM": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

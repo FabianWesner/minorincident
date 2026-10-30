@@ -8,7 +8,7 @@ import { crowdWeaponAssets, crowdWeaponGeometry, isCrowdGun, type CrowdGun } fro
 import type { CivilianProp } from '../../sim/npc/types';
 
 /** Mug body centre in the upright right-hand frame (+X forward, +Y up, +Z the figure's right): inboard of the hand. */
-export const cupSocket: [number, number, number] = [.035, -.11, -.125];
+export const cupSocket: [number, number, number] = [.035, -.095, -.07];
 /** Small shared rigid accessories follow the same baked hand matrix as the GPU civilian. */
 export class RoutineProps extends Group {
   readonly contacts: { entity: number; prop: CivilianProp; hand: Float32Array; geometry: BufferGeometry; matrix: Matrix4 }[] = [];
@@ -39,9 +39,12 @@ export class RoutineProps extends Group {
     // PO 10-15 'The way how the person holds the cup is still wrong': the mug body sits inboard of the right hand (-Z, towards the
     // chest) and the handle loop outboard, so the fingers pass through the handle. It was mirrored (body 12.5 cm outboard, loop
     // towards the chest), which forced the chest hold to pull the hand behind the mug: the hand vanished and the handle faced away.
-    const handle = (color: string) => [bar(.13, .035, -.045, 0, color), bar(.13, .035, -.17, 0, color), part(new CylinderGeometry(.01, .01, .125, 8), color, .035, -.1075, .065)];
+    // A human mug is about 10 cm tall. Keep its loop sized for the existing
+    // finger curl, while moving the body close enough that the loop actually
+    // meets the hand instead of reading as a floating prop.
+    const handle = (color: string) => [bar(.1, .035, -.045, 0, color), bar(.1, .035, -.145, 0, color), part(new CylinderGeometry(.008, .008, .1, 8), color, .035, -.095, .05)];
     const shapes: Record<CivilianProp, BufferGeometry[]> = {
-      coffee: [part(new CylinderGeometry(.07, .055, .16, 12), '#f5e6c7', ...cupSocket), part(new CylinderGeometry(.065, .065, .012, 12), '#563c2c', cupSocket[0], -.024, cupSocket[2]), ...handle('#f5e6c7')],
+      coffee: [part(new CylinderGeometry(.04, .035, .1, 12), '#f5e6c7', ...cupSocket), part(new CylinderGeometry(.038, .038, .008, 12), '#563c2c', cupSocket[0], cupSocket[1] + .054, cupSocket[2]), ...handle('#f5e6c7')],
       bag: [part(new BoxGeometry(.26, .34, .18), '#ba8c53', .035, -.32), bar(.16, .035, -.045, 0, '#6e5537'), ...[-.08, .08].map(z => part(new CylinderGeometry(.01, .01, .11, 8), '#6e5537', .035, -.1, z)), part(new CylinderGeometry(.028, .035, .23, 8), '#76a14e', .1, -.21)],
       phone: [part(new BoxGeometry(.018, .12, .065), '#292537', .079, -.03), part(new BoxGeometry(.004, .085, .05), '#75b8cf', .09, -.022)],
       cane: [part(new CylinderGeometry(.018, .021, .73, 8), '#71513e', .035, -.415, .105), bar(.16, .035, -.045, .025, '#493d34'), part(new CylinderGeometry(.027, .027, .035, 8), '#292537', .035, -.795, .105)],
