@@ -67,7 +67,7 @@ export const dialogue: Record<string, string> = {
   'L5.found.rosa': 'Rosa: You’re real. I have not seen anyone in hours. Take me with you.',
   'L5.found.okafor': 'Mr. Okafor: Bless you, child. Please, take me with you.',
   'L5.found.mia': 'Mia: Is it over? Please say it’s over. Take me with you.',
-  'L5.found.sam': 'Sam: Thank God. I lost my rifle days ago. Take me with you.',
+  'L5.found.sam': 'Sam: Thank God. I lost my rifle in the fighting. Take me with you.',
   'L6.briefing': 'Lakeshore shelter, under the street. Rest, share water, and let the medic dress the injured. Pick up the headlamp by the lantern. Marcus, who runs the shelter, watches the sealed stair.',
   'L7.briefing': 'Night. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.',
   'L8.briefing': 'The evacuation bus reaches the zoo, now an army safe zone: high walls, soldiers, lights. The zoo is secure. Take a breath. Explore the sanctuary.',
