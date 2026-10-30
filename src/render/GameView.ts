@@ -1027,8 +1027,8 @@ export class GameView implements Lifecycle {
       seeThrough.solidRadius.value = 0;
     }
     if (this.probes?.solidCutOff) seeThrough.strength.value = 0;
-    // Q-209: small-corpse piles dissolve around the courier on foot (vehicles keep their own .35 silhouette rule).
-    seeThrough.corpse.value = subject && seeThrough.retain.value === 0 ? seeThrough.strength.value : 0;
+    // Q-254 (batch-39 QA): corpses never occlude the courier enough to need the cut, so they stay whole (corpses persist). Q-209's dissolve is off.
+    seeThrough.corpse.value = 0;
     // Reuse the foreground silhouette at the boss and in L7's close crowd. Building blockers no longer trigger it: their
     // placement cut already clears the whole subject disc, and the near-camera depth slice drew the courier over every
     // nearer person and prop (PO #9 L2 start: on top of firefighter "2"; #26 L1: in front of the closed bay leaf and the horde).

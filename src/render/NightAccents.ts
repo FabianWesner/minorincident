@@ -274,6 +274,14 @@ export function cureAccents(placements: readonly Placement[], origin: P2 = [0, 0
       for (const [i, lz] of [-.38, .38].entries()) put({ kind: 'beacon', x: x + lz * s, y: h * .98, z: z + lz * c, yaw: p.yaw, color: i ? '#2f6bff' : '#ff2a1a', glow: 9, flicker: 0, strobe: true, seed: ph + i * .5, pool: { color: i ? 'light_siren_blue' : 'light_siren_red', intensity: 2.8, range: 4.2 } });
     }
   }
+  // Q-254 (batch-39 QA): the finale refuge (bld.cure-service-building beside the dispersal arena) read as a featureless black slab
+  // at the edge of the epilogue view. Two warm window lanterns on its camera-facing walls light the facade; render-only.
+  for (const p of placements) {
+    if (p.assetId !== 'bld.cure-service-building' || Math.hypot(p.position[0] - consoleAt[0], p.position[2] - consoleAt[1]) > 70) continue;
+    const [x, , z] = p.position, w = p.visualAabb.max[0] - p.visualAabb.min[0], d = p.visualAabb.max[2] - p.visualAabb.min[2];
+    for (const [ox, oz] of [[w / 2 + .6, 0], [0, d / 2 + .6]] as const)
+      put({ kind: 'lantern', x: x + ox, y: 2.4, z: z + oz, yaw: 0, color: '#ffc070', glow: 8, flicker: 1, strobe: false, pool: { color: 'light_window_warm', intensity: 4.4, range: 7 } });
+  }
   // The substation's existing stacks leave room for a lantern, with no extra supply footprint.
   const [lx, ly, lz] = cureBeltGroundLantern;
   put({ kind: 'storm-lantern', x: lx, y: ly, z: lz, yaw: 0, color: '#ffb35c', glow: 5,
