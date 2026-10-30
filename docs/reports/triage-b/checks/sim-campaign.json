@@ -1,0 +1,1104 @@
+{
+  "completed": 10,
+  "runs": 10,
+  "time": 3075.383333333333,
+  "deaths": 0,
+  "failures": {},
+  "reports": [
+    {
+      "level": "L1",
+      "policy": "complete",
+      "seed": 1,
+      "completed": true,
+      "time": 111.46666666666667,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 20,
+      "failures": {},
+      "objectiveTimeline": [
+        {
+          "id": "pickup",
+          "t": 15.466666666666667
+        },
+        {
+          "id": "deliver",
+          "t": 51.81666666666667
+        },
+        {
+          "id": "escape",
+          "t": 65.83333333333333
+        },
+        {
+          "id": "weapon",
+          "t": 81.91666666666667
+        },
+        {
+          "id": "firestation",
+          "t": 106.46666666666667
+        }
+      ],
+      "furthestObjective": "firestation",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null,
+      "collision": {
+        "failures": 0,
+        "pending": 0,
+        "admitted": 4794,
+        "deferred": 7,
+        "requests": [],
+        "offenders": []
+      }
+    },
+    {
+      "level": "L2",
+      "policy": "complete",
+      "seed": 1,
+      "completed": true,
+      "time": 150.71666666666667,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 108,
+      "failures": {},
+      "objectiveTimeline": [
+        {
+          "id": "axe",
+          "t": 23.1
+        },
+        {
+          "id": "calm",
+          "t": 23.1
+        },
+        {
+          "id": "board",
+          "t": 26.216666666666665
+        },
+        {
+          "id": "ride",
+          "t": 50.55
+        },
+        {
+          "id": "doors",
+          "t": 60.1
+        },
+        {
+          "id": "bridge",
+          "t": 150.71666666666667
+        }
+      ],
+      "furthestObjective": "bridge",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null,
+      "collision": {
+        "failures": 0,
+        "pending": 0,
+        "admitted": 224,
+        "deferred": 0,
+        "requests": [],
+        "offenders": []
+      }
+    },
+    {
+      "level": "L3",
+      "policy": "complete",
+      "seed": 1,
+      "completed": true,
+      "time": 279.1166666666667,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 0,
+      "failures": {},
+      "objectiveTimeline": [
+        {
+          "id": "armory",
+          "t": 4.45
+        },
+        {
+          "id": "defend",
+          "t": 69.45
+        },
+        {
+          "id": "checkpoint",
+          "t": 279.1166666666667
+        }
+      ],
+      "furthestObjective": "checkpoint",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null,
+      "collision": {
+        "failures": 0,
+        "pending": 0,
+        "admitted": 3990,
+        "deferred": 0,
+        "requests": [],
+        "offenders": []
+      }
+    },
+    {
+      "level": "L4",
+      "policy": "complete",
+      "seed": 1,
+      "completed": true,
+      "time": 313.01666666666665,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 39,
+      "failures": {},
+      "objectiveTimeline": [
+        {
+          "id": "ride",
+          "t": 30.483333333333334
+        },
+        {
+          "id": "quartermaster",
+          "t": 32.81666666666667
+        },
+        {
+          "id": "hold",
+          "t": 222.83333333333334
+        },
+        {
+          "id": "hide",
+          "t": 304.76666666666665
+        },
+        {
+          "id": "bar",
+          "t": 306.01666666666665
+        },
+        {
+          "id": "wait",
+          "t": 313.01666666666665
+        }
+      ],
+      "furthestObjective": "wait",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null,
+      "collision": {
+        "failures": 0,
+        "pending": 0,
+        "admitted": 497,
+        "deferred": 0,
+        "requests": [],
+        "offenders": []
+      }
+    },
+    {
+      "level": "L5",
+      "policy": "complete",
+      "seed": 1,
+      "completed": true,
+      "time": 164.73333333333332,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 30,
+      "failures": {},
+      "objectiveTimeline": [
+        {
+          "id": "emerge",
+          "t": 1
+        },
+        {
+          "id": "look",
+          "t": 116.51666666666667
+        },
+        {
+          "id": "metro",
+          "t": 164.73333333333332
+        }
+      ],
+      "furthestObjective": "metro",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null,
+      "collision": {
+        "failures": 0,
+        "pending": 0,
+        "admitted": 129,
+        "deferred": 0,
+        "requests": [],
+        "offenders": []
+      }
+    },
+    {
+      "level": "L6",
+      "policy": "complete",
+      "seed": 1,
+      "completed": true,
+      "time": 277.28333333333336,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 0,
+      "failures": {},
+      "objectiveTimeline": [
+        {
+          "id": "shelter",
+          "t": 33.2
+        },
+        {
+          "id": "stop",
+          "t": 69.21666666666667
+        },
+        {
+          "id": "retreat",
+          "t": 262.26666666666665
+        },
+        {
+          "id": "exit",
+          "t": 277.28333333333336
+        }
+      ],
+      "furthestObjective": "exit",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null,
+      "collision": {
+        "failures": 0,
+        "pending": 0,
+        "admitted": 111,
+        "deferred": 0,
+        "requests": [],
+        "offenders": []
+      }
+    },
+    {
+      "level": "L7",
+      "policy": "complete",
+      "seed": 1,
+      "completed": true,
+      "time": 372.48333333333335,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 0,
+      "failures": {},
+      "objectiveTimeline": [],
+      "furthestObjective": "bus-departure",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null,
+      "collision": {
+        "failures": 0,
+        "pending": 0,
+        "admitted": 454,
+        "deferred": 0,
+        "requests": [],
+        "offenders": []
+      }
+    },
+    {
+      "level": "L8",
+      "policy": "complete",
+      "seed": 1,
+      "completed": true,
+      "time": 92.38333333333334,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 0,
+      "failures": {},
+      "objectiveTimeline": [
+        {
+          "id": "escape",
+          "t": 85.48333333333333
+        },
+        {
+          "id": "depart",
+          "t": 92.38333333333334
+        }
+      ],
+      "furthestObjective": "depart",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null,
+      "collision": {
+        "failures": 0,
+        "pending": 48,
+        "admitted": 376,
+        "deferred": 92,
+        "requests": [
+          {
+            "id": 460,
+            "archetype": "infected.runner",
+            "x": -60,
+            "z": 10.63999999999998,
+            "y": 0.82,
+            "yaw": -1.5707963267948966,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 462,
+            "archetype": "infected.runner",
+            "x": -60,
+            "z": 10.63999999999998,
+            "y": 0.82,
+            "yaw": -1.5707963267948966,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 464,
+            "archetype": "infected.runner",
+            "x": -60,
+            "z": 10.63999999999998,
+            "y": 0.82,
+            "yaw": -1.5707963267948966,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 467,
+            "archetype": "infected.runner",
+            "x": 60,
+            "z": -37.336666666666986,
+            "y": 0.7,
+            "yaw": -1.5707963267948966,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 469,
+            "archetype": "infected.runner",
+            "x": 60,
+            "z": -37.336666666666986,
+            "y": 0.7,
+            "yaw": -1.5707963267948966,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 471,
+            "archetype": "infected.runner",
+            "x": 60,
+            "z": -37.336666666666986,
+            "y": 0.7,
+            "yaw": -1.5707963267948966,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 491,
+            "archetype": "infected.runner",
+            "x": -64.52333333333371,
+            "z": 0,
+            "y": 0.82,
+            "yaw": 0,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 493,
+            "archetype": "infected.runner",
+            "x": -64.52333333333371,
+            "z": 0,
+            "y": 0.82,
+            "yaw": 0,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 495,
+            "archetype": "infected.runner",
+            "x": -64.52333333333371,
+            "z": 0,
+            "y": 0.82,
+            "yaw": 0,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 499,
+            "archetype": "infected.runner",
+            "x": 60,
+            "z": -52.536666666666804,
+            "y": 0.82,
+            "yaw": -1.5707963267948966,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 501,
+            "archetype": "infected.runner",
+            "x": 60,
+            "z": -52.536666666666804,
+            "y": 0.82,
+            "yaw": -1.5707963267948966,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 503,
+            "archetype": "infected.runner",
+            "x": 60,
+            "z": -52.536666666666804,
+            "y": 0.82,
+            "yaw": -1.5707963267948966,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 525,
+            "archetype": "infected.runner",
+            "x": -79.72333333333353,
+            "z": 0,
+            "y": 0.82,
+            "yaw": 0,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 527,
+            "archetype": "infected.runner",
+            "x": -79.72333333333353,
+            "z": 0,
+            "y": 0.82,
+            "yaw": 0,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 529,
+            "archetype": "infected.runner",
+            "x": -79.72333333333353,
+            "z": 0,
+            "y": 0.82,
+            "yaw": 0,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 533,
+            "archetype": "infected.runner",
+            "x": 63.70000000000039,
+            "z": -64,
+            "y": 0.82,
+            "yaw": -3.141592653589793,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 535,
+            "archetype": "infected.runner",
+            "x": 63.70000000000039,
+            "z": -64,
+            "y": 0.82,
+            "yaw": -3.141592653589793,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 537,
+            "archetype": "infected.runner",
+            "x": 63.70000000000039,
+            "z": -64,
+            "y": 0.82,
+            "yaw": -3.141592653589793,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 541,
+            "archetype": "infected.runner",
+            "x": -60,
+            "z": -45.696666666666886,
+            "y": 0.7,
+            "yaw": -1.5707963267948966,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 543,
+            "archetype": "infected.runner",
+            "x": -60,
+            "z": -45.696666666666886,
+            "y": 0.7,
+            "yaw": -1.5707963267948966,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 545,
+            "archetype": "infected.runner",
+            "x": -60,
+            "z": -45.696666666666886,
+            "y": 0.7,
+            "yaw": -1.5707963267948966,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 557,
+            "archetype": "infected.runner",
+            "x": -94.92333333333335,
+            "z": 0,
+            "y": 0.82,
+            "yaw": 0,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 559,
+            "archetype": "infected.runner",
+            "x": -94.92333333333335,
+            "z": 0,
+            "y": 0.82,
+            "yaw": 0,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 561,
+            "archetype": "infected.runner",
+            "x": -94.92333333333335,
+            "z": 0,
+            "y": 0.82,
+            "yaw": 0,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 565,
+            "archetype": "infected.runner",
+            "x": 78.9000000000002,
+            "z": -64,
+            "y": 0.82,
+            "yaw": -3.141592653589793,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 567,
+            "archetype": "infected.runner",
+            "x": 78.9000000000002,
+            "z": -64,
+            "y": 0.82,
+            "yaw": -3.141592653589793,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 569,
+            "archetype": "infected.runner",
+            "x": 78.9000000000002,
+            "z": -64,
+            "y": 0.82,
+            "yaw": -3.141592653589793,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 573,
+            "archetype": "infected.runner",
+            "x": -60,
+            "z": -60.896666666666704,
+            "y": 0.82,
+            "yaw": -1.5707963267948966,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 575,
+            "archetype": "infected.runner",
+            "x": -60,
+            "z": -60.896666666666704,
+            "y": 0.82,
+            "yaw": -1.5707963267948966,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 577,
+            "archetype": "infected.runner",
+            "x": -60,
+            "z": -60.896666666666704,
+            "y": 0.82,
+            "yaw": -1.5707963267948966,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 591,
+            "archetype": "infected.runner",
+            "x": -96,
+            "z": 14.076666666666881,
+            "y": 0.82,
+            "yaw": 1.5707963267948966,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 593,
+            "archetype": "infected.runner",
+            "x": -96,
+            "z": 14.076666666666881,
+            "y": 0.82,
+            "yaw": 1.5707963267948966,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 595,
+            "archetype": "infected.runner",
+            "x": -96,
+            "z": 14.076666666666881,
+            "y": 0.82,
+            "yaw": 1.5707963267948966,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 599,
+            "archetype": "infected.runner",
+            "x": 94.10000000000002,
+            "z": -64,
+            "y": 0.82,
+            "yaw": -3.141592653589793,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 601,
+            "archetype": "infected.runner",
+            "x": 94.10000000000002,
+            "z": -64,
+            "y": 0.82,
+            "yaw": -3.141592653589793,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 603,
+            "archetype": "infected.runner",
+            "x": 94.10000000000002,
+            "z": -64,
+            "y": 0.82,
+            "yaw": -3.141592653589793,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 607,
+            "archetype": "infected.runner",
+            "x": -47.92333333333312,
+            "z": -64,
+            "y": 0.82,
+            "yaw": -3.141592653589793,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 609,
+            "archetype": "infected.runner",
+            "x": -47.92333333333312,
+            "z": -64,
+            "y": 0.82,
+            "yaw": -3.141592653589793,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 611,
+            "archetype": "infected.runner",
+            "x": -47.92333333333312,
+            "z": -64,
+            "y": 0.82,
+            "yaw": -3.141592653589793,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 624,
+            "archetype": "infected.runner",
+            "x": -96,
+            "z": 29.2766666666667,
+            "y": 0.82,
+            "yaw": 1.5707963267948966,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 626,
+            "archetype": "infected.runner",
+            "x": -96,
+            "z": 29.2766666666667,
+            "y": 0.82,
+            "yaw": 1.5707963267948966,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 628,
+            "archetype": "infected.runner",
+            "x": -96,
+            "z": 29.2766666666667,
+            "y": 0.82,
+            "yaw": 1.5707963267948966,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 632,
+            "archetype": "infected.runner",
+            "x": 96,
+            "z": -50.7233333333333,
+            "y": 0.82,
+            "yaw": 1.5707963267948966,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 634,
+            "archetype": "infected.runner",
+            "x": 96,
+            "z": -50.7233333333333,
+            "y": 0.82,
+            "yaw": 1.5707963267948966,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 636,
+            "archetype": "infected.runner",
+            "x": 96,
+            "z": -50.7233333333333,
+            "y": 0.82,
+            "yaw": 1.5707963267948966,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 640,
+            "archetype": "infected.runner",
+            "x": -32.7233333333333,
+            "z": -64,
+            "y": 0.82,
+            "yaw": -3.141592653589793,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 642,
+            "archetype": "infected.runner",
+            "x": -32.7233333333333,
+            "z": -64,
+            "y": 0.82,
+            "yaw": -3.141592653589793,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          },
+          {
+            "id": 644,
+            "archetype": "infected.runner",
+            "x": -32.7233333333333,
+            "z": -64,
+            "y": 0.82,
+            "yaw": -3.141592653589793,
+            "writer": "house.emergence",
+            "hidden": false,
+            "range": 0,
+            "navigation": false
+          }
+        ],
+        "offenders": []
+      }
+    },
+    {
+      "level": "L9",
+      "policy": "complete",
+      "seed": 1,
+      "completed": true,
+      "time": 128.13333333333333,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 0,
+      "failures": {},
+      "objectiveTimeline": [
+        {
+          "id": "approach",
+          "t": 114.13333333333334
+        },
+        {
+          "id": "reach-outskirts",
+          "t": 128.13333333333333
+        }
+      ],
+      "furthestObjective": "reach-outskirts",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null,
+      "collision": {
+        "failures": 0,
+        "pending": 0,
+        "admitted": 52,
+        "deferred": 0,
+        "requests": [],
+        "offenders": []
+      }
+    },
+    {
+      "level": "L10",
+      "policy": "complete",
+      "seed": 1,
+      "completed": true,
+      "time": 1186.05,
+      "deaths": 0,
+      "kills": 308,
+      "damageTaken": 250,
+      "failures": {},
+      "objectiveTimeline": [
+        {
+          "id": "crash",
+          "t": 0.016666666666666666
+        },
+        {
+          "id": "residential-fringe",
+          "t": 58.28333333333333
+        },
+        {
+          "id": "industrial-area",
+          "t": 190.36666666666667
+        },
+        {
+          "id": "military-zone",
+          "t": 355.71666666666664
+        },
+        {
+          "id": "research-campus",
+          "t": 528.9666666666667
+        },
+        {
+          "id": "research",
+          "t": 593.0166666666667
+        },
+        {
+          "id": "cure",
+          "t": 594.1166666666667
+        },
+        {
+          "id": "research-exit",
+          "t": 615.0666666666667
+        },
+        {
+          "id": "destroyed-corridor",
+          "t": 654.4
+        },
+        {
+          "id": "dispersal-complex",
+          "t": 872.35
+        },
+        {
+          "id": "install",
+          "t": 947.7166666666667
+        },
+        {
+          "id": "hold",
+          "t": 1010.85
+        },
+        {
+          "id": "mega",
+          "t": 1034.35
+        },
+        {
+          "id": "release",
+          "t": 1036.05
+        },
+        {
+          "id": "epilogue",
+          "t": 1186.05
+        },
+        {
+          "id": "credits",
+          "t": 1203.05
+        }
+      ],
+      "furthestObjective": "credits",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null,
+      "cureReleases": 1,
+      "regions": [
+        {
+          "id": "crash-outskirts",
+          "seconds": 66.04999999999754,
+          "travelSeconds": 65.13333333333092,
+          "combatSeconds": 0.8833333333333344,
+          "interactionSeconds": 0.03333333333333333,
+          "holdSeconds": 0,
+          "epilogueSeconds": 0,
+          "otherSeconds": 0,
+          "metres": 296.44077342764035
+        },
+        {
+          "id": "residential-fringe",
+          "seconds": 120.94999999999442,
+          "travelSeconds": 99.24999999999565,
+          "combatSeconds": 21.70000000000005,
+          "interactionSeconds": 0,
+          "holdSeconds": 0,
+          "epilogueSeconds": 0,
+          "otherSeconds": 0,
+          "metres": 543.0727780428737
+        },
+        {
+          "id": "industrial-area",
+          "seconds": 164.68333333335653,
+          "travelSeconds": 68.73333333333072,
+          "combatSeconds": 95.93333333332917,
+          "interactionSeconds": 0.016666666666666666,
+          "holdSeconds": 0,
+          "epilogueSeconds": 0,
+          "otherSeconds": 0,
+          "metres": 740.1354839922365
+        },
+        {
+          "id": "military-zone",
+          "seconds": 182.16666666670378,
+          "travelSeconds": 123.84999999999425,
+          "combatSeconds": 58.31666666666464,
+          "interactionSeconds": 0,
+          "holdSeconds": 0,
+          "epilogueSeconds": 0,
+          "otherSeconds": 0,
+          "metres": 813.3372918187431
+        },
+        {
+          "id": "research-campus",
+          "seconds": 127.64999999999404,
+          "travelSeconds": 80.64999999999671,
+          "combatSeconds": 46.94999999999862,
+          "interactionSeconds": 0.05,
+          "holdSeconds": 0,
+          "epilogueSeconds": 0,
+          "otherSeconds": 0,
+          "metres": 573.3180594228828
+        },
+        {
+          "id": "destroyed-corridor",
+          "seconds": 215.73333333339716,
+          "travelSeconds": 175.750000000032,
+          "combatSeconds": 39.98333333333235,
+          "interactionSeconds": 0,
+          "holdSeconds": 0,
+          "epilogueSeconds": 0,
+          "otherSeconds": 0,
+          "metres": 964.4498740772536
+        },
+        {
+          "id": "dispersal-complex",
+          "seconds": 308.81666666671447,
+          "travelSeconds": 72.14999999999719,
+          "combatSeconds": 0,
+          "interactionSeconds": 0.03333333333333333,
+          "holdSeconds": 86.6333333333297,
+          "epilogueSeconds": 150.0000000000115,
+          "otherSeconds": 0,
+          "metres": 1235.2896254979075
+        }
+      ],
+      "maxConcurrentInfected": 169,
+      "collision": {
+        "failures": 0,
+        "pending": 0,
+        "admitted": 479,
+        "deferred": 0,
+        "requests": [],
+        "offenders": []
+      }
+    }
+  ]
+}

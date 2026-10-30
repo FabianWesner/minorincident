@@ -2,9 +2,9 @@
 
 Source: `/Users/wesner/Workspace/minorincident/epics-pipeline/po-bugs-1019.md`, read 2026-10-30; audited against main `305071ff2`. Early bare numbers and `P1-N` are normalized to `Q-N` below. Referenced-only Q-179–191 are expanded from the cited QA16–18 reports. Each item has exactly one status; any unresolved subpart keeps its whole item **open**. A later green gate does not by itself close an unrelated visual symptom.
 
-Scope includes every L6–L10 record plus the shared figure/corpse/camera/HUD/performance/tooling records. L1–L5 mission, AI, route and combat-only records remain on triage-a. Explicitly outside this ledger: Q-6, Q-7, Q-8, Q-9, Q-11, Q-12, Q-13, Q-14, Q-15, Q-16, Q-17, Q-18, Q-19, Q-20, Q-26, Q-35, Q-38, Q-39, Q-41, Q-47, Q-48, Q-52, Q-55, Q-56, Q-58, Q-59, Q-60, Q-78, Q-92, Q-106, Q-111, Q-112, Q-113, Q-113b, Q-114, Q-116, Q-118, Q-119, Q-129, Q-130, Q-133, Q-135, Q-140, Q-155, Q-158, Q-160, Q-161, Q-168, Q-170, Q-192, Q-196, Q-203, Q-204, Q-215. No source record is silently dropped: source IDs are partitioned by the table and this exclusion list.
+Scope includes every L6–L10 record plus the shared figure/corpse/camera/HUD/performance/tooling records. L1–L5 mission, AI, route and combat-only records remain on triage-a. Explicitly outside this ledger: Q-6, Q-7, Q-8, Q-9, Q-11, Q-12, Q-13, Q-14, Q-15, Q-16, Q-17, Q-19, Q-20, Q-26, Q-35, Q-55, Q-56, Q-58, Q-59, Q-60, Q-78, Q-92, Q-106, Q-111, Q-112, Q-113, Q-113b, Q-114, Q-116, Q-118, Q-119, Q-129, Q-130, Q-133, Q-135, Q-155, Q-158, Q-160, Q-168, Q-170, Q-192, Q-196, Q-203, Q-204. No source record is silently dropped: source IDs are partitioned by the table and this exclusion list.
 
-Provisional counts: **159 fixed-before / 0 fixed-now / 9 obsolete / 24 still-open** (192 rows). Counts remain provisional until focused visual review and final checks are recorded. No L5 balance, camera framing values, corpse lifetimes or budgets changed.
+**170 fixed-before / 5 fixed-now / 9 obsolete / 19 still-open** (203 rows; [machine-readable inventory](inventory.json)). Fixed-now: Q-146, Q-147, Q-148, Q-156, Q-185. No L5 balance, camera framing values, corpse lifetimes or budgets changed.
 
 | ID | Status | Evidence / root cause and proposed next action |
 |---|---|---|
@@ -14,6 +14,7 @@ Provisional counts: **159 fixed-before / 0 fixed-now / 9 obsolete / 24 still-ope
 | Q-4 | fixed | `f5769d973`: ambient leaves anchored to world positions, with walking comparison captures in [visual polish](../visual-polish/README.md). |
 | Q-5 | fixed | `f5769d973`: removed the courier-following dither patch; batch 13b rechecked the original spot. |
 | Q-10 | fixed | `3014f5551`: fitted heroine gear and ponytail; current textured courier replaces the old disc/rings mesh. [Gear proof](../qa-invariants/coverage.md). |
+| Q-18 | fixed | Backlog batch 13a directly checks MP pickup and alarm on the same tick 2024; `c0c098cfa` prewarms the campaign alarm/war paths. L4 pressure remains as later approved. |
 | Q-21 | fixed | `5976d95c9`, `05948cba6`, later v2 Alpha rollout; [reviewed near/far corpse matrix](../fixes-13k-visual/README.md). |
 | Q-22 | open | Large Alpha bodies have solid footprints, but small bodies remain walkable (`InfectedSystem.settle`, comment “small human corpses remain visual debris”). Full crowd/soldier footprint steering with chokepoint escape and determinism needs >1 h; proposed fix: spatial corpse-footprint avoidance with a tested clearance fallback, preserving every body. |
 | Q-23 | fixed | Five ordinary Alpha and three Mega appearances are shipped; `3014f5551` attachment work plus [L10 native variant census/review](../l10-all-new/README.md). |
@@ -29,14 +30,20 @@ Provisional counts: **159 fixed-before / 0 fixed-now / 9 obsolete / 24 still-ope
 | Q-34 | fixed | `9ab76731b` dresses L8 drive-out; L9 night/road life and current L10 `0044d60ad` add authored roadside content. The original void is removed; the higher “stunning” standard remains open at Q-150. |
 | Q-36 | fixed | `67201663f`: reserved Sound/Controls row above HUD and letterbox, including portrait. [16 browser cases / viewed captures](../vfx-hud-polish/README.md). |
 | Q-37 | fixed | `c55e4f6ef`: large groups hide healthy world bars and cap hurt bars at six; L7 entry rows and current v2 cast separate bodies. [L7 cast](../l7-all-new/README.md). |
+| Q-38 | fixed | `67201663f`: six-metre foreground foliage reveal projected at the subject, instead of a 22% screen cap; [canopy matrix](../vfx-hud-polish/README.md). |
+| Q-39 | fixed | `67201663f`: opaque inner reveal core cleared; [fire-station wall matrix](../vfx-hud-polish/README.md) verifies the dithered wall blob. |
 | Q-40 | fixed | `4dc60196f`: abilities never resolve to placeholder boxes; console guard covers all ten levels. |
+| Q-41 | fixed | `f6416ad38`: L4 generator pocket closed and local reveal cleared; source commit explicitly includes original PO #41 spot. |
 | Q-42 | fixed | `f6416ad38`: near lamp heads participate in the reveal; retained PO-spot and backend matrices. |
 | Q-43 | fixed | `4dc60196f`: corgi-lure ability no longer loads placeholder geometry. |
 | Q-44 | fixed | `65683baeb`: neutral moon bounce and grade protection retain authored corgi orange/white; follows the earlier `f6416ad38` correction. |
 | Q-46 | fixed | Shared pool (`137960f82`, `54cda1c74`, `9e290c274`) supports queued shared work and exclusive timing. [Operation](../../../tools/browser-pool/README.md). This lane observed queue delay; it is not classified as a game defect. |
+| Q-47 | fixed | `33af0bb54` and the following camera-line placement correction; backlog batch 13e explicitly confirms #47 fixed on screen. |
+| Q-48 | fixed | `a03a1af91` retains the stunning-l5-l7 before/after sheets including the roof cut at her feet; no L5 combat balance changed. |
 | Q-49 | fixed | `496ce0572`: Metro closing camera follows courier; [L5 transition captures](../vfx-hud-polish/README.md). No framing values changed by triage-b. |
 | Q-50 | open | Reveal cuts expose unmodeled dark interiors. A clean fix requires authored interior/roof-edge treatment at each large building, not a global opacity change; >1 h across L3/L5. Proposed: add restrained interior floors/wall backs and validate the existing subject reveal. |
 | Q-51 | fixed | `29b18e9d5`: transport doors carry the `cabCrack` attribute required by their shared cab shader. |
+| Q-52 | fixed | `e235951e9`: amber survivor rings; backlog batch 13e confirms the rings on screen. The ring is a presentation hint, not combat tuning. |
 | Q-53 | fixed | `e235951e9`, `4d7195b7c`: medkits/drinks no longer carry objective rings. |
 | Q-54 | fixed | Directional heavy-hit knockdown/flung clips and retained blast flight are implemented; `224aebeb4` keeps corpse poses during blasts. Current v2 movement/corpse reviews are in [L10 rollout](../l10-all-new/README.md). |
 | Q-56b | fixed | `8b0a695c1`, `73895e42e`: carried arsenal and armed survivor equipment survive L5→L6 handover. |
@@ -67,7 +74,7 @@ Provisional counts: **159 fixed-before / 0 fixed-now / 9 obsolete / 24 still-ope
 | Q-84 | fixed | `ae99d6483`: two-second reading dwell; backlog 13e2 records one change instead of 53. |
 | Q-85 | fixed | `877c2b14e`: intact retained bodies after actual kills; [L10 low-body/runtime evidence](../fixes-13k-visual/README.md). |
 | Q-86 | fixed | `fb784e885`: fixed weapon-number mapping; [HUD and physical-input proof](../weapon-keys/README.md). |
-| Q-86b | open | The old near-identical pistol glyphs need direct current rack review; proposed cheap fix: distinct long-gun/launcher silhouettes in the existing icon path after capture. |
+| Q-86b | fixed | `f32df9b92` gives pistol, machine gun, shotgun and rocket distinct silhouettes; current catalog maps each to its own SVG. Viewed current L6 rack in [tunnel capture](captures/before-webgpu-high/l6-tunnel-walkway/shot-0075.png). |
 | Q-87 | fixed | `6101b529d` and the per-gate guard documented in the linked report: gate-specific safe checkpoint guards; [zero-skip male/female/fists receipts](../l6-fists-loop/README.md). |
 | Q-87b | fixed | Same underlying checkpoint/driver issue as Q-87; [audited final provenance and complete routes](../l6-fists-loop/README.md). |
 | Q-88 | fixed | `6101b529d` and actual-column-head rejoin documented in the linked report: ring follows real head/tail and held reasons have dwell; [viewed ring/respawn captures](../l6-fists-loop/README.md). |
@@ -109,10 +116,11 @@ Provisional counts: **159 fixed-before / 0 fixed-now / 9 obsolete / 24 still-ope
 | Q-137 | fixed | [61 real drive samples](../fixes-13l-gameplay.md): companion seated before L9 drive starts, zero visible overlapping-corgi frames. |
 | Q-138 | fixed | [Exact no-pickup probe](../fixes-13l-gameplay.md): E-only pickups cannot be fetched even from restored pending-fetch state; lamp stays fixed until E. |
 | Q-139 | fixed | [Original stop rerun](../fixes-13l-gameplay.md) drives beyond x447; `b9b467846`/`ca1a45376` clear later bypass obstacles. [L9 final input runs](../l9-vehicle/README.md). |
+| Q-140 | fixed | [Exact before/after visibility and real click/E proof](../fixes-13l-gameplay.md): Sam ring moved to visible z50 side; z1.5 visible area 34%→83%. |
 | Q-141 | fixed | [Missing passenger guidance](../fixes-13l-gameplay.md): nearest missing passenger on minimap and named distance; later APC lock Q-97. |
-| Q-142 | open | Original evacuation truck material/lighting has no direct truck-specific later acceptance. Recheck `qa-l7-entry-rocket` against actual truck; proposed localized truck surface fill/practical repair, without global grade or camera change. |
-| Q-143 | open | Current blood decal path still needs targeted capture; `FxPool` uses texture alpha for blood shapes. Proposed: confirm whether squares originate in texture alpha sampling or a different ground shape, then fix that path only. |
-| Q-144 | open | Q-218 fixes roof framing (`be003d807`), but the original three counter definitions still need reconciliation. Proposed: record starting, living, lost and rescued IDs at exit and use one consistent result definition; investigation spans checkpoint/handover state (>1 h). |
+| Q-142 | open | Confirmed in the current actual L7 entry [capture](playthrough/captures/continue-L7-L7-t4.jpg): cab/tyres remain almost black against purple low-detail ground. Root: dark truck surfaces plus L6-night lighting at this entry and undressed handover ground; proposed local truck/practical-light and ground treatment, then native tier/zoom and handover review (>1 h), without global grade/framing changes. |
+| Q-143 | open | Current high close/night fixture shows irregular textured splats, not squares ([viewed frame](captures/detail-webgpu-high/blood/shot-0120.png)). Exact historic decal source is unproven; broad styling changes would risk good paths. Proposed: recover a matching L7 combat frame and identify texture/shape/LOD before editing, >1 h targeted reproduction. |
+| Q-144 | open | Q-218 fixes roof framing (`be003d807`). Current actual run shows 11 out / 29 in, while the exit tracker uses 11 living as denominator. `MissionUI.campaignSummary` sums rescue events across levels, so prior people can be counted again. [Viewed result](playthrough/captures/continue-L6-L6-result.jpg). Proposed: distinguish starters/living/out/lost and decide unique campaign rescue semantics with cross-level identity/handover checks (>1 h); do not simply force unlike totals equal. |
 | Q-145 | open | L5-specific finale crowd/camera composition not explicitly closed by camera-follow fix. Frozen difficulty remains untouched. Proposed: inspect final boarding spacing and shot occluders, then correct presentation/formation without combat tuning; >1 h including L5 regression. |
 | Q-146 | fixed | Fixed-now: fork/crash arrows are 4 m × 1.4 m muted paint rather than 13 m × 8 m white slabs. Viewed [before](captures/before-webgpu-high/l9-arrow/shot-0000.png) / [after](captures/after-webgpu-high/l9-arrow/shot-0000.png). Rebuilt base, streamed cells and compressed horizon; every parsed gameplay metadata section is unchanged except geometryHash ([identity](checks/q146-layout-identity.json)). |
 | Q-147 | fixed | Fixed-now: warning rim is a feathered inward pressure band, retaining its exact outer danger radius and pooled lifetime. Viewed matched [hard-line before](captures/before-webgpu-high/slam/shot-0059.png) / [soft-band after](captures/q147-webgpu-high/slam/shot-0059.png); original special sequence passes with zero errors. |
@@ -125,6 +133,7 @@ Provisional counts: **159 fixed-before / 0 fixed-now / 9 obsolete / 24 still-ope
 | Q-156 | fixed | Fixed-now: HUD shows the objective's count once; both missing-name list and pin sort by current distance. Viewed [before](captures/before-webgpu-high/boarding.png) / [after](captures/after-webgpu-high/boarding.png); [exact text/state](captures/after-webgpu-high/boarding.json). |
 | Q-157 | open | Historical one-seed L6 survival difference (6 vs 10) has no isolated post-headlamp comparison. Current L6 was substantially revised afterward. Proposed: isolate the headlamp-fetch change and compare exact input/event sequences before balance action; >1 h on the historical runtime, no L5 tuning. |
 | Q-159 | fixed | `ce63f4ed6`: before-alarm alert idles, shelter-aware flee, cower only with infected within 15 m. [Result section](../l4-storyline/design.md) documents implemented rule, not only proposal. |
+| Q-161 | fixed | `d16bfd1a3`: carried gun fires while moving and empty weapon fallback is explicit. Covers the L9 missed-damage observations as well as L5; no L5 balance changed. |
 | Q-166 | fixed | `6459bde5f`, `52a4e20e5`, `537e288ea`, `591eb20c9`: spread arrivals and bounded corpse settling retain every body. Later desired L4 pressure is preserved. [Native crowd/body review](../l4-no-tents/report.md). |
 | Q-167 | fixed | `c2e8f2147`: onboarding enter/exit card gated by vehicle presence; absent throughout L4 war. |
 | Q-169 | fixed | Old rigid Alpha corpses replaced by fitted skinned cast; [L4 native corpse review](../l4-no-tents/report.md), later [Q-231 palette comparison](../q231-p3/README.md). |
@@ -133,7 +142,7 @@ Provisional counts: **159 fixed-before / 0 fixed-now / 9 obsolete / 24 still-ope
 | Q-173 | fixed | Later pressure decision keeps the heavy war; `6459bde5f`/corpse settling and varied skinned infected retain readable forms. [L4 living vs dead review](../l4-no-tents/report.md). Q-247 separately audits current contrast. |
 | Q-174 | fixed | `f4d005329`: carried survivors route around buildings and keep story injuries; L7-specific batch14 reproduction and later [native L7 rollout/input acceptance](../l7-all-new/README.md). Generic boarding names remain checked at Q-156. |
 | Q-175 | obsolete | Old textured zebra bake superseded by v2 skinned animals; [native L8 body/turn/feet/corpse sheets](../l8-all-new/README.md) show intact animal surfaces. |
-| Q-176 | open | Same square blood-decal path as Q-143, reported at L10 console; both must be closed by current matching captures, not by unrelated cure-mist work. |
+| Q-176 | open | Same historic square-decal family as Q-143 at L10 console. Current close blood controls render alpha-shaped splats, but do not prove the original gameplay source. Proposed: capture the exact console kill/decal instance, then repair its specific texture-alpha/shape path; >1 h without a matching event trace. |
 | Q-177 | open | Driver zoom issue overlaps Q-181 and is fixed by vehicle-warmup; 770 s remote SwiftShader scene cost is not yet remeasured. Proposed: profile shader/scene setup and cache only equivalent immutable work; >1 h. Native pool scenes remain available. |
 | Q-178 | fixed | `f019eccb0`: textured heroine receives brighter hue-preserving night key, specifically Q-178. |
 | Q-179 | fixed | `41299f813`, skinned crowd integration and retained infection palette; [native crowd/body review](../skinned-crowd/README.md) and [Q-231 Alpha palette](../q231-p3/README.md). |
@@ -141,7 +150,7 @@ Provisional counts: **159 fixed-before / 0 fixed-now / 9 obsolete / 24 still-ope
 | Q-181 | fixed | Vehicle-warmup merger `8ac48ff6d` includes driver zoom/weapon timing; it waits for scripted intro/loading before applying requested zoom. [Harness behavior](../../../tools/playtest/session.ts). |
 | Q-182 | fixed | [Followups-25](../followups-25/README.md): timed epilogue/credits progress accepted; orphan/corgi flags corrected with Q-226. |
 | Q-183 | fixed | `87102e52b`, `a25110b50`, `f82481767`: textured fitted gloves/cuffs and full low-tier garment shells. [Gear acceptance](../qa-invariants/coverage.md). |
-| Q-184 | open | Male tier-1→2 vest contrast against orange shirt was explicitly left known in [QA17](../visual-qa-17/README.md). Proposed cheap fix: assess current fitted textured garment colours before a scoped vest swatch change. |
+| Q-184 | fixed | `a44725f64` ships textured garment shells; `f82481767` retains them at low quality. Current native high/low male t1/t2 [close pair](captures/gear-high/male-t2-torso/shot-0020.png) and game idle/run views inspected: olive quilted vest distinctly covers the orange shirt, versus bare shirt/straps at t1. [Review](review.md). |
 | Q-185 | fixed | Fixed-now: live debug selection awaits the existing character preparation/warm-up path. Before: male selected, no model/rig; after: `char.courier-male.skin`, skinned, both sources loaded. Viewed [before](captures/before-webgpu-high/variant-male.png) / [after](captures/after-webgpu-high/variant-male.png); [state](captures/after-webgpu-high/variant.json). |
 | Q-186 | fixed | Driver route recovery/vehicle reverse implemented in `ff7a2d8b2`; [full no-skip L1–credits campaign](../playtest-harness/report.md) passes the L2 fence. |
 | Q-187 | fixed | `edb118146`: native hat/accessory placement and face fits; [144 game-camera views / 72-case eye gate](../l1-hats-faces/README.md). |
@@ -168,6 +177,7 @@ Provisional counts: **159 fixed-before / 0 fixed-now / 9 obsolete / 24 still-ope
 | Q-212 | open | Later L8/L9/L10 cold-load receipts do not close this distinct L3/L4 regression. Proposed: quiet paired cold loads with unchanged renderer/quality, then profile registration/asset/pipeline cost; >1 h for a reliable pair and fix. |
 | Q-213 | fixed | Skinned corpse/native bind retention `4a6971cec`, `5ae023a8e` and [L4 frozen-body review](../l4-no-tents/report.md); Q-247 remains a separate current appearance check. |
 | Q-214 | fixed | `a890e409c`: shared chase BFS seeds nearest walkable cell when courier grid cell is blocked; seven nearby freezes→zero in matched 240 s hold. |
+| Q-215 | open | Backlog closes the Metro 20 s jam (5-run follow-up), but the separate L5 fog/face readability complaint has no exact modern matched frame. Root: strong sunset fog and small facial pixels at z1.5. Proposed: identify model/light/region and tune local character fill only with native low/night comparison; >1 h, no L5 combat changes. |
 | Q-216 | fixed | `5df0cea8e`: hair/skull envelope fitted to bare brow, shared by live/frozen figures; [review](../polish-26/q216.md). |
 | Q-217 | obsolete | Backlog quiet-window recheck: zero reproductions in 7 runs; long frames were GPU contention. Reopen only with quiet current-runtime evidence. |
 | Q-218 | fixed | `be003d807`: L6 exit shot follows actual courier instead of flat roof; [matched final frames](../polish-26/q218.md). |
@@ -193,17 +203,22 @@ Provisional counts: **159 fixed-before / 0 fixed-now / 9 obsolete / 24 still-ope
 | Q-238 | fixed | `25df02671`: stream-retire fixture stays on road; [L9 clean route/gates](../l9-vehicle/README.md). |
 | Q-239 | fixed | `ca1a45376`: full lamp footprints clear APC route-to-detour maneuvering strips; [three real-input runs](../l9-vehicle/README.md). |
 | Q-240 | fixed | `33956d730`, `529c49714`: lantern sightlines/bedroll scale; `50bf2181d` visible R3 gap fill, verified colliders/nav unchanged. |
-| Q-241 | open | R3 repeated units varied (`a4245303f`, `ee23c8f07`), but backlog says L6 reveal improvement marginal. Proposed cheap rendering fix after capture: reduce the speckled feather band at tunnel arches while retaining clear core and per-placement eligibility. |
+| Q-241 | open | R3 units varied (`a4245303f`, `ee23c8f07`). Viewed current [L6 arch/track capture](captures/before-webgpu-high/l6-tunnel-walkway/shot-0075.png): courier readable, slight ordered feather texture remains. Root is ordered reveal dithering, not geometry; a safe further change needs arch-specific coverage plus city/low-backend reveal regressions (>1 h), avoiding a global opacity change. |
 | Q-242 | fixed | `09a9eabda`: feathered playable cure-mist edge; [subsequent evidence](../l10-camera/q243/README.md). |
 | Q-243 | fixed | `491f554ac`: snap framing on explicit pose transitions; [first-frame/reset probe](../l10-camera/q243/README.md). |
 | Q-244 | fixed | `c56ac3e82`: retained corpse shade/colour at wide zoom; no body deletion or LOD substitution. [Material and persistence evidence](../l10-camera/q243/README.md). |
 | Q-245 | fixed | `601df6db6`: unsupported oil polygons removed while consuming the same seeded random draws; [world identity comparison](../l10-camera/q243/README.md). |
 | Q-246 | fixed | `0044d60ad`, `a57062154`, `305071ff2`: close lit supply belt and medkit prewarm; reviewed roadside sheets and final checks committed on main. |
-| Q-247 | open | Current frozen-corpse fill change Q-244 needs L8 dark-ground contrast and L4 healthy/infected comparison; targeted high/low day/night pair captures pending. |
+| Q-247 | open | Viewed current high/low pairs at z1.5: [L4 day](captures/review-webgpu-high/corpse-pairs-L4/z1.5.png), [L8 night](captures/review-webgpu-high/corpse-pairs-L8-zoo/z1.5.png), and matching low-tier receipts. All six staged bodies persist with distinct healthy/infected materials; at night their dark lower halves merge into grass. Root: dark ground + the Q-244 25% frozen additive fill; a global increase would undo the L10 cure look. Proposed: local corpse contrast/material adjustment with L8/L10 tier/zoom comparison (>1 h art/lighting QA). |
+| Q-248 | open | Backlog inline batch-38 item: repeated crate/lantern clusters. `0044d60ad`, `src/levels/L10/roadsideBelt.ts`: 28 m stations, alternating side and per-region fixed anchor/theme; `NightAccents` puts a lantern on every anchor. Proposed: authored asymmetric supply/medical/wreck/abandoned-rest vignettes and deliberate empty stretches; preserve clearance, then compare R1–R5 at z1/1.5 on both tiers (>1 h composition plus route/lighting QA). |
 
-## Current verification and remaining work
+## Verification
 
-- Prior restricted run: `npm test` passed 26 files / 110 tests. Its smoke and scene attempts could not open sandbox sockets; these are superseded by unrestricted runs below.
-- Unrestricted smoke: first attempt found occupied 3301; dedicated-port attempt passed both full shader-budget checks, then exceeded 240 s while queued behind another lane's exclusive job. No success claimed; fresh shared-window rerun required.
-- Unrestricted `scene:gate` and focused visual receipts are running through the shared pool; final results and viewed-capture review will be added after terminal completion.
-- Current table is the evidence-audit checkpoint. Open items with targeted cheap fixes remain active; every >1 h item records a concrete root/unknown and proposed next action in its row. Full current L6–L10 input/story/visual review is pending.
+Runtime checked: `9fd194de0`, with only report/visual-helper changes afterward. [Visual review and fix details](review.md).
+
+- `npm test`: **26 files / 110 tests pass**, 31.7 s; [log](checks/test.log.txt). No test files or cases added; budget remains 150/150 cases, 42/45 files.
+- `npm run typecheck` and `npm run lint`: pass ([typecheck](checks/typecheck.log.txt), [lint](checks/lint.log.txt)).
+- `npm run test:smoke`: **6 QA + 1 public pass**, 159.0 s / 240 s ([log](checks/smoke-final.log.txt)). Both full-variant backend shader-budget checks pass. Earlier occupied-port and exclusive-queue timeout attempts are superseded by this complete run.
+- `SCENE_PORT=33963 npm run scene:gate -- --out test-results/triage-b/scene-gate-final --jobs 1`: **48/48 pass, 0 known, 0 not run**, 7.3 min ([log](checks/scene-gate-final.log.txt), [state with all 48 rows](checks/scene-gate/state.json)).
+- `node --import tsx tools/sim-runner/index.ts --level all --policy complete --completion-only`: **10/10 complete, 0 deaths, 0 collision failures**, including L10 credits ([receipt](checks/sim-campaign.json)). This is deterministic sim completion, separate from real-input browser play.
+- Current L6–L10 browser input/story/motion review is ongoing; current L6 completed with zero skips/deaths/assists/issues. The final review will retain handover, motion, result and credits evidence. No current fresh L1→credits claim is made by this scoped run; the prior full fresh campaign is linked at Q-128/Q-151.

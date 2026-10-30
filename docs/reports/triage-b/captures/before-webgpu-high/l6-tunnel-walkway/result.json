@@ -1,0 +1,97 @@
+{
+  "name": "l6-tunnel-walkway",
+  "pass": true,
+  "checks": [
+    {
+      "name": "consoleErrors",
+      "pass": true,
+      "value": 0,
+      "limit": 0
+    },
+    {
+      "name": "undrawnFramesMax",
+      "pass": true,
+      "value": 0,
+      "limit": 0
+    },
+    {
+      "name": "canvas.f1.varianceMin",
+      "pass": true,
+      "value": 1311.0301820076727,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f1.variedTilesMin",
+      "pass": true,
+      "value": 54,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f75.varianceMin",
+      "pass": true,
+      "value": 1913.5672591920027,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f75.variedTilesMin",
+      "pass": true,
+      "value": 58,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f149.varianceMin",
+      "pass": true,
+      "value": 1867.1879159866146,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f149.variedTilesMin",
+      "pass": true,
+      "value": 56,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f150.varianceMin",
+      "pass": true,
+      "value": 1868.416188760111,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f150.variedTilesMin",
+      "pass": true,
+      "value": 56,
+      "limit": 8
+    },
+    {
+      "name": "requestedBackend",
+      "pass": true,
+      "value": 1,
+      "limit": 1
+    },
+    {
+      "name": "requestedQuality",
+      "pass": true,
+      "value": 1,
+      "limit": 1
+    }
+  ],
+  "backend": "webgpu",
+  "actualTier": "high",
+  "frames": 150,
+  "seconds": 7.827,
+  "failed": [],
+  "clipping": {
+    "gunBodyHits": 1,
+    "staticPairs": 129,
+    "heldPropHits": 0,
+    "actorHits": 4,
+    "piercing": 4
+  },
+  "files": [
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/before-webgpu-high/l6-tunnel-walkway/shot-0001.png",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/before-webgpu-high/l6-tunnel-walkway/shot-0075.png",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/before-webgpu-high/l6-tunnel-walkway/shot-0149.png",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/before-webgpu-high/l6-tunnel-walkway/metrics.json"
+  ],
+  "consoleErrors": []
+}

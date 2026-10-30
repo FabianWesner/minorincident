@@ -1,0 +1,5340 @@
+{
+  "backend": "webgpu",
+  "requestedBackend": "webgpu",
+  "tier": "high",
+  "actualTier": "high",
+  "frames": 150,
+  "timing": {
+    "openMs": 0,
+    "loadMs": 4909,
+    "runMs": 2918,
+    "sceneMs": 7827
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "undrawnFramesMax",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "canvas.f1.varianceMin",
+        "pass": true,
+        "value": 1311.0301820076727,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f1.variedTilesMin",
+        "pass": true,
+        "value": 54,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f75.varianceMin",
+        "pass": true,
+        "value": 1913.5672591920027,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f75.variedTilesMin",
+        "pass": true,
+        "value": 58,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f149.varianceMin",
+        "pass": true,
+        "value": 1867.1879159866146,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f149.variedTilesMin",
+        "pass": true,
+        "value": 56,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f150.varianceMin",
+        "pass": true,
+        "value": 1868.416188760111,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f150.variedTilesMin",
+        "pass": true,
+        "value": 56,
+        "limit": 8
+      },
+      {
+        "name": "requestedBackend",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      },
+      {
+        "name": "requestedQuality",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      }
+    ]
+  },
+  "seeThroughCut": null,
+  "seeThroughCutSamples": [],
+  "courierShares": [],
+  "courierForeground": [],
+  "vehicleSilhouettes": [],
+  "pixels": [
+    {
+      "frame": 1,
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "mean": [
+          37.354814453125,
+          39.480078125,
+          41.94875
+        ],
+        "variance": 1311.0301820076727,
+        "variedTiles": 54,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 75,
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "mean": [
+          42.34924262152778,
+          41.89194552951389,
+          40.424814453125
+        ],
+        "variance": 1913.5672591920027,
+        "variedTiles": 58,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 149,
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "mean": [
+          41.32026909722222,
+          41.636356336805555,
+          41.18118489583333
+        ],
+        "variance": 1867.1879159866146,
+        "variedTiles": 56,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 150,
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "mean": [
+          41.28121419270833,
+          41.618974609375,
+          41.17755750868056
+        ],
+        "variance": 1868.416188760111,
+        "variedTiles": 56,
+        "tiles": 64
+      }
+    }
+  ],
+  "edgeSamples": [],
+  "lookSamples": [],
+  "ring": null,
+  "contrast": [],
+  "consoleErrors": [],
+  "scene": {
+    "name": "l6-tunnel-walkway",
+    "frame": 0,
+    "placements": [
+      {
+        "id": "l6-0",
+        "asset": "int.metro-station",
+        "at": [
+          0,
+          -8
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-1",
+        "asset": "kit.metro-tunnel",
+        "at": [
+          36,
+          15
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-2",
+        "asset": "kit.metro-tunnel",
+        "at": [
+          48,
+          15
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-3",
+        "asset": "kit.metro-tunnel",
+        "at": [
+          60,
+          15
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-4",
+        "asset": "kit.metro-tunnel",
+        "at": [
+          72,
+          15
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-5",
+        "asset": "kit.metro-tunnel",
+        "at": [
+          84,
+          15
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-6",
+        "asset": "kit.metro-tunnel",
+        "at": [
+          96,
+          15
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "at": [
+          108,
+          15
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-8",
+        "asset": "kit.metro-tunnel",
+        "at": [
+          120,
+          15
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-9",
+        "asset": "kit.metro-tunnel",
+        "at": [
+          132,
+          15
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-10",
+        "asset": "kit.metro-tunnel",
+        "at": [
+          144,
+          15
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-11",
+        "asset": "kit.metro-tunnel",
+        "at": [
+          156,
+          15
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-12",
+        "asset": "kit.metro-tunnel",
+        "at": [
+          168,
+          15
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-13",
+        "asset": "kit.metro-tunnel",
+        "at": [
+          180,
+          15
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-14",
+        "asset": "kit.metro-tunnel",
+        "at": [
+          192,
+          15
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-15",
+        "asset": "kit.metro-tunnel",
+        "at": [
+          204,
+          15
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-16",
+        "asset": "kit.metro-tunnel",
+        "at": [
+          216,
+          15
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-17",
+        "asset": "kit.metro-tunnel",
+        "at": [
+          228,
+          15
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-18",
+        "asset": "kit.metro-tunnel",
+        "at": [
+          240,
+          15
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-19",
+        "asset": "kit.maintenance-corridor",
+        "at": [
+          54,
+          6.2
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-20",
+        "asset": "kit.maintenance-corridor",
+        "at": [
+          126,
+          6.2
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-21",
+        "asset": "kit.maintenance-corridor",
+        "at": [
+          198,
+          6.2
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-22",
+        "asset": "kit.maintenance-corridor",
+        "at": [
+          78,
+          23.8
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "l6-23",
+        "asset": "kit.maintenance-corridor",
+        "at": [
+          174,
+          23.8
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "l6-24",
+        "asset": "int.metro-exit",
+        "at": [
+          252,
+          15.9
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "l6-25",
+        "asset": "kit.shelter-camp",
+        "at": [
+          -8,
+          -10
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-26",
+        "asset": "kit.shelter-camp",
+        "at": [
+          0,
+          -10
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-27",
+        "asset": "kit.shelter-camp",
+        "at": [
+          -24,
+          7
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-28",
+        "asset": "kit.shelter-camp",
+        "at": [
+          -12,
+          7
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-29",
+        "asset": "kit.shelter-camp",
+        "at": [
+          0,
+          7
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-30",
+        "asset": "kit.shelter-camp",
+        "at": [
+          20,
+          7
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-31",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          269,
+          3
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-32",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          282,
+          26
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-33",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          283,
+          6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-34",
+        "asset": "prop.crates",
+        "at": [
+          279,
+          24
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-35",
+        "asset": "veh.wreck",
+        "at": [
+          279,
+          22
+        ],
+        "yawDeg": 22.9
+      },
+      {
+        "id": "l6-36",
+        "asset": "bld.backdrop-houses",
+        "at": [
+          284,
+          27
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "l6-37",
+        "asset": "decay.fuel-truck-crater",
+        "at": [
+          283,
+          8
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-38",
+        "asset": "util.radio",
+        "at": [
+          -4,
+          -6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-39",
+        "asset": "prop.emergency-light",
+        "at": [
+          30,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-40",
+        "asset": "prop.emergency-light",
+        "at": [
+          42,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-41",
+        "asset": "prop.emergency-light",
+        "at": [
+          54,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-42",
+        "asset": "prop.emergency-light",
+        "at": [
+          66,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-43",
+        "asset": "prop.emergency-light",
+        "at": [
+          78,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-44",
+        "asset": "prop.emergency-light",
+        "at": [
+          90,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-45",
+        "asset": "prop.emergency-light",
+        "at": [
+          102,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-46",
+        "asset": "prop.emergency-light",
+        "at": [
+          114,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-47",
+        "asset": "prop.emergency-light",
+        "at": [
+          126,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-48",
+        "asset": "prop.emergency-light",
+        "at": [
+          138,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-49",
+        "asset": "prop.emergency-light",
+        "at": [
+          150,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-50",
+        "asset": "prop.emergency-light",
+        "at": [
+          162,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-51",
+        "asset": "prop.emergency-light",
+        "at": [
+          174,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-52",
+        "asset": "prop.emergency-light",
+        "at": [
+          186,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-53",
+        "asset": "prop.emergency-light",
+        "at": [
+          198,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-54",
+        "asset": "prop.emergency-light",
+        "at": [
+          210,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-55",
+        "asset": "prop.emergency-light",
+        "at": [
+          222,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-56",
+        "asset": "prop.emergency-light",
+        "at": [
+          234,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-57",
+        "asset": "prop.emergency-light",
+        "at": [
+          246,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-58",
+        "asset": "prop.emergency-light",
+        "at": [
+          -12,
+          0.8000000000000007
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-59",
+        "asset": "prop.emergency-light",
+        "at": [
+          0,
+          0.8000000000000007
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-60",
+        "asset": "prop.emergency-light",
+        "at": [
+          12,
+          0.8000000000000007
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-61",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          90,
+          12.7
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-62",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          90,
+          17.475
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-63",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          150,
+          12.7
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-64",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          150,
+          17.475
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-65",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          210,
+          12.7
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-66",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          210,
+          17.475
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-67",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          42,
+          12.825
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-68",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          66,
+          17.35
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-69",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          114,
+          17.35
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-70",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          138,
+          12.825
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-71",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          162,
+          17.35
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-72",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          186,
+          12.825
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-73",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          234,
+          12.825
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-74",
+        "asset": "prop.crates",
+        "at": [
+          87,
+          12.35
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-75",
+        "asset": "prop.crates",
+        "at": [
+          87,
+          17.65
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-76",
+        "asset": "prop.crates",
+        "at": [
+          147,
+          12.35
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-77",
+        "asset": "prop.crates",
+        "at": [
+          147,
+          17.65
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-78",
+        "asset": "prop.crates",
+        "at": [
+          207,
+          12.35
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-79",
+        "asset": "prop.crates",
+        "at": [
+          207,
+          17.65
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-80",
+        "asset": "kit.metro-track",
+        "at": [
+          -24,
+          15
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-81",
+        "asset": "kit.metro-track",
+        "at": [
+          -12,
+          15
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-82",
+        "asset": "kit.metro-track",
+        "at": [
+          0,
+          15
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-83",
+        "asset": "kit.metro-track",
+        "at": [
+          12,
+          15
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-84",
+        "asset": "kit.metro-track",
+        "at": [
+          24,
+          15
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-85",
+        "asset": "prop.bench",
+        "at": [
+          -5.37,
+          -11
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "l6-86",
+        "asset": "prop.bench",
+        "at": [
+          2.5,
+          -11
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-87",
+        "asset": "prop.bench",
+        "at": [
+          -0.7700000000000005,
+          -8.5
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "l6-88",
+        "asset": "prop.bench",
+        "at": [
+          -8.33,
+          -6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-89",
+        "asset": "prop.bench",
+        "at": [
+          3.83,
+          -6
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "l6-90",
+        "asset": "prop.bench",
+        "at": [
+          -3.7300000000000004,
+          -3.5
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decor-D-SUBWAY-0",
+        "asset": "prop.trash-bags",
+        "at": [
+          33.49910740964115,
+          17.864034758391792
+        ],
+        "yawDeg": 177
+      },
+      {
+        "id": "decor-D-SUBWAY-1",
+        "asset": "prop.pallet",
+        "at": [
+          36.271687843697144,
+          17.905870188283735
+        ],
+        "yawDeg": 163.8
+      },
+      {
+        "id": "decor-D-SUBWAY-2",
+        "asset": "prop.broken-chair",
+        "at": [
+          39.76845343466848,
+          17.785249353107066
+        ],
+        "yawDeg": 189.1
+      },
+      {
+        "id": "decor-D-SUBWAY-3",
+        "asset": "prop.medical-cooler",
+        "at": [
+          70.99788347152061,
+          17.95831285454333
+        ],
+        "yawDeg": 155.3
+      },
+      {
+        "id": "decor-D-SUBWAY-4",
+        "asset": "prop.trash-bags",
+        "at": [
+          74.21259163473732,
+          17.969957146281377
+        ],
+        "yawDeg": 172.5
+      },
+      {
+        "id": "decor-D-SUBWAY-5",
+        "asset": "prop.trash-bags",
+        "at": [
+          82.70209031496198,
+          17.930316650867464
+        ],
+        "yawDeg": 175.1
+      },
+      {
+        "id": "decor-D-SUBWAY-6",
+        "asset": "prop.trash-bags",
+        "at": [
+          93.79705567536874,
+          12.110460187960415
+        ],
+        "yawDeg": 19.8
+      },
+      {
+        "id": "decor-D-SUBWAY-7",
+        "asset": "prop.pallet",
+        "at": [
+          94.04880616879089,
+          17.755667738150805
+        ],
+        "yawDeg": 156.9
+      },
+      {
+        "id": "decor-D-SUBWAY-8",
+        "asset": "prop.carpet",
+        "at": [
+          96.12556132702154,
+          17.89224668641109
+        ],
+        "yawDeg": 182
+      },
+      {
+        "id": "decor-D-SUBWAY-9",
+        "asset": "prop.medical-cooler",
+        "at": [
+          106.89612502260131,
+          18.027676495164634
+        ],
+        "yawDeg": 167.1
+      },
+      {
+        "id": "decor-D-SUBWAY-10",
+        "asset": "prop.medical-cooler",
+        "at": [
+          108.45086507317608,
+          17.83111611213535
+        ],
+        "yawDeg": 164.3
+      },
+      {
+        "id": "decor-D-SUBWAY-11",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          126.324107644055,
+          17.869969413778744
+        ],
+        "yawDeg": 161.3
+      },
+      {
+        "id": "decor-D-SUBWAY-12",
+        "asset": "prop.broken-chair",
+        "at": [
+          129.73766763303425,
+          11.975792760099283
+        ],
+        "yawDeg": 20.3
+      },
+      {
+        "id": "decor-D-SUBWAY-13",
+        "asset": "prop.crates",
+        "at": [
+          135.6967541004065,
+          18.007831586920656
+        ],
+        "yawDeg": 184.5
+      },
+      {
+        "id": "decor-D-SUBWAY-14",
+        "asset": "prop.medical-cooler",
+        "at": [
+          152.97166357440872,
+          17.87921319131274
+        ],
+        "yawDeg": 169.3
+      },
+      {
+        "id": "decor-D-SUBWAY-15",
+        "asset": "prop.carpet",
+        "at": [
+          156.27348526413547,
+          17.77683193050325
+        ],
+        "yawDeg": 189.6
+      },
+      {
+        "id": "decor-D-SUBWAY-16",
+        "asset": "prop.pallet",
+        "at": [
+          158.23834733706894,
+          17.864663195144384
+        ],
+        "yawDeg": 169.3
+      },
+      {
+        "id": "decor-D-SUBWAY-17",
+        "asset": "prop.pallet",
+        "at": [
+          164.70175472027617,
+          11.97966289280448
+        ],
+        "yawDeg": 3.2
+      },
+      {
+        "id": "decor-D-SUBWAY-18",
+        "asset": "prop.crates",
+        "at": [
+          167.89809902585108,
+          18.000006738607773
+        ],
+        "yawDeg": 193.8
+      },
+      {
+        "id": "decor-D-SUBWAY-19",
+        "asset": "prop.crates",
+        "at": [
+          169.9270691952202,
+          17.849744213419036
+        ],
+        "yawDeg": 175.3
+      },
+      {
+        "id": "decor-D-SUBWAY-20",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          182.86244374020023,
+          11.96287889033556
+        ],
+        "yawDeg": -20.3
+      },
+      {
+        "id": "decor-D-SUBWAY-21",
+        "asset": "prop.broken-chair",
+        "at": [
+          182.88558400114997,
+          18.01961920557078
+        ],
+        "yawDeg": 199.9
+      },
+      {
+        "id": "decor-D-SUBWAY-22",
+        "asset": "prop.broken-chair",
+        "at": [
+          195.30094832018946,
+          17.875641187955626
+        ],
+        "yawDeg": 182.9
+      },
+      {
+        "id": "decor-D-SUBWAY-23",
+        "asset": "prop.trash-bags",
+        "at": [
+          220.2577212281059,
+          17.952892084489577
+        ],
+        "yawDeg": 172.4
+      },
+      {
+        "id": "decor-D-SUBWAY-24",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          222.24526386479843,
+          12.075083129224367
+        ],
+        "yawDeg": 9.1
+      },
+      {
+        "id": "decor-D-SUBWAY-25",
+        "asset": "prop.medical-cooler",
+        "at": [
+          223.01265156972218,
+          17.803221379290335
+        ],
+        "yawDeg": 168.6
+      },
+      {
+        "id": "decor-D-SUBWAY-26",
+        "asset": "prop.medical-cooler",
+        "at": [
+          226.01193162472913,
+          12.00896440509241
+        ],
+        "yawDeg": -8.9
+      },
+      {
+        "id": "decor-D-SUBWAY-27",
+        "asset": "prop.pallet",
+        "at": [
+          228.00341313602397,
+          12.078787929029204
+        ],
+        "yawDeg": -9.8
+      },
+      {
+        "id": "decor-D-SUBWAY-28",
+        "asset": "prop.carpet",
+        "at": [
+          242.32060895380553,
+          18.028687661909498
+        ],
+        "yawDeg": 194.1
+      },
+      {
+        "id": "decor-D-SUBWAY-29",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          38,
+          12.911880432302132
+        ],
+        "yawDeg": 97.7
+      },
+      {
+        "id": "decor-D-SUBWAY-30",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          53.40692573040724,
+          17.006816732883454
+        ],
+        "yawDeg": 152.5
+      },
+      {
+        "id": "decor-D-SUBWAY-31",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          71.89381417259574,
+          13.047901558200829
+        ],
+        "yawDeg": 72.2
+      },
+      {
+        "id": "decor-D-SUBWAY-32",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          84.32892568968236,
+          16.87477828147821
+        ],
+        "yawDeg": 239.8
+      },
+      {
+        "id": "decor-D-SUBWAY-33",
+        "asset": "prop.pallet",
+        "at": [
+          96.05149526335299,
+          12.924955614027567
+        ],
+        "yawDeg": 93.6
+      },
+      {
+        "id": "decor-D-SUBWAY-34",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          114.24116047285497,
+          13.069946693535893
+        ],
+        "yawDeg": 344.6
+      },
+      {
+        "id": "decor-D-SUBWAY-35",
+        "asset": "prop.pallet",
+        "at": [
+          125.60543551295996,
+          16.890687430626713
+        ],
+        "yawDeg": 128.5
+      },
+      {
+        "id": "decor-D-SUBWAY-36",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          144.0139233134687,
+          16.847744891513138
+        ],
+        "yawDeg": 23.6
+      },
+      {
+        "id": "decor-D-SUBWAY-37",
+        "asset": "prop.pallet",
+        "at": [
+          160.53749819286168,
+          13.147250687191264
+        ],
+        "yawDeg": 355.8
+      },
+      {
+        "id": "decor-D-SUBWAY-38",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          178.45933531038463,
+          17.057768912776375
+        ],
+        "yawDeg": 357.9
+      },
+      {
+        "id": "decor-D-SUBWAY-39",
+        "asset": "prop.pallet",
+        "at": [
+          189.54793136380613,
+          16.877765441243536
+        ],
+        "yawDeg": 123.3
+      },
+      {
+        "id": "decor-D-SUBWAY-40",
+        "asset": "prop.pallet",
+        "at": [
+          205.44787551276386,
+          13.154954848391935
+        ],
+        "yawDeg": 250
+      },
+      {
+        "id": "decor-D-SUBWAY-41",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          221.52072803117335,
+          16.88314018123783
+        ],
+        "yawDeg": 15.4
+      },
+      {
+        "id": "decor-D-SUBWAY-42",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          238.71376092545688,
+          16.897760663554074
+        ],
+        "yawDeg": 234.1
+      },
+      {
+        "id": "decor-D-SUBWAY-43",
+        "asset": "prop.carpet",
+        "at": [
+          47,
+          17.75
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "decor-D-SUBWAY-44",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          48.5,
+          17.95
+        ],
+        "yawDeg": 197.2
+      },
+      {
+        "id": "decor-D-SUBWAY-45",
+        "asset": "prop.folding-chair",
+        "at": [
+          45.6,
+          17.6
+        ],
+        "yawDeg": -34.4
+      },
+      {
+        "id": "decor-D-SUBWAY-46",
+        "asset": "prop.medical-cooler",
+        "at": [
+          49.6,
+          18.05
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "decor-D-SUBWAY-47",
+        "asset": "prop.carpet",
+        "at": [
+          61,
+          17.75
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "decor-D-SUBWAY-48",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          62.5,
+          17.95
+        ],
+        "yawDeg": 197.2
+      },
+      {
+        "id": "decor-D-SUBWAY-49",
+        "asset": "prop.folding-chair",
+        "at": [
+          59.6,
+          17.6
+        ],
+        "yawDeg": -34.4
+      },
+      {
+        "id": "decor-D-SUBWAY-50",
+        "asset": "prop.medical-cooler",
+        "at": [
+          63.6,
+          18.05
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "decor-D-SUBWAY-51",
+        "asset": "prop.carpet",
+        "at": [
+          100,
+          17.75
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "decor-D-SUBWAY-52",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          101.5,
+          17.95
+        ],
+        "yawDeg": 197.2
+      },
+      {
+        "id": "decor-D-SUBWAY-53",
+        "asset": "prop.folding-chair",
+        "at": [
+          98.6,
+          17.6
+        ],
+        "yawDeg": -34.4
+      },
+      {
+        "id": "decor-D-SUBWAY-54",
+        "asset": "prop.medical-cooler",
+        "at": [
+          102.6,
+          18.05
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "decor-D-SUBWAY-55",
+        "asset": "prop.carpet",
+        "at": [
+          120,
+          17.75
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "decor-D-SUBWAY-56",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          121.5,
+          17.95
+        ],
+        "yawDeg": 197.2
+      },
+      {
+        "id": "decor-D-SUBWAY-57",
+        "asset": "prop.folding-chair",
+        "at": [
+          118.6,
+          17.6
+        ],
+        "yawDeg": -34.4
+      },
+      {
+        "id": "decor-D-SUBWAY-58",
+        "asset": "prop.medical-cooler",
+        "at": [
+          122.6,
+          18.05
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "decor-D-SUBWAY-59",
+        "asset": "prop.carpet",
+        "at": [
+          191,
+          17.75
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "decor-D-SUBWAY-60",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          192.5,
+          17.95
+        ],
+        "yawDeg": 197.2
+      },
+      {
+        "id": "decor-D-SUBWAY-61",
+        "asset": "prop.folding-chair",
+        "at": [
+          189.6,
+          17.6
+        ],
+        "yawDeg": -34.4
+      },
+      {
+        "id": "decor-D-SUBWAY-62",
+        "asset": "prop.medical-cooler",
+        "at": [
+          193.6,
+          18.05
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "decor-D-SUBWAY-63",
+        "asset": "prop.carpet",
+        "at": [
+          238,
+          17.75
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "decor-D-SUBWAY-64",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          239.5,
+          17.95
+        ],
+        "yawDeg": 197.2
+      },
+      {
+        "id": "decor-D-SUBWAY-65",
+        "asset": "prop.folding-chair",
+        "at": [
+          236.6,
+          17.6
+        ],
+        "yawDeg": -34.4
+      },
+      {
+        "id": "decor-D-SUBWAY-66",
+        "asset": "prop.medical-cooler",
+        "at": [
+          240.6,
+          18.05
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "decor-D-SUBWAY-67",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          263.5,
+          11.2
+        ],
+        "yawDeg": 40.1
+      },
+      {
+        "id": "decor-D-SUBWAY-68",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          270.5,
+          19.8
+        ],
+        "yawDeg": 126.1
+      },
+      {
+        "id": "decor-D-SUBWAY-69",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          277.5,
+          11.6
+        ],
+        "yawDeg": 252.1
+      },
+      {
+        "id": "decor-D-SUBWAY-70",
+        "asset": "prop.trash-bags",
+        "at": [
+          268.2,
+          10.4
+        ],
+        "yawDeg": 17.2
+      },
+      {
+        "id": "decor-D-SUBWAY-71",
+        "asset": "prop.trash-bags",
+        "at": [
+          282.5,
+          16.8
+        ],
+        "yawDeg": 108.9
+      },
+      {
+        "id": "decor-D-SUBWAY-72",
+        "asset": "prop.trash-bags",
+        "at": [
+          273.5,
+          21.4
+        ],
+        "yawDeg": 234.9
+      },
+      {
+        "id": "decor-D-SUBWAY-73",
+        "asset": "prop.traffic-cone",
+        "at": [
+          266.2,
+          19.4
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decor-D-SUBWAY-74",
+        "asset": "prop.traffic-cone",
+        "at": [
+          275.5,
+          9.6
+        ],
+        "yawDeg": 68.8
+      },
+      {
+        "id": "decor-D-SUBWAY-75",
+        "asset": "prop.traffic-cone",
+        "at": [
+          280.8,
+          12.2
+        ],
+        "yawDeg": 28.6
+      },
+      {
+        "id": "decor-D-SUBWAY-76",
+        "asset": "prop.shopping-cart",
+        "at": [
+          279.5,
+          18.5
+        ],
+        "yawDeg": 137.5
+      },
+      {
+        "id": "decor-D-SUBWAY-77",
+        "asset": "prop.crates",
+        "at": [
+          272.5,
+          9.8
+        ],
+        "yawDeg": 51.6
+      },
+      {
+        "id": "decor-D-SUBWAY-78",
+        "asset": "prop.broken-chair",
+        "at": [
+          266.5,
+          12.6
+        ],
+        "yawDeg": 80.2
+      },
+      {
+        "id": "decor-D-SUBWAY-79",
+        "asset": "prop.medical-cooler",
+        "at": [
+          284.5,
+          13.2
+        ],
+        "yawDeg": 114.6
+      }
+    ],
+    "actors": [
+      {
+        "id": "courier",
+        "kind": "courier",
+        "entity": 1
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 52,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    },
+    "marketDoors": null,
+    "armyBoom": null,
+    "scene": "l6-tunnel-walkway",
+    "frame": 150,
+    "tick": 153,
+    "backend": "webgpu",
+    "quality": "high",
+    "convoyOverlapFrames": 0,
+    "courierAttachments": {
+      "samples": 15,
+      "gapMaxCm": 1.2,
+      "frame": 10,
+      "worst": "courierSkin.t2",
+      "worstAt": [
+        111.577,
+        1.454,
+        15.507,
+        1099
+      ],
+      "attachments": 1
+    },
+    "animalLimbs": {
+      "samples": 0,
+      "gapMaxCm": 0,
+      "frame": -1,
+      "actor": null
+    },
+    "corgiTongue": {
+      "idleSamples": 0,
+      "idleOutFrames": 0,
+      "firstIdleOut": -1,
+      "movingSamples": 0,
+      "movingInFrames": 0,
+      "firstMovingIn": -1
+    },
+    "propPenetration": {
+      "samples": 5926,
+      "framesMax": 0,
+      "pairs": []
+    },
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "bodies": [],
+    "attackOverlap": {
+      "depthCm": 0,
+      "frame": 0,
+      "actor": ""
+    },
+    "wheels": {},
+    "lodPlaceholders": {
+      "frames": 0,
+      "firstFrame": -1,
+      "assets": []
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 61,
+        "p95": 63,
+        "max": 63
+      },
+      "triangles": {
+        "p50": 120399,
+        "p95": 125058,
+        "max": 125058
+      },
+      "shadowDrawCalls": {
+        "p50": 46,
+        "p95": 46,
+        "max": 50
+      },
+      "shadowTriangles": {
+        "p50": 96586,
+        "p95": 101218,
+        "max": 101218
+      },
+      "stepMs": {
+        "p50": 4.5,
+        "p95": 5.3,
+        "max": 8
+      },
+      "lastFrame": {
+        "drawCalls": 63,
+        "triangles": 125058,
+        "shadowDrawCalls": 46,
+        "shadowTriangles": 101218,
+        "stepMs": 4.59999942779541,
+        "categories": {
+          "other": 38,
+          "shadows": 46,
+          "buildings": 7,
+          "crowd": 11,
+          "props": 7
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "grounding": {
+      "corpses": 0,
+      "corpseOffMaxCm": 0,
+      "pickups": 0,
+      "pickupOffMaxCm": 0,
+      "worst": []
+    },
+    "pursuit": {
+      "actors": {},
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "hullWindups": 0,
+      "hullHits": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "aim": {
+      "shots": 0,
+      "hitShare": 0,
+      "intentErrorMaxDeg": 0,
+      "misses": []
+    },
+    "cure": null,
+    "megaAlpha": null,
+    "minigun": null,
+    "specials": [],
+    "heldProps": {
+      "samples": 0,
+      "intersections": 0,
+      "holds": {}
+    },
+    "seeThrough": {
+      "frames": 150,
+      "solidRadiusMax": 0.257,
+      "occluders": [
+        "kit.metro-tunnel@120.0,15.0",
+        "kit.metro-tunnel@108.0,15.0"
+      ],
+      "cutLowProps": [
+        "kit.metro-track",
+        "kit.shelter-camp",
+        "prop.emergency-light"
+      ],
+      "cutPlacements": [
+        "kit.metro-tunnel@108.0,15.0",
+        "kit.metro-tunnel@120.0,15.0"
+      ]
+    },
+    "appearance": [],
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "variety": {
+      "infected": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      },
+      "pedestrian": {
+        "figures": 20,
+        "distinct": 18,
+        "per20": [
+          {
+            "figures": 20,
+            "distinct": 18
+          }
+        ],
+        "largestSameLookShare": 0.1,
+        "largestModelShare": 0.2
+      }
+    },
+    "actors": {
+      "courier": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          107.145,
+          16.412
+        ],
+        "yawDeg": -168.2,
+        "travelM": 4.949744019869187,
+        "maxX": 111.9902114868164,
+        "heldWeapon": null,
+        "targetId": null,
+        "state": "walk",
+        "health": 100,
+        "drawnFrames": 150,
+        "inViewFrames": 150,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 150
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            111.99,
+            15.402
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 150,
+          "torsoPitchMinDeg": 7,
+          "torsoPitchMaxDeg": 7.3,
+          "contacts": 14,
+          "slideMaxCm": 82.7,
+          "slideP95Cm": 52.1,
+          "yawDriftMaxDeg": 90.9,
+          "liftMaxCm": 11,
+          "sinkMaxCm": 3,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 6
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 150,
+      "sim": {
+        "pedestrian": 29,
+        "infected": 11,
+        "courier": 1,
+        "actors": 1
+      },
+      "drawn": {
+        "vehicle": 0,
+        "pedestrian": 20,
+        "courier": 1
+      }
+    },
+    "lods": {
+      "l6-0": "lod2",
+      "l6-1": "culled",
+      "l6-2": "culled",
+      "l6-3": "culled",
+      "l6-4": "culled",
+      "l6-5": "lod2",
+      "l6-6": "lod1",
+      "l6-7": "lod0",
+      "l6-8": "lod1",
+      "l6-9": "culled",
+      "l6-10": "culled",
+      "l6-11": "culled",
+      "l6-12": "culled",
+      "l6-13": "culled",
+      "l6-14": "culled",
+      "l6-15": "culled",
+      "l6-16": "culled",
+      "l6-17": "culled",
+      "l6-18": "culled",
+      "l6-19": "culled",
+      "l6-20": "culled",
+      "l6-21": "culled",
+      "l6-22": "culled",
+      "l6-23": "culled",
+      "l6-24": "culled",
+      "l6-25": "culled",
+      "l6-26": "culled",
+      "l6-27": "culled",
+      "l6-28": "culled",
+      "l6-29": "culled",
+      "l6-30": "culled",
+      "l6-31": "culled",
+      "l6-32": "culled",
+      "l6-33": "culled",
+      "l6-34": "culled",
+      "l6-35": "culled",
+      "l6-36": "culled",
+      "l6-37": "culled",
+      "l6-38": "culled",
+      "l6-39": "culled",
+      "l6-40": "culled",
+      "l6-41": "culled",
+      "l6-42": "culled",
+      "l6-43": "culled",
+      "l6-44": "culled",
+      "l6-45": "culled",
+      "l6-46": "culled",
+      "l6-47": "culled",
+      "l6-48": "culled",
+      "l6-49": "culled",
+      "l6-50": "culled",
+      "l6-51": "culled",
+      "l6-52": "culled",
+      "l6-53": "culled",
+      "l6-54": "culled",
+      "l6-55": "culled",
+      "l6-56": "culled",
+      "l6-57": "culled",
+      "l6-58": "culled",
+      "l6-59": "culled",
+      "l6-60": "culled",
+      "l6-61": "culled",
+      "l6-62": "lod2",
+      "l6-63": "culled",
+      "l6-64": "culled",
+      "l6-65": "culled",
+      "l6-66": "culled",
+      "l6-67": "culled",
+      "l6-68": "culled",
+      "l6-69": "lod1",
+      "l6-70": "culled",
+      "l6-71": "culled",
+      "l6-72": "culled",
+      "l6-73": "culled",
+      "l6-74": "culled",
+      "l6-75": "culled",
+      "l6-76": "culled",
+      "l6-77": "culled",
+      "l6-78": "culled",
+      "l6-79": "culled",
+      "l6-80": "culled",
+      "l6-81": "culled",
+      "l6-82": "culled",
+      "l6-83": "culled",
+      "l6-84": "culled",
+      "l6-85": "culled",
+      "l6-86": "culled",
+      "l6-87": "culled",
+      "l6-88": "culled",
+      "l6-89": "culled",
+      "l6-90": "culled",
+      "decor-D-SUBWAY-0": "culled",
+      "decor-D-SUBWAY-1": "culled",
+      "decor-D-SUBWAY-2": "culled",
+      "decor-D-SUBWAY-3": "culled",
+      "decor-D-SUBWAY-4": "culled",
+      "decor-D-SUBWAY-5": "culled",
+      "decor-D-SUBWAY-6": "culled",
+      "decor-D-SUBWAY-7": "lod2",
+      "decor-D-SUBWAY-8": "lod2",
+      "decor-D-SUBWAY-9": "lod1",
+      "decor-D-SUBWAY-10": "lod1",
+      "decor-D-SUBWAY-11": "culled",
+      "decor-D-SUBWAY-12": "culled",
+      "decor-D-SUBWAY-13": "culled",
+      "decor-D-SUBWAY-14": "culled",
+      "decor-D-SUBWAY-15": "culled",
+      "decor-D-SUBWAY-16": "culled",
+      "decor-D-SUBWAY-17": "culled",
+      "decor-D-SUBWAY-18": "culled",
+      "decor-D-SUBWAY-19": "culled",
+      "decor-D-SUBWAY-20": "culled",
+      "decor-D-SUBWAY-21": "culled",
+      "decor-D-SUBWAY-22": "culled",
+      "decor-D-SUBWAY-23": "culled",
+      "decor-D-SUBWAY-24": "culled",
+      "decor-D-SUBWAY-25": "culled",
+      "decor-D-SUBWAY-26": "culled",
+      "decor-D-SUBWAY-27": "culled",
+      "decor-D-SUBWAY-28": "culled",
+      "decor-D-SUBWAY-29": "culled",
+      "decor-D-SUBWAY-30": "culled",
+      "decor-D-SUBWAY-31": "culled",
+      "decor-D-SUBWAY-32": "culled",
+      "decor-D-SUBWAY-33": "lod2",
+      "decor-D-SUBWAY-34": "culled",
+      "decor-D-SUBWAY-35": "culled",
+      "decor-D-SUBWAY-36": "culled",
+      "decor-D-SUBWAY-37": "culled",
+      "decor-D-SUBWAY-38": "culled",
+      "decor-D-SUBWAY-39": "culled",
+      "decor-D-SUBWAY-40": "culled",
+      "decor-D-SUBWAY-41": "culled",
+      "decor-D-SUBWAY-42": "culled",
+      "decor-D-SUBWAY-43": "culled",
+      "decor-D-SUBWAY-44": "culled",
+      "decor-D-SUBWAY-45": "culled",
+      "decor-D-SUBWAY-46": "culled",
+      "decor-D-SUBWAY-47": "culled",
+      "decor-D-SUBWAY-48": "culled",
+      "decor-D-SUBWAY-49": "culled",
+      "decor-D-SUBWAY-50": "culled",
+      "decor-D-SUBWAY-51": "lod2",
+      "decor-D-SUBWAY-52": "lod2",
+      "decor-D-SUBWAY-53": "lod2",
+      "decor-D-SUBWAY-54": "lod2",
+      "decor-D-SUBWAY-55": "culled",
+      "decor-D-SUBWAY-56": "culled",
+      "decor-D-SUBWAY-57": "culled",
+      "decor-D-SUBWAY-58": "culled",
+      "decor-D-SUBWAY-59": "culled",
+      "decor-D-SUBWAY-60": "culled",
+      "decor-D-SUBWAY-61": "culled",
+      "decor-D-SUBWAY-62": "culled",
+      "decor-D-SUBWAY-63": "culled",
+      "decor-D-SUBWAY-64": "culled",
+      "decor-D-SUBWAY-65": "culled",
+      "decor-D-SUBWAY-66": "culled",
+      "decor-D-SUBWAY-67": "culled",
+      "decor-D-SUBWAY-68": "culled",
+      "decor-D-SUBWAY-69": "culled",
+      "decor-D-SUBWAY-70": "culled",
+      "decor-D-SUBWAY-71": "culled",
+      "decor-D-SUBWAY-72": "culled",
+      "decor-D-SUBWAY-73": "culled",
+      "decor-D-SUBWAY-74": "culled",
+      "decor-D-SUBWAY-75": "culled",
+      "decor-D-SUBWAY-76": "culled",
+      "decor-D-SUBWAY-77": "culled",
+      "decor-D-SUBWAY-78": "culled",
+      "decor-D-SUBWAY-79": "culled"
+    },
+    "clipping": {
+      "gunBodyHits": 1,
+      "staticPairs": 129,
+      "heldPropHits": 0,
+      "actorHits": 4,
+      "piercing": 4
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [
+      {
+        "a": "l6-0",
+        "b": "l6-30",
+        "assetA": "int.metro-station",
+        "assetB": "kit.shelter-camp",
+        "intersectingTriangles": 966,
+        "region": {
+          "min": [
+            18.099613189697266,
+            0.5999839901924133,
+            4.540238857269287
+          ],
+          "max": [
+            21.719974517822266,
+            1.650015950202942,
+            5.399945259094238
+          ]
+        },
+        "regionCm": [
+          362,
+          105,
+          86
+        ]
+      },
+      {
+        "a": "l6-26",
+        "b": "l6-87",
+        "assetA": "kit.shelter-camp",
+        "assetB": "prop.bench",
+        "intersectingTriangles": 766,
+        "region": {
+          "min": [
+            -1.1286202669143677,
+            0.7199583053588867,
+            -9.449999809265137
+          ],
+          "max": [
+            -0.41978055238723755,
+            1.134997844696045,
+            -7.739988327026367
+          ]
+        },
+        "regionCm": [
+          71,
+          42,
+          171
+        ]
+      },
+      {
+        "a": "l6-0",
+        "b": "l6-90",
+        "assetA": "int.metro-station",
+        "assetB": "prop.bench",
+        "intersectingTriangles": 733,
+        "region": {
+          "min": [
+            -4.075136661529541,
+            0.6419451832771301,
+            -3.8096256256103516
+          ],
+          "max": [
+            -3.371379852294922,
+            1.6600581407546997,
+            -2.549999952316284
+          ]
+        },
+        "regionCm": [
+          70,
+          102,
+          126
+        ]
+      },
+      {
+        "a": "l6-18",
+        "b": "decor-D-SUBWAY-28",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.carpet",
+        "intersectingTriangles": 549,
+        "region": {
+          "min": [
+            241.66917419433594,
+            0.869999349117279,
+            17.40070915222168
+          ],
+          "max": [
+            242.73263549804688,
+            1.1100579500198364,
+            18.7999210357666
+          ]
+        },
+        "regionCm": [
+          106,
+          24,
+          140
+        ]
+      },
+      {
+        "a": "l6-32",
+        "b": "l6-36",
+        "assetA": "prop.jersey-barrier",
+        "assetB": "bld.backdrop-houses",
+        "intersectingTriangles": 414,
+        "region": {
+          "min": [
+            282.4962463378906,
+            3.900041341781616,
+            25.640003204345703
+          ],
+          "max": [
+            283.5,
+            4.849989891052246,
+            26.359996795654297
+          ]
+        },
+        "regionCm": [
+          100,
+          95,
+          72
+        ]
+      },
+      {
+        "a": "l6-1",
+        "b": "l6-39",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 388,
+        "region": {
+          "min": [
+            30,
+            3.314997434616089,
+            11.782495498657227
+          ],
+          "max": [
+            30.19000244140625,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          61,
+          29
+        ]
+      },
+      {
+        "a": "l6-2",
+        "b": "l6-40",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 388,
+        "region": {
+          "min": [
+            42,
+            3.314997434616089,
+            11.782495498657227
+          ],
+          "max": [
+            42.19000244140625,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          61,
+          29
+        ]
+      },
+      {
+        "a": "l6-3",
+        "b": "l6-41",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 388,
+        "region": {
+          "min": [
+            54,
+            3.314997434616089,
+            11.782495498657227
+          ],
+          "max": [
+            54.19000244140625,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          61,
+          29
+        ]
+      },
+      {
+        "a": "l6-4",
+        "b": "l6-42",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 388,
+        "region": {
+          "min": [
+            66,
+            3.314997434616089,
+            11.782495498657227
+          ],
+          "max": [
+            66.19000244140625,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          61,
+          29
+        ]
+      },
+      {
+        "a": "l6-5",
+        "b": "l6-43",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 388,
+        "region": {
+          "min": [
+            78,
+            3.314997434616089,
+            11.782495498657227
+          ],
+          "max": [
+            78.19000244140625,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          61,
+          29
+        ]
+      },
+      {
+        "a": "l6-6",
+        "b": "l6-44",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 388,
+        "region": {
+          "min": [
+            90,
+            3.314997434616089,
+            11.782495498657227
+          ],
+          "max": [
+            90.19000244140625,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          61,
+          29
+        ]
+      },
+      {
+        "a": "l6-7",
+        "b": "l6-45",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 388,
+        "region": {
+          "min": [
+            102,
+            3.314997434616089,
+            11.782495498657227
+          ],
+          "max": [
+            102.19000244140625,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          61,
+          29
+        ]
+      },
+      {
+        "a": "l6-8",
+        "b": "l6-46",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 388,
+        "region": {
+          "min": [
+            114,
+            3.314997434616089,
+            11.782495498657227
+          ],
+          "max": [
+            114.19000244140625,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          61,
+          29
+        ]
+      },
+      {
+        "a": "l6-9",
+        "b": "l6-47",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 388,
+        "region": {
+          "min": [
+            126,
+            3.314997434616089,
+            11.782495498657227
+          ],
+          "max": [
+            126.19000244140625,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          61,
+          29
+        ]
+      },
+      {
+        "a": "l6-10",
+        "b": "l6-48",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 388,
+        "region": {
+          "min": [
+            138,
+            3.314997434616089,
+            11.782495498657227
+          ],
+          "max": [
+            138.19000244140625,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          61,
+          29
+        ]
+      },
+      {
+        "a": "l6-11",
+        "b": "l6-49",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 388,
+        "region": {
+          "min": [
+            150,
+            3.314997434616089,
+            11.782495498657227
+          ],
+          "max": [
+            150.19000244140625,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          61,
+          29
+        ]
+      },
+      {
+        "a": "l6-12",
+        "b": "l6-50",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 388,
+        "region": {
+          "min": [
+            162,
+            3.314997434616089,
+            11.782495498657227
+          ],
+          "max": [
+            162.19000244140625,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          61,
+          29
+        ]
+      },
+      {
+        "a": "l6-13",
+        "b": "l6-51",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 388,
+        "region": {
+          "min": [
+            174,
+            3.314997434616089,
+            11.782495498657227
+          ],
+          "max": [
+            174.19000244140625,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          61,
+          29
+        ]
+      },
+      {
+        "a": "l6-14",
+        "b": "l6-52",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 388,
+        "region": {
+          "min": [
+            186,
+            3.314997434616089,
+            11.782495498657227
+          ],
+          "max": [
+            186.19000244140625,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          61,
+          29
+        ]
+      },
+      {
+        "a": "l6-15",
+        "b": "l6-53",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 388,
+        "region": {
+          "min": [
+            198,
+            3.314997434616089,
+            11.782495498657227
+          ],
+          "max": [
+            198.19000244140625,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          61,
+          29
+        ]
+      },
+      {
+        "a": "l6-16",
+        "b": "l6-54",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 388,
+        "region": {
+          "min": [
+            210,
+            3.314997434616089,
+            11.782495498657227
+          ],
+          "max": [
+            210.19000244140625,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          61,
+          29
+        ]
+      },
+      {
+        "a": "l6-17",
+        "b": "l6-55",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 388,
+        "region": {
+          "min": [
+            222,
+            3.314997434616089,
+            11.782495498657227
+          ],
+          "max": [
+            222.19000244140625,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          61,
+          29
+        ]
+      },
+      {
+        "a": "l6-18",
+        "b": "l6-56",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 388,
+        "region": {
+          "min": [
+            234,
+            3.314997434616089,
+            11.782495498657227
+          ],
+          "max": [
+            234.19000244140625,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          61,
+          29
+        ]
+      },
+      {
+        "a": "l6-6",
+        "b": "decor-D-SUBWAY-8",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.carpet",
+        "intersectingTriangles": 385,
+        "region": {
+          "min": [
+            95.58432006835938,
+            0.8699864149093628,
+            17.303802490234375
+          ],
+          "max": [
+            96.65196990966797,
+            1.1100579500198364,
+            18.59886932373047
+          ]
+        },
+        "regionCm": [
+          107,
+          24,
+          130
+        ]
+      },
+      {
+        "a": "l6-1",
+        "b": "l6-40",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 347,
+        "region": {
+          "min": [
+            41.80999755859375,
+            3.285003900527954,
+            11.782495498657227
+          ],
+          "max": [
+            42,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          63,
+          29
+        ]
+      },
+      {
+        "a": "l6-2",
+        "b": "l6-41",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 347,
+        "region": {
+          "min": [
+            53.80999755859375,
+            3.285003900527954,
+            11.782495498657227
+          ],
+          "max": [
+            54,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          63,
+          29
+        ]
+      },
+      {
+        "a": "l6-3",
+        "b": "l6-42",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 347,
+        "region": {
+          "min": [
+            65.80999755859375,
+            3.285003900527954,
+            11.782495498657227
+          ],
+          "max": [
+            66,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          63,
+          29
+        ]
+      },
+      {
+        "a": "l6-4",
+        "b": "l6-43",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 347,
+        "region": {
+          "min": [
+            77.80999755859375,
+            3.285003900527954,
+            11.782495498657227
+          ],
+          "max": [
+            78,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          63,
+          29
+        ]
+      },
+      {
+        "a": "l6-5",
+        "b": "l6-44",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 347,
+        "region": {
+          "min": [
+            89.80999755859375,
+            3.285003900527954,
+            11.782495498657227
+          ],
+          "max": [
+            90,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          63,
+          29
+        ]
+      },
+      {
+        "a": "l6-6",
+        "b": "l6-45",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 347,
+        "region": {
+          "min": [
+            101.80999755859375,
+            3.285003900527954,
+            11.782495498657227
+          ],
+          "max": [
+            102,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          63,
+          29
+        ]
+      },
+      {
+        "a": "l6-7",
+        "b": "l6-46",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 347,
+        "region": {
+          "min": [
+            113.80999755859375,
+            3.285003900527954,
+            11.782495498657227
+          ],
+          "max": [
+            114,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          63,
+          29
+        ]
+      },
+      {
+        "a": "l6-8",
+        "b": "l6-47",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 347,
+        "region": {
+          "min": [
+            125.80999755859375,
+            3.285003900527954,
+            11.782495498657227
+          ],
+          "max": [
+            126,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          63,
+          29
+        ]
+      },
+      {
+        "a": "l6-9",
+        "b": "l6-48",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 347,
+        "region": {
+          "min": [
+            137.80999755859375,
+            3.285003900527954,
+            11.782495498657227
+          ],
+          "max": [
+            138,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          63,
+          29
+        ]
+      },
+      {
+        "a": "l6-10",
+        "b": "l6-49",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 347,
+        "region": {
+          "min": [
+            149.80999755859375,
+            3.285003900527954,
+            11.782495498657227
+          ],
+          "max": [
+            150,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          63,
+          29
+        ]
+      },
+      {
+        "a": "l6-11",
+        "b": "l6-50",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 347,
+        "region": {
+          "min": [
+            161.80999755859375,
+            3.285003900527954,
+            11.782495498657227
+          ],
+          "max": [
+            162,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          63,
+          29
+        ]
+      },
+      {
+        "a": "l6-12",
+        "b": "l6-51",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 347,
+        "region": {
+          "min": [
+            173.80999755859375,
+            3.285003900527954,
+            11.782495498657227
+          ],
+          "max": [
+            174,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          63,
+          29
+        ]
+      },
+      {
+        "a": "l6-13",
+        "b": "l6-52",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 347,
+        "region": {
+          "min": [
+            185.80999755859375,
+            3.285003900527954,
+            11.782495498657227
+          ],
+          "max": [
+            186,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          63,
+          29
+        ]
+      },
+      {
+        "a": "l6-14",
+        "b": "l6-53",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 347,
+        "region": {
+          "min": [
+            197.80999755859375,
+            3.285003900527954,
+            11.782495498657227
+          ],
+          "max": [
+            198,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          63,
+          29
+        ]
+      },
+      {
+        "a": "l6-15",
+        "b": "l6-54",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 347,
+        "region": {
+          "min": [
+            209.80999755859375,
+            3.285003900527954,
+            11.782495498657227
+          ],
+          "max": [
+            210,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          63,
+          29
+        ]
+      },
+      {
+        "a": "l6-16",
+        "b": "l6-55",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 347,
+        "region": {
+          "min": [
+            221.80999755859375,
+            3.285003900527954,
+            11.782495498657227
+          ],
+          "max": [
+            222,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          63,
+          29
+        ]
+      },
+      {
+        "a": "l6-17",
+        "b": "l6-56",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 347,
+        "region": {
+          "min": [
+            233.80999755859375,
+            3.285003900527954,
+            11.782495498657227
+          ],
+          "max": [
+            234,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          63,
+          29
+        ]
+      },
+      {
+        "a": "l6-18",
+        "b": "l6-57",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 347,
+        "region": {
+          "min": [
+            245.80999755859375,
+            3.285003900527954,
+            11.782495498657227
+          ],
+          "max": [
+            246,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          63,
+          29
+        ]
+      },
+      {
+        "a": "l6-11",
+        "b": "decor-D-SUBWAY-37",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.pallet",
+        "intersectingTriangles": 346,
+        "region": {
+          "min": [
+            160.0717315673828,
+            0.5499939918518066,
+            13.178045272827148
+          ],
+          "max": [
+            161.00326538085938,
+            0.7268060445785522,
+            13.685002326965332
+          ]
+        },
+        "regionCm": [
+          93,
+          18,
+          51
+        ]
+      },
+      {
+        "a": "l6-12",
+        "b": "decor-D-SUBWAY-18",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.crates",
+        "intersectingTriangles": 325,
+        "region": {
+          "min": [
+            167.26927185058594,
+            0.869999349117279,
+            17.542430877685547
+          ],
+          "max": [
+            167.950927734375,
+            1.1100579500198364,
+            18.62678337097168
+          ]
+        },
+        "regionCm": [
+          68,
+          24,
+          108
+        ]
+      },
+      {
+        "a": "l6-8",
+        "b": "decor-D-SUBWAY-35",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.pallet",
+        "intersectingTriangles": 299,
+        "region": {
+          "min": [
+            124.94149780273438,
+            0.5499939918518066,
+            16.262088775634766
+          ],
+          "max": [
+            126,
+            0.7268060445785522,
+            17.5422306060791
+          ]
+        },
+        "regionCm": [
+          106,
+          18,
+          128
+        ]
+      },
+      {
+        "a": "l6-1",
+        "b": "l6-84",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "kit.metro-track",
+        "intersectingTriangles": 266,
+        "region": {
+          "min": [
+            30,
+            0.3499639332294464,
+            11.200078964233398
+          ],
+          "max": [
+            30,
+            0.9600899815559387,
+            18.7999210357666
+          ]
+        },
+        "regionCm": [
+          0,
+          61,
+          760
+        ]
+      },
+      {
+        "a": "l6-14",
+        "b": "decor-D-SUBWAY-39",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.pallet",
+        "intersectingTriangles": 265,
+        "region": {
+          "min": [
+            188.8876953125,
+            0.5499939918518066,
+            16.264677047729492
+          ],
+          "max": [
+            190.19393920898438,
+            0.7268060445785522,
+            16.82195472717285
+          ]
+        },
+        "regionCm": [
+          131,
+          18,
+          56
+        ]
+      },
+      {
+        "a": "l6-11",
+        "b": "decor-D-SUBWAY-16",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.pallet",
+        "intersectingTriangles": 238,
+        "region": {
+          "min": [
+            157.66134643554688,
+            0.8699929118156433,
+            17.18794059753418
+          ],
+          "max": [
+            158.81533813476562,
+            1.0780071020126343,
+            18.547025680541992
+          ]
+        },
+        "regionCm": [
+          115,
+          21,
+          136
+        ]
+      },
+      {
+        "a": "l6-15",
+        "b": "decor-D-SUBWAY-40",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.pallet",
+        "intersectingTriangles": 203,
+        "region": {
+          "min": [
+            204.8318634033203,
+            0.5499939918518066,
+            13.178045272827148
+          ],
+          "max": [
+            206.0638885498047,
+            0.7268060445785522,
+            13.705903053283691
+          ]
+        },
+        "regionCm": [
+          123,
+          18,
+          53
+        ]
+      },
+      {
+        "a": "l6-26",
+        "b": "l6-86",
+        "assetA": "kit.shelter-camp",
+        "assetB": "prop.bench",
+        "intersectingTriangles": 202,
+        "region": {
+          "min": [
+            2.149780511856079,
+            0.6011236310005188,
+            -11.760011672973633
+          ],
+          "max": [
+            2.799999952316284,
+            0.7199583053588867,
+            -10.239988327026367
+          ]
+        },
+        "regionCm": [
+          65,
+          12,
+          152
+        ]
+      },
+      {
+        "a": "l6-4",
+        "b": "l6-68",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 175,
+        "region": {
+          "min": [
+            66,
+            0.6000099182128906,
+            15.850000381469727
+          ],
+          "max": [
+            66.35999298095703,
+            1.5499900579452515,
+            18.7999210357666
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          295
+        ]
+      },
+      {
+        "a": "l6-8",
+        "b": "l6-69",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 175,
+        "region": {
+          "min": [
+            114,
+            0.6000099182128906,
+            15.850000381469727
+          ],
+          "max": [
+            114.35999298095703,
+            1.5499900579452515,
+            18.7999210357666
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          295
+        ]
+      },
+      {
+        "a": "l6-12",
+        "b": "l6-71",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 175,
+        "region": {
+          "min": [
+            162,
+            0.6000099182128906,
+            15.850000381469727
+          ],
+          "max": [
+            162.36000061035156,
+            1.5499900579452515,
+            18.7999210357666
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          295
+        ]
+      },
+      {
+        "a": "l6-1",
+        "b": "decor-D-SUBWAY-1",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.pallet",
+        "intersectingTriangles": 164,
+        "region": {
+          "min": [
+            35.649539947509766,
+            0.8699929118156433,
+            17.198471069335938
+          ],
+          "max": [
+            36.923118591308594,
+            1.0780071020126343,
+            18.499984741210938
+          ]
+        },
+        "regionCm": [
+          127,
+          21,
+          130
+        ]
+      },
+      {
+        "a": "l6-6",
+        "b": "l6-62",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 163,
+        "region": {
+          "min": [
+            90,
+            0.6000099182128906,
+            16.100000381469727
+          ],
+          "max": [
+            90.35999298095703,
+            1.5499900579452515,
+            18.7999210357666
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          270
+        ]
+      },
+      {
+        "a": "l6-11",
+        "b": "l6-64",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 163,
+        "region": {
+          "min": [
+            150,
+            0.6000099182128906,
+            16.100000381469727
+          ],
+          "max": [
+            150.36000061035156,
+            1.5499900579452515,
+            18.7999210357666
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          270
+        ]
+      },
+      {
+        "a": "l6-16",
+        "b": "l6-66",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 163,
+        "region": {
+          "min": [
+            210,
+            0.6000099182128906,
+            16.100000381469727
+          ],
+          "max": [
+            210.36000061035156,
+            1.5499900579452515,
+            18.7999210357666
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          270
+        ]
+      },
+      {
+        "a": "l6-3",
+        "b": "l6-68",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 158,
+        "region": {
+          "min": [
+            65.64000701904297,
+            0.6000099182128906,
+            15.850000381469727
+          ],
+          "max": [
+            66,
+            1.5499900579452515,
+            18.7999210357666
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          295
+        ]
+      },
+      {
+        "a": "l6-7",
+        "b": "l6-69",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 158,
+        "region": {
+          "min": [
+            113.64000701904297,
+            0.6000099182128906,
+            15.850000381469727
+          ],
+          "max": [
+            114,
+            1.5499900579452515,
+            18.7999210357666
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          295
+        ]
+      },
+      {
+        "a": "l6-11",
+        "b": "l6-71",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 158,
+        "region": {
+          "min": [
+            161.63999938964844,
+            0.6000099182128906,
+            15.850000381469727
+          ],
+          "max": [
+            162,
+            1.5499900579452515,
+            18.7999210357666
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          295
+        ]
+      },
+      {
+        "a": "l6-0",
+        "b": "l6-27",
+        "assetA": "int.metro-station",
+        "assetB": "kit.shelter-camp",
+        "intersectingTriangles": 156,
+        "region": {
+          "min": [
+            -24.40962028503418,
+            0.5999839901924133,
+            4.699545383453369
+          ],
+          "max": [
+            -21.30954933166504,
+            1.1601649522781372,
+            9.410077095031738
+          ]
+        },
+        "regionCm": [
+          310,
+          56,
+          471
+        ]
+      },
+      {
+        "a": "l6-8",
+        "b": "decor-D-SUBWAY-34",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "decay.dropped-belongings",
+        "intersectingTriangles": 155,
+        "region": {
+          "min": [
+            114,
+            0.5500060319900513,
+            12.715289115905762
+          ],
+          "max": [
+            114.85401916503906,
+            0.9000295400619507,
+            13.643106460571289
+          ]
+        },
+        "regionCm": [
+          85,
+          35,
+          93
+        ]
+      },
+      {
+        "a": "l6-18",
+        "b": "decor-D-SUBWAY-42",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "decay.dropped-belongings",
+        "intersectingTriangles": 148,
+        "region": {
+          "min": [
+            238.0430450439453,
+            0.5584977865219116,
+            16.30038070678711
+          ],
+          "max": [
+            239.1923828125,
+            0.869999349117279,
+            17.419071197509766
+          ]
+        },
+        "regionCm": [
+          115,
+          31,
+          112
+        ]
+      },
+      {
+        "a": "l6-1",
+        "b": "l6-67",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 145,
+        "region": {
+          "min": [
+            41.6400032043457,
+            0.6000099182128906,
+            11.5
+          ],
+          "max": [
+            42,
+            1.5499900579452515,
+            14.149999618530273
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          265
+        ]
+      },
+      {
+        "a": "l6-9",
+        "b": "l6-70",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 145,
+        "region": {
+          "min": [
+            137.63999938964844,
+            0.6000099182128906,
+            11.5
+          ],
+          "max": [
+            138,
+            1.5499900579452515,
+            14.149999618530273
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          265
+        ]
+      },
+      {
+        "a": "l6-13",
+        "b": "l6-72",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 145,
+        "region": {
+          "min": [
+            185.63999938964844,
+            0.6000099182128906,
+            11.5
+          ],
+          "max": [
+            186,
+            1.5499900579452515,
+            14.149999618530273
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          265
+        ]
+      },
+      {
+        "a": "l6-17",
+        "b": "l6-73",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 145,
+        "region": {
+          "min": [
+            233.63999938964844,
+            0.6000099182128906,
+            11.5
+          ],
+          "max": [
+            234,
+            1.5499900579452515,
+            14.149999618530273
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          265
+        ]
+      },
+      {
+        "a": "l6-5",
+        "b": "l6-62",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 143,
+        "region": {
+          "min": [
+            89.64000701904297,
+            0.6000099182128906,
+            16.100000381469727
+          ],
+          "max": [
+            90,
+            1.5499900579452515,
+            18.7999210357666
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          270
+        ]
+      },
+      {
+        "a": "l6-10",
+        "b": "l6-64",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 143,
+        "region": {
+          "min": [
+            149.63999938964844,
+            0.6000099182128906,
+            16.100000381469727
+          ],
+          "max": [
+            150,
+            1.5499900579452515,
+            18.7999210357666
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          270
+        ]
+      },
+      {
+        "a": "l6-15",
+        "b": "l6-66",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 143,
+        "region": {
+          "min": [
+            209.63999938964844,
+            0.6000099182128906,
+            16.100000381469727
+          ],
+          "max": [
+            210,
+            1.5499900579452515,
+            18.7999210357666
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          270
+        ]
+      },
+      {
+        "a": "l6-0",
+        "b": "l6-25",
+        "assetA": "int.metro-station",
+        "assetB": "kit.shelter-camp",
+        "intersectingTriangles": 138,
+        "region": {
+          "min": [
+            -10.800000190734863,
+            0.5999839901924133,
+            -12.500076293945312
+          ],
+          "max": [
+            -8.999908447265625,
+            1.134997844696045,
+            -9.499801635742188
+          ]
+        },
+        "regionCm": [
+          180,
+          54,
+          300
+        ]
+      },
+      {
+        "a": "l6-2",
+        "b": "decor-D-SUBWAY-30",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "decay.dropped-belongings",
+        "intersectingTriangles": 136,
+        "region": {
+          "min": [
+            52.873897552490234,
+            0.5500060319900513,
+            16.366352081298828
+          ],
+          "max": [
+            54,
+            0.9000295400619507,
+            17.403249740600586
+          ]
+        },
+        "regionCm": [
+          113,
+          35,
+          104
+        ]
+      },
+      {
+        "a": "l6-2",
+        "b": "l6-67",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 132,
+        "region": {
+          "min": [
+            42,
+            0.6000099182128906,
+            11.5
+          ],
+          "max": [
+            42.3599967956543,
+            1.5499900579452515,
+            14.149999618530273
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          265
+        ]
+      },
+      {
+        "a": "l6-5",
+        "b": "l6-61",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 132,
+        "region": {
+          "min": [
+            89.64000701904297,
+            0.6000099182128906,
+            11.5
+          ],
+          "max": [
+            90,
+            1.5499900579452515,
+            13.899999618530273
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          240
+        ]
+      },
+      {
+        "a": "l6-10",
+        "b": "l6-63",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 132,
+        "region": {
+          "min": [
+            149.63999938964844,
+            0.6000099182128906,
+            11.5
+          ],
+          "max": [
+            150,
+            1.5499900579452515,
+            13.899999618530273
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          240
+        ]
+      },
+      {
+        "a": "l6-10",
+        "b": "l6-70",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 132,
+        "region": {
+          "min": [
+            138,
+            0.6000099182128906,
+            11.5
+          ],
+          "max": [
+            138.36000061035156,
+            1.5499900579452515,
+            14.149999618530273
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          265
+        ]
+      },
+      {
+        "a": "l6-14",
+        "b": "l6-72",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 132,
+        "region": {
+          "min": [
+            186,
+            0.6000099182128906,
+            11.5
+          ],
+          "max": [
+            186.36000061035156,
+            1.5499900579452515,
+            14.149999618530273
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          265
+        ]
+      },
+      {
+        "a": "l6-15",
+        "b": "l6-65",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 132,
+        "region": {
+          "min": [
+            209.63999938964844,
+            0.6000099182128906,
+            11.5
+          ],
+          "max": [
+            210,
+            1.5499900579452515,
+            13.899999618530273
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          240
+        ]
+      },
+      {
+        "a": "l6-18",
+        "b": "l6-73",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 132,
+        "region": {
+          "min": [
+            234,
+            0.6000099182128906,
+            11.5
+          ],
+          "max": [
+            234.36000061035156,
+            1.5499900579452515,
+            14.149999618530273
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          265
+        ]
+      },
+      {
+        "a": "l6-10",
+        "b": "decor-D-SUBWAY-36",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "decay.dropped-belongings",
+        "intersectingTriangles": 128,
+        "region": {
+          "min": [
+            143.3837890625,
+            0.5500060319900513,
+            16.458993911743164
+          ],
+          "max": [
+            144.73648071289062,
+            0.8220073580741882,
+            16.82195472717285
+          ]
+        },
+        "regionCm": [
+          135,
+          27,
+          36
+        ]
+      },
+      {
+        "a": "l6-9",
+        "b": "decor-D-SUBWAY-35",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.pallet",
+        "intersectingTriangles": 127,
+        "region": {
+          "min": [
+            126,
+            0.5499939918518066,
+            16.79998207092285
+          ],
+          "max": [
+            126.25379180908203,
+            0.7268060445785522,
+            17.5422306060791
+          ]
+        },
+        "regionCm": [
+          25,
+          18,
+          74
+        ]
+      },
+      {
+        "a": "l6-16",
+        "b": "decor-D-SUBWAY-41",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "decay.dropped-belongings",
+        "intersectingTriangles": 125,
+        "region": {
+          "min": [
+            220.8790283203125,
+            0.5500060319900513,
+            16.50963592529297
+          ],
+          "max": [
+            222,
+            0.9000295400619507,
+            17.43288230895996
+          ]
+        },
+        "regionCm": [
+          112,
+          35,
+          92
+        ]
+      },
+      {
+        "a": "l6-6",
+        "b": "l6-61",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 119,
+        "region": {
+          "min": [
+            90,
+            0.6000099182128906,
+            11.5
+          ],
+          "max": [
+            90.35999298095703,
+            1.5499900579452515,
+            13.899999618530273
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          240
+        ]
+      },
+      {
+        "a": "l6-11",
+        "b": "l6-63",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 119,
+        "region": {
+          "min": [
+            150,
+            0.6000099182128906,
+            11.5
+          ],
+          "max": [
+            150.36000061035156,
+            1.5499900579452515,
+            13.899999618530273
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          240
+        ]
+      },
+      {
+        "a": "l6-16",
+        "b": "l6-65",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 119,
+        "region": {
+          "min": [
+            210,
+            0.6000099182128906,
+            11.5
+          ],
+          "max": [
+            210.36000061035156,
+            1.5499900579452515,
+            13.899999618530273
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          240
+        ]
+      },
+      {
+        "a": "l6-4",
+        "b": "decor-D-SUBWAY-31",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "decay.dropped-belongings",
+        "intersectingTriangles": 113,
+        "region": {
+          "min": [
+            71.5507583618164,
+            0.5584977865219116,
+            12.513263702392578
+          ],
+          "max": [
+            72.48274230957031,
+            0.869999349117279,
+            13.66498851776123
+          ]
+        },
+        "regionCm": [
+          93,
+          31,
+          115
+        ]
+      },
+      {
+        "a": "l6-5",
+        "b": "decor-D-SUBWAY-32",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "decay.dropped-belongings",
+        "intersectingTriangles": 112,
+        "region": {
+          "min": [
+            83.67715454101562,
+            0.5584977865219116,
+            16.264667510986328
+          ],
+          "max": [
+            84.76280975341797,
+            0.869999349117279,
+            17.405258178710938
+          ]
+        },
+        "regionCm": [
+          109,
+          31,
+          114
+        ]
+      },
+      {
+        "a": "l6-11",
+        "b": "decor-D-SUBWAY-15",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.carpet",
+        "intersectingTriangles": 112,
+        "region": {
+          "min": [
+            155.87100219726562,
+            0.869999349117279,
+            17.162574768066406
+          ],
+          "max": [
+            156.66629028320312,
+            0.9564073085784912,
+            18.499984741210938
+          ]
+        },
+        "regionCm": [
+          80,
+          9,
+          134
+        ]
+      },
+      {
+        "a": "l6-6",
+        "b": "decor-D-SUBWAY-33",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.pallet",
+        "intersectingTriangles": 98,
+        "region": {
+          "min": [
+            95.51740264892578,
+            0.5499939918518066,
+            13.178045272827148
+          ],
+          "max": [
+            96.58558654785156,
+            0.7268060445785522,
+            13.200017929077148
+          ]
+        },
+        "regionCm": [
+          107,
+          18,
+          2
+        ]
+      },
+      {
+        "a": "l6-25",
+        "b": "l6-85",
+        "assetA": "kit.shelter-camp",
+        "assetB": "prop.bench",
+        "intersectingTriangles": 96,
+        "region": {
+          "min": [
+            -5.7286200523376465,
+            0.7199583053588867,
+            -11.760011672973633
+          ],
+          "max": [
+            -5.4313883781433105,
+            0.7199583053588867,
+            -10.239988327026367
+          ]
+        },
+        "regionCm": [
+          30,
+          0,
+          152
+        ]
+      },
+      {
+        "a": "l6-0",
+        "b": "l6-1",
+        "assetA": "int.metro-station",
+        "assetB": "kit.metro-tunnel",
+        "intersectingTriangles": 95,
+        "region": {
+          "min": [
+            30,
+            0.3499639332294464,
+            11.200078964233398
+          ],
+          "max": [
+            30,
+            0.6804139614105225,
+            12.00018310546875
+          ]
+        },
+        "regionCm": [
+          0,
+          33,
+          80
+        ]
+      },
+      {
+        "a": "l6-1",
+        "b": "decor-D-SUBWAY-29",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "decay.dropped-belongings",
+        "intersectingTriangles": 80,
+        "region": {
+          "min": [
+            37.64419937133789,
+            0.5584977865219116,
+            12.437454223632812
+          ],
+          "max": [
+            38.309940338134766,
+            0.869999349117279,
+            13.565556526184082
+          ]
+        },
+        "regionCm": [
+          67,
+          31,
+          113
+        ]
+      },
+      {
+        "a": "l6-2",
+        "b": "decor-D-SUBWAY-43",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.carpet",
+        "intersectingTriangles": 78,
+        "region": {
+          "min": [
+            46.64056396484375,
+            0.869999349117279,
+            17.83080291748047
+          ],
+          "max": [
+            47.339054107666016,
+            0.869999349117279,
+            17.9226016998291
+          ]
+        },
+        "regionCm": [
+          70,
+          0,
+          9
+        ]
+      },
+      {
+        "a": "l6-3",
+        "b": "decor-D-SUBWAY-47",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.carpet",
+        "intersectingTriangles": 78,
+        "region": {
+          "min": [
+            60.64056396484375,
+            0.869999349117279,
+            17.83080291748047
+          ],
+          "max": [
+            61.339054107666016,
+            0.869999349117279,
+            17.9226016998291
+          ]
+        },
+        "regionCm": [
+          70,
+          0,
+          9
+        ]
+      },
+      {
+        "a": "l6-6",
+        "b": "decor-D-SUBWAY-51",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.carpet",
+        "intersectingTriangles": 78,
+        "region": {
+          "min": [
+            99.64056396484375,
+            0.869999349117279,
+            17.83080291748047
+          ],
+          "max": [
+            100.33905029296875,
+            0.869999349117279,
+            17.9226016998291
+          ]
+        },
+        "regionCm": [
+          70,
+          0,
+          9
+        ]
+      },
+      {
+        "a": "l6-8",
+        "b": "decor-D-SUBWAY-55",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.carpet",
+        "intersectingTriangles": 78,
+        "region": {
+          "min": [
+            119.64056396484375,
+            0.869999349117279,
+            17.83080291748047
+          ],
+          "max": [
+            120.33905029296875,
+            0.869999349117279,
+            17.9226016998291
+          ]
+        },
+        "regionCm": [
+          70,
+          0,
+          9
+        ]
+      },
+      {
+        "a": "l6-14",
+        "b": "decor-D-SUBWAY-59",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.carpet",
+        "intersectingTriangles": 78,
+        "region": {
+          "min": [
+            190.64056396484375,
+            0.869999349117279,
+            17.83080291748047
+          ],
+          "max": [
+            191.33905029296875,
+            0.869999349117279,
+            17.9226016998291
+          ]
+        },
+        "regionCm": [
+          70,
+          0,
+          9
+        ]
+      },
+      {
+        "a": "l6-18",
+        "b": "decor-D-SUBWAY-63",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.carpet",
+        "intersectingTriangles": 78,
+        "region": {
+          "min": [
+            237.64056396484375,
+            0.869999349117279,
+            17.83080291748047
+          ],
+          "max": [
+            238.33905029296875,
+            0.869999349117279,
+            17.9226016998291
+          ]
+        },
+        "regionCm": [
+          70,
+          0,
+          9
+        ]
+      },
+      {
+        "a": "l6-18",
+        "b": "l6-24",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "int.metro-exit",
+        "intersectingTriangles": 77,
+        "region": {
+          "min": [
+            246,
+            0.3999430537223816,
+            12.100078582763672
+          ],
+          "max": [
+            246,
+            0.6000834107398987,
+            18.7999210357666
+          ]
+        },
+        "regionCm": [
+          0,
+          20,
+          670
+        ]
+      },
+      {
+        "a": "l6-0",
+        "b": "l6-80",
+        "assetA": "int.metro-station",
+        "assetB": "kit.metro-track",
+        "intersectingTriangles": 73,
+        "region": {
+          "min": [
+            -30,
+            0.0001564073609188199,
+            11.200078964233398
+          ],
+          "max": [
+            -18,
+            0.5500044226646423,
+            17.99981689453125
+          ]
+        },
+        "regionCm": [
+          1200,
+          55,
+          680
+        ]
+      },
+      {
+        "a": "l6-0",
+        "b": "l6-84",
+        "assetA": "int.metro-station",
+        "assetB": "kit.metro-track",
+        "intersectingTriangles": 73,
+        "region": {
+          "min": [
+            18,
+            0.0001564073609188199,
+            11.200078964233398
+          ],
+          "max": [
+            30,
+            0.5500044226646423,
+            17.99981689453125
+          ]
+        },
+        "regionCm": [
+          1200,
+          55,
+          680
+        ]
+      },
+      {
+        "a": "l6-0",
+        "b": "l6-81",
+        "assetA": "int.metro-station",
+        "assetB": "kit.metro-track",
+        "intersectingTriangles": 71,
+        "region": {
+          "min": [
+            -18,
+            0.0001564073609188199,
+            11.200078964233398
+          ],
+          "max": [
+            -6,
+            0.5500044226646423,
+            17.99981689453125
+          ]
+        },
+        "regionCm": [
+          1200,
+          55,
+          680
+        ]
+      },
+      {
+        "a": "l6-0",
+        "b": "l6-82",
+        "assetA": "int.metro-station",
+        "assetB": "kit.metro-track",
+        "intersectingTriangles": 71,
+        "region": {
+          "min": [
+            -6,
+            0.0001564073609188199,
+            11.200078964233398
+          ],
+          "max": [
+            6,
+            0.5500044226646423,
+            17.99981689453125
+          ]
+        },
+        "regionCm": [
+          1200,
+          55,
+          680
+        ]
+      },
+      {
+        "a": "l6-0",
+        "b": "l6-83",
+        "assetA": "int.metro-station",
+        "assetB": "kit.metro-track",
+        "intersectingTriangles": 71,
+        "region": {
+          "min": [
+            6,
+            0.0001564073609188199,
+            11.200078964233398
+          ],
+          "max": [
+            18,
+            0.5500044226646423,
+            17.99981689453125
+          ]
+        },
+        "regionCm": [
+          1200,
+          55,
+          680
+        ]
+      },
+      {
+        "a": "l6-13",
+        "b": "decor-D-SUBWAY-38",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "decay.dropped-belongings",
+        "intersectingTriangles": 69,
+        "region": {
+          "min": [
+            178.02175903320312,
+            0.5500060319900513,
+            16.79998207092285
+          ],
+          "max": [
+            178.96888732910156,
+            0.9000295400619507,
+            17.097747802734375
+          ]
+        },
+        "regionCm": [
+          95,
+          35,
+          30
+        ]
+      },
+      {
+        "a": "l6-5",
+        "b": "l6-74",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.crates",
+        "intersectingTriangles": 64,
+        "region": {
+          "min": [
+            87.12372589111328,
+            0.869999349117279,
+            12.395967483520508
+          ],
+          "max": [
+            87.52499389648438,
+            0.869999349117279,
+            12.853033065795898
+          ]
+        },
+        "regionCm": [
+          40,
+          0,
+          46
+        ]
+      },
+      {
+        "a": "l6-5",
+        "b": "l6-75",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.crates",
+        "intersectingTriangles": 64,
+        "region": {
+          "min": [
+            87.12372589111328,
+            0.869999349117279,
+            17.695966720581055
+          ],
+          "max": [
+            87.52499389648438,
+            0.869999349117279,
+            18.153032302856445
+          ]
+        },
+        "regionCm": [
+          40,
+          0,
+          46
+        ]
+      },
+      {
+        "a": "l6-9",
+        "b": "decor-D-SUBWAY-13",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.crates",
+        "intersectingTriangles": 64,
+        "region": {
+          "min": [
+            135.1342010498047,
+            0.869999349117279,
+            17.516555786132812
+          ],
+          "max": [
+            135.56935119628906,
+            0.869999349117279,
+            18.0029296875
+          ]
+        },
+        "regionCm": [
+          44,
+          0,
+          49
+        ]
+      },
+      {
+        "a": "l6-10",
+        "b": "l6-76",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.crates",
+        "intersectingTriangles": 64,
+        "region": {
+          "min": [
+            147.12371826171875,
+            0.869999349117279,
+            12.395967483520508
+          ],
+          "max": [
+            147.52499389648438,
+            0.869999349117279,
+            12.853033065795898
+          ]
+        },
+        "regionCm": [
+          40,
+          0,
+          46
+        ]
+      },
+      {
+        "a": "l6-10",
+        "b": "l6-77",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.crates",
+        "intersectingTriangles": 64,
+        "region": {
+          "min": [
+            147.12371826171875,
+            0.869999349117279,
+            17.695966720581055
+          ],
+          "max": [
+            147.52499389648438,
+            0.869999349117279,
+            18.153032302856445
+          ]
+        },
+        "regionCm": [
+          40,
+          0,
+          46
+        ]
+      },
+      {
+        "a": "l6-12",
+        "b": "decor-D-SUBWAY-19",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.crates",
+        "intersectingTriangles": 64,
+        "region": {
+          "min": [
+            169.4080352783203,
+            0.869999349117279,
+            17.305984497070312
+          ],
+          "max": [
+            169.84437561035156,
+            0.869999349117279,
+            17.793367385864258
+          ]
+        },
+        "regionCm": [
+          44,
+          0,
+          49
+        ]
+      },
+      {
+        "a": "l6-15",
+        "b": "l6-78",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.crates",
+        "intersectingTriangles": 64,
+        "region": {
+          "min": [
+            207.12371826171875,
+            0.869999349117279,
+            12.395967483520508
+          ],
+          "max": [
+            207.52499389648438,
+            0.869999349117279,
+            12.853033065795898
+          ]
+        },
+        "regionCm": [
+          40,
+          0,
+          46
+        ]
+      },
+      {
+        "a": "l6-15",
+        "b": "l6-79",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.crates",
+        "intersectingTriangles": 64,
+        "region": {
+          "min": [
+            207.12371826171875,
+            0.869999349117279,
+            17.695966720581055
+          ],
+          "max": [
+            207.52499389648438,
+            0.869999349117279,
+            18.153032302856445
+          ]
+        },
+        "regionCm": [
+          40,
+          0,
+          46
+        ]
+      },
+      {
+        "a": "l6-6",
+        "b": "decor-D-SUBWAY-7",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.pallet",
+        "intersectingTriangles": 59,
+        "region": {
+          "min": [
+            93.37777709960938,
+            0.8699929118156433,
+            17.018836975097656
+          ],
+          "max": [
+            94.74787139892578,
+            1.0780071020126343,
+            18.499984741210938
+          ]
+        },
+        "regionCm": [
+          137,
+          21,
+          148
+        ]
+      },
+      {
+        "a": "l6-0",
+        "b": "l6-28",
+        "assetA": "int.metro-station",
+        "assetB": "kit.shelter-camp",
+        "intersectingTriangles": 56,
+        "region": {
+          "min": [
+            -12.410351753234863,
+            0.5999839901924133,
+            8.589739799499512
+          ],
+          "max": [
+            -11.590014457702637,
+            0.7199583053588867,
+            9.410077095031738
+          ]
+        },
+        "regionCm": [
+          82,
+          12,
+          82
+        ]
+      },
+      {
+        "a": "l6-0",
+        "b": "l6-29",
+        "assetA": "int.metro-station",
+        "assetB": "kit.shelter-camp",
+        "intersectingTriangles": 56,
+        "region": {
+          "min": [
+            -0.41016876697540283,
+            0.5999839901924133,
+            8.589739799499512
+          ],
+          "max": [
+            0.41016876697540283,
+            0.7199583053588867,
+            9.410077095031738
+          ]
+        },
+        "regionCm": [
+          82,
+          12,
+          82
+        ]
+      },
+      {
+        "a": "l6-17",
+        "b": "decor-D-SUBWAY-27",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.pallet",
+        "intersectingTriangles": 40,
+        "region": {
+          "min": [
+            227.4342041015625,
+            0.8699929118156433,
+            11.500015258789062
+          ],
+          "max": [
+            228.57261657714844,
+            0.869999349117279,
+            12.74997615814209
+          ]
+        },
+        "regionCm": [
+          114,
+          0,
+          125
+        ]
+      },
+      {
+        "a": "l6-7",
+        "b": "decor-D-SUBWAY-34",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "decay.dropped-belongings",
+        "intersectingTriangles": 36,
+        "region": {
+          "min": [
+            113.97802734375,
+            0.5584977865219116,
+            12.715289115905762
+          ],
+          "max": [
+            114,
+            0.8134952783584595,
+            13.178045272827148
+          ]
+        },
+        "regionCm": [
+          2,
+          25,
+          46
+        ]
+      },
+      {
+        "a": "l6-17",
+        "b": "decor-D-SUBWAY-41",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "decay.dropped-belongings",
+        "intersectingTriangles": 36,
+        "region": {
+          "min": [
+            222,
+            0.5542417168617249,
+            16.79998207092285
+          ],
+          "max": [
+            222.2374267578125,
+            0.6647568941116333,
+            17.43288230895996
+          ]
+        },
+        "regionCm": [
+          24,
+          11,
+          63
+        ]
+      },
+      {
+        "a": "l6-12",
+        "b": "decor-D-SUBWAY-17",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.pallet",
+        "intersectingTriangles": 33,
+        "region": {
+          "min": [
+            164.19773864746094,
+            0.8699929118156433,
+            11.500015258789062
+          ],
+          "max": [
+            165.20977783203125,
+            0.869999349117279,
+            12.605393409729004
+          ]
+        },
+        "regionCm": [
+          101,
+          0,
+          111
+        ]
+      },
+      {
+        "a": "l6-33",
+        "b": "l6-37",
+        "assetA": "prop.jersey-barrier",
+        "assetB": "decay.fuel-truck-crater",
+        "intersectingTriangles": 29,
+        "region": {
+          "min": [
+            281.5,
+            3.900009870529175,
+            5.640003681182861
+          ],
+          "max": [
+            284.5,
+            4.2782301902771,
+            6.359996318817139
+          ]
+        },
+        "regionCm": [
+          300,
+          38,
+          72
+        ]
+      },
+      {
+        "a": "l6-0",
+        "b": "l6-26",
+        "assetA": "int.metro-station",
+        "assetB": "kit.shelter-camp",
+        "intersectingTriangles": 24,
+        "region": {
+          "min": [
+            2.5104525089263916,
+            0.5999839901924133,
+            -12.800000190734863
+          ],
+          "max": [
+            2.689901351928711,
+            0.7199583053588867,
+            -12.699666976928711
+          ]
+        },
+        "regionCm": [
+          18,
+          12,
+          10
+        ]
+      },
+      {
+        "a": "l6-13",
+        "b": "decor-D-SUBWAY-20",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "decay.dropped-belongings",
+        "intersectingTriangles": 24,
+        "region": {
+          "min": [
+            182.5500030517578,
+            1.0299959182739258,
+            11.51271915435791
+          ],
+          "max": [
+            182.68344116210938,
+            1.1099903583526611,
+            11.580035209655762
+          ]
+        },
+        "regionCm": [
+          13,
+          8,
+          7
+        ]
+      },
+      {
+        "a": "l6-3",
+        "b": "decor-D-SUBWAY-30",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "decay.dropped-belongings",
+        "intersectingTriangles": 18,
+        "region": {
+          "min": [
+            54,
+            0.5584977865219116,
+            16.909488677978516
+          ],
+          "max": [
+            54.02101516723633,
+            0.8134952783584595,
+            17.403249740600586
+          ]
+        },
+        "regionCm": [
+          2,
+          25,
+          49
+        ]
+      },
+      {
+        "a": "l6-1",
+        "b": "decor-D-SUBWAY-0",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.trash-bags",
+        "intersectingTriangles": 5,
+        "region": {
+          "min": [
+            33.56417465209961,
+            0.869999349117279,
+            17.96853256225586
+          ],
+          "max": [
+            33.83386993408203,
+            0.869999349117279,
+            18.208133697509766
+          ]
+        },
+        "regionCm": [
+          27,
+          0,
+          24
+        ]
+      },
+      {
+        "a": "l6-4",
+        "b": "decor-D-SUBWAY-4",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.trash-bags",
+        "intersectingTriangles": 5,
+        "region": {
+          "min": [
+            74.25499725341797,
+            0.869999349117279,
+            18.092721939086914
+          ],
+          "max": [
+            74.5285415649414,
+            0.869999349117279,
+            18.33061408996582
+          ]
+        },
+        "regionCm": [
+          27,
+          0,
+          24
+        ]
+      },
+      {
+        "a": "l6-5",
+        "b": "decor-D-SUBWAY-5",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.trash-bags",
+        "intersectingTriangles": 5,
+        "region": {
+          "min": [
+            82.75774383544922,
+            0.869999349117279,
+            18.04252052307129
+          ],
+          "max": [
+            83.02924346923828,
+            0.869999349117279,
+            18.28158187866211
+          ]
+        },
+        "regionCm": [
+          27,
+          0,
+          24
+        ]
+      },
+      {
+        "a": "l6-6",
+        "b": "decor-D-SUBWAY-6",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.trash-bags",
+        "intersectingTriangles": 5,
+        "region": {
+          "min": [
+            93.39936065673828,
+            0.869999349117279,
+            11.86877155303955
+          ],
+          "max": [
+            93.6749038696289,
+            0.869999349117279,
+            12.107257843017578
+          ]
+        },
+        "regionCm": [
+          28,
+          0,
+          24
+        ]
+      },
+      {
+        "a": "l6-16",
+        "b": "decor-D-SUBWAY-23",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.trash-bags",
+        "intersectingTriangles": 5,
+        "region": {
+          "min": [
+            220.29959106445312,
+            0.869999349117279,
+            18.076080322265625
+          ],
+          "max": [
+            220.5731964111328,
+            0.869999349117279,
+            18.313913345336914
+          ]
+        },
+        "regionCm": [
+          27,
+          0,
+          24
+        ]
+      }
+    ],
+    "actors": [
+      {
+        "bone": "shinR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0,
+        "at": [
+          109.881,
+          0.71,
+          15.741
+        ],
+        "actor": "courier",
+        "frame": 69,
+        "count": 39
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0,
+        "at": [
+          108.76,
+          0.73,
+          16.176
+        ],
+        "actor": "courier",
+        "frame": 96,
+        "count": 26
+      },
+      {
+        "bone": "thighR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.1,
+        "at": [
+          109.821,
+          0.901,
+          15.754
+        ],
+        "actor": "courier",
+        "frame": 66,
+        "count": 17
+      },
+      {
+        "bone": "thighL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.1,
+        "at": [
+          111.415,
+          0.91,
+          15.738
+        ],
+        "actor": "courier",
+        "frame": 21,
+        "count": 10
+      }
+    ],
+    "gunBodies": [
+      {
+        "bone": "torso",
+        "prop": "courier/gun",
+        "asset": "gun",
+        "crossing": false,
+        "clearanceCm": 11.6,
+        "actor": "courier",
+        "frame": 3,
+        "count": 150
+      }
+    ],
+    "heldProps": [],
+    "summary": {
+      "gunBodyHits": 1,
+      "staticPairs": 129,
+      "heldPropHits": 0,
+      "actorHits": 4,
+      "piercing": 4
+    }
+  }
+}

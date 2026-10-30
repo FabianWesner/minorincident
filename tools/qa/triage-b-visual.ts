@@ -110,7 +110,7 @@ try {
         }
         return rows;
       });
-      await session.step(2); await session.ready();
+      await session.step(120); await session.ready();
       const dir = `${out}/${spec.name}`; mkdirSync(dir, { recursive: true });
       for (const zoom of [.5, 1, 1.5]) {
         await session.page.evaluate(zoom => window.__SCENE__!.setCamera({ mode: 'game', target: [0, 0], zoom }), zoom);

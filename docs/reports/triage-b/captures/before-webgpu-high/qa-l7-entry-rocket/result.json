@@ -1,0 +1,84 @@
+{
+  "name": "qa-l7-entry-rocket",
+  "pass": true,
+  "checks": [
+    {
+      "name": "consoleErrors",
+      "pass": true,
+      "value": 0,
+      "limit": 0
+    },
+    {
+      "name": "undrawnFramesMax",
+      "pass": true,
+      "value": 0,
+      "limit": 0
+    },
+    {
+      "name": "drawCallsMax",
+      "pass": true,
+      "value": 16,
+      "limit": 600
+    },
+    {
+      "name": "trianglesMax",
+      "pass": true,
+      "value": 34563,
+      "limit": 1500000
+    },
+    {
+      "name": "canvas.f0.varianceMin",
+      "pass": true,
+      "value": 125.94737206728769,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f0.variedTilesMin",
+      "pass": true,
+      "value": 54,
+      "limit": 8
+    },
+    {
+      "name": "canvas.f70.varianceMin",
+      "pass": true,
+      "value": 127.26896629757357,
+      "limit": 1
+    },
+    {
+      "name": "canvas.f70.variedTilesMin",
+      "pass": true,
+      "value": 54,
+      "limit": 8
+    },
+    {
+      "name": "requestedBackend",
+      "pass": true,
+      "value": 1,
+      "limit": 1
+    },
+    {
+      "name": "requestedQuality",
+      "pass": true,
+      "value": 1,
+      "limit": 1
+    }
+  ],
+  "backend": "webgpu",
+  "actualTier": "high",
+  "frames": 70,
+  "seconds": 3.714,
+  "failed": [],
+  "clipping": {
+    "gunBodyHits": 0,
+    "staticPairs": 0,
+    "heldPropHits": 0,
+    "actorHits": 0,
+    "piercing": 0
+  },
+  "files": [
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/before-webgpu-high/qa-l7-entry-rocket/shot-0000.png",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/before-webgpu-high/qa-l7-entry-rocket/shot-0070.png",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/triage-b/docs/reports/triage-b/captures/before-webgpu-high/qa-l7-entry-rocket/metrics.json"
+  ],
+  "consoleErrors": []
+}
