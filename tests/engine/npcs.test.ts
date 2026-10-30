@@ -1,6 +1,8 @@
 // NPC core: civilians (panic, grab, turning), escorts and the corgi use one NPC system in every level.
 import { afterEach, expect, test } from 'vitest';
+import { Box3, BoxGeometry, Group, Mesh, MeshBasicMaterial, Vector3 } from 'three';
 import { npcs } from '../../src/data/npcs';
+import { adultMaleStandingHeight, civilianHeight, fitCivilianHeight, heroineStandingHeight } from '../../src/render/npc/figureHeight';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 
 const worlds: SimWorld[] = [];
@@ -11,6 +13,21 @@ function teleport(w: SimWorld, x: number, z: number) { const p = w.entities.get(
 function pair(w: SimWorld) { const id = w.npcs!.civilians.spawn('cashier', { x: 5, z: 0 }), attacker = w.infected!.spawn('infected.runner', { x: 5, z: 0 }); return { e: w.entities.get(id)!, attacker: w.entities.get(attacker)! }; }
 
 test('civilians: seeded grab → bite → down → glowing eyes → rising → infected cycle in place; panic flees; a kill during the grab saves', async () => {
+  expect(civilianHeight('npc.civilian-woman-a')).toBeCloseTo(heroineStandingHeight, 3);
+  expect(civilianHeight('npc.civilian-adult-f')).toBeCloseTo(heroineStandingHeight, 3);
+  expect(civilianHeight('npc.lab-tech-a')).toBeCloseTo(heroineStandingHeight, 3);
+  expect(civilianHeight('npc.dale.aftermath')).toBeCloseTo(adultMaleStandingHeight, 3);
+  expect(adultMaleStandingHeight / heroineStandingHeight).toBeGreaterThanOrEqual(1.05);
+  expect(adultMaleStandingHeight / heroineStandingHeight).toBeLessThanOrEqual(1.12);
+  expect(civilianHeight('npc.civilian-elderly') / adultMaleStandingHeight).toBeGreaterThanOrEqual(.95);
+  expect(civilianHeight('npc.civilian-elderly')).toBeLessThanOrEqual(adultMaleStandingHeight);
+  expect(civilianHeight('npc.civilian-kid')).toBe(1.4744);
+  expect(civilianHeight('npc.brother')).toBe(1.4265);
+  const calibrated = new Group(), rig = new Group(), body = new Mesh(new BoxGeometry(.4, 1.2, .3), new MeshBasicMaterial());
+  rig.name = 'root'; rig.userData.preserveAuthoredBodyScale = true; body.name = 'skin_body'; calibrated.add(rig); rig.add(body);
+  fitCivilianHeight(calibrated, 'npc.depot-clerk');
+  expect(new Box3().setFromObject(body).getSize(new Vector3()).y).toBeCloseTo(civilianHeight('npc.depot-clerk'), 4);
+
   const timings = new Set<number>();
   for (const seed of [1, 2, 3, 4, 5]) {
     const w = await world('horde-arena', seed), { e, attacker } = pair(w);

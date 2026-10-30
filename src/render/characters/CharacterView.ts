@@ -1,4 +1,4 @@
-import { BoxGeometry, Color, Group, Mesh, Quaternion, SkinnedMesh, Uint16BufferAttribute, Vector3, type Material } from 'three/webgpu';
+import { Box3, BoxGeometry, Color, Group, Mesh, Quaternion, SkinnedMesh, Uint16BufferAttribute, Vector3, type Material } from 'three/webgpu';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import manifest from '../../assets/manifest.json' with { type: 'json' };
@@ -18,6 +18,7 @@ import { LimbIK } from './LimbIK';
 import { RiderContacts } from './RiderContacts';
 import { CourierLiving } from './CourierRig';
 import { courierForegroundOn, useCourierDepth } from './courierDepth';
+import { adultMaleStandingHeight, heroineStandingHeight } from '../npc/figureHeight';
 
 type LoadedCharacter = Awaited<ReturnType<typeof loadCharacter>> & { assetId: string; animator: KeyframeAnimator; living?: CourierLiving; gear: Group[]; tierGear?: { mesh: SkinnedMesh; tierTris: number[] }; body: Set<Mesh>; headlamp?: Group; cure?: Group; aim: GunAim; sockets: Record<'LEFT' | 'RIGHT', { socket: import('three').Object3D; hand: import('three').Object3D }> };
 /** Hero hierarchy presentation. Cosmetic variants share identical sim state and attachment rules. */
@@ -102,6 +103,11 @@ export class CharacterView extends Group {
       isSkin &&= character.source === 'glb';
       this.skinned ||= isSkin;
       if (character.source === 'placeholder') console.info(JSON.stringify({ type: 'asset.placeholder', id, reason: character.reason }));
+      if (character.source === 'glb') {
+        const bounds = new Box3().setFromObject(character.model), height = bounds.max.y - bounds.min.y;
+        const target = variant === 'female' ? heroineStandingHeight : adultMaleStandingHeight;
+        if (height > 0) { character.model.scale.multiplyScalar(target / height); character.model.updateMatrixWorld(true); }
+      }
       const vertexMaterial = materials.fromVertexColors(`character:${variant}`);
       vertexMaterial.movingFigure.value = 1; vertexMaterial.heroFigure.value = 1;
       vertexMaterial.bloodCoverage.value = 0; vertexMaterial.userData.sharedPalette = true;
