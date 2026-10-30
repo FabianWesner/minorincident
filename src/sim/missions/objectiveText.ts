@@ -47,6 +47,8 @@ export function objectiveText(mission: Mission, fallback: string): string {
   }
   if (mission.def.l8) {
     const zoo=mission.l8!, seated=w.vehicles!.active===zoo.state.carId;
+    // PO: the first minute is deliberate false safety with no immediate objective; the marker still shows the vehicle.
+    if(!seated&&!zoo.state.breachedAt&&s.steps.escape?.status==='active')return 'Explore the sanctuary · the armored vehicle waits by the exit';
     if(seated&&!zoo.state.breachedAt)return `Waiting for departure · ${Math.max(0,Math.ceil((zoo.state.startedAt+3600-w.tick)/60))} s`;
     if(s.steps.depart?.status==='active') {
       const ids=zoo.passengers(),car=w.vehicles!.cars.get(zoo.state.carId)!.entity.vehicle!;
