@@ -736,7 +736,7 @@ export function l3EvacuationText(mission: Mission | null | undefined): string | 
   for (const [index, member] of s.squad.entries()) {
     const officer = world.entities.get(member.id);
     if (officer && officer.health.current > 0 && !officer.infection && officer.transform.x < l3.map.zoneX)
-      return `Checkpoint reached · Waiting for the rescued group · Officer ${index + 1}: ${Math.ceil(dist(officer.transform, player.transform))} m away`;
+      return `Checkpoint reached · Waiting for your squad · Officer ${index + 1}: ${Math.ceil(dist(officer.transform, player.transform))} m away`;
   }
-  return 'Checkpoint reached · Waiting for the rescued group';
+  return 'Checkpoint reached · Waiting for your squad';
 }
