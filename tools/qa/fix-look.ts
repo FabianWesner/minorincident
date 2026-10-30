@@ -62,6 +62,8 @@ try {
     await shots(id); await session.close();
   }
   await fixture('q92', 'specs/scenes/catalog/qa-l3-ramp-west.json', 40);
+  await fixture('q92-east', 'specs/scenes/catalog/qa-l3-ramp-east.json', 40);
+  await fixture('q35-l4', 'specs/scenes/catalog/dress-l8-cellar-l4.json', 60, s => { s.camera = { mode: 'game', target: 'courier', zoom: 1 }; });
   await fixture('q145', 'tests/scenes/catalog/l5-po-metro-ingress.json', 330);
   await fixture('q215', 'specs/scenes/qa-l5-group.json', 90, s => {
     s.camera = { mode: 'game', target: 'courier', zoom: 1 }; s.weather = 'fog'; s.weatherWarmup = 60;
