@@ -312,7 +312,7 @@ export class StaticCorpses extends Group {
         if (material instanceof PaletteMaterial) {
           let shared = sharedFrozenMaterials.get(material);
           if (!shared) {
-            const copy = material.frozenCopy(); copy.positionNode = null; copy.normalNode = null; copy.maskNode = corpseMask(material.userData.frozenSurfaceMask);
+            const copy = material.frozenCopy(true); copy.name = `corpse_${material.name}`; copy.positionNode = null; copy.normalNode = null; copy.maskNode = corpseMask(material.userData.frozenSurfaceMask);
             shared = { material: copy, users: 0 }; sharedFrozenMaterials.set(material, shared);
           }
           shared.users++; frozenMaterial = shared.material;

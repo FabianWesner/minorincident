@@ -37,7 +37,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   private _outputs = new Map<string, Node>();
   private readonly _propertyHashes = new Map<string, number>();
   private readonly _programValues: number[] = [];
-  private outputFor: (mode: number) => Node;
+  private outputFor: (mode: number, corpse?: boolean) => Node;
   private readonly newCopy: () => PaletteMaterial;
   private weatherMode = -1;
   constructor(readonly token: PaletteToken, palette: Texture, lighting: Lighting, emissive = 0, swatch?: Color, vertexSwatches = false, nodes?: { base: Node<'vec3'>; /** 1 where a merged batch draws asphalt (palette attribute): the night road lift applies there. */ road?: Node<'float'>; glow?: Node<'vec3'>; /** Exclude lit surface/bounce/rim on emissive eye vertices in a merged figure. */ emissiveOnly?: Node<'float'>; /** 0 healthy, 1 infected: keep underground body highlights below the red eyes. */ threat?: Node<'float'>; opacity?: Node<'float'>; surface?: Node<'float'>; /** Preserve separate figure/headwear lighting inside one draw. */ figureMask?: Node<'float'>; shadowReceiver?: Node<'float'>; interior?: Node<'float'> }) {
@@ -47,10 +47,12 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
     // a different texture coordinate literal in every fragment program.
     const original = nodes?.base ?? (vertexSwatches ? attribute('color', 'vec3') : swatch ? uniform(swatch).setGroup(this._uniformGroup).rgb : texture(palette, vec2(uniform((paletteTokens.indexOf(token) + 0.5) / (paletteTokens.length * 2)).setGroup(this._uniformGroup), 0.5)).rgb);
     const base = !swatch && !vertexSwatches && !nodes && !emissive ? surfaceDetail(token, original, lighting.look.nodes) : original;
-    const figureRimAmount = this.figureRim.mul(nodes?.figureMask ?? 1), figureFillAmount = this.figureFill.mul(nodes?.figureMask ?? 1);
     const caughtShadow = float(1).toVar();
     this.receivedShadowNode = Fn(([shadow]: [Node<'vec3'>]) => { caughtShadow.mulAssign(mix(1, shadow.r, nodes?.shadowReceiver ?? 1)); return float(1); }) as unknown as NonNullable<MeshLambertNodeMaterial['receivedShadowNode']>;
-    this.outputFor = mode => Fn(() => {
+    this.outputFor = (mode, corpse = false) => Fn(() => {
+      // Frozen bodies keep directional shading: the living crowd's pale additive key made distant bodies look translucent.
+      const figureRimAmount = this.figureRim.mul(nodes?.figureMask ?? 1).mul(corpse ? .2 : 1);
+      const figureFillAmount = this.figureFill.mul(nodes?.figureMask ?? 1).mul(corpse ? .25 : 1);
       const flags = weatherMaterialFlags, probe = mode >> flags.probeShift;
       // Diagnostics use their own graph, rather than adding mask samplers to game shaders.
       if (probe) {
@@ -155,7 +157,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         shaded.assign(mix(shaded, environment.rgb.mul(mix(vec3(1), surface, metal)), metal.mul(.75).add(.18)).add(highlight));
       });
       const controlled = mix(luminance(shaded), shaded, lighting.look.nodes.saturation).mul(nodes?.emissiveOnly?.oneMinus() ?? 1);
-      const output = emissive > 0 ? base.div(luminance(base).max(0.001)).mul(emissive).mul(this.emissivePower) : mix(controlled.add(nodes?.glow ? nodes.glow.mul(this.emissivePower) : 0), lighting.radialFog, rangeFogFactor(lighting.fogNear, lighting.fogFar));
+      const output = emissive > 0 ? base.div(luminance(base).max(0.001)).mul(emissive).mul(this.emissivePower) : mix(controlled.add(nodes?.glow ? nodes.glow.mul(this.emissivePower).mul(corpse ? .25 : 1) : 0), lighting.radialFog, rangeFogFactor(lighting.fogNear, lighting.fogFar));
       const result = output.toVar();
       // Atmosphere 2: low camera-relative haze. Starts beyond the focus (the courier never hazes), thickest near the
       // ground so roofs and lamp heads stand out of it; emissive eyes/lamps skip it (threat readability).
@@ -275,12 +277,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   /** Frozen geometry keeps the source shading uniforms and follows future weather changes. */
   frozenCopy(corpse = false): PaletteMaterial {
     const copy = this.newCopy(); copy.copy(this);
-    copy.outputFor = corpse ? mode => {
-      // Apply after palette/skin/clothing resolution: editing only the source
-      // vertex colours leaves the crowd's per-person garment tints saturated.
-      const output = this.outputFor(mode) as Node<'vec4'>;
-      return vec4(mix(vec3(luminance(output.rgb)), output.rgb, .4).mul(.62), output.a);
-    } : this.outputFor;
+    copy.outputFor = corpse ? mode => this.outputFor(mode, true) : this.outputFor;
     copy._outputs = corpse ? new Map() : this._outputs; copy.weatherMode = -1; copy.setWeatherMode(this.weatherMode);
     return copy;
   }
