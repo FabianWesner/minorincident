@@ -303,7 +303,11 @@ export class Hud {
         const seconds = inRing.complete.kind === 'interact' ? inRing.complete.seconds : 0;
         const progress = seconds ? Math.min(100, Math.round(mission.state.steps[inRing.id].interaction / (seconds * 60) * 100)) : 0;
         const explicit = mission.def.id === 'L10' && ['hold', 'release'].includes(inRing.id);
-        text(this.trackerText, explicit ? `Press E or tap the console action · ${inRing.text}` : `Hold still or press E · ${inRing.text.replace(/^Optional: /, '')} · ${progress}%`);
+        const line = explicit ? `Press E or tap the console action · ${inRing.text}` : `Hold still or press E · ${inRing.text.replace(/^Optional: /, '')} · ${progress}%`;
+        const duplicate = mission.def.id === 'L10' && !!this.trackerText.textContent?.includes(inRing.text);
+        text(this.trackerText, duplicate
+          ? `${this.trackerText.textContent} · ${explicit ? 'Press E or tap the console action' : `Hold still or press E · ${progress}%`}`
+          : line);
       }
       else if (optional.length) text(this.trackerText, `${this.trackerText.textContent} · ${optional[0].text}`);
     }
