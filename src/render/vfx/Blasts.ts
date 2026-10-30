@@ -295,9 +295,11 @@ export class Blasts extends Group {
     this.blasts++;
     const { x, z } = event.position, ground = event.position.y < 0 ? event.position.y - .7 : 0, r = event.radius, now = this.time, low = this.quality === 'low';
     // Beat 2 flash: screen flash (capped by flash reduction) + a strong, short ground light pool.
-    // The white-out belongs to blasts close to the player; a distant tank round or fuel chain only gets a weak flash.
+    // Repeated point-blank rockets must leave the scene readable. Their local
+    // fireball/light still carries the impact; only the full-screen wash is capped.
     const focus0 = this.host.focus?.(), flashNear = focus0 ? Math.max(.15, Math.min(1, 1.4 - Math.hypot(focus0.x - x, focus0.z - z) / 18)) : 1;
-    this.flashPeak = Math.max(this.flash, (this.flashReduction ? Math.min(.12, fx.flash) : fx.flash) * flashNear); this.flashAt = now;
+    const screenFlash = event.defId === 'explosion.rocket' ? Math.min(.2, fx.flash) : fx.flash;
+    this.flashPeak = Math.max(this.flash, (this.flashReduction ? Math.min(.12, screenFlash) : screenFlash) * flashNear); this.flashAt = now;
     this.glow(x, z, r * 1.4, fx.light.color, (this.flashReduction ? .45 : 1) * Math.min(1.3, fx.light.intensity / 100), fx.light.seconds, ground || undefined);
     const hex = `#${fx.light.color.toString(16).padStart(6, '0')}`;
     this.host.light?.(x, z, hex, Math.min(10, fx.light.intensity / 20) * (this.flashReduction ? .5 : 1), fx.light.range, fx.light.seconds, true);
