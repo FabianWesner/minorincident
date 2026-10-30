@@ -394,9 +394,9 @@ export class Hud {
       const zoo = mission.l8!, car = this.game.world.vehicles!.cars.get(zoo.state.carId)?.entity.vehicle;
       const missing = zoo.passengers().map(id => this.game.world.entities.get(id)!).filter(e => !car?.passengers?.some(p => p.id === e.id && p.phase === 'seated'))
         .sort((a, b) => Math.hypot(a.transform.x - px, a.transform.z - pz) - Math.hypot(b.transform.x - px, b.transform.z - pz));
-      const target = missing[0], aboard = zoo.passengers().length - missing.length;
-      setHidden(this.survivorText, false);
-      text(this.survivorText, ` · ${aboard}/${zoo.passengers().length} aboard`);
+      const target = missing[0];
+      // The objective already carries the boarding count; this line only locates its nearest missing passenger.
+      setHidden(this.survivorText, true); text(this.survivorText, '');
       setHidden(this.cuePin, !target);
       setHidden(this.cueText, !target);
       if (target) {

@@ -50,7 +50,9 @@ export function objectiveText(mission: Mission, fallback: string): string {
     if(seated&&!zoo.state.breachedAt)return `Wait for the breach · ${Math.max(0,Math.ceil((zoo.state.startedAt+3600-w.tick)/60))} s`;
     if(s.steps.depart?.status==='active') {
       const ids=zoo.passengers(),car=w.vehicles!.cars.get(zoo.state.carId)!.entity.vehicle!;
-      const missing=ids.filter(id=>!car.passengers?.some(p=>p.id===id&&p.phase==='seated'));
+      const player=w.entities.get(1)!.transform;
+      const distance=(id:number)=>{const p=w.entities.get(id)!.transform;return Math.hypot(p.x-player.x,p.z-player.z);};
+      const missing=ids.filter(id=>!car.passengers?.some(p=>p.id===id&&p.phase==='seated')).sort((a,b)=>distance(a)-distance(b));
       const names=missing.map(id=>{const e=w.entities.get(id)!;return e.companion?'Corgi':l5Survivors.find(s=>s.key===e.civilian?.survivor?.key)?.name??`Survivor ${(e.civilian?.survivor?.slot??0)+1}`;});
       const text=seated?fallback:'Return to the armored vehicle and board';
       const waiting=names.length?` · ${names.slice(0,2).join(', ')} missing${names.length>2?` (+${names.length-2} others)`:''}`:'';
