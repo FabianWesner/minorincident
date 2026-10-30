@@ -1,0 +1,55 @@
+{
+  "name": "shotgun",
+  "seed": 1,
+  "ground": "asphalt",
+  "time": "L5",
+  "dof": false,
+  "size": 30,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -3,
+        0
+      ],
+      "god": true,
+      "loadout": [
+        "weapon.shotgun",
+        "weapon.fire-axe"
+      ],
+      "state": {
+        "attack": "victim",
+        "seconds": 0.25,
+        "side": "LEFT",
+        "inPlace": true
+      }
+    },
+    {
+      "id": "victim",
+      "kind": "infected",
+      "at": [
+        0,
+        0
+      ],
+      "archetype": "infected.runner",
+      "state": "idle",
+      "look": {
+        "model": "npc.civilian-man-b"
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 40,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0
+  }
+}

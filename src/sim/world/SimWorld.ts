@@ -258,6 +258,9 @@ export class SimWorld implements Lifecycle {
     }
     this.events.on('sim.tick', () => this.physics.update(), SimPhase.physics);
     this.events.on('sim.tick', () => {
+      for (const entity of this.entities.iterate()) if (entity.knockbackSlide) this.slideKnockback(entity);
+    }, SimPhase.combat - .1);
+    this.events.on('sim.tick', () => {
       this.vehicles?.postPhysics();
       if (this.combat) {
         if (!this.entities.get(1)!.pendingAdmission) { const position = this.physics.playerBody!.translation(); Object.assign(this.entities.get(1)!.transform, position); this.spatial.set(1, position.x, position.z); }
@@ -417,7 +420,12 @@ export class SimWorld implements Lifecycle {
     this.spatial.set(entity.id, pos.x, pos.z); this.events.emit({ type: 'entity.spawned', tick: this.tick, id: entity.id }); return entity.id;
   }
   /** E05 impulse is the authored displacement in metres, swept against full cover. */
-  knockback(entity: EntitySnapshot, direction: { x: number; z: number }, impulse: number): void {
+  knockback(entity: EntitySnapshot, direction: { x: number; z: number }, impulse: number, ticks = 1): void {
+    if (ticks > 1) {
+      entity.knockbackSlide = { x: direction.x * impulse, z: direction.z * impulse, ticks };
+      this.slideKnockback(entity);
+      return;
+    }
     this.solids.wrote(entity, 'combat.knockback');
     const distance = this.combat!.query.clearDistance(entity.transform, direction, impulse + (entity.combat?.radius ?? 0.4));
     const move = Math.max(0, Math.min(impulse, distance - (entity.combat?.radius ?? 0.4)));
@@ -428,6 +436,14 @@ export class SimWorld implements Lifecycle {
     else { entity.transform.x += direction.x * move; entity.transform.z += direction.z * move; }
     this.spatial.set(entity.id, entity.transform.x, entity.transform.z);
     if (entity.id === 1) this.physics.playerBody!.setTranslation(entity.transform, true);
+  }
+  private slideKnockback(entity: EntitySnapshot): void {
+    const slide = entity.knockbackSlide!;
+    const x = slide.x / slide.ticks, z = slide.z / slide.ticks, distance = Math.hypot(x, z);
+    // Reuse the real wall sweep and navigation slide on every step; interpolating only a final endpoint can cut corners.
+    if (distance > 0) this.knockback(entity, { x: x / distance, z: z / distance }, distance);
+    slide.x -= x; slide.z -= z;
+    if (--slide.ticks <= 0) delete entity.knockbackSlide;
   }
   reset(): void {
     this.solids.reset();

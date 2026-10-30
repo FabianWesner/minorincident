@@ -611,8 +611,8 @@ export class CrowdView extends Group {
       let frame = infectedClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
       const tint = batch.animal ? batch.role === 'inf.dog' && batch.lod === 'lod1' ? this.dogCoatTints[Number(key === 'inf.dog.cream')] : batch.shirt : crowdShirt(e.id);
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
-      const resting = b.state === 'dead' ? this.corpsePosition(e, b.deadAt, proneReach.get(batch.poses.clip)) : e.transform;
-      const settle = b.state === 'dead' ? reaction?.groundDeath ? 1 : Math.min(1, (this.world.tick - b.deadAt) / 60) : 0;
+      const resting = b.state === 'dead' && !e.knockbackSlide ? this.corpsePosition(e, b.deadAt, proneReach.get(batch.poses.clip)) : { ...e.transform, y: e.transform.y - .7 };
+      const settle = b.state === 'dead' && !e.knockbackSlide ? reaction?.groundDeath ? 1 : Math.max(0, Math.min(1, (this.world.tick - b.deadAt - 8) / 52)) : 0;
       const x = presented.x + (resting.x - e.transform.x) * settle, z = presented.z + (resting.z - e.transform.z) * settle;
       const blend = batch.poses.sample(e.id, clip, frame, renderTick / 60);
       const fade = 0;

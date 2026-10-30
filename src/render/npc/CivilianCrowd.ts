@@ -377,10 +377,11 @@ class CivilianBatch extends Group {
     // The baked walking hunch also reaches beyond the roots while approaching a
     // neighbour. Yield that upper-body pose before two otherwise clear feet meet.
     if (contact && !still && !heavy && !b.specialAttack && b.state !== 'dead') { layers.lean = -.15; layers.lurch = 0; }
-    const resting = b.state === 'dead' ? corpseLayout(this.world).place(e) : presented;
+    const resting = b.state === 'dead' && !e.knockbackSlide ? corpseLayout(this.world).place(e) : presented;
+    const settle = b.state === 'dead' && !e.knockbackSlide ? reaction?.groundDeath ? 1 : Math.max(0, Math.min(1, (tick - b.deadAt - 8) / 52)) : 0;
     if (b.state === 'dead') this.transform.makeRotationY(resting.yaw);
-    this.transform.setPosition(resting.x, b.state === 'dead' ? resting.y : presented.y - .7, resting.z);
-    if (b.state === 'dead') this.deadFeet.set(e.id, { id: e.id, x: presented.x, y: presented.y - .7, z: presented.z });
+    this.transform.setPosition(presented.x + (resting.x - presented.x) * settle, (presented.y - .7) * (1 - settle) + (b.state === 'dead' ? resting.y : presented.y - .7) * settle, presented.z + (resting.z - presented.z) * settle);
+    if (b.state === 'dead') this.deadFeet.set(e.id, { id: e.id, x: this.transform.elements[12], y: this.transform.elements[13], z: this.transform.elements[14] });
     let frame = civilianClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
     const sourceFrame = frame;
     const blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
