@@ -1,3 +1,4 @@
+import { livingStencil } from './characters/figureStencil';
 import { paintedSkinMask } from './characters/paintedSkin';
 import { crowdRegionOf, crowdRegionSkin, crowdRegionTint } from './characters/crowdRegions';
 import { crowdLimbParts } from '../assets/crowdParts';
@@ -393,6 +394,7 @@ export class CrowdView extends Group {
       const glow = emission.mul(eye).add(atlasFill).add(feedbackState.w.mod(2).mul(base.mul(base.oneMinus().mul(1.1))).mul(figureMask ?? 1));
       material = this.shading?.shaded(base, glow, undefined, undefined, undefined, healthy ? undefined : eye, figureMask, shadowReceiver, healthy ? undefined : float(1)) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
       // E25 night readability: crowd silhouettes take the preset's moonlit rim.
+      livingStencil(material);
       if (material instanceof PaletteMaterial) { material.figureRim.value = .25; material.figureFill.value = regularAlpha ? .25 : 1; }
       // The Alpha-sized Mega retains its silhouette at contact, like a regular Alpha.
       // Instances cannot be sorted independently in the transparent render list.

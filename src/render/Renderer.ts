@@ -3,6 +3,7 @@ import { MaterialNode, NodeBuilder, AgXToneMapping, ACESFilmicToneMapping, WebGP
 
 import { worldAssets } from '../assets/worldDefinitions';
 import { installTextureRanges } from './TextureRanges';
+import { installDepthStencilSampling } from './characters/figureStencil';
 import { PaletteMaterial } from './PaletteMaterial';
 
 // r186's module-level MaterialNode property cache keeps the last material in
@@ -179,7 +180,10 @@ export class Renderer extends WebGPURenderer {
     await super.init();
     installTextureRanges(this.backend);
     installTextureBindingIdentity((this as unknown as { _bindings: Parameters<typeof installTextureBindingIdentity>[0] })._bindings);
-    if (this.selectedBackend === 'webgpu') installInterleavedBufferDisposal(this.backend as unknown as Parameters<typeof installInterleavedBufferDisposal>[0]);
+    if (this.selectedBackend === 'webgpu') {
+      installDepthStencilSampling(this.backend as unknown as Parameters<typeof installDepthStencilSampling>[0]);
+      installInterleavedBufferDisposal(this.backend as unknown as Parameters<typeof installInterleavedBufferDisposal>[0]);
+    }
     installPaletteVariantCache((this as unknown as { _objects: RenderObjects })._objects);
     const nodes = (this as unknown as { _nodes: { getForRender(object: unknown): unknown; getForRenderAsync(object: unknown): Promise<unknown> } })._nodes;
     const asynchronous = nodes.getForRenderAsync;
@@ -215,7 +219,7 @@ export class Renderer extends WebGPURenderer {
   private profileCamera: Camera | null = null;
   beginProfile(camera: Camera): void { if (__QA_HOOKS__ && this.profile) { this.profile = {}; this.profileAssets = {}; this.profileCamera = camera; } }
   constructor(params: URLSearchParams, canvas?: HTMLCanvasElement) {
-    super({ antialias: true, forceWebGL: __QA_HOOKS__ && params.get('renderer') === 'webgl', ...(canvas ? { canvas } : {}) });
+    super({ antialias: true, stencil: true, forceWebGL: __QA_HOOKS__ && params.get('renderer') === 'webgl', ...(canvas ? { canvas } : {}) });
     if (__QA_HOOKS__ && params.get('test') === '1' && params.has('tone')) this.toneMapping = params.get('tone') === 'agx' ? AgXToneMapping : ACESFilmicToneMapping;
     if (__QA_HOOKS__ && params.has('profile')) { this.profile = {}; this.profileAssets = {}; }
     // Game owns recovery and pauses before another draw can reach the lost backend.
