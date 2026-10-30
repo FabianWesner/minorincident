@@ -1,5 +1,5 @@
 import { livingStencil } from './figureStencil';
-import { skinnedBrow } from './headMeasurements';
+import { skinnedBrow, referenceSkullWidth } from './headMeasurements';
 import { crowdSurfaceBindings } from './crowdTexture';
 export { skinnedBrow } from './headMeasurements';
 import { Box3, Vector3, BoxGeometry, BufferAttribute, BufferGeometry, Color, Group, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, StreamDrawUsage } from 'three/webgpu';
@@ -21,7 +21,7 @@ const hairColors = hairTones.map(c => new Color(c));
 /** Base whose authored fits are retargeted to unauthored (ordinary infected) heads. */
 const referenceBase = 'npc.civilian-man-a';
 /** Its baked LOD1 skin skull in head-local metres (bakeInfected path; pinned by tests/unit/render/crowd-accessory-fit.test.ts). */
-export const referenceSkull = { size: new Vector3(.301, .334, .381), centre: new Vector3(.009, .118, 0) };
+export const referenceSkull = { size: new Vector3(.301, .334, referenceSkullWidth), centre: new Vector3(.009, .118, 0) };
 /** Skin height/width in head-local space. Painted faces cover only the front;
  * retain the full head depth so a hat stays centred over the skull, not the nose. */
 export function bakedSkull(geometry: BufferGeometry): { size: Vector3; centre: Vector3 } | null {
@@ -254,7 +254,7 @@ export class CrowdAccessories extends Group {
       // Keep the afro's volume around the crown, with its hairline fixed at the brow; scaling about the neck
       // let a tall dark shell overwhelm the narrow spectacled face (Q-229). Long styles retain their tails.
       const pivotY = afro ? brow?.y ?? centre.y : 0;
-      this.fitTransform.premultiply(new Matrix4().makeTranslation(centre.x, pivotY, centre.z).multiply(new Matrix4().makeScale(Math.min(1, skullDepth * limit / depth), Math.min(1, referenceSkull.size.y * scale.y * (afro ? .55 : hair ? .9 : .42) / height), Math.min(1, skullWidth * limit / width))).multiply(new Matrix4().makeTranslation(-centre.x, -pivotY, -centre.z)));
+      this.fitTransform.premultiply(new Matrix4().makeTranslation(centre.x, pivotY, centre.z).multiply(new Matrix4().makeScale(Math.min(1, skullDepth * limit / depth), Math.min(1, referenceSkull.size.y * scale.y * (afro ? .55 : hair ? .9 : .7) / height), Math.min(1, skullWidth * limit / width))).multiply(new Matrix4().makeTranslation(-centre.x, -pivotY, -centre.z)));
       const bounds = new Box3();
       for (const lod of ['lod0', 'lod1']) {
         const geometry = this.batches.get(`${id}:${lod}`)?.geometry; if (geometry?.boundingBox) bounds.union(geometry.boundingBox.clone().applyMatrix4(this.fitTransform));
@@ -262,7 +262,8 @@ export class CrowdAccessories extends Group {
       if (!bounds.isEmpty()) {
         const offset = bounds.getCenter(new Vector3()).x - centre.x, allowance = hair ? skullDepth * .1 : referenceSkull.size.x * scale.x * .2;
         if (Math.abs(offset) > allowance) this.fitTransform.premultiply(new Matrix4().makeTranslation(Math.sign(offset) * allowance - offset, 0, 0));
-        if (!hair) this.fitTransform.premultiply(new Matrix4().makeTranslation(centre.x, centre.y, 0).multiply(new Matrix4().makeRotationZ(.45)).multiply(new Matrix4().makeTranslation(-centre.x, -centre.y, 0)));
+        // Retain the cap's authored pitch. The old extra 26-degree rotation
+        // lifted its brim and compressed crown into a floating disc.
       }
     }
   }
@@ -271,7 +272,11 @@ export class CrowdAccessories extends Group {
    * its lowest point just above the frames, the way people wear a hat over glasses. Cached per hat/model. */
   private glassesLift(id: string, model: string): number {
     let top = this.measuredGlasses.get(model) ?? spectacleTops[model.replace(/\.aftermath$/, '')];
-    const seat = this.minimumHatY.get(model);
+    const browSeat = this.minimumHatY.get(model);
+    // The baseball cap's lower rim wraps the scalp below the brow; seating
+    // that rim above the brow leaves the whole crown visibly suspended.
+    const rimDepth = id === 'acc.hat-baseball-cap' ? .075 * (this.brows.get(model)?.width ?? referenceSkullWidth) / referenceSkullWidth : 0;
+    const seat = browSeat === undefined ? undefined : browSeat - rimDepth;
     if (definitions.get(id)?.slot !== 'hat' || top === undefined && seat === undefined) return 0;
     if (top !== undefined && this.measuredModels.has(model) && !this.measuredGlasses.has(model)) top = this.glassesPoint.set(0, top, 0).applyMatrix4(this.fits.get(model)!).y;
     const key = `${id}/${model}`, cached = this.lifts.get(key); if (cached !== undefined) return cached;
@@ -280,7 +285,9 @@ export class CrowdAccessories extends Group {
     const point = new Vector3();
     let bottom = Infinity;
     for (const mesh of meshes) { const position = mesh.geometry.getAttribute('position'); for (let i = 0; i < position.count; i++) bottom = Math.min(bottom, point.fromBufferAttribute(position, i).applyMatrix4(this.fitTransform).y); }
-    const lift = Math.max(0, Math.max(top === undefined ? -Infinity : top + glassesClearance, seat ?? -Infinity) - bottom); this.lifts.set(key, lift); return lift;
+    // Seat a high authored fit down as well as lifting a low brim. A one-way
+    // lift left a cap floating after the skull was uniformly reduced.
+    const lift = Math.max(top === undefined ? -Infinity : top + glassesClearance, seat ?? -Infinity) - bottom; this.lifts.set(key, lift); return lift;
   }
   private readonly lifts = new Map<string, number>();
   private readonly glassesPoint = new Vector3();

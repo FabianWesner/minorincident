@@ -52,7 +52,16 @@ export class Civilians {
       combat: { radius: animal?.radius ?? .35, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } });
     if (animal) civilian.l1 = { walkSpeed: 1, fleeSpeed: 2, startleTicks: 30, refuge: null, target: null, repickAt: 0, noticed: -1 };
     if (options.pet === 'dog') { civilian.model = dogModel(this.world.seed, e.id, false); civilian.variant = civilian.model.replace(/^amb\./, 'inf.'); }
-    this.world.spatial.set(e.id, position.x, position.z); if (admit) this.world.solids.admit(e, 'civilian.spawn'); return e.id;
+    this.world.spatial.set(e.id, position.x, position.z); if (admit) this.world.solids.admit(e, 'civilian.spawn');
+    // A morning sitter is already at its clear approach when the level opens.
+    // Begin in the settled seat pose instead of standing through the initial
+    // routine pause (including the mission's paused introductory frame).
+    const first = civilian.schedule?.[0];
+    if (first?.activity === 'sit' && first.seat && Math.hypot(e.transform.x-first.target.x,e.transform.z-first.target.z)<.75) {
+      civilian.activityStarted=this.world.tick-36;
+      civilian.activityUntil=this.world.tick+Math.max(1,first.ticks);
+    }
+    return e.id;
   }
   state(e: EntitySnapshot, state: CivilianState, duration = 0): void {
     const c = e.civilian!; if (c.state === 'grabbed' && state !== 'grabbed') this.held.delete(c.attacker); if (state !== 'calm' && state !== 'alarmed') leaveSeat(e);

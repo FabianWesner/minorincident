@@ -21,6 +21,7 @@ import { Matrix4, Vector3 } from 'three';
 import { PNG } from 'pngjs';
 import { regularInfectedModels } from '../../src/data/crowdAppearance';
 import { legacyCrowdPalette } from './skin-crowd-legacy-palette';
+import { calibrateFigure, measureFigure, planHeadScale } from './figure-proportions';
 
 // A cast directory is the complete input; no hand-prepared files or placement numbers.
 // A named game variant can consume a compatible reviewed base cast without
@@ -250,6 +251,19 @@ for (const lod of [0, 1, 2]) {
     if (!regions) throw Error(`${id}: regional readability pass requires a decoded body atlas`);
     await io.write(raw, document);
     writeFileSync(join(report, `lod${lod}.regions.json`), JSON.stringify({ ...regions, authoredPalette: palette }, null, 2) + '\n');
+  }
+  // Keep future human rebuilds on the approved heroine anatomy. This is an
+  // offline bind/mesh edit; source paint and the game animation contract stay
+  // intact. Already-calibrated inputs retain their once-shrunk hands.
+  if (['character','infected'].includes(def.category) && !['char.courier-female','npc.civilian-kid','npc.brother'].includes(id) && !/corgi|dog|cat|crow|lion|gorilla|flamingo|zebra|elephant/.test(id) && !['quadruped','bird','prop'].includes(metadata?.class ?? '')) {
+    const document=await io.read(raw),root=document.getRoot().listNodes().find(n=>n.getName()==='root');
+    if(root?.getExtras().preserveAuthoredBodyScale!==true){
+      const target=measureFigure(await io.read('public/assets/models/char.courier-female.skin.glb')).ratios;
+      const plan=planHeadScale(measureFigure(document),target);
+      const receipt=calibrateFigure(document,target,{headScale:plan.scale});
+      await io.write(raw,document);
+      writeFileSync(join(report,`lod${lod}.proportions.json`),JSON.stringify({plan,...receipt},null,2)+'\n');
+    }
   }
   const tiers = [];
   for (const low of [false, true]) {

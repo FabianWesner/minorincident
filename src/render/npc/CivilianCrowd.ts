@@ -232,7 +232,11 @@ class CivilianBatch extends Group {
       const speed = e.motion && !e.motion.moving ? 0 : motion.speed;
       const activity = c.schedule?.[c.scheduleStep ?? 0];
       // A sitter that is not at its seat (moved off by a fight/flight) never keeps the sitting pose or the seat lift.
-      const offSeat = !!activity?.seat && Math.hypot(e.transform.x - activity.seat.x, e.transform.z - activity.seat.z) > 1.2;
+      // Physics keeps the civilian at the clear approach point; the seated
+      // presentation moves onto the seat anchor below. Navigation can snap
+      // that approach over 1.2 m from the bench, so test the authored approach
+      // rather than rejecting a sitter that has reached its own destination.
+      const offSeat = !!activity?.seat && Math.hypot(e.transform.x - activity.target.x, e.transform.z - activity.target.z) > .75;
       const performing = c.state === 'calm' && !!c.activityUntil && !offSeat;
       const elapsed = (this.world.tick - (c.activityStarted ?? this.world.tick)) / 60;
       const noticingSeated = c.state === 'alarmed' && !!activity?.seat && !!c.activityUntil && !offSeat;
