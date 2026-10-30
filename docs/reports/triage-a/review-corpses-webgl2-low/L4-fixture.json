@@ -1,0 +1,79 @@
+{
+  "name": "corpse-contrast-L4",
+  "ground": "asphalt",
+  "time": "L4",
+  "size": 35,
+  "dof": false,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -4,
+        4
+      ],
+      "god": true
+    },
+    {
+      "id": "healthy-live",
+      "kind": "pedestrian",
+      "at": [
+        -1.5,
+        -3
+      ],
+      "look": {
+        "model": "npc.civilian-man-b"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "infected-live",
+      "kind": "infected",
+      "at": [
+        1.5,
+        -3
+      ],
+      "look": {
+        "model": "npc.civilian-man-b"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "healthy-dead",
+      "kind": "pedestrian",
+      "at": [
+        -1.5,
+        1
+      ],
+      "look": {
+        "model": "npc.civilian-man-b"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "infected-dead",
+      "kind": "infected",
+      "at": [
+        1.5,
+        1
+      ],
+      "look": {
+        "model": "npc.civilian-man-b"
+      },
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "close",
+    "target": [
+      0,
+      0.5,
+      0
+    ],
+    "radius": 14,
+    "azimuth": 45
+  },
+  "expect": {
+    "consoleErrors": 0
+  }
+}

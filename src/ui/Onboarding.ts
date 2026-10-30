@@ -67,6 +67,7 @@ export class Onboarding {
       if (l1.state.steps.weapon?.status === 'completed') { this.completed.add('pickup'); this.completed.add('interact'); }
       if (this.current === 'evade' && l1.state.steps.escape?.status === 'completed') this.completed.add('evade');
     }
+    if (this.current === 'vehicle' && this.world.tick - this.startTick >= 180) this.completed.add('vehicle');
     if (this.current && this.completed.has(this.current)) { this.current = null; this.startTick = this.world.tick; }
     if (!this.current) {
       const first = level === 'L1' ? 0 : level === 'L2' ? 5 : 7, last = level === 'L1' ? 7 : level === 'L2' ? 7 : 8;

@@ -1,5 +1,5 @@
 import * as RAPIER from '@dimforge/rapier3d-compat';
-import { BoxGeometry, DynamicDrawUsage, InstancedMesh, Matrix4, MeshBasicNodeMaterial, Quaternion, Vector3, SphereGeometry, type BufferGeometry } from 'three/webgpu';
+import { IcosahedronGeometry, DynamicDrawUsage, InstancedMesh, Matrix4, MeshLambertNodeMaterial, Quaternion, Vector3, SphereGeometry, type BufferGeometry } from 'three/webgpu';
 import { Rng } from '../../core/Rng';
 
 /** Visual-only Rapier world with 80 preallocated bodies. It never shares sim bodies or impulses. */
@@ -24,8 +24,9 @@ export class GibPool {
   count = 0;
   constructor(geometries?: { limb: BufferGeometry; head: BufferGeometry }) {
     this.ownsGeometry = !geometries;
-    const material = new MeshBasicNodeMaterial({ color: '#b3121f' });
-    this.mesh = new InstancedMesh(geometries?.limb ?? new BoxGeometry(0.18, 0.36, 0.18), material, this.cap);
+    // Q-143/Q-176: lit, faceted clots replace full-bright red boxes that read as confetti.
+    const material = new MeshLambertNodeMaterial({ color: '#872b35' });
+    this.mesh = new InstancedMesh(geometries?.limb ?? new IcosahedronGeometry(.16, 0).scale(.7, 1.35, .8), material, this.cap);
     this.heads = new InstancedMesh(geometries?.head ?? new SphereGeometry(0.2, 8, 6), material, this.cap);
     this.heads.frustumCulled = false; this.heads.instanceMatrix.setUsage(DynamicDrawUsage);
     this.physics.createCollider(RAPIER.ColliderDesc.cuboid(200, 0.1, 200).setTranslation(0, -0.1, 0));
@@ -67,5 +68,5 @@ export class GibPool {
     this.mesh.instanceMatrix.needsUpdate = this.heads.instanceMatrix.needsUpdate = true;
   }
   reset(): void { this.dirty = true; this.expires.fill(0); this.cursor = this.remainder = this.count = 0; this.advance(0, 0); }
-  dispose(): void { this.physics.free(); this.mesh.dispose(); this.heads.dispose(); if (this.ownsGeometry) { this.mesh.geometry.dispose(); this.heads.geometry.dispose(); } (this.mesh.material as MeshBasicNodeMaterial).dispose(); }
+  dispose(): void { this.physics.free(); this.mesh.dispose(); this.heads.dispose(); if (this.ownsGeometry) { this.mesh.geometry.dispose(); this.heads.geometry.dispose(); } (this.mesh.material as MeshLambertNodeMaterial).dispose(); }
 }

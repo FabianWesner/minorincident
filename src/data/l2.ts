@@ -79,10 +79,10 @@ export const l2 = {
   },
   /** Section 5.5: the street escape. */
   escape: {
-    /** PO 10-23: solitary figures/pairs along the ordinary market → Juniper → Elm walk.
-     * Homes sit 3–4 m off the walking line, about 33 m apart along it; the bridge cluster remains separate.
-     * Prepared at doors-open, before the courier can see these street corners. Low tier keeps one per encounter. */
-    scattered: [[-34, -14, 2], [-27.2, 19, 1], [-13, 26.5, 2], [25, 26.5, 1]] as readonly (readonly [number, number, number])[],
+    /** PO 10-23 / Q-168: six solitary figures along the ordinary market → Juniper → Elm walk.
+     * Split the former pairs between roadside corners: high retains six infected, low gains two singles.
+     * Prepared at doors-open, before the courier can see these street corners; the bridge cluster remains separate. */
+    scattered: [[-34, -14, 1], [-34, 2, 1], [-27.2, 19, 1], [-13, 26.5, 1], [6, 26.5, 1], [25, 26.5, 1]] as readonly (readonly [number, number, number])[],
     /** Group homes of the wandering infected (x, z, size); spawned at emergence doors when the escape starts. */
     groups: [
       [-64, 8, 4], [-64, 25, 4], [4, 48, 2], [48, 48, 2], [40, -31, 4],

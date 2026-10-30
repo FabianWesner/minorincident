@@ -1,0 +1,2311 @@
+{
+  "backend": "webgl",
+  "requestedBackend": "webgl2",
+  "tier": "low",
+  "actualTier": "low",
+  "frames": 60,
+  "timing": {
+    "openMs": 0,
+    "loadMs": 3112,
+    "runMs": 9367,
+    "sceneMs": 12479
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "drawCallsMax",
+        "pass": true,
+        "value": 40,
+        "limit": 600
+      },
+      {
+        "name": "trianglesMax",
+        "pass": true,
+        "value": 126276,
+        "limit": 500000
+      },
+      {
+        "name": "courierVisibleShare",
+        "pass": true,
+        "value": 0.977,
+        "limit": 0.6
+      },
+      {
+        "name": "courierShareSampled",
+        "pass": true,
+        "value": 3,
+        "limit": 1
+      },
+      {
+        "name": "seeThroughCutPixelsInside",
+        "pass": true,
+        "value": 31143,
+        "limit": 500
+      },
+      {
+        "name": "canvas.f0.varianceMin",
+        "pass": true,
+        "value": 2212.342582127182,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f0.variedTilesMin",
+        "pass": true,
+        "value": 46,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f30.varianceMin",
+        "pass": true,
+        "value": 2269.928434971557,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f30.variedTilesMin",
+        "pass": true,
+        "value": 47,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f59.varianceMin",
+        "pass": true,
+        "value": 2357.324936945409,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f59.variedTilesMin",
+        "pass": true,
+        "value": 46,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f60.varianceMin",
+        "pass": true,
+        "value": 2359.8308272466547,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f60.variedTilesMin",
+        "pass": true,
+        "value": 46,
+        "limit": 8
+      },
+      {
+        "name": "requestedBackend",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      },
+      {
+        "name": "requestedQuality",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      }
+    ]
+  },
+  "seeThroughCut": {
+    "frame": 0,
+    "outside": 0,
+    "inside": 31143,
+    "allowedLens": 0,
+    "unexpectedLensPlacements": [],
+    "strength": 1,
+    "cover": 0,
+    "occluder": "bld.supermarket@-83.0,9.0",
+    "insideMax": 31157
+  },
+  "seeThroughCutSamples": [
+    {
+      "frame": 0,
+      "outside": 0,
+      "inside": 31143,
+      "allowedLens": 0,
+      "unexpectedLensPlacements": [],
+      "strength": 1,
+      "cover": 0,
+      "occluder": "bld.supermarket@-83.0,9.0"
+    },
+    {
+      "frame": 30,
+      "outside": 0,
+      "inside": 31149,
+      "allowedLens": 0,
+      "unexpectedLensPlacements": [],
+      "strength": 1,
+      "cover": 0,
+      "occluder": "bld.supermarket@-83.0,9.0"
+    },
+    {
+      "frame": 60,
+      "outside": 0,
+      "inside": 31157,
+      "allowedLens": 0,
+      "unexpectedLensPlacements": [],
+      "strength": 1,
+      "cover": 0,
+      "occluder": "bld.supermarket@-83.0,9.0"
+    }
+  ],
+  "courierShares": [
+    {
+      "frame": 0,
+      "alphaPixels": 0,
+      "alphaBodyPixels": 0,
+      "bossReveal": {
+        "center": [
+          0.5,
+          0.4060717350601136
+        ],
+        "radius": 0.12,
+        "strength": 0
+      },
+      "megaAlphaRatio": 0,
+      "megaM": null,
+      "visible": 3264,
+      "reference": 3341,
+      "share": 0.9769530080814127,
+      "megaPixels": 0,
+      "megaShare": 0
+    },
+    {
+      "frame": 30,
+      "alphaPixels": 0,
+      "alphaBodyPixels": 0,
+      "bossReveal": {
+        "center": [
+          0.5000000001676406,
+          0.40607173679828173
+        ],
+        "radius": 0.12,
+        "strength": 0
+      },
+      "megaAlphaRatio": 0,
+      "megaM": null,
+      "visible": 3252,
+      "reference": 3327,
+      "share": 0.9774571686203787,
+      "megaPixels": 0,
+      "megaShare": 0
+    },
+    {
+      "frame": 60,
+      "alphaPixels": 0,
+      "alphaBodyPixels": 0,
+      "bossReveal": {
+        "center": [
+          0.5000000000011293,
+          0.40607173676156333
+        ],
+        "radius": 0.12,
+        "strength": 0
+      },
+      "megaAlphaRatio": 0,
+      "megaM": null,
+      "visible": 3234,
+      "reference": 3309,
+      "share": 0.9773345421577516,
+      "megaPixels": 0,
+      "megaShare": 0
+    }
+  ],
+  "courierForeground": [],
+  "vehicleSilhouettes": [],
+  "pixels": [
+    {
+      "frame": 0,
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "mean": [
+          79.66891167534722,
+          48.94631293402778,
+          52.14349175347222
+        ],
+        "variance": 2212.342582127182,
+        "variedTiles": 46,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 30,
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "mean": [
+          79.97307074652778,
+          49.15915798611111,
+          52.24986111111111
+        ],
+        "variance": 2269.928434971557,
+        "variedTiles": 47,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 59,
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "mean": [
+          80.36284722222223,
+          49.423687065972224,
+          52.37135199652778
+        ],
+        "variance": 2357.324936945409,
+        "variedTiles": 46,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 60,
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "mean": [
+          80.37264539930555,
+          49.42995551215278,
+          52.37383246527778
+        ],
+        "variance": 2359.8308272466547,
+        "variedTiles": 46,
+        "tiles": 64
+      }
+    }
+  ],
+  "edgeSamples": [],
+  "lookSamples": [],
+  "ring": null,
+  "contrast": [],
+  "consoleErrors": [],
+  "scene": {
+    "name": "stunning-cut-l3-supermarket",
+    "frame": 0,
+    "placements": [
+      {
+        "id": "bld.pharmacy:122",
+        "asset": "bld.pharmacy",
+        "at": [
+          -111.825,
+          -19.05
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.pharmacy:123",
+        "asset": "bld.pharmacy",
+        "at": [
+          -105.375,
+          -19.05
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.pharmacy:124",
+        "asset": "bld.pharmacy",
+        "at": [
+          -98.925,
+          -19.05
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:125",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -93.955,
+          -22
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:126",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -92.25,
+          -20.78333333333333
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:127",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -92.25,
+          -17.95
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:128",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -92.25,
+          -15.116666666666665
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "bld.cafe-corner:129",
+        "asset": "bld.cafe-corner",
+        "at": [
+          -78.14,
+          -18.501
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.pharmacy:130",
+        "asset": "bld.pharmacy",
+        "at": [
+          -65.50500000000001,
+          -19.05
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.maple-hardware:160",
+        "asset": "bld.maple-hardware",
+        "at": [
+          -109.30000019073486,
+          -8.514999794960023
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "bld.mainstreet-brick:161",
+        "asset": "bld.mainstreet-brick",
+        "at": [
+          -98.64875038146974,
+          -8.49405
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "prop.privacy-fence:163",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -92.25,
+          -11.883333333333335
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:164",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -92.25,
+          -9.05
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:165",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -92.25,
+          -6.216666666666667
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "bld.mainstreet-brick:166",
+        "asset": "bld.mainstreet-brick",
+        "at": [
+          -82.64875,
+          -8.49405
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "bld.joes-diner:167",
+        "asset": "bld.joes-diner",
+        "at": [
+          -71.825,
+          -8.28495
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "prop.privacy-fence:169",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -61.539375,
+          -5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:204",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -113.8388888888889,
+          -13.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:205",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -111.31666666666668,
+          -13.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:206",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -108.79444444444445,
+          -13.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:207",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -106.27222222222223,
+          -13.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:208",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -103.75,
+          -13.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:209",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -101.22777777777777,
+          -13.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:210",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -98.70555555555555,
+          -13.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:211",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -96.18333333333334,
+          -13.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:212",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -93.6611111111111,
+          -13.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:213",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -86.3409090909091,
+          -13.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:214",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -83.82272727272728,
+          -13.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:215",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -81.30454545454546,
+          -13.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:216",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -78.78636363636365,
+          -13.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:217",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -76.26818181818183,
+          -13.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:218",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.75,
+          -13.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:219",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -71.23181818181818,
+          -13.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:220",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -68.71363636363637,
+          -13.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:221",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -66.19545454545455,
+          -13.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:222",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -63.67727272727273,
+          -13.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:223",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -61.15909090909091,
+          -13.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.pharmacy:284",
+        "asset": "bld.pharmacy",
+        "at": [
+          -111.825,
+          7.949999999999999
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.supermarket:285",
+        "asset": "bld.supermarket",
+        "at": [
+          -104.04075,
+          9
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.pharmacy:286",
+        "asset": "bld.pharmacy",
+        "at": [
+          -96.2565,
+          7.949999999999999
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.supermarket:287",
+        "asset": "bld.supermarket",
+        "at": [
+          -82.99075,
+          9
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.pharmacy:288",
+        "asset": "bld.pharmacy",
+        "at": [
+          -75.2065,
+          7.949999999999999
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.pharmacy:289",
+        "asset": "bld.pharmacy",
+        "at": [
+          -68.7565,
+          7.949999999999999
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:290",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -63.881125000000004,
+          5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:291",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -61.360375000000005,
+          5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:322",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -115.4,
+          15.891666666666667
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:323",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -115.4,
+          18.875
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:324",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -115.4,
+          21.858333333333334
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.hedge:325",
+        "asset": "prop.hedge",
+        "at": [
+          -103.3802,
+          15.891666666666667
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.hedge:326",
+        "asset": "prop.hedge",
+        "at": [
+          -103.3802,
+          18.875
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.hedge:327",
+        "asset": "prop.hedge",
+        "at": [
+          -103.3802,
+          21.858333333333334
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:328",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -92.1,
+          15.891666666666667
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:329",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -92.1,
+          18.875
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:330",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -92.1,
+          21.858333333333334
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:331",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -114.10555555555555,
+          14.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:332",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -111.51666666666667,
+          14.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:333",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -108.92777777777778,
+          14.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:334",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -106.33888888888889,
+          14.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:335",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -103.75,
+          14.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:336",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -101.16111111111111,
+          14.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:337",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -98.57222222222222,
+          14.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:338",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -95.98333333333332,
+          14.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:339",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -93.39444444444445,
+          14.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.house-a:340",
+        "asset": "bld.house-a",
+        "at": [
+          -109.3901,
+          18.92875
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "prop.picket-fence:341",
+        "asset": "prop.picket-fence",
+        "at": [
+          -113.560025,
+          23.25
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:342",
+        "asset": "prop.picket-fence",
+        "at": [
+          -110.28007500000001,
+          23.25
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:343",
+        "asset": "prop.picket-fence",
+        "at": [
+          -105.26015000000001,
+          23.25
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.house-d:344",
+        "asset": "bld.house-d",
+        "at": [
+          -97.7401,
+          18.9
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "prop.picket-fence:345",
+        "asset": "prop.picket-fence",
+        "at": [
+          -102.032675,
+          23.25
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:346",
+        "asset": "prop.picket-fence",
+        "at": [
+          -99.737625,
+          23.25
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:347",
+        "asset": "prop.picket-fence",
+        "at": [
+          -95.742575,
+          23.25
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:348",
+        "asset": "prop.picket-fence",
+        "at": [
+          -93.447525,
+          23.25
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:349",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -87.9,
+          15.891666666666667
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:350",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -87.9,
+          18.875
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:351",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -87.9,
+          21.858333333333334
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.hedge:352",
+        "asset": "prop.hedge",
+        "at": [
+          -78.27727333333334,
+          15.891666666666667
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.hedge:353",
+        "asset": "prop.hedge",
+        "at": [
+          -78.27727333333334,
+          18.875
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.hedge:354",
+        "asset": "prop.hedge",
+        "at": [
+          -78.27727333333334,
+          21.858333333333334
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:355",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -69.22272666666667,
+          15.891666666666667
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:356",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -69.22272666666667,
+          18.875
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:357",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -69.22272666666667,
+          21.858333333333334
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:361",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -86.61363636363637,
+          14.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:362",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -84.0409090909091,
+          14.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:363",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -81.46818181818182,
+          14.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:364",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -78.89545454545456,
+          14.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:365",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -76.32272727272728,
+          14.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:366",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.75,
+          14.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:367",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -71.17727272727274,
+          14.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:368",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -68.60454545454546,
+          14.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:369",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -66.03181818181818,
+          14.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:370",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -63.45909090909091,
+          14.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.house-e:372",
+        "asset": "bld.house-e",
+        "at": [
+          -83.08863666666667,
+          18.858175
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "prop.picket-fence:373",
+        "asset": "prop.picket-fence",
+        "at": [
+          -85.81931833333334,
+          23.25
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:374",
+        "asset": "prop.picket-fence",
+        "at": [
+          -80.357955,
+          23.25
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.house-c:375",
+        "asset": "bld.house-c",
+        "at": [
+          -73.75,
+          18.73872
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "prop.picket-fence:376",
+        "asset": "prop.picket-fence",
+        "at": [
+          -76.957955,
+          23.25
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:377",
+        "asset": "prop.picket-fence",
+        "at": [
+          -74.71931833333333,
+          23.25
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:378",
+        "asset": "prop.picket-fence",
+        "at": [
+          -70.66136333333334,
+          23.25
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.house-e:379",
+        "asset": "bld.house-e",
+        "at": [
+          -64.41136333333334,
+          18.858175
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "prop.picket-fence:380",
+        "asset": "prop.picket-fence",
+        "at": [
+          -67.142045,
+          23.25
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:381",
+        "asset": "prop.picket-fence",
+        "at": [
+          -61.68068166666667,
+          23.25
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:561",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -115.4,
+          33.935
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.hedge:566",
+        "asset": "prop.hedge",
+        "at": [
+          -106.62676230769232,
+          34.25625
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:570",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -97.28534461538463,
+          33.935
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.hedge:575",
+        "asset": "prop.hedge",
+        "at": [
+          -87.58242692307694,
+          34.25625
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:579",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -78.61910923076924,
+          33.935
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.hedge:584",
+        "asset": "prop.hedge",
+        "at": [
+          -69.84587153846155,
+          34.25625
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:776",
+        "asset": "prop.picket-fence",
+        "at": [
+          -114.03169057692307,
+          32.75
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:777",
+        "asset": "prop.picket-fence",
+        "at": [
+          -110.0792264423077,
+          32.75
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:778",
+        "asset": "prop.picket-fence",
+        "at": [
+          -107.91091701923078,
+          32.75
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:781",
+        "asset": "prop.picket-fence",
+        "at": [
+          -104.6164078846154,
+          32.75
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:782",
+        "asset": "prop.picket-fence",
+        "at": [
+          -99.29569903846155,
+          32.75
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:785",
+        "asset": "prop.picket-fence",
+        "at": [
+          -95.9846151923077,
+          32.75
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:786",
+        "asset": "prop.picket-fence",
+        "at": [
+          -91.83352105769232,
+          32.75
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:787",
+        "asset": "prop.picket-fence",
+        "at": [
+          -89.1327916346154,
+          32.75
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:790",
+        "asset": "prop.picket-fence",
+        "at": [
+          -85.66659750000001,
+          32.75
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:791",
+        "asset": "prop.picket-fence",
+        "at": [
+          -80.53493865384617,
+          32.75
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:794",
+        "asset": "prop.picket-fence",
+        "at": [
+          -77.25079980769232,
+          32.75
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:795",
+        "asset": "prop.picket-fence",
+        "at": [
+          -73.29833567307695,
+          32.75
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:796",
+        "asset": "prop.picket-fence",
+        "at": [
+          -71.13002625000001,
+          32.75
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:799",
+        "asset": "prop.picket-fence",
+        "at": [
+          -68.54514211538462,
+          32.75
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:800",
+        "asset": "prop.picket-fence",
+        "at": [
+          -64.39404798076924,
+          32.75
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.picket-fence:801",
+        "asset": "prop.picket-fence",
+        "at": [
+          -61.69331855769232,
+          32.75
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.street-lamp:1156",
+        "asset": "prop.street-lamp",
+        "at": [
+          -109,
+          -24
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:1158",
+        "asset": "prop.street-lamp",
+        "at": [
+          -93,
+          -24
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:1160",
+        "asset": "prop.street-lamp",
+        "at": [
+          -77,
+          -24
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:1181",
+        "asset": "prop.street-lamp",
+        "at": [
+          -109,
+          3
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:1182",
+        "asset": "prop.street-lamp",
+        "at": [
+          -100,
+          -3
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:1183",
+        "asset": "prop.street-lamp",
+        "at": [
+          -93,
+          3
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:1184",
+        "asset": "prop.street-lamp",
+        "at": [
+          -84,
+          -3
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:1185",
+        "asset": "prop.street-lamp",
+        "at": [
+          -77,
+          3
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:1186",
+        "asset": "prop.street-lamp",
+        "at": [
+          -68,
+          -3
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:1206",
+        "asset": "prop.street-lamp",
+        "at": [
+          -109,
+          31
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:1207",
+        "asset": "prop.street-lamp",
+        "at": [
+          -100,
+          25
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:1208",
+        "asset": "prop.street-lamp",
+        "at": [
+          -93,
+          31
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:1209",
+        "asset": "prop.street-lamp",
+        "at": [
+          -84,
+          25
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:1210",
+        "asset": "prop.street-lamp",
+        "at": [
+          -77,
+          31
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:1211",
+        "asset": "prop.street-lamp",
+        "at": [
+          -68,
+          25
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-sign:1233",
+        "asset": "prop.street-sign",
+        "at": [
+          -116.5,
+          31.5
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l3-fighting-15",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -100,
+          -23.6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l3-fighting-16",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -98.15,
+          -23.6
+        ],
+        "yawDeg": 11.5
+      },
+      {
+        "id": "l3-fighting-17",
+        "asset": "prop.barricade",
+        "at": [
+          -102.50432914190873,
+          -23.769030116872177
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l3-looted-32",
+        "asset": "decay.looted-store",
+        "at": [
+          -104,
+          -3.4
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l3-merchandise-37",
+        "asset": "prop.shopping-cart",
+        "at": [
+          -101.6,
+          -1.8
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l3-merchandise-41",
+        "asset": "prop.crates",
+        "at": [
+          -64.8,
+          3.3
+        ],
+        "yawDeg": 297.9
+      },
+      {
+        "id": "l3-damaged-sign-47",
+        "asset": "decay.damaged-sign",
+        "at": [
+          -80,
+          -3.7
+        ],
+        "yawDeg": 17.2
+      },
+      {
+        "id": "l3-abandoned-50",
+        "asset": "veh.sedan-blue",
+        "at": [
+          -64,
+          1.3
+        ],
+        "yawDeg": 5.7
+      },
+      {
+        "id": "l3-crashed-59",
+        "asset": "veh.sedan-red",
+        "at": [
+          -72,
+          26.8
+        ],
+        "yawDeg": 34.4
+      },
+      {
+        "id": "l3-garden-67",
+        "asset": "prop.broken-chair",
+        "at": [
+          -80,
+          32
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l3-blood-78",
+        "asset": "decal.blood-trail",
+        "at": [
+          -67.6,
+          26.2
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l3-broken-window-0",
+        "asset": "decay.broken-glass",
+        "at": [
+          -109.30000019073486,
+          -3.6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l3-broken-window-1",
+        "asset": "decay.broken-glass",
+        "at": [
+          -98.64875038146974,
+          -3.6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l3-broken-window-2",
+        "asset": "decay.broken-glass",
+        "at": [
+          -82.64875,
+          -3.6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l3-broken-window-3",
+        "asset": "decay.broken-glass",
+        "at": [
+          -71.825,
+          -3.6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l3-broken-window-16",
+        "asset": "decay.broken-glass",
+        "at": [
+          -111.825,
+          3.6
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "l3-broken-window-17",
+        "asset": "decay.broken-glass",
+        "at": [
+          -104.04075,
+          3.6
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "l3-broken-window-18",
+        "asset": "decay.broken-glass",
+        "at": [
+          -96.2565,
+          3.6
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "l3-broken-window-19",
+        "asset": "decay.broken-glass",
+        "at": [
+          -82.99075,
+          3.6
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "l3-broken-window-20",
+        "asset": "decay.broken-glass",
+        "at": [
+          -75.2065,
+          3.6
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "l3-broken-window-21",
+        "asset": "decay.broken-glass",
+        "at": [
+          -68.7565,
+          3.6
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "l3-roadblock-0-0",
+        "asset": "veh.sedan-blue",
+        "at": [
+          -72,
+          -3
+        ],
+        "yawDeg": 85.4
+      },
+      {
+        "id": "l3-roadblock-0-1",
+        "asset": "veh.school-bus",
+        "at": [
+          -71,
+          0
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l3-roadblock-0-2",
+        "asset": "veh.sedan-blue",
+        "at": [
+          -72,
+          3
+        ],
+        "yawDeg": 94.6
+      },
+      {
+        "id": "l3-roadblock-1-2",
+        "asset": "veh.sedan-blue",
+        "at": [
+          -72,
+          -24
+        ],
+        "yawDeg": 94.6
+      }
+    ],
+    "actors": [
+      {
+        "id": "courier",
+        "kind": "courier",
+        "entity": 1
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 1,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    },
+    "marketDoors": null,
+    "armyBoom": null,
+    "scene": "stunning-cut-l3-supermarket",
+    "frame": 60,
+    "tick": 60,
+    "backend": "webgl",
+    "quality": "low",
+    "convoyOverlapFrames": 0,
+    "courierAttachments": {
+      "samples": 6,
+      "gapMaxCm": 0,
+      "frame": -1,
+      "worst": null,
+      "worstAt": null,
+      "attachments": 0
+    },
+    "animalLimbs": {
+      "samples": 0,
+      "gapMaxCm": 0,
+      "frame": -1,
+      "actor": null
+    },
+    "corgiTongue": {
+      "idleSamples": 0,
+      "idleOutFrames": 0,
+      "firstIdleOut": -1,
+      "movingSamples": 0,
+      "movingInFrames": 0,
+      "firstMovingIn": -1
+    },
+    "propPenetration": {
+      "samples": 60,
+      "framesMax": 0,
+      "pairs": []
+    },
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "bodies": [],
+    "attackOverlap": {
+      "depthCm": 0,
+      "frame": 0,
+      "actor": ""
+    },
+    "wheels": {},
+    "lodPlaceholders": {
+      "frames": 0,
+      "firstFrame": -1,
+      "assets": []
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 40,
+        "p95": 40,
+        "max": 40
+      },
+      "triangles": {
+        "p50": 126276,
+        "p95": 126276,
+        "max": 126276
+      },
+      "shadowDrawCalls": {
+        "p50": 23,
+        "p95": 23,
+        "max": 23
+      },
+      "shadowTriangles": {
+        "p50": 94638,
+        "p95": 94638,
+        "max": 94638
+      },
+      "stepMs": {
+        "p50": 3.3,
+        "p95": 4.3,
+        "max": 7.6
+      },
+      "lastFrame": {
+        "drawCalls": 40,
+        "triangles": 126276,
+        "shadowDrawCalls": 23,
+        "shadowTriangles": 94638,
+        "stepMs": 2.3999996185302734,
+        "categories": {
+          "other": 25,
+          "shadows": 23,
+          "buildings": 11,
+          "props": 4
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "grounding": {
+      "corpses": 0,
+      "corpseOffMaxCm": 0,
+      "pickups": 0,
+      "pickupOffMaxCm": 0,
+      "worst": []
+    },
+    "pursuit": {
+      "actors": {},
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "hullWindups": 0,
+      "hullHits": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "aim": {
+      "shots": 0,
+      "hitShare": 0,
+      "intentErrorMaxDeg": 0,
+      "misses": []
+    },
+    "cure": null,
+    "megaAlpha": null,
+    "minigun": null,
+    "specials": [],
+    "heldProps": {
+      "samples": 0,
+      "intersections": 0,
+      "holds": {}
+    },
+    "seeThrough": {
+      "frames": 60,
+      "solidRadiusMax": 0.21,
+      "occluders": [
+        "bld.supermarket@-83.0,9.0"
+      ],
+      "cutLowProps": [],
+      "cutPlacements": [
+        "bld.supermarket@-83.0,9.0"
+      ]
+    },
+    "appearance": [],
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "variety": {
+      "infected": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      },
+      "pedestrian": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      }
+    },
+    "actors": {
+      "courier": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          -91.07,
+          6.7
+        ],
+        "yawDeg": 0,
+        "travelM": 0,
+        "maxX": -91.06999969482422,
+        "heldWeapon": null,
+        "targetId": null,
+        "state": "idle",
+        "health": 100,
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -91.07,
+            6.7
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 2.9,
+          "torsoPitchMaxDeg": 3.5,
+          "contacts": 2,
+          "slideMaxCm": 15,
+          "slideP95Cm": 12,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0.4,
+          "sinkMaxCm": 4.5,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 60,
+      "sim": {
+        "courier": 1,
+        "actors": 1
+      },
+      "drawn": {
+        "vehicle": 0,
+        "courier": 1
+      }
+    },
+    "lods": {
+      "bld.pharmacy:122": "culled",
+      "bld.pharmacy:123": "culled",
+      "bld.pharmacy:124": "culled",
+      "prop.privacy-fence:125": "culled",
+      "prop.privacy-fence:126": "n/a",
+      "prop.privacy-fence:127": "culled",
+      "prop.privacy-fence:128": "n/a",
+      "bld.cafe-corner:129": "culled",
+      "bld.pharmacy:130": "culled",
+      "bld.maple-hardware:160": "culled",
+      "bld.mainstreet-brick:161": "lod2",
+      "prop.privacy-fence:163": "n/a",
+      "prop.privacy-fence:164": "lod2",
+      "prop.privacy-fence:165": "n/a",
+      "bld.mainstreet-brick:166": "lod2",
+      "bld.joes-diner:167": "culled",
+      "prop.privacy-fence:169": "culled",
+      "prop.privacy-fence:204": "n/a",
+      "prop.privacy-fence:205": "culled",
+      "prop.privacy-fence:206": "culled",
+      "prop.privacy-fence:207": "culled",
+      "prop.privacy-fence:208": "culled",
+      "prop.privacy-fence:209": "culled",
+      "prop.privacy-fence:210": "culled",
+      "prop.privacy-fence:211": "culled",
+      "prop.privacy-fence:212": "n/a",
+      "prop.privacy-fence:213": "n/a",
+      "prop.privacy-fence:214": "culled",
+      "prop.privacy-fence:215": "culled",
+      "prop.privacy-fence:216": "culled",
+      "prop.privacy-fence:217": "culled",
+      "prop.privacy-fence:218": "culled",
+      "prop.privacy-fence:219": "culled",
+      "prop.privacy-fence:220": "culled",
+      "prop.privacy-fence:221": "culled",
+      "prop.privacy-fence:222": "culled",
+      "prop.privacy-fence:223": "n/a",
+      "bld.pharmacy:284": "lod2",
+      "bld.supermarket:285": "lod2",
+      "bld.pharmacy:286": "lod1",
+      "bld.supermarket:287": "lod2",
+      "bld.pharmacy:288": "culled",
+      "bld.pharmacy:289": "culled",
+      "prop.privacy-fence:290": "n/a",
+      "prop.privacy-fence:291": "n/a",
+      "prop.privacy-fence:322": "culled",
+      "prop.privacy-fence:323": "culled",
+      "prop.privacy-fence:324": "n/a",
+      "prop.hedge:325": "culled",
+      "prop.hedge:326": "culled",
+      "prop.hedge:327": "culled",
+      "prop.privacy-fence:328": "lod2",
+      "prop.privacy-fence:329": "culled",
+      "prop.privacy-fence:330": "n/a",
+      "prop.privacy-fence:331": "culled",
+      "prop.privacy-fence:332": "culled",
+      "prop.privacy-fence:333": "culled",
+      "prop.privacy-fence:334": "culled",
+      "prop.privacy-fence:335": "culled",
+      "prop.privacy-fence:336": "culled",
+      "prop.privacy-fence:337": "culled",
+      "prop.privacy-fence:338": "culled",
+      "prop.privacy-fence:339": "lod2",
+      "bld.house-a:340": "culled",
+      "prop.picket-fence:341": "culled",
+      "prop.picket-fence:342": "culled",
+      "prop.picket-fence:343": "culled",
+      "bld.house-d:344": "culled",
+      "prop.picket-fence:345": "culled",
+      "prop.picket-fence:346": "culled",
+      "prop.picket-fence:347": "culled",
+      "prop.picket-fence:348": "culled",
+      "prop.privacy-fence:349": "lod2",
+      "prop.privacy-fence:350": "culled",
+      "prop.privacy-fence:351": "n/a",
+      "prop.hedge:352": "culled",
+      "prop.hedge:353": "culled",
+      "prop.hedge:354": "culled",
+      "prop.privacy-fence:355": "n/a",
+      "prop.privacy-fence:356": "culled",
+      "prop.privacy-fence:357": "n/a",
+      "prop.privacy-fence:361": "lod2",
+      "prop.privacy-fence:362": "culled",
+      "prop.privacy-fence:363": "culled",
+      "prop.privacy-fence:364": "culled",
+      "prop.privacy-fence:365": "culled",
+      "prop.privacy-fence:366": "culled",
+      "prop.privacy-fence:367": "culled",
+      "prop.privacy-fence:368": "culled",
+      "prop.privacy-fence:369": "culled",
+      "prop.privacy-fence:370": "n/a",
+      "bld.house-e:372": "lod1",
+      "prop.picket-fence:373": "culled",
+      "prop.picket-fence:374": "culled",
+      "bld.house-c:375": "culled",
+      "prop.picket-fence:376": "culled",
+      "prop.picket-fence:377": "culled",
+      "prop.picket-fence:378": "culled",
+      "bld.house-e:379": "culled",
+      "prop.picket-fence:380": "culled",
+      "prop.picket-fence:381": "culled",
+      "prop.privacy-fence:561": "culled",
+      "prop.hedge:566": "culled",
+      "prop.privacy-fence:570": "culled",
+      "prop.hedge:575": "culled",
+      "prop.privacy-fence:579": "culled",
+      "prop.hedge:584": "culled",
+      "prop.picket-fence:776": "culled",
+      "prop.picket-fence:777": "culled",
+      "prop.picket-fence:778": "culled",
+      "prop.picket-fence:781": "culled",
+      "prop.picket-fence:782": "culled",
+      "prop.picket-fence:785": "culled",
+      "prop.picket-fence:786": "culled",
+      "prop.picket-fence:787": "culled",
+      "prop.picket-fence:790": "culled",
+      "prop.picket-fence:791": "culled",
+      "prop.picket-fence:794": "culled",
+      "prop.picket-fence:795": "culled",
+      "prop.picket-fence:796": "culled",
+      "prop.picket-fence:799": "culled",
+      "prop.picket-fence:800": "culled",
+      "prop.picket-fence:801": "culled",
+      "prop.street-lamp:1156": "culled",
+      "prop.street-lamp:1158": "culled",
+      "prop.street-lamp:1160": "culled",
+      "prop.street-lamp:1181": "culled",
+      "prop.street-lamp:1182": "culled",
+      "prop.street-lamp:1183": "lod2",
+      "prop.street-lamp:1184": "culled",
+      "prop.street-lamp:1185": "culled",
+      "prop.street-lamp:1186": "culled",
+      "prop.street-lamp:1206": "culled",
+      "prop.street-lamp:1207": "culled",
+      "prop.street-lamp:1208": "culled",
+      "prop.street-lamp:1209": "culled",
+      "prop.street-lamp:1210": "culled",
+      "prop.street-lamp:1211": "culled",
+      "prop.street-sign:1233": "culled",
+      "l3-fighting-15": "culled",
+      "l3-fighting-16": "culled",
+      "l3-fighting-17": "culled",
+      "l3-looted-32": "culled",
+      "l3-merchandise-37": "culled",
+      "l3-merchandise-41": "culled",
+      "l3-damaged-sign-47": "culled",
+      "l3-abandoned-50": "culled",
+      "l3-crashed-59": "culled",
+      "l3-garden-67": "culled",
+      "l3-blood-78": "n/a",
+      "l3-broken-window-0": "culled",
+      "l3-broken-window-1": "lod2",
+      "l3-broken-window-2": "culled",
+      "l3-broken-window-3": "culled",
+      "l3-broken-window-16": "culled",
+      "l3-broken-window-17": "lod2",
+      "l3-broken-window-18": "lod2",
+      "l3-broken-window-19": "culled",
+      "l3-broken-window-20": "culled",
+      "l3-broken-window-21": "culled",
+      "l3-roadblock-0-0": "culled",
+      "l3-roadblock-0-1": "culled",
+      "l3-roadblock-0-2": "culled",
+      "l3-roadblock-1-2": "culled"
+    },
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 4,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {
+      "bld.house-a:340": {
+        "closedFrames": 0,
+        "firstClosedFrame": null,
+        "inDoorwayFrames": 0,
+        "maxOpen": 0
+      }
+    },
+    "log": []
+  },
+  "clipping": {
+    "static": [
+      {
+        "a": "l3-roadblock-0-1",
+        "b": "l3-roadblock-0-2",
+        "assetA": "veh.school-bus",
+        "assetB": "veh.sedan-blue",
+        "intersectingTriangles": 6715,
+        "region": {
+          "min": [
+            -72.29159545898438,
+            0.19498655200004578,
+            1.5606908798217773
+          ],
+          "max": [
+            -71.29508209228516,
+            1.0920201539993286,
+            4.060833930969238
+          ]
+        },
+        "regionCm": [
+          100,
+          90,
+          250
+        ]
+      },
+      {
+        "a": "l3-roadblock-0-0",
+        "b": "l3-roadblock-0-1",
+        "assetA": "veh.sedan-blue",
+        "assetB": "veh.school-bus",
+        "intersectingTriangles": 5607,
+        "region": {
+          "min": [
+            -72.31080627441406,
+            0.19498655200004578,
+            -3.962723970413208
+          ],
+          "max": [
+            -71.25348663330078,
+            1.0920201539993286,
+            -1.5593175888061523
+          ]
+        },
+        "regionCm": [
+          106,
+          90,
+          240
+        ]
+      },
+      {
+        "a": "l3-broken-window-3",
+        "b": "l3-roadblock-0-0",
+        "assetA": "decay.broken-glass",
+        "assetB": "veh.sedan-blue",
+        "intersectingTriangles": 164,
+        "region": {
+          "min": [
+            -71.50292205810547,
+            0.029986349865794182,
+            -3.9767942428588867
+          ],
+          "max": [
+            -71.30680084228516,
+            0.09399712830781937,
+            -3.608919382095337
+          ]
+        },
+        "regionCm": [
+          20,
+          6,
+          37
+        ]
+      },
+      {
+        "a": "prop.street-lamp:1211",
+        "b": "l3-blood-78",
+        "assetA": "prop.street-lamp",
+        "assetB": "decal.blood-trail",
+        "intersectingTriangles": 18,
+        "region": {
+          "min": [
+            -68.29924774169922,
+            0.07500000298023224,
+            24.899999618530273
+          ],
+          "max": [
+            -67.70075225830078,
+            0.07500000298023224,
+            25.29924964904785
+          ]
+        },
+        "regionCm": [
+          60,
+          0,
+          40
+        ]
+      }
+    ],
+    "actors": [],
+    "gunBodies": [],
+    "heldProps": [],
+    "summary": {
+      "gunBodyHits": 0,
+      "staticPairs": 4,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}
