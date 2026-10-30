@@ -412,7 +412,12 @@ export class Hud {
     }
     if (mission?.def.l8 && mission.state.steps.depart?.status === 'active') {
       const zoo = mission.l8!, car = this.game.world.vehicles!.cars.get(zoo.state.carId)?.entity.vehicle;
-      const missing = zoo.passengers().map(id => this.game.world.entities.get(id)!).filter(e => !car?.passengers?.some(p => p.id === e.id && p.phase === 'seated'))
+      const missing = zoo.passengers().map(id => this.game.world.entities.get(id)!).filter(e => {
+        if (car?.passengers?.some(p => p.id === e.id && p.phase === 'seated')) return false;
+        // A companion at heel is already with the player; do not turn it into a search target.
+        if (e.companion?.state === 'follow' && e.companion.following !== false && Math.hypot(e.transform.x - px, e.transform.z - pz) <= 4) return false;
+        return true;
+      })
         .sort((a, b) => Math.hypot(a.transform.x - px, a.transform.z - pz) - Math.hypot(b.transform.x - px, b.transform.z - pz));
       const target = missing[0];
       // The objective already carries the boarding count; this line only locates its nearest missing passenger.
