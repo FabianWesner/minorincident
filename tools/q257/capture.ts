@@ -33,7 +33,7 @@ async function forceLod(lod: 'lod0' | 'lod1' | 'lod2') {
 try {
   await session.open();
   for (const [index, models] of groups.entries()) {
-    if (process.argv.includes('--l5-only')) continue;
+    if (process.argv.includes('--l5-only') || process.argv.includes('--details-only')) continue;
     if (process.env.Q257_GROUP && Number(process.env.Q257_GROUP) !== index + 1) continue;
     const spec: SceneSpec = { name: 'q257-height-lineup', ground: 'sidewalk', time: 'L1', dof: false, size: 40,
       actors: [...models.flatMap((model, i) => model === 'npc.brother' ? [] : [{ id: `npc-${i}`, kind: 'pedestrian' as const, at: [(i - 3) * 1.8, 0] as [number, number], yaw: 0, look: { model, accessories: ['none'] }, state: 'idle' as const }]), { id: 'heroine', kind: 'courier', at: [5.4, 0], yaw: 0, look: { model: 'female' }, state: 'idle' }],
@@ -78,6 +78,6 @@ try {
     }
   }
   }
-  writeFileSync(resolve(out, process.argv.includes('--corpses-only') ? 'corpse-receipts.json' : process.argv.includes('--l5-only') ? 'l5-receipts.json' : 'receipts.json'), JSON.stringify({ receipts, errors: session.errors }, null, 2) + '\n');
+  writeFileSync(resolve(out, process.argv.includes('--corpses-only') ? 'corpse-receipts.json' : process.argv.includes('--l5-only') ? 'l5-receipts.json' : process.argv.includes('--details-only') ? 'detail-receipts.json' : 'receipts.json'), JSON.stringify({ receipts, errors: session.errors }, null, 2) + '\n');
   if (session.errors.length) throw Error(session.errors.join('\n'));
 } finally { await session.close(); stopServer(); }
