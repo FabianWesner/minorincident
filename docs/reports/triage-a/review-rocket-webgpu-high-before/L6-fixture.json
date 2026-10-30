@@ -1,0 +1,65 @@
+{
+  "name": "rocket-L6",
+  "note": "Late-level acceptance audit: reuse the unchanged shared combat fixture at the game camera in the quality/zoom/backend matrix.",
+  "ground": "asphalt",
+  "size": 40,
+  "time": "L6",
+  "dof": false,
+  "infectedCap": 200,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "loadout": [
+        "weapon.rocket-launcher",
+        "weapon.kick"
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "front",
+      "kind": "infected",
+      "at": [
+        8,
+        0
+      ],
+      "state": "idle",
+      "archetype": "infected.runner"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      5,
+      0
+    ]
+  },
+  "script": [
+    {
+      "frame": 5,
+      "actor": "courier",
+      "do": {
+        "attack": "front",
+        "seconds": 0.5
+      }
+    }
+  ],
+  "frames": 180,
+  "shots": [
+    10,
+    60,
+    120,
+    180
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000
+  },
+  "sheet": 15
+}

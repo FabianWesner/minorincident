@@ -58,6 +58,17 @@ try {
       results.push(await runSpec(session, spec, { out: `${out}/${name}`, shots: spec.shots ?? [spec.frames ?? 60], sheet: spec.sheet ?? 30 }));
     }
     writeFileSync(`${out}/summary.json`, JSON.stringify(results.map(r => ({ pass: r.pass, failed: r.failed, files: r.files, sheet: r.sheet })), null, 2));
+  } else if (mode === 'rocket') {
+    for (const time of ['L6', 'L10-night'] as const) {
+      const spec = readSpec('tests/scenes/catalog/qa-late-rocket-alpha.json');
+      spec.name = `rocket-${time}`; spec.time = time;
+      spec.actors![1].archetype = 'infected.runner';
+      spec.script = [{ frame: 5, actor: 'courier', do: { attack: 'front', seconds: .5 } }];
+      spec.frames = 180; spec.shots = [10, 60, 120, 180]; spec.sheet = 15;
+      writeFileSync(`${out}/${time}-fixture.json`, JSON.stringify(spec, null, 2));
+      const result = await runSpec(session, spec, { out: `${out}/${time}`, frames: 180, shots: spec.shots, sheet: 15 });
+      assert.ok(result.pass, JSON.stringify(result.failed));
+    }
   } else if (mode === 'blood') {
     const base = readSpec('tests/scenes/catalog/polish-blood-ground.json');
     for (const time of ['L6', 'L8-zoo', 'L10-night'] as const) {
