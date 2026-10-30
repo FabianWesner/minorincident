@@ -437,6 +437,8 @@ export class Hud {
       const waiting = active && (ending || world.tick - mission.state.steps[active.id].started >= 300);
       setHidden(this.survivorText, true);
       this.waitCue(waiting && target ? { ...target, name: ending ? 'Cure dispersal' : active.text, id: active.id } : undefined, px, pz);
+      // Navigation/console objectives already name their destination and distance in the shared tracker.
+      if (!ending) setHidden(this.cueText, true);
       return;
     }
     const l5 = mission?.state.l5, show = !!mission && !!l5 && l5.phase !== 'cellar';
