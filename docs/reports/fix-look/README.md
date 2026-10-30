@@ -1,1 +1,2 @@
 - Q-248 fixed: triage-b “28 m stations” replaced with seeded 25–34 m spacing, eight compositions and sparse single-prop stops; lantern cadence retained. Viewed R1–R5 before/after, high/low, z1/z1.5 ([captures](captures/), [determinism](checks/q248-layout.json)); zero late shader builds.
+- Q-92 fixed: triage-a “LOD silhouette is warped” retain all eight Jersey corners; road strips survive too. Viewed before/after high/low z1/z1.5; authored LODs 10,558/8,763 triangles, caps 22,000/14,000 ([validation](checks/q92-validation.log.txt)); zero late shader builds.
