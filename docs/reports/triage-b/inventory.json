@@ -488,12 +488,12 @@
     "204"
   ],
   "counts": {
-    "fixed": 176,
-    "open": 18,
+    "fixed": 177,
+    "open": 17,
     "obsolete": 9
   },
   "main": "305071ff2",
-  "fixedBefore": 170,
+  "fixedBefore": 171,
   "fixedNow": [
     "94",
     "146",
@@ -506,7 +506,12 @@
   "inlineSourceIds": [
     "248"
   ],
-  "laterMainEvidence": {
-    "94": "659138661"
-  }
+  "reusedLaneEvidence": {
+    "94": {
+      "source": "659138661",
+      "lane": "lane/triage-a",
+      "includedIn": "e0e3b4176"
+    }
+  },
+  "mainSurvivalCheck": "01aa4fe59"
 }
