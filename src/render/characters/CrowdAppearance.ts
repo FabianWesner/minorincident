@@ -109,7 +109,7 @@ export function markCrowdAppearance(geometry: BufferGeometry): void {
     const centre = new Vector3((front + back) * .5, brow.y - .09 * unit, brow.centre.z);
     // The covered scalp belongs inside the cap, not at the old chibi hair
     // crown. Its reduced dome prevents a tuft piercing a shallow flat cap.
-    const radii = new Vector3(Math.max(.08 * unit, (front - back) * .5), .16 * unit, brow.width * .5), alternate = new Vector3();
+    const radii = new Vector3(Math.max(.08 * unit, (front - back) * .5), .10 * unit, brow.width * .5), alternate = new Vector3();
     for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getY(i) !== -6 && parts.getW(i) < 1024 && !parts.getZ(i)) {
       point.fromBufferAttribute(position, i).applyMatrix4(inverse);
       const t = Math.max(0, Math.min(1, (point.y - (brow.y - .045 * unit)) / (.065 * unit))), weight = t * t * (3 - 2 * t);
