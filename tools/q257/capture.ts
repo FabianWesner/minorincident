@@ -37,9 +37,16 @@ try {
     if (process.env.Q257_GROUP && Number(process.env.Q257_GROUP) !== index + 1) continue;
     const spec: SceneSpec = { name: 'q257-height-lineup', ground: 'sidewalk', time: 'L1', dof: false, size: 40,
       actors: [...models.flatMap((model, i) => model === 'npc.brother' ? [] : [{ id: `npc-${i}`, kind: 'pedestrian' as const, at: [(i - 3) * 1.8, 0] as [number, number], yaw: 0, look: { model, accessories: ['none'] }, state: 'idle' as const }]), { id: 'heroine', kind: 'courier', at: [5.4, 0], yaw: 0, look: { model: 'female' }, state: 'idle' }],
-      props: models.includes('npc.brother') ? [{ id: 'brother', asset: 'npc.brother', at: [3.6, 0], yaw: 0 }] : [],
       camera: { mode: 'pose', position: [0, 1, 15.6], target: [0, 1, 0] } };
     await session.load(spec); await forceLod('lod1');
+    if (models.includes('npc.brother')) {
+      await session.page.evaluate(x => {
+        const { world } = (window.__SCENE__ as unknown as { game: { world: import('../../src/sim/world/SimWorld').SimWorld } }).game;
+        const id = world.npcs!.escorts.spawn({ x, z: 0 }, true), child = world.entities.get(id)!;
+        child.escort!.order = child.escort!.state = 'wait';
+      }, (models.indexOf('npc.brother') - 3) * 1.8);
+      await session.step(3); await session.ready();
+    }
     if (!process.argv.includes('--corpses-only')) await shot(`lineup-${index + 1}`, models.join(' · ') + ' | heroine');
     if (phase === 'after') {
       const adults = models.flatMap((model, i) => ['npc.brother', 'npc.civilian-kid'].includes(model) ? [] : [`npc-${i}`]);

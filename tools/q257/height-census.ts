@@ -48,7 +48,11 @@ for (const row of census.rows.filter(r => !r.error)) {
   if (after.route === 'civilian GPU' || after.route === 'CharacterView' || after.route === 'escort') {
     for (const [lod, measured] of Object.entries(after.tiers)) {
       const id = row.id, target = civilianHeight(id), ratio = measured.height / heroine;
-      if (row.child) { const before = prod.tiers[lod] ?? prod.tiers.lod0; if (Math.abs(measured.height - before.height) > .0001) errors.push(`${id} ${lod}: child height changed`); }
+      if (row.child) {
+        const before = prod.tiers[lod] ?? prod.tiers.lod0, expected = before.height / 1.8 * heroine;
+        if (Math.abs(measured.height - expected) > .001) errors.push(`${id} ${lod}: child/adult ratio changed`);
+        if (measured.height >= heroine * .95) errors.push(`${id} ${lod}: child not shorter than every adult class`);
+      }
       else if (/elderly/.test(id)) { if (measured.height < adultMaleStandingHeight * .95 - .001 || measured.height > adultMaleStandingHeight + .001) errors.push(`${id} ${lod}: elderly height ${measured.height}`); }
       else if (target === heroineStandingHeight) { if (ratio < .95 || ratio > 1.05) errors.push(`${id} ${lod}: female/heroine ratio ${ratio}`); }
       else if (ratio < 1.05 || ratio > 1.12) errors.push(`${id} ${lod}: male/heroine ratio ${ratio}`);
@@ -59,7 +63,7 @@ for (const row of census.rows.filter(r => !r.error)) {
 const fmt = (n: number) => n.toFixed(3), value = (s: { tiers: Record<string, Size> }) => (s.tiers.lod1 ?? s.tiers.lod0).height;
 const markdown = [
   '# q257 height census', '',
-  `Heroine skinned bind height: **${fmt(heroine)} m**. Delivered healthy women target ${fmt(heroineStandingHeight)} m; men ${fmt(adultMaleStandingHeight)} m (+8%); elderly man ${fmt(civilianHeight('npc.civilian-elderly'))} m (male × 0.95). **${errors.length} class/child errors** across every delivered LOD.`,
+  `Heroine skinned bind height: **${fmt(heroine)} m**. Delivered healthy women target ${fmt(heroineStandingHeight)} m; men ${fmt(adultMaleStandingHeight)} m (+8%); elderly man ${fmt(civilianHeight('npc.civilian-elderly'))} m (male × 0.95). Children preserve their PROD child/adult ratios against women: child ${fmt(civilianHeight('npc.civilian-kid'))} m (1.4744 / 1.8); brother ${fmt(civilianHeight('npc.brother'))} m (1.4265 / 1.8). **${errors.length} class/child errors** across every delivered LOD.`,
   'PROD batch 40 = `fd8f56ca3`; main before q257 = `73a855ef6` (q249 rollout). GPU rows measure the actual encoded geometry referenced by each revision’s delivery manifest, after its offline normalizer; they do not assume a target was applied. The table uses the normal game LOD1; JSON records LOD0/1/2, ground planes and exact delivery files. Character/escort rows include their runtime uniform fit. Retained legacy assets have no production spawn and are measured separately; infected archetypes retain their authored heights/poses.', '',
   '| Figure | Renderer | PROD 40 (m) | main (m) | after (m) |', '|---|---|---:|---:|---:|',
   `| Heroine | CharacterView | ${fmt(heroine)} | ${fmt(heroine)} | ${fmt(heroine)} |`,

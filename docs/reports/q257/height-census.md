@@ -1,6 +1,6 @@
 # q257 height census
 
-Heroine skinned bind height: **1.454 m**. Delivered healthy women target 1.454 m; men 1.570 m (+8%); elderly man 1.492 m (male × 0.95). **0 class/child errors** across every delivered LOD.
+Heroine skinned bind height: **1.454 m**. Delivered healthy women target 1.454 m; men 1.570 m (+8%); elderly man 1.492 m (male × 0.95). Children preserve their PROD child/adult ratios against women: child 1.191 m (1.4744 / 1.8); brother 1.152 m (1.4265 / 1.8). **0 class/child errors** across every delivered LOD.
 PROD batch 40 = `fd8f56ca3`; main before q257 = `73a855ef6` (q249 rollout). GPU rows measure the actual encoded geometry referenced by each revision’s delivery manifest, after its offline normalizer; they do not assume a target was applied. The table uses the normal game LOD1; JSON records LOD0/1/2, ground planes and exact delivery files. Character/escort rows include their runtime uniform fit. Retained legacy assets have no production spawn and are measured separately; infected archetypes retain their authored heights/poses.
 
 | Figure | Renderer | PROD 40 (m) | main (m) | after (m) |
@@ -37,10 +37,10 @@ PROD batch 40 = `fd8f56ca3`; main before q257 = `73a855ef6` (q249 rollout). GPU 
 | inf.brute | retained legacy asset | 2.204 | 2.204 | 2.204 |
 | npc.civilian-adult-m | civilian GPU | 1.800 | 1.685 | 1.570 |
 | npc.civilian-adult-f | civilian GPU | 1.800 | 1.725 | 1.454 |
-| npc.civilian-kid | civilian GPU | 1.474 | 1.474 | 1.474 |
+| npc.civilian-kid | civilian GPU | 1.474 | 1.474 | 1.191 |
 | npc.civilian-elderly | civilian GPU | 1.800 | 1.339 | 1.492 |
 | npc.patient-zero-courier | retained legacy asset | 1.800 | 1.752 | 1.752 |
-| npc.brother | escort | 1.427 | 1.427 | 1.427 |
+| npc.brother | escort | 1.427 | 1.427 | 1.152 |
 | npc.mrs-alvarez | escort | 1.800 | 1.693 | 1.454 |
 | npc.police-officer | civilian GPU | 1.800 | 1.418 | 1.570 |
 | npc.paramedic | retained legacy asset | 1.800 | 1.800 | 1.800 |

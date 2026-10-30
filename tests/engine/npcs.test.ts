@@ -23,8 +23,14 @@ test('civilians: seeded grab → bite → down → glowing eyes → rising → i
   expect(adultMaleStandingHeight / heroineStandingHeight).toBeLessThanOrEqual(1.12);
   expect(civilianHeight('npc.civilian-elderly') / adultMaleStandingHeight).toBeGreaterThanOrEqual(.95);
   expect(civilianHeight('npc.civilian-elderly')).toBeLessThanOrEqual(adultMaleStandingHeight);
-  expect(civilianHeight('npc.civilian-kid')).toBe(1.4744);
-  expect(civilianHeight('npc.brother')).toBe(1.4265);
+  expect(civilianHeight('npc.civilian-kid') / heroineStandingHeight).toBeCloseTo(1.4744 / 1.8, 6);
+  expect(civilianHeight('npc.brother') / heroineStandingHeight).toBeCloseTo(1.4265 / 1.8, 6);
+  for (const child of ['npc.civilian-kid', 'npc.brother']) {
+    expect(civilianHeight(child)).toBeLessThan(civilianHeight('npc.civilian-woman-a') * .83);
+    const figure = new Group(), mesh = new Mesh(new BoxGeometry(.4, 1.47, .3), new MeshBasicMaterial());
+    figure.add(mesh); fitCivilianHeight(figure, child);
+    expect(new Box3().setFromObject(figure).getSize(new Vector3()).y).toBeCloseTo(civilianHeight(child), 5);
+  }
   const calibrated = new Group(), rig = new Group(), body = new Mesh(new BoxGeometry(.4, 1.2, .3), new MeshBasicMaterial());
   rig.name = 'root'; rig.userData.preserveAuthoredBodyScale = true; body.name = 'skin_body'; calibrated.add(rig); rig.add(body);
   fitCivilianHeight(calibrated, 'npc.depot-clerk');

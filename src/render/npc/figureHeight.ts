@@ -5,8 +5,9 @@ export const adultMaleStandingHeight = heroineStandingHeight * 1.08;
 
 /** Metres in the standing crowd frame. Children have their own authored proportions. */
 export function civilianHeight(model: string): number {
-  if (model === 'npc.civilian-kid') return 1.4744;
-  if (model === 'npc.brother') return 1.4265;
+  // Preserve the PROD child/adult ratios against the new women's class.
+  if (model === 'npc.civilian-kid') return heroineStandingHeight * (1.4744 / 1.8);
+  if (model === 'npc.brother') return heroineStandingHeight * (1.4265 / 1.8);
   // The heroine's measured standing height is 1.454 m. Keep women in that
   // class and give adult men an 8% height difference, including story survivors.
   if (/woman|female|mia|rosa|alvarez|lab-tech-b|depot-clerk|paramedic|civilian-adult-f/i.test(model)) return heroineStandingHeight;

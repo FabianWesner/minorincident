@@ -4,7 +4,8 @@ import type { AssetDef } from '../../src/assets/types';
 import { skinCrowdBakes } from '../assets/skin-crowd-bakes';
 
 const files = JSON.parse(readFileSync('src/assets/civilianBakes.json', 'utf8')) as Record<string, string>;
-for (const def of manifest.filter(def => def.id.startsWith('npc.') && def.crowdSkin)) {
+const selected = process.argv.slice(2);
+for (const def of manifest.filter(def => def.id.startsWith('npc.') && def.crowdSkin && (!selected.length || selected.includes(def.id)))) {
   Object.assign(files, await skinCrowdBakes(def as AssetDef));
   console.log(`rebuilt ${def.id}`);
 }
