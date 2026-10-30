@@ -37,3 +37,7 @@ A higher pitch (smaller polar) was not tried: with the 45° azimuth it shortens 
 Before ~5/10, after ~5.5–6/10. At zoom 1 the frame now spans about ±7.8 m across the road instead of ±6 m. The verge dressing, field edges,
 evac flares and parked trucks now sit inside the frame, but the 6 m road is still the largest surface. The camps and burning cars 11 m or more out
 appear at zoom 1.5 (now 1.95 × the old base). Getting to "stunning" still needs a denser or lit belt within 10 m of the road, not more camera.
+
+## Batch 36 follow-up (Q-243–245)
+
+[Framing snaps, solid corpse shading and removal of stray road oil polygons](q243/README.md), with an inspected before/after sheet and browser evidence.

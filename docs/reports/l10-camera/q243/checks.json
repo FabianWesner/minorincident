@@ -1,0 +1,130 @@
+{
+  "base": "582bf4c55",
+  "implementationCommits": [
+    "491f554ac",
+    "c56ac3e82",
+    "601df6db6"
+  ],
+  "test": {
+    "name": "test",
+    "cases": 150,
+    "counts": {
+      "vitest": 129,
+      "e2e": 9,
+      "invariantsBrowser": 12
+    },
+    "files": 42,
+    "limits": {
+      "cases": 150,
+      "files": 45,
+      "seconds": 240
+    },
+    "command": [
+      "node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "--project",
+      "default",
+      "--configLoader",
+      "runner"
+    ],
+    "seconds": 31.964549457999997,
+    "exitCode": 0,
+    "signal": null,
+    "failures": [],
+    "at": "2026-10-30T09:10:37.438Z"
+  },
+  "verify": {
+    "target": "E32",
+    "epics": [
+      "E32"
+    ],
+    "checks": [
+      {
+        "command": "npm run typecheck",
+        "status": 0,
+        "seconds": 22.349
+      },
+      {
+        "command": "npm run lint",
+        "status": 0,
+        "seconds": 13.029
+      },
+      {
+        "command": "npm test",
+        "status": 0,
+        "seconds": 32.336
+      }
+    ]
+  },
+  "smoke": {
+    "name": "smoke",
+    "cases": 150,
+    "counts": {
+      "vitest": 129,
+      "e2e": 9,
+      "invariantsBrowser": 12
+    },
+    "files": 42,
+    "limits": {
+      "cases": 150,
+      "files": 45,
+      "seconds": 240
+    },
+    "command": [
+      "sh",
+      "tools/qa/smoke.sh"
+    ],
+    "seconds": 126.65816475,
+    "exitCode": 0,
+    "signal": null,
+    "failures": [],
+    "at": "2026-10-30T09:16:39.511Z"
+  },
+  "sceneGate": {
+    "passed": 48,
+    "known": 0,
+    "notRun": 0,
+    "batches": [
+      {
+        "name": "webgl2-low-1",
+        "passed": 12,
+        "exitCode": 0,
+        "seconds": 112.71
+      },
+      {
+        "name": "webgpu-high-1",
+        "passed": 8,
+        "exitCode": 0,
+        "seconds": 72.054
+      },
+      {
+        "name": "webgl2-high-1",
+        "passed": 14,
+        "exitCode": 0,
+        "seconds": 102.058
+      },
+      {
+        "name": "webgpu-low-1",
+        "passed": 14,
+        "exitCode": 0,
+        "seconds": 79.981
+      }
+    ]
+  },
+  "arrivalCheckerSha256": "c463dbc81af2197a88ed58ae741134b9b13a696e22a186a55c7162b21063eeab",
+  "arrivalCheckerUnchanged": true,
+  "unchangedLayoutFields": [
+    "placements",
+    "colliders",
+    "roads",
+    "walkable",
+    "anchors",
+    "terrainChunks",
+    "bounds"
+  ],
+  "earlierSmokeAttempts": {
+    "port3301": "occupied by another job; retried on 3434",
+    "overlap": "one 1716.6 ms frame while gate ran; complete solo rerun passes"
+  }
+}
