@@ -57,9 +57,8 @@ export function objectiveText(mission: Mission, fallback: string): string {
       const player=w.entities.get(1)!.transform;
       const distance=(id:number)=>{const p=w.entities.get(id)!.transform;return Math.hypot(p.x-player.x,p.z-player.z);};
       const missing=ids.filter(id=>!car.passengers?.some(p=>p.id===id&&p.phase==='seated')).sort((a,b)=>distance(a)-distance(b));
-      const names=missing.map(id=>{const e=w.entities.get(id)!;return survivorName(e);});
       const text=seated?fallback:'Return to the armored vehicle and board';
-      const waiting=names.length?` · ${names.slice(0,2).join(', ')} missing${names.length>2?` (+${names.length-2} others)`:''}`:'';
+      const waiting=missing.length?` · ${missing.length} missing`:'';
       return `${text} · ${ids.length-missing.length}/${ids.length} aboard${waiting}`;
     }
   }

@@ -8,7 +8,6 @@ export function survivorName(entity: EntitySnapshot): string {
   const known = l5Survivors.find(s => s.key === survivor?.key || s.model === model);
   if (known) return known.name;
   if (survivor?.key === 'shelter-0' || model === 'npc.marcus.aftermath') return 'Marcus';
-  // Shelter keys survive roster compaction; slots can change at the next level.
-  const shelter = /^shelter-(\d+)$/.exec(survivor?.key ?? '');
-  return `Person ${shelter ? Number(shelter[1]) + 1 : survivor && survivor.slot >= 0 ? survivor.slot + 1 : entity.id}`;
+  // Unnamed shelter survivors get one short generic label (never a slot number: Q-252).
+  return 'a survivor';
 }
