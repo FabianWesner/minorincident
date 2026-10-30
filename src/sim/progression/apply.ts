@@ -1,8 +1,13 @@
 import { enforceCureArsenal } from './arsenal';
 import { action, catalog } from '../../data/actions/catalog';
 import type { ActionDef } from '../../data/actions/schema';
+import { l2WeaponPickup } from '../../data/l2';
+import { l3WeaponPickup } from '../../data/l3';
+import { l4 } from '../../data/l4';
+import { l5DroppedWeapons, l5WeaponPickup } from '../../data/l5';
+import { l7Rocket } from '../../data/l7';
 import type { SimWorld } from '../world/SimWorld';
-import { gearTier,modifiers,powerScore,rackSize,type CampaignSave } from './Campaign';
+import { fixedUnlocks, gearTier,modifiers,powerScore,rackSize,type CampaignSave } from './Campaign';
 import { restoreSelectedAction } from './selection';
 export { restoreSelectedAction } from './selection';
 /** Materialize once at a level/loadout boundary, never in a simulation/render tick. */
@@ -44,16 +49,36 @@ export function applyCampaign(world:SimWorld,save:CampaignSave):void {
   if(world.combat){
     const level=/^L([1-9]|10)$/.exec(world.scenario??'');
     const {size,LEFT,RIGHT}=campaignLoadout(save,level?Number(level[1]):save.unlockedLevel);
+    world.progression.campaign!.racks={LEFT:[...LEFT],RIGHT:[...RIGHT]};
     world.combat.rackCapacity=size;world.combat.actionDefinitions=modifiedActions(save);world.combat.setLoadout(LEFT,RIGHT);
     save.selectedAction=restoreSelectedAction(world.combat.runner.loadout,save);
     world.progression.campaign!.selectedAction=save.selectedAction;
     if(save.settings.aimAssist)world.combat.assist.setting=save.settings.aimAssist;
   }
 }
-/** The racks a level starts with. The level's rack size is a floor, never a cut: a rack that grew by a pickup (L5's basement
- * shotgun, Pickups' extra slot) is carried whole (E24: "The player keeps the existing arsenal"; P1 10-20 lost shotgun in L6). */
+/** The racks a level starts with, clamped to weapons earned before that level while preserving carried rack order and selection. */
 export function campaignLoadout(save:CampaignSave,level:number):{size:number;LEFT:string[];RIGHT:string[]} {
-  const size=Math.max(rackSize(level),save.racks.LEFT.length,save.racks.RIGHT.length);
-  return {size,LEFT:[...save.racks.LEFT],RIGHT:[...save.racks.RIGHT]};
+  const allowed = storyWeaponsBefore(level);
+  const permitted = (id:string) => allowed.has(id) || catalog[id]?.category === 'ability';
+  const LEFT = save.racks.LEFT.filter(permitted), RIGHT = save.racks.RIGHT.filter(permitted);
+  // A filtered rack may be empty if an older save only contains weapons from future chapters.
+  // The unarmed actions are always available and do not count as story weapons.
+  if (!LEFT.length) LEFT.push('weapon.fists');
+  if (!RIGHT.length) RIGHT.push('weapon.kick');
+  const size=Math.max(rackSize(level),LEFT.length,RIGHT.length);
+  return {size,LEFT,RIGHT};
+}
+/** Story grants become selectable at the next level boundary. Current-level pickups stay withheld until collected. */
+function storyWeaponsBefore(level:number):Set<string> {
+  if (level === 10) return new Set(['weapon.fire-axe','weapon.fists','weapon.kick']); // the mandatory L9 crash strips the combat arsenal
+  const earned = new Set<string>(['weapon.fists','weapon.kick', ...(level > 1 ? fixedUnlocks[1].filter(id => catalog[id]?.category !== 'ability') : [])]);
+  // These ids are the weapon pickup/action ids authored by each level's mission data.
+  // The grant level is the level containing the pickup, so the weapon is usable starting in level + 1.
+  const grants: Record<number,readonly string[]> = {
+    2:[l2WeaponPickup], 3:[l3WeaponPickup], 4:[l4.machineGun.id],
+    5:[l5WeaponPickup,...l5DroppedWeapons.map(p => p.actionId)], 7:[l7Rocket.action],
+  };
+  for (const [grantLevel, ids] of Object.entries(grants)) if (Number(grantLevel) < level) ids.forEach(id => earned.add(id));
+  return earned;
 }
 export function actionResolver(defs:Record<string,ActionDef>|null):(id:string)=>ActionDef {return id=>defs?.[id]??action(id);}

@@ -2,7 +2,7 @@ import { l3RouteDirection } from '../../levels/L3/navigation';
 import { ArmyCheckpointBoom } from './ArmyCheckpointBoom';
 import { Rng } from '../../core/Rng';
 import { l4 } from '../../data/l4';
-import { l3, l3ArmyOffset, l3Street, l3Segment } from '../../data/l3';
+import { l3, l3ArmyOffset, l3Street, l3Segment, l3WeaponPickup } from '../../data/l3';
 import { l3Dressing } from '../../levels/L3/layout';
 import { Outbreak } from '../outbreak/Outbreak';
 import { allyState } from '../outbreak/Allies';
@@ -89,7 +89,7 @@ export class LevelThreeCollapse {
     world.npcs.setAmbient(0);
     // L3-default progression (bat + axe from L1/L2) unless a campaign load already applied its racks.
     if (!world.progression || !world.entities.get(1)!.weapons) world.combat?.setLoadout(['weapon.fire-axe', 'weapon.bat'], ['weapon.kick']);
-    world.combat?.withholdPickups('weapon.handgun');
+    world.combat?.withholdPickups(l3WeaponPickup);
     this.spawnOfficers();
     this.spawnSoldiers();
     this.spawnWaitingSurvivors();
@@ -200,10 +200,10 @@ export class LevelThreeCollapse {
   private takeHandgun(): void {
     const combat = this.world.combat, s = this.s; if (!combat || s.handgunAt) return;
     s.handgunAt = Math.max(1, this.world.tick);
-    const left = combat.runner.loadout.state.LEFT.rack.map(r => r.id), right = combat.runner.loadout.state.RIGHT.rack.map(r => r.id).filter(id => id !== 'weapon.handgun');
-    combat.setLoadout(left, ['weapon.handgun', ...right].slice(0, Math.max(2, combat.rackCapacity)));
+    const left = combat.runner.loadout.state.LEFT.rack.map(r => r.id), right = combat.runner.loadout.state.RIGHT.rack.map(r => r.id).filter(id => id !== l3WeaponPickup);
+    combat.setLoadout(left, [l3WeaponPickup, ...right].slice(0, Math.max(2, combat.rackCapacity)));
     combat.runner.loadout.state.selectedSide = 'RIGHT';
-    this.world.events.emit({ type: 'pickup.collected', tick: this.world.tick, sourceId: 1, pickupId: 0, side: 'RIGHT', actionId: 'weapon.handgun', replaced: null });
+    this.world.events.emit({ type: 'pickup.collected', tick: this.world.tick, sourceId: 1, pickupId: 0, side: 'RIGHT', actionId: l3WeaponPickup, replaced: null });
     this.world.events.emit({ type: 'l3.handgun', tick: this.world.tick });
     this.mission.radio('L3.handgun');
   }

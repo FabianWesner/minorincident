@@ -3,6 +3,12 @@
 import { expect, test, vi } from 'vitest';
 import { epilogueSurvivorLines } from '../../src/data/epilogueSurvivors';
 import { action, catalog } from '../../src/data/actions/catalog';
+import { l2WeaponPickup } from '../../src/data/l2';
+import { l3WeaponPickup } from '../../src/data/l3';
+import { l4 } from '../../src/data/l4';
+import { l5DroppedWeapons, l5WeaponPickup } from '../../src/data/l5';
+import { l7Rocket } from '../../src/data/l7';
+import { enforceCureArsenal } from '../../src/sim/progression/arsenal';
 import { emptyInput } from '../../src/input/InputFrame';
 import { Loadout } from '../../src/sim/combat/Loadout';
 import { beginRewards, finishRewards, gearTier, newCampaign, pickUpgrades, preset, revealCards, type CampaignSave, type Level } from '../../src/sim/progression/Campaign';
@@ -16,34 +22,52 @@ const result = { time: 1, kills: 0, knockdowns: 0, damage: 0, deaths: 0, rescued
 const fakeWorld = (racks: CampaignSave['racks'], selectedAction = 'weapon.handgun') => ({
   entities: { get: (id: number) => id === 1 ? { weapons: { selectedSide: racks.RIGHT.includes(selectedAction) ? 'RIGHT' : 'LEFT', LEFT: { index: racks.LEFT.indexOf(selectedAction), rack: racks.LEFT.map(id => ({ id })) }, RIGHT: { index: racks.RIGHT.indexOf(selectedAction), rack: racks.RIGHT.map(id => ({ id })) } } } : undefined, iterate: () => [][Symbol.iterator]() },
 }) as never;
-const start = (level: Level): CampaignSave => level === 1 ? newCampaign() : preset(`L${level}-default` as Parameters<typeof preset>[0]);
 const resume = (save: CampaignSave, level: number) => { const l = campaignLoadout(save, level as Level); return new Loadout(l.LEFT, l.RIGHT, undefined, l.size); };
 
-test('every handover L1→L9 keeps every carried weapon (plus a picked-up firearm) and the selected action, and the save reloads', () => {
+test('L1–L10 starts clamp progressed saves and fresh handovers to story weapons, keeping eligible carry-over and selection', () => {
+  const bat = 'weapon.bat', axe = 'weapon.fire-axe', handgun = 'weapon.handgun', mg = 'weapon.army-mg', shotgun = 'weapon.shotgun', rifle = 'weapon.assault-rifle', rocket = 'weapon.rocket-launcher';
+  // Expected story boundaries are independent of the production pickup declarations below.
+  const expected = [[], [bat], [bat,axe], [bat,axe,handgun], [bat,axe,handgun,mg], [bat,axe,handgun,mg,shotgun,rifle], [bat,axe,handgun,mg,shotgun,rifle], [bat,axe,handgun,mg,shotgun,rifle,rocket], [bat,axe,handgun,mg,shotgun,rifle,rocket], [axe]];
+  const pickups: Record<number, string[]> = { 1:[bat], 2:[l2WeaponPickup], 3:[l3WeaponPickup], 4:[l4.machineGun.id], 5:[...new Set([l5WeaponPickup, ...l5DroppedWeapons.map(p => p.actionId)])], 7:[l7Rocket.action] };
+  const weapons = (racks: CampaignSave['racks']) => [...new Set([...racks.LEFT,...racks.RIGHT].filter(id => !['weapon.fists','weapon.kick'].includes(id) && catalog[id].category !== 'ability'))].sort();
+  const fresh = newCampaign();
   for (let level = 1; level <= 10; level++) {
-    const save = start(level as Level);
-    expect(validateSave(save), `L${level} cold-load boundary`).toBe(true);
-    expect(save.unlockedLevel, `L${level} unlocked`).toBe(level);
-    expect(save.completedLevels, `L${level} completed`).toBe(level - 1);
+    const progressed = preset('L10-default'); progressed.completedLevels = 10;
+    progressed.racks = { LEFT:[bat,axe,'weapon.pistol','weapon.knife'], RIGHT:[rocket,rifle,shotgun,mg,handgun,'weapon.smg'] };
+    progressed.ownedActions = [...new Set([...progressed.ownedActions,...progressed.racks.LEFT,...progressed.racks.RIGHT])];
+    progressed.selectedAction = handgun;
+    expect(validateSave(progressed), `L${level} finished-L10 fixture`).toBe(true);
+    if (level === 10) enforceCureArsenal(progressed);
+    let boundary = campaignLoadout(fresh, level);
+    for (const save of [progressed, fresh]) {
+      const decoded = decodeSave(JSON.stringify(save));
+      expect(decoded.status, `L${level} save reload`).toBe('ok');
+      const loadout = campaignLoadout(save, level);
+      expect(weapons(loadout), `L${level} ${save === fresh ? 'fresh handover' : 'finished L10 save'}`).toEqual([...expected[level - 1]].sort());
+      const live = new Loadout(loadout.LEFT, loadout.RIGHT, undefined, loadout.size), selected = restoreSelectedAction(live, save);
+      if (save.selectedAction && [...loadout.LEFT,...loadout.RIGHT].includes(save.selectedAction)) expect(selected, `L${level} carry selection`).toBe(save.selectedAction);
+      expect(live.current(live.state.selectedSide).id).toBe(selected);
+      if (save === fresh) { boundary = loadout; fresh.selectedAction = selected; }
+    }
+    if (level === 10) break;
+    // Finish a fresh run having collected this level's authored pickups, through the real handover/save function.
+    const holding = { LEFT:boundary.LEFT.filter(id => id !== 'weapon.fists' && catalog[id].category !== 'ability'), RIGHT:boundary.RIGHT.filter(id => catalog[id].category !== 'ability') };
+    for (const id of pickups[level] ?? []) {
+      const side = catalog[id].category === 'melee' ? 'LEFT' : 'RIGHT';
+      if (!holding[side].includes(id)) holding[side].push(id);
+      if (!fresh.ownedActions.includes(id)) fresh.ownedActions.push(id);
+    }
+    const selected = pickups[level]?.at(-1) ?? fresh.selectedAction;
+    if (level === 9) {
+      const held = new Loadout(holding.LEFT, holding.RIGHT, undefined, 6).state;
+      const world = { entities: { get: () => ({ weapons:held, health:{ current:100,max:100 }, transform:{ x:0,y:.7,z:0,yaw:0 } }), iterate: () => [][Symbol.iterator]() }, missions:{ l9:{ state:{ finished:true,preCrashDurability:0 } } }, combat:{ projectiles:[], setLoadout:vi.fn() }, progression:{ pickups:[],campaign:fresh } };
+      completeCampaignLevel(fresh, 9, result, world as never);
+    } else completeCampaignLevel(fresh, level as Level, result, fakeWorld(holding, selected));
+    expect(validateSave(fresh), `L${level} handover save`).toBe(true);
   }
-  for (const level of [1, 2, 3, 4, 5, 6, 7, 8] as const) {
-    const save = start(level), next = level + 1;
-    const extra = Object.keys(catalog).find(id => catalog[id].category === 'ranged' && !save.racks.RIGHT.includes(id) && !save.racks.LEFT.includes(id) && id !== 'weapon.rocket-launcher')!;
-    const carried = { LEFT: [...save.racks.LEFT], RIGHT: [...save.racks.RIGHT, extra] };
-    if (!save.ownedActions.includes(extra)) save.ownedActions.push(extra);
-    const selected = carried.RIGHT.includes('weapon.handgun') ? 'weapon.handgun' : carried.RIGHT[0];
-    completeCampaignLevel(save, level, result, fakeWorld(carried, selected));
-    const loadout = campaignLoadout(save, next as Level);
-    for (const id of [...carried.LEFT, ...carried.RIGHT].filter(id => id !== 'weapon.fists')) expect([...loadout.LEFT, ...loadout.RIGHT], `L${level}→L${next}: ${id}`).toContain(id);
-    expect(save.selectedAction, `L${level}`).toBe(selected);
-    // Menu Continue: decode the stored JSON and restore the selection on a fresh loadout.
-    const decoded = decodeSave(JSON.stringify(save));
-    expect(decoded.status, `L${level}→L${next}: reload from menu`).toBe('ok');
-    const resumed = resume((decoded as { save: CampaignSave }).save, next);
-    restoreSelectedAction(resumed, save);
-    expect(resumed.current(resumed.state.selectedSide).id, `L${level}→L${next}`).toBe(selected);
-    expect(validateSave(save)).toBe(true);
-  }
+  // L5 difficulty is frozen: preserve the exact rack used by its bot fixture, including kick.
+  const l5 = preset('L5-default'), l5Start = campaignLoadout(l5, 5);
+  expect({ LEFT:l5Start.LEFT, RIGHT:l5Start.RIGHT }).toEqual(l5.racks);
 });
 
 test('selection fallback: lost or empty weapons fall back to the best usable owned weapon, never an empty finite gun', () => {

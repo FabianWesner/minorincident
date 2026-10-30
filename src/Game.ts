@@ -17,7 +17,7 @@ import { GameUI } from './ui/GameUI';
 import { CampaignUI } from './ui/CampaignUI';
 import { completePending,newCampaign, reservedCampaignIds, nextLevelAfter, preset, type CampaignSave, type CampaignSettings, type Level, type ProgressionPreset } from './sim/progression/Campaign';
 import { heldAction } from './sim/progression/selection';
-import { applyCampaign } from './sim/progression/apply';
+import { applyCampaign, campaignLoadout } from './sim/progression/apply';
 import { SaveStore } from './sim/progression/Save';
 import { completeCampaignLevel } from './sim/progression/carryover';
 import type { SurvivorVariant } from './data/survivor';
@@ -284,6 +284,11 @@ export class Game {
         if(missionIds.includes(id as MissionId)) {
           this.world.combat ??= new Combat(this.world, { name:id,survivor:true,combat:true,ground:{width:100,depth:100},player:{...this.world.entities.get(1)!.transform} });
           if(this.campaign)this.applyCampaign();
+          else if (id !== 'L1') {
+            // Direct QA starts have no save: use the level's boundary rack instead of Combat's sandbox weapons.
+            const { size, LEFT, RIGHT } = campaignLoadout(preset(`${id}-default` as ProgressionPreset), Number(id.slice(1)));
+            this.world.combat.rackCapacity = size; this.world.combat.setLoadout(LEFT, RIGHT);
+          }
           if (id === 'L1') this.world.combat.clearLoadout();
           const campaign = resolveCampaignMission(id as MissionId, this.world.districts!);
           const mission=this.world.loadMission(campaign);
