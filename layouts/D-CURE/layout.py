@@ -55,6 +55,9 @@ l.data['terrainChunks'] = chunks
 
 patches=[]
 def surface(name, poly, token, height=0, cut=True):
+    # Q-245: opaque oil pools read as unsupported pothole/shadow blobs on the empty lane.
+    # Keep evaluating their authored shapes below so later seeded road dressing stays exactly in place.
+    if name == 'oil-stain': return
     # cut=False (look-l9b): a thin overlay that sits above its owner instead of cutting it (cracks, skids): cutting the road
     # quads with hundreds of strips fragmented the asphalt past the 10k streamed-horizon budget.
     # Arrow silhouettes are concave; partition them into convex triangles.
