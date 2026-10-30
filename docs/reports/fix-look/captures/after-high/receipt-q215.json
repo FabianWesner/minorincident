@@ -8,8 +8,8 @@
       "errors": [],
       "state": {
         "camera": {
-          "zoom": 1.5,
-          "targetZoom": 1.5,
+          "zoom": 1,
+          "targetZoom": 1,
           "zoomLimits": [
             0.5,
             1.5
@@ -17,7 +17,7 @@
           "fov": 25,
           "azimuth": 0.7853981633974483,
           "polar": 0.9424777960769379,
-          "radius": 28.5,
+          "radius": 19,
           "regionScale": 1,
           "focus": [
             10.809574440048088,
@@ -37,6 +37,8 @@
           "spot": "scene-lab"
         },
         "quality": "high",
+        "rim": 0.4,
+        "corpseRim": 0,
         "perf": {
           "backend": "webgl",
           "drawCalls": 88,
@@ -80,6 +82,8 @@
           "spot": "scene-lab"
         },
         "quality": "high",
+        "rim": 0.4,
+        "corpseRim": 0,
         "perf": {
           "backend": "webgl",
           "drawCalls": 108,

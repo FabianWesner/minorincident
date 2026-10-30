@@ -1,0 +1,220 @@
+{
+  "base": "731db2b24",
+  "branch": "lane/fix-look",
+  "productionRevision": "cbe399ab5",
+  "po10_30": "I hopefully don't find any obvious glitches anymore (like clipping (tanks over walls), ugly figures, z-index issues, massive load times...)",
+  "items": {
+    "q35": {
+      "status": "fixed",
+      "commit": "ed9608363",
+      "receipts": [
+        "captures/before-high/receipt-q35.json",
+        "captures/before-low/receipt-q35.json",
+        "captures/after-high/receipt-q35.json",
+        "captures/after-low/receipt-q35.json"
+      ]
+    },
+    "q92": {
+      "status": "fixed",
+      "commit": "a01214aed",
+      "receipts": [
+        "captures/before-high/receipt-q92.json",
+        "captures/before-low/receipt-q92.json",
+        "captures/after-high/receipt-q92.json",
+        "captures/after-low/receipt-q92.json"
+      ]
+    },
+    "q142": {
+      "status": "fixed",
+      "commit": "25739c695",
+      "receipts": [
+        "captures/before-high/receipt-q142.json",
+        "captures/before-low/receipt-q142.json",
+        "captures/after-high/receipt-q142.json",
+        "captures/after-low/receipt-q142.json"
+      ]
+    },
+    "q145": {
+      "status": "fixed",
+      "commit": "cbe399ab5",
+      "receipts": [
+        "captures/before-high/receipt-q145.json",
+        "captures/before-low/receipt-q145.json",
+        "captures/after-high/receipt-q145.json",
+        "captures/after-low/receipt-q145.json"
+      ]
+    },
+    "q215": {
+      "status": "fixed",
+      "commit": "8f310fd99",
+      "receipts": [
+        "captures/before-high/receipt-q215.json",
+        "captures/before-low/receipt-q215.json",
+        "captures/after-high/receipt-q215.json",
+        "captures/after-low/receipt-q215.json"
+      ]
+    },
+    "q247": {
+      "status": "fixed",
+      "commit": "9388b0bcf",
+      "receipts": [
+        "captures/before-high/receipt-q247.json",
+        "captures/before-low/receipt-q247.json",
+        "captures/after-high/receipt-q247.json",
+        "captures/after-low/receipt-q247.json"
+      ]
+    },
+    "q248": {
+      "status": "fixed",
+      "commit": "d23513bb9",
+      "receipts": [
+        "captures/before-high/receipt-q248.json",
+        "captures/before-low/receipt-q248.json",
+        "captures/after-high/receipt-q248.json",
+        "captures/after-low/receipt-q248.json"
+      ]
+    },
+    "q175": {
+      "status": "documented, not fixed",
+      "commit": "2e5abfc40",
+      "receipts": [
+        "captures/before-high/receipt-q175.json",
+        "captures/before-low/receipt-q175.json",
+        "captures/after-high/receipt-q175.json",
+        "captures/after-low/receipt-q175.json"
+      ]
+    }
+  },
+  "capturesReviewed": [
+    "captures/before-high/q35/sheet.jpg",
+    "captures/before-low/q35/sheet.jpg",
+    "captures/after-high/q35/sheet.jpg",
+    "captures/after-high/q35-l4/sheet.jpg",
+    "captures/after-low/q35/sheet.jpg",
+    "captures/after-low/q35-l4/sheet.jpg",
+    "captures/before-high/q92/sheet.jpg",
+    "captures/before-low/q92/sheet.jpg",
+    "captures/after-high/q92/sheet.jpg",
+    "captures/after-low/q92/sheet.jpg",
+    "captures/before-high/q142/sheet.jpg",
+    "captures/before-low/q142/sheet.jpg",
+    "captures/after-high/q142/sheet.jpg",
+    "captures/after-low/q142/sheet.jpg",
+    "captures/before-high/q145/sheet.jpg",
+    "captures/before-low/q145/sheet.jpg",
+    "captures/after-high/q145/sheet.jpg",
+    "captures/after-low/q145/sheet.jpg",
+    "captures/before-high/q215/sheet.jpg",
+    "captures/before-low/q215/sheet.jpg",
+    "captures/after-high/q215/sheet.jpg",
+    "captures/after-low/q215/sheet.jpg",
+    "captures/before-high/q247-L4/sheet.jpg",
+    "captures/before-high/q247-L8-zoo/sheet.jpg",
+    "captures/before-high/q247-L10-night/sheet.jpg",
+    "captures/before-low/q247-L4/sheet.jpg",
+    "captures/before-low/q247-L8-zoo/sheet.jpg",
+    "captures/before-low/q247-L10-night/sheet.jpg",
+    "captures/after-high/q247-L4/sheet.jpg",
+    "captures/after-high/q247-L8-zoo/sheet.jpg",
+    "captures/after-high/q247-L10-night/sheet.jpg",
+    "captures/after-low/q247-L4/sheet.jpg",
+    "captures/after-low/q247-L8-zoo/sheet.jpg",
+    "captures/after-low/q247-L10-night/sheet.jpg",
+    "captures/before-high/q248-r1/sheet.jpg",
+    "captures/before-high/q248-r2/sheet.jpg",
+    "captures/before-high/q248-r3/sheet.jpg",
+    "captures/before-high/q248-r4/sheet.jpg",
+    "captures/before-high/q248-r5/sheet.jpg",
+    "captures/before-low/q248-r1/sheet.jpg",
+    "captures/before-low/q248-r2/sheet.jpg",
+    "captures/before-low/q248-r3/sheet.jpg",
+    "captures/before-low/q248-r4/sheet.jpg",
+    "captures/before-low/q248-r5/sheet.jpg",
+    "captures/after-high/q248-r1/sheet.jpg",
+    "captures/after-high/q248-r2/sheet.jpg",
+    "captures/after-high/q248-r3/sheet.jpg",
+    "captures/after-high/q248-r4/sheet.jpg",
+    "captures/after-high/q248-r5/sheet.jpg",
+    "captures/after-low/q248-r1/sheet.jpg",
+    "captures/after-low/q248-r2/sheet.jpg",
+    "captures/after-low/q248-r3/sheet.jpg",
+    "captures/after-low/q248-r4/sheet.jpg",
+    "captures/after-low/q248-r5/sheet.jpg",
+    "captures/before-high/q175/sheet.jpg",
+    "captures/before-low/q175/sheet.jpg",
+    "captures/after-high/q175/sheet.jpg",
+    "captures/after-low/q175/sheet.jpg",
+    "captures/after-high/q92-east/sheet.jpg",
+    "captures/after-high/q175-close/sheet.jpg",
+    "captures/after-low/q92-east/sheet.jpg",
+    "captures/after-low/q175-close/sheet.jpg"
+  ],
+  "reviewNotes": {
+    "q35": "Actual L5 start. L4 cellar is a staged environment control, not a natural ending playthrough.",
+    "q92": "West ramp before/after and east after control: continuous roads and intact barrier corners.",
+    "q145": "Five followers reach shelter; staggered heads against tiled shaft, no opaque foreground plate over legs.",
+    "q215": "Old .25 preset versus final .4; actual zooms checked. Fog and grade unchanged.",
+    "q247": "Six permanent bodies; L8 rim 0 versus .65, L4/L10 control stays 0.",
+    "q248": "R1 through R5 from road, matching before/after viewpoints.",
+    "q175": "3 m running pose still tears on both tiers. Winding trial worsened hoof shards and was fully reverted; bounded investigation stopped without shipping heuristic mesh changes."
+  },
+  "constraints": {
+    "unchanged": {
+      "src/data/l5.ts": {
+        "matchesBase": true,
+        "sha256": "64367ae830e8ce7a5797db9f24c99edb0e23b58bdc745c99652a61f81a2151e0"
+      },
+      "src/render/View.ts": {
+        "matchesBase": true,
+        "sha256": "8ebe440ef3127d9ca997ed9ce0199832871c4cedaadcc393e9b0113237a2961a"
+      },
+      "src/render/characters/StaticCorpses.ts": {
+        "matchesBase": true,
+        "sha256": "30ea57cf13a7de3f66af0d35447689068f1415ab32b086426508ed8361e3c501"
+      }
+    },
+    "newTestFiles": 0,
+    "newTestCases": 0,
+    "protectedDirectoriesChanged": false,
+    "lateShaderBuildsInFinalFixMatrices": 0,
+    "browser": "headless shared pool, scene jobs 1",
+    "baselineTmpCopiesCreated": 0,
+    "published": false,
+    "deployed": false
+  },
+  "checks": {
+    "test": {
+      "exitCode": 0,
+      "files": 26,
+      "tests": 110,
+      "seconds": 24.9,
+      "log": "checks/test.log.txt"
+    },
+    "smoke": {
+      "exitCode": 0,
+      "qa": 6,
+      "public": 1,
+      "seconds": 204.3,
+      "log": "checks/smoke.log.txt"
+    },
+    "typecheck": {
+      "exitCode": 0,
+      "log": "checks/typecheck.log.txt"
+    },
+    "lint": {
+      "exitCode": 0,
+      "log": "checks/lint.log.txt"
+    },
+    "sceneGate": {
+      "exitCode": 0,
+      "passed": 48,
+      "total": 48,
+      "knownFailures": 0,
+      "notRun": 0,
+      "seconds": 472.20799999999997,
+      "checkedRevision": "2e5abfc401b9cc869b23d4aea61f5eab78035b89",
+      "summary": "checks/scene-gate/summary.md",
+      "state": "checks/scene-gate/state.json"
+    }
+  }
+}
