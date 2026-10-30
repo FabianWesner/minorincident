@@ -90,7 +90,7 @@ export class MissionUI {
     setHidden(this.result,state.phase!=='result');
     if(this.phase!==state.phase){
       this.phase=state.phase;
-      const labels={briefing:['Mission briefing',mission.def.briefing,'Begin mission'],retry:['Mission failed',`${state.failure}. Retry from ${checkpointName(mission.def.id,state.checkpoint)}.`,'Retry'],result:mission.def.l6?['Night. Still alive.',this.campaignSummary(),nextLevelAfter(6)?'Continue':'Credits']:mission.def.l1?['Delivery complete. Outbreak: not contained.','The fire station shutter holds, for now.','Continue']:['Level complete','Mission results','Continue'],progression:['Progression','Next: upgrades and loadout setup.',''],playing:['','',''],cinematic:['','','']};
+      const labels={briefing:['Mission briefing',mission.def.briefing,'Begin mission'],retry:['Mission failed',`${state.failure}. Retry from ${checkpointName(mission.def.id,state.checkpoint)}.`,'Retry'],result:mission.def.l6?['Night. Still alive.',nextLevelAfter(6)?'The group is out of the tunnels. Above, Fairhaven burns.':this.campaignSummary(),nextLevelAfter(6)?'Continue':'Credits']:mission.def.l1?['Delivery complete. Outbreak: not contained.','The fire station shutter holds, for now.','Continue']:['Level complete','Mission results','Continue'],progression:['Progression','Next: upgrades and loadout setup.',''],playing:['','',''],cinematic:['','','']};
       const [title,detail,button]=labels[state.phase];this.text(this.heading,title);this.text(this.detail,detail);this.text(this.button,button);this.button.hidden=!button;
       if(!this.panel.hidden&&!this.button.hidden)this.button.focus({preventScroll:true});
     }
