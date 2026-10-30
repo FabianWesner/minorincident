@@ -142,7 +142,7 @@ Provisional counts: **159 fixed-before / 0 fixed-now / 9 obsolete / 24 still-ope
 | Q-182 | fixed | [Followups-25](../followups-25/README.md): timed epilogue/credits progress accepted; orphan/corgi flags corrected with Q-226. |
 | Q-183 | fixed | `87102e52b`, `a25110b50`, `f82481767`: textured fitted gloves/cuffs and full low-tier garment shells. [Gear acceptance](../qa-invariants/coverage.md). |
 | Q-184 | open | Male tier-1→2 vest contrast against orange shirt was explicitly left known in [QA17](../visual-qa-17/README.md). Proposed cheap fix: assess current fitted textured garment colours before a scoped vest swatch change. |
-| Q-185 | open | `__SS__.survivor.select('male')` on a loaded level is a debug-only invisible-model path (QA17); normal menu flow passes. Proposed: route live variant changes through the existing awaited courier reload; estimate ≤1 h plus capture. |
+| Q-185 | fixed | Fixed-now: live debug selection awaits the existing character preparation/warm-up path. Before: male selected, no model/rig; after: `char.courier-male.skin`, skinned, both sources loaded. Viewed [before](captures/before-webgpu-high/variant-male.png) / [after](captures/after-webgpu-high/variant-male.png); [state](captures/after-webgpu-high/variant.json). |
 | Q-186 | fixed | Driver route recovery/vehicle reverse implemented in `ff7a2d8b2`; [full no-skip L1–credits campaign](../playtest-harness/report.md) passes the L2 fence. |
 | Q-187 | fixed | `edb118146`: native hat/accessory placement and face fits; [144 game-camera views / 72-case eye gate](../l1-hats-faces/README.md). |
 | Q-188 | fixed | Same fitted hat correction and native comparison as Q-187; [report](../l1-hats-faces/README.md). |
