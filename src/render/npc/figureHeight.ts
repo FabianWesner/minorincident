@@ -9,6 +9,7 @@ export function civilianHeight(model: string): number {
  * Apply before baking so geometry, pivots, stride, props and every LOD share the same frame.
  */
 export function fitCivilianHeight(root: Group, model: string): void {
+  if (root.getObjectByName('root')?.userData.preserveAuthoredBodyScale === true) return;
   const bounds = new Box3().setFromObject(root.getObjectByName('skin_body') ?? root), height = bounds.max.y - bounds.min.y;
   const target = civilianHeight(model);
   if (height > 0 && Math.abs(height / target - 1) > .08) {

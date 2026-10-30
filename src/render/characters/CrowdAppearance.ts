@@ -15,7 +15,8 @@ export function resolveCrowdAppearance(e: EntitySnapshot, ids: readonly string[]
   const selected = e.appearance?.asset ?? e.civilian?.model ?? e.infected?.model ?? e.infected?.variant ?? e.archetype;
   const model = selected.startsWith('infected.') ? infectedDefinitions.find(def => def.id === selected)?.asset ?? selected : selected;
   const uniform = /firefighter|police|guard|hazmat|riot|armored|lab-|patient-zero|infected\.(dog|cat|crow|lion|gorilla|elephant|zebra|flamingo)/.test(model);
-  const eligible = !uniform && !e.civilian?.zooAnimal && !e.archetype.startsWith('healthy.') && (!e.infected || ['infected.runner', 'infected.sprinter'].includes(e.archetype));
+  // Explicit bare-head fixtures retain authored hair for anatomy review.
+  const eligible = !e.appearance?.accessories.includes('none') && !uniform && !e.civilian?.zooAnimal && !e.archetype.startsWith('healthy.') && (!e.infected || ['infected.runner', 'infected.sprinter'].includes(e.archetype));
   const channels = crowdAppearance(e.id), explicit = e.appearance?.accessories.find(id => ids.includes(id));
   // A person who turned keeps the head piece they wore alive (story-true); infected generated as infected are capped.
   const turnedPerson = !!e.infected && e.appearance?.entityId === e.id && !e.appearance.bornInfected;

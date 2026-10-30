@@ -44,7 +44,7 @@ export class RoutineProps extends Group {
     // meets the hand instead of reading as a floating prop.
     const handle = (color: string) => [bar(.1, .035, -.045, 0, color), bar(.1, .035, -.145, 0, color), part(new CylinderGeometry(.008, .008, .1, 8), color, .035, -.095, .05)];
     const shapes: Record<CivilianProp, BufferGeometry[]> = {
-      coffee: [part(new CylinderGeometry(.04, .035, .1, 12), '#f5e6c7', ...cupSocket), part(new CylinderGeometry(.038, .038, .008, 12), '#563c2c', cupSocket[0], -.024, cupSocket[2]), ...handle('#f5e6c7')],
+      coffee: [part(new CylinderGeometry(.04, .035, .1, 12), '#f5e6c7', ...cupSocket), part(new CylinderGeometry(.038, .038, .008, 12), '#563c2c', cupSocket[0], cupSocket[1] + .054, cupSocket[2]), ...handle('#f5e6c7')],
       bag: [part(new BoxGeometry(.26, .34, .18), '#ba8c53', .035, -.32), bar(.16, .035, -.045, 0, '#6e5537'), ...[-.08, .08].map(z => part(new CylinderGeometry(.01, .01, .11, 8), '#6e5537', .035, -.1, z)), part(new CylinderGeometry(.028, .035, .23, 8), '#76a14e', .1, -.21)],
       phone: [part(new BoxGeometry(.018, .12, .065), '#292537', .079, -.03), part(new BoxGeometry(.004, .085, .05), '#75b8cf', .09, -.022)],
       cane: [part(new CylinderGeometry(.018, .021, .73, 8), '#71513e', .035, -.415, .105), bar(.16, .035, -.045, .025, '#493d34'), part(new CylinderGeometry(.027, .027, .035, 8), '#292537', .035, -.795, .105)],
