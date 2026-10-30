@@ -214,11 +214,12 @@ Scope includes every L6–L10 record plus the shared figure/corpse/camera/HUD/pe
 
 ## Verification
 
-Runtime checked: `9fd194de0`, with only report/visual-helper changes afterward. [Visual review and fix details](review.md).
+Final production code checked: `9efa1498c`; later changes contain only reports and replay helpers. [Source/constraint audit](checks/audit.json). [Visual review and fix details](review.md).
 
-- `npm test`: **26 files / 110 tests pass**, 31.7 s; [log](checks/test.log.txt). No test files or cases added; budget remains 150/150 cases, 42/45 files.
-- `npm run typecheck` and `npm run lint`: pass ([typecheck](checks/typecheck.log.txt), [lint](checks/lint.log.txt)).
-- `npm run test:smoke`: **6 QA + 1 public pass**, 159.0 s / 240 s ([log](checks/smoke-final.log.txt)). Both full-variant backend shader-budget checks pass. Earlier occupied-port and exclusive-queue timeout attempts are superseded by this complete run.
-- `SCENE_PORT=33963 npm run scene:gate -- --out test-results/triage-b/scene-gate-final --jobs 1`: **48/48 pass, 0 known, 0 not run**, 7.3 min ([log](checks/scene-gate-final.log.txt), [state with all 48 rows](checks/scene-gate/state.json)).
+- `npm test`: **26 files / 110 tests pass**, 22.4 s total; [log](checks/test-delivery.log.txt). No test files or cases added; budget remains 150/150 cases, 42/45 files.
+- `npm run typecheck` and `npm run lint`: pass ([typecheck](checks/typecheck-delivery.log.txt), [lint](checks/lint-delivery.log.txt)).
+- `npm run test:smoke`: **6 QA + 1 public pass**, 130.3 s / 240 s ([log](checks/smoke-delivery.log.txt)). Both full-variant backend shader-budget checks pass. Earlier occupied-port and exclusive-queue timeout attempts are superseded by this complete run.
+- `SCENE_PORT=33963 npm run scene:gate -- --out test-results/triage-b/scene-gate-delivery --jobs 1`: **48/48 pass, 0 known, 0 not run**, 5.6 min ([log](checks/scene-gate-delivery.log.txt), [state with all 48 rows](checks/scene-gate/state.json)).
 - `node --import tsx tools/sim-runner/index.ts --level all --policy complete --completion-only`: **10/10 complete, 0 deaths, 0 collision failures**, including L10 credits ([receipt](checks/sim-campaign.json)). This is deterministic sim completion, separate from real-input browser play.
 - Current L6→L10 credits input route completed with zero deaths/skips/assists/reported issues; all 16 final mission steps complete ([receipt](playthrough/completion.json)). All level/contact sheets were viewed; Q-50 remains an obvious visual defect despite the harness result. L10 used four pool sessions (1612 s total). No current fresh L1→credits claim is made by this scoped run; the prior full fresh campaign is linked at Q-128/Q-151.
+- `npm run build:qa`: pass after public smoke; QA dev-tool hooks restored in the local build ([log](checks/build-qa-delivery.log.txt)). Temporary baseline removed; no background checks or job-owned servers retained.

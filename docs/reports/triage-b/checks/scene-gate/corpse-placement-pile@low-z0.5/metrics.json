@@ -7,9 +7,9 @@
   "frames": 180,
   "timing": {
     "openMs": 0,
-    "loadMs": 4454,
-    "runMs": 1092,
-    "sceneMs": 5546
+    "loadMs": 2906,
+    "runMs": 833,
+    "sceneMs": 3739
   },
   "checks": {
     "pass": true,
@@ -41,7 +41,7 @@
       {
         "name": "trianglesMax",
         "pass": true,
-        "value": 78334,
+        "value": 78574,
         "limit": 500000
       },
       {
@@ -409,9 +409,9 @@
         "max": 37
       },
       "triangles": {
-        "p50": 78334,
-        "p95": 78334,
-        "max": 78334
+        "p50": 78574,
+        "p95": 78574,
+        "max": 78574
       },
       "shadowDrawCalls": {
         "p50": 9,
@@ -424,16 +424,16 @@
         "max": 6009
       },
       "stepMs": {
-        "p50": 1.4,
-        "p95": 2.2,
-        "max": 48.6
+        "p50": 0.9,
+        "p95": 1.5,
+        "max": 30.6
       },
       "lastFrame": {
         "drawCalls": 37,
-        "triangles": 78334,
+        "triangles": 78574,
         "shadowDrawCalls": 9,
         "shadowTriangles": 6009,
-        "stepMs": 1.4000005722045898,
+        "stepMs": 0.6999998092651367,
         "categories": {
           "other": 14,
           "shadows": 9,
