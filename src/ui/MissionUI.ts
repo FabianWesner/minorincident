@@ -151,8 +151,11 @@ export class MissionUI {
     const results={...previous,...(result?{L6:result}:{})},all=Object.values(results);
     // A survivor carried through several level handovers is one campaign rescue, not a new person per level.
     const identityResults=all.filter(r=>r.survivors),rescued=new Set(identityResults.flatMap(r=>r.survivors??[]));
-    const rescuedCount=identityResults.length?rescued.size:Math.max(0,...all.map(r=>r.rescued));
-    return `Campaign summary · ${all.length} levels · Time ${all.reduce((n,r)=>n+r.time,0).toFixed(1)} s · Deaths ${all.reduce((n,r)=>n+r.deaths,0)} · Unique survivors rescued ${rescuedCount}`;
+    // Earlier missions/legacy saves can record rescue events without identities. Preserve those events explicitly;
+    // neither adding them to the evacuees nor taking a maximum can establish a unique person count.
+    const events=all.filter(r=>!r.survivors).reduce((n,r)=>n+r.rescued,0);
+    const rescueText=identityResults.length?`Distinct group evacuees ${rescued.size}${events?` · Other level rescue events ${events}`:''}`:`Level rescue events ${events} (people may repeat)`;
+    return `Campaign summary · ${all.length} levels · Time ${all.reduce((n,r)=>n+r.time,0).toFixed(1)} s · Deaths ${all.reduce((n,r)=>n+r.deaths,0)} · ${rescueText}`;
   }
   dispose(): void {this.subtitleLayout.disconnect();window.removeEventListener('resize',this.positionCaptions);style(document.documentElement,'--mission-caption-bottom','0px');this.button.removeEventListener('click',this.accept);this.root.remove();}
 }
