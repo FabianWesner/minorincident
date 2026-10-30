@@ -1,9 +1,10 @@
+import { dialogue } from '../../data/dialogue';
 import { l6, l6PhotoSpots } from '../../data/l6';
 import type { Anchor, MissionDef } from '../../sim/missions/types';
 import type { DistrictId } from '../districts/types';
 export function levelSixMission(resolve: (district: DistrictId, name: string) => Anchor): MissionDef {
   const def: MissionDef = {
-    id: 'L6', l6: true, briefing: 'Lakeshore shelter. Rest, share water, and let the medic dress the injured. Pick up the headlamp by the lantern. Marcus watches the sealed stair.',
+    id: 'L6', l6: true, briefing: dialogue['L6.briefing'],
     anchors: {}, actors: {}, groups: {}, gates: {}, items: ['headlamp'], states: ['breached', 'abandoned', 'platform', 'exited'], counters: [],
     checkpoints: [...l6.checkpoints], cinematics: {}, steps: [], finish: ['exit'], onStart: [], onComplete: [{ kind: 'cinematic', id: 'night' }],
   };

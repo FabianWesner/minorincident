@@ -1,3 +1,4 @@
+import { dialogue } from '../../data/dialogue';
 import type { Anchor, MissionDef } from '../../sim/missions/types';
 import type { DistrictId } from '../districts/types';
 
@@ -7,7 +8,7 @@ export function levelSevenMission(resolve: (district: DistrictId, name: string) 
   anchors['l7-corridor-east'].radius = 6;
   anchors['l7-corridor-west'].radius = 12;
   return {
-    id: 'L7', briefing: 'Bring the survivors through the ruined city to the evacuation bus.',
+    id: 'L7', briefing: dialogue['L7.briefing'],
     anchors, actors: {}, groups: {}, gates: {}, items: [], states: ['corridor-group'], counters: [],
     checkpoints: ['night-exit', 'rocket', 'corridor'], cinematics: {},
     onStart: [{ kind: 'checkpoint', id: 'night-exit' }], onComplete: [], finish: ['departure'],

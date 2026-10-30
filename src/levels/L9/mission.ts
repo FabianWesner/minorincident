@@ -1,3 +1,4 @@
+import { dialogue } from '../../data/dialogue';
 import type { Anchor, MissionDef } from '../../sim/missions/types';
 import type { DistrictId } from '../districts/types';
 
@@ -6,7 +7,7 @@ export function levelNineMission(resolve: (district: DistrictId, name: string) =
   const anchors = Object.fromEntries(names.map(name => [name, resolve('D-CROSSING', name)]));
   anchors.outskirts.radius = 12;
   return {
-    id: 'L9', l9: true, briefing: 'Cross the countryside toward the next city.',
+    id: 'L9', l9: true, briefing: dialogue['L9.briefing'],
     anchors,
     actors: {}, groups: {}, gates: {}, items: [], states: ['crash-started', 'crash-finished'], counters: [],
     checkpoints: ['crossing-start', 'outskirts-approach'], cinematics: {},

@@ -68,6 +68,9 @@ export const dialogue: Record<string, string> = {
   'L5.found.okafor': 'Mr. Okafor: Bless you, child. Please, take me with you.',
   'L5.found.mia': 'Mia: Is it over? Please say it’s over. Take me with you.',
   'L5.found.sam': 'Sam: Thank God. I lost my rifle days ago. Take me with you.',
-  'L6.briefing': 'Extraction chopper at the substation helipad at dawn.',
-  'L6.twist': 'You survived the first day.',
+  'L6.briefing': 'Lakeshore shelter, under the street. Rest, share water, and let the medic dress the injured. Pick up the headlamp by the lantern. Marcus, who runs the shelter, watches the sealed stair.',
+  'L7.briefing': 'Night. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.',
+  'L8.briefing': 'The evacuation bus reaches the zoo, now an army safe zone: high walls, soldiers, lights. The zoo is secure. Take a breath. Explore the sanctuary.',
+  'L9.briefing': 'The zoo is lost behind you. The armored vehicle’s radio loops one army broadcast: the research campus past the next city has a cure. Cross the countryside toward it; every hit costs armor.',
+  'L10.briefing': 'The crash took the vehicle, the others and every weapon but the axe. Find the research campus and the cure. Something huge is on your trail: you will hear it long before you see it.',
 };

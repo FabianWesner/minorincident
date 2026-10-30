@@ -1,3 +1,4 @@
+import { dialogue } from '../../data/dialogue';
 import type { Anchor, MissionDef, ObjectiveDef, ScriptAction, Trigger } from '../../sim/missions/types';
 
 /** D1–D4 supply these anchor names in D-CURE. No geometry or encounter spawning lives here. */
@@ -28,7 +29,7 @@ export function levelTenMission(resolve: (name: string) => Anchor | undefined): 
   // The final existing approach lane is a bounded collapse tableau, outside the release disc.
   const arrival = resolve('dispersal-horizon');
   if (arrival) anchors['epilogue-approach'] = arrival;
-  const def: MissionDef = { id: 'L10', briefing: 'Find the airborne cure and bring it to the dispersal complex.', anchors, actors: {}, groups: {}, gates: {}, items: ['cure-canister'], states: [...cureStates, 'anchor-unavailable'], counters: [...cureCounters], checkpoints: [...cureCheckpoints], cinematics: {}, steps: [], finish: ['credits'], onStart: [{ kind: 'checkpoint', id: 'cure-crash' }], onComplete: [] };
+  const def: MissionDef = { id: 'L10', briefing: dialogue['L10.briefing'], anchors, actors: {}, groups: {}, gates: {}, items: ['cure-canister'], states: [...cureStates, 'anchor-unavailable'], counters: [...cureCounters], checkpoints: [...cureCheckpoints], cinematics: {}, steps: [], finish: ['credits'], onStart: [{ kind: 'checkpoint', id: 'cure-crash' }], onComplete: [] };
   const step = (id: string, text: string, name: string, complete: Trigger, actions: ScriptAction[] = [], type: ObjectiveDef['type'] = 'custom') => {
     const previous = def.steps.at(-1);
     def.steps.push({ id, text, type, anchor: anchors[name] ? name : 'cure-crash', waypoint: !!anchors[name], start: previous ? { kind: 'objectives', ids: [previous.id], mode: 'all' } : { kind: 'start' }, complete, fail: [], onComplete: actions });

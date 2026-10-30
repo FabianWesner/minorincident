@@ -3,7 +3,7 @@ import { dialogue } from '../data/dialogue';
 import { button, node } from './dom';
 import './ui.css';
 
-const titles = ['Special Delivery', 'The Failed Rescue', 'The Police Collapse', 'The Safe City Falls', 'Aftermath', 'The Subway'];
+const titles = ['Special Delivery', 'The Failed Rescue', 'The Police Collapse', 'The Safe City Falls', 'Aftermath', 'The Subway', 'The Ruined City', 'The Zoo', 'The Crossing', 'The Cure'];
 /** Covers native scene teardown through the first full-size draw. Progress reports completed
  * loading stages, loader items and shader batches; it never advances on a timer. */
 export class LevelTransition {
@@ -31,7 +31,7 @@ export class LevelTransition {
     const continuing = !this.root.hidden && this.level === id && this.retry.hidden;
     this.level = id; this.retry.hidden = true;
     const number = Number(id.slice(1));
-    this.heading.textContent = /^L[1-6]$/.test(id) ? `Level ${number} · ${titles[number - 1]}` : 'Loading neighborhood';
+    this.heading.textContent = /^L([1-9]|10)$/.test(id) ? `Level ${number} · ${titles[number - 1]}` : 'Loading neighborhood';
     this.story.textContent = dialogue[`${id}.briefing`] ?? 'Getting the neighborhood ready.';
     if (!continuing) { this.progress.value = 0; this.stage = .2; }
     this.root.hidden = false;
