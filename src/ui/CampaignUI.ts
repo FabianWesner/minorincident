@@ -52,7 +52,7 @@ export class CampaignUI {
       if (ending.phase === 'title') {
         this.screen('Minor Incident'); this.root.classList.add('epilogue-title');
         this.heading.dataset.testid = 'epilogue-title';
-        const line = document.createElement('p'); line.textContent = 'The outbreak is over.'; this.content.append(line);
+        const line = document.createElement('p'); line.textContent = 'It began with one delivery. Now the outbreak is over.'; this.content.append(line);
       } else { this.root.classList.remove('epilogue-title'); delete this.heading.dataset.testid; this.credits(save, true); }
       // Title/credits use the saved simulation phase clock; focus/menu still pause normally.
       if (!paused) this.game.clock.resume();
