@@ -80,7 +80,7 @@ export class Mission {
     };
     world.mission = this.state;
     if (def.id === 'L10' && world.progression?.campaign?.crossingHandover) {
-      this.state.subtitle = { id: 'l10.arsenal-lost', text: 'The crash took everything but the axe. Find the research campus and the cure.', until: world.tick + 300 };
+      this.state.subtitle = { id: 'l10.arsenal-lost', text: dialogue['L10.crash'], until: world.tick + 480 };
     }
     this.rebuildGates();
     for (const step of def.steps) {this.registerZones(step.complete); for(const fail of step.fail)this.registerZones(fail.trigger);}

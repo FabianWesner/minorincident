@@ -26,7 +26,7 @@ export function objectiveText(mission: Mission, fallback: string): string {
   if (s.l4?.barredAt && s.steps.wait?.status === 'active') return `${fallback} · ${clock(s.l4.barredAt+l4.cellar.battleAfterBarredS*60-w.tick)} remaining`;
   if (s.l6) {
     const l6 = s.l6;
-    if (l6.phase === 'shelter') return `${fallback} · ${clock(l6.breach1At-w.tick)} remaining`;
+    if (l6.phase === 'shelter') return `${fallback} · rest while you can`;
     if (l6.phase === 'first' || l6.phase === 'fails') return `${fallback} · Retreat in ${clock(l6.breach2At+900-w.tick)}`;
     if (l6.phase === 'retreat') {
       const p = w.entities.get(1)!.transform;

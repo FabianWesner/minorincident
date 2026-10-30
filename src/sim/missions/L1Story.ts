@@ -11,7 +11,7 @@ type BeatId = NonNullable<L1State['beat']>['id'];
 /** One speech line per beat (PO UAT: short in-world bubbles, no cut-scenes). */
 export const storyLines: Record<string, string> = {
   'pickup.clerk': 'Morning! Cold-chain, handle with care.',
-  'handover.tech': '…Thanks. Don’t hang around.',
+  'handover.tech': '…The sample. They have been waiting for this. Thanks. Don’t hang around.',
   'garage.courier': 'This’ll do.',
   'firestation.firefighter': 'Get in!',
   'firestation.caption': 'Delivery complete. Outbreak: not contained.',

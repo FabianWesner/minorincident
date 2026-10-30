@@ -11,7 +11,7 @@ export function levelSevenMission(resolve: (district: DistrictId, name: string) 
     id: 'L7', briefing: dialogue['L7.briefing'],
     anchors, actors: {}, groups: {}, gates: {}, items: [], states: ['corridor-group'], counters: [],
     checkpoints: ['night-exit', 'rocket', 'corridor'], cinematics: {},
-    onStart: [{ kind: 'checkpoint', id: 'night-exit' }], onComplete: [], finish: ['departure'],
+    onStart: [{ kind: 'radio', id: 'L7.start' }, { kind: 'checkpoint', id: 'night-exit' }], onComplete: [], finish: ['departure'],
     steps: [
       { id: 'rocket', type: 'custom', text: 'Recover the rocket launcher beside the exit', anchor: 'l7-rocket',
         start: { kind: 'start' }, complete: { kind: 'event', type: 'l7.armed', count: 1 }, fail: [],

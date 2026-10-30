@@ -1,3 +1,4 @@
+import { dialogue } from '../../data/dialogue';
 import { megaCueInterval } from '../../data/megaPresentation';
 import { SimPhase } from '../../core/EventBus';
 import { megaAlpha } from '../../data/megaAlpha';
@@ -58,6 +59,7 @@ export interface MegaPursuitState {
   lastDamage: { tick: number; amount: number; sourceId: number } | null;
   /** Metres advanced while coarse (telemetry). */
   coarseM: number;
+  introduced?: boolean;
   audio?: { next: number; step: number; index: number; last?: { x: number; z: number } };
 }
 const key = (a: string, b: string) => a < b ? `${a}|${b}` : `${b}|${a}`;
@@ -192,7 +194,14 @@ export class MegaPursuit {
     const moving = dist(last, e.transform) > .005; last.x = e.transform.x; last.z = e.transform.z;
     const emit = (kind: 'roar' | 'impact' | 'step') => this.world.events.emit({ type: 'mega.cue', tick, sourceId: e.id, kind, band });
     if (tick >= audio.next) {
-      emit('roar'); emit('impact'); audio.next = tick + megaCueInterval(this.world.seed, audio.index++);
+      emit('roar'); emit('impact');
+      // First audible roar, once the opening line is gone: say what it is (story audit, finding 11).
+      const m = this.world.mission;
+      if (!this.state.introduced && m && (!m.subtitle || m.subtitle.until <= tick)) {
+        this.state.introduced = true;
+        m.subtitle = { id: 'L10.mega-roar', text: dialogue['L10.mega-roar'], until: tick + 300 };
+        this.world.events.emit({ type: 'dialogue.line', tick, id: 'L10.mega-roar', text: m.subtitle.text });
+      } audio.next = tick + megaCueInterval(this.world.seed, audio.index++);
     }
     if (tick >= audio.step) {
       audio.step = tick + 48;
