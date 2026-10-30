@@ -10,14 +10,15 @@ import type { Materials } from '../Materials';
 
 type Entry = { material: MeshLambertNodeMaterial; pose: ReturnType<typeof poseTexture>; atlas?: ReturnType<typeof sampleTexture>; uses: number };
 const caches = new WeakMap<Materials, Map<string, Entry>>();
-/** Cache by side/hand layout. Each draw binds its own immutable geometry,
- * current pose texture, transforms, tint and infection attributes. */
+/** Cache by side/hand layout and atlas. Each draw binds its current pose,
+ * transforms, tint and infection attributes; its colour atlas stays fixed. */
 export function civilianMaterial(shading: Materials | undefined, doubleSided: boolean, initialTexture: DataTexture, options: { bindRow: number; atlas?: Texture; toyEyes?: boolean } = { bindRow: 0 }) {
   let cache = shading && caches.get(shading);
   if (!cache) { cache = new Map(); if (shading) caches.set(shading, cache); }
-  // Renderer refreshes sampled bindings on texture identity, including equal
-  // versions. Every atlas can use this same graph without stale GPU handles.
-  const key = `${doubleSided}:${options.bindRow}:${!!options.atlas}:${!!options.toyEyes}`;
+  // Different figures can share a shader program, but must own their atlas
+  // binding. Rebinding one graph across atlases left Dale sampling another
+  // figure's map (and pose) when the mixed L5 cast drew together.
+  const key = `${doubleSided}:${options.bindRow}:${options.atlas?.uuid ?? 'plain'}:${!!options.toyEyes}`;
   let entry = cache.get(key);
   if (!entry) {
     const pose = poseTexture(initialTexture);

@@ -9,7 +9,7 @@ export function civilianHeight(model: string): number {
   if (model === 'npc.brother') return 1.4265;
   // The heroine's measured standing height is 1.454 m. Keep women in that
   // class and give adult men an 8% height difference, including story survivors.
-  if (/woman|female|mia|rosa|lab-tech-a|civilian-adult-f/i.test(model)) return heroineStandingHeight;
+  if (/woman|female|mia|rosa|alvarez|lab-tech-b|depot-clerk|paramedic|civilian-adult-f/i.test(model)) return heroineStandingHeight;
   // The elderly roster figure is a man; the age allowance is up to 5% below
   // the male class. Other adult models in the L1/core roster are male.
   if (/elderly/i.test(model)) return adultMaleStandingHeight * .95;

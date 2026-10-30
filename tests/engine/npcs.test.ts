@@ -15,7 +15,9 @@ function pair(w: SimWorld) { const id = w.npcs!.civilians.spawn('cashier', { x: 
 test('civilians: seeded grab → bite → down → glowing eyes → rising → infected cycle in place; panic flees; a kill during the grab saves', async () => {
   expect(civilianHeight('npc.civilian-woman-a')).toBeCloseTo(heroineStandingHeight, 3);
   expect(civilianHeight('npc.civilian-adult-f')).toBeCloseTo(heroineStandingHeight, 3);
-  expect(civilianHeight('npc.lab-tech-a')).toBeCloseTo(heroineStandingHeight, 3);
+  expect(civilianHeight('npc.lab-tech-b')).toBeCloseTo(heroineStandingHeight, 3);
+  expect(civilianHeight('npc.depot-clerk')).toBeCloseTo(heroineStandingHeight, 3);
+  expect(civilianHeight('npc.lab-tech-a')).toBeCloseTo(adultMaleStandingHeight, 3);
   expect(civilianHeight('npc.dale.aftermath')).toBeCloseTo(adultMaleStandingHeight, 3);
   expect(adultMaleStandingHeight / heroineStandingHeight).toBeGreaterThanOrEqual(1.05);
   expect(adultMaleStandingHeight / heroineStandingHeight).toBeLessThanOrEqual(1.12);

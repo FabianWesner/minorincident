@@ -340,7 +340,7 @@ test('crowd long guns use asset grip/muzzle sockets and the courier support-hand
   const one = civilianMaterial(shading, false, pose, { bindRow: 0, atlas: a });
   const same = civilianMaterial(shading, false, pose, { bindRow: 0, atlas: a });
   const other = civilianMaterial(shading, false, pose, { bindRow: 0, atlas: b });
-  expect(one.material).toBe(same.material); expect(one.material).toBe(other.material);
+  expect(one.material).toBe(same.material); expect(one.material).not.toBe(other.material);
   one.release(); same.release(); other.release(); shading.dispose();
   const props = new RoutineProps();
   const loadAsset = vi.fn(async (id: string) => {
