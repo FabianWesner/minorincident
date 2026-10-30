@@ -47,9 +47,10 @@ try {
       await a.loadLevel('L2', { seed: 1, checkpoint: 'doors', progression: 'L2-default' });
       a.settings.set({ quality: 'low' }); a.missions.begin(); a.pause(); a.cheats.god(true); g.ui.show(null); await a.step(120);
       const s = g.world.missions!.state.l2!;
-      return { tier: g.world.infected!.director.tier, homes: homes.map(([x, z]) => ({ x, z, clear: g.world.solids!.clear({ x, y: 0, z }, .3) })),
-        arrivals: s.pending.filter(p => p.door.startsWith('l2-route-edge-')).map(p => ({ ...p, entity: p.id ? a.getEntity(p.id) : null })) };
+      return { tier: g.world.infected!.director.tier, homes: homes.map(([x, z]) => ({ x, z, clear: g.world.solids!.clear({ x, y: .72, z }, .3, undefined, false) })),
+        arrivals: s.pending.filter(p => p.door.startsWith('l2-route-edge-')).map(p => ({ ...p, entity: p.id ? { transform: a.getEntity(p.id)?.transform, health: a.getEntity(p.id)?.health, hidden: a.getEntity(p.id)?.hidden } : null })) };
     }, l2.escape.scattered);
+    writeFileSync(`${out}/evidence.json`, JSON.stringify(receipt, null, 2));
     assert.equal(receipt.tier, 'low');
     assert.equal(receipt.homes.length, 6); assert.ok(receipt.homes.every(p => p.clear), JSON.stringify(receipt.homes));
     assert.equal(receipt.arrivals.length, 6); assert.ok(receipt.arrivals.every(p => p.id > 0));
