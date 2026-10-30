@@ -1,0 +1,858 @@
+{
+  "baselineRevision": "6384d11c41dfe33a3581997a5ccb75ea8fc6ce22",
+  "implementationRevision": "09a9eabda28e8fc60954fade04bcf3da7f21c51f",
+  "captures": {
+    "low": {
+      "wideZoom": 1.5,
+      "wideReleaseSeconds": [
+        126,
+        138
+      ],
+      "corpseCloseZoom": 1.5,
+      "spawned": 72,
+      "titleCreditsPixelComparison": {
+        "title": {
+          "changedPixels": 2,
+          "maxChannelDelta": 1,
+          "meanAbsoluteChannelDelta": 7.233796296296296e-7
+        },
+        "credits": {
+          "changedPixels": 0,
+          "maxChannelDelta": 0,
+          "meanAbsoluteChannelDelta": 0
+        }
+      },
+      "closeViewMeanAbsoluteMistDelta": {
+        "before": 1.0728370949074073,
+        "after": 0.5353421585648148
+      }
+    },
+    "high": {
+      "wideZoom": 1,
+      "wideReleaseSeconds": [
+        126,
+        138
+      ],
+      "corpseCloseZoom": 1.5,
+      "spawned": 72,
+      "titleCreditsPixelComparison": {
+        "title": {
+          "changedPixels": 1,
+          "maxChannelDelta": 1,
+          "meanAbsoluteChannelDelta": 3.616898148148148e-7
+        },
+        "credits": {
+          "changedPixels": 0,
+          "maxChannelDelta": 0,
+          "meanAbsoluteChannelDelta": 0
+        }
+      },
+      "closeViewMeanAbsoluteMistDelta": {
+        "before": 3.8616030092592593,
+        "after": 1.5871498842592593
+      }
+    }
+  },
+  "shaderProfiles": {
+    "webgpu-low": {
+      "backend": "webgpu",
+      "tier": "low",
+      "loadedKeys": null,
+      "warmKeys": 283,
+      "afterKeys": 283,
+      "loadedHash": null,
+      "warmHash": "b57d64ece46d3a26f2f3cced6dacbce1f1fcce34e54b98d34ed24eacea43c093",
+      "afterHash": "b57d64ece46d3a26f2f3cced6dacbce1f1fcce34e54b98d34ed24eacea43c093",
+      "lateBuilds": [],
+      "mistBuildsAfterLoad": null
+    },
+    "webgpu-high": {
+      "backend": "webgpu",
+      "tier": "high",
+      "loadedKeys": 293,
+      "warmKeys": 293,
+      "afterKeys": 293,
+      "loadedHash": "9f4bea45ffaf634983af8425e6b8ff480d73b407c1e5399d6070684fc5b59301",
+      "warmHash": "9f4bea45ffaf634983af8425e6b8ff480d73b407c1e5399d6070684fc5b59301",
+      "afterHash": "9f4bea45ffaf634983af8425e6b8ff480d73b407c1e5399d6070684fc5b59301",
+      "lateBuilds": [],
+      "mistBuildsAfterLoad": []
+    },
+    "after-high": {
+      "backend": "webgl",
+      "tier": "high",
+      "loadedKeys": null,
+      "warmKeys": 293,
+      "afterKeys": 293,
+      "loadedHash": null,
+      "warmHash": "cc87412bf9422c36242fa280918cbc8397ae1ab4c1efbd5c270d233661638cbd",
+      "afterHash": "cc87412bf9422c36242fa280918cbc8397ae1ab4c1efbd5c270d233661638cbd",
+      "lateBuilds": [],
+      "mistBuildsAfterLoad": null
+    }
+  },
+  "l10Matrices": {
+    "webgl2": {
+      "seconds": 202.46,
+      "rows": [
+        {
+          "name": "qa-l10-epilogue@high-z0.5",
+          "pass": true,
+          "mistPuffs": 24,
+          "errors": 0
+        },
+        {
+          "name": "qa-l10-epilogue@high-z1",
+          "pass": true,
+          "mistPuffs": 83,
+          "errors": 0
+        },
+        {
+          "name": "qa-l10-epilogue@high-z1.5",
+          "pass": true,
+          "mistPuffs": 152,
+          "errors": 0
+        },
+        {
+          "name": "qa-l10-epilogue@low-z0.5",
+          "pass": true,
+          "mistPuffs": 12,
+          "errors": 0
+        },
+        {
+          "name": "qa-l10-epilogue@low-z1",
+          "pass": true,
+          "mistPuffs": 32,
+          "errors": 0
+        },
+        {
+          "name": "qa-l10-epilogue@low-z1.5",
+          "pass": true,
+          "mistPuffs": 53,
+          "errors": 0
+        },
+        {
+          "name": "qa-l10-title-credits@high-z0.5",
+          "pass": true,
+          "mistPuffs": 22,
+          "errors": 0
+        },
+        {
+          "name": "qa-l10-title-credits@high-z1",
+          "pass": true,
+          "mistPuffs": 78,
+          "errors": 0
+        },
+        {
+          "name": "qa-l10-title-credits@high-z1.5",
+          "pass": true,
+          "mistPuffs": 164,
+          "errors": 0
+        },
+        {
+          "name": "qa-l10-title-credits@low-z0.5",
+          "pass": true,
+          "mistPuffs": 16,
+          "errors": 0
+        },
+        {
+          "name": "qa-l10-title-credits@low-z1",
+          "pass": true,
+          "mistPuffs": 56,
+          "errors": 0
+        },
+        {
+          "name": "qa-l10-title-credits@low-z1.5",
+          "pass": true,
+          "mistPuffs": 112,
+          "errors": 0
+        }
+      ]
+    },
+    "webgpu": {
+      "seconds": 209.082,
+      "rows": [
+        {
+          "name": "qa-l10-epilogue@high-z0.5",
+          "pass": true,
+          "mistPuffs": 24,
+          "errors": 0
+        },
+        {
+          "name": "qa-l10-epilogue@high-z1",
+          "pass": true,
+          "mistPuffs": 83,
+          "errors": 0
+        },
+        {
+          "name": "qa-l10-epilogue@high-z1.5",
+          "pass": true,
+          "mistPuffs": 152,
+          "errors": 0
+        },
+        {
+          "name": "qa-l10-epilogue@low-z0.5",
+          "pass": true,
+          "mistPuffs": 12,
+          "errors": 0
+        },
+        {
+          "name": "qa-l10-epilogue@low-z1",
+          "pass": true,
+          "mistPuffs": 32,
+          "errors": 0
+        },
+        {
+          "name": "qa-l10-epilogue@low-z1.5",
+          "pass": true,
+          "mistPuffs": 53,
+          "errors": 0
+        },
+        {
+          "name": "qa-l10-title-credits@high-z0.5",
+          "pass": true,
+          "mistPuffs": 22,
+          "errors": 0
+        },
+        {
+          "name": "qa-l10-title-credits@high-z1",
+          "pass": true,
+          "mistPuffs": 78,
+          "errors": 0
+        },
+        {
+          "name": "qa-l10-title-credits@high-z1.5",
+          "pass": true,
+          "mistPuffs": 164,
+          "errors": 0
+        },
+        {
+          "name": "qa-l10-title-credits@low-z0.5",
+          "pass": true,
+          "mistPuffs": 16,
+          "errors": 0
+        },
+        {
+          "name": "qa-l10-title-credits@low-z1",
+          "pass": true,
+          "mistPuffs": 56,
+          "errors": 0
+        },
+        {
+          "name": "qa-l10-title-credits@low-z1.5",
+          "pass": true,
+          "mistPuffs": 112,
+          "errors": 0
+        }
+      ]
+    }
+  },
+  "verify": {
+    "target": "E32",
+    "epics": [
+      "E32"
+    ],
+    "checks": [
+      {
+        "command": "npm run typecheck",
+        "status": 0,
+        "seconds": 17.34
+      },
+      {
+        "command": "npm run lint",
+        "status": 0,
+        "seconds": 11.427
+      },
+      {
+        "command": "npm test",
+        "status": 0,
+        "seconds": 28.442
+      }
+    ]
+  },
+  "unitTests": {
+    "passed": 107,
+    "files": 25,
+    "newTestCases": 0
+  },
+  "smoke": {
+    "qa": {
+      "startTime": "2026-10-30T05:02:09.096Z",
+      "duration": 108504.83499999999,
+      "expected": 6,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "public": {
+      "startTime": "2026-10-30T05:04:05.040Z",
+      "duration": 4883.378000000001,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "seconds": 129.7,
+    "freezeGuard": {
+      "title": "L1 handover + outbreak: no shader builds after warm-up and no frame over 200 ms @smoke",
+      "status": "passed",
+      "annotations": [
+        {
+          "type": "builds after warm-up",
+          "description": "{}"
+        },
+        {
+          "type": "frames",
+          "description": "max 17 ms in 169"
+        },
+        {
+          "type": "L8 boarding shader builds",
+          "description": "{\"carId\":406,\"boarded\":true,\"builds\":{}}"
+        }
+      ]
+    }
+  },
+  "sceneGate": {
+    "passed": 48,
+    "knownFailures": 0,
+    "notRun": 0,
+    "identity": {
+      "revision": "09a9eabda28e8fc60954fade04bcf3da7f21c51f",
+      "inputs": "bea1b60764e140ae24a2504000e88d3144d2347d5b8ece3c67eb88a44d4e5d4b",
+      "mode": "gate",
+      "rows": [
+        [
+          "webgl2",
+          "low",
+          "courier-gear-tier4-female@low-z1.5"
+        ],
+        [
+          "webgpu",
+          "high",
+          "courier-gear-tier4-male@high-z0.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "courier-gear-tier2-female@high-z1.5"
+        ],
+        [
+          "webgpu",
+          "low",
+          "courier-gear-tier4-swing-female@low-z0.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "e18-courier-armed-male@high-z1.5"
+        ],
+        [
+          "webgpu",
+          "low",
+          "e18-courier-armed-female@low-z0.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "courier-locomotion-f@high-z1.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "courier-turns@high-z1.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "ped-walk-all@high"
+        ],
+        [
+          "webgpu",
+          "low",
+          "ped-walk-all@low"
+        ],
+        [
+          "webgl2",
+          "high",
+          "ped-sit-all@high"
+        ],
+        [
+          "webgpu",
+          "low",
+          "ped-sit-all@low"
+        ],
+        [
+          "webgl2",
+          "low",
+          "ped-newchars-walk-1@low-z0.5"
+        ],
+        [
+          "webgl2",
+          "low",
+          "ped-newchars-sit@low"
+        ],
+        [
+          "webgpu",
+          "low",
+          "ped-hats-glasses@low-z1.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "ped-hats-spots-l1@high-z0.5"
+        ],
+        [
+          "webgpu",
+          "low",
+          "ped-l1-staged-cast@low-z1.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "ped-water-flowerbed@high"
+        ],
+        [
+          "webgpu",
+          "high",
+          "ped-zoo-staff@high"
+        ],
+        [
+          "webgl2",
+          "low",
+          "ped-bitten@low"
+        ],
+        [
+          "webgl2",
+          "low",
+          "inf-chase-l1@low-z1.5"
+        ],
+        [
+          "webgpu",
+          "high",
+          "inf-chase-l3@high-z0.5"
+        ],
+        [
+          "webgpu",
+          "low",
+          "inf-looks@low"
+        ],
+        [
+          "webgl2",
+          "high",
+          "inf-horde-headwear@high-z1.5"
+        ],
+        [
+          "webgl2",
+          "low",
+          "inf-attack-knockdown@low"
+        ],
+        [
+          "webgpu",
+          "low",
+          "alpha-variants-close@low-z1.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "alpha-hit-corpse-suit@high-z1.5"
+        ],
+        [
+          "webgl2",
+          "low",
+          "mega-alpha-variants-lineup@low-z0.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "corgi-tongue-female@high-z1.5"
+        ],
+        [
+          "webgpu",
+          "low",
+          "dog-pet-trot@low-z1.5"
+        ],
+        [
+          "webgpu",
+          "low",
+          "animal-zoo-healthy@low-z0.5"
+        ],
+        [
+          "webgpu",
+          "high",
+          "wave3-zoo-routines@high-z1.5"
+        ],
+        [
+          "webgl2",
+          "low",
+          "corpse-look-close@low-z1.5"
+        ],
+        [
+          "webgpu",
+          "high",
+          "corpse-look-alpha@high-z0.5"
+        ],
+        [
+          "webgpu",
+          "low",
+          "corpse-placement-pile@low-z0.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "l4-broken-army-line@high-z0.5"
+        ],
+        [
+          "webgpu",
+          "high",
+          "fight-army-line-zoom06@high-z1.5"
+        ],
+        [
+          "webgl2",
+          "low",
+          "l10-d2-military-breach@low-z0.5"
+        ],
+        [
+          "webgl2",
+          "low",
+          "l10-mega-close-contact@low-z1.5"
+        ],
+        [
+          "webgpu",
+          "low",
+          "seethrough-open-sidewalk-l4@low-z0.5"
+        ],
+        [
+          "webgl2",
+          "low",
+          "seethrough-gear-four@low-z1.5"
+        ],
+        [
+          "webgpu",
+          "high",
+          "seat-bench-l1-start@high-z1.5"
+        ],
+        [
+          "webgl2",
+          "low",
+          "seat-bench-tipped@low"
+        ],
+        [
+          "webgpu",
+          "low",
+          "seat-grip-coffee-game@low-z1.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "veh-bus-hero@high-z0.5"
+        ],
+        [
+          "webgpu",
+          "low",
+          "veh-apc-damage-250@low-z1.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "collision-vehicle-admission@high-z0.5"
+        ],
+        [
+          "webgpu",
+          "high",
+          "inf-mega-arrival@high-z0.5"
+        ]
+      ],
+      "maxRows": 15
+    },
+    "rows": [
+      {
+        "batch": "webgl2-low-1",
+        "name": "corpse-look-close@low-z1.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgl2-low-1",
+        "name": "courier-gear-tier4-female@low-z1.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgl2-low-1",
+        "name": "inf-attack-knockdown@low",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgl2-low-1",
+        "name": "inf-chase-l1@low-z1.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgl2-low-1",
+        "name": "l10-d2-military-breach@low-z0.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgl2-low-1",
+        "name": "l10-mega-close-contact@low-z1.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgl2-low-1",
+        "name": "mega-alpha-variants-lineup@low-z0.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgl2-low-1",
+        "name": "ped-bitten@low",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgl2-low-1",
+        "name": "ped-newchars-sit@low",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgl2-low-1",
+        "name": "ped-newchars-walk-1@low-z0.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgl2-low-1",
+        "name": "seat-bench-tipped@low",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgl2-low-1",
+        "name": "seethrough-gear-four@low-z1.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgpu-high-1",
+        "name": "corpse-look-alpha@high-z0.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgpu-high-1",
+        "name": "courier-gear-tier4-male@high-z0.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgpu-high-1",
+        "name": "fight-army-line-zoom06@high-z1.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgpu-high-1",
+        "name": "inf-chase-l3@high-z0.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgpu-high-1",
+        "name": "inf-mega-arrival@high-z0.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgpu-high-1",
+        "name": "ped-zoo-staff@high",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgpu-high-1",
+        "name": "seat-bench-l1-start@high-z1.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgpu-high-1",
+        "name": "wave3-zoo-routines@high-z1.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgl2-high-1",
+        "name": "alpha-hit-corpse-suit@high-z1.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgl2-high-1",
+        "name": "collision-vehicle-admission@high-z0.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgl2-high-1",
+        "name": "corgi-tongue-female@high-z1.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgl2-high-1",
+        "name": "courier-gear-tier2-female@high-z1.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgl2-high-1",
+        "name": "courier-locomotion-f@high-z1.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgl2-high-1",
+        "name": "courier-turns@high-z1.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgl2-high-1",
+        "name": "e18-courier-armed-male@high-z1.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgl2-high-1",
+        "name": "inf-horde-headwear@high-z1.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgl2-high-1",
+        "name": "l4-broken-army-line@high-z0.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgl2-high-1",
+        "name": "ped-hats-spots-l1@high-z0.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgl2-high-1",
+        "name": "ped-sit-all@high",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgl2-high-1",
+        "name": "ped-walk-all@high",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgl2-high-1",
+        "name": "ped-water-flowerbed@high",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgl2-high-1",
+        "name": "veh-bus-hero@high-z0.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgpu-low-1",
+        "name": "alpha-variants-close@low-z1.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgpu-low-1",
+        "name": "animal-zoo-healthy@low-z0.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgpu-low-1",
+        "name": "corpse-placement-pile@low-z0.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgpu-low-1",
+        "name": "courier-gear-tier4-swing-female@low-z0.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgpu-low-1",
+        "name": "dog-pet-trot@low-z1.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgpu-low-1",
+        "name": "e18-courier-armed-female@low-z0.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgpu-low-1",
+        "name": "inf-looks@low",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgpu-low-1",
+        "name": "ped-hats-glasses@low-z1.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgpu-low-1",
+        "name": "ped-l1-staged-cast@low-z1.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgpu-low-1",
+        "name": "ped-sit-all@low",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgpu-low-1",
+        "name": "ped-walk-all@low",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgpu-low-1",
+        "name": "seat-grip-coffee-game@low-z1.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgpu-low-1",
+        "name": "seethrough-open-sidewalk-l4@low-z0.5",
+        "pass": true,
+        "failed": []
+      },
+      {
+        "batch": "webgpu-low-1",
+        "name": "veh-apc-damage-250@low-z1.5",
+        "pass": true,
+        "failed": []
+      }
+    ]
+  }
+}

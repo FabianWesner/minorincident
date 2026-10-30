@@ -15,6 +15,8 @@ try {
   const wide = readSpec('tests/scenes/catalog/qa-l10-epilogue.json');
   wide.camera = { mode: 'game', target: 'courier', zoom: tier === 'low' ? 1.5 : 1 };
   await session.load(wide);
+  await session.ready();
+  const loaded = await builds();
   await session.step(720);
   await session.screenshot(`${out}/wide-126s.png`);
   const warm = await builds();
@@ -48,8 +50,8 @@ try {
   await session.screenshot(`${out}/corpse-close.png`);
   await session.page.evaluate(() => { (window.__SCENE__ as unknown as { game: Game }).game.view.vfx!.blasts.visible = false; });
   await session.screenshot(`${out}/corpse-close-no-mist.png`);
-  const evidence = { tier, backend, spawned, warm, after, lateBuilds: Object.entries(after).filter(([key, value]) => value > (warm[key] ?? 0)), metrics, errors: session.errors };
+  const evidence = { tier, backend, spawned, loaded, warm, after, lateBuilds: Object.entries(after).filter(([key, value]) => value > (warm[key] ?? 0)), mistBuildsAfterLoad: Object.entries(after).filter(([key, value]) => key.includes('e27-blasts') && value > (loaded[key] ?? 0)), metrics, errors: session.errors };
   writeFileSync(`${out}/evidence.json`, JSON.stringify(evidence, null, 2));
-  console.log(JSON.stringify({ out, tier, backend, spawned, lateBuilds: evidence.lateBuilds, errors: session.errors }));
-  if (session.errors.length) process.exitCode = 1;
+  console.log(JSON.stringify({ out, tier, backend, spawned, lateBuilds: evidence.lateBuilds, mistBuildsAfterLoad: evidence.mistBuildsAfterLoad, errors: session.errors }));
+  if (!Object.keys(loaded).length || evidence.lateBuilds.length || evidence.mistBuildsAfterLoad.length || metrics.backend !== backend || session.errors.length) process.exitCode = 1;
 } finally { await session.close(); stopServer(); }
