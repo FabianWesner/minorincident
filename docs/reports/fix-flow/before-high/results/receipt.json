@@ -1,6 +1,7 @@
 {
   "staged": {
     "level": "L6",
+    "quality": "high",
     "result": {
       "rescued": 11,
       "survivorsIn": 24,
@@ -18,12 +19,16 @@
         "shelter-10"
       ]
     },
-    "campaignSummary": "Campaign summary \u00b7 2 levels \u00b7 Time 0.0 s \u00b7 Deaths 0 \u00b7 Rescued 16"
+    "campaignSummary": "Campaign summary · 2 levels · Time 0.0 s · Deaths 0 · Rescued 16",
+    "summaryCases": {
+      "withUnidentifiedEvents": "Campaign summary · 3 levels · Time 0.0 s · Deaths 0 · Rescued 19",
+      "withoutIdentities": "Campaign summary · 2 levels · Time 0.0 s · Deaths 0 · Rescued 14"
+    }
   },
   "hud": {
     "tracker": "",
     "result": "Time (seconds)0Knockdowns0Kills0Damage taken0Deaths0Survivors out11Survivors in24Optional objectivesNoneDeliveryInfected nowPedestrians turnedPedestrians escaped",
-    "cue": "<span data-testid=\"minimap-cue\" class=\"hud-pin hud-pin-cue\" hidden=\"\">\u266a</span>"
+    "cue": "<span data-testid=\"minimap-cue\" class=\"hud-pin hud-pin-cue\" hidden=\"\">♪</span>"
   },
   "errors": []
 }
