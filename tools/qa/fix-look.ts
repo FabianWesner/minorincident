@@ -3,6 +3,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { SceneSession, readSpec, stopServer } from '../scenelab/session';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 import type { Game } from '../../src/Game';
+import type { Lighting } from '../../src/render/Lighting';
 
 const [label = 'before', tierArg = 'high', only = 'all'] = process.argv.slice(2);
 const tier = tierArg === 'low' ? 'low' : 'high';
@@ -28,18 +29,24 @@ async function shots(id: string, camera?: SceneSpec['camera']) {
   for (const zoom of [1, 1.5]) {
     await session.page.evaluate(async ({ zoom, camera }) => {
       const a = window.__SS__!;
-      if (camera) window.__SCENE__!.setCamera({ ...camera, zoom });
-      else a.camera.zoom(zoom);
+      if (camera) a.camera.follow();
+      a.camera.zoom(zoom);
+      if (camera) window.__SCENE__!.setCamera(camera.mode === 'game' || camera.mode === 'follow' ? { ...camera, zoom } : camera);
       await a.step(1); await a.screenshotReady();
     }, { zoom, camera });
     const jpeg = await session.snapshot(); writeFileSync(`${dir}/z${zoom}.jpg`, jpeg);
     cells.push({ frame: zoom * 10, jpeg });
-    rows.push({ id, zoom, errors: [...session.errors], state: await session.page.evaluate(() => {
+    rows.push({ id, zoom, errors: [...session.errors], state: await session.page.evaluate(id => {
       const a = window.__SS__!, p = a.perf();
+      const game = (window.__SCENE__ as unknown as { game: Game }).game;
+      const light = (game.view as unknown as { lighting: Lighting }).lighting;
       return { camera: a.getState().render.camera, quality: a.getState().render.quality,
+        rim: light.rim.value, corpseRim: light.corpseRim.value,
+        ...(id === 'q145' ? { metro: game.world.missions?.state.l5,
+          followers: [...game.world.entities.iterate()].filter(e => e.civilian?.survivor).map(e => ({ id: e.id, at: e.transform, mode: e.civilian!.survivor!.mode })) } : {}),
         perf: { backend: p.backend, drawCalls: p.drawCalls, triangles: p.triangles },
         shaderBuildsAfterWarmup: (window as unknown as { __fixLookBuilds: number }).__fixLookBuilds };
-    }) });
+    }, id) });
   }
   await session.makeSheet(cells, `${dir}/sheet.jpg`, 640, 500);
   console.log(`${label} ${tier} ${id}: captured`);
@@ -49,6 +56,12 @@ async function fixture(id: string, file: string, frames: number, amend?: (s: Sce
   await session.open();
   const spec = readSpec(file); amend?.(spec);
   await session.load(spec);
+  if (id === 'q215' && label === 'before') await session.page.evaluate(async () => {
+    const path = '/src/data/timeOfDay.ts';
+    const { timeOfDay } = await import(path) as { timeOfDay: { L5: { rim: number } } };
+    timeOfDay.L5.rim = .25;
+    ((window.__SCENE__ as unknown as { game: Game }).game.view as unknown as { lighting: Lighting }).lighting.rim.value = .25;
+  });
   if (id === 'q175') await session.page.evaluate(() => window.__SCENE__!.command('animal', { special: 'zebra.kick', target: 'courier' }));
   await session.step(frames); await shots(id, spec.camera); await session.close();
 }
@@ -77,6 +90,9 @@ try {
           { id: `infected-${i}`, kind: 'pedestrian' as const, at: [i * 3 - 3, 2] as [number, number], look: { model }, state: 'idle' as const }])],
       camera: { mode: 'game', target: [0, 0], zoom: 1 } };
     await session.load(spec);
+    if (label === 'before') await session.page.evaluate(() => {
+      ((window.__SCENE__ as unknown as { game: Game }).game.view as unknown as { lighting: Lighting }).lighting.corpseRim.value = 0;
+    });
     await session.page.evaluate(() => {
       const lab = window.__SCENE__!, w = (lab as unknown as { game: Game }).game.world;
       for (let i = 0; i < 3; i++) lab.command(`infected-${i}`, { infect: { instant: true } });

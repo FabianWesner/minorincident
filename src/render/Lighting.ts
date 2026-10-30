@@ -103,6 +103,7 @@ export class Lighting {
   readonly hero = uniform(new Vector3(0, -100, 0));
   readonly rim = uniform(0);
   readonly rimColor = uniform(new Color('#b9c6ff'));
+  readonly corpseRim = uniform(0);
   /** Survivor-only fill at night (preset `aura`), warm lantern white. */
   readonly heroFill = uniform(0);
   /** Extra continuous courier fill; authored separately from the world-space aura. */
@@ -148,7 +149,7 @@ export class Lighting {
     this.fallbackEnvironment.needsUpdate = true;
     if (renderer) this.environment = sharedEnvironment ?? new Environment(renderer);
     // These values describe the entire view; they are identical for every world draw.
-    for (const node of [this.direction, this.color, this.intensity, this.worldPaletteEnabled, this.shadow, this.skyAmbient, this.groundAmbient, this.fogColor, this.fogColorA, this.fogCenter, this.fogNear, this.fogFar, this.hero, this.rim, this.rimColor, this.roadLift, this.roadLiftColor, this.roadFocus, this.heroFill, this.heroSurfaceFill, this.heroRim, this.heroRimEdge, this.heroSmokeRim, this.heroFillColor, this.fieldShadow, this.shadowHue]) node.setGroup(renderGroup);
+    for (const node of [this.direction, this.color, this.intensity, this.worldPaletteEnabled, this.shadow, this.skyAmbient, this.groundAmbient, this.fogColor, this.fogColorA, this.fogCenter, this.fogNear, this.fogFar, this.hero, this.rim, this.rimColor, this.corpseRim, this.roadLift, this.roadLiftColor, this.roadFocus, this.heroFill, this.heroSurfaceFill, this.heroRim, this.heroRimEdge, this.heroSmokeRim, this.heroFillColor, this.fieldShadow, this.shadowHue]) node.setGroup(renderGroup);
     this.bounce = look.nodes.bounce;
     this.coreShadowEdgeHigh = look.nodes.coreLightEdge; this.coreShadowEdgeLow = look.nodes.coreShadowEdge;
     this.fogRadialStart = look.nodes.fogRatioA; this.fogRadialEnd = look.nodes.fogRatioB;
@@ -177,6 +178,7 @@ export class Lighting {
     this.promoted = null; this.promotedAt = -Infinity; this.heroLight = null; this.promotionChanges = 0; this.heroTime = -1; this.spot.visible = name === 'L6-subway'; this.sun.visible = !this.spot.visible;
     this.worldPaletteEnabled.value = Number(name === 'L1');
     this.preset = name; const p = timeOfDay[name];
+    this.corpseRim.value = p.corpseRim ?? 0;
     (this.sun.shadow as typeof this.sun.shadow & { filterNode: typeof stableSunShadow }).filterNode = name === 'L10-night' ? activeSunShadow : stableSunShadow;
     (this.spot.shadow as typeof this.spot.shadow & { filterNode: typeof activeSpotShadow | null }).filterNode = name === 'L10-night' ? activeSpotShadow : null;
     this.look.setPreset(p.look ?? {});
