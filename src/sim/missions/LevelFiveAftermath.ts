@@ -327,10 +327,11 @@ export class LevelFiveAftermath {
     // Route to the actual queue position. The grid already rounds the entrance
     // corner; a second X-dependent side-step goal fought that route and could
     // repeatedly send a straggler back across the same threshold.
-    // The rear wall is only 23 cm behind the former last slot: Dale's idle
-    // forearm crossed it after turning toward the courier. Keep the front
-    // slot and both lanes fixed, and fit the queue inside the rear clearance.
-    return { x: door.x + side, z: door.z - 3.8 + slot * .6 };
+    // Spread the five silhouettes along the existing clearance and stagger
+    // shoulders within this lane; the opposite lane stays open for the corgi.
+    // Rearmost centre remains 0.73 m from the wall, frontmost 1.1 m past the leaf.
+    const stagger = (slot % 2 ? -.15 : .15) * Math.sign(side);
+    return { x: door.x + side + stagger, z: door.z - 3.9 + slot * .7 };
   }
   private metro(): void {
     const { world } = this.mission, s = this.s, tick = world.tick, player = world.entities.get(1)!;

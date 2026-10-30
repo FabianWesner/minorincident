@@ -7,6 +7,8 @@ export interface TimeOfDayPreset {
   practical?: number;
   /** E25 night readability: survivor/infected rim strength and the player's light-field aura (§6 2). */
   rim?: number; aura?: number;
+  /** Extra silhouette separation for settled bodies in this preset only. */
+  corpseRim?: number;
   /** Survivor surface fill, independent of the ground light-field aura. */
   heroFill?: number;
   /** Courier-only rim, widened with camera distance for a legible silhouette. */
@@ -38,7 +40,7 @@ const presets = {
     look: { skyAmbient: '#b5cde4', groundAmbient: '#d2b58d', bounce: '#ad9b70', vignette: .08, bloomStrength: .2, gradeShadow: '#b0c4f0', gradeHighlight: '#fff3df', gradeAmount: .7, gradeContrast: 1.1, gradeSaturation: 1.2, haze: '#cfe4f6', hazeAmount: .14, cloudShadow: .45, cloudScale: 12 }, ambient: { leaf: 10, dust: 40, bird: 3, glow: 1.3 } },
   golden,
   // E23 sunset (PO: dark red, orange, increasingly gloomy): the sun sits on the horizon (polar 1.48 rad, hue ~19 deg) at 0.65x L4 (the low sun leaves roofs and ground in core shadow, so the shadow tint is bright: dusky rose beneath the ash, never black) and the level fades it further (gloom ramp); red-to-violet sky, long shadows, fires carry the image.
-  L5: { sun: '#ff7a38', intensity: 0.85, polar: 1.48, azimuth: -1.4, shadow: '#6e536e', sky: '#514366', fog: '#a76762', fogNear: 34, fogFar: 105, practical: .8, rim: .25, aura: .25,
+  L5: { sun: '#ff7a38', intensity: 0.85, polar: 1.48, azimuth: -1.4, shadow: '#6e536e', sky: '#514366', fog: '#a76762', fogNear: 34, fogFar: 105, practical: .8, rim: .4, aura: .25,
     look: { skyAmbient: '#a9a4c3', groundAmbient: '#bb7965', vignette: .1, bloomStrength: .2, gradeShadow: '#7e7a88', gradeHighlight: '#ff9a60', gradeAmount: .9, gradeContrast: 1.14, gradeSaturation: .55, haze: '#8a8282', hazeAmount: .45, hazeHeight: 8, leaf: '#a49c9b', petal: '#77706f', dust: '#ff9a52' }, ambient: { leaf: 70, dust: 24, bird: 0, glow: 2.4, rise: true } },
   "L6-subway": { sun: "#9fb4ff", intensity: 0, polar: 1.55, azimuth: 2.2, shadow: "#252830", sky: "#0c1016", fog: "#181d25", fogNear: 30, fogFar: 85, practical: 1, rim: .25, aura: 1.3,
     look: { skyAmbient: '#8fabc2', groundAmbient: '#8a8077', vignette: .08, bloomStrength: .16, gradeShadow: '#4e6676', gradeHighlight: '#ffa640', gradeAmount: .85, gradeContrast: 1.1, gradeSaturation: .9, haze: '#26282c', hazeAmount: .28, beamStrength: 2.6, dust: '#dcc79a' }, ambient: { leaf: 0, dust: 30, bird: 0, glow: 1.5 } },
@@ -65,7 +67,7 @@ const presets = {
     // gradeHighlight one step off L9's (#d6e2f2): the merged look-l10b/road-life preset had the same grade signature as L9 (@E25 atmosphere 2).
     look: { skyAmbient: '#7f98b8', groundAmbient: '#55505a', vignette: .16, bloomStrength: .3, gradeShadow: '#22355e', gradeHighlight: '#d4e0f0', gradeAmount: .75, gradeContrast: 1.34, gradeSaturation: .8, haze: '#48527c', hazeAmount: 0, beamStrength: 2.4, dust: '#c8d8ff', leaf: '#7b838d', petal: '#5f6670', groundBreakup: .22, roadNeutral: .85 }, ambient: { leaf: 30, dust: 40, bird: 0, glow: 1.6 } },
   /** E30 intact zoo at night: cool moonlight, powered warm practicals; no mandatory blackout. */
-  "L8-zoo": { sun: '#afc5ed', intensity: .38, polar: 1.55, azimuth: 2.2, shadow: '#343e57', sky: '#182f3b', fog: '#36505c', fogNear: 45, fogFar: 120, practical: 1, rim: .4, aura: .45, heroFill: .8, lampInsects: true,
+  "L8-zoo": { sun: '#afc5ed', intensity: .38, polar: 1.55, azimuth: 2.2, shadow: '#343e57', sky: '#182f3b', fog: '#36505c', fogNear: 45, fogFar: 120, practical: 1, rim: .4, corpseRim: .65, aura: .45, heroFill: .8, lampInsects: true,
     look: { skyAmbient: '#9dbfce', groundAmbient: '#8d987c', vignette: .08, bloomStrength: .2, gradeShadow: '#3f7f86', gradeHighlight: '#ffd88a', gradeAmount: .75, gradeContrast: 1.05, gradeSaturation: 1.12, haze: '#3a6e58', hazeAmount: .42, hazeHeight: 4, beamStrength: 2.6, dust: '#c6ff66' }, ambient: { leaf: 0, dust: 45, bird: 0, glow: 3 } },
   /** Night segments without fires (L4 blackout blocks, scripted night beats): moonlight only, practicals carry the scene. */
   night: { sun: '#8fa6ff', intensity: 0.2, polar: 0.7, azimuth: 2.4, shadow: '#2f2d55', sky: '#141c33', fog: '#26304d', fogNear: 42, fogFar: 115, practical: 1, rim: .45, aura: .5 },

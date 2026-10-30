@@ -51,7 +51,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
     this.receivedShadowNode = Fn(([shadow]: [Node<'vec3'>]) => { caughtShadow.mulAssign(mix(1, shadow.r, nodes?.shadowReceiver ?? 1)); return float(1); }) as unknown as NonNullable<MeshLambertNodeMaterial['receivedShadowNode']>;
     this.outputFor = (mode, corpse = false) => Fn(() => {
       // Frozen bodies keep directional shading: the living crowd's pale additive key made distant bodies look translucent.
-      const figureRimAmount = this.figureRim.mul(nodes?.figureMask ?? 1).mul(corpse ? .2 : 1);
+      const figureRimAmount = this.figureRim.mul(nodes?.figureMask ?? 1).mul(corpse ? lighting.corpseRim.add(.2) : 1);
       const figureFillAmount = this.figureFill.mul(nodes?.figureMask ?? 1).mul(corpse ? .25 : 1);
       const flags = weatherMaterialFlags, probe = mode >> flags.probeShift;
       // Diagnostics use their own graph, rather than adding mask samplers to game shaders.

@@ -12,6 +12,7 @@ ASSET = {'id': 'kit.highway-onramp', 'category': 'building'}
 RNG = random.Random(26)
 M = {}
 ROOT = None
+SIMPLE_BARRIER = ([], [])
 
 
 def mesh(name, verts, faces, material):
@@ -103,6 +104,9 @@ def roadway():
                     group[1].append(tuple(vertex(group,t,ww,h) for t,ww,h in ((ta,w,0),(tb,w,0),(tb,w,z),(ta,w,z))))
     for token,(verts,faces,_) in groups.items():
         obj=mesh('Road band '+token,verts,faces,token)
+        # These disconnected paint/road strips also need their boundary vertices.
+        # A collapse pass can erase whole bands between the expansion joints.
+        obj['preserve_profile']='road'
         for polygon in obj.data.polygons: polygon.use_smooth=True
 
 
@@ -116,6 +120,11 @@ def barrier(t0,t1,side, index):
     faces=[tuple(range(7,-1,-1)),tuple(range(8,16))]
     faces.extend([(i,(i+1)%8,(i+1)%8+8,i+8) for i in range(8)])
     obj=mesh('Jersey barrier',verts,faces,'sidewalk')
+    # Keep the eight Jersey-profile corners in both distance tiers. The tiny
+    # beveled segments do not tolerate a collapse pass at .12 / .035.
+    offset=len(SIMPLE_BARRIER[0]); SIMPLE_BARRIER[0].extend(verts)
+    SIMPLE_BARRIER[1].extend(tuple(i+offset for i in face) for face in faces)
+    obj['preserve_profile']='barrier'
     bevel(obj,.035,1)
     if index%5==0:
         p=(point(t0,side*2.58,.62)+point(t1,side*2.58,.62))/2
@@ -231,6 +240,7 @@ def weather():
 def build(ctx=None):
     global ROOT
     RNG.seed(26)
+    SIMPLE_BARRIER[0].clear(); SIMPLE_BARRIER[1].clear()
     bpy.ops.object.select_all(action='SELECT'); bpy.ops.object.delete(use_global=False)
     ROOT=bpy.data.objects.new('root',None); bpy.context.collection.objects.link(ROOT)
     ROOT['asset_id']=ASSET['id']; ROOT['category']='building'; ROOT['forward']='+X'
@@ -297,14 +307,15 @@ def build(ctx=None):
     (HERE/'part-stats.json').write_text(json.dumps(parts,indent=2))
     # Join all fixed geometry by material: exactly one primitive per palette token.
     for material in set(M.values()):
-        objects=[o for o in bpy.context.scene.objects if o.type=='MESH' and o.data.materials and o.data.materials[0]==material and not o.get('preserve_node')]
-        if not objects: continue
-        bpy.ops.object.select_all(action='DESELECT')
-        for obj in objects: obj.select_set(True)
-        bpy.context.view_layer.objects.active=objects[0]; bpy.ops.object.join()
-        obj=bpy.context.object; obj.name='static_'+material.name
-        bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
-        clean_mesh(obj)
+        for profile in (False, True):
+            objects=[o for o in bpy.context.scene.objects if o.type=='MESH' and o.data.materials and o.data.materials[0]==material and not o.get('preserve_node') and bool(o.get('preserve_profile'))==profile]
+            if not objects: continue
+            bpy.ops.object.select_all(action='DESELECT')
+            for obj in objects: obj.select_set(True)
+            bpy.context.view_layer.objects.active=objects[0]; bpy.ops.object.join()
+            obj=bpy.context.object; obj.name='static_'+material.name+('_profile' if profile else '')
+            bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
+            clean_mesh(obj)
     for obj in ROOT.children:
         if obj.type=='MESH' and obj.get('preserve_node'): clean_mesh(obj)
     return ROOT
@@ -337,13 +348,17 @@ def export_lods(path):
     export(path)
     objects=[o for o in ROOT.children if o.type=='MESH']
     original={o:o.data.copy() for o in objects}
+    simple=bpy.data.meshes.new('Corner-preserving barrier LOD')
+    simple.from_pydata(SIMPLE_BARRIER[0],[],SIMPLE_BARRIER[1]); simple.update()
+    bm=bmesh.new(); bm.from_mesh(simple); bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces)); bm.to_mesh(simple); bm.free()
     counts={}
     for level,ratio in ((1,.12),(2,.035)):
         for obj in objects:
-            obj.data=original[obj].copy()
+            obj.data=(simple if obj.get('preserve_profile')=='barrier' else original[obj]).copy()
             bpy.context.view_layer.objects.active=obj
-            mod=obj.modifiers.new('LOD simplification','DECIMATE'); mod.ratio=max(ratio,.12) if obj.get('preserve_node') else ratio; mod.use_collapse_triangulate=True
-            bpy.ops.object.modifier_apply(modifier=mod.name)
+            if not obj.get('preserve_profile'):
+                mod=obj.modifiers.new('LOD simplification','DECIMATE'); mod.ratio=max(ratio,.12) if obj.get('preserve_node') else ratio; mod.use_collapse_triangulate=True
+                bpy.ops.object.modifier_apply(modifier=mod.name)
             clean_mesh(obj)
         target=path.with_name(path.stem+'.lod'+str(level)+'.glb')
         export(target); counts[str(level)]=stats()[0]

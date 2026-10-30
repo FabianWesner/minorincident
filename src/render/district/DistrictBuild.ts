@@ -25,6 +25,7 @@ import { heightSteps } from '../../sim/world/HeightSteps';
 import { HeightStepEdges } from '../HeightStepEdges';
 import { batchPerimeterPosts } from '../PerimeterPosts';
 import { NightAccents, nightAccents } from '../NightAccents';
+import { fairhavenDressing } from './FairhavenDressing';
 
 const crownTokens = new Map<string, [PaletteToken, PaletteToken]>(Object.values(worldAssets).flatMap(asset => asset.foliage ? [[asset.foliage.colors.join(':'), asset.foliage.tokens ?? ['foliageDark', 'foliageLight']]] : []));
 
@@ -205,6 +206,7 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
         });
         freezeLayout(groundLayer);
       }
+      if (d.id === 'D-FAIR') parts.ownedGeometry.push(...fairhavenDressing(root, d.layout, deps.world.composition.timeOfDay, deps.materials, parts.ownedMaterials));
       if (d.layout.terrainChunks?.length && scenes.length) {
         parts.terrain = new TerrainView(layoutTerrainChunks(d.layout, d.origin), d.layout.terrainChunks[0].size, id => `/assets/layouts/${d.id}.chunks/${id}.glb`, deps.registry, deps.low() ? 'low' : 'high');
         deps.view.add(parts.terrain);
