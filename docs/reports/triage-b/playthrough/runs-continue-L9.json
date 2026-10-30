@@ -1,0 +1,65 @@
+[
+  {
+    "level": "L9",
+    "entry": "continue",
+    "heroine": "female",
+    "finished": true,
+    "skipped": [],
+    "wallSeconds": 160,
+    "simSeconds": 0,
+    "maxNoProgressSeconds": 14.45,
+    "deaths": 0,
+    "assists": 0,
+    "attacks": {},
+    "weaponsStart": [
+      "weapon.fire-axe",
+      "weapon.bat",
+      "weapon.army-mg",
+      "weapon.handgun",
+      "weapon.kick",
+      "weapon.rocket-launcher"
+    ],
+    "weaponsEnd": [
+      "weapon.fire-axe",
+      "weapon.fire-axe"
+    ],
+    "steps": [
+      {
+        "id": "approach",
+        "text": "Drive toward the city · 1020 m",
+        "tick": 6,
+        "marker": {
+          "anchor": "crash-approach",
+          "ring": {
+            "x": 470,
+            "y": 0,
+            "z": 0
+          },
+          "drawn": [
+            470,
+            0,
+            0
+          ],
+          "playerY": 0.9970209002494812,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "reach-outskirts",
+        "text": "Get clear of the wreck · 89 m",
+        "tick": 8290,
+        "marker": {
+          "anchor": "crawl-end",
+          "ring": {
+            "x": 547,
+            "y": 0,
+            "z": 0
+          },
+          "drawn": null,
+          "playerY": 0.9956991363896264,
+          "pinVisible": true
+        }
+      }
+    ]
+  }
+]

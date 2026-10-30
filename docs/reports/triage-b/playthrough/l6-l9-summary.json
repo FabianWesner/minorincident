@@ -1,0 +1,337 @@
+{
+  "mode": "continue",
+  "quality": "low",
+  "heroine": "female",
+  "zoom": 1.5,
+  "levels": [
+    "L6",
+    "L7",
+    "L8",
+    "L9"
+  ],
+  "runs": [
+    {
+      "level": "L6",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 283,
+      "simSeconds": 274,
+      "maxNoProgressSeconds": 18.512,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.army-mg": 93,
+        "weapon.fire-axe": 25,
+        "weapon.kick": 7,
+        "weapon.fists": 34
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.kick"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.kick"
+      ],
+      "steps": [
+        {
+          "id": "shelter",
+          "text": "Look around the shelter · 0:34 remaining",
+          "tick": 10,
+          "marker": {
+            "anchor": null,
+            "ring": null,
+            "drawn": null,
+            "playerY": 1.3200000524520874,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "stop",
+          "text": "Stop the infected · Retreat in 0:36",
+          "tick": 1998,
+          "marker": {
+            "anchor": null,
+            "ring": null,
+            "drawn": null,
+            "playerY": 1.3200000524520874,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "retreat",
+          "text": "Cover the retreat through the tunnel · 15 m",
+          "tick": 4157,
+          "marker": {
+            "anchor": "l6-next",
+            "ring": {
+              "x": 6,
+              "y": 0.6,
+              "z": 15
+            },
+            "drawn": [
+              6,
+              0.6,
+              15
+            ],
+            "playerY": 1.3200000524520874,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "exit",
+          "text": "Bring the survivors into the night · 10/11 out · 27 m",
+          "tick": 15566,
+          "marker": {
+            "anchor": "night-exit",
+            "ring": {
+              "x": 273,
+              "y": 3.9,
+              "z": 15
+            },
+            "drawn": [
+              273,
+              3.9,
+              15
+            ],
+            "playerY": 1.3033547401428223,
+            "pinVisible": true
+          }
+        }
+      ]
+    },
+    {
+      "level": "L7",
+      "entry": "continue",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 201,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 13.25,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.rocket-launcher": 81
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.kick"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.kick",
+        "weapon.rocket-launcher"
+      ],
+      "steps": [
+        {
+          "id": "rocket",
+          "text": "Recover the rocket launcher beside the exit · 3 m",
+          "tick": 4,
+          "marker": {
+            "anchor": "l7-rocket",
+            "ring": {
+              "x": 276,
+              "y": 3.9,
+              "z": 15
+            },
+            "drawn": [
+              276,
+              3.9,
+              15
+            ],
+            "playerY": 4.619999885559082,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "corridor",
+          "text": "Bring the group to the evacuation corridor · Group 11/11 nearby · 307 m",
+          "tick": 114,
+          "marker": {
+            "anchor": "l7-corridor-east",
+            "ring": {
+              "x": -30,
+              "y": 0,
+              "z": 50
+            },
+            "drawn": [
+              -30,
+              0.13,
+              50
+            ],
+            "playerY": 4.619999885559082,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "departure",
+          "text": "Get everyone aboard the bus · 46 m",
+          "tick": 9353,
+          "marker": {
+            "anchor": "l7-bus-boarding",
+            "ring": {
+              "x": -70.5,
+              "y": 0,
+              "z": 47.5
+            },
+            "drawn": [
+              -70.5,
+              0,
+              47.5
+            ],
+            "playerY": 0.8500000238418579,
+            "pinVisible": true
+          }
+        }
+      ]
+    },
+    {
+      "level": "L8",
+      "entry": "continue",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 97,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 7.32,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {},
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.kick",
+        "weapon.rocket-launcher"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.kick",
+        "weapon.rocket-launcher"
+      ],
+      "steps": [
+        {
+          "id": "escape",
+          "text": "Bring the survivors to the armored vehicle and board · 97 m",
+          "tick": 13,
+          "marker": {
+            "anchor": "exit",
+            "ring": {
+              "x": 96.71,
+              "y": 0,
+              "z": 76.275
+            },
+            "drawn": [
+              96.71,
+              0.12,
+              76.28
+            ],
+            "playerY": 0.8399999737739563,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "depart",
+          "text": "Wait for the breach · 36 s",
+          "tick": 1474,
+          "marker": {
+            "anchor": "exit",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.9954345226287842,
+            "pinVisible": false
+          }
+        }
+      ]
+    },
+    {
+      "level": "L9",
+      "entry": "continue",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 160,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 14.45,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {},
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.kick",
+        "weapon.rocket-launcher"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.fire-axe"
+      ],
+      "steps": [
+        {
+          "id": "approach",
+          "text": "Drive toward the city · 1020 m",
+          "tick": 6,
+          "marker": {
+            "anchor": "crash-approach",
+            "ring": {
+              "x": 470,
+              "y": 0,
+              "z": 0
+            },
+            "drawn": [
+              470,
+              0,
+              0
+            ],
+            "playerY": 0.9970209002494812,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "reach-outskirts",
+          "text": "Get clear of the wreck · 89 m",
+          "tick": 8290,
+          "marker": {
+            "anchor": "crawl-end",
+            "ring": {
+              "x": 547,
+              "y": 0,
+              "z": 0
+            },
+            "drawn": null,
+            "playerY": 0.9956991363896264,
+            "pinVisible": true
+          }
+        }
+      ]
+    }
+  ],
+  "issues": 0,
+  "bySeverity": {
+    "P0": 0,
+    "P1": 0,
+    "P2": 0,
+    "P3": 0
+  }
+}
