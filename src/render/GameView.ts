@@ -3,6 +3,7 @@ import { l6Doors, l6Entries } from '../data/l6';
 import { MilitaryPerimeter } from './MilitaryPerimeter';
 import { l3, l3AttackView } from '../data/l3';
 import { epiloguePull } from '../sim/missions/LevelTenEpilogue';
+import { l10Framing, l10RoadFraming } from '../levels/L10/cameraFraming';
 import { CrowdAccessories } from './characters/CrowdAccessories';
 import { carTransitionPose } from './characters/carTransition';
 import { CourierPresenter } from './characters/CourierPresenter';
@@ -245,6 +246,7 @@ export class GameView implements Lifecycle {
     const cooperative = this.world.scenario === 'L8' && this.frozenUpdates;
     if (cooperative) loadGate.setPaced(true);
     const player = this.world.entities.get(1);
+    this.view.framing = this.world.scenario === 'L10' ? this.l10Framing() : null;
     this.view.reset(player?.transform ?? { x: 0, z: 0 }, true);
     let actors: Promise<unknown> | null = null;
     if (this.world.districts) {
@@ -704,6 +706,15 @@ export class GameView implements Lifecycle {
       this.playerPosition.set(player.transform.x, player.transform.y - 0.5, player.transform.z);
       if (__QA_HOOKS__ && this.labView) this.occlusion.update(this.camera, this.playerPosition, seconds, this.labView.playerMeshes);
     }
+  }
+  /** PO 10-30 wider L10 road camera; QA builds accept `l10cam=<scale>,<fovDeg>` to compare framings. */
+  private l10Framing(): (x: number, z: number) => { scale: number; fovDeg: number } {
+    const qa = __QA_HOOKS__ ? this.params.get('l10cam')?.split(',').map(Number) : undefined;
+    const wide = qa && qa.every(Number.isFinite) ? { scale: qa[0] ?? l10RoadFraming.scale, fovDeg: qa[1] ?? l10RoadFraming.fovDeg } : l10RoadFraming;
+    return (x, z) => {
+      const state = this.world.missions?.state;
+      return l10Framing(x, z, !!state && (!!state.states['cure-installed'] || !!state.epilogue), wide);
+    };
   }
   /** Photo spots are only registered by the current scenario. */
   preset(name: string): void {

@@ -66,6 +66,19 @@ export class View {
   get playerZoom(): number { return this.zoomRatio; }
   /** Finale widening multiplies player zoom without locking wheel/pinch or follow input. */
   epilogueScale = 1;
+  /** Level framing by place (L10 road regions): radius multiplier and FOV from the focus point, eased over ~1.5 s,
+   * applied instantly on re-poses and teleports. Player zoom multiplies on top, so every zoom level scales from it. */
+  framing: ((x: number, z: number) => { scale: number; fovDeg: number }) | null = null;
+  regionScale = 1;
+  private applyFraming(seconds: number): void {
+    const target = this.framing?.(this.focus.x, this.focus.z), scale = target?.scale ?? 1, fov = target?.fovDeg ?? cameraFraming.fovDeg;
+    const k = seconds > 0 ? 1 - Math.exp(-2 * seconds) : 1;
+    this.regionScale += (scale - this.regionScale) * k;
+    if (Math.abs(this.regionScale - scale) < 1e-4) this.regionScale = scale;
+    let next = this.camera.fov + (fov - this.camera.fov) * k;
+    if (Math.abs(next - fov) < 1e-4) next = fov;
+    if (next !== this.camera.fov) { this.camera.fov = this.simCamera.fov = next; this.camera.updateProjectionMatrix(); this.simCamera.updateProjectionMatrix(); }
+  }
   driving = false;
   /** The player is the driver (not a passenger): the follow camera widens a further 1.4x in view area. */
   driverWide = false;
@@ -100,14 +113,14 @@ export class View {
     this.viewportHeight = height;
     this.camera.aspect = width / height;
     this.defaultRadius = width >= height ? cameraFraming.radiusM : Math.max(cameraFraming.radiusM, cameraFraming.portraitWidthM / (2 * Math.tan(this.camera.fov * Math.PI / 360) * this.camera.aspect));
-    this.radius = this.defaultRadius * this.zoomRatio * this.encounterScale * this.epilogueScale;
+    this.radius = this.defaultRadius * this.zoomRatio * this.encounterScale * this.epilogueScale * this.regionScale;
     this.camera.updateProjectionMatrix(); this.simCamera.aspect = this.camera.aspect; this.simCamera.updateProjectionMatrix(); this.update({ x: this.focus.x, z: this.focus.z, y: this.focus.y + feetOffset }, 0);
   }
   reset(player: { x: number; z: number; y?: number }, preserveZoom = false): void {
     this.maxZoom = zoomLimits[1]; this.zoomReturn = 0;
     this.encounterScale = this.epilogueScale = 1;
     this.zoomRatio = this.targetZoom = Math.max(zoomLimits[0], Math.min(zoomLimits[1], preserveZoom ? this.targetZoom : 1));
-    this.radius = this.defaultRadius * this.zoomRatio;
+    this.radius = this.defaultRadius * this.zoomRatio * this.regionScale;
     this.driving = false; this.driverWide = false; this.driveScale = 1; this.focus.set(player.x, Math.max(0, (player.y ?? feetOffset) - feetOffset), player.z); this.spot = null; this.blend = this.blendTarget = 0; this.shakeStrength = this.shakeTime = 0; this.rollAngle = this.rollSpeed = 0; this.pullWeight = 0;
     this.update(player, 0);
   }
@@ -173,7 +186,8 @@ export class View {
     const driveTarget = this.driving ? (this.driverWide ? driveWideScale : 1.15) : 1;
     this.driveScale = seconds > 0 ? driveTarget + (this.driveScale - driveTarget) * Math.exp(-5 * seconds) : this.driveScale;
     if (Math.abs(this.driveScale - driveTarget) < 1e-4) this.driveScale = driveTarget;
-    this.radius = this.defaultRadius * this.scriptedAdjusted(this.zoomRatio) * this.encounterScale * this.epilogueScale;
+    this.applyFraming(seconds);
+    this.radius = this.defaultRadius * this.scriptedAdjusted(this.zoomRatio) * this.encounterScale * this.epilogueScale * this.regionScale;
     this.focus.x += (player.x - this.focus.x) * (1 - Math.exp(-10 * seconds));
     this.focus.z += (player.z - this.focus.z) * (1 - Math.exp(-10 * seconds));
     // Elevated decks/ramps: follow the feet height (transform.y is the body centre, .72 m above the feet), damped so stairs do not jitter.
@@ -223,6 +237,6 @@ export class View {
     this.camera.updateMatrixWorld();
   }
   getState() {
-    return { zoom: this.zoomRatio, targetZoom: this.targetZoom, zoomLimits: [zoomLimits[0], this.maxZoom], fov: this.camera.fov, azimuth: this.azimuth, polar: this.polar, radius: this.radius * this.driveScale, focus: this.focus.toArray(), target: this.cameraTarget.toArray(), position: this.camera.position.toArray(), spot: this.spot };
+    return { zoom: this.zoomRatio, targetZoom: this.targetZoom, zoomLimits: [zoomLimits[0], this.maxZoom], fov: this.camera.fov, azimuth: this.azimuth, polar: this.polar, radius: this.radius * this.driveScale, regionScale: this.regionScale, focus: this.focus.toArray(), target: this.cameraTarget.toArray(), position: this.camera.position.toArray(), spot: this.spot };
   }
 }

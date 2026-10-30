@@ -4,6 +4,7 @@ import routes from '../../layouts/D-CURE/routes.json' with { type: 'json' };
 /**
  * look-l10 game-camera sweep: every L10 region station at player zooms 0.5 / 1 / 1.5, one tier and backend per run.
  * SCENE_SERVER=preview SCENE_PORT=3471 E2E_UNITS=1 sh tools/e2e-lock.sh npx tsx tools/qa/l10-look.ts <label> <high|low> <webgl2|webgpu> [station,...]
+ * L10CAM=<scale>,<fovDeg> overrides the L10 road framing (QA builds) to compare options.
  * -> test-results/look-l10/<label>/<backend>-<tier>/<station>-z<zoom>.jpg plus one sheet per region.
  */
 const [label = 'after', tier = 'high', backend = 'webgl2', only] = process.argv.slice(2);
@@ -37,7 +38,7 @@ const walk = (() => {
 })();
 const picked = only === 'walk' ? walk : only ? stations.filter(s => only.split(',').includes(s.id)) : stations;
 const out = `test-results/look-l10/${label}/${backend}-${tier}`; mkdirSync(out, { recursive: true });
-const session = new SceneSession({ tier: tier as 'high' | 'low', backend: backend as Backend, viewport: { width: 1280, height: 720 } });
+const session = new SceneSession({ tier: tier as 'high' | 'low', backend: backend as Backend, viewport: { width: 1280, height: 720 }, ...(process.env.L10CAM ? { query: { l10cam: process.env.L10CAM } } : {}) });
 const zooms = only === 'walk' ? [1] : [0.5, 1, 1.5];
 const metrics: unknown[] = [];
 try {
