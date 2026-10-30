@@ -67,9 +67,28 @@ export function measureFigure(document: Document, rootName?: string, shoulderRef
  * about a neck pivot below the lowest chin/beard point. Only the narrow neck
  * connection tapers. Hands shrink around their wrists with existing weights.
  * Everything is baked into mesh + bind pose once; no per-frame anatomy cost. */
-export function calibrateFigure(document: Document, target: FigureRatios) {
-  const before = measureFigure(document);
-  const nodes = document.getRoot().listNodes();
+export function planHeadScale(before: ReturnType<typeof measureFigure>, target: FigureRatios) {
+  const a=before.crown-before.headBottom, b=before.headBottom-before.ground;
+  const heightScale=(ratio:number)=>(ratio*b-.005)/(a-.005-ratio*a);
+  const legScale=(ratio:number)=>((before.hip.y-before.ground)/ratio-b)/a;
+  const intervals={
+    headHeight:[heightScale(target.headHeight*.9),heightScale(target.headHeight*1.1)],
+    headShoulder:[target.headShoulder*.9/before.ratios.headShoulder,target.headShoulder*1.1/before.ratios.headShoulder],
+    legHeight:[legScale(target.legHeight*1.1),legScale(target.legHeight*.9)],
+  };
+  const minimum=Math.max(.1,...Object.values(intervals).map(v=>v[0])), maximum=Math.min(1,...Object.values(intervals).map(v=>v[1]));
+  // PO rollout decision: head size wins. A smaller head is acceptable; never
+  // widen the body or enlarge a head to meet a lower ratio bound. Use 1.099
+  // for a small serialization margin under the explicit heroine × 1.1 cap.
+  const limits={headHeight:heightScale(target.headHeight*1.099),headShoulder:target.headShoulder*1.099/before.ratios.headShoulder};
+  const binding=limits.headHeight<limits.headShoulder?'headHeight':'headShoulder';
+  const scale=Math.min(1,limits.headHeight,limits.headShoulder);
+  return {feasible:true,strictThreeRatioIntervalFeasible:minimum<=maximum,minimum,maximum,intervals,limits,binding:scale===1?'already-small-enough':binding,scale};
+}
+
+export function calibrateFigure(document: Document, target: FigureRatios, options: { rootName?: string; headScale?: number; handScale?: number } = {}) {
+  const before = measureFigure(document,options.rootName);
+  const nodes = figureNodes(document,options.rootName);
   const anatomy = nodes.filter(n => n.getMesh() && !ignored.test(n.getName()) && !n.getExtras().hidden).flatMap(n => n.getMesh()!.listPrimitives().flatMap(p => primitiveVertices(n,p)));
   const headPoints = anatomy.filter(v => v.owner === 'head');
   const headBottom = Math.min(...headPoints.map(v => v.point.y));
@@ -79,8 +98,8 @@ export function calibrateFigure(document: Document, target: FigureRatios) {
   const minimumHeadHeight = target.headHeight * .903;
   const minScale = (minimumHeadHeight * (plane-before.ground) - .005) /
     ((before.crown-headBottom) - minimumHeadHeight*(before.crown-plane));
-  const headScale = Math.max(target.headShoulder / before.ratios.headShoulder, minScale), handScale = .75;
-  const wrists = ['L','R'].map(side => new Vector3().setFromMatrixPosition(world(nodes.find(n => n.getName() === `hand${side}`)!)));
+  const headScale = options.headScale ?? Math.max(target.headShoulder / before.ratios.headShoulder, minScale), handScale = options.handScale ?? .75;
+  const wrists = ['L','R'].map(side => new Vector3().setFromMatrixPosition(world(nodes.find(n => shortName(n.getName()) === `hand${side}`)!)));
   const smooth = (t:number) => {t=Math.max(0,Math.min(1,t));return t*t*(3-2*t);};
   const deform = (vertex: Vertex) => {
     const {point:p,owner,influences}=vertex;
@@ -102,7 +121,7 @@ export function calibrateFigure(document: Document, target: FigureRatios) {
   const oldWorld=new Map(nodes.map(n=>[n,world(n)]));
   const newWorld=new Map(nodes.map(n=>{const m=oldWorld.get(n)!.clone(),p=new Vector3().setFromMatrixPosition(m);return [n,m.setPosition(deform({point:p,owner:ownerName(n)}))] as const;}));
   const surfaces=nodes.flatMap(node=>node.getMesh()?.listPrimitives().map(primitive=>({node,primitive,vertices:primitiveVertices(node,primitive)})) ?? []);
-  for(const node of nodes){const parent=node.getParentNode();node.setMatrix((parent?newWorld.get(parent)!.clone().invert().multiply(newWorld.get(node)!):newWorld.get(node)!).toArray());}
+  for(const node of nodes){const parent=node.getParentNode();node.setMatrix((parent?(newWorld.get(parent)??world(parent)).clone().invert().multiply(newWorld.get(node)!):newWorld.get(node)!).toArray());}
   for(const {node,primitive,vertices} of surfaces){
     const position=primitive.getAttribute('POSITION')!,output=position.clone().setArray(new Float32Array(position.getCount()*3)).setNormalized(false),index=primitive.getIndices();
     const ids=index?[...new Set(Array.from({length:index.getCount()},(_,i)=>index.getScalar(i)))]:Array.from({length:position.getCount()},(_,i)=>i);
@@ -114,9 +133,9 @@ export function calibrateFigure(document: Document, target: FigureRatios) {
     }
   }
   for(const skin of document.getRoot().listSkins()){const matrices=new Float32Array(skin.listJoints().length*16);skin.listJoints().forEach((n,i)=>world(n).invert().toArray(matrices,i*16));skin.setInverseBindMatrices(skin.getInverseBindMatrices()!.clone().setArray(matrices));}
-  const root=nodes.find(n=>n.getName()==='root')!;root.setExtras({...root.getExtras(),preserveAuthoredBodyScale:true});
+  const root=nodes.find(n=>shortName(n.getName())==='root')!;root.setExtras({...root.getExtras(),preserveAuthoredBodyScale:true});
   adoptStandingBind(document);
-  const after=measureFigure(document,undefined,before.height);
+  const after=measureFigure(document,options.rootName,before.height);
   let unchangedBodyMaxDisplacementM=0, unchangedBodyVertices=0, unchangedJointMaxDisplacementM=0;
   for(const {node,primitive,vertices} of surfaces){
     const current=primitiveVertices(node,primitive);
@@ -128,7 +147,7 @@ export function calibrateFigure(document: Document, target: FigureRatios) {
       unchangedBodyMaxDisplacementM=Math.max(unchangedBodyMaxDisplacementM,v.point.distanceTo(current[i].point));
     });
   }
-  for(const node of nodes.filter(n=>/^(hip|torso|arm[LR]|foreArm[LR]|hand[LR]|leg[LR]|shin[LR]|foot[LR])$/.test(n.getName()))) {
+  for(const node of nodes.filter(n=>/^(hip|torso|arm[LR]|foreArm[LR]|hand[LR]|leg[LR]|shin[LR]|foot[LR])$/.test(shortName(n.getName())))) {
     unchangedJointMaxDisplacementM=Math.max(unchangedJointMaxDisplacementM,new Vector3().setFromMatrixPosition(oldWorld.get(node)!).distanceTo(new Vector3().setFromMatrixPosition(world(node))));
   }
   if(unchangedBodyMaxDisplacementM>1e-6 || unchangedJointMaxDisplacementM>1e-6) throw Error('Body changed outside head/neck/hands');
