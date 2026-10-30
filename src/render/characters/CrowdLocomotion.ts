@@ -270,6 +270,9 @@ export class CrowdLocomotion {
    * pushed under the floor (QA: infected feet 2-6 cm under the floor at melee range). Same sole points as the probe. */
   private ground(): void {
     const { hip, footL, footR } = this.rig;
+    // The elderly's skinned run soles reach 0.53 mm below the rigid contact probes.
+    // Give that model's contact target 1 mm of clearance for the weighted shoe edge.
+    const soleClearance = this.model.userData.assetId === 'npc.civilian-elderly' ? .001 : 0;
     if (hip && this.pawSoles.length) {
       let bottom = Infinity;
       for (const { node, points } of this.pawSoles) for (const point of points) bottom = Math.min(bottom, this.point.copy(point).applyMatrix4(node.matrixWorld).y);
@@ -280,7 +283,7 @@ export class CrowdLocomotion {
       return;
     }
     if (!hip || !footL || !footR || !this.sole) return;
-    const floor = this.frame.matrixWorld.elements[13];
+    const floor = this.frame.matrixWorld.elements[13] + soleClearance;
     let deficit = 0;
     for (const [side, foot] of [footL, footR].entries()) {
       if (this.solePoints) for (const point of this.solePoints[side]) deficit = Math.max(deficit, floor - this.point.copy(point).applyMatrix4(foot.matrixWorld).y);
