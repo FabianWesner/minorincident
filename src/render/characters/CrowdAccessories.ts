@@ -254,10 +254,7 @@ export class CrowdAccessories extends Group {
       // Keep the afro's volume around the crown, with its hairline fixed at the brow; scaling about the neck
       // let a tall dark shell overwhelm the narrow spectacled face (Q-229). Long styles retain their tails.
       const pivotY = afro ? brow?.y ?? centre.y : 0;
-      // A tall source crown on a narrow skull became a purple cone (Q-267).
-      // Hat height follows the fitted skull width/depth as well as its height.
-      const heightLimit = hair ? referenceSkull.size.y * scale.y * (afro ? .55 : .9) : Math.min(referenceSkull.size.y * scale.y * .7, Math.min(skullWidth, skullDepth) * limit * .45);
-      this.fitTransform.premultiply(new Matrix4().makeTranslation(centre.x, pivotY, centre.z).multiply(new Matrix4().makeScale(Math.min(1, skullDepth * limit / depth), Math.min(1, heightLimit / height), Math.min(1, skullWidth * limit / width))).multiply(new Matrix4().makeTranslation(-centre.x, -pivotY, -centre.z)));
+      this.fitTransform.premultiply(new Matrix4().makeTranslation(centre.x, pivotY, centre.z).multiply(new Matrix4().makeScale(Math.min(1, skullDepth * limit / depth), Math.min(1, referenceSkull.size.y * scale.y * (afro ? .55 : hair ? .9 : .7) / height), Math.min(1, skullWidth * limit / width))).multiply(new Matrix4().makeTranslation(-centre.x, -pivotY, -centre.z)));
       const bounds = new Box3();
       for (const lod of ['lod0', 'lod1']) {
         const geometry = this.batches.get(`${id}:${lod}`)?.geometry; if (geometry?.boundingBox) bounds.union(geometry.boundingBox.clone().applyMatrix4(this.fitTransform));
