@@ -7,8 +7,24 @@ import { spawn } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { preview } from 'vite';
+import { quietConditions, delay } from '../browser-pool/host';
 
-const rounds = Number(process.argv[2] ?? 5), out = 'test-results/look-empty/loads';
+const rounds = Number(process.argv[2] ?? 5), out = process.env.LOOK_LOAD_OUT ?? 'test-results/look-empty/loads';
+const waitQuiet = process.env.LOOK_LOAD_WAIT_QUIET === '1';
+const admissionDeadline = Date.now() + 60 * 60 * 1000;
+async function awaitQuiet() {
+  if (!waitQuiet) return;
+  while (true) {
+    const health = await fetch('http://127.0.0.1:4329/health').then(r => r.json()) as { browsers: { pid: number }[]; leases: unknown[]; waiting: number; exclusive: unknown[] };
+    const host = await quietConditions(new Set(health.browsers.map(b => b.pid)));
+    const conditions = { at: new Date().toISOString(), ...host, leases: health.leases.length, waiting: health.waiting, exclusive: health.exclusive.length };
+    console.log('Shared quiet preflight:', JSON.stringify(conditions));
+    writeFileSync(`${out}/conditions.jsonl`, JSON.stringify(conditions) + '\n', { flag: 'a' });
+    if (host.quiet && !health.leases.length && !health.waiting && !health.exclusive.length) return;
+    assert.ok(Date.now() < admissionDeadline, 'natural shared quiet window not available within one hour');
+    await delay(30_000);
+  }
+}
 const servers: Awaited<ReturnType<typeof preview>>[] = [];
 const rows: { level: string; tier: string; phase: string; round: number; ms: number; errors: string[] }[] = existsSync(`${out}/samples.json`) ? JSON.parse(readFileSync(`${out}/samples.json`, 'utf8')) : [];
 mkdirSync(out, { recursive: true });
@@ -19,6 +35,7 @@ try {
   for (const [port, dir] of [[4873, 'test-results/look-empty/dist-before-public'], [4874, 'test-results/look-empty/dist-after-public']] as const)
     servers.push(await preview({ configFile: false, build: { outDir: resolve(dir) }, preview: { host: '127.0.0.1', port, strictPort: true } }));
   for (const tier of ['low', 'high']) for (const level of ['L6', 'L7', 'L10']) for (let round = 0; round < rounds; round++) {
+    await awaitQuiet();
     const phases = round % 2 ? ['after', 'before'] : ['before', 'after'];
     for (const phase of phases) {
       if (rows.some(r => r.level === level && r.tier === tier && r.phase === phase && r.round === round)) continue;
