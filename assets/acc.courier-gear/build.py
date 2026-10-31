@@ -532,10 +532,14 @@ def paint(kind, prm, P, N, F, male):
     if kind == 'shoulder':
         c = np.tile(srgb('#3b3e46'), (n, 1))
         c = mix(c, srgb('#596070'), np.clip((F - .006) / .025, 0, 1) * .5)
-        c[F < .0035] = srgb('#eda04f')                                   # tier 3: orange rim
         ridge = (np.abs(np.sin(F * 420)) < .12) & (F > .012)
         c[ridge] = c[ridge] * .72
-        return finish(c, edge_dark=.0, light=.14, g=.06)
+        c = finish(c, edge_dark=.0, light=.14, g=.06)
+        # tier 3: orange rim. Q-274 (visual QA 42): "at tier 4 the heroine's shoulder pads show orange-streaked rims from behind".
+        # The rim took the grain and top light, so it streaked yellow to red along the curve and stepped at the edge. It is now a flat, slightly
+        # wider orange band with a soft inner edge, no grain and no light.
+        rim = np.clip((.0046 - F) / .0014, 0, 1)
+        return mix(c, np.tile(srgb('#e8892c'), (n, 1)), rim)
     if kind == 'belt':
         wz = prm['wz']; dz = P[:, 2] - wz
         c = np.tile(srgb('#5a3b29'), (n, 1))
