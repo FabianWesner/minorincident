@@ -1,860 +1,4857 @@
 {
-  "source": "current manifest delivered high GLB bind pose",
+  "baseline": "53949e814",
+  "phase": "before",
   "rows": [
     {
       "id": "char.courier-female",
+      "child": false,
+      "policy": "reference",
+      "path": "public/assets/models/char.courier-female.skin.glb",
       "heightM": 1.4536735234488913,
+      "groundM": -1.1167450417711043e-7,
       "ratios": {
-        "upperArmRadius": 0.040929638934520104,
+        "upperArmRadius": 0.037693099377762704,
         "forearmRadius": 0.043443451637625384,
-        "thighRadius": 0.1323529702611185,
-        "calfRadius": 0.061464329890766944,
-        "torsoWidth": 0.2845809204416324,
-        "torsoDepth": 0.31010611305127794,
-        "shoeLength": 0.17983973950862975,
-        "shoeHeight": 0.1275198849416455
+        "thighRadius": 0.07117019495985975,
+        "calfRadius": 0.03686353867166122,
+        "torsoWidth": 0.1941771602015463,
+        "torsoDepth": 0.18705388847075485,
+        "shoeLength": 0.15982385511906877,
+        "shoeHeight": 0.11778177747382615
       },
-      "groundM": -1.1167450417711043e-7
+      "dimensions": {
+        "upperArmRadius": 0.05479346058218152,
+        "forearmRadius": 0.0631525954128484,
+        "thighRadius": 0.10345822807184386,
+        "calfRadius": 0.053587550147628234,
+        "torsoWidth": 0.28227019664348163,
+        "torsoDepth": 0.27191528512809815,
+        "shoeLength": 0.23233170660212182,
+        "shoeHeight": 0.17121625145845012
+      },
+      "torsoBand": [
+        0.6835285411349137,
+        0.745571968172232
+      ],
+      "shoulderY": 0.9317022492841873,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "char.survivor-male",
-      "heightM": 1.3985192775726318,
-      "ratios": {
-        "upperArmRadius": null,
-        "forearmRadius": null,
-        "thighRadius": null,
-        "calfRadius": null,
-        "torsoWidth": null,
-        "torsoDepth": null,
-        "shoeLength": null,
-        "shoeHeight": null
+      "path": "public/assets/models/char.survivor-male.glb",
+      "dimensions": {
+        "upperArmRadius": 0.10069720032526146,
+        "forearmRadius": 0.11546519639920345,
+        "thighRadius": 0.18914329950683367,
+        "calfRadius": 0.10597055669550041,
+        "torsoWidth": 0.45893503510737,
+        "torsoDepth": 0.3277526552829274,
+        "shoeLength": 0.2862267670269203,
+        "shoeHeight": 0.2771468077631108
       },
-      "groundM": 0
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.2635268386088578,
+        "headShoulder": 0.5831384434772139,
+        "legHeight": 0.45047705530334176,
+        "shoulderHeight": 0.5051262266198083
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.3457118633154337,
+        "maximum": 1,
+        "intervals": {
+          "headHeight": [
+            0.9069565011500059,
+            1.1995066683767495
+          ],
+          "headShoulder": [
+            1.3457118633154337,
+            1.6447589440521968
+          ],
+          "legHeight": [
+            0.8402095649038792,
+            1.647962781368016
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 1.643263708648513
+        },
+        "binding": "headHeight",
+        "scale": 0.9999999999999964
+      },
+      "policy": "adult",
+      "heightM": 1.7999999914107452,
+      "groundM": -0.0000019816588332499663,
+      "ratios": {
+        "upperArmRadius": 0.05594288933653844,
+        "forearmRadius": 0.06414733163898957,
+        "thighRadius": 0.10507961133854957,
+        "calfRadius": 0.05887253177842866,
+        "torsoWidth": 0.25496390960962223,
+        "torsoDepth": 0.182084809359389,
+        "shoeLength": 0.15901487132929976,
+        "shoeHeight": 0.15397044949200123
+      },
+      "torsoBand": [
+        0.897090677859229,
+        0.9833246410557059
+      ],
+      "shoulderY": 1.2420265306451368,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "char.survivor-female",
-      "heightM": 1.2471807095693304,
-      "ratios": {
-        "upperArmRadius": null,
-        "forearmRadius": null,
-        "thighRadius": null,
-        "calfRadius": null,
-        "torsoWidth": null,
-        "torsoDepth": null,
-        "shoeLength": null,
-        "shoeHeight": null
+      "path": "public/assets/models/char.survivor-female.glb",
+      "dimensions": {
+        "upperArmRadius": 0.08852625501434604,
+        "forearmRadius": 0.06382180263200087,
+        "thighRadius": 0.12381367696340113,
+        "calfRadius": 0.07467040373077985,
+        "torsoWidth": 0.42508207818932664,
+        "torsoDepth": 0.25839030624320225,
+        "shoeLength": 0.32491138721637625,
+        "shoeHeight": 0.27828036702243797
       },
-      "groundM": 4.6566128730773926e-9
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3747132476682171,
+        "headShoulder": 1.3838244711285768,
+        "legHeight": 0.43971659636014676,
+        "shoulderHeight": 0.38113538376993034
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 0.8265606422792672,
+        "maximum": 0.6930952519921929,
+        "intervals": {
+          "headHeight": [
+            0.5377802784134895,
+            0.7113778404955663
+          ],
+          "headShoulder": [
+            0.5670779334481578,
+            0.6930952519921929
+          ],
+          "legHeight": [
+            0.8265606422792672,
+            1.3810646416342691
+          ]
+        },
+        "limits": {
+          "headHeight": 0.7104419310672974,
+          "headShoulder": 0.6924651653994727
+        },
+        "binding": "headShoulder",
+        "scale": 0.6924651653994727
+      },
+      "policy": "adult",
+      "heightM": 1.5923576578424312,
+      "groundM": -4.6642047840661505e-7,
+      "ratios": {
+        "upperArmRadius": 0.05559445428503474,
+        "forearmRadius": 0.040080067639123466,
+        "thighRadius": 0.07775494177053337,
+        "calfRadius": 0.04689298497923808,
+        "torsoWidth": 0.26695138249612377,
+        "torsoDepth": 0.16226901347861059,
+        "shoeLength": 0.20404422688343504,
+        "shoeHeight": 0.17475996403941976
+      },
+      "torsoBand": [
+        0.8705207723151073,
+        0.9496590243437535
+      ],
+      "shoulderY": 1.1870737804296918,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "inf.common-worker",
-      "heightM": 1.6218439796051003,
-      "ratios": {
-        "upperArmRadius": 0.1318897068342718,
-        "forearmRadius": 0.11066733501092006,
-        "thighRadius": 0.17259766803669366,
-        "calfRadius": 0.12714134366199498,
-        "torsoWidth": 0.3900512816017273,
-        "torsoDepth": 0.31364892890326806,
-        "shoeLength": 0.39632279976160734,
-        "shoeHeight": 0.11344204736764431
+      "path": "public/assets/models/skinned/inf.common-worker.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.18673039349487355,
+        "forearmRadius": 0.16973361912718132,
+        "thighRadius": 0.17991331613703818,
+        "calfRadius": 0.18901695948203232,
+        "torsoWidth": 0.38536962145297726,
+        "torsoDepth": 0.38733558363000986,
+        "shoeLength": 0.46062909066677094,
+        "shoeHeight": 0.16823370191747095
       },
-      "groundM": -1.8099221621437067e-7
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3794399969959724,
+        "headShoulder": 0.5412644208929197,
+        "legHeight": 0.4036703021615023,
+        "shoulderHeight": 0.6146138879916466
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.4498206256528183,
+        "maximum": 0.6970910782851814,
+        "intervals": {
+          "headHeight": [
+            0.527011733928055,
+            0.6970910782851814
+          ],
+          "headShoulder": [
+            1.4498206256528183,
+            1.7720029869090002
+          ],
+          "legHeight": [
+            0.6267167727182937,
+            1.1294233462402283
+          ]
+        },
+        "limits": {
+          "headHeight": 0.6961741581578167,
+          "headShoulder": 1.7703920751027191
+        },
+        "binding": "headHeight",
+        "scale": 0.6961741581578167
+      },
+      "policy": "adult",
+      "heightM": 1.6218439796051003,
+      "groundM": -1.8099221621437067e-7,
+      "ratios": {
+        "upperArmRadius": 0.11513462197537656,
+        "forearmRadius": 0.10465471479476678,
+        "thighRadius": 0.1109313339627434,
+        "calfRadius": 0.11654447768031034,
+        "torsoWidth": 0.23761201835629725,
+        "torsoDepth": 0.23882419548415593,
+        "shoeLength": 0.28401566146882307,
+        "shoeHeight": 0.1037298926610893
+      },
+      "torsoBand": [
+        0.818,
+        0.8959999999999999
+      ],
+      "shoulderY": 1.13,
+      "spatialFallbacks": [],
+      "absentParts": []
+    },
+    {
+      "id": "inf.alpha",
+      "path": "public/assets/models/skinned/inf.alpha.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.63323237601076,
+        "forearmRadius": 0.3949262551792383,
+        "thighRadius": 0.3750491988406352,
+        "calfRadius": 0.43671734039099996,
+        "torsoWidth": 0.7431336939334869,
+        "torsoDepth": 0.7592230886220932,
+        "shoeLength": 0.7201713919639587,
+        "shoeHeight": 0.4667870588600636
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.2497884576043497,
+        "headShoulder": 0.5929960607647372,
+        "legHeight": 0.3925672655140333,
+        "shoulderHeight": 0.8049646581630824
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.3233415418149233,
+        "maximum": 1,
+        "intervals": {
+          "headHeight": [
+            0.9758100158851685,
+            1.2894026766314695
+          ],
+          "headShoulder": [
+            1.3233415418149233,
+            1.6174174399960173
+          ],
+          "legHeight": [
+            0.3384482228984971,
+            1.0810783934909958
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 1.6159470605051116
+        },
+        "binding": "headHeight",
+        "scale": 0.9999999999999964
+      },
+      "policy": "retained intentional bulk",
+      "heightM": 2.3343770503997803,
+      "groundM": 0,
+      "ratios": {
+        "upperArmRadius": 0.27126396564870014,
+        "forearmRadius": 0.16917843461132556,
+        "thighRadius": 0.1606635049708037,
+        "calfRadius": 0.18708089180203716,
+        "torsoWidth": 0.31834347146542563,
+        "torsoDepth": 0.32523584332362687,
+        "shoeLength": 0.3085068848841809,
+        "shoeHeight": 0.1999621521211077
+      },
+      "torsoBand": [
+        1.038820004463196,
+        1.161239993572235
+      ],
+      "shoulderY": 1.528499960899353,
+      "spatialFallbacks": [],
+      "absentParts": []
+    },
+    {
+      "id": "inf.alpha-worker",
+      "path": "public/assets/models/skinned/inf.alpha-worker.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.43343535713577375,
+        "forearmRadius": 0.43413529048662053,
+        "thighRadius": 0.30096531809964555,
+        "calfRadius": 0.2912366909897042,
+        "torsoWidth": 0.7318948209285736,
+        "torsoDepth": 0.67467196052894,
+        "shoeLength": 0.5845679566264153,
+        "shoeHeight": 0.38223524764180183
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.2767576314477132,
+        "headShoulder": 0.5922318809102789,
+        "legHeight": 0.38629448432464547,
+        "shoulderHeight": 0.6681890835428627
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.3250491009305663,
+        "maximum": 1,
+        "intervals": {
+          "headHeight": [
+            0.8477625165456526,
+            1.120141833093742
+          ],
+          "headShoulder": [
+            1.3250491009305663,
+            1.6195044566929144
+          ],
+          "legHeight": [
+            0.3547191794642767,
+            1.0142722927329348
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 1.6180321799141024
+        },
+        "binding": "headHeight",
+        "scale": 0.9999999999999964
+      },
+      "policy": "retained intentional bulk",
+      "heightM": 2.372283458709717,
+      "groundM": 0,
+      "ratios": {
+        "upperArmRadius": 0.18270808049705786,
+        "forearmRadius": 0.18300312675229224,
+        "thighRadius": 0.12686735094605447,
+        "calfRadius": 0.12276639619959566,
+        "torsoWidth": 0.30851912668423304,
+        "torsoDepth": 0.2843977004737425,
+        "shoeLength": 0.24641572847469134,
+        "shoeHeight": 0.1611254533004666
+      },
+      "torsoBand": [
+        1.038820004463196,
+        1.161239993572235
+      ],
+      "shoulderY": 1.528499960899353,
+      "spatialFallbacks": [],
+      "absentParts": []
+    },
+    {
+      "id": "inf.alpha-hoodie",
+      "path": "public/assets/models/skinned/inf.alpha-hoodie.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.63323237601076,
+        "forearmRadius": 0.3949262551792383,
+        "thighRadius": 0.3750491988406352,
+        "calfRadius": 0.43671734039099996,
+        "torsoWidth": 0.7431336939334869,
+        "torsoDepth": 0.7592230886220932,
+        "shoeLength": 0.7201713919639587,
+        "shoeHeight": 0.4667870588600636
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.2801816489030246,
+        "headShoulder": 0.6573035418043646,
+        "legHeight": 0.3766632553460942,
+        "shoulderHeight": 0.7723532632942465
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.193872041505212,
+        "maximum": 0.9247600073600165,
+        "intervals": {
+          "headHeight": [
+            0.8333281440819519,
+            1.1009879605544224
+          ],
+          "headShoulder": [
+            1.193872041505212,
+            1.4591769396174814
+          ],
+          "legHeight": [
+            0.2895103472449572,
+            0.9247600073600165
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 1.45785041512692
+        },
+        "binding": "headHeight",
+        "scale": 0.9999999999999964
+      },
+      "policy": "retained intentional bulk",
+      "heightM": 2.432942428939954,
+      "groundM": 0,
+      "ratios": {
+        "upperArmRadius": 0.26027429522311496,
+        "forearmRadius": 0.16232453776200112,
+        "thighRadius": 0.15415457200277696,
+        "calfRadius": 0.17950171578095256,
+        "torsoWidth": 0.3054464771109583,
+        "torsoDepth": 0.31205961949247224,
+        "shoeLength": 0.2960083984715336,
+        "shoeHeight": 0.19186111981426754
+      },
+      "torsoBand": [
+        1.038820004463196,
+        1.161239993572235
+      ],
+      "shoulderY": 1.528499960899353,
+      "spatialFallbacks": [],
+      "absentParts": []
+    },
+    {
+      "id": "inf.alpha-fire",
+      "path": "public/assets/models/skinned/inf.alpha-fire.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.63323237601076,
+        "forearmRadius": 0.32328648165553736,
+        "thighRadius": 0.3750491988406352,
+        "calfRadius": 0.43671734039099996,
+        "torsoWidth": 0.7431336939334869,
+        "torsoDepth": 0.7592230886220932,
+        "shoeLength": 0.7201713919639587,
+        "shoeHeight": 0.4667870588600636
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.2736242968677858,
+        "headShoulder": 0.6573035418043646,
+        "legHeight": 0.380094556535178,
+        "shoulderHeight": 0.7793891942833184
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.193872041505212,
+        "maximum": 0.9555479002110175,
+        "intervals": {
+          "headHeight": [
+            0.8613534503279666,
+            1.1380440824779323
+          ],
+          "headShoulder": [
+            1.193872041505212,
+            1.4591769396174814
+          ],
+          "legHeight": [
+            0.29914897075732094,
+            0.9555479002110175
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 1.45785041512692
+        },
+        "binding": "headHeight",
+        "scale": 0.9999999999999964
+      },
+      "policy": "retained intentional bulk",
+      "heightM": 2.410979056653086,
+      "groundM": 0,
+      "ratios": {
+        "upperArmRadius": 0.2626453242152221,
+        "forearmRadius": 0.13408929487107313,
+        "thighRadius": 0.155558878790626,
+        "calfRadius": 0.181136928247419,
+        "torsoWidth": 0.30822901255936375,
+        "torsoDepth": 0.31490239889352023,
+        "shoeLength": 0.29870495555598003,
+        "shoeHeight": 0.1936089231351748
+      },
+      "torsoBand": [
+        1.038820004463196,
+        1.161239993572235
+      ],
+      "shoulderY": 1.528499960899353,
+      "spatialFallbacks": [],
+      "absentParts": []
+    },
+    {
+      "id": "inf.alpha-suit",
+      "path": "public/assets/models/skinned/inf.alpha-suit.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.63323237601076,
+        "forearmRadius": 0.3949262551792383,
+        "thighRadius": 0.3750491988406352,
+        "calfRadius": 0.43671734039099996,
+        "torsoWidth": 0.7431336939334869,
+        "torsoDepth": 0.7592230886220932,
+        "shoeLength": 0.7201713919639587,
+        "shoeHeight": 0.4667870588600636
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.2497884576043497,
+        "headShoulder": 0.5929960607647372,
+        "legHeight": 0.3925672655140333,
+        "shoulderHeight": 0.8049646581630824
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.3233415418149233,
+        "maximum": 1,
+        "intervals": {
+          "headHeight": [
+            0.9758100158851685,
+            1.2894026766314695
+          ],
+          "headShoulder": [
+            1.3233415418149233,
+            1.6174174399960173
+          ],
+          "legHeight": [
+            0.3384482228984971,
+            1.0810783934909958
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 1.6159470605051116
+        },
+        "binding": "headHeight",
+        "scale": 0.9999999999999964
+      },
+      "policy": "retained intentional bulk",
+      "heightM": 2.3343770503997803,
+      "groundM": 0,
+      "ratios": {
+        "upperArmRadius": 0.27126396564870014,
+        "forearmRadius": 0.16917843461132556,
+        "thighRadius": 0.1606635049708037,
+        "calfRadius": 0.18708089180203716,
+        "torsoWidth": 0.31834347146542563,
+        "torsoDepth": 0.32523584332362687,
+        "shoeLength": 0.3085068848841809,
+        "shoeHeight": 0.1999621521211077
+      },
+      "torsoBand": [
+        1.038820004463196,
+        1.161239993572235
+      ],
+      "shoulderY": 1.528499960899353,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "inf.jogger",
+      "path": "public/assets/models/skinned/inf.jogger.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.13517642695108975,
+        "forearmRadius": 0.04644118039398818,
+        "thighRadius": 0.1356842118936974,
+        "calfRadius": 0.07349000740747602,
+        "torsoWidth": 0.36343549355379784,
+        "torsoDepth": 0.27543842792510986,
+        "shoeLength": 0.39112313091754913,
+        "shoeHeight": 0.1765376968542114
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.5354009988674507,
+        "headShoulder": 1.4688550694400888,
+        "legHeight": 0.24474105673406638,
+        "shoulderHeight": 0.4627930356152839
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 0.534250340737644,
+        "maximum": 0.3202541267874756,
+        "intervals": {
+          "headHeight": [
+            0.2770465751900041,
+            0.3668268915739476
+          ],
+          "headShoulder": [
+            0.534250340737644,
+            0.6529726386793427
+          ],
+          "legHeight": [
+            0.10425175172773864,
+            0.3202541267874756
+          ]
+        },
+        "limits": {
+          "headHeight": 0.36634297505301205,
+          "headShoulder": 0.6523790271896341
+        },
+        "binding": "headHeight",
+        "scale": 0.36634297505301205
+      },
+      "policy": "adult",
       "heightM": 1.1891912392192245,
+      "groundM": -8.6474108229595e-7,
       "ratios": {
         "upperArmRadius": 0.11367089034379466,
         "forearmRadius": 0.039052743463262984,
-        "thighRadius": 0.2759887384898727,
-        "calfRadius": 0.07465757770290707,
-        "torsoWidth": 0.33496845297340744,
-        "torsoDepth": 0.3146074941074181,
-        "shoeLength": 0.4150757173745413,
-        "shoeHeight": 0.16441577749280564
+        "thighRadius": 0.1140978905821592,
+        "calfRadius": 0.06179830878650487,
+        "torsoWidth": 0.3056156836409382,
+        "torsoDepth": 0.23161827874375507,
+        "shoeLength": 0.32889842946904396,
+        "shoeHeight": 0.14845189825828098
       },
-      "groundM": -8.6474108229595e-7
+      "torsoBand": [
+        0.5179994761943817,
+        0.5955176472663879
+      ],
+      "shoulderY": 0.8280721604824066,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "inf.baseball-cap",
-      "heightM": 1.35874899417352,
-      "ratios": {
-        "upperArmRadius": null,
-        "forearmRadius": null,
-        "thighRadius": null,
-        "calfRadius": null,
-        "torsoWidth": null,
-        "torsoDepth": null,
-        "shoeLength": null,
-        "shoeHeight": null
+      "path": "public/assets/models/inf.baseball-cap.glb",
+      "dimensions": {
+        "upperArmRadius": 0.08608740101753157,
+        "forearmRadius": 0.05456597762993232,
+        "thighRadius": 0.1318371398119092,
+        "calfRadius": 0.06731872700381869,
+        "torsoWidth": 0.3740253011112384,
+        "torsoDepth": 0.3567843823020329,
+        "shoeLength": 0.3645451181415015,
+        "shoeHeight": 0.28909132227339285
       },
-      "groundM": -2.9802322387695312e-8
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.42933839785179195,
+        "headShoulder": 0.8950886497346145,
+        "legHeight": 0.40662375957180164,
+        "shoulderHeight": 0.4181634610022629
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 0.8767135205828498,
+        "maximum": 0.5650445982748128,
+        "intervals": {
+          "headHeight": [
+            0.42705993483237287,
+            0.5650445982748128
+          ],
+          "headShoulder": [
+            0.8767135205828498,
+            1.0715387473790388
+          ],
+          "legHeight": [
+            0.6847279947819324,
+            1.1322597872216562
+          ]
+        },
+        "limits": {
+          "headHeight": 0.564300760655339,
+          "headShoulder": 1.0705646212450577
+        },
+        "binding": "headHeight",
+        "scale": 0.564300760655339
+      },
+      "policy": "adult",
+      "heightM": 1.4632845504869074,
+      "groundM": 8.883894203615128e-8,
+      "ratios": {
+        "upperArmRadius": 0.058831620267490704,
+        "forearmRadius": 0.03729006611309845,
+        "thighRadius": 0.09009672094743325,
+        "calfRadius": 0.046005219546272395,
+        "torsoWidth": 0.2556066767648039,
+        "torsoDepth": 0.24382433490691405,
+        "shoeLength": 0.24912797584051524,
+        "shoeHeight": 0.1975632983873149
+      },
+      "torsoBand": [
+        0.8070177959310656,
+        0.8821142929634413
+      ],
+      "shoulderY": 1.1074037840605688,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "inf.suburban-mom",
-      "heightM": 1.6121027059595803,
-      "ratios": {
-        "upperArmRadius": 0.1736348431185138,
-        "forearmRadius": 0.22024414688557026,
-        "thighRadius": 0.18624874967520763,
-        "calfRadius": 0.13507934736232285,
-        "torsoWidth": 0.43036722731720783,
-        "torsoDepth": 0.35764001268265627,
-        "shoeLength": 0.2858533536865113,
-        "shoeHeight": 0.18013372716859646
+      "path": "public/assets/models/skinned/inf.suburban-mom.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.23890009741693125,
+        "forearmRadius": 0.34682366265987546,
+        "thighRadius": 0.30742356623386413,
+        "calfRadius": 0.18954389795789262,
+        "torsoWidth": 0.6099930360756447,
+        "torsoDepth": 0.3628226748225564,
+        "shoeLength": 0.4338203444642395,
+        "shoeHeight": 0.22278683256302845
       },
-      "groundM": 3.7194432613868603e-9
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3722239493047034,
+        "headShoulder": 1.0843097104380475,
+        "legHeight": 0.41791227713412754,
+        "shoulderHeight": 0.512766820075972
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 0.7237197212091364,
+        "maximum": 0.7190810169011015,
+        "intervals": {
+          "headHeight": [
+            0.5436084618252088,
+            0.7190810169011015
+          ],
+          "headShoulder": [
+            0.7237197212091364,
+            0.884546325922278
+          ],
+          "legHeight": [
+            0.7008398808254916,
+            1.2313720096249219
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9828039531152335,
+          "headShoulder": 0.8837421928987121
+        },
+        "binding": "headShoulder",
+        "scale": 0.8837421928987121
+      },
+      "policy": "adult",
+      "heightM": 1.6121027059595803,
+      "groundM": 3.7194432613868603e-9,
+      "ratios": {
+        "upperArmRadius": 0.14819161120055901,
+        "forearmRadius": 0.2151374483633993,
+        "thighRadius": 0.19069725836783755,
+        "calfRadius": 0.11757557211286325,
+        "torsoWidth": 0.3783834825291453,
+        "torsoDepth": 0.22506176156226448,
+        "shoeLength": 0.2691021749796111,
+        "shoeHeight": 0.1381964261578594
+      },
+      "torsoBand": [
+        0.8225064486977686,
+        0.8927687278081378
+      ],
+      "shoulderY": 1.1035555651392455,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "inf.delivery-driver",
-      "heightM": 1.445623494741335,
-      "ratios": {
-        "upperArmRadius": 0.06969888746192088,
-        "forearmRadius": 0.045205896731204946,
-        "thighRadius": 0.18316100604681218,
-        "calfRadius": 0.0733946089754878,
-        "torsoWidth": 0.6096876578112802,
-        "torsoDepth": 0.5878187738990275,
-        "shoeLength": 0.31558117968883814,
-        "shoeHeight": 0.15927171374766633
+      "path": "public/assets/models/skinned/inf.delivery-driver.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.09624913570319317,
+        "forearmRadius": 0.03659332967835664,
+        "thighRadius": 0.1823248203632111,
+        "calfRadius": 0.10610097112231842,
+        "torsoWidth": 0.4559258070560624,
+        "torsoDepth": 0.3241720348596573,
+        "shoeLength": 0.3994406759738922,
+        "shoeHeight": 0.2128969335462898
       },
-      "groundM": 0.000001892320597107755
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.43598466722812157,
+        "headShoulder": 0.8069379867603356,
+        "legHeight": 0.2900993290047537,
+        "shoulderHeight": 0.5658771977680497
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 0.9724865283553117,
+        "maximum": 0.4356362956414012,
+        "intervals": {
+          "headHeight": [
+            0.415496176289213,
+            0.5497639012572476
+          ],
+          "headShoulder": [
+            0.9724865283553117,
+            1.1885946457676033
+          ],
+          "legHeight": [
+            0.12121903415500236,
+            0.4356362956414012
+          ]
+        },
+        "limits": {
+          "headHeight": 0.5490401079346583,
+          "headShoulder": 1.1875141051805418
+        },
+        "binding": "headHeight",
+        "scale": 0.5490401079346583
+      },
+      "policy": "adult",
+      "heightM": 1.445623494741335,
+      "groundM": 0.000001892320597107755,
+      "ratios": {
+        "upperArmRadius": 0.0665796703313922,
+        "forearmRadius": 0.025313181344568753,
+        "thighRadius": 0.12612192664718308,
+        "calfRadius": 0.0733946089754878,
+        "torsoWidth": 0.3153835066423302,
+        "torsoDepth": 0.2242437509067057,
+        "shoeLength": 0.2763103099990527,
+        "shoeHeight": 0.14726997335110648
+      },
+      "torsoBand": [
+        0.5908936738967896,
+        0.6597783923149109
+      ],
+      "shoulderY": 0.8664325475692749,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "inf.skater",
-      "heightM": 1.2922509076244377,
-      "ratios": {
-        "upperArmRadius": null,
-        "forearmRadius": null,
-        "thighRadius": null,
-        "calfRadius": null,
-        "torsoWidth": null,
-        "torsoDepth": null,
-        "shoeLength": null,
-        "shoeHeight": null
+      "path": "public/assets/models/inf.skater.glb",
+      "dimensions": {
+        "upperArmRadius": 0.12402167501910319,
+        "forearmRadius": 0.07309202979368648,
+        "thighRadius": 0.14706129782700153,
+        "calfRadius": 0.1192757213966083,
+        "torsoWidth": 0.4925339924164172,
+        "torsoDepth": 0.4618469822507495,
+        "shoeLength": 0.40972857967076354,
+        "shoeHeight": 0.27561245732277895
       },
-      "groundM": 0
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.4448171204500146,
+        "headShoulder": 0.7153248527749813,
+        "legHeight": 0.32405546198096263,
+        "shoulderHeight": 0.5576875131578735
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.0970348902297073,
+        "maximum": 0.5301729703155291,
+        "intervals": {
+          "headHeight": [
+            0.4006716591494133,
+            0.5301729703155291
+          ],
+          "headShoulder": [
+            1.0970348902297073,
+            1.3408204213918646
+          ],
+          "legHeight": [
+            0.300991455330048,
+            0.6452373139391053
+          ]
+        },
+        "limits": {
+          "headHeight": 0.5294748805417697,
+          "headShoulder": 1.3396014937360539
+        },
+        "binding": "headHeight",
+        "scale": 0.5294748805417697
+      },
+      "policy": "adult",
+      "heightM": 1.423268133166058,
+      "groundM": -0.0000015385614662022373,
+      "ratios": {
+        "upperArmRadius": 0.08713865794438687,
+        "forearmRadius": 0.051355066617766086,
+        "thighRadius": 0.10332648810162276,
+        "calfRadius": 0.08380411154943772,
+        "torsoWidth": 0.3460584698968676,
+        "torsoDepth": 0.3244975219274892,
+        "shoeLength": 0.28787869981977526,
+        "shoeHeight": 0.19364759942294177
+      },
+      "torsoBand": [
+        0.6685666201459005,
+        0.7538333692804098
+      ],
+      "shoulderY": 1.0096336166839377,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "inf.college-student",
-      "heightM": 1.548291567665823,
-      "ratios": {
-        "upperArmRadius": null,
-        "forearmRadius": null,
-        "thighRadius": null,
-        "calfRadius": null,
-        "torsoWidth": null,
-        "torsoDepth": null,
-        "shoeLength": null,
-        "shoeHeight": null
+      "path": "public/assets/models/inf.college-student.glb",
+      "dimensions": {
+        "upperArmRadius": 0.09373127281065759,
+        "forearmRadius": 0.04446544596570878,
+        "thighRadius": 0.09562638592198489,
+        "calfRadius": 0.0902979864277385,
+        "torsoWidth": 0.4376229385415744,
+        "torsoDepth": 0.2625602033209664,
+        "shoeLength": 0.28246157294825663,
+        "shoeHeight": 0.17256398572419684
       },
-      "groundM": 0
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.34048402935769484,
+        "headShoulder": 0.9646811315447892,
+        "legHeight": 0.4616015033443051,
+        "shoulderHeight": 0.445587338901918
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 0.9458003130876451,
+        "maximum": 0.8272852930320385,
+        "intervals": {
+          "headHeight": [
+            0.6254644692449925,
+            0.8272852930320385
+          ],
+          "headShoulder": [
+            0.8134670573331813,
+            0.9942375145183328
+          ],
+          "legHeight": [
+            0.9458003130876451,
+            1.5864215643899886
+          ]
+        },
+        "limits": {
+          "headHeight": 0.8261971398034547,
+          "headShoulder": 0.9933336622324069
+        },
+        "binding": "headHeight",
+        "scale": 0.8261971398034547
+      },
+      "policy": "adult",
+      "heightM": 1.6934819163527648,
+      "groundM": -0.000002230292923510735,
+      "ratios": {
+        "upperArmRadius": 0.05534825728315169,
+        "forearmRadius": 0.026256817705779565,
+        "thighRadius": 0.05646732037619539,
+        "calfRadius": 0.05332090384656269,
+        "torsoWidth": 0.25841606828851094,
+        "torsoDepth": 0.1550416339174378,
+        "shoeLength": 0.16679338008910738,
+        "shoeHeight": 0.10189892437460814
+      },
+      "torsoBand": [
+        0.9095958487016738,
+        0.9883108778295279
+      ],
+      "shoulderY": 1.2244559652130902,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "inf.bbq-dad",
-      "heightM": 1.5797725002210843,
-      "ratios": {
-        "upperArmRadius": 0.21984884627127688,
-        "forearmRadius": 0.15559490282988048,
-        "thighRadius": 0.20911895969305483,
-        "calfRadius": 0.19767546541830477,
-        "torsoWidth": 0.650740557791446,
-        "torsoDepth": 0.4219538757654162,
-        "shoeLength": 0.3325859130097065,
-        "shoeHeight": 0.14684729772884914
+      "path": "public/assets/models/skinned/inf.bbq-dad.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.31953470790412986,
+        "forearmRadius": 0.21921235944223363,
+        "thighRadius": 0.41717778448957327,
+        "calfRadius": 0.30618643373562016,
+        "torsoWidth": 0.8811506220567586,
+        "torsoDepth": 0.6409799837921493,
+        "shoeLength": 0.46178069132166466,
+        "shoeHeight": 0.20803163556975202
       },
-      "groundM": -0.000005001798791541945
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.38433229659672186,
+        "headShoulder": 0.6427692472980016,
+        "legHeight": 0.3603216221969183,
+        "shoulderHeight": 0.6638960277885425
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.2208678692102435,
+        "maximum": 0.682561097448054,
+        "intervals": {
+          "headHeight": [
+            0.5159785998681506,
+            0.682561097448054
+          ],
+          "headShoulder": [
+            1.2208678692102435,
+            1.4921718401458532
+          ],
+          "legHeight": [
+            0.3916335237873749,
+            0.8346443256431575
+          ]
+        },
+        "limits": {
+          "headHeight": 0.6816630255858911,
+          "headShoulder": 1.4908153202911751
+        },
+        "binding": "headHeight",
+        "scale": 0.6816630255858911
+      },
+      "policy": "adult",
+      "heightM": 1.5797725002210843,
+      "groundM": -0.000005001798791541945,
+      "ratios": {
+        "upperArmRadius": 0.2022662806571275,
+        "forearmRadius": 0.1387619795961479,
+        "thighRadius": 0.26407459582388637,
+        "calfRadius": 0.19381678924830653,
+        "torsoWidth": 0.5577705789494654,
+        "torsoDepth": 0.4057419556945358,
+        "shoeLength": 0.29230834899141483,
+        "shoeHeight": 0.1316845530230705
+      },
+      "torsoBand": [
+        0.7428201180221066,
+        0.8370673517445738
+      ],
+      "shoulderY": 1.1198090529119753,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "inf.cashier",
-      "heightM": 1.3022272377990365,
-      "ratios": {
-        "upperArmRadius": 0.10359576666650565,
-        "forearmRadius": 0.04500326751869282,
-        "thighRadius": 0.19095351425081958,
-        "calfRadius": 0.08640008504153629,
-        "torsoWidth": 0.3280999655981213,
-        "torsoDepth": 0.29860603335275016,
-        "shoeLength": 0.3066794393385022,
-        "shoeHeight": 0.13977077741827315
+      "path": "public/assets/models/skinned/inf.cashier.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.11678586556863736,
+        "forearmRadius": 0.05860448075279844,
+        "thighRadius": 0.14922654785921818,
+        "calfRadius": 0.11251254408924165,
+        "torsoWidth": 0.38080674572680095,
+        "torsoDepth": 0.36844000220298767,
+        "shoeLength": 0.367389053106308,
+        "shoeHeight": 0.16362446662969887
       },
-      "groundM": -0.0010143175022676587
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.4918848597719339,
+        "headShoulder": 0.9119150426931275,
+        "legHeight": 0.25319902502538283,
+        "shoulderHeight": 0.4426885831557476
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 0.8605366559422556,
+        "maximum": 0.3048068124019699,
+        "intervals": {
+          "headHeight": [
+            0.3307124161372362,
+            0.4377301999749045
+          ],
+          "headShoulder": [
+            0.8605366559422556,
+            1.0517670239294237
+          ],
+          "legHeight": [
+            0.06156991981659858,
+            0.3048068124019699
+          ]
+        },
+        "limits": {
+          "headHeight": 0.4371533459999313,
+          "headShoulder": 1.0508108720894878
+        },
+        "binding": "headHeight",
+        "scale": 0.4371533459999313
+      },
+      "policy": "adult",
+      "heightM": 1.3022272377990365,
+      "groundM": -0.0010143175022676587,
+      "ratios": {
+        "upperArmRadius": 0.08968163326549931,
+        "forearmRadius": 0.04500326751869282,
+        "thighRadius": 0.1145933240587364,
+        "calfRadius": 0.08640008504153629,
+        "torsoWidth": 0.29242726205790526,
+        "torsoDepth": 0.28293065258388217,
+        "shoeLength": 0.2821236128705553,
+        "shoeHeight": 0.12564970373853437
+      },
+      "torsoBand": [
+        0.5246668577194213,
+        0.5943910717964173
+      ],
+      "shoulderY": 0.8035637140274048,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "inf.bathrobe-neighbor",
-      "heightM": 1.3112640297401623,
-      "ratios": {
-        "upperArmRadius": 0.1883271179810134,
-        "forearmRadius": 0.04757928897787461,
-        "thighRadius": 0.36571774094405973,
-        "calfRadius": null,
-        "torsoWidth": 0.49333542298628313,
-        "torsoDepth": 0.3858621934468998,
-        "shoeLength": 0.2910289908774415,
-        "shoeHeight": 0.1501114227387941
+      "path": "public/assets/models/skinned/inf.bathrobe-neighbor.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.23765835719105843,
+        "forearmRadius": 0.06238901019729955,
+        "thighRadius": 0.47674403786693376,
+        "calfRadius": 0.16966228581942566,
+        "torsoWidth": 0.5253252088262446,
+        "torsoDepth": 0.4578606188297272,
+        "shoeLength": 0.3772536441683769,
+        "shoeHeight": 0.18007442576345056
       },
-      "groundM": -1.0180023224393153e-7
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.48746450668214786,
+        "headShoulder": 0.6894243815556189,
+        "legHeight": 0.30033303463420474,
+        "shoulderHeight": 0.7091701369894629
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.1382485771273452,
+        "maximum": 0.4456380759204714,
+        "intervals": {
+          "headHeight": [
+            0.3366944775226542,
+            0.4456380759204714
+          ],
+          "headShoulder": [
+            1.1382485771273452,
+            1.3911927053778665
+          ],
+          "legHeight": [
+            0.2586657092338788,
+            0.5497984022748287
+          ]
+        },
+        "limits": {
+          "headHeight": 0.4450508375350495,
+          "headShoulder": 1.3899279847366137
+        },
+        "binding": "headHeight",
+        "scale": 0.4450508375350495
+      },
+      "policy": "adult",
+      "heightM": 1.3112640297401623,
+      "groundM": -1.0180023224393153e-7,
+      "ratios": {
+        "upperArmRadius": 0.18124370973415047,
+        "forearmRadius": 0.04757928897787461,
+        "thighRadius": 0.36357592906853736,
+        "calfRadius": 0.1293883474047905,
+        "torsoWidth": 0.4006250434020844,
+        "torsoDepth": 0.3491750009496226,
+        "shoeLength": 0.2877022747608907,
+        "shoeHeight": 0.13732888394653348
+      },
+      "torsoBand": [
+        0.6221408009529114,
+        0.7044247508049011
+      ],
+      "shoulderY": 0.9512766003608704,
+      "spatialFallbacks": [
+        "shinL",
+        "shinR"
+      ],
+      "absentParts": []
     },
     {
       "id": "inf.construction-worker",
-      "heightM": 1.3784363180905839,
-      "ratios": {
-        "upperArmRadius": null,
-        "forearmRadius": null,
-        "thighRadius": null,
-        "calfRadius": null,
-        "torsoWidth": null,
-        "torsoDepth": null,
-        "shoeLength": null,
-        "shoeHeight": null
+      "path": "public/assets/models/inf.construction-worker.glb",
+      "dimensions": {
+        "upperArmRadius": 0.11636626366401923,
+        "forearmRadius": 0.07263351111935687,
+        "thighRadius": 0.12689234113074693,
+        "calfRadius": 0.12617022459525493,
+        "torsoWidth": 0.5381981809559226,
+        "torsoDepth": 0.4509093898039205,
+        "shoeLength": 0.3663464482986943,
+        "shoeHeight": 0.27693126113086414
       },
-      "groundM": -7.450580596923828e-9
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.41394450467819466,
+        "headShoulder": 0.7367352759117602,
+        "legHeight": 0.35115624213413227,
+        "shoulderHeight": 0.559725942666559
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.0651537221038023,
+        "maximum": 0.6023367119387543,
+        "intervals": {
+          "headHeight": [
+            0.45527849494322997,
+            0.6023367119387543
+          ],
+          "headShoulder": [
+            1.0651537221038023,
+            1.3018545492379807
+          ],
+          "legHeight": [
+            0.38807237322226823,
+            0.7889290705684657
+          ]
+        },
+        "limits": {
+          "headHeight": 0.6015439413467725,
+          "headShoulder": 1.3006710451023098
+        },
+        "binding": "headHeight",
+        "scale": 0.6015439413467725
+      },
+      "policy": "adult",
+      "heightM": 1.5031148928452363,
+      "groundM": -0.000001881726420210894,
+      "ratios": {
+        "upperArmRadius": 0.07741674586415034,
+        "forearmRadius": 0.04832199552082767,
+        "thighRadius": 0.08441958877178926,
+        "calfRadius": 0.0839391753723018,
+        "torsoWidth": 0.3580552514765993,
+        "torsoDepth": 0.2999833159462595,
+        "shoeLength": 0.24372484767630737,
+        "shoeHeight": 0.1842382524776019
+      },
+      "torsoBand": [
+        0.7172707055419851,
+        0.8024601494718918
+      ],
+      "shoulderY": 1.0580284812616116,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "inf.crawler",
-      "heightM": 1.0134821437682326,
-      "ratios": {
-        "upperArmRadius": 0.23620227048499098,
-        "forearmRadius": 0.1686892817522078,
-        "thighRadius": 0.3921898539739924,
-        "calfRadius": null,
-        "torsoWidth": 0.7232536497277627,
-        "torsoDepth": 0.8799810181741651,
+      "path": "public/assets/models/skinned/inf.crawler.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.22791881641858153,
+        "forearmRadius": 0.16256406043354338,
+        "thighRadius": 0.33744499282471224,
+        "calfRadius": 0.11642191602170578,
+        "torsoWidth": 0.7830895781517029,
+        "torsoDepth": 0.8646887244791709,
         "shoeLength": null,
         "shoeHeight": null
       },
-      "groundM": -0.015433460474014282
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.49201650258386875,
+        "headShoulder": 0.7455888234475668,
+        "legHeight": 0.2717694165909828,
+        "shoulderHeight": 0.8586973141083906
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.0525054784405166,
+        "maximum": 0.37975186855407406,
+        "intervals": {
+          "headHeight": [
+            0.2855162907148847,
+            0.37975186855407406
+          ],
+          "headShoulder": [
+            1.0525054784405166,
+            1.2863955847606314
+          ],
+          "legHeight": [
+            0.2667961677531124,
+            0.5278029455485457
+          ]
+        },
+        "limits": {
+          "headHeight": 0.6047852121239607,
+          "headShoulder": 1.2852261342290308
+        },
+        "binding": "headHeight",
+        "scale": 0.6047852121239607
+      },
+      "policy": "adult",
+      "heightM": 1.0134821437682326,
+      "groundM": -0.015433460474014282,
+      "ratios": {
+        "upperArmRadius": 0.22488685944791836,
+        "forearmRadius": 0.16040150429203734,
+        "thighRadius": 0.33295603173634264,
+        "calfRadius": 0.11487317930322571,
+        "torsoWidth": 0.7726722991291133,
+        "torsoDepth": 0.8531859488556629,
+        "shoeLength": null,
+        "shoeHeight": null
+      },
+      "torsoBand": [
+        0.321999990940094,
+        0.38399999141693114
+      ],
+      "shoulderY": 0.5699999928474426,
+      "spatialFallbacks": [
+        "shinL",
+        "shinR"
+      ],
+      "absentParts": [
+        "shoeLength",
+        "shoeHeight"
+      ]
     },
     {
       "id": "inf.riot-cop",
-      "heightM": 1.5811347752015796,
-      "ratios": {
-        "upperArmRadius": 0.21402077981946865,
-        "forearmRadius": 0.36745887327877086,
-        "thighRadius": 0.15359147175295965,
-        "calfRadius": 0.2300986918105773,
-        "torsoWidth": 0.5446835830287281,
-        "torsoDepth": 0.44233128474987016,
-        "shoeLength": 0.319331947774167,
-        "shoeHeight": 0.09915974207048558
+      "path": "public/assets/models/skinned/inf.riot-cop.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.32709141322870694,
+        "forearmRadius": 0.5810020029974551,
+        "thighRadius": 0.31350074078404416,
+        "calfRadius": 0.326563040177708,
+        "torsoWidth": 0.7830188275999461,
+        "torsoDepth": 0.6300821454633202,
+        "shoeLength": 0.4916675986030469,
+        "shoeHeight": 0.15531017564648286
       },
-      "groundM": 0.00000221080108576793
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.38380689147977154,
+        "headShoulder": 0.6074074558453514,
+        "legHeight": 0.3962714031782592,
+        "shoulderHeight": 0.6671740205374306
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.2919438406471924,
+        "maximum": 0.6840974473860457,
+        "intervals": {
+          "headHeight": [
+            0.5171409843196872,
+            0.6840974473860457
+          ],
+          "headShoulder": [
+            1.2919438406471924,
+            1.579042471902124
+          ],
+          "legHeight": [
+            0.5899720620046459,
+            1.0778496150159649
+          ]
+        },
+        "limits": {
+          "headHeight": 0.6924821715229825,
+          "headShoulder": 1.5776069787458493
+        },
+        "binding": "headHeight",
+        "scale": 0.6924821715229825
+      },
+      "policy": "adult",
+      "heightM": 1.5811347752015796,
+      "groundM": 0.00000221080108576793,
+      "ratios": {
+        "upperArmRadius": 0.20687130430548267,
+        "forearmRadius": 0.36745887327877086,
+        "thighRadius": 0.198275786290309,
+        "calfRadius": 0.2065371309894024,
+        "torsoWidth": 0.495225859225137,
+        "torsoDepth": 0.3984999605001988,
+        "shoeLength": 0.3109586901220131,
+        "shoeHeight": 0.09822703167519814
+      },
+      "torsoBand": [
+        0.7992662046902979,
+        0.8852422842489887
+      ],
+      "shoulderY": 1.143170522925061,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "inf.hazmat",
-      "heightM": 1.447106309835082,
-      "ratios": {
-        "upperArmRadius": 0.14015877705189397,
-        "forearmRadius": 0.14674052411562788,
-        "thighRadius": 0.16960171911169897,
-        "calfRadius": 0.13037784842594308,
-        "torsoWidth": 0.4860538850806611,
-        "torsoDepth": 0.5277871896576266,
-        "shoeLength": 0.3112453884638392,
-        "shoeHeight": 0.2183587748575075
+      "path": "public/assets/models/skinned/inf.hazmat.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.1955410213024511,
+        "forearmRadius": 0.18987574981910746,
+        "thighRadius": 0.23976631390108294,
+        "calfRadius": 0.17121231230853295,
+        "torsoWidth": 0.5068978369235992,
+        "torsoDepth": 0.5940483510494232,
+        "shoeLength": 0.43685944378376007,
+        "shoeHeight": 0.3063044816954062
       },
-      "groundM": 0.00018647406250238419
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3965199229721265,
+        "headShoulder": 0.6631174920575889,
+        "legHeight": 0.4040148458816953,
+        "shoulderHeight": 0.5712094515056191
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.18340464659984,
+        "maximum": 0.6478289642317567,
+        "intervals": {
+          "headHeight": [
+            0.48955432776898,
+            0.6478289642317567
+          ],
+          "headShoulder": [
+            1.18340464659984,
+            1.4463834569553602
+          ],
+          "legHeight": [
+            0.6446434507597708,
+            1.1261067455102363
+          ]
+        },
+        "limits": {
+          "headHeight": 0.6469756575248091,
+          "headShoulder": 1.4450685629035824
+        },
+        "binding": "headHeight",
+        "scale": 0.6469756575248091
+      },
+      "policy": "adult",
+      "heightM": 1.447106309835082,
+      "groundM": 0.00018647406250238419,
+      "ratios": {
+        "upperArmRadius": 0.13512553982625902,
+        "forearmRadius": 0.13121064328767004,
+        "thighRadius": 0.16568673101038972,
+        "calfRadius": 0.11831356904804388,
+        "torsoWidth": 0.3502837583379533,
+        "torsoDepth": 0.41050774708951643,
+        "shoeLength": 0.30188483100011243,
+        "shoeHeight": 0.21166688280857118
+      },
+      "torsoBand": [
+        0.7586015224456787,
+        0.8372030377388
+      ],
+      "shoulderY": 1.073007583618164,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "inf.firefighter",
-      "heightM": 1.5008090215804355,
-      "ratios": {
-        "upperArmRadius": 0.2041499987882401,
-        "forearmRadius": null,
-        "thighRadius": 0.2609484207011982,
-        "calfRadius": null,
-        "torsoWidth": 0.4932077779108847,
-        "torsoDepth": 0.5643565819604206,
-        "shoeLength": 0.37367838641186585,
-        "shoeHeight": 0.19007368700128982
+      "path": "public/assets/models/skinned/inf.firefighter.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.27319876415958777,
+        "forearmRadius": 0.19511378760570633,
+        "thighRadius": 0.22139084603182857,
+        "calfRadius": 0.18066736471873293,
+        "torsoWidth": 0.63534814166053,
+        "torsoDepth": 0.4521927987149822,
+        "shoeLength": 0.3927558735013008,
+        "shoeHeight": 0.275833499405142
       },
-      "groundM": 0.0002268632233608514
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.41464447017306316,
+        "headShoulder": 0.6438790056838383,
+        "legHeight": 0.27264500501404304,
+        "shoulderHeight": 0.709463401444795
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.2187636410184643,
+        "maximum": 0.29718975532347736,
+        "intervals": {
+          "headHeight": [
+            0.45394790290244375,
+            0.6005790877127
+          ],
+          "headShoulder": [
+            1.2187636410184643,
+            1.4896000056892342
+          ],
+          "legHeight": [
+            -0.013518319769102406,
+            0.29718975532347736
+          ]
+        },
+        "limits": {
+          "headHeight": 0.599788619946171,
+          "headShoulder": 1.4882458238658802
+        },
+        "binding": "headHeight",
+        "scale": 0.599788619946171
+      },
+      "policy": "adult",
+      "heightM": 1.5008090215804355,
+      "groundM": 0.0002268632233608514,
+      "ratios": {
+        "upperArmRadius": 0.1820343296390198,
+        "forearmRadius": 0.13000574010425434,
+        "thighRadius": 0.14751433583381027,
+        "calfRadius": 0.12037998314301185,
+        "torsoWidth": 0.4233371018728772,
+        "torsoDepth": 0.30129936068667684,
+        "shoeLength": 0.2616961038038717,
+        "shoeHeight": 0.18378987295443758
+      },
+      "torsoBand": [
+        0.5825461303844349,
+        0.6742642736091511
+      ],
+      "shoulderY": 0.9494187032832997,
+      "spatialFallbacks": [
+        "foreArmL",
+        "foreArmR",
+        "shinL",
+        "shinR"
+      ],
+      "absentParts": []
+    },
+    {
+      "id": "inf.bloated",
+      "path": "public/assets/models/inf.bloated.glb",
+      "dimensions": {
+        "upperArmRadius": 0.1588373908373957,
+        "forearmRadius": 0.1238307677758473,
+        "thighRadius": 0.18441846275412516,
+        "calfRadius": 0.12439444737618716,
+        "torsoWidth": 0.7296630617131702,
+        "torsoDepth": 0.9655024108157569,
+        "shoeLength": 0.34368279455047734,
+        "shoeHeight": 0.13371873198964102
+      },
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3594935517661523,
+        "headShoulder": 0.4630263497579367,
+        "legHeight": 0.35490202734208265,
+        "shoulderHeight": 0.6977971487052915
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.6947984099670172,
+        "maximum": 0.7601596049456678,
+        "intervals": {
+          "headHeight": [
+            0.5746856226627062,
+            0.7601596049456678
+          ],
+          "headShoulder": [
+            1.6947984099670172,
+            2.071420278848577
+          ],
+          "legHeight": [
+            0.3175425027264839,
+            0.7840388505704862
+          ]
+        },
+        "limits": {
+          "headHeight": 0.7591596338883804,
+          "headShoulder": 2.069537169504169
+        },
+        "binding": "headHeight",
+        "scale": 0.7591596338883804
+      },
+      "policy": "retained intentional bulk",
+      "heightM": 1.6441549931444603,
+      "groundM": -8.726438117945268e-7,
+      "ratios": {
+        "upperArmRadius": 0.09660730983373889,
+        "forearmRadius": 0.07531575082165454,
+        "thighRadius": 0.11216610570358898,
+        "calfRadius": 0.07565858930263121,
+        "torsoWidth": 0.4437921392785989,
+        "torsoDepth": 0.5872332078432736,
+        "shoeLength": 0.20903308750301033,
+        "shoeHeight": 0.08132976060480941
+      },
+      "torsoBand": [
+        0.7590471268447848,
+        0.879271476408532
+      ],
+      "shoulderY": 1.2399445250997734,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "inf.screamer",
-      "heightM": 1.4698599386789462,
-      "ratios": {
-        "upperArmRadius": null,
-        "forearmRadius": null,
-        "thighRadius": null,
-        "calfRadius": null,
-        "torsoWidth": null,
-        "torsoDepth": null,
-        "shoeLength": null,
-        "shoeHeight": null
+      "path": "public/assets/models/inf.screamer.glb",
+      "dimensions": {
+        "upperArmRadius": 0.1218599166063649,
+        "forearmRadius": 0.07788822231855766,
+        "thighRadius": 0.14315370125024685,
+        "calfRadius": 0.09018496562671478,
+        "torsoWidth": 0.43848503454562693,
+        "torsoDepth": 0.37322969032230996,
+        "shoeLength": 0.30653266422007597,
+        "shoeHeight": 0.2214454804692066
       },
-      "groundM": 0.00010381918400526047
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.4031436515476914,
+        "headShoulder": 0.6024328258883155,
+        "legHeight": 0.4049138900522053,
+        "shoulderHeight": 0.5770762042332034
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.3026121546173262,
+        "maximum": 0.6302190622018129,
+        "intervals": {
+          "headHeight": [
+            0.4763758399706048,
+            0.6302190622018129
+          ],
+          "headShoulder": [
+            1.3026121546173262,
+            1.5920815223100655
+          ],
+          "legHeight": [
+            0.655224061157743,
+            1.129830605524138
+          ]
+        },
+        "limits": {
+          "headHeight": 0.6319638348833791,
+          "headShoulder": 1.5906341754716018
+        },
+        "binding": "headHeight",
+        "scale": 0.6319638348833791
+      },
+      "policy": "adult",
+      "heightM": 1.531064723148782,
+      "groundM": 0.00010704506105199685,
+      "ratios": {
+        "upperArmRadius": 0.07959161671215849,
+        "forearmRadius": 0.050871933198469256,
+        "thighRadius": 0.09349944459293497,
+        "calfRadius": 0.05890343122872083,
+        "torsoWidth": 0.2863922262174784,
+        "torsoDepth": 0.2437713342089988,
+        "shoeLength": 0.20020882173397742,
+        "shoeHeight": 0.1446349570472649
+      },
+      "torsoBand": [
+        0.805407077026328,
+        0.8818615014666457
+      ],
+      "shoulderY": 1.111224774787599,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "inf.sprinter",
-      "heightM": 1.3833995601332307,
-      "ratios": {
-        "upperArmRadius": null,
-        "forearmRadius": null,
-        "thighRadius": null,
-        "calfRadius": null,
-        "torsoWidth": null,
-        "torsoDepth": null,
-        "shoeLength": null,
-        "shoeHeight": null
+      "path": "public/assets/models/inf.sprinter.glb",
+      "dimensions": {
+        "upperArmRadius": 0.11349933420716492,
+        "forearmRadius": 0.07085453315761431,
+        "thighRadius": 0.14722894767943634,
+        "calfRadius": 0.09212448676591034,
+        "torsoWidth": 0.39395503407744165,
+        "torsoDepth": 0.38876442306794745,
+        "shoeLength": 0.3491954427108744,
+        "shoeHeight": 0.2715683976532052
       },
-      "groundM": -7.450580596923828e-9
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.4079848557880061,
+        "headShoulder": 0.7668390182530893,
+        "legHeight": 0.35956577639987763,
+        "shoulderHeight": 0.5012869586076346
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.023339061606783,
+        "maximum": 0.6175371488917418,
+        "intervals": {
+          "headHeight": [
+            0.4667800850825809,
+            0.6175371488917418
+          ],
+          "headShoulder": [
+            1.023339061606783,
+            1.250747741963846
+          ],
+          "legHeight": [
+            0.4229636068556822,
+            0.8394158242530567
+          ]
+        },
+        "limits": {
+          "headHeight": 0.6167244299960153,
+          "headShoulder": 1.2496106985620605
+        },
+        "binding": "headHeight",
+        "scale": 0.6167244299960153
+      },
+      "policy": "adult",
+      "heightM": 1.518528746201225,
+      "groundM": -0.00000269459755336543,
+      "ratios": {
+        "upperArmRadius": 0.07474296057357928,
+        "forearmRadius": 0.046659988054138,
+        "thighRadius": 0.0969549954505284,
+        "calfRadius": 0.06066693633319118,
+        "torsoWidth": 0.259432055575481,
+        "torsoDepth": 0.2560138713478336,
+        "shoeLength": 0.2299564256418768,
+        "shoeHeight": 0.1788365207656193
+      },
+      "torsoBand": [
+        0.7323424598308892,
+        0.8174709723463633
+      ],
+      "shoulderY": 1.0728565098927856,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "inf.armored-football",
-      "heightM": 1.7648738384851221,
-      "ratios": {
-        "upperArmRadius": null,
-        "forearmRadius": null,
-        "thighRadius": null,
-        "calfRadius": null,
-        "torsoWidth": null,
-        "torsoDepth": null,
-        "shoeLength": null,
-        "shoeHeight": null
+      "path": "public/assets/models/inf.armored-football.glb",
+      "dimensions": {
+        "upperArmRadius": 0.19718558699178734,
+        "forearmRadius": 0.10515453647866474,
+        "thighRadius": 0.15066853258910162,
+        "calfRadius": 0.1026395634957281,
+        "torsoWidth": 0.47737794588405785,
+        "torsoDepth": 0.41765158662867485,
+        "shoeLength": 0.32974650492444674,
+        "shoeHeight": 0.23395129605441645
       },
-      "groundM": -1.1175870895385742e-8
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.36583814998664077,
+        "headShoulder": 0.5868624634197547,
+        "legHeight": 0.3844475859546607,
+        "shoulderHeight": 0.5704708818719492
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.3371724556547397,
+        "maximum": 0.7393255021264461,
+        "intervals": {
+          "headHeight": [
+            0.5589242215550777,
+            0.7393255021264461
+          ],
+          "headShoulder": [
+            1.3371724556547397,
+            1.6343218902446819
+          ],
+          "legHeight": [
+            0.501108285319895,
+            0.9976766163565205
+          ]
+        },
+        "limits": {
+          "headHeight": 0.73835289387074,
+          "headShoulder": 1.6328361430717322
+        },
+        "binding": "headHeight",
+        "scale": 0.73835289387074
+      },
+      "policy": "adult",
+      "heightM": 1.6277015668742931,
+      "groundM": 0.0000010452277015154943,
+      "ratios": {
+        "upperArmRadius": 0.1211435750906394,
+        "forearmRadius": 0.06460308119048815,
+        "thighRadius": 0.09256520707197777,
+        "calfRadius": 0.0630579742531236,
+        "torsoWidth": 0.2932834590807552,
+        "torsoDepth": 0.25658977980263253,
+        "shoeLength": 0.2025841294468158,
+        "shoeHeight": 0.14373107504201624
+      },
+      "torsoBand": [
+        0.784273512,
+        0.8765409839999999
+      ],
+      "shoulderY": 1.1533433999999998,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "inf.butcher",
-      "heightM": 1.7903186234578208,
-      "ratios": {
-        "upperArmRadius": null,
-        "forearmRadius": null,
-        "thighRadius": null,
-        "calfRadius": null,
-        "torsoWidth": null,
-        "torsoDepth": null,
-        "shoeLength": null,
-        "shoeHeight": null
+      "path": "public/assets/models/inf.butcher.glb",
+      "dimensions": {
+        "upperArmRadius": 0.1573649655849359,
+        "forearmRadius": 0.12242541412484717,
+        "thighRadius": 0.1843842100120115,
+        "calfRadius": 0.10587567678009635,
+        "torsoWidth": 0.5306603900279941,
+        "torsoDepth": 0.5966476620510799,
+        "shoeLength": 0.3651913778029382,
+        "shoeHeight": 0.32643444854452963
       },
-      "groundM": -7.450580596923828e-9
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3905576482475619,
+        "headShoulder": 0.4866801819912873,
+        "legHeight": 0.37390718453098937,
+        "shoulderHeight": 0.601401016800192
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.6124271141096758,
+        "maximum": 0.6646753088070335,
+        "intervals": {
+          "headHeight": [
+            0.5024462659837692,
+            0.6646753088070335
+          ],
+          "headShoulder": [
+            1.6124271141096758,
+            1.9707442505784927
+          ],
+          "legHeight": [
+            0.4752973061576733,
+            0.927683701429088
+          ]
+        },
+        "limits": {
+          "headHeight": 0.6638007176337446,
+          "headShoulder": 1.9689526648961484
+        },
+        "binding": "headHeight",
+        "scale": 0.6638007176337446
+      },
+      "policy": "adult",
+      "heightM": 1.5636515869159993,
+      "groundM": -0.0000011037122170931557,
+      "ratios": {
+        "upperArmRadius": 0.1006394051601405,
+        "forearmRadius": 0.07829456072519816,
+        "thighRadius": 0.11791898627217444,
+        "calfRadius": 0.06771052942101742,
+        "torsoWidth": 0.33937252676257584,
+        "torsoDepth": 0.3815732782440698,
+        "shoeLength": 0.2335503515352852,
+        "shoeHeight": 0.20876418460224797
+      },
+      "torsoBand": [
+        0.7629537121342669,
+        0.8528751887400552
+      ],
+      "shoulderY": 1.12263961855742,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "inf.nurse",
+      "path": "public/assets/models/skinned/inf.nurse.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.12982679760244098,
+        "forearmRadius": 0.10984560037726965,
+        "thighRadius": 0.18391199885437207,
+        "calfRadius": 0.10581209099085023,
+        "torsoWidth": 0.44817820187068524,
+        "torsoDepth": 0.34306730329990387,
+        "shoeLength": 0.4149923175573349,
+        "shoeHeight": 0.186282005161047
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.4821881956268199,
+        "headShoulder": 0.7145248024048614,
+        "legHeight": 0.28154950073248863,
+        "shoulderHeight": 0.5100649771972564
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.0982632355117867,
+        "maximum": 0.4436316001283859,
+        "intervals": {
+          "headHeight": [
+            0.3439976802441609,
+            0.4552849344621174
+          ],
+          "headShoulder": [
+            1.0982632355117867,
+            1.3423217322921839
+          ],
+          "legHeight": [
+            0.1677205717266604,
+            0.4436316001283859
+          ]
+        },
+        "limits": {
+          "headHeight": 0.45468505966701045,
+          "headShoulder": 1.341101439808282
+        },
+        "binding": "headHeight",
+        "scale": 0.45468505966701045
+      },
+      "policy": "adult",
       "heightM": 1.3267017498601756,
+      "groundM": -0.0000020244387997081503,
       "ratios": {
         "upperArmRadius": 0.09785680739180735,
-        "forearmRadius": 0.08279600173049186,
-        "thighRadius": 0.21348300985587643,
-        "calfRadius": 0.084924711552188,
-        "torsoWidth": 0.32847804797877145,
-        "torsoDepth": 0.2878739482439491,
-        "shoeLength": 0.3367158625118637,
-        "shoeHeight": 0.15667246726724554
+        "forearmRadius": 0.08279600173049184,
+        "thighRadius": 0.13862346897013966,
+        "calfRadius": 0.07975574842047357,
+        "torsoWidth": 0.3378138318713455,
+        "torsoDepth": 0.25858660647433424,
+        "shoeLength": 0.31280000768904687,
+        "shoeHeight": 0.14040985864432584
       },
-      "groundM": -0.0000020244387997081503
+      "torsoBand": [
+        0.5850417852401734,
+        0.66329585313797
+      ],
+      "shoulderY": 0.8980580568313599,
+      "spatialFallbacks": [],
+      "absentParts": []
+    },
+    {
+      "id": "inf.brute",
+      "path": "public/assets/models/inf.brute.glb",
+      "dimensions": {
+        "upperArmRadius": 0.2732846253633051,
+        "forearmRadius": 0.22323921445622044,
+        "thighRadius": 0.23466504732631316,
+        "calfRadius": 0.19365290319335463,
+        "torsoWidth": 0.7793897396661871,
+        "torsoDepth": 0.7477053977727035,
+        "shoeLength": 0.434080467425904,
+        "shoeHeight": 0.26338895194685463
+      },
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.2690546708406687,
+        "headShoulder": 0.3081109518097606,
+        "legHeight": 0.38109052148820943,
+        "shoulderHeight": 0.7686143531180722
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 2.5469277113755733,
+        "maximum": 0.964413413066459,
+        "intervals": {
+          "headHeight": [
+            0.8815957017691749,
+            1.165112542566881
+          ],
+          "headShoulder": [
+            2.5469277113755733,
+            3.112911647236812
+          ],
+          "legHeight": [
+            0.2951170209840055,
+            0.964413413066459
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 3.110081727557506
+        },
+        "binding": "headHeight",
+        "scale": 0.9999999999999964
+      },
+      "policy": "retained intentional bulk",
+      "heightM": 2.2042301534886803,
+      "groundM": -0.000011241191369748549,
+      "ratios": {
+        "upperArmRadius": 0.12398189224059562,
+        "forearmRadius": 0.10127763387271295,
+        "thighRadius": 0.10646122727016685,
+        "calfRadius": 0.08785511934262227,
+        "torsoWidth": 0.3535881851686998,
+        "torsoDepth": 0.339213850508893,
+        "shoeLength": 0.19693064571268837,
+        "shoeHeight": 0.11949249107675236
+      },
+      "torsoBand": [
+        0.9859999895095826,
+        1.1320000052452088
+      ],
+      "shoulderY": 1.5700000524520874,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "npc.civilian-adult-m",
-      "heightM": 1.6884443358519219,
-      "ratios": {
-        "upperArmRadius": 0.06277457970037674,
-        "forearmRadius": 0.06627949022206264,
-        "thighRadius": 0.10074423271275967,
-        "calfRadius": 0.09918842919584704,
-        "torsoWidth": 0.35468722469273434,
-        "torsoDepth": 0.1834867113972159,
-        "shoeLength": 0.20058935113699336,
-        "shoeHeight": 0.15138011351974393
+      "path": "public/assets/models/skinned/npc.civilian-man-a.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.06966670146959632,
+        "forearmRadius": 0.1041913204443877,
+        "thighRadius": 0.13613108741632035,
+        "calfRadius": 0.1628006034353779,
+        "torsoWidth": 0.5381316696655594,
+        "torsoDepth": 0.2235710635562877,
+        "shoeLength": 0.3262021752333635,
+        "shoeHeight": 0.23172818971069967
       },
-      "groundM": -0.0000029167530685182255
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.29223126467498384,
+        "headShoulder": 1.1380749448398177,
+        "legHeight": 0.4156007954001798,
+        "shoulderHeight": 0.3174938154821244
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": true,
+        "minimum": 0.7844045609957483,
+        "maximum": 0.8427583568890702,
+        "intervals": {
+          "headHeight": [
+            0.7844045609957483,
+            1.0374312243602952
+          ],
+          "headShoulder": [
+            0.689529564727421,
+            0.8427583568890702
+          ],
+          "legHeight": [
+            0.6021312843694272,
+            1.2741487573492918
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 0.8419922129282619
+        },
+        "binding": "headShoulder",
+        "scale": 0.8419922129282619
+      },
+      "policy": "adult",
+      "heightM": 1.6884443358519219,
+      "groundM": -0.0000029167530685182255,
+      "ratios": {
+        "upperArmRadius": 0.0412608813866791,
+        "forearmRadius": 0.061708472249881366,
+        "thighRadius": 0.08062515566889211,
+        "calfRadius": 0.09642047414801813,
+        "torsoWidth": 0.3187144866070101,
+        "torsoDepth": 0.13241245731887433,
+        "shoeLength": 0.19319687851526052,
+        "shoeHeight": 0.13724360631277716
+      },
+      "torsoBand": [
+        0.8511743821307405,
+        0.9542708293440626
+      ],
+      "shoulderY": 1.2635601709840287,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "npc.civilian-adult-f",
-      "heightM": 1.6916447426427847,
-      "ratios": {
-        "upperArmRadius": 0.07317165457598057,
-        "forearmRadius": 0.08635674293710591,
-        "thighRadius": 0.1378553792999063,
-        "calfRadius": 0.08743660065517245,
-        "torsoWidth": 0.5004290129651315,
-        "torsoDepth": 0.3390250032857289,
-        "shoeLength": 0.2630228659181233,
-        "shoeHeight": 0.14036626755106824
+      "path": "public/assets/models/skinned/npc.civilian-woman-a.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.12378044897814523,
+        "forearmRadius": 0.1460849301813096,
+        "thighRadius": 0.18956078592953632,
+        "calfRadius": 0.1305759690852745,
+        "torsoWidth": 0.6307255480178355,
+        "torsoDepth": 0.32877560754697677,
+        "shoeLength": 0.4205113602014553,
+        "shoeHeight": 0.2149675458949284
       },
-      "groundM": 0.0000012315253186302998
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.34119111802370516,
+        "headShoulder": 0.8697319634564472,
+        "legHeight": 0.4808865171583422,
+        "shoulderHeight": 0.4234536071412418
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.0661018868119556,
+        "maximum": 0.8246529339697247,
+        "intervals": {
+          "headHeight": [
+            0.6234732425347235,
+            0.8246529339697247
+          ],
+          "headShoulder": [
+            0.9022737513565923,
+            1.102779029435835
+          ],
+          "legHeight": [
+            1.0661018868119556,
+            1.7321042288996296
+          ]
+        },
+        "limits": {
+          "headHeight": 0.8235682394448709,
+          "headShoulder": 1.1017765030454387
+        },
+        "binding": "headHeight",
+        "scale": 0.8235682394448709
+      },
+      "policy": "adult",
+      "heightM": 1.6916447426428314,
+      "groundM": 0.0000012315253186302998,
+      "ratios": {
+        "upperArmRadius": 0.07317165706126032,
+        "forearmRadius": 0.0863567429371035,
+        "thighRadius": 0.1120570892641373,
+        "calfRadius": 0.07718876534400337,
+        "torsoWidth": 0.3728475205925698,
+        "torsoDepth": 0.19435263164849584,
+        "shoeLength": 0.2485813655794518,
+        "shoeHeight": 0.12707605827396584
+      },
+      "torsoBand": [
+        0.932043835187838,
+        0.9984911093757859
+      ],
+      "shoulderY": 1.1978329319396295,
+      "spatialFallbacks": [],
+      "absentParts": []
+    },
+    {
+      "id": "npc.civilian-kid",
+      "path": "public/assets/models/skinned/npc.civilian-kid.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.12115501879194286,
+        "forearmRadius": 0.1379133494080906,
+        "thighRadius": 0.1736425199014737,
+        "calfRadius": 0.1685939969912774,
+        "torsoWidth": 0.46316979825496674,
+        "torsoDepth": 0.4427413046360016,
+        "shoeLength": 0.34822895377874374,
+        "shoeHeight": 0.19623599434271455
+      },
+      "crowdSkin": true,
+      "child": true,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3992090544577927,
+        "headShoulder": 1.129384716094456,
+        "legHeight": 0.4408565558209677,
+        "shoulderHeight": 0.33612219263555587
+      },
+      "plan": {
+        "binding": "child-proportions-retained",
+        "scale": 1
+      },
+      "policy": "child",
+      "heightM": 1.4744024276733398,
+      "groundM": 0,
+      "ratios": {
+        "upperArmRadius": 0.08217228656027774,
+        "forearmRadius": 0.09353847146448534,
+        "thighRadius": 0.11777145550111977,
+        "calfRadius": 0.11434734087987415,
+        "torsoWidth": 0.31414069155180746,
+        "torsoDepth": 0.3002852520628736,
+        "shoeLength": 0.23618311204781559,
+        "shoeHeight": 0.13309527348810868
+      },
+      "torsoBand": [
+        0.7135999798774719,
+        0.7771999835968018
+      ],
+      "shoulderY": 0.9679999947547913,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "npc.civilian-elderly",
-      "heightM": 1.3253463901559706,
-      "ratios": {
-        "upperArmRadius": null,
-        "forearmRadius": 0.10408912672278339,
-        "thighRadius": 0.1229654797285436,
-        "calfRadius": 0.10122147350514242,
-        "torsoWidth": 0.3537666054784211,
-        "torsoDepth": 0.23655803706719375,
-        "shoeLength": 0.23030337750082341,
-        "shoeHeight": 0.12232670707221927
+      "path": "public/assets/models/skinned/npc.civilian-elderly.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.16649555226067428,
+        "forearmRadius": 0.12470311162062962,
+        "thighRadius": 0.12550099155697186,
+        "calfRadius": 0.12892648515555266,
+        "torsoWidth": 0.4336197227239609,
+        "torsoDepth": 0.266780748963356,
+        "shoeLength": 0.29287296533584595,
+        "shoeHeight": 0.1558271156391129
       },
-      "groundM": 0
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.31246777791761743,
+        "headShoulder": 1.0486083329130331,
+        "legHeight": 0.43388132396098966,
+        "shoulderHeight": 0.304527681989505
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": true,
+        "minimum": 0.7523005293850039,
+        "maximum": 0.9146619766651894,
+        "intervals": {
+          "headHeight": [
+            0.710711228172453,
+            0.9410782219008226
+          ],
+          "headShoulder": [
+            0.7483597990897004,
+            0.9146619766651894
+          ],
+          "legHeight": [
+            0.7523005293850039,
+            1.408440644392537
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9398357274083935,
+          "headShoulder": 0.913830465777312
+        },
+        "binding": "headShoulder",
+        "scale": 0.913830465777312
+      },
+      "policy": "adult",
+      "heightM": 1.3253463901559706,
+      "groundM": 0,
+      "ratios": {
+        "upperArmRadius": 0.12562417908051993,
+        "forearmRadius": 0.09409095806716175,
+        "thighRadius": 0.09469297422102801,
+        "calfRadius": 0.09727757672496488,
+        "torsoWidth": 0.3271746359628529,
+        "torsoDepth": 0.20129133858504755,
+        "shoeLength": 0.22097843062852407,
+        "shoeHeight": 0.11757463316497561
+      },
+      "torsoBand": [
+        0.6865999937057495,
+        0.7661999940872193
+      ],
+      "shoulderY": 1.0049999952316284,
+      "spatialFallbacks": [
+        "armR"
+      ],
+      "absentParts": []
     },
     {
       "id": "npc.patient-zero-courier",
-      "heightM": 1.3747563327135963,
-      "ratios": {
-        "upperArmRadius": null,
-        "forearmRadius": null,
-        "thighRadius": null,
-        "calfRadius": null,
-        "torsoWidth": null,
-        "torsoDepth": null,
-        "shoeLength": null,
-        "shoeHeight": null
+      "path": "public/assets/models/npc.patient-zero-courier.glb",
+      "dimensions": {
+        "upperArmRadius": 0.11639430959799282,
+        "forearmRadius": 0.06843795849093207,
+        "thighRadius": 0.1595705793487252,
+        "calfRadius": 0.09949276091761616,
+        "torsoWidth": 0.4963717423362463,
+        "torsoDepth": 0.6578094275108534,
+        "shoeLength": 0.3009479398962387,
+        "shoeHeight": 0.2072424912372564
       },
-      "groundM": 0
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.31811787308858624,
+        "headShoulder": 0.7507383614921842,
+        "legHeight": 0.47943235145265845,
+        "shoulderHeight": 0.40533137671041947
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.0611762229781256,
+        "maximum": 0.9166657656381366,
+        "intervals": {
+          "headHeight": [
+            0.6930713013120816,
+            0.9166657656381366
+          ],
+          "headShoulder": [
+            1.0452860298530955,
+            1.2775718142648944
+          ],
+          "legHeight": [
+            1.0611762229781256,
+            1.7733240260267327
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9154601432921297,
+          "headShoulder": 1.2764103853428355
+        },
+        "binding": "headHeight",
+        "scale": 0.9154601432921297
+      },
+      "policy": "adult",
+      "heightM": 1.7515845355430666,
+      "groundM": 0.000002091291137207296,
+      "ratios": {
+        "upperArmRadius": 0.06645086619350951,
+        "forearmRadius": 0.039072027128689714,
+        "thighRadius": 0.09110070117126917,
+        "calfRadius": 0.056801575315786355,
+        "torsoWidth": 0.2833844055276211,
+        "torsoDepth": 0.3755510591482267,
+        "shoeLength": 0.17181468195763208,
+        "shoeHeight": 0.11831715057532312
+      },
+      "torsoBand": [
+        0.9403591905576382,
+        1.0177414627141053
+      ],
+      "shoulderY": 1.2498882791835069,
+      "spatialFallbacks": [],
+      "absentParts": []
+    },
+    {
+      "id": "npc.brother",
+      "path": "public/assets/models/npc.brother.glb",
+      "dimensions": {
+        "upperArmRadius": 0.08163660789578707,
+        "forearmRadius": 0.0806682617759204,
+        "thighRadius": 0.12996357506149048,
+        "calfRadius": 0.06178251918127704,
+        "torsoWidth": 0.3209176149435172,
+        "torsoDepth": 0.5184551819760588,
+        "shoeLength": 0.2291445448573073,
+        "shoeHeight": 0.16701751162666975
+      },
+      "crowdSkin": false,
+      "child": true,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3444821400521776,
+        "headShoulder": 0.7145372513746556,
+        "legHeight": 0.399567491902445,
+        "shoulderHeight": 0.4163645842196851
+      },
+      "plan": {
+        "binding": "child-proportions-retained",
+        "scale": 1
+      },
+      "policy": "child",
+      "heightM": 1.4265436404311485,
+      "groundM": -4.716490147188557e-7,
+      "ratios": {
+        "upperArmRadius": 0.057226856285387664,
+        "forearmRadius": 0.05654805046941277,
+        "thighRadius": 0.09110382001507589,
+        "calfRadius": 0.0433092387994554,
+        "torsoWidth": 0.2249616526603598,
+        "torsoDepth": 0.36343450510870073,
+        "shoeLength": 0.16062918677205856,
+        "shoeHeight": 0.1170784453367242
+      },
+      "torsoBand": [
+        0.6411999940872193,
+        0.7123999953269958
+      ],
+      "shoulderY": 0.9259999990463257,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "npc.mrs-alvarez",
-      "heightM": 1.3615951046329418,
-      "ratios": {
-        "upperArmRadius": null,
-        "forearmRadius": null,
-        "thighRadius": null,
-        "calfRadius": null,
-        "torsoWidth": null,
-        "torsoDepth": null,
-        "shoeLength": null,
-        "shoeHeight": null
+      "path": "public/assets/models/npc.mrs-alvarez.glb",
+      "dimensions": {
+        "upperArmRadius": 0.04131174587881516,
+        "forearmRadius": 0.10488582908624068,
+        "thighRadius": 0.11384931804680352,
+        "calfRadius": 0.10709869282085613,
+        "torsoWidth": 0.43908340836154197,
+        "torsoDepth": 0.5708352900749418,
+        "shoeLength": 0.3132110480891789,
+        "shoeHeight": 0.21699054589214395
       },
-      "groundM": -0.000004902482032775879
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.34051479525908335,
+        "headShoulder": 0.7557693174670375,
+        "legHeight": 0.393360274446021,
+        "shoulderHeight": 0.45014894637584174
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.038327837881311,
+        "maximum": 0.8271705263866279,
+        "intervals": {
+          "headHeight": [
+            0.6253776541266951,
+            0.8271705263866279
+          ],
+          "headShoulder": [
+            1.038327837881311,
+            1.2690673574104914
+          ],
+          "legHeight": [
+            0.5196633090969958,
+            1.0655284793152746
+          ]
+        },
+        "limits": {
+          "headHeight": 0.8260825239474876,
+          "headShoulder": 1.2679136598128453
+        },
+        "binding": "headHeight",
+        "scale": 0.8260825239474876
+      },
+      "policy": "adult",
+      "heightM": 1.6934013392888914,
+      "groundM": -0.000008501649911563103,
+      "ratios": {
+        "upperArmRadius": 0.024395720565665295,
+        "forearmRadius": 0.061937962757420105,
+        "thighRadius": 0.06723114917023283,
+        "calfRadius": 0.06324471956885896,
+        "torsoWidth": 0.25929081203273757,
+        "torsoDepth": 0.3370939167407605,
+        "shoeLength": 0.18495972621629397,
+        "shoeHeight": 0.1281388769795497
+      },
+      "torsoBand": [
+        0.8061718404467457,
+        0.9043036946782226
+      ],
+      "shoulderY": 1.198699257372653,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "npc.police-officer",
-      "heightM": 1.4179394245147705,
-      "ratios": {
-        "upperArmRadius": 0.0806110919261292,
-        "forearmRadius": 0.08948983452945804,
-        "thighRadius": 0.1701254905673787,
-        "calfRadius": 0.08393597818437369,
-        "torsoWidth": 0.35821829523769655,
-        "torsoDepth": 0.2721884511193289,
-        "shoeLength": 0.24516487630709155,
-        "shoeHeight": 0.12408701792368901
+      "path": "public/assets/models/skinned/npc.police-officer.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.11280521850356462,
+        "forearmRadius": 0.12689116447262178,
+        "thighRadius": 0.17036546154683005,
+        "calfRadius": 0.11215601885566968,
+        "torsoWidth": 0.4356631636619568,
+        "torsoDepth": 0.34925176948308945,
+        "shoeLength": 0.3404570147395134,
+        "shoeHeight": 0.15939387865364552
       },
-      "groundM": 0
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.2728284225919493,
+        "headShoulder": 0.6560110840010298,
+        "legHeight": 0.45135918688056653,
+        "shoulderHeight": 0.45833150476294243
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.196224180476425,
+        "maximum": 1,
+        "intervals": {
+          "headHeight": [
+            0.8638794779921232,
+            1.143767979423699
+          ],
+          "headShoulder": [
+            1.196224180476425,
+            1.462051776137853
+          ],
+          "legHeight": [
+            0.8525325549126329,
+            1.6342747375839792
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 1.4607226381595457
+        },
+        "binding": "headHeight",
+        "scale": 0.9999999999999964
+      },
+      "policy": "adult",
+      "heightM": 1.4179394245147705,
+      "groundM": 0,
+      "ratios": {
+        "upperArmRadius": 0.07955573880891803,
+        "forearmRadius": 0.08948983452945804,
+        "thighRadius": 0.12015002799229621,
+        "calfRadius": 0.07909789157181402,
+        "torsoWidth": 0.30725089953052404,
+        "torsoDepth": 0.24630937220932836,
+        "shoeLength": 0.24010688246151302,
+        "shoeHeight": 0.11241233292331321
+      },
+      "torsoBand": [
+        0.7129999876022339,
+        0.7859999895095825
+      ],
+      "shoulderY": 1.0049999952316284,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "npc.paramedic",
-      "heightM": 1.431420560926199,
-      "ratios": {
-        "upperArmRadius": null,
-        "forearmRadius": null,
-        "thighRadius": null,
-        "calfRadius": null,
-        "torsoWidth": null,
-        "torsoDepth": null,
-        "shoeLength": null,
-        "shoeHeight": null
+      "path": "public/assets/models/npc.paramedic.glb",
+      "dimensions": {
+        "upperArmRadius": 0.10244695348325504,
+        "forearmRadius": 0.05526948393043825,
+        "thighRadius": 0.18379339155384677,
+        "calfRadius": 0.11528263824575494,
+        "torsoWidth": 0.42877606776608035,
+        "torsoDepth": 0.5085228049557847,
+        "shoeLength": 0.28204869695805534,
+        "shoeHeight": 0.2222051580630734
       },
-      "groundM": 3.725290298461914e-9
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.2960997526576288,
+        "headShoulder": 0.7560492702117934,
+        "legHeight": 0.45409558104465947,
+        "shoulderHeight": 0.43381338469099556
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.0379433619752767,
+        "maximum": 1,
+        "intervals": {
+          "headHeight": [
+            0.7697280394556396,
+            1.0180238469948444
+          ],
+          "headShoulder": [
+            1.0379433619752767,
+            1.268597442414227
+          ],
+          "legHeight": [
+            0.8837734152157921,
+            1.6084431165779491
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 1.2674441720120322
+        },
+        "binding": "headHeight",
+        "scale": 0.9999999999999964
+      },
+      "policy": "adult",
+      "heightM": 1.79999998758037,
+      "groundM": -8.165283957722869e-7,
+      "ratios": {
+        "upperArmRadius": 0.056914974550065535,
+        "forearmRadius": 0.030705269062103517,
+        "thighRadius": 0.10210744045665744,
+        "calfRadius": 0.06404591057843413,
+        "torsoWidth": 0.23820892818030392,
+        "torsoDepth": 0.28251267136915975,
+        "shoeLength": 0.15669372161340744,
+        "shoeHeight": 0.12344731088680184
+      },
+      "torsoBand": [
+        0.9066533218559608,
+        0.9959354176929207
+      ],
+      "shoulderY": 1.2637817052038,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "npc.firefighter-alive",
+      "path": "public/assets/models/skinned/npc.firefighter-alive.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.12733104563574613,
+        "forearmRadius": 0.15734534229675018,
+        "thighRadius": 0.16103475089290317,
+        "calfRadius": 0.1640562521108464,
+        "torsoWidth": 0.3899114578962326,
+        "torsoDepth": 0.37939654290676117,
+        "shoeLength": 0.28174518048763275,
+        "shoeHeight": 0.12004021822940558
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.35638140224756365,
+        "headShoulder": 1.0186696271025892,
+        "legHeight": 0.3982705930703959,
+        "shoulderHeight": 0.35110707392376417
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 0.7703540976033765,
+        "maximum": 0.7700411894274494,
+        "intervals": {
+          "headHeight": [
+            0.5815916130917279,
+            0.7700411894274494
+          ],
+          "headShoulder": [
+            0.7703540976033765,
+            0.9415438970707936
+          ],
+          "legHeight": [
+            0.5703465854633517,
+            1.0984197292644249
+          ]
+        },
+        "limits": {
+          "headHeight": 0.7690249716197677,
+          "headShoulder": 0.9406879480734565
+        },
+        "binding": "headHeight",
+        "scale": 0.7690249716197677
+      },
+      "policy": "adult",
       "heightM": 1.3359020752138895,
+      "groundM": 0.00022515654563903809,
       "ratios": {
         "upperArmRadius": 0.09531465516689112,
-        "forearmRadius": 0.1351036642052919,
-        "thighRadius": 0.20914316694261673,
-        "calfRadius": 0.13035895054497057,
-        "torsoWidth": 0.39888926596718793,
-        "torsoDepth": 0.37805515709826676,
-        "shoeLength": 0.22143181487024075,
-        "shoeHeight": 0.09923126158441366
+        "forearmRadius": 0.11778209287649907,
+        "thighRadius": 0.1205438286837904,
+        "calfRadius": 0.1228055971726667,
+        "torsoWidth": 0.2918712869233356,
+        "torsoDepth": 0.28400026464964995,
+        "shoeLength": 0.21090256966815693,
+        "shoeHeight": 0.08985704899828538
       },
-      "groundM": 0.00022515654563903809
+      "torsoBand": [
+        0.6503999829292297,
+        0.72079998254776
+      ],
+      "shoulderY": 0.9319999814033508,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "npc.national-guard",
+      "path": "public/assets/models/skinned/npc.national-guard.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.08988634779135159,
+        "forearmRadius": 0.11986256551809689,
+        "thighRadius": 0.12169648891489442,
+        "calfRadius": 0.1293394296221464,
+        "torsoWidth": 0.40246695280075073,
+        "torsoDepth": 0.5285496492378399,
+        "shoeLength": 0.2882493808865547,
+        "shoeHeight": 0.16538511228282005
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.30401558864342676,
+        "headShoulder": 0.9620507776009626,
+        "legHeight": 0.44798386664783746,
+        "shoulderHeight": 0.39805563764056323
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": true,
+        "minimum": 0.8440521898335772,
+        "maximum": 0.9798020513362077,
+        "intervals": {
+          "headHeight": [
+            0.7400466494114991,
+            0.9798020513362077
+          ],
+          "headShoulder": [
+            0.8156911668420006,
+            0.9969558705846675
+          ],
+          "legHeight": [
+            0.8440521898335772,
+            1.540353790642368
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9785089098858393,
+          "headShoulder": 0.996049547065954
+        },
+        "binding": "headHeight",
+        "scale": 0.9785089098858393
+      },
+      "policy": "adult",
       "heightM": 1.3879370011779568,
+      "groundM": 1.862645149230957e-9,
       "ratios": {
         "upperArmRadius": 0.06476255602024018,
-        "forearmRadius": 0.10005924047407523,
-        "thighRadius": 0.12142803453023686,
-        "calfRadius": 0.09960688534489033,
-        "torsoWidth": 0.3359045106559479,
-        "torsoDepth": 0.3306239564792605,
-        "shoeLength": 0.2191571056917156,
-        "shoeHeight": 0.12594561653797542
+        "forearmRadius": 0.08636023495041076,
+        "thighRadius": 0.08768156538200893,
+        "calfRadius": 0.09318825675255768,
+        "torsoWidth": 0.2899749429975372,
+        "torsoDepth": 0.3808167436917196,
+        "shoeLength": 0.20768189092294131,
+        "shoeHeight": 0.11915894751883979
       },
-      "groundM": 1.862645149230957e-9
+      "torsoBand": [
+        0.7129999876022339,
+        0.7859999895095825
+      ],
+      "shoulderY": 1.0049999952316284,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "npc.survivor-group",
-      "heightM": 1.4264411159547685,
-      "ratios": {
-        "upperArmRadius": null,
-        "forearmRadius": null,
-        "thighRadius": null,
-        "calfRadius": null,
-        "torsoWidth": null,
-        "torsoDepth": null,
-        "shoeLength": null,
-        "shoeHeight": null
+      "rootName": "survivor01_root",
+      "path": "public/assets/models/npc.survivor-group.glb",
+      "dimensions": {
+        "upperArmRadius": 0.09050744510862622,
+        "forearmRadius": 0.05334566740614665,
+        "thighRadius": 0.12998139766381522,
+        "calfRadius": 0.09529753785749327,
+        "torsoWidth": 0.41321773560346675,
+        "torsoDepth": 0.38516831196409745,
+        "shoeLength": 0.2830391893272667,
+        "shoeHeight": 0.19350650482297121
       },
-      "groundM": -5.587935447692871e-8
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3105310997783507,
+        "headShoulder": 0.6268136995371749,
+        "legHeight": 0.4204195069804556,
+        "shoulderHeight": 0.3892402534484519
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.2519450706358441,
+        "maximum": 0.9499465974428375,
+        "intervals": {
+          "headHeight": [
+            0.7182426170593778,
+            0.9499465974428375
+          ],
+          "headShoulder": [
+            1.2519450706358441,
+            1.5301550863326985
+          ],
+          "legHeight": [
+            0.6585745938975104,
+            1.2983221416659931
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9486972205260251,
+          "headShoulder": 1.528764036254214
+        },
+        "binding": "headHeight",
+        "scale": 0.9486972205260251
+      },
+      "policy": "adult",
+      "heightM": 1.771310908337706,
+      "groundM": 0.0000017857452255382045,
+      "ratios": {
+        "upperArmRadius": 0.05109630651660318,
+        "forearmRadius": 0.030116490083725113,
+        "thighRadius": 0.07338146965164732,
+        "calfRadius": 0.05380057075746551,
+        "torsoWidth": 0.23328357187798984,
+        "torsoDepth": 0.21744816799302627,
+        "shoeLength": 0.159790801261923,
+        "shoeHeight": 0.10924479938113642
+      },
+      "torsoBand": [
+        0.8485539208496856,
+        0.940356537152791
+      ],
+      "shoulderY": 1.215764386062107,
+      "spatialFallbacks": [],
+      "absentParts": []
+    },
+    {
+      "id": "npc.survivor-group",
+      "rootName": "survivor02_root",
+      "path": "public/assets/models/npc.survivor-group.glb",
+      "dimensions": {
+        "upperArmRadius": 0.09050747819204574,
+        "forearmRadius": 0.05334568574609629,
+        "thighRadius": 0.09580049417371858,
+        "calfRadius": 0.09529772828204823,
+        "torsoWidth": 0.34687219393016444,
+        "torsoDepth": 0.3830914981944695,
+        "shoeLength": 0.28296375858437817,
+        "shoeHeight": 0.19347437497829056
+      },
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3105378991793334,
+        "headShoulder": 0.6263835032450359,
+        "legHeight": 0.42041764482253985,
+        "shoulderHeight": 0.3893897944249643
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.2528048987196923,
+        "maximum": 0.949916039021456,
+        "intervals": {
+          "headHeight": [
+            0.7182195317151671,
+            0.949916039021456
+          ],
+          "headShoulder": [
+            1.2528048987196923,
+            1.5312059873240684
+          ],
+          "legHeight": [
+            0.6585693185672691,
+            1.298300025143065
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9486667024368884,
+          "headShoulder": 1.5298139818810463
+        },
+        "binding": "headHeight",
+        "scale": 0.9486667024368884
+      },
+      "policy": "adult",
+      "heightM": 1.771309423695286,
+      "groundM": -0.0000017856988018954967,
+      "ratios": {
+        "upperArmRadius": 0.05109636802091305,
+        "forearmRadius": 0.030116525680085368,
+        "thighRadius": 0.05408456190215522,
+        "calfRadius": 0.05380072335596746,
+        "torsoWidth": 0.19582811974574355,
+        "torsoDepth": 0.21627587651810054,
+        "shoeLength": 0.159748350457066,
+        "shoeHeight": 0.10922675191027126
+      },
+      "torsoBand": [
+        0.8485539356385026,
+        0.9403565667304248
+      ],
+      "shoulderY": 1.2157644600061916,
+      "spatialFallbacks": [],
+      "absentParts": []
+    },
+    {
+      "id": "npc.survivor-group",
+      "rootName": "survivor03_root",
+      "path": "public/assets/models/npc.survivor-group.glb",
+      "dimensions": {
+        "upperArmRadius": 0.09050748738762383,
+        "forearmRadius": 0.053345674703834715,
+        "thighRadius": 0.1316210492610092,
+        "calfRadius": 0.09529754550461367,
+        "torsoWidth": 0.3720360512310852,
+        "torsoDepth": 0.3784403976220707,
+        "shoeLength": 0.2829637498880862,
+        "shoeHeight": 0.19350649887595833
+      },
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.29728995761369165,
+        "headShoulder": 0.627207742108554,
+        "legHeight": 0.4284954272717915,
+        "shoulderHeight": 0.3963378864545641
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.2511585375276904,
+        "maximum": 1,
+        "intervals": {
+          "headHeight": [
+            0.7652338214383797,
+            1.0121589793975958
+          ],
+          "headShoulder": [
+            1.2511585375276904,
+            1.5291937680893994
+          ],
+          "legHeight": [
+            0.7011314037733399,
+            1.382209361774263
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 1.5278035919365907
+        },
+        "binding": "headHeight",
+        "scale": 0.9999999999999964
+      },
+      "policy": "adult",
+      "heightM": 1.7660704016187816,
+      "groundM": -0.0000017889715278884832,
+      "ratios": {
+        "upperArmRadius": 0.05124794985786784,
+        "forearmRadius": 0.030205859661618262,
+        "thighRadius": 0.07452763442519915,
+        "calfRadius": 0.053960218922905825,
+        "torsoWidth": 0.21065754280807641,
+        "torsoDepth": 0.2142838684546165,
+        "shoeLength": 0.16022223668361205,
+        "shoeHeight": 0.10956896095341959
+      },
+      "torsoBand": [
+        0.8485539356385026,
+        0.9403565667304248
+      ],
+      "shoulderY": 1.2157644600061916,
+      "spatialFallbacks": [],
+      "absentParts": []
+    },
+    {
+      "id": "npc.survivor-group",
+      "rootName": "survivor04_root",
+      "path": "public/assets/models/npc.survivor-group.glb",
+      "dimensions": {
+        "upperArmRadius": 0.09050747864077276,
+        "forearmRadius": 0.05334571489190984,
+        "thighRadius": 0.09580048563939939,
+        "calfRadius": 0.09529396060385532,
+        "torsoWidth": 0.3613377409066716,
+        "torsoDepth": 0.39389460434301504,
+        "shoeLength": 0.283071406496635,
+        "shoeHeight": 0.19454827581255268
+      },
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.30722406513093825,
+        "headShoulder": 0.6302410665477207,
+        "legHeight": 0.422437041952565,
+        "shoulderHeight": 0.3890296386659056
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.2451367627329382,
+        "maximum": 0.96497246825817,
+        "intervals": {
+          "headHeight": [
+            0.7295927053195729,
+            0.96497246825817
+          ],
+          "headShoulder": [
+            1.2451367627329382,
+            1.5218338211180356
+          ],
+          "legHeight": [
+            0.6688633879618383,
+            1.3186004408432843
+          ]
+        },
+        "limits": {
+          "headHeight": 0.963703252414259,
+          "headShoulder": 1.5204503358261099
+        },
+        "binding": "headHeight",
+        "scale": 0.963703252414259
+      },
+      "policy": "adult",
+      "heightM": 1.7714135208922814,
+      "groundM": 0.0000019303555915256565,
+      "ratios": {
+        "upperArmRadius": 0.05109336559381295,
+        "forearmRadius": 0.03011477233449081,
+        "thighRadius": 0.054081378802586746,
+        "calfRadius": 0.05379543482080607,
+        "torsoWidth": 0.20398271586222375,
+        "torsoDepth": 0.22236174653595608,
+        "shoeLength": 0.15979973233694675,
+        "shoeHeight": 0.10982657268787047
+      },
+      "torsoBand": [
+        0.8485539356385026,
+        0.9403565667304248
+      ],
+      "shoulderY": 1.2157644600061916,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "npc.helicopter-pilot",
-      "heightM": 1.3543891450472718,
-      "ratios": {
-        "upperArmRadius": null,
-        "forearmRadius": null,
-        "thighRadius": null,
-        "calfRadius": null,
-        "torsoWidth": null,
-        "torsoDepth": null,
-        "shoeLength": null,
-        "shoeHeight": null
+      "path": "public/assets/models/npc.helicopter-pilot.glb",
+      "dimensions": {
+        "upperArmRadius": 0.10659853113358349,
+        "forearmRadius": 0.07693632155752012,
+        "thighRadius": 0.09994683496614624,
+        "calfRadius": 0.10081464167597054,
+        "torsoWidth": 0.562767142919898,
+        "torsoDepth": 0.4118934035268278,
+        "shoeLength": 0.2978608058412811,
+        "shoeHeight": 0.21327011871103546
       },
-      "groundM": 0
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3279591443291706,
+        "headShoulder": 0.9107710356937002,
+        "legHeight": 0.4102669051568828,
+        "shoulderHeight": 0.40230804698515055
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": true,
+        "minimum": 0.8616175642266433,
+        "maximum": 0.875817366156564,
+        "intervals": {
+          "headHeight": [
+            0.6621748478021587,
+            0.875817366156564
+          ],
+          "headShoulder": [
+            0.8616175642266433,
+            1.0530881340547864
+          ],
+          "legHeight": [
+            0.6108917126575653,
+            1.2020143801649106
+          ]
+        },
+        "limits": {
+          "headHeight": 0.8746654364620312,
+          "headShoulder": 1.0521307812056455
+        },
+        "binding": "headHeight",
+        "scale": 0.8746654364620312
+      },
+      "policy": "adult",
+      "heightM": 1.7266908404601078,
+      "groundM": -5.730482361826494e-7,
+      "ratios": {
+        "upperArmRadius": 0.061735736725850934,
+        "forearmRadius": 0.04455709137660049,
+        "thighRadius": 0.057883456971089056,
+        "calfRadius": 0.058386040693368516,
+        "torsoWidth": 0.3259223537491741,
+        "torsoDepth": 0.23854496350781093,
+        "shoeLength": 0.17250384310946523,
+        "shoeHeight": 0.12351378354112645
+      },
+      "torsoBand": [
+        0.8372832361168662,
+        0.936086737427505
+      ],
+      "shoulderY": 1.2324972413594217,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "npc.civilian-man-a",
-      "heightM": 1.6884443358519219,
-      "ratios": {
-        "upperArmRadius": 0.06277457970044649,
-        "forearmRadius": 0.06627949022206264,
-        "thighRadius": 0.10074423062055439,
-        "calfRadius": 0.09918842919584704,
-        "torsoWidth": 0.35468722469273434,
-        "torsoDepth": 0.1834867113972159,
-        "shoeLength": 0.20058935113699336,
-        "shoeHeight": 0.15138011351974395
+      "path": "public/assets/models/q249-pilot/npc.civilian-man-a.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.06966671031874157,
+        "forearmRadius": 0.10419132044438768,
+        "thighRadius": 0.13613108741632035,
+        "calfRadius": 0.1628006034353779,
+        "torsoWidth": 0.5381316696655594,
+        "torsoDepth": 0.2235710635562877,
+        "shoeLength": 0.3262021752333635,
+        "shoeHeight": 0.23172818971069967
       },
-      "groundM": -0.0000029167530685182255
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": true,
+      "before": {
+        "headHeight": 0.29223126467498384,
+        "headShoulder": 1.1380749448398177,
+        "legHeight": 0.4156007954001798,
+        "shoulderHeight": 0.3174938154821244
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": true,
+        "minimum": 0.7844045609957483,
+        "maximum": 0.8427583568890702,
+        "intervals": {
+          "headHeight": [
+            0.7844045609957483,
+            1.0374312243602952
+          ],
+          "headShoulder": [
+            0.689529564727421,
+            0.8427583568890702
+          ],
+          "legHeight": [
+            0.6021312843694272,
+            1.2741487573492918
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 0.8419922129282619
+        },
+        "binding": "headShoulder",
+        "scale": 0.8419922129282619
+      },
+      "policy": "adult",
+      "heightM": 1.6884443358519219,
+      "groundM": -0.0000029167530687957813,
+      "ratios": {
+        "upperArmRadius": 0.041260886627684124,
+        "forearmRadius": 0.06170847224988136,
+        "thighRadius": 0.08062515566889211,
+        "calfRadius": 0.09642047414801813,
+        "torsoWidth": 0.3187144866070101,
+        "torsoDepth": 0.13241245731887433,
+        "shoeLength": 0.19319687851526052,
+        "shoeHeight": 0.13724360631277716
+      },
+      "torsoBand": [
+        0.8511743821307404,
+        0.9542708293440624
+      ],
+      "shoulderY": 1.2635601709840283,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "npc.civilian-man-b",
-      "heightM": 1.7654379974800085,
-      "ratios": {
-        "upperArmRadius": 0.08535698154341759,
-        "forearmRadius": 0.11764965170392032,
-        "thighRadius": 0.1202599863625101,
-        "calfRadius": 0.09850848692864539,
-        "torsoWidth": 0.3951775195555896,
-        "torsoDepth": 0.28064529428186863,
-        "shoeLength": 0.22106070580732354,
-        "shoeHeight": 0.12377939804225911
+      "path": "public/assets/models/skinned/npc.civilian-man-b.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.1434028369171243,
+        "forearmRadius": 0.20770316550838955,
+        "thighRadius": 0.13964610956202225,
+        "calfRadius": 0.1739106258980933,
+        "torsoWidth": 0.6476696833935166,
+        "torsoDepth": 0.37173192581138115,
+        "shoeLength": 0.3777689522745387,
+        "shoeHeight": 0.19532909521452244
       },
-      "groundM": 0.000001519127818058774
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.32159731944765285,
+        "headShoulder": 0.5798532917148819,
+        "legHeight": 0.40506382828008647,
+        "shoulderHeight": 0.4584635511790308
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.3533359774879812,
+        "maximum": 0.90195015672128,
+        "intervals": {
+          "headHeight": [
+            0.681976795526478,
+            0.90195015672128
+          ],
+          "headShoulder": [
+            1.3533359774879812,
+            1.6540773058186438
+          ],
+          "legHeight": [
+            0.5687917931067062,
+            1.1639630035706514
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9007640851086229,
+          "headShoulder": 1.6525735991769905
+        },
+        "binding": "headHeight",
+        "scale": 0.9007640851086229
+      },
+      "policy": "adult",
+      "heightM": 1.7654379974800085,
+      "groundM": 0.000001519127818058774,
+      "ratios": {
+        "upperArmRadius": 0.08122790895053689,
+        "forearmRadius": 0.11764965170392032,
+        "thighRadius": 0.07909997958656918,
+        "calfRadius": 0.09850848692864539,
+        "torsoWidth": 0.3668606228697934,
+        "torsoDepth": 0.2105607369627211,
+        "shoeLength": 0.213980299967355,
+        "shoeHeight": 0.11064058635496447
+      },
+      "torsoBand": [
+        0.8255813428839929,
+        0.9124714804385903
+      ],
+      "shoulderY": 1.1731418931023825,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "npc.civilian-woman-a",
+      "path": "public/assets/models/skinned/npc.civilian-woman-a.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.12378044897814523,
+        "forearmRadius": 0.1460849301813096,
+        "thighRadius": 0.18956078592953632,
+        "calfRadius": 0.1305759690852745,
+        "torsoWidth": 0.6307255480178355,
+        "torsoDepth": 0.32877560754697677,
+        "shoeLength": 0.4205113602014553,
+        "shoeHeight": 0.2149675458949284
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.34119111802370516,
+        "headShoulder": 0.8697319634564472,
+        "legHeight": 0.4808865171583422,
+        "shoulderHeight": 0.4234536071412418
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.0661018868119556,
+        "maximum": 0.8246529339697247,
+        "intervals": {
+          "headHeight": [
+            0.6234732425347235,
+            0.8246529339697247
+          ],
+          "headShoulder": [
+            0.9022737513565923,
+            1.102779029435835
+          ],
+          "legHeight": [
+            1.0661018868119556,
+            1.7321042288996296
+          ]
+        },
+        "limits": {
+          "headHeight": 0.8235682394448709,
+          "headShoulder": 1.1017765030454387
+        },
+        "binding": "headHeight",
+        "scale": 0.8235682394448709
+      },
+      "policy": "adult",
       "heightM": 1.6916447426428314,
+      "groundM": 0.0000012315253186302998,
       "ratios": {
         "upperArmRadius": 0.07317165706126032,
-        "forearmRadius": 0.08635674293710352,
-        "thighRadius": 0.13785537929990244,
-        "calfRadius": 0.08743660065517005,
-        "torsoWidth": 0.5004290082721135,
-        "torsoDepth": 0.3390249806963337,
-        "shoeLength": 0.263022865918116,
-        "shoeHeight": 0.14036627173432695
+        "forearmRadius": 0.0863567429371035,
+        "thighRadius": 0.1120570892641373,
+        "calfRadius": 0.07718876534400337,
+        "torsoWidth": 0.3728475205925698,
+        "torsoDepth": 0.19435263164849584,
+        "shoeLength": 0.2485813655794518,
+        "shoeHeight": 0.12707605827396584
       },
-      "groundM": 0.0000012315253186302998
+      "torsoBand": [
+        0.932043835187838,
+        0.9984911093757859
+      ],
+      "shoulderY": 1.1978329319396295,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "npc.civilian-woman-b",
-      "heightM": 1.7038964775387995,
-      "ratios": {
-        "upperArmRadius": 0.08780955586152621,
-        "forearmRadius": 0.08787925235196449,
-        "thighRadius": 0.13733468808808827,
-        "calfRadius": 0.08064969143764349,
-        "torsoWidth": 0.38059469168977217,
-        "torsoDepth": 0.28921675308161976,
-        "shoeLength": 0.22331364277786542,
-        "shoeHeight": 0.10324503057984001
+      "path": "public/assets/models/skinned/npc.civilian-woman-b.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.11262853158827124,
+        "forearmRadius": 0.10622010845951352,
+        "thighRadius": 0.15407964430545498,
+        "calfRadius": 0.13583201312920112,
+        "torsoWidth": 0.45876835300967156,
+        "torsoDepth": 0.395683350351681,
+        "shoeLength": 0.3655649156992693,
+        "shoeHeight": 0.16659721009965092
       },
-      "groundM": 0.0000019944906666357113
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3364718283419847,
+        "headShoulder": 0.833591186679861,
+        "legHeight": 0.47517113599189215,
+        "shoulderHeight": 0.3267774967294981
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.0309096732945167,
+        "maximum": 0.8424339526109585,
+        "intervals": {
+          "headHeight": [
+            0.636923394320127,
+            0.8424339526109585
+          ],
+          "headShoulder": [
+            0.941392296226327,
+            1.150590584276622
+          ],
+          "legHeight": [
+            1.0309096732945167,
+            1.6982267158638804
+          ]
+        },
+        "limits": {
+          "headHeight": 0.8413258942018516,
+          "headShoulder": 1.1495445928363706
+        },
+        "binding": "headHeight",
+        "scale": 0.8413258942018516
+      },
+      "policy": "adult",
+      "heightM": 1.7038964775387995,
+      "groundM": 0.0000019944906666357113,
+      "ratios": {
+        "upperArmRadius": 0.06610057187920125,
+        "forearmRadius": 0.06233953169088277,
+        "thighRadius": 0.09042782019716127,
+        "calfRadius": 0.07971846583391279,
+        "torsoWidth": 0.2692466115502166,
+        "torsoDepth": 0.23222264707256599,
+        "shoeLength": 0.2145464354896203,
+        "shoeHeight": 0.09777425582820205
+      },
+      "torsoBand": [
+        0.9267084404624285,
+        0.9981081227687156
+      ],
+      "shoulderY": 1.212307169687577,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "inf.teen-skater",
-      "heightM": 1.3822413326402312,
-      "ratios": {
-        "upperArmRadius": null,
-        "forearmRadius": null,
-        "thighRadius": null,
-        "calfRadius": null,
-        "torsoWidth": null,
-        "torsoDepth": null,
-        "shoeLength": null,
-        "shoeHeight": null
+      "path": "public/assets/models/inf.teen-skater.glb",
+      "dimensions": {
+        "upperArmRadius": 0.105810547300837,
+        "forearmRadius": 0.06455559863134937,
+        "thighRadius": 0.1187017786810128,
+        "calfRadius": 0.11546899648146595,
+        "torsoWidth": 0.43423897478848517,
+        "torsoDepth": 0.39873843416322075,
+        "shoeLength": 0.32680528265858655,
+        "shoeHeight": 0.2346364701077519
       },
-      "groundM": -7.450580596923828e-9
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.4168169562268138,
+        "headShoulder": 0.7138641276634753,
+        "legHeight": 0.3486100755249473,
+        "shoulderHeight": 0.5632875406587932
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.0992796681226682,
+        "maximum": 0.594848259999996,
+        "intervals": {
+          "headHeight": [
+            0.4494517547718154,
+            0.594848259999996
+          ],
+          "headShoulder": [
+            1.0992796681226682,
+            1.3435640388165946
+          ],
+          "legHeight": [
+            0.3793001375864828,
+            0.7745078668863662
+          ]
+        },
+        "limits": {
+          "headHeight": 0.594064406520495,
+          "headShoulder": 1.342342616963125
+        },
+        "binding": "headHeight",
+        "scale": 0.594064406520495
+      },
+      "policy": "adult",
+      "heightM": 1.3822458548887713,
+      "groundM": -0.0000016007343242030458,
+      "ratios": {
+        "upperArmRadius": 0.07654973022823898,
+        "forearmRadius": 0.046703412712743586,
+        "thighRadius": 0.08587602434196823,
+        "calfRadius": 0.08353723476404108,
+        "torsoWidth": 0.31415465870463993,
+        "torsoDepth": 0.2884714269555954,
+        "shoeLength": 0.23643064763242458,
+        "shoeHeight": 0.1697501709105382
+      },
+      "torsoBand": [
+        0.6581701159477233,
+        0.7363402485847473
+      ],
+      "shoulderY": 0.9708506464958191,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "char.courier-male",
-      "heightM": 1.3410359824115734,
-      "ratios": {
-        "upperArmRadius": null,
-        "forearmRadius": null,
-        "thighRadius": null,
-        "calfRadius": null,
-        "torsoWidth": null,
-        "torsoDepth": null,
-        "shoeLength": null,
-        "shoeHeight": null
+      "path": "public/assets/models/char.courier-male.skin.glb",
+      "dimensions": {
+        "upperArmRadius": 0.0788038237772632,
+        "forearmRadius": 0.07148221673023143,
+        "thighRadius": 0.09790494314422087,
+        "calfRadius": 0.09879279295043161,
+        "torsoWidth": 0.3464839575051425,
+        "torsoDepth": 0.4358554071870729,
+        "shoeLength": 0.31508035695505293,
+        "shoeHeight": 0.2058364136817137
       },
-      "groundM": -0.0000015387304115321854
-    },
-    {
-      "id": "char.courier-female",
-      "heightM": 1.4536735234488913,
-      "ratios": {
-        "upperArmRadius": 0.040929638934520104,
-        "forearmRadius": 0.043443451637625384,
-        "thighRadius": 0.1323529702611185,
-        "calfRadius": 0.061464329890766944,
-        "torsoWidth": 0.2845809204416324,
-        "torsoDepth": 0.31010611305127794,
-        "shoeLength": 0.17983973950862975,
-        "shoeHeight": 0.1275198849416455
+      "crowdSkin": false,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.32761384911551755,
+        "headShoulder": 0.6524635415902555,
+        "legHeight": 0.4506434918402436,
+        "shoulderHeight": 0.4516314413902911
       },
-      "groundM": -1.1167450417711043e-7
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.2027282312662835,
+        "maximum": 0.8767742195672587,
+        "intervals": {
+          "headHeight": [
+            0.6621232234312469,
+            0.8767742195672587
+          ],
+          "headShoulder": [
+            1.2027282312662835,
+            1.4700011715476797
+          ],
+          "legHeight": [
+            0.8725476381822566,
+            1.5225302277821555
+          ]
+        },
+        "limits": {
+          "headHeight": 0.875616553824635,
+          "headShoulder": 1.4686648068462727
+        },
+        "binding": "headHeight",
+        "scale": 0.875616553824635
+      },
+      "policy": "adult",
+      "heightM": 1.3980178049405747,
+      "groundM": 7.827742476882302e-8,
+      "ratios": {
+        "upperArmRadius": 0.056368254752387,
+        "forearmRadius": 0.05113112041750421,
+        "thighRadius": 0.07003125625312225,
+        "calfRadius": 0.07066633386305905,
+        "torsoWidth": 0.24783944544960243,
+        "torsoDepth": 0.31176670686651214,
+        "shoeLength": 0.22537649795414874,
+        "shoeHeight": 0.1472344722322497
+      },
+      "torsoBand": [
+        0.6332177840747143,
+        0.6914177582815697
+      ],
+      "shoulderY": 0.866017680902136,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "npc.lab-tech-a",
-      "heightM": 1.199486184296549,
-      "ratios": {
-        "upperArmRadius": 0.09443304833339432,
-        "forearmRadius": 0.1055262986099875,
-        "thighRadius": 0.09246033049945827,
-        "calfRadius": 0.10620752210966174,
-        "torsoWidth": 0.42190603899807505,
-        "torsoDepth": 0.26100121111015223,
-        "shoeLength": 0.24724147318123885,
-        "shoeHeight": 0.1491556348025206
+      "path": "public/assets/models/skinned/npc.lab-tech-a.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.15581392516553982,
+        "forearmRadius": 0.12043692620250718,
+        "thighRadius": 0.1310290911582654,
+        "calfRadius": 0.12365943434879711,
+        "torsoWidth": 0.45771268010139465,
+        "torsoDepth": 0.24065734446048737,
+        "shoeLength": 0.28891564905643463,
+        "shoeHeight": 0.16342951174010523
       },
-      "groundM": -9.854105655904277e-7
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3833238120278831,
+        "headShoulder": 1.1040691988391467,
+        "legHeight": 0.36921291314245563,
+        "shoulderHeight": 0.3426625185180238
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 0.710767334300857,
+        "maximum": 0.6844624639479826,
+        "intervals": {
+          "headHeight": [
+            0.5167197709152099,
+            0.6844624639479826
+          ],
+          "headShoulder": [
+            0.710767334300857,
+            0.8687156308121586
+          ],
+          "legHeight": [
+            0.43935517224832527,
+            0.8944919769827832
+          ]
+        },
+        "limits": {
+          "headHeight": 0.6835579162314964,
+          "headShoulder": 0.8679258893296021
+        },
+        "binding": "headHeight",
+        "scale": 0.6835579162314964
+      },
+      "policy": "adult",
+      "heightM": 1.199486184296549,
+      "groundM": -9.854105655904277e-7,
+      "ratios": {
+        "upperArmRadius": 0.12990055842695555,
+        "forearmRadius": 0.10040709745493122,
+        "thighRadius": 0.10923768266252167,
+        "calfRadius": 0.10309367124667507,
+        "torsoWidth": 0.3815906227963976,
+        "torsoDepth": 0.20063369433606554,
+        "shoeLength": 0.24086617489960685,
+        "shoeHeight": 0.13624959910309442
+      },
+      "torsoBand": [
+        0.5858000040054321,
+        0.6675999999046326
+      ],
+      "shoulderY": 0.9129999876022339,
+      "spatialFallbacks": [
+        "armR"
+      ],
+      "absentParts": []
     },
     {
       "id": "npc.lab-tech-b",
-      "heightM": 1.1509855349457467,
-      "ratios": {
-        "upperArmRadius": null,
-        "forearmRadius": 0.09550185087006802,
-        "thighRadius": 0.08509309926429266,
-        "calfRadius": 0.11183041067051842,
-        "torsoWidth": 0.4403099122967128,
-        "torsoDepth": 0.26430726325632814,
-        "shoeLength": 0.2905162883293244,
-        "shoeHeight": 0.15924171494966918
+      "path": "public/assets/models/skinned/npc.lab-tech-b.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.1536901924879659,
+        "forearmRadius": 0.09780195431605383,
+        "thighRadius": 0.12400773532665504,
+        "calfRadius": 0.12300775438558606,
+        "torsoWidth": 0.4672074317932129,
+        "torsoDepth": 0.2464151158928871,
+        "shoeLength": 0.32691366970539093,
+        "shoeHeight": 0.17009256035089496
       },
-      "groundM": -9.854105655904277e-7
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.40274136263332827,
+        "headShoulder": 1.4813160755261483,
+        "legHeight": 0.3653372082329455,
+        "shoulderHeight": 0.26993739066316846
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": true,
+        "minimum": 0.5297561636626761,
+        "maximum": 0.6301654360995236,
+        "intervals": {
+          "headHeight": [
+            0.47570994885516193,
+            0.6301654360995236
+          ],
+          "headShoulder": [
+            0.5297561636626761,
+            0.6474797555877152
+          ],
+          "legHeight": [
+            0.445922862008289,
+            0.8745686329493885
+          ]
+        },
+        "limits": {
+          "headHeight": 0.6293325880202616,
+          "headShoulder": 0.6468911376280899
+        },
+        "binding": "headHeight",
+        "scale": 0.6293325880202616
+      },
+      "policy": "adult",
+      "heightM": 1.1509855349457467,
+      "groundM": -9.854105655904277e-7,
+      "ratios": {
+        "upperArmRadius": 0.1335292128542782,
+        "forearmRadius": 0.0849723574681274,
+        "thighRadius": 0.10774048114557784,
+        "calfRadius": 0.10687167705490251,
+        "torsoWidth": 0.40591946432692166,
+        "torsoDepth": 0.21409054102882552,
+        "shoeLength": 0.28402934683345127,
+        "shoeHeight": 0.1477799287537636
+      },
+      "torsoBand": [
+        0.5858000040054321,
+        0.6675999999046326
+      ],
+      "shoulderY": 0.9129999876022339,
+      "spatialFallbacks": [
+        "armL",
+        "armR"
+      ],
+      "absentParts": []
     },
     {
       "id": "npc.lab-guard",
-      "heightM": 1.2073437550784818,
-      "ratios": {
-        "upperArmRadius": 0.15599576721995248,
-        "forearmRadius": 0.15042893402328894,
-        "thighRadius": 0.18883090657668786,
-        "calfRadius": 0.12316921545449144,
-        "torsoWidth": 0.492899835743962,
-        "torsoDepth": 0.36300919692214156,
-        "shoeLength": 0.3026955973068427,
-        "shoeHeight": 0.20388225412294758
+      "path": "public/assets/models/skinned/npc.lab-guard.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.17866761354919655,
+        "forearmRadius": 0.17724830855530854,
+        "thighRadius": 0.21659326501963824,
+        "calfRadius": 0.14678474066668382,
+        "torsoWidth": 0.5930763781070709,
+        "torsoDepth": 0.40693558752536774,
+        "shoeLength": 0.34164293855428696,
+        "shoeHeight": 0.21778919361531734
       },
-      "groundM": 6.666135732302791e-7
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.38876220397063993,
+        "headShoulder": 0.5598554904932932,
+        "legHeight": 0.36354478134266005,
+        "shoulderHeight": 0.5788101915282399
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.4016765659494483,
+        "maximum": 0.6687553930853803,
+        "intervals": {
+          "headHeight": [
+            0.5048922489046677,
+            0.6687553930853803
+          ],
+          "headShoulder": [
+            1.4016765659494483,
+            1.713160247271548
+          ],
+          "legHeight": [
+            0.4161953452804695,
+            0.8580757589211937
+          ]
+        },
+        "limits": {
+          "headHeight": 0.6678717916181078,
+          "headShoulder": 1.7116028288649374
+        },
+        "binding": "headHeight",
+        "scale": 0.6678717916181078
+      },
+      "policy": "adult",
+      "heightM": 1.2073437550784818,
+      "groundM": 6.666135732302791e-7,
+      "ratios": {
+        "upperArmRadius": 0.1479840458010921,
+        "forearmRadius": 0.14680848582662917,
+        "thighRadius": 0.17939651744466006,
+        "calfRadius": 0.12157659328526718,
+        "torsoWidth": 0.49122412371157603,
+        "torsoDepth": 0.33705031049662854,
+        "shoeLength": 0.2829707257085857,
+        "shoeHeight": 0.18038706267309945
+      },
+      "torsoBand": [
+        0.5858000040054321,
+        0.6675999999046326
+      ],
+      "shoulderY": 0.9129999876022339,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "npc.depot-clerk",
-      "heightM": 1.280700567424005,
-      "ratios": {
-        "upperArmRadius": 0.07499191628879433,
-        "forearmRadius": 0.0775912561897781,
-        "thighRadius": 0.1441812147153366,
-        "calfRadius": 0.12242712778655157,
-        "torsoWidth": 0.387104642023679,
-        "torsoDepth": 0.2918432373455921,
-        "shoeLength": 0.22146045457685945,
-        "shoeHeight": 0.17673486222957185
+      "path": "public/assets/models/skinned/npc.depot-clerk.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.0945139412224709,
+        "forearmRadius": 0.09540050436999432,
+        "thighRadius": 0.17573650269447744,
+        "calfRadius": 0.15014174072644926,
+        "torsoWidth": 0.454907551407814,
+        "torsoDepth": 0.23837701976299286,
+        "shoeLength": 0.27660083770751953,
+        "shoeHeight": 0.21556218032492325
       },
-      "groundM": -9.854105655904277e-7
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3600339608394027,
+        "headShoulder": 1.2092428124027377,
+        "legHeight": 0.35401260334464313,
+        "shoulderHeight": 0.32996676481771364
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": true,
+        "minimum": 0.6489485100046452,
+        "maximum": 0.7576423745745224,
+        "intervals": {
+          "headHeight": [
+            0.5721532068493773,
+            0.7576423745745224
+          ],
+          "headShoulder": [
+            0.6489485100046452,
+            0.7931592900056774
+          ],
+          "legHeight": [
+            0.31331385137145135,
+            0.7779426536721262
+          ]
+        },
+        "limits": {
+          "headHeight": 0.7566421084933026,
+          "headShoulder": 0.7924382361056722
+        },
+        "binding": "headHeight",
+        "scale": 0.7566421084933026
+      },
+      "policy": "adult",
+      "heightM": 1.280700567424005,
+      "groundM": -9.854105655904277e-7,
+      "ratios": {
+        "upperArmRadius": 0.07379862524194535,
+        "forearmRadius": 0.07449087382063274,
+        "thighRadius": 0.13721904023822915,
+        "calfRadius": 0.11723407059032044,
+        "torsoWidth": 0.35520211591911205,
+        "torsoDepth": 0.1861301742392941,
+        "shoeLength": 0.21597619673416177,
+        "shoeHeight": 0.16831583104433534
+      },
+      "torsoBand": [
+        0.5858000040054321,
+        0.6675999999046326
+      ],
+      "shoulderY": 0.9129999876022339,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "npc.dale.aftermath",
+      "path": "public/assets/models/skinned/npc.dale.aftermath.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.10540864159789641,
+        "forearmRadius": 0.1620802488408038,
+        "thighRadius": 0.13138266248335037,
+        "calfRadius": 0.15946941282904337,
+        "torsoWidth": 0.30442385375499725,
+        "torsoDepth": 0.25613314658403397,
+        "shoeLength": 0.2897496372461319,
+        "shoeHeight": 0.16420061606913805
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.2926808052535256,
+        "headShoulder": 0.6995079903311024,
+        "legHeight": 0.42538386624940616,
+        "shoulderHeight": 0.42148701228795965
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.1218403966638595,
+        "maximum": 1,
+        "intervals": {
+          "headHeight": [
+            0.7819701895622602,
+            1.0352729699106156
+          ],
+          "headShoulder": [
+            1.1218403966638595,
+            1.3711382625891617
+          ],
+          "legHeight": [
+            0.6738186108514319,
+            1.360598620662052
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 1.369891773259535
+        },
+        "binding": "headHeight",
+        "scale": 0.9999999999999964
+      },
+      "policy": "adult",
       "heightM": 1.433998942375183,
+      "groundM": 0,
       "ratios": {
         "upperArmRadius": 0.07350677778276765,
-        "forearmRadius": 0.11607756955641242,
-        "thighRadius": 0.1224160393915761,
-        "calfRadius": 0.11265021115513764,
-        "torsoWidth": 0.3013289060710742,
-        "torsoDepth": 0.18206729136592414,
-        "shoeLength": 0.21197811086388973,
-        "shoeHeight": 0.12174280535245117
+        "forearmRadius": 0.11302675619296103,
+        "thighRadius": 0.09161977641750323,
+        "calfRadius": 0.11120608817528732,
+        "torsoWidth": 0.21229015221640907,
+        "torsoDepth": 0.17861459936629492,
+        "shoeLength": 0.20205707876339807,
+        "shoeHeight": 0.11450539551805161
       },
-      "groundM": 0
+      "torsoBand": [
+        0.6840000152587891,
+        0.7580000162124634
+      ],
+      "shoulderY": 0.9800000190734863,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "npc.rosa.aftermath",
-      "heightM": 1.3749711814663614,
-      "ratios": {
-        "upperArmRadius": 0.07591891868378213,
-        "forearmRadius": 0.07536908598801083,
-        "thighRadius": 0.1462338918376152,
-        "calfRadius": 0.11452045239874335,
-        "torsoWidth": 0.31028430118711947,
-        "torsoDepth": 0.24340951170593322,
-        "shoeLength": 0.22034353711155974,
-        "shoeHeight": 0.13367759671722892
+      "path": "public/assets/models/skinned/npc.rosa.aftermath.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.1007008901422568,
+        "forearmRadius": 0.09111701113089878,
+        "thighRadius": 0.14733816093236668,
+        "calfRadius": 0.14756904266304968,
+        "torsoWidth": 0.4038049429655075,
+        "torsoDepth": 0.22613535076379776,
+        "shoeLength": 0.2868093103170395,
+        "shoeHeight": 0.17071445647161454
       },
-      "groundM": -1.4901161193847656e-8
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3054347729686776,
+        "headShoulder": 1.131989195976688,
+        "legHeight": 0.450575968484114,
+        "shoulderHeight": 0.3248646258203849
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 0.8628226263506423,
+        "maximum": 0.8472891560615001,
+        "intervals": {
+          "headHeight": [
+            0.7350612754841614,
+            0.9731556415820499
+          ],
+          "headShoulder": [
+            0.6932365822321365,
+            0.8472891560615001
+          ],
+          "legHeight": [
+            0.8628226263506423,
+            1.5598990890166973
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9718714814403491,
+          "headShoulder": 0.8465188931923533
+        },
+        "binding": "headShoulder",
+        "scale": 0.8465188931923533
+      },
+      "policy": "adult",
+      "heightM": 1.3749711814663614,
+      "groundM": -1.4901161193847656e-8,
+      "ratios": {
+        "upperArmRadius": 0.07323854601437,
+        "forearmRadius": 0.06626830609913256,
+        "thighRadius": 0.10715727203477486,
+        "calfRadius": 0.10732518954009797,
+        "torsoWidth": 0.29368247742826353,
+        "torsoDepth": 0.1644655203046742,
+        "shoeLength": 0.20859296120749732,
+        "shoeHeight": 0.12415857057422339
+      },
+      "torsoBand": [
+        0.7209999799728394,
+        0.7919999837875367
+      ],
+      "shoulderY": 1.0049999952316284,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "npc.mr-okafor.aftermath",
-      "heightM": 1.5406801158662198,
-      "ratios": {
-        "upperArmRadius": null,
-        "forearmRadius": 0.08935991506192137,
-        "thighRadius": 0.17169726305824048,
-        "calfRadius": 0.09362143243372316,
-        "torsoWidth": 0.31569015024060443,
-        "torsoDepth": 0.2722786300402976,
-        "shoeLength": 0.22502117369740943,
-        "shoeHeight": 0.2280012316195204
+      "path": "public/assets/models/skinned/npc.mr-okafor.aftermath.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.21230172399319003,
+        "forearmRadius": 0.1376750442913966,
+        "thighRadius": 0.17992744758806525,
+        "calfRadius": 0.13568191559809567,
+        "torsoWidth": 0.4040774255990982,
+        "torsoDepth": 0.2796098440885544,
+        "shoeLength": 0.33222340047359467,
+        "shoeHeight": 0.3299993872642517
       },
-      "groundM": -0.1899999976158142
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.2489789311262483,
+        "headShoulder": 1.0915684620051451,
+        "legHeight": 0.5015733338784901,
+        "shoulderHeight": 0.29254259209696387
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.2672582121440104,
+        "maximum": 0.878664237667672,
+        "intervals": {
+          "headHeight": [
+            0.9799799186513599,
+            1.2967882233256505
+          ],
+          "headShoulder": [
+            0.718907103546277,
+            0.878664237667672
+          ],
+          "legHeight": [
+            1.2672582121440104,
+            2.2191831705864877
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 0.8778654519970649
+        },
+        "binding": "headShoulder",
+        "scale": 0.8778654519970649
+      },
+      "policy": "adult",
+      "heightM": 1.5406801158662198,
+      "groundM": -0.1899999976158142,
+      "ratios": {
+        "upperArmRadius": 0.1377974063576638,
+        "forearmRadius": 0.08935991506192138,
+        "thighRadius": 0.11678442899024777,
+        "calfRadius": 0.08806624697808275,
+        "torsoWidth": 0.26227211050355703,
+        "torsoDepth": 0.18148468407496046,
+        "shoeLength": 0.2156342494800149,
+        "shoeHeight": 0.2141907225684648
+      },
+      "torsoBand": [
+        0.6865999937057495,
+        0.7661999940872193
+      ],
+      "shoulderY": 1.0049999952316284,
+      "spatialFallbacks": [
+        "armL",
+        "armR"
+      ],
+      "absentParts": []
     },
     {
       "id": "npc.mia.aftermath",
-      "heightM": 1.308955446779657,
-      "ratios": {
-        "upperArmRadius": 0.19956671091800246,
-        "forearmRadius": 0.14105398435519462,
-        "thighRadius": 0.15929182553727392,
-        "calfRadius": 0.1496858874606122,
-        "torsoWidth": 0.3942541235853149,
-        "torsoDepth": 0.37299041043410863,
-        "shoeLength": 0.43024965570130114,
-        "shoeHeight": 0.2110806698726409
+      "path": "public/assets/models/skinned/npc.mia.aftermath.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.2320820278050727,
+        "forearmRadius": 0.1692683989067287,
+        "thighRadius": 0.1250369904231515,
+        "calfRadius": 0.1361804131032325,
+        "torsoWidth": 0.40137696266174316,
+        "torsoDepth": 0.45841392867879344,
+        "shoeLength": 0.4778463989496231,
+        "shoeHeight": 0.22828159714117646
       },
-      "groundM": -7.450580596923828e-9
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.35174865068718,
+        "headShoulder": 1.1936451173832137,
+        "legHeight": 0.4801965226770572,
+        "shoulderHeight": 0.2979822861638757
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.0599467195874324,
+        "maximum": 0.7859603750228292,
+        "intervals": {
+          "headHeight": [
+            0.5935392825017751,
+            0.7859603750228292
+          ],
+          "headShoulder": [
+            0.6574285019176663,
+            0.8035237245660367
+          ],
+          "legHeight": [
+            1.0599467195874324,
+            1.7050324620680977
+          ]
+        },
+        "limits": {
+          "headHeight": 0.784922696951746,
+          "headShoulder": 0.8027932484527949
+        },
+        "binding": "headHeight",
+        "scale": 0.784922696951746
+      },
+      "policy": "adult",
+      "heightM": 1.308955446779657,
+      "groundM": -7.450580596923828e-9,
+      "ratios": {
+        "upperArmRadius": 0.17730322936204584,
+        "forearmRadius": 0.12931563050764594,
+        "thighRadius": 0.095524252357689,
+        "calfRadius": 0.10403747005925133,
+        "torsoWidth": 0.3066391324847812,
+        "torsoDepth": 0.3502135460810383,
+        "shoeLength": 0.36505933041895305,
+        "shoeHeight": 0.17439982216568464
+      },
+      "torsoBand": [
+        0.7322000026702881,
+        0.7843999981880188
+      ],
+      "shoulderY": 0.9409999847412109,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "npc.sam.aftermath",
-      "heightM": 1.4231274852000269,
-      "ratios": {
-        "upperArmRadius": 0.08675653996661631,
-        "forearmRadius": 0.11124957154475577,
-        "thighRadius": 0.20475739806894824,
-        "calfRadius": 0.11976761317300368,
-        "torsoWidth": 0.35887571973850985,
-        "torsoDepth": 0.34803486053715565,
-        "shoeLength": 0.2198317759455543,
-        "shoeHeight": 0.12681065236734174
+      "path": "public/assets/models/skinned/npc.sam.aftermath.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.19014455741687644,
+        "forearmRadius": 0.1364198165567588,
+        "thighRadius": 0.24488598506327064,
+        "calfRadius": 0.16681943306397837,
+        "torsoWidth": 0.4380519539117813,
+        "torsoDepth": 0.4332991689443588,
+        "shoeLength": 0.2776499539613724,
+        "shoeHeight": 0.16646263096481562
       },
-      "groundM": 0
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3130254463775903,
+        "headShoulder": 0.9039130650302065,
+        "legHeight": 0.4203997413708822,
+        "shoulderHeight": 0.3323094972259809
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": true,
+        "minimum": 0.8681546397566001,
+        "maximum": 0.9386349261258407,
+        "intervals": {
+          "headHeight": [
+            0.7089979215926403,
+            0.9386349261258407
+          ],
+          "headShoulder": [
+            0.8681546397566001,
+            1.0610778930358447
+          ],
+          "legHeight": [
+            0.6611609774340836,
+            1.2957808526309533
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9373964251649447,
+          "headShoulder": 1.0601132767694483
+        },
+        "binding": "headHeight",
+        "scale": 0.9373964251649447
+      },
+      "policy": "adult",
+      "heightM": 1.4231274852000269,
+      "groundM": 0,
+      "ratios": {
+        "upperArmRadius": 0.13361034720663187,
+        "forearmRadius": 0.09585916790693168,
+        "thighRadius": 0.17207592967600568,
+        "calfRadius": 0.1172203016235971,
+        "torsoWidth": 0.30780935542834464,
+        "torsoDepth": 0.30446967924553625,
+        "shoeLength": 0.19509844117889932,
+        "shoeHeight": 0.11696958473219184
+      },
+      "torsoBand": [
+        0.6840000152587891,
+        0.7580000162124634
+      ],
+      "shoulderY": 0.9800000190734863,
+      "spatialFallbacks": [
+        "armR"
+      ],
+      "absentParts": []
     },
     {
       "id": "npc.civilian-man-a.aftermath",
-      "heightM": 1.3412723807414695,
-      "ratios": {
-        "upperArmRadius": 0.06893587543783676,
-        "forearmRadius": 0.06636172955390471,
-        "thighRadius": 0.10087005388050616,
-        "calfRadius": 0.09931186425108866,
-        "torsoWidth": 0.30809053464362596,
-        "torsoDepth": 0.18248776813146542,
-        "shoeLength": 0.20083879325674955,
-        "shoeHeight": 0.14330374106334182
+      "path": "public/assets/models/skinned/npc.civilian-man-a.aftermath.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.08939829956285976,
+        "forearmRadius": 0.08287063429573213,
+        "thighRadius": 0.11041098350400563,
+        "calfRadius": 0.1294870808808887,
+        "torsoWidth": 0.3933850824832916,
+        "torsoDepth": 0.1778220310807228,
+        "shoeLength": 0.25836385786533356,
+        "shoeHeight": 0.17532693326938897
       },
-      "groundM": -1.862645149230957e-9
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.29294596927538535,
+        "headShoulder": 1.13807495553129,
+        "legHeight": 0.41559932150915896,
+        "shoulderHeight": 0.31749380833945834
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": true,
+        "minimum": 0.7809464339281017,
+        "maximum": 0.8427583489719049,
+        "intervals": {
+          "headHeight": [
+            0.7809464339281017,
+            1.0339263951489623
+          ],
+          "headShoulder": [
+            0.6895295582497404,
+            0.8427583489719049
+          ],
+          "legHeight": [
+            0.6030912720819307,
+            1.2734668366894544
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 0.841992205018294
+        },
+        "binding": "headShoulder",
+        "scale": 0.841992205018294
+      },
+      "policy": "adult",
+      "heightM": 1.3412723807414695,
+      "groundM": -1.862645149230957e-9,
+      "ratios": {
+        "upperArmRadius": 0.06665186046210796,
+        "forearmRadius": 0.061785089654884544,
+        "thighRadius": 0.08231809220060826,
+        "calfRadius": 0.09654048106866026,
+        "torsoWidth": 0.29329246477574095,
+        "torsoDepth": 0.13257712127228097,
+        "shoeLength": 0.19262594352573434,
+        "shoeHeight": 0.13071687435513016
+      },
+      "torsoBand": [
+        0.6769999742507935,
+        0.7589999794960022
+      ],
+      "shoulderY": 1.0049999952316284,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "npc.civilian-man-b.aftermath",
-      "heightM": 1.7860735680580082,
-      "ratios": {
-        "upperArmRadius": 0.08382011434607341,
-        "forearmRadius": 0.09682814804014209,
-        "thighRadius": 0.12481336638319505,
-        "calfRadius": 0.08855653856680569,
-        "torsoWidth": 0.27758738439454883,
-        "torsoDepth": 0.2810412354356894,
-        "shoeLength": 0.21855605451271623,
-        "shoeHeight": 0.10051736925235133
+      "path": "public/assets/models/skinned/npc.civilian-man-b.aftermath.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.13933391547354554,
+        "forearmRadius": 0.16805348368585946,
+        "thighRadius": 0.16588207512503308,
+        "calfRadius": 0.15600242630628994,
+        "torsoWidth": 0.4732079812319119,
+        "torsoDepth": 0.37713894609927046,
+        "shoeLength": 0.3778619951222498,
+        "shoeHeight": 0.17815169677153178
       },
-      "groundM": -1.3059576140632032e-7
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.30501704500044213,
+        "headShoulder": 0.6132425233641142,
+        "legHeight": 0.4102920455643427,
+        "shoulderHeight": 0.43919510002597767
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.2796508582570099,
+        "maximum": 0.9751877435171411,
+        "intervals": {
+          "headHeight": [
+            0.737333207679553,
+            0.9751877435171411
+          ],
+          "headShoulder": [
+            1.2796508582570099,
+            1.5640177156474566
+          ],
+          "legHeight": [
+            0.5817998872825566,
+            1.2174232632365207
+          ]
+        },
+        "limits": {
+          "headHeight": 0.973905180503337,
+          "headShoulder": 1.5625958813605043
+        },
+        "binding": "headHeight",
+        "scale": 0.973905180503337
+      },
+      "policy": "adult",
+      "heightM": 1.7860735680580082,
+      "groundM": -1.3059576140632032e-7,
+      "ratios": {
+        "upperArmRadius": 0.0780112969394888,
+        "forearmRadius": 0.09409101992846994,
+        "thighRadius": 0.09287527573984318,
+        "calfRadius": 0.08734378532677736,
+        "torsoWidth": 0.26494316342547375,
+        "torsoDepth": 0.21115532576260695,
+        "shoeLength": 0.21156015176524778,
+        "shoeHeight": 0.09974488171012771
+      },
+      "torsoBand": [
+        0.8255813428839929,
+        0.9124714804385903
+      ],
+      "shoulderY": 1.1731418931023825,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "npc.civilian-woman-b.aftermath",
-      "heightM": 1.6469287369212968,
-      "ratios": {
-        "upperArmRadius": 0.09084647092400543,
-        "forearmRadius": 0.09091905820986361,
-        "thighRadius": 0.14208558201419605,
-        "calfRadius": 0.08343962884878295,
-        "torsoWidth": 0.3937601329517166,
-        "torsoDepth": 0.2992212874365585,
-        "shoeLength": 0.2310384609414296,
-        "shoeHeight": 0.10681646886441735
+      "path": "public/assets/models/skinned/npc.civilian-woman-b.aftermath.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.11262776944229205,
+        "forearmRadius": 0.10622037215917418,
+        "thighRadius": 0.15407967478121884,
+        "calfRadius": 0.1358323637220933,
+        "torsoWidth": 0.458769008660743,
+        "torsoDepth": 0.39568391659578817,
+        "shoeLength": 0.3655654372398943,
+        "shoeHeight": 0.16659744316311773
       },
-      "groundM": 0.0000019944906666357113
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3584239938724762,
+        "headShoulder": 0.8335911778564804,
+        "legHeight": 0.47517044366638733,
+        "shoulderHeight": 0.3267775007624194
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.0290124609653002,
+        "maximum": 0.763745233657309,
+        "intervals": {
+          "headHeight": [
+            0.5773981746574423,
+            0.763745233657309
+          ],
+          "headShoulder": [
+            0.941392306190759,
+            1.1505905964553722
+          ],
+          "legHeight": [
+            1.0290124609653002,
+            1.655457849917905
+          ]
+        },
+        "limits": {
+          "headHeight": 0.7627405530350835,
+          "headShoulder": 1.149544605004049
+        },
+        "binding": "headHeight",
+        "scale": 0.7627405530350835
+      },
+      "policy": "adult",
+      "heightM": 1.6469287369212968,
+      "groundM": 0.0000019944906666357113,
+      "ratios": {
+        "upperArmRadius": 0.06838654698128221,
+        "forearmRadius": 0.06449603421076879,
+        "thighRadius": 0.09355576311653245,
+        "calfRadius": 0.08247616346534395,
+        "torsoWidth": 0.2785603277032785,
+        "torsoDepth": 0.24025563931531366,
+        "shoeLength": 0.22196797532555526,
+        "shoeHeight": 0.10115643708697947
+      },
+      "torsoBand": [
+        0.9267084404624285,
+        0.9981081227687156
+      ],
+      "shoulderY": 1.212307169687577,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "npc.marcus.aftermath",
-      "heightM": 1.6946937391638892,
-      "ratios": {
-        "upperArmRadius": 0.06590986039262839,
-        "forearmRadius": 0.06353366020665369,
-        "thighRadius": 0.10297099052940517,
-        "calfRadius": 0.0981089112953107,
-        "torsoWidth": 0.32287793057847486,
-        "torsoDepth": 0.15578744155344773,
-        "shoeLength": 0.20137542837375125,
-        "shoeHeight": 0.13447187538650457
+      "path": "public/assets/models/skinned/npc.marcus.aftermath.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.10786683902900762,
+        "forearmRadius": 0.09998879300212687,
+        "thighRadius": 0.13569804304070038,
+        "calfRadius": 0.16125691348174542,
+        "torsoWidth": 0.4870188552955097,
+        "torsoDepth": 0.2249692990783373,
+        "shoeLength": 0.3273142190611819,
+        "shoeHeight": 0.21747644059514043
       },
-      "groundM": -3.746968501797353e-8
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3097598481971248,
+        "headShoulder": 1.1063600175203934,
+        "legHeight": 0.41245029368407776,
+        "shoulderHeight": 0.32659508697082745
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": true,
+        "minimum": 0.7208967935622315,
+        "maximum": 0.866916876370349,
+        "intervals": {
+          "headHeight": [
+            0.7208967935622315,
+            0.9534268940388102
+          ],
+          "headShoulder": [
+            0.7092956261211946,
+            0.866916876370349
+          ],
+          "legHeight": [
+            0.603018657260169,
+            1.2322022182530887
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9521730686083032,
+          "headShoulder": 0.8661287701191032
+        },
+        "binding": "headShoulder",
+        "scale": 0.8661287701191032
+      },
+      "policy": "adult",
+      "heightM": 1.6946937391638892,
+      "groundM": -3.746968501797353e-8,
+      "ratios": {
+        "upperArmRadius": 0.06364975366122841,
+        "forearmRadius": 0.05900109895458652,
+        "thighRadius": 0.0800723103559996,
+        "calfRadius": 0.09515401500291416,
+        "torsoWidth": 0.2873786832633194,
+        "torsoDepth": 0.13274923597070132,
+        "shoeLength": 0.1931406315471897,
+        "shoeHeight": 0.1283278716202945
+      },
+      "torsoBand": [
+        0.8511743521549917,
+        0.9542707693925649
+      ],
+      "shoulderY": 1.2635600211052846,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "npc.shelter-survivor.bandaged",
-      "heightM": 1.3412723807414695,
-      "ratios": {
-        "upperArmRadius": 0.06893587543783676,
-        "forearmRadius": 0.06636172955390471,
-        "thighRadius": 0.10087005388050616,
-        "calfRadius": 0.09931186425108866,
-        "torsoWidth": 0.30809053464362596,
-        "torsoDepth": 0.18248776813146542,
-        "shoeLength": 0.20083879325674955,
-        "shoeHeight": 0.14330374106334182
+      "path": "public/assets/models/skinned/npc.shelter-survivor.bandaged.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.08939829956285976,
+        "forearmRadius": 0.08287063429573213,
+        "thighRadius": 0.11041098350400563,
+        "calfRadius": 0.1294870808808887,
+        "torsoWidth": 0.3933850824832916,
+        "torsoDepth": 0.1778220310807228,
+        "shoeLength": 0.25836385786533356,
+        "shoeHeight": 0.17532693326938897
       },
-      "groundM": -1.862645149230957e-9
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.29294596927538535,
+        "headShoulder": 1.13807495553129,
+        "legHeight": 0.41559932150915896,
+        "shoulderHeight": 0.31749380833945834
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": true,
+        "minimum": 0.7809464339281017,
+        "maximum": 0.8427583489719049,
+        "intervals": {
+          "headHeight": [
+            0.7809464339281017,
+            1.0339263951489623
+          ],
+          "headShoulder": [
+            0.6895295582497404,
+            0.8427583489719049
+          ],
+          "legHeight": [
+            0.6030912720819307,
+            1.2734668366894544
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 0.841992205018294
+        },
+        "binding": "headShoulder",
+        "scale": 0.841992205018294
+      },
+      "policy": "adult",
+      "heightM": 1.3412723807414695,
+      "groundM": -1.862645149230957e-9,
+      "ratios": {
+        "upperArmRadius": 0.06665186046210796,
+        "forearmRadius": 0.061785089654884544,
+        "thighRadius": 0.08231809220060826,
+        "calfRadius": 0.09654048106866026,
+        "torsoWidth": 0.29329246477574095,
+        "torsoDepth": 0.13257712127228097,
+        "shoeLength": 0.19262594352573434,
+        "shoeHeight": 0.13071687435513016
+      },
+      "torsoBand": [
+        0.6769999742507935,
+        0.7589999794960022
+      ],
+      "shoulderY": 1.0049999952316284,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "npc.shelter-survivor.lying",
-      "heightM": 1.3412723807414695,
-      "ratios": {
-        "upperArmRadius": 0.06893587543783676,
-        "forearmRadius": 0.06636172955390471,
-        "thighRadius": 0.10087005388050616,
-        "calfRadius": 0.09931186425108866,
-        "torsoWidth": 0.30809053464362596,
-        "torsoDepth": 0.18248776813146542,
-        "shoeLength": 0.20083879325674955,
-        "shoeHeight": 0.14330374106334182
+      "path": "public/assets/models/skinned/npc.shelter-survivor.lying.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.08939829956285976,
+        "forearmRadius": 0.08287063429573213,
+        "thighRadius": 0.11041098350400563,
+        "calfRadius": 0.1294870808808887,
+        "torsoWidth": 0.3933850824832916,
+        "torsoDepth": 0.1778220310807228,
+        "shoeLength": 0.25836385786533356,
+        "shoeHeight": 0.17532693326938897
       },
-      "groundM": -1.862645149230957e-9
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.29294596927538535,
+        "headShoulder": 1.13807495553129,
+        "legHeight": 0.41559932150915896,
+        "shoulderHeight": 0.31749380833945834
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": true,
+        "minimum": 0.7809464339281017,
+        "maximum": 0.8427583489719049,
+        "intervals": {
+          "headHeight": [
+            0.7809464339281017,
+            1.0339263951489623
+          ],
+          "headShoulder": [
+            0.6895295582497404,
+            0.8427583489719049
+          ],
+          "legHeight": [
+            0.6030912720819307,
+            1.2734668366894544
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 0.841992205018294
+        },
+        "binding": "headShoulder",
+        "scale": 0.841992205018294
+      },
+      "policy": "adult",
+      "heightM": 1.3412723807414695,
+      "groundM": -1.862645149230957e-9,
+      "ratios": {
+        "upperArmRadius": 0.06665186046210796,
+        "forearmRadius": 0.061785089654884544,
+        "thighRadius": 0.08231809220060826,
+        "calfRadius": 0.09654048106866026,
+        "torsoWidth": 0.29329246477574095,
+        "torsoDepth": 0.13257712127228097,
+        "shoeLength": 0.19262594352573434,
+        "shoeHeight": 0.13071687435513016
+      },
+      "torsoBand": [
+        0.6769999742507935,
+        0.7589999794960022
+      ],
+      "shoulderY": 1.0049999952316284,
+      "spatialFallbacks": [],
+      "absentParts": []
     },
     {
       "id": "npc.shelter-survivor.sitting",
-      "heightM": 1.3412723807414695,
-      "ratios": {
-        "upperArmRadius": 0.06893587543783676,
-        "forearmRadius": 0.06636172955390471,
-        "thighRadius": 0.10087005388050616,
-        "calfRadius": 0.09931186425108866,
-        "torsoWidth": 0.30809053464362596,
-        "torsoDepth": 0.18248776813146542,
-        "shoeLength": 0.20083879325674955,
-        "shoeHeight": 0.14330374106334182
+      "path": "public/assets/models/skinned/npc.shelter-survivor.sitting.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.08939829956285976,
+        "forearmRadius": 0.08287063429573213,
+        "thighRadius": 0.11041098350400563,
+        "calfRadius": 0.1294870808808887,
+        "torsoWidth": 0.3933850824832916,
+        "torsoDepth": 0.1778220310807228,
+        "shoeLength": 0.25836385786533356,
+        "shoeHeight": 0.17532693326938897
       },
-      "groundM": -1.862645149230957e-9
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.29294596927538535,
+        "headShoulder": 1.13807495553129,
+        "legHeight": 0.41559932150915896,
+        "shoulderHeight": 0.31749380833945834
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": true,
+        "minimum": 0.7809464339281017,
+        "maximum": 0.8427583489719049,
+        "intervals": {
+          "headHeight": [
+            0.7809464339281017,
+            1.0339263951489623
+          ],
+          "headShoulder": [
+            0.6895295582497404,
+            0.8427583489719049
+          ],
+          "legHeight": [
+            0.6030912720819307,
+            1.2734668366894544
+          ]
+        },
+        "limits": {
+          "headHeight": 0.9999999999999964,
+          "headShoulder": 0.841992205018294
+        },
+        "binding": "headShoulder",
+        "scale": 0.841992205018294
+      },
+      "policy": "adult",
+      "heightM": 1.3412723807414695,
+      "groundM": -1.862645149230957e-9,
+      "ratios": {
+        "upperArmRadius": 0.06665186046210796,
+        "forearmRadius": 0.061785089654884544,
+        "thighRadius": 0.08231809220060826,
+        "calfRadius": 0.09654048106866026,
+        "torsoWidth": 0.29329246477574095,
+        "torsoDepth": 0.13257712127228097,
+        "shoeLength": 0.19262594352573434,
+        "shoeHeight": 0.13071687435513016
+      },
+      "torsoBand": [
+        0.6769999742507935,
+        0.7589999794960022
+      ],
+      "shoulderY": 1.0049999952316284,
+      "spatialFallbacks": [],
+      "absentParts": []
+    },
+    {
+      "id": "inf.mega-alpha",
+      "path": "public/assets/models/skinned/inf.mega-alpha.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.600341684618579,
+        "forearmRadius": 0.6863040890276432,
+        "thighRadius": 0.3807586318156608,
+        "calfRadius": 0.3647644027352971,
+        "torsoWidth": 1.0686247813284564,
+        "torsoDepth": 0.7331160420170121,
+        "shoeLength": 0.809278530568865,
+        "shoeHeight": 0.5247127234721857
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3398130267233443,
+        "headShoulder": 0.23383010504309307,
+        "legHeight": 0.41919392718326765,
+        "shoulderHeight": 0.8886401341045095
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 3.3560106437020263,
+        "maximum": 0.7952555981878069,
+        "intervals": {
+          "headHeight": [
+            0.601974566500684,
+            0.7952555981878069
+          ],
+          "headShoulder": [
+            3.3560106437020263,
+            4.101790786746921
+          ],
+          "legHeight": [
+            0.7618420963573547,
+            1.3447579024267582
+          ]
+        },
+        "limits": {
+          "headHeight": 0.8807456987141329,
+          "headShoulder": 4.098061886031696
+        },
+        "binding": "headHeight",
+        "scale": 0.8807456987141329
+      },
+      "policy": "retained intentional bulk",
+      "heightM": 2.647390942493313,
+      "groundM": 0.000001133274753930525,
+      "ratios": {
+        "upperArmRadius": 0.2267672956730664,
+        "forearmRadius": 0.2592379077875374,
+        "thighRadius": 0.1438241045944889,
+        "calfRadius": 0.13778259828590406,
+        "torsoWidth": 0.40365205009050364,
+        "torsoDepth": 0.27692020481363566,
+        "shoeLength": 0.30568909093822255,
+        "shoeHeight": 0.19819993906076117
+      },
+      "torsoBand": [
+        1.2493954036345258,
+        1.3890194680190064
+      ],
+      "shoulderY": 1.807891661172448,
+      "spatialFallbacks": [],
+      "absentParts": []
+    },
+    {
+      "id": "inf.mega-alpha-ashen",
+      "path": "public/assets/models/skinned/inf.mega-alpha-ashen.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.600341684618579,
+        "forearmRadius": 0.6863040890276432,
+        "thighRadius": 0.3807586318156608,
+        "calfRadius": 0.3647644027352971,
+        "torsoWidth": 1.0686247813284564,
+        "torsoDepth": 0.7331160420170121,
+        "shoeLength": 0.809278530568865,
+        "shoeHeight": 0.530001384080851
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.3819863059182658,
+        "headShoulder": 0.5526694067597058,
+        "legHeight": 0.41919392718326765,
+        "shoulderHeight": 0.8886401341045095
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 1.4199018649204467,
+        "maximum": 0.6904937516137529,
+        "intervals": {
+          "headHeight": [
+            0.5226801696976263,
+            0.6904937516137529
+          ],
+          "headShoulder": [
+            1.4199018649204467,
+            1.7354356126805461
+          ],
+          "legHeight": [
+            0.7156199879864417,
+            1.2341788507423908
+          ]
+        },
+        "limits": {
+          "headHeight": 0.7830236163456306,
+          "headShoulder": 1.7338579439417456
+        },
+        "binding": "headHeight",
+        "scale": 0.7830236163456306
+      },
+      "policy": "retained intentional bulk",
+      "heightM": 2.64739094250432,
+      "groundM": 0.000001133274753930525,
+      "ratios": {
+        "upperArmRadius": 0.22676729567212353,
+        "forearmRadius": 0.25923790778645955,
+        "thighRadius": 0.14382410459389092,
+        "calfRadius": 0.1377825982853312,
+        "torsoWidth": 0.4036520500888254,
+        "torsoDepth": 0.27692020481248425,
+        "shoeLength": 0.30568909093695157,
+        "shoeHeight": 0.20019762686786713
+      },
+      "torsoBand": [
+        1.2493954036345258,
+        1.3890194680190064
+      ],
+      "shoulderY": 1.807891661172448,
+      "spatialFallbacks": [],
+      "absentParts": []
+    },
+    {
+      "id": "inf.mega-alpha-ember",
+      "path": "public/assets/models/skinned/inf.mega-alpha-ember.lod0.glb",
+      "dimensions": {
+        "upperArmRadius": 0.5660490847331305,
+        "forearmRadius": 0.721285583532821,
+        "thighRadius": 0.3850779002570252,
+        "calfRadius": 0.5189253326146146,
+        "torsoWidth": 0.9957044279719298,
+        "torsoDepth": 0.7133695594255332,
+        "shoeLength": 0.7930199329416177,
+        "shoeHeight": 0.5104316412826518
+      },
+      "crowdSkin": true,
+      "child": false,
+      "approvedPilot": false,
+      "before": {
+        "headHeight": 0.36931338146400317,
+        "headShoulder": 0.24037477478879762,
+        "legHeight": 0.4277894771889893,
+        "shoulderHeight": 0.8620447507894888
+      },
+      "plan": {
+        "feasible": true,
+        "strictThreeRatioIntervalFeasible": false,
+        "minimum": 3.2646367408230845,
+        "maximum": 0.7291208905780245,
+        "intervals": {
+          "headHeight": [
+            0.5519037510265657,
+            0.7291208905780245
+          ],
+          "headShoulder": [
+            3.2646367408230845,
+            3.990111572117103
+          ],
+          "legHeight": [
+            0.7553520569690056,
+            1.3027030701654734
+          ]
+        },
+        "limits": {
+          "headHeight": 0.8100110282089119,
+          "headShoulder": 3.986484197960633
+        },
+        "binding": "headHeight",
+        "scale": 0.8100110282089119
+      },
+      "policy": "retained intentional bulk",
+      "heightM": 2.594204269288881,
+      "groundM": -0.0000019488304891465852,
+      "ratios": {
+        "upperArmRadius": 0.21819757658802058,
+        "forearmRadius": 0.2780373126633311,
+        "thighRadius": 0.14843777138744058,
+        "calfRadius": 0.20003256441978703,
+        "torsoWidth": 0.38381882250346877,
+        "torsoDepth": 0.27498588598849266,
+        "shoeLength": 0.30568908637213793,
+        "shoeHeight": 0.19675846166985553
+      },
+      "torsoBand": [
+        1.2493954036345258,
+        1.3890194680190064
+      ],
+      "shoulderY": 1.807891661172448,
+      "spatialFallbacks": [],
+      "absentParts": []
     }
   ]
 }
