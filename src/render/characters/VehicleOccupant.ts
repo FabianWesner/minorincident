@@ -67,11 +67,14 @@ export class VehicleOccupant extends Group {
     }
     const model = await registry.loadAsset(asset, 'lod1');
     // Registry clones share their source resources; batching owns copies only.
-    model.traverse(node => { if (node instanceof Mesh) { node.geometry = node.geometry.clone(); const copy = (m: import('three').Material) => new MeshLambertNodeMaterial({ color: (m as import('three').MeshStandardMaterial).color }); node.material = Array.isArray(node.material) ? node.material.map(copy) : copy(node.material); } });
+    // Textured figures (registry atlas route) keep the registry's shared textured material, exactly as on foot; recolouring them to
+    // plain swatches made them pale. Only untextured parts take the vertex-colour route below.
+    const textured = (m: import('three').Material) => !!(m as import('three').MeshStandardMaterial).map;
+    model.traverse(node => { if (node instanceof Mesh) { node.geometry = node.geometry.clone(); if ((Array.isArray(node.material) ? node.material : [node.material]).some(textured)) { for (const m of Array.isArray(node.material) ? node.material : [node.material]) (m as import('../PaletteMaterial').PaletteMaterial).movingFigure.value = 1; return; } const copy = (m: import('three').Material) => new MeshLambertNodeMaterial({ color: (m as import('three').MeshStandardMaterial).color }); node.material = Array.isArray(node.material) ? node.material.map(copy) : copy(node.material); } });
     const material = materials.fromVertexColors(`vehicle:${asset}`); material.movingFigure.value = 1; material.userData.sharedPalette = true;
     batchRigidParts(model, characterNodes, material, source => (source as import('three').MeshStandardMaterial).color);
     model.traverse(node => {
-      if (!(node instanceof Mesh) || node.material === material) return;
+      if (!(node instanceof Mesh) || node.material === material || (Array.isArray(node.material) ? node.material : [node.material]).some(textured)) return;
       const source = Array.isArray(node.material) ? node.material[0] : node.material;
       const color = (source as MeshLambertNodeMaterial).color.toArray(), count = node.geometry.getAttribute('position').count, colors = new Float32Array(count * 3);
       for (let i = 0; i < count; i++) colors.set(color, i * 3);
