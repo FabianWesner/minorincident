@@ -4,6 +4,15 @@ import type { MissionResult } from '../missions/types';
 import { commitCrossingHandover } from './crossingHandover';
 import { autoRewards, carriedRackMax, lastLevel, type CampaignSave, type Level } from './Campaign';
 import { heldAction } from './selection';
+import type { VehicleTransfer } from '../vehicles/Vehicles';
+
+/** Keep the L8 transport only for the canonical first-time handover to L9. A replay after the L9 crash
+ * must not combine a new APC transfer with the already committed L9→L10 crossing transaction. */
+export function recordL8Transport(save: CampaignSave, transport: VehicleTransfer): boolean {
+  if (save.completedLevels !== 7 || save.crossingHandover) return false;
+  save.transport = structuredClone(transport);
+  return true;
+}
 
 /** Record the completed run before any result-screen navigation or level unload. Replays update aftermath without granting rewards again. */
 export function completeCampaignLevel(save: CampaignSave, level: Level, result: MissionResult, world: SimWorld): void {

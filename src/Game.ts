@@ -19,7 +19,7 @@ import { completePending,newCampaign, reservedCampaignIds, nextLevelAfter, prese
 import { heldAction } from './sim/progression/selection';
 import { applyCampaign, campaignLoadout } from './sim/progression/apply';
 import { SaveStore } from './sim/progression/Save';
-import { completeCampaignLevel } from './sim/progression/carryover';
+import { completeCampaignLevel, recordL8Transport } from './sim/progression/carryover';
 import type { SurvivorVariant } from './data/survivor';
 import { performanceLevels, installPerformanceLevel } from '../tests/fixtures/scenarios/performance';
 import { Quality, type QualitySetting } from './core/Quality';
@@ -397,7 +397,7 @@ export class Game {
     const save=this.campaign!;
     this.world.events.on('level.completed',event=>{
       if(event.type!=='level.completed'||!/^L(?:[1-9]|10)$/.test(event.id))return;
-      if (event.id === 'L8' && this.world.missions?.l8) { const transport = this.world.missions.l8.transferOrNull(); if (transport) save.transport = transport; }
+      if (event.id === 'L8' && this.world.missions?.l8) { const transport = this.world.missions.l8.transferOrNull(); if (transport) recordL8Transport(save, transport); }
       completeCampaignLevel(save,Number(event.id.slice(1)) as Level,event.result,this.world);
       this.saveCampaign();
       const next = Number(event.id.slice(1)) + 1;

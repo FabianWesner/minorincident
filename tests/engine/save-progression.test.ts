@@ -13,7 +13,7 @@ import { emptyInput } from '../../src/input/InputFrame';
 import { Loadout } from '../../src/sim/combat/Loadout';
 import { beginRewards, finishRewards, gearTier, newCampaign, pickUpgrades, preset, revealCards, type CampaignSave, type Level } from '../../src/sim/progression/Campaign';
 import { campaignLoadout, restoreSelectedAction } from '../../src/sim/progression/apply';
-import { completeCampaignLevel } from '../../src/sim/progression/carryover';
+import { completeCampaignLevel, recordL8Transport } from '../../src/sim/progression/carryover';
 import { commitCrossingHandover } from '../../src/sim/progression/crossingHandover';
 import { decodeSave, SaveStore, validateSave } from '../../src/sim/progression/Save';
 
@@ -178,6 +178,11 @@ test('crossing handover: needs the finished crawl, commits once, drops weapons a
   const continued = decodeSave(JSON.stringify(save));
   expect(continued.status, 'Continue loads the committed save').toBe('ok');
   expect((continued as { save: CampaignSave }).save.crossingHandover).toEqual(save.crossingHandover);
+  expect(validateSave(save)).toBe(true);
+  // Replaying L8 from this post-crash save must not persist a second transport.
+  const transport = { occupants: [] } as never;
+  expect(recordL8Transport(save, transport)).toBe(false);
+  expect(save.transport).toBeUndefined();
   expect(validateSave(save)).toBe(true);
 });
 
