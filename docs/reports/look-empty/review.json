@@ -1,0 +1,1430 @@
+{
+  "runtimeCommit": "012044601",
+  "manualReview": {
+    "sheets": 14,
+    "stations": 30,
+    "zooms": [
+      1,
+      1.5
+    ],
+    "tiers": [
+      "high",
+      "low"
+    ],
+    "scores": {
+      "L6": {
+        "before": 6,
+        "after": 7
+      },
+      "L7": {
+        "before": 5,
+        "after": 7
+      },
+      "L10": {
+        "before": 5,
+        "after": 6.5
+      }
+    }
+  },
+  "levels": {
+    "L6": {
+      "drawMax": 110,
+      "trianglesMax": 113191,
+      "contrastMin": null
+    },
+    "L7": {
+      "drawMax": 108,
+      "trianglesMax": 166725,
+      "contrastMin": null
+    },
+    "L10": {
+      "drawMax": 102,
+      "trianglesMax": 140134,
+      "contrastMin": 2.690483298264982
+    }
+  },
+  "pending": [],
+  "newLateBuilds": [],
+  "R1_R5Unchanged": true,
+  "finaleIdentical": true,
+  "placementPlan": {
+    "l6": {
+      "pieces": 8,
+      "lights": [
+        {
+          "x": 258.5,
+          "z": 22,
+          "base": 3.905
+        },
+        {
+          "x": 273.5,
+          "z": 7.8,
+          "base": 3.905
+        },
+        {
+          "x": 283,
+          "z": 22,
+          "base": 3.905
+        }
+      ]
+    },
+    "l7": {
+      "pieces": 12,
+      "stations": [
+        [
+          233,
+          3.9,
+          21.8
+        ],
+        [
+          195.94616038679416,
+          3.3,
+          8.2
+        ],
+        [
+          157,
+          2.0999999999999996,
+          21.8
+        ],
+        [
+          119,
+          0.9,
+          8.2
+        ]
+      ],
+      "supportErrors": []
+    },
+    "l10": {
+      "pieces": 92,
+      "lamps": 35,
+      "r7Pieces": 16,
+      "gapMin": 25.428052567411214,
+      "gapMax": 33.288854078156874,
+      "lastX": 3891
+    },
+    "overlaps": [],
+    "collidersUnchanged": true
+  },
+  "frames": [
+    {
+      "name": "L6-high-261-15-z1",
+      "level": "L6",
+      "tier": "high",
+      "draws": 91,
+      "triangles": 67559,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L6-high-261-15-z1.5",
+      "level": "L6",
+      "tier": "high",
+      "draws": 109,
+      "triangles": 86475,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L6-high-273-15-z1",
+      "level": "L6",
+      "tier": "high",
+      "draws": 103,
+      "triangles": 86389,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L6-high-273-15-z1.5",
+      "level": "L6",
+      "tier": "high",
+      "draws": 110,
+      "triangles": 108161,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L6-high-283-15-z1",
+      "level": "L6",
+      "tier": "high",
+      "draws": 101,
+      "triangles": 96143,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L6-high-283-15-z1.5",
+      "level": "L6",
+      "tier": "high",
+      "draws": 109,
+      "triangles": 113191,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-high-265-15-z1",
+      "level": "L7",
+      "tier": "high",
+      "draws": 97,
+      "triangles": 138642,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-high-265-15-z1.5",
+      "level": "L7",
+      "tier": "high",
+      "draws": 107,
+      "triangles": 166725,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-high-247-15-z1",
+      "level": "L7",
+      "tier": "high",
+      "draws": 96,
+      "triangles": 106581,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-high-247-15-z1.5",
+      "level": "L7",
+      "tier": "high",
+      "draws": 101,
+      "triangles": 109385,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-high-233-15-z1",
+      "level": "L7",
+      "tier": "high",
+      "draws": 94,
+      "triangles": 84855,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-high-233-15-z1.5",
+      "level": "L7",
+      "tier": "high",
+      "draws": 99,
+      "triangles": 88735,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-high-214-15-z1",
+      "level": "L7",
+      "tier": "high",
+      "draws": 78,
+      "triangles": 89724,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-high-214-15-z1.5",
+      "level": "L7",
+      "tier": "high",
+      "draws": 84,
+      "triangles": 101981,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-high-195-15-z1",
+      "level": "L7",
+      "tier": "high",
+      "draws": 87,
+      "triangles": 83877,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-high-195-15-z1.5",
+      "level": "L7",
+      "tier": "high",
+      "draws": 94,
+      "triangles": 98661,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-high-176-15-z1",
+      "level": "L7",
+      "tier": "high",
+      "draws": 82,
+      "triangles": 99783,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-high-176-15-z1.5",
+      "level": "L7",
+      "tier": "high",
+      "draws": 87,
+      "triangles": 102323,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-high-157-15-z1",
+      "level": "L7",
+      "tier": "high",
+      "draws": 88,
+      "triangles": 88313,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-high-157-15-z1.5",
+      "level": "L7",
+      "tier": "high",
+      "draws": 91,
+      "triangles": 90341,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-high-138-15-z1",
+      "level": "L7",
+      "tier": "high",
+      "draws": 85,
+      "triangles": 94615,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-high-138-15-z1.5",
+      "level": "L7",
+      "tier": "high",
+      "draws": 94,
+      "triangles": 114449,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-high-119-15-z1",
+      "level": "L7",
+      "tier": "high",
+      "draws": 98,
+      "triangles": 91303,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-high-119-15-z1.5",
+      "level": "L7",
+      "tier": "high",
+      "draws": 102,
+      "triangles": 101067,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-high-100-15-z1",
+      "level": "L7",
+      "tier": "high",
+      "draws": 90,
+      "triangles": 104722,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-high-100-15-z1.5",
+      "level": "L7",
+      "tier": "high",
+      "draws": 108,
+      "triangles": 119233,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-668-25-z1",
+      "level": "L10",
+      "tier": "high",
+      "draws": 89,
+      "triangles": 129434,
+      "contrast": 3,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-668-25-z1.5",
+      "level": "L10",
+      "tier": "high",
+      "draws": 96,
+      "triangles": 137784,
+      "contrast": 2.690483298264982,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-1095-25-z1",
+      "level": "L10",
+      "tier": "high",
+      "draws": 90,
+      "triangles": 131100,
+      "contrast": 3,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-1095-25-z1.5",
+      "level": "L10",
+      "tier": "high",
+      "draws": 102,
+      "triangles": 140134,
+      "contrast": 3,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-1420-100-z1",
+      "level": "L10",
+      "tier": "high",
+      "draws": 73,
+      "triangles": 91005,
+      "contrast": 3.356961047869043,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-1420-100-z1.5",
+      "level": "L10",
+      "tier": "high",
+      "draws": 77,
+      "triangles": 99085,
+      "contrast": 3.092251415398027,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-2000--75-z1",
+      "level": "L10",
+      "tier": "high",
+      "draws": 70,
+      "triangles": 78079,
+      "contrast": 3.0433984188665035,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-2000--75-z1.5",
+      "level": "L10",
+      "tier": "high",
+      "draws": 77,
+      "triangles": 85943,
+      "contrast": 3.1146977783418768,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-2640-45-z1",
+      "level": "L10",
+      "tier": "high",
+      "draws": 78,
+      "triangles": 96059,
+      "contrast": 2.9914980636891886,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-2640-45-z1.5",
+      "level": "L10",
+      "tier": "high",
+      "draws": 84,
+      "triangles": 103289,
+      "contrast": 3,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-2880--5-z1",
+      "level": "L10",
+      "tier": "high",
+      "draws": 75,
+      "triangles": 90246,
+      "contrast": 3.2565954506666457,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-2880--5-z1.5",
+      "level": "L10",
+      "tier": "high",
+      "draws": 81,
+      "triangles": 100583,
+      "contrast": 2.8177484207547523,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-2950--5-z1",
+      "level": "L10",
+      "tier": "high",
+      "draws": 63,
+      "triangles": 69291,
+      "contrast": 3.436760978029599,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-2950--5-z1.5",
+      "level": "L10",
+      "tier": "high",
+      "draws": 69,
+      "triangles": 85219,
+      "contrast": 3.4041399454069405,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-2977-45-z1",
+      "level": "L10",
+      "tier": "high",
+      "draws": 60,
+      "triangles": 69893,
+      "contrast": 3.1673349593007636,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-2977-45-z1.5",
+      "level": "L10",
+      "tier": "high",
+      "draws": 64,
+      "triangles": 75683,
+      "contrast": 3.4631573588984637,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-3020-95-z1",
+      "level": "L10",
+      "tier": "high",
+      "draws": 61,
+      "triangles": 79253,
+      "contrast": 3.5827794368403327,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-3020-95-z1.5",
+      "level": "L10",
+      "tier": "high",
+      "draws": 71,
+      "triangles": 107221,
+      "contrast": 3.3539400140059703,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-3100-95-z1",
+      "level": "L10",
+      "tier": "high",
+      "draws": 60,
+      "triangles": 74427,
+      "contrast": 3.3849100740623457,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-3100-95-z1.5",
+      "level": "L10",
+      "tier": "high",
+      "draws": 67,
+      "triangles": 91718,
+      "contrast": 3.3833541208737543,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-3220-95-z1",
+      "level": "L10",
+      "tier": "high",
+      "draws": 59,
+      "triangles": 63210,
+      "contrast": 3.563887464397524,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-3220-95-z1.5",
+      "level": "L10",
+      "tier": "high",
+      "draws": 61,
+      "triangles": 69114,
+      "contrast": 3.447505046317056,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-3370-95-z1",
+      "level": "L10",
+      "tier": "high",
+      "draws": 63,
+      "triangles": 63442,
+      "contrast": 3.50207819944533,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-3370-95-z1.5",
+      "level": "L10",
+      "tier": "high",
+      "draws": 68,
+      "triangles": 77048,
+      "contrast": 3.174019706793357,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-3490-95-z1",
+      "level": "L10",
+      "tier": "high",
+      "draws": 63,
+      "triangles": 81591,
+      "contrast": 3.4945714100537235,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-3490-95-z1.5",
+      "level": "L10",
+      "tier": "high",
+      "draws": 67,
+      "triangles": 100071,
+      "contrast": 3.2926637839035373,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-3577-40-z1",
+      "level": "L10",
+      "tier": "high",
+      "draws": 62,
+      "triangles": 72511,
+      "contrast": 3.2594481994825357,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-3577-40-z1.5",
+      "level": "L10",
+      "tier": "high",
+      "draws": 66,
+      "triangles": 98506,
+      "contrast": 3.2963395564094435,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-3630--25-z1",
+      "level": "L10",
+      "tier": "high",
+      "draws": 65,
+      "triangles": 68220,
+      "contrast": 3.402919573421299,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-3630--25-z1.5",
+      "level": "L10",
+      "tier": "high",
+      "draws": 83,
+      "triangles": 113027,
+      "contrast": 3.302520361696533,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-high-3740--25-z1",
+      "level": "L10",
+      "tier": "high",
+      "draws": 63,
+      "triangles": 67601,
+      "contrast": 3.2887980120435123,
+      "postLoadBuilds": {
+        "pal_picketWhite:mesh_0": 1,
+        "emi_orange:mesh_2": 1
+      },
+      "trace": []
+    },
+    {
+      "name": "L10-high-3740--25-z1.5",
+      "level": "L10",
+      "tier": "high",
+      "draws": 65,
+      "triangles": 68845,
+      "contrast": 3.3887337319304134,
+      "postLoadBuilds": {
+        "pal_picketWhite:mesh_0": 1,
+        "emi_orange:mesh_2": 1
+      },
+      "trace": []
+    },
+    {
+      "name": "L10-high-3850--41-z1",
+      "level": "L10",
+      "tier": "high",
+      "draws": 69,
+      "triangles": 68260,
+      "contrast": 3.3030857482565934,
+      "postLoadBuilds": {
+        "pal_picketWhite:mesh_0": 1,
+        "emi_orange:mesh_2": 1
+      },
+      "trace": []
+    },
+    {
+      "name": "L10-high-3850--41-z1.5",
+      "level": "L10",
+      "tier": "high",
+      "draws": 70,
+      "triangles": 68864,
+      "contrast": 3.237815854559137,
+      "postLoadBuilds": {
+        "pal_picketWhite:mesh_0": 1,
+        "emi_orange:mesh_2": 1
+      },
+      "trace": []
+    },
+    {
+      "name": "L6-low-261-15-z1",
+      "level": "L6",
+      "tier": "low",
+      "draws": 80,
+      "triangles": 56189,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L6-low-261-15-z1.5",
+      "level": "L6",
+      "tier": "low",
+      "draws": 88,
+      "triangles": 65317,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L6-low-273-15-z1",
+      "level": "L6",
+      "tier": "low",
+      "draws": 85,
+      "triangles": 64749,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L6-low-273-15-z1.5",
+      "level": "L6",
+      "tier": "low",
+      "draws": 90,
+      "triangles": 73945,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L6-low-283-15-z1",
+      "level": "L6",
+      "tier": "low",
+      "draws": 84,
+      "triangles": 73745,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L6-low-283-15-z1.5",
+      "level": "L6",
+      "tier": "low",
+      "draws": 88,
+      "triangles": 82585,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-low-265-15-z1",
+      "level": "L7",
+      "tier": "low",
+      "draws": 54,
+      "triangles": 55756,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-low-265-15-z1.5",
+      "level": "L7",
+      "tier": "low",
+      "draws": 67,
+      "triangles": 85974,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-low-247-15-z1",
+      "level": "L7",
+      "tier": "low",
+      "draws": 59,
+      "triangles": 54240,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-low-247-15-z1.5",
+      "level": "L7",
+      "tier": "low",
+      "draws": 63,
+      "triangles": 54404,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-low-233-15-z1",
+      "level": "L7",
+      "tier": "low",
+      "draws": 58,
+      "triangles": 47852,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-low-233-15-z1.5",
+      "level": "L7",
+      "tier": "low",
+      "draws": 60,
+      "triangles": 48792,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-low-214-15-z1",
+      "level": "L7",
+      "tier": "low",
+      "draws": 52,
+      "triangles": 50377,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-low-214-15-z1.5",
+      "level": "L7",
+      "tier": "low",
+      "draws": 55,
+      "triangles": 55383,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-low-195-15-z1",
+      "level": "L7",
+      "tier": "low",
+      "draws": 60,
+      "triangles": 51640,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-low-195-15-z1.5",
+      "level": "L7",
+      "tier": "low",
+      "draws": 61,
+      "triangles": 52384,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-low-176-15-z1",
+      "level": "L7",
+      "tier": "low",
+      "draws": 54,
+      "triangles": 52038,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-low-176-15-z1.5",
+      "level": "L7",
+      "tier": "low",
+      "draws": 58,
+      "triangles": 52202,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-low-157-15-z1",
+      "level": "L7",
+      "tier": "low",
+      "draws": 58,
+      "triangles": 47728,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-low-157-15-z1.5",
+      "level": "L7",
+      "tier": "low",
+      "draws": 60,
+      "triangles": 49210,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-low-138-15-z1",
+      "level": "L7",
+      "tier": "low",
+      "draws": 56,
+      "triangles": 51717,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-low-138-15-z1.5",
+      "level": "L7",
+      "tier": "low",
+      "draws": 58,
+      "triangles": 55422,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-low-119-15-z1",
+      "level": "L7",
+      "tier": "low",
+      "draws": 63,
+      "triangles": 49307,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-low-119-15-z1.5",
+      "level": "L7",
+      "tier": "low",
+      "draws": 65,
+      "triangles": 52745,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-low-100-15-z1",
+      "level": "L7",
+      "tier": "low",
+      "draws": 57,
+      "triangles": 53040,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L7-low-100-15-z1.5",
+      "level": "L7",
+      "tier": "low",
+      "draws": 65,
+      "triangles": 59887,
+      "contrast": null,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-668-25-z1",
+      "level": "L10",
+      "tier": "low",
+      "draws": 80,
+      "triangles": 96476,
+      "contrast": 3.001182658731249,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-668-25-z1.5",
+      "level": "L10",
+      "tier": "low",
+      "draws": 87,
+      "triangles": 110140,
+      "contrast": 2.7040912880143213,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-1095-25-z1",
+      "level": "L10",
+      "tier": "low",
+      "draws": 83,
+      "triangles": 96376,
+      "contrast": 3,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-1095-25-z1.5",
+      "level": "L10",
+      "tier": "low",
+      "draws": 93,
+      "triangles": 99264,
+      "contrast": 3,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-1420-100-z1",
+      "level": "L10",
+      "tier": "low",
+      "draws": 64,
+      "triangles": 83110,
+      "contrast": 3.4174326869410803,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-1420-100-z1.5",
+      "level": "L10",
+      "tier": "low",
+      "draws": 66,
+      "triangles": 88792,
+      "contrast": 3.152086032186481,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-2000--75-z1",
+      "level": "L10",
+      "tier": "low",
+      "draws": 61,
+      "triangles": 65686,
+      "contrast": 3.0959478171501775,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-2000--75-z1.5",
+      "level": "L10",
+      "tier": "low",
+      "draws": 68,
+      "triangles": 71732,
+      "contrast": 3.1307174259340522,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-2640-45-z1",
+      "level": "L10",
+      "tier": "low",
+      "draws": 69,
+      "triangles": 70177,
+      "contrast": 3,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-2640-45-z1.5",
+      "level": "L10",
+      "tier": "low",
+      "draws": 75,
+      "triangles": 73709,
+      "contrast": 3,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-2880--5-z1",
+      "level": "L10",
+      "tier": "low",
+      "draws": 66,
+      "triangles": 69618,
+      "contrast": 3.2536165880589474,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-2880--5-z1.5",
+      "level": "L10",
+      "tier": "low",
+      "draws": 71,
+      "triangles": 76545,
+      "contrast": 3,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-2950--5-z1",
+      "level": "L10",
+      "tier": "low",
+      "draws": 55,
+      "triangles": 62213,
+      "contrast": 3.47894272535667,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-2950--5-z1.5",
+      "level": "L10",
+      "tier": "low",
+      "draws": 61,
+      "triangles": 72713,
+      "contrast": 3.4621898914690012,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-2977-45-z1",
+      "level": "L10",
+      "tier": "low",
+      "draws": 53,
+      "triangles": 62467,
+      "contrast": 3.12492245762624,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-2977-45-z1.5",
+      "level": "L10",
+      "tier": "low",
+      "draws": 57,
+      "triangles": 66481,
+      "contrast": 3.4631573588984637,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-3020-95-z1",
+      "level": "L10",
+      "tier": "low",
+      "draws": 54,
+      "triangles": 69807,
+      "contrast": 3.5827794368403327,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-3020-95-z1.5",
+      "level": "L10",
+      "tier": "low",
+      "draws": 64,
+      "triangles": 88569,
+      "contrast": 3.397445636047387,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-3100-95-z1",
+      "level": "L10",
+      "tier": "low",
+      "draws": 53,
+      "triangles": 60830,
+      "contrast": 3.3831355132521415,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-3100-95-z1.5",
+      "level": "L10",
+      "tier": "low",
+      "draws": 60,
+      "triangles": 75723,
+      "contrast": 3.3539517136222328,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-3220-95-z1",
+      "level": "L10",
+      "tier": "low",
+      "draws": 52,
+      "triangles": 57930,
+      "contrast": 3.5638309484542545,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-3220-95-z1.5",
+      "level": "L10",
+      "tier": "low",
+      "draws": 54,
+      "triangles": 61436,
+      "contrast": 3.447505046317056,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-3370-95-z1",
+      "level": "L10",
+      "tier": "low",
+      "draws": 56,
+      "triangles": 58163,
+      "contrast": 3.4862349247405806,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-3370-95-z1.5",
+      "level": "L10",
+      "tier": "low",
+      "draws": 61,
+      "triangles": 69993,
+      "contrast": 3.273264027194958,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-3490-95-z1",
+      "level": "L10",
+      "tier": "low",
+      "draws": 57,
+      "triangles": 68395,
+      "contrast": 3.5204059269617356,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-3490-95-z1.5",
+      "level": "L10",
+      "tier": "low",
+      "draws": 61,
+      "triangles": 82079,
+      "contrast": 3.2926335139067855,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-3577-40-z1",
+      "level": "L10",
+      "tier": "low",
+      "draws": 55,
+      "triangles": 65083,
+      "contrast": 3.25491876772842,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-3577-40-z1.5",
+      "level": "L10",
+      "tier": "low",
+      "draws": 59,
+      "triangles": 77579,
+      "contrast": 3.2969179605662577,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-3630--25-z1",
+      "level": "L10",
+      "tier": "low",
+      "draws": 58,
+      "triangles": 63192,
+      "contrast": 3.503707646389714,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-3630--25-z1.5",
+      "level": "L10",
+      "tier": "low",
+      "draws": 66,
+      "triangles": 77589,
+      "contrast": 3.3285203578383613,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-3740--25-z1",
+      "level": "L10",
+      "tier": "low",
+      "draws": 56,
+      "triangles": 62341,
+      "contrast": 3.3054735803746635,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-3740--25-z1.5",
+      "level": "L10",
+      "tier": "low",
+      "draws": 57,
+      "triangles": 62963,
+      "contrast": 3.398489514494913,
+      "postLoadBuilds": {},
+      "trace": []
+    },
+    {
+      "name": "L10-low-3850--41-z1",
+      "level": "L10",
+      "tier": "low",
+      "draws": 61,
+      "triangles": 62808,
+      "contrast": 3.278045922740151,
+      "postLoadBuilds": {
+        "pal_picketWhite:mesh_0": 1,
+        "emi_orange:mesh_2": 1
+      },
+      "trace": [
+        {
+          "material": "pal_picketWhite",
+          "ancestry": [
+            {
+              "name": "mesh_0"
+            },
+            {
+              "name": "body"
+            },
+            {
+              "name": "root"
+            },
+            {
+              "name": "Scene",
+              "asset": "wpn.minigun-mounted"
+            }
+          ]
+        },
+        {
+          "material": "emi_orange",
+          "ancestry": [
+            {
+              "name": "mesh_2"
+            },
+            {
+              "name": "heatGlow"
+            },
+            {
+              "name": "barrels"
+            },
+            {
+              "name": "elevation"
+            },
+            {
+              "name": "pivot"
+            },
+            {
+              "name": "root"
+            },
+            {
+              "name": "Scene",
+              "asset": "wpn.minigun-mounted"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "L10-low-3850--41-z1.5",
+      "level": "L10",
+      "tier": "low",
+      "draws": 62,
+      "triangles": 63124,
+      "contrast": 3.2431548985646454,
+      "postLoadBuilds": {
+        "pal_picketWhite:mesh_0": 1,
+        "emi_orange:mesh_2": 1
+      },
+      "trace": [
+        {
+          "material": "pal_picketWhite",
+          "ancestry": [
+            {
+              "name": "mesh_0"
+            },
+            {
+              "name": "body"
+            },
+            {
+              "name": "root"
+            },
+            {
+              "name": "Scene",
+              "asset": "wpn.minigun-mounted"
+            }
+          ]
+        },
+        {
+          "material": "emi_orange",
+          "ancestry": [
+            {
+              "name": "mesh_2"
+            },
+            {
+              "name": "heatGlow"
+            },
+            {
+              "name": "barrels"
+            },
+            {
+              "name": "elevation"
+            },
+            {
+              "name": "pivot"
+            },
+            {
+              "name": "root"
+            },
+            {
+              "name": "Scene",
+              "asset": "wpn.minigun-mounted"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "npm test": "26 files, 110 tests pass",
+    "smoke": "pass, 157.6 s",
+    "scene gate": "48/48 pass, 0 known, 0 not run",
+    "load": "pass, 60 samples / 30 matched pairs, candidate maximum 5576.8 ms, maximum absolute median delta 35.8 ms"
+  },
+  "loadAcceptance": "loads-natural-quiet/summary.json",
+  "loadAdmission": "Natural quiet host and idle pool before each pair; normal shared admission; all samples retained, including any activity starting mid-pair."
+}

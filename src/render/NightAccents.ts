@@ -51,9 +51,25 @@ export function nightAccents(world: DistrictWorld | null | undefined): AccentSet
     const truck = fair?.decay.placements.find(p => p.id === 'l7-rocket-wreck');
     if (truck && fair) {
       const [x, y, z] = truck.position;
-      const entry: AccentSet = { points: [{ kind: 'storm-lantern', x: x - 2.8 + fair.origin[0], y: y + .17, z: z + 1.95 + fair.origin[1],
+      const points: Accent[] = [{ kind: 'storm-lantern', x: x - 2.8 + fair.origin[0], y: y + .17, z: z + 1.95 + fair.origin[1],
         yaw: 0, seed: 142, color: '#ffdfac', glow: 5, flicker: 0, strobe: false,
-        pool: { color: '#ffdfac', intensity: 18, range: 7 } }], fires: [] };
+        pool: { color: '#ffdfac', intensity: 18, range: 7 } }];
+      for (const p of fair.decay.placements) if (!fair.decay.removed.includes(p.id) && p.decor && p.roadLife) {
+        const [px, , pz] = p.position;
+        points.push({ kind: 'storm-lantern', x: px + fair.origin[0], y: p.visualAabb.max[1] + .235,
+          z: pz + fair.origin[1], yaw: p.yaw, seed: Math.abs(px * 12.9898 + pz * 78.233) % 6.283,
+          color: '#ffb35c', glow: 5, flicker: 1, strobe: false,
+          pool: { color: '#ff9a48', intensity: 7.6, range: 7.4 } });
+      }
+      // The existing wrecks sit between the supply stops. Flat road flares
+      // mark their clear shoulder and carry warm ground into the zoom-1 frame.
+      for (const p of fair.decay.placements) if (p.id.startsWith('l7-military-')) {
+        const px = p.position[0] + fair.origin[0], pz = 15 + (p.position[2] < 15 ? -5.8 : 5.8) + fair.origin[1];
+        points.push({ kind: 'flare', x: px, y: world.groundHeight(px, pz) + .03, z: pz,
+          yaw: p.yaw, seed: px * .13, color: '#ff9f42', glow: 7, flicker: 1, strobe: false,
+          pool: { color: '#ff843d', intensity: 5.2, range: 7 } });
+      }
+      const entry: AccentSet = { points, fires: [] };
       cache.set(world, entry); return entry;
     }
   }
@@ -255,7 +271,7 @@ export function cureAccents(placements: readonly Placement[], origin: P2 = [0, 0
       const [x, , z] = p.position;
       put({ kind: 'storm-lantern', x, y: p.visualAabb.max[1] + .235, z, yaw: p.yaw,
         color: '#ffb35c', glow: 5, flicker: 1, strobe: false,
-        pool: { color: '#ff9a48', intensity: 4.6, range: Math.min(2.4, lane(x, z) - 1.6) } });
+        pool: { color: '#ff9a48', intensity: 4.6, range: x >= 2910 ? 1.8 : Math.min(2.4, lane(x, z) - 1.6) } });
       continue;
     }
     if (!p.roadLife) continue;
@@ -316,6 +332,11 @@ export function subwayAccents(origin: P2 = [0, 0]): AccentSet {
   // Beside the chair, clear of the bedroll and projected wall piers. The frame's base rests on the .87 m walkway.
   for (const cx of l6Camps) put({ kind: 'storm-lantern', x: cx - 1, y: 1.11, z: 17.8, yaw: 0, color: '#ffb35c', glow: 4, flicker: 1, strobe: false, pool: { color: '#ff9a48', intensity: 5, range: 3.4 } });
   for (const [x, z] of [[261.5, 13.6], [266.5, 17.6], [271.5, 13.4]] as const) flare(x, 3.93, z);
+  // The final subway-to-street handover keeps the existing red flares but adds
+  // three spaced warm pools over the abandoned exit supplies and dark apron.
+  for (const [i, [x, z]] of ([[258.5, 22], [273.5, 7.8], [283, 22]] as const).entries())
+    put({ kind: 'storm-lantern', x, y: 4.14, z, yaw: i * 1.1, color: '#ffb35c', glow: 5, flicker: 1, strobe: false,
+      pool: { color: '#ff9a48', intensity: 7.6, range: 7.4 } });
   fires.push({ x: 283 + origin[0], z: 8 + origin[1], radius: 1.4, car: true }, { x: 280.2 + origin[0], z: 21.2 + origin[1], radius: .8, car: false });
   return { points, fires };
 }

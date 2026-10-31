@@ -1,0 +1,61 @@
+{
+  "method": "Matched local public bundles, fresh isolated contexts, shared native GPU pool, 5 interleaved menu-click-to-loading-card-closure pairs per tier and level; median delta <= 300 ms, every candidate sample <= 6 s.",
+  "rounds": 5,
+  "groups": [
+    {
+      "level": "L6",
+      "tier": "low",
+      "beforeMedian": 2990.699999809265,
+      "afterMedian": 3091.9000005722046,
+      "deltaMs": 101.20000076293945,
+      "beforeMax": 3106.800000190735,
+      "afterMax": 3292.1000003814697
+    },
+    {
+      "level": "L6",
+      "tier": "high",
+      "beforeMedian": 4409.5,
+      "afterMedian": 4427.10000038147,
+      "deltaMs": 17.600000381469727,
+      "beforeMax": 4746.39999961853,
+      "afterMax": 5041.599999427795
+    },
+    {
+      "level": "L7",
+      "tier": "low",
+      "beforeMedian": 3209.0999994277954,
+      "afterMedian": 3025.6000003814697,
+      "deltaMs": -183.49999904632568,
+      "beforeMax": 3493.5,
+      "afterMax": 3259.4000005722046
+    },
+    {
+      "level": "L7",
+      "tier": "high",
+      "beforeMedian": 3393,
+      "afterMedian": 3809.300000190735,
+      "deltaMs": 416.30000019073486,
+      "beforeMax": 3832,
+      "afterMax": 4303.199999809265
+    },
+    {
+      "level": "L10",
+      "tier": "low",
+      "beforeMedian": 5607.400000572205,
+      "afterMedian": 5810.10000038147,
+      "deltaMs": 202.69999980926514,
+      "beforeMax": 6062.199999809265,
+      "afterMax": 6326.199999809265
+    },
+    {
+      "level": "L10",
+      "tier": "high",
+      "beforeMedian": 7122.89999961853,
+      "afterMedian": 5958.199999809265,
+      "deltaMs": -1164.6999998092651,
+      "beforeMax": 7811,
+      "afterMax": 7990.199999809265
+    }
+  ],
+  "pass": false
+}
