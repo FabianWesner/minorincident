@@ -189,6 +189,9 @@ class CivilianBatch extends Group {
     const surface = this.surface = { bind: () => shared.bindTexture(this.texture, baked.texture), textures: baked.texture ? [baked.texture] : [] };
     crowdSurfaceBindings.set(baked.geometry, surface);
     this.mesh = new InstancedMesh(baked.geometry, material, this.capacity); this.mesh.userData.preRenderTextures = [this.texture, ...(baked.texture ? [baked.texture] : [])]; this.mesh.userData.preRenderSolo = true; this.mesh.frustumCulled = false; this.mesh.count = 0; this.mesh.castShadow = !this.distant; this.mesh.receiveShadow = true;
+    // update() hides distant-from-camera casters at spawn. Their close-band
+    // shadow graph still belongs to the loading warm-up, before boarding.
+    this.mesh.userData.preRenderCastShadow = !this.distant && this.world.infected?.director.tier !== 'low';
     this.mesh.instanceMatrix.setUsage(StreamDrawUsage);
     const matrices = new InstancedInterleavedBuffer(this.mesh.instanceMatrix.array, 16, 1).setUsage(StreamDrawUsage);
     for (let i = 0; i < 4; i++) baked.geometry.setAttribute(`_crowd${i}`, new InterleavedBufferAttribute(matrices, 4, i * 4));

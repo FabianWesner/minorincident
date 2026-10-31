@@ -119,7 +119,7 @@ export function incrementalPreRender(renderer: Renderer, scene: Scene, camera: C
   };
 }
 export async function preRender(renderer: Renderer, scene: Scene, camera: Camera, render: () => void, compile: (partitions: CompilePartitions) => Promise<unknown> = partitions => Promise.all(partitions.map(apply => { apply(); return renderer.compileAsync(scene, camera); })), pause?: () => Promise<void>, progress?: (completed: number, total: number) => void, background = false, budgetedWarmUp = false, cooperative = false, foregroundLanes = compileLanes): Promise<void> {
-  const saved: { object: Object3D; visible: boolean; culled: boolean; count?: number; matrices?: Matrix4[]; position?: Vector3 }[] = [];
+  const saved: { object: Object3D; visible: boolean; culled: boolean; castShadow: boolean; count?: number; matrices?: Matrix4[]; position?: Vector3 }[] = [];
   scene.updateMatrixWorld(true);
   const focus = camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(camera.position);
   const size = renderer.getSize(new Vector2());
@@ -132,8 +132,9 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
       // Reserved hero slots have no vertices until their streamed model arrives.
       if ((object instanceof Mesh || object instanceof LineSegments) && !object.geometry.hasAttribute('position')) return;
       const matrices = object instanceof InstancedMesh ? Array.from({ length: Math.min(2, object.instanceMatrix.count) }, (_, i) => { const matrix = new Matrix4(); object.getMatrixAt(i, matrix); return matrix; }) : undefined;
-      saved.push({ ...(object instanceof LineSegments ? {position:object.position.clone()}:{}), object, visible: object.visible, culled: object.frustumCulled, ...(object instanceof InstancedMesh ? { count: object.count, matrices } : {}) });
+      saved.push({ ...(object instanceof LineSegments ? {position:object.position.clone()}:{}), object, visible: object.visible, culled: object.frustumCulled, castShadow: object.castShadow, ...(object instanceof InstancedMesh ? { count: object.count, matrices } : {}) });
       object.visible = true;
+      if (object.userData.preRenderCastShadow) object.castShadow = true;
       if (object instanceof LineSegments) object.position.copy(object.parent ? object.parent.worldToLocal(focus.clone()) : focus);
       if (object instanceof Mesh || object instanceof Sprite || object instanceof LineSegments) object.frustumCulled = false;
       if (object instanceof InstancedMesh) {
@@ -251,8 +252,8 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
     performance.measure('L1 warm-up solo draws', { start: phase, end: performance.now() });
     performance.measure('L1 driver warm-up', { start: draw, end: performance.now() });
   } finally {
-    for (const { object, visible, culled, count, matrices, position } of saved) {
-      object.visible = visible; object.frustumCulled = culled; if(position)object.position.copy(position);
+    for (const { object, visible, culled, castShadow, count, matrices, position } of saved) {
+      object.visible = visible; object.frustumCulled = culled; object.castShadow = castShadow; if(position)object.position.copy(position);
       if (object instanceof InstancedMesh && count !== undefined) { object.count = count; matrices!.forEach((matrix, i) => object.setMatrixAt(i, matrix)); object.instanceMatrix.needsUpdate = true; }
     }
     renderer.setSize(size.x, size.y, false);
