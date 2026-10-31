@@ -311,7 +311,9 @@ export class CourierGroundContacts {
       const dx = point.x - this.joint.x, dz = point.z - this.joint.z, offset = this.joint.y - this.delta.setFromMatrixPosition(rig.hip.matrixWorld).y;
       const compression = moving && foot.locked && foot.phase >= 0 && foot.phase <= stance ? Math.sin(Math.PI * foot.phase / stance) ** 2 : 0;
       const supportKnee = (foot.locked ? 14 + 15 * run + (16 + 10 * run) * compression : 22) * DEG;
-      const desired = foot.target.y + Math.sqrt(Math.max(.001, legLength(foot, supportKnee) ** 2 - dx * dx - dz * dz)) - offset;
+      // A foot beyond the leg's horizontal reach (a plant left behind by a sprint) must not pull the pelvis to the floor: cap its pull at a deep crouch.
+      const reachable = legLength(foot, supportKnee), horizontalSq = Math.min(dx * dx + dz * dz, (reachable * .75) ** 2);
+      const desired = foot.target.y + Math.sqrt(Math.max(.001, reachable ** 2 - horizontalSq)) - offset;
       if (foot.locked) {
         height = Math.min(height, desired);
         if (!moving) minimumHeight = Math.max(minimumHeight, foot.target.y + Math.sqrt(Math.max(.001, legLength(foot, 50 * DEG) ** 2 - dx * dx - dz * dz)) - offset);
@@ -320,7 +322,8 @@ export class CourierGroundContacts {
     }
     if (!locked.length && this.pelvisHeight !== undefined) {
       // Flight (running): hold the pelvis on its arc with a slight rise; the reaching foot brings it down for heel strike.
-      height = Math.min(height, this.origin.y + this.pelvisHeight + .2 * dt);
+      // A pelvis dropped by an out-of-reach plant recovers fast; a healthy flight only rises slowly.
+      height = Math.min(height, this.origin.y + this.pelvisHeight + (this.pelvisHeight < .6 * s ? 4 : .2) * dt);
     }
     // No foot to stand on and no pelvis yet (a crowd figure whose footwork starts mid-run with both feet in swing):
     // keep the clip's hip height. Infinity here made the filter Infinity - Infinity = NaN, and the NaN pelvis then
