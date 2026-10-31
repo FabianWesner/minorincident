@@ -77,7 +77,9 @@ export class VehicleOccupant extends Group {
       if (!(node instanceof Mesh) || node.material === material || (Array.isArray(node.material) ? node.material : [node.material]).some(textured)) return;
       const source = Array.isArray(node.material) ? node.material[0] : node.material;
       const color = (source as MeshLambertNodeMaterial).color.toArray(), count = node.geometry.getAttribute('position').count, colors = new Float32Array(count * 3);
-      for (let i = 0; i < count; i++) colors.set(color, i * 3);
+      // Skinned palette pieces retain their authored paint (e.g. red firefighter helmets).
+      const authored = node.geometry.getAttribute('color');
+      for (let i = 0; i < count; i++) for (let c = 0; c < 3; c++) colors[i * 3 + c] = color[c] * (authored ? authored.getComponent(i, c) : 1);
       node.geometry.setAttribute('color', new BufferAttribute(colors, 3));
       for (const m of Array.isArray(node.material) ? node.material : [node.material]) m.dispose();
       node.material = material;
