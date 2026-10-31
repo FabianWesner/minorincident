@@ -788,6 +788,78 @@
         }
       ],
       "campaignCompletedLevels": 3
+    },
+    {
+      "tag": "fresh-15",
+      "level": "L4",
+      "finished": false,
+      "skipped": [],
+      "driverWallSeconds": 523,
+      "driverSimSeconds": 515,
+      "missionStats": {
+        "time": 515.5666666666667,
+        "kills": 0,
+        "knockdowns": 87,
+        "damage": 983.7333333333331,
+        "deaths": 7,
+        "rescued": 18,
+        "optionalObjectives": []
+      },
+      "runDeaths": 1,
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "loads": [
+        6989.39999961853
+      ],
+      "longFrames": [
+        {
+          "at": 91826.7,
+          "level": "L4",
+          "tick": 4837,
+          "phase": "playing",
+          "loading": false,
+          "x": -28.621265411376953,
+          "z": 1.3470487594604492,
+          "ms": 266.59999999999127,
+          "playMs": 266.59999999999127
+        }
+      ],
+      "errors": [],
+      "issues": [],
+      "phases": [
+        "briefing",
+        "playing",
+        "cinematic"
+      ],
+      "resultPanels": [],
+      "lastPlayer": {
+        "x": 20.941967010498047,
+        "y": 0.7900000810623169,
+        "z": 41.27286911010742,
+        "yaw": -7.850462293418876e-17
+      },
+      "lastCorgis": [
+        {
+          "id": 29,
+          "hp": 100,
+          "hidden": false,
+          "state": "follow"
+        }
+      ],
+      "campaignCompletedLevels": 3
     }
   ]
 }
