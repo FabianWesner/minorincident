@@ -1,0 +1,102 @@
+{
+  "sourceRevision": "94f918060",
+  "fixture": "../../fresh/fresh-21-completion.json:campaign",
+  "fixtureChange": "Only settings.quality changed from low to high before normal menu entry; earned campaign state unchanged.",
+  "command": "PLAYTEST_VISIBLE_ONLY=1 PLAYTEST_SHADER_GUARD=1 E2E_PORT=4761 node --import tsx tools/playtest/play.ts --levels L8-L9 --entry continue --no-skip --mode campaign --quality high --level-minutes 5 --keep-profile --out test-results/playtest/fix-e2e-campaign-warm",
+  "exitCode": 0,
+  "finished": [
+    "L8",
+    "L9"
+  ],
+  "skipped": [],
+  "assists": 0,
+  "deaths": 0,
+  "lateShaderBuilds": [],
+  "errors": [],
+  "warnings": [
+    {
+      "level": "L9",
+      "tick": 6152,
+      "x": 179.5,
+      "z": -26.2,
+      "severity": "P2",
+      "kind": "stuck-navigating",
+      "text": "20 s without objective progress (distance 292.0 m, no marker: false); HUD: \"Drive toward the city · 292 m\"",
+      "captures": [
+        "captures/campaign-L9-6152-stuck-navigating.jpg"
+      ],
+      "step": "approach",
+      "objective": "Drive toward the city · 292 m"
+    }
+  ],
+  "loadingSwitches": [
+    {
+      "level": "L8",
+      "at": 1763.1999998092651,
+      "loading": true
+    },
+    {
+      "level": "L8",
+      "at": 7661.5,
+      "loading": false
+    },
+    {
+      "level": "L8",
+      "at": 126458.19999980927,
+      "loading": true
+    },
+    {
+      "level": "L9",
+      "at": 132055.4000005722,
+      "loading": false
+    },
+    {
+      "level": "L10",
+      "at": 298825.69999980927,
+      "loading": true
+    }
+  ],
+  "l8ToL9CardMs": 5597.200000762939,
+  "l8MenuToBeginMs": 6089.699999809265,
+  "menuTimingScope": "The 6.09 s menu start is not an in-campaign handover. The real L8→L9 card was 5.60 s; the full handover matrix separately retains outgoing scenes and campaign state.",
+  "decodeSave": "ok",
+  "completedLevels": 9,
+  "unlockedLevel": 10,
+  "crossingHandover": true,
+  "transport": false,
+  "activeFramesOver200ms": [],
+  "preflights": [
+    {
+      "kind": "fixture quality mismatch",
+      "finished": 0,
+      "action": "Aborted before input; retained historical save quality was low; restarted with high preference."
+    },
+    {
+      "kind": "runtime shadow guard",
+      "finished": 2,
+      "lateBuilds": 1,
+      "action": "Added loading coverage for dynamically enabled close civilian casters; repeated run passed."
+    }
+  ],
+  "cleanup": "All three temporary profiles deleted. Browser contexts disposed through the shared pool.",
+  "laterSourceChange": "L10 WebGL compile-lane count only; L8/L9 gameplay and warm-up unchanged.",
+  "shelteredPassengerCount": 14,
+  "shelteredSurvivorsMatchL8Result": true,
+  "survivorKeys": [
+    "shelter-2",
+    "shelter-3",
+    "shelter-4",
+    "shelter-6",
+    "shelter-9",
+    "shelter-14",
+    "shelter-17",
+    "dale",
+    "mia",
+    "shelter-12",
+    "okafor",
+    "shelter-13",
+    "shelter-18",
+    "shelter-19"
+  ],
+  "finalSave": "profiles/live-l8-l9-save.json.gz"
+}

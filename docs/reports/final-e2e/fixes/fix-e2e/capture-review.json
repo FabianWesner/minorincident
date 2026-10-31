@@ -1,0 +1,92 @@
+{
+  "reviewed": [
+    {
+      "path": "../../fresh/captures/fresh-08-L3-along-street-centre.jpg",
+      "observation": "Armored closure spans the fenced street; original HUD says Get inside the army checkpoint · 217 m."
+    },
+    {
+      "path": "../../fresh/captures/fresh-09-L3-through-open-side-yard.jpg",
+      "observation": "Shop-side context for the recorded 266.7 ms frame; image cannot identify its CPU cause."
+    },
+    {
+      "path": "../../fresh/captures/fresh-10-L3-highway-approach-road.jpg",
+      "observation": "Original route trial ends beside the highway with a distant checkpoint bearing."
+    },
+    {
+      "path": "../../fresh/captures/fresh-11-L3-step-checkpoint.jpg",
+      "observation": "Original checkpoint route trial, compared with the fixed near route."
+    },
+    {
+      "path": "../../fresh/captures/fresh-23-L9-step-reach-outskirts.jpg",
+      "observation": "Original Get clear of the wreck · 79 m while intact APC armor is 1000/1000."
+    },
+    {
+      "path": "captures/l3-next-open-gap.jpg",
+      "observation": "Fixed HUD marker is 10 m ahead in the open passage; squad/corgi follow."
+    },
+    {
+      "path": "captures/l3-checkpoint-arrived.jpg",
+      "observation": "Natural checkpoint evacuation countdown, no skip."
+    },
+    {
+      "path": "captures/l9-intact-apc-wording.jpg",
+      "observation": "Fixed Stay in the armored vehicle while intact APC armor is 1000/1000."
+    },
+    {
+      "path": "captures/l4-high-begin.jpg",
+      "observation": "Final high L4 Begin screen with convoy and scene intact."
+    },
+    {
+      "path": "captures/l8-high-briefing.jpg",
+      "observation": "Final high L8 briefing with carried group and evacuation bus intact."
+    },
+    {
+      "path": "captures/live-l8-departure.jpg",
+      "observation": "Real-input high L8 countdown, intact APC and corgi."
+    },
+    {
+      "path": "captures/live-l9-before-crash.jpg",
+      "observation": "Real-input high L9 Stay in the armored vehicle before scripted crash; armor 950/1000 after normal contact."
+    },
+    {
+      "path": "captures/l10-after-crossing.jpg",
+      "observation": "Final low handover reaches L10 after the wreck with axe, following corgi and explicit weapons-loss narration."
+    },
+    {
+      "path": "captures/scene-attack-low.jpg",
+      "sceneGateRow": "webgl2-low-1/inf-attack-knockdown@low",
+      "observation": "Reviewed the generated frame sheet; corresponding scene assertions passed."
+    },
+    {
+      "path": "captures/scene-bitten-low.jpg",
+      "sceneGateRow": "webgl2-low-1/ped-bitten@low",
+      "observation": "Reviewed the generated frame sheet; corresponding scene assertions passed."
+    },
+    {
+      "path": "captures/scene-l3-chase-high.jpg",
+      "sceneGateRow": "webgpu-high-1/inf-chase-l3@high-z0.5",
+      "observation": "Reviewed the generated frame sheet; corresponding scene assertions passed."
+    },
+    {
+      "path": "captures/scene-zoo-staff-high.jpg",
+      "sceneGateRow": "webgpu-high-1/ped-zoo-staff@high",
+      "observation": "Reviewed the generated frame sheet; corresponding scene assertions passed."
+    },
+    {
+      "path": "captures/scene-bus-high.jpg",
+      "sceneGateRow": "webgl2-high-1/veh-bus-hero@high-z0.5",
+      "observation": "Reviewed the generated frame sheet; corresponding scene assertions passed."
+    },
+    {
+      "path": "captures/scene-l4-high.jpg",
+      "sceneGateRow": "webgl2-high-1/l4-broken-army-line@high-z0.5",
+      "observation": "Reviewed the generated frame sheet; corresponding scene assertions passed."
+    },
+    {
+      "path": "captures/scene-apc-low.jpg",
+      "sceneGateRow": "webgpu-low-1/veh-apc-damage-250@low-z1.5",
+      "observation": "Reviewed the generated frame sheet; corresponding scene assertions passed."
+    }
+  ],
+  "additionalVisualFollowup": "High-quality seated APC occupants look pale; unchanged VehicleOccupant path drops NPC texture maps when converting to vertex colors. Flagged to scheduler for separate visual triage; not part of Q-270–273."
+}

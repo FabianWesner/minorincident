@@ -1,0 +1,297 @@
+{
+  "verifiedSourceRevision": "38ccc5d823baacdcf6dc943f31c059db9fffb09a",
+  "branch": "lane/fix-e2e",
+  "typecheck": {
+    "exitCode": 0
+  },
+  "lint": {
+    "exitCode": 0
+  },
+  "npmTest": {
+    "exitCode": 0,
+    "tests": 110,
+    "files": 26,
+    "casesAdded": 0,
+    "suiteBudgetCases": 150,
+    "seconds": 21.313405166
+  },
+  "smoke": {
+    "exitCode": 0,
+    "qaTests": 6,
+    "publicTests": 1,
+    "seconds": 90.648827791
+  },
+  "sceneGate": {
+    "exitCode": 0,
+    "passed": 48,
+    "total": 48,
+    "known": 0,
+    "notRun": 0,
+    "sourceIdentity": {
+      "revision": "38ccc5d823baacdcf6dc943f31c059db9fffb09a",
+      "inputs": "1137606892099d13252fd3719c298711f786ab8a0fb850af043dc8185ae2f1fd",
+      "mode": "gate",
+      "rows": [
+        [
+          "webgl2",
+          "low",
+          "courier-gear-tier4-female@low-z1.5"
+        ],
+        [
+          "webgpu",
+          "high",
+          "courier-gear-tier4-male@high-z0.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "courier-gear-tier2-female@high-z1.5"
+        ],
+        [
+          "webgpu",
+          "low",
+          "courier-gear-tier4-swing-female@low-z0.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "e18-courier-armed-male@high-z1.5"
+        ],
+        [
+          "webgpu",
+          "low",
+          "e18-courier-armed-female@low-z0.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "courier-locomotion-f@high-z1.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "courier-turns@high-z1.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "ped-walk-all@high"
+        ],
+        [
+          "webgpu",
+          "low",
+          "ped-walk-all@low"
+        ],
+        [
+          "webgl2",
+          "high",
+          "ped-sit-all@high"
+        ],
+        [
+          "webgpu",
+          "low",
+          "ped-sit-all@low"
+        ],
+        [
+          "webgl2",
+          "low",
+          "ped-newchars-walk-1@low-z0.5"
+        ],
+        [
+          "webgl2",
+          "low",
+          "ped-newchars-sit@low"
+        ],
+        [
+          "webgpu",
+          "low",
+          "ped-hats-glasses@low-z1.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "ped-hats-spots-l1@high-z0.5"
+        ],
+        [
+          "webgpu",
+          "low",
+          "ped-l1-staged-cast@low-z1.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "ped-water-flowerbed@high"
+        ],
+        [
+          "webgpu",
+          "high",
+          "ped-zoo-staff@high"
+        ],
+        [
+          "webgl2",
+          "low",
+          "ped-bitten@low"
+        ],
+        [
+          "webgl2",
+          "low",
+          "inf-chase-l1@low-z1.5"
+        ],
+        [
+          "webgpu",
+          "high",
+          "inf-chase-l3@high-z0.5"
+        ],
+        [
+          "webgpu",
+          "low",
+          "inf-looks@low"
+        ],
+        [
+          "webgl2",
+          "high",
+          "inf-horde-headwear@high-z1.5"
+        ],
+        [
+          "webgl2",
+          "low",
+          "inf-attack-knockdown@low"
+        ],
+        [
+          "webgpu",
+          "low",
+          "alpha-variants-close@low-z1.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "alpha-hit-corpse-suit@high-z1.5"
+        ],
+        [
+          "webgl2",
+          "low",
+          "mega-alpha-variants-lineup@low-z0.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "corgi-tongue-female@high-z1.5"
+        ],
+        [
+          "webgpu",
+          "low",
+          "dog-pet-trot@low-z1.5"
+        ],
+        [
+          "webgpu",
+          "low",
+          "animal-zoo-healthy@low-z0.5"
+        ],
+        [
+          "webgpu",
+          "high",
+          "wave3-zoo-routines@high-z1.5"
+        ],
+        [
+          "webgl2",
+          "low",
+          "corpse-look-close@low-z1.5"
+        ],
+        [
+          "webgpu",
+          "high",
+          "corpse-look-alpha@high-z0.5"
+        ],
+        [
+          "webgpu",
+          "low",
+          "corpse-placement-pile@low-z0.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "l4-broken-army-line@high-z0.5"
+        ],
+        [
+          "webgpu",
+          "high",
+          "fight-army-line-zoom06@high-z1.5"
+        ],
+        [
+          "webgl2",
+          "low",
+          "l10-d2-military-breach@low-z0.5"
+        ],
+        [
+          "webgl2",
+          "low",
+          "l10-mega-close-contact@low-z1.5"
+        ],
+        [
+          "webgpu",
+          "low",
+          "seethrough-open-sidewalk-l4@low-z0.5"
+        ],
+        [
+          "webgl2",
+          "low",
+          "seethrough-gear-four@low-z1.5"
+        ],
+        [
+          "webgpu",
+          "high",
+          "seat-bench-l1-start@high-z1.5"
+        ],
+        [
+          "webgl2",
+          "low",
+          "seat-bench-tipped@low"
+        ],
+        [
+          "webgpu",
+          "low",
+          "seat-grip-coffee-game@low-z1.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "veh-bus-hero@high-z0.5"
+        ],
+        [
+          "webgpu",
+          "low",
+          "veh-apc-damage-250@low-z1.5"
+        ],
+        [
+          "webgl2",
+          "high",
+          "collision-vehicle-admission@high-z0.5"
+        ],
+        [
+          "webgpu",
+          "high",
+          "inf-mega-arrival@high-z0.5"
+        ]
+      ],
+      "maxRows": 15
+    }
+  },
+  "performance": {
+    "passed": 18,
+    "total": 18,
+    "budgetMs": 6000
+  },
+  "realInput": [
+    "L3 HUD marker only, no skips/assists; natural checkpoint arrival/completion",
+    "Post-crash L8 replay through L9, no save error; decodeSave ok",
+    "Canonical high L8→L9, all 14 survivors carried, crash/crawl completed, no skips/assists, no late shader builds or active >200 ms frames"
+  ],
+  "cleanup": {
+    "temporaryProfilesDeleted": true,
+    "timingPreviewStopped": true,
+    "freeDiskGiB": 15,
+    "githubPublished": false,
+    "deployed": false
+  },
+  "elapsedMinutesAtChecks": 110.1
+}

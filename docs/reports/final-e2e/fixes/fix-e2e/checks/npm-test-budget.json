@@ -1,0 +1,29 @@
+{
+  "name": "test",
+  "cases": 150,
+  "counts": {
+    "vitest": 129,
+    "e2e": 9,
+    "invariantsBrowser": 12
+  },
+  "files": 42,
+  "limits": {
+    "cases": 150,
+    "files": 45,
+    "seconds": 240
+  },
+  "command": [
+    "node",
+    "node_modules/vitest/vitest.mjs",
+    "run",
+    "--project",
+    "default",
+    "--configLoader",
+    "runner"
+  ],
+  "seconds": 21.313405166,
+  "exitCode": 0,
+  "signal": null,
+  "failures": [],
+  "at": "2026-10-31T08:36:01.269Z"
+}
