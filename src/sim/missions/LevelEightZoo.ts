@@ -222,8 +222,19 @@ export class LevelEightZoo {
     const door = this.door(), boarding = w.vehicles!.active === s.carId || distance(p.transform, door) < 12;
     const slot = c.survivor!.slot, velocity = p.survivor!.velocity;
     const goal = formationSlot(p.transform, leaderHeading(p.transform.yaw, velocity), slot);
-    const target = boarding ? door : w.infected!.nav.clear(goal.x, goal.z, .35) ? goal : p.transform;
-    if (boarding && distance(e.transform, door) < .7) w.vehicles!.boardPassenger(s.carId, e.id);
+    let target = boarding ? door : w.infected!.nav.clear(goal.x, goal.z, .35) ? goal : p.transform;
+    let queueIndex = 0;
+    if (boarding) {
+      const vehicle = w.vehicles!.cars.get(s.carId)!.entity.vehicle!;
+      const waiting = this.passengers().filter(id => !vehicle.passengers?.some(passenger => passenger.id === id && passenger.phase === 'seated'));
+      queueIndex = Math.max(0, waiting.indexOf(e.id));
+      if (queueIndex) {
+        const car = w.entities.get(s.carId)!, dx = door.x - car.transform.x, dz = door.z - car.transform.z, length = Math.hypot(dx, dz) || 1;
+        const queue = { x: door.x + dx / length * queueIndex * 1.25, z: door.z + dz / length * queueIndex * 1.25 };
+        target = w.infected!.nav.clear(queue.x, queue.z, actorRadius(e)) && w.solids.clear({ ...queue, y: e.transform.y }, actorRadius(e), e.id) ? queue : e.transform;
+      }
+    }
+    if (boarding && queueIndex === 0 && distance(e.transform, door) < .7) w.vehicles!.boardPassenger(s.carId, e.id);
     else if (distance(e.transform, target) > (boarding ? .3 : 1)) {
       const speed = c.survivor?.injured ? 1.4 : 3.8;
       if (!boarding || !this.approachDoor(e, door, speed)) w.npcs!.move(e, target, speed, c, boarding ? .2 : .8, 2400);
