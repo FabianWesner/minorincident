@@ -124,11 +124,13 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       const onBuild = g.view.renderer.debug.onNodeBuilderCreated;
       g.view.renderer.debug.onNodeBuilderCreated = (builder, object) => {
         onBuild?.(builder, object);
-        const draw = object as unknown as { object: import('three/webgpu').Mesh; material: import('three/webgpu').Material };
+        const draw = object as unknown as { object: import('three/webgpu').Mesh; material: import('three/webgpu').Material & { id: number } };
         const path: string[] = []; let asset: string | undefined;
         for (let node: import('three/webgpu').Object3D | null = draw.object; node; node = node.parent) { path.push(node.name || node.type); asset ??= node.userData.assetId; }
         const card = document.querySelector<HTMLElement>('[data-testid=level-transition]');
-        builds.push({ at: performance.now(), tick: g.world.tick, level: g.world.scenario, phase: g.world.missions?.state.phase, loading: (g as unknown as { loading: boolean }).loading || !!(card && !card.hidden), asset, path, material: draw.material.name });
+        const cache = object as unknown as { getGeometryCacheKey(): string; getMaterialCacheKey(): number; getDynamicCacheKey(): number; context: { id: number } };
+        const corpseCache = draw.material.name.startsWith('corpse_') ? { materialId: draw.material.id, program: draw.material.customProgramCacheKey(), geometry: cache.getGeometryCacheKey(), material: cache.getMaterialCacheKey(), dynamic: cache.getDynamicCacheKey(), context: cache.context.id } : undefined;
+        builds.push({ at: performance.now(), tick: g.world.tick, level: g.world.scenario, phase: g.world.missions?.state.phase, loading: (g as unknown as { loading: boolean }).loading || !!(card && !card.hidden), asset, path, material: draw.material.name, corpseCache });
       };
       g.input.tap = (frame, scheme) => {
         previous?.(frame, scheme);

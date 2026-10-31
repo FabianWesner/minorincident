@@ -40,7 +40,7 @@ test('L1 handover + outbreak: no shader builds after warm-up and no frame over 2
   await page.goto('/');
   const adapter = await page.evaluate(async () => Boolean(await (navigator as Navigator & { gpu?: { requestAdapter(): Promise<unknown> } }).gpu?.requestAdapter()));
   test.skip(!adapter && process.platform !== 'darwin', 'No WebGPU adapter in this headless browser');
-  await boot(page, testUrl.replace('renderer=webgl', 'renderer=webgpu').replace('quality=high', 'quality=low') + '&loadProfile=2');
+  await boot(page, testUrl.replace('renderer=webgl', 'renderer=webgpu').replace('quality=high', 'quality=low') + '&loadProfile=2&ui=1');
   const builds = (): Promise<Record<string, number>> => page.evaluate(() => ({ ...window.__SS__!.perf().nodeBuildMaterials }));
   const pile = await page.evaluate(async () => {
     const a = window.__SS__!;
@@ -102,6 +102,43 @@ test('L1 handover + outbreak: no shader builds after warm-up and no frame over 2
     return { loaded, after: { ...a.perf().nodeBuildMaterials } };
   });
   expect(heldBuilds(l2.loaded, l2.after), 'L2 carried-weapon builds after the level warm-up (fire axe at the start and at its pickup)').toEqual([]);
+  // Q-276: L3 has three killable cast families that settle as frozen corpses.
+  // Exercise a civilian, police officer and soldier after the level's loading warm-up.
+  const l3 = await page.evaluate(async () => {
+    const a = window.__SS__!;
+    await a.loadLevel('L3', { seed: 1 }); a.pause();
+    const loaded = { ...a.perf().nodeBuildMaterials };
+    a.missions.begin(); a.cheats.god(true); await a.step(30); await a.screenshotReady();
+    const required = ['npc.civilian-man-a', 'npc.police-officer', 'npc.national-guard'];
+    const cast = a.query({ kind: 'civilian' });
+    const player = a.getEntity(1)!.transform;
+    const corpses = required.map((model, index) => {
+      const actor = cast.find(e => e.health.current > 0 && (e.appearance?.asset ?? e.civilian?.model) === model);
+      if (!actor) throw new Error(`L3 corpse warm-up fixture is missing ${model}`);
+      a.teleport(actor.id, { x: player.x + 3 + index * 2, z: player.z + 3 });
+      a.npcs.finish(actor.id); return { id: actor.id, model };
+    });
+    await a.step(123); await a.screenshotReady(); a.resume();
+    await new Promise(resolve => setTimeout(resolve, 1500)); a.pause();
+    const drawnCorpses = a.crowdFigures().filter(f => f.drawn && corpses.some(c => c.id === f.id)).map(f => f.id);
+    // A retry replaces the entity records but must retain the warmed corpse graphs.
+    a.missions.checkpoint('armory'); a.missions.restore('armory');
+    await a.step(3); await a.screenshotReady();
+    a.missions.completeObjective('armory'); a.missions.completeObjective('defend'); await a.step(30);
+    const at = a.getEntity(1)!.transform;
+    // The authored checkpoint is at (225, 0), even while the arrow follows l3-route.
+    const hud = { text: document.querySelector('[data-testid=objective-text]')?.textContent,
+      expectedDistance: Math.round(Math.hypot(225 - at.x, at.z)), marker: a.missions.state()!.marker };
+    return { loaded, after: { ...a.perf().nodeBuildMaterials }, corpses, drawnCorpses, hud };
+  });
+  const lateCorpseBuilds = Object.entries(l3.after).filter(([key, count]) => key.startsWith('corpse_') && count !== l3.loaded[key]);
+  mkdirSync('test-results/smoke', { recursive: true });
+  writeFileSync('test-results/smoke/l3-corpse-builds.json', JSON.stringify({ level: 'L3', corpses: l3.corpses, before: l3.loaded, after: l3.after, lateCorpseBuilds: Object.fromEntries(lateCorpseBuilds) }, null, 2));
+  test.info().annotations.push({ type: 'L3 corpse shader builds', description: JSON.stringify({ corpses: l3.corpses, builds: Object.fromEntries(lateCorpseBuilds) }) });
+  expect(lateCorpseBuilds, 'L3 civilian, police and soldier corpse shader builds after warm-up').toEqual([]);
+  expect([...new Set(l3.drawnCorpses)].sort(), 'all three settled corpses are actually drawn').toEqual(l3.corpses.map(c => c.id).sort());
+  expect(l3.hud.marker, 'L3 arrow retains the next route waypoint').toBe('l3-route');
+  expect(l3.hud.text, 'visible L3 HUD distance measures the army checkpoint').toContain(` · ${l3.hud.expectedDistance}\u00a0m`);
   const l8 = await page.evaluate(async () => {
     const a = window.__SS__!;
     await a.loadLevel('L8', { seed: 1 }); a.pause(); a.missions.begin();

@@ -168,6 +168,14 @@ test('textured corpse draws bind their surface and upload placements added after
     expect(placement.data.version).toBe(page.instanceMatrix.version);
     expect(placement.data.array[12]).toBe(3); expect(placement.data.array[14]).toBe(5);
     expect(bind).toHaveBeenCalledOnce();
+    const frozenMaterial = page.material, frozenGeometry = page.geometry;
+    const restored = { id: 1 } as EntitySnapshot;
+    pool.begin(id => id === 1 ? restored : undefined);
+    expect(pool.snapshot().instances).toBe(0);
+    pool.place(restored, 'runner', baked.geometry, material, baked.clip, deathFrame(), new Matrix4().makeTranslation(3, 0, 5), new Color('white'), [0, 0, 0]);
+    expect(pool.children[0]).toBe(page);
+    expect(page.material).toBe(frozenMaterial); expect(page.geometry).toBe(frozenGeometry);
+    upload(); expect(bind).toHaveBeenCalledTimes(2);
   } finally { pool.dispose(); baked.geometry.dispose(); shading.dispose(); lighting.dispose(); }
 });
 
@@ -225,6 +233,14 @@ test('corpse pages: bodies persist past the old cap, bounds stay conservative, c
       }
     }
     records.delete(1); pool.begin(id => records.get(id)); expect(pool.snapshot().instances).toBe(259);
+    const warmedPages = [...pool.children];
+    for (let restore = 0; restore < 3; restore++) {
+      for (const [id, e] of records) records.set(id, { ...e });
+      pool.begin(id => records.get(id));
+      for (const [id, e] of records) pool.place(e, 'runner', baked.geometry, material, baked.clip, deathFrame(), new Matrix4().makeTranslation(id * .01, 0, 0), new Color('white'), [0, 0, 0]);
+      expect(pool.snapshot().instances).toBe(259);
+      expect(pool.children).toEqual(warmedPages);
+    }
   } finally { pool.dispose(); }
 
   const culled = new StaticCorpses(), live = new Map<number, EntitySnapshot>();

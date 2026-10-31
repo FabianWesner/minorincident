@@ -69,7 +69,7 @@ export class StaticCorpses extends Group {
     let movedPages: Set<InstancedMesh> | null = null;
     for (const [key, body] of this.bodies) {
       const current = get(body.id);
-      if (current && current !== body) { this.reset(); gone = null; movedPages = null; break; }
+      if (current && current !== body) { this.clearBodies(); gone = null; movedPages = null; break; }
       if (!current || current.hidden) { (gone ??= []).push(key); continue; }
       // Thrown bodies follow their flight; settled bodies can yield the
       // courier's footprint. Update both during the existing lifecycle pass.
@@ -119,7 +119,7 @@ export class StaticCorpses extends Group {
     if (!this.chunks.has(cellKey) && prepared?.every(page => page.keys.length === 0)) {
       this.chunks.delete(appearanceKey); this.chunks.set(cellKey, prepared);
     }
-    let page = this.chunks.get(cellKey)?.at(-1);
+    let page = this.chunks.get(cellKey)?.find(page => page.keys.length < 128);
     if (!page || page.keys.length >= 128) {
       page = this.createPage(cellKey, source, material, clip, frame, hiddenParts, look?.hidesHair);
     }
@@ -377,6 +377,16 @@ export class StaticCorpses extends Group {
     return page;
   }
   snapshot() { return { instances: this.bodies.size, draws: [...this.chunks.values()].reduce((n, pages) => n + pages.filter(page => page.mesh.count > 0).length, 0), figures: [...this.chunks.values()].flatMap(pages => pages.flatMap(page => page.probe.figures)) }; }
+  /** Checkpoint restore replaces entity records. Retain warmed surfaces and
+   * reusable pages so the first subsequent death cannot rebuild their shaders. */
+  private clearBodies(): void {
+    this.revision++;
+    for (const pages of this.chunks.values()) for (const page of pages) {
+      page.mesh.count = 0; page.mesh.visible = false;
+      page.keys.length = page.spheres.length = page.probe.figures.length = 0;
+    }
+    this.bodies.clear(); this.slots.clear(); this.detailBodies.clear(); this.detailSpatial.reset(); this.detailed.clear(); this.detailDirty = false;
+  }
   reset(): void {
     this.revision++;
     for (const pages of this.chunks.values()) for (const { mesh } of pages) { mesh.geometry.dispose(); mesh.dispose(); }
