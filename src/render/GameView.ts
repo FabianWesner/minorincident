@@ -509,11 +509,14 @@ export class GameView implements Lifecycle {
       if (this.lighting) { this.lighting.sun.shadow.needsUpdate = true; this.lighting.spot.shadow.needsUpdate = true; }
       if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera);
     };
+    // L10's larger graph needs more independent native links in flight. The
+    // opaque card still runs every ordinary, instanced and solo warm-up draw.
+    const foregroundLanes = this.world.scenario === 'L10' ? this.renderer.selectedBackend === 'webgpu' ? 24 : 12 : compileLanes;
     const prepareVariant = () => preRender(this.renderer, this.scene, this.camera, renderWarm, async partitions => {
       if (this.postFx) await this.postFx.compile(partitions);
       else await Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); }));
       if (!this.background && !cooperative) await compileShadowMaps(this.renderer, this.scene, this.postFx ? 2 : 1);
-    }, this.background ? () => loadGate.wait() : () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0))), this.loadProgress, this.background, this.world.scenario === 'L3' || this.world.scenario === 'L6' || this.world.scenario === 'L8', cooperative, this.world.scenario === 'L10' && this.renderer.selectedBackend === 'webgpu' ? 24 : compileLanes);
+    }, this.background ? () => loadGate.wait() : () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0))), this.loadProgress, this.background, this.world.scenario === 'L3' || this.world.scenario === 'L6' || this.world.scenario === 'L8', cooperative, foregroundLanes);
     const prepare = async (): Promise<void> => {
       // L4's moving set pieces reveal the courier during combat. Warm both
       // graphs against every loading light/weather variant, before LOD swaps.

@@ -48,6 +48,14 @@ try {
         requestAnimationFrame(frame);
         const buildsBefore = g.view.renderer.nodeBuilds, materialsBefore = { ...g.view.renderer.nodeBuildMaterials };
         const start = performance.now();
+        const card = document.querySelector<HTMLElement>('[data-testid="level-transition"]')!;
+        let shownAt: number | null = null, hiddenAt: number | null = null;
+        const cardChanged = () => {
+          if (!card.hidden && shownAt === null) shownAt = performance.now();
+          if (card.hidden && shownAt !== null && hiddenAt === null) hiddenAt = performance.now();
+        };
+        const cardObserver = new MutationObserver(cardChanged);
+        cardObserver.observe(card, { attributes: true, attributeFilter: ['hidden'] });
         const shaderBuilds: { at: number; name: string; foreground: boolean }[] = [];
         const onBuild = g.view.renderer.debug.onNodeBuilderCreated;
         g.view.renderer.debug.onNodeBuilderCreated = (builder, object) => {
@@ -56,8 +64,9 @@ try {
         };
         await g.continueCampaign(save, level as Level);
         const end = performance.now(); stopped = true;
+        cardChanged(); cardObserver.disconnect();
         g.view.renderer.debug.onNodeBuilderCreated = onBuild;
-        return { ms: end - start, frames, shaderBuilds, backend: g.view.renderer.selectedBackend, quality: g.quality.tier,
+        return { ms: end - start, loadingCardMs: shownAt !== null && hiddenAt !== null ? hiddenAt - shownAt : null, frames, shaderBuilds, backend: g.view.renderer.selectedBackend, quality: g.quality.tier,
           nodeBuilds: g.view.renderer.nodeBuilds - buildsBefore, entities: g.world.entities.size,
           nodeBuildMaterials: Object.fromEntries(Object.entries(g.view.renderer.nodeBuildMaterials).map(([name, count]) => [name, count - (materialsBefore[name] ?? 0)]).filter(([, count]) => Number(count) > 0)),
           bundle: document.querySelector<HTMLScriptElement>('script[type="module"][src]')?.src,
