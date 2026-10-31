@@ -530,16 +530,28 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       }
       const control = process.env.PLAYTEST_CONTROL_FILE;
       if (control && existsSync(control)) {
-        let command: { manual?: boolean; key?: string; keys?: string[]; click?: [number, number]; ms?: number; button?: string; capture?: string };
+        let command: { manual?: boolean; key?: string; keys?: string[]; click?: [number, number]; ms?: number; button?: string; capture?: string; resume?: boolean; combat?: boolean; pauseAfter?: boolean };
         try { command = JSON.parse(readFileSync(control, 'utf8')); }
         catch { await hold(50); continue; }
         unlinkSync(control); await press([]); await releaseAim();
         if (command.manual !== undefined) manual = command.manual;
+        if (command.resume && await page.getByTestId('resume-game').isVisible()) await page.getByTestId('resume-game').click();
         if (command.key) await page.keyboard.press(command.key);
         if (command.button) await page.getByTestId(command.button).click();
         if (command.click) await clickGround(...command.click);
-        if (command.keys) { await press(command.keys); await hold(Math.min(10000, command.ms ?? 1000)); await press([]); }
+        if (command.keys) {
+          const until = Date.now() + Math.min(10000, command.ms ?? 1000);
+          do {
+            const view = command.combat ? await see() : null;
+            const target = view?.enemies.find(b => b.drawn && b.d < (ranged.test(view.player?.current ?? '') ? 14 : 3.5));
+            if (target) await page.mouse.move(target.aim.x, target.aim.y);
+            await press([...command.keys, ...(target ? ['Space'] : [])]);
+            await hold(Math.min(150, Math.max(1, until - Date.now())));
+          } while (Date.now() < until);
+          await press([]);
+        }
         if (command.capture) await capture(command.capture);
+        if (command.pauseAfter && !await page.getByTestId('resume-game').isVisible()) await page.keyboard.press('Escape');
         log({ manualInput: command, level: e.level, tick: e.tick }); continue;
       }
       if (manual) { await press([]); await hold(200); continue; }
@@ -1012,9 +1024,10 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   }
   await press([]).catch(() => undefined);
   if (run && !run.finished) {
+    const finalView = await see();
     run.wallSeconds = Math.round((Date.now() - wallStart) / 1000);
-    run.simSeconds = Math.round(((eyes?.tick ?? tickStart) - tickStart) / 60);
-    run.weaponsEnd = eyes?.player?.weapons ?? [];
+    run.simSeconds = Math.round((finalView.tick - tickStart) / 60);
+    run.weaponsEnd = finalView.player?.weapons ?? [];
   }
   writeFileSync(join(o.out, `runs-${o.tag}.json`), JSON.stringify(runs, null, 2));
   writeFileSync(join(o.out, `issues-${o.tag}.json`), JSON.stringify(issues, null, 2));
@@ -1053,7 +1066,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   return { runs, issues };
   } finally {
     if (visibleOnly && !page.isClosed()) {
-      await page.evaluate('({ audit: window.__finalE2eAudit ?? [], frames: window.__playtestFrames ?? [] })').then(data => {
+      await page.evaluate<{ audit: unknown[]; frames: LongFrame[] }>('({ audit: window.__finalE2eAudit ?? [], frames: window.__playtestFrames ?? [] })').then(data => {
         writeFileSync(join(o.out, `${o.tag}-audit.json`), JSON.stringify(data.audit, null, 2));
         writeFileSync(join(o.out, `${o.tag}-frames.json`), JSON.stringify(data.frames, null, 2));
       }).catch(error => log({ observerCleanupError: String(error) }));
