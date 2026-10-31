@@ -1,0 +1,43 @@
+{
+  "baseline": "b98aaa60448060e02ccfe2e1332b39406360e828",
+  "observedHead": "78a047deee39f8d2612eb18738dcf53213fd9e9d",
+  "campaignBuild": "Baseline game b98aaa604; post-campaign F06 text-only fix separately rebuilt and visually retested",
+  "paths": [
+    {
+      "path": "src",
+      "baseline": "1d7a3aeb5d521963948de5a6f0fde1d20e062eb7",
+      "current": "5a548fa04690084e92313960653cd35b0055addc"
+    },
+    {
+      "path": "assets",
+      "baseline": "80d8928ff5a86d6a807001233670c66db8a13282",
+      "current": "80d8928ff5a86d6a807001233670c66db8a13282"
+    },
+    {
+      "path": "public",
+      "baseline": "a26e72adc76b8dc06b7013b0b20b5f3b305b6753",
+      "current": "a26e72adc76b8dc06b7013b0b20b5f3b305b6753"
+    },
+    {
+      "path": "package.json",
+      "baseline": "fefffa1742a92a953a336f16325f9f2b1d277432",
+      "current": "fefffa1742a92a953a336f16325f9f2b1d277432"
+    },
+    {
+      "path": "package-lock.json",
+      "baseline": "0615b1a2555a9bad68078c84842a01f58e820beb",
+      "current": "0615b1a2555a9bad68078c84842a01f58e820beb"
+    },
+    {
+      "path": "vite.config.ts",
+      "baseline": "5154f600ff4565f633d688aed719911297db9380",
+      "current": "5154f600ff4565f633d688aed719911297db9380"
+    }
+  ],
+  "gameCodeChanges": [
+    "src/sim/missions/objectiveText.ts"
+  ],
+  "gameFixCommit": "78a047dee",
+  "gameDiff": "diff --git a/src/sim/missions/objectiveText.ts b/src/sim/missions/objectiveText.ts\nindex ed545df4b..274aff193 100644\n--- a/src/sim/missions/objectiveText.ts\n+++ b/src/sim/missions/objectiveText.ts\n@@ -57,7 +57,7 @@ export function objectiveText(mission: Mission, fallback: string): string {\n       const player=w.entities.get(1)!.transform;\n       const distance=(id:number)=>{const p=w.entities.get(id)!.transform;return Math.hypot(p.x-player.x,p.z-player.z);};\n       const missing=ids.filter(id=>!car.passengers?.some(p=>p.id===id&&p.phase==='seated')).sort((a,b)=>distance(a)-distance(b));\n-      const text=seated?fallback:'Return to the armored vehicle and board';\n+      const text=`${zoo.state.breachedAt ? 'The zoo is breached · ' : ''}${seated ? fallback : 'Return to the armored vehicle and board'}`;\n       const waiting=missing.length?` · ${missing.length} missing`:'';\n       return `${text} · ${ids.length-missing.length}/${ids.length} aboard${waiting}`;\n     }",
+  "difficultyAndCameraCodeChanged": false
+}

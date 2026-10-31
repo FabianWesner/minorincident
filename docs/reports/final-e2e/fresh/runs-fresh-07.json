@@ -1,0 +1,118 @@
+[
+  {
+    "level": "L2",
+    "entry": "continue",
+    "heroine": "female",
+    "finished": true,
+    "skipped": [],
+    "wallSeconds": 397,
+    "simSeconds": 0,
+    "maxNoProgressSeconds": 12.129,
+    "deaths": 0,
+    "assists": 0,
+    "attacks": {
+      "weapon.fire-axe": 58
+    },
+    "weaponsStart": [
+      "weapon.bat",
+      "weapon.kick",
+      "weapon.kick"
+    ],
+    "weaponsEnd": [
+      "weapon.fire-axe",
+      "weapon.bat",
+      "ability.corgi-lure",
+      "weapon.kick"
+    ],
+    "steps": [
+      {
+        "id": "axe",
+        "text": "Take the fire axe · 2 m",
+        "tick": 11,
+        "marker": {
+          "anchor": "l2-axe-rack",
+          "ring": {
+            "x": -74.15,
+            "y": 1.1200000047683716,
+            "z": 47.5
+          },
+          "drawn": [
+            -74.15,
+            0.4,
+            47.5
+          ],
+          "playerY": 1.1200000047683716,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "board",
+        "text": "Get on the fire truck · 13 m",
+        "tick": 109,
+        "marker": {
+          "anchor": "l2-board",
+          "ring": {
+            "x": -66.8,
+            "y": 1.1200000047683716,
+            "z": 36.400000000000006
+          },
+          "drawn": [
+            -66.8,
+            0,
+            36.4
+          ],
+          "playerY": 1.1200000047683716,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "ride",
+        "text": "Ride with Engine 3 to Grove Market · 73 m",
+        "tick": 473,
+        "marker": {
+          "anchor": "l2-truck-stop",
+          "ring": {
+            "x": -43,
+            "y": 0.7200000286102295,
+            "z": -32
+          },
+          "drawn": null,
+          "playerY": 0.7200000286102295,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "doors",
+        "text": "Cover the firefighters while they force the doors",
+        "tick": 1928,
+        "marker": {
+          "anchor": "l2-truck-stop",
+          "ring": null,
+          "drawn": null,
+          "playerY": 0.8500000238418579,
+          "pinVisible": false
+        }
+      },
+      {
+        "id": "bridge",
+        "text": "Reach the police checkpoint at the bridge · 139 m",
+        "tick": 2694,
+        "marker": {
+          "anchor": "l2-gate-inside",
+          "ring": {
+            "x": 79.5,
+            "y": 0.8500000238418579,
+            "z": 30
+          },
+          "drawn": [
+            79.5,
+            0,
+            30
+          ],
+          "playerY": 0.8500000238418579,
+          "pinVisible": true
+        }
+      }
+    ]
+  }
+]

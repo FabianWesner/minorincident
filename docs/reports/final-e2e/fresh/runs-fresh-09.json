@@ -1,0 +1,83 @@
+[
+  {
+    "level": "L3",
+    "entry": "continue",
+    "heroine": "female",
+    "finished": false,
+    "skipped": [],
+    "wallSeconds": 528,
+    "simSeconds": 248,
+    "maxNoProgressSeconds": 52.4,
+    "deaths": 0,
+    "assists": 0,
+    "attacks": {
+      "weapon.handgun": 65
+    },
+    "weaponsStart": [
+      "weapon.fire-axe",
+      "weapon.bat",
+      "ability.corgi-lure",
+      "weapon.kick"
+    ],
+    "weaponsEnd": [
+      "weapon.fire-axe",
+      "weapon.bat",
+      "weapon.handgun",
+      "ability.corgi-lure"
+    ],
+    "steps": [
+      {
+        "id": "armory",
+        "text": "Take a handgun from the armory · 19 m",
+        "tick": 10,
+        "marker": {
+          "anchor": "l3-armory",
+          "ring": {
+            "x": -139.2,
+            "y": 0.7049999833106995,
+            "z": -8.4
+          },
+          "drawn": [
+            -139.2,
+            0.05,
+            -8.4
+          ],
+          "playerY": 0.7049999833106995,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "defend",
+        "text": "Help defend the station",
+        "tick": 716,
+        "marker": {
+          "anchor": "l3-armory",
+          "ring": null,
+          "drawn": null,
+          "playerY": 0.7049999833106995,
+          "pinVisible": false
+        }
+      },
+      {
+        "id": "checkpoint",
+        "text": "Get inside the army checkpoint · 364 m",
+        "tick": 1410,
+        "marker": {
+          "anchor": "l3-route",
+          "ring": {
+            "x": 225,
+            "y": 0.7200000286102295,
+            "z": 0
+          },
+          "drawn": [
+            225,
+            0.05,
+            0
+          ],
+          "playerY": 0.7200000286102295,
+          "pinVisible": true
+        }
+      }
+    ]
+  }
+]

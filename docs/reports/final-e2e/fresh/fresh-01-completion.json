@@ -1,0 +1,171 @@
+{
+  "levels": [],
+  "campaign": {
+    "version": 2,
+    "seed": 1,
+    "character": "female",
+    "unlockedLevel": 1,
+    "completedLevels": 0,
+    "ownedActions": [
+      "weapon.fists",
+      "weapon.kick"
+    ],
+    "upgrades": [],
+    "racks": {
+      "LEFT": [
+        "weapon.fists"
+      ],
+      "RIGHT": [
+        "weapon.kick"
+      ]
+    },
+    "settings": {
+      "muted": false,
+      "captions": false,
+      "noiseRings": false,
+      "mono": false,
+      "haptics": true,
+      "tinnitus": true,
+      "gore": "Full",
+      "textSize": 1,
+      "aimAssist": "Default",
+      "cameraShake": true,
+      "flashReduction": false,
+      "colorblind": false,
+      "quality": "low",
+      "slowMotion": true
+    },
+    "usage": {},
+    "selectedAction": "weapon.fists"
+  },
+  "mission": {
+    "id": "L1",
+    "phase": "playing",
+    "completedObjectives": [],
+    "volumes": [
+      false
+    ],
+    "killedBosses": [],
+    "deadlineTicks": null,
+    "steps": {
+      "pickup": {
+        "status": "active",
+        "started": 0,
+        "kills": [],
+        "events": {},
+        "interaction": 0
+      },
+      "deliver": {
+        "status": "pending",
+        "started": 0,
+        "kills": [],
+        "events": {},
+        "interaction": 0
+      },
+      "escape": {
+        "status": "pending",
+        "started": 0,
+        "kills": [],
+        "events": {},
+        "interaction": 0
+      },
+      "weapon": {
+        "status": "pending",
+        "started": 0,
+        "kills": [],
+        "events": {},
+        "interaction": 0
+      },
+      "firestation": {
+        "status": "pending",
+        "started": 0,
+        "kills": [],
+        "events": {},
+        "interaction": 0
+      }
+    },
+    "actors": {},
+    "items": [],
+    "states": {
+      "delivered": false,
+      "exited": false,
+      "away": false,
+      "safe": false
+    },
+    "counters": {},
+    "gates": {
+      "fire-shutter": true
+    },
+    "marker": "parcel-counter",
+    "checkpoint": null,
+    "tier": 0,
+    "timeOfDay": null,
+    "subtitle": null,
+    "cinematic": null,
+    "failure": null,
+    "stats": {
+      "time": 100.25,
+      "kills": 0,
+      "knockdowns": 0,
+      "damage": 0,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": []
+    },
+    "result": null,
+    "l1": {
+      "phase": "morning",
+      "carrying": false,
+      "delivered": false,
+      "away": false,
+      "techId": 157,
+      "hx": 0,
+      "hz": 0,
+      "handoverAt": 0,
+      "deliveredAt": 0,
+      "flickerAt": 0,
+      "exitAt": 0,
+      "warned": false,
+      "fired": 0,
+      "exitIds": [],
+      "exitHeadingsDeg": [],
+      "runs": [],
+      "turnedIds": [],
+      "escapedIds": [],
+      "graceUntil": 0,
+      "house": null,
+      "labExit": null
+    }
+  },
+  "backend": "webgl",
+  "quality": "low",
+  "camera": {
+    "zoom": 1,
+    "targetZoom": 1,
+    "zoomLimits": [
+      0.5,
+      1.5
+    ],
+    "fov": 25,
+    "azimuth": 0.7853981633974483,
+    "polar": 0.9424777960769379,
+    "radius": 19,
+    "regionScale": 1,
+    "focus": [
+      -51.725847926035314,
+      0.12928280392255628,
+      -4.062909377190631
+    ],
+    "target": [
+      -51.725847926035314,
+      0.12928280392255628,
+      -4.062909377190631
+    ],
+    "position": [
+      -40.86532805801922,
+      11.297184192394267,
+      6.814849580090575
+    ],
+    "spot": null
+  }
+}

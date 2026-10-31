@@ -1,0 +1,61 @@
+[
+  {
+    "level": "L8",
+    "entry": "continue",
+    "heroine": "female",
+    "finished": true,
+    "skipped": [],
+    "wallSeconds": 100,
+    "simSeconds": 90,
+    "maxNoProgressSeconds": 4.783333333333333,
+    "deaths": 0,
+    "assists": 0,
+    "attacks": {},
+    "weaponsStart": [
+      "weapon.fire-axe",
+      "weapon.shotgun",
+      "weapon.army-mg",
+      "weapon.rocket-launcher"
+    ],
+    "weaponsEnd": [
+      "weapon.fire-axe",
+      "weapon.shotgun",
+      "weapon.army-mg",
+      "weapon.rocket-launcher"
+    ],
+    "steps": [
+      {
+        "id": "escape",
+        "text": "Explore the sanctuary · the armored vehicle waits by the exit · 97 m",
+        "tick": 11,
+        "marker": {
+          "anchor": "exit",
+          "ring": {
+            "x": 96.71,
+            "y": 0.8399999737739563,
+            "z": 76.275
+          },
+          "drawn": [
+            96.71,
+            0.12,
+            76.28
+          ],
+          "playerY": 0.8399999737739563,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "depart",
+        "text": "Waiting for departure · 24 s",
+        "tick": 2190,
+        "marker": {
+          "anchor": "exit",
+          "ring": null,
+          "drawn": null,
+          "playerY": 0.9954345226287842,
+          "pinVisible": false
+        }
+      }
+    ]
+  }
+]

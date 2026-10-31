@@ -1,0 +1,30 @@
+[
+  {
+    "level": "L1",
+    "tick": 1825,
+    "x": -51.9,
+    "z": -3.9,
+    "severity": "P2",
+    "kind": "stuck-navigating",
+    "text": "20 s without objective progress (distance 36.0 m, no marker: false); HUD: \"Pick up the package at the courier depot · 36 m\"",
+    "captures": [
+      "captures/fresh-01-L1-1825-stuck-navigating.jpg"
+    ],
+    "step": "pickup",
+    "objective": "Pick up the package at the courier depot · 36 m"
+  },
+  {
+    "level": "L1",
+    "tick": 6009,
+    "x": -51.8,
+    "z": -4,
+    "severity": "P0",
+    "kind": "cannot-finish",
+    "text": "No visible progress for 90.1 s; stopping without advancing the objective",
+    "captures": [
+      "captures/fresh-01-L1-6009-cannot-finish.jpg"
+    ],
+    "step": "pickup",
+    "objective": "Pick up the package at the courier depot · 36 m"
+  }
+]

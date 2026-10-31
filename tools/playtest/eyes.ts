@@ -14,6 +14,7 @@ export interface Eyes {
   objective: string; tracker: string; distance: number | null;
   marker: { visible: boolean; offscreen: boolean; x: number; y: number; anchor: string | null; guidance?: string } | null;
   route: { dx: number; dz: number } | null;
+  cue?: { x: number; z: number; text: string } | null;
   panel: { visible: boolean; heading: string; button: string | null };
   menu: string | null; loading: boolean; prompt: string; subtitle: string;
   player: { x: number; y: number; z: number; hp: number; max: number; riding: boolean; weapons: string[]; emptyWeapons?: string[]; current: string | null } | null;
@@ -66,12 +67,14 @@ export function look(): Eyes {
   const liveTracker = q('objective-tracker');
   const tracker = shown(liveTracker) ? liveTracker : q('mission-tracker');
   const objective = q('objective-text');
-  const trackerText = shown(tracker) ? tracker!.textContent ?? '' : '';
+  const trackerText = shown(tracker) ? tracker!.innerText : '';
   const distanceText = trackerText.match(/(?:^| · )(\d+(?:\.\d+)?)\s*m\b/);
   const ringPrompt = shown(q('interaction-ring')) ? q('interaction-ring')!.textContent ?? 'ring' : '';
   const trackerPrompt = shown(objective) ? objective!.textContent ?? '' : shown(tracker) ? tracker!.textContent ?? '' : '';
   const markerEl = q('mission-marker');
-  const route = q('mission-route-pin');
+  const cue = q('minimap-cue');
+  const hudRoute = q('minimap-route');
+  const route = shown(hudRoute) ? hudRoute : q('mission-route-pin');
   const panel = q('mission-panel'), button = q<HTMLButtonElement>('mission-button');
   const menu = [...document.querySelectorAll<HTMLElement>('[data-menu-screen]')].find(el => !el.hidden)?.dataset.menuScreen ?? null;
   const p = a.getEntity(1);
@@ -85,8 +88,9 @@ export function look(): Eyes {
     const near = a.query({ within: { x: p.transform.x, z: p.transform.z, r: 32 } });
     for (const e of near) {
       if (e.id === 1 || e.hidden) continue;
-      // L6's community keeps its civilian faction while following the retreat; these are visible human allies too.
-      const ally = e.faction === 'survivor' || e.faction === 'escort' || !!e.companion || !!e.escort || m?.id === 'L6' && !!e.civilian && e.faction !== 'infected';
+      // Named followers and L6's community retain their civilian faction.
+      const civilianAlly = e.faction !== 'infected' && (!!e.civilian?.survivor || m?.id === 'L6' && !!e.civilian);
+      const ally = e.faction === 'survivor' || e.faction === 'escort' || !!e.companion || !!e.escort || civilianAlly;
       const enemy = e.faction === 'infected' && !e.emerging && !e.infectionRise;
       if (!ally && !enemy) continue;
       if (enemy && (e.corpse || e.health.current <= 0)) continue;
@@ -104,9 +108,10 @@ export function look(): Eyes {
       let aim = { x: s.x, y: s.y - 18 };
       if (joints?.hip && joints.head) {
         const at = joints.hip.map((v, i) => v + (joints.head[i] - v) * .6), ndc = a.camera.project(at[0], at[1], at[2]);
-        aim = { x: rect.left + (ndc[0] + 1) / 2 * rect.width, y: rect.top + (1 - ndc[1]) / 2 * rect.height };
+        const chest = { x: rect.left + (ndc[0] + 1) / 2 * rect.width, y: rect.top + (1 - ndc[1]) / 2 * rect.height };
+        if (Number.isFinite(chest.x) && Number.isFinite(chest.y)) aim = chest;
       }
-      if (aim.x < 0 || aim.x >= view.w || aim.y < 44 || aim.y >= view.h) continue;
+      if (!Number.isFinite(aim.x) || !Number.isFinite(aim.y) || aim.x < 0 || aim.x >= view.w || aim.y < 44 || aim.y >= view.h) continue;
       // The drawn chest may sit behind Home, Pause or a rack button. A mouse
       // attack there activates the UI and can leave the driver holding WASD on the title menu.
       if (document.elementFromPoint(aim.x, aim.y)?.closest('button, input, select, textarea, [role="dialog"]')) continue;
@@ -131,9 +136,10 @@ export function look(): Eyes {
     objective: shown(objective) ? objective!.textContent ?? '' : trackerText, tracker: trackerText,
     distance: shown(tracker) && tracker?.dataset.distance ? Number(tracker.dataset.distance) : distanceText ? Number(distanceText[1]) : null,
     marker: markerEl && Number.isFinite(left) ? { visible: shown(markerEl), offscreen: markerEl.dataset.offscreen === 'true', x: left, y: top, anchor: markerEl.dataset.anchor ?? null, guidance: markerEl.dataset.guidance } : null,
-    route: shown(route) ? { dx: (parseFloat(route!.style.left) - 50) * 100 / 40, dz: (parseFloat(route!.style.top) - 50) * 100 / 40 } : null,
+    route: shown(route) ? { dx: (parseFloat(route!.style.left) - 50) * (route === hudRoute ? 30 / 44 : 100 / 40), dz: (parseFloat(route!.style.top) - 50) * (route === hudRoute ? 30 / 44 : 100 / 40) } : null,
+    cue: shown(cue) && Number.isFinite(Number(cue!.dataset.worldX)) && Number.isFinite(Number(cue!.dataset.worldZ)) ? { x: Number(cue!.dataset.worldX), z: Number(cue!.dataset.worldZ), text: cue!.getAttribute('aria-label') ?? '' } : null,
     panel: { visible: shown(panel), heading: q('mission-heading')?.textContent ?? '', button: button && shown(button) ? button.textContent : null },
-    menu, loading: shown(q('menu-loading')) || shown(q('level-transition')),
+    menu, loading: shown(q('menu-loading')) || !!q('level-transition') && !q('level-transition')!.hidden,
     prompt: ringPrompt || (trackerPrompt.includes('Press E or tap the console action') ? trackerPrompt : ''),
     subtitle: shown(q('mission-subtitle')) ? q('mission-subtitle')!.textContent ?? '' : '',
     player: p ? { x: p.transform.x, y: p.transform.y, z: p.transform.z, hp: p.health.current, max: p.health.max, riding: !!p.riding || !!p.passengerOf, weapons, emptyWeapons, current } : null,

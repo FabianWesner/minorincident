@@ -1,0 +1,103 @@
+[
+  {
+    "level": "L4",
+    "entry": "continue",
+    "heroine": "female",
+    "finished": false,
+    "skipped": [],
+    "wallSeconds": 523,
+    "simSeconds": 515,
+    "maxNoProgressSeconds": 11.833333333333334,
+    "deaths": 1,
+    "assists": 0,
+    "attacks": {
+      "weapon.army-mg": 1110,
+      "weapon.fire-axe": 41
+    },
+    "weaponsStart": [
+      "weapon.fire-axe",
+      "weapon.bat",
+      "weapon.kick",
+      "weapon.handgun",
+      "ability.corgi-lure"
+    ],
+    "weaponsEnd": [
+      "weapon.fire-axe",
+      "weapon.bat",
+      "weapon.kick",
+      "weapon.army-mg",
+      "weapon.handgun",
+      "ability.corgi-lure"
+    ],
+    "steps": [
+      {
+        "id": "ride",
+        "text": "Ride into Fairhaven with the convoy · 57 m",
+        "tick": 17,
+        "marker": {
+          "anchor": "l4-plaza",
+          "ring": {
+            "x": -17,
+            "y": 0.7049999833106995,
+            "z": 3
+          },
+          "drawn": null,
+          "playerY": 0.7049999833106995,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "quartermaster",
+        "text": "Report to the quartermaster · 10 m",
+        "tick": 1846,
+        "marker": {
+          "anchor": "l4-quartermaster",
+          "ring": {
+            "x": -23.2,
+            "y": 0.7049999833106995,
+            "z": 0.6
+          },
+          "drawn": [
+            -23.2,
+            0.05,
+            0.6
+          ],
+          "playerY": 0.7049999833106995,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "hold",
+        "text": "Hold the plaza with the army · 3:10 remaining",
+        "tick": 2070,
+        "marker": {
+          "anchor": "l4-quartermaster",
+          "ring": null,
+          "drawn": null,
+          "playerY": 0.7149999737739563,
+          "pinVisible": false
+        }
+      },
+      {
+        "id": "hide",
+        "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street · 319 m",
+        "tick": 12761,
+        "marker": {
+          "anchor": "l4-cellar-door",
+          "ring": {
+            "x": -79.29999999999998,
+            "y": 0.7099999785423279,
+            "z": -45.2801
+          },
+          "drawn": [
+            -79.3,
+            0.13,
+            -45.28
+          ],
+          "playerY": 0.7099999785423279,
+          "pinVisible": true
+        }
+      }
+    ]
+  }
+]

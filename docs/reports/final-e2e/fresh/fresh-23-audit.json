@@ -1,0 +1,3097 @@
+[
+  {
+    "at": 2559.7000007629395,
+    "level": "L9",
+    "tick": 0,
+    "phase": "briefing",
+    "paused": false,
+    "loading": true,
+    "begin": false,
+    "loadToBeginMs": null,
+    "transition": {
+      "title": "Level 9 · The Crossing",
+      "story": "The zoo is lost behind you. The armored vehicle’s radio loops one army broadcast: the research campus past the next city has a cure. Cross the countryside toward it; every hit costs armor.",
+      "status": "Loading assets…"
+    },
+    "objective": "",
+    "subtitle": "",
+    "storyBubble": "",
+    "prompt": "",
+    "panel": "",
+    "rack": {
+      "selectedSide": "RIGHT",
+      "LEFT": {
+        "rack": [
+          {
+            "id": "weapon.fire-axe",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.bat",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.kick",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 1,
+          "z": 0
+        },
+        "aimPoint": null,
+        "swapUntil": 0
+      },
+      "RIGHT": {
+        "rack": [
+          {
+            "id": "weapon.army-mg",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.handgun",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "ability.corgi-lure",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.rocket-launcher",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 0.999551842007757,
+          "z": 0.029935182292744517
+        },
+        "aimPoint": {
+          "x": 100.80079382495116,
+          "z": 76.58330994040088
+        },
+        "swapUntil": 0
+      }
+    },
+    "player": {
+      "x": -550,
+      "y": 0.9954345226287842,
+      "z": 0,
+      "yaw": 0
+    },
+    "stats": {
+      "time": 0,
+      "kills": 0,
+      "knockdowns": 0,
+      "damage": 0,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": []
+    },
+    "result": null,
+    "people": [
+      {
+        "id": 31,
+        "name": "mia",
+        "hp": 60,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 139,
+        "name": "shelter-14",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 129,
+        "name": "shelter-4",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 128,
+        "name": "shelter-3",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 127,
+        "name": "shelter-2",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 137,
+        "name": "shelter-12",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 28,
+        "name": "dale",
+        "hp": 60,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 134,
+        "name": "shelter-9",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 142,
+        "name": "shelter-17",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 143,
+        "name": "shelter-18",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 138,
+        "name": "shelter-13",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 30,
+        "name": "okafor",
+        "hp": 60,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 144,
+        "name": "shelter-19",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 131,
+        "name": "shelter-6",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 559,
+        "hp": 1000,
+        "hidden": false,
+        "faction": "survivor"
+      }
+    ],
+    "corgis": [
+      {
+        "id": 167,
+        "hp": 100,
+        "hidden": true,
+        "state": "follow"
+      }
+    ]
+  },
+  {
+    "at": 10666.70000076294,
+    "level": "L9",
+    "tick": 0,
+    "phase": "playing",
+    "paused": false,
+    "loading": true,
+    "begin": false,
+    "loadToBeginMs": null,
+    "transition": {
+      "title": "Level 9 · The Crossing",
+      "story": "The zoo is lost behind you. The armored vehicle’s radio loops one army broadcast: the research campus past the next city has a cure. Cross the countryside toward it; every hit costs armor.",
+      "status": "Preparing sound…"
+    },
+    "objective": "Drive toward the city · 1020 m",
+    "subtitle": "",
+    "storyBubble": "",
+    "prompt": "",
+    "panel": "",
+    "rack": {
+      "selectedSide": "RIGHT",
+      "LEFT": {
+        "rack": [
+          {
+            "id": "weapon.fire-axe",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.bat",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.kick",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 1,
+          "z": 0
+        },
+        "aimPoint": null,
+        "swapUntil": 0
+      },
+      "RIGHT": {
+        "rack": [
+          {
+            "id": "weapon.army-mg",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.handgun",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "ability.corgi-lure",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.rocket-launcher",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 0.999551842007757,
+          "z": 0.029935182292744517
+        },
+        "aimPoint": {
+          "x": 100.80079382495116,
+          "z": 76.58330994040088
+        },
+        "swapUntil": 0
+      }
+    },
+    "player": {
+      "x": -550,
+      "y": 0.9954345226287842,
+      "z": 0,
+      "yaw": 0
+    },
+    "stats": {
+      "time": 0,
+      "kills": 0,
+      "knockdowns": 0,
+      "damage": 0,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": []
+    },
+    "result": null,
+    "people": [
+      {
+        "id": 31,
+        "name": "mia",
+        "hp": 60,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 139,
+        "name": "shelter-14",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 129,
+        "name": "shelter-4",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 128,
+        "name": "shelter-3",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 127,
+        "name": "shelter-2",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 137,
+        "name": "shelter-12",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 28,
+        "name": "dale",
+        "hp": 60,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 134,
+        "name": "shelter-9",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 142,
+        "name": "shelter-17",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 143,
+        "name": "shelter-18",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 138,
+        "name": "shelter-13",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 30,
+        "name": "okafor",
+        "hp": 60,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 144,
+        "name": "shelter-19",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 131,
+        "name": "shelter-6",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 559,
+        "hp": 1000,
+        "hidden": false,
+        "faction": "survivor"
+      }
+    ],
+    "corgis": [
+      {
+        "id": 167,
+        "hp": 100,
+        "hidden": true,
+        "state": "follow"
+      }
+    ]
+  },
+  {
+    "at": 10712.60000038147,
+    "level": "L9",
+    "tick": 0,
+    "phase": "playing",
+    "paused": false,
+    "loading": false,
+    "begin": false,
+    "loadToBeginMs": null,
+    "transition": {
+      "title": "Level 9 · The Crossing",
+      "story": "The zoo is lost behind you. The armored vehicle’s radio loops one army broadcast: the research campus past the next city has a cure. Cross the countryside toward it; every hit costs armor.",
+      "status": "Preparing sound…"
+    },
+    "objective": "Drive toward the city · 1020 m",
+    "subtitle": "",
+    "storyBubble": "",
+    "prompt": "",
+    "panel": "",
+    "rack": {
+      "selectedSide": "RIGHT",
+      "LEFT": {
+        "rack": [
+          {
+            "id": "weapon.fire-axe",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.bat",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.kick",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 1,
+          "z": 0
+        },
+        "aimPoint": null,
+        "swapUntil": 0
+      },
+      "RIGHT": {
+        "rack": [
+          {
+            "id": "weapon.army-mg",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.handgun",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "ability.corgi-lure",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.rocket-launcher",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 0.999551842007757,
+          "z": 0.029935182292744517
+        },
+        "aimPoint": {
+          "x": 100.80079382495116,
+          "z": 76.58330994040088
+        },
+        "swapUntil": 0
+      }
+    },
+    "player": {
+      "x": -550,
+      "y": 0.9954345226287842,
+      "z": 0,
+      "yaw": 0
+    },
+    "stats": {
+      "time": 0,
+      "kills": 0,
+      "knockdowns": 0,
+      "damage": 0,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": []
+    },
+    "result": null,
+    "people": [
+      {
+        "id": 31,
+        "name": "mia",
+        "hp": 60,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 139,
+        "name": "shelter-14",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 129,
+        "name": "shelter-4",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 128,
+        "name": "shelter-3",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 127,
+        "name": "shelter-2",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 137,
+        "name": "shelter-12",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 28,
+        "name": "dale",
+        "hp": 60,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 134,
+        "name": "shelter-9",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 142,
+        "name": "shelter-17",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 143,
+        "name": "shelter-18",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 138,
+        "name": "shelter-13",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 30,
+        "name": "okafor",
+        "hp": 60,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 144,
+        "name": "shelter-19",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 131,
+        "name": "shelter-6",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 559,
+        "hp": 1000,
+        "hidden": false,
+        "faction": "survivor"
+      }
+    ],
+    "corgis": [
+      {
+        "id": 167,
+        "hp": 100,
+        "hidden": true,
+        "state": "follow"
+      }
+    ]
+  },
+  {
+    "at": 132408.4000005722,
+    "level": "L9",
+    "tick": 7300,
+    "phase": "playing",
+    "paused": false,
+    "loading": false,
+    "begin": false,
+    "loadToBeginMs": null,
+    "transition": {
+      "title": "Level 9 · The Crossing",
+      "story": "The zoo is lost behind you. The armored vehicle’s radio loops one army broadcast: the research campus past the next city has a cure. Cross the countryside toward it; every hit costs armor.",
+      "status": "Preparing sound…"
+    },
+    "objective": "Get clear of the wreck · 85 m",
+    "subtitle": "",
+    "storyBubble": "",
+    "prompt": "",
+    "panel": "",
+    "rack": {
+      "selectedSide": "RIGHT",
+      "LEFT": {
+        "rack": [
+          {
+            "id": "weapon.fire-axe",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.bat",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.kick",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 1,
+          "z": 0
+        },
+        "aimPoint": null,
+        "swapUntil": 0
+      },
+      "RIGHT": {
+        "rack": [
+          {
+            "id": "weapon.army-mg",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.handgun",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "ability.corgi-lure",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.rocket-launcher",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 0.999551842007757,
+          "z": 0.029935182292744517
+        },
+        "aimPoint": {
+          "x": 100.80079382495116,
+          "z": 76.58330994040088
+        },
+        "swapUntil": 0
+      }
+    },
+    "player": {
+      "x": 468.35699785020614,
+      "y": 0.9957320924599965,
+      "z": -31.40532176759508,
+      "yaw": 0
+    },
+    "stats": {
+      "time": 121.66666666666667,
+      "kills": 0,
+      "knockdowns": 0,
+      "damage": 0,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": []
+    },
+    "result": null,
+    "people": [
+      {
+        "id": 31,
+        "name": "mia",
+        "hp": 60,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 139,
+        "name": "shelter-14",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 129,
+        "name": "shelter-4",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 128,
+        "name": "shelter-3",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 127,
+        "name": "shelter-2",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 137,
+        "name": "shelter-12",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 28,
+        "name": "dale",
+        "hp": 60,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 134,
+        "name": "shelter-9",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 142,
+        "name": "shelter-17",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 143,
+        "name": "shelter-18",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 138,
+        "name": "shelter-13",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 30,
+        "name": "okafor",
+        "hp": 60,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 144,
+        "name": "shelter-19",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 131,
+        "name": "shelter-6",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 559,
+        "hp": 1000,
+        "hidden": false,
+        "faction": "survivor"
+      },
+      {
+        "id": 1543,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1544,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1545,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1546,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1547,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1548,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1549,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1550,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1551,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1552,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1553,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1554,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1555,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1556,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1557,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1558,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1559,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1560,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1561,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1562,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1563,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1564,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1565,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1566,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1567,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1568,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1569,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1570,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1571,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1572,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1573,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1574,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1575,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1576,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1577,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1578,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1579,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1580,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1581,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1582,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1583,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1584,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      }
+    ],
+    "corgis": [
+      {
+        "id": 167,
+        "hp": 100,
+        "hidden": true,
+        "state": "follow"
+      }
+    ]
+  },
+  {
+    "at": 137412.9000005722,
+    "level": "L9",
+    "tick": 7600,
+    "phase": "playing",
+    "paused": false,
+    "loading": false,
+    "begin": false,
+    "loadToBeginMs": null,
+    "transition": {
+      "title": "Level 9 · The Crossing",
+      "story": "The zoo is lost behind you. The armored vehicle’s radio loops one army broadcast: the research campus past the next city has a cure. Cross the countryside toward it; every hit costs armor.",
+      "status": "Preparing sound…"
+    },
+    "objective": "Get clear of the wreck · 20 m",
+    "subtitle": "The bridge gave way. Crawl clear of the wreck.",
+    "storyBubble": "",
+    "prompt": "",
+    "panel": "",
+    "rack": {
+      "selectedSide": "RIGHT",
+      "LEFT": {
+        "rack": [
+          {
+            "id": "weapon.fire-axe",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.bat",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.kick",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 1,
+          "z": 0
+        },
+        "aimPoint": null,
+        "swapUntil": 0
+      },
+      "RIGHT": {
+        "rack": [
+          {
+            "id": "weapon.army-mg",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.handgun",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "ability.corgi-lure",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.rocket-launcher",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 0.999551842007757,
+          "z": 0.029935182292744517
+        },
+        "aimPoint": {
+          "x": 100.80079382495116,
+          "z": 76.58330994040088
+        },
+        "swapUntil": 0
+      }
+    },
+    "player": {
+      "x": 527.5,
+      "y": 0.7049999833106995,
+      "z": 2.5999999046325684,
+      "yaw": 0
+    },
+    "stats": {
+      "time": 126.66666666666667,
+      "kills": 0,
+      "knockdowns": 0,
+      "damage": 0,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": []
+    },
+    "result": null,
+    "people": [
+      {
+        "id": 31,
+        "name": "mia",
+        "hp": 60,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 139,
+        "name": "shelter-14",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 129,
+        "name": "shelter-4",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 128,
+        "name": "shelter-3",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 127,
+        "name": "shelter-2",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 137,
+        "name": "shelter-12",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 28,
+        "name": "dale",
+        "hp": 60,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 134,
+        "name": "shelter-9",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 142,
+        "name": "shelter-17",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 143,
+        "name": "shelter-18",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 138,
+        "name": "shelter-13",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 30,
+        "name": "okafor",
+        "hp": 60,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 144,
+        "name": "shelter-19",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 131,
+        "name": "shelter-6",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 559,
+        "hp": 0,
+        "hidden": false,
+        "faction": "survivor"
+      },
+      {
+        "id": 1579,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1580,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1581,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1582,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1583,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1584,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1585,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1586,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1587,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1588,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1589,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1590,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1591,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1592,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1593,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1594,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1595,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1596,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1597,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1598,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1599,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1600,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1601,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1602,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1603,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1604,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1605,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1606,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1607,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1608,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1609,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1610,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1611,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1612,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1613,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1614,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1615,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1616,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1617,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1618,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1619,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1620,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      }
+    ],
+    "corgis": [
+      {
+        "id": 167,
+        "hp": 100,
+        "hidden": true,
+        "state": "follow"
+      }
+    ]
+  },
+  {
+    "at": 142405.9000005722,
+    "level": "L9",
+    "tick": 7900,
+    "phase": "playing",
+    "paused": false,
+    "loading": false,
+    "begin": false,
+    "loadToBeginMs": null,
+    "transition": {
+      "title": "Level 9 · The Crossing",
+      "story": "The zoo is lost behind you. The armored vehicle’s radio loops one army broadcast: the research campus past the next city has a cure. Cross the countryside toward it; every hit costs armor.",
+      "status": "Preparing sound…"
+    },
+    "objective": "Get clear of the wreck · 13 m",
+    "subtitle": "",
+    "storyBubble": "",
+    "prompt": "",
+    "panel": "",
+    "rack": {
+      "selectedSide": "RIGHT",
+      "LEFT": {
+        "rack": [
+          {
+            "id": "weapon.fire-axe",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.bat",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.kick",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 1,
+          "z": 0
+        },
+        "aimPoint": null,
+        "swapUntil": 0
+      },
+      "RIGHT": {
+        "rack": [
+          {
+            "id": "weapon.army-mg",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.handgun",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "ability.corgi-lure",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.rocket-launcher",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 0.999551842007757,
+          "z": 0.029935182292744517
+        },
+        "aimPoint": {
+          "x": 100.80079382495116,
+          "z": 76.58330994040088
+        },
+        "swapUntil": 0
+      }
+    },
+    "player": {
+      "x": 534.0541381835938,
+      "y": 0.7200000286102295,
+      "z": 1.7261110544204712,
+      "yaw": 0
+    },
+    "stats": {
+      "time": 131.66666666666666,
+      "kills": 0,
+      "knockdowns": 0,
+      "damage": 0,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": []
+    },
+    "result": null,
+    "people": [
+      {
+        "id": 31,
+        "name": "mia",
+        "hp": 60,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 139,
+        "name": "shelter-14",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 129,
+        "name": "shelter-4",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 128,
+        "name": "shelter-3",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 127,
+        "name": "shelter-2",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 137,
+        "name": "shelter-12",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 28,
+        "name": "dale",
+        "hp": 60,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 134,
+        "name": "shelter-9",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 142,
+        "name": "shelter-17",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 143,
+        "name": "shelter-18",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 138,
+        "name": "shelter-13",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 30,
+        "name": "okafor",
+        "hp": 60,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 144,
+        "name": "shelter-19",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 131,
+        "name": "shelter-6",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 559,
+        "hp": 0,
+        "hidden": false,
+        "faction": "survivor"
+      },
+      {
+        "id": 1579,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1580,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1581,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1582,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1583,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1584,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1585,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1586,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1587,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1588,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1589,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1590,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1591,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1592,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1593,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1594,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1595,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1596,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1597,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1598,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1599,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1600,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1601,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1602,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1603,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1604,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1605,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1606,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1607,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1608,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1609,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1610,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1611,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1612,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1613,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1614,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1615,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1616,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1617,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1618,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1619,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1620,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      }
+    ],
+    "corgis": [
+      {
+        "id": 167,
+        "hp": 100,
+        "hidden": true,
+        "state": "follow"
+      }
+    ]
+  },
+  {
+    "at": 146405.60000038147,
+    "level": "L9",
+    "tick": 8139,
+    "phase": "progression",
+    "paused": true,
+    "loading": true,
+    "begin": false,
+    "loadToBeginMs": null,
+    "transition": {
+      "title": "Level 10 · The Cure",
+      "story": "The crash took the vehicle and every weapon but the axe. The others went ahead to the evacuation point while you fell behind. Find the research campus and the cure. Something huge is on your trail: you will hear it long before you see it.",
+      "status": "Loading neighborhood…"
+    },
+    "objective": "Get clear of the wreck · 0 m",
+    "subtitle": "",
+    "storyBubble": "",
+    "prompt": "",
+    "panel": "",
+    "rack": {
+      "selectedSide": "LEFT",
+      "LEFT": {
+        "rack": [
+          {
+            "id": "weapon.fire-axe",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 1,
+          "z": 0
+        },
+        "aimPoint": null,
+        "swapUntil": 0
+      },
+      "RIGHT": {
+        "rack": [
+          {
+            "id": "weapon.fire-axe",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 1,
+          "z": 0
+        },
+        "aimPoint": null,
+        "swapUntil": 0
+      }
+    },
+    "player": {
+      "x": 547,
+      "y": 0.7200000286102295,
+      "z": 0,
+      "yaw": 0
+    },
+    "stats": {
+      "time": 135.65,
+      "kills": 0,
+      "knockdowns": 0,
+      "damage": 0,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": []
+    },
+    "result": {
+      "time": 135.65,
+      "kills": 0,
+      "knockdowns": 0,
+      "damage": 0,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": []
+    },
+    "people": [
+      {
+        "id": 31,
+        "name": "mia",
+        "hp": 60,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 139,
+        "name": "shelter-14",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 129,
+        "name": "shelter-4",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 128,
+        "name": "shelter-3",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 127,
+        "name": "shelter-2",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 137,
+        "name": "shelter-12",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 28,
+        "name": "dale",
+        "hp": 60,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 134,
+        "name": "shelter-9",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 142,
+        "name": "shelter-17",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 143,
+        "name": "shelter-18",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 138,
+        "name": "shelter-13",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 30,
+        "name": "okafor",
+        "hp": 60,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 144,
+        "name": "shelter-19",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 131,
+        "name": "shelter-6",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 559,
+        "hp": 0,
+        "hidden": false,
+        "faction": "survivor"
+      },
+      {
+        "id": 1579,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1580,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1581,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1582,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1583,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1584,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1585,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1586,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1587,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1588,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1589,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1590,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1591,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1592,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1593,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1594,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1595,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1596,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1597,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1598,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1599,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1600,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1601,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1602,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1603,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1604,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1605,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1606,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1607,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1608,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1609,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1610,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1611,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1612,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1613,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1614,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1615,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1616,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1617,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1618,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1619,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      },
+      {
+        "id": 1620,
+        "hp": 100,
+        "hidden": false,
+        "faction": "civilian"
+      }
+    ],
+    "corgis": [
+      {
+        "id": 167,
+        "hp": 100,
+        "hidden": true,
+        "state": "follow"
+      }
+    ]
+  },
+  {
+    "at": 147376.9000005722,
+    "level": "L10",
+    "tick": 0,
+    "phase": "playing",
+    "paused": false,
+    "loading": true,
+    "begin": false,
+    "loadToBeginMs": null,
+    "transition": {
+      "title": "Level 10 · The Cure",
+      "story": "The crash took the vehicle and every weapon but the axe. The others went ahead to the evacuation point while you fell behind. Find the research campus and the cure. Something huge is on your trail: you will hear it long before you see it.",
+      "status": "Loading assets…"
+    },
+    "objective": "",
+    "subtitle": "",
+    "storyBubble": "",
+    "prompt": "",
+    "panel": "",
+    "rack": {
+      "selectedSide": "LEFT",
+      "LEFT": {
+        "rack": [
+          {
+            "id": "weapon.fire-axe",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 1,
+          "z": 0
+        },
+        "aimPoint": null,
+        "swapUntil": 0
+      },
+      "RIGHT": {
+        "rack": [
+          {
+            "id": "weapon.fire-axe",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 1,
+          "z": 0
+        },
+        "aimPoint": null,
+        "swapUntil": 0
+      }
+    },
+    "player": {
+      "x": 547,
+      "y": 0.705,
+      "z": 0,
+      "yaw": 0.3205919885488634
+    },
+    "stats": {
+      "time": 0,
+      "kills": 0,
+      "knockdowns": 0,
+      "damage": 0,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": []
+    },
+    "result": null,
+    "people": [],
+    "corgis": [
+      {
+        "id": 167,
+        "hp": 100,
+        "hidden": false,
+        "state": "follow"
+      }
+    ]
+  },
+  {
+    "at": 147407,
+    "level": "L10",
+    "tick": 0,
+    "phase": "playing",
+    "paused": false,
+    "loading": true,
+    "begin": false,
+    "loadToBeginMs": null,
+    "transition": {
+      "title": "Level 10 · The Cure",
+      "story": "The crash took the vehicle and every weapon but the axe. The others went ahead to the evacuation point while you fell behind. Find the research campus and the cure. Something huge is on your trail: you will hear it long before you see it.",
+      "status": "Loading assets…"
+    },
+    "objective": "Leave the wreck on foot · 0 m",
+    "subtitle": "",
+    "storyBubble": "",
+    "prompt": "",
+    "panel": "",
+    "rack": {
+      "selectedSide": "LEFT",
+      "LEFT": {
+        "rack": [
+          {
+            "id": "weapon.fire-axe",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 1,
+          "z": 0
+        },
+        "aimPoint": null,
+        "swapUntil": 0
+      },
+      "RIGHT": {
+        "rack": [
+          {
+            "id": "weapon.fire-axe",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 1,
+          "z": 0
+        },
+        "aimPoint": null,
+        "swapUntil": 0
+      }
+    },
+    "player": {
+      "x": 547,
+      "y": 0.705,
+      "z": 0,
+      "yaw": 0.3205919885488634
+    },
+    "stats": {
+      "time": 0,
+      "kills": 0,
+      "knockdowns": 0,
+      "damage": 0,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": []
+    },
+    "result": null,
+    "people": [],
+    "corgis": [
+      {
+        "id": 167,
+        "hp": 100,
+        "hidden": false,
+        "state": "follow"
+      }
+    ]
+  },
+  {
+    "at": 156063.10000038147,
+    "level": "L10",
+    "tick": 0,
+    "phase": "playing",
+    "paused": false,
+    "loading": true,
+    "begin": false,
+    "loadToBeginMs": null,
+    "transition": {
+      "title": "Level 10 · The Cure",
+      "story": "The crash took the vehicle and every weapon but the axe. The others went ahead to the evacuation point while you fell behind. Find the research campus and the cure. Something huge is on your trail: you will hear it long before you see it.",
+      "status": "Preparing sound…"
+    },
+    "objective": "Leave the wreck on foot · 0 m",
+    "subtitle": "The crash took everything but the axe. The others made it to the evacuation point while you fell behind. Find the research campus and the cure.",
+    "storyBubble": "",
+    "prompt": "",
+    "panel": "",
+    "rack": {
+      "selectedSide": "LEFT",
+      "LEFT": {
+        "rack": [
+          {
+            "id": "weapon.fire-axe",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 1,
+          "z": 0
+        },
+        "aimPoint": null,
+        "swapUntil": 0
+      },
+      "RIGHT": {
+        "rack": [
+          {
+            "id": "weapon.fire-axe",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 1,
+          "z": 0
+        },
+        "aimPoint": null,
+        "swapUntil": 0
+      }
+    },
+    "player": {
+      "x": 547,
+      "y": 0.705,
+      "z": 0,
+      "yaw": 0.3205919885488634
+    },
+    "stats": {
+      "time": 0,
+      "kills": 0,
+      "knockdowns": 0,
+      "damage": 0,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": []
+    },
+    "result": null,
+    "people": [],
+    "corgis": [
+      {
+        "id": 167,
+        "hp": 100,
+        "hidden": false,
+        "state": "follow"
+      }
+    ]
+  },
+  {
+    "at": 156305.5,
+    "level": "L10",
+    "tick": 0,
+    "phase": "playing",
+    "paused": false,
+    "loading": false,
+    "begin": false,
+    "loadToBeginMs": null,
+    "transition": {
+      "title": "Level 10 · The Cure",
+      "story": "The crash took the vehicle and every weapon but the axe. The others went ahead to the evacuation point while you fell behind. Find the research campus and the cure. Something huge is on your trail: you will hear it long before you see it.",
+      "status": "Preparing sound…"
+    },
+    "objective": "Leave the wreck on foot · 0 m",
+    "subtitle": "The crash took everything but the axe. The others made it to the evacuation point while you fell behind. Find the research campus and the cure.",
+    "storyBubble": "",
+    "prompt": "",
+    "panel": "",
+    "rack": {
+      "selectedSide": "LEFT",
+      "LEFT": {
+        "rack": [
+          {
+            "id": "weapon.fire-axe",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 1,
+          "z": 0
+        },
+        "aimPoint": null,
+        "swapUntil": 0
+      },
+      "RIGHT": {
+        "rack": [
+          {
+            "id": "weapon.fire-axe",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 1,
+          "z": 0
+        },
+        "aimPoint": null,
+        "swapUntil": 0
+      }
+    },
+    "player": {
+      "x": 547,
+      "y": 0.705,
+      "z": 0,
+      "yaw": 0.3205919885488634
+    },
+    "stats": {
+      "time": 0,
+      "kills": 0,
+      "knockdowns": 0,
+      "damage": 0,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": []
+    },
+    "result": null,
+    "people": [],
+    "corgis": [
+      {
+        "id": 167,
+        "hp": 100,
+        "hidden": false,
+        "state": "follow"
+      }
+    ]
+  },
+  {
+    "at": 156357.80000019073,
+    "level": "L10",
+    "tick": 1,
+    "phase": "playing",
+    "paused": false,
+    "loading": false,
+    "begin": false,
+    "loadToBeginMs": null,
+    "transition": {
+      "title": "Level 10 · The Cure",
+      "story": "The crash took the vehicle and every weapon but the axe. The others went ahead to the evacuation point while you fell behind. Find the research campus and the cure. Something huge is on your trail: you will hear it long before you see it.",
+      "status": "Preparing sound…"
+    },
+    "objective": "Recover the handgun at the checkpoint · 221 m",
+    "subtitle": "The crash took everything but the axe. The others made it to the evacuation point while you fell behind. Find the research campus and the cure.",
+    "storyBubble": "",
+    "prompt": "",
+    "panel": "",
+    "rack": {
+      "selectedSide": "LEFT",
+      "LEFT": {
+        "rack": [
+          {
+            "id": "weapon.fire-axe",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 1,
+          "z": 0
+        },
+        "aimPoint": null,
+        "swapUntil": 0
+      },
+      "RIGHT": {
+        "rack": [
+          {
+            "id": "weapon.fire-axe",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 1,
+          "z": 0
+        },
+        "aimPoint": null,
+        "swapUntil": 0
+      }
+    },
+    "player": {
+      "x": 547,
+      "y": 0.7049999833106995,
+      "z": 0,
+      "yaw": 0.3205919885488634
+    },
+    "stats": {
+      "time": 0.016666666666666666,
+      "kills": 0,
+      "knockdowns": 0,
+      "damage": 0,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": []
+    },
+    "result": null,
+    "people": [],
+    "corgis": [
+      {
+        "id": 167,
+        "hp": 100,
+        "hidden": false,
+        "state": "follow"
+      }
+    ]
+  }
+]

@@ -1,0 +1,145 @@
+[
+  {
+    "level": "L10",
+    "entry": "continue",
+    "heroine": "female",
+    "finished": false,
+    "skipped": [],
+    "wallSeconds": 560,
+    "simSeconds": 498,
+    "maxNoProgressSeconds": 6.133333333333334,
+    "deaths": 0,
+    "assists": 0,
+    "attacks": {
+      "weapon.rocket-launcher": 62
+    },
+    "weaponsStart": [
+      "weapon.fire-axe",
+      "weapon.pistol",
+      "weapon.shotgun",
+      "weapon.army-mg",
+      "weapon.rocket-launcher"
+    ],
+    "weaponsEnd": [
+      "weapon.fire-axe",
+      "weapon.pistol",
+      "weapon.shotgun",
+      "weapon.army-mg",
+      "weapon.rocket-launcher"
+    ],
+    "steps": [
+      {
+        "id": "dispersal-complex",
+        "text": "Bring the cure to the dispersal complex · 761 m",
+        "tick": 0,
+        "marker": {
+          "anchor": "cure-complex",
+          "ring": {
+            "x": 3697,
+            "y": 0.7049999833106995,
+            "z": -25
+          },
+          "drawn": [
+            3697,
+            0,
+            -25
+          ],
+          "playerY": 0.7200000286102295,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "install",
+        "text": "Install the cure in the dispersal device · 311 m",
+        "tick": 15140,
+        "marker": {
+          "anchor": "cure-install",
+          "ring": {
+            "x": 4006.5,
+            "y": 0.7200000286102295,
+            "z": -39
+          },
+          "drawn": [
+            4006.5,
+            0,
+            -39
+          ],
+          "playerY": 0.7200000286102295,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "hold",
+        "text": "Activate the dispersal console · 13 m",
+        "tick": 20382,
+        "marker": {
+          "anchor": "cure-console",
+          "ring": {
+            "x": 4002,
+            "y": 0.7200000286102295,
+            "z": -27
+          },
+          "drawn": [
+            4002,
+            0,
+            -27
+          ],
+          "playerY": 0.7200000286102295,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "mega",
+        "text": "Kill the Mega Alpha · 1027 m",
+        "tick": 24238,
+        "marker": {
+          "anchor": "cure-mega",
+          "ring": {
+            "x": 2992.807945048499,
+            "y": 0.7099999785423279,
+            "z": -0.3506043975084931
+          },
+          "drawn": [
+            3984.21,
+            0.7,
+            -44.56
+          ],
+          "playerY": 0.7099999785423279,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "release",
+        "text": "Release the cure at the console · 24 m",
+        "tick": 26222,
+        "marker": {
+          "anchor": "cure-console",
+          "ring": {
+            "x": 4002,
+            "y": 0.7120000123977661,
+            "z": -27
+          },
+          "drawn": [
+            4002,
+            0,
+            -27
+          ],
+          "playerY": 0.7120000123977661,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "epilogue",
+        "text": "Watch the cure spread · 1/150 s",
+        "tick": 26976,
+        "marker": {
+          "anchor": "cure-console",
+          "ring": null,
+          "drawn": null,
+          "playerY": 0.7049999833106995,
+          "pinVisible": false
+        }
+      }
+    ]
+  }
+]

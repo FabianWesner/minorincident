@@ -1,0 +1,141 @@
+{
+  "note": "All recorded intervals over 200 ms are counted, including loading, menus/results and pause. Confirmed active gameplay is separate. Speculative L1 title loading in sessions playing other levels is excluded from L1 totals; actual handover loading is included. Original raw files remain unchanged. fresh-02 and fresh-08 final frame dumps are unavailable and cannot be counted.",
+  "excludedBackgroundIntervals": 1,
+  "levels": {
+    "L1": {
+      "all": 3,
+      "active": 0,
+      "loadingOrNonPlay": 3,
+      "paused": 0,
+      "pauseBoundary": 0,
+      "other": 0,
+      "sources": {
+        "fresh-01-frames.json": 2,
+        "fresh-03-frames.json": 1
+      }
+    },
+    "L2": {
+      "all": 8,
+      "active": 0,
+      "loadingOrNonPlay": 8,
+      "paused": 0,
+      "pauseBoundary": 0,
+      "other": 0,
+      "sources": {
+        "fresh-03-frames.json": 2,
+        "fresh-04-frames.json": 2,
+        "fresh-05-frames.json": 2,
+        "fresh-06-frames.json": 1,
+        "fresh-07-frames.json": 1
+      }
+    },
+    "L3": {
+      "all": 9,
+      "active": 2,
+      "loadingOrNonPlay": 7,
+      "paused": 0,
+      "pauseBoundary": 0,
+      "other": 0,
+      "sources": {
+        "fresh-07-frames.json": 2,
+        "fresh-09-frames.json": 2,
+        "fresh-10-frames.json": 2,
+        "fresh-11-frames.json": 1,
+        "fresh-12-L3-FAIL-permitted-continuation-frames.json": 2
+      }
+    },
+    "L4": {
+      "all": 12,
+      "active": 2,
+      "loadingOrNonPlay": 10,
+      "paused": 0,
+      "pauseBoundary": 0,
+      "other": 0,
+      "sources": {
+        "fresh-12-L3-FAIL-permitted-continuation-frames.json": 2,
+        "fresh-13-frames.json": 2,
+        "fresh-14-frames.json": 2,
+        "fresh-15-frames.json": 3,
+        "fresh-16-frames.json": 3
+      }
+    },
+    "L5": {
+      "all": 13,
+      "active": 1,
+      "loadingOrNonPlay": 10,
+      "paused": 2,
+      "pauseBoundary": 0,
+      "other": 0,
+      "sources": {
+        "fresh-16-frames.json": 3,
+        "fresh-17-frames.json": 5,
+        "fresh-18-frames.json": 2,
+        "fresh-19-frames.json": 3
+      }
+    },
+    "L6": {
+      "all": 2,
+      "active": 0,
+      "loadingOrNonPlay": 2,
+      "paused": 0,
+      "pauseBoundary": 0,
+      "other": 0,
+      "sources": {
+        "fresh-19-frames.json": 1,
+        "fresh-20-frames.json": 1
+      }
+    },
+    "L7": {
+      "all": 3,
+      "active": 0,
+      "loadingOrNonPlay": 3,
+      "paused": 0,
+      "pauseBoundary": 0,
+      "other": 0,
+      "sources": {
+        "fresh-20-frames.json": 2,
+        "fresh-21-frames.json": 1
+      }
+    },
+    "L8": {
+      "all": 4,
+      "active": 0,
+      "loadingOrNonPlay": 4,
+      "paused": 0,
+      "pauseBoundary": 0,
+      "other": 0,
+      "sources": {
+        "fresh-21-frames.json": 3,
+        "fresh-22-frames.json": 1
+      }
+    },
+    "L9": {
+      "all": 10,
+      "active": 0,
+      "loadingOrNonPlay": 10,
+      "paused": 0,
+      "pauseBoundary": 0,
+      "other": 0,
+      "sources": {
+        "fresh-22-frames.json": 8,
+        "fresh-23-frames.json": 2
+      }
+    },
+    "L10": {
+      "all": 20,
+      "active": 2,
+      "loadingOrNonPlay": 18,
+      "paused": 0,
+      "pauseBoundary": 0,
+      "other": 0,
+      "sources": {
+        "fresh-23-frames.json": 5,
+        "fresh-24-frames.json": 4,
+        "fresh-25-frames.json": 5,
+        "fresh-26-frames.json": 2,
+        "fresh-27-frames.json": 2,
+        "fresh-28-frames.json": 2
+      }
+    }
+  }
+}
