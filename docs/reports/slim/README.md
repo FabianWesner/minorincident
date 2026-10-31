@@ -95,6 +95,8 @@ The crawler keeps its [q260 approved full head](../q260/README.md); its crouched
 
 [Runtime LOD audit](rollout/lod-audit.json): zero new fallbacks. The manifest keeps the existing `skin_body` dimension convention and original tolerances. The full validator already reports auxiliary-eye versus body-envelope differences and legacy rest-cushion findings on main; [the same-validator comparison of all 165 delivered high LOD files](rollout/contract-delta.json) records those baseline findings and **zero new contract errors**.
 
+Male courier fitted gear follows the same torso displacement at all three LODs, with UVs, atlas bytes, weights and rig retained. [Gear audit](rollout/gear-refit.json). The [cast review](rollout/review.md#qa-corrections) records the corrected attachment gap and sole-normal rendering fault.
+
 ## Final measurements
 
 The table above is the complete before census. [Final values for all 71 figures](measurements-after.json) use the identical bind-pose method.
@@ -108,6 +110,7 @@ node --import tsx tools/slim/build-pilot.ts
 node --import tsx tools/slim/build-pilot.ts --rollout
 node --import tsx tools/slim/sync-dimensions.ts
 node --import tsx tools/slim/pack-normals.ts
+node --import tsx tools/slim/refit-gear.ts
 node --import tsx tools/slim/measure.ts after
 node --import tsx tools/slim/audit.ts rollout
 HEIGHT_OUT=docs/reports/slim/rollout node --import tsx tools/q257/height-census.ts

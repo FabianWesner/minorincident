@@ -30,6 +30,12 @@ for (const entry of build.receipts) for (const f of entry.files) {
         assert.equal(p.getAttribute(key)!.getCount(), old.getAttribute(key)!.getCount());
         if (!['POSITION', 'NORMAL'].includes(key)) assert.equal(sha(bytes(p.getAttribute(key)!.getArray())), sha(bytes(old.getAttribute(key)!.getArray())), `${f.output}: ${key}`);
       }
+      const normal = p.getAttribute('NORMAL'), oldNormal = old.getAttribute('NORMAL');
+      if (normal && oldNormal) for (let v = 0; v < normal.getCount(); v++) {
+        const n = normal.getElement(v, []), b = oldNormal.getElement(v, []);
+        if (b.every(Number.isFinite)) assert.ok(n.every(Number.isFinite), `${f.output}: nonfinite normal ${v}`);
+        if (b.every(Number.isFinite) && b.reduce((s,x)=>s+x*x,0) > 1e-12) assert.ok(n.reduce((s,x)=>s+x*x,0) > 1e-12, `${f.output}: new zero normal ${v}`);
+      }
       assert.equal(p.getIndices()?.getCount(), old.getIndices()?.getCount());
       if (p.getIndices()) assert.equal(sha(bytes(p.getIndices()!.getArray())), sha(bytes(old.getIndices()!.getArray())));
       triangles += (p.getIndices()?.getCount() ?? p.getAttribute('POSITION')!.getCount()) / 3;

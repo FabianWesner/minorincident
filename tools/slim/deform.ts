@@ -94,6 +94,9 @@ export function slimBuild(doc: Document, scales: Scales, rootName?: string) {
         const cols = [new Vector3(e, 0, 0), new Vector3(0, e, 0), new Vector3(0, 0, e)].map(d => deform(v, v.point.clone().add(d)).sub(p).divideScalar(e));
         const jac = new Matrix3().set(cols[0].x, cols[1].x, cols[2].x, cols[0].y, cols[1].y, cols[2].y, cols[0].z, cols[1].z, cols[2].z).invert().transpose();
         const n = new Vector3().fromArray(normal.getElement(v.id, [])).applyMatrix3(new Matrix3().getNormalMatrix(into)).applyMatrix3(jac).applyMatrix3(new Matrix3().getNormalMatrix(from)).normalize();
+        // The exact sole-height clamp has a singular Jacobian. Its authored
+        // sole normal remains valid; a zero normal would poison HDR lighting.
+        if (!n.toArray().every(Number.isFinite) || n.lengthSq() < 1e-12) n.fromArray(normal.getElement(v.id, [])).normalize();
         normals.setElement(v.id, n.toArray());
       }
     }
