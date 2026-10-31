@@ -245,7 +245,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     // Carried guns cannot fire from a vehicle; keep following the driving objective.
     if (e.driving || e.player?.riding) return false;
     // Resume gameplay keyboard focus after a retry or a HUD button click.
-    if (e.level === 'L4' && (e.step === 'hold' || e.step === 'hide')) await page.locator('canvas').focus();
+    if (e.level === 'L4' && (e.step === 'hold' || e.step === 'hide')) // Canvas has no tabindex: a physical world click releases the hidden Resume button's focus.
+          await page.mouse.click(e.view.w / 2, e.view.h / 2);
     if (e.level === 'L4' && e.step === 'hide' && e.route && e.player) {
       // Read the street bearing, visible bodies and nearby health packs. Step
       // around a blocking crowd instead of walking into its melee ring.
@@ -537,7 +538,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         if (command.manual !== undefined) manual = command.manual;
         if (command.resume && await page.getByTestId('resume-game').isVisible()) {
           await page.getByTestId('resume-game').click();
-          await page.locator('canvas').focus();
+          // Canvas has no tabindex: a physical world click releases the hidden Resume button's focus.
+          await page.mouse.click(e.view.w / 2, e.view.h / 2);
         }
         if (command.key) await page.keyboard.press(command.key);
         if (command.button) await page.getByTestId(command.button).click();
@@ -560,6 +562,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         if (command.pauseAfter && !await page.getByTestId('resume-game').isVisible()) await page.keyboard.press('Escape');
         log({ manualInput: command, level: e.level, tick: e.tick }); continue;
       }
+      if (manual && run && o.sampleSeconds !== undefined && Date.now() - wallStart >= o.sampleSeconds * 1000) manual = false;
       if (manual) { await press([]); await hold(200); continue; }
     }
     if (run && shouldResumePause(e.menu,e.loading)) {
