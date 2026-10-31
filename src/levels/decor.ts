@@ -76,10 +76,39 @@ const cache = new Map<string, Placement[]>();
 export function districtDecor(district: DistrictId, placements: readonly Placement[]): Placement[] {
   // L9 roadside pieces were removed (orchestrator 10-29): without vehicle collision they were pass-through, with it the APC
   // stopped on luggage. L9 keeps its existing dressing.
-  if (district !== 'D-SUBWAY' && district !== 'D-CURE') return [];
+  const l7 = district === 'D-FAIR' && placements.some(p => p.id.startsWith('l7-'));
+  if (district !== 'D-SUBWAY' && district !== 'D-CURE' && !l7) return [];
   const key = `${district}:${placements.length}`, hit = cache.get(key); if (hit) return hit;
   if (district === 'D-CURE') {
     const list = cureRoadsideBelt(placements); cache.set(key, list); return list;
+  }
+  if (l7) {
+    const themes = [
+      ['prop.crates', 'decay.dropped-belongings'], ['prop.traffic-cone', 'prop.trash-bags'],
+      ['prop.medical-cooler', 'prop.broken-chair'], ['prop.pallet', 'decay.dropped-belongings'],
+    ];
+    const list: Placement[] = [], occupied = [...placements];
+    const ground = (x: number) => Math.min(3.9, Math.max(0, (x - 85) / 130 * 3.9));
+    const blocked = (p: Placement) => {
+      const a = p.visualAabb;
+      return [...occupied, ...list].some(q => {
+        const b = q.visualAabb;
+        return !(a.min[0] >= b.max[0] + .5 || a.max[0] <= b.min[0] - .5 || a.min[2] >= b.max[2] + .5 || a.max[2] <= b.min[2] - .5);
+      });
+    };
+    // Four varied refugee and military remnants fill the long Northgate approach
+    // between its existing wrecks. Their full AABBs stay outside the 10 m road.
+    for (const [i, x] of [233, 195, 157, 119].entries()) {
+      const side = i % 2 ? -1 : 1, theme = themes[i];
+      for (const [j, asset] of theme.entries()) {
+        const spot: Spot = { asset, x: x + (j ? 1.8 : 0), z: 15 + side * (8.8 + (j ? 1.3 : 0)), y: ground(x), yaw: i * .63 + j * .8, scale: j ? .82 : 1 };
+        const p = placement('D-FAIR', list.length + i * 2, spot);
+        p.id = `decor-l7-northgate-${i}-${j}`;
+        if (j === 0) p.roadLife = true;
+        if (!blocked(p)) list.push(p);
+      }
+    }
+    cache.set(key, list); return list;
   }
   const spots = subwayDecor();
   const list = spots.map((s, i) => placement(district, i, s));
