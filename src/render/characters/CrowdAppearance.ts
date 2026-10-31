@@ -23,10 +23,10 @@ export function resolveCrowdAppearance(e: EntitySnapshot, ids: readonly string[]
   // Aftermath and continuous infected bodies carry authored headwear (or deliberately bare hair).
   // Random caps must not replace a named person's cap, ponytail or fitted glasses.
   const slot = eligible ? explicit ? ids.indexOf(explicit) + 1 : model.endsWith('.aftermath') || authoredInfectedHeads.has(model) ? 0 : !e.infected || turnedPerson ? channels.accessory % (ids.length + 1) : infectedWearsAccessory(e.id) ? channels.accessory % ids.length + 1 : 0 : 0;
-  // Q-267: the sun-hat fit on the elderly head becomes an upright cone. Retire
-  // that combination; the same hat fits the other heads, and her own hair stays.
+  // Q-267: fitted hats on this narrow head become upright cones. Retire these
+  // combinations; the same hats fit the other heads, and her own hair stays.
   const picked = slot ? ids[slot - 1] : null;
-  const retired = model.replace(/\.aftermath$/, '') === 'npc.civilian-elderly' && picked === 'acc.hat-sun-hat';
+  const retired = model.replace(/\.aftermath$/, '') === 'npc.civilian-woman-b' && accessoryKinds.get(picked ?? '') === 'hat';
   const accessory = retired ? null : picked, kind = accessoryKinds.get(accessory ?? '');
   const hidesHair = kind === 'hat' || kind === 'hair' || !!accessory?.startsWith('acc.placeholder-');
   return { ...channels, model, outfit: model, head: model, headwear: kind === 'hat' ? accessory : accessory ? null : model,
