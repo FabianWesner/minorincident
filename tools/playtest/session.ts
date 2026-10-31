@@ -530,7 +530,9 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       }
       const control = process.env.PLAYTEST_CONTROL_FILE;
       if (control && existsSync(control)) {
-        const command = JSON.parse(readFileSync(control, 'utf8')) as { manual?: boolean; key?: string; keys?: string[]; click?: [number, number]; ms?: number; button?: string; capture?: string };
+        let command: { manual?: boolean; key?: string; keys?: string[]; click?: [number, number]; ms?: number; button?: string; capture?: string };
+        try { command = JSON.parse(readFileSync(control, 'utf8')); }
+        catch { await hold(50); continue; }
         unlinkSync(control); await press([]); await releaseAim();
         if (command.manual !== undefined) manual = command.manual;
         if (command.key) await page.keyboard.press(command.key);
@@ -1050,6 +1052,12 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   assert.ok(handoverReady,'L8 objective, destination pin and minimap marker must appear within 2 s of control returning');
   return { runs, issues };
   } finally {
+    if (visibleOnly && !page.isClosed()) {
+      await page.evaluate('({ audit: window.__finalE2eAudit ?? [], frames: window.__playtestFrames ?? [] })').then(data => {
+        writeFileSync(join(o.out, `${o.tag}-audit.json`), JSON.stringify(data.audit, null, 2));
+        writeFileSync(join(o.out, `${o.tag}-frames.json`), JSON.stringify(data.frames, null, 2));
+      }).catch(error => log({ observerCleanupError: String(error) }));
+    }
     await observeWithin(context.close(), 10_000).catch(error => log({ cleanupError: String(error) }));
   }
 }

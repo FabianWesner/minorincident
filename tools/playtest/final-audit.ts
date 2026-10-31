@@ -15,7 +15,8 @@ export function installFinalAudit(): void {
     if (loading && !wasLoading) loadStarted = now;
     const text = visible(q('objective-text')) ? q('objective-text')!.textContent : q('mission-tracker')?.textContent;
     const subtitle = visible(q('mission-subtitle')) ? q('mission-subtitle')!.textContent : '';
-    const key = JSON.stringify([g.world.scenario, m.state.phase, loading, begin, text?.replace(/[\d.]+\s*m\b/g, '#m'), subtitle]);
+    const storyBubble = visible(q('story-bubble')) ? q('story-bubble')!.textContent : '';
+    const key = JSON.stringify([g.world.scenario, m.state.phase, loading, begin, text?.replace(/[\d.]+\s*m\b/g, '#m'), subtitle, storyBubble]);
     if (key !== previous || begin && !wasBegin) {
       const state = window.__SS__!.missions.state();
       const entities = [...g.world.entities.iterate()];
@@ -24,7 +25,7 @@ export function installFinalAudit(): void {
       target.__finalE2eAudit.push({ at: now, level: g.world.scenario, tick: g.world.tick, phase: m.state.phase, loading,
         begin, loadToBeginMs: begin && !wasBegin && loadStarted ? now - loadStarted : null,
         transition: { title: q('transition-title')?.textContent, story: q('transition-story')?.textContent, status: q('transition-status')?.textContent },
-        objective: text, subtitle, prompt: visible(q('interaction-ring')) ? q('interaction-ring')!.textContent : '',
+        objective: text, subtitle, storyBubble, prompt: visible(q('interaction-ring')) ? q('interaction-ring')!.textContent : '',
         panel: visible(q('mission-panel')) ? q('mission-panel')!.innerText : '',
         rack: player?.weapons, player: player?.transform,
         stats: state?.stats, result: state?.result,
@@ -36,5 +37,5 @@ export function installFinalAudit(): void {
     }
     wasLoading = loading; wasBegin = begin;
   };
-  setInterval(sample, 250);
+  setInterval(sample, 50);
 }
