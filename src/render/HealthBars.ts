@@ -48,7 +48,7 @@ export class HealthBars extends Group {
   private readonly definitions = new Map(infectedDefinitions.map(def => [def.id, { ...def }]));
   private readonly probes: { id: number; fraction: number; x: number; y: number; width: number; height: number; gap: number; anchor: number[] }[] = [];
   private readonly hurt: number[] = [];
-  private readonly l10Bars: { id: number; distance: number; hurt: boolean }[] = [];
+  private readonly l10Bars: { id: number; distance: number }[] = [];
   private readonly l10BarIds = new Set<number>();
   private readonly probing = __QA_HOOKS__ && typeof location !== 'undefined' && new URLSearchParams(location.search).has('test');
   constructor(private readonly world: SimWorld) {
@@ -83,11 +83,11 @@ export class HealthBars extends Group {
     if (l10) {
       for (const e of this.world.entities.iterate()) {
         if (e.faction !== 'infected' || !e.infected || !barEligible(e, player.transform, this.definitions.get(e.archetype)?.bar === true, full)) continue;
-        this.l10Bars.push({ id: e.id, distance: Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z), hurt: e.health.current < e.health.max });
+        this.l10Bars.push({ id: e.id, distance: Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) });
       }
-      // Prioritize damaged enemies, then the nearest. This also bounds bars when
-      // several close melee groups overlap on screen.
-      this.l10Bars.sort((a, b) => Number(b.hurt) - Number(a.hurt) || a.distance - b.distance || a.id - b.id);
+      // Keep the nearest threats. This also bounds bars when several close
+      // melee groups overlap on screen.
+      this.l10Bars.sort((a, b) => a.distance - b.distance || a.id - b.id);
       this.l10Bars.length = Math.min(this.l10Bars.length, l10InfectedBarCap);
       for (const target of this.l10Bars) this.l10BarIds.add(target.id);
     }
