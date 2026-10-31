@@ -93,8 +93,8 @@ export function districtDecor(district: DistrictId, placements: readonly Placeme
   }
   if (l7) {
     const themes = [
-      ['prop.crates', 'decay.dropped-belongings', 'prop.traffic-cone'], ['prop.pallet', 'prop.traffic-cone', 'prop.trash-bags'],
-      ['prop.medical-cooler', 'prop.broken-chair', 'prop.carpet'], ['prop.crates', 'prop.pallet', 'decay.dropped-belongings'],
+      ['prop.crates', 'decay.dropped-belongings', 'decay.broken-glass'], ['prop.sandbag-pallet', 'decay.broken-glass', 'decay.dropped-belongings'],
+      ['prop.crates', 'prop.bench', 'decay.broken-glass'], ['prop.sandbag-pallet', 'decay.furniture-barricade', 'decay.dropped-belongings'],
     ];
     const list: Placement[] = [], occupied = placements.filter(p => p.minTier <= 6 && p.maxTier >= 6);
     const ground = (x: number) => Math.min(3.9, Math.max(0, Math.floor((x - 85) / 5) * 5 / 130 * 3.9));
@@ -110,8 +110,9 @@ export function districtDecor(district: DistrictId, placements: readonly Placeme
     for (const [i, x] of [233, 195, 157, 119].entries()) {
       const side = i % 2 ? -1 : 1, theme = themes[i];
       for (const [j, asset] of theme.entries()) {
-        const px = x + (j === 1 ? 1.8 : j === 2 ? -1.8 : 0);
-        const spot: Spot = { asset, x: px, z: 15 + side * (6.8 + (j ? 1.3 : 0)), y: ground(px), yaw: i * .63 + j * .8, scale: j ? .82 : 1 };
+        const debris = asset === 'decay.broken-glass';
+        const px = x + (j ? (j === 1 ? 1 : -1) * (debris ? 3.3 : 2.4) : 0);
+        const spot: Spot = { asset, x: px, z: 15 + side * (debris ? 6.4 : 6.8 + (j ? 2.3 : 0)), y: ground(px), yaw: i * .63 + j * .8, scale: j ? .82 : 1 };
         const p = placement('D-FAIR', list.length + i * 2, spot);
         // Keep the whole footprint on one terrace, including rotated bedrolls
         // and pallets: sampling only the centre can leave an edge over a riser.
