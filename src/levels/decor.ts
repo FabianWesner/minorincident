@@ -75,7 +75,7 @@ function subwayDecor(): Spot[] {
     ['prop.medical-cooler', 261.5, 24.1, .8, .85],
     ['prop.crates', 272.1, 6.9, .2, 1], ['prop.pallet', 274.7, 6.2, -.4, 1],
     ['decay.dropped-belongings', 275.4, 8.2, 1.8, .7],
-    ['prop.broken-chair', 284.4, 23.6, 1.2, .8], ['prop.pallet', 282.5, 24.4, .5, .8],
+    ['prop.broken-chair', 285, 20.2, 1.2, .8], ['prop.pallet', 281.9, 20.6, .5, .8],
   ] as const).entries()) out.push({ id: `decor-l6-exit-${i}`, asset, x, z, yaw, scale, y: L6Y.street });
   return out;
 }
