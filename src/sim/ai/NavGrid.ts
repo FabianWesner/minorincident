@@ -422,8 +422,8 @@ export class NavGrid {
   }
   /** Shared string-pulled route: skip all visible waypoints, so actors do not zig-zag on the grid. */
   /** `nearest`: when the target is unreachable (a click into a fenced yard), route to the reachable cell closest to it. */
-  steer(position: { x: number; z: number }, target: { x: number; z: number }, route: { path: number[]; goal: number; pathIndex: number; hold?: number }, radius: number, waypoint: { x: number; z: number }, budget = 1600, nearest = false): boolean {
-    if (nearest && this.playerMask) return this.forPlayer(radius).steer(position, target, route, radius, waypoint, budget, nearest);
+  steer(position: { x: number; z: number }, target: { x: number; z: number }, route: { path: number[]; goal: number; pathIndex: number; hold?: number }, radius: number, waypoint: { x: number; z: number }, budget = 1600, nearest = false, lookAheadCells = 40): boolean {
+    if (nearest && this.playerMask) return this.forPlayer(radius).steer(position, target, route, radius, waypoint, budget, nearest, lookAheadCells);
     if (nearest && this.playerBounds) {
       const b = this.playerBounds, margin = Math.max(radius, this.clearance);
       target = { x: Math.max(b.x0 + margin, Math.min(b.x1 - margin, target.x)), z: Math.max(b.z0 + margin, Math.min(b.z1 - margin, target.z)) };
@@ -462,7 +462,7 @@ export class NavGrid {
       // Walking the straight segment toward the chosen node keeps it visible: re-run the look-ahead every fourth tick.
       if (route.hold && route.pathIndex < route.path.length) { route.hold--; waypoint.x = this.x(route.path[route.pathIndex]); waypoint.z = this.z(route.path[route.pathIndex]); return true; }
       const last = route.path.length - 1;
-      let above = Math.min(last, route.pathIndex + 40) + 1;
+      let above = Math.min(last, route.pathIndex + lookAheadCells) + 1;
       for (const k of lookAhead) {
         const i = Math.min(last, route.pathIndex + k); if (i >= above) continue;
         waypoint.x = this.x(route.path[i]); waypoint.z = this.z(route.path[i]);
@@ -481,7 +481,7 @@ export class NavGrid {
       }
       route.goal = -1; return false;
     }
-    for (let i = Math.min(route.path.length - 1, route.pathIndex + 40); i >= route.pathIndex; i--) {
+    for (let i = Math.min(route.path.length - 1, route.pathIndex + lookAheadCells); i >= route.pathIndex; i--) {
       waypoint.x = this.x(route.path[i]); waypoint.z = this.z(route.path[i]);
       if (this.visible(position, waypoint, radius)) { route.pathIndex = i; return true; }
     }
