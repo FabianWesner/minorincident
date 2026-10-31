@@ -1,0 +1,33 @@
+total 1441 ms
+
+self time by file:
+    1210  three-webgpu-p0IadyXU.js
+     119  (garbage collector)
+      57  (program)
+      18  (idle)
+      12  three-core-BzgDqAAS.js
+      11  index-Da_PTjbd.js
+       4  type.<computed>
+       3  measure
+       2  createBuffer
+       2  createPipelineLayout
+       2  copyExternalImageToTexture
+       1  unmap
+       1  createShaderModule
+
+self time by function:
+     294  build three-webgpu-p0IadyXU.js:7
+     119  (garbage collector) :-1
+      64  getChildren three-webgpu-p0IadyXU.js:7
+      57  _getChildren three-webgpu-p0IadyXU.js:7
+      57  build three-webgpu-p0IadyXU.js:20
+      57  (program) :-1
+      53  generate three-webgpu-p0IadyXU.js:7
+      48  n three-webgpu-p0IadyXU.js:7
+      43  getDataFromNode three-webgpu-p0IadyXU.js:34
+      38  analyze three-webgpu-p0IadyXU.js:7
+      30  getNodeType three-webgpu-p0IadyXU.js:7
+      30  setHashNode three-webgpu-p0IadyXU.js:34
+      30  setup three-webgpu-p0IadyXU.js:7
+      27  addNode three-webgpu-p0IadyXU.js:34
+      26  getNodeFromHash three-webgpu-p0IadyXU.js:34

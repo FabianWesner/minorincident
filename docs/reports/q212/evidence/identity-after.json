@@ -1,0 +1,19 @@
+{
+  "entry": "/build/index-Da_PTjbd.js",
+  "bundleSha256": "782a350687a6fcb64f3ff4a3898dfb05dc258869b3a285035794efacf4330a6a",
+  "coldLoadProbeSha256": "a64ae3993d8f126213c725c42d6b128c4fe5262e0874f52815ad563179d146f5",
+  "htmlSha256": "4ba91f3ef2f50d223e34c68d4f278ef50efa5cc2fb1bad7fb77ff32aaa7ec4c9",
+  "command": "MI_BUILD_CACHE=off npm run build",
+  "runtimeChangesFromBaseline": [
+    "src/render/CrowdView.ts"
+  ],
+  "assetsDiff": "",
+  "probeDiff": "Lifecycle cleanup only; see probe-cache-cleanup.patch and probe-cache-cleanup.json.",
+  "warmupDiff": "",
+  "coldLoadProbeSha256ByRows": {
+    "L1-high through L3-high": "a64ae3993d8f126213c725c42d6b128c4fe5262e0874f52815ad563179d146f5",
+    "L3-low through L10-low": "ebc4db6552492cbd728e7af422edd8a86dedeb7bd9e625364d8e07bb294bfe60"
+  },
+  "runtimeBuildRevision": "73722e6bb19046102edcddf40bc9fd938d89e13e",
+  "note": "Build was completed before the tool-only cache cleanup commit. The sweep keeps its original artifact identity; no runtime or timing change occurred mid-sweep."
+}
