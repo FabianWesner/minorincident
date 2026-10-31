@@ -45,7 +45,7 @@ try {
               const template = members[0]; if (!template) throw new Error('No living officer to stage');
               while (members.length < 12) {
                 const id = g.world.npcs!.civilians.spawn('officer', {x:168.3,z:-1.2}, {model:template.civilian!.model,waypoints:[{x:168.3,z:-1.2}]}, false);
-                const e = g.world.entities.get(id)!; e.civilian!.ally = structuredClone(template.civilian!.ally!); e.appearance = structuredClone(template.appearance); e.faction = template.faction; members.push(e);
+                const e = g.world.entities.get(id)!; e.civilian!.ally = structuredClone(template.civilian!.ally!); e.civilian!.l1 = structuredClone(template.civilian!.l1!); e.appearance = structuredClone(template.appearance); if(e.appearance)e.appearance.entityId=id; e.faction = template.faction; members.push(e);
               }
               members.forEach((e, i) => { Object.assign(e.transform, {x:168.3 + i % 4 * .6,z:-1.2 + Math.floor(i / 4) * .8,y:6.4}); const c=e.civilian!;c.floorY=5.7;c.state='calm';c.story=null;c.ally!.targetId=0;c.ally!.run=null;c.ally!.follow!.slot=i;g.world.spatial.set(e.id,e.transform.x,e.transform.z); });
             }
