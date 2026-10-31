@@ -992,7 +992,7 @@ export class GameView implements Lifecycle {
     let subject: Box3 | undefined;
     // Q-241: the whole L6 metro reveals with the clean cut (was the retreat only) and keeps its track rails whole.
     const metro = this.world.scenario === 'L6' || !!this.world.districts?.composition.districts.some(d => d.id === 'D-SUBWAY');
-    const l6Shelter = this.world.scenario === 'L6' && this.world.missions?.state.l6?.phase === 'shelter';
+    const l6Shelter = metro && !!current && current.x < 30;
     // Keep the tunnel's clean rail cut, but let the shelter use the ordinary
     // noise feather so the courier reveal has no hard elliptical edge.
     seeThrough.solidSilhouette.value = metro && !l6Shelter ? 1 : 0;
