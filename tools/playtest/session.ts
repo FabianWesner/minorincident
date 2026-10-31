@@ -513,7 +513,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
 
   // --- main loop ---
   let lastLevel: string | null = null, levelIndex = 0, lastPhase = '', idleScreens = 0, bootWall = Date.now(), lastSeenWall = Date.now();
-  let manual = false, latestShot = 0;
+  let manual = false, latestShot = 0, creditsVisibleAt = 0;
+  const endingShots = new Set<string>();
   for (;;) {
     if (pageCrashed) throw new Error(`Playtest browser renderer crashed during ${run?.level ?? 'startup'}; session cannot continue`);
     if (pageClosed || page.isClosed()) throw new Error(`Playtest browser page closed unexpectedly during ${run?.level ?? 'startup'}; session cannot continue`);
@@ -528,6 +529,23 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       writeFileSync(join(o.out, 'latest.json'), JSON.stringify(e));
       if (Date.now() - latestShot > (manual ? 2000 : 10000)) {
         await page.screenshot({ path: join(o.out, 'latest.jpg'), type: 'jpeg', quality: 72 }); latestShot = Date.now();
+      }
+      // Evidence only: capture the player-visible title and credits without input.
+      if (e.level === 'L10' && e.phase === 'progression') {
+        const card = await page.evaluate(() => {
+          const title = document.querySelector<HTMLElement>('[data-testid=epilogue-title]');
+          const roll = document.querySelector<HTMLElement>('.credits-roll');
+          return roll?.getClientRects().length ? { kind: 'credits', text: roll.innerText }
+            : title?.getClientRects().length ? { kind: 'title', text: title.innerText } : null;
+        });
+        if (card) {
+          if (card.kind === 'credits') creditsVisibleAt ||= Date.now();
+          const key = card.kind === 'credits' && Date.now() - creditsVisibleAt >= 5000 ? 'credits-roll' : card.kind;
+          if (!endingShots.has(key)) {
+            endingShots.add(key); log({ visibleEndingCard: card, tick: e.tick });
+            await capture(`L10-ending-${key}`);
+          }
+        }
       }
       const control = process.env.PLAYTEST_CONTROL_FILE;
       if (control && existsSync(control)) {
