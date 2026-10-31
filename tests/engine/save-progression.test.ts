@@ -182,8 +182,10 @@ test('crossing handover: needs the finished crawl, commits once, drops weapons a
   // Replaying L8 from this post-crash save must not persist a second transport.
   const transport = { occupants: [] } as never;
   expect(recordL8Transport(save, transport)).toBe(false);
+  completeCampaignLevel(save, 8, result, fakeWorld(save.racks, 'weapon.fire-axe'));
   expect(save.transport).toBeUndefined();
   expect(validateSave(save)).toBe(true);
+  expect(decodeSave(JSON.stringify(save)).status).toBe('ok');
 });
 
 test('rewards: a saved reward screen round-trips at each phase and cannot be claimed twice; gear tiers follow the default path', () => {

@@ -1,0 +1,128 @@
+{
+  "requirement": "Q-271: replay L8 from the actual post-crash save without rejecting or corrupting it",
+  "fixture": "docs/reports/final-e2e/fresh/fresh-23-completion.json:campaign",
+  "command": "PLAYTEST_VISIBLE_ONLY=1 E2E_PORT=4761 node --import tsx tools/playtest/play.ts --levels L8-L9 --entry continue --no-skip --mode campaign --quality low --level-minutes 5 --keep-profile --out test-results/playtest/fix-e2e-l8-replay",
+  "runs": [
+    {
+      "level": "L8",
+      "entry": "continue",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 134,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 2.816666666666667,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {},
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.fire-axe"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.fire-axe"
+      ],
+      "steps": [
+        {
+          "id": "escape",
+          "text": "Explore the sanctuary · the armored vehicle waits by the exit · 97 m",
+          "tick": 12,
+          "marker": {
+            "anchor": "exit",
+            "ring": {
+              "x": 96.71,
+              "y": 0.8399999737739563,
+              "z": 76.275
+            },
+            "drawn": [
+              96.71,
+              0.12,
+              76.28
+            ],
+            "playerY": 0.8399999737739563,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "depart",
+          "text": "Waiting for departure · 29 s",
+          "tick": 1917,
+          "marker": {
+            "anchor": "exit",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.9954345226287842,
+            "pinVisible": false
+          }
+        }
+      ]
+    },
+    {
+      "level": "L9",
+      "entry": "continue",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 178,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 26.852,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {},
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.fire-axe"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.fire-axe"
+      ],
+      "steps": [
+        {
+          "id": "approach",
+          "text": "Drive toward the city · 1020 m",
+          "tick": 4,
+          "marker": {
+            "anchor": "crash-approach",
+            "ring": {
+              "x": 470,
+              "y": 1.0187900066375732,
+              "z": 0
+            },
+            "drawn": [
+              470,
+              0,
+              0
+            ],
+            "playerY": 1.0347378253936768,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "reach-outskirts",
+          "text": "Stay in the armored vehicle · 81 m",
+          "tick": 9488,
+          "marker": {
+            "anchor": "crawl-end",
+            "ring": {
+              "x": 547,
+              "y": 0.9969446672333612,
+              "z": 0
+            },
+            "drawn": null,
+            "playerY": 0.9969446672333612,
+            "pinVisible": true
+          }
+        }
+      ]
+    }
+  ],
+  "decodeSave": "ok",
+  "completedLevels": 9,
+  "unlockedLevel": 10,
+  "crossingHandover": true,
+  "transport": false,
+  "errors": [],
+  "observations": "Both missions finished naturally. The two >2 s L8 frame warnings coincided with the parallel loading profiler; one L9 vehicle detour warning resolved by physical input. Neither mission was skipped. The browser profile was deleted after exporting evidence."
+}
