@@ -691,6 +691,103 @@
         }
       ],
       "campaignCompletedLevels": 3
+    },
+    {
+      "tag": "fresh-14",
+      "level": "L4",
+      "finished": false,
+      "skipped": [],
+      "driverWallSeconds": 521,
+      "driverSimSeconds": 332,
+      "missionStats": {
+        "time": 333.0833333333333,
+        "kills": 0,
+        "knockdowns": 83,
+        "damage": 122.25,
+        "deaths": 0,
+        "rescued": 19,
+        "optionalObjectives": []
+      },
+      "runDeaths": 0,
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "loads": [
+        6117
+      ],
+      "longFrames": [],
+      "errors": [],
+      "issues": [
+        {
+          "kind": "enemy-frozen",
+          "level": "L4",
+          "tick": 14461,
+          "text": "Infected #411 in state chase 6.1 m away has not moved for ~5 s",
+          "captures": [
+            "captures/fresh-14-L4-14461-enemy-frozen.jpg"
+          ]
+        },
+        {
+          "kind": "enemy-frozen",
+          "level": "L4",
+          "tick": 14483,
+          "text": "Infected #491 in state chase 3.2 m away has not moved for ~5 s",
+          "captures": [
+            "captures/fresh-14-L4-14483-enemy-frozen.jpg"
+          ]
+        },
+        {
+          "kind": "enemy-frozen",
+          "level": "L4",
+          "tick": 14483,
+          "text": "Infected #475 in state chase 3.9 m away has not moved for ~5 s",
+          "captures": [
+            "captures/fresh-14-L4-14483-enemy-frozen.jpg"
+          ]
+        },
+        {
+          "kind": "enemy-frozen",
+          "level": "L4",
+          "tick": 14483,
+          "text": "Infected #452 in state chase 7.3 m away has not moved for ~5 s",
+          "captures": [
+            "captures/fresh-14-L4-14483-enemy-frozen.jpg"
+          ]
+        }
+      ],
+      "phases": [
+        "briefing",
+        "playing",
+        "cinematic"
+      ],
+      "resultPanels": [],
+      "lastPlayer": {
+        "x": -8.342087745666504,
+        "y": 0.7049999833106995,
+        "z": -8.361924171447754,
+        "yaw": 9.158208578115662
+      },
+      "lastCorgis": [
+        {
+          "id": 29,
+          "hp": 100,
+          "hidden": false,
+          "state": "follow"
+        }
+      ],
+      "campaignCompletedLevels": 3
     }
   ]
 }
