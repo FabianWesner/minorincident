@@ -25,9 +25,12 @@ export function cureRoadsideBelt(placements: readonly Placement[]): Placement[] 
   };
   const clear = (p: Placement) => {
     const { min: a, max: b } = p.visualAabb;
-    // Entire footprint stays >= 3 m beyond every 3 m road edge, including detours and corners.
-    if ([[a[0], a[2]], [a[0], b[2]], [b[0], a[2]], [b[0], b[2]]].some(([x, z]) => laneDistance(x, z) < 6 || laneDistance(x, z) > 13)) return false;
-    if (p.position[0] > 3680) return false;
+    // The wide R1–R5 camera uses the outer verge. R6/R7 retain the normal
+    // camera: their low supplies sit closer, with every corner > 1.2 m beyond
+    // the six-metre road. The final 100 m into the arena stays clear.
+    const corridor = p.position[0] >= 2910;
+    if ([[a[0], a[2]], [a[0], b[2]], [b[0], a[2]], [b[0], b[2]]].some(([x, z]) => laneDistance(x, z) < (corridor ? 4.2 : 6) || laneDistance(x, z) > (corridor ? 9 : 13))) return false;
+    if (p.position[0] > 3900) return false;
     return [...placements, ...out].every(q => {
       let { min: c, max: d } = q.visualAabb;
       // These low supplies fit below tree crowns; the authored solid is the 0.6 m trunk box.
@@ -49,9 +52,8 @@ export function cureRoadsideBelt(placements: readonly Placement[]): Placement[] 
   ];
   let carry = 14, routeOffset = 0, previous = -Infinity, ordinal = 0;
   const spacing = new Rng(248, 'cure-roadside-spacing');
-  // R1–R5 already carry this belt. Continue the same authored treatment through
-  // the destroyed corridor (R6); stop before the finale arena itself.
-  for (const [ri, region] of cure.regions.slice(0, 6).entries()) {
+  // Retain R1–R5 exactly; continue through R6 and the early R7 approach.
+  for (const [ri, region] of cure.regions.entries()) {
     const segments = region.route.slice(1).map((b, i) => ({ a: region.route[i], b, d: Math.hypot(b[0] - region.route[i][0], b[1] - region.route[i][1]) }));
     const length = segments.reduce((s, q) => s + q.d, 0);
     const pose = (s: number) => {
@@ -75,10 +77,10 @@ export function cureRoadsideBelt(placements: readonly Placement[]): Placement[] 
         for (const shift of [0, -1.5, 1.5, -3, 3, -6, 5.5, 6]) {
           if (station + shift < 1 || station + shift > length - 1 || routeOffset + station + shift - previous < 25) continue;
           const { x, z, ux, uz } = pose(station + shift);
-          for (const lateral of [7, 7.8, 8.6, 9.4, 10.2, 11, 11.8, 12.5]) {
+          for (const lateral of ri >= 5 ? [5.2, 6, 6.8, 7.6, 8.4] : [7, 7.8, 8.6, 9.4, 10.2, 11, 11.8, 12.5]) {
             for (const asset of [theme[0], 'prop.medical-cooler']) {
               const p = make(asset, x - uz * candidateSide * lateral, z + ux * candidateSide * lateral, -Math.atan2(uz, ux), out.length);
-              if (!clear(p) || laneDistance(p.position[0], p.position[2]) < 7) continue;
+              if (!clear(p) || laneDistance(p.position[0], p.position[2]) < (ri >= 5 ? 5.2 : 7)) continue;
               p.id = `decor-cure-belt-r${ri + 1}-${n}-lamp`;
               p.roadLife = true; out.push(p); anchor = p; forward = [ux, uz]; side = candidateSide; previous = routeOffset + station + shift; break;
             }

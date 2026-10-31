@@ -271,7 +271,7 @@ export function cureAccents(placements: readonly Placement[], origin: P2 = [0, 0
       const [x, , z] = p.position;
       put({ kind: 'storm-lantern', x, y: p.visualAabb.max[1] + .235, z, yaw: p.yaw,
         color: '#ffb35c', glow: 5, flicker: 1, strobe: false,
-        pool: { color: '#ff9a48', intensity: 4.6, range: Math.min(2.4, lane(x, z) - 1.6) } });
+        pool: { color: '#ff9a48', intensity: 4.6, range: x >= 2910 ? 1.8 : Math.min(2.4, lane(x, z) - 1.6) } });
       continue;
     }
     if (!p.roadLife) continue;
