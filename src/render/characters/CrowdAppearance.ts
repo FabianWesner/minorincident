@@ -9,6 +9,9 @@ import { infectedDefinitions } from '../../data/infected';
 import type { EntitySnapshot } from '../../sim/world/types';
 import { characterNodes } from '../../data/survivor';
 export const crowdAccessoryIds = manifest.filter(a => a.id.startsWith('acc.') && !a.aliasOf && 'accessory' in a).map(a => a.id).sort();
+// The hard-hat dome reads as a gnome cone at game scale; retire it from random
+// crowd assignment until its silhouette is rebuilt. Explicit authored looks remain available.
+const randomCrowdAccessoryIds = crowdAccessoryIds.filter(id => id !== 'acc.hat-hard-hat');
 const authoredInfectedHeads = new Set(manifest.filter(a => a.id.startsWith('inf.') && 'crowdSkin' in a && a.crowdSkin).map(a => a.id));
 /** Resolve identity without consulting pose, health, quality, LOD or pool membership. */
 export function resolveCrowdAppearance(e: EntitySnapshot, ids: readonly string[] = crowdAccessoryIds) {
@@ -22,8 +25,9 @@ export function resolveCrowdAppearance(e: EntitySnapshot, ids: readonly string[]
   const turnedPerson = !!e.infected && e.appearance?.entityId === e.id && !e.appearance.bornInfected;
   // Aftermath and continuous infected bodies carry authored headwear (or deliberately bare hair).
   // Random caps must not replace a named person's cap, ponytail or fitted glasses.
-  const slot = eligible ? explicit ? ids.indexOf(explicit) + 1 : model.endsWith('.aftermath') || authoredInfectedHeads.has(model) ? 0 : !e.infected || turnedPerson ? channels.accessory % (ids.length + 1) : infectedWearsAccessory(e.id) ? channels.accessory % ids.length + 1 : 0 : 0;
-  const accessory = slot ? ids[slot - 1] : null, kind = accessoryKinds.get(accessory ?? '');
+  const randomIds = ids === crowdAccessoryIds ? randomCrowdAccessoryIds : ids.filter(id => id !== 'acc.hat-hard-hat');
+  const slot = eligible ? explicit ? ids.indexOf(explicit) + 1 : model.endsWith('.aftermath') || authoredInfectedHeads.has(model) ? 0 : !e.infected || turnedPerson ? channels.accessory % (randomIds.length + 1) : infectedWearsAccessory(e.id) ? channels.accessory % randomIds.length + 1 : 0 : 0;
+  const accessory = explicit ? explicit : slot ? randomIds[slot - 1] : null, kind = accessoryKinds.get(accessory ?? '');
   const hidesHair = kind === 'hat' || kind === 'hair' || !!accessory?.startsWith('acc.placeholder-');
   return { ...channels, model, outfit: model, head: model, headwear: kind === 'hat' ? accessory : accessory ? null : model,
     accessory, accessories: e.appearance?.accessories.length ? e.appearance.accessories : accessory ? [accessory] : [], slot, hidesHair, tint: e.appearance?.tint ?? shirtTones[channels.shirt], infectedSkin: !!e.infected };
