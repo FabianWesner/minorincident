@@ -1,0 +1,484 @@
+[
+  {
+    "at": 2672.800000190735,
+    "level": "L9",
+    "tick": 0,
+    "phase": "briefing",
+    "paused": false,
+    "loading": true,
+    "begin": false,
+    "loadToBeginMs": null,
+    "transition": {
+      "title": "Level 9 · The Crossing",
+      "story": "The zoo is lost behind you. The armored vehicle’s radio loops one army broadcast: the research campus past the next city has a cure. Cross the countryside toward it; every hit costs armor.",
+      "status": "Loading assets…"
+    },
+    "objective": "",
+    "subtitle": "",
+    "storyBubble": "",
+    "prompt": "",
+    "panel": "",
+    "rack": {
+      "selectedSide": "RIGHT",
+      "LEFT": {
+        "rack": [
+          {
+            "id": "weapon.fire-axe",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.bat",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.kick",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 1,
+          "z": 0
+        },
+        "aimPoint": null,
+        "swapUntil": 0
+      },
+      "RIGHT": {
+        "rack": [
+          {
+            "id": "weapon.army-mg",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.handgun",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "ability.corgi-lure",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.rocket-launcher",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 0.999551842007757,
+          "z": 0.029935182292744517
+        },
+        "aimPoint": {
+          "x": 100.80079382495116,
+          "z": 76.58330994040088
+        },
+        "swapUntil": 0
+      }
+    },
+    "player": {
+      "x": -550,
+      "y": 0.9954345226287842,
+      "z": 0,
+      "yaw": 0
+    },
+    "stats": {
+      "time": 0,
+      "kills": 0,
+      "knockdowns": 0,
+      "damage": 0,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": []
+    },
+    "result": null,
+    "people": [
+      {
+        "id": 31,
+        "name": "mia",
+        "hp": 60,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 139,
+        "name": "shelter-14",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 129,
+        "name": "shelter-4",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 128,
+        "name": "shelter-3",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 127,
+        "name": "shelter-2",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 137,
+        "name": "shelter-12",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 28,
+        "name": "dale",
+        "hp": 60,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 134,
+        "name": "shelter-9",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 142,
+        "name": "shelter-17",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 143,
+        "name": "shelter-18",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 138,
+        "name": "shelter-13",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 30,
+        "name": "okafor",
+        "hp": 60,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 144,
+        "name": "shelter-19",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 131,
+        "name": "shelter-6",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 559,
+        "hp": 1000,
+        "hidden": false,
+        "faction": "survivor"
+      }
+    ],
+    "corgis": [
+      {
+        "id": 167,
+        "hp": 100,
+        "hidden": true,
+        "state": "follow"
+      }
+    ]
+  },
+  {
+    "at": 10574.300000190735,
+    "level": "L9",
+    "tick": 0,
+    "phase": "playing",
+    "paused": false,
+    "loading": false,
+    "begin": false,
+    "loadToBeginMs": null,
+    "transition": {
+      "title": "Level 9 · The Crossing",
+      "story": "The zoo is lost behind you. The armored vehicle’s radio loops one army broadcast: the research campus past the next city has a cure. Cross the countryside toward it; every hit costs armor.",
+      "status": "Preparing sound…"
+    },
+    "objective": "Drive toward the city · 1020 m",
+    "subtitle": "",
+    "storyBubble": "",
+    "prompt": "",
+    "panel": "",
+    "rack": {
+      "selectedSide": "RIGHT",
+      "LEFT": {
+        "rack": [
+          {
+            "id": "weapon.fire-axe",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.bat",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.kick",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 1,
+          "z": 0
+        },
+        "aimPoint": null,
+        "swapUntil": 0
+      },
+      "RIGHT": {
+        "rack": [
+          {
+            "id": "weapon.army-mg",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.handgun",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "ability.corgi-lure",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.rocket-launcher",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 0.999551842007757,
+          "z": 0.029935182292744517
+        },
+        "aimPoint": {
+          "x": 100.80079382495116,
+          "z": 76.58330994040088
+        },
+        "swapUntil": 0
+      }
+    },
+    "player": {
+      "x": -550,
+      "y": 0.9954345226287842,
+      "z": 0,
+      "yaw": 0
+    },
+    "stats": {
+      "time": 0,
+      "kills": 0,
+      "knockdowns": 0,
+      "damage": 0,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": []
+    },
+    "result": null,
+    "people": [
+      {
+        "id": 31,
+        "name": "mia",
+        "hp": 60,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 139,
+        "name": "shelter-14",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 129,
+        "name": "shelter-4",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 128,
+        "name": "shelter-3",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 127,
+        "name": "shelter-2",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 137,
+        "name": "shelter-12",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 28,
+        "name": "dale",
+        "hp": 60,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 134,
+        "name": "shelter-9",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 142,
+        "name": "shelter-17",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 143,
+        "name": "shelter-18",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 138,
+        "name": "shelter-13",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 30,
+        "name": "okafor",
+        "hp": 60,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 144,
+        "name": "shelter-19",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 131,
+        "name": "shelter-6",
+        "hp": 100,
+        "hidden": true,
+        "faction": "civilian"
+      },
+      {
+        "id": 559,
+        "hp": 1000,
+        "hidden": false,
+        "faction": "survivor"
+      }
+    ],
+    "corgis": [
+      {
+        "id": 167,
+        "hp": 100,
+        "hidden": true,
+        "state": "follow"
+      }
+    ]
+  }
+]

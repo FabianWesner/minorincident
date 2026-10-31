@@ -2,7 +2,7 @@
 
 ## Status
 
-**In progress — L1, L2 and L4–L7 completed by real input; L3 route completion failed after four attempts.** L3 used one explicitly permitted debug continuation of its checkpoint objective and is **FAIL**. L8 is live; L9/L10, credits and the progressed-save L9 opening remain outstanding. Progressed-save L2/L5 openings passed.
+**In progress — L1, L2 and L4–L7 completed by real input; L3 route completion failed after four attempts.** L3 used one explicitly permitted debug continuation of its checkpoint objective and is **FAIL**. L9 is live; L10 and credits remain outstanding. Progressed-save L2/L5/L9 openings passed.
 
 The QA game build is from `b98aaa604`. Branch commits change playtest tools/reporting only; game difficulty and camera code are unchanged.
 
@@ -21,7 +21,7 @@ The headless shared-pool driver uses the player-facing title → Start game → 
 | L5 | Successful 372 s wall / 243.05 s mission; prior two trials 1,040 s wall / 398.2 s mission | 0 deaths across all three trials; 2 menu replays | Housing fences, tree and wrecked-bus approach stopped direct steering; ordinary ground clicks cleared them; all five found on third attempt | Named address/distance for each find; Metro destination plus survivor count; brief intentional silent interlude after cellar | Axe/bat/kick/MG/handgun/lure retained; no shotgun pickup made | 6.43–8.53 s menu / 13.40 s incoming | 1 active in prior trial: 283.4 ms; successful attempt 0; paused spikes excluded | 0 across all trials | Four named rescued survivors (Dale, Rosa, Okafor, Mia), all carried weapons and corgi observed in L6; Sam lost | No card displayed: automatic progression; stored result 243.05 s / 0 deaths / 10 knockdowns / 55 damage / 4 rescued; four names and four actual entities match |
 | L6 | 271 s wall / 261.5 s card | 0 deaths / 0 retries | Rest period triggered a driver stall warning at 20 s, but progressed naturally; injured survivor and rear-cover waits explained on HUD | Shelter has free rest text/no destination; briefing names headlamp; retreat/help/rear cover/gates/exit specify destination or count | All L5 carried weapons retained; no later weapon granted early | 3.86 s menu / 8.89 s incoming | 0 | 0 | 24 survivors including all four L5 names observed in L7; weapons and corgi retained | [Reviewed card](fresh/captures/fresh-20-L6-result.jpg): 261.5 s, 24 knockdowns, 0 kills/damage/deaths, 24 out + 4 lost = 28 start; names match |
 | L7 | 313 s wall / 178.98 s mission | 1 death with normal checkpoint respawn; 0 menu retries | Long featureless opening (F05), roadside tree sidestep, waiting for followers | Evacuation corridor and bus named with bearing/distance; group count and lagging-survivor distance explain waits; no street route named | L6 weapons retained → rocket launcher recovered beside exit, matching story | Auto-start: no Begin; ~3.44 s menu to playable / ~4.00 s incoming | 0 | 0 | 14 escaped names and 14 entity snapshots match L8 roster; weapons and corgi retained; 10 of 24 lost | No card displayed; stored result 178.98 s / 67 knockdowns / 130 damage / 1 death / 14 rescued; roster counts match |
-| L8 | — | — | Not played | — | — | — | — | — | — | — |
+| L8 | 97 s wall / 90.13 s mission | 0 deaths / 0 retries | No navigation stall; follows opening marker directly to APC and waits for the group; story gap F06 | Sanctuary/APC destination at 97 m; boarding count, missing count and named survivor cue explain wait | All carried L7 weapons retained; no new weapon acquired | 6.48 s menu / 21.88 s incoming | 0 | 0 | All 14 humans and corgi board; same names arrive hidden as L9 APC passengers; all weapons retained | No card displayed; stored result 90.13 s / 0 kills, knockdowns, damage, deaths / 14 rescued; 14-name roster matches |
 | L9 | — | — | Not played | — | — | — | — | — | — | — |
 | L10 | — | — | Not played | — | — | — | — | — | — | — |
 | Credits | — | — | Not reached | — | — | — | — | — | — | — |
@@ -51,6 +51,10 @@ L5’s first trial recorded **283.4 ms** during active play at tick 7834, `(-80.
 ### P2 · F05 — L7 opens onto a long, largely featureless approach
 
 At `(220.1,19.6)`, the [reviewed opening capture](fresh/captures/fresh-21-L7-opening-pressure-after-first-death.jpg) shows mostly uniform purple ground, a truck edge and no visible street route. The HUD reads **“Bring the group to the evacuation corridor · Group 23/24 nearby · Waiting for a survivor (27 m away) · 252 m”**. At `(175.2,19.6)`, the [reviewed unpaused westward capture](fresh/captures/fresh-21-L7-follow-visible-evacuation-bearing-west.jpg) still shows no city detail, with 207 m remaining. This weakens the ruined-city transition’s spatial clarity. The destination bearing remains usable and normal movement makes progress. The cause of this placement/rendered composition is unconfirmed; no game change was attempted. Environment: low-quality WebGL2, default camera, real GPU through the shared headless pool.
+
+### P2 · F06 — The objective-following Zoo route leaves before its loss is explained
+
+The [reviewed opening](fresh/captures/fresh-22-L8-step-escape.jpg) says **“Explore the sanctuary · the armored vehicle waits by the exit · 97 m”**. Following that destination and boarding normally produces [“Waiting for departure”](fresh/captures/fresh-22-L8-step-depart.jpg), then the missing-survivor cues. All 14 carried humans board. L8 ends naturally in **90.13 s**, with **0 combat, damage or deaths** and no observed Zoo subtitle/story-bubble messages. The next [reviewed transition](fresh/captures/fresh-22-L8-result.jpg) nevertheless opens **“The zoo is lost behind you.”** The crisis and reason to abandon the sanctuary were not communicated on this successful player path. This is a story continuity failure in the observed objective-following route; no debug action was used. Departure gating or narration needs a broader story decision, so no game fix was made.
 
 ### Driver limitations and historical preflight
 
@@ -99,13 +103,13 @@ No game change has been made. No god mode or teleport has been used. L3’s chec
 
 ## Progressed-save level select checks
 
-Separate copies of the actual earned save (completed L1–L4, unlocked L5) were used; no campaign state was synthesized. Both entered through title → Start game → level select → Begin mission.
+Separate copies of the actual earned saves were used: completed L1–L4 for L2/L5, completed L1–L8 for L9, including the disclosed L3 FAIL. No campaign state was synthesized. All enter through title → Start game → level select; L2/L5 show Begin mission, while L9 auto-starts. The temporary profile copies were deleted after use.
 
 | Start | State and story check | Load to Begin | Errors / active >200 ms frames | Evidence |
 |---|---|---:|---|---|
 | L2 | PASS: bat/kick/lure; no later guns; “Take the fire axe · 2 m”; Fire Station 3, a few hours later; following corgi | 5.01 s | 0 / 0 | [Reviewed opening](progressed/L2/captures/progressed-L2-L2-step-axe.jpg), [run](progressed/L2/runs-progressed-L2.json) |
 | L5 | PASS: axe/bat/kick/MG/handgun/lure; shotgun absent; “Unbar the cellar door · 4 m”; hours later, same cellar; following corgi | 7.33 s | 0 / 0 | [Reviewed opening](progressed/L5/captures/progressed-L5-L5-step-emerge.jpg), [run](progressed/L5/runs-progressed-L5.json) |
-| L9 | Pending earned unlock | — | — | — |
+| L9 | PASS: actual completed-L8 save; inside APC with armor 1000/1000, carried axe/bat/kick/MG/handgun/lure/launcher, corgi hiding as passenger; “Drive toward the city · 1020 m” | No Begin (auto-start); ~7.90 s to playable | 0 / 0 | [Reviewed opening](progressed/L9/captures/progressed-L9-L9-step-approach.jpg), [run](progressed/L9/runs-progressed-L9.json) |
 
 - `fresh-19` completed L5 naturally, without any debug action: 372 s wall / 243.05 s mission, 0 deaths, 10 knockdowns, 55 damage, 4 rescued, 0 active >200 ms frames and 0 console errors. The [reviewed Metro approach](fresh/captures/fresh-19-L5-third-trial-near-visible-Metro-entrance.jpg) shows all four follower badges and the corgi. The first two trials remain counted. Five survivors were found; Sam did not make the final group. The result’s four named survivors and four carried entity snapshots match the actual L6 opening. L6 loaded to Begin in **8.89 s**. The file named L5-result.jpg shows the L6 loading card, not a result card.
 
@@ -116,3 +120,5 @@ L4’s full retreat ends under one cellar bulb; L5 resumes hours later in that c
 The visible tracker reader now uses innerText rather than textContent, so hidden child hints do not enter future raw tracker strings. Older L5 raw tracker strings sometimes include a stale pharmacy hint that is absent from the reviewed player-visible Metro capture; it is not reported as a game text defect.
 
 - `fresh-21` completed L7 naturally with one normal checkpoint respawn and no skip. The [raw completion](fresh/fresh-21-completion.json) records 178.98 s mission, 67 knockdowns, 130 damage and 14 escaped survivors; all 14 names and entity snapshots appear in L8. The corgi boards the bus, is hidden as its passenger during departure, and reappears following in L8. L8 loaded to Begin in **21.88 s**. No active >200 ms frame or console error occurred. The driver’s ally filter included L6 civilians but omitted some named civilian followers in L7; its failure to cover the group may have contributed to losses. Future sessions include those visibly drawn followers. No game difficulty changed.
+
+- `fresh-22` completed L8 naturally with 0 deaths, 14 rescued, 0 active >200 ms frames and 0 console errors. All 14 result names match the L9 passengers. L9 auto-starts without a Begin card; its observed loading-card interval is **14.38 s**. Its transition connects the army radio’s cure broadcast to the research campus past the next city. The Zoo’s missing crisis is recorded as F06.
