@@ -4,7 +4,7 @@
 
 **In progress — L1 and L2 completed by real input; L3 route completion failed after four attempts.** The QA game build is from `b98aaa604`; later branch commits change playtest tools/reporting only. No game difficulty or camera code has changed. L5–L10, credits and the progressed-save checks remain outstanding.
 
-L3 used the prompt’s explicitly permitted debug continuation for its checkpoint objective; this is a **FAIL**, not a real-input completion. L4 has completed naturally; L5 is live, and remaining levels are being played normally.
+L3 used the prompt’s explicitly permitted debug continuation for its checkpoint objective; this is a **FAIL**, not a real-input completion. L4 has completed naturally; L5 is live, and remaining levels are being played normally. Progressed-save L2/L5 openings have passed; L9 awaits its earned unlock.
 
 The headless shared-pool driver uses the player-facing title → Start game → character → level flow, normal handovers, keyboard/mouse input, low rendering quality, the default camera and `--no-skip`. Visible-guidance mode disables authored street routes and hidden navigation-grid steering. Manual interventions also use physical input. Sessions release the pool at handovers; the same campaign profile continues through the menu.
 
@@ -92,3 +92,13 @@ L1 connects the cold-chain delivery to the Annex bang explicitly, then directs t
 No game change has been made. No god mode or teleport has been used. L3’s checkpoint objective is the sole permitted debug continuation and must be counted as FAIL.
 
 - `fresh-18` reached 3/5 survivors using ordinary movement and ground clicks. It yielded after 520 s wall / 182.9 s mission, 0 deaths, 2 knockdowns, 25 damage, 0 rescued, 0 active >200 ms frames and 0 console errors. The [reviewed cab capture](fresh/captures/fresh-18-L5-reach-visible-cab-cue-before-yield.jpg) shows the wreck search ring, exact search text and 3 m distance before discovery. The last visible objective was “Look for anyone still alive · Survivors found 3/5 · Search a wrecked bus on Lakeshore Avenue · 22 m”, at (-27.5,37.8). Two recruited survivors had turned by the final audit; this is not counted as successful rescue. The next attempt follows the streets learned by input.
+
+## Progressed-save level select checks
+
+Separate copies of the actual earned save (completed L1–L4, unlocked L5) were used; no campaign state was synthesized. Both entered through title → Start game → level select → Begin mission.
+
+| Start | State and story check | Load to Begin | Errors / active >200 ms frames | Evidence |
+|---|---|---:|---|---|
+| L2 | PASS: bat/kick/lure; no later guns; “Take the fire axe · 2 m”; Fire Station 3, a few hours later; following corgi | 5.01 s | 0 / 0 | [Reviewed opening](progressed/L2/captures/progressed-L2-L2-step-axe.jpg), [run](progressed/L2/runs-progressed-L2.json) |
+| L5 | PASS: axe/bat/kick/MG/handgun/lure; shotgun absent; “Unbar the cellar door · 4 m”; hours later, same cellar; following corgi | 7.33 s | 0 / 0 | [Reviewed opening](progressed/L5/captures/progressed-L5-L5-step-emerge.jpg), [run](progressed/L5/runs-progressed-L5.json) |
+| L9 | Pending earned unlock | — | — | — |
