@@ -84,11 +84,11 @@ export function districtDecor(district: DistrictId, placements: readonly Placeme
   }
   if (l7) {
     const themes = [
-      ['prop.crates', 'decay.dropped-belongings'], ['prop.traffic-cone', 'prop.trash-bags'],
-      ['prop.medical-cooler', 'prop.broken-chair'], ['prop.pallet', 'decay.dropped-belongings'],
+      ['prop.crates', 'decay.dropped-belongings', 'prop.traffic-cone'], ['prop.pallet', 'prop.traffic-cone', 'prop.trash-bags'],
+      ['prop.medical-cooler', 'prop.broken-chair', 'prop.carpet'], ['prop.crates', 'prop.pallet', 'decay.dropped-belongings'],
     ];
-    const list: Placement[] = [], occupied = [...placements];
-    const ground = (x: number) => Math.min(3.9, Math.max(0, (x - 85) / 130 * 3.9));
+    const list: Placement[] = [], occupied = placements.filter(p => p.minTier <= 6 && p.maxTier >= 6);
+    const ground = (x: number) => Math.min(3.9, Math.max(0, Math.floor((x - 85) / 5) * 5 / 130 * 3.9));
     const blocked = (p: Placement) => {
       const a = p.visualAabb;
       return [...occupied, ...list].some(q => {
@@ -101,7 +101,8 @@ export function districtDecor(district: DistrictId, placements: readonly Placeme
     for (const [i, x] of [233, 195, 157, 119].entries()) {
       const side = i % 2 ? -1 : 1, theme = themes[i];
       for (const [j, asset] of theme.entries()) {
-        const spot: Spot = { asset, x: x + (j ? 1.8 : 0), z: 15 + side * (8.8 + (j ? 1.3 : 0)), y: ground(x), yaw: i * .63 + j * .8, scale: j ? .82 : 1 };
+        const px = x + (j === 1 ? 1.8 : j === 2 ? -1.8 : 0);
+        const spot: Spot = { asset, x: px, z: 15 + side * (8.8 + (j ? 1.3 : 0)), y: ground(px), yaw: i * .63 + j * .8, scale: j ? .82 : 1 };
         const p = placement('D-FAIR', list.length + i * 2, spot);
         p.id = `decor-l7-northgate-${i}-${j}`;
         if (j === 0) p.roadLife = true;
