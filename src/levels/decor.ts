@@ -9,13 +9,13 @@ import { l6, l6Doors } from '../data/l6';
 import { cureRoadsideBelt } from './L10/roadsideBelt';
 import type { DistrictId, Placement } from './districts/types';
 
-type Spot = { asset: string; x: number; z: number; y?: number; yaw?: number; scale?: number };
+type Spot = { id?: string; asset: string; x: number; z: number; y?: number; yaw?: number; scale?: number };
 
 const placement = (district: string, i: number, s: Spot): Placement => {
   const d = worldAssets[s.asset]; if (!d) throw new Error(`Unregistered decor asset ${s.asset}`);
   const k = s.scale ?? 1, yaw = s.yaw ?? 0, y = s.y ?? 0, c = Math.abs(Math.cos(yaw)), n = Math.abs(Math.sin(yaw));
   const hx = (c * d.dimensions.x + n * d.dimensions.z) * k / 2, hz = (n * d.dimensions.x + c * d.dimensions.z) * k / 2;
-  return { id: `decor-${district}-${i}`, assetId: s.asset, position: [s.x, y, s.z], yaw, scale: [k, k, k], minTier: 0, maxTier: 6, allowRoad: true,
+  return { id: s.id ?? `decor-${district}-${i}`, assetId: s.asset, position: [s.x, y, s.z], yaw, scale: [k, k, k], minTier: 0, maxTier: 6, allowRoad: true,
     lightGroup: 'decor', decor: true, visualAabb: { min: [s.x - hx, y, s.z - hz], max: [s.x + hx, y + d.dimensions.y * k, s.z + hz] } };
 };
 
@@ -68,6 +68,15 @@ function subwayDecor(): Spot[] {
     { asset: 'prop.traffic-cone', x: 280.8, z: 12.2, y: L6Y.street, yaw: .5 },
     { asset: 'prop.shopping-cart', x: 279.5, z: 18.5, y: L6Y.street, yaw: 2.4 }, { asset: 'prop.crates', x: 272.5, z: 9.8, y: L6Y.street, yaw: .9 },
     { asset: 'prop.broken-chair', x: 266.5, z: 12.6, y: L6Y.street, yaw: 1.4 }, { asset: 'prop.medical-cooler', x: 284.5, z: 13.2, y: L6Y.street, yaw: 2 });
+  // Exit apron: a last rest stop, abandoned road supplies, and luggage by the
+  // burned cart. Existing small assets stay on the sides of the central walk.
+  for (const [i, [asset, x, z, yaw, scale]] of ([
+    ['prop.folding-chair', 260.2, 23, -.7, 1], ['prop.carpet', 258.9, 24.2, .3, .65],
+    ['prop.medical-cooler', 261.5, 24.1, .8, .85],
+    ['prop.crates', 272.1, 6.9, .2, 1], ['prop.pallet', 274.7, 6.2, -.4, 1],
+    ['decay.dropped-belongings', 275.4, 8.2, 1.8, .7],
+    ['prop.broken-chair', 285, 20.2, 1.2, .8], ['prop.pallet', 281.9, 20.6, .5, .8],
+  ] as const).entries()) out.push({ id: `decor-l6-exit-${i}`, asset, x, z, yaw, scale, y: L6Y.street });
   return out;
 }
 
@@ -76,10 +85,49 @@ const cache = new Map<string, Placement[]>();
 export function districtDecor(district: DistrictId, placements: readonly Placement[]): Placement[] {
   // L9 roadside pieces were removed (orchestrator 10-29): without vehicle collision they were pass-through, with it the APC
   // stopped on luggage. L9 keeps its existing dressing.
-  if (district !== 'D-SUBWAY' && district !== 'D-CURE') return [];
+  const l7 = district === 'D-FAIR' && placements.some(p => p.id.startsWith('l7-'));
+  if (district !== 'D-SUBWAY' && district !== 'D-CURE' && !l7) return [];
   const key = `${district}:${placements.length}`, hit = cache.get(key); if (hit) return hit;
   if (district === 'D-CURE') {
     const list = cureRoadsideBelt(placements); cache.set(key, list); return list;
+  }
+  if (l7) {
+    const themes = [
+      ['prop.crates', 'decay.dropped-belongings', 'decay.broken-glass'], ['prop.sandbag-pallet', 'decay.broken-glass', 'decay.dropped-belongings'],
+      ['prop.crates', 'prop.bench', 'decay.broken-glass'], ['prop.sandbag-pallet', 'decay.furniture-barricade', 'decay.dropped-belongings'],
+    ];
+    const list: Placement[] = [], occupied = placements.filter(p => p.minTier <= 6 && p.maxTier >= 6);
+    const ground = (x: number) => Math.min(3.9, Math.max(0, Math.floor((x - 85) / 5) * 5 / 130 * 3.9));
+    const blocked = (p: Placement) => {
+      const a = p.visualAabb;
+      return [...occupied, ...list].some(q => {
+        const b = q.visualAabb;
+        return !(a.min[0] >= b.max[0] + .5 || a.max[0] <= b.min[0] - .5 || a.min[2] >= b.max[2] + .5 || a.max[2] <= b.min[2] - .5);
+      });
+    };
+    // Four varied refugee and military remnants fill the long Northgate approach
+    // between its existing wrecks. Their full AABBs stay outside the 10 m road.
+    for (const [i, x] of [233, 195, 157, 119].entries()) {
+      const side = i % 2 ? -1 : 1, theme = themes[i];
+      for (const [j, asset] of theme.entries()) {
+        const debris = asset === 'decay.broken-glass';
+        const px = x + (j ? (j === 1 ? 1 : -1) * (debris ? 3.3 : 2.4) : 0);
+        const spot: Spot = { asset, x: px, z: 15 + side * (debris ? 6.4 : 6.8 + (j ? 2.3 : 0)), y: ground(px), yaw: i * .63 + j * .8, scale: j ? .82 : 1 };
+        const p = placement('D-FAIR', list.length + i * 2, spot);
+        // Keep the whole footprint on one terrace, including rotated bedrolls
+        // and pallets: sampling only the centre can leave an edge over a riser.
+        if (p.position[1] < 3.9) {
+          const tile = 85 + Math.floor((px - 85) / 5) * 5;
+          const half = (p.visualAabb.max[0] - p.visualAabb.min[0]) / 2;
+          const dx = Math.max(tile + half + .03, Math.min(tile + 5 - half - .03, px)) - px;
+          p.position[0] += dx; p.visualAabb.min[0] += dx; p.visualAabb.max[0] += dx;
+        }
+        p.id = `decor-l7-northgate-${i}-${j}`;
+        if (j === 0) p.roadLife = true;
+        if (!blocked(p)) list.push(p);
+      }
+    }
+    cache.set(key, list); return list;
   }
   const spots = subwayDecor();
   const list = spots.map((s, i) => placement(district, i, s));

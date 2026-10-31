@@ -7,9 +7,10 @@ mesh); on the front of the torso an orange texel is repainted when it is enclose
 of those neighbours, so the bake's shading stays. The orange shirt itself is never enclosed by white, so it is kept.
 
 Run (python3 with numpy, scipy, Pillow), then compress as in build.py:
-  python3 tools/assets/courier-male-shirt-clean.py assets/char.courier-male-skin/model.skin.glb [--preview out.png]
+  python3 tools/assets/courier-male-shirt-clean.py assets/char.courier-male-skin/model.skin.glb [--preview out.png] [--hem-only] [--dry]
+(--hem-only: only the hem-corner step, for a file that already went through the enclosed-texel pass)
   npx tsx tools/assets/courier-tex-compress.ts assets/char.courier-male-skin/model.skin.glb public/assets/models/char.courier-male.skin.glb
-Run it once: each run repaints the texels its 2 cm reach finds enclosed, so a second run would grow the repaint further.
+Run it once: each run repaints the texels its 2 cm reach finds enclosed, so a second run would grow the repaint further (the hem corner step only touches orange, so it is stable).
 """
 import io, json, struct, sys
 import numpy as np
@@ -73,9 +74,30 @@ def enclosed(cand, by, reach=.02, dy=.006):
     return hit, colour
 
 out = tex.copy(); total = 0
-for by in (white, strap):
+for by in (() if '--hem-only' in sys.argv else (white, strap)):
     hit, colour = enclosed(orange & ~(out != tex).any(-1), by)
     out[hit] = colour[hit]; total += int(hit.sum())
+# Q-269 rest (PO 10-31): "the orange patch at the lower left of the male courier's white shirt front is still visible". Below the bag strap the
+# orange side panel runs into the undershirt as a dark blotch that nothing encloses. Repaint the orange texels in that hem corner (his right, around the flank
+# below the strap's lower edge) with the nearest white texels at the same height, so the undershirt reaches the strap; the strap itself is not orange and stays.
+warm = (tex[..., 0] > .25) & (tex[..., 0] > 1.35 * tex[..., 1]) & (tex[..., 0] > 2 * tex[..., 2])  # includes the bake's darker, shaded orange
+area = ~np.isnan(pos[..., 0]) & (pos[..., 1] > .675) & (pos[..., 1] < .78) & (pos[..., 2] > .03) & (pos[..., 2] < .16) & (pos[..., 0] > -.08)
+corner = area & warm & (out == tex).all(-1)
+# the blotch's anti-aliased rim is only slightly warm: take it too, 2 px around the core
+from scipy.ndimage import binary_dilation
+rim = (tex[..., 0] > 1.12 * tex[..., 1]) & (tex[..., 0] > 1.4 * tex[..., 2]) & (tex[..., 0] > .2)
+corner |= binary_dilation(corner, iterations=2) & area & rim & ~white & ~strap & (out == tex).all(-1)
+cy, cx = np.nonzero(corner)
+if len(cy):
+    wy, wx = np.nonzero(white & (pos[..., 1] > .64) & (pos[..., 1] < .80)); wtree = cKDTree(pos[wy, wx])
+    d, idx = wtree.query(pos[cy, cx], k=4)
+    out[cy, cx] = tex[wy[idx], wx[idx]].mean(1)
+    total += len(cy)
+    # UV gutter texels (no surface behind them) around the repaint still hold the old orange, and bilinear filtering pulls it back in as thin lines
+    from scipy.ndimage import distance_transform_edt
+    near = distance_transform_edt(~corner, return_indices=True)[1]
+    gutter = np.isnan(pos[..., 0]) & binary_dilation(corner, iterations=3)
+    gy, gx = np.nonzero(gutter); out[gy, gx] = out[near[0][gy, gx], near[1][gy, gx]]
 print('repainted texels', total)
 if preview:
     pv = (tex * 255).astype(np.uint8); pv[(out != tex).any(-1)] = (255, 0, 255); Image.fromarray(pv).save(preview)
