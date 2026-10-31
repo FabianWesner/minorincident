@@ -202,12 +202,9 @@ class CivilianBatch extends Group {
     this.mesh.userData.staticInstanceAttributes = true;
     this.mesh.userData.staticInstancePosition = material.positionNode;
     this.mesh.onAfterRender = () => this.probe.draw();
-    // First settled bodies must not bake geometry or compile frozen-material shaders during the retreat.
-    // Warm the band actually used for settled bodies: L4/L7 phones freeze LOD2,
-    // while desktop and L6 freeze LOD1. Warming a different band left the first
-    // phone corpse baking geometry and compiling its shader during combat.
-    if (['L4', 'L6', 'L7'].includes(this.world.scenario ?? '') && this.lod === this.corpseLod) for (const death of corpsePoses) this.corpses.prepare(`${this.model}:${death}`, baked.geometry, material, baked.clip, civilianClips.indexOf(death) * framesPerClip + framesPerClip - 1, true);
-    if (this.lod === this.corpseLod) this.corpses.prepare(`${this.model}:death-side`, baked.geometry, material, baked.clip, civilianClips.indexOf('death-side') * framesPerClip + framesPerClip - 1, true);
+    // Every cast can die; warm all three frozen poses in the exact LOD band
+    // used by settled bodies so first deaths never bake geometry or shaders.
+    if (this.lod === this.corpseLod) for (const death of corpsePoses) this.corpses.prepare(`${this.model}:${death}`, baked.geometry, material, baked.clip, civilianClips.indexOf(death) * framesPerClip + framesPerClip - 1, true);
     this.add(this.mesh); this.update();
   }
   update(alpha = 1, low = false, shotId?: number, figures?: readonly EntitySnapshot[]): void {

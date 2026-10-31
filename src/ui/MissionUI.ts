@@ -106,7 +106,10 @@ export class MissionUI {
     setHidden(this.routePin, cellarDistance === null || !!anchor && Math.hypot(this.cellarTurn.x - anchor.x, this.cellarTurn.z - anchor.z) < 2);
     setHidden(this.marker,storyShot||!!this.world.storyLock||!!this.world.l7Departure?.cinematic||!playing||!anchor||!player);
     if(player&&objective&&playing){
-      const distance=cellarDistance ?? (anchor?Math.hypot(anchor.x-player.transform.x,anchor.z-player.transform.z):null);
+      // L3's route marker follows the next walkable waypoint, while the HUD
+      // distance remains measured to the active mission objective.
+      const distanceAnchor = mission.def.l3 ? mission.def.anchors[objective.anchor] : anchor;
+      const distance=cellarDistance ?? (distanceAnchor?Math.hypot(distanceAnchor.x-player.transform.x,distanceAnchor.z-player.transform.z):null);
       const seconds = state.deadlineTicks === null ? null : Math.ceil(state.deadlineTicks / 60);
       const timer = seconds === null ? '' : ` · ${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
       this.text(this.tracker,`${objectiveText(mission, objective.text)}${distance===null?'':` · ${Math.round(distance)}\u00a0m`}${timer}`);attribute(this.tracker,'data-objective',objective.id);attribute(this.tracker,'data-distance',distance===null?'':String(distance));
