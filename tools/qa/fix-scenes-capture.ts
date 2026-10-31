@@ -36,7 +36,17 @@ try {
         save.settings.quality = tier; save.seed = 1; save.character = 'female';
         const proof = await session.page.evaluate(prepareStop, { stop, seed: 1, save, zoom: 1, tier });
         receipt.push({ name, proof }); captureTarget = proof.target;
-        if (name === 'l3-army-pullback') await session.page.evaluate(async () => { await window.__SS__!.step(180); });
+        if (name === 'l3-army-pullback') {
+          const formation = await session.page.evaluate(async protect => {
+            const a = window.__SS__!, g = (window.__SCENE__ as unknown as {game: import('../../src/Game').Game}).game;
+            if (protect) for (const e of g.world.entities.iterate()) if (e.civilian?.ally?.follow && e.health.current > 0) e.health.current = e.health.max = 100000;
+            const npcs = g.world.npcs!, move = npcs.move, goals = new Map<number, {x:number;z:number}>();
+            npcs.move = function(e, target, ...rest) { if (e.civilian?.ally?.follow) goals.set(e.id, {x:target.x,z:target.z}); return move.call(this, e, target, ...rest); };
+            try { await a.step(180); } finally { npcs.move = move; }
+            return { protected: protect, goals: [...goals], members: [...g.world.entities.iterate()].filter(e => e.civilian?.ally?.follow).map(e => ({id:e.id,at:e.transform,hp:e.health.current})) };
+          }, process.env.FIX_PROTECT_SQUAD === '1');
+          receipt.push({name, formation});
+        }
       }
       for (const zoom of [1, 1.5]) {
         await session.page.evaluate(zoom => window.__SS__!.camera.zoom(zoom), zoom);
@@ -53,7 +63,7 @@ try {
           const hatMatrices: unknown[] = []; g.view.scene.traverse(node => { const m = node as import('three').InstancedMesh; if (m.isInstancedMesh && node.name.startsWith('acc.hat') && m.count) hatMatrices.push({ name: node.name, matrices: Array.from(m.instanceMatrix.array).slice(0, m.count * 16) }); }); return { crowdMaterials, hatMatrices, civilians, transparent, corpseLayout: a.debug.corpseLayout(), builds: a.perf().nodeBuildMaterials, hud: document.querySelector('.mission-objective')?.textContent, mission: a.missions.state(), render: a.getState().render };
         });
         receipt.push({ name, zoom, state, audit });
-        if (name === 'bars' && side === 'after' && audit.render.healthBars.count > 5) failed = true;
+        if (name === 'bars' && side === 'after' && (audit.render.healthBars?.count ?? 0) > 5) failed = true;
       }
       if (name === 'hats') {
         await session.page.evaluate(() => { const g = (window.__SCENE__ as unknown as {game: import('../../src/Game').Game}).game; g.view.scene.traverse(node => { const m = node as import('three').Mesh; if (m.isMesh && node.name.startsWith('acc.')) for (const material of Array.isArray(m.material) ? m.material : [m.material]) material.visible = false; }); });
