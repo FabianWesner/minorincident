@@ -288,9 +288,10 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
 function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point): boolean {
   const f = a.follow!, d = dist(e.transform, p);
   const leader = world.entities.get(f.targetId)!;
+  const spread = world.scenario === 'L3';
   const moving = Math.hypot(leader.survivor?.velocity.x ?? 0, leader.survivor?.velocity.z ?? 0) > .5;
   // A stop or a tight turn can leave a follower inside the band. Step into nearby clear space, never onto the courier.
-  if (d < f.minM) {
+  if (d < f.minM && !spread) {
     const nav = world.infected!.nav, angle = Math.atan2(e.transform.z - p.z, e.transform.x - p.x);
     for (let i = 0; i < 16; i++) {
       const a = angle + i * Math.PI / 8, goal = { x: p.x + Math.cos(a) * (f.minM + 1), z: p.z + Math.sin(a) * (f.minM + 1) };
@@ -300,7 +301,7 @@ function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point): bo
     return true;
   }
   // E08 corgi/escort band: keep walking while the leader walks, avoiding repeated stop/start response delays.
-  if (d > f.maxM || (moving && d > f.minM) || !moving) {
+  if (d > f.maxM || (moving && d > f.minM) || spread) {
     // E08 shared NPC movement uses the same obstacle routing/steering as corgi and survivor escorts.
     // Slots trail the courier's facing, leaving her walking line clear even when she changes avenue.
     const forward = world.entities.get(f.targetId)!.transform.yaw;
@@ -310,15 +311,16 @@ function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point): bo
     const nav = world.infected!.nav;
     // Settle into individual spots even after the courier stops. Sending every
     // blocked slot to her feet left the pull-back squad packed over the van.
-    let goal: Point = p;
-    if (d <= 10) {
+    let goal: Point = d <= 10 && nav.clear(slot.x, slot.z, .4) && nav.visible(e.transform, slot, .4) && nav.visible(slot, p, .4) ? slot : p;
+    if (spread && d <= 10) {
       const candidates = [slot], seed = f.slot * 2.399963229728653;
-      for (let ring = 0; ring < 3; ring++) for (let ray = 0; ray < 8; ray++) {
+      for (let ring = 0; ring < 6; ring++) for (let ray = 0; ray < 8; ray++) {
         const angle = seed + ray * Math.PI / 4, radius = .8 + ring * .7;
         candidates.push({ x: slot.x + Math.cos(angle) * radius, z: slot.z + Math.sin(angle) * radius });
       }
-      goal = candidates.find(point => nav.clear(point.x, point.z, .4) && world.solids.clear({ ...point, y: e.transform.y }, .4, e.id)
-        && nav.visible(e.transform, point, .4) && nav.visible(point, p, .4)) ?? p;
+      const others = [...world.entities.iterate()].filter(other => other.id !== e.id && other.health.current > 0 && other.civilian?.ally?.follow?.targetId === f.targetId);
+      goal = candidates.find(point => nav.clear(point.x, point.z, .6) && world.solids.clear({ ...point, y: e.transform.y }, .6, e.id)
+        && others.every(other => dist(other.transform, point) >= 1.4) && nav.visible(e.transform, point, .4) && nav.visible(point, p, .4)) ?? e.transform;
     }
     if (!world.npcs!.move(e, goal, d > f.maxM + 2 ? f.moveMs : f.moveMs * .9, e.civilian!, goal === p ? f.minM : .5))
       world.npcs!.move(e, p, f.moveMs, e.civilian!, f.minM);
