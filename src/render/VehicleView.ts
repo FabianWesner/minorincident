@@ -30,6 +30,10 @@ export class VehicleView extends Group {
   private readonly registry: AssetRegistry;
   private readonly records = new Map<number, Record>();
   private readonly variants = new Map<number, Map<string, Record>>();
+  /** Each car keeps its own damage/reveal uniforms, shared by its retained LODs. */
+  private readonly paintCopies = new Map<number, Map<import('three').Material, Record['paint'][number]>>();
+  /** Immutable wheel-local samples are identical for copies of the same shell. */
+  private readonly tyreContacts = new Map<string, Vector3[]>();
   private readonly occupants = new Map<number, VehicleOccupant>();
   private readonly occupantLoads = new Map<number, Promise<void>>();
   private readonly occupantSeats = new Map<number, Group>();
@@ -97,22 +101,25 @@ export class VehicleView extends Group {
     }
   }
   async load(): Promise<void> {
-    for (const car of this.world.vehicles!.cars.values()) {
+    await Promise.all([...this.world.vehicles!.cars.values()].map(async car => {
       await this.addCar(car.entity.id);
       for (const lod of this.low ? ['lod1', 'lod2'] as const : ['lod0', 'lod1', 'lod2'] as const) await this.addCar(car.entity.id, lod, false);
-    }
+    }));
     this.update(1); await this.ready();
   }
   /** Both occluding and ridden hull graphs belong to the level warm-up. */
   prewarmReveal(enabled: boolean): () => void {
-    const saved: [PaletteMaterial, boolean][] = [];
+    const saved = new Map<PaletteMaterial, boolean>();
     for (const variants of this.variants.values()) for (const record of variants.values()) for (const material of record.paint) if (material instanceof PaletteMaterial) {
-      saved.push([material, material.userData.seeThrough === true]); material.seeThrough(enabled);
+      if (!saved.has(material)) saved.set(material, material.userData.seeThrough === true);
+      material.seeThrough(enabled);
     }
     return () => { for (const [material, value] of saved) material.seeThrough(value); };
   }
-  private paintModel(model: Object3D): Record['paint'] {
-    const paint: Record['paint'] = [], copies = new Map<import('three').Material, Record['paint'][number]>();
+  private paintModel(model: Object3D, id: number): Record['paint'] {
+    const paint: Record['paint'] = [];
+    let copies = this.paintCopies.get(id);
+    if (!copies) { copies = new Map(); this.paintCopies.set(id, copies); }
     model.traverse(node => { if (!(node instanceof Mesh)) return; const convert = (material: import('three').Material) => {
       if (material.name.startsWith('emi_') || material.userData.emissiveStrength > 0) return material;
       if (!(material instanceof PaletteMaterial) && !(material instanceof MeshLambertNodeMaterial)) return material;
@@ -130,8 +137,9 @@ export class VehicleView extends Group {
           // Retain imported color, vertex colors and lighting while adding the surface mask.
           owned.colorNode = mix(mix(uniform(owned.color), color('#b3121f'), grain.lessThan(owned.bloodCoverage).select(1, 0)), color('#1d1a18'), owned.char); copy = owned;
         }
-        copies.set(material, copy); paint.push(copy);
+        copies!.set(material, copy);
       }
+      if (!paint.includes(copy)) paint.push(copy);
       return copy;
     }; node.material = Array.isArray(node.material) ? node.material.map(convert) : convert(node.material); });
     return paint;
@@ -157,10 +165,16 @@ export class VehicleView extends Group {
     const model = atLeast(this.registry.definition(asset).status, 'integrated') ? await this.registry.loadAsset(asset, lod, shell) : vehiclePlaceholder(def, this.materials.get(def.emergency ? 'picketWhite' : def.id === 'vehicle.school-bus' ? 'schoolBusYellow' : 'survivorRed'));
     if (this.disposed) return;
     model.userData.assetId = def.asset; prepareTransportModel(model, def);
-    const paint = this.paintModel(model);
+    const paint = this.paintModel(model, id);
     if (!decay) openTransportCab(model, def);
     const parent = new Group(); parent.add(model); this.add(parent); parent.position.copy(car.entity.transform); parent.quaternion.copy(car.physics.rotation); parent.visible = activate; model.position.y = -(def.suspension + def.wheelRadius + .15);
-    const wheels = ['wheelFL', 'wheelFR', 'wheelRL', 'wheelRR', ...(def.transport ? ['wheelML', 'wheelMR'] : [])].filter(name => model.getObjectByName(name)).map(name => { const node = model.getObjectByName(name)!; node.rotation.order = 'YXZ'; return { node, y: node.position.y, steer: node.rotation.y, spin: node.rotation.z, contacts: tyreSurface(node), contactPose: new Matrix4(), contactOffset: 0, contactGround: null }; });
+    const wheels = ['wheelFL', 'wheelFR', 'wheelRL', 'wheelRR', ...(def.transport ? ['wheelML', 'wheelMR'] : [])].filter(name => model.getObjectByName(name)).map(name => {
+      const node = model.getObjectByName(name)!; node.rotation.order = 'YXZ';
+      const contactKey = `${asset}:${lod}:${shell ?? ''}:${name}`;
+      let contacts = this.tyreContacts.get(contactKey);
+      if (!contacts) { contacts = tyreSurface(node); this.tyreContacts.set(contactKey, contacts); }
+      return { node, y: node.position.y, steer: node.rotation.y, spin: node.rotation.z, contacts, contactPose: new Matrix4(), contactOffset: 0, contactGround: null };
+    });
     const lamp = (name: string, color: string) => {
       const material = new MeshBasicNodeMaterial({ color });
       const anchor = model.getObjectByName(name);
@@ -442,7 +456,6 @@ export class VehicleView extends Group {
   snapshot() { return [...this.records].map(([id, r]) => ({ id, apcDamage: r.apc?.snapshot() ?? null, transitionCouriers: [...this.occupants.values()].filter(o => o.parent === r.parent && o.visible).map(o => ({ actorId: o.actorId, asset: o.asset, phase: 'exit', position: o.position.toArray() })), doors: ['doorL','doorR','door_near_0','door_near_1','door_far_0','door_far_1'].flatMap(name => { const node = r.model.getObjectByName(name); let meshes = 0; node?.traverse(child => { if (child instanceof Mesh) meshes++; }); return node ? [{ name, yaw: node.rotation.y, meshes }] : []; }), decay: r.decay ?? null, bloodCoverage: this.bloodEnabled ? r.blood : 0, windshieldBloodCoverage: this.bloodEnabled ? r.blood : 0, wheels: r.wheels.map(w => ({ spin: w.node.rotation.z, steer: w.node.rotation.y })), brake: r.brake.color.r, sirens: r.sirens.map(s => s.color.toArray()), placeholder: !!r.model.userData.placeholder, occupants: [...this.occupants.values()].filter(o => o.parent === r.model && o.visible).map(o => ({ actorId: o.actorId, asset: o.asset, seated: true, position: o.position.toArray(), handGapM: [...o.handGapM] })) })); }
   private releaseRecord(record: Record): void {
     record.apc?.dispose(); disposeTransportCab(record.model);
-    for (const material of record.paint) material.dispose();
     record.door.geometry.dispose(); record.brake.dispose(); for (const material of record.sirens) material.dispose();
   }
   dispose(): void {
@@ -450,6 +463,8 @@ export class VehicleView extends Group {
     const geometries = new Set<import('three').BufferGeometry>(), materials = new Set<MeshBasicNodeMaterial>();
     for (const variants of this.variants.values()) for (const r of variants.values()) { this.releaseRecord(r); if (r.model.userData.placeholder) r.model.traverse(node => { if (node instanceof Mesh) { geometries.add(node.geometry); const m = node.material; if (!Array.isArray(m) && m instanceof MeshBasicNodeMaterial) materials.add(m); } }); }
     for (const g of geometries) g.dispose(); for (const m of materials) m.dispose();
-    for (const occupant of this.occupants.values()) occupant.dispose(); this.occupants.clear(); this.occupantSeats.clear(); this.registry.dispose(); this.propGeometry.dispose(); this.puffGeometry.dispose(); this.smokeMaterial.dispose(); this.fireMaterial.dispose(); this.records.clear(); this.variants.clear(); this.props.clear(); this.debris.length = 0; this.clear();
+    for (const copies of this.paintCopies.values()) for (const material of copies.values()) material.dispose();
+    this.paintCopies.clear();
+    for (const occupant of this.occupants.values()) occupant.dispose(); this.occupants.clear(); this.occupantSeats.clear(); this.registry.dispose(); this.propGeometry.dispose(); this.puffGeometry.dispose(); this.smokeMaterial.dispose(); this.fireMaterial.dispose(); this.records.clear(); this.variants.clear(); this.tyreContacts.clear(); this.props.clear(); this.debris.length = 0; this.clear();
   }
 }

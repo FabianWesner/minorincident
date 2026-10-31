@@ -220,7 +220,11 @@ export class CrowdView extends Group {
       const key = crowdModelKey(def);
       const role = dogCoat(def.id) ? 'dog' : def.id.startsWith('infected.') ? def.id.slice(9) : 'runner', asset = def.asset;
       const cpuKey = `${def.id}|${asset}|${def.decay ?? ''}|${lod}|${this.low ? 'low' : 'high'}`;
-      const prebuilt = !preparedBatches.has(cpuKey) ? loadSkinnedCrowdBake(asset, lod) : undefined;
+      // Keep the selected CPU data across the async model load. The zoo can
+      // evict it from the bounded cache meanwhile; a second lookup then used
+      // neither the cached body nor a delivery and rebaked every Alpha.
+      const prepared = preparedBatches.get(cpuKey);
+      const prebuilt = !prepared ? loadSkinnedCrowdBake(asset, lod) : undefined;
       const [loaded, delivered] = await Promise.all([
         this.registry.loadAsset(asset, lod, def.decay) as Promise<Group>,
         this.world.scenario === 'L4' ? prebuilt : undefined,
@@ -242,10 +246,9 @@ export class CrowdView extends Group {
       const infectedAtlas = textured && human && !healthy;
       // Texture ownership stays with this view's registry, never the CPU geometry cache.
       const preparedKey = cpuKey;
-      const prepared = preparedKey ? preparedBatches.get(preparedKey) : undefined;
       let baked: BakedBatch, createdCorpse: BufferGeometry | null = null, corpseClip: BakedBatch['clip'] | undefined;
       if (prepared) {
-        preparedBatches.delete(preparedKey!); preparedBatches.set(preparedKey!, prepared);
+        if (preparedBatches.get(preparedKey) === prepared) { preparedBatches.delete(preparedKey); preparedBatches.set(preparedKey, prepared); }
         // The bake adds every clip part the model lacks as an empty joint at the origin; the locomotion rig expects them.
         for (const name of prepared.clip.parts) if (!model.getObjectByName(name)) { const joint = model.clone(false); joint.name = name; joint.position.set(0, 0, 0); model.add(joint); }
         model.updateMatrixWorld(true);
