@@ -290,7 +290,8 @@ export class Hud {
     const remaining = mission?.def.id === 'L3' && mission.state.deadlineTicks !== null ? Math.ceil(mission.state.deadlineTicks / 60) : null;
     const deadline = remaining === null ? '' : `Gates close in ${Math.floor(remaining / 60)}:${String(remaining % 60).padStart(2, '0')} · `;
     if (!objective && !done) text(this.trackerText, '');
-    if (objective) text(this.trackerText, `${deadline}${objectiveText(mission!, objective.text)}${anchor ? ` · ${Math.round(cellarDistance ?? Math.hypot(anchor.x - px, anchor.z - pz))}\u00a0m` : ''}`);
+    const distanceAnchor = mission?.def.l3 && objective ? mission.def.anchors[objective.anchor] : anchor;
+    if (objective) text(this.trackerText, `${deadline}${objectiveText(mission!, objective.text)}${distanceAnchor ? ` · ${Math.round(cellarDistance ?? Math.hypot(distanceAnchor.x - px, distanceAnchor.z - pz))}\u00a0m` : ''}`);
     const finaleStep = mission?.def.id === 'L10' ? mission.interactStepInRange() : null;
     const finaleAction = !!finaleStep && ['install', 'hold', 'release'].includes(finaleStep.id);
     setHidden(this.finaleAction, !finaleAction);

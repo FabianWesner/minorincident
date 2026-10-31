@@ -11,8 +11,8 @@ export function searchAnchors(mission: Pick<Mission, 'state' | 'def'> | null | u
     ? s.survivors.filter(r => r.status === 'hidden').map(r => mission.def.anchors[`l5-ring-${r.key}`]) : [];
 }
 /**
- * World position shared by the minimap pin, tracker distance, diamond and 3D ring.
- * L3 uses its next open route waypoint so every HUD surface guides the player
+ * World position shared by the minimap pin, diamond and 3D ring.
+ * L3 uses its next open route waypoint so navigation markers guide the player
  * around street closures instead of bearing straight through them.
  */
 export function markerAnchor(mission: Pick<Mission, 'state' | 'def'> | null | undefined): Anchored | null {
