@@ -209,6 +209,9 @@ export class CourierGroundContacts {
       } else if (foot.swing) {
         const swing = foot.swing;
         let u: number, landed: boolean;
+        // Standing steps lift first, then travel and yaw while the sole is clearly off the floor (a foot dragged or twisted
+        // within 1.2 cm of the floor is a slide); gait swings and crowd steps keep the full window.
+        const clear = !swing.gait && !moving && !style?.maxSwing, stepFrom = clear ? .3 : .12, stepSpan = clear ? .45 : .76;
         if (swing.gait) {
           landed = previous >= 0 && p < previous;
           // Progress from the release phase: a stance fraction shifting under a walk/run blend must not stall the swing.
@@ -251,11 +254,11 @@ export class CourierGroundContacts {
             // Crowds stepping while on the move aim where the body will be when the step lands.
             if (style?.maxSwing && moving) swing.land.addScaledVector(this.forward, speed * (1 - u) * swing.duration);
           }
-          foot.target.copy(swing.from).lerp(swing.land, ease((u - .12) / .76));
+          foot.target.copy(swing.from).lerp(swing.land, ease((u - stepFrom) / stepSpan));
         }
         // Crowds latch the landing heading late in the swing, so a foot never yaws once it is down.
         if (style?.maxSwing && u >= .7) swing.landYaw ??= landYaw;
-        foot.yaw = swing.fromYaw + wrap((swing.landYaw ?? landYaw) - swing.fromYaw) * ease((u - .12) / .76);
+        foot.yaw = swing.fromYaw + wrap((swing.landYaw ?? landYaw) - swing.fromYaw) * ease((u - stepFrom) / stepSpan);
         // Toes trail at toe-off, then the heel leads into contact.
         const strikePitch = swing.gait || moving ? heelStrike : heelStrike * .5;
         foot.pitch = u < .5 ? swing.fromPitch * (1 - ease(u / .5)) : strikePitch * ease((u - .5) / .35);
@@ -345,10 +348,12 @@ export class CourierGroundContacts {
         const dx = foot.target.x - this.joint.x, dz = foot.target.z - this.joint.z, floor = ground + swing.dip;
         const landing = kneeOf(foot, Math.hypot(dx, dz, this.joint.y - floor));
         // Guaranteed clearance through the swing, on top of the readable knee arc.
+        // Slow steps (turning on the spot, first/last steps) lift fast and a little higher: the shoe must clear the floor band before it travels.
+        const slow = style?.maxSwing ? 0 : Math.max(0, Math.min(1, (.5 - speed) / .3));
         const dragged = swing.gait ? drag(foot) : 0;
         // A dragged foot scrapes just above the ground (toes down), lifting off and touching down quickly.
         const clearance = dragged ? Math.max(.016, (.025 + .02 * run) * (1 - .8 * dragged) * s) * Math.min(1, u / .04, (1 - u) / .06)
-          : Math.max(style?.maxSwing ? (swing.gait ? .022 : .04) : 0, (swing.gait ? .025 + .02 * run : .02) * s) * Math.min(1, u / .1, (1 - u) / (style?.maxSwing && !swing.gait ? .05 : .12));
+          : Math.max(style?.maxSwing ? (swing.gait ? .022 : .04) : 0, (swing.gait ? .025 + .02 * run + .012 * slow : .035) * s) * Math.min(1, u / (.1 - .06 * slow), (1 - u) / (style?.maxSwing && !swing.gait ? .05 : .12));
         const needed = kneeOf(foot, Math.hypot(dx, dz, this.joint.y - floor - clearance));
         const peak = Math.max(peakKnee(swing.gait, foot), swing.knee0);
         const profile = swing.knee0 + (peak - swing.knee0) * ease(u / .35);
