@@ -6,13 +6,19 @@ export function installFinalAudit(): void {
   target.__finalE2eAudit = [];
   let previous = '', loadStarted = 0, wasLoading = false, wasBegin = false;
   const q = (id: string) => document.querySelector<HTMLElement>(`[data-testid="${id}"]`);
-  const visible = (e: HTMLElement | null) => !!e && !e.hidden && e.offsetParent !== null;
+  const visible = (e: HTMLElement | null) => !!e && !e.hidden && e.getClientRects().length > 0;
+  const watchLoading = () => {
+    const loading = visible(q('level-transition')) || visible(q('menu-loading'));
+    if (loading && !wasLoading) loadStarted = performance.now();
+    wasLoading = loading;
+    return loading;
+  };
   const sample = () => {
+    const loading = watchLoading();
     const g = target.__SCENE__?.game, m = g?.world.missions;
     if (!g || !m) return;
-    const now = performance.now(), loading = visible(q('level-transition')) || visible(q('menu-loading'));
+    const now = performance.now();
     const begin = !loading && visible(q('mission-button')) && q('mission-button')!.textContent === 'Begin mission';
-    if (loading && !wasLoading) loadStarted = now;
     const text = visible(q('objective-text')) ? q('objective-text')!.textContent : q('mission-tracker')?.textContent;
     const subtitle = visible(q('mission-subtitle')) ? q('mission-subtitle')!.textContent : '';
     const storyBubble = visible(q('story-bubble')) ? q('story-bubble')!.textContent : '';
@@ -35,7 +41,9 @@ export function installFinalAudit(): void {
       });
       previous = key;
     }
-    wasLoading = loading; wasBegin = begin;
+    wasBegin = begin;
   };
+  new MutationObserver(watchLoading).observe(document, { subtree: true, childList: true, attributes: true, attributeFilter: ['hidden'] });
+  document.addEventListener('click', sample, true);
   setInterval(sample, 50);
 }

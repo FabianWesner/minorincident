@@ -1,0 +1,460 @@
+{
+  "levels": [
+    {
+      "level": "L1",
+      "tick": 9828,
+      "result": {
+        "time": 163.8,
+        "kills": 0,
+        "knockdowns": 16,
+        "damage": 150,
+        "deaths": 1,
+        "rescued": 1,
+        "optionalObjectives": [],
+        "delivered": true,
+        "infected": 27,
+        "turned": 0,
+        "escaped": 6
+      },
+      "steps": [
+        {
+          "id": "pickup",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "deliver",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "escape",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "weapon",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "firestation",
+          "optional": false,
+          "status": "completed"
+        }
+      ]
+    }
+  ],
+  "campaign": {
+    "version": 2,
+    "seed": 1,
+    "character": "female",
+    "unlockedLevel": 2,
+    "completedLevels": 1,
+    "ownedActions": [
+      "weapon.fists",
+      "weapon.kick",
+      "weapon.bat"
+    ],
+    "upgrades": [
+      "upgrade.handling.1",
+      "upgrade.melee.1"
+    ],
+    "racks": {
+      "LEFT": [
+        "weapon.bat",
+        "weapon.kick"
+      ],
+      "RIGHT": [
+        "weapon.kick"
+      ]
+    },
+    "settings": {
+      "muted": false,
+      "captions": false,
+      "noiseRings": false,
+      "mono": false,
+      "haptics": true,
+      "tinnitus": true,
+      "gore": "Full",
+      "textSize": 1,
+      "aimAssist": "Default",
+      "cameraShake": true,
+      "flashReduction": false,
+      "colorblind": false,
+      "quality": "low",
+      "slowMotion": true
+    },
+    "usage": {},
+    "selectedAction": "weapon.bat",
+    "world": {
+      "L1": {
+        "version": 1,
+        "props": [
+          {
+            "id": "D-GROVE/prop.carpet:1296",
+            "p": [
+              28.5208,
+              0,
+              47.205
+            ],
+            "q": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "id": "D-GROVE/prop.bench:1301",
+            "p": [
+              -68.2618,
+              0,
+              11.8427
+            ],
+            "q": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "id": "D-GROVE/prop.bench:1308",
+            "p": [
+              -20.2971,
+              0,
+              25.927
+            ],
+            "q": [
+              0,
+              -0.7071,
+              0,
+              0.7071
+            ]
+          },
+          {
+            "id": "D-GROVE/prop.bench:1309",
+            "p": [
+              29.3202,
+              0,
+              34.2719
+            ],
+            "q": [
+              0,
+              0.7132,
+              0,
+              0.701
+            ]
+          }
+        ],
+        "dumpsters": [
+          "dumpster-1"
+        ],
+        "gatesClosed": [],
+        "bodies": [
+          {
+            "x": -68.07,
+            "z": 16.57,
+            "yaw": -31.02,
+            "model": "npc.civilian-man-a",
+            "tint": "#a86645"
+          },
+          {
+            "x": -69.64,
+            "z": 14.58,
+            "yaw": -0.41,
+            "model": "npc.civilian-man-a",
+            "tint": "#f2efe4"
+          },
+          {
+            "x": -70.3,
+            "z": 4.7,
+            "yaw": -0.96,
+            "model": "npc.civilian-man-b",
+            "tint": "#6d5aa8"
+          },
+          {
+            "x": -67,
+            "z": 15.02,
+            "yaw": 11.5,
+            "model": "npc.civilian-man-a",
+            "tint": "#2f4858"
+          },
+          {
+            "x": -66.12,
+            "z": 16.03,
+            "yaw": 4.93,
+            "model": "npc.civilian-woman-a",
+            "tint": "#e07fa0"
+          },
+          {
+            "x": 11.26,
+            "z": 31.44,
+            "yaw": 22.06,
+            "model": "npc.civilian-woman-a",
+            "tint": "#6d5aa8"
+          },
+          {
+            "x": 10.96,
+            "z": 30.78,
+            "yaw": 32.5,
+            "model": "npc.civilian-elderly",
+            "tint": "#f2efe4"
+          },
+          {
+            "x": 11.41,
+            "z": 32.31,
+            "yaw": 14.4,
+            "model": "npc.civilian-elderly",
+            "tint": "#d4ad32"
+          },
+          {
+            "x": 23.68,
+            "z": 25.96,
+            "yaw": 3.44,
+            "model": "npc.civilian-elderly",
+            "tint": "#c4473d"
+          },
+          {
+            "x": 38.63,
+            "z": 27.13,
+            "yaw": 29.1,
+            "model": "npc.civilian-man-a",
+            "tint": "#a86645"
+          },
+          {
+            "x": 34,
+            "z": 34.63,
+            "yaw": 19.62,
+            "model": "npc.civilian-woman-b",
+            "tint": "#f2efe4"
+          },
+          {
+            "x": 6.62,
+            "z": -4.27,
+            "yaw": 11.41,
+            "model": "npc.civilian-woman-a",
+            "tint": "#f2efe4"
+          }
+        ],
+        "bike": {
+          "x": -41.2,
+          "z": -34.6,
+          "yaw": 0
+        }
+      }
+    },
+    "results": {
+      "L1": {
+        "time": 163.8,
+        "kills": 0,
+        "knockdowns": 16,
+        "damage": 150,
+        "deaths": 1,
+        "rescued": 1,
+        "optionalObjectives": [],
+        "delivered": true,
+        "infected": 27,
+        "turned": 0,
+        "escaped": 6
+      }
+    }
+  },
+  "mission": {
+    "id": "L2",
+    "phase": "playing",
+    "completedObjectives": [],
+    "volumes": [],
+    "killedBosses": [],
+    "deadlineTicks": null,
+    "steps": {
+      "axe": {
+        "status": "active",
+        "started": 0,
+        "kills": [],
+        "events": {},
+        "interaction": 0
+      },
+      "calm": {
+        "status": "active",
+        "started": 0,
+        "kills": [],
+        "events": {},
+        "interaction": 0
+      },
+      "board": {
+        "status": "pending",
+        "started": 0,
+        "kills": [],
+        "events": {},
+        "interaction": 0
+      },
+      "ride": {
+        "status": "pending",
+        "started": 0,
+        "kills": [],
+        "events": {},
+        "interaction": 0
+      },
+      "doors": {
+        "status": "pending",
+        "started": 0,
+        "kills": [],
+        "events": {},
+        "interaction": 0
+      },
+      "bridge": {
+        "status": "pending",
+        "started": 0,
+        "kills": [],
+        "events": {},
+        "interaction": 0
+      }
+    },
+    "actors": {},
+    "items": [],
+    "states": {
+      "alarm": false,
+      "boarded": false,
+      "arrived": false,
+      "doors-open": false,
+      "radio": false,
+      "crossed": false
+    },
+    "counters": {},
+    "gates": {},
+    "marker": "l2-axe-rack",
+    "checkpoint": null,
+    "tier": 1,
+    "timeOfDay": null,
+    "subtitle": {
+      "id": "L2.briefing",
+      "text": "Fire Station 3, a few hours later. Organized help still exists. For now.",
+      "until": 300
+    },
+    "cinematic": null,
+    "failure": null,
+    "stats": {
+      "time": 0.2,
+      "kills": 0,
+      "knockdowns": 0,
+      "damage": 0,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": []
+    },
+    "result": null,
+    "l2": {
+      "phase": "calm",
+      "alarmAt": 0,
+      "departAt": 0,
+      "arrivedAt": 0,
+      "crewExitAt": 0,
+      "atDoorsAt": 0,
+      "doorsOpenAt": 0,
+      "radioAt": 0,
+      "crossedAt": 0,
+      "gateClosedAt": 0,
+      "truckId": 120,
+      "seated": false,
+      "axe": false,
+      "rideS": 0,
+      "rideV": 0,
+      "crewIds": [
+        121,
+        122,
+        123,
+        124,
+        125,
+        126
+      ],
+      "benchIds": [
+        127,
+        128,
+        129,
+        130
+      ],
+      "trappedIds": [
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181
+      ],
+      "officerIds": [
+        131,
+        132,
+        133,
+        134
+      ],
+      "lineIds": [
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142
+      ],
+      "doorIds": [],
+      "gateIds": [],
+      "released": 0,
+      "ambush": [],
+      "ambushIds": [],
+      "pending": [],
+      "escapeIds": [],
+      "clusterIds": [],
+      "escapeSpawned": false,
+      "clusterSpawned": false,
+      "clusterReached": false
+    }
+  },
+  "backend": "webgl",
+  "quality": "low",
+  "camera": {
+    "zoom": 1,
+    "targetZoom": 1,
+    "zoomLimits": [
+      0.5,
+      1.5
+    ],
+    "fov": 25,
+    "azimuth": 0.7853981633974483,
+    "polar": 0.9424777960769379,
+    "radius": 19,
+    "regionScale": 1,
+    "focus": [
+      -73.1999116019653,
+      0.23306755047101266,
+      45.20000065968682
+    ],
+    "target": [
+      -73.1999116019653,
+      0.23306755047101266,
+      45.20000065968682
+    ],
+    "position": [
+      -62.330744958466404,
+      11.400917118270078,
+      56.06916731314792
+    ],
+    "spot": null
+  }
+}

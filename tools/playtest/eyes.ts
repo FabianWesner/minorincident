@@ -133,7 +133,7 @@ export function look(): Eyes {
     marker: markerEl && Number.isFinite(left) ? { visible: shown(markerEl), offscreen: markerEl.dataset.offscreen === 'true', x: left, y: top, anchor: markerEl.dataset.anchor ?? null, guidance: markerEl.dataset.guidance } : null,
     route: shown(route) ? { dx: (parseFloat(route!.style.left) - 50) * 100 / 40, dz: (parseFloat(route!.style.top) - 50) * 100 / 40 } : null,
     panel: { visible: shown(panel), heading: q('mission-heading')?.textContent ?? '', button: button && shown(button) ? button.textContent : null },
-    menu, loading: shown(q('menu-loading')) || shown(q('level-transition')),
+    menu, loading: shown(q('menu-loading')) || !!q('level-transition') && !q('level-transition')!.hidden,
     prompt: ringPrompt || (trackerPrompt.includes('Press E or tap the console action') ? trackerPrompt : ''),
     subtitle: shown(q('mission-subtitle')) ? q('mission-subtitle')!.textContent ?? '' : '',
     player: p ? { x: p.transform.x, y: p.transform.y, z: p.transform.z, hp: p.health.current, max: p.health.max, riding: !!p.riding || !!p.passengerOf, weapons, emptyWeapons, current } : null,
