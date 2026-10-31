@@ -62,6 +62,7 @@ import { MountedGunView } from './MountedGunView';
 import { RenderProbes, type ProbeTargets } from './RenderProbes';
 import { EntityAssets } from './EntityAssets';
 import { loadMeasure } from '../assets/loadTiming';
+import { compileShadowMaps } from './ShadowWarmup';
 import { loadGate } from '../assets/loadGate';
 import { lodPolicy } from './lodPolicy';
 import { layoutLights } from './WorldLights';
@@ -145,11 +146,11 @@ export class GameView implements Lifecycle {
   unfreeze(): void { this.frozenFrame?.remove(); this.frozenFrame = null; this.frozenUpdates = false; if (!this.warming) this.update(1); }
   get frozen(): boolean { return this.frozenFrame !== null; }
   private loadingPresentedAt = -Infinity;
-  /** Keep the compositor presenting during handover work. The frozen canvas
-   * preserves the last picture while the opaque loading card covers it. A
-   * cheap canvas submission avoids Chrome's no-draw RAF pacing (~100 ms). */
+  /** Keep the compositor presenting during every handover's opaque loading card.
+   * A cheap canvas submission avoids Chrome's no-draw RAF pacing (~100 ms),
+   * including handovers that do not use a frozen copy of the outgoing picture. */
   presentLoading(): void {
-    if (!this.frozenFrame || this.background) return;
+    if (this.background) return;
     const now = performance.now();
     if (now - this.loadingPresentedAt < 1000 / 60) return;
     this.loadingPresentedAt = now;
@@ -508,7 +509,11 @@ export class GameView implements Lifecycle {
       if (this.lighting) { this.lighting.sun.shadow.needsUpdate = true; this.lighting.spot.shadow.needsUpdate = true; }
       if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera);
     };
-    const prepareVariant = () => preRender(this.renderer, this.scene, this.camera, renderWarm, partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); })), this.background ? () => loadGate.wait() : () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0))), this.loadProgress, this.background, this.world.scenario === 'L3' || this.world.scenario === 'L6' || this.world.scenario === 'L8', cooperative, this.world.scenario === 'L10' && this.renderer.selectedBackend === 'webgpu' ? 24 : compileLanes);
+    const prepareVariant = () => preRender(this.renderer, this.scene, this.camera, renderWarm, async partitions => {
+      if (this.postFx) await this.postFx.compile(partitions);
+      else await Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); }));
+      if (!this.background && !cooperative) await compileShadowMaps(this.renderer, this.scene, this.postFx ? 2 : 1);
+    }, this.background ? () => loadGate.wait() : () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0))), this.loadProgress, this.background, this.world.scenario === 'L3' || this.world.scenario === 'L6' || this.world.scenario === 'L8', cooperative, this.world.scenario === 'L10' && this.renderer.selectedBackend === 'webgpu' ? 24 : compileLanes);
     const prepare = async (): Promise<void> => {
       // L4's moving set pieces reveal the courier during combat. Warm both
       // graphs against every loading light/weather variant, before LOD swaps.

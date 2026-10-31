@@ -255,7 +255,9 @@ export class Game {
         return;
       }
       this.speculative = null;
-      if (!speculative && id === 'L8') this.view.freeze(this.world.scenario === 'L7');
+      // The opaque loading card owns this interval and the game clock is paused.
+      // Preserve the old picture while using the foreground loading budget.
+      if (!speculative && id === 'L8') this.view.freeze();
       this.loading=true; this.restoredWhilePaused = false;
       const releaseSkins = id === 'L4' ? prefetchSkinnedCrowdBakes(l4InfectedLooks) : undefined;
       try{

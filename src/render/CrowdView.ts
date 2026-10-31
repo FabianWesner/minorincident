@@ -145,8 +145,11 @@ export class CrowdView extends Group {
     // L1 v2: every infected is a pedestrian that keeps its look and is drawn by the civilian crowd (lane D); this view
     // only needs the plain runner fallback plus scripted infected actors. Without the outbreak layer keep the old set.
     const regularCrowd = this.world.scenario === 'L7' || this.world.scenario === 'L10' || this.world.scenario?.startsWith('perf-horde-');
+    // L9's future chunk encounters contain runners and Alphas (l9Groups),
+    // never the global zoo/finale cast. Keep every resident override too.
+    const crossingCrowd = this.world.scenario === 'L9';
     const actors = Object.values(this.world.missions?.def.actors ?? {}).map(actor => actor.archetype);
-    const l1Roles = new Set<string>(regularCrowd || this.world.scenario === 'L6' || this.world.npcs?.civilians.outbreak || this.world.districts?.districts.some(d => isOutbreakDistrict(d.id)) ? ['infected.runner', ...actors] : ['infected.runner', ...actors, ...civilianRoles.map(role => role.variant), ...models]);
+    const l1Roles = new Set<string>(regularCrowd || crossingCrowd || this.world.scenario === 'L6' || this.world.npcs?.civilians.outbreak || this.world.districts?.districts.some(d => isOutbreakDistrict(d.id)) ? ['infected.runner', ...actors] : ['infected.runner', ...actors, ...civilianRoles.map(role => role.variant), ...models]);
     if (regularCrowd) for (const model of regularInfectedModels) l1Roles.add(model);
     // L4 sprinters always wear a shared soldier/civilian/suit skin.
     // Their unused default batch need not delay the level's loading card.
@@ -164,7 +167,7 @@ export class CrowdView extends Group {
     }
     // First Alphas emerge after the Fairhaven crowd has initialized. Warm the
     // derived model now, including its sim definition when A-S1 registers it.
-    const alphaLevel = ['L4', 'L5', 'L7', 'L8', 'L10'].includes(this.world.scenario ?? '');
+    const alphaLevel = ['L4', 'L5', 'L7', 'L8', 'L9', 'L10'].includes(this.world.scenario ?? '');
     if (this.world.scenario === 'L10') {
       // Include every future region/console encounter, not only the spawn chunk.
       for (const group of cureEncounters) for (const slot of cureEncounterSlots(group, this.low ? 'low' : 'high')) l1Roles.add(slot.archetype);
@@ -174,7 +177,7 @@ export class CrowdView extends Group {
     if (alphaLevel)
       for (const def of allDefinitions) if (alphaLooks['inf.alpha'].includes(def.asset)) l1Roles.add(def.id);
     const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6';
-    const definitions = grove || regularCrowd || this.world.scenario === 'L8' ? allDefinitions.filter(def => l1Roles.has(def.id) || l1Roles.has(def.asset)) : allDefinitions;
+    const definitions = grove || regularCrowd || crossingCrowd || this.world.scenario === 'L8' ? allDefinitions.filter(def => l1Roles.has(def.id) || l1Roles.has(def.asset)) : allDefinitions;
     for (const def of definitions) {
       // Registrations must not remove the asset spelling used by model overrides.
       const independent = def.id.startsWith('healthy.') || dogCoat(def.id);
