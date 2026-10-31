@@ -186,3 +186,4 @@ A living record, updated after every lane or experiment. Short entries with evid
 
 - 10-30/31: 7 of 8 fresh scheduler submits with `--sandbox danger-full-access` still started restricted (no loopback bind, read-only .git, Blender Metal crash); a stop + `--resume-from <slug> --sandbox danger-full-access` always fixed it. Until the scheduler is fixed: check a fresh lane's first message for EPERM and restart it at once.
 - 2026-10-31: test-API capture scripts (SceneSession against a local preview) need `BRANCH=qa npm run build`; a plain build has no `__SS__` hooks and SceneSession.open times out after 120 s.
+- 2026-10-31: garment/body refits must be checked on the posed, skinned figure and its corpse, not only in bind pose; bbq-dad's apron passed bind-pose crops but sank in play.
