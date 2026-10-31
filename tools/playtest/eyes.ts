@@ -108,7 +108,8 @@ export function look(): Eyes {
       let aim = { x: s.x, y: s.y - 18 };
       if (joints?.hip && joints.head) {
         const at = joints.hip.map((v, i) => v + (joints.head[i] - v) * .6), ndc = a.camera.project(at[0], at[1], at[2]);
-        aim = { x: rect.left + (ndc[0] + 1) / 2 * rect.width, y: rect.top + (1 - ndc[1]) / 2 * rect.height };
+        const chest = { x: rect.left + (ndc[0] + 1) / 2 * rect.width, y: rect.top + (1 - ndc[1]) / 2 * rect.height };
+        if (Number.isFinite(chest.x) && Number.isFinite(chest.y)) aim = chest;
       }
       if (!Number.isFinite(aim.x) || !Number.isFinite(aim.y) || aim.x < 0 || aim.x >= view.w || aim.y < 44 || aim.y >= view.h) continue;
       // The drawn chest may sit behind Home, Pause or a rack button. A mouse
