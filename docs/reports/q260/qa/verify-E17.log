@@ -1,0 +1,28 @@
+
+> verify
+> tsx tools/verify.ts E17
+
+[verify] E17 (E17): per-epic AC tests were retired; running the per-change gate.
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+> lint
+> eslint src tests tools functions *.config.ts eslint.config.js
+
+
+> test
+> node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner
+
+[test-budget] 150/150 test cases ({"vitest":129,"e2e":9,"invariantsBrowser":12}), 42/45 files
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/q260
+
+
+ Test Files  26 passed (26)
+      Tests  110 passed (110)
+   Start at  01:14:29
+   Duration  31.28s (tests 86%, transform 8%, import 5%, setup 1%)
+
+[test-budget] test: 35.5 s (budget 240 s)
