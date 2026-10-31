@@ -1,0 +1,696 @@
+{
+  "note": "Read-only aggregation of retained run, observer, frame and completion files. Driver wall/sim values can be invalid at automatic handovers or after short-cap debug skips; use authoritative missionStats and observer timestamps. fresh-08 was killed before final files and is described separately in README.",
+  "runs": [
+    {
+      "tag": "fresh-01",
+      "level": "L1",
+      "finished": false,
+      "skipped": [],
+      "driverWallSeconds": 0,
+      "driverSimSeconds": 0,
+      "missionStats": {
+        "time": 100.25,
+        "kills": 0,
+        "knockdowns": 0,
+        "damage": 0,
+        "deaths": 0,
+        "rescued": 0,
+        "optionalObjectives": []
+      },
+      "runDeaths": 0,
+      "weaponsStart": [],
+      "weaponsEnd": [],
+      "loads": [
+        2636.199999809265
+      ],
+      "longFrames": [],
+      "errors": [],
+      "issues": [
+        {
+          "kind": "stuck-navigating",
+          "level": "L1",
+          "tick": 1825,
+          "text": "20 s without objective progress (distance 36.0 m, no marker: false); HUD: \"Pick up the package at the courier depot · 36 m\"",
+          "captures": [
+            "captures/fresh-01-L1-1825-stuck-navigating.jpg"
+          ]
+        },
+        {
+          "kind": "cannot-finish",
+          "level": "L1",
+          "tick": 6009,
+          "text": "No visible progress for 90.1 s; stopping without advancing the objective",
+          "captures": [
+            "captures/fresh-01-L1-6009-cannot-finish.jpg"
+          ]
+        }
+      ],
+      "phases": [
+        "briefing",
+        "playing"
+      ],
+      "resultPanels": [],
+      "lastPlayer": {
+        "x": -58.073978424072266,
+        "y": 0.8500000238418579,
+        "z": -2.8311758041381836,
+        "yaw": 1.5707963267948966
+      },
+      "lastCorgis": [
+        {
+          "id": 83,
+          "hp": 100,
+          "hidden": false,
+          "state": "follow"
+        }
+      ],
+      "campaignCompletedLevels": 0
+    },
+    {
+      "tag": "fresh-03",
+      "level": "L1",
+      "finished": true,
+      "skipped": [],
+      "driverWallSeconds": 166,
+      "driverSimSeconds": 164,
+      "missionStats": {
+        "time": 163.8,
+        "kills": 0,
+        "knockdowns": 16,
+        "damage": 150,
+        "deaths": 1,
+        "rescued": 1,
+        "optionalObjectives": [],
+        "delivered": true,
+        "infected": 27,
+        "turned": 0,
+        "escaped": 6
+      },
+      "runDeaths": 1,
+      "weaponsStart": [],
+      "weaponsEnd": [
+        "weapon.bat",
+        "weapon.fists"
+      ],
+      "loads": [
+        1723.4000005722046
+      ],
+      "longFrames": [],
+      "errors": [],
+      "issues": [],
+      "phases": [
+        "briefing",
+        "playing",
+        "result",
+        "progression"
+      ],
+      "resultPanels": [
+        "Delivery complete. Outbreak: not contained.\n\nThe fire station shutter holds, for now.\n\nTime (seconds)\n163.8\nKnockdowns\n16\nKills\n0\nDamage taken\n150\nDeaths\n1\nSurvivors out\n1\nOptional objectives\nNone\nDelivery\n✓\nInfected now\n27\nPedestrians turned\n0\nPedestrians escaped\n6\nContinue"
+      ],
+      "lastPlayer": {
+        "x": -76.06656646728516,
+        "y": 1.25,
+        "z": 40.971710205078125,
+        "yaw": 3.9741745622960685
+      },
+      "lastCorgis": [
+        {
+          "id": 83,
+          "hp": 100,
+          "hidden": true,
+          "state": "follow"
+        }
+      ],
+      "campaignCompletedLevels": 1
+    },
+    {
+      "tag": "fresh-04",
+      "level": "L2",
+      "finished": false,
+      "skipped": [],
+      "driverWallSeconds": 591,
+      "driverSimSeconds": 587,
+      "missionStats": {
+        "time": 587.6,
+        "kills": 0,
+        "knockdowns": 6,
+        "damage": 918,
+        "deaths": 9,
+        "rescued": 7,
+        "optionalObjectives": []
+      },
+      "runDeaths": 3,
+      "weaponsStart": [
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.kick"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick"
+      ],
+      "loads": [
+        3965.5
+      ],
+      "longFrames": [],
+      "errors": [],
+      "issues": [],
+      "phases": [
+        "briefing",
+        "playing"
+      ],
+      "resultPanels": [],
+      "lastPlayer": {
+        "x": -26.01860237121582,
+        "y": 0.8500000238418579,
+        "z": -23.72608757019043,
+        "yaw": -1.3700749236222416
+      },
+      "lastCorgis": [
+        {
+          "id": 107,
+          "hp": 100,
+          "hidden": false,
+          "state": "follow"
+        }
+      ],
+      "campaignCompletedLevels": 1
+    },
+    {
+      "tag": "fresh-05",
+      "level": "L2",
+      "finished": false,
+      "skipped": [],
+      "driverWallSeconds": 562,
+      "driverSimSeconds": 137,
+      "missionStats": {
+        "time": 136.93333333333334,
+        "kills": 0,
+        "knockdowns": 4,
+        "damage": 172,
+        "deaths": 1,
+        "rescued": 2,
+        "optionalObjectives": []
+      },
+      "runDeaths": 0,
+      "weaponsStart": [
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.kick"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick"
+      ],
+      "loads": [
+        4383.700000762939
+      ],
+      "longFrames": [],
+      "errors": [],
+      "issues": [],
+      "phases": [
+        "briefing",
+        "playing"
+      ],
+      "resultPanels": [],
+      "lastPlayer": {
+        "x": 5.824688911437988,
+        "y": 0.7049999833106995,
+        "z": -30.170963287353516,
+        "yaw": 1.512994264670722
+      },
+      "lastCorgis": [
+        {
+          "id": 107,
+          "hp": 100,
+          "hidden": false,
+          "state": "follow"
+        }
+      ],
+      "campaignCompletedLevels": 1
+    },
+    {
+      "tag": "fresh-06",
+      "level": "L2",
+      "finished": false,
+      "skipped": [],
+      "driverWallSeconds": 587,
+      "driverSimSeconds": 165,
+      "missionStats": {
+        "time": 164.9,
+        "kills": 0,
+        "knockdowns": 23,
+        "damage": 187.96666666666576,
+        "deaths": 1,
+        "rescued": 7,
+        "optionalObjectives": []
+      },
+      "runDeaths": 0,
+      "weaponsStart": [
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.kick"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick"
+      ],
+      "loads": [
+        4211.89999961853
+      ],
+      "longFrames": [],
+      "errors": [],
+      "issues": [],
+      "phases": [
+        "briefing",
+        "playing"
+      ],
+      "resultPanels": [],
+      "lastPlayer": {
+        "x": 2.3359971046447754,
+        "y": 0.7049999833106995,
+        "z": -16.202226638793945,
+        "yaw": -12.646972418286664
+      },
+      "lastCorgis": [
+        {
+          "id": 107,
+          "hp": 100,
+          "hidden": false,
+          "state": "follow"
+        }
+      ],
+      "campaignCompletedLevels": 1
+    },
+    {
+      "tag": "fresh-07",
+      "level": "L2",
+      "finished": true,
+      "skipped": [],
+      "driverWallSeconds": 397,
+      "driverSimSeconds": 0,
+      "missionStats": {
+        "time": 111.08333333333333,
+        "kills": 0,
+        "knockdowns": 2,
+        "damage": 36,
+        "deaths": 0,
+        "rescued": 7,
+        "optionalObjectives": []
+      },
+      "runDeaths": 0,
+      "weaponsStart": [
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.kick"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "ability.corgi-lure",
+        "weapon.kick"
+      ],
+      "loads": [
+        4267.699999809265
+      ],
+      "longFrames": [],
+      "errors": [],
+      "issues": [],
+      "phases": [
+        "briefing",
+        "playing",
+        "progression"
+      ],
+      "resultPanels": [],
+      "lastPlayer": {
+        "x": 79.82135009765625,
+        "y": 0.7049999833106995,
+        "z": 30.237009048461914,
+        "yaw": -3.1060374069169807
+      },
+      "lastCorgis": [
+        {
+          "id": 107,
+          "hp": 100,
+          "hidden": false,
+          "state": "follow"
+        }
+      ],
+      "campaignCompletedLevels": 2
+    },
+    {
+      "tag": "fresh-09",
+      "level": "L3",
+      "finished": false,
+      "skipped": [],
+      "driverWallSeconds": 528,
+      "driverSimSeconds": 248,
+      "missionStats": {
+        "time": 247.61666666666667,
+        "kills": 0,
+        "knockdowns": 17,
+        "damage": 110,
+        "deaths": 0,
+        "rescued": 1,
+        "optionalObjectives": []
+      },
+      "runDeaths": 0,
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "ability.corgi-lure",
+        "weapon.kick"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "loads": [
+        3200.9000005722046
+      ],
+      "longFrames": [
+        {
+          "at": 267227.6,
+          "level": "L3",
+          "tick": 7620,
+          "phase": "playing",
+          "loading": false,
+          "x": -85.03871154785156,
+          "z": 6.594399929046631,
+          "ms": 266.69999999995343,
+          "playMs": 266.69999999995343
+        }
+      ],
+      "errors": [],
+      "issues": [
+        {
+          "kind": "stuck-navigating",
+          "level": "L3",
+          "tick": 5258,
+          "text": "35 s without objective progress (distance 304.0 m, no marker: false); HUD: \"Get inside the army checkpoint · 304 m\"",
+          "captures": [
+            "captures/fresh-09-L3-5258-stuck-navigating.jpg"
+          ]
+        }
+      ],
+      "phases": [
+        "briefing",
+        "playing"
+      ],
+      "resultPanels": [],
+      "lastPlayer": {
+        "x": 30.707693099975586,
+        "y": 0.7070000171661377,
+        "z": -27.96412467956543,
+        "yaw": -7.850462293418876e-17
+      },
+      "lastCorgis": [
+        {
+          "id": 23,
+          "hp": 100,
+          "hidden": false,
+          "state": "follow"
+        }
+      ],
+      "campaignCompletedLevels": 2
+    },
+    {
+      "tag": "fresh-10",
+      "level": "L3",
+      "finished": false,
+      "skipped": [],
+      "driverWallSeconds": 521,
+      "driverSimSeconds": 320,
+      "missionStats": {
+        "time": 319.8833333333333,
+        "kills": 0,
+        "knockdowns": 39,
+        "damage": 299,
+        "deaths": 2,
+        "rescued": 3,
+        "optionalObjectives": []
+      },
+      "runDeaths": 2,
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "ability.corgi-lure",
+        "weapon.kick"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "loads": [
+        3325.3999996185303
+      ],
+      "longFrames": [],
+      "errors": [],
+      "issues": [],
+      "phases": [
+        "briefing",
+        "playing"
+      ],
+      "resultPanels": [],
+      "lastPlayer": {
+        "x": 179.0216827392578,
+        "y": 0.7200000286102295,
+        "z": -11.463388442993164,
+        "yaw": 15.712477328070129
+      },
+      "lastCorgis": [
+        {
+          "id": 23,
+          "hp": 100,
+          "hidden": false,
+          "state": "follow"
+        }
+      ],
+      "campaignCompletedLevels": 2
+    },
+    {
+      "tag": "fresh-11",
+      "level": "L3",
+      "finished": false,
+      "skipped": [],
+      "driverWallSeconds": 520,
+      "driverSimSeconds": 304,
+      "missionStats": {
+        "time": 304.3833333333333,
+        "kills": 0,
+        "knockdowns": 55,
+        "damage": 122,
+        "deaths": 1,
+        "rescued": 3,
+        "optionalObjectives": []
+      },
+      "runDeaths": 0,
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "ability.corgi-lure",
+        "weapon.kick"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "loads": [
+        3266.199999809265
+      ],
+      "longFrames": [],
+      "errors": [],
+      "issues": [],
+      "phases": [
+        "briefing",
+        "playing"
+      ],
+      "resultPanels": [],
+      "lastPlayer": {
+        "x": 97.48707580566406,
+        "y": 0.8500000238418579,
+        "z": 24.43846893310547,
+        "yaw": -3.122306027480999
+      },
+      "lastCorgis": [
+        {
+          "id": 23,
+          "hp": 100,
+          "hidden": false,
+          "state": "follow"
+        }
+      ],
+      "campaignCompletedLevels": 2
+    },
+    {
+      "tag": "fresh-12-L3-FAIL-permitted-continuation",
+      "level": "L3",
+      "finished": true,
+      "skipped": [
+        "checkpoint"
+      ],
+      "driverWallSeconds": -174,
+      "driverSimSeconds": 0,
+      "missionStats": {
+        "time": 62.53333333333333,
+        "kills": 0,
+        "knockdowns": 13,
+        "damage": 0,
+        "deaths": 0,
+        "rescued": 1,
+        "optionalObjectives": []
+      },
+      "runDeaths": 0,
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "ability.corgi-lure",
+        "weapon.kick"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "loads": [
+        3235.5999994277954
+      ],
+      "longFrames": [
+        {
+          "at": 34287.2,
+          "level": "L3",
+          "tick": 1743,
+          "phase": "playing",
+          "loading": false,
+          "x": -131.40000915527344,
+          "z": -8.839437484741211,
+          "ms": 333.29999999999563,
+          "playMs": 333.29999999999563
+        }
+      ],
+      "errors": [],
+      "issues": [
+        {
+          "kind": "cannot-finish",
+          "level": "L3",
+          "tick": 3449,
+          "text": "Driver could not finish step checkpoint (\"Get inside the army checkpoint · 313 m\") after 0 s on it (1 min level cap: true); skipping it with the debug objective cheat",
+          "captures": [
+            "captures/fresh-12-L3-FAIL-permitted-continuation-L3-3449-cannot-finish.jpg"
+          ]
+        }
+      ],
+      "phases": [
+        "briefing",
+        "playing",
+        "progression"
+      ],
+      "resultPanels": [],
+      "lastPlayer": {
+        "x": -85.4898681640625,
+        "y": 0.8500000238418579,
+        "z": -2.7155089378356934,
+        "yaw": -0.013013950000704764
+      },
+      "lastCorgis": [
+        {
+          "id": 23,
+          "hp": 100,
+          "hidden": false,
+          "state": "follow"
+        }
+      ],
+      "campaignCompletedLevels": 3
+    },
+    {
+      "tag": "fresh-13",
+      "level": "L4",
+      "finished": false,
+      "skipped": [],
+      "driverWallSeconds": 450,
+      "driverSimSeconds": 415,
+      "missionStats": {
+        "time": 416.95,
+        "kills": 0,
+        "knockdowns": 76,
+        "damage": 99.1,
+        "deaths": 0,
+        "rescued": 22,
+        "optionalObjectives": []
+      },
+      "runDeaths": 0,
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "loads": [
+        6253.800000190735
+      ],
+      "longFrames": [],
+      "errors": [],
+      "issues": [
+        {
+          "kind": "stuck-navigating",
+          "level": "L4",
+          "tick": 16393,
+          "text": "20 s without objective progress (distance 325.0 m, no marker: false); HUD: \"Run to the cellar via Lakeshore, Metro Road and Harbor Street · 325 m\"",
+          "captures": [
+            "captures/fresh-13-L4-16393-stuck-navigating.jpg"
+          ]
+        },
+        {
+          "kind": "cannot-finish",
+          "level": "L4",
+          "tick": 24879,
+          "text": "No visible progress for 93.0 s; stopping without advancing the objective",
+          "captures": [
+            "captures/fresh-13-L4-24879-cannot-finish.jpg"
+          ]
+        }
+      ],
+      "phases": [
+        "briefing",
+        "playing",
+        "cinematic"
+      ],
+      "resultPanels": [],
+      "lastPlayer": {
+        "x": 2.461552858352661,
+        "y": 0.8274343013763428,
+        "z": 26.339662551879883,
+        "yaw": -0.7853981633974484
+      },
+      "lastCorgis": [
+        {
+          "id": 29,
+          "hp": 100,
+          "hidden": false,
+          "state": "follow"
+        }
+      ],
+      "campaignCompletedLevels": 3
+    }
+  ]
+}
