@@ -68,12 +68,24 @@ export class CorpseLayout {
     const safePlayer = (p: RestingPose) => !player || pointDistance(player.x, player.z, p.ax, p.az, p.bx, p.bz) >= .95;
     if (previous?.deadAt === deadAt && previous.sourceX === e.transform.x && previous.sourceZ === e.transform.z && safePlayer(previous)) return previous;
     const feet = e.transform.y - .7, support = this.world.districts, nav = this.world.infected?.nav;
-    if (e.corpseThrown && feet > (support?.supportBelow(e.transform.x, e.transform.z, feet) ?? 0) + .15) return { ...e.transform, y: feet };
+    const cars = this.world.vehicles?.cars;
+    const vehicleClear = (x: number, z: number, padding = .65) => {
+      if (!cars) return true;
+      for (const car of cars.values()) {
+        const p = car.entity.transform, def = car.physics.def, dx = x - p.x, dz = z - p.z;
+        const along = dx * Math.cos(p.yaw) - dz * Math.sin(p.yaw), across = dx * Math.sin(p.yaw) + dz * Math.cos(p.yaw);
+        if (Math.abs(along) < def.length / 2 + padding && Math.abs(across) < def.width / 2 + padding) return false;
+      }
+      return true;
+    };
+    const startsOnVehicle = !vehicleClear(e.transform.x, e.transform.z, 0);
+    if (e.corpseThrown && !startsOnVehicle && feet > (support?.supportBelow(e.transform.x, e.transform.z, feet) ?? 0) + .15) return { ...e.transform, y: feet };
     const initialYaw = e.transform.yaw + corpseYaw(e.id), direction = prone === undefined ? 1 : -1;
     const length = prone ?? 1.25, radius = prone === undefined ? .6 : .8, height = prone === undefined ? .22 : .32;
     const pose: RestingPose = { x: e.transform.x, y: feet, z: e.transform.z, yaw: initialYaw, sourceX: e.transform.x, sourceZ: e.transform.z, deadAt,
       ax: 0, az: 0, bx: 0, bz: 0, radius, height, body: e };
     const evaluate = (x: number, z: number, yaw: number, supported = true): RestingPose | undefined => {
+      if (!vehicleClear(x, z)) return;
       if (nav) {
         const swept = { x: e.transform.x, z: e.transform.z };
         nav.move(swept, x - swept.x, z - swept.z, Math.min(.3, e.combat?.radius ?? .3));
@@ -106,7 +118,7 @@ export class CorpseLayout {
     // First prefer an unoccupied footprint, nearest to the death position.
     // Combat bodies stay within 1 m. Once the L10 fight ends, use the surrounding
     // floor (up to 4 m) so the final collapsed crowd reads as individual people.
-    for (let ring = 0; ring <= (epilogue ? 10 : 5); ring++) {
+    for (let ring = 0; ring <= (epilogue ? 10 : startsOnVehicle ? 30 : 5); ring++) {
       const distance = ring * (epilogue ? .4 : .2), samples = ring ? Math.max(16, Math.min(48, ring * 8)) : 1;
       for (let i = 0; i < samples; i++) {
         const angle = initialYaw + i * Math.PI * 2 / samples, x = e.transform.x + Math.cos(angle) * distance, z = e.transform.z + Math.sin(angle) * distance;
