@@ -1,0 +1,67 @@
+[
+  {
+    "level": "L5",
+    "entry": "continue",
+    "heroine": "female",
+    "finished": false,
+    "skipped": [],
+    "wallSeconds": 520,
+    "simSeconds": 183,
+    "maxNoProgressSeconds": 80.581,
+    "deaths": 0,
+    "assists": 0,
+    "attacks": {
+      "weapon.army-mg": 8
+    },
+    "weaponsStart": [
+      "weapon.fire-axe",
+      "weapon.bat",
+      "weapon.kick",
+      "weapon.army-mg",
+      "weapon.handgun",
+      "ability.corgi-lure"
+    ],
+    "weaponsEnd": [
+      "weapon.fire-axe",
+      "weapon.bat",
+      "weapon.kick",
+      "weapon.army-mg",
+      "weapon.handgun",
+      "ability.corgi-lure"
+    ],
+    "steps": [
+      {
+        "id": "emerge",
+        "text": "Unbar the cellar door · 4 m",
+        "tick": 12,
+        "marker": {
+          "anchor": "l5-brace",
+          "ring": {
+            "x": 74.6,
+            "y": 0.7049999833106995,
+            "z": -1.4
+          },
+          "drawn": [
+            74.6,
+            0.05,
+            -1.4
+          ],
+          "playerY": 0.7049999833106995,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "look",
+        "text": "Look for anyone still alive",
+        "tick": 804,
+        "marker": {
+          "anchor": "l5-brace",
+          "ring": null,
+          "drawn": null,
+          "playerY": 0.8500000238418579,
+          "pinVisible": false
+        }
+      }
+    ]
+  }
+]

@@ -933,6 +933,198 @@
         }
       ],
       "campaignCompletedLevels": 4
+    },
+    {
+      "tag": "fresh-17",
+      "level": "L5",
+      "finished": false,
+      "skipped": [],
+      "driverWallSeconds": 520,
+      "driverSimSeconds": 215,
+      "missionStats": {
+        "time": 215.33333333333334,
+        "kills": 0,
+        "knockdowns": 0,
+        "damage": 0,
+        "deaths": 0,
+        "rescued": 0,
+        "optionalObjectives": []
+      },
+      "runDeaths": 0,
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "loads": [
+        6433.10000038147
+      ],
+      "longFrames": [
+        {
+          "at": 191233.7,
+          "level": "L5",
+          "tick": 7834,
+          "phase": "playing",
+          "loading": false,
+          "x": -80.14292907714844,
+          "z": -57.799034118652344,
+          "ms": 283.4000000000233,
+          "playMs": 283.4000000000233
+        },
+        {
+          "at": 408191.6,
+          "level": "L5",
+          "tick": 11785,
+          "phase": "playing",
+          "loading": false,
+          "x": -36.14348220825195,
+          "z": -56.25688934326172,
+          "ms": 316.69999999995343,
+          "playMs": 316.69999999995343
+        },
+        {
+          "at": 426390.9,
+          "level": "L5",
+          "tick": 11785,
+          "phase": "playing",
+          "loading": false,
+          "x": -36.14348220825195,
+          "z": -56.25688934326172,
+          "ms": 250,
+          "playMs": 250
+        }
+      ],
+      "errors": [],
+      "issues": [
+        {
+          "kind": "stuck-navigating",
+          "level": "L5",
+          "tick": 2030,
+          "text": "20 s without objective progress (distance 55.0 m, no marker: true); HUD: \"Look for anyone still alive · Survivors found 0/5 · Search the apartment stairwell above Harbor Street · 55 m\"",
+          "captures": [
+            "captures/fresh-17-L5-2030-stuck-navigating.jpg"
+          ]
+        },
+        {
+          "kind": "stuck-navigating",
+          "level": "L5",
+          "tick": 7812,
+          "text": "20 s without objective progress (distance 73.0 m, no marker: true); HUD: \"Look for anyone still alive · Survivors found 1/5 · Search the church vestry · 73 m\"",
+          "captures": [
+            "captures/fresh-17-L5-7812-stuck-navigating.jpg"
+          ]
+        }
+      ],
+      "phases": [
+        "briefing",
+        "playing"
+      ],
+      "resultPanels": [],
+      "lastPlayer": {
+        "x": -4.786016941070557,
+        "y": 1.0619370937347412,
+        "z": -55.53477096557617,
+        "yaw": 4.71238898038469
+      },
+      "lastCorgis": [
+        {
+          "id": 18,
+          "hp": 100,
+          "hidden": false,
+          "state": "follow"
+        }
+      ],
+      "campaignCompletedLevels": 4
+    },
+    {
+      "tag": "fresh-18",
+      "level": "L5",
+      "finished": false,
+      "skipped": [],
+      "driverWallSeconds": 520,
+      "driverSimSeconds": 183,
+      "missionStats": {
+        "time": 182.9,
+        "kills": 0,
+        "knockdowns": 2,
+        "damage": 25,
+        "deaths": 0,
+        "rescued": 0,
+        "optionalObjectives": []
+      },
+      "runDeaths": 0,
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "loads": [
+        5883
+      ],
+      "longFrames": [],
+      "errors": [],
+      "issues": [
+        {
+          "kind": "stuck-navigating",
+          "level": "L5",
+          "tick": 2032,
+          "text": "20 s without objective progress (distance 54.0 m, no marker: true); HUD: \"Look for anyone still alive · Survivors found 0/5 · Search the apartment stairwell above Harbor Street · 54 m\"",
+          "captures": [
+            "captures/fresh-18-L5-2032-stuck-navigating.jpg"
+          ]
+        },
+        {
+          "kind": "stuck-navigating",
+          "level": "L5",
+          "tick": 10889,
+          "text": "20 s without objective progress (distance 19.0 m, no marker: true); HUD: \"Look for anyone still alive · Survivors found 3/5 · Search a wrecked bus on Lakeshore Avenue · 19 m\"",
+          "captures": [
+            "captures/fresh-18-L5-10889-stuck-navigating.jpg"
+          ]
+        }
+      ],
+      "phases": [
+        "briefing",
+        "playing"
+      ],
+      "resultPanels": [],
+      "lastPlayer": {
+        "x": -7.75402307510376,
+        "y": 0.7200000286102295,
+        "z": 12.489171028137207,
+        "yaw": -2.321201676047301
+      },
+      "lastCorgis": [
+        {
+          "id": 18,
+          "hp": 100,
+          "hidden": false,
+          "state": "follow"
+        }
+      ],
+      "campaignCompletedLevels": 4
     }
   ]
 }

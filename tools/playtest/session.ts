@@ -531,11 +531,18 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       }
       const control = process.env.PLAYTEST_CONTROL_FILE;
       if (control && existsSync(control)) {
-        let command: { manual?: boolean; key?: string; keys?: string[]; click?: [number, number]; ms?: number; button?: string; capture?: string; resume?: boolean; combat?: boolean; pauseAfter?: boolean };
+        let command: { manual?: boolean; key?: string; keys?: string[]; click?: [number, number]; ms?: number; button?: string; capture?: string; resume?: boolean; combat?: boolean; pauseAfter?: boolean; skipObjective?: string };
         try { command = JSON.parse(readFileSync(control, 'utf8')); }
         catch { await hold(50); continue; }
         unlinkSync(control); await press([]); await releaseAim();
         if (command.manual !== undefined) manual = command.manual;
+        if (command.skipObjective) {
+          if (o.noSkip || !run || e.phase !== 'playing' || e.step !== command.skipObjective) throw new Error('Explicit continuation skip requires a matching playing objective and noSkip=false');
+          await issue('P0', 'permitted-debug-continuation', `FAIL: explicitly permitted continuation of ${e.step} after the recorded real-input attempts; not a gameplay completion`);
+          run.skipped.push(e.step); run.assists++;
+          assist('skip-step', { step: e.step, reason: 'user-permitted continuation after recorded failure' });
+          await page.evaluate(id => window.__SS__!.cheats.completeObjective(id), e.step);
+        }
         if (command.resume && await page.getByTestId('resume-game').isVisible()) {
           await page.getByTestId('resume-game').click();
           // Re-establish a physical gameplay pointer after the menu click.

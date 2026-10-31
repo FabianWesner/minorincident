@@ -14,6 +14,7 @@ export interface Eyes {
   objective: string; tracker: string; distance: number | null;
   marker: { visible: boolean; offscreen: boolean; x: number; y: number; anchor: string | null; guidance?: string } | null;
   route: { dx: number; dz: number } | null;
+  cue?: { x: number; z: number; text: string } | null;
   panel: { visible: boolean; heading: string; button: string | null };
   menu: string | null; loading: boolean; prompt: string; subtitle: string;
   player: { x: number; y: number; z: number; hp: number; max: number; riding: boolean; weapons: string[]; emptyWeapons?: string[]; current: string | null } | null;
@@ -71,6 +72,7 @@ export function look(): Eyes {
   const ringPrompt = shown(q('interaction-ring')) ? q('interaction-ring')!.textContent ?? 'ring' : '';
   const trackerPrompt = shown(objective) ? objective!.textContent ?? '' : shown(tracker) ? tracker!.textContent ?? '' : '';
   const markerEl = q('mission-marker');
+  const cue = q('minimap-cue');
   const hudRoute = q('minimap-route');
   const route = shown(hudRoute) ? hudRoute : q('mission-route-pin');
   const panel = q('mission-panel'), button = q<HTMLButtonElement>('mission-button');
@@ -133,6 +135,7 @@ export function look(): Eyes {
     distance: shown(tracker) && tracker?.dataset.distance ? Number(tracker.dataset.distance) : distanceText ? Number(distanceText[1]) : null,
     marker: markerEl && Number.isFinite(left) ? { visible: shown(markerEl), offscreen: markerEl.dataset.offscreen === 'true', x: left, y: top, anchor: markerEl.dataset.anchor ?? null, guidance: markerEl.dataset.guidance } : null,
     route: shown(route) ? { dx: (parseFloat(route!.style.left) - 50) * (route === hudRoute ? 30 / 44 : 100 / 40), dz: (parseFloat(route!.style.top) - 50) * (route === hudRoute ? 30 / 44 : 100 / 40) } : null,
+    cue: shown(cue) && Number.isFinite(Number(cue!.dataset.worldX)) && Number.isFinite(Number(cue!.dataset.worldZ)) ? { x: Number(cue!.dataset.worldX), z: Number(cue!.dataset.worldZ), text: cue!.getAttribute('aria-label') ?? '' } : null,
     panel: { visible: shown(panel), heading: q('mission-heading')?.textContent ?? '', button: button && shown(button) ? button.textContent : null },
     menu, loading: shown(q('menu-loading')) || !!q('level-transition') && !q('level-transition')!.hidden,
     prompt: ringPrompt || (trackerPrompt.includes('Press E or tap the console action') ? trackerPrompt : ''),
