@@ -67,7 +67,8 @@ export class CorpseLayout {
     const player = this.world.entities.get(1)?.transform, previous = this.bodies.get(e.id);
     const safePlayer = (p: RestingPose) => !player || pointDistance(player.x, player.z, p.ax, p.az, p.bx, p.bz) >= .95;
     if (previous?.deadAt === deadAt && previous.sourceX === e.transform.x && previous.sourceZ === e.transform.z && safePlayer(previous)) return previous;
-    const feet = e.transform.y - .7, support = this.world.districts, nav = this.world.infected?.nav;
+    let feet = e.transform.y - .7;
+    const support = this.world.districts, nav = this.world.infected?.nav;
     const cars = this.world.vehicles?.cars;
     const vehicleClear = (x: number, z: number, padding = .65) => {
       if (!cars) return true;
@@ -79,6 +80,7 @@ export class CorpseLayout {
       return true;
     };
     const startsOnVehicle = !vehicleClear(e.transform.x, e.transform.z, 0);
+    if (startsOnVehicle) feet = support?.supportBelow(e.transform.x, e.transform.z, feet) ?? 0;
     if (e.corpseThrown && !startsOnVehicle && feet > (support?.supportBelow(e.transform.x, e.transform.z, feet) ?? 0) + .15) return { ...e.transform, y: feet };
     const initialYaw = e.transform.yaw + corpseYaw(e.id), direction = prone === undefined ? 1 : -1;
     const length = prone ?? 1.25, radius = prone === undefined ? .6 : .8, height = prone === undefined ? .22 : .32;
@@ -86,13 +88,15 @@ export class CorpseLayout {
       ax: 0, az: 0, bx: 0, bz: 0, radius, height, body: e };
     const evaluate = (x: number, z: number, yaw: number, supported = true): RestingPose | undefined => {
       if (!vehicleClear(x, z)) return;
-      if (nav) {
+      // A body falling off a hull does not need a walkable route from its roof.
+      if (nav && !startsOnVehicle) {
         const swept = { x: e.transform.x, z: e.transform.z };
         nav.move(swept, x - swept.x, z - swept.z, Math.min(.3, e.combat?.radius ?? .3));
         if (Math.hypot(swept.x - x, swept.z - z) > .01) return;
       }
       const dx = -Math.cos(yaw) * direction, dz = Math.sin(yaw) * direction;
       Object.assign(pose, { x, z, yaw, ax: x - dx * .15, az: z - dz * .15, bx: x + dx * length, bz: z + dz * length });
+      if (!vehicleClear(pose.ax, pose.az, radius) || !vehicleClear(pose.bx, pose.bz, radius)) return;
       if (!safePlayer(pose)) return;
       pose.y = support?.supportBelow(x, z, feet) ?? feet;
       if (supported) for (const t of [0, .5, 1]) {
