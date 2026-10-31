@@ -5,7 +5,7 @@
  * Usage: tsx tools/perf/cold-load-time.ts <origin> <webgpu|webgl2> <low|high> [runs=20] [level=L1] [menuWait=0]
  */
 import { launchBrowser } from '../browser-pool/client';
-import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import assert from 'node:assert/strict';
 import { gzipSync } from 'node:zlib';
@@ -178,7 +178,7 @@ for (let run = 0; run < Number(count); run++) {
   } finally {
     // Finish releasing the pool lease before a fresh sample changes launch flags.
     try { for (const context of browser.contexts()) await context.close(); }
-    finally { await browser.close(); }
+    finally { try { await browser.close(); } finally { if (diskCache) rmSync(diskCache, { recursive: true, force: true }); } }
   }
 }
 const sorted = results.map(result => result.ms as number).sort((a, b) => a - b);
