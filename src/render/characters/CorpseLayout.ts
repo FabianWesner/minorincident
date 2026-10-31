@@ -1,6 +1,8 @@
 import { SpatialHash } from '../../sim/spatial/SpatialHash';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import type { EntitySnapshot } from '../../sim/world/types';
+import { staticCollision } from '../../assets/staticCollision';
+import type { Aabb } from '../../levels/districts/types';
 
 export const corpsePoses = ['death-back', 'death-side', 'death-crumple'] as const;
 export const corpsePose = (id: number) => corpsePoses[Math.abs(Math.imul(id ^ (id >>> 16), 0x45d9f3b)) % corpsePoses.length];
@@ -9,6 +11,7 @@ interface RestingPose {
   x: number; y: number; z: number; yaw: number; sourceX: number; sourceZ: number; deadAt: number;
   ax: number; az: number; bx: number; bz: number; radius: number; height: number; body: EntitySnapshot;
 }
+interface VehicleFootprint { x: number; z: number; c: number; s: number; sx: number; sz: number; floor: number; boxes: readonly Aabb[] }
 const layouts = new WeakMap<SimWorld, CorpseLayout>();
 /** Native and pedestrian-look bodies share one layout, without movement colliders. */
 export function corpseLayout(world: SimWorld): CorpseLayout {
@@ -38,6 +41,9 @@ export class CorpseLayout {
   private readonly query = { x: 0, z: 0, r: 5 };
   private revision = -1;
   private epilogue = false;
+  private readonly scriptedVehicles: EntitySnapshot[] = [];
+  private vehicleDistrict: SimWorld['districts'] | undefined;
+  private readonly parkedVehicles: VehicleFootprint[] = [];
   constructor(private readonly world: SimWorld) {}
   audit() {
     const bodies = [...this.bodies.values()], player = this.world.entities.get(1)?.transform;
@@ -63,24 +69,58 @@ export class CorpseLayout {
     if (this.revision !== this.world.entities.revision) {
       for (const [id, pose] of this.bodies) if (this.world.entities.get(id) !== pose.body || pose.body.health.current > 0 || pose.body.hidden) { this.bodies.delete(id); this.spatial.delete(id); }
       this.revision = this.world.entities.revision;
+      this.scriptedVehicles.length = 0;
+      for (const entity of this.world.entities.iterate()) if ((entity.kind === 'setpiece' || entity.traffic || entity.convoy) && entity.archetype.startsWith('veh.') && staticCollision[entity.archetype]) this.scriptedVehicles.push(entity);
     }
     const player = this.world.entities.get(1)?.transform, previous = this.bodies.get(e.id);
     const safePlayer = (p: RestingPose) => !player || pointDistance(player.x, player.z, p.ax, p.az, p.bx, p.bz) >= .95;
     if (previous?.deadAt === deadAt && previous.sourceX === e.transform.x && previous.sourceZ === e.transform.z && safePlayer(previous)) return previous;
-    const feet = e.transform.y - .7, support = this.world.districts, nav = this.world.infected?.nav;
-    if (e.corpseThrown && feet > (support?.supportBelow(e.transform.x, e.transform.z, feet) ?? 0) + .15) return { ...e.transform, y: feet };
+    let feet = e.transform.y - .7;
+    const support = this.world.districts, nav = this.world.infected?.nav;
+    if (this.vehicleDistrict !== support) {
+      this.vehicleDistrict = support; this.parkedVehicles.length = 0;
+      for (const district of support?.districts ?? []) for (const p of district.decay.placements) {
+        const shape = p.assetId.startsWith('veh.') && staticCollision[p.assetId]; if (!shape) continue;
+        this.parkedVehicles.push({ x: p.position[0] + district.origin[0], z: p.position[2] + district.origin[1], c: Math.cos(p.yaw), s: Math.sin(p.yaw), sx: p.scale[0] || 1, sz: p.scale[2] || 1, floor: p.position[1], boxes: shape.boxes });
+      }
+    }
+    const hulls = [...this.parkedVehicles];
+    for (const entity of this.scriptedVehicles) if (!entity.hidden) {
+      const p = entity.transform;
+      hulls.push({ x: p.x, z: p.z, c: Math.cos(p.yaw), s: Math.sin(p.yaw), sx: 1, sz: 1, floor: p.y - (entity.traffic || entity.convoy ? .5 : .7), boxes: staticCollision[entity.archetype].boxes });
+    }
+    for (const car of this.world.vehicles?.cars.values() ?? []) {
+      const p = car.entity.transform, def = car.physics.def;
+      hulls.push({ x: p.x, z: p.z, c: Math.cos(p.yaw), s: Math.sin(p.yaw), sx: 1, sz: 1, floor: p.y - .7, boxes: [{ min: [-def.length / 2, 0, -def.width / 2], max: [def.length / 2, 0, def.width / 2] }] });
+    }
+    const sourceFeet = feet;
+    const vehicleFloor = (x: number, z: number, padding = .65): number | undefined => {
+      for (const h of hulls) {
+        if (h.floor > sourceFeet + .6) continue;
+        const dx = x - h.x, dz = z - h.z, along = (dx * h.c - dz * h.s) / h.sx, across = (dx * h.s + dz * h.c) / h.sz;
+        for (const b of h.boxes) if (along > b.min[0] - padding / Math.abs(h.sx) && along < b.max[0] + padding / Math.abs(h.sx) && across > b.min[2] - padding / Math.abs(h.sz) && across < b.max[2] + padding / Math.abs(h.sz)) return h.floor;
+      }
+      return undefined;
+    };
+    const vehicleClear = (x: number, z: number, padding = .65) => vehicleFloor(x, z, padding) === undefined;
+    const floor = vehicleFloor(e.transform.x, e.transform.z, 0), startsOnVehicle = floor !== undefined;
+    if (startsOnVehicle) feet = support?.supportBelow(e.transform.x, e.transform.z, floor) ?? floor;
+    if (e.corpseThrown && !startsOnVehicle && feet > (support?.supportBelow(e.transform.x, e.transform.z, feet) ?? 0) + .15) return { ...e.transform, y: feet };
     const initialYaw = e.transform.yaw + corpseYaw(e.id), direction = prone === undefined ? 1 : -1;
     const length = prone ?? 1.25, radius = prone === undefined ? .6 : .8, height = prone === undefined ? .22 : .32;
     const pose: RestingPose = { x: e.transform.x, y: feet, z: e.transform.z, yaw: initialYaw, sourceX: e.transform.x, sourceZ: e.transform.z, deadAt,
       ax: 0, az: 0, bx: 0, bz: 0, radius, height, body: e };
     const evaluate = (x: number, z: number, yaw: number, supported = true): RestingPose | undefined => {
-      if (nav) {
+      if (!vehicleClear(x, z)) return;
+      // A body falling off a hull does not need a walkable route from its roof.
+      if (nav && !startsOnVehicle) {
         const swept = { x: e.transform.x, z: e.transform.z };
         nav.move(swept, x - swept.x, z - swept.z, Math.min(.3, e.combat?.radius ?? .3));
         if (Math.hypot(swept.x - x, swept.z - z) > .01) return;
       }
       const dx = -Math.cos(yaw) * direction, dz = Math.sin(yaw) * direction;
       Object.assign(pose, { x, z, yaw, ax: x - dx * .15, az: z - dz * .15, bx: x + dx * length, bz: z + dz * length });
+      if (!vehicleClear(pose.ax, pose.az, radius) || !vehicleClear(pose.bx, pose.bz, radius)) return;
       if (!safePlayer(pose)) return;
       pose.y = support?.supportBelow(x, z, feet) ?? feet;
       if (supported) for (const t of [0, .5, 1]) {
@@ -106,7 +146,7 @@ export class CorpseLayout {
     // First prefer an unoccupied footprint, nearest to the death position.
     // Combat bodies stay within 1 m. Once the L10 fight ends, use the surrounding
     // floor (up to 4 m) so the final collapsed crowd reads as individual people.
-    for (let ring = 0; ring <= (epilogue ? 10 : 5); ring++) {
+    for (let ring = 0; ring <= (epilogue ? 10 : startsOnVehicle ? 30 : 5); ring++) {
       const distance = ring * (epilogue ? .4 : .2), samples = ring ? Math.max(16, Math.min(48, ring * 8)) : 1;
       for (let i = 0; i < samples; i++) {
         const angle = initialYaw + i * Math.PI * 2 / samples, x = e.transform.x + Math.cos(angle) * distance, z = e.transform.z + Math.sin(angle) * distance;

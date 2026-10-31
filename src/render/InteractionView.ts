@@ -384,7 +384,9 @@ export class InteractionView extends Group {
     const serviceGate = selected?.archetype === 'l6.service-gate' && this.world.missions?.state.l6?.gates.find(g=>g.id===selected!.id);
     const stand = serviceGate && !serviceGate.closedAt ? LevelSixSubway.gateWait(serviceGate.x) : selected?.transform;
     const inRange = !!selected && !!player && !!stand && Math.hypot(stand.x-player.transform.x,stand.z-player.transform.z) <= (serviceGate ? 1.7 : selected.interactable!.radius);
-    this.ring.visible = !!ringTarget;
+    // The shelter's headlamp already has a pickup marker. Its large, always-on-top
+    // interaction ring crossed the courier's head and read as a white cutaway rim.
+    this.ring.visible = !!ringTarget && ringTarget.archetype !== 'pickup.headlamp';
     this.panel.hidden = !inRange;
     if (ringTarget) {
       const c = ringTarget.interactable!;

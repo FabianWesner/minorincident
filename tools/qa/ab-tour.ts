@@ -52,14 +52,14 @@ export const tour: TourStop[] = [
 ];
 
 /** Runs in the snapshot's own test harness. Only campaign APIs and ordinary bot inputs move actors. */
-export async function prepareStop({ stop, seed, save, zoom, driveRoute, walkRoute }: { stop:TourStop; seed:number; save:CampaignSave|null; zoom:number; driveRoute?:readonly (readonly number[])[]; walkRoute?:readonly (readonly number[])[] }) {
+export async function prepareStop({ stop, seed, save, zoom, driveRoute, walkRoute, tier = 'low' }: { stop:TourStop; seed:number; save:CampaignSave|null; zoom:number; driveRoute?:readonly (readonly number[])[]; walkRoute?:readonly (readonly number[])[]; tier?: 'low' | 'high' }) {
   const a=window.__SS__!, g=(window.__SCENE__ as unknown as {game:Game}).game;
   await a.ready; a.pause();
   if(save) a.campaign.restore(save);
   if(stop.checkpoint) await a.unloadScenario();
   await a.loadLevel(stop.level,{seed,...(stop.checkpoint?{checkpoint:stop.checkpoint}:{})}); a.pause();
   a.missions.begin();
-  a.cheats.god(true); a.settings.set({quality:'low',cameraShake:false,cheapDof:false,vfx:false});
+  a.cheats.god(true); a.settings.set({quality:tier,cameraShake:false,cheapDof:false,vfx:false});
   a.debug.figureJoints(false); g.ui.show(null);
   const rig=g.view.view;rig.inspectionPose=null;rig.follow();rig.zoom(Math.log(zoom/rig.getState().targetZoom),true);
   const seek=async(predicate:()=>boolean,maxTicks=18000)=>{

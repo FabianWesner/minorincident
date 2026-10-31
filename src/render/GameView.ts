@@ -992,7 +992,10 @@ export class GameView implements Lifecycle {
     let subject: Box3 | undefined;
     // Q-241: the whole L6 metro reveals with the clean cut (was the retreat only) and keeps its track rails whole.
     const metro = this.world.scenario === 'L6' || !!this.world.districts?.composition.districts.some(d => d.id === 'D-SUBWAY');
-    seeThrough.solidSilhouette.value = metro ? 1 : 0;
+    const l6Shelter = metro && !!current && current.x < 30;
+    // Keep the tunnel's clean rail cut, but let the shelter use the ordinary
+    // noise feather so the courier reveal has no hard elliptical edge.
+    seeThrough.solidSilhouette.value = metro && !l6Shelter ? 1 : 0;
     seeThrough.keepBand.value = metro ? .42 : .22;
     if (current) {
       const feet = current.y - .7;
@@ -1002,6 +1005,17 @@ export class GameView implements Lifecycle {
       const inVehicle = !!(this.vehicles?.playerBounds(this.revealVehicle) || this.entityAssets?.playerBounds(this.revealVehicle));
       if (inVehicle) this.revealSubject.union(this.revealVehicle);
       seeThrough.retain.value = inVehicle || this.revealSubject.max.x - this.revealSubject.min.x > 2 || this.revealSubject.max.z - this.revealSubject.min.z > 2 ? .35 : 0;
+      // The final L5 building can cover the Metro stairs and ring even when the
+      // courier herself is visible. Reveal that nearby objective through the
+      // existing occluder cut; the camera and the frozen encounter stay put.
+      if (this.world.scenario === 'L5') {
+        const mission = this.world.missions, step = mission?.def.steps.find(item => item.id === 'metro' && mission.state.steps[item.id]?.status === 'active');
+        const anchor = step && mission?.def.anchors[step.anchor];
+        if (anchor && Math.hypot(anchor.x - current.x, anchor.z - current.z) <= 35) {
+          this.revealPet.min.set(anchor.x - 2, 0, anchor.z - 2); this.revealPet.max.set(anchor.x + 2, 3.2, anchor.z + 2);
+          this.revealSubject.union(this.revealPet);
+        }
+      }
       // PO #45: the see-through disc must clear the corgi next to her too, else its tail dissolves into occluder dots.
       let pet = this.companionId >= 0 ? this.world.entities.get(this.companionId) : undefined;
       if (!pet?.companion) { pet = undefined; if (this.companionSearch++ % 60 === 0) for (const e of this.world.entities.iterate()) if (e.companion) { pet = e; this.companionId = e.id; break; } }

@@ -332,7 +332,7 @@ export class LevelThreeCollapse {
         a.engaged = false;
         // Closure waits for this officer to be inside. Keep regrouping into the compound afterwards too:
         // sending him west of the closed arm reopens it on the next tick and cancels the rendezvous.
-        a.run = { x: l3.map.zoneX + 3, z: (a.follow.slot % 2 ? 1 : -1) * .8 };
+        a.run = this.pullbackSlot(e, a.follow.slot);
         continue;
       }
       const far = dist(e.transform, player.transform) > a.follow.maxM;
@@ -570,6 +570,20 @@ export class LevelThreeCollapse {
   }
   private rescueReachable?: Uint8Array;
   private boom?: ArmyCheckpointBoom;
+  private readonly pullbackSlots = new Map<number, Point>();
+  /** Distinct resting spots inside the arm, clear of the checkpoint's parked van. */
+  private pullbackSlot(e: EntitySnapshot, slot: number): Point {
+    const previous = this.pullbackSlots.get(e.id); if (previous) return previous;
+    const w = this.world, at = { x: l3.map.zoneX + 3 + Math.floor(slot / 4) * 1.8, z: (slot % 4 - 1.5) * 1.8 };
+    for (let ring = 0; ring <= 12; ring++) for (let ray = 0; ray < (ring ? 16 : 1); ray++) {
+      const angle = slot * 2.399963229728653 + ray * Math.PI / 8;
+      const p = { x: at.x + Math.cos(angle) * ring * .5, z: at.z + Math.sin(angle) * ring * .5 };
+      if (p.x < l3.map.zoneX + 1.3 || !w.infected!.nav.clear(p.x, p.z, .4) || !w.solids.clear({ ...p, y: e.transform.y }, .4, e.id, false)
+        || [...this.pullbackSlots.values()].some(other => dist(other, p) < 1.6)) continue;
+      this.pullbackSlots.set(e.id, p); return p;
+    }
+    return e.transform;
+  }
   private barrier(closed: boolean): void {
     this.boom ??= new ArmyCheckpointBoom(this.world, l3.finale.barrierX);
     this.boom.set(closed);
@@ -703,6 +717,7 @@ export class LevelThreeCollapse {
     s.pending = this.easePending(s.pending as Pending[]);
   }
   restore(delta: number): void {
+    this.pullbackSlots.clear();
     const s = this.mission.state.l3; if (!s) return;
     this.retryApproachX = Infinity; this.retryEndX = -Infinity; this.retryIgnoreUntil = 0;
     this.mercyDue = true; { const id = this.mission.state.checkpoint ?? 'start'; this.respawns[id] = (this.respawns[id] ?? 0) + 1; }

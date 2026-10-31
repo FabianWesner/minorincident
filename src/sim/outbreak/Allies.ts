@@ -66,6 +66,9 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   const visible = (from: EntitySnapshot['transform'], to: EntitySnapshot['transform'], id: number) => shooter
     ? (from.y > 2.5 || sees(from, to, id)) && world.combat!.query.shotVisible(from, to, id) : sees(from, to, id);
   const player = world.entities.get(1);
+  // Keep the local pull-back formation moving while officers cover the courier;
+  // repeated self-defence shots must not pin all of them beside the van.
+  if (a.follow && player && dist(e.transform, player.transform) <= 12 && rampPullback(world, player) && c.state !== 'grabbed') regroup(world, e, a, player.transform);
   // L4's breached heavy can be finished only by a nearby soldier. The shared
   // down/recovery rule remains intact for the player and every other level.
   const finishable = (target: EntitySnapshot) => {
@@ -285,12 +288,18 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   return true;
 }
 /** Squad: stay 3-8 m from the player on an own slot around it; regroup when the player moves on (E21 §5.4). Never teleports. */
+function rampPullback(world: SimWorld, leader: EntitySnapshot): boolean {
+  // The narrow elevated span beside l3-highway-car; ordinary street pursuit keeps its existing band.
+  return world.scenario === 'L3' && leader.transform.x >= 167.5 && leader.transform.x <= 179.5
+    && Math.hypot(leader.survivor?.velocity.x ?? 0, leader.survivor?.velocity.z ?? 0) <= .5;
+}
 function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point): boolean {
   const f = a.follow!, d = dist(e.transform, p);
   const leader = world.entities.get(f.targetId)!;
+  const spread = rampPullback(world, leader);
   const moving = Math.hypot(leader.survivor?.velocity.x ?? 0, leader.survivor?.velocity.z ?? 0) > .5;
   // A stop or a tight turn can leave a follower inside the band. Step into nearby clear space, never onto the courier.
-  if (d < f.minM) {
+  if (d < f.minM && !spread) {
     const nav = world.infected!.nav, angle = Math.atan2(e.transform.z - p.z, e.transform.x - p.x);
     for (let i = 0; i < 16; i++) {
       const a = angle + i * Math.PI / 8, goal = { x: p.x + Math.cos(a) * (f.minM + 1), z: p.z + Math.sin(a) * (f.minM + 1) };
@@ -300,7 +309,7 @@ function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point): bo
     return true;
   }
   // E08 corgi/escort band: keep walking while the leader walks, avoiding repeated stop/start response delays.
-  if (d > f.maxM || (moving && d > f.minM)) {
+  if (d > f.maxM || (moving && d > f.minM) || spread) {
     // E08 shared NPC movement uses the same obstacle routing/steering as corgi and survivor escorts.
     // Slots trail the courier's facing, leaving her walking line clear even when she changes avenue.
     const forward = world.entities.get(f.targetId)!.transform.yaw;
@@ -308,9 +317,23 @@ function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point): bo
     const slot = { x: p.x - Math.cos(forward) * behind + Math.sin(forward) * side,
       z: p.z + Math.sin(forward) * behind + Math.cos(forward) * side };
     const nav = world.infected!.nav;
-    // Around a wreck, follow the courier's reachable line rather than routing to a slot on its far face.
-    const goal = d <= 10 && nav.clear(slot.x, slot.z, .4) && nav.visible(e.transform, slot, .4) && nav.visible(slot, p, .4) ? slot : p;
-    if (!world.npcs!.move(e, goal, d > f.maxM + 2 ? f.moveMs : f.moveMs * .9, e.civilian!, goal === p ? f.minM : .5))
+    // Settle into individual spots even after the courier stops. Sending every
+    // blocked slot to her feet left the pull-back squad packed over the van.
+    let goal: Point = d <= 10 && nav.clear(slot.x, slot.z, .4) && nav.visible(e.transform, slot, .4) && nav.visible(slot, p, .4) ? slot : p;
+    if (spread) {
+      // The van divides the deck: a clear resting spot need not have a
+      // straight sight line to the courier. Shared navigation routes around it;
+      // destinations stay on the level deck and clear of the van and rails.
+      const spots: Point[] = [];
+      for (let x = 168.4; x < 179.3; x += 1.3) for (const z of [-1.7, -.55, .7, 1.85]) {
+        if (nav.clear(x, z, .4) && world.solids.clear({ x, z, y: e.transform.y }, .4, e.id, false)) spots.push({ x, z });
+      }
+      const squad = [...world.entities.iterate()].filter(other => other.health.current > 0 && other.civilian?.ally?.follow?.targetId === f.targetId)
+        .sort((a, b) => a.civilian!.ally!.follow!.slot - b.civilian!.ally!.follow!.slot || a.id - b.id);
+      const index = squad.findIndex(other => other.id === e.id);
+      goal = spots[index] ?? e.transform;
+    }
+    if (!world.npcs!.move(e, goal, d > f.maxM + 2 ? f.moveMs : f.moveMs * .9, e.civilian!, goal === p ? f.minM : spread ? .15 : .5) && !spread)
       world.npcs!.move(e, p, f.moveMs, e.civilian!, f.minM);
   }
   return true;
