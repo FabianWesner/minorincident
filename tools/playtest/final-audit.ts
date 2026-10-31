@@ -29,6 +29,7 @@ export function installFinalAudit(): void {
       const people = entities.filter(e => e.id !== 1 && !e.companion && (e.escort || e.civilian || e.faction === 'survivor'));
       const player = window.__SS__!.getEntity(1);
       target.__finalE2eAudit.push({ at: now, level: g.world.scenario, tick: g.world.tick, phase: m.state.phase, paused: g.clock.paused, loading,
+        loadToFirstFrameMs: !loading ? performance.getEntriesByName(`transition:${g.world.scenario}:first-frame`).at(-1)?.duration ?? null : null,
         begin, loadToBeginMs: begin && !wasBegin && loadStarted ? now - loadStarted : null,
         transition: { title: q('transition-title')?.textContent, story: q('transition-story')?.textContent, status: q('transition-status')?.textContent },
         objective: text, subtitle, storyBubble, prompt: visible(q('interaction-ring')) ? q('interaction-ring')!.textContent : '',
