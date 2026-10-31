@@ -12,6 +12,8 @@ export const followerBarsAlwaysMax = 5;
 /** Larger groups (L6 tunnel crowd, L7's ~24 at the night exit, QA #37 "the ~24 bars are noise"): only hurt followers carry a bar,
  * and at most this many, the most hurt first. The HUD still lists the group; the bars point at who needs a medkit. */
 export const followerBarCap = 6;
+/** L10's close melee can put a dozen infected in one screen column. Keep its bars legible. */
+export const l10InfectedBarCap = 5;
 export const isFollower = (e: EntitySnapshot) => e.civilian?.survivor?.mode === 'follow' && !e.hidden && !e.infection && !['finished', 'infected'].includes(e.civilian?.state ?? '') && e.health.current > 0 && !e.corpse;
 /** `fullFollowers`: the group is small enough that healthy followers keep their bar too. */
 export function barEligible(e: EntitySnapshot, player: { x: number; z: number }, bar: boolean, fullFollowers = true): boolean {
@@ -46,6 +48,7 @@ export class HealthBars extends Group {
   private readonly definitions = new Map(infectedDefinitions.map(def => [def.id, { ...def }]));
   private readonly probes: { id: number; fraction: number; x: number; y: number; width: number; height: number; gap: number; anchor: number[] }[] = [];
   private readonly hurt: number[] = [];
+  private readonly l10Bars: { id: number; distance: number; hurt: boolean }[] = [];
   private readonly probing = __QA_HOOKS__ && typeof location !== 'undefined' && new URLSearchParams(location.search).has('test');
   constructor(private readonly world: SimWorld) {
     super(); this.name = 'infected-health-bars'; this.unoccluded.needsUpdate = true;
@@ -73,9 +76,22 @@ export class HealthBars extends Group {
     const full = followers <= followerBarsAlwaysMax;
     let hurtLimit = Infinity, hurtLeft = followerBarCap;
     if (!full && this.hurt.length > followerBarCap) { this.hurt.sort(ascending); hurtLimit = this.hurt[followerBarCap - 1]; }
+    const l10 = this.world.scenario === 'L10';
+    this.l10Bars.length = 0;
+    if (l10) {
+      for (const e of this.world.entities.iterate()) {
+        if (e.faction !== 'infected' || !e.infected || !barEligible(e, player.transform, this.definitions.get(e.archetype)?.bar === true, full)) continue;
+        this.l10Bars.push({ id: e.id, distance: Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z), hurt: e.health.current < e.health.max });
+      }
+      // Prioritize damaged enemies, then the nearest. This also bounds bars when
+      // several close melee groups overlap on screen.
+      this.l10Bars.sort((a, b) => Number(b.hurt) - Number(a.hurt) || a.distance - b.distance || a.id - b.id);
+      this.l10Bars.length = Math.min(this.l10Bars.length, l10InfectedBarCap);
+    }
     this.projection.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
     for (const e of this.world.entities.iterate()) {
       if (!barEligible(e, player.transform, this.definitions.get(e.archetype)?.bar === true, full)) continue;
+      if (l10 && e.faction === 'infected' && !this.l10Bars.some(target => target.id === e.id)) continue;
       if (!full && e.civilian?.survivor?.mode === 'follow') { if (hurtLeft <= 0 || healthFraction(e.health.current, e.health.max) > hurtLimit) continue; hurtLeft--; }
       if (!pickBodies.bounds(e.id, this.bounds)) continue;
       // E32-AC09: the Mega's bar is larger; regular Alphas retain their E07 size and shared pool.
