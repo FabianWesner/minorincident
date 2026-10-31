@@ -1,0 +1,19 @@
+{
+  "name": "b46-bbq-dad",
+  "seed": 3,
+  "ground": "asphalt",
+  "time": "L4",
+  "size": 30,
+  "dof": false,
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [0, 0], "yaw": 180 },
+    { "id": "stand", "kind": "infected", "archetype": "infected.sprinter", "at": [-1.6, -1.2], "yaw": -45, "look": { "model": "inf.bbq-dad" }, "state": "idle" },
+    { "id": "chase", "kind": "infected", "archetype": "infected.sprinter", "at": [3, 2], "yaw": 200, "look": { "model": "inf.bbq-dad" }, "state": { "chase": "courier" } },
+    { "id": "dead", "kind": "infected", "at": [-1.4, 1.6], "look": { "model": "inf.bbq-dad" }, "state": { "corpse": true } },
+    { "id": "robe", "kind": "infected", "archetype": "infected.sprinter", "at": [0, -3], "yaw": -45, "look": { "model": "inf.bathrobe-neighbor" }, "state": "idle" },
+    { "id": "mom", "kind": "infected", "archetype": "infected.sprinter", "at": [-3, 0], "yaw": -45, "look": { "model": "inf.suburban-mom" }, "state": "idle" }
+  ],
+  "camera": { "mode": "close", "target": [0, 0.8, 0], "radius": 6, "azimuth": 315 },
+  "frames": 90,
+  "shots": [10, 45, 90]
+}
