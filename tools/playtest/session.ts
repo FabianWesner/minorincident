@@ -531,7 +531,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         await page.screenshot({ path: join(o.out, 'latest.jpg'), type: 'jpeg', quality: 72 }); latestShot = Date.now();
       }
       // Evidence only: capture the player-visible title and credits without input.
-      if (e.level === 'L10' && e.phase === 'progression') {
+      if (e.level === 'L10' && e.ending) {
         const card = await page.evaluate(() => {
           const title = document.querySelector<HTMLElement>('[data-testid=epilogue-title]');
           const roll = document.querySelector<HTMLElement>('.credits-roll');

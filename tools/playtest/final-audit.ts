@@ -22,7 +22,7 @@ export function installFinalAudit(): void {
     const text = visible(q('objective-text')) ? q('objective-text')!.textContent : q('mission-tracker')?.textContent;
     const subtitle = visible(q('mission-subtitle')) ? q('mission-subtitle')!.textContent : '';
     const storyBubble = visible(q('story-bubble')) ? q('story-bubble')!.textContent : '';
-    const key = JSON.stringify([g.world.scenario, m.state.phase, g.clock.paused, loading, begin, m.state.stats.deaths, text?.replace(/[\d.]+\s*m\b/g, '#m'), subtitle, storyBubble]);
+    const key = JSON.stringify([g.world.scenario, m.state.phase, g.clock.paused, loading, begin, m.state.stats.deaths, m.state.epilogue?.phase, text?.replace(/[\d.]+\s*m\b/g, '#m'), subtitle, storyBubble]);
     if (key !== previous || begin && !wasBegin) {
       const state = window.__SS__!.missions.state();
       const entities = [...g.world.entities.iterate()];
@@ -35,6 +35,7 @@ export function installFinalAudit(): void {
         panel: visible(q('mission-panel')) ? q('mission-panel')!.innerText : '',
         rack: player?.weapons, player: player?.transform,
         stats: state?.stats, result: state?.result,
+        ending: state?.epilogue ? { phase: state.epilogue.phase, phaseTicks: state.epilogue.phaseTicks } : null,
         people: people.map(e => ({ id: e.id, name: e.civilian?.survivor?.key, hp: e.health.current, hidden: !!e.hidden, faction: e.faction })),
         corgis: entities.filter(e => e.companion).map(e => ({ id: e.id, hp: e.health.current, hidden: !!e.hidden, state: e.companion?.state })),
         campaign: (m.state.phase === 'result' || begin && !wasBegin) ? window.__SS__!.campaign.state() : undefined,
