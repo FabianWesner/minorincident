@@ -12,13 +12,11 @@ export function searchAnchors(mission: Pick<Mission, 'state' | 'def'> | null | u
 }
 /**
  * World position shared by the minimap pin, tracker distance, diamond and 3D ring.
- * L3's `l3-route` anchor is a moving guidance waypoint that
- * steers bots and the route hint (it follows the player along the path), so it is shown as the
- * fixed rendezvous ring `l3-zone` instead (PO 10-12: the marker "should just stick to the checkpoint").
+ * L3 uses its next open route waypoint so every HUD surface guides the player
+ * around street closures instead of bearing straight through them.
  */
 export function markerAnchor(mission: Pick<Mission, 'state' | 'def'> | null | undefined): Anchored | null {
   const marker = mission?.state.marker;
   if (!mission || !marker) return null;
-  const key = mission.def.l3 && marker === 'l3-route' ? 'l3-zone' : marker;
-  return (mission.def.anchors[key] as Anchored | undefined) ?? null;
+  return (mission.def.anchors[marker] as Anchored | undefined) ?? null;
 }

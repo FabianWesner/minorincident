@@ -1,0 +1,30 @@
+{
+  "requirement": "Q-270: L3 start to checkpoint using the visible HUD marker and real input; no debug continuation",
+  "method": "PLAYTEST_VISIBLE_ONLY=1; headless shared pool; default camera; low quality; level-select entry at the normal L3 start; keyboard/mouse movement, combat and interactions",
+  "command": "PLAYTEST_VISIBLE_ONLY=1 E2E_PORT=4761 node --import tsx tools/playtest/play.ts --levels L3 --entry debug --no-skip --mode campaign --quality low --level-minutes 9 --out test-results/playtest/fix-e2e-l3-hud-03",
+  "finished": true,
+  "skipped": [],
+  "routeAssists": 0,
+  "wallSeconds": 324,
+  "result": {
+    "time": 319.96666666666664,
+    "kills": 0,
+    "knockdowns": 51,
+    "damage": 232,
+    "deaths": 1,
+    "rescued": 5,
+    "optionalObjectives": []
+  },
+  "completedLevels": 3,
+  "nextLevel": "L4",
+  "capturesReviewed": [
+    "captures/l3-next-open-gap.jpg",
+    "captures/l3-checkpoint-arrived.jpg"
+  ],
+  "observations": "One normal checkpoint respawn. The enemy-unhittable warning was recorded while the driver held the corgi lure (a non-damaging ability); no objective was bypassed. simSeconds in the driver summary is invalid across an automatic handover; the persisted mission result supplies elapsed mission time.",
+  "sources": {
+    "src/sim/missions/markerAnchor.ts": "9293fa6c842a08f843f3eee26758bceb8df5193ab9b696dd4fbc8dadb723af17",
+    "src/levels/L3/navigation.ts": "9b97851d91baad90fd2bf3f0b04b8ffd9eab4d52b2c3a5e338f275d471b4ca87",
+    "src/sim/ai/NavGrid.ts": "24dfd561c274718d40b2fba2b5864d0b028a967557f80fa2be0fd3eca70dd833"
+  }
+}
