@@ -110,7 +110,7 @@ export function look(): Eyes {
         const at = joints.hip.map((v, i) => v + (joints.head[i] - v) * .6), ndc = a.camera.project(at[0], at[1], at[2]);
         aim = { x: rect.left + (ndc[0] + 1) / 2 * rect.width, y: rect.top + (1 - ndc[1]) / 2 * rect.height };
       }
-      if (aim.x < 0 || aim.x >= view.w || aim.y < 44 || aim.y >= view.h) continue;
+      if (!Number.isFinite(aim.x) || !Number.isFinite(aim.y) || aim.x < 0 || aim.x >= view.w || aim.y < 44 || aim.y >= view.h) continue;
       // The drawn chest may sit behind Home, Pause or a rack button. A mouse
       // attack there activates the UI and can leave the driver holding WASD on the title menu.
       if (document.elementFromPoint(aim.x, aim.y)?.closest('button, input, select, textarea, [role="dialog"]')) continue;
