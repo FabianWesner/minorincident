@@ -6,10 +6,10 @@ import { autoRewards, carriedRackMax, lastLevel, type CampaignSave, type Level }
 import { heldAction } from './selection';
 import type { VehicleTransfer } from '../vehicles/Vehicles';
 
-/** Keep the L8 transport only for the canonical first-time handover to L9. A replay after the L9 crash
- * must not combine a new APC transfer with the already committed L9→L10 crossing transaction. */
+/** Pre-crash L8 runs and replays replace the pending transport. After the L9 crash,
+ * a replay must not combine a new APC with the committed L9→L10 transaction. */
 export function recordL8Transport(save: CampaignSave, transport: VehicleTransfer): boolean {
-  if (save.completedLevels !== 7 || save.crossingHandover) return false;
+  if (save.completedLevels < 7 || save.crossingHandover) return false;
   save.transport = structuredClone(transport);
   return true;
 }
