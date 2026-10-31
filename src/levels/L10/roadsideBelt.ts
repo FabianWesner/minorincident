@@ -27,7 +27,7 @@ export function cureRoadsideBelt(placements: readonly Placement[]): Placement[] 
     const { min: a, max: b } = p.visualAabb;
     // Entire footprint stays >= 3 m beyond every 3 m road edge, including detours and corners.
     if ([[a[0], a[2]], [a[0], b[2]], [b[0], a[2]], [b[0], b[2]]].some(([x, z]) => laneDistance(x, z) < 6 || laneDistance(x, z) > 13)) return false;
-    if (p.position[0] > 2905) return false;
+    if (p.position[0] > 3680) return false;
     return [...placements, ...out].every(q => {
       let { min: c, max: d } = q.visualAabb;
       // These low supplies fit below tree crowns; the authored solid is the 0.6 m trunk box.
@@ -49,7 +49,9 @@ export function cureRoadsideBelt(placements: readonly Placement[]): Placement[] 
   ];
   let carry = 14, routeOffset = 0, previous = -Infinity, ordinal = 0;
   const spacing = new Rng(248, 'cure-roadside-spacing');
-  for (const [ri, region] of cure.regions.slice(0, 5).entries()) {
+  // R1–R5 already carry this belt. Continue the same authored treatment through
+  // the destroyed corridor (R6); stop before the finale arena itself.
+  for (const [ri, region] of cure.regions.slice(0, 6).entries()) {
     const segments = region.route.slice(1).map((b, i) => ({ a: region.route[i], b, d: Math.hypot(b[0] - region.route[i][0], b[1] - region.route[i][1]) }));
     const length = segments.reduce((s, q) => s + q.d, 0);
     const pose = (s: number) => {
