@@ -13,7 +13,7 @@ The headless shared-pool driver uses the player-facing title → Start game → 
 | Level | Time | Deaths / retries | Stuck or confusing moments | Objective gives destination? | Weapons start → story | Load to Begin | Frames >200 ms | Console errors | Carry-over (weapons / survivors / corgi) | Result cards add up? |
 |---|---:|---:|---|---|---|---|---|---|---|---|
 | L1 | 166 s wall / 163.8 s card; earlier attempts also disclosed below | 1 death; 2 menu restarts after driver aborts | Opening fence: 90 s stalled in first driver attempt; later weapon-route detour before driver error | Depot/Annex/fire station named; weapon objective generic, supported by marker/story bubble | Unarmed → bat, matches story | 1.72 s in successful opening sample | 0 | 0 | Bat and following corgi reach L2; no rescued human group | [Reviewed card](fresh/captures/fresh-03-L1-result.jpg): stats match mission result |
-| L2 | First attempt: 591 s wall / 587.6 s sim; not yet complete | 9 deaths so far; next menu attempt pending | Bridge route: fenced-yard detours and repeated checkpoint respawns during unpaused manual planning | Bridge destination named; arrow is a bearing rather than a street route | Bat start → axe collected; correct | 3.97 s menu sample; first handover ~5.5 s upper bound | 0 so far | 0 so far | Corgi follows; 7 rescued in current mission stats; final handover pending | Not reached |
+| L2 | Three incomplete attempts: 1,740 s wall / 889.4 s sim; completion pending | 11 deaths (9 + 1 + 1); 3 menu retries pending next attempt | Bridge route: fenced-yard detours, blocked vehicles and manual-input failures | Bridge destination named; arrow is a bearing rather than a street route | Bat start → axe collected; correct | 3.97 s first menu sample; first handover ~5.5 s upper bound | 0 across recorded attempts | 0 across recorded attempts | Corgi follows; final handover pending | Not reached |
 | L3 | — | — | Not played | — | — | — | — | — | — | — |
 | L4 | — | — | Not played | — | — | — | — | — | — | — |
 | L5 | — | — | Not played | — | — | — | — | — | — | — |
@@ -26,6 +26,10 @@ The headless shared-pool driver uses the player-facing title → Start game → 
 
 ## Findings
 
+### P3 · F01 — L2 fire engine temporarily hides the courier
+
+At the market exit, the HUD says **“Reach the police checkpoint at the bridge · 139 m”**, but the engine fills the central view and hides the courier at approximately `(-43.6, -33.9)`. The reviewed [capture](fresh/captures/fresh-05-L2-bridge-route-ready.jpg) shows the occlusion. A ground click onto visible pavement clears the vehicle; this is not a permanent soft-lock. The camera is unchanged.
+
 ### Driver limitations and historical preflight
 
 - The initial sandbox startup restriction was resolved when unrestricted execution was provided. See [preflight evidence](evidence/preflight.md).
@@ -33,6 +37,7 @@ The headless shared-pool driver uses the player-facing title → Start game → 
 - `fresh-02` reached the outbreak and weapon search, then a partially written command file caused the driver to exit. Its profile cleanup ran; L1 restarted through the normal menu because that save did not retain the in-level checkpoint. The command-file race is fixed in `b994b8ce0`; no objective was skipped.
 - `fresh-03` completed L1 and used Continue → L2 → Begin mission. [Raw run](fresh/runs-fresh-03.json), [observed text/results](fresh/fresh-03-audit.json), [frame intervals](fresh/fresh-03-frames.json), and [input/progress log](fresh/log-fresh-03.jsonl) are retained. Its one death is also shown on the result card. No console error occurred.
 - `fresh-04` reached L2's bridge objective without any skip, then recorded **9 deaths** while manual steering/planning left the game running. The [mission counters](fresh/fresh-04-completion.json) establish those deaths even when the driver was not sampling its own death counter. The reviewed [alley capture](fresh/captures/fresh-04-L2-follow-visible-alley.jpg) shows approaching infected behind the courier. This attempt stopped through a normal save/menu yield; it is not counted as completion. Subsequent manual actions use the normal pause menu between decisions and real held attacks while moving.
+- `fresh-05` and `fresh-06` each recorded one further death before yielding without completion. Their mission counters, captures and observer records are retained. The manual helper now focuses the canvas after Resume (keyboard events on buttons are ignored by the game's keyboard device) and aims keyboard attacks at visible feet rather than the chest point used for mouse target selection. These are driver corrections, not game changes.
 - The initial observer misread fixed-position loading cards because their `offsetParent` is null. Its 171 s L2 handover load value is invalid and is excluded. The valid menu sample is 3.97 s; the preceding L1 result/handover timestamps bound that first L2 handover by about 5.5 s. The observer now reads client rectangles and watches loading-card visibility independently of mission construction.
 
 ### Story observations so far

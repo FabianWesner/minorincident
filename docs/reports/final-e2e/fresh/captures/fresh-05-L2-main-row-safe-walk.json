@@ -1,0 +1,81 @@
+{
+  "tick": 3351,
+  "level": "L2",
+  "phase": "playing",
+  "step": "bridge",
+  "checkpoint": "doors",
+  "ending": false,
+  "completed": 5,
+  "objective": "Reach the police checkpoint at the bridge · 121 m",
+  "tracker": "Reach the police checkpoint at the bridge · 121 m",
+  "distance": 121,
+  "marker": {
+    "visible": true,
+    "offscreen": true,
+    "x": 769.938,
+    "y": 678,
+    "anchor": "l2-gate-inside",
+    "guidance": "destination"
+  },
+  "route": null,
+  "panel": {
+    "visible": false,
+    "heading": "",
+    "button": null
+  },
+  "menu": "pause",
+  "loading": false,
+  "prompt": "",
+  "subtitle": "",
+  "player": {
+    "x": -23.637399673461914,
+    "y": 0.8500000238418579,
+    "z": -33.819339752197266,
+    "hp": 46,
+    "max": 100,
+    "riding": false,
+    "weapons": [
+      "weapon.fire-axe",
+      "weapon.bat",
+      "weapon.kick"
+    ],
+    "emptyWeapons": [],
+    "current": "weapon.fire-axe"
+  },
+  "driving": null,
+  "healthKits": [],
+  "enemies": [],
+  "allies": [
+    {
+      "id": 107,
+      "x": -31.044184626593015,
+      "z": -30.982551546915506,
+      "hp": 100,
+      "max": 100,
+      "d": 7.9314456855957225,
+      "kind": "companion",
+      "archetype": "char.corgi",
+      "drawn": true,
+      "screen": {
+        "x": 95.82027820554231,
+        "y": 217.29962695750615
+      },
+      "aim": {
+        "x": 95.82027820554231,
+        "y": 199.29962695750615
+      },
+      "moving": true,
+      "speed": 5.619417481847297,
+      "yaw": -0.5218804067531405,
+      "vx": 5.101139363895655,
+      "vz": 2.3571656762742066,
+      "corpse": false,
+      "state": "follow",
+      "attacking": false
+    }
+  ],
+  "view": {
+    "w": 1280,
+    "h": 720
+  }
+}

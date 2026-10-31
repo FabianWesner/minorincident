@@ -535,7 +535,10 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         catch { await hold(50); continue; }
         unlinkSync(control); await press([]); await releaseAim();
         if (command.manual !== undefined) manual = command.manual;
-        if (command.resume && await page.getByTestId('resume-game').isVisible()) await page.getByTestId('resume-game').click();
+        if (command.resume && await page.getByTestId('resume-game').isVisible()) {
+          await page.getByTestId('resume-game').click();
+          await page.locator('canvas').focus();
+        }
         if (command.key) await page.keyboard.press(command.key);
         if (command.button) await page.getByTestId(command.button).click();
         if (command.click) await clickGround(...command.click);
@@ -544,7 +547,10 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
           do {
             const view = command.combat ? await see() : null;
             const target = view?.enemies.find(b => b.drawn && b.d < (ranged.test(view.player?.current ?? '') ? 14 : 3.5));
-            if (target) await page.mouse.move(target.aim.x, target.aim.y);
+            if (target) {
+              const feet = await page.evaluate(at => window.__SS__!.input.project(at, 'destination'), { x: target.x, z: target.z });
+              await page.mouse.move(feet.x, feet.y);
+            }
             await press([...command.keys, ...(target ? ['Space'] : [])]);
             await hold(Math.min(150, Math.max(1, until - Date.now())));
           } while (Date.now() < until);
