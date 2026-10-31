@@ -69,7 +69,8 @@ const markdown = [
   `| Heroine | CharacterView | ${fmt(heroine)} | ${fmt(heroine)} | ${fmt(heroine)} |`,
   ...rows.map(r => `| ${r.id}${r.root ? ` / ${r.root}` : ''} | ${r.route} | ${fmt(value(r.prod))} | ${fmt(value(r.main))} | ${fmt(value(r.after))} |`), ''
 ].join('\n');
-mkdirSync('docs/reports/q257', { recursive: true });
-writeFileSync('docs/reports/q257/height-census.json', JSON.stringify({ batch40, main, heroine, errors, rows }, null, 2) + '\n');
-writeFileSync('docs/reports/q257/height-census.md', markdown);
+const output = process.env.HEIGHT_OUT ?? 'docs/reports/q257';
+mkdirSync(output, { recursive: true });
+writeFileSync(`${output}/height-census.json`, JSON.stringify({ batch40, main, heroine, errors, rows }, null, 2) + '\n');
+writeFileSync(`${output}/height-census.md`, markdown);
 console.log(`${rows.length + 1} figures; ${errors.length} errors`); if (errors.length) { console.log(errors.join('\n')); process.exitCode = 1; }

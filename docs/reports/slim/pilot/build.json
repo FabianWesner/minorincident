@@ -1,238 +1,1245 @@
 {
-  "heroine": {
-    "upperArmRadius": 0.040929638934520104,
+  "baseline": "53949e814",
+  "target": {
+    "upperArmRadius": 0.037693099377762704,
     "forearmRadius": 0.043443451637625384,
-    "thighRadius": 0.1323529702611185,
-    "calfRadius": 0.061464329890766944,
-    "torsoWidth": 0.2845809204416324,
-    "torsoDepth": 0.31010611305127794,
-    "shoeLength": 0.17983973950862975,
-    "shoeHeight": 0.1275198849416455
+    "thighRadius": 0.07117019495985975,
+    "calfRadius": 0.03686353867166122,
+    "torsoWidth": 0.16689024370396707,
+    "torsoDepth": 0.1560945918209433,
+    "shoeLength": 0.15982385511906877,
+    "shoeHeight": 0.11778177747382615
   },
-  "receipt": [
+  "keys": [
+    "upperArmRadius",
+    "forearmRadius",
+    "thighRadius",
+    "calfRadius",
+    "torsoWidth",
+    "torsoDepth",
+    "shoeLength",
+    "shoeHeight"
+  ],
+  "receipts": [
     {
       "id": "npc.civilian-man-a",
-      "scale": {
-        "upperArm": 0.749811229311398,
-        "forearm": 0.753777212466231,
-        "thigh": 1,
-        "calf": 0.7126232358697487,
-        "torsoWidth": 0.9226948018536323,
-        "torsoDepth": 1,
-        "shoeLength": 1,
-        "shoeHeight": 0.9687393163684315
-      },
       "files": [
         {
           "input": "assets/npc.civilian-man-a/model.q249.skin.glb",
           "output": "assets/npc.civilian-man-a/model.slim.skin.glb",
-          "scale": {
-            "upperArm": 0.749811229311398,
-            "forearm": 0.753777212466231,
-            "thigh": 1,
-            "calf": 0.7126232358697487,
-            "torsoWidth": 0.9226948018536323,
-            "torsoDepth": 1,
-            "shoeLength": 1,
-            "shoeHeight": 0.9687393163684315
-          }
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "before": {
+                "heightM": 1.6884443358519219,
+                "groundM": -0.0000029167530687957813,
+                "ratios": {
+                  "upperArmRadius": 0.04126088662769574,
+                  "forearmRadius": 0.060975080658497736,
+                  "thighRadius": 0.0800206494757703,
+                  "calfRadius": 0.09642047414801813,
+                  "torsoWidth": 0.20082660671923486,
+                  "torsoDepth": 0.13419169029240793,
+                  "shoeLength": 0.19257210347603076,
+                  "shoeHeight": 0.13793697634230206
+                },
+                "dimensions": {
+                  "upperArmRadius": 0.06966671031876118,
+                  "forearmRadius": 0.10295302956595458,
+                  "thighRadius": 0.13511041235855642,
+                  "calfRadius": 0.1628006034353779,
+                  "torsoWidth": 0.3390845466034536,
+                  "torsoDepth": 0.2265751993926115,
+                  "shoeLength": 0.32514727735719434,
+                  "shoeHeight": 0.23289890640970046
+                },
+                "torsoBand": [
+                  0.8511743821307404,
+                  0.9542708293440624
+                ],
+                "shoulderY": 1.2635601709840283,
+                "spatialFallbacks": [],
+                "absentParts": []
+              },
+              "after": {
+                "heightM": 1.6884443358519219,
+                "groundM": -0.0000029167530687957813,
+                "ratios": {
+                  "upperArmRadius": 0.04196197869982796,
+                  "forearmRadius": 0.04865666654297462,
+                  "thighRadius": 0.07971061974441598,
+                  "calfRadius": 0.06267330974145158,
+                  "torsoWidth": 0.1869170682440997,
+                  "torsoDepth": 0.13419169029240793,
+                  "shoeLength": 0.1789241494301983,
+                  "shoeHeight": 0.13359034899238423
+                },
+                "dimensions": {
+                  "upperArmRadius": 0.07085046525686352,
+                  "forearmRadius": 0.0821540730259212,
+                  "thighRadius": 0.13458694441470553,
+                  "calfRadius": 0.105820394842047,
+                  "torsoWidth": 0.3155990651507973,
+                  "torsoDepth": 0.2265751993926115,
+                  "shoeLength": 0.3021034666525412,
+                  "shoeHeight": 0.22555986808067263
+                },
+                "torsoBand": [
+                  0.8511743821307404,
+                  0.9542708293440624
+                ],
+                "shoulderY": 1.2635601709840283,
+                "spatialFallbacks": [],
+                "absentParts": []
+              },
+              "scales": {
+                "upperArmRadius": 1,
+                "forearmRadius": 0.7979762438798749,
+                "thighRadius": 0.9961256110421693,
+                "calfRadius": 0.65,
+                "torsoWidth": 0.9307385908768657,
+                "torsoDepth": 1,
+                "shoeLength": 0.9295360776678504,
+                "shoeHeight": 0.9563468351178425,
+                "shoulderReference": 1.7999986043100902
+              }
+            }
+          ]
         },
         {
           "input": "public/assets/models/q249-pilot/npc.civilian-man-a.lod0.glb",
-          "output": "public/assets/models/slim-pilot/npc.civilian-man-a.npc.civilian-man-a.lod0.glb",
-          "scale": {
-            "upperArm": 0.749811229311398,
-            "forearm": 0.753777212466231,
-            "thigh": 1,
-            "calf": 0.7126232358697487,
-            "torsoWidth": 0.9226948018536323,
-            "torsoDepth": 1,
-            "shoeLength": 1,
-            "shoeHeight": 0.9687393163684315
-          }
+          "output": "public/assets/models/slim-pilot/npc.civilian-man-a.lod0.glb",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "before": {
+                "heightM": 1.6884443358519219,
+                "groundM": -0.0000029167530687957813,
+                "ratios": {
+                  "upperArmRadius": 0.041260886627684124,
+                  "forearmRadius": 0.06170847224988136,
+                  "thighRadius": 0.08062515566889211,
+                  "calfRadius": 0.09642047414801813,
+                  "torsoWidth": 0.20082660379445405,
+                  "torsoDepth": 0.1341916978057009,
+                  "shoeLength": 0.19319687851526052,
+                  "shoeHeight": 0.13724360631277716
+                },
+                "dimensions": {
+                  "upperArmRadius": 0.06966671031874157,
+                  "forearmRadius": 0.10419132044438768,
+                  "thighRadius": 0.13613108741632035,
+                  "calfRadius": 0.1628006034353779,
+                  "torsoWidth": 0.33908454166512403,
+                  "torsoDepth": 0.22657521207838846,
+                  "shoeLength": 0.3262021752333635,
+                  "shoeHeight": 0.23172818971069967
+                },
+                "torsoBand": [
+                  0.8511743821307404,
+                  0.9542708293440624
+                ],
+                "shoulderY": 1.2635601709840283,
+                "spatialFallbacks": [],
+                "absentParts": []
+              },
+              "after": {
+                "heightM": 1.6884443358519219,
+                "groundM": -0.0000029167530687957813,
+                "ratios": {
+                  "upperArmRadius": 0.04196198274197642,
+                  "forearmRadius": 0.04865666385745492,
+                  "thighRadius": 0.07971062410950906,
+                  "calfRadius": 0.06267330974145158,
+                  "torsoWidth": 0.18691707434727212,
+                  "torsoDepth": 0.1341916978057009,
+                  "shoeLength": 0.17825207918614272,
+                  "shoeHeight": 0.1336248084947686
+                },
+                "dimensions": {
+                  "upperArmRadius": 0.07085047208180618,
+                  "forearmRadius": 0.08215406849157068,
+                  "thighRadius": 0.13458695178492222,
+                  "calfRadius": 0.105820394842047,
+                  "torsoWidth": 0.3155990754556642,
+                  "torsoDepth": 0.22657521207838846,
+                  "shoeLength": 0.30096871345567094,
+                  "shoeHeight": 0.22561805103228982
+                },
+                "torsoBand": [
+                  0.8511743821307404,
+                  0.9542708293440624
+                ],
+                "shoulderY": 1.2635601709840283,
+                "spatialFallbacks": [],
+                "absentParts": []
+              },
+              "scales": {
+                "upperArmRadius": 1,
+                "forearmRadius": 0.7884924721051408,
+                "thighRadius": 0.9886569234346044,
+                "calfRadius": 0.65,
+                "torsoWidth": 0.9307386044318745,
+                "torsoDepth": 1,
+                "shoeLength": 0.9265300718573345,
+                "shoeHeight": 0.9611784061550426,
+                "shoulderReference": 1.7999986043100902
+              }
+            }
+          ]
         },
         {
           "input": "public/assets/models/q249-pilot/npc.civilian-man-a.lod1.glb",
-          "output": "public/assets/models/slim-pilot/npc.civilian-man-a.npc.civilian-man-a.lod1.glb",
-          "scale": {
-            "upperArm": 0.749811229311398,
-            "forearm": 0.753777212466231,
-            "thigh": 1,
-            "calf": 0.7126232358697487,
-            "torsoWidth": 0.9226948018536323,
-            "torsoDepth": 1,
-            "shoeLength": 1,
-            "shoeHeight": 0.9687393163684315
-          }
+          "output": "public/assets/models/slim-pilot/npc.civilian-man-a.lod1.glb",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "before": {
+                "heightM": 1.6852147966726834,
+                "groundM": -0.000003833876132839488,
+                "ratios": {
+                  "upperArmRadius": 0.034087312748857304,
+                  "forearmRadius": 0.06074244520170403,
+                  "thighRadius": 0.07853422416938949,
+                  "calfRadius": 0.09673541426285241,
+                  "torsoWidth": 0.19487532848646538,
+                  "torsoDepth": 0.13073708926637684,
+                  "shoeLength": 0.19724451443772023,
+                  "shoeHeight": 0.1414747831733632
+                },
+                "dimensions": {
+                  "upperArmRadius": 0.05744444382318373,
+                  "forearmRadius": 0.10236406743999127,
+                  "thighRadius": 0.13234703661546465,
+                  "calfRadius": 0.16301995147802062,
+                  "torsoWidth": 0.3284067870718411,
+                  "torsoDepth": 0.2203200773056157,
+                  "shoeLength": 0.33239937429296484,
+                  "shoeHeight": 0.23841539795981123
+                },
+                "torsoBand": [
+                  0.8511743821307404,
+                  0.9542708293440624
+                ],
+                "shoulderY": 1.2635601709840283,
+                "spatialFallbacks": [],
+                "absentParts": []
+              },
+              "after": {
+                "heightM": 1.6852147966726834,
+                "groundM": -0.000003833876132839488,
+                "ratios": {
+                  "upperArmRadius": 0.034328023799229286,
+                  "forearmRadius": 0.04865666430205338,
+                  "thighRadius": 0.07853422416938949,
+                  "calfRadius": 0.06287801772849695,
+                  "torsoWidth": 0.18691707143363875,
+                  "torsoDepth": 0.13073708926637684,
+                  "shoeLength": 0.17900271635906073,
+                  "shoeHeight": 0.13566365173203848
+                },
+                "dimensions": {
+                  "upperArmRadius": 0.057850093646993214,
+                  "forearmRadius": 0.0819969306385559,
+                  "thighRadius": 0.13234703661546465,
+                  "calfRadius": 0.10596296586151037,
+                  "torsoWidth": 0.31499541453069296,
+                  "torsoDepth": 0.2203200773056157,
+                  "shoeLength": 0.30165802625289256,
+                  "shoeHeight": 0.22862239326948094
+                },
+                "torsoBand": [
+                  0.8511743821307404,
+                  0.9542708293440624
+                ],
+                "shoulderY": 1.2635601709840283,
+                "spatialFallbacks": [],
+                "absentParts": []
+              },
+              "scales": {
+                "upperArmRadius": 1,
+                "forearmRadius": 0.8010323863744532,
+                "thighRadius": 1,
+                "calfRadius": 0.65,
+                "torsoWidth": 0.9591623239338121,
+                "torsoDepth": 1,
+                "shoeLength": 0.907516836367467,
+                "shoeHeight": 0.9324318285686003,
+                "shoulderReference": 1.7999986869681497
+              }
+            }
+          ]
         },
         {
           "input": "public/assets/models/q249-pilot/npc.civilian-man-a.lod2.glb",
-          "output": "public/assets/models/slim-pilot/npc.civilian-man-a.npc.civilian-man-a.lod2.glb",
-          "scale": {
-            "upperArm": 0.749811229311398,
-            "forearm": 0.753777212466231,
-            "thigh": 1,
-            "calf": 0.7126232358697487,
-            "torsoWidth": 0.9226948018536323,
-            "torsoDepth": 1,
-            "shoeLength": 1,
-            "shoeHeight": 0.9687393163684315
-          }
+          "output": "public/assets/models/slim-pilot/npc.civilian-man-a.lod2.glb",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "before": {
+                "heightM": 1.6771990387392688,
+                "groundM": -0.0000020233630409306056,
+                "ratios": {
+                  "upperArmRadius": 0.07653440860205396,
+                  "forearmRadius": 0.11904573754000804,
+                  "thighRadius": 0.10601894218251152,
+                  "calfRadius": 0.09654318509994805,
+                  "torsoWidth": 0.20195174008527908,
+                  "torsoDepth": 0.1323425916109693,
+                  "shoeLength": null,
+                  "shoeHeight": null
+                },
+                "dimensions": {
+                  "upperArmRadius": 0.12836343653784332,
+                  "forearmRadius": 0.19966339656810878,
+                  "thighRadius": 0.17781486791666246,
+                  "calfRadius": 0.16192213724646018,
+                  "torsoWidth": 0.33871326434275273,
+                  "torsoDepth": 0.22196486743418137,
+                  "shoeLength": null,
+                  "shoeHeight": null
+                },
+                "torsoBand": [
+                  0.8511743821307404,
+                  0.9542708293440624
+                ],
+                "shoulderY": 1.2635601709840283,
+                "spatialFallbacks": [
+                  "foreArmL",
+                  "foreArmR",
+                  "shinL",
+                  "shinR"
+                ],
+                "absentParts": [
+                  "shoeLength",
+                  "shoeHeight"
+                ]
+              },
+              "after": {
+                "heightM": 1.6771990387392688,
+                "groundM": -0.0000020233630409306056,
+                "ratios": {
+                  "upperArmRadius": 0.0518032086978376,
+                  "forearmRadius": 0.12238787256519147,
+                  "thighRadius": 0.07971061995074863,
+                  "calfRadius": 0.0737859747388816,
+                  "torsoWidth": 0.18691707148289158,
+                  "torsoDepth": 0.1323425916109693,
+                  "shoeLength": null,
+                  "shoeHeight": null
+                },
+                "dimensions": {
+                  "upperArmRadius": 0.08688429183162294,
+                  "forearmRadius": 0.20526882221968326,
+                  "thighRadius": 0.13369057515870678,
+                  "calfRadius": 0.12375376590449219,
+                  "torsoWidth": 0.31349713261506496,
+                  "torsoDepth": 0.22196486743418137,
+                  "shoeLength": null,
+                  "shoeHeight": null
+                },
+                "torsoBand": [
+                  0.8511743821307404,
+                  0.9542708293440624
+                ],
+                "shoulderY": 1.2635601709840283,
+                "spatialFallbacks": [
+                  "foreArmL",
+                  "foreArmR",
+                  "shinL",
+                  "shinR"
+                ],
+                "absentParts": [
+                  "shoeLength",
+                  "shoeHeight"
+                ]
+              },
+              "scales": {
+                "upperArmRadius": 0.65,
+                "forearmRadius": 0.65,
+                "thighRadius": 0.7518526096763083,
+                "calfRadius": 0.65,
+                "torsoWidth": 0.9255531686407497,
+                "torsoDepth": 1,
+                "shoeLength": 1,
+                "shoeHeight": 1,
+                "shoulderReference": 1.799998664594353
+              }
+            }
+          ]
         },
         {
           "input": "public/assets/models/q249-pilot/npc.civilian-man-a.lod0.low.glb",
-          "output": "public/assets/models/slim-pilot/npc.civilian-man-a.npc.civilian-man-a.lod0.low.glb",
-          "scale": {
-            "upperArm": 0.749811229311398,
-            "forearm": 0.753777212466231,
-            "thigh": 1,
-            "calf": 0.7126232358697487,
-            "torsoWidth": 0.9226948018536323,
-            "torsoDepth": 1,
-            "shoeLength": 1,
-            "shoeHeight": 0.9687393163684315
-          }
+          "output": "public/assets/models/slim-pilot/npc.civilian-man-a.lod0.low.glb",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "before": {
+                "heightM": 1.6884443358519219,
+                "groundM": -0.0000029167530687957813,
+                "ratios": {
+                  "upperArmRadius": 0.041260886627684124,
+                  "forearmRadius": 0.06170847224988136,
+                  "thighRadius": 0.08062515566889211,
+                  "calfRadius": 0.09642047414801813,
+                  "torsoWidth": 0.20082660379445405,
+                  "torsoDepth": 0.1341916978057009,
+                  "shoeLength": 0.19319687851526052,
+                  "shoeHeight": 0.13724360631277716
+                },
+                "dimensions": {
+                  "upperArmRadius": 0.06966671031874157,
+                  "forearmRadius": 0.10419132044438768,
+                  "thighRadius": 0.13613108741632035,
+                  "calfRadius": 0.1628006034353779,
+                  "torsoWidth": 0.33908454166512403,
+                  "torsoDepth": 0.22657521207838846,
+                  "shoeLength": 0.3262021752333635,
+                  "shoeHeight": 0.23172818971069967
+                },
+                "torsoBand": [
+                  0.8511743821307404,
+                  0.9542708293440624
+                ],
+                "shoulderY": 1.2635601709840283,
+                "spatialFallbacks": [],
+                "absentParts": []
+              },
+              "after": {
+                "heightM": 1.6884443358519219,
+                "groundM": -0.0000029167530687957813,
+                "ratios": {
+                  "upperArmRadius": 0.04196198274197642,
+                  "forearmRadius": 0.04865666385745492,
+                  "thighRadius": 0.07971062410950906,
+                  "calfRadius": 0.06267330974145158,
+                  "torsoWidth": 0.18691707434727212,
+                  "torsoDepth": 0.1341916978057009,
+                  "shoeLength": 0.17825207918614272,
+                  "shoeHeight": 0.1336248084947686
+                },
+                "dimensions": {
+                  "upperArmRadius": 0.07085047208180618,
+                  "forearmRadius": 0.08215406849157068,
+                  "thighRadius": 0.13458695178492222,
+                  "calfRadius": 0.105820394842047,
+                  "torsoWidth": 0.3155990754556642,
+                  "torsoDepth": 0.22657521207838846,
+                  "shoeLength": 0.30096871345567094,
+                  "shoeHeight": 0.22561805103228982
+                },
+                "torsoBand": [
+                  0.8511743821307404,
+                  0.9542708293440624
+                ],
+                "shoulderY": 1.2635601709840283,
+                "spatialFallbacks": [],
+                "absentParts": []
+              },
+              "scales": {
+                "upperArmRadius": 1,
+                "forearmRadius": 0.7884924721051408,
+                "thighRadius": 0.9886569234346044,
+                "calfRadius": 0.65,
+                "torsoWidth": 0.9307386044318745,
+                "torsoDepth": 1,
+                "shoeLength": 0.9265300718573345,
+                "shoeHeight": 0.9611784061550426,
+                "shoulderReference": 1.7999986043100902
+              }
+            }
+          ]
         },
         {
           "input": "public/assets/models/q249-pilot/npc.civilian-man-a.lod1.low.glb",
-          "output": "public/assets/models/slim-pilot/npc.civilian-man-a.npc.civilian-man-a.lod1.low.glb",
-          "scale": {
-            "upperArm": 0.749811229311398,
-            "forearm": 0.753777212466231,
-            "thigh": 1,
-            "calf": 0.7126232358697487,
-            "torsoWidth": 0.9226948018536323,
-            "torsoDepth": 1,
-            "shoeLength": 1,
-            "shoeHeight": 0.9687393163684315
-          }
+          "output": "public/assets/models/slim-pilot/npc.civilian-man-a.lod1.low.glb",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "before": {
+                "heightM": 1.6852147966726834,
+                "groundM": -0.000003833876132839488,
+                "ratios": {
+                  "upperArmRadius": 0.034087312748857304,
+                  "forearmRadius": 0.06074244520170403,
+                  "thighRadius": 0.07853422416938949,
+                  "calfRadius": 0.09673541426285241,
+                  "torsoWidth": 0.19487532848646538,
+                  "torsoDepth": 0.13073708926637684,
+                  "shoeLength": 0.19724451443772023,
+                  "shoeHeight": 0.1414747831733632
+                },
+                "dimensions": {
+                  "upperArmRadius": 0.05744444382318373,
+                  "forearmRadius": 0.10236406743999127,
+                  "thighRadius": 0.13234703661546465,
+                  "calfRadius": 0.16301995147802062,
+                  "torsoWidth": 0.3284067870718411,
+                  "torsoDepth": 0.2203200773056157,
+                  "shoeLength": 0.33239937429296484,
+                  "shoeHeight": 0.23841539795981123
+                },
+                "torsoBand": [
+                  0.8511743821307404,
+                  0.9542708293440624
+                ],
+                "shoulderY": 1.2635601709840283,
+                "spatialFallbacks": [],
+                "absentParts": []
+              },
+              "after": {
+                "heightM": 1.6852147966726834,
+                "groundM": -0.000003833876132839488,
+                "ratios": {
+                  "upperArmRadius": 0.034328023799229286,
+                  "forearmRadius": 0.04865666430205338,
+                  "thighRadius": 0.07853422416938949,
+                  "calfRadius": 0.06287801772849695,
+                  "torsoWidth": 0.18691707143363875,
+                  "torsoDepth": 0.13073708926637684,
+                  "shoeLength": 0.17900271635906073,
+                  "shoeHeight": 0.13566365173203848
+                },
+                "dimensions": {
+                  "upperArmRadius": 0.057850093646993214,
+                  "forearmRadius": 0.0819969306385559,
+                  "thighRadius": 0.13234703661546465,
+                  "calfRadius": 0.10596296586151037,
+                  "torsoWidth": 0.31499541453069296,
+                  "torsoDepth": 0.2203200773056157,
+                  "shoeLength": 0.30165802625289256,
+                  "shoeHeight": 0.22862239326948094
+                },
+                "torsoBand": [
+                  0.8511743821307404,
+                  0.9542708293440624
+                ],
+                "shoulderY": 1.2635601709840283,
+                "spatialFallbacks": [],
+                "absentParts": []
+              },
+              "scales": {
+                "upperArmRadius": 1,
+                "forearmRadius": 0.8010323863744532,
+                "thighRadius": 1,
+                "calfRadius": 0.65,
+                "torsoWidth": 0.9591623239338121,
+                "torsoDepth": 1,
+                "shoeLength": 0.907516836367467,
+                "shoeHeight": 0.9324318285686003,
+                "shoulderReference": 1.7999986869681497
+              }
+            }
+          ]
         },
         {
           "input": "public/assets/models/q249-pilot/npc.civilian-man-a.lod2.low.glb",
-          "output": "public/assets/models/slim-pilot/npc.civilian-man-a.npc.civilian-man-a.lod2.low.glb",
-          "scale": {
-            "upperArm": 0.749811229311398,
-            "forearm": 0.753777212466231,
-            "thigh": 1,
-            "calf": 0.7126232358697487,
-            "torsoWidth": 0.9226948018536323,
-            "torsoDepth": 1,
-            "shoeLength": 1,
-            "shoeHeight": 0.9687393163684315
-          }
+          "output": "public/assets/models/slim-pilot/npc.civilian-man-a.lod2.low.glb",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "before": {
+                "heightM": 1.6771990387392688,
+                "groundM": -0.0000020233630409306056,
+                "ratios": {
+                  "upperArmRadius": 0.07653440860205396,
+                  "forearmRadius": 0.11904573754000804,
+                  "thighRadius": 0.10601894218251152,
+                  "calfRadius": 0.09654318509994805,
+                  "torsoWidth": 0.20195174008527908,
+                  "torsoDepth": 0.1323425916109693,
+                  "shoeLength": null,
+                  "shoeHeight": null
+                },
+                "dimensions": {
+                  "upperArmRadius": 0.12836343653784332,
+                  "forearmRadius": 0.19966339656810878,
+                  "thighRadius": 0.17781486791666246,
+                  "calfRadius": 0.16192213724646018,
+                  "torsoWidth": 0.33871326434275273,
+                  "torsoDepth": 0.22196486743418137,
+                  "shoeLength": null,
+                  "shoeHeight": null
+                },
+                "torsoBand": [
+                  0.8511743821307404,
+                  0.9542708293440624
+                ],
+                "shoulderY": 1.2635601709840283,
+                "spatialFallbacks": [
+                  "foreArmL",
+                  "foreArmR",
+                  "shinL",
+                  "shinR"
+                ],
+                "absentParts": [
+                  "shoeLength",
+                  "shoeHeight"
+                ]
+              },
+              "after": {
+                "heightM": 1.6771990387392688,
+                "groundM": -0.0000020233630409306056,
+                "ratios": {
+                  "upperArmRadius": 0.0518032086978376,
+                  "forearmRadius": 0.12238787256519147,
+                  "thighRadius": 0.07971061995074863,
+                  "calfRadius": 0.0737859747388816,
+                  "torsoWidth": 0.18691707148289158,
+                  "torsoDepth": 0.1323425916109693,
+                  "shoeLength": null,
+                  "shoeHeight": null
+                },
+                "dimensions": {
+                  "upperArmRadius": 0.08688429183162294,
+                  "forearmRadius": 0.20526882221968326,
+                  "thighRadius": 0.13369057515870678,
+                  "calfRadius": 0.12375376590449219,
+                  "torsoWidth": 0.31349713261506496,
+                  "torsoDepth": 0.22196486743418137,
+                  "shoeLength": null,
+                  "shoeHeight": null
+                },
+                "torsoBand": [
+                  0.8511743821307404,
+                  0.9542708293440624
+                ],
+                "shoulderY": 1.2635601709840283,
+                "spatialFallbacks": [
+                  "foreArmL",
+                  "foreArmR",
+                  "shinL",
+                  "shinR"
+                ],
+                "absentParts": [
+                  "shoeLength",
+                  "shoeHeight"
+                ]
+              },
+              "scales": {
+                "upperArmRadius": 0.65,
+                "forearmRadius": 0.65,
+                "thighRadius": 0.7518526096763083,
+                "calfRadius": 0.65,
+                "torsoWidth": 0.9255531686407497,
+                "torsoDepth": 1,
+                "shoeLength": 1,
+                "shoeHeight": 1,
+                "shoulderReference": 1.799998664594353
+              }
+            }
+          ]
         }
       ]
     },
     {
       "id": "npc.civilian-woman-a",
-      "scale": {
-        "upperArm": 0.6432693568124503,
-        "forearm": 0.5785300334874451,
-        "thigh": 1,
-        "calf": 0.8084026465432185,
-        "torsoWidth": 0.6539749956499762,
-        "torsoDepth": 1,
-        "shoeLength": 0.786303121262886,
-        "shoeHeight": 1
-      },
       "files": [
         {
           "input": "assets/npc.civilian-woman-a/model.skin.glb",
           "output": "assets/npc.civilian-woman-a/model.slim.skin.glb",
-          "scale": {
-            "upperArm": 0.6432693568124503,
-            "forearm": 0.5785300334874451,
-            "thigh": 1,
-            "calf": 0.8084026465432185,
-            "torsoWidth": 0.6539749956499762,
-            "torsoDepth": 1,
-            "shoeLength": 0.786303121262886,
-            "shoeHeight": 1
-          }
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "before": {
+                "heightM": 1.6916447426427847,
+                "groundM": 0.0000012315253186302998,
+                "ratios": {
+                  "upperArmRadius": 0.07317165457598057,
+                  "forearmRadius": 0.0863567429371059,
+                  "thighRadius": 0.13380103245222252,
+                  "calfRadius": 0.08743660065517245,
+                  "torsoWidth": 0.3740250012792277,
+                  "torsoDepth": 0.22039413390821916,
+                  "shoeLength": 0.2540386263075594,
+                  "shoeHeight": 0.12707605827396934
+                },
+                "dimensions": {
+                  "upperArmRadius": 0.12378044477393141,
+                  "forearmRadius": 0.1460849301813096,
+                  "thighRadius": 0.22634381310797885,
+                  "calfRadius": 0.14791166581287915,
+                  "torsoWidth": 0.6327174270309665,
+                  "torsoDepth": 0.37282857793514884,
+                  "shoeLength": 0.42974310662137793,
+                  "shoeHeight": 0.2149675458949284
+                },
+                "torsoBand": [
+                  0.932043835187838,
+                  0.9984911093757859
+                ],
+                "shoulderY": 1.1978329319396295,
+                "spatialFallbacks": [],
+                "absentParts": []
+              },
+              "after": {
+                "heightM": 1.6916447426427847,
+                "groundM": 0.0000012315253186302998,
+                "ratios": {
+                  "upperArmRadius": 0.05418270356695195,
+                  "forearmRadius": 0.05613188020468368,
+                  "thighRadius": 0.10107507870956914,
+                  "calfRadius": 0.061252958815624876,
+                  "torsoWidth": 0.19000966045644382,
+                  "torsoDepth": 0.17482593861786394,
+                  "shoeLength": 0.1790027183027492,
+                  "shoeHeight": 0.12668825602395703
+                },
+                "dimensions": {
+                  "upperArmRadius": 0.09165788563120672,
+                  "forearmRadius": 0.09495520004290775,
+                  "thighRadius": 0.1709831255112483,
+                  "calfRadius": 0.10361824575176684,
+                  "torsoWidth": 0.3214288431624838,
+                  "torsoDepth": 0.2957433799404997,
+                  "shoeLength": 0.30280900733561306,
+                  "shoeHeight": 0.21431152225751002
+                },
+                "torsoBand": [
+                  0.932043835187838,
+                  0.9984911093757859
+                ],
+                "shoulderY": 1.1978329319396295,
+                "spatialFallbacks": [],
+                "absentParts": []
+              },
+              "scales": {
+                "upperArmRadius": 0.65,
+                "forearmRadius": 0.65,
+                "thighRadius": 0.65,
+                "calfRadius": 0.65,
+                "torsoWidth": 0.45338735808550085,
+                "torsoDepth": 0.7932422689265447,
+                "shoeLength": 0.7046279549498197,
+                "shoeHeight": 1,
+                "shoulderReference": 1.7999991652699128
+              }
+            }
+          ]
         },
         {
           "input": "public/assets/models/skinned/npc.civilian-woman-a.lod0.glb",
-          "output": "public/assets/models/slim-pilot/npc.civilian-woman-a.npc.civilian-woman-a.lod0.glb",
-          "scale": {
-            "upperArm": 0.6432693568124503,
-            "forearm": 0.5785300334874451,
-            "thigh": 1,
-            "calf": 0.8084026465432185,
-            "torsoWidth": 0.6539749956499762,
-            "torsoDepth": 1,
-            "shoeLength": 0.786303121262886,
-            "shoeHeight": 1
-          }
+          "output": "public/assets/models/slim-pilot/npc.civilian-woman-a.lod0.glb",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "before": {
+                "heightM": 1.6916447426428314,
+                "groundM": 0.0000012315253186302998,
+                "ratios": {
+                  "upperArmRadius": 0.07317165706126032,
+                  "forearmRadius": 0.0863567429371035,
+                  "thighRadius": 0.1120570892641373,
+                  "calfRadius": 0.07718876534400337,
+                  "torsoWidth": 0.3740250124260314,
+                  "torsoDepth": 0.19435263164849584,
+                  "shoeLength": 0.2485813655794518,
+                  "shoeHeight": 0.12707605827396584
+                },
+                "dimensions": {
+                  "upperArmRadius": 0.12378044897814523,
+                  "forearmRadius": 0.1460849301813096,
+                  "thighRadius": 0.18956078592953632,
+                  "calfRadius": 0.1305759690852745,
+                  "torsoWidth": 0.6327174458874157,
+                  "torsoDepth": 0.32877560754697677,
+                  "shoeLength": 0.4205113602014553,
+                  "shoeHeight": 0.2149675458949284
+                },
+                "torsoBand": [
+                  0.932043835187838,
+                  0.9984911093757859
+                ],
+                "shoulderY": 1.1978329319396295,
+                "spatialFallbacks": [],
+                "absentParts": []
+              },
+              "after": {
+                "heightM": 1.6916447426428314,
+                "groundM": 0.0000012315253186302998,
+                "ratios": {
+                  "upperArmRadius": 0.05396968788514852,
+                  "forearmRadius": 0.056131880204682134,
+                  "thighRadius": 0.08552683072539005,
+                  "calfRadius": 0.0611403288006249,
+                  "torsoWidth": 0.18881237991759017,
+                  "torsoDepth": 0.17482594052467856,
+                  "shoeLength": 0.17900271830274425,
+                  "shoeHeight": 0.12668825602395353
+                },
+                "dimensions": {
+                  "upperArmRadius": 0.091297538772986,
+                  "forearmRadius": 0.09495520004290775,
+                  "thighRadius": 0.14468101355150945,
+                  "calfRadius": 0.1034277157790312,
+                  "torsoWidth": 0.31940346983347234,
+                  "torsoDepth": 0.29574338316616083,
+                  "shoeLength": 0.30280900733561306,
+                  "shoeHeight": 0.21431152225751002
+                },
+                "torsoBand": [
+                  0.932043835187838,
+                  0.9984911093757859
+                ],
+                "shoulderY": 1.1978329319396295,
+                "spatialFallbacks": [],
+                "absentParts": []
+              },
+              "scales": {
+                "upperArmRadius": 0.65,
+                "forearmRadius": 0.65,
+                "thighRadius": 0.7113393617350856,
+                "calfRadius": 0.65,
+                "torsoWidth": 0.48066117716813667,
+                "torsoDepth": 0.8995295888539594,
+                "shoeLength": 0.7200970889997949,
+                "shoeHeight": 1,
+                "shoulderReference": 1.7999991652699128
+              }
+            }
+          ]
         },
         {
           "input": "public/assets/models/skinned/npc.civilian-woman-a.lod1.glb",
-          "output": "public/assets/models/slim-pilot/npc.civilian-woman-a.npc.civilian-woman-a.lod1.glb",
-          "scale": {
-            "upperArm": 0.6432693568124503,
-            "forearm": 0.5785300334874451,
-            "thigh": 1,
-            "calf": 0.8084026465432185,
-            "torsoWidth": 0.6539749956499762,
-            "torsoDepth": 1,
-            "shoeLength": 0.786303121262886,
-            "shoeHeight": 1
-          }
+          "output": "public/assets/models/slim-pilot/npc.civilian-woman-a.lod1.glb",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "before": {
+                "heightM": 1.7249610191672822,
+                "groundM": 0.000001880505510584749,
+                "ratios": {
+                  "upperArmRadius": 0.09458171055711605,
+                  "forearmRadius": 0.07836940204595459,
+                  "thighRadius": 0.11799637293418942,
+                  "calfRadius": 0.06503749869760636,
+                  "torsoWidth": 0.3222173695052578,
+                  "torsoDepth": 0.18093124520195306,
+                  "shoeLength": 0.2441040005310352,
+                  "shoeHeight": 0.14124116713084914
+                },
+                "dimensions": {
+                  "upperArmRadius": 0.1631497638371878,
+                  "forearmRadius": 0.13518416362472033,
+                  "thighRadius": 0.2035391437146021,
+                  "calfRadius": 0.11218715003751387,
+                  "torsoWidth": 0.5558124020951902,
+                  "torsoDepth": 0.3120993451227664,
+                  "shoeLength": 0.4210698855388253,
+                  "shoeHeight": 0.243635507602406
+                },
+                "torsoBand": [
+                  0.932043835187838,
+                  0.9984911093757859
+                ],
+                "shoulderY": 1.1978329319396295,
+                "spatialFallbacks": [],
+                "absentParts": []
+              },
+              "after": {
+                "heightM": 1.7249610191672822,
+                "groundM": 0.000001880505510584749,
+                "ratios": {
+                  "upperArmRadius": 0.08190170254791289,
+                  "forearmRadius": 0.055789368212495825,
+                  "thighRadius": 0.09024128061750822,
+                  "calfRadius": 0.043699009196359224,
+                  "torsoWidth": 0.1341978487041913,
+                  "torsoDepth": 0.17482594153857403,
+                  "shoeLength": 0.179002719208659,
+                  "shoeHeight": 0.13449260870900095
+                },
+                "dimensions": {
+                  "upperArmRadius": 0.1412772442985834,
+                  "forearmRadius": 0.09623448545052557,
+                  "thighRadius": 0.15566269138493768,
+                  "calfRadius": 0.07537908743995224,
+                  "torsoWidth": 0.23148605787083854,
+                  "torsoDepth": 0.30156793429325834,
+                  "shoeLength": 0.3087727129598833,
+                  "shoeHeight": 0.23199450738914476
+                },
+                "torsoBand": [
+                  0.932043835187838,
+                  0.9984911093757859
+                ],
+                "shoulderY": 1.1978329319396295,
+                "spatialFallbacks": [],
+                "absentParts": []
+              },
+              "scales": {
+                "upperArmRadius": 0.65,
+                "forearmRadius": 0.65,
+                "thighRadius": 0.6755344793479394,
+                "calfRadius": 0.65,
+                "torsoWidth": 0.5800962041104153,
+                "torsoDepth": 0.9662562297867242,
+                "shoeLength": 0.7333051377443475,
+                "shoeHeight": 0.9339740916221373,
+                "shoulderReference": 1.799999112336183
+              }
+            }
+          ]
         },
         {
           "input": "public/assets/models/skinned/npc.civilian-woman-a.lod2.glb",
-          "output": "public/assets/models/slim-pilot/npc.civilian-woman-a.npc.civilian-woman-a.lod2.glb",
-          "scale": {
-            "upperArm": 0.6432693568124503,
-            "forearm": 0.5785300334874451,
-            "thigh": 1,
-            "calf": 0.8084026465432185,
-            "torsoWidth": 0.6539749956499762,
-            "torsoDepth": 1,
-            "shoeLength": 0.786303121262886,
-            "shoeHeight": 1
-          }
+          "output": "public/assets/models/slim-pilot/npc.civilian-woman-a.lod2.glb",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "before": {
+                "heightM": 1.729068562137413,
+                "groundM": 0.0000010622207157524436,
+                "ratios": {
+                  "upperArmRadius": 0.1365209061480304,
+                  "forearmRadius": 0.09558231425032665,
+                  "thighRadius": 0.21064691695162352,
+                  "calfRadius": 0.05662431672715933,
+                  "torsoWidth": 0.22483033308728906,
+                  "torsoDepth": 0.19196724940590754,
+                  "shoeLength": null,
+                  "shoeHeight": null
+                },
+                "dimensions": {
+                  "upperArmRadius": 0.23605400689507158,
+                  "forearmRadius": 0.16526837466657865,
+                  "thighRadius": 0.3642229618122227,
+                  "calfRadius": 0.09790732590544284,
+                  "torsoWidth": 0.3887470607561145,
+                  "torsoDepth": 0.3319245359077467,
+                  "shoeLength": null,
+                  "shoeHeight": null
+                },
+                "torsoBand": [
+                  0.932043835187838,
+                  0.9984911093757859
+                ],
+                "shoulderY": 1.1978329319396295,
+                "spatialFallbacks": [
+                  "foreArmL",
+                  "foreArmR",
+                  "shinL",
+                  "shinR"
+                ],
+                "absentParts": [
+                  "shoeLength",
+                  "shoeHeight"
+                ]
+              },
+              "after": {
+                "heightM": 1.729068562137413,
+                "groundM": 0.0000010622207157524436,
+                "ratios": {
+                  "upperArmRadius": 0.10443752022068699,
+                  "forearmRadius": 0.10942727941027813,
+                  "thighRadius": 0.16409948775192607,
+                  "calfRadius": 0.03693162405708827,
+                  "torsoWidth": 0.18287229095255084,
+                  "torsoDepth": 0.17068274509445322,
+                  "shoeLength": null,
+                  "shoeHeight": null
+                },
+                "dimensions": {
+                  "upperArmRadius": 0.18057963292118023,
+                  "forearmRadius": 0.18920726866853854,
+                  "thighRadius": 0.2837392653347088,
+                  "calfRadius": 0.0638573101057891,
+                  "torsoWidth": 0.3161987291721017,
+                  "torsoDepth": 0.2951221686421328,
+                  "shoeLength": null,
+                  "shoeHeight": null
+                },
+                "torsoBand": [
+                  0.932043835187838,
+                  0.9984911093757859
+                ],
+                "shoulderY": 1.1978329319396295,
+                "spatialFallbacks": [
+                  "foreArmL",
+                  "foreArmR",
+                  "shinL",
+                  "shinR"
+                ],
+                "absentParts": [
+                  "shoeLength",
+                  "shoeHeight"
+                ]
+              },
+              "scales": {
+                "upperArmRadius": 0.65,
+                "forearmRadius": 0.65,
+                "thighRadius": 0.65,
+                "calfRadius": 0.7291419252120983,
+                "torsoWidth": 0.7385019029881448,
+                "torsoDepth": 0.9107071304115714,
+                "shoeLength": 1,
+                "shoeHeight": 1,
+                "shoulderReference": 1.7999990961559307
+              }
+            }
+          ]
         },
         {
           "input": "public/assets/models/skinned/npc.civilian-woman-a.lod0.low.glb",
-          "output": "public/assets/models/slim-pilot/npc.civilian-woman-a.npc.civilian-woman-a.lod0.low.glb",
-          "scale": {
-            "upperArm": 0.6432693568124503,
-            "forearm": 0.5785300334874451,
-            "thigh": 1,
-            "calf": 0.8084026465432185,
-            "torsoWidth": 0.6539749956499762,
-            "torsoDepth": 1,
-            "shoeLength": 0.786303121262886,
-            "shoeHeight": 1
-          }
+          "output": "public/assets/models/slim-pilot/npc.civilian-woman-a.lod0.low.glb",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "before": {
+                "heightM": 1.6916447426428314,
+                "groundM": 0.0000012315253186302998,
+                "ratios": {
+                  "upperArmRadius": 0.07317165706126032,
+                  "forearmRadius": 0.0863567429371035,
+                  "thighRadius": 0.1120570892641373,
+                  "calfRadius": 0.07718876534400337,
+                  "torsoWidth": 0.3740250124260314,
+                  "torsoDepth": 0.19435263164849584,
+                  "shoeLength": 0.2485813655794518,
+                  "shoeHeight": 0.12707605827396584
+                },
+                "dimensions": {
+                  "upperArmRadius": 0.12378044897814523,
+                  "forearmRadius": 0.1460849301813096,
+                  "thighRadius": 0.18956078592953632,
+                  "calfRadius": 0.1305759690852745,
+                  "torsoWidth": 0.6327174458874157,
+                  "torsoDepth": 0.32877560754697677,
+                  "shoeLength": 0.4205113602014553,
+                  "shoeHeight": 0.2149675458949284
+                },
+                "torsoBand": [
+                  0.932043835187838,
+                  0.9984911093757859
+                ],
+                "shoulderY": 1.1978329319396295,
+                "spatialFallbacks": [],
+                "absentParts": []
+              },
+              "after": {
+                "heightM": 1.6916447426428314,
+                "groundM": 0.0000012315253186302998,
+                "ratios": {
+                  "upperArmRadius": 0.05396968788514852,
+                  "forearmRadius": 0.056131880204682134,
+                  "thighRadius": 0.08552683072539005,
+                  "calfRadius": 0.0611403288006249,
+                  "torsoWidth": 0.18881237991759017,
+                  "torsoDepth": 0.17482594052467856,
+                  "shoeLength": 0.17900271830274425,
+                  "shoeHeight": 0.12668825602395353
+                },
+                "dimensions": {
+                  "upperArmRadius": 0.091297538772986,
+                  "forearmRadius": 0.09495520004290775,
+                  "thighRadius": 0.14468101355150945,
+                  "calfRadius": 0.1034277157790312,
+                  "torsoWidth": 0.31940346983347234,
+                  "torsoDepth": 0.29574338316616083,
+                  "shoeLength": 0.30280900733561306,
+                  "shoeHeight": 0.21431152225751002
+                },
+                "torsoBand": [
+                  0.932043835187838,
+                  0.9984911093757859
+                ],
+                "shoulderY": 1.1978329319396295,
+                "spatialFallbacks": [],
+                "absentParts": []
+              },
+              "scales": {
+                "upperArmRadius": 0.65,
+                "forearmRadius": 0.65,
+                "thighRadius": 0.7113393617350856,
+                "calfRadius": 0.65,
+                "torsoWidth": 0.48066117716813667,
+                "torsoDepth": 0.8995295888539594,
+                "shoeLength": 0.7200970889997949,
+                "shoeHeight": 1,
+                "shoulderReference": 1.7999991652699128
+              }
+            }
+          ]
         },
         {
           "input": "public/assets/models/skinned/npc.civilian-woman-a.lod1.low.glb",
-          "output": "public/assets/models/slim-pilot/npc.civilian-woman-a.npc.civilian-woman-a.lod1.low.glb",
-          "scale": {
-            "upperArm": 0.6432693568124503,
-            "forearm": 0.5785300334874451,
-            "thigh": 1,
-            "calf": 0.8084026465432185,
-            "torsoWidth": 0.6539749956499762,
-            "torsoDepth": 1,
-            "shoeLength": 0.786303121262886,
-            "shoeHeight": 1
-          }
+          "output": "public/assets/models/slim-pilot/npc.civilian-woman-a.lod1.low.glb",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "before": {
+                "heightM": 1.7249610191672822,
+                "groundM": 0.000001880505510584749,
+                "ratios": {
+                  "upperArmRadius": 0.09458171055711605,
+                  "forearmRadius": 0.07836940204595459,
+                  "thighRadius": 0.11799637293418942,
+                  "calfRadius": 0.06503749869760636,
+                  "torsoWidth": 0.3222173695052578,
+                  "torsoDepth": 0.18093124520195306,
+                  "shoeLength": 0.2441040005310352,
+                  "shoeHeight": 0.14124116713084914
+                },
+                "dimensions": {
+                  "upperArmRadius": 0.1631497638371878,
+                  "forearmRadius": 0.13518416362472033,
+                  "thighRadius": 0.2035391437146021,
+                  "calfRadius": 0.11218715003751387,
+                  "torsoWidth": 0.5558124020951902,
+                  "torsoDepth": 0.3120993451227664,
+                  "shoeLength": 0.4210698855388253,
+                  "shoeHeight": 0.243635507602406
+                },
+                "torsoBand": [
+                  0.932043835187838,
+                  0.9984911093757859
+                ],
+                "shoulderY": 1.1978329319396295,
+                "spatialFallbacks": [],
+                "absentParts": []
+              },
+              "after": {
+                "heightM": 1.7249610191672822,
+                "groundM": 0.000001880505510584749,
+                "ratios": {
+                  "upperArmRadius": 0.08190170254791289,
+                  "forearmRadius": 0.055789368212495825,
+                  "thighRadius": 0.09024128061750822,
+                  "calfRadius": 0.043699009196359224,
+                  "torsoWidth": 0.1341978487041913,
+                  "torsoDepth": 0.17482594153857403,
+                  "shoeLength": 0.179002719208659,
+                  "shoeHeight": 0.13449260870900095
+                },
+                "dimensions": {
+                  "upperArmRadius": 0.1412772442985834,
+                  "forearmRadius": 0.09623448545052557,
+                  "thighRadius": 0.15566269138493768,
+                  "calfRadius": 0.07537908743995224,
+                  "torsoWidth": 0.23148605787083854,
+                  "torsoDepth": 0.30156793429325834,
+                  "shoeLength": 0.3087727129598833,
+                  "shoeHeight": 0.23199450738914476
+                },
+                "torsoBand": [
+                  0.932043835187838,
+                  0.9984911093757859
+                ],
+                "shoulderY": 1.1978329319396295,
+                "spatialFallbacks": [],
+                "absentParts": []
+              },
+              "scales": {
+                "upperArmRadius": 0.65,
+                "forearmRadius": 0.65,
+                "thighRadius": 0.6755344793479394,
+                "calfRadius": 0.65,
+                "torsoWidth": 0.5800962041104153,
+                "torsoDepth": 0.9662562297867242,
+                "shoeLength": 0.7333051377443475,
+                "shoeHeight": 0.9339740916221373,
+                "shoulderReference": 1.799999112336183
+              }
+            }
+          ]
         },
         {
           "input": "public/assets/models/skinned/npc.civilian-woman-a.lod2.low.glb",
-          "output": "public/assets/models/slim-pilot/npc.civilian-woman-a.npc.civilian-woman-a.lod2.low.glb",
-          "scale": {
-            "upperArm": 0.6432693568124503,
-            "forearm": 0.5785300334874451,
-            "thigh": 1,
-            "calf": 0.8084026465432185,
-            "torsoWidth": 0.6539749956499762,
-            "torsoDepth": 1,
-            "shoeLength": 0.786303121262886,
-            "shoeHeight": 1
-          }
+          "output": "public/assets/models/slim-pilot/npc.civilian-woman-a.lod2.low.glb",
+          "texturesUnchanged": true,
+          "figures": [
+            {
+              "before": {
+                "heightM": 1.729068562137413,
+                "groundM": 0.0000010622207157524436,
+                "ratios": {
+                  "upperArmRadius": 0.1365209061480304,
+                  "forearmRadius": 0.09558231425032665,
+                  "thighRadius": 0.21064691695162352,
+                  "calfRadius": 0.05662431672715933,
+                  "torsoWidth": 0.22483033308728906,
+                  "torsoDepth": 0.19196724940590754,
+                  "shoeLength": null,
+                  "shoeHeight": null
+                },
+                "dimensions": {
+                  "upperArmRadius": 0.23605400689507158,
+                  "forearmRadius": 0.16526837466657865,
+                  "thighRadius": 0.3642229618122227,
+                  "calfRadius": 0.09790732590544284,
+                  "torsoWidth": 0.3887470607561145,
+                  "torsoDepth": 0.3319245359077467,
+                  "shoeLength": null,
+                  "shoeHeight": null
+                },
+                "torsoBand": [
+                  0.932043835187838,
+                  0.9984911093757859
+                ],
+                "shoulderY": 1.1978329319396295,
+                "spatialFallbacks": [
+                  "foreArmL",
+                  "foreArmR",
+                  "shinL",
+                  "shinR"
+                ],
+                "absentParts": [
+                  "shoeLength",
+                  "shoeHeight"
+                ]
+              },
+              "after": {
+                "heightM": 1.729068562137413,
+                "groundM": 0.0000010622207157524436,
+                "ratios": {
+                  "upperArmRadius": 0.10443752022068699,
+                  "forearmRadius": 0.10942727941027813,
+                  "thighRadius": 0.16409948775192607,
+                  "calfRadius": 0.03693162405708827,
+                  "torsoWidth": 0.18287229095255084,
+                  "torsoDepth": 0.17068274509445322,
+                  "shoeLength": null,
+                  "shoeHeight": null
+                },
+                "dimensions": {
+                  "upperArmRadius": 0.18057963292118023,
+                  "forearmRadius": 0.18920726866853854,
+                  "thighRadius": 0.2837392653347088,
+                  "calfRadius": 0.0638573101057891,
+                  "torsoWidth": 0.3161987291721017,
+                  "torsoDepth": 0.2951221686421328,
+                  "shoeLength": null,
+                  "shoeHeight": null
+                },
+                "torsoBand": [
+                  0.932043835187838,
+                  0.9984911093757859
+                ],
+                "shoulderY": 1.1978329319396295,
+                "spatialFallbacks": [
+                  "foreArmL",
+                  "foreArmR",
+                  "shinL",
+                  "shinR"
+                ],
+                "absentParts": [
+                  "shoeLength",
+                  "shoeHeight"
+                ]
+              },
+              "scales": {
+                "upperArmRadius": 0.65,
+                "forearmRadius": 0.65,
+                "thighRadius": 0.65,
+                "calfRadius": 0.7291419252120983,
+                "torsoWidth": 0.7385019029881448,
+                "torsoDepth": 0.9107071304115714,
+                "shoeLength": 1,
+                "shoeHeight": 1,
+                "shoulderReference": 1.7999990961559307
+              }
+            }
+          ]
         }
       ]
     }

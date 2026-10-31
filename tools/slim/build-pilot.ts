@@ -1,74 +1,73 @@
-/** Bake measured radial body adjustments into man-a and woman-a pilot GLBs. */
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
-import { Matrix3, Matrix4, Vector3 } from 'three';
+/** Pilot first; after its visual review, --rollout applies the same offline edit to the human cast. */
+import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { getBounds, prune } from '@gltf-transform/functions';
 import type { AssetDef } from '../../src/assets/types';
 import { assetIO } from '../assets/io';
 import { skinCrowdBakes } from '../assets/skin-crowd-bakes';
-
-const manifest=JSON.parse(readFileSync('src/assets/manifest.json','utf8')) as AssetDef[];
-const ratios=JSON.parse(readFileSync('docs/reports/slim/measurements.json','utf8')) as {rows:{id:string;ratios?:Record<string,number|null>}[]};
-const measured=(id:string)=>ratios.rows.find(r=>r.id===id)?.ratios;
-const target=measured('char.courier-female');
-if(!target)throw Error('Missing heroine anatomy');
-const cap=(wanted:number|null|undefined,current:number|null|undefined)=>wanted==null||current==null?1:Math.min(1,1.15*wanted/current);
-const factors=(id:string)=>{const r=measured(id);if(!r)throw Error(`Missing measurements: ${id}`);return {
-  upperArm:cap(target.upperArmRadius,r.upperArmRadius), forearm:cap(target.forearmRadius,r.forearmRadius),
-  thigh:cap(target.thighRadius,r.thighRadius), calf:cap(target.calfRadius,r.calfRadius),
-  torsoWidth:cap(target.torsoWidth,r.torsoWidth),torsoDepth:cap(target.torsoDepth,r.torsoDepth),
-  shoeLength:cap(target.shoeLength,r.shoeLength),shoeHeight:cap(target.shoeHeight,r.shoeHeight),
-};};
-const jointShort=(n:string)=>n.replace(/^survivor\d+_/,'');
-function deform(doc:Awaited<ReturnType<Awaited<ReturnType<typeof assetIO>>['readBinary']>>, id:string) {
-  const ns=doc.getRoot().listNodes(), f=factors(id), positions=new Map<string,Vector3>();
-  const point=(name:string)=>{let p=positions.get(name);if(!p){const node=ns.find(n=>jointShort(n.getName())===name);if(!node)throw Error(`${id}: missing joint ${name}`);p=new Vector3().setFromMatrixPosition(new Matrix4().fromArray(node.getWorldMatrix()));positions.set(name,p);}return p!;};
-  const limb=(p:Vector3,start:string,end:string,scale:number)=>{const a=point(start),b=point(end),axis=b.clone().sub(a).normalize(),t=p.clone().sub(a).dot(axis),radial=p.clone().sub(a).addScaledVector(axis,-t);return p.clone().addScaledVector(radial,scale-1);};
-  for(const node of ns){const mesh=node.getMesh(),skin=node.getSkin();if(!mesh||!skin)continue;
-    const worlds=skin.listJoints().map((j,i)=>new Matrix4().fromArray(j.getWorldMatrix()).multiply(new Matrix4().fromArray(skin.getInverseBindMatrices()!.getElement(i,[]))));
-    for(const prim of mesh.listPrimitives()){
-      const pos=prim.getAttribute('POSITION')!,indices=prim.getAttribute('JOINTS_0'),weights=prim.getAttribute('WEIGHTS_0');if(!indices||!weights)continue;
-      const out=pos.clone().setArray(new Float32Array(pos.getCount()*3)).setNormalized(false),normal=prim.getAttribute('NORMAL'),nout=normal?.clone();
-      const skinPoint=(raw:Vector3,j:number,w:number)=>raw.clone().applyMatrix4(worlds[j]).multiplyScalar(w);
-      const apply=(p:Vector3,joints:number[],ws:number[])=>{
-        let result=p.clone();const groups:{name:string;w:number}[]=[];
-        for(let k=0;k<ws.length;k++)if(ws[k]){const n=jointShort(skin.listJoints()[joints[k]].getName());groups.push({name:n,w:ws[k]});}
-        const weighted=(names:RegExp,scale:number,start:(n:string)=>string,end:(n:string)=>string)=>{
-          const selected=groups.filter(g=>names.test(g.name));if(!selected.length||scale>=1)return;
-          const sum=selected.reduce((a,g)=>a+g.w,0),deformed=selected.reduce((a,g)=>a.add(limb(p,start(g.name),end(g.name),scale).multiplyScalar(g.w)),new Vector3()).divideScalar(sum);
-          result.lerp(deformed,Math.min(1,sum));
-        };
-        weighted(/^(arm|elbow)[LR]$/,f.upperArm,n=>`arm${n.slice(-1)}`,n=>`foreArm${n.slice(-1)}`);
-        weighted(/^foreArm(?:Twist)?[LR]$/,f.forearm,n=>`foreArm${n.slice(-1)}`,n=>`hand${n.slice(-1)}`);
-        weighted(/^leg[LR]$/,f.thigh,()=> 'hip',n=>`shin${n.slice(-1)}`);
-        weighted(/^shin[LR]$/,f.calf,n=>`shin${n.slice(-1)}`,n=>`foot${n.slice(-1)}`);
-        const torso=groups.filter(g=>/^(torso|spine|chest)$/.test(g.name)).reduce((a,g)=>a+g.w,0);
-        if(torso){const q=p.clone();q.x*=f.torsoDepth;q.z*=f.torsoWidth;result.lerp(q,Math.min(1,torso));}
-        for(const side of ['L','R']){const shoe=groups.filter(g=>new RegExp(`^(foot|toe)${side}$`).test(g.name)).reduce((a,g)=>a+g.w,0);if(shoe){const anchor=point(`foot${side}`),q=p.clone().sub(anchor);q.x*=f.shoeLength;q.y*=f.shoeHeight;q.z*=Math.min(f.shoeLength,f.shoeHeight);result.lerp(anchor.add(q),Math.min(1,shoe));}}
-        return result;
-      };
-      for(let i=0;i<pos.getCount();i++){
-        const raw=new Vector3().fromArray(pos.getElement(i,[])),js=indices.getElement(i,[]),ws=weights.getElement(i,[]);
-        let p=new Vector3();for(let k=0;k<ws.length;k++)if(ws[k])p.add(skinPoint(raw,js[k],ws[k]));
-        const after=apply(p,js,ws);out.setElement(i,after.toArray());
-        if(nout&&normal){const n=new Vector3().fromArray(normal.getElement(i,[])),eps=1e-4,cols=[new Vector3(eps,0,0),new Vector3(0,eps,0),new Vector3(0,0,eps)].map(d=>apply(p.clone().add(d),js,ws).sub(after).divideScalar(eps));const jac=new Matrix3().set(cols[0].x,cols[1].x,cols[2].x,cols[0].y,cols[1].y,cols[2].y,cols[0].z,cols[1].z,cols[2].z).invert().transpose();nout.setElement(i,n.applyMatrix3(jac).normalize().toArray());}
+import { measureFigure } from '../assets/figure-proportions';
+import { keys, measureBuild } from './anatomy';
+import { planBuild, slimBuild } from './deform';
+import { headReference } from './head-reference';
+const baseline = '53949e814', rollout = process.argv.includes('--rollout'), planOnly = process.argv.includes('--plan');
+const original = (path: string) => execFileSync('git', ['show', `${baseline}:${path}`], { maxBuffer: 64 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] });
+const sha = (b: Uint8Array) => createHash('sha256').update(b).digest('hex');
+const oldDefs = JSON.parse(original('src/assets/manifest.json').toString()) as AssetDef[];
+const manifest = JSON.parse(original('src/assets/manifest.json').toString()) as AssetDef[];
+const census = JSON.parse(readFileSync('docs/reports/q249/rollout/census.json', 'utf8')) as { rows: { id: string; rootName?: string; child?: boolean }[] };
+const ids = rollout ? [...new Set(census.rows.filter(r => !r.child && !/alpha|brute|bloated/.test(r.id)).map(r => r.id))] : ['npc.civilian-man-a', 'npc.civilian-woman-a'];
+const io = await assetIO(), heroine = await io.read('public/assets/models/char.courier-female.skin.glb'), target = measureBuild(heroine).ratios, caps = measureFigure(heroine).ratios;
+const maleProfile = planBuild(measureBuild(await io.readBinary(original(oldDefs.find(d => d.id === 'npc.civilian-man-a')!.glb))).ratios, target);
+const bakes = JSON.parse(original('src/assets/civilianBakes.json').toString()) as Record<string, string>, receipts = [];
+const report = `docs/reports/slim/${rollout ? 'rollout' : 'pilot'}`; mkdirSync(report, { recursive: true });
+for (const id of ids.filter(id => !process.env.SLIM_IDS || process.env.SLIM_IDS.split(',').includes(id))) {
+  const old = oldDefs.find(d => d.id === id)!, def = manifest.find(d => d.id === id)!;
+  const paths = [...new Set([old.sourceGlb!, old.glb, ...Object.values(old.lods ?? {}), ...[old.glb, ...Object.values(old.lods ?? {})].map(p => p.replace('.glb', '.low.glb')), ...(id === 'char.courier-male' ? ['assets/char.courier-male-skin/model.skin.glb', 'public/assets/models/char.courier-male.skin.glb', 'public/assets/models/char.courier-male.skin.low.glb'] : [])])];
+  const files = [], outputs = new Map<string, string>();
+  for (const path of paths) {
+    let input: Buffer; try { input = original(path); } catch { continue; }
+    const doc = await io.readBinary(input), images = doc.getRoot().listTextures().map(t => sha(t.getImage()!));
+    const roots = id === 'npc.survivor-group' ? census.rows.filter(r => r.id === id).map(r => r.rootName) : [undefined];
+    const figures = [];
+    for (const rootName of roots) {
+      const before = measureBuild(doc, rootName), plan = id === 'inf.crawler' ? { ...maleProfile } : planBuild(before.ratios, target);
+      plan.shoulderReference = headReference(path, rootName);
+      // Skin blends and a protected shoulder rim attenuate a torso contraction.
+      // Solve against the resulting visible envelope from the unchanged input.
+      for (let pass = 0; pass < (id === 'inf.crawler' ? 0 : 6); pass++) {
+        const trial = await io.readBinary(input), sample = slimBuild(trial, plan, rootName).after;
+        let changed = false;
+        if (!plan.shoulderGuard && measureFigure(trial, rootName, plan.shoulderReference).ratios.headShoulder > caps.headShoulder * 1.1 + 1e-5) {
+          plan.shoulderGuard = true; continue;
+        }
+        for (const k of ['torsoWidth', 'torsoDepth'] as const) {
+          if (before.ratios[k] <= target[k] * 1.15 || sample.ratios[k] <= target[k] * 1.145) continue;
+          const response = (before.ratios[k] - sample.ratios[k]) / (1 - plan[k]);
+          if (!(response > 0)) continue;
+          plan[k] = Math.max(.01, plan[k] - (sample.ratios[k] - target[k] * 1.12) / response); changed = true;
+        }
+        if (!changed) break;
       }
-      prim.setAttribute('POSITION',out);if(nout)prim.setAttribute('NORMAL',nout);
+      const result = slimBuild(doc, plan, rootName), head = measureFigure(doc, rootName, plan.shoulderReference);
+      if (id !== 'inf.crawler' && (head.ratios.headHeight > caps.headHeight * 1.1 + 1e-5 || head.ratios.headShoulder > caps.headShoulder * 1.1 + 1e-5)) throw Error(`${id} ${path}: q249 cap changed ${JSON.stringify({reference:plan.shoulderReference,guard:plan.shoulderGuard,head:head.ratios,baseline:measureFigure(await io.readBinary(input),rootName,plan.shoulderReference).ratios})}`);
+      if (Math.abs(result.before.heightM - result.after.heightM) > 1e-5) throw Error(`${id} ${path}: height changed`);
+      figures.push({ rootName, ...result });
     }
+    if (JSON.stringify(images) !== JSON.stringify(doc.getRoot().listTextures().map(t => sha(t.getImage()!)))) throw Error('Texture bytes changed');
+    await doc.transform(prune({ keepLeaves: true, keepAttributes: true }));
+    const pilot = ['npc.civilian-man-a', 'npc.civilian-woman-a'].includes(id);
+    const output = pilot ? path === old.sourceGlb ? `assets/${id}/model.slim.skin.glb` : `public/assets/models/slim-pilot/${id}.${path.split('/').at(-1)!.split('.').slice(-2).join('.')}` : path;
+    // Preserve lodN.low names; source inputs use the dedicated source path above.
+    const finalOutput = pilot && path !== old.sourceGlb ? `public/assets/models/slim-pilot/${id}.${/lod[012](?:\.low)?\.glb$/.exec(path)?.[0] ?? path.split('/').at(-1)}` : output;
+    mkdirSync(finalOutput.slice(0, finalOutput.lastIndexOf('/')), { recursive: true }); if (!planOnly) await io.write(finalOutput, doc); outputs.set(path, finalOutput);
+    if (path === old.glb) { const body = doc.getRoot().listNodes().find(n => n.getName() === 'skin_body') ?? doc.getRoot().listScenes()[0]; const b = getBounds(body); def.dimensions = { ...def.dimensions, x: b.max[0] - b.min[0], y: b.max[1] - b.min[1], z: b.max[2] - b.min[2] }; }
+    files.push({ input: path, output: finalOutput, texturesUnchanged: true, figures });
   }
-  for(const skin of doc.getRoot().listSkins()){const matrices=new Float32Array(skin.listJoints().length*16);skin.listJoints().forEach((joint,i)=>new Matrix4().fromArray(joint.getWorldMatrix()).invert().toArray(matrices,i*16));skin.setInverseBindMatrices(skin.getInverseBindMatrices()!.clone().setArray(matrices));}
-  return f;
+  def.sourceGlb = outputs.get(old.sourceGlb!)!; def.glb = outputs.get(old.glb)!; def.lods = Object.fromEntries(Object.entries(old.lods ?? {}).map(([lod, path]) => [lod, outputs.get(path)!]));
+  if (!planOnly && def.crowdSkin) Object.assign(bakes, await skinCrowdBakes(def));
+  receipts.push({ id, files }); console.log('BUILT', id, files.length);
+  writeFileSync(`${report}/${planOnly ? 'plan' : 'build'}.json`, JSON.stringify({ baseline, target, keys, receipts }, null, 2) + '\n');
 }
-const io=await assetIO(),outDir='public/assets/models/slim-pilot';mkdirSync(outDir,{recursive:true});mkdirSync('docs/reports/slim/pilot/input',{recursive:true});
-const receipt=[];
-for(const id of ['npc.civilian-man-a','npc.civilian-woman-a']){
-  const def=manifest.find(d=>d.id===id)!;const original=[def.sourceGlb!,def.glb,...Object.values(def.lods??{}),...[def.glb,...Object.values(def.lods??{})].map(p=>p.replace('.glb','.low.glb')).filter(existsSync)];const prepared=[];
-  for(const input of [...new Set(original)]){
-    const d=await io.read(input);writeFileSync(`docs/reports/slim/pilot/input/${id}.${input.split('/').at(-1)}`,readFileSync(input));const scale=deform(d,id);await d.transform(prune({keepLeaves:true,keepAttributes:true}));
-    const output=input===def.sourceGlb?`assets/${id}/model.slim.skin.glb`:`${outDir}/${id}.${input.split('/').at(-1)}`;mkdirSync(output.slice(0,output.lastIndexOf('/')),{recursive:true});await io.write(output,d);if(input===def.glb){const body=d.getRoot().listNodes().find(n=>n.getName()==='skin_body');if(body){const b=getBounds(body);def.dimensions={...def.dimensions,x:b.max[0]-b.min[0],y:b.max[1]-b.min[1],z:b.max[2]-b.min[2]};}}prepared.push({input,output,scale});
-  }
-  def.sourceGlb=`assets/${id}/model.slim.skin.glb`;def.glb=`${outDir}/${id}.${def.glb.split('/').at(-1)}`;def.lods=Object.fromEntries(Object.entries(def.lods??{}).map(([k,v])=>[k,`${outDir}/${id}.${v.split('/').at(-1)}`]));
-  receipt.push({id,scale:factors(id),files:prepared});
-}
-writeFileSync('src/assets/manifest.json',JSON.stringify(manifest,null,2)+'\n');
-const bakes=JSON.parse(readFileSync('src/assets/civilianBakes.json','utf8'));for(const item of receipt)Object.assign(bakes,await skinCrowdBakes(manifest.find(d=>d.id===item.id)!));writeFileSync('src/assets/civilianBakes.json',JSON.stringify(bakes,null,2)+'\n');
-writeFileSync('docs/reports/slim/pilot/build.json',JSON.stringify({heroine:target,receipt},null,2)+'\n');console.log(JSON.stringify(receipt.map(r=>({id:r.id,scale:r.scale,files:r.files.length}))));
+if (!planOnly) writeFileSync('src/assets/manifest.json', JSON.stringify(manifest, null, 2) + '\n');
+if (!planOnly) writeFileSync('src/assets/civilianBakes.json', JSON.stringify(bakes, null, 2) + '\n');
