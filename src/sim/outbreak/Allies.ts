@@ -300,7 +300,7 @@ function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point): bo
     return true;
   }
   // E08 corgi/escort band: keep walking while the leader walks, avoiding repeated stop/start response delays.
-  if (d > f.maxM || (moving && d > f.minM)) {
+  if (d > f.maxM || (moving && d > f.minM) || !moving) {
     // E08 shared NPC movement uses the same obstacle routing/steering as corgi and survivor escorts.
     // Slots trail the courier's facing, leaving her walking line clear even when she changes avenue.
     const forward = world.entities.get(f.targetId)!.transform.yaw;
@@ -308,8 +308,18 @@ function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point): bo
     const slot = { x: p.x - Math.cos(forward) * behind + Math.sin(forward) * side,
       z: p.z + Math.sin(forward) * behind + Math.cos(forward) * side };
     const nav = world.infected!.nav;
-    // Around a wreck, follow the courier's reachable line rather than routing to a slot on its far face.
-    const goal = d <= 10 && nav.clear(slot.x, slot.z, .4) && nav.visible(e.transform, slot, .4) && nav.visible(slot, p, .4) ? slot : p;
+    // Settle into individual spots even after the courier stops. Sending every
+    // blocked slot to her feet left the pull-back squad packed over the van.
+    let goal: Point = p;
+    if (d <= 10) {
+      const candidates = [slot], seed = f.slot * 2.399963229728653;
+      for (let ring = 0; ring < 3; ring++) for (let ray = 0; ray < 8; ray++) {
+        const angle = seed + ray * Math.PI / 4, radius = .8 + ring * .7;
+        candidates.push({ x: slot.x + Math.cos(angle) * radius, z: slot.z + Math.sin(angle) * radius });
+      }
+      goal = candidates.find(point => nav.clear(point.x, point.z, .4) && world.solids.clear({ ...point, y: e.transform.y }, .4, e.id)
+        && nav.visible(e.transform, point, .4) && nav.visible(point, p, .4)) ?? p;
+    }
     if (!world.npcs!.move(e, goal, d > f.maxM + 2 ? f.moveMs : f.moveMs * .9, e.civilian!, goal === p ? f.minM : .5))
       world.npcs!.move(e, p, f.moveMs, e.civilian!, f.minM);
   }
