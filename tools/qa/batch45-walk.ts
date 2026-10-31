@@ -28,7 +28,7 @@ try {
       a.teleport(1, { x: start[0], z: start[1] }); a.resume(); await a.screenshotReady();
     }, { level, start: leg.start });
     for (let i = 0; i < 4; i++) { console.log(JSON.stringify({ level, at: await s.page.evaluate(() => { const h = window.__SS__!.getEntity(1)!.transform; return [+h.x.toFixed(1), +h.z.toFixed(1)]; }) })); await new Promise(r => setTimeout(r, 500)); }
-    const t0 = Date.now(); let stalls = 0, travelled = 0;
+    const t0 = Date.now(); let stalls = 0;
     for (const [i, wp] of leg.path.entries()) {
       let last = { x: 0, z: 0, t: Date.now() }, reached = false;
       const legT = Date.now();
@@ -46,7 +46,7 @@ try {
         if (Math.abs(st.dy) / L > .38) k.push(st.dy > 0 ? 'KeyS' : 'KeyW');
         await press(k);
         if (Math.random() < .03) console.log(JSON.stringify({ level, pos: [+st.x.toFixed(1), +st.z.toFixed(1)], wp, dx: +st.dx.toFixed(2), dy: +st.dy.toFixed(2) }));
-        if (Math.hypot(st.x - last.x, st.z - last.z) > .5) { travelled += Math.hypot(st.x - last.x, st.z - last.z); last = { x: st.x, z: st.z, t: Date.now() }; }
+        if (Math.hypot(st.x - last.x, st.z - last.z) > .5) { last = { x: st.x, z: st.z, t: Date.now() }; }
         else if (Date.now() - last.t > 2500) { stalls++; console.log(JSON.stringify({ level, stall: { x: +st.x.toFixed(1), z: +st.z.toFixed(1) }, wp })); last.t = Date.now(); }
         await new Promise(r => setTimeout(r, 120));
       }
