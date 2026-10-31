@@ -9,13 +9,13 @@ import { l6, l6Doors } from '../data/l6';
 import { cureRoadsideBelt } from './L10/roadsideBelt';
 import type { DistrictId, Placement } from './districts/types';
 
-type Spot = { asset: string; x: number; z: number; y?: number; yaw?: number; scale?: number };
+type Spot = { id?: string; asset: string; x: number; z: number; y?: number; yaw?: number; scale?: number };
 
 const placement = (district: string, i: number, s: Spot): Placement => {
   const d = worldAssets[s.asset]; if (!d) throw new Error(`Unregistered decor asset ${s.asset}`);
   const k = s.scale ?? 1, yaw = s.yaw ?? 0, y = s.y ?? 0, c = Math.abs(Math.cos(yaw)), n = Math.abs(Math.sin(yaw));
   const hx = (c * d.dimensions.x + n * d.dimensions.z) * k / 2, hz = (n * d.dimensions.x + c * d.dimensions.z) * k / 2;
-  return { id: `decor-${district}-${i}`, assetId: s.asset, position: [s.x, y, s.z], yaw, scale: [k, k, k], minTier: 0, maxTier: 6, allowRoad: true,
+  return { id: s.id ?? `decor-${district}-${i}`, assetId: s.asset, position: [s.x, y, s.z], yaw, scale: [k, k, k], minTier: 0, maxTier: 6, allowRoad: true,
     lightGroup: 'decor', decor: true, visualAabb: { min: [s.x - hx, y, s.z - hz], max: [s.x + hx, y + d.dimensions.y * k, s.z + hz] } };
 };
 
@@ -68,6 +68,15 @@ function subwayDecor(): Spot[] {
     { asset: 'prop.traffic-cone', x: 280.8, z: 12.2, y: L6Y.street, yaw: .5 },
     { asset: 'prop.shopping-cart', x: 279.5, z: 18.5, y: L6Y.street, yaw: 2.4 }, { asset: 'prop.crates', x: 272.5, z: 9.8, y: L6Y.street, yaw: .9 },
     { asset: 'prop.broken-chair', x: 266.5, z: 12.6, y: L6Y.street, yaw: 1.4 }, { asset: 'prop.medical-cooler', x: 284.5, z: 13.2, y: L6Y.street, yaw: 2 });
+  // Exit apron: a last rest stop, abandoned road supplies, and luggage by the
+  // burned cart. Existing small assets stay on the sides of the central walk.
+  for (const [i, [asset, x, z, yaw, scale]] of ([
+    ['prop.folding-chair', 260.2, 23, -.7, 1], ['prop.carpet', 258.9, 24.2, .3, .65],
+    ['prop.medical-cooler', 261.5, 24.1, .8, .85],
+    ['prop.crates', 272.1, 6.9, .2, 1], ['prop.pallet', 274.7, 6.2, -.4, 1],
+    ['decay.dropped-belongings', 275.4, 8.2, 1.8, .7],
+    ['prop.broken-chair', 284.4, 23.6, 1.2, .8], ['prop.pallet', 282.5, 24.4, .5, .8],
+  ] as const).entries()) out.push({ id: `decor-l6-exit-${i}`, asset, x, z, yaw, scale, y: L6Y.street });
   return out;
 }
 

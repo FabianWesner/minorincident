@@ -328,7 +328,7 @@ export function subwayAccents(origin: P2 = [0, 0]): AccentSet {
   // three spaced warm pools over the abandoned exit supplies and dark apron.
   for (const [i, [x, z]] of ([[258.5, 22], [273.5, 7.8], [283, 22]] as const).entries())
     put({ kind: 'storm-lantern', x, y: 4.14, z, yaw: i * 1.1, color: '#ffb35c', glow: 5, flicker: 1, strobe: false,
-      pool: { color: '#ff9a48', intensity: 5, range: 5.2 } });
+      pool: { color: '#ff9a48', intensity: 7.6, range: 7.4 } });
   fires.push({ x: 283 + origin[0], z: 8 + origin[1], radius: 1.4, car: true }, { x: 280.2 + origin[0], z: 21.2 + origin[1], radius: .8, car: false });
   return { points, fires };
 }
