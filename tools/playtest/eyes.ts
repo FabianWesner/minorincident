@@ -67,7 +67,7 @@ export function look(): Eyes {
   const liveTracker = q('objective-tracker');
   const tracker = shown(liveTracker) ? liveTracker : q('mission-tracker');
   const objective = q('objective-text');
-  const trackerText = shown(tracker) ? tracker!.textContent ?? '' : '';
+  const trackerText = shown(tracker) ? tracker!.innerText : '';
   const distanceText = trackerText.match(/(?:^| · )(\d+(?:\.\d+)?)\s*m\b/);
   const ringPrompt = shown(q('interaction-ring')) ? q('interaction-ring')!.textContent ?? 'ring' : '';
   const trackerPrompt = shown(objective) ? objective!.textContent ?? '' : shown(tracker) ? tracker!.textContent ?? '' : '';
