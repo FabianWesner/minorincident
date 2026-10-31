@@ -75,12 +75,68 @@ def ray_flags(body, bm, thick):
         if hit[3] < thick + .004 or hit[1].dot(n) > 0: out.add(f.index)
     return out
 
-def cut_piece(body, field, thick, keep='largest', min_share=.15):
-    """Copy of the welded body, cut along field == 0, keeping faces with field >= 0. Returns a bmesh (vertices on the skin)."""
-    bm = body.bm.copy()
+def envelope(body, centre, skip, el=(-72, 84), step=3.0, close=4, jump=.02):
+    """Q-261: the outer hull of the body round `centre` as a clean (azimuth, elevation) grid, for a garment that must not copy the skin's
+    folds. The heroine's TRELLIS shirt is folded and layered (inner shells, sleeve flaps), so a vest cut from her own surface came out
+    crumpled, with shards at the hem. Each grid ray comes in from outside towards `centre` and stops at the first outward-facing body
+    face that `skip` does not reject (her hair: the vest runs under it; an arm in front of the side is hit and cut out with its own
+    weights, so the side opens under the arm instead of wrapping into the armpit); that face's skin weights go onto the grid vertex, so
+    the piece field (torso ownership, bag, head) still decides what is cut. A few closing passes (r = max(r, mean of the 4-ring)) bridge
+    the fold crevices, so the hull never dips into the skin and never lies under it. Returns a bmesh like body.bm (with a deform layer)."""
+    bm0 = body.bm; bm0.faces.ensure_lookup_table(); bvh = BVHTree.FromBMesh(bm0)
+    deform0 = bm0.verts.layers.deform.active
+    na = int(round(360 / step)); els = np.arange(el[0], el[1] + 1e-6, step); ne = len(els)
+    R = np.full((ne, na), np.nan); F = [[None] * na for _ in range(ne)]
+    for i, e in enumerate(els):
+        for j in range(na):
+            az = math.radians(j * step); ce = math.cos(math.radians(e))
+            d = Vector((ce * math.cos(az), ce * math.sin(az), math.sin(math.radians(e))))
+            o = centre + d * .6; dist = 0.0
+            while dist < .6:
+                hit = bvh.ray_cast(o, -d, .6 - dist)
+                if hit[0] is None: break
+                f = bm0.faces[hit[2]]
+                if hit[1].dot(d) > 0 and not skip(f):
+                    R[i, j] = (hit[0] - centre).length; F[i][j] = f; break
+                step_in = (hit[0] - o).length + 1e-4; o = o - d * step_in; dist += step_in
+    for _ in range(close):   # closing: fill crevices between folds (never lowers the hull)
+        nb = np.stack([np.roll(R, 1, 1), np.roll(R, -1, 1), np.vstack([R[:1], R[:-1]]), np.vstack([R[1:], R[-1:]])])
+        R = np.where(np.isnan(R), R, np.clip(np.nanmean(nb, 0), R, R + .004))   # at most 4 mm a pass: a fold, not the armpit
+    bm = bmesh.new(); deform = bm.verts.layers.deform.verify()
+    grid = [[None] * na for _ in range(ne)]
+    for i, e in enumerate(els):
+        for j in range(na):
+            if np.isnan(R[i, j]): continue
+            az = math.radians(j * step); ce = math.cos(math.radians(e))
+            d = Vector((ce * math.cos(az), ce * math.sin(az), math.sin(math.radians(e))))
+            v = bm.verts.new(centre + d * R[i, j]); grid[i][j] = v
+            # skin weights of the nearest body vertex (on the surface under the hull, not the hair or bag face the ray grazed)
+            p = v.co; near = bm0.faces[bvh.find_nearest(p)[2]]; src = min(near.verts, key=lambda q: (q.co - p).length)
+            for g, w in src[deform0].items(): v[deform][g] = w
+    for i in range(ne - 1):
+        for j in range(na):
+            a, b, c, d_ = grid[i][j], grid[i][(j + 1) % na], grid[i + 1][(j + 1) % na], grid[i + 1][j]
+            for tri in ((a, b, c), (a, c, d_)):
+                # a jump in the hull (ray passing a strand of hair or the armpit) is a wall, not cloth: leave it open
+                if all(tri) and len(set(tri)) == 3 and max((q.co - centre).length for q in tri) - min((q.co - centre).length for q in tri) < jump:
+                    bm.faces.new(tri)
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+    # outward = away from the centre
+    bm.normal_update()
+    if sum((f.calc_center_median() - centre).dot(f.normal) for f in bm.faces) < 0: bmesh.ops.reverse_faces(bm, faces=bm.faces)
+    bm.normal_update()
+    return bm
+
+def cut_piece(body, field, thick, keep='largest', min_share=.15, src=None):
+    """Copy of the welded body (or of `src`, an envelope), cut along field == 0, keeping faces with field >= 0. Returns a bmesh
+    (vertices on the skin)."""
+    bm = (src or body.bm).copy()
     deform = bm.verts.layers.deform.active; body.deform = deform
     vals = {}
     for v in bm.verts: vals[v] = field(v.co, v, deform)
+    if src is not None:   # envelope: the ownership steps of the nearest skin vertex would cut a ragged rim; a few 1-ring passes round it
+        for _ in range(4):
+            vals = {v: (vals[v] * 2 + sum(vals[e.other_vert(v)] for e in v.link_edges)) / (2 + len(v.link_edges)) for v in bm.verts}
     # refine near the piece: long edges are split (twice) so the cut line and the bulge are smooth on the coarse limbs
     for _ in range(3):
         near = {v for v in bm.verts if vals[v] > -.03}
@@ -105,7 +161,7 @@ def cut_piece(body, field, thick, keep='largest', min_share=.15):
     bmesh.ops.triangulate(bm, faces=bm.faces)
     bm.normal_update()
     bm.faces.ensure_lookup_table()
-    hidden = ray_flags(body, bm, thick)
+    hidden = ray_flags(body, bm, thick) if src is None else set()   # the hull is outermost by construction
     drop = [f for f in bm.faces if any(vals.get(v, 0) < -1e-7 for v in f.verts) or all(vals.get(v, 0) <= 1e-7 for v in f.verts) or f.index in hidden]
     bmesh.ops.delete(bm, geom=drop, context='FACES')
     bmesh.ops.delete(bm, geom=[v for v in bm.verts if not v.link_faces], context='VERTS')
@@ -173,11 +229,11 @@ class Gear:
         self.verts = []   # dict(p=outer, a=anchor, inner, piece, f, n)
         self.tris = []    # (a, b, c, piece)
         self.tier_end = []; self.pieces = []; self.log = []
-    def add(self, kind, field, thick, ramp=.012, keep='largest', budget=100, params=None, rim=.016):
+    def add(self, kind, field, thick, ramp=.012, keep='largest', budget=100, params=None, rim=.016, src=None):
         # the low quality tier draws the same 6k body, so it gets the full gear: decimated to half, the low vest tore open and the gloves
         # read as faceted plates (PO plays low). LOD2 (not drawn by the game) is the silhouette copy.
         body = self.body
-        bm = cut_piece(body, field, thick, keep)
+        bm = cut_piece(body, field, thick, keep, src=src)
         surf = BVHTree.FromBMesh(bm)   # the cut patch on the outer skin: anchors snap to it, never to an inner shell
         bm = thin_boundary(bm, rim * (1, 1, 2.2)[self.lod])
         bm = decimate(bm, budget * (1, 1, .22)[self.lod] / max(1, len(bm.faces)))
@@ -233,18 +289,25 @@ class Gear:
         out = push(smooth(out, 3))
         base = len(self.verts)
         for i in range(len(verts)):
-            self.verts.append(dict(p=out[i], a=anchors[i], inner=0, piece=pid, f=fvals[i], n=nrm[i]))
+            # paint position: the skin anchor (the texture follows the body), but on a hull piece the outer face itself; its smoothing
+            # slides the outer vertices along the hull, and painting at the anchors bent the quilting lines into waves (Q-261)
+            self.verts.append(dict(p=out[i], a=anchors[i], q=out[i] if src is not None else anchors[i], inner=0, piece=pid, f=fvals[i], n=nrm[i]))
         for f, t in zip(bm.faces, tris):
             ids = [base + k for k in t]
             a, b, c = (self.verts[k]['p'] for k in ids)
             if (b - a).cross(c - a).dot(f.normal) < 0: ids[1], ids[2] = ids[2], ids[1]
             self.tris.append((*ids, pid))
         # rim wall: every open edge gets a strip down to a ring 3 mm inside the skin (`_inner` = 1, what the attachment guard measures)
+        # The ring sits on the BODY, not on the cut patch: where hidden faces were dropped and the hole filled (the palm under his curled
+        # fingers) or where an envelope bridges a fold, the patch anchor lies off the skin, and the ring hung 1.5 cm inside the fist
+        # (Q-268: courierAttachmentGapMaxCm 2.1 in the male t4 swing). Its weights then come from that skin point too.
         ring = {}
         for i in range(len(verts)):
             if boundary[i]:
                 ring[i] = len(self.verts)
-                self.verts.append(dict(p=anchors[i] - nrm[i] * INSET, a=anchors[i], inner=1, piece=pid, f=0.0, n=nrm[i]))
+                skin = body.bvh.find_nearest(anchors[i])[0]
+                a = skin if skin is not None and (skin - anchors[i]).length > .003 else anchors[i]
+                self.verts.append(dict(p=a - nrm[i] * INSET, a=a, inner=1, piece=pid, f=0.0, n=nrm[i]))
         for e in bm.edges:
             if not e.is_boundary: continue
             i, j = idx[e.verts[0]], idx[e.verts[1]]
@@ -305,7 +368,15 @@ def build_gear(body, lod):
     def vest(p, v, d):
         if v is None: return min(p.z - z0, (p - cn).length - rn, yA - abs(p.y))
         return min(p.z - z0, (p - cn).length - rn, yA - abs(p.y), (W(v, TORSO) - .55) * .08, (.03 - bagW(v)) * .5, (.35 - W(v, ['head'])) * .1)
-    g.add('vest', vest, .010 if not male else .009, ramp=.02, keep='big', params=dict(z0=z0, z1=nk.z), budget=620)
+    hull = None
+    if not male:   # Q-261: her vest is cut from the body's outer hull, not from her folded TRELLIS shirt (see envelope)
+        body.deform = body.bm.verts.layers.deform.active
+        tv = [v.co for v in body.bm.verts if W(v, TORSO) > .55 and z0 < v.co.z < nk.z]
+        centre = sum(tv, Vector()) / len(tv)
+        top = max(v.co.z for v in body.bm.verts if vest(v.co, v, None) >= 0) + .004   # her approved outline: no higher than the skin cut
+        hull = envelope(body, centre, lambda f: sum(W(q, ['head']) for q in f.verts) / len(f.verts) > .5)
+        cut = vest; vest = lambda p, v, d: min(cut(p, v, d), top - p.z)
+    g.add('vest', vest, .010 if not male else .009, ramp=.02, keep='big', params=dict(z0=z0, z1=nk.z), budget=620, src=hull)
     g.tier_mark()
 
     # ---- tier 3: shoulder pads, elbow pads, utility belt -------------------------------------------------------------
@@ -570,7 +641,7 @@ def bake(g, me, size):
     uv = me.uv_layers.active.data
     tri_uv = np.array([[uv[li].uv[:] for li in p.loop_indices] for p in me.polygons]) * size
     vids = np.array([list(p.vertices) for p in me.polygons])
-    P = np.array([v['a'][:] for v in g.verts]); Nn = np.array([v['n'][:] for v in g.verts]); Fv = np.array([v['f'] for v in g.verts])
+    P = np.array([v.get('q', v['a'])[:] for v in g.verts]); Nn = np.array([v['n'][:] for v in g.verts]); Fv = np.array([v['f'] for v in g.verts])
     piece = np.array([t[3] for t in g.tris])
     buf = np.zeros((size, size, 7), np.float32); pid = -np.ones((size, size), np.int32)
     for t in range(len(vids)):
