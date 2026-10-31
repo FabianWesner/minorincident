@@ -1,0 +1,622 @@
+{
+  "runtime": "f3b6cac63",
+  "branch": "lane/fix-scenes",
+  "commands": {
+    "npm test": {
+      "files": 26,
+      "tests": 110,
+      "passed": true
+    },
+    "npm run typecheck": {
+      "passed": true
+    },
+    "npm run lint": {
+      "passed": true
+    },
+    "npm run test:smoke": {
+      "qaTests": 6,
+      "publicTests": 1,
+      "passed": true
+    },
+    "npm run scene:gate": {
+      "passed": 48,
+      "failed": 0,
+      "known": 0,
+      "notRun": 0
+    },
+    "named isolated scenes": {
+      "passed": 46,
+      "failed": 0,
+      "tiers": [
+        "low",
+        "high"
+      ],
+      "zoom": [
+        1,
+        1.5
+      ]
+    }
+  },
+  "gate": [
+    {
+      "backend": "webgl2",
+      "name": "corpse-look-close@low-z1.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgl2",
+      "name": "courier-gear-tier4-female@low-z1.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgl2",
+      "name": "inf-attack-knockdown@low",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgl2",
+      "name": "inf-chase-l1@low-z1.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgl2",
+      "name": "l10-d2-military-breach@low-z0.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgl2",
+      "name": "l10-mega-close-contact@low-z1.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgl2",
+      "name": "mega-alpha-variants-lineup@low-z0.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgl2",
+      "name": "ped-bitten@low",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgl2",
+      "name": "ped-newchars-sit@low",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgl2",
+      "name": "ped-newchars-walk-1@low-z0.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgl2",
+      "name": "seat-bench-tipped@low",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgl2",
+      "name": "seethrough-gear-four@low-z1.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgpu",
+      "name": "corpse-look-alpha@high-z0.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgpu",
+      "name": "courier-gear-tier4-male@high-z0.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgpu",
+      "name": "fight-army-line-zoom06@high-z1.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgpu",
+      "name": "inf-chase-l3@high-z0.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgpu",
+      "name": "inf-mega-arrival@high-z0.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgpu",
+      "name": "ped-zoo-staff@high",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgpu",
+      "name": "seat-bench-l1-start@high-z1.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgpu",
+      "name": "wave3-zoo-routines@high-z1.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgl2",
+      "name": "alpha-hit-corpse-suit@high-z1.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgl2",
+      "name": "collision-vehicle-admission@high-z0.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgl2",
+      "name": "corgi-tongue-female@high-z1.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgl2",
+      "name": "courier-gear-tier2-female@high-z1.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgl2",
+      "name": "courier-locomotion-f@high-z1.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgl2",
+      "name": "courier-turns@high-z1.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgl2",
+      "name": "e18-courier-armed-male@high-z1.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgl2",
+      "name": "inf-horde-headwear@high-z1.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgl2",
+      "name": "l4-broken-army-line@high-z0.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgl2",
+      "name": "ped-hats-spots-l1@high-z0.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgl2",
+      "name": "ped-sit-all@high",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgl2",
+      "name": "ped-walk-all@high",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgl2",
+      "name": "ped-water-flowerbed@high",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgl2",
+      "name": "veh-bus-hero@high-z0.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgpu",
+      "name": "alpha-variants-close@low-z1.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgpu",
+      "name": "animal-zoo-healthy@low-z0.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgpu",
+      "name": "corpse-placement-pile@low-z0.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgpu",
+      "name": "courier-gear-tier4-swing-female@low-z0.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgpu",
+      "name": "dog-pet-trot@low-z1.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgpu",
+      "name": "e18-courier-armed-female@low-z0.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgpu",
+      "name": "inf-looks@low",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgpu",
+      "name": "ped-hats-glasses@low-z1.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgpu",
+      "name": "ped-l1-staged-cast@low-z1.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgpu",
+      "name": "ped-sit-all@low",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgpu",
+      "name": "ped-walk-all@low",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgpu",
+      "name": "seat-grip-coffee-game@low-z1.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgpu",
+      "name": "seethrough-open-sidewalk-l4@low-z0.5",
+      "pass_": true,
+      "failed": []
+    },
+    {
+      "backend": "webgpu",
+      "name": "veh-apc-damage-250@low-z1.5",
+      "pass_": true,
+      "failed": []
+    }
+  ],
+  "isolated": [
+    {
+      "name": "alphas-at-the-tank@low-z1",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "alphas-at-the-tank@low-z1.5",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "collision-tank-admission@low-z1",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "collision-tank-admission@low-z1.5",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l10-mega-close-contact@low-z1",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l10-mega-close-contact@low-z1.5",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l3-army-inner-cover@low-z1",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l3-army-inner-cover@low-z1.5",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l3-army-occupied-boom@low-z1",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l3-army-occupied-boom@low-z1.5",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l4-corpses-persist@low-z1",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l4-corpses-persist@low-z1.5",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l4-infected-get-up@low-z1",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l4-infected-get-up@low-z1.5",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l5-po-metro-ingress@low-z1",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l5-po-metro-ingress@low-z1.5",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "ped-hats-glasses-close@low",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "qa-l6-shelter-reveal@low-z1",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "qa-l6-shelter-reveal@low-z1.5",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "alphas-at-the-tank@high-z1",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "alphas-at-the-tank@high-z1.5",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "collision-tank-admission@high-z1",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "collision-tank-admission@high-z1.5",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l10-mega-close-contact@high-z1",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l10-mega-close-contact@high-z1.5",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l3-army-inner-cover@high-z1",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l3-army-inner-cover@high-z1.5",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l3-army-occupied-boom@high-z1",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l3-army-occupied-boom@high-z1.5",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l4-corpses-persist@high-z1",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l4-corpses-persist@high-z1.5",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l4-infected-get-up@high-z1",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l4-infected-get-up@high-z1.5",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l5-po-metro-ingress@high-z1",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l5-po-metro-ingress@high-z1.5",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "ped-hats-glasses-close@high",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "qa-l6-shelter-reveal@high-z1",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "qa-l6-shelter-reveal@high-z1.5",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l8-apc-companion@low-z1",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l8-apc-companion@low-z1.5",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l8-apc-transport@low-z1",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l8-apc-transport@low-z1.5",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l8-apc-companion@high-z1",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l8-apc-companion@high-z1.5",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l8-apc-transport@high-z1",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    },
+    {
+      "name": "l8-apc-transport@high-z1.5",
+      "passed": true,
+      "failed": [],
+      "errors": 0
+    }
+  ],
+  "fixtureCorrection": {
+    "commit": "bbb6208a7",
+    "file": "tests/scenes/l8-apc/companion.json",
+    "reason": "Original frame-zero corgi boarding conflicts with courier occupying the doorway. Existing fixture now approaches and boards after driver entry; all four tier/zoom rows pass.",
+    "runtimeChanged": false
+  },
+  "unitAndFixtureRevision": "bbb6208a7",
+  "cleanup": {
+    "taskCacheRemoved": true,
+    "privateQaPreviewRemoved": true,
+    "ownedBrowserContexts": 0,
+    "privateBrowserProfilesCreated": 0,
+    "freeDiskGiB": 16
+  }
+}

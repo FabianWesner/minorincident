@@ -1,0 +1,36 @@
+
+> test:smoke
+> node tools/qa/test-budget.mjs --name smoke --max-seconds 240 -- sh tools/qa/smoke.sh
+
+[test-budget] 150/150 test cases ({"vitest":129,"e2e":9,"invariantsBrowser":12}), 42/45 files
+
+> build:qa
+> NODE_ENV=production VITE_QA_HOOKS=1 sh tools/build-cached.sh
+
+Reused production dist for tree 870e45f6cea90984391bc54dcc2a0dd50f257048 (apfs clone)
+
+Running 6 tests using 2 workers
+
+[gpu-limits] webgl: 472 programs, 66 crowd; crowd max attributes 13, varyings 14, buffers 0; all max attributes 13, varyings 14, buffers 0
+  ✓  2 [chromium] › tests/e2e/crowd-gpu-limits.spec.ts:19:52 › every crowd, corpse and accessory program compiles within the portable GPU limits on webgl @smoke (1.2m)
+[gpu-limits] webgpu: 713 programs, 81 crowd; crowd max attributes 13, varyings 14, buffers 5; all max attributes 13, varyings 14, buffers 8
+  ✓  1 [chromium] › tests/e2e/crowd-gpu-limits.spec.ts:19:52 › every crowd, corpse and accessory program compiles within the portable GPU limits on webgpu @smoke (1.2m)
+  ✓  4 [chromium] › tests/e2e/smoke.spec.ts:138:54 › L1 start: pedestrians are drawn on screen (webgl), not only their props @smoke (20.5s)
+  ✓  3 [chromium] › tests/e2e/smoke.spec.ts:38:1 › L1 handover + outbreak: no shader builds after warm-up and no frame over 200 ms @smoke (32.3s)
+  ✓  6 [chromium] › tests/e2e/webgpu-unflagged.spec.ts:12:1 › menu → L1 start on unflagged WebGPU compiles every render pipeline with suit zombies drawn (low tier) @smoke (7.3s)
+  ✓  5 [chromium] › tests/e2e/smoke.spec.ts:138:54 › L1 start: pedestrians are drawn on screen (webgpu), not only their props @smoke (20.2s)
+
+  6 passed (1.9m)
+
+> build
+> NODE_ENV=production sh tools/build-cached.sh
+
+Reused production dist for tree 870e45f6cea90984391bc54dcc2a0dd50f257048 (apfs clone)
+[public-build] PASS: 18 HTML/JS files contain no QA hooks
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/e2e/smoke.spec.ts:15:1 › public build: menu start draws L1 and exposes no QA globals @public-smoke (5.0s)
+
+  1 passed (5.7s)
+[test-budget] smoke: 127.1 s (budget 240 s)
