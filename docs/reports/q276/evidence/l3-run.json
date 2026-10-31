@@ -1,0 +1,113 @@
+{
+  "source": "ea6507302",
+  "run": {
+    "level": "L3",
+    "entry": "debug",
+    "heroine": "female",
+    "finished": false,
+    "skipped": [],
+    "wallSeconds": 460,
+    "simSeconds": 455,
+    "maxNoProgressSeconds": 90.06666666666666,
+    "deaths": 2,
+    "assists": 0,
+    "attacks": {},
+    "weaponsStart": [
+      "weapon.fire-axe",
+      "weapon.bat",
+      "ability.corgi-lure"
+    ],
+    "weaponsEnd": [
+      "weapon.fire-axe",
+      "weapon.bat",
+      "weapon.handgun",
+      "ability.corgi-lure"
+    ],
+    "steps": [
+      {
+        "id": "armory",
+        "text": "Take a handgun from the armory \u00b7 19\u00a0m",
+        "tick": 17,
+        "marker": {
+          "anchor": "l3-armory",
+          "ring": {
+            "x": -139.2,
+            "y": 0.7049999833106995,
+            "z": -8.4
+          },
+          "drawn": [
+            -139.2,
+            0.05,
+            -8.4
+          ],
+          "playerY": 0.7049999833106995,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "defend",
+        "text": "Help defend the station \u00b7 11\u00a0m",
+        "tick": 813,
+        "marker": {
+          "anchor": "l3-armory",
+          "ring": null,
+          "drawn": null,
+          "playerY": 0.7049999833106995,
+          "pinVisible": false
+        }
+      },
+      {
+        "id": "checkpoint",
+        "text": "Get inside the army checkpoint \u00b7 364\u00a0m",
+        "tick": 1509,
+        "marker": {
+          "anchor": "l3-route",
+          "ring": {
+            "x": -129.25,
+            "y": 0.7200000286102295,
+            "z": -8.25
+          },
+          "drawn": [
+            -125.75,
+            0.13,
+            -4.25
+          ],
+          "playerY": 0.7200000286102295,
+          "pinVisible": true
+        }
+      }
+    ]
+  },
+  "lateBuilds": [],
+  "activeFramesOver200": [],
+  "issues": [
+    {
+      "level": "L3",
+      "tick": 23102,
+      "x": 143.7,
+      "z": -0.9,
+      "severity": "P2",
+      "kind": "stuck-at-ring",
+      "text": "20 s without objective progress standing at the ring (81.0 m); HUD: \"Get inside the army checkpoint \u00b7 81\u00a0m\"",
+      "captures": [
+        "captures/campaign-L3-23102-stuck-at-ring.jpg"
+      ],
+      "step": "checkpoint",
+      "objective": "Get inside the army checkpoint \u00b7 81\u00a0m"
+    },
+    {
+      "level": "L3",
+      "tick": 27298,
+      "x": 143.7,
+      "z": -0.9,
+      "severity": "P0",
+      "kind": "cannot-finish",
+      "text": "No visible progress for 90.1 s; stopping without advancing the objective",
+      "captures": [
+        "captures/campaign-L3-27298-cannot-finish.jpg"
+      ],
+      "step": "checkpoint",
+      "objective": "Get inside the army checkpoint \u00b7 81\u00a0m"
+    }
+  ]
+}

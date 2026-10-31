@@ -1,0 +1,545 @@
+[
+  {
+    "level": "L1",
+    "quality": "high",
+    "loadToBeginMs": 2453,
+    "run": {
+      "level": "L1",
+      "entry": "new",
+      "heroine": "female",
+      "finished": false,
+      "skipped": [],
+      "wallSeconds": 132,
+      "simSeconds": 130,
+      "maxNoProgressSeconds": 13.866666666666667,
+      "deaths": 1,
+      "assists": 0,
+      "attacks": {},
+      "weaponsStart": [],
+      "weaponsEnd": [
+        "weapon.bat",
+        "weapon.fists"
+      ],
+      "steps": [
+        {
+          "id": "pickup",
+          "text": "Pick up the package at the courier depot \u00b7 55\u00a0m",
+          "tick": 8,
+          "marker": {
+            "anchor": "parcel-counter",
+            "ring": {
+              "x": -37.8,
+              "y": 0.7049999833106995,
+              "z": -37.5
+            },
+            "drawn": [
+              -37.8,
+              0.05,
+              -37.5
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "deliver",
+          "text": "Deliver the package to the Medical Annex \u00b7 107\u00a0m",
+          "tick": 1448,
+          "marker": {
+            "anchor": "lab-door",
+            "ring": {
+              "x": 66,
+              "y": 0.7049999833106995,
+              "z": -12.3
+            },
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "weapon",
+          "text": "Find something to defend yourself \u00b7 63\u00a0m",
+          "tick": 5719,
+          "marker": {
+            "anchor": "garage-door",
+            "ring": {
+              "x": 22.8,
+              "y": 0.7049999833106995,
+              "z": 36.699999999999996
+            },
+            "drawn": [
+              22.8,
+              0.24,
+              36.7
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "firestation",
+          "text": "Get inside the fire station \u00b7 100\u00a0m",
+          "tick": 6832,
+          "marker": {
+            "anchor": "fire-bay-trigger",
+            "ring": {
+              "x": -76.6,
+              "y": 0.9700000286102295,
+              "z": 41.27
+            },
+            "drawn": null,
+            "playerY": 0.9700000286102295,
+            "pinVisible": true
+          }
+        }
+      ]
+    },
+    "issues": [],
+    "framesOver200": [],
+    "capture": "L1-high-play.jpg"
+  },
+  {
+    "level": "L4",
+    "quality": "high",
+    "loadToBeginMs": 7823.699999809265,
+    "run": {
+      "level": "L4",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": false,
+      "skipped": [],
+      "wallSeconds": 132,
+      "simSeconds": 126,
+      "maxNoProgressSeconds": 11.038,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.army-mg": 589,
+        "weapon.fire-axe": 7
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "steps": [
+        {
+          "id": "ride",
+          "text": "Ride into Fairhaven with the convoy \u00b7 57\u00a0m",
+          "tick": 12,
+          "marker": {
+            "anchor": "l4-plaza",
+            "ring": {
+              "x": -17,
+              "y": 0.7049999833106995,
+              "z": 3
+            },
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "quartermaster",
+          "text": "Report to the quartermaster \u00b7 10\u00a0m",
+          "tick": 1836,
+          "marker": {
+            "anchor": "l4-quartermaster",
+            "ring": {
+              "x": -23.2,
+              "y": 0.7049999833106995,
+              "z": 0.6
+            },
+            "drawn": [
+              -23.2,
+              0.05,
+              0.6
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "hold",
+          "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+          "tick": 2036,
+          "marker": {
+            "anchor": "l4-quartermaster",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.7179999947547913,
+            "pinVisible": false
+          }
+        }
+      ]
+    },
+    "issues": [
+      {
+        "level": "L4",
+        "tick": 5150,
+        "x": -30.1,
+        "z": 0.8,
+        "severity": "P2",
+        "kind": "enemy-frozen",
+        "text": "Infected #329 in state chase 7.5 m away has not moved for ~5 s",
+        "captures": [
+          "captures/L4-high-L4-5150-enemy-frozen.jpg"
+        ],
+        "step": "hold",
+        "objective": "Hold the west breach \u00b7 2:19 remaining \u00b7 6\u00a0m"
+      }
+    ],
+    "framesOver200": [],
+    "capture": "L4-high-play.jpg"
+  },
+  {
+    "level": "L10",
+    "quality": "high",
+    "loadToBeginMs": null,
+    "loadToFirstFrameMs": 6116.200000762939,
+    "run": {
+      "level": "L10",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": false,
+      "skipped": [],
+      "wallSeconds": 132,
+      "simSeconds": 127,
+      "maxNoProgressSeconds": 2.55,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.fire-axe": 1
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.fire-axe"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.fire-axe",
+        "weapon.pistol"
+      ],
+      "steps": [
+        {
+          "id": "residential-fringe",
+          "text": "Recover the handgun at the checkpoint \u00b7 221\u00a0m",
+          "tick": 4,
+          "marker": {
+            "anchor": "cure-residential",
+            "ring": {
+              "x": 767,
+              "y": 0.7049999833106995,
+              "z": 25
+            },
+            "drawn": [
+              767,
+              0,
+              25
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "industrial-area",
+          "text": "Recover the shotgun at the checkpoint \u00b7 490\u00a0m",
+          "tick": 3518,
+          "marker": {
+            "anchor": "cure-industrial",
+            "ring": {
+              "x": 1257,
+              "y": 0.7200000286102295,
+              "z": 25
+            },
+            "drawn": [
+              1257,
+              0,
+              25
+            ],
+            "playerY": 0.7200000286102295,
+            "pinVisible": true
+          }
+        }
+      ]
+    },
+    "issues": [],
+    "framesOver200": [],
+    "capture": "L10-high-play.jpg"
+  },
+  {
+    "level": "L1",
+    "quality": "low",
+    "loadToBeginMs": 2601.800000190735,
+    "loadToFirstFrameMs": null,
+    "run": {
+      "level": "L1",
+      "entry": "new",
+      "heroine": "female",
+      "finished": false,
+      "skipped": [],
+      "wallSeconds": 132,
+      "simSeconds": 130,
+      "maxNoProgressSeconds": 13.862,
+      "deaths": 1,
+      "assists": 0,
+      "attacks": {},
+      "weaponsStart": [],
+      "weaponsEnd": [
+        "weapon.bat",
+        "weapon.fists"
+      ],
+      "steps": [
+        {
+          "id": "pickup",
+          "text": "Pick up the package at the courier depot \u00b7 55\u00a0m",
+          "tick": 12,
+          "marker": {
+            "anchor": "parcel-counter",
+            "ring": {
+              "x": -37.8,
+              "y": 0.7049999833106995,
+              "z": -37.5
+            },
+            "drawn": [
+              -37.8,
+              0.05,
+              -37.5
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "deliver",
+          "text": "Deliver the package to the Medical Annex \u00b7 107\u00a0m",
+          "tick": 1773,
+          "marker": {
+            "anchor": "lab-door",
+            "ring": {
+              "x": 66,
+              "y": 0.7049999833106995,
+              "z": -12.3
+            },
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "weapon",
+          "text": "Find something to defend yourself \u00b7 63\u00a0m",
+          "tick": 6090,
+          "marker": {
+            "anchor": "garage-door",
+            "ring": {
+              "x": 22.8,
+              "y": 0.7049999833106995,
+              "z": 36.699999999999996
+            },
+            "drawn": [
+              22.8,
+              0.24,
+              36.7
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "firestation",
+          "text": "Get inside the fire station \u00b7 100\u00a0m",
+          "tick": 7122,
+          "marker": {
+            "anchor": "fire-bay-trigger",
+            "ring": {
+              "x": -76.6,
+              "y": 0.9700000286102295,
+              "z": 41.27
+            },
+            "drawn": null,
+            "playerY": 0.9700000286102295,
+            "pinVisible": true
+          }
+        }
+      ]
+    },
+    "issues": [],
+    "framesOver200": [],
+    "capture": "L1-low-play.jpg"
+  },
+  {
+    "level": "L4",
+    "quality": "low",
+    "loadToBeginMs": 6774.199999809265,
+    "loadToFirstFrameMs": 4382.10000038147,
+    "run": {
+      "level": "L4",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": false,
+      "skipped": [],
+      "wallSeconds": 132,
+      "simSeconds": 127,
+      "maxNoProgressSeconds": 12.116666666666667,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.army-mg": 523,
+        "weapon.fire-axe": 29
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "steps": [
+        {
+          "id": "ride",
+          "text": "Ride into Fairhaven with the convoy \u00b7 58\u00a0m",
+          "tick": 11,
+          "marker": {
+            "anchor": "l4-plaza",
+            "ring": {
+              "x": -17,
+              "y": 0.7049999833106995,
+              "z": 3
+            },
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "quartermaster",
+          "text": "Report to the quartermaster \u00b7 10\u00a0m",
+          "tick": 1836,
+          "marker": {
+            "anchor": "l4-quartermaster",
+            "ring": {
+              "x": -23.2,
+              "y": 0.7049999833106995,
+              "z": 0.6
+            },
+            "drawn": [
+              -23.2,
+              0.05,
+              0.6
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "hold",
+          "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+          "tick": 2033,
+          "marker": {
+            "anchor": "l4-quartermaster",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.7200000286102295,
+            "pinVisible": false
+          }
+        }
+      ]
+    },
+    "issues": [],
+    "framesOver200": [],
+    "capture": "L4-low-play.jpg"
+  },
+  {
+    "level": "L10",
+    "quality": "low",
+    "loadToBeginMs": null,
+    "loadToFirstFrameMs": 5699.699999809265,
+    "run": {
+      "level": "L10",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": false,
+      "skipped": [],
+      "wallSeconds": 132,
+      "simSeconds": 127,
+      "maxNoProgressSeconds": 1.015,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {},
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.fire-axe"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.fire-axe",
+        "weapon.pistol"
+      ],
+      "steps": [
+        {
+          "id": "residential-fringe",
+          "text": "Recover the handgun at the checkpoint \u00b7 221\u00a0m",
+          "tick": 10,
+          "marker": {
+            "anchor": "cure-residential",
+            "ring": {
+              "x": 767,
+              "y": 0.7049999833106995,
+              "z": 25
+            },
+            "drawn": [
+              767,
+              0,
+              25
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "industrial-area",
+          "text": "Recover the shotgun at the checkpoint \u00b7 490\u00a0m",
+          "tick": 3427,
+          "marker": {
+            "anchor": "cure-industrial",
+            "ring": {
+              "x": 1257,
+              "y": 0.7200000286102295,
+              "z": 25
+            },
+            "drawn": [
+              1257,
+              0,
+              25
+            ],
+            "playerY": 0.7200000286102295,
+            "pinVisible": true
+          }
+        }
+      ]
+    },
+    "issues": [],
+    "framesOver200": [],
+    "capture": "L10-low-play.jpg"
+  }
+]
