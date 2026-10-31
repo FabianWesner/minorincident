@@ -17,7 +17,7 @@ if (port === 3300) throw new Error('Scene Lab must not use the shared dev-server
 export const origin = `http://127.0.0.1:${port}`;
 export type Backend = 'webgl2' | 'webgpu';
 /** `query`: extra game URL parameters, e.g. { skin: '0' } for the rigid courier (A/B checks). */
-export interface SessionOptions { /** Pixel 7 touch emulation for phone timing. */ phone?: boolean; backend?: Backend; tier?: 'high' | 'low'; viewport?: { width: number; height: number }; seed?: number; query?: Record<string, string>; /** E18 native timing: Chrome without the refresh-rate ceiling (still headless). */ nativeFrameTiming?: boolean; log?: (line: string) => void }
+export interface SessionOptions { /** Pixel 7 touch emulation for phone timing. */ phone?: boolean; deviceScaleFactor?: number; backend?: Backend; tier?: 'high' | 'low'; viewport?: { width: number; height: number }; seed?: number; query?: Record<string, string>; /** E18 native timing: Chrome without the refresh-rate ceiling (still headless). */ nativeFrameTiming?: boolean; log?: (line: string) => void }
 
 let server: ChildProcess | null = null;
 let serverStarting: Promise<void> | undefined;
@@ -62,7 +62,7 @@ export class SceneSession {
   private guard!: ReturnType<typeof attachErrorGuard>;
   readonly options: Required<Omit<SessionOptions, 'log'>> & { log: (line: string) => void };
   constructor(options: SessionOptions = {}) {
-    this.options = { phone: options.phone ?? false, backend: options.backend ?? 'webgl2', tier: options.tier ?? 'high', viewport: options.viewport ?? { width: 1280, height: 720 }, seed: options.seed ?? 1, query: options.query ?? {}, nativeFrameTiming: options.nativeFrameTiming ?? false, log: options.log ?? (line => console.error(`[scene] ${line}`)) };
+    this.options = { phone: options.phone ?? false, deviceScaleFactor: options.deviceScaleFactor ?? 1, backend: options.backend ?? 'webgl2', tier: options.tier ?? 'high', viewport: options.viewport ?? { width: 1280, height: 720 }, seed: options.seed ?? 1, query: options.query ?? {}, nativeFrameTiming: options.nativeFrameTiming ?? false, log: options.log ?? (line => console.error(`[scene] ${line}`)) };
   }
   get errors(): string[] { return this.guard?.errors ?? []; }
   /** A supplied browser is borrowed: close() releases only this session's isolated context. */
@@ -75,7 +75,7 @@ export class SceneSession {
     if (process.env.SCENE_UNCAPPED === '1' || this.options.nativeFrameTiming) args.push(...uncappedArgs());
     this.ownsBrowser = !browser;
     this.browser = browser ?? await launchBrowser({ headless: true, args, ...(this.options.nativeFrameTiming ? { channel: 'chrome' } : {}) });
-    const context = await this.browser.newContext({ ...(this.options.phone ? devices['Pixel 7'] : {}), viewport: this.options.viewport, deviceScaleFactor: 1 });
+    const context = await this.browser.newContext({ ...(this.options.phone ? devices['Pixel 7'] : {}), viewport: this.options.viewport, deviceScaleFactor: this.options.deviceScaleFactor });
     this.context = context;
     this.page = await context.newPage();
     this.guard = attachErrorGuard(this.page);

@@ -53,7 +53,7 @@ for (const entry of build.receipts) for (const f of entry.files) {
     return { rootName, before: b.ratios, after: a.ratios, heightM: a.heightM, groundM: a.groundM, heads: { before: bh.ratios, after: ah.ratios } };
   });
   const oldVertices = surfacesOf(before).flatMap(s => s.vertices), vertices = surfacesOf(after).flatMap(s => s.vertices);
-  let fixedMaxM = 0; oldVertices.forEach((v, i) => { if (/^(head|neck|eye|iris|pony|hair|hand|weapon|backpack)/.test(v.owner)) fixedMaxM = Math.max(fixedMaxM, v.point.distanceTo(vertices[i].point)); });
+  let fixedMaxM = 0; oldVertices.forEach((v, i) => { if (/^(head|neck|eye|iris|pony|hair|hand|weapon)/.test(v.owner)) fixedMaxM = Math.max(fixedMaxM, v.point.distanceTo(vertices[i].point)); });
   assert.ok(fixedMaxM < 2e-5, `${f.output}: head/hand/prop surface changed ${fixedMaxM}`);
   rows.push({ id: entry.id, path: f.output, topologyAttributesWeightsUVsTexturesAndRigUnchanged: true, triangles, fixedMaxM, figures });
   } catch(error) { if (!process.env.SLIM_AUDIT_COLLECT) throw error; rows.push({id:entry.id,path:f.output,error:String(error)}); }

@@ -24,8 +24,18 @@ export function slimBuild(doc: Document, scales: Scales, rootName?: string) {
     const points = visible.filter(v => v.owner === `foot${side}` || v.owner === `toe${side}`).map(v => v.point);
     return [side, points.length ? { centre: new Vector3((Math.min(...points.map(p => p.x)) + Math.max(...points.map(p => p.x))) / 2, figure.ground, (Math.min(...points.map(p => p.z)) + Math.max(...points.map(p => p.z))) / 2) } : undefined];
   }));
+  const packs = visible.filter(v=>/^backpack/.test(v.owner));
+  const torsoPoints = visible.filter(v=>/^(hip|torso|spine|chest)$/.test(v.owner));
+  const backpackShift = new Vector3();
+  if(packs.length && torsoPoints.length) {
+    const ys=packs.map(v=>v.point.y).sort((a,b)=>a-b), xs=torsoPoints.map(v=>v.point.x).sort((a,b)=>a-b);
+    const y=Math.max(hip.y,Math.min(shoulder-figure.height*.04,ys[Math.floor(ys.length/2)]));
+    const x=xs[Math.floor(xs.length*.05)], fade=smooth((shoulder+figure.height*.02-y)/(figure.height*.12))*smooth((y-hip.y+figure.height*.25)/(figure.height*.25));
+    backpackShift.set((x-hip.x)*(scales.torsoDepth-1)*fade,0,0);
+  }
   const deform = (v: Vertex, p: Vector3) => {
-    if (/^(head|neck|eye|iris|pony|hair|hand|weapon|backpack)/.test(v.owner)) return p.clone();
+    if (/^backpack/.test(v.owner)) return p.clone().add(backpackShift);
+    if (/^(head|neck|eye|iris|pony|hair|hand|weapon)/.test(v.owner)) return p.clone();
     const result = p.clone();
     // Garment layers follow their authored body influences. Spatial arm
     // classification is for measurement, never a second deformation rule.
@@ -34,7 +44,8 @@ export function slimBuild(doc: Document, scales: Scales, rootName?: string) {
       if (!w) continue;
       if (/^(hip|torso|spine|chest)$/.test(name)) {
         const top = smooth((shoulder + figure.height * .02 - p.y) / (figure.height * .12));
-        const fade = top * (v.rigid ? smooth((p.y - hip.y) / (figure.height * .06)) : smooth((p.y - hip.y + figure.height * .25) / (figure.height * .25)));
+        const collar = v.rigid ? smooth((Math.min(p.distanceTo(joint('armL')),p.distanceTo(joint('armR')))-figure.height*.06)/(figure.height*.04)) : 1;
+        const fade = collar * top * (v.rigid ? smooth((p.y - hip.y) / (figure.height * .06)) : smooth((p.y - hip.y + figure.height * .25) / (figure.height * .25)));
         result.add(new Vector3((p.x - hip.x) * (scales.torsoDepth - 1), 0, (p.z - hip.z) * (scales.torsoWidth - 1)).multiplyScalar(w * fade));
         continue;
       }
@@ -68,7 +79,7 @@ export function slimBuild(doc: Document, scales: Scales, rootName?: string) {
   // UV and hard-normal splits must receive the same displacement at a shared
   // bind point, even where the exporter rounded their skin weights differently.
   const pointKey = (p: Vector3) => p.toArray().map(x => Math.round(x * 1e5)).join(',');
-  const isFixed = (v: Vertex) => /^(head|neck|eye|iris|pony|hair|hand|weapon|backpack)/.test(v.owner);
+  const isFixed = (v: Vertex) => /^(head|neck|eye|iris|pony|hair|hand|weapon)/.test(v.owner);
   const welded = new Map<string, { point: Vector3; count: number; fixed: boolean }>();
   for (const { vertices } of surfaces) for (const v of vertices) {
     const key = pointKey(v.point), entry = welded.get(key) ?? { point: new Vector3(), count: 0, fixed: false };

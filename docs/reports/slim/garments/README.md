@@ -4,9 +4,9 @@ The earlier rollout approval is superseded by this garment review. The orchestra
 
 ## Change
 
-Spatial nearest-arm classification is retained for anatomical measurement only. Export deformation now uses each vertex's authored body influences, so a torso-weighted garment cannot receive an arm-axis displacement just because it lies close to an arm. UVs, atlas bytes, skin weights, rig, heads and hand props remain exact.
+Spatial nearest-arm classification is retained for anatomical measurement only. Rigid backpacks receive the torso-relative translation, and segmented jacket shoulder contacts retain their original connecting volume. Export deformation now uses each vertex's authored body influences, so a torso-weighted garment cannot receive an arm-axis displacement just because it lies close to an arm. UVs, atlas bytes, skin weights, rig, heads and hand props remain exact.
 
-The attempted woman-a refits did not pass visual review. Following the requested fallback, woman-a and its shared adult-f variant are restored to their complete pre-slim exports, at every LOD/tier. Seven more variants are restored because the coherent field would exceed the unchanged q249 head/shoulder cap. [Explicit list](reverted.json). No cap or automated offset threshold was increased.
+The attempted woman-a refits did not pass visual review. Following the requested fallback, woman-a and its shared adult-f variant are restored to their complete pre-slim exports, at every LOD/tier. Mrs Alvarez and the butcher also use the fallback because their apron fronts/ties kinked in the crop review. Seven more variants are restored because the coherent field would exceed the unchanged q249 head/shoulder cap. [Explicit list](reverted.json). No cap or automated offset threshold was increased.
 
 ## Automated offset check
 

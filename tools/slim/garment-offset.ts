@@ -28,7 +28,7 @@ for(const r of build.receipts.filter(r=>!process.env.SLIM_CHECK_IDS||process.env
           if(triangle.every(p=>p.toArray().every(Number.isFinite))) for(const p of triangle) points.push(...p.toArray());
         }
         for(const v of s.vertices) {
-          if(/head|neck|eye|iris|pony|hair|hand|weapon|backpack/.test(v.jointOwner??v.owner)||region?.getScalar(v.id)===1||/skin|eye|blood/i.test(s.primitive.getMaterial()?.getName()??''))continue;
+          if(/head|neck|eye|iris|pony|hair|hand|weapon/.test(v.jointOwner??v.owner)||region?.getScalar(v.id)===1||/skin|eye|blood/i.test(s.primitive.getMaterial()?.getName()??''))continue;
           const expected=rv.get(v.id)!.point,point=av.get(v.id)!.point;
           if(!v.point.toArray().every(Number.isFinite))continue;
           if(!expected.toArray().every(Number.isFinite)||!point.toArray().every(Number.isFinite))throw Error(`${f.output}: nonfinite garment vertex`);
