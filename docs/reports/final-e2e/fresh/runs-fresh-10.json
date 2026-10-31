@@ -1,0 +1,84 @@
+[
+  {
+    "level": "L3",
+    "entry": "continue",
+    "heroine": "female",
+    "finished": false,
+    "skipped": [],
+    "wallSeconds": 521,
+    "simSeconds": 320,
+    "maxNoProgressSeconds": 10.516666666666667,
+    "deaths": 2,
+    "assists": 0,
+    "attacks": {
+      "weapon.handgun": 124,
+      "ability.corgi-lure": 3
+    },
+    "weaponsStart": [
+      "weapon.fire-axe",
+      "weapon.bat",
+      "ability.corgi-lure",
+      "weapon.kick"
+    ],
+    "weaponsEnd": [
+      "weapon.fire-axe",
+      "weapon.bat",
+      "weapon.handgun",
+      "ability.corgi-lure"
+    ],
+    "steps": [
+      {
+        "id": "armory",
+        "text": "Take a handgun from the armory · 19 m",
+        "tick": 11,
+        "marker": {
+          "anchor": "l3-armory",
+          "ring": {
+            "x": -139.2,
+            "y": 0.7049999833106995,
+            "z": -8.4
+          },
+          "drawn": [
+            -139.2,
+            0.05,
+            -8.4
+          ],
+          "playerY": 0.7049999833106995,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "defend",
+        "text": "Help defend the station",
+        "tick": 707,
+        "marker": {
+          "anchor": "l3-armory",
+          "ring": null,
+          "drawn": null,
+          "playerY": 0.7049999833106995,
+          "pinVisible": false
+        }
+      },
+      {
+        "id": "checkpoint",
+        "text": "Get inside the army checkpoint · 364 m",
+        "tick": 1426,
+        "marker": {
+          "anchor": "l3-route",
+          "ring": {
+            "x": 225,
+            "y": 0.7049999833106995,
+            "z": 0
+          },
+          "drawn": [
+            225,
+            0.05,
+            0
+          ],
+          "playerY": 0.7059999704360962,
+          "pinVisible": true
+        }
+      }
+    ]
+  }
+]

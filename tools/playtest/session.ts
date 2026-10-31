@@ -245,7 +245,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     // Carried guns cannot fire from a vehicle; keep following the driving objective.
     if (e.driving || e.player?.riding) return false;
     // Resume gameplay keyboard focus after a retry or a HUD button click.
-    if (e.level === 'L4' && (e.step === 'hold' || e.step === 'hide')) // Canvas has no tabindex: a physical world click releases the hidden Resume button's focus.
+    if (e.level === 'L4' && (e.step === 'hold' || e.step === 'hide')) // Re-establish a physical gameplay pointer after the menu click.
           await page.mouse.click(e.view.w / 2, e.view.h / 2);
     if (e.level === 'L4' && e.step === 'hide' && e.route && e.player) {
       // Read the street bearing, visible bodies and nearby health packs. Step
@@ -538,7 +538,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         if (command.manual !== undefined) manual = command.manual;
         if (command.resume && await page.getByTestId('resume-game').isVisible()) {
           await page.getByTestId('resume-game').click();
-          // Canvas has no tabindex: a physical world click releases the hidden Resume button's focus.
+          // Re-establish a physical gameplay pointer after the menu click.
           await page.mouse.click(e.view.w / 2, e.view.h / 2);
         }
         if (command.key) await page.keyboard.press(command.key);
