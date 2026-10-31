@@ -237,7 +237,7 @@ export class LevelEightZoo {
     if (boarding && queueIndex === 0 && distance(e.transform, door) < .7) w.vehicles!.boardPassenger(s.carId, e.id);
     else if (distance(e.transform, target) > (boarding ? .3 : 1)) {
       const speed = c.survivor?.injured ? 1.4 : 3.8;
-      if (!boarding || !this.approachDoor(e, door, speed)) w.npcs!.move(e, target, speed, c, boarding ? .2 : .8, 2400);
+      if (!boarding || queueIndex > 0 || !this.approachDoor(e, door, speed)) w.npcs!.move(e, target, speed, c, boarding ? .2 : .8, 2400);
     }
     return true;
   }
