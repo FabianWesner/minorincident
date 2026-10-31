@@ -37,14 +37,24 @@ try {
         const proof = await session.page.evaluate(prepareStop, { stop, seed: 1, save, zoom: 1, tier });
         receipt.push({ name, proof }); captureTarget = proof.target;
         if (name === 'l3-army-pullback') {
-          const formation = await session.page.evaluate(async protect => {
+          const formation = await session.page.evaluate(async ({protect, stage}) => {
             const a = window.__SS__!, g = (window.__SCENE__ as unknown as {game: import('../../src/Game').Game}).game;
+            if (stage) {
+              const members = [...g.world.entities.iterate()].filter(e => e.civilian?.ally?.follow && e.health.current > 0 && !e.infection);
+              members.sort((a, b) => Math.hypot(a.transform.x - 174, a.transform.z) - Math.hypot(b.transform.x - 174, b.transform.z));
+              const template = members[0]; if (!template) throw new Error('No living officer to stage');
+              while (members.length < 12) {
+                const id = g.world.npcs!.civilians.spawn('officer', {x:168.3,z:-1.2}, {model:template.civilian!.model,waypoints:[{x:168.3,z:-1.2}]}, false);
+                const e = g.world.entities.get(id)!; e.civilian!.ally = structuredClone(template.civilian!.ally!); e.appearance = structuredClone(template.appearance); e.faction = template.faction; members.push(e);
+              }
+              members.forEach((e, i) => { Object.assign(e.transform, {x:168.3 + i % 4 * .6,z:-1.2 + Math.floor(i / 4) * .8,y:6.4}); const c=e.civilian!;c.floorY=5.7;c.state='calm';c.story=null;c.ally!.targetId=0;c.ally!.run=null;c.ally!.follow!.slot=i;g.world.spatial.set(e.id,e.transform.x,e.transform.z); });
+            }
             if (protect) for (const e of g.world.entities.iterate()) if (e.civilian?.ally?.follow && e.health.current > 0) e.health.current = e.health.max = 100000;
             const npcs = g.world.npcs!, move = npcs.move, goals = new Map<number, {x:number;z:number}>();
             npcs.move = function(e, target, ...rest) { if (e.civilian?.ally?.follow) goals.set(e.id, {x:target.x,z:target.z}); return move.call(this, e, target, ...rest); };
             try { await a.step(180); } finally { npcs.move = move; }
-            return { protected: protect, goals: [...goals], members: [...g.world.entities.iterate()].filter(e => e.civilian?.ally?.follow).map(e => ({id:e.id,at:e.transform,hp:e.health.current})) };
-          }, process.env.FIX_PROTECT_SQUAD === '1');
+            return { protected: protect, staged: stage, goals: [...goals], members: [...g.world.entities.iterate()].filter(e => e.civilian?.ally?.follow).map(e => ({id:e.id,at:e.transform,hp:e.health.current})) };
+          }, {protect:process.env.FIX_PROTECT_SQUAD === '1',stage:process.env.FIX_STAGE_SQUAD === '1'});
           receipt.push({name, formation});
         }
       }
