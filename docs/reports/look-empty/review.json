@@ -43,9 +43,7 @@
       "contrastMin": 2.690483298264982
     }
   },
-  "pending": [
-    "load acceptance"
-  ],
+  "pending": [],
   "newLateBuilds": [],
   "R1_R5Unchanged": true,
   "finaleIdentical": true,
@@ -1424,6 +1422,9 @@
     "lint": "pass",
     "npm test": "26 files, 110 tests pass",
     "smoke": "pass, 157.6 s",
-    "scene gate": "48/48 pass, 0 known, 0 not run"
-  }
+    "scene gate": "48/48 pass, 0 known, 0 not run",
+    "load": "pass, 60 samples / 30 matched pairs, candidate maximum 5576.8 ms, maximum absolute median delta 35.8 ms"
+  },
+  "loadAcceptance": "loads-natural-quiet/summary.json",
+  "loadAdmission": "Natural quiet host and idle pool before each pair; normal shared admission; all samples retained, including any activity starting mid-pair."
 }
