@@ -2,7 +2,9 @@
 
 ## Status
 
-**In progress — L1 and L2 completed by real input; L3 is live.** The QA game build is from `b98aaa604`; later branch commits change playtest tools/reporting only. No game difficulty or camera code has changed. L3–L10, credits and the progressed-save checks remain outstanding.
+**In progress — L1 and L2 completed by real input; L3 route completion failed after four attempts.** The QA game build is from `b98aaa604`; later branch commits change playtest tools/reporting only. No game difficulty or camera code has changed. L3–L10, credits and the progressed-save checks remain outstanding.
+
+L3 used the prompt’s explicitly permitted debug continuation for its checkpoint objective; this is a **FAIL**, not a real-input completion. L4 is now live; remaining levels are being played normally.
 
 The headless shared-pool driver uses the player-facing title → Start game → character → level flow, normal handovers, keyboard/mouse input, low rendering quality, the default camera and `--no-skip`. Visible-guidance mode disables authored street routes and hidden navigation-grid steering. Manual interventions also use physical input. Sessions release the pool at handovers; the same campaign profile continues through the menu.
 
@@ -14,7 +16,7 @@ The headless shared-pool driver uses the player-facing title → Start game → 
 |---|---:|---:|---|---|---|---|---|---|---|---|
 | L1 | 166 s wall / 163.8 s card; earlier attempts also disclosed below | 1 death; 2 menu restarts after driver aborts | Opening fence: 90 s stalled in first driver attempt; later weapon-route detour before driver error | Depot/Annex/fire station named; weapon objective generic, supported by marker/story bubble | Unarmed → bat, matches story | 1.72 s in successful opening sample | 0 | 0 | Bat and following corgi reach L2; no rescued human group | [Reviewed card](fresh/captures/fresh-03-L1-result.jpg): stats match mission result |
 | L2 | Successful attempt 397 s wall / 111.1 s mission; all four attempts 2,137 s wall / 1,000.5 s sim | 11 deaths in earlier trials; 3 menu replays; successful attempt 0 deaths | Bridge route: fenced-yard detours, blocked vehicles and manual-input failures; see F01 | Bridge destination named; arrow gives a bearing rather than a street route | Bat → axe + bat; correct | 3.97–4.27 s menu samples; first handover ~5.5 s upper bound | 0 across all recorded attempts | 0 | Axe, bat, unlocked corgi lure and following corgi reach L3; 7 rescued recorded | No result card displayed: automatic progression to L3; stored result 111.1 s, 0 deaths, 2 knockdowns, 36 damage, 7 rescued |
-| L3 | Three attempts 1,644 s wall; known mission times 247.6 / 319.9 s; fourth in progress | 2 recorded deaths; 3 menu replays | >60 s at armored vehicle / fenced road end, `(10.1, 28.0)`, HUD “Get inside the army checkpoint · 217 m”; detour found via cross street | Destination named; only distant bearing during detour | Axe + bat + corgi lure → handgun acquired; correct | 3.20 s menu sample | 1 observed gameplay frame: 266.7 ms at `(-85.0, 6.6)`; first attempt final probe lost | 0 observed | Corgi follows; squad present; handover pending | Not reached |
+| L3 | **FAIL**; four route trials 2,164 s wall, then 62.5 s mission in permitted continuation; recorded trial mission times 247.6 / 319.9 / 304.4 s | 3 recorded deaths/respawns; 4 menu replays; checkpoint objective debug-skipped once | F02/F04: vehicle closures, distant bearing and highway/fence approach; bounded retry also failed | Names army checkpoint; does not identify the turn/ramp needed | Axe + bat + lure start; handgun acquired normally; correct | 3.20–3.33 s menu; prior handover 7.76 s | 2: 266.7 ms and 333.3 ms; first aborted trial final probe unavailable | 0 observed | Earned axe/bat/handgun/lure reach L4; corgi present; natural squad/gate handover **unverified because of skip** | No card displayed (automatic progression). Debug result 62.5 s / 0 deaths / 13 knockdowns / 1 rescued cannot validate a natural L3 result |
 | L4 | — | — | Not played | — | — | — | — | — | — | — |
 | L5 | — | — | Not played | — | — | — | — | — | — | — |
 | L6 | — | — | Not played | — | — | — | — | — | — | — |
@@ -34,9 +36,9 @@ At the market exit, the HUD says **“Reach the police checkpoint at the bridge 
 
 The reviewed [capture](fresh/captures/fresh-08-L3-along-street-centre.jpg) shows an armored vehicle spanning the fenced street ahead. At `(10.1, 28.0)` the objective reads **“Get inside the army checkpoint · 217 m”**, with its arrow beyond the obstruction. The bot spent over 60 s trying the vehicle edges. Backtracking to the visible Maple Ave/Pine St crossing, then following the commercial road, offered a detour. This is a recorded navigation/confusion event, not established proof of an impossible route.
 
-### P3 · F03 — One L3 gameplay frame exceeded 200 ms
+### P3 · F03 — Two L3 gameplay frames exceeded 200 ms
 
-`fresh-09` recorded one **266.7 ms** frame during active play, tick 7620, at `(-85.0, 6.6)`. The [frame record](fresh/fresh-09-frames.json) retains its timing. The reviewed [nearby capture](fresh/captures/fresh-09-L3-through-open-side-yard.jpg) shows the shop-side position; it is contextual evidence, not a visual measurement of the hitch. No console error accompanied it.
+`fresh-09` recorded one **266.7 ms** frame during active play, tick 7620, at `(-85.0, 6.6)`. The [frame record](fresh/fresh-09-frames.json) retains its timing. The reviewed [nearby capture](fresh/captures/fresh-09-L3-through-open-side-yard.jpg) shows the shop-side position; it is contextual evidence, not a visual measurement of the hitch. A further **333.3 ms** frame occurred in the continuation attempt before its skip, tick 1743 at `(-131.4, -8.8)`; its raw frame file is retained. No console error accompanied either frame.
 
 ### P3 · F04 — The L3 destination bearing permits an unhelpful approach beside the elevated highway
 
@@ -59,9 +61,12 @@ Following the distant checkpoint bearing along the north road led onto open grou
 
 - `fresh-10` yielded cleanly after 521 s wall / 319.9 s mission, with 2 deaths, 39 knockdowns, 299 damage and 3 rescued recorded. Zero gameplay frames exceeded 200 ms and no console error was observed. It followed the north road past the vehicle pinch, but then approached the checkpoint beside the highway rather than over its elevated bridge. The final replay explicitly selects the earned handgun through its normal number shortcut.
 
+- `fresh-11` yielded after 520 s wall / 304.4 s mission, with 1 death, 55 knockdowns, 122 damage and 3 rescued. Its final road/ramp retry was unsuccessful; no gameplay frame exceeded 200 ms and no console error occurred.
+- `fresh-12-L3-FAIL-permitted-continuation` replayed the armory and defense normally, then invoked the one permitted debug completion of `checkpoint`. Its raw issue/assist log marks the failure. Campaign completedLevels becomes 3 and L4 loads to Begin in 6.30 s. Its helper wallSeconds is invalid (-174 s) because the old short-cap skip bookkeeping advances wallStart into the future; observer timestamps and the 62.5 s mission result are used instead. The file named L3-result.jpg was reviewed and shows the subsequent L4 loading card, not a result card.
+
 ### Story observations so far
 
-L1 connects the cold-chain delivery to the Annex bang explicitly, then directs the unarmed courier to obtain a bat and reach the fire station. The station's result card confirms the delivery while saying the outbreak is not contained. The normal L2 handover starts with the retained bat and a fire-axe pickup objective. Later story continuity remains unreviewed.
+L1 connects the cold-chain delivery to the Annex bang explicitly, then directs the unarmed courier to obtain a bat and reach the fire station. The station's result card confirms the delivery while saying the outbreak is not contained. The normal L2 handover starts with the retained bat and a fire-axe pickup objective. L3 clearly links the police retreat to the army checkpoint (“We can’t hold this! Army checkpoint, up the avenues. You’re with us!”). Its natural final gate sequence remains unverified because of the route failure. L4 opens with an organized Fairhaven convoy and the promise of safety. Later story continuity remains unreviewed.
 
 ## Required follow-up
 
@@ -70,4 +75,4 @@ L1 connects the cold-chain delivery to the Annex bang explicitly, then directs t
 3. Review the story for player-facing clarity and logical continuity; report any P1–P3 findings with captures.
 4. For any trivially safe blocker fixed, commit each fix separately, inspect its capture, then run `npm test` and `npm run test:smoke`.
 
-No game change has been made. No debug skip, god mode or teleport has been used.
+No game change has been made. No god mode or teleport has been used. L3’s checkpoint objective is the sole permitted debug continuation and must be counted as FAIL.
