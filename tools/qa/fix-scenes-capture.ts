@@ -1,5 +1,5 @@
 /** Q-262..267 / Q-269 review, using the original tour setup and authored game camera. */
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { SceneSession, readSpec, stopServer } from '../scenelab/session';
 import { prepareStop, readyFrame, tour } from './ab-tour';
@@ -9,7 +9,7 @@ const tier: 'low' | 'high' = process.env.FIX_TIER === 'high' ? 'high' : 'low';
 const filter = (process.env.FIX_FILTER ?? 'hats,l3-army-pullback,l4-tank-hold,l5-finale,l6-start,l8-finale,bars').split(',');
 const out = resolve(process.env.FIX_OUT ?? 'test-results/fix-scenes', side, tier);
 mkdirSync(out, { recursive: true });
-const receipt: unknown[] = [];
+const receipt: unknown[] = existsSync(out + '/receipt.json') ? JSON.parse(readFileSync(out + '/receipt.json', 'utf8')).filter((row: {name: string}) => !filter.includes(row.name)) : [];
 let failed = false;
 try {
   for (const name of filter) {
@@ -36,6 +36,7 @@ try {
         save.settings.quality = tier; save.seed = 1; save.character = 'female';
         const proof = await session.page.evaluate(prepareStop, { stop, seed: 1, save, zoom: 1, tier });
         receipt.push({ name, proof }); captureTarget = proof.target;
+        if (name === 'l3-army-pullback') await session.page.evaluate(async () => { await window.__SS__!.step(180); });
       }
       for (const zoom of [1, 1.5]) {
         await session.page.evaluate(zoom => window.__SS__!.camera.zoom(zoom), zoom);
@@ -52,6 +53,7 @@ try {
           const hatMatrices: unknown[] = []; g.view.scene.traverse(node => { const m = node as import('three').InstancedMesh; if (m.isInstancedMesh && node.name.startsWith('acc.hat') && m.count) hatMatrices.push({ name: node.name, matrices: Array.from(m.instanceMatrix.array).slice(0, m.count * 16) }); }); return { crowdMaterials, hatMatrices, civilians, transparent, corpseLayout: a.debug.corpseLayout(), builds: a.perf().nodeBuildMaterials, hud: document.querySelector('.mission-objective')?.textContent, mission: a.missions.state(), render: a.getState().render };
         });
         receipt.push({ name, zoom, state, audit });
+        if (name === 'bars' && side === 'after' && audit.render.healthBars.count > 5) failed = true;
       }
       if (name === 'hats') {
         await session.page.evaluate(() => { const g = (window.__SCENE__ as unknown as {game: import('../../src/Game').Game}).game; g.view.scene.traverse(node => { const m = node as import('three').Mesh; if (m.isMesh && node.name.startsWith('acc.')) for (const material of Array.isArray(m.material) ? m.material : [m.material]) material.visible = false; }); });
