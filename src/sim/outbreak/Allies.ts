@@ -320,17 +320,20 @@ function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point): bo
     // Settle into individual spots even after the courier stops. Sending every
     // blocked slot to her feet left the pull-back squad packed over the van.
     let goal: Point = d <= 10 && nav.clear(slot.x, slot.z, .4) && nav.visible(e.transform, slot, .4) && nav.visible(slot, p, .4) ? slot : p;
-    if (spread && d <= 10) {
-      const candidates = [slot], seed = f.slot * 2.399963229728653;
-      for (let ring = 0; ring < 6; ring++) for (let ray = 0; ray < 8; ray++) {
-        const angle = seed + ray * Math.PI / 4, radius = .8 + ring * .7;
-        candidates.push({ x: slot.x + Math.cos(angle) * radius, z: slot.z + Math.sin(angle) * radius });
+    if (spread) {
+      // The van divides the deck: a clear resting spot need not have a
+      // straight sight line to the courier. Shared navigation routes around it;
+      // destinations stay on the level deck and clear of the van and rails.
+      const spots: Point[] = [];
+      for (let x = 168.4; x < 179.3; x += 1.3) for (const z of [-1.7, -.55, .7, 1.85]) {
+        if (nav.clear(x, z, .4) && world.solids.clear({ x, z, y: e.transform.y }, .4, e.id, false)) spots.push({ x, z });
       }
-      const others = [...world.entities.iterate()].filter(other => other.id !== e.id && other.health.current > 0 && other.civilian?.ally?.follow?.targetId === f.targetId);
-      goal = candidates.find(point => nav.clear(point.x, point.z, .6) && world.solids.clear({ ...point, y: e.transform.y }, .6, e.id)
-        && others.every(other => dist(other.transform, point) >= 1.4) && nav.visible(e.transform, point, .4) && nav.visible(point, p, .4)) ?? e.transform;
+      const squad = [...world.entities.iterate()].filter(other => other.health.current > 0 && other.civilian?.ally?.follow?.targetId === f.targetId)
+        .sort((a, b) => a.civilian!.ally!.follow!.slot - b.civilian!.ally!.follow!.slot || a.id - b.id);
+      const index = squad.findIndex(other => other.id === e.id);
+      goal = spots[index] ?? e.transform;
     }
-    if (!world.npcs!.move(e, goal, d > f.maxM + 2 ? f.moveMs : f.moveMs * .9, e.civilian!, goal === p ? f.minM : .5))
+    if (!world.npcs!.move(e, goal, d > f.maxM + 2 ? f.moveMs : f.moveMs * .9, e.civilian!, goal === p ? f.minM : spread ? .15 : .5) && !spread)
       world.npcs!.move(e, p, f.moveMs, e.civilian!, f.minM);
   }
   return true;
