@@ -347,13 +347,14 @@ export class CrowdView extends Group {
       // Keep a default attribute even in scenes that do not load the cream coat.
       const dogPalette = asset === 'inf.dog' && !def.decay && lod === 'lod1';
       if (dogPalette) baked.geometry.setAttribute('_dogCream', baked.geometry.getAttribute('color'));
-      // Zoo LODs/variants share the same graph just as L4's horde does. Bind each
-      // draw's pose and unchanged atlas below; graph identity must include every
+      // Ordinary human LODs/looks share L4's existing graph path on every level.
+      // Bind each draw's pose and atlas below; graph identity must include every
       // branch that changes the surface, including healthy animals and dog coats.
       // Alpha hero/frozen surfaces retain their original snapshots; only the
       // intermediate living band joins the zoo's shared shader path.
       const zooSurface = this.world.scenario === 'L8' && /^(infected|healthy)\.(lion|gorilla|elephant|zebra|flamingo)$/.test(def.id);
-      const sharedSurface = this.world.scenario === 'L4' && infectedAtlas || zooSurface || this.world.scenario === 'L8' && alpha && lod === 'lod1';
+      const ordinarySurface = regularInfectedModels.some(model => model === asset);
+      const sharedSurface = (this.world.scenario === 'L4' || ordinarySurface) && infectedAtlas || zooSurface || this.world.scenario === 'L8' && alpha && lod === 'lod1';
       const materialKey = sharedSurface && baked.texture ? `${baked.clip.parts.join('|')}:${poses.bindRow}:${baked.doubleSided}:${inlineAccessories}:${asset.startsWith('npc.')}:${baked.geometry.hasAttribute('_skin')}:${human}:${healthy}:${infectedAtlas}:${dogPalette}:${regularAlpha}` : undefined;
       let sharedSkin = materialKey ? this.sharedSkinMaterials.get(materialKey) : undefined;
       let material = sharedSkin?.material, surfaceAtlas = sharedSkin?.atlas;
