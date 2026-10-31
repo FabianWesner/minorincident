@@ -40,6 +40,7 @@ try {
           const formation = await session.page.evaluate(async ({protect, stage}) => {
             const a = window.__SS__!, g = (window.__SCENE__ as unknown as {game: import('../../src/Game').Game}).game;
             if (stage) {
+              a.cheats.killAll(); // Isolate resting formation from hostile knockback; retain every corpse.
               const members = [...g.world.entities.iterate()].filter(e => e.civilian?.ally?.follow && e.health.current > 0 && !e.infection);
               members.sort((a, b) => Math.hypot(a.transform.x - 174, a.transform.z) - Math.hypot(b.transform.x - 174, b.transform.z));
               const template = members[0]; if (!template) throw new Error('No living officer to stage');
@@ -52,7 +53,7 @@ try {
             if (protect) for (const e of g.world.entities.iterate()) if (e.civilian?.ally?.follow && e.health.current > 0) e.health.current = e.health.max = 100000;
             const npcs = g.world.npcs!, move = npcs.move, goals = new Map<number, {x:number;z:number}>();
             npcs.move = function(e, target, ...rest) { if (e.civilian?.ally?.follow) goals.set(e.id, {x:target.x,z:target.z}); return move.call(this, e, target, ...rest); };
-            try { await a.step(180); } finally { npcs.move = move; }
+            try { await a.step(stage ? 600 : 180); } finally { npcs.move = move; }
             return { protected: protect, staged: stage, goals: [...goals], members: [...g.world.entities.iterate()].filter(e => e.civilian?.ally?.follow).map(e => ({id:e.id,at:e.transform,hp:e.health.current})) };
           }, {protect:process.env.FIX_PROTECT_SQUAD === '1',stage:process.env.FIX_STAGE_SQUAD === '1'});
           receipt.push({name, formation});
