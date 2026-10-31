@@ -14,7 +14,7 @@ export function levelNineMission(resolve: (district: DistrictId, name: string) =
     steps: [
       { id: 'approach', type: 'custom', text: 'Drive toward the city', anchor: 'crash-approach', start: { kind: 'start' },
         complete: { kind: 'state', key: 'crash-started', equals: true }, fail: [] },
-      { id: 'reach-outskirts', type: 'custom', text: 'Get clear of the wreck', anchor: 'crawl-end', start: { kind: 'state', key: 'crash-finished', equals: true },
+      { id: 'reach-outskirts', type: 'custom', text: 'Get clear of the wreck', anchor: 'crawl-end', start: { kind: 'objectives', ids: ['approach'], mode: 'all' },
         complete: { kind: 'all', triggers: [{ kind: 'state', key: 'crash-finished', equals: true }, { kind: 'volume', anchor: 'outskirts', edge: 'inside' }] }, fail: [] },
     ],
     finish: ['reach-outskirts'], onStart: [], onComplete: [],

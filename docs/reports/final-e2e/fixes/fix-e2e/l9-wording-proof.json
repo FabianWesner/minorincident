@@ -1,0 +1,57 @@
+{
+  "requirement": "Q-273: do not call the intact APC a wreck",
+  "observations": [
+    {
+      "at": 299005.30000019073,
+      "tick": 9483,
+      "objective": "Stay in the armored vehicle · 82 m",
+      "subtitle": "",
+      "player": {
+        "x": 468.12384033203125,
+        "y": 0.9954288005828857,
+        "z": 21.93418312072754,
+        "yaw": 0
+      }
+    },
+    {
+      "at": 304005.89999961853,
+      "tick": 9783,
+      "objective": "Get clear of the wreck · 20 m",
+      "subtitle": "The bridge gave way. Crawl clear of the wreck.",
+      "player": {
+        "x": 527.5,
+        "y": 0.7200000286102295,
+        "z": 2.5999999046325684,
+        "yaw": 0
+      }
+    },
+    {
+      "at": 309006.60000038147,
+      "tick": 10083,
+      "objective": "Get clear of the wreck · 13 m",
+      "subtitle": "",
+      "player": {
+        "x": 534,
+        "y": 0.7200000286102295,
+        "z": 1.7333333492279053,
+        "yaw": 0
+      }
+    },
+    {
+      "at": 313006,
+      "tick": 10323,
+      "objective": "Get clear of the wreck · 0 m",
+      "subtitle": "",
+      "player": {
+        "x": 547,
+        "y": 0.7200000286102295,
+        "z": 0,
+        "yaw": 0
+      }
+    }
+  ],
+  "capturesReviewed": [
+    "captures/l9-intact-apc-wording.jpg"
+  ],
+  "method": "Real-input L9 replay; approach HUD captured with armor 1000/1000, then the audit observes wreck-clear wording together with the bridge-collapse subtitle."
+}

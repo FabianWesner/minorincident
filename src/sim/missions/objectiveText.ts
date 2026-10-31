@@ -14,6 +14,8 @@ export function objectiveText(mission: Mission, fallback: string): string {
   const s = mission.state, w = mission.world;
   const override = l3EvacuationText(mission) ?? cureFinaleText(mission) ?? LevelSixSubway.text(mission);
   if (override) return override;
+  const crash = mission.l9?.state;
+  if (crash && (crash.phase === 'approach' || crash.phase === 'fall')) return 'Stay in the armored vehicle';
   if (s.l4?.phase === 'war') {
     const third = s.l4.director.lines[2];
     const end = Math.min(s.l4.warAt + l4.lineBreak.defenseS * 60, (third.brokeAt || s.l4.turnAt + l4.director.lines[2].dueS * 60) + l4.lineBreak.fallBackS * 60);
