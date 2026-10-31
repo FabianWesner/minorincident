@@ -24,7 +24,7 @@ try {
         if (process.env.VQA_LEVEL && process.env.VQA_LEVEL !== level) continue;
         const info = await s.page.evaluate(async ({ level, tier }) => {
           const a = window.__SS__!;
-          await a.loadLevel(level, { seed: 45, progression: `${level}-default` });
+          await a.loadLevel(level, { seed: 45, progression: `${level}-default` as never });
           a.pause(); a.cheats.god(true); a.settings.set({ quality: tier }); a.camera.follow();
           if (a.missions.state()?.phase === 'briefing') a.missions.begin();
           if (level === 'L6') { for (const id of ['shelter', 'stop', 'retreat']) a.cheats.completeObjective(id); a.teleport(1, { x: 273, z: 15 }); await a.step(2); }

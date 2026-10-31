@@ -21,7 +21,7 @@ try {
     if (process.env.WALK_LEVEL && process.env.WALK_LEVEL !== level) continue;
     await s.page.evaluate(async ({ level, start }) => {
       const a = window.__SS__!;
-      await a.loadLevel(level, { seed: 45, progression: `${level}-default` });
+      await a.loadLevel(level, { seed: 45, progression: `${level}-default` as never });
       a.cheats.god(true); a.settings.set({ quality: 'low' }); a.camera.follow();
       if (a.missions.state()?.phase === 'briefing') a.missions.begin();
       if (level === 'L6') for (const id of ['shelter', 'stop', 'retreat']) a.cheats.completeObjective(id);
