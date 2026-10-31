@@ -66,6 +66,9 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   const visible = (from: EntitySnapshot['transform'], to: EntitySnapshot['transform'], id: number) => shooter
     ? (from.y > 2.5 || sees(from, to, id)) && world.combat!.query.shotVisible(from, to, id) : sees(from, to, id);
   const player = world.entities.get(1);
+  // Keep the local pull-back formation moving while officers cover the courier;
+  // repeated self-defence shots must not pin all of them beside the van.
+  if (a.follow && player && dist(e.transform, player.transform) <= 12 && rampPullback(world, player) && c.state !== 'grabbed') regroup(world, e, a, player.transform);
   // L4's breached heavy can be finished only by a nearby soldier. The shared
   // down/recovery rule remains intact for the player and every other level.
   const finishable = (target: EntitySnapshot) => {
@@ -285,10 +288,15 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   return true;
 }
 /** Squad: stay 3-8 m from the player on an own slot around it; regroup when the player moves on (E21 §5.4). Never teleports. */
+function rampPullback(world: SimWorld, leader: EntitySnapshot): boolean {
+  // The narrow elevated span beside l3-highway-car; ordinary street pursuit keeps its existing band.
+  return world.scenario === 'L3' && leader.transform.x >= 167.5 && leader.transform.x <= 179.5
+    && Math.hypot(leader.survivor?.velocity.x ?? 0, leader.survivor?.velocity.z ?? 0) <= .5;
+}
 function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point): boolean {
   const f = a.follow!, d = dist(e.transform, p);
   const leader = world.entities.get(f.targetId)!;
-  const spread = world.scenario === 'L3';
+  const spread = rampPullback(world, leader);
   const moving = Math.hypot(leader.survivor?.velocity.x ?? 0, leader.survivor?.velocity.z ?? 0) > .5;
   // A stop or a tight turn can leave a follower inside the band. Step into nearby clear space, never onto the courier.
   if (d < f.minM && !spread) {
