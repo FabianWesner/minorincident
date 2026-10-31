@@ -20,3 +20,11 @@ for page,start in enumerate(range(0,len(entries),4),1):
  atlas.save(root/f'review-{page:02}.jpg',quality=95)
 (root/'sheet-index.json').write_text(json.dumps(entries,indent=2)+'\n')
 print(len(entries),'individual sheets;', (len(entries)+3)//4,'review pages')
+# Extra: actual skinned courier with all tier-4 gear on the production actor.
+name='char.courier-male.skin-gear4'
+if all((root/f'crops-{tier}'/f'{name}-{view}.jpg').exists() for tier in ['high','low'] for view in ['front','side','three-quarter']):
+ out=Image.new('RGB',(1200,1060),'#ddd');draw=ImageDraw.Draw(out);draw.text((10,8),'char.courier-male.skin | actual courier, gear tier 4 | game zoom 1.5',fill='black')
+ for y,tier in enumerate(['high','low']):
+  for x,view in enumerate(['front','side','three-quarter']):
+   im=Image.open(root/f'crops-{tier}'/f'{name}-{view}.jpg').convert('RGB');im=im.crop((0,round(im.height*.21),im.width,round(im.height*.86)));im=ImageOps.contain(im,(396,480));out.paste(im,(x*400+(400-im.width)//2,52+y*504+(480-im.height)//2));draw.text((x*400+10,32+y*504),f'{tier} | {view}',fill='black')
+ out.save(root/'sheets'/f'{name}.jpg',quality=95)

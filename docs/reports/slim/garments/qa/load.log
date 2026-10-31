@@ -1,0 +1,43 @@
+16:36  up 83 days, 16:30, 5 users, load averages: 2.09 4.90 5.17
+Quiet-run preflight: load < 3; no local Vitest, typecheck, Blender, build or headless Chrome processes; all configured browser slots held.
+Quiet-run conditions: {"quiet":true,"load":[2.09326171875,4.89794921875,5.17236328125],"busy":[],"ignoredIdle":[]}
+before 0 2177 ms
+after 0 2176 ms
+after 1 2176 ms
+before 1 2210 ms
+before 2 2210 ms
+after 2 2227 ms
+after 3 2210 ms
+before 3 2175 ms
+before 4 2210 ms
+after 4 2192 ms
+after 5 2193 ms
+before 5 2177 ms
+before 6 2192 ms
+after 6 2194 ms
+after 7 2193 ms
+before 7 2195 ms
+before 8 2210 ms
+after 8 2209 ms
+after 9 2209 ms
+before 9 2194 ms
+{
+  before: {
+    n: 10,
+    median: 2194.2999997138977,
+    p90: 2210.1000003814697,
+    max: 2210.199999809265
+  },
+  after: {
+    n: 10,
+    median: 2193.4000000953674,
+    p90: 2210.4000005722046,
+    max: 2226.5
+  },
+  delta: {
+    median: -0.8999996185302734,
+    p90: 0.3000001907348633,
+    max: 16.300000190734863
+  },
+  pass: true
+}

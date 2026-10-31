@@ -1,3 +1,5 @@
+> **Superseded by [the garment audit](../garments/README.md):** final status is 43 fixed, 1 already OK, 11 complete pre-slim fallbacks. The 55-variant body-only approval below is historical; use the refreshed lineup/L1 images and new crop verdicts.
+
 # Final cast review
 
 Decision: **PASS for the relative body-build change; QA candidate for the PO’s style review.**

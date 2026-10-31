@@ -1,0 +1,2581 @@
+{
+  "baseline": "53949e814",
+  "actualRevision": "working tree",
+  "thresholdM": 0.01,
+  "method": "Surface distance and corresponding-point displacement of outer garment vertices to the coherently body-deformed reference cage. These assets have one clothed mesh, not a separate hidden nude torso: the pre-slim clothed body is the reference surface. The reference uses authored bone influences throughout; no spatial arm reclassification. Skin/head/hand/weapon/cap vertices are excluded. Both offsets must be <=10 mm. Visual crops remain required: this check alone cannot prove bag shape or cloth fold quality.",
+  "pass": true,
+  "rows": [
+    {
+      "id": "char.survivor-male",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 42828,
+      "maxSurfaceOffsetM": 5.917516424642094e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/char.survivor-male/model.glb",
+          "samples": 20665,
+          "maxSurfaceOffsetM": 3.3236188124423423e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/char.survivor-male.glb",
+          "samples": 17688,
+          "maxSurfaceOffsetM": 5.8942067184160697e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/char.survivor-male.lod1.glb",
+          "samples": 2774,
+          "maxSurfaceOffsetM": 5.8661267850132996e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/char.survivor-male.lod2.glb",
+          "samples": 1701,
+          "maxSurfaceOffsetM": 5.917516424642094e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "char.survivor-female",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 14121,
+      "maxSurfaceOffsetM": 5.864631998689656e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/char.survivor-female/model.glb",
+          "samples": 6804,
+          "maxSurfaceOffsetM": 0,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/char.survivor-female.glb",
+          "samples": 6156,
+          "maxSurfaceOffsetM": 5.864631998689656e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/char.survivor-female.lod1.glb",
+          "samples": 755,
+          "maxSurfaceOffsetM": 5.61940956701776e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/char.survivor-female.lod2.glb",
+          "samples": 406,
+          "maxSurfaceOffsetM": 5.7318887575827224e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "inf.common-worker",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 18295,
+      "maxSurfaceOffsetM": 4.3208835098971456e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/inf.common-worker/model.skin.glb",
+          "samples": 4791,
+          "maxSurfaceOffsetM": 4.3208835098971456e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.common-worker.lod0.glb",
+          "samples": 4101,
+          "maxSurfaceOffsetM": 2.2067389466772223e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.common-worker.lod1.glb",
+          "samples": 1752,
+          "maxSurfaceOffsetM": 1.5220086585765318e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.common-worker.lod2.glb",
+          "samples": 899,
+          "maxSurfaceOffsetM": 1.433307232217927e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.common-worker.lod0.low.glb",
+          "samples": 4101,
+          "maxSurfaceOffsetM": 2.2067389466772223e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.common-worker.lod1.low.glb",
+          "samples": 1752,
+          "maxSurfaceOffsetM": 1.5220086585765318e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.common-worker.lod2.low.glb",
+          "samples": 899,
+          "maxSurfaceOffsetM": 1.433307232217927e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "inf.jogger",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 10225,
+      "maxSurfaceOffsetM": 2.7010854512353596e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/inf.jogger/model.skin.glb",
+          "samples": 2499,
+          "maxSurfaceOffsetM": 2.7010854512353596e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.jogger.lod0.glb",
+          "samples": 1991,
+          "maxSurfaceOffsetM": 5.210356674151974e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.jogger.lod1.glb",
+          "samples": 936,
+          "maxSurfaceOffsetM": 5.81026095721837e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.jogger.lod2.glb",
+          "samples": 936,
+          "maxSurfaceOffsetM": 6.572416142008912e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.jogger.lod0.low.glb",
+          "samples": 1991,
+          "maxSurfaceOffsetM": 5.210356674151974e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.jogger.lod1.low.glb",
+          "samples": 936,
+          "maxSurfaceOffsetM": 5.81026095721837e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.jogger.lod2.low.glb",
+          "samples": 936,
+          "maxSurfaceOffsetM": 6.572416142008912e-9,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "inf.baseball-cap",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 18067,
+      "maxSurfaceOffsetM": 5.960464477539063e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/inf.baseball-cap/model.glb",
+          "samples": 8350,
+          "maxSurfaceOffsetM": 5.960464477539063e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/inf.baseball-cap.glb",
+          "samples": 7066,
+          "maxSurfaceOffsetM": 5.8899400256276884e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/inf.baseball-cap.lod1.glb",
+          "samples": 1419,
+          "maxSurfaceOffsetM": 5.7971942681606816e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/inf.baseball-cap.lod2.glb",
+          "samples": 1232,
+          "maxSurfaceOffsetM": 5.8205172435013125e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "inf.suburban-mom",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 16837,
+      "maxSurfaceOffsetM": 5.986092622811602e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/inf.suburban-mom/model.skin.glb",
+          "samples": 8189,
+          "maxSurfaceOffsetM": 5.986092622811602e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.suburban-mom.lod0.glb",
+          "samples": 2364,
+          "maxSurfaceOffsetM": 3.8479291233879713e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.suburban-mom.lod1.glb",
+          "samples": 980,
+          "maxSurfaceOffsetM": 3.642435210252924e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.suburban-mom.lod2.glb",
+          "samples": 980,
+          "maxSurfaceOffsetM": 3.643046986463202e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.suburban-mom.lod0.low.glb",
+          "samples": 2364,
+          "maxSurfaceOffsetM": 3.8479291233879713e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.suburban-mom.lod1.low.glb",
+          "samples": 980,
+          "maxSurfaceOffsetM": 3.642435210252924e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.suburban-mom.lod2.low.glb",
+          "samples": 980,
+          "maxSurfaceOffsetM": 3.643046986463202e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "inf.delivery-driver",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 39139,
+      "maxSurfaceOffsetM": 3.709924741319721e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/inf.delivery-driver/model.skin.glb",
+          "samples": 10483,
+          "maxSurfaceOffsetM": 3.709924741319721e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.delivery-driver.lod0.glb",
+          "samples": 8498,
+          "maxSurfaceOffsetM": 1.7025902059946184e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.delivery-driver.lod1.glb",
+          "samples": 2915,
+          "maxSurfaceOffsetM": 1.0970415528602787e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.delivery-driver.lod2.glb",
+          "samples": 2915,
+          "maxSurfaceOffsetM": 1.0970871342905966e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.delivery-driver.lod0.low.glb",
+          "samples": 8498,
+          "maxSurfaceOffsetM": 1.7025902059946184e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.delivery-driver.lod1.low.glb",
+          "samples": 2915,
+          "maxSurfaceOffsetM": 1.0970415528602787e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.delivery-driver.lod2.low.glb",
+          "samples": 2915,
+          "maxSurfaceOffsetM": 1.0970871342905966e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "inf.skater",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 35658,
+      "maxSurfaceOffsetM": 5.9141815674339676e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/inf.skater/model.glb",
+          "samples": 15279,
+          "maxSurfaceOffsetM": 1.4901161193847656e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/inf.skater.glb",
+          "samples": 14707,
+          "maxSurfaceOffsetM": 5.9141815674339676e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/inf.skater.lod1.glb",
+          "samples": 3076,
+          "maxSurfaceOffsetM": 5.6145246678355855e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/inf.skater.lod2.glb",
+          "samples": 2596,
+          "maxSurfaceOffsetM": 5.655873762507544e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "inf.college-student",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 25032,
+      "maxSurfaceOffsetM": 5.976025825578114e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/inf.college-student/model.glb",
+          "samples": 10400,
+          "maxSurfaceOffsetM": 5.976025825578114e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/inf.college-student.glb",
+          "samples": 9808,
+          "maxSurfaceOffsetM": 5.933629269218906e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/inf.college-student.lod1.glb",
+          "samples": 2638,
+          "maxSurfaceOffsetM": 5.898651957190383e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/inf.college-student.lod2.glb",
+          "samples": 2186,
+          "maxSurfaceOffsetM": 5.898651957190383e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "inf.bbq-dad",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 17761,
+      "maxSurfaceOffsetM": 4.683440627612855e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/inf.bbq-dad/model.skin.glb",
+          "samples": 7301,
+          "maxSurfaceOffsetM": 4.683440627612855e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.bbq-dad.lod0.glb",
+          "samples": 2784,
+          "maxSurfaceOffsetM": 3.653630072680563e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.bbq-dad.lod1.glb",
+          "samples": 1223,
+          "maxSurfaceOffsetM": 2.7071535592546077e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.bbq-dad.lod2.glb",
+          "samples": 1223,
+          "maxSurfaceOffsetM": 2.7071535592546077e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.bbq-dad.lod0.low.glb",
+          "samples": 2784,
+          "maxSurfaceOffsetM": 3.653630072680563e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.bbq-dad.lod1.low.glb",
+          "samples": 1223,
+          "maxSurfaceOffsetM": 2.7071535592546077e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.bbq-dad.lod2.low.glb",
+          "samples": 1223,
+          "maxSurfaceOffsetM": 2.7071535592546077e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "inf.cashier",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 23296,
+      "maxSurfaceOffsetM": 2.987961908824253e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/inf.cashier/model.skin.glb",
+          "samples": 6068,
+          "maxSurfaceOffsetM": 2.9291358176402664e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.cashier.lod0.glb",
+          "samples": 4870,
+          "maxSurfaceOffsetM": 2.987961908824253e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.cashier.lod1.glb",
+          "samples": 1872,
+          "maxSurfaceOffsetM": 2.980324489737896e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.cashier.lod2.glb",
+          "samples": 1872,
+          "maxSurfaceOffsetM": 2.97988382945091e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.cashier.lod0.low.glb",
+          "samples": 4870,
+          "maxSurfaceOffsetM": 2.987961908824253e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.cashier.lod1.low.glb",
+          "samples": 1872,
+          "maxSurfaceOffsetM": 2.980324489737896e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.cashier.lod2.low.glb",
+          "samples": 1872,
+          "maxSurfaceOffsetM": 2.97988382945091e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "inf.bathrobe-neighbor",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 25901,
+      "maxSurfaceOffsetM": 3.614845871843783e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/inf.bathrobe-neighbor/model.skin.glb",
+          "samples": 7491,
+          "maxSurfaceOffsetM": 3.614845871843783e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.bathrobe-neighbor.lod0.glb",
+          "samples": 4953,
+          "maxSurfaceOffsetM": 4.3928407056849846e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.bathrobe-neighbor.lod1.glb",
+          "samples": 2126,
+          "maxSurfaceOffsetM": 1.2223054420581728e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.bathrobe-neighbor.lod2.glb",
+          "samples": 2126,
+          "maxSurfaceOffsetM": 1.2223054420581728e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.bathrobe-neighbor.lod0.low.glb",
+          "samples": 4953,
+          "maxSurfaceOffsetM": 4.3928407056849846e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.bathrobe-neighbor.lod1.low.glb",
+          "samples": 2126,
+          "maxSurfaceOffsetM": 1.2223054420581728e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.bathrobe-neighbor.lod2.low.glb",
+          "samples": 2126,
+          "maxSurfaceOffsetM": 1.2223054420581728e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "inf.construction-worker",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 43877,
+      "maxSurfaceOffsetM": 6.049530781302614e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/inf.construction-worker/model.glb",
+          "samples": 19328,
+          "maxSurfaceOffsetM": 1.4747879743395459e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/inf.construction-worker.glb",
+          "samples": 17905,
+          "maxSurfaceOffsetM": 6.049530781302614e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/inf.construction-worker.lod1.glb",
+          "samples": 3595,
+          "maxSurfaceOffsetM": 5.885958039473663e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/inf.construction-worker.lod2.glb",
+          "samples": 3049,
+          "maxSurfaceOffsetM": 5.930217564350111e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "inf.crawler",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 16296,
+      "maxSurfaceOffsetM": 2.021641249604582e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/inf.crawler/model.skin.glb",
+          "samples": 7872,
+          "maxSurfaceOffsetM": 2.021641249604582e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.crawler.lod0.glb",
+          "samples": 2442,
+          "maxSurfaceOffsetM": 3.4349832539625953e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.crawler.lod1.glb",
+          "samples": 1234,
+          "maxSurfaceOffsetM": 1.3580581374938023e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.crawler.lod2.glb",
+          "samples": 536,
+          "maxSurfaceOffsetM": 1.1102230246251565e-16,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.crawler.lod0.low.glb",
+          "samples": 2442,
+          "maxSurfaceOffsetM": 3.4349832539625953e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.crawler.lod1.low.glb",
+          "samples": 1234,
+          "maxSurfaceOffsetM": 1.3580581374938023e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.crawler.lod2.low.glb",
+          "samples": 536,
+          "maxSurfaceOffsetM": 1.1102230246251565e-16,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "inf.riot-cop",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 16373,
+      "maxSurfaceOffsetM": 5.815404122031415e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/inf.riot-cop/model.skin.glb",
+          "samples": 8019,
+          "maxSurfaceOffsetM": 5.815404122031415e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.riot-cop.lod0.glb",
+          "samples": 2660,
+          "maxSurfaceOffsetM": 1.6941473547878196e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.riot-cop.lod1.glb",
+          "samples": 1185,
+          "maxSurfaceOffsetM": 7.920873797002966e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.riot-cop.lod2.glb",
+          "samples": 332,
+          "maxSurfaceOffsetM": 3.675425621258048e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.riot-cop.lod0.low.glb",
+          "samples": 2660,
+          "maxSurfaceOffsetM": 1.6941473547878196e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.riot-cop.lod1.low.glb",
+          "samples": 1185,
+          "maxSurfaceOffsetM": 7.920873797002966e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.riot-cop.lod2.low.glb",
+          "samples": 332,
+          "maxSurfaceOffsetM": 3.675425621258048e-9,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "inf.hazmat",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 22972,
+      "maxSurfaceOffsetM": 4.708938459523671e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/inf.hazmat/model.skin.glb",
+          "samples": 11048,
+          "maxSurfaceOffsetM": 4.708938459523671e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.hazmat.lod0.glb",
+          "samples": 3625,
+          "maxSurfaceOffsetM": 9.822992784243588e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.hazmat.lod1.glb",
+          "samples": 1752,
+          "maxSurfaceOffsetM": 2.3478722791263205e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.hazmat.lod2.glb",
+          "samples": 585,
+          "maxSurfaceOffsetM": 1.8652782432417928e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.hazmat.lod0.low.glb",
+          "samples": 3625,
+          "maxSurfaceOffsetM": 9.822992784243588e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.hazmat.lod1.low.glb",
+          "samples": 1752,
+          "maxSurfaceOffsetM": 2.3478722791263205e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.hazmat.lod2.low.glb",
+          "samples": 585,
+          "maxSurfaceOffsetM": 1.8652782432417928e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "inf.firefighter",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 22815,
+      "maxSurfaceOffsetM": 4.0975657433621486e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/inf.firefighter/model.skin.glb",
+          "samples": 10525,
+          "maxSurfaceOffsetM": 4.0975657433621486e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.firefighter.lod0.glb",
+          "samples": 3795,
+          "maxSurfaceOffsetM": 1.644104336667448e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.firefighter.lod1.glb",
+          "samples": 1713,
+          "maxSurfaceOffsetM": 1.644104336667448e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.firefighter.lod2.glb",
+          "samples": 637,
+          "maxSurfaceOffsetM": 1.6434700326083407e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.firefighter.lod0.low.glb",
+          "samples": 3795,
+          "maxSurfaceOffsetM": 1.644104336667448e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.firefighter.lod1.low.glb",
+          "samples": 1713,
+          "maxSurfaceOffsetM": 1.644104336667448e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.firefighter.lod2.low.glb",
+          "samples": 637,
+          "maxSurfaceOffsetM": 1.6434700326083407e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "inf.screamer",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 25349,
+      "maxSurfaceOffsetM": 6.061051147521895e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/inf.screamer/model.glb",
+          "samples": 9988,
+          "maxSurfaceOffsetM": 3.725290298461914e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/inf.screamer.glb",
+          "samples": 11164,
+          "maxSurfaceOffsetM": 6.061051147521895e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/inf.screamer.lod1.glb",
+          "samples": 2352,
+          "maxSurfaceOffsetM": 5.895904343326592e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/inf.screamer.lod2.glb",
+          "samples": 1845,
+          "maxSurfaceOffsetM": 5.895904343326592e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "inf.sprinter",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 29530,
+      "maxSurfaceOffsetM": 5.882406464986563e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/inf.sprinter/model.glb",
+          "samples": 12425,
+          "maxSurfaceOffsetM": 1.3886967685444523e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/inf.sprinter.glb",
+          "samples": 12583,
+          "maxSurfaceOffsetM": 5.878472850464005e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/inf.sprinter.lod1.glb",
+          "samples": 2486,
+          "maxSurfaceOffsetM": 5.882406464986563e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/inf.sprinter.lod2.glb",
+          "samples": 2036,
+          "maxSurfaceOffsetM": 5.878754006304504e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "inf.armored-football",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 28361,
+      "maxSurfaceOffsetM": 6.455433940934581e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/inf.armored-football/model.glb",
+          "samples": 11878,
+          "maxSurfaceOffsetM": 6.455433940934581e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/inf.armored-football.glb",
+          "samples": 11804,
+          "maxSurfaceOffsetM": 5.8803132232285196e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/inf.armored-football.lod1.glb",
+          "samples": 2550,
+          "maxSurfaceOffsetM": 5.650650896986089e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/inf.armored-football.lod2.glb",
+          "samples": 2129,
+          "maxSurfaceOffsetM": 5.69391870460959e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "inf.butcher",
+      "policy": "reverted",
+      "pass": true,
+      "samples": 26725,
+      "maxSurfaceOffsetM": 5.956527858615563e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/inf.butcher/model.glb",
+          "samples": 11256,
+          "maxSurfaceOffsetM": 3.725290298461914e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/inf.butcher.glb",
+          "samples": 11580,
+          "maxSurfaceOffsetM": 5.898414675897019e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/inf.butcher.lod1.glb",
+          "samples": 2165,
+          "maxSurfaceOffsetM": 5.956527858615563e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/inf.butcher.lod2.glb",
+          "samples": 1724,
+          "maxSurfaceOffsetM": 5.956527858615563e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "inf.nurse",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 22210,
+      "maxSurfaceOffsetM": 3.105307586015365e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/inf.nurse/model.skin.glb",
+          "samples": 5386,
+          "maxSurfaceOffsetM": 3.105307586015365e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.nurse.lod0.glb",
+          "samples": 5386,
+          "maxSurfaceOffsetM": 5.820766091346741e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.nurse.lod1.glb",
+          "samples": 2220,
+          "maxSurfaceOffsetM": 1.0108111448300678e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.nurse.lod2.glb",
+          "samples": 806,
+          "maxSurfaceOffsetM": 6.061666693720781e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.nurse.lod0.low.glb",
+          "samples": 5386,
+          "maxSurfaceOffsetM": 5.820766091346741e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.nurse.lod1.low.glb",
+          "samples": 2220,
+          "maxSurfaceOffsetM": 1.0108111448300678e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/inf.nurse.lod2.low.glb",
+          "samples": 806,
+          "maxSurfaceOffsetM": 6.061666693720781e-9,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.civilian-adult-m",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 17089,
+      "maxSurfaceOffsetM": 5.592221498260198e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.civilian-man-a/model.skin.glb",
+          "samples": 8519,
+          "maxSurfaceOffsetM": 5.592221498260198e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-a.lod0.glb",
+          "samples": 2495,
+          "maxSurfaceOffsetM": 5.465909989941228e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-a.lod1.glb",
+          "samples": 1164,
+          "maxSurfaceOffsetM": 3.2229265074129364e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-a.lod2.glb",
+          "samples": 626,
+          "maxSurfaceOffsetM": 4.308893124784685e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-a.lod0.low.glb",
+          "samples": 2495,
+          "maxSurfaceOffsetM": 5.465909989941228e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-a.lod1.low.glb",
+          "samples": 1164,
+          "maxSurfaceOffsetM": 3.2229265074129364e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-a.lod2.low.glb",
+          "samples": 626,
+          "maxSurfaceOffsetM": 4.308893124784685e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.civilian-adult-f",
+      "policy": "reverted",
+      "pass": true,
+      "samples": 21480,
+      "maxSurfaceOffsetM": 5.5389312830918656e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.civilian-woman-a/model.skin.glb",
+          "samples": 9256,
+          "maxSurfaceOffsetM": 5.5389312830918656e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-woman-a.lod0.glb",
+          "samples": 3439,
+          "maxSurfaceOffsetM": 3.183576701671383e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-woman-a.lod1.glb",
+          "samples": 1867,
+          "maxSurfaceOffsetM": 4.20401595040326e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-woman-a.lod2.glb",
+          "samples": 806,
+          "maxSurfaceOffsetM": 3.057567183743767e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-woman-a.lod0.low.glb",
+          "samples": 3439,
+          "maxSurfaceOffsetM": 3.183576701671383e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-woman-a.lod1.low.glb",
+          "samples": 1867,
+          "maxSurfaceOffsetM": 4.20401595040326e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-woman-a.lod2.low.glb",
+          "samples": 806,
+          "maxSurfaceOffsetM": 3.057567183743767e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.civilian-elderly",
+      "policy": "reverted",
+      "pass": true,
+      "samples": 23725,
+      "maxSurfaceOffsetM": 5.647638239663956e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.civilian-elderly/model.skin.glb",
+          "samples": 8707,
+          "maxSurfaceOffsetM": 5.647638239663956e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-elderly.lod0.glb",
+          "samples": 3989,
+          "maxSurfaceOffsetM": 1.9626805254469974e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-elderly.lod1.glb",
+          "samples": 1760,
+          "maxSurfaceOffsetM": 2.0922512345628217e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-elderly.lod2.glb",
+          "samples": 1760,
+          "maxSurfaceOffsetM": 2.0922512345628217e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-elderly.lod0.low.glb",
+          "samples": 3989,
+          "maxSurfaceOffsetM": 1.9626805254469974e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-elderly.lod1.low.glb",
+          "samples": 1760,
+          "maxSurfaceOffsetM": 2.0922512345628217e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-elderly.lod2.low.glb",
+          "samples": 1760,
+          "maxSurfaceOffsetM": 2.0922512345628217e-9,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.patient-zero-courier",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 33696,
+      "maxSurfaceOffsetM": 5.945176968101813e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.patient-zero-courier/model.glb",
+          "samples": 16503,
+          "maxSurfaceOffsetM": 0,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/npc.patient-zero-courier.glb",
+          "samples": 14313,
+          "maxSurfaceOffsetM": 5.900270154673565e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/npc.patient-zero-courier.lod1.glb",
+          "samples": 1882,
+          "maxSurfaceOffsetM": 5.9259894589187676e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/npc.patient-zero-courier.lod2.glb",
+          "samples": 998,
+          "maxSurfaceOffsetM": 5.945176968101813e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.mrs-alvarez",
+      "policy": "reverted",
+      "pass": true,
+      "samples": 31188,
+      "maxSurfaceOffsetM": 6.048410321858145e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.mrs-alvarez/model.glb",
+          "samples": 12844,
+          "maxSurfaceOffsetM": 5.960418622875235e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/npc.mrs-alvarez.glb",
+          "samples": 12844,
+          "maxSurfaceOffsetM": 6.048410321858145e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/npc.mrs-alvarez.lod1.glb",
+          "samples": 2992,
+          "maxSurfaceOffsetM": 5.9441957368216525e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/npc.mrs-alvarez.lod2.glb",
+          "samples": 2508,
+          "maxSurfaceOffsetM": 5.9441957368216525e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.police-officer",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 24593,
+      "maxSurfaceOffsetM": 3.346844143982777e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.police-officer/model.skin.glb",
+          "samples": 10833,
+          "maxSurfaceOffsetM": 3.346844143982777e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.police-officer.lod0.glb",
+          "samples": 3514,
+          "maxSurfaceOffsetM": 2.250866379853249e-16,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.police-officer.lod1.glb",
+          "samples": 1683,
+          "maxSurfaceOffsetM": 2.237994986951949e-16,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.police-officer.lod2.glb",
+          "samples": 1683,
+          "maxSurfaceOffsetM": 2.237994986951949e-16,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.police-officer.lod0.low.glb",
+          "samples": 3514,
+          "maxSurfaceOffsetM": 2.250866379853249e-16,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.police-officer.lod1.low.glb",
+          "samples": 1683,
+          "maxSurfaceOffsetM": 2.237994986951949e-16,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.police-officer.lod2.low.glb",
+          "samples": 1683,
+          "maxSurfaceOffsetM": 2.237994986951949e-16,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.paramedic",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 44990,
+      "maxSurfaceOffsetM": 5.948807517397253e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.paramedic/model.glb",
+          "samples": 21889,
+          "maxSurfaceOffsetM": 2.982062076419392e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/npc.paramedic.glb",
+          "samples": 18667,
+          "maxSurfaceOffsetM": 5.948807517397253e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/npc.paramedic.lod1.glb",
+          "samples": 2615,
+          "maxSurfaceOffsetM": 5.9207126458095676e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/npc.paramedic.lod2.glb",
+          "samples": 1819,
+          "maxSurfaceOffsetM": 5.9207126458095676e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.firefighter-alive",
+      "policy": "reverted",
+      "pass": true,
+      "samples": 24830,
+      "maxSurfaceOffsetM": 5.5235943676287355e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.firefighter-alive/model.skin.glb",
+          "samples": 10254,
+          "maxSurfaceOffsetM": 5.5235943676287355e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.firefighter-alive.lod0.glb",
+          "samples": 3646,
+          "maxSurfaceOffsetM": 3.884838313570975e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.firefighter-alive.lod1.glb",
+          "samples": 1821,
+          "maxSurfaceOffsetM": 5.127284584522658e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.firefighter-alive.lod2.glb",
+          "samples": 1821,
+          "maxSurfaceOffsetM": 5.127284584522658e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.firefighter-alive.lod0.low.glb",
+          "samples": 3646,
+          "maxSurfaceOffsetM": 3.884838313570975e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.firefighter-alive.lod1.low.glb",
+          "samples": 1821,
+          "maxSurfaceOffsetM": 5.127284584522658e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.firefighter-alive.lod2.low.glb",
+          "samples": 1821,
+          "maxSurfaceOffsetM": 5.127284584522658e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.national-guard",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 25779,
+      "maxSurfaceOffsetM": 4.52393428901981e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.national-guard/model.skin.glb",
+          "samples": 10305,
+          "maxSurfaceOffsetM": 3.741669459194271e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.national-guard.lod0.glb",
+          "samples": 3863,
+          "maxSurfaceOffsetM": 3.343593253223159e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.national-guard.lod1.glb",
+          "samples": 1937,
+          "maxSurfaceOffsetM": 4.52393428901981e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.national-guard.lod2.glb",
+          "samples": 1937,
+          "maxSurfaceOffsetM": 4.52393428901981e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.national-guard.lod0.low.glb",
+          "samples": 3863,
+          "maxSurfaceOffsetM": 3.343593253223159e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.national-guard.lod1.low.glb",
+          "samples": 1937,
+          "maxSurfaceOffsetM": 4.52393428901981e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.national-guard.lod2.low.glb",
+          "samples": 1937,
+          "maxSurfaceOffsetM": 4.52393428901981e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.survivor-group",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 56086,
+      "maxSurfaceOffsetM": 8.039468134870849e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.survivor-group/model.glb",
+          "samples": 24054,
+          "maxSurfaceOffsetM": 6.545614498790033e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/npc.survivor-group.glb",
+          "samples": 20491,
+          "maxSurfaceOffsetM": 7.671948565774316e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/npc.survivor-group.lod1.glb",
+          "samples": 6203,
+          "maxSurfaceOffsetM": 8.039468134870849e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/npc.survivor-group.lod2.glb",
+          "samples": 5338,
+          "maxSurfaceOffsetM": 8.039468134870849e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.helicopter-pilot",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 44937,
+      "maxSurfaceOffsetM": 5.916175638300416e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.helicopter-pilot/model.glb",
+          "samples": 24862,
+          "maxSurfaceOffsetM": 4.470348358154297e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/npc.helicopter-pilot.glb",
+          "samples": 15480,
+          "maxSurfaceOffsetM": 5.8348574857767546e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/npc.helicopter-pilot.lod1.glb",
+          "samples": 2643,
+          "maxSurfaceOffsetM": 5.916175638300416e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/npc.helicopter-pilot.lod2.glb",
+          "samples": 1952,
+          "maxSurfaceOffsetM": 5.9161673387926534e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.civilian-man-a",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 17089,
+      "maxSurfaceOffsetM": 5.817280746645897e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.civilian-man-a/model.slim.skin.glb",
+          "samples": 8519,
+          "maxSurfaceOffsetM": 5.592221498260198e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/slim-pilot/npc.civilian-man-a.lod0.glb",
+          "samples": 2495,
+          "maxSurfaceOffsetM": 5.817280746645897e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/slim-pilot/npc.civilian-man-a.lod1.glb",
+          "samples": 1164,
+          "maxSurfaceOffsetM": 3.484501220632679e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/slim-pilot/npc.civilian-man-a.lod2.glb",
+          "samples": 626,
+          "maxSurfaceOffsetM": 4.308893147501976e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/slim-pilot/npc.civilian-man-a.lod0.low.glb",
+          "samples": 2495,
+          "maxSurfaceOffsetM": 5.817280746645897e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/slim-pilot/npc.civilian-man-a.lod1.low.glb",
+          "samples": 1164,
+          "maxSurfaceOffsetM": 3.484501220632679e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/slim-pilot/npc.civilian-man-a.lod2.low.glb",
+          "samples": 626,
+          "maxSurfaceOffsetM": 4.308893147501976e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.civilian-man-b",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 21848,
+      "maxSurfaceOffsetM": 5.8587220632270256e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.civilian-man-b/model.skin.glb",
+          "samples": 10554,
+          "maxSurfaceOffsetM": 5.7009061581376106e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-b.lod0.glb",
+          "samples": 3275,
+          "maxSurfaceOffsetM": 5.8587220632270256e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-b.lod1.glb",
+          "samples": 1568,
+          "maxSurfaceOffsetM": 3.716542149985374e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-b.lod2.glb",
+          "samples": 804,
+          "maxSurfaceOffsetM": 3.568395237419443e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-b.lod0.low.glb",
+          "samples": 3275,
+          "maxSurfaceOffsetM": 5.8587220632270256e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-b.lod1.low.glb",
+          "samples": 1568,
+          "maxSurfaceOffsetM": 3.716542149985374e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-b.lod2.low.glb",
+          "samples": 804,
+          "maxSurfaceOffsetM": 3.568395237419443e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.civilian-woman-a",
+      "policy": "reverted",
+      "pass": true,
+      "samples": 21480,
+      "maxSurfaceOffsetM": 5.5389312830918656e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.civilian-woman-a/model.slim.skin.glb",
+          "samples": 9256,
+          "maxSurfaceOffsetM": 5.5389312830918656e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/slim-pilot/npc.civilian-woman-a.lod0.glb",
+          "samples": 3439,
+          "maxSurfaceOffsetM": 3.183576701671383e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/slim-pilot/npc.civilian-woman-a.lod1.glb",
+          "samples": 1867,
+          "maxSurfaceOffsetM": 4.20401595040326e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/slim-pilot/npc.civilian-woman-a.lod2.glb",
+          "samples": 806,
+          "maxSurfaceOffsetM": 3.057567183743767e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/slim-pilot/npc.civilian-woman-a.lod0.low.glb",
+          "samples": 3439,
+          "maxSurfaceOffsetM": 3.183576701671383e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/slim-pilot/npc.civilian-woman-a.lod1.low.glb",
+          "samples": 1867,
+          "maxSurfaceOffsetM": 4.20401595040326e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/slim-pilot/npc.civilian-woman-a.lod2.low.glb",
+          "samples": 806,
+          "maxSurfaceOffsetM": 3.057567183743767e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.civilian-woman-b",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 19871,
+      "maxSurfaceOffsetM": 4.71812217689336e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.civilian-woman-b/model.skin.glb",
+          "samples": 9167,
+          "maxSurfaceOffsetM": 4.71812217689336e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-woman-b.lod0.glb",
+          "samples": 3133,
+          "maxSurfaceOffsetM": 4.301856109428871e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-woman-b.lod1.glb",
+          "samples": 1401,
+          "maxSurfaceOffsetM": 3.7906004294014893e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-woman-b.lod2.glb",
+          "samples": 818,
+          "maxSurfaceOffsetM": 2.9619749776638027e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-woman-b.lod0.low.glb",
+          "samples": 3133,
+          "maxSurfaceOffsetM": 4.301856109428871e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-woman-b.lod1.low.glb",
+          "samples": 1401,
+          "maxSurfaceOffsetM": 3.7906004294014893e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-woman-b.lod2.low.glb",
+          "samples": 818,
+          "maxSurfaceOffsetM": 2.9619749776638027e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "inf.teen-skater",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 33178,
+      "maxSurfaceOffsetM": 5.8937761271687626e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/inf.teen-skater/model.glb",
+          "samples": 14179,
+          "maxSurfaceOffsetM": 7.450580596923828e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/inf.teen-skater.glb",
+          "samples": 13882,
+          "maxSurfaceOffsetM": 5.8937761271687626e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/inf.teen-skater.lod1.glb",
+          "samples": 2784,
+          "maxSurfaceOffsetM": 5.483609363436392e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/inf.teen-skater.lod2.glb",
+          "samples": 2333,
+          "maxSurfaceOffsetM": 5.2431172084331914e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "char.courier-male",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 27980,
+      "maxSurfaceOffsetM": 5.531513028580418e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/char.courier-male/model.glb",
+          "samples": 8075,
+          "maxSurfaceOffsetM": 5.531513028580418e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/char.courier-male.glb",
+          "samples": 8075,
+          "maxSurfaceOffsetM": 5.531513028580418e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/char.courier-male.lod1.glb",
+          "samples": 614,
+          "maxSurfaceOffsetM": 3.072147442997857e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/char.courier-male.lod2.glb",
+          "samples": 302,
+          "maxSurfaceOffsetM": 2.788735171175877e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "assets/char.courier-male-skin/model.skin.glb",
+          "samples": 3638,
+          "maxSurfaceOffsetM": 4.4081831468105836e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/char.courier-male.skin.glb",
+          "samples": 3638,
+          "maxSurfaceOffsetM": 2.2388387281952346e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/char.courier-male.skin.low.glb",
+          "samples": 3638,
+          "maxSurfaceOffsetM": 2.2388387281952346e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.lab-tech-a",
+      "policy": "reverted",
+      "pass": true,
+      "samples": 18084,
+      "maxSurfaceOffsetM": 2.878371565828314e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.lab-tech-a/model.skin.glb",
+          "samples": 8170,
+          "maxSurfaceOffsetM": 2.878371565828314e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.lab-tech-a.lod0.glb",
+          "samples": 2595,
+          "maxSurfaceOffsetM": 8.028088971379077e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.lab-tech-a.lod1.glb",
+          "samples": 1181,
+          "maxSurfaceOffsetM": 5.430383098936528e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.lab-tech-a.lod2.glb",
+          "samples": 1181,
+          "maxSurfaceOffsetM": 5.430383098936528e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.lab-tech-a.lod0.low.glb",
+          "samples": 2595,
+          "maxSurfaceOffsetM": 8.028088971379077e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.lab-tech-a.lod1.low.glb",
+          "samples": 1181,
+          "maxSurfaceOffsetM": 5.430383098936528e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.lab-tech-a.lod2.low.glb",
+          "samples": 1181,
+          "maxSurfaceOffsetM": 5.430383098936528e-9,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.lab-tech-b",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 17985,
+      "maxSurfaceOffsetM": 2.341094438914252e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.lab-tech-b/model.skin.glb",
+          "samples": 7977,
+          "maxSurfaceOffsetM": 2.341094438914252e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.lab-tech-b.lod0.glb",
+          "samples": 2656,
+          "maxSurfaceOffsetM": 1.1854337955696792e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.lab-tech-b.lod1.glb",
+          "samples": 1174,
+          "maxSurfaceOffsetM": 1.3101232403856587e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.lab-tech-b.lod2.glb",
+          "samples": 1174,
+          "maxSurfaceOffsetM": 1.3101232403856587e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.lab-tech-b.lod0.low.glb",
+          "samples": 2656,
+          "maxSurfaceOffsetM": 1.1854337955696792e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.lab-tech-b.lod1.low.glb",
+          "samples": 1174,
+          "maxSurfaceOffsetM": 1.3101232403856587e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.lab-tech-b.lod2.low.glb",
+          "samples": 1174,
+          "maxSurfaceOffsetM": 1.3101232403856587e-9,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.lab-guard",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 23359,
+      "maxSurfaceOffsetM": 2.5429492088032968e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.lab-guard/model.skin.glb",
+          "samples": 10085,
+          "maxSurfaceOffsetM": 2.5429492088032968e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.lab-guard.lod0.glb",
+          "samples": 3273,
+          "maxSurfaceOffsetM": 2.424126108750741e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.lab-guard.lod1.glb",
+          "samples": 1682,
+          "maxSurfaceOffsetM": 2.301923048546777e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.lab-guard.lod2.glb",
+          "samples": 1682,
+          "maxSurfaceOffsetM": 2.301923048546777e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.lab-guard.lod0.low.glb",
+          "samples": 3273,
+          "maxSurfaceOffsetM": 2.424126108750741e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.lab-guard.lod1.low.glb",
+          "samples": 1682,
+          "maxSurfaceOffsetM": 2.301923048546777e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.lab-guard.lod2.low.glb",
+          "samples": 1682,
+          "maxSurfaceOffsetM": 2.301923048546777e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.depot-clerk",
+      "policy": "reverted",
+      "pass": true,
+      "samples": 17158,
+      "maxSurfaceOffsetM": 2.9286206531161154e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.depot-clerk/model.skin.glb",
+          "samples": 8192,
+          "maxSurfaceOffsetM": 2.9286206531161154e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.depot-clerk.lod0.glb",
+          "samples": 2283,
+          "maxSurfaceOffsetM": 2.0309661337305552e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.depot-clerk.lod1.glb",
+          "samples": 1100,
+          "maxSurfaceOffsetM": 2.6616761939692667e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.depot-clerk.lod2.glb",
+          "samples": 1100,
+          "maxSurfaceOffsetM": 2.6616761939692667e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.depot-clerk.lod0.low.glb",
+          "samples": 2283,
+          "maxSurfaceOffsetM": 2.0309661337305552e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.depot-clerk.lod1.low.glb",
+          "samples": 1100,
+          "maxSurfaceOffsetM": 2.6616761939692667e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.depot-clerk.lod2.low.glb",
+          "samples": 1100,
+          "maxSurfaceOffsetM": 2.6616761939692667e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.dale.aftermath",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 21445,
+      "maxSurfaceOffsetM": 2.946030659798616e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.dale.aftermath/model.skin.glb",
+          "samples": 9445,
+          "maxSurfaceOffsetM": 2.946030659798616e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.dale.aftermath.lod0.glb",
+          "samples": 3118,
+          "maxSurfaceOffsetM": 2.220717083251841e-16,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.dale.aftermath.lod1.glb",
+          "samples": 1441,
+          "maxSurfaceOffsetM": 7.045889724613051e-10,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.dale.aftermath.lod2.glb",
+          "samples": 1441,
+          "maxSurfaceOffsetM": 7.045889724613051e-10,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.dale.aftermath.lod0.low.glb",
+          "samples": 3118,
+          "maxSurfaceOffsetM": 2.220717083251841e-16,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.dale.aftermath.lod1.low.glb",
+          "samples": 1441,
+          "maxSurfaceOffsetM": 7.045889724613051e-10,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.dale.aftermath.lod2.low.glb",
+          "samples": 1441,
+          "maxSurfaceOffsetM": 7.045889724613051e-10,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.rosa.aftermath",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 19217,
+      "maxSurfaceOffsetM": 3.9388140300859565e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.rosa.aftermath/model.skin.glb",
+          "samples": 8327,
+          "maxSurfaceOffsetM": 3.9388140300859565e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.rosa.aftermath.lod0.glb",
+          "samples": 2817,
+          "maxSurfaceOffsetM": 7.564502357837455e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.rosa.aftermath.lod1.glb",
+          "samples": 1314,
+          "maxSurfaceOffsetM": 1.978118318528666e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.rosa.aftermath.lod2.glb",
+          "samples": 1314,
+          "maxSurfaceOffsetM": 1.978118318528666e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.rosa.aftermath.lod0.low.glb",
+          "samples": 2817,
+          "maxSurfaceOffsetM": 7.564502357837455e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.rosa.aftermath.lod1.low.glb",
+          "samples": 1314,
+          "maxSurfaceOffsetM": 1.978118318528666e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.rosa.aftermath.lod2.low.glb",
+          "samples": 1314,
+          "maxSurfaceOffsetM": 1.978118318528666e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.mr-okafor.aftermath",
+      "policy": "reverted",
+      "pass": true,
+      "samples": 24618,
+      "maxSurfaceOffsetM": 3.476944467368018e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.mr-okafor.aftermath/model.skin.glb",
+          "samples": 9002,
+          "maxSurfaceOffsetM": 3.476944467368018e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.mr-okafor.aftermath.lod0.glb",
+          "samples": 4098,
+          "maxSurfaceOffsetM": 2.6197238920060688e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.mr-okafor.aftermath.lod1.glb",
+          "samples": 1855,
+          "maxSurfaceOffsetM": 1.5573231943462054e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.mr-okafor.aftermath.lod2.glb",
+          "samples": 1855,
+          "maxSurfaceOffsetM": 1.5573231943462054e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.mr-okafor.aftermath.lod0.low.glb",
+          "samples": 4098,
+          "maxSurfaceOffsetM": 2.6197238920060688e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.mr-okafor.aftermath.lod1.low.glb",
+          "samples": 1855,
+          "maxSurfaceOffsetM": 1.5573231943462054e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.mr-okafor.aftermath.lod2.low.glb",
+          "samples": 1855,
+          "maxSurfaceOffsetM": 1.5573231943462054e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.mia.aftermath",
+      "policy": "reverted",
+      "pass": true,
+      "samples": 20493,
+      "maxSurfaceOffsetM": 2.8577685303991345e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.mia.aftermath/model.skin.glb",
+          "samples": 8203,
+          "maxSurfaceOffsetM": 2.8577685303991345e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.mia.aftermath.lod0.glb",
+          "samples": 2987,
+          "maxSurfaceOffsetM": 4.165651538672092e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.mia.aftermath.lod1.glb",
+          "samples": 1579,
+          "maxSurfaceOffsetM": 1.7908843180192407e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.mia.aftermath.lod2.glb",
+          "samples": 1579,
+          "maxSurfaceOffsetM": 1.7908843180192407e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.mia.aftermath.lod0.low.glb",
+          "samples": 2987,
+          "maxSurfaceOffsetM": 4.165651538672092e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.mia.aftermath.lod1.low.glb",
+          "samples": 1579,
+          "maxSurfaceOffsetM": 1.7908843180192407e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.mia.aftermath.lod2.low.glb",
+          "samples": 1579,
+          "maxSurfaceOffsetM": 1.7908843180192407e-9,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.sam.aftermath",
+      "policy": "reverted",
+      "pass": true,
+      "samples": 25973,
+      "maxSurfaceOffsetM": 5.697070477121356e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.sam.aftermath/model.skin.glb",
+          "samples": 10897,
+          "maxSurfaceOffsetM": 5.697070477121356e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.sam.aftermath.lod0.glb",
+          "samples": 3810,
+          "maxSurfaceOffsetM": 2.337085946990669e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.sam.aftermath.lod1.glb",
+          "samples": 1864,
+          "maxSurfaceOffsetM": 2.4473629800995236e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.sam.aftermath.lod2.glb",
+          "samples": 1864,
+          "maxSurfaceOffsetM": 2.4473629800995236e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.sam.aftermath.lod0.low.glb",
+          "samples": 3810,
+          "maxSurfaceOffsetM": 2.337085946990669e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.sam.aftermath.lod1.low.glb",
+          "samples": 1864,
+          "maxSurfaceOffsetM": 2.4473629800995236e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.sam.aftermath.lod2.low.glb",
+          "samples": 1864,
+          "maxSurfaceOffsetM": 2.4473629800995236e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.civilian-man-a.aftermath",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 17902,
+      "maxSurfaceOffsetM": 4.1214965843351266e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.civilian-man-a.aftermath/model.skin.glb",
+          "samples": 8346,
+          "maxSurfaceOffsetM": 4.1214965843351266e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-a.aftermath.lod0.glb",
+          "samples": 2460,
+          "maxSurfaceOffsetM": 1.2350404546380706e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-a.aftermath.lod1.glb",
+          "samples": 1159,
+          "maxSurfaceOffsetM": 3.378122752992166e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-a.aftermath.lod2.glb",
+          "samples": 1159,
+          "maxSurfaceOffsetM": 3.378122752992166e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-a.aftermath.lod0.low.glb",
+          "samples": 2460,
+          "maxSurfaceOffsetM": 1.2350404546380706e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-a.aftermath.lod1.low.glb",
+          "samples": 1159,
+          "maxSurfaceOffsetM": 3.378122752992166e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-a.aftermath.lod2.low.glb",
+          "samples": 1159,
+          "maxSurfaceOffsetM": 3.378122752992166e-9,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.civilian-man-b.aftermath",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 23209,
+      "maxSurfaceOffsetM": 5.813492993520338e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.civilian-man-b.aftermath/model.skin.glb",
+          "samples": 10625,
+          "maxSurfaceOffsetM": 5.75272010519006e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-b.aftermath.lod0.glb",
+          "samples": 3298,
+          "maxSurfaceOffsetM": 5.813492993520338e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-b.aftermath.lod1.glb",
+          "samples": 1497,
+          "maxSurfaceOffsetM": 4.5166597770986016e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-b.aftermath.lod2.glb",
+          "samples": 1497,
+          "maxSurfaceOffsetM": 4.5166597770986016e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-b.aftermath.lod0.low.glb",
+          "samples": 3298,
+          "maxSurfaceOffsetM": 5.813492993520338e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-b.aftermath.lod1.low.glb",
+          "samples": 1497,
+          "maxSurfaceOffsetM": 4.5166597770986016e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-b.aftermath.lod2.low.glb",
+          "samples": 1497,
+          "maxSurfaceOffsetM": 4.5166597770986016e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.civilian-woman-b.aftermath",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 21129,
+      "maxSurfaceOffsetM": 5.079443474036467e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.civilian-woman-b.aftermath/model.skin.glb",
+          "samples": 9163,
+          "maxSurfaceOffsetM": 5.079443474036467e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-woman-b.aftermath.lod0.glb",
+          "samples": 3133,
+          "maxSurfaceOffsetM": 3.8333097341029643e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-woman-b.aftermath.lod1.glb",
+          "samples": 1425,
+          "maxSurfaceOffsetM": 4.273192588256215e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-woman-b.aftermath.lod2.glb",
+          "samples": 1425,
+          "maxSurfaceOffsetM": 4.273192588256215e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-woman-b.aftermath.lod0.low.glb",
+          "samples": 3133,
+          "maxSurfaceOffsetM": 3.8333097341029643e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-woman-b.aftermath.lod1.low.glb",
+          "samples": 1425,
+          "maxSurfaceOffsetM": 4.273192588256215e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-woman-b.aftermath.lod2.low.glb",
+          "samples": 1425,
+          "maxSurfaceOffsetM": 4.273192588256215e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.marcus.aftermath",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 17618,
+      "maxSurfaceOffsetM": 5.7478165452669074e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.marcus.aftermath/model.skin.glb",
+          "samples": 8236,
+          "maxSurfaceOffsetM": 5.687800198901407e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.marcus.aftermath.lod0.glb",
+          "samples": 2429,
+          "maxSurfaceOffsetM": 5.7478165452669074e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.marcus.aftermath.lod1.glb",
+          "samples": 1131,
+          "maxSurfaceOffsetM": 2.0146857673500645e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.marcus.aftermath.lod2.glb",
+          "samples": 1131,
+          "maxSurfaceOffsetM": 2.0146857673500645e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.marcus.aftermath.lod0.low.glb",
+          "samples": 2429,
+          "maxSurfaceOffsetM": 5.7478165452669074e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.marcus.aftermath.lod1.low.glb",
+          "samples": 1131,
+          "maxSurfaceOffsetM": 2.0146857673500645e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.marcus.aftermath.lod2.low.glb",
+          "samples": 1131,
+          "maxSurfaceOffsetM": 2.0146857673500645e-8,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.shelter-survivor.bandaged",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 17902,
+      "maxSurfaceOffsetM": 4.1214965843351266e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.shelter-survivor.bandaged/model.skin.glb",
+          "samples": 8346,
+          "maxSurfaceOffsetM": 4.1214965843351266e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.shelter-survivor.bandaged.lod0.glb",
+          "samples": 2460,
+          "maxSurfaceOffsetM": 1.2350404546380706e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.shelter-survivor.bandaged.lod1.glb",
+          "samples": 1159,
+          "maxSurfaceOffsetM": 3.378122752992166e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.shelter-survivor.bandaged.lod2.glb",
+          "samples": 1159,
+          "maxSurfaceOffsetM": 3.378122752992166e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.shelter-survivor.bandaged.lod0.low.glb",
+          "samples": 2460,
+          "maxSurfaceOffsetM": 1.2350404546380706e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.shelter-survivor.bandaged.lod1.low.glb",
+          "samples": 1159,
+          "maxSurfaceOffsetM": 3.378122752992166e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.shelter-survivor.bandaged.lod2.low.glb",
+          "samples": 1159,
+          "maxSurfaceOffsetM": 3.378122752992166e-9,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.shelter-survivor.lying",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 17902,
+      "maxSurfaceOffsetM": 4.1214965843351266e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.shelter-survivor.lying/model.skin.glb",
+          "samples": 8346,
+          "maxSurfaceOffsetM": 4.1214965843351266e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.shelter-survivor.lying.lod0.glb",
+          "samples": 2460,
+          "maxSurfaceOffsetM": 1.2350404546380706e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.shelter-survivor.lying.lod1.glb",
+          "samples": 1159,
+          "maxSurfaceOffsetM": 3.378122752992166e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.shelter-survivor.lying.lod2.glb",
+          "samples": 1159,
+          "maxSurfaceOffsetM": 3.378122752992166e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.shelter-survivor.lying.lod0.low.glb",
+          "samples": 2460,
+          "maxSurfaceOffsetM": 1.2350404546380706e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.shelter-survivor.lying.lod1.low.glb",
+          "samples": 1159,
+          "maxSurfaceOffsetM": 3.378122752992166e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.shelter-survivor.lying.lod2.low.glb",
+          "samples": 1159,
+          "maxSurfaceOffsetM": 3.378122752992166e-9,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    },
+    {
+      "id": "npc.shelter-survivor.sitting",
+      "policy": "slimmed",
+      "pass": true,
+      "samples": 17902,
+      "maxSurfaceOffsetM": 4.1214965843351266e-8,
+      "maxBodyDisplacementOffsetM": 0,
+      "files": [
+        {
+          "path": "assets/npc.shelter-survivor.sitting/model.skin.glb",
+          "samples": 8346,
+          "maxSurfaceOffsetM": 4.1214965843351266e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.shelter-survivor.sitting.lod0.glb",
+          "samples": 2460,
+          "maxSurfaceOffsetM": 1.2350404546380706e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.shelter-survivor.sitting.lod1.glb",
+          "samples": 1159,
+          "maxSurfaceOffsetM": 3.378122752992166e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.shelter-survivor.sitting.lod2.glb",
+          "samples": 1159,
+          "maxSurfaceOffsetM": 3.378122752992166e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.shelter-survivor.sitting.lod0.low.glb",
+          "samples": 2460,
+          "maxSurfaceOffsetM": 1.2350404546380706e-8,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.shelter-survivor.sitting.lod1.low.glb",
+          "samples": 1159,
+          "maxSurfaceOffsetM": 3.378122752992166e-9,
+          "maxBodyDisplacementOffsetM": 0
+        },
+        {
+          "path": "public/assets/models/skinned/npc.shelter-survivor.sitting.lod2.low.glb",
+          "samples": 1159,
+          "maxSurfaceOffsetM": 3.378122752992166e-9,
+          "maxBodyDisplacementOffsetM": 0
+        }
+      ]
+    }
+  ]
+}

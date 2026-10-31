@@ -1,7 +1,7 @@
 /** Paired public L1 loads in fresh isolated contexts of the shared native-GPU pool. */
 import{spawn,spawnSync,type ChildProcess}from'node:child_process';import{mkdirSync,readFileSync,writeFileSync,rmSync}from'node:fs';import{resolve}from'node:path';import{get}from'node:http';import assert from'node:assert/strict';
 assert.equal(process.env.MI_PERF_LOCK_HELD,'1','Run through tools/perf/quiet-run.sh');
-const out=resolve('docs/reports/slim/rollout/load'),count=Number(process.env.SLIM_LOAD_PAIRS??10),servers:ChildProcess[]=[],samples:{phase:string;run:number;ms:number;adapter:unknown;errors:string[];bundle:string;cache?:string}[]=[];mkdirSync(out,{recursive:true});
+const out=resolve(process.env.SLIM_LOAD_OUT??'docs/reports/slim/rollout/load'),count=Number(process.env.SLIM_LOAD_PAIRS??10),servers:ChildProcess[]=[],samples:{phase:string;run:number;ms:number;adapter:unknown;errors:string[];bundle:string;cache?:string}[]=[];mkdirSync(out,{recursive:true});
 const up=(port:number)=>new Promise<boolean>(done=>{const r=get(`http://127.0.0.1:${port}`,{agent:false},s=>{s.resume();done(s.statusCode===200);});r.on('error',()=>done(false));r.setTimeout(1000,()=>{r.destroy();done(false);});});
 try{
  for(const[phase,port,cwd]of [['before',4871,'/tmp/slim-baseline'],['after',4872,process.cwd()]]as const){assert.equal(await up(port),false,`Private timing port ${port} already occupied`);const child=spawn(process.execPath,[resolve(cwd,'node_modules/vite/bin/vite.js'),'preview','--host','127.0.0.1','--port',String(port),'--strictPort','--configLoader','runner'],{cwd,stdio:'ignore'});servers.push(child);for(let i=0;i<100&&!await up(port);i++)await new Promise(r=>setTimeout(r,100));assert.ok(await up(port),`${phase} preview did not start`);}

@@ -1,4 +1,4 @@
-> **Garment follow-up:** the earlier rollout review is superseded by [slim-c](garments/README.md). Eleven variants use the requested pre-slim safety fallback; 44 remain slimmed and use the coherent body field. New validation is in progress.
+> **Garment follow-up:** the earlier rollout review is superseded by [slim-c](garments/README.md). Eleven variants use the requested pre-slim safety fallback; 44 remain slimmed and use the coherent body field. The new gate is green: [full per-variant verdicts and crops](garments/README.md).
 
 # Slim build
 

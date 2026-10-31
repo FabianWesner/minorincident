@@ -1,3 +1,5 @@
+> **Superseded by the garment review:** woman-a is restored to her complete pre-slim export after the bag/cardigan refits failed close review. The historical ratios and decision below describe the earlier body-only pilot, not the final garment candidate. See [slim-c](../garments/README.md).
+
 # Pilot review — body build
 
 Decision: **PASS for the body-build change; proceed to the adult rollout.** Reviewed the final front / three-quarter / side studio pairs, game zoom 1.5, literal 3 m upper/lower views, both quality tiers, walking, a full `civ-flee` running stride, `npc-sit`, the mid-swing attack pose, infected attack/windup and settled death. The heroine uses her original mesh; the pilot uses the existing q257 delivered height classes in every comparison.

@@ -61,6 +61,6 @@ for (const entry of build.receipts) for (const f of entry.files) {
 const hero = 'public/assets/models/char.courier-female.skin.glb'; assert.equal(sha(readFileSync(hero)), sha(original(hero)), 'Heroine changed');
 const errors=rows.filter(r=>'error' in r);
 writeFileSync(process.env.SLIM_AUDIT_OUT??`${root}/audit.json`, JSON.stringify({ baseline: build.baseline, variants: build.receipts.length, files: rows.length, errors, heroineUnchanged: true, rows }, null, 2) + '\n');
-console.log(`PASS: ${build.receipts.length} variants, ${rows.length} files; topology, UVs, textures, weights, rig, hands/props, head caps and heights`);
+console.log(`${errors.length?'FAIL':'PASS'}: ${build.receipts.length} variants, ${rows.length} files; topology, UVs, textures, weights, rig, hands/props, head caps and heights`);
 
 if(errors.length){console.error(errors);process.exitCode=1;}

@@ -1,0 +1,284 @@
+{
+  "method": "10 paired loads in alternating order; new isolated browser context per sample in the shared headless pool; native WebGPU, low, public menu to closed L1 loading card, audio muted, DPR1, 1600x900; shared quiet-run admission and quiet preflight; no owned browser profiles",
+  "before": {
+    "n": 10,
+    "median": 2194.2999997138977,
+    "p90": 2210.1000003814697,
+    "max": 2210.199999809265
+  },
+  "after": {
+    "n": 10,
+    "median": 2193.4000000953674,
+    "p90": 2210.4000005722046,
+    "max": 2226.5
+  },
+  "delta": {
+    "median": -0.8999996185302734,
+    "p90": 0.3000001907348633,
+    "max": 16.300000190734863
+  },
+  "limitMs": 300,
+  "pass": true,
+  "samples": [
+    {
+      "phase": "before",
+      "run": 0,
+      "ms": 2177,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:4871/build/index-BKbn8x5U.js"
+    },
+    {
+      "phase": "after",
+      "run": 0,
+      "ms": 2176.1000003814697,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:4872/build/index-CxlacrHq.js"
+    },
+    {
+      "phase": "after",
+      "run": 1,
+      "ms": 2176.1000003814697,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:4872/build/index-CxlacrHq.js"
+    },
+    {
+      "phase": "before",
+      "run": 1,
+      "ms": 2210.1000003814697,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:4871/build/index-BKbn8x5U.js"
+    },
+    {
+      "phase": "before",
+      "run": 2,
+      "ms": 2209.7000007629395,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:4871/build/index-BKbn8x5U.js"
+    },
+    {
+      "phase": "after",
+      "run": 2,
+      "ms": 2226.5,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:4872/build/index-CxlacrHq.js"
+    },
+    {
+      "phase": "after",
+      "run": 3,
+      "ms": 2210.4000005722046,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:4872/build/index-CxlacrHq.js"
+    },
+    {
+      "phase": "before",
+      "run": 3,
+      "ms": 2175.300000190735,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:4871/build/index-BKbn8x5U.js"
+    },
+    {
+      "phase": "before",
+      "run": 4,
+      "ms": 2209.6000003814697,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:4871/build/index-BKbn8x5U.js"
+    },
+    {
+      "phase": "after",
+      "run": 4,
+      "ms": 2191.7000007629395,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:4872/build/index-CxlacrHq.js"
+    },
+    {
+      "phase": "after",
+      "run": 5,
+      "ms": 2193.300000190735,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:4872/build/index-CxlacrHq.js"
+    },
+    {
+      "phase": "before",
+      "run": 5,
+      "ms": 2176.8999996185303,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:4871/build/index-BKbn8x5U.js"
+    },
+    {
+      "phase": "before",
+      "run": 6,
+      "ms": 2191.5,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:4871/build/index-BKbn8x5U.js"
+    },
+    {
+      "phase": "after",
+      "run": 6,
+      "ms": 2193.5,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:4872/build/index-CxlacrHq.js"
+    },
+    {
+      "phase": "after",
+      "run": 7,
+      "ms": 2192.7999992370605,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:4872/build/index-CxlacrHq.js"
+    },
+    {
+      "phase": "before",
+      "run": 7,
+      "ms": 2194.8999996185303,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:4871/build/index-BKbn8x5U.js"
+    },
+    {
+      "phase": "before",
+      "run": 8,
+      "ms": 2210.199999809265,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:4871/build/index-BKbn8x5U.js"
+    },
+    {
+      "phase": "after",
+      "run": 8,
+      "ms": 2209.4000005722046,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:4872/build/index-CxlacrHq.js"
+    },
+    {
+      "phase": "after",
+      "run": 9,
+      "ms": 2208.7999992370605,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:4872/build/index-CxlacrHq.js"
+    },
+    {
+      "phase": "before",
+      "run": 9,
+      "ms": 2193.699999809265,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "description": "",
+        "fallback": false
+      },
+      "errors": [],
+      "bundle": "http://127.0.0.1:4871/build/index-BKbn8x5U.js"
+    }
+  ]
+}
