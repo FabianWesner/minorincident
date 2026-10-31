@@ -24,7 +24,7 @@ for view in ['zoom15','close3m']:
    out.paste(im,(x*w,y*(h+28)+28));draw.text((x*w+6,y*(h+28)+7),f'{figure} {phase} | {view} | {pose}',fill='black')
  if valid:out.save(ROOT/f'game-sheet-{view}.jpg',quality=94)
 for tier in ['high','low']:
- phases=['before','after'] if tier=='high' else ['after'];poses=['run60','sit60','attack35','attack55','death180'];w,h=320,240
+ phases=['before','after'] if tier=='high' else ['after'];poses=['run60','sit60','swing-mid','attack35','attack55','death180'];w,h=320,240
  out=Image.new('RGB',(len(poses)*w,len(phases)*2*(h+28)),'#ddd');draw=ImageDraw.Draw(out);valid=True
  for y,(figure,phase) in enumerate((f,p)for f in ['man-a','woman-a']for p in phases):
   for x,pose in enumerate(poses):
@@ -49,3 +49,26 @@ for tier in ['high','low']:
    if not path.exists():valid=False;continue
    out.paste(Image.open(path).convert('RGB').resize((w,h),Image.Resampling.LANCZOS),(x*w,y*(h+28)+28));draw.text((x*w+6,y*(h+28)+7),f'{figure} {phase} {tier} | {pose}',fill='black')
  if valid:out.save(ROOT/f'lower-sheet-{tier}.jpg',quality=94)
+
+# Full-cast and L1 comparisons use the captured metre scales without reframing.
+ROLL=Path('docs/reports/slim/rollout')
+for view in ['front','side']:
+ if not (ROLL/'lineup-after-high'/'group-12-front.jpg').exists():continue
+ w,h=1200,488;out=Image.new('RGB',(w*2,12*(h+24)),'#ddd');draw=ImageDraw.Draw(out)
+ for i in range(1,13):
+  for x,phase in enumerate(['before','after']):
+   im=Image.open(ROLL/f'lineup-{phase}-high'/f'group-{i}-{view}.jpg').convert('RGB').resize((w,h),Image.Resampling.LANCZOS);out.paste(im,(x*w,(i-1)*(h+24)+24));draw.text((x*w+8,(i-1)*(h+24)+6),f'{phase} | group {i} | {view}',fill='black')
+ out.save(ROLL/f'lineup-{view}-before-after.jpg',quality=93)
+for tier in ['high','low']:
+ w,h=800,325;out=Image.new('RGB',(w*3,4*(h+24)),'#ddd');draw=ImageDraw.Draw(out);valid=True
+ for i in range(1,13):
+  p=ROLL/f'lineup-after-{tier}'/f'group-{i}-front.jpg'
+  if not p.exists():valid=False;continue
+  x=(i-1)%3;y=(i-1)//3;out.paste(Image.open(p).convert('RGB').resize((w,h),Image.Resampling.LANCZOS),(x*w,y*(h+24)+24));draw.text((x*w+8,y*(h+24)+6),f'final {tier} | group {i}',fill='black')
+ if valid:out.save(ROLL/f'overview-{tier}.jpg',quality=94)
+for name in ['depot-handover','po-bench','production-bench-0','production-bench-120']:
+ paths=[ROLL/'l1'/f'{p}-{name}.png' for p in ['before','after']]
+ if not all(p.exists() for p in paths):continue
+ imgs=[Image.open(p).convert('RGB')for p in paths];w,h=imgs[0].size;out=Image.new('RGB',(w*2,h+28),'#ddd');draw=ImageDraw.Draw(out)
+ for i,(phase,im)in enumerate(zip(['before','after'],imgs)):out.paste(im,(i*w,28));draw.text((i*w+8,8),f'{phase} | L1 {name}',fill='black')
+ out.save(ROLL/'l1'/f'{name}-before-after.jpg',quality=94)

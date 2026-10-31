@@ -1,0 +1,4 @@
+import{execFileSync}from'node:child_process';import{writeFileSync}from'node:fs';import{assetIO}from'../assets/io';import{validateDocument}from'../assets/validate';import type{AssetDef}from'../../src/assets/types';
+const base='53949e814',old=(p:string)=>execFileSync('git',['show',`${base}:${p}`],{maxBuffer:64*1024*1024}),defs=JSON.parse(old('src/assets/manifest.json').toString())as AssetDef[],io=await assetIO(),rows=[];
+for(const id of ['inf.construction-worker','inf.armored-football','inf.teen-skater']){const d=defs.find(d=>d.id===id)!;for(const p of [d.glb,...Object.values(d.lods??{})]){const bytes=old(p);const report=validateDocument(await io.readBinary(bytes),d,bytes.length);rows.push({id,path:p,errors:report.errors});console.log(id,p,report.errors);}}
+writeFileSync('docs/reports/slim/rollout/baseline-contract.json',JSON.stringify({baseline:base,rows},null,2)+'\n');

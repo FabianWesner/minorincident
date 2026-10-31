@@ -35,22 +35,23 @@ for (const id of ids.filter(id => !process.env.SLIM_IDS || process.env.SLIM_IDS.
       plan.shoulderReference = headReference(path, rootName);
       // Skin blends and a protected shoulder rim attenuate a torso contraction.
       // Solve against the resulting visible envelope from the unchanged input.
-      for (let pass = 0; pass < (id === 'inf.crawler' ? 0 : 6); pass++) {
+      for (let pass = 0; pass < (id === 'inf.crawler' ? 0 : 8); pass++) {
         const trial = await io.readBinary(input), sample = slimBuild(trial, plan, rootName).after;
         let changed = false;
         if (!plan.shoulderGuard && measureFigure(trial, rootName, plan.shoulderReference).ratios.headShoulder > caps.headShoulder * 1.1 + 1e-5) {
           plan.shoulderGuard = true; continue;
         }
         for (const k of ['torsoWidth', 'torsoDepth'] as const) {
-          if (before.ratios[k] <= target[k] * 1.15 || sample.ratios[k] <= target[k] * 1.145) continue;
+          if (sample.ratios[k] <= target[k] * 1.145 && (before.ratios[k] < target[k] * .85 || sample.ratios[k] >= target[k] * .87)) continue;
           const response = (before.ratios[k] - sample.ratios[k]) / (1 - plan[k]);
           if (!(response > 0)) continue;
-          plan[k] = Math.max(.01, plan[k] - (sample.ratios[k] - target[k] * 1.12) / response); changed = true;
+          plan[k] = Math.min(1, Math.max(.01, plan[k] - (sample.ratios[k] - target[k] * 1.12) / response)); changed = true;
         }
         if (!changed) break;
       }
       const result = slimBuild(doc, plan, rootName), head = measureFigure(doc, rootName, plan.shoulderReference);
       if (id !== 'inf.crawler' && (head.ratios.headHeight > caps.headHeight * 1.1 + 1e-5 || head.ratios.headShoulder > caps.headShoulder * 1.1 + 1e-5)) throw Error(`${id} ${path}: q249 cap changed ${JSON.stringify({reference:plan.shoulderReference,guard:plan.shoulderGuard,head:head.ratios,baseline:measureFigure(await io.readBinary(input),rootName,plan.shoulderReference).ratios})}`);
+      if(id!=='inf.crawler')for(const k of ['torsoWidth','torsoDepth']as const)if(result.after.ratios[k]>target[k]*1.15+1e-5||(before.ratios[k]>=target[k]*.85&&result.after.ratios[k]<target[k]*.85-1e-5))throw Error(`${id} ${path}: torso outside reference interval ${k} ${result.after.ratios[k]/target[k]}`);
       if (Math.abs(result.before.heightM - result.after.heightM) > 1e-5) throw Error(`${id} ${path}: height changed`);
       figures.push({ rootName, ...result });
     }

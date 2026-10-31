@@ -1,7 +1,8 @@
+import { preserveTinyTriangles } from './triangle-area';
 import type { Document } from '@gltf-transform/core';
 import { Matrix3, Matrix4, Vector3 } from 'three';
 import { measureFigure } from '../assets/figure-proportions';
-import { keys, measureBuild, nodesOf, shortName, surfacesOf, worldMatrix, type Ratios, type Vertex } from './anatomy';
+import { keys, measureBuild, referenceBuild, nodesOf, shortName, surfacesOf, worldMatrix, type Ratios, type Vertex } from './anatomy';
 
 export type Scales = Record<typeof keys[number], number> & { shoulderGuard?: boolean; shoulderReference?: number };
 const smooth = (t: number) => { t = Math.max(0, Math.min(1, t)); return t * t * (3 - 2 * t); };
@@ -10,6 +11,7 @@ export function planBuild(before: Ratios, target: Ratios): Scales {
 }
 /** Offline vertex edit. Bones, inverse binds, UVs, joint indices and weights stay exact. */
 export function slimBuild(doc: Document, scales: Scales, rootName?: string) {
+  const reference = referenceBuild(doc,rootName);
   const nodes = nodesOf(doc, rootName), figure = measureFigure(doc, rootName), before = measureBuild(doc, rootName);
   const surfaces = surfacesOf(doc, rootName, true), visible = surfacesOf(doc, rootName).flatMap(s => s.vertices);
   const jointPoints = new Map(nodes.map(n => [shortName(n.getName()), new Vector3().setFromMatrixPosition(worldMatrix(n))]));
@@ -30,7 +32,7 @@ export function slimBuild(doc: Document, scales: Scales, rootName?: string) {
       if (!w) continue;
       if (/^(hip|torso|spine|chest)$/.test(name)) {
         const top = smooth((shoulder + figure.height * .02 - p.y) / (figure.height * .12));
-        const fade = top * smooth((p.y - hip.y + figure.height * .25) / (figure.height * .25));
+        const fade = top * (v.rigid ? smooth((p.y - hip.y) / (figure.height * .06)) : smooth((p.y - hip.y + figure.height * .25) / (figure.height * .25)));
         result.add(new Vector3((p.x - hip.x) * (scales.torsoDepth - 1), 0, (p.z - hip.z) * (scales.torsoWidth - 1)).multiplyScalar(w * fade));
         continue;
       }
@@ -39,13 +41,15 @@ export function slimBuild(doc: Document, scales: Scales, rootName?: string) {
         const start = joint(part[0] + side), end = joint(part[1] + side), axis = end.clone().sub(start), length = axis.length(); axis.normalize();
         const d = p.clone().sub(start), axial = d.dot(axis);
         const shoulderKeep = protectShoulders ? smooth((shoulder - shoulderReference * .1001 - p.y) / (figure.height * .04)) : 1;
-        const fade = (part[0] === 'arm' ? smooth(axial / length / .15) : 1) * shoulderKeep;
+        const segment = v.rigid ? smooth(axial / length / .20) * smooth((1 - axial / length) / .20) : part[0] === 'arm' ? smooth(axial / length / .15) : 1;
+        const fade = segment * shoulderKeep;
         result.addScaledVector(d.addScaledVector(axis, -axial), (scales[part[2] as typeof keys[number]] - 1) * w * fade);
         continue;
       }
       if (/^(foot|toe)[LR]$/.test(name) && shoeBounds[side]) {
         const centre = shoeBounds[side]!.centre, d = p.clone().sub(centre);
-        result.add(new Vector3(d.x * (scales.shoeLength - 1), d.y * (scales.shoeHeight - 1), d.z * (Math.min(scales.shoeLength, scales.shoeHeight) - 1)).multiplyScalar(w));
+        const ankle = joint('foot' + side), keep = v.rigid ? smooth((p.y - ankle.y + figure.height * .02) / (figure.height * .03)) * (1 - smooth((Math.abs(p.x - ankle.x) - figure.height * .025) / (figure.height * .04))) : 0;
+        result.add(new Vector3(d.x * (scales.shoeLength - 1), d.y * (scales.shoeHeight - 1), d.z * (Math.min(scales.shoeLength, scales.shoeHeight) - 1)).multiplyScalar(w * (1 - keep)));
       }
     }
     // Keep the authored standing envelope exact, including sole vertices with
@@ -72,7 +76,7 @@ export function slimBuild(doc: Document, scales: Scales, rootName?: string) {
   }
   for (const entry of welded.values()) if (!entry.fixed) entry.point.divideScalar(entry.count);
   for (const { node, primitive, vertices } of surfaces) {
-    const position = primitive.getAttribute('POSITION')!, output = position.clone().setArray(new Float32Array(position.getCount() * 3)).setNormalized(false), normal = primitive.getAttribute('NORMAL'), normals = normal?.clone().setArray(new Float32Array(normal.getCount() * 3)).setNormalized(false);
+    const position = primitive.getAttribute('POSITION')!, output = position.clone().setArray(new Float32Array(position.getCount() * 3)).setNormalized(false), normal = primitive.getAttribute('NORMAL'), normals = normal?.clone().setArray(normal.getArray()!.slice());
     for (let i = 0; i < position.getCount(); i++) output.setElement(i, position.getElement(i, []));
     if (normal && normals) for (let i = 0; i < normal.getCount(); i++) normals.setElement(i, normal.getElement(i, []));
     const skin = node.getSkin(), indices = primitive.getAttribute('JOINTS_0'), weights = primitive.getAttribute('WEIGHTS_0');
@@ -93,7 +97,7 @@ export function slimBuild(doc: Document, scales: Scales, rootName?: string) {
         normals.setElement(v.id, n.toArray());
       }
     }
-    primitive.setAttribute('POSITION', output); if (normals) primitive.setAttribute('NORMAL', normals);
+    primitive.setAttribute('POSITION', output); preserveTinyTriangles(primitive, position); if (normals) primitive.setAttribute('NORMAL', normals);
   }
-  return { before, after: measureBuild(doc, rootName), scales };
+  return { before, after: measureBuild(doc, rootName, reference), scales };
 }

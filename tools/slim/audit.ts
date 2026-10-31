@@ -5,7 +5,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import type { Accessor, Document } from '@gltf-transform/core';
 import { assetIO } from '../assets/io';
 import { measureFigure } from '../assets/figure-proportions';
-import { measureBuild, surfacesOf } from './anatomy';
+import { measureBuild, referenceBuild, surfacesOf } from './anatomy';
 import { headReference } from './head-reference';
 const phase = process.argv[2] ?? 'pilot', root = `docs/reports/slim/${phase}`;
 const build = JSON.parse(readFileSync(`${root}/build.json`, 'utf8')) as { baseline: string; target: ReturnType<typeof measureBuild>['ratios']; receipts: { id: string; files: { input: string; output: string; figures: { rootName?: string }[] }[] }[] };
@@ -36,12 +36,12 @@ for (const entry of build.receipts) for (const f of entry.files) {
     }
   }
   const figures = f.figures.map(({ rootName }) => {
-    const b = measureBuild(before, rootName), a = measureBuild(after, rootName), bh = measureFigure(before, rootName, headReference(f.input, rootName)), ah = measureFigure(after, rootName, headReference(f.input, rootName));
+    const b = measureBuild(before, rootName), a = measureBuild(after, rootName, referenceBuild(before,rootName)), bh = measureFigure(before, rootName, headReference(f.input, rootName)), ah = measureFigure(after, rootName, headReference(f.input, rootName));
     assert.ok(Math.abs(a.heightM - b.heightM) < 1e-5, `${f.output}: height`);
     assert.ok(Math.abs(a.groundM - b.groundM) < 1e-5, `${f.output}: ground`);
     if (entry.id !== 'inf.crawler') assert.ok(ah.ratios.headHeight <= caps.headHeight * 1.1 + 1e-5, `${f.output}: head/height`);
     if (entry.id !== 'inf.crawler') assert.ok(ah.ratios.headShoulder <= caps.headShoulder * 1.1 + 1e-5, `${f.output}: head/shoulder`);
-    for (const k of ['torsoWidth', 'torsoDepth'] as const) if (entry.id !== 'inf.crawler' && b.ratios[k] > build.target[k] * 1.15) assert.ok(a.ratios[k] <= build.target[k] * 1.15 + 1e-5, `${f.output}: ${k} ${a.ratios[k]}`);
+    for (const k of ['torsoWidth', 'torsoDepth'] as const) if (entry.id !== 'inf.crawler') assert.ok(a.ratios[k] <= build.target[k] * 1.15 + 1e-5 && (b.ratios[k] < build.target[k] * .85 || a.ratios[k] >= build.target[k] * .85 - 1e-5), `${f.output}: ${k} ${a.ratios[k]}`);
     return { rootName, before: b.ratios, after: a.ratios, heightM: a.heightM, groundM: a.groundM, heads: { before: bh.ratios, after: ah.ratios } };
   });
   const oldVertices = surfacesOf(before).flatMap(s => s.vertices), vertices = surfacesOf(after).flatMap(s => s.vertices);

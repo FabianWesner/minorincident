@@ -1,8 +1,10 @@
 import { mkdirSync, writeFileSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import type { Game } from '../../src/Game';
+import { authoredClips } from '../../src/render/characters/clips';
 import type { SceneSpec, CameraSpec } from '../../src/debug/scenelab/spec';
 import { SceneSession, stopServer } from '../scenelab/session';
-const runOnly = process.argv.includes('--run-only');
+const runOnly = process.argv.includes('--run-only'), swingOnly=process.argv.includes('--swing-only');
 const phase = process.argv[2] ?? 'after', tier = process.argv[3] === 'low' ? 'low' : 'high';
 const output = resolve(process.env.SLIM_OUT ?? `docs/reports/slim/pilot/game-${phase}-${tier}`); mkdirSync(output, { recursive: true });
 const session = new SceneSession({ backend: process.env.SLIM_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2', tier, viewport: { width: 1200, height: 900 }, query: { skin: '1' } });
@@ -33,18 +35,21 @@ try {
       for (const a of Object.values(metrics.actors)) if (a.track) a.track = a.track.filter(t => t.frame % 12 === 0 || t.frame === metrics.frame);
       receipts.push({ figure, pose, metrics }); console.log(phase, tier, figure, pose);
     };
+    const swing=async()=>{await reset();await session.page.evaluate(()=>{const lab=window.__SCENE__ as unknown as{game:Game;actors:Map<string,{entity:number}>};const e=lab.game.world.entities.get(lab.actors.get('pilot')!.entity)!;e.appearance!.handProp=null;e.civilian!.story={clip:'swing',start:lab.game.world.tick};});await session.step(Math.max(1,Math.floor(authoredClips.get('swing')!.duration*30)));await shot('swing-mid');};
+    if(swingOnly){await swing();continue;}
     if (runOnly) { await reset(); await session.page.evaluate(() => window.__SCENE__!.command('pilot', { flee: [-4, -4] })); await session.step(60); await shot('run60'); continue; }
     await reset(); await shot('idle', true);
     await session.page.evaluate(() => window.__SCENE__!.command('pilot', { walk: [[1.8, 1.4]] }));
     await session.step(12); await shot('walk12', true); await session.step(12); await shot('walk24', true);
     await reset(); await session.page.evaluate(() => window.__SCENE__!.command('pilot', { flee: [-4, -4] })); await session.step(60); await shot('run60');
     await reset(); await session.page.evaluate(() => window.__SCENE__!.command('pilot', { routine: 'sit' })); await session.step(60); await shot('sit60');
+    await swing();
     await reset(); await session.page.evaluate(() => window.__SCENE__!.command('pilot', { infect: { instant: true } })); await session.step(1);
     await session.page.evaluate(() => window.__SCENE__!.command('pilot', { chase: 'heroine' })); await session.step(35); await shot('attack35');
     await session.step(20); await shot('attack55');
     await session.page.evaluate(() => window.__SCENE__!.command('pilot', { corpse: true })); await session.step(180); await shot('death180');
   }
-  if (runOnly) { const previous = JSON.parse(readFileSync(resolve(output, 'receipts.json'), 'utf8')); receipts.push(...previous.receipts.filter((r: { pose: string }) => !r.pose.startsWith('run'))); }
+  if (runOnly || swingOnly) { const previous = JSON.parse(readFileSync(resolve(output, 'receipts.json'), 'utf8')); receipts.push(...previous.receipts.filter((r: { pose: string }) => swingOnly?r.pose!=='swing-mid':!r.pose.startsWith('run'))); }
   writeFileSync(resolve(output, 'receipts.json'), JSON.stringify({ phase, tier, receipts, errors: session.errors }, null, 2) + '\n');
   if (session.errors.length) throw Error(session.errors.join('\n'));
 } finally { await session.close(); stopServer(); }

@@ -90,16 +90,16 @@
             "max": 6201
           },
           "stepMs": {
-            "p50": 2.7,
-            "p95": 3.8,
-            "max": 9
+            "p50": 1.4,
+            "p95": 2.5,
+            "max": 6.9
           },
           "lastFrame": {
             "drawCalls": 16,
             "triangles": 13555,
             "shadowDrawCalls": 10,
             "shadowTriangles": 6201,
-            "stepMs": 3.3999996185302734,
+            "stepMs": 2.3999996185302734,
             "categories": {
               "other": 15,
               "shadows": 10,
@@ -1255,16 +1255,16 @@
             "max": 6201
           },
           "stepMs": {
-            "p50": 2.7,
-            "p95": 3.7,
-            "max": 9
+            "p50": 1.4,
+            "p95": 2.5,
+            "max": 6.9
           },
           "lastFrame": {
             "drawCalls": 16,
             "triangles": 13555,
             "shadowDrawCalls": 10,
             "shadowTriangles": 6201,
-            "stepMs": 1,
+            "stepMs": 1.1000003814697266,
             "categories": {
               "other": 15,
               "shadows": 10,
@@ -2504,9 +2504,9 @@
             "max": 6201
           },
           "stepMs": {
-            "p50": 2.6,
-            "p95": 3.7,
-            "max": 9
+            "p50": 1.4,
+            "p95": 2.5,
+            "max": 6.9
           },
           "lastFrame": {
             "drawCalls": 16,
@@ -3837,16 +3837,16 @@
             "max": 6201
           },
           "stepMs": {
-            "p50": 2.4,
-            "p95": 3.2,
-            "max": 6.3
+            "p50": 1,
+            "p95": 1.8,
+            "max": 3.2
           },
           "lastFrame": {
             "drawCalls": 15,
             "triangles": 13363,
             "shadowDrawCalls": 9,
             "shadowTriangles": 6009,
-            "stepMs": 1,
+            "stepMs": 0.9000005722045898,
             "categories": {
               "other": 14,
               "shadows": 9,
@@ -5422,16 +5422,16 @@
             "max": 6201
           },
           "stepMs": {
-            "p50": 2.5,
-            "p95": 3.5,
-            "max": 6
+            "p50": 0.9,
+            "p95": 2,
+            "max": 2.9
           },
           "lastFrame": {
             "drawCalls": 16,
             "triangles": 13555,
             "shadowDrawCalls": 10,
             "shadowTriangles": 6201,
-            "stepMs": 1.9000005722045898,
+            "stepMs": 1.0999994277954102,
             "categories": {
               "other": 15,
               "shadows": 10,
@@ -6921,6 +6921,1339 @@
     },
     {
       "figure": "man-a",
+      "pose": "swing-mid",
+      "metrics": {
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 2,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        },
+        "marketDoors": null,
+        "armyBoom": null,
+        "scene": "slim-pilot-man-a",
+        "frame": 135,
+        "tick": 135,
+        "backend": "webgl",
+        "quality": "low",
+        "convoyOverlapFrames": 0,
+        "courierAttachments": {
+          "samples": 13,
+          "gapMaxCm": 0,
+          "frame": -1,
+          "worst": null,
+          "worstAt": null,
+          "attachments": 0
+        },
+        "animalLimbs": {
+          "samples": 0,
+          "gapMaxCm": 0,
+          "frame": -1,
+          "actor": null
+        },
+        "corgiTongue": {
+          "idleSamples": 0,
+          "idleOutFrames": 0,
+          "firstIdleOut": -1,
+          "movingSamples": 0,
+          "movingInFrames": 0,
+          "firstMovingIn": -1
+        },
+        "propPenetration": {
+          "samples": 270,
+          "framesMax": 0,
+          "pairs": []
+        },
+        "props": {
+          "sinkMaxCm": 0,
+          "samples": 0,
+          "gaps": []
+        },
+        "bodies": [],
+        "attackOverlap": {
+          "depthCm": 0,
+          "frame": 0,
+          "actor": ""
+        },
+        "wheels": {},
+        "vehicleTrack": {},
+        "wheelTrack": {},
+        "lodPlaceholders": {
+          "frames": 0,
+          "firstFrame": -1,
+          "assets": []
+        },
+        "perf": {
+          "drawCalls": {
+            "p50": 16,
+            "p95": 16,
+            "max": 16
+          },
+          "triangles": {
+            "p50": 13555,
+            "p95": 13555,
+            "max": 13555
+          },
+          "shadowDrawCalls": {
+            "p50": 10,
+            "p95": 10,
+            "max": 10
+          },
+          "shadowTriangles": {
+            "p50": 6201,
+            "p95": 6201,
+            "max": 6201
+          },
+          "stepMs": {
+            "p50": 0.8,
+            "p95": 1.7,
+            "max": 2.5
+          },
+          "lastFrame": {
+            "drawCalls": 15,
+            "triangles": 13363,
+            "shadowDrawCalls": 9,
+            "shadowTriangles": 6009,
+            "stepMs": 0.8000001907348633,
+            "categories": {
+              "other": 14,
+              "shadows": 9,
+              "crowd": 1
+            }
+          },
+          "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+        },
+        "vehicles": {},
+        "grounding": {
+          "corpses": 0,
+          "corpseOffMaxCm": 0,
+          "pickups": 0,
+          "pickupOffMaxCm": 0,
+          "worst": []
+        },
+        "pursuit": {
+          "actors": {},
+          "courierSwings": 0,
+          "courierAttacks": 0,
+          "hullWindups": 0,
+          "hullHits": 0,
+          "firstAttackFrame": -1,
+          "bites": 0,
+          "firstBiteFrame": -1
+        },
+        "aim": {
+          "shots": 0,
+          "hitShare": 0,
+          "intentErrorMaxDeg": 0,
+          "misses": []
+        },
+        "cure": null,
+        "megaAlpha": null,
+        "minigun": null,
+        "specials": [],
+        "heldProps": {
+          "samples": 40,
+          "intersections": 0,
+          "holds": {
+            "pilot": {
+              "prop": "coffee",
+              "samples": 40,
+              "heightMin": 0.516,
+              "heightFrame": 18,
+              "straightMax": 0.566,
+              "straightFrame": 15,
+              "lods": {
+                "lod1": 40
+              }
+            }
+          }
+        },
+        "seeThrough": {
+          "frames": 135,
+          "solidRadiusMax": 1.377,
+          "occluders": [],
+          "cutLowProps": [],
+          "cutPlacements": []
+        },
+        "appearance": [
+          {
+            "actor": "pilot",
+            "looks": [
+              "{\"model\":\"npc.civilian-man-a\",\"hair\":null,\"skin\":2,\"trousers\":null,\"shirt\":null,\"accessory\":null}"
+            ],
+            "corpseFrames": 0
+          }
+        ],
+        "companion": {
+          "overlapMaxCm": 0,
+          "overlapFrame": 0,
+          "runLagMaxM": 0,
+          "runLagFrame": 0,
+          "samples": 0,
+          "runningSamples": 0
+        },
+        "bike": {
+          "inViewFrames": 0,
+          "missedFrames": 0,
+          "offFrames": 0,
+          "maxOffsetCm": 0,
+          "firstMissedFrame": -1
+        },
+        "variety": {
+          "infected": {
+            "figures": 0,
+            "distinct": 0,
+            "per20": [],
+            "largestSameLookShare": 0,
+            "largestModelShare": 0
+          },
+          "pedestrian": {
+            "figures": 1,
+            "distinct": 1,
+            "per20": [
+              {
+                "figures": 1,
+                "distinct": 1
+              }
+            ],
+            "largestSameLookShare": 1,
+            "largestModelShare": 1
+          }
+        },
+        "actors": {
+          "heroine": {
+            "kind": "courier",
+            "entity": 1,
+            "position": [
+              -0.4,
+              0.4
+            ],
+            "yawDeg": 315,
+            "travelM": 0,
+            "maxX": -0.4000000059604645,
+            "heldWeapon": null,
+            "targetId": null,
+            "state": "idle",
+            "health": 100,
+            "drawnFrames": 135,
+            "inViewFrames": 135,
+            "missedInViewFrames": 0,
+            "lod": {
+              "lod0": 135
+            },
+            "firstDrawn": {
+              "frame": 1,
+              "at": [
+                -0.4,
+                0.4
+              ]
+            },
+            "farLodCloseFrames": 0,
+            "motion": {
+              "frames": 135,
+              "torsoPitchMinDeg": 2.4,
+              "torsoPitchMaxDeg": 3.5,
+              "contacts": 3,
+              "slideMaxCm": 0,
+              "slideP95Cm": 0,
+              "yawDriftMaxDeg": 0,
+              "liftMaxCm": 5.9,
+              "sinkMaxCm": 0,
+              "jitterRunMax": 0,
+              "worstSlideFrame": 10
+            },
+            "track": [
+              {
+                "frame": 12,
+                "floor": 0,
+                "clip": "idle",
+                "feet": [
+                  {
+                    "heel": [
+                      -0.36,
+                      0.005,
+                      0.312
+                    ],
+                    "toe": [
+                      -0.256,
+                      0.005,
+                      0.399
+                    ]
+                  },
+                  {
+                    "heel": [
+                      -0.6,
+                      0.005,
+                      0.479
+                    ],
+                    "toe": [
+                      -0.514,
+                      0.005,
+                      0.583
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  -0.4,
+                  0.4
+                ],
+                "torsoPitchDeg": 3.1075704991465223
+              },
+              {
+                "frame": 24,
+                "floor": 0,
+                "clip": "idle",
+                "feet": [
+                  {
+                    "heel": [
+                      -0.36,
+                      0.005,
+                      0.312
+                    ],
+                    "toe": [
+                      -0.256,
+                      0.005,
+                      0.399
+                    ]
+                  },
+                  {
+                    "heel": [
+                      -0.488,
+                      0.04,
+                      0.44
+                    ],
+                    "toe": [
+                      -0.402,
+                      0.051,
+                      0.543
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  -0.4,
+                  0.4
+                ],
+                "torsoPitchDeg": 3.292566222249999
+              },
+              {
+                "frame": 36,
+                "floor": 0,
+                "clip": "idle",
+                "feet": [
+                  {
+                    "heel": [
+                      -0.36,
+                      0.005,
+                      0.312
+                    ],
+                    "toe": [
+                      -0.256,
+                      0.005,
+                      0.399
+                    ]
+                  },
+                  {
+                    "heel": [
+                      -0.488,
+                      0.005,
+                      0.44
+                    ],
+                    "toe": [
+                      -0.401,
+                      0.005,
+                      0.544
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  -0.4,
+                  0.4
+                ],
+                "torsoPitchDeg": 3.4163160690446746
+              },
+              {
+                "frame": 48,
+                "floor": 0,
+                "clip": "idle",
+                "feet": [
+                  {
+                    "heel": [
+                      -0.36,
+                      0.005,
+                      0.312
+                    ],
+                    "toe": [
+                      -0.256,
+                      0.005,
+                      0.399
+                    ]
+                  },
+                  {
+                    "heel": [
+                      -0.488,
+                      0.005,
+                      0.44
+                    ],
+                    "toe": [
+                      -0.401,
+                      0.005,
+                      0.544
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  -0.4,
+                  0.4
+                ],
+                "torsoPitchDeg": 3.4550202006063424
+              },
+              {
+                "frame": 60,
+                "floor": 0,
+                "clip": "idle",
+                "feet": [
+                  {
+                    "heel": [
+                      -0.36,
+                      0.005,
+                      0.312
+                    ],
+                    "toe": [
+                      -0.256,
+                      0.005,
+                      0.399
+                    ]
+                  },
+                  {
+                    "heel": [
+                      -0.488,
+                      0.005,
+                      0.44
+                    ],
+                    "toe": [
+                      -0.401,
+                      0.005,
+                      0.544
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  -0.4,
+                  0.4
+                ],
+                "torsoPitchDeg": 3.401133854852143
+              },
+              {
+                "frame": 72,
+                "floor": 0,
+                "clip": "idle",
+                "feet": [
+                  {
+                    "heel": [
+                      -0.36,
+                      0.005,
+                      0.312
+                    ],
+                    "toe": [
+                      -0.256,
+                      0.005,
+                      0.399
+                    ]
+                  },
+                  {
+                    "heel": [
+                      -0.488,
+                      0.005,
+                      0.44
+                    ],
+                    "toe": [
+                      -0.401,
+                      0.005,
+                      0.544
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  -0.4,
+                  0.4
+                ],
+                "torsoPitchDeg": 3.26514972087664
+              },
+              {
+                "frame": 84,
+                "floor": 0,
+                "clip": "idle",
+                "feet": [
+                  {
+                    "heel": [
+                      -0.36,
+                      0.005,
+                      0.312
+                    ],
+                    "toe": [
+                      -0.256,
+                      0.005,
+                      0.399
+                    ]
+                  },
+                  {
+                    "heel": [
+                      -0.488,
+                      0.005,
+                      0.44
+                    ],
+                    "toe": [
+                      -0.401,
+                      0.005,
+                      0.544
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  -0.4,
+                  0.4
+                ],
+                "torsoPitchDeg": 3.0731126427017945
+              },
+              {
+                "frame": 96,
+                "floor": 0,
+                "clip": "idle",
+                "feet": [
+                  {
+                    "heel": [
+                      -0.36,
+                      0.005,
+                      0.312
+                    ],
+                    "toe": [
+                      -0.256,
+                      0.005,
+                      0.399
+                    ]
+                  },
+                  {
+                    "heel": [
+                      -0.488,
+                      0.005,
+                      0.44
+                    ],
+                    "toe": [
+                      -0.401,
+                      0.005,
+                      0.544
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  -0.4,
+                  0.4
+                ],
+                "torsoPitchDeg": 2.860305262918946
+              },
+              {
+                "frame": 108,
+                "floor": 0,
+                "clip": "idle",
+                "feet": [
+                  {
+                    "heel": [
+                      -0.36,
+                      0.005,
+                      0.312
+                    ],
+                    "toe": [
+                      -0.256,
+                      0.005,
+                      0.399
+                    ]
+                  },
+                  {
+                    "heel": [
+                      -0.488,
+                      0.005,
+                      0.44
+                    ],
+                    "toe": [
+                      -0.401,
+                      0.005,
+                      0.544
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  -0.4,
+                  0.4
+                ],
+                "torsoPitchDeg": 2.662731428161804
+              },
+              {
+                "frame": 120,
+                "floor": 0,
+                "clip": "idle",
+                "feet": [
+                  {
+                    "heel": [
+                      -0.36,
+                      0.005,
+                      0.312
+                    ],
+                    "toe": [
+                      -0.256,
+                      0.005,
+                      0.399
+                    ]
+                  },
+                  {
+                    "heel": [
+                      -0.488,
+                      0.005,
+                      0.44
+                    ],
+                    "toe": [
+                      -0.401,
+                      0.005,
+                      0.544
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  -0.4,
+                  0.4
+                ],
+                "torsoPitchDeg": 2.5094980769971267
+              },
+              {
+                "frame": 132,
+                "floor": 0,
+                "clip": "idle",
+                "feet": [
+                  {
+                    "heel": [
+                      -0.36,
+                      0.005,
+                      0.312
+                    ],
+                    "toe": [
+                      -0.256,
+                      0.005,
+                      0.399
+                    ]
+                  },
+                  {
+                    "heel": [
+                      -0.488,
+                      0.005,
+                      0.44
+                    ],
+                    "toe": [
+                      -0.401,
+                      0.005,
+                      0.544
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  -0.4,
+                  0.4
+                ],
+                "torsoPitchDeg": 2.4192045164613925
+              },
+              {
+                "frame": 135,
+                "floor": 0,
+                "clip": "idle",
+                "feet": [
+                  {
+                    "heel": [
+                      -0.36,
+                      0.005,
+                      0.312
+                    ],
+                    "toe": [
+                      -0.256,
+                      0.005,
+                      0.399
+                    ]
+                  },
+                  {
+                    "heel": [
+                      -0.488,
+                      0.005,
+                      0.44
+                    ],
+                    "toe": [
+                      -0.401,
+                      0.005,
+                      0.544
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  -0.4,
+                  0.4
+                ],
+                "torsoPitchDeg": 2.4076834559514193
+              }
+            ]
+          },
+          "pilot": {
+            "kind": "pedestrian",
+            "entity": 3,
+            "position": [
+              0.4,
+              -0.4
+            ],
+            "yawDeg": 315,
+            "travelM": 0,
+            "maxX": 0.4,
+            "heldWeapon": null,
+            "targetId": null,
+            "state": "calm",
+            "health": 100,
+            "drawnFrames": 135,
+            "inViewFrames": 135,
+            "missedInViewFrames": 0,
+            "lod": {
+              "lod1": 135
+            },
+            "firstDrawn": {
+              "frame": 1,
+              "at": [
+                0.4,
+                -0.4
+              ]
+            },
+            "farLodCloseFrames": 0,
+            "motion": {
+              "frames": 135,
+              "torsoPitchMinDeg": -1,
+              "torsoPitchMaxDeg": 10.3,
+              "contacts": 2,
+              "slideMaxCm": 0,
+              "slideP95Cm": 0,
+              "yawDriftMaxDeg": 0,
+              "liftMaxCm": 0,
+              "sinkMaxCm": 0,
+              "jitterRunMax": 0,
+              "worstSlideFrame": 121
+            },
+            "track": [
+              {
+                "frame": 12,
+                "appearance": {
+                  "model": "npc.civilian-man-a",
+                  "hair": null,
+                  "skin": 2,
+                  "trousers": null,
+                  "shirt": null,
+                  "accessory": null,
+                  "key": "{\"model\":\"npc.civilian-man-a\",\"hair\":null,\"skin\":2,\"trousers\":null,\"shirt\":null,\"accessory\":null}"
+                },
+                "corpse": false,
+                "floor": 0,
+                "clip": "npc-stand-up",
+                "feet": [
+                  {
+                    "heel": [
+                      0.531,
+                      -0.029,
+                      -0.497
+                    ],
+                    "toe": [
+                      0.641,
+                      -0.066,
+                      -0.389
+                    ]
+                  },
+                  {
+                    "heel": [
+                      0.303,
+                      -0.029,
+                      -0.269
+                    ],
+                    "toe": [
+                      0.411,
+                      -0.066,
+                      -0.159
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  0.4,
+                  -0.4
+                ],
+                "torsoPitchDeg": 5.773642578454485
+              },
+              {
+                "frame": 24,
+                "appearance": {
+                  "model": "npc.civilian-man-a",
+                  "hair": null,
+                  "skin": 2,
+                  "trousers": null,
+                  "shirt": null,
+                  "accessory": null,
+                  "key": "{\"model\":\"npc.civilian-man-a\",\"hair\":null,\"skin\":2,\"trousers\":null,\"shirt\":null,\"accessory\":null}"
+                },
+                "corpse": false,
+                "floor": 0,
+                "clip": "npc-stand-up",
+                "feet": [
+                  {
+                    "heel": [
+                      0.426,
+                      -0.008,
+                      -0.602
+                    ],
+                    "toe": [
+                      0.531,
+                      -0.066,
+                      -0.498
+                    ]
+                  },
+                  {
+                    "heel": [
+                      0.198,
+                      -0.008,
+                      -0.374
+                    ],
+                    "toe": [
+                      0.302,
+                      -0.066,
+                      -0.269
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  0.4,
+                  -0.4
+                ],
+                "torsoPitchDeg": 8.622618287897033
+              },
+              {
+                "frame": 36,
+                "appearance": {
+                  "model": "npc.civilian-man-a",
+                  "hair": null,
+                  "skin": 2,
+                  "trousers": null,
+                  "shirt": null,
+                  "accessory": null,
+                  "key": "{\"model\":\"npc.civilian-man-a\",\"hair\":null,\"skin\":2,\"trousers\":null,\"shirt\":null,\"accessory\":null}"
+                },
+                "corpse": false,
+                "floor": 0,
+                "clip": "npc-stand-up",
+                "feet": [
+                  {
+                    "heel": [
+                      0.467,
+                      -0.001,
+                      -0.562
+                    ],
+                    "toe": [
+                      0.579,
+                      -0.002,
+                      -0.45
+                    ]
+                  },
+                  {
+                    "heel": [
+                      0.238,
+                      -0.001,
+                      -0.333
+                    ],
+                    "toe": [
+                      0.35,
+                      -0.002,
+                      -0.221
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  0.4,
+                  -0.4
+                ],
+                "torsoPitchDeg": 0.16112171194958275
+              },
+              {
+                "frame": 48,
+                "appearance": {
+                  "model": "npc.civilian-man-a",
+                  "hair": null,
+                  "skin": 2,
+                  "trousers": null,
+                  "shirt": null,
+                  "accessory": null,
+                  "key": "{\"model\":\"npc.civilian-man-a\",\"hair\":null,\"skin\":2,\"trousers\":null,\"shirt\":null,\"accessory\":null}"
+                },
+                "corpse": false,
+                "floor": 0,
+                "clip": "npc-stand-up",
+                "feet": [
+                  {
+                    "heel": [
+                      0.468,
+                      0,
+                      -0.561
+                    ],
+                    "toe": [
+                      0.58,
+                      0,
+                      -0.449
+                    ]
+                  },
+                  {
+                    "heel": [
+                      0.239,
+                      0,
+                      -0.332
+                    ],
+                    "toe": [
+                      0.351,
+                      0,
+                      -0.22
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  0.4,
+                  -0.4
+                ],
+                "torsoPitchDeg": 0.00001842415662169338
+              },
+              {
+                "frame": 60,
+                "appearance": {
+                  "model": "npc.civilian-man-a",
+                  "hair": null,
+                  "skin": 2,
+                  "trousers": null,
+                  "shirt": null,
+                  "accessory": null,
+                  "key": "{\"model\":\"npc.civilian-man-a\",\"hair\":null,\"skin\":2,\"trousers\":null,\"shirt\":null,\"accessory\":null}"
+                },
+                "corpse": false,
+                "floor": 0,
+                "clip": "npc-stand-up",
+                "feet": [
+                  {
+                    "heel": [
+                      0.468,
+                      0,
+                      -0.561
+                    ],
+                    "toe": [
+                      0.58,
+                      0,
+                      -0.449
+                    ]
+                  },
+                  {
+                    "heel": [
+                      0.239,
+                      0,
+                      -0.332
+                    ],
+                    "toe": [
+                      0.351,
+                      0,
+                      -0.22
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  0.4,
+                  -0.4
+                ],
+                "torsoPitchDeg": 0.00001842415662169338
+              },
+              {
+                "frame": 72,
+                "appearance": {
+                  "model": "npc.civilian-man-a",
+                  "hair": null,
+                  "skin": 2,
+                  "trousers": null,
+                  "shirt": null,
+                  "accessory": null,
+                  "key": "{\"model\":\"npc.civilian-man-a\",\"hair\":null,\"skin\":2,\"trousers\":null,\"shirt\":null,\"accessory\":null}"
+                },
+                "corpse": false,
+                "floor": 0,
+                "clip": "npc-stand-up",
+                "feet": [
+                  {
+                    "heel": [
+                      0.468,
+                      0,
+                      -0.561
+                    ],
+                    "toe": [
+                      0.58,
+                      0,
+                      -0.449
+                    ]
+                  },
+                  {
+                    "heel": [
+                      0.239,
+                      0,
+                      -0.332
+                    ],
+                    "toe": [
+                      0.351,
+                      0,
+                      -0.22
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  0.4,
+                  -0.4
+                ],
+                "torsoPitchDeg": 0.00001842415662169338
+              },
+              {
+                "frame": 84,
+                "appearance": {
+                  "model": "npc.civilian-man-a",
+                  "hair": null,
+                  "skin": 2,
+                  "trousers": null,
+                  "shirt": null,
+                  "accessory": null,
+                  "key": "{\"model\":\"npc.civilian-man-a\",\"hair\":null,\"skin\":2,\"trousers\":null,\"shirt\":null,\"accessory\":null}"
+                },
+                "corpse": false,
+                "floor": 0,
+                "clip": "npc-stand-up",
+                "feet": [
+                  {
+                    "heel": [
+                      0.468,
+                      0,
+                      -0.561
+                    ],
+                    "toe": [
+                      0.58,
+                      0,
+                      -0.449
+                    ]
+                  },
+                  {
+                    "heel": [
+                      0.239,
+                      0,
+                      -0.332
+                    ],
+                    "toe": [
+                      0.351,
+                      0,
+                      -0.22
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  0.4,
+                  -0.4
+                ],
+                "torsoPitchDeg": 0.00001842415662169338
+              },
+              {
+                "frame": 96,
+                "appearance": {
+                  "model": "npc.civilian-man-a",
+                  "hair": null,
+                  "skin": 2,
+                  "trousers": null,
+                  "shirt": null,
+                  "accessory": null,
+                  "key": "{\"model\":\"npc.civilian-man-a\",\"hair\":null,\"skin\":2,\"trousers\":null,\"shirt\":null,\"accessory\":null}"
+                },
+                "corpse": false,
+                "floor": 0,
+                "clip": "npc-stand-up",
+                "feet": [
+                  {
+                    "heel": [
+                      0.468,
+                      0,
+                      -0.561
+                    ],
+                    "toe": [
+                      0.58,
+                      0,
+                      -0.449
+                    ]
+                  },
+                  {
+                    "heel": [
+                      0.239,
+                      0,
+                      -0.332
+                    ],
+                    "toe": [
+                      0.351,
+                      0,
+                      -0.22
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  0.4,
+                  -0.4
+                ],
+                "torsoPitchDeg": 0.00001842415662169338
+              },
+              {
+                "frame": 108,
+                "appearance": {
+                  "model": "npc.civilian-man-a",
+                  "hair": null,
+                  "skin": 2,
+                  "trousers": null,
+                  "shirt": null,
+                  "accessory": null,
+                  "key": "{\"model\":\"npc.civilian-man-a\",\"hair\":null,\"skin\":2,\"trousers\":null,\"shirt\":null,\"accessory\":null}"
+                },
+                "corpse": false,
+                "floor": 0,
+                "clip": "npc-stand-up",
+                "feet": [
+                  {
+                    "heel": [
+                      0.468,
+                      0,
+                      -0.561
+                    ],
+                    "toe": [
+                      0.58,
+                      0,
+                      -0.449
+                    ]
+                  },
+                  {
+                    "heel": [
+                      0.239,
+                      0,
+                      -0.332
+                    ],
+                    "toe": [
+                      0.351,
+                      0,
+                      -0.22
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  0.4,
+                  -0.4
+                ],
+                "torsoPitchDeg": 0.00001842415662169338
+              },
+              {
+                "frame": 120,
+                "appearance": {
+                  "model": "npc.civilian-man-a",
+                  "hair": null,
+                  "skin": 2,
+                  "trousers": null,
+                  "shirt": null,
+                  "accessory": null,
+                  "key": "{\"model\":\"npc.civilian-man-a\",\"hair\":null,\"skin\":2,\"trousers\":null,\"shirt\":null,\"accessory\":null}"
+                },
+                "corpse": false,
+                "floor": 0,
+                "clip": "npc-stand-up",
+                "feet": [
+                  {
+                    "heel": [
+                      0.468,
+                      0,
+                      -0.561
+                    ],
+                    "toe": [
+                      0.58,
+                      0,
+                      -0.449
+                    ]
+                  },
+                  {
+                    "heel": [
+                      0.239,
+                      0,
+                      -0.332
+                    ],
+                    "toe": [
+                      0.351,
+                      0,
+                      -0.22
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  0.4,
+                  -0.4
+                ],
+                "torsoPitchDeg": 0.00001842415662169338
+              },
+              {
+                "frame": 132,
+                "appearance": {
+                  "model": "npc.civilian-man-a",
+                  "hair": null,
+                  "skin": 2,
+                  "trousers": null,
+                  "shirt": null,
+                  "accessory": null,
+                  "key": "{\"model\":\"npc.civilian-man-a\",\"hair\":null,\"skin\":2,\"trousers\":null,\"shirt\":null,\"accessory\":null}"
+                },
+                "corpse": false,
+                "floor": 0,
+                "clip": "swing",
+                "feet": [
+                  {
+                    "heel": [
+                      0.464,
+                      0,
+                      -0.557
+                    ],
+                    "toe": [
+                      0.586,
+                      0,
+                      -0.455
+                    ]
+                  },
+                  {
+                    "heel": [
+                      0.243,
+                      0,
+                      -0.336
+                    ],
+                    "toe": [
+                      0.345,
+                      0,
+                      -0.214
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  0.4,
+                  -0.4
+                ],
+                "torsoPitchDeg": 6.237197734349241
+              },
+              {
+                "frame": 135,
+                "appearance": {
+                  "model": "npc.civilian-man-a",
+                  "hair": null,
+                  "skin": 2,
+                  "trousers": null,
+                  "shirt": null,
+                  "accessory": null,
+                  "key": "{\"model\":\"npc.civilian-man-a\",\"hair\":null,\"skin\":2,\"trousers\":null,\"shirt\":null,\"accessory\":null}"
+                },
+                "corpse": false,
+                "floor": 0,
+                "clip": "swing",
+                "feet": [
+                  {
+                    "heel": [
+                      0.464,
+                      0,
+                      -0.557
+                    ],
+                    "toe": [
+                      0.586,
+                      0,
+                      -0.455
+                    ]
+                  },
+                  {
+                    "heel": [
+                      0.243,
+                      0,
+                      -0.336
+                    ],
+                    "toe": [
+                      0.345,
+                      0,
+                      -0.214
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  0.4,
+                  -0.4
+                ],
+                "torsoPitchDeg": 4.943388744780919
+              }
+            ]
+          }
+        },
+        "clicks": {
+          "total": 0,
+          "misses": 0,
+          "rows": [],
+          "swings": []
+        },
+        "visibility": {
+          "frame": 135,
+          "sim": {
+            "pedestrian": 1,
+            "courier": 1,
+            "actors": 2
+          },
+          "drawn": {
+            "vehicle": 0,
+            "pedestrian": 1,
+            "courier": 1
+          }
+        },
+        "lods": {},
+        "clipping": {
+          "gunBodyHits": 0,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 0,
+          "piercing": 0
+        },
+        "emergence": null,
+        "doors": {},
+        "log": []
+      }
+    },
+    {
+      "figure": "man-a",
       "pose": "attack35",
       "metrics": {
         "collision": {
@@ -7007,16 +8340,16 @@
             "max": 6201
           },
           "stepMs": {
-            "p50": 2.6,
-            "p95": 3.8,
-            "max": 12.8
+            "p50": 0.9,
+            "p95": 2,
+            "max": 9.5
           },
           "lastFrame": {
             "drawCalls": 21,
             "triangles": 14393,
             "shadowDrawCalls": 9,
             "shadowTriangles": 6009,
-            "stepMs": 1.8999996185302734,
+            "stepMs": 1.3000001907348633,
             "categories": {
               "other": 19,
               "shadows": 9,
@@ -8426,16 +9759,16 @@
             "max": 6201
           },
           "stepMs": {
-            "p50": 2.6,
-            "p95": 3.8,
-            "max": 12.8
+            "p50": 0.9,
+            "p95": 2,
+            "max": 9.5
           },
           "lastFrame": {
             "drawCalls": 16,
             "triangles": 13363,
             "shadowDrawCalls": 9,
             "shadowTriangles": 6009,
-            "stepMs": 2.6999998092651367,
+            "stepMs": 1.1999998092651367,
             "categories": {
               "other": 14,
               "shadows": 9,
@@ -10013,16 +11346,16 @@
             "max": 6201
           },
           "stepMs": {
-            "p50": 2,
-            "p95": 3.4,
-            "max": 12.8
+            "p50": 0.7,
+            "p95": 1.7,
+            "max": 9.5
           },
           "lastFrame": {
             "drawCalls": 15,
             "triangles": 13258,
             "shadowDrawCalls": 9,
             "shadowTriangles": 6009,
-            "stepMs": 1,
+            "stepMs": 0.5,
             "categories": {
               "other": 14,
               "shadows": 9,
@@ -12449,16 +13782,16 @@
             "max": 6201
           },
           "stepMs": {
-            "p50": 2,
-            "p95": 2.8,
-            "max": 3.2
+            "p50": 0.8,
+            "p95": 1.9,
+            "max": 2.9
           },
           "lastFrame": {
             "drawCalls": 16,
             "triangles": 13938,
             "shadowDrawCalls": 10,
             "shadowTriangles": 6201,
-            "stepMs": 2.299999237060547,
+            "stepMs": 0.6999998092651367,
             "categories": {
               "other": 15,
               "shadows": 10,
@@ -13614,16 +14947,16 @@
             "max": 6201
           },
           "stepMs": {
-            "p50": 2,
-            "p95": 2.8,
-            "max": 3.2
+            "p50": 0.8,
+            "p95": 1.9,
+            "max": 2.9
           },
           "lastFrame": {
             "drawCalls": 16,
             "triangles": 13938,
             "shadowDrawCalls": 10,
             "shadowTriangles": 6201,
-            "stepMs": 1.8000001907348633,
+            "stepMs": 1.6000003814697266,
             "categories": {
               "other": 15,
               "shadows": 10,
@@ -14863,16 +16196,16 @@
             "max": 6201
           },
           "stepMs": {
-            "p50": 1.9,
-            "p95": 2.8,
-            "max": 3.2
+            "p50": 0.8,
+            "p95": 1.9,
+            "max": 2.9
           },
           "lastFrame": {
             "drawCalls": 16,
             "triangles": 13938,
             "shadowDrawCalls": 10,
             "shadowTriangles": 6201,
-            "stepMs": 1,
+            "stepMs": 0.8999996185302734,
             "categories": {
               "other": 15,
               "shadows": 10,
@@ -16196,9 +17529,9 @@
             "max": 6201
           },
           "stepMs": {
-            "p50": 1.2,
-            "p95": 2.3,
-            "max": 3.5
+            "p50": 0.7,
+            "p95": 1.7,
+            "max": 5.4
           },
           "lastFrame": {
             "drawCalls": 15,
@@ -17781,16 +19114,16 @@
             "max": 6201
           },
           "stepMs": {
-            "p50": 1.7,
-            "p95": 2.8,
-            "max": 3.2
+            "p50": 0.8,
+            "p95": 1.9,
+            "max": 2.6
           },
           "lastFrame": {
             "drawCalls": 16,
             "triangles": 13938,
             "shadowDrawCalls": 10,
             "shadowTriangles": 6201,
-            "stepMs": 1.5,
+            "stepMs": 0.5,
             "categories": {
               "other": 15,
               "shadows": 10,
@@ -19280,6 +20613,1339 @@
     },
     {
       "figure": "woman-a",
+      "pose": "swing-mid",
+      "metrics": {
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 2,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        },
+        "marketDoors": null,
+        "armyBoom": null,
+        "scene": "slim-pilot-woman-a",
+        "frame": 135,
+        "tick": 135,
+        "backend": "webgl",
+        "quality": "low",
+        "convoyOverlapFrames": 0,
+        "courierAttachments": {
+          "samples": 13,
+          "gapMaxCm": 0,
+          "frame": -1,
+          "worst": null,
+          "worstAt": null,
+          "attachments": 0
+        },
+        "animalLimbs": {
+          "samples": 0,
+          "gapMaxCm": 0,
+          "frame": -1,
+          "actor": null
+        },
+        "corgiTongue": {
+          "idleSamples": 0,
+          "idleOutFrames": 0,
+          "firstIdleOut": -1,
+          "movingSamples": 0,
+          "movingInFrames": 0,
+          "firstMovingIn": -1
+        },
+        "propPenetration": {
+          "samples": 270,
+          "framesMax": 0,
+          "pairs": []
+        },
+        "props": {
+          "sinkMaxCm": 0,
+          "samples": 0,
+          "gaps": []
+        },
+        "bodies": [],
+        "attackOverlap": {
+          "depthCm": 0,
+          "frame": 0,
+          "actor": ""
+        },
+        "wheels": {},
+        "vehicleTrack": {},
+        "wheelTrack": {},
+        "lodPlaceholders": {
+          "frames": 0,
+          "firstFrame": -1,
+          "assets": []
+        },
+        "perf": {
+          "drawCalls": {
+            "p50": 16,
+            "p95": 16,
+            "max": 16
+          },
+          "triangles": {
+            "p50": 13938,
+            "p95": 13938,
+            "max": 13938
+          },
+          "shadowDrawCalls": {
+            "p50": 10,
+            "p95": 10,
+            "max": 10
+          },
+          "shadowTriangles": {
+            "p50": 6201,
+            "p95": 6201,
+            "max": 6201
+          },
+          "stepMs": {
+            "p50": 0.8,
+            "p95": 1.7,
+            "max": 2.4
+          },
+          "lastFrame": {
+            "drawCalls": 15,
+            "triangles": 13746,
+            "shadowDrawCalls": 9,
+            "shadowTriangles": 6009,
+            "stepMs": 0.6000003814697266,
+            "categories": {
+              "other": 14,
+              "shadows": 9,
+              "crowd": 1
+            }
+          },
+          "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+        },
+        "vehicles": {},
+        "grounding": {
+          "corpses": 0,
+          "corpseOffMaxCm": 0,
+          "pickups": 0,
+          "pickupOffMaxCm": 0,
+          "worst": []
+        },
+        "pursuit": {
+          "actors": {},
+          "courierSwings": 0,
+          "courierAttacks": 0,
+          "hullWindups": 0,
+          "hullHits": 0,
+          "firstAttackFrame": -1,
+          "bites": 0,
+          "firstBiteFrame": -1
+        },
+        "aim": {
+          "shots": 0,
+          "hitShare": 0,
+          "intentErrorMaxDeg": 0,
+          "misses": []
+        },
+        "cure": null,
+        "megaAlpha": null,
+        "minigun": null,
+        "specials": [],
+        "heldProps": {
+          "samples": 40,
+          "intersections": 0,
+          "holds": {
+            "pilot": {
+              "prop": "coffee",
+              "samples": 40,
+              "heightMin": 0.353,
+              "heightFrame": 21,
+              "straightMax": 0.563,
+              "straightFrame": 42,
+              "lods": {
+                "lod1": 40
+              }
+            }
+          }
+        },
+        "seeThrough": {
+          "frames": 135,
+          "solidRadiusMax": 1.377,
+          "occluders": [],
+          "cutLowProps": [],
+          "cutPlacements": []
+        },
+        "appearance": [
+          {
+            "actor": "pilot",
+            "looks": [
+              "{\"model\":\"npc.civilian-woman-a\",\"hair\":null,\"skin\":2,\"trousers\":null,\"shirt\":null,\"accessory\":null}"
+            ],
+            "corpseFrames": 0
+          }
+        ],
+        "companion": {
+          "overlapMaxCm": 0,
+          "overlapFrame": 0,
+          "runLagMaxM": 0,
+          "runLagFrame": 0,
+          "samples": 0,
+          "runningSamples": 0
+        },
+        "bike": {
+          "inViewFrames": 0,
+          "missedFrames": 0,
+          "offFrames": 0,
+          "maxOffsetCm": 0,
+          "firstMissedFrame": -1
+        },
+        "variety": {
+          "infected": {
+            "figures": 0,
+            "distinct": 0,
+            "per20": [],
+            "largestSameLookShare": 0,
+            "largestModelShare": 0
+          },
+          "pedestrian": {
+            "figures": 1,
+            "distinct": 1,
+            "per20": [
+              {
+                "figures": 1,
+                "distinct": 1
+              }
+            ],
+            "largestSameLookShare": 1,
+            "largestModelShare": 1
+          }
+        },
+        "actors": {
+          "heroine": {
+            "kind": "courier",
+            "entity": 1,
+            "position": [
+              -0.4,
+              0.4
+            ],
+            "yawDeg": 315,
+            "travelM": 0,
+            "maxX": -0.4000000059604645,
+            "heldWeapon": null,
+            "targetId": null,
+            "state": "idle",
+            "health": 100,
+            "drawnFrames": 135,
+            "inViewFrames": 135,
+            "missedInViewFrames": 0,
+            "lod": {
+              "lod0": 135
+            },
+            "firstDrawn": {
+              "frame": 1,
+              "at": [
+                -0.4,
+                0.4
+              ]
+            },
+            "farLodCloseFrames": 0,
+            "motion": {
+              "frames": 135,
+              "torsoPitchMinDeg": 2.4,
+              "torsoPitchMaxDeg": 3.5,
+              "contacts": 3,
+              "slideMaxCm": 0,
+              "slideP95Cm": 0,
+              "yawDriftMaxDeg": 0,
+              "liftMaxCm": 5.9,
+              "sinkMaxCm": 0,
+              "jitterRunMax": 0,
+              "worstSlideFrame": 10
+            },
+            "track": [
+              {
+                "frame": 12,
+                "floor": 0,
+                "clip": "idle",
+                "feet": [
+                  {
+                    "heel": [
+                      -0.36,
+                      0.005,
+                      0.312
+                    ],
+                    "toe": [
+                      -0.256,
+                      0.005,
+                      0.399
+                    ]
+                  },
+                  {
+                    "heel": [
+                      -0.6,
+                      0.005,
+                      0.479
+                    ],
+                    "toe": [
+                      -0.514,
+                      0.005,
+                      0.583
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  -0.4,
+                  0.4
+                ],
+                "torsoPitchDeg": 3.1075704991465223
+              },
+              {
+                "frame": 24,
+                "floor": 0,
+                "clip": "idle",
+                "feet": [
+                  {
+                    "heel": [
+                      -0.36,
+                      0.005,
+                      0.312
+                    ],
+                    "toe": [
+                      -0.256,
+                      0.005,
+                      0.399
+                    ]
+                  },
+                  {
+                    "heel": [
+                      -0.488,
+                      0.04,
+                      0.44
+                    ],
+                    "toe": [
+                      -0.402,
+                      0.051,
+                      0.543
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  -0.4,
+                  0.4
+                ],
+                "torsoPitchDeg": 3.292566222249999
+              },
+              {
+                "frame": 36,
+                "floor": 0,
+                "clip": "idle",
+                "feet": [
+                  {
+                    "heel": [
+                      -0.36,
+                      0.005,
+                      0.312
+                    ],
+                    "toe": [
+                      -0.256,
+                      0.005,
+                      0.399
+                    ]
+                  },
+                  {
+                    "heel": [
+                      -0.488,
+                      0.005,
+                      0.44
+                    ],
+                    "toe": [
+                      -0.401,
+                      0.005,
+                      0.544
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  -0.4,
+                  0.4
+                ],
+                "torsoPitchDeg": 3.4163160690446746
+              },
+              {
+                "frame": 48,
+                "floor": 0,
+                "clip": "idle",
+                "feet": [
+                  {
+                    "heel": [
+                      -0.36,
+                      0.005,
+                      0.312
+                    ],
+                    "toe": [
+                      -0.256,
+                      0.005,
+                      0.399
+                    ]
+                  },
+                  {
+                    "heel": [
+                      -0.488,
+                      0.005,
+                      0.44
+                    ],
+                    "toe": [
+                      -0.401,
+                      0.005,
+                      0.544
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  -0.4,
+                  0.4
+                ],
+                "torsoPitchDeg": 3.4550202006063424
+              },
+              {
+                "frame": 60,
+                "floor": 0,
+                "clip": "idle",
+                "feet": [
+                  {
+                    "heel": [
+                      -0.36,
+                      0.005,
+                      0.312
+                    ],
+                    "toe": [
+                      -0.256,
+                      0.005,
+                      0.399
+                    ]
+                  },
+                  {
+                    "heel": [
+                      -0.488,
+                      0.005,
+                      0.44
+                    ],
+                    "toe": [
+                      -0.401,
+                      0.005,
+                      0.544
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  -0.4,
+                  0.4
+                ],
+                "torsoPitchDeg": 3.401133854852143
+              },
+              {
+                "frame": 72,
+                "floor": 0,
+                "clip": "idle",
+                "feet": [
+                  {
+                    "heel": [
+                      -0.36,
+                      0.005,
+                      0.312
+                    ],
+                    "toe": [
+                      -0.256,
+                      0.005,
+                      0.399
+                    ]
+                  },
+                  {
+                    "heel": [
+                      -0.488,
+                      0.005,
+                      0.44
+                    ],
+                    "toe": [
+                      -0.401,
+                      0.005,
+                      0.544
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  -0.4,
+                  0.4
+                ],
+                "torsoPitchDeg": 3.26514972087664
+              },
+              {
+                "frame": 84,
+                "floor": 0,
+                "clip": "idle",
+                "feet": [
+                  {
+                    "heel": [
+                      -0.36,
+                      0.005,
+                      0.312
+                    ],
+                    "toe": [
+                      -0.256,
+                      0.005,
+                      0.399
+                    ]
+                  },
+                  {
+                    "heel": [
+                      -0.488,
+                      0.005,
+                      0.44
+                    ],
+                    "toe": [
+                      -0.401,
+                      0.005,
+                      0.544
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  -0.4,
+                  0.4
+                ],
+                "torsoPitchDeg": 3.0731126427017945
+              },
+              {
+                "frame": 96,
+                "floor": 0,
+                "clip": "idle",
+                "feet": [
+                  {
+                    "heel": [
+                      -0.36,
+                      0.005,
+                      0.312
+                    ],
+                    "toe": [
+                      -0.256,
+                      0.005,
+                      0.399
+                    ]
+                  },
+                  {
+                    "heel": [
+                      -0.488,
+                      0.005,
+                      0.44
+                    ],
+                    "toe": [
+                      -0.401,
+                      0.005,
+                      0.544
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  -0.4,
+                  0.4
+                ],
+                "torsoPitchDeg": 2.860305262918946
+              },
+              {
+                "frame": 108,
+                "floor": 0,
+                "clip": "idle",
+                "feet": [
+                  {
+                    "heel": [
+                      -0.36,
+                      0.005,
+                      0.312
+                    ],
+                    "toe": [
+                      -0.256,
+                      0.005,
+                      0.399
+                    ]
+                  },
+                  {
+                    "heel": [
+                      -0.488,
+                      0.005,
+                      0.44
+                    ],
+                    "toe": [
+                      -0.401,
+                      0.005,
+                      0.544
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  -0.4,
+                  0.4
+                ],
+                "torsoPitchDeg": 2.662731428161804
+              },
+              {
+                "frame": 120,
+                "floor": 0,
+                "clip": "idle",
+                "feet": [
+                  {
+                    "heel": [
+                      -0.36,
+                      0.005,
+                      0.312
+                    ],
+                    "toe": [
+                      -0.256,
+                      0.005,
+                      0.399
+                    ]
+                  },
+                  {
+                    "heel": [
+                      -0.488,
+                      0.005,
+                      0.44
+                    ],
+                    "toe": [
+                      -0.401,
+                      0.005,
+                      0.544
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  -0.4,
+                  0.4
+                ],
+                "torsoPitchDeg": 2.5094980769971267
+              },
+              {
+                "frame": 132,
+                "floor": 0,
+                "clip": "idle",
+                "feet": [
+                  {
+                    "heel": [
+                      -0.36,
+                      0.005,
+                      0.312
+                    ],
+                    "toe": [
+                      -0.256,
+                      0.005,
+                      0.399
+                    ]
+                  },
+                  {
+                    "heel": [
+                      -0.488,
+                      0.005,
+                      0.44
+                    ],
+                    "toe": [
+                      -0.401,
+                      0.005,
+                      0.544
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  -0.4,
+                  0.4
+                ],
+                "torsoPitchDeg": 2.4192045164613925
+              },
+              {
+                "frame": 135,
+                "floor": 0,
+                "clip": "idle",
+                "feet": [
+                  {
+                    "heel": [
+                      -0.36,
+                      0.005,
+                      0.312
+                    ],
+                    "toe": [
+                      -0.256,
+                      0.005,
+                      0.399
+                    ]
+                  },
+                  {
+                    "heel": [
+                      -0.488,
+                      0.005,
+                      0.44
+                    ],
+                    "toe": [
+                      -0.401,
+                      0.005,
+                      0.544
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  -0.4,
+                  0.4
+                ],
+                "torsoPitchDeg": 2.4076834559514193
+              }
+            ]
+          },
+          "pilot": {
+            "kind": "pedestrian",
+            "entity": 3,
+            "position": [
+              0.4,
+              -0.4
+            ],
+            "yawDeg": 315,
+            "travelM": 0,
+            "maxX": 0.4,
+            "heldWeapon": null,
+            "targetId": null,
+            "state": "calm",
+            "health": 100,
+            "drawnFrames": 135,
+            "inViewFrames": 135,
+            "missedInViewFrames": 0,
+            "lod": {
+              "lod1": 135
+            },
+            "firstDrawn": {
+              "frame": 1,
+              "at": [
+                0.4,
+                -0.4
+              ]
+            },
+            "farLodCloseFrames": 0,
+            "motion": {
+              "frames": 135,
+              "torsoPitchMinDeg": -0.8,
+              "torsoPitchMaxDeg": 8.3,
+              "contacts": 2,
+              "slideMaxCm": 0,
+              "slideP95Cm": 0,
+              "yawDriftMaxDeg": 0,
+              "liftMaxCm": 0,
+              "sinkMaxCm": 0,
+              "jitterRunMax": 0,
+              "worstSlideFrame": 121
+            },
+            "track": [
+              {
+                "frame": 12,
+                "appearance": {
+                  "model": "npc.civilian-woman-a",
+                  "hair": null,
+                  "skin": 2,
+                  "trousers": null,
+                  "shirt": null,
+                  "accessory": null,
+                  "key": "{\"model\":\"npc.civilian-woman-a\",\"hair\":null,\"skin\":2,\"trousers\":null,\"shirt\":null,\"accessory\":null}"
+                },
+                "corpse": false,
+                "floor": 0,
+                "clip": "npc-stand-up",
+                "feet": [
+                  {
+                    "heel": [
+                      0.636,
+                      0.059,
+                      -0.374
+                    ],
+                    "toe": [
+                      0.736,
+                      0.026,
+                      -0.276
+                    ]
+                  },
+                  {
+                    "heel": [
+                      0.426,
+                      0.059,
+                      -0.164
+                    ],
+                    "toe": [
+                      0.524,
+                      0.026,
+                      -0.064
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  0.4,
+                  -0.4
+                ],
+                "torsoPitchDeg": 4.63704711409705
+              },
+              {
+                "frame": 24,
+                "appearance": {
+                  "model": "npc.civilian-woman-a",
+                  "hair": null,
+                  "skin": 2,
+                  "trousers": null,
+                  "shirt": null,
+                  "accessory": null,
+                  "key": "{\"model\":\"npc.civilian-woman-a\",\"hair\":null,\"skin\":2,\"trousers\":null,\"shirt\":null,\"accessory\":null}"
+                },
+                "corpse": false,
+                "floor": 0,
+                "clip": "npc-stand-up",
+                "feet": [
+                  {
+                    "heel": [
+                      0.494,
+                      -0.002,
+                      -0.517
+                    ],
+                    "toe": [
+                      0.589,
+                      -0.055,
+                      -0.422
+                    ]
+                  },
+                  {
+                    "heel": [
+                      0.283,
+                      -0.002,
+                      -0.306
+                    ],
+                    "toe": [
+                      0.378,
+                      -0.055,
+                      -0.211
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  0.4,
+                  -0.4
+                ],
+                "torsoPitchDeg": 6.92624091548986
+              },
+              {
+                "frame": 36,
+                "appearance": {
+                  "model": "npc.civilian-woman-a",
+                  "hair": null,
+                  "skin": 2,
+                  "trousers": null,
+                  "shirt": null,
+                  "accessory": null,
+                  "key": "{\"model\":\"npc.civilian-woman-a\",\"hair\":null,\"skin\":2,\"trousers\":null,\"shirt\":null,\"accessory\":null}"
+                },
+                "corpse": false,
+                "floor": 0,
+                "clip": "npc-stand-up",
+                "feet": [
+                  {
+                    "heel": [
+                      0.467,
+                      -0.001,
+                      -0.544
+                    ],
+                    "toe": [
+                      0.57,
+                      -0.002,
+                      -0.441
+                    ]
+                  },
+                  {
+                    "heel": [
+                      0.256,
+                      -0.001,
+                      -0.333
+                    ],
+                    "toe": [
+                      0.359,
+                      -0.002,
+                      -0.23
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  0.4,
+                  -0.4
+                ],
+                "torsoPitchDeg": 0.12941144137633992
+              },
+              {
+                "frame": 48,
+                "appearance": {
+                  "model": "npc.civilian-woman-a",
+                  "hair": null,
+                  "skin": 2,
+                  "trousers": null,
+                  "shirt": null,
+                  "accessory": null,
+                  "key": "{\"model\":\"npc.civilian-woman-a\",\"hair\":null,\"skin\":2,\"trousers\":null,\"shirt\":null,\"accessory\":null}"
+                },
+                "corpse": false,
+                "floor": 0,
+                "clip": "npc-stand-up",
+                "feet": [
+                  {
+                    "heel": [
+                      0.468,
+                      0,
+                      -0.543
+                    ],
+                    "toe": [
+                      0.57,
+                      0,
+                      -0.441
+                    ]
+                  },
+                  {
+                    "heel": [
+                      0.257,
+                      0,
+                      -0.332
+                    ],
+                    "toe": [
+                      0.359,
+                      0,
+                      -0.23
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  0.4,
+                  -0.4
+                ],
+                "torsoPitchDeg": 0.00001479811591886263
+              },
+              {
+                "frame": 60,
+                "appearance": {
+                  "model": "npc.civilian-woman-a",
+                  "hair": null,
+                  "skin": 2,
+                  "trousers": null,
+                  "shirt": null,
+                  "accessory": null,
+                  "key": "{\"model\":\"npc.civilian-woman-a\",\"hair\":null,\"skin\":2,\"trousers\":null,\"shirt\":null,\"accessory\":null}"
+                },
+                "corpse": false,
+                "floor": 0,
+                "clip": "npc-stand-up",
+                "feet": [
+                  {
+                    "heel": [
+                      0.468,
+                      0,
+                      -0.543
+                    ],
+                    "toe": [
+                      0.57,
+                      0,
+                      -0.441
+                    ]
+                  },
+                  {
+                    "heel": [
+                      0.257,
+                      0,
+                      -0.332
+                    ],
+                    "toe": [
+                      0.359,
+                      0,
+                      -0.23
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  0.4,
+                  -0.4
+                ],
+                "torsoPitchDeg": 0.00001479811591886263
+              },
+              {
+                "frame": 72,
+                "appearance": {
+                  "model": "npc.civilian-woman-a",
+                  "hair": null,
+                  "skin": 2,
+                  "trousers": null,
+                  "shirt": null,
+                  "accessory": null,
+                  "key": "{\"model\":\"npc.civilian-woman-a\",\"hair\":null,\"skin\":2,\"trousers\":null,\"shirt\":null,\"accessory\":null}"
+                },
+                "corpse": false,
+                "floor": 0,
+                "clip": "npc-stand-up",
+                "feet": [
+                  {
+                    "heel": [
+                      0.468,
+                      0,
+                      -0.543
+                    ],
+                    "toe": [
+                      0.57,
+                      0,
+                      -0.441
+                    ]
+                  },
+                  {
+                    "heel": [
+                      0.257,
+                      0,
+                      -0.332
+                    ],
+                    "toe": [
+                      0.359,
+                      0,
+                      -0.23
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  0.4,
+                  -0.4
+                ],
+                "torsoPitchDeg": 0.00001479811591886263
+              },
+              {
+                "frame": 84,
+                "appearance": {
+                  "model": "npc.civilian-woman-a",
+                  "hair": null,
+                  "skin": 2,
+                  "trousers": null,
+                  "shirt": null,
+                  "accessory": null,
+                  "key": "{\"model\":\"npc.civilian-woman-a\",\"hair\":null,\"skin\":2,\"trousers\":null,\"shirt\":null,\"accessory\":null}"
+                },
+                "corpse": false,
+                "floor": 0,
+                "clip": "npc-stand-up",
+                "feet": [
+                  {
+                    "heel": [
+                      0.468,
+                      0,
+                      -0.543
+                    ],
+                    "toe": [
+                      0.57,
+                      0,
+                      -0.441
+                    ]
+                  },
+                  {
+                    "heel": [
+                      0.257,
+                      0,
+                      -0.332
+                    ],
+                    "toe": [
+                      0.359,
+                      0,
+                      -0.23
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  0.4,
+                  -0.4
+                ],
+                "torsoPitchDeg": 0.00001479811591886263
+              },
+              {
+                "frame": 96,
+                "appearance": {
+                  "model": "npc.civilian-woman-a",
+                  "hair": null,
+                  "skin": 2,
+                  "trousers": null,
+                  "shirt": null,
+                  "accessory": null,
+                  "key": "{\"model\":\"npc.civilian-woman-a\",\"hair\":null,\"skin\":2,\"trousers\":null,\"shirt\":null,\"accessory\":null}"
+                },
+                "corpse": false,
+                "floor": 0,
+                "clip": "npc-stand-up",
+                "feet": [
+                  {
+                    "heel": [
+                      0.468,
+                      0,
+                      -0.543
+                    ],
+                    "toe": [
+                      0.57,
+                      0,
+                      -0.441
+                    ]
+                  },
+                  {
+                    "heel": [
+                      0.257,
+                      0,
+                      -0.332
+                    ],
+                    "toe": [
+                      0.359,
+                      0,
+                      -0.23
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  0.4,
+                  -0.4
+                ],
+                "torsoPitchDeg": 0.00001479811591886263
+              },
+              {
+                "frame": 108,
+                "appearance": {
+                  "model": "npc.civilian-woman-a",
+                  "hair": null,
+                  "skin": 2,
+                  "trousers": null,
+                  "shirt": null,
+                  "accessory": null,
+                  "key": "{\"model\":\"npc.civilian-woman-a\",\"hair\":null,\"skin\":2,\"trousers\":null,\"shirt\":null,\"accessory\":null}"
+                },
+                "corpse": false,
+                "floor": 0,
+                "clip": "npc-stand-up",
+                "feet": [
+                  {
+                    "heel": [
+                      0.468,
+                      0,
+                      -0.543
+                    ],
+                    "toe": [
+                      0.57,
+                      0,
+                      -0.441
+                    ]
+                  },
+                  {
+                    "heel": [
+                      0.257,
+                      0,
+                      -0.332
+                    ],
+                    "toe": [
+                      0.359,
+                      0,
+                      -0.23
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  0.4,
+                  -0.4
+                ],
+                "torsoPitchDeg": 0.00001479811591886263
+              },
+              {
+                "frame": 120,
+                "appearance": {
+                  "model": "npc.civilian-woman-a",
+                  "hair": null,
+                  "skin": 2,
+                  "trousers": null,
+                  "shirt": null,
+                  "accessory": null,
+                  "key": "{\"model\":\"npc.civilian-woman-a\",\"hair\":null,\"skin\":2,\"trousers\":null,\"shirt\":null,\"accessory\":null}"
+                },
+                "corpse": false,
+                "floor": 0,
+                "clip": "npc-stand-up",
+                "feet": [
+                  {
+                    "heel": [
+                      0.468,
+                      0,
+                      -0.543
+                    ],
+                    "toe": [
+                      0.57,
+                      0,
+                      -0.441
+                    ]
+                  },
+                  {
+                    "heel": [
+                      0.257,
+                      0,
+                      -0.332
+                    ],
+                    "toe": [
+                      0.359,
+                      0,
+                      -0.23
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  0.4,
+                  -0.4
+                ],
+                "torsoPitchDeg": 0.00001479811591886263
+              },
+              {
+                "frame": 132,
+                "appearance": {
+                  "model": "npc.civilian-woman-a",
+                  "hair": null,
+                  "skin": 2,
+                  "trousers": null,
+                  "shirt": null,
+                  "accessory": null,
+                  "key": "{\"model\":\"npc.civilian-woman-a\",\"hair\":null,\"skin\":2,\"trousers\":null,\"shirt\":null,\"accessory\":null}"
+                },
+                "corpse": false,
+                "floor": 0,
+                "clip": "swing",
+                "feet": [
+                  {
+                    "heel": [
+                      0.464,
+                      0,
+                      -0.54
+                    ],
+                    "toe": [
+                      0.575,
+                      0,
+                      -0.447
+                    ]
+                  },
+                  {
+                    "heel": [
+                      0.26,
+                      0,
+                      -0.336
+                    ],
+                    "toe": [
+                      0.353,
+                      0,
+                      -0.225
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  0.4,
+                  -0.4
+                ],
+                "torsoPitchDeg": 5.00927716033178
+              },
+              {
+                "frame": 135,
+                "appearance": {
+                  "model": "npc.civilian-woman-a",
+                  "hair": null,
+                  "skin": 2,
+                  "trousers": null,
+                  "shirt": null,
+                  "accessory": null,
+                  "key": "{\"model\":\"npc.civilian-woman-a\",\"hair\":null,\"skin\":2,\"trousers\":null,\"shirt\":null,\"accessory\":null}"
+                },
+                "corpse": false,
+                "floor": 0,
+                "clip": "swing",
+                "feet": [
+                  {
+                    "heel": [
+                      0.464,
+                      0,
+                      -0.54
+                    ],
+                    "toe": [
+                      0.575,
+                      0,
+                      -0.447
+                    ]
+                  },
+                  {
+                    "heel": [
+                      0.26,
+                      0,
+                      -0.336
+                    ],
+                    "toe": [
+                      0.353,
+                      0,
+                      -0.225
+                    ]
+                  }
+                ],
+                "speed": 0,
+                "at": [
+                  0.4,
+                  -0.4
+                ],
+                "torsoPitchDeg": 3.970600161891736
+              }
+            ]
+          }
+        },
+        "clicks": {
+          "total": 0,
+          "misses": 0,
+          "rows": [],
+          "swings": []
+        },
+        "visibility": {
+          "frame": 135,
+          "sim": {
+            "pedestrian": 1,
+            "courier": 1,
+            "actors": 2
+          },
+          "drawn": {
+            "vehicle": 0,
+            "pedestrian": 1,
+            "courier": 1
+          }
+        },
+        "lods": {},
+        "clipping": {
+          "gunBodyHits": 0,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 0,
+          "piercing": 0
+        },
+        "emergence": null,
+        "doors": {},
+        "log": []
+      }
+    },
+    {
+      "figure": "woman-a",
       "pose": "attack35",
       "metrics": {
         "collision": {
@@ -19366,16 +22032,16 @@
             "max": 6201
           },
           "stepMs": {
-            "p50": 1.9,
-            "p95": 2.6,
-            "max": 4.5
+            "p50": 0.7,
+            "p95": 1.8,
+            "max": 5.7
           },
           "lastFrame": {
             "drawCalls": 21,
             "triangles": 14776,
             "shadowDrawCalls": 9,
             "shadowTriangles": 6009,
-            "stepMs": 1.8999996185302734,
+            "stepMs": 1.1999998092651367,
             "categories": {
               "other": 19,
               "shadows": 9,
@@ -20785,16 +23451,16 @@
             "max": 6201
           },
           "stepMs": {
-            "p50": 1.8,
-            "p95": 2.6,
-            "max": 4.5
+            "p50": 0.7,
+            "p95": 1.8,
+            "max": 5.7
           },
           "lastFrame": {
             "drawCalls": 16,
             "triangles": 13746,
             "shadowDrawCalls": 9,
             "shadowTriangles": 6009,
-            "stepMs": 1.6000003814697266,
+            "stepMs": 0.5999994277954102,
             "categories": {
               "other": 14,
               "shadows": 9,
@@ -22372,16 +25038,16 @@
             "max": 6201
           },
           "stepMs": {
-            "p50": 1.3,
-            "p95": 2.4,
-            "max": 4.5
+            "p50": 0.6,
+            "p95": 1.6,
+            "max": 5.7
           },
           "lastFrame": {
             "drawCalls": 15,
             "triangles": 13544,
             "shadowDrawCalls": 9,
             "shadowTriangles": 6009,
-            "stepMs": 0.39999961853027344,
+            "stepMs": 0.40000057220458984,
             "categories": {
               "other": 14,
               "shadows": 9,

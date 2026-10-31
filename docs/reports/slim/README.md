@@ -2,7 +2,7 @@
 
 Baseline: `53949e814`. Every q249 human figure is included below; children and the intentionally bulky Alphas/brute/bloated are measured and identified for retention. Ratios are invariant under q257’s uniform delivery height fit.
 
-Measurements use visible indexed bind-pose geometry; hidden stump caps, eyes and hand props are excluded. Each limb radius is the 95th percentile perpendicular distance from its own bone axis, in the middle 40–60% of that segment (thigh: leg→shin, calf: shin→foot). Torso width/depth are the 2–98% envelope in the lower torso band 20–40% from pelvis to shoulder, excluding limb surfaces assigned to the nearest arm capsule and the courier backpack region. Limb radii retain the authored joint ownership; the body surface split only prevents a folded sleeve or backpack from setting torso thickness. Shoes are measured separately by foot/toe ownership; the larger 2–98% length and height is reported. This avoids combining both feet, flared hems or a backpack with body thickness.
+Measurements use visible indexed bind-pose geometry; hidden stump caps, eyes and hand props are excluded. Each limb radius is the 95th percentile perpendicular distance from its own bone axis, in the middle 40–60% of that segment (thigh: leg→shin, calf: shin→foot). Torso width/depth are the 2–98% envelope in the lower torso band 20–40% from pelvis to shoulder, excluding limb surfaces assigned to the nearest arm capsule and the courier backpack region. Limb radii retain the authored joint ownership; the body surface split only prevents a folded sleeve or backpack from setting torso thickness. After comparisons freeze the baseline vertex ownership and cross-section membership, so a shifted sleeve cannot change which body section is being measured. Shoes are measured separately by foot/toe ownership; the larger 2–98% length and height is reported. This avoids combining both feet, flared hems or a backpack with body thickness.
 
 | Figure | Policy | Upper arm r/H | Forearm r/H | Thigh r/H | Calf r/H | Torso W/H | Torso D/H | Shoe L/H | Shoe H/H |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -80,3 +80,39 @@ Measurements use visible indexed bind-pose geometry; hidden stump caps, eyes and
 
 * n/a: no visible geometry for this anatomical part. Sparse bone ownership uses the nearest same-side visible cross-section; exact fallbacks are identified per figure in JSON.
 
+
+## Pilot and rollout
+
+[Reviewed pilot and its full before/after table](pilot/review.md). The pilot passes for the relative body-build improvement. [Studio](pilot/studio-sheet.jpg), [game zoom 1.5](pilot/game-sheet-zoom15.jpg), [literal 3 m](pilot/game-sheet-close3m.jpg), [lower-body motion](pilot/lower-sheet-high.jpg). Existing angular cloth/atlas seams and ground-occluded corpse surfaces are visible in the untouched baseline too; they are documented in that review.
+
+The final rollout covers **55 adult variants / 58 figures / 337 source, LOD and texture-tier files**. All **38 GPU variants** receive regenerated delivery: 26 NPCs × 3 LODs × healthy/infected plus 12 infected models × 3 LODs = **192 bakes**. Frozen corpses use those same edited surfaces. Ten intentionally bulky variants and both children retain their q249/q257 assets; the heroine remains unchanged. [Retention audit](rollout/retention.json).
+
+The edit contracts limb vertices perpendicular to their bone axes. Skeleton transforms, inverse binds, weights, UVs, textures, topology, hands and hand props are retained. Continuous skins use blended radial fields and welded UV-split bind points. Segmented legacy meshes preserve their joint ends and ankle connections while their middle sections slim. Torso width/depth contract toward heroine ×1.12; standing adults previously inside or above the reference band stay within the ±15% interval. Already thinner axes are not enlarged. Normals retain their original component precision and storage size. A bounded numerical guard keeps tiny triangles above the unchanged export validator floor.
+
+The crawler keeps its [q260 approved full head](../q260/README.md); its crouched vertical extent is not compared to a standing body. Its limbs/torso use the standing male pilot’s contraction profile. All other edited head ratios pass q249’s upper caps, using each file/member’s original frozen shoulder band from the q249 receipts. All source heights and ground planes remain within 0.01 mm. [Full export audit](rollout/audit.json), [71-figure delivered height census](rollout/height-census.md).
+
+[Final cast review](rollout/review.md). [All figures, front before/after](rollout/lineup-front-before-after.jpg), [side before/after](rollout/lineup-side-before-after.jpg). Raw labelled high and low sheets are in `rollout/lineup-after-high/` and `rollout/lineup-after-low/`. [L1 depot before/after](rollout/l1/depot-handover-before-after.jpg), [production bench](rollout/l1/production-bench-120-before-after.jpg), [PO bench](rollout/l1/po-bench-before-after.jpg). The five actual game LOD1 lineups and corpse cohorts per quality tier are in `rollout/game-high/` and `rollout/game-low/`.
+
+[Runtime LOD audit](rollout/lod-audit.json): zero new fallbacks. The manifest keeps the existing `skin_body` dimension convention and original tolerances. The full validator already reports auxiliary-eye versus body-envelope differences and legacy rest-cushion findings on main; [the same-validator comparison of all 165 delivered high LOD files](rollout/contract-delta.json) records those baseline findings and **zero new contract errors**.
+
+## Final measurements
+
+The table above is the complete before census. [Final values for all 71 figures](measurements-after.json) use the identical bind-pose method.
+
+## Reproduce
+
+```sh
+node --import tsx tools/slim/measure.ts before
+node --import tsx tools/slim/build-pilot.ts
+# Capture and review the pilot before proceeding.
+node --import tsx tools/slim/build-pilot.ts --rollout
+node --import tsx tools/slim/sync-dimensions.ts
+node --import tsx tools/slim/pack-normals.ts
+node --import tsx tools/slim/measure.ts after
+node --import tsx tools/slim/audit.ts rollout
+HEIGHT_OUT=docs/reports/slim/rollout node --import tsx tools/q257/height-census.ts
+node --import tsx tools/slim/lod-audit.ts
+node --import tsx tools/slim/contract-delta.ts
+```
+
+Branch: `lane/slim`; no GitHub publication or deployment. Browser captures use shared headless pool contexts and private ports 4871/4872.
