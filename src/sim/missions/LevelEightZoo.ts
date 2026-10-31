@@ -170,7 +170,7 @@ export class LevelEightZoo {
   /** The parked nav AABB encloses free space beside a rotated hull. Use the
    * canonical physical sweep for the final clear approach, without changing
    * capsule collision, movement response, speed or the actual boarding reach. */
-  private approachDoor(e: EntitySnapshot, door: Point, speed: number): boolean {
+  private approachBoardingSpot(e: EntitySnapshot, door: Point, speed: number): boolean {
     const w = this.w, radius = actorRadius(e);
     let dx = door.x - e.transform.x, dz = door.z - e.transform.z, distance = Math.hypot(dx, dz), stop = .2;
     if (distance <= stop) return false;
@@ -230,14 +230,15 @@ export class LevelEightZoo {
       queueIndex = Math.max(0, waiting.indexOf(e.id));
       if (queueIndex) {
         const car = w.entities.get(s.carId)!, dx = door.x - car.transform.x, dz = door.z - car.transform.z, length = Math.hypot(dx, dz) || 1;
-        const queue = { x: door.x + dx / length * queueIndex * 1.25, z: door.z + dz / length * queueIndex * 1.25 };
-        target = w.infected!.nav.clear(queue.x, queue.z, actorRadius(e)) && w.solids.clear({ ...queue, y: e.transform.y }, actorRadius(e), e.id) ? queue : e.transform;
+        const row = Math.floor((queueIndex - 1) / 2), side = ((queueIndex - 1) % 2 - .5) * 1.6;
+        const queue = { x: door.x + dx / length * (2.5 + row * 1.5) - dz / length * side, z: door.z + dz / length * (2.5 + row * 1.5) + dx / length * side };
+        target = w.infected!.nav.clear(queue.x, queue.z, actorRadius(e)) && w.solids.clear({ ...queue, y: e.transform.y }, actorRadius(e), e.id, false) ? queue : e.transform;
       }
     }
     if (boarding && queueIndex === 0 && distance(e.transform, door) < .7) w.vehicles!.boardPassenger(s.carId, e.id);
     else if (distance(e.transform, target) > (boarding ? .3 : 1)) {
       const speed = c.survivor?.injured ? 1.4 : 3.8;
-      if (!boarding || queueIndex > 0 || !this.approachDoor(e, door, speed)) w.npcs!.move(e, target, speed, c, boarding ? .2 : .8, 2400);
+      if (!boarding || !this.approachBoardingSpot(e, target, speed)) w.npcs!.move(e, target, speed, c, boarding ? .2 : .8, 2400);
     }
     return true;
   }
