@@ -59,7 +59,15 @@ export function nightAccents(world: DistrictWorld | null | undefined): AccentSet
         points.push({ kind: 'storm-lantern', x: px + fair.origin[0], y: p.visualAabb.max[1] + .235,
           z: pz + fair.origin[1], yaw: p.yaw, seed: Math.abs(px * 12.9898 + pz * 78.233) % 6.283,
           color: '#ffb35c', glow: 5, flicker: 1, strobe: false,
-          pool: { color: '#ff9a48', intensity: 4.8, range: 4.2 } });
+          pool: { color: '#ff9a48', intensity: 7.6, range: 7.4 } });
+      }
+      // The existing wrecks sit between the supply stops. Flat road flares
+      // mark their clear shoulder and carry warm ground into the zoom-1 frame.
+      for (const p of fair.decay.placements) if (p.id.startsWith('l7-military-')) {
+        const px = p.position[0] + fair.origin[0], pz = 15 + (p.position[2] < 15 ? -5.8 : 5.8) + fair.origin[1];
+        points.push({ kind: 'flare', x: px, y: world.groundHeight(px, pz) + .03, z: pz,
+          yaw: p.yaw, seed: px * .13, color: '#ff9f42', glow: 7, flicker: 1, strobe: false,
+          pool: { color: '#ff843d', intensity: 5.2, range: 7 } });
       }
       const entry: AccentSet = { points, fires: [] };
       cache.set(world, entry); return entry;

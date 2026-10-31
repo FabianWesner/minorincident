@@ -111,8 +111,16 @@ export function districtDecor(district: DistrictId, placements: readonly Placeme
       const side = i % 2 ? -1 : 1, theme = themes[i];
       for (const [j, asset] of theme.entries()) {
         const px = x + (j === 1 ? 1.8 : j === 2 ? -1.8 : 0);
-        const spot: Spot = { asset, x: px, z: 15 + side * (8.8 + (j ? 1.3 : 0)), y: ground(px), yaw: i * .63 + j * .8, scale: j ? .82 : 1 };
+        const spot: Spot = { asset, x: px, z: 15 + side * (6.8 + (j ? 1.3 : 0)), y: ground(px), yaw: i * .63 + j * .8, scale: j ? .82 : 1 };
         const p = placement('D-FAIR', list.length + i * 2, spot);
+        // Keep the whole footprint on one terrace, including rotated bedrolls
+        // and pallets: sampling only the centre can leave an edge over a riser.
+        if (p.position[1] < 3.9) {
+          const tile = 85 + Math.floor((px - 85) / 5) * 5;
+          const half = (p.visualAabb.max[0] - p.visualAabb.min[0]) / 2;
+          const dx = Math.max(tile + half + .03, Math.min(tile + 5 - half - .03, px)) - px;
+          p.position[0] += dx; p.visualAabb.min[0] += dx; p.visualAabb.max[0] += dx;
+        }
         p.id = `decor-l7-northgate-${i}-${j}`;
         if (j === 0) p.roadLife = true;
         if (!blocked(p)) list.push(p);
