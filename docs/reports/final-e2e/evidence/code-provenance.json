@@ -1,11 +1,12 @@
 {
-  "baseline": "b98aaa604",
-  "observedHead": "ba66c809adac484c572b064d0ac66dcf97274554",
+  "baseline": "b98aaa60448060e02ccfe2e1332b39406360e828",
+  "observedHead": "78a047deee39f8d2612eb18738dcf53213fd9e9d",
+  "campaignBuild": "Baseline game b98aaa604; post-campaign F06 text-only fix separately rebuilt and visually retested",
   "paths": [
     {
       "path": "src",
       "baseline": "1d7a3aeb5d521963948de5a6f0fde1d20e062eb7",
-      "current": "1d7a3aeb5d521963948de5a6f0fde1d20e062eb7"
+      "current": "5a548fa04690084e92313960653cd35b0055addc"
     },
     {
       "path": "assets",
@@ -32,5 +33,11 @@
       "baseline": "5154f600ff4565f633d688aed719911297db9380",
       "current": "5154f600ff4565f633d688aed719911297db9380"
     }
-  ]
+  ],
+  "gameCodeChanges": [
+    "src/sim/missions/objectiveText.ts"
+  ],
+  "gameFixCommit": "78a047dee",
+  "gameDiff": "diff --git a/src/sim/missions/objectiveText.ts b/src/sim/missions/objectiveText.ts\nindex ed545df4b..274aff193 100644\n--- a/src/sim/missions/objectiveText.ts\n+++ b/src/sim/missions/objectiveText.ts\n@@ -57,7 +57,7 @@ export function objectiveText(mission: Mission, fallback: string): string {\n       const player=w.entities.get(1)!.transform;\n       const distance=(id:number)=>{const p=w.entities.get(id)!.transform;return Math.hypot(p.x-player.x,p.z-player.z);};\n       const missing=ids.filter(id=>!car.passengers?.some(p=>p.id===id&&p.phase==='seated')).sort((a,b)=>distance(a)-distance(b));\n-      const text=seated?fallback:'Return to the armored vehicle and board';\n+      const text=`${zoo.state.breachedAt ? 'The zoo is breached · ' : ''}${seated ? fallback : 'Return to the armored vehicle and board'}`;\n       const waiting=missing.length?` · ${missing.length} missing`:'';\n       return `${text} · ${ids.length-missing.length}/${ids.length} aboard${waiting}`;\n     }",
+  "difficultyAndCameraCodeChanged": false
 }
