@@ -77,4 +77,24 @@ and Begin clicks and no cheats. Quiet reservations split levels into
 [Per-level receipts](evidence/input-minutes.json), [all frame samples](evidence/input-minute-samples.json.gz),
 [quiet admission](evidence/quiet-input.jsonl), [20 captures](evidence/input-contact-sheet.jpg).
 
-The final smoke and 48-row scene gate run after timed gameplay finishes.
+`npm run test:smoke` passes **6 QA + 1 public tests**, zero skips/failures, in
+131.8 s (240 s budget). The unchanged freeze guard reports no builds after warm-up,
+17 ms maximum frame, and no L8 boarding builds. The rebuilt public artifact passes
+the no-QA-hooks assertion. [Run status](evidence/checks/smoke-run.json),
+[QA results](evidence/checks/smoke-6-tests.json), [public results](evidence/checks/smoke-1-tests.json),
+[log](evidence/checks/smoke.log), [rebuilt artifact identity](evidence/checks/smoke-public-artifact.json).
+Vite's embedded commit metadata differs between builds; runtime sources/assets do
+not. The earlier 144.3 s execution also passed all seven tests; its collector rejected
+an enumeration-only report, then was corrected and the full command repeated
+([retained first receipts and note](evidence/checks/smoke-first/)).
+
+`npm run scene:gate -- --jobs 2` passes **48/48**, zero known failures and zero
+unrun rows, across WebGPU/WebGL2 and high/low. It uses the separately fingerprinted
+QA artifact with identical runtime sources. [Summary](evidence/scene-gate/summary.md),
+[all rows, metrics and sheets](evidence/scene-gate/), [log](evidence/checks/scene-gate.log).
+
+[Completion audit](evidence/completion-audit.json): all checks finished; native cold
+samples remain within budget. All owned cold-cache directories, the sole temporary
+baseline build and the temporary candidate QA build have been removed. Disk free:
+19.49 GB (18.16 GiB). Only the `CrowdView` graph-sharing condition changes runtime
+sources; [source audit](evidence/source-audit.json). Nothing was published or deployed.
