@@ -282,8 +282,12 @@ def build(ctx):
 
 
     def frame(name, x0, z0, x1, z1, side, mat, parent, bar=0.04, r=0.04, depth=0.03, lift=0.0, y_skin=W):
-        if DISTANCE:
+        if DISTANCE and mat != 'black':
             return box(name,((x0+x1)/2,side*(y_skin-.006),(z0+z1)/2),(x1-x0+2*bar,.005,z1-z0+2*bar),mat,parent,bevel=0)
+        if DISTANCE:
+            # Q-278: the black window frame used to be a solid slab behind the glass here. It plugged the opening, so the
+            # cab glass showed dark and the crew vanished at low quality. The frame sits behind the skin: leave the opening hollow.
+            return None
         ring(name, rrect(x0 - bar, z0 - bar, x1 + bar, z1 + bar, r + bar * 0.6), rrect(x0, z0, x1, z1, r), side, depth, mat, parent, y_skin, lift=lift)
 
 
