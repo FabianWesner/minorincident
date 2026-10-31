@@ -1,0 +1,113 @@
+{
+  "baseline": "53949e814",
+  "actualRevision": "b8899ae4b",
+  "thresholdM": 0.01,
+  "method": "Surface distance and corresponding-point displacement of outer garment vertices to the coherently body-deformed reference cage. These assets have one clothed mesh, not a separate hidden nude torso: the pre-slim clothed body is the reference surface. The reference uses authored bone influences throughout; no spatial arm reclassification. Skin/head/hand/weapon/cap vertices are excluded. Both offsets must be <=10 mm. Visual crops remain required: this check alone cannot prove bag shape or cloth fold quality.",
+  "pass": false,
+  "rows": [
+    {
+      "id": "npc.civilian-man-b",
+      "policy": "slimmed",
+      "pass": false,
+      "samples": 21848,
+      "maxSurfaceOffsetM": 0.06559211121618219,
+      "maxBodyDisplacementOffsetM": 0.176656724126705,
+      "files": [
+        {
+          "path": "assets/npc.civilian-man-b/model.skin.glb",
+          "samples": 10554,
+          "maxSurfaceOffsetM": 0.06514736104469965,
+          "maxBodyDisplacementOffsetM": 0.14009433818727957
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-b.lod0.glb",
+          "samples": 3275,
+          "maxSurfaceOffsetM": 0.06559211121618219,
+          "maxBodyDisplacementOffsetM": 0.13461297199777697
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-b.lod1.glb",
+          "samples": 1568,
+          "maxSurfaceOffsetM": 0.05657443336617081,
+          "maxBodyDisplacementOffsetM": 0.176656724126705
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-b.lod2.glb",
+          "samples": 804,
+          "maxSurfaceOffsetM": 0.05665302724098529,
+          "maxBodyDisplacementOffsetM": 0.09908021418474361
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-b.lod0.low.glb",
+          "samples": 3275,
+          "maxSurfaceOffsetM": 0.06559211121618219,
+          "maxBodyDisplacementOffsetM": 0.13461297199777697
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-b.lod1.low.glb",
+          "samples": 1568,
+          "maxSurfaceOffsetM": 0.05657443336617081,
+          "maxBodyDisplacementOffsetM": 0.176656724126705
+        },
+        {
+          "path": "public/assets/models/skinned/npc.civilian-man-b.lod2.low.glb",
+          "samples": 804,
+          "maxSurfaceOffsetM": 0.05665302724098529,
+          "maxBodyDisplacementOffsetM": 0.09908021418474361
+        }
+      ]
+    },
+    {
+      "id": "npc.civilian-woman-a",
+      "policy": "slimmed",
+      "pass": false,
+      "samples": 21480,
+      "maxSurfaceOffsetM": 0.07284388109661935,
+      "maxBodyDisplacementOffsetM": 0.21582128974740697,
+      "files": [
+        {
+          "path": "assets/npc.civilian-woman-a/model.slim.skin.glb",
+          "samples": 9256,
+          "maxSurfaceOffsetM": 0.060037891735313535,
+          "maxBodyDisplacementOffsetM": 0.21582128974740697
+        },
+        {
+          "path": "public/assets/models/slim-pilot/npc.civilian-woman-a.lod0.glb",
+          "samples": 3439,
+          "maxSurfaceOffsetM": 0.05968389140988247,
+          "maxBodyDisplacementOffsetM": 0.21289015808993983
+        },
+        {
+          "path": "public/assets/models/slim-pilot/npc.civilian-woman-a.lod1.glb",
+          "samples": 1867,
+          "maxSurfaceOffsetM": 0.07284388109661935,
+          "maxBodyDisplacementOffsetM": 0.14369597625627617
+        },
+        {
+          "path": "public/assets/models/slim-pilot/npc.civilian-woman-a.lod2.glb",
+          "samples": 806,
+          "maxSurfaceOffsetM": 0.04272583889031501,
+          "maxBodyDisplacementOffsetM": 0.07431778656635565
+        },
+        {
+          "path": "public/assets/models/slim-pilot/npc.civilian-woman-a.lod0.low.glb",
+          "samples": 3439,
+          "maxSurfaceOffsetM": 0.05968389140988247,
+          "maxBodyDisplacementOffsetM": 0.21289015808993983
+        },
+        {
+          "path": "public/assets/models/slim-pilot/npc.civilian-woman-a.lod1.low.glb",
+          "samples": 1867,
+          "maxSurfaceOffsetM": 0.07284388109661935,
+          "maxBodyDisplacementOffsetM": 0.14369597625627617
+        },
+        {
+          "path": "public/assets/models/slim-pilot/npc.civilian-woman-a.lod2.low.glb",
+          "samples": 806,
+          "maxSurfaceOffsetM": 0.04272583889031501,
+          "maxBodyDisplacementOffsetM": 0.07431778656635565
+        }
+      ]
+    }
+  ]
+}

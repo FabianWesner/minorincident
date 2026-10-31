@@ -27,7 +27,9 @@ export function slimBuild(doc: Document, scales: Scales, rootName?: string) {
   const deform = (v: Vertex, p: Vector3) => {
     if (/^(head|neck|eye|iris|pony|hair|hand|weapon|backpack)/.test(v.owner)) return p.clone();
     const result = p.clone();
-    for (const influence of v.shapeInfluences ?? v.influences) {
+    // Garment layers follow their authored body influences. Spatial arm
+    // classification is for measurement, never a second deformation rule.
+    for (const influence of v.influences) {
       const name = influence.name, side = name.slice(-1), w = influence.weight;
       if (!w) continue;
       if (/^(hip|torso|spine|chest)$/.test(name)) {

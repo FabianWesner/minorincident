@@ -1,3 +1,5 @@
+> **Garment follow-up:** the earlier rollout review is superseded by [slim-c](garments/README.md). Nine variants use the requested pre-slim safety fallback; the others use the coherent body field. New validation is in progress.
+
 # Slim build
 
 Baseline: `53949e814`. Every q249 human figure is included below; children and the intentionally bulky Alphas/brute/bloated are measured and identified for retention. Ratios are invariant under q257’s uniform delivery height fit.
