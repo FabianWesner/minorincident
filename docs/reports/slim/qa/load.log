@@ -1,0 +1,45 @@
+Quiet-run waiting for admission; load=15:27  up 83 days, 15:20, 5 users, load averages: 3.85 5.08 4.10 blockers:
+{"quiet":false,"load":[3.85302734375,5.07958984375,4.1025390625],"busy":[],"ignoredIdle":[]}
+15:27  up 83 days, 15:21, 5 users, load averages: 2.51 4.58 3.96
+Quiet-run preflight: load < 3; no local Vitest, typecheck, Blender, build or headless Chrome processes; all configured browser slots held.
+Quiet-run conditions: {"quiet":true,"load":[2.50927734375,4.5810546875,3.9638671875],"busy":[],"ignoredIdle":[]}
+before 0 2178 ms
+after 0 2194 ms
+after 1 2160 ms
+before 1 2193 ms
+before 2 2210 ms
+after 2 2177 ms
+after 3 2177 ms
+before 3 2210 ms
+before 4 2177 ms
+after 4 2193 ms
+after 5 2178 ms
+before 5 2177 ms
+before 6 2177 ms
+after 6 2175 ms
+after 7 2192 ms
+before 7 2209 ms
+before 8 2243 ms
+after 8 2194 ms
+after 9 2177 ms
+before 9 2195 ms
+{
+  before: {
+    n: 10,
+    median: 2193.9000005722046,
+    p90: 2209.699999809265,
+    max: 2242.6000003814697
+  },
+  after: {
+    n: 10,
+    median: 2177.5499997138977,
+    p90: 2193.8999996185303,
+    max: 2194
+  },
+  delta: {
+    median: -16.350000858306885,
+    p90: -15.800000190734863,
+    max: -48.60000038146973
+  },
+  pass: true
+}

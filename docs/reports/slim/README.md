@@ -116,6 +116,13 @@ node --import tsx tools/slim/audit.ts rollout
 HEIGHT_OUT=docs/reports/slim/rollout node --import tsx tools/q257/height-census.ts
 node --import tsx tools/slim/lod-audit.ts
 node --import tsx tools/slim/contract-delta.ts
+node --import tsx tools/slim/check-baked-normals.ts
 ```
 
 Branch: `lane/slim`; no GitHub publication or deployment. Browser captures use shared headless pool contexts and private ports 4871/4872.
+
+## Validation
+
+[Final checks and evidence](qa/README.md): `npm test` 110/110, smoke 7/7, scene gate **48/48**, no known failures or skipped rows. Source head caps/heights, GPU shader limits and 192 baked normal streams pass; no new LOD fallback, late L1 shader build or delivered export-contract error. Ten paired public L1 loads show no regression: median **2.194 → 2.178 s**, p90 **2.210 → 2.194 s**. [Load receipt](rollout/load/summary.json).
+
+The normal and fitted-gear corrections are recorded in the cast review. The final L1 captures were refreshed and are byte-identical to the reviewed sheets. The temporary baseline was removed after measurement; no owned browser profile remains. The lane remains local for the orchestrator’s QA-only deployment and the PO’s style judgement.
