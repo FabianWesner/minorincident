@@ -23,12 +23,10 @@ export function resolveCrowdAppearance(e: EntitySnapshot, ids: readonly string[]
   // Aftermath and continuous infected bodies carry authored headwear (or deliberately bare hair).
   // Random caps must not replace a named person's cap, ponytail or fitted glasses.
   const slot = eligible ? explicit ? ids.indexOf(explicit) + 1 : model.endsWith('.aftermath') || authoredInfectedHeads.has(model) ? 0 : !e.infected || turnedPerson ? channels.accessory % (ids.length + 1) : infectedWearsAccessory(e.id) ? channels.accessory % ids.length + 1 : 0 : 0;
-  // Q-267: retire the pointed bucket hat, including explicit authored wearers.
-  const picked = slot ? ids[slot - 1] : null;
-  const accessory = picked === 'acc.hat-bucket-hat' ? 'acc.hat-sun-hat' : picked, kind = accessoryKinds.get(accessory ?? '');
+  const accessory = slot ? ids[slot - 1] : null, kind = accessoryKinds.get(accessory ?? '');
   const hidesHair = kind === 'hat' || kind === 'hair' || !!accessory?.startsWith('acc.placeholder-');
   return { ...channels, model, outfit: model, head: model, headwear: kind === 'hat' ? accessory : accessory ? null : model,
-    accessory, accessories: e.appearance?.accessories.length ? e.appearance.accessories.map(id => id === 'acc.hat-bucket-hat' ? 'acc.hat-sun-hat' : id) : accessory ? [accessory] : [], slot: accessory ? ids.indexOf(accessory) + 1 : 0, hidesHair, tint: e.appearance?.tint ?? shirtTones[channels.shirt], infectedSkin: !!e.infected };
+    accessory, accessories: e.appearance?.accessories.length ? e.appearance.accessories : accessory ? [accessory] : [], slot, hidesHair, tint: e.appearance?.tint ?? shirtTones[channels.shirt], infectedSkin: !!e.infected };
 }
 const colors = { hair: hairTones.map(c => new Color(c)), skin: skinTones.map(c => new Color(c)), infected: infectedSkinTones.map(c => new Color(c)), trousers: trouserTones.map(c => new Color(c)), shirt: shirtTones.map(c => new Color(c)) };
 /** _variant.xyz: shirt RGB in the remainder modulo 2; hair/skin/trousers in integer pairs.
