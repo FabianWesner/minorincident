@@ -308,21 +308,8 @@ function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point): bo
     const slot = { x: p.x - Math.cos(forward) * behind + Math.sin(forward) * side,
       z: p.z + Math.sin(forward) * behind + Math.cos(forward) * side };
     const nav = world.infected!.nav;
-    // A follower's route slot must also clear live hulls (the nav bake does not
-    // include every parked set piece) and other bodies. If the nominal slot is
-    // blocked, try adjacent points in a stable, slot-specific order instead of
-    // routing the whole squad to one point at the courier's feet.
-    let goal: Point = p;
-    if (d <= 10) {
-      const candidates = [slot];
-      const seed = f.slot * 2.399963229728653;
-      for (let ring = 0; ring < 3; ring++) for (let ray = 0; ray < 8; ray++) {
-        const angle = seed + ray * Math.PI / 4, radius = .8 + ring * .7;
-        candidates.push({ x: slot.x + Math.cos(angle) * radius, z: slot.z + Math.sin(angle) * radius });
-      }
-      const clear = (point: Point) => nav.clear(point.x, point.z, .4) && world.solids!.clear({ ...point, y: e.transform.y }, .4, e.id) && nav.visible(e.transform, point, .4) && nav.visible(point, p, .4);
-      goal = candidates.find(clear) ?? p;
-    }
+    // Around a wreck, follow the courier's reachable line rather than routing to a slot on its far face.
+    const goal = d <= 10 && nav.clear(slot.x, slot.z, .4) && nav.visible(e.transform, slot, .4) && nav.visible(slot, p, .4) ? slot : p;
     if (!world.npcs!.move(e, goal, d > f.maxM + 2 ? f.moveMs : f.moveMs * .9, e.civilian!, goal === p ? f.minM : .5))
       world.npcs!.move(e, p, f.moveMs, e.civilian!, f.minM);
   }
