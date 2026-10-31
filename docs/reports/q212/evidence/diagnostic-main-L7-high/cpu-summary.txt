@@ -1,0 +1,42 @@
+total 1783 ms
+
+self time by file:
+    1484  three-webgpu-p0IadyXU.js
+     149  (garbage collector)
+      75  (program)
+      26  index-DDRW8J25.js
+      20  (idle)
+      13  three-core-BzgDqAAS.js
+       7  createShaderModule
+       4  measure
+       2  now
+       2  createBuffer
+       2  type.<computed>
+       1  mark
+
+self time by function:
+     354  build three-webgpu-p0IadyXU.js:7
+     149  (garbage collector) :-1
+     117  _getChildren three-webgpu-p0IadyXU.js:7
+      90  build three-webgpu-p0IadyXU.js:20
+      89  getChildren three-webgpu-p0IadyXU.js:7
+      75  (program) :-1
+      63  generate three-webgpu-p0IadyXU.js:7
+      59  n three-webgpu-p0IadyXU.js:7
+      58  analyze three-webgpu-p0IadyXU.js:7
+      48  getDataFromNode three-webgpu-p0IadyXU.js:34
+      32  setup three-webgpu-p0IadyXU.js:7
+      32  getNodeType three-webgpu-p0IadyXU.js:7
+      31  getNodeFromHash three-webgpu-p0IadyXU.js:34
+      27  getHash three-webgpu-p0IadyXU.js:7
+      27  setData three-webgpu-p0IadyXU.js:34
+      26  addNode three-webgpu-p0IadyXU.js:34
+      26  generateNodeType three-webgpu-p0IadyXU.js:7
+      23  getNodeProperties three-webgpu-p0IadyXU.js:34
+      22  setHashNode three-webgpu-p0IadyXU.js:34
+      20  (idle) :-1
+      19  getTypeLength three-webgpu-p0IadyXU.js:34
+      18  (anonymous) index-DDRW8J25.js:13
+      14  H.<computed> three-webgpu-p0IadyXU.js:7
+      13  build three-webgpu-p0IadyXU.js:32
+      13  call three-webgpu-p0IadyXU.js:7

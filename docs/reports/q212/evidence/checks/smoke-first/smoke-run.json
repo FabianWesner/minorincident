@@ -1,0 +1,30 @@
+{
+  "command": "E2E_PORT=4330 MI_BUILD_CACHE=off npm run test:smoke",
+  "exitCode": 0,
+  "reports": {
+    "0": {
+      "startTime": "2026-10-31T02:54:12.762Z",
+      "duration": 26.62500000000003,
+      "expected": 0,
+      "skipped": 9,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "6": {
+      "startTime": "2026-10-31T02:54:20.687Z",
+      "duration": 122865.504,
+      "expected": 6,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "1": {
+      "startTime": "2026-10-31T02:56:31.076Z",
+      "duration": 4988.404,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  }
+}

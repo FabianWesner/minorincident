@@ -1,0 +1,283 @@
+{
+  "backend": "webgpu",
+  "tier": "high",
+  "census": {
+    "backend": "webgpu",
+    "tier": "high",
+    "nodeBuilds": 288,
+    "batches": [
+      {
+        "key": "infected.runner:lod1",
+        "asset": "inf.common-worker",
+        "lod": "lod1",
+        "material": "373c6170-a25e-433f-baeb-1a2bd94e7f3e",
+        "vertices": 3198,
+        "indices": 6795
+      },
+      {
+        "key": "infected.runner:lod2",
+        "asset": "inf.common-worker",
+        "lod": "lod2",
+        "material": "67515bd7-0616-4588-a496-cfeb6c66d627",
+        "vertices": 1569,
+        "indices": 2673
+      },
+      {
+        "key": "inf.jogger:lod1",
+        "asset": "inf.jogger",
+        "lod": "lod1",
+        "material": "bd79c915-8818-4f21-b06b-8fec257c38a4",
+        "vertices": 4828,
+        "indices": 7500
+      },
+      {
+        "key": "inf.jogger:lod2",
+        "asset": "inf.jogger",
+        "lod": "lod2",
+        "material": "95302a8f-81f7-43c0-af0d-a8e5989ff0d8",
+        "vertices": 4828,
+        "indices": 7500
+      },
+      {
+        "key": "inf.suburban-mom:lod1",
+        "asset": "inf.suburban-mom",
+        "lod": "lod1",
+        "material": "f9ec85cd-1aa9-4fdc-82c2-2991c49d5847",
+        "vertices": 4965,
+        "indices": 8358
+      },
+      {
+        "key": "inf.suburban-mom:lod2",
+        "asset": "inf.suburban-mom",
+        "lod": "lod2",
+        "material": "4838986b-4cb6-4453-a701-620b5d65058e",
+        "vertices": 4965,
+        "indices": 8358
+      },
+      {
+        "key": "inf.delivery-driver:lod1",
+        "asset": "inf.delivery-driver",
+        "lod": "lod1",
+        "material": "5f0ecadb-e198-488f-bb21-16e4c9d60899",
+        "vertices": 5015,
+        "indices": 7632
+      },
+      {
+        "key": "inf.delivery-driver:lod2",
+        "asset": "inf.delivery-driver",
+        "lod": "lod2",
+        "material": "283686da-11c2-4446-b368-a9899268f249",
+        "vertices": 5015,
+        "indices": 7632
+      },
+      {
+        "key": "inf.bbq-dad:lod1",
+        "asset": "inf.bbq-dad",
+        "lod": "lod1",
+        "material": "61daa223-2d5d-46fb-bd2b-ffa6d0d23ec2",
+        "vertices": 3630,
+        "indices": 7071
+      },
+      {
+        "key": "inf.bbq-dad:lod2",
+        "asset": "inf.bbq-dad",
+        "lod": "lod2",
+        "material": "8e230f80-a761-4f6f-a036-57c9a4c55174",
+        "vertices": 3630,
+        "indices": 7071
+      },
+      {
+        "key": "inf.cashier:lod1",
+        "asset": "inf.cashier",
+        "lod": "lod1",
+        "material": "18d678f6-94dc-4ae0-ac39-67df31b6d533",
+        "vertices": 4751,
+        "indices": 7470
+      },
+      {
+        "key": "inf.cashier:lod2",
+        "asset": "inf.cashier",
+        "lod": "lod2",
+        "material": "271ad809-0240-4352-95fd-f71c2be5bdcb",
+        "vertices": 4751,
+        "indices": 7470
+      },
+      {
+        "key": "inf.bathrobe-neighbor:lod2",
+        "asset": "inf.bathrobe-neighbor",
+        "lod": "lod2",
+        "material": "eaec3b43-1dca-4726-8019-dd6f308db959",
+        "vertices": 5082,
+        "indices": 7743
+      },
+      {
+        "key": "inf.bathrobe-neighbor:lod1",
+        "asset": "inf.bathrobe-neighbor",
+        "lod": "lod1",
+        "material": "824a7473-6bff-4a7c-ab2f-52ca29c60f08",
+        "vertices": 5082,
+        "indices": 7743
+      }
+    ],
+    "materials": 14
+  },
+  "bodies": {
+    "settled": [
+      {
+        "id": 3,
+        "health": 0,
+        "transform": {
+          "x": -4,
+          "y": 0.7,
+          "z": -4,
+          "yaw": -1.1902899496825317
+        }
+      },
+      {
+        "id": 4,
+        "health": 0,
+        "transform": {
+          "x": 0,
+          "y": 0.7,
+          "z": -4,
+          "yaw": -1.5707963267948966
+        }
+      },
+      {
+        "id": 5,
+        "health": 0,
+        "transform": {
+          "x": 4,
+          "y": 0.7,
+          "z": -4,
+          "yaw": -1.9513027039072615
+        }
+      },
+      {
+        "id": 6,
+        "health": 0,
+        "transform": {
+          "x": -3.9930970642247527,
+          "y": 0.7,
+          "z": 0.010354403662870942,
+          "yaw": -0.9827937232473407
+        }
+      },
+      {
+        "id": 7,
+        "health": 0,
+        "transform": {
+          "x": 0,
+          "y": 0.7,
+          "z": 0.0008888888888888889,
+          "yaw": -1.5707963267948966
+        }
+      },
+      {
+        "id": 8,
+        "health": 0,
+        "transform": {
+          "x": 4,
+          "y": 0.7,
+          "z": 0,
+          "yaw": -2.158798930342464
+        }
+      },
+      {
+        "id": 9,
+        "health": 0,
+        "transform": {
+          "x": 0,
+          "y": 0.7,
+          "z": 4,
+          "yaw": -1.5707963267948966
+        }
+      }
+    ],
+    "retained": [
+      {
+        "id": 3,
+        "health": 0,
+        "transform": {
+          "x": -4,
+          "y": 0.7,
+          "z": -4,
+          "yaw": -1.1902899496825317
+        }
+      },
+      {
+        "id": 4,
+        "health": 0,
+        "transform": {
+          "x": 0,
+          "y": 0.7,
+          "z": -4,
+          "yaw": -1.5707963267948966
+        }
+      },
+      {
+        "id": 5,
+        "health": 0,
+        "transform": {
+          "x": 4,
+          "y": 0.7,
+          "z": -4,
+          "yaw": -1.9513027039072615
+        }
+      },
+      {
+        "id": 6,
+        "health": 0,
+        "transform": {
+          "x": -3.9930970642247527,
+          "y": 0.7,
+          "z": 0.010354403662870942,
+          "yaw": -0.9827937232473407
+        }
+      },
+      {
+        "id": 7,
+        "health": 0,
+        "transform": {
+          "x": 0,
+          "y": 0.7,
+          "z": 0.0008888888888888889,
+          "yaw": -1.5707963267948966
+        }
+      },
+      {
+        "id": 8,
+        "health": 0,
+        "transform": {
+          "x": 4,
+          "y": 0.7,
+          "z": 0,
+          "yaw": -2.158798930342464
+        }
+      },
+      {
+        "id": 9,
+        "health": 0,
+        "transform": {
+          "x": 0,
+          "y": 0.7,
+          "z": 4,
+          "yaw": -1.5707963267948966
+        }
+      }
+    ],
+    "layout": {
+      "count": 7,
+      "sunkPairs": 0,
+      "heapPairs": 0,
+      "repeatedPairs": 0,
+      "maxDisplacementM": 0,
+      "maxLiftM": 0,
+      "courierClear": true
+    },
+    "nodeBuildsAfter": 567
+  },
+  "fixtureLoadedBuilds": 567,
+  "fixtureLateBuilds": 0,
+  "errors": []
+}
