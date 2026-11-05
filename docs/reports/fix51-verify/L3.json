@@ -5,7 +5,7 @@
   "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
   "fixtureHash": "ddf4ffe827cdb6519b9236bf294cb3aa5d95d548536fee4b39f34806eaf1b132",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-05T22:15:14.163Z",
+  "generatedAt": "2026-11-05T22:48:30.143Z",
   "policies": [
     {
       "tier": "low",
@@ -5014,13 +5014,14 @@
       "id": "L3-06",
       "status": "FAIL",
       "currentStatus": "FAIL",
-      "value": "low/controlled-fixture calm squad following distance by member: [{\"id\":30,\"samples\":55,\"within3to6\":52,\"minM\":4.739992556384009,\"medianM\":5.754150922803517,\"maxM\":7.4635789679913},{\"id\":31,\"samples\":55,\"within3to6\":52,\"minM\":4.322399762479623,\"medianM\":5.619907839891667,\"maxM\":6.671842107884287},{\"id\":32,\"samples\":55,\"within3to6\":7,\"minM\":5.393776776224756,\"medianM\":6.475450421449417,\"maxM\":7.8137652095043215},{\"id\":33,\"samples\":55,\"within3to6\":11,\"minM\":4.872… (full values in JSON) (target every sampled living officer follows 3–6 m from the courier outside combat; FAIL) Manual review FAIL (STALE, Codex fix64-a): Fresh baseline native low still exceeds3–6m (rear medians6.475/6.364m, maximum7.814m), high has no calm survivors. A new calm-only velocity-plus-slot correction improves the rear medians to5.881/5.529m, but4 officers reach the army line and transient samples still exceed6m. The candidate was rejected and reverted; no attrition target or spacing criterion changed. Actual moving-fire presentation is separately proven for both tiers in L3-07.",
+      "value": "low/controlled-fixture calm squad following distance by member: [{\"id\":30,\"samples\":55,\"within3to6\":52,\"minM\":4.739992556384009,\"medianM\":5.754150922803517,\"maxM\":7.4635789679913},{\"id\":31,\"samples\":55,\"within3to6\":52,\"minM\":4.322399762479623,\"medianM\":5.619907839891667,\"maxM\":6.671842107884287},{\"id\":32,\"samples\":55,\"within3to6\":7,\"minM\":5.393776776224756,\"medianM\":6.475450421449417,\"maxM\":7.8137652095043215},{\"id\":33,\"samples\":55,\"within3to6\":11,\"minM\":4.872… (full values in JSON) (target every sampled living officer follows 3–6 m from the courier outside combat; FAIL) Manual review FAIL (FRESH, Codex fix64-a): Fresh baseline native low still exceeds3–6m (rear medians6.475/6.364m, maximum7.814m), high has no calm survivors. A new calm-only velocity-plus-slot correction improves the rear medians to5.881/5.529m, but4 officers reach the army line and transient samples still exceed6m. The candidate was rejected and reverted; no attrition target or spacing criterion changed. Actual moving-fire presentation is separately proven for both tiers in L3-07.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L3-low-complete.json",
         "docs/reports/fix51-verify/receipts/L3-high-complete.json",
         "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
         "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+        "docs/reports/fix64-a/L3-06-current.json",
         "docs/reports/fix64-a/L3-officer-ledger.json",
         "docs/reports/fix64-a/L3-06-trial-summary.json",
         "docs/reports/fix64-a/L3-06-rejected-trial.json.gz",
@@ -5321,7 +5322,7 @@
         "status": "FAIL",
         "reviewer": "Codex fix64-a",
         "date": "2026-11-05",
-        "commit": "b49e9c332dece65a4500827351e1e3239fea07a8",
+        "commit": "91c25c7feccd8e6b58f829304151d2ee62fd6d38",
         "clauses": [
           {
             "clause": "Squad of 3–4 forms, follows 3–6 m (officers fire while moving, PO 2026-11-05), never teleports; size non-increasing per segment, ≤ 2 at the army line; every loss a bite/kill/separation.",
@@ -5330,6 +5331,11 @@
           }
         ],
         "evidence": [
+          {
+            "file": "docs/reports/fix64-a/L3-06-current.json",
+            "sha256": "5614dcbb1670032c91943c4842e780e99bf563fee2fddb3b8ee9bd8c555b5881",
+            "what": "Fresh final-source native/fixture checks: low rear medians6.475/6.364m, max7.814m; high loses all4 in yard; final survivors1/0, every loss bite."
+          },
           {
             "file": "docs/reports/fix64-a/L3-officer-ledger.json",
             "sha256": "cded0405052a4fcb48e100932d05634643f012f09d428782c3d5402cc9c89c7f",
@@ -5351,8 +5357,8 @@
             "what": "Exact calm-only feedforward controller trial, reverted byte-for-byte after the cardinality regression."
           }
         ],
-        "notes": "Measured FAIL remains. The trial changed only calm movement, not damage immunity, counts, cap, timers or combat. The requirement≤2 at army prevents shipping this otherwise promising spacing improvement.",
-        "freshness": "STALE",
+        "notes": "Final source refresh: native low/high and all controlled fixtures rerun after the L1 marker change. Calm spacing still fails; rejected candidate remains reverted. Measured FAIL remains. The trial changed only calm movement, not damage immunity, counts, cap, timers or combat. The requirement≤2 at army prevents shipping this otherwise promising spacing improvement.",
+        "freshness": "FRESH",
         "latestRelevantCommit": "5fcfe692e8d8b9386e8cce10834e87011c736b94"
       }
     },
@@ -7231,24 +7237,17 @@
     },
     {
       "id": "L3-12",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete native fixed army checkpoint marker coordinates: {\"id\":\"l3-zone\",\"x\":225,\"z\":0,\"samples\":13379,\"maxDisplacement\":0} (target l3-zone remains fixed; HUD distance and route readability remain open; PASS); low/stationary native fixed army checkpoint marker coordinates: {\"id\":\"l3-zone\",\"x\":225,\"z\":0,\"samples\":3139,\"maxDisplacement\":0} (target l3-zone remains fixed; HUD distance and route readability remain open; PASS); high/complete native fixed army checkpoint marker coordinates: {\"id\":\"l3-zone\",\"x\":225,\"z\":0,\"samples\":7690,\"maxDisplacement\":0} (target l3-zone remains fixed; HUD distance and route readability remain open; PASS); high/stationary native fixed army checkpoint marker coordinates: {\"id\":\"l3-zone\",\"x\":225,\"z\":0,\"samples\":3978,\"maxDisplacement\":0} (target l3-zone remains fixed; HUD distance and route readability remain open; PASS) Manual review FAIL (STALE, Codex fix62-a): Fixed painted crosslinks are visible in all8controlled low/high actualzoom0.5/1.5 frames; fixed army marker remains unchanged in native proof. In fresh low screenshot-only route, tester overshoots first turn, meets bus/shop wall, backtracks, finds crosslink and reaches residential avenue, then misreads turn and stalls near sidewalk/lamppost at311m. Continuous onward path not discerned; qualitative FAIL remains. All14routeframes reviewed; no time threshold or impossible-route claim. High full route not qualified.",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "low/complete native fixed army checkpoint marker coordinates: {\"id\":\"l3-zone\",\"x\":225,\"z\":0,\"samples\":13379,\"maxDisplacement\":0} (target l3-zone remains fixed; HUD distance and route readability remain open; PASS); low/stationary native fixed army checkpoint marker coordinates: {\"id\":\"l3-zone\",\"x\":225,\"z\":0,\"samples\":3139,\"maxDisplacement\":0} (target l3-zone remains fixed; HUD distance and route readability remain open; PASS); high/complete native fixed army checkpoint marker coordinates: {\"id\":\"l3-zone\",\"x\":225,\"z\":0,\"samples\":7690,\"maxDisplacement\":0} (target l3-zone remains fixed; HUD distance and route readability remain open; PASS); high/stationary native fixed army checkpoint marker coordinates: {\"id\":\"l3-zone\",\"x\":225,\"z\":0,\"samples\":3978,\"maxDisplacement\":0} (target l3-zone remains fixed; HUD distance and route readability remain open; PASS) Manual review FAIL (FRESH, Codex fix64-a): Fresh named Luna screenshot-only low route starts at actual fallback after ordinary native InputFrames, with no relocation or onward route hints.35 accepted actions,53.633s active, all70 input/action images personally inspected (36 unique). The player circles the crowded generator/gate plaza, then repeatedly approaches the truck/crate/fence dead end, ending351m from the unchanged army checkpoint after starting360m. The onward route is not discovered. This establishes a qualitative route-readability FAIL; no time threshold or physically impossible route is claimed. Crosslinks themselves are not reached, so their paint is not separately qualified. High full screenshot route remains unqualified.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L3-low-complete.json",
         "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L3-high-complete.json",
         "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
-        "docs/reports/fix62-a/L3-12-screen.json.gz",
-        "docs/reports/fix62-a/L3-12-image-review.json",
-        "docs/reports/fix62-a/L3-12-marker-proof.json",
-        "docs/reports/fix62-a/L3-12-cue-browser.json.gz",
-        "docs/reports/fix62-a/L3-12-cue-image-review.json",
-        "docs/reports/fix62-a/reviewed/L3-route-0.jpg",
-        "docs/reports/fix62-a/reviewed/L3-route-1.jpg",
-        "docs/reports/fix62-a/reviewed/cue-L3-0.jpg",
-        "docs/reports/fix62-a/reviewed/cue-L3-1.jpg"
+        "docs/reports/fix64-a/screen-L3-low-route-observed-images.json",
+        "docs/reports/fix64-a/screen-L3-low-route-observed-ledger.json.gz"
       ],
       "expected": "**Marker:** ring stays at `l3-zone` (army checkpoint), no corridor steer; HUD distance is the real ~360 m distance. Route to the checkpoint readable without steering (Q-270).",
       "checks": [
@@ -7340,75 +7339,42 @@
       "reviewDecision": {
         "row": "L3-12",
         "status": "FAIL",
-        "reviewer": "Codex fix62-a",
+        "reviewer": "Codex fix64-a",
         "date": "2026-11-05",
-        "commit": "ba261cb1a0076bb617f99ea85488ff713b79635a",
+        "commit": "7babe37b5565d42416e684e7afd2bc6c13541a6c",
         "clauses": [
           {
             "clause": "**Marker:** ring stays at `l3-zone` (army checkpoint), no corridor steer; HUD distance is the real ~360 m distance. Route to the checkpoint readable without steering (Q-270).",
             "verdict": "FAIL",
-            "note": "Fixed painted crosslinks are visible in all8controlled low/high actualzoom0.5/1.5 frames; fixed army marker remains unchanged in native proof. In fresh low screenshot-only route, tester overshoots first turn, meets bus/shop wall, backtracks, finds crosslink and reaches residential avenue, then misreads turn and stalls near sidewalk/lamppost at311m. Continuous onward path not discerned; qualitative FAIL remains. All14routeframes reviewed; no time threshold or impossible-route claim. High full route not qualified."
+            "note": "Fresh named Luna screenshot-only low route starts at actual fallback after ordinary native InputFrames, with no relocation or onward route hints.35 accepted actions,53.633s active, all70 input/action images personally inspected (36 unique). The player circles the crowded generator/gate plaza, then repeatedly approaches the truck/crate/fence dead end, ending351m from the unchanged army checkpoint after starting360m. The onward route is not discovered. This establishes a qualitative route-readability FAIL; no time threshold or physically impossible route is claimed. Crosslinks themselves are not reached, so their paint is not separately qualified. High full screenshot route remains unqualified."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/fix62-a/L3-12-screen.json.gz",
-            "sha256": "64d1bbf381f6e6c86b4e5ed8d3d0b8da867de232453d09d6dccb7be848ee1c91",
-            "what": "Fixed painted crosslinks are visible in all8controlled low/high actualzoom0.5/1.5 frames; fixed army marker remains unchanged in native proof. In fresh low screenshot-only route, tester overshoots first turn, meets bus/shop wall, backtracks, finds crosslink and reaches residential avenue, then misreads turn and stalls near sidewalk/lamppost at311m. Continuous onward path not discerned; qualitative FAIL remains. All14routeframes reviewed; no time threshold or impossible-route claim. High full route not qualified."
+            "file": "docs/reports/fix64-a/screen-L3-low-route-observed-images.json",
+            "sha256": "4389b571fa77c69fa883ae5fc972438f365e062b6e6f03ceeacf7d5a58a9dc1c",
+            "what": "Exact70 image hashes, duplicate references and concrete personal observations; current source and isolated screenshot protocol."
           },
           {
-            "file": "docs/reports/fix62-a/L3-12-image-review.json",
-            "sha256": "ccd5a89a23f7c41dd7b5b2d814c22646c449d84acdee4ac89adebe0f6a1fcc14",
-            "what": "Fixed painted crosslinks are visible in all8controlled low/high actualzoom0.5/1.5 frames; fixed army marker remains unchanged in native proof. In fresh low screenshot-only route, tester overshoots first turn, meets bus/shop wall, backtracks, finds crosslink and reaches residential avenue, then misreads turn and stalls near sidewalk/lamppost at311m. Continuous onward path not discerned; qualitative FAIL remains. All14routeframes reviewed; no time threshold or impossible-route claim. High full route not qualified."
-          },
-          {
-            "file": "docs/reports/fix62-a/L3-12-marker-proof.json",
-            "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
-            "what": "Fixed painted crosslinks are visible in all8controlled low/high actualzoom0.5/1.5 frames; fixed army marker remains unchanged in native proof. In fresh low screenshot-only route, tester overshoots first turn, meets bus/shop wall, backtracks, finds crosslink and reaches residential avenue, then misreads turn and stalls near sidewalk/lamppost at311m. Continuous onward path not discerned; qualitative FAIL remains. All14routeframes reviewed; no time threshold or impossible-route claim. High full route not qualified."
-          },
-          {
-            "file": "docs/reports/fix62-a/L3-12-cue-browser.json.gz",
-            "sha256": "e98c5b439810df7a071733eef3e63bcfe744f50cdd4acb9d73cd08e1a3ba5f12",
-            "what": "Fixed painted crosslinks are visible in all8controlled low/high actualzoom0.5/1.5 frames; fixed army marker remains unchanged in native proof. In fresh low screenshot-only route, tester overshoots first turn, meets bus/shop wall, backtracks, finds crosslink and reaches residential avenue, then misreads turn and stalls near sidewalk/lamppost at311m. Continuous onward path not discerned; qualitative FAIL remains. All14routeframes reviewed; no time threshold or impossible-route claim. High full route not qualified."
-          },
-          {
-            "file": "docs/reports/fix62-a/L3-12-cue-image-review.json",
-            "sha256": "5bd675d3dd7df9a7f600225b757a3cc0318702c37966afbe4ee8a50b862cfc30",
-            "what": "Fixed painted crosslinks are visible in all8controlled low/high actualzoom0.5/1.5 frames; fixed army marker remains unchanged in native proof. In fresh low screenshot-only route, tester overshoots first turn, meets bus/shop wall, backtracks, finds crosslink and reaches residential avenue, then misreads turn and stalls near sidewalk/lamppost at311m. Continuous onward path not discerned; qualitative FAIL remains. All14routeframes reviewed; no time threshold or impossible-route claim. High full route not qualified."
-          },
-          {
-            "file": "docs/reports/fix62-a/reviewed/L3-route-0.jpg",
-            "sha256": "8cda33dc42bda7c74c4c25581ad654719a789b4afb929f2ea0c31881e7d74e1a",
-            "what": "Fixed painted crosslinks are visible in all8controlled low/high actualzoom0.5/1.5 frames; fixed army marker remains unchanged in native proof. In fresh low screenshot-only route, tester overshoots first turn, meets bus/shop wall, backtracks, finds crosslink and reaches residential avenue, then misreads turn and stalls near sidewalk/lamppost at311m. Continuous onward path not discerned; qualitative FAIL remains. All14routeframes reviewed; no time threshold or impossible-route claim. High full route not qualified."
-          },
-          {
-            "file": "docs/reports/fix62-a/reviewed/L3-route-1.jpg",
-            "sha256": "e44751e35632459b973f8394213acdac6df960be96466f14055639f6ebbc492a",
-            "what": "Fixed painted crosslinks are visible in all8controlled low/high actualzoom0.5/1.5 frames; fixed army marker remains unchanged in native proof. In fresh low screenshot-only route, tester overshoots first turn, meets bus/shop wall, backtracks, finds crosslink and reaches residential avenue, then misreads turn and stalls near sidewalk/lamppost at311m. Continuous onward path not discerned; qualitative FAIL remains. All14routeframes reviewed; no time threshold or impossible-route claim. High full route not qualified."
-          },
-          {
-            "file": "docs/reports/fix62-a/reviewed/cue-L3-0.jpg",
-            "sha256": "4e3ecae1312ac55a30b1b87d8cd6343f4e81caeda38b2d9d23b70ba1c06cee4c",
-            "what": "Fixed painted crosslinks are visible in all8controlled low/high actualzoom0.5/1.5 frames; fixed army marker remains unchanged in native proof. In fresh low screenshot-only route, tester overshoots first turn, meets bus/shop wall, backtracks, finds crosslink and reaches residential avenue, then misreads turn and stalls near sidewalk/lamppost at311m. Continuous onward path not discerned; qualitative FAIL remains. All14routeframes reviewed; no time threshold or impossible-route claim. High full route not qualified."
-          },
-          {
-            "file": "docs/reports/fix62-a/reviewed/cue-L3-1.jpg",
-            "sha256": "0f52007e68b5ceb37ff1483ee4dfb30fb60c992d2126db477c86c2d8f1b3b760",
-            "what": "Fixed painted crosslinks are visible in all8controlled low/high actualzoom0.5/1.5 frames; fixed army marker remains unchanged in native proof. In fresh low screenshot-only route, tester overshoots first turn, meets bus/shop wall, backtracks, finds crosslink and reaches residential avenue, then misreads turn and stalls near sidewalk/lamppost at311m. Continuous onward path not discerned; qualitative FAIL remains. All14routeframes reviewed; no time threshold or impossible-route claim. High full route not qualified."
+            "file": "docs/reports/fix64-a/screen-L3-low-route-observed-ledger.json.gz",
+            "sha256": "b3fa1f597254f6c3c6edf555b825cf81f03392b8aa01a0c1cfd4dd42a82e583b",
+            "what": "Exact physical actions, private tick intervals, visible HUD, player-only observations, native fallback setup and complete model-command audit.595s bounded attempt, not a whole-route PASS."
           }
         ],
-        "notes": "Damage protection after ordinary mortal yard prefix; static matrix uses disclosed teleports and cannot qualify route discovery. No nav/actor coordinates during screen decisions. Ended when browser connection closed. Input notes preserve mistakes; image-review file corrects them.",
-        "freshness": "STALE",
+        "notes": "Fixed l3-zone destination and no corridor steering preserved. Movement works during the early plaza circle; the later truck/fence repeats remain an unresolved combination of navigation confusion and crowd/obstacle pressure. No speculative game change. Images deleted after SHA/observation recording.",
+        "freshness": "FRESH",
         "latestRelevantCommit": "5fcfe692e8d8b9386e8cce10834e87011c736b94"
       }
     },
     {
       "id": "L3-13",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "Manual review FAIL (STALE, Codex fix64-a): Fresh full physical traversal from x135 to216 at both tiers, followed by10s settling. All72 frames inspected. The entry S-bends still show interrupted deck/rail surfaces and living infected appearing suspended beyond the visible inner edge, notably high/x150 close view. The trajectory/foot ledger and support audit do not prove actor roots outside the nominal deck width; rendering/occlusion versus physical support remains unresolved. Keep FAIL; no small causal game fix established. Final rescue camera locks the requested zoom pair, so no independent late-route zoom qualification is claimed. Reviewed raised-corridor/army-approach poses show continuous deck and no obvious hanging body. Full ramp-seam and stuck-clump trajectories across both tiers remain unqualified.",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "Manual review FAIL (FRESH, Codex fix64-a): Fresh full physical traversal from x135 to216 at both tiers, followed by10s settling. All72 frames inspected. The entry S-bends still show interrupted deck/rail surfaces and living infected appearing suspended beyond the visible inner edge, notably high/x150 close view. The trajectory/foot ledger and support audit do not prove actor roots outside the nominal deck width; rendering/occlusion versus physical support remains unresolved. Keep FAIL; no small causal game fix established. Final rescue camera locks the requested zoom pair, so no independent late-route zoom qualification is claimed. Final-source refresh after the unrelated L1 cue change: all16 high entry images inspected at recorded actualzoom0.5/1.5; the same living body appears past the broken inner edge atx150 and remains visible after10s atx157. This fresh counterexample retains FAIL. Reviewed raised-corridor/army-approach poses show continuous deck and no obvious hanging body. Full ramp-seam and stuck-clump trajectories across both tiers remain unqualified.",
       "automatedComplete": false,
       "receipt": [
+        "docs/reports/fix64-a/L3-13-entry-high.json.gz",
+        "docs/reports/fix64-a/L3-13-entry-high-images.json",
         "docs/reports/fix64-a/L3-13-image-review.json",
         "docs/reports/fix64-a/L3-13-frames.json.gz",
         "docs/reports/fix64-a/L3-13-support-audit.json"
@@ -7436,15 +7402,25 @@
         "status": "FAIL",
         "reviewer": "Codex fix64-a",
         "date": "2026-11-05",
-        "commit": "1623f1d509a3ccaf1d7fc688e157544a93620ba4",
+        "commit": "f8d88ddc14f6c9608e9004f80aa757788d795b8a",
         "clauses": [
           {
             "clause": "Raised corridor: no deck gaps or dark seams at the ramps; no infected clumps stuck between barrier rows; no body hanging on walls.",
             "verdict": "FAIL",
-            "note": "Fresh full physical traversal from x135 to216 at both tiers, followed by10s settling. All72 frames inspected. The entry S-bends still show interrupted deck/rail surfaces and living infected appearing suspended beyond the visible inner edge, notably high/x150 close view. The trajectory/foot ledger and support audit do not prove actor roots outside the nominal deck width; rendering/occlusion versus physical support remains unresolved. Keep FAIL; no small causal game fix established. Final rescue camera locks the requested zoom pair, so no independent late-route zoom qualification is claimed."
+            "note": "Fresh full physical traversal from x135 to216 at both tiers, followed by10s settling. All72 frames inspected. The entry S-bends still show interrupted deck/rail surfaces and living infected appearing suspended beyond the visible inner edge, notably high/x150 close view. The trajectory/foot ledger and support audit do not prove actor roots outside the nominal deck width; rendering/occlusion versus physical support remains unresolved. Keep FAIL; no small causal game fix established. Final rescue camera locks the requested zoom pair, so no independent late-route zoom qualification is claimed. Final-source refresh after the unrelated L1 cue change: all16 high entry images inspected at recorded actualzoom0.5/1.5; the same living body appears past the broken inner edge atx150 and remains visible after10s atx157. This fresh counterexample retains FAIL."
           }
         ],
         "evidence": [
+          {
+            "file": "docs/reports/fix64-a/L3-13-entry-high.json.gz",
+            "sha256": "67d417100fb2494f7cd23ff9df5509236baa052cda10456d049ed305ded35caf",
+            "what": "Current-source actual camera, actor health, transform and rendered-foot states; native physical entry traversal and10s settling. Raw53MB command duplication omitted; full receipt hash retained."
+          },
+          {
+            "file": "docs/reports/fix64-a/L3-13-entry-high-images.json",
+            "sha256": "ada5e8da2b461f8c3436316a37522d6effd8f2bc8243ccdabe2ee969ddc7bc2b",
+            "what": "Personally inspected all16 current-source high entry images, actual zoom0.5/1.5; ten-second settling atx157. Living wall-body appearance persists. Collision root penetration is not established."
+          },
           {
             "file": "docs/reports/fix64-a/L3-13-image-review.json",
             "sha256": "c0921ce211634204f4aa9e4b99b57471260308a286f99c5519468eba276afbf8",
@@ -7462,7 +7438,7 @@
           }
         ],
         "notes": "All captures are under test-results and will be deleted after recording their SHA-256 and observations. No targets, counts, timers or collision geometry were changed.",
-        "freshness": "STALE",
+        "freshness": "FRESH",
         "latestRelevantCommit": "5fcfe692e8d8b9386e8cce10834e87011c736b94"
       }
     },
@@ -7798,7 +7774,7 @@
             "what": "Rejected stable framing plus smaller puff-size trial; original smoke source restored byte-for-byte."
           }
         ],
-        "notes": "P: inspect final low/high Oak, Commerce and Boulevard at both zoom limits: does the amber light read late afternoon, and are residential wrecked gardens, looted shop fronts and the boulevard jam sufficiently distinct? Smoke count remains an objective FAIL.",
+        "notes": "P: inspect final low/high Oak, Commerce and Boulevard at both zoom limits: does the amber light read late afternoon, and are residential wrecked gardens, looted shop fronts and the boulevard jam sufficiently distinct? Smoke count remains an objective FAIL. Coverage clarification: per tier,6 static images cover all3 streets at0.5/1.5;6 moving images cover x-80/x-40 at0.5/1/1.5. No default-zoom moving Boulevard qualification is claimed.",
         "freshness": "FRESH",
         "latestRelevantCommit": "5fcfe692e8d8b9386e8cce10834e87011c736b94"
       }

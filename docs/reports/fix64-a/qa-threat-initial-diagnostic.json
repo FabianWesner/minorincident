@@ -1,0 +1,85 @@
+{
+  "gatePassed": false,
+  "execution": "Historical diagnostic assembled from sequential non-overlapping level batches after the600s zero-flag wrapper timeout. NOT a passing one-shot gate. Before the L1 render cue change; game source based on2cc5adb25.",
+  "revision": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7",
+  "seconds": 827.2888588320001,
+  "flags": [],
+  "archive": "docs/reports/fix64-a/qa-threat-initial-diagnostic.json.gz",
+  "archiveSha256": "b51ae916579b1e9b70289d80769a78b21791ee8c5d64ed4d5c1d31e01d307883",
+  "originalJsonSha256": "d2b867c9297af7107da15c43dfabdfa290a638f07662827384fe2abe63278712",
+  "levels": [
+    {
+      "level": "L1",
+      "skilledOutcome": "complete",
+      "passiveOutcome": "complete",
+      "flags": [],
+      "passiveFlags": []
+    },
+    {
+      "level": "L2",
+      "skilledOutcome": "complete",
+      "passiveOutcome": "complete",
+      "flags": [],
+      "passiveFlags": []
+    },
+    {
+      "level": "L3",
+      "skilledOutcome": "complete",
+      "passiveOutcome": "tick-budget",
+      "flags": [
+        "wave/station-0:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+        "wave/station-2:WAVE_NO_ATTACK_WITHIN_20_SECONDS"
+      ],
+      "passiveFlags": []
+    },
+    {
+      "level": "L4",
+      "skilledOutcome": "complete",
+      "passiveOutcome": "tick-budget",
+      "flags": [],
+      "passiveFlags": []
+    },
+    {
+      "level": "L5",
+      "skilledOutcome": "complete",
+      "passiveOutcome": "tick-budget",
+      "flags": [],
+      "passiveFlags": []
+    },
+    {
+      "level": "L6",
+      "skilledOutcome": "complete",
+      "passiveOutcome": "tick-budget",
+      "flags": [],
+      "passiveFlags": []
+    },
+    {
+      "level": "L7",
+      "skilledOutcome": "complete",
+      "passiveOutcome": "complete",
+      "flags": [],
+      "passiveFlags": []
+    },
+    {
+      "level": "L8",
+      "skilledOutcome": "complete",
+      "passiveOutcome": "tick-budget",
+      "flags": [],
+      "passiveFlags": []
+    },
+    {
+      "level": "L9",
+      "skilledOutcome": "complete",
+      "passiveOutcome": "complete",
+      "flags": [],
+      "passiveFlags": []
+    },
+    {
+      "level": "L10",
+      "skilledOutcome": "complete",
+      "passiveOutcome": "tick-budget",
+      "flags": [],
+      "passiveFlags": []
+    }
+  ]
+}
