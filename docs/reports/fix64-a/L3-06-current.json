@@ -1,0 +1,297 @@
+{
+  "sourceHash": "27857aeadd4b7c6c6837371520e80fa22a6417ceeef45e5aa1ac9c303c8c2d3f",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "fixtureHash": "ddf4ffe827cdb6519b9236bf294cb3aa5d95d548536fee4b39f34806eaf1b132",
+  "generatedAt": "2026-11-05T22:15:14.163Z",
+  "checks": [
+    {
+      "id": "L3-06",
+      "clause": "initial squad count",
+      "level": "L3",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 4,
+      "target": "3 \u2264 value \u2264 4",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+    },
+    {
+      "id": "L3-06",
+      "clause": "squad remaining at army arrival",
+      "level": "L3",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 1,
+      "target": "0 \u2264 value \u2264 2",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+    },
+    {
+      "id": "L3-06",
+      "clause": "logged squad-loss causes",
+      "level": "L3",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        {
+          "id": 33,
+          "cause": "bite",
+          "tick": 7611
+        },
+        {
+          "id": 32,
+          "cause": "bite",
+          "tick": 12501
+        },
+        {
+          "id": 30,
+          "cause": "bite",
+          "tick": 12869
+        }
+      ],
+      "target": "each loss bite, kill, or separation",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+    },
+    {
+      "id": "L3-06",
+      "clause": "initial squad count",
+      "level": "L3",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 4,
+      "target": "3 \u2264 value \u2264 4",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+    },
+    {
+      "id": "L3-06",
+      "clause": "squad remaining at army arrival",
+      "level": "L3",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 0,
+      "target": "0 \u2264 value \u2264 2",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+    },
+    {
+      "id": "L3-06",
+      "clause": "logged squad-loss causes",
+      "level": "L3",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        {
+          "id": 30,
+          "cause": "bite",
+          "tick": 2365
+        },
+        {
+          "id": 31,
+          "cause": "bite",
+          "tick": 2365
+        },
+        {
+          "id": 32,
+          "cause": "bite",
+          "tick": 2430
+        },
+        {
+          "id": 33,
+          "cause": "bite",
+          "tick": 2446
+        }
+      ],
+      "target": "each loss bite, kill, or separation",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+    },
+    {
+      "id": "L3-06",
+      "clause": "native squad cardinality and loss causes (formation/teleport review open)",
+      "value": {
+        "atFallback": 4,
+        "segmentEnds": [
+          4,
+          1,
+          1
+        ],
+        "atCheckpoint": 1,
+        "losses": [
+          {
+            "cause": "bite",
+            "t": 126.85
+          },
+          {
+            "cause": "bite",
+            "t": 208.35
+          },
+          {
+            "cause": "bite",
+            "t": 214.48333333333332
+          }
+        ],
+        "turnedInCorridor": 0,
+        "protected": 0,
+        "maxJumpM": 0.13136264052676874,
+        "near8Share": 1,
+        "followRange": [
+          {
+            "id": 30,
+            "samples": 55,
+            "within3to6": 52,
+            "minM": 4.739992556384009,
+            "medianM": 5.754150922803517,
+            "maxM": 7.4635789679913
+          },
+          {
+            "id": 31,
+            "samples": 55,
+            "within3to6": 52,
+            "minM": 4.322399762479623,
+            "medianM": 5.619907839891667,
+            "maxM": 6.671842107884287
+          },
+          {
+            "id": 32,
+            "samples": 55,
+            "within3to6": 7,
+            "minM": 5.393776776224756,
+            "medianM": 6.475450421449417,
+            "maxM": 7.8137652095043215
+          },
+          {
+            "id": 33,
+            "samples": 55,
+            "within3to6": 11,
+            "minM": 4.872193837961474,
+            "medianM": 6.363784446482939,
+            "maxM": 7.39683146497342
+          }
+        ]
+      },
+      "target": "forms3\u20134;nonincreasing;\u22642 atcheckpoint;loss causes bite/kill/separation",
+      "status": "NOT CHECKED",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+      "level": "L3"
+    },
+    {
+      "id": "L3-06",
+      "clause": "calm squad following distance by member",
+      "value": [
+        {
+          "id": 30,
+          "samples": 55,
+          "within3to6": 52,
+          "minM": 4.739992556384009,
+          "medianM": 5.754150922803517,
+          "maxM": 7.4635789679913
+        },
+        {
+          "id": 31,
+          "samples": 55,
+          "within3to6": 52,
+          "minM": 4.322399762479623,
+          "medianM": 5.619907839891667,
+          "maxM": 6.671842107884287
+        },
+        {
+          "id": 32,
+          "samples": 55,
+          "within3to6": 7,
+          "minM": 5.393776776224756,
+          "medianM": 6.475450421449417,
+          "maxM": 7.8137652095043215
+        },
+        {
+          "id": 33,
+          "samples": 55,
+          "within3to6": 11,
+          "minM": 4.872193837961474,
+          "medianM": 6.363784446482939,
+          "maxM": 7.39683146497342
+        }
+      ],
+      "target": "every sampled living officer follows 3\u20136 m from the courier outside combat",
+      "status": "FAIL",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+      "level": "L3"
+    },
+    {
+      "id": "L3-06",
+      "clause": "native squad cardinality and loss causes (formation/teleport review open)",
+      "value": {
+        "atFallback": 4,
+        "segmentEnds": [
+          0,
+          0,
+          0
+        ],
+        "atCheckpoint": 0,
+        "losses": [
+          {
+            "cause": "bite",
+            "t": 39.416666666666664
+          },
+          {
+            "cause": "bite",
+            "t": 39.416666666666664
+          },
+          {
+            "cause": "bite",
+            "t": 40.5
+          },
+          {
+            "cause": "bite",
+            "t": 40.766666666666666
+          }
+        ],
+        "turnedInCorridor": 4,
+        "protected": 0,
+        "maxJumpM": 0.10242475825920586,
+        "near8Share": 1,
+        "followRange": []
+      },
+      "target": "forms3\u20134;nonincreasing;\u22642 atcheckpoint;loss causes bite/kill/separation",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+      "level": "L3"
+    },
+    {
+      "id": "L3-06",
+      "clause": "calm squad following distance by member",
+      "value": [],
+      "target": "every sampled living officer follows 3\u20136 m from the courier outside combat",
+      "status": "NOT CHECKED",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+      "level": "L3"
+    }
+  ],
+  "receipts": [
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
+      "sha256": "ef890ec77dee759b3f5e84abc9d91bff3a5180923bae55657c1b5f957394d0d5"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-complete.json",
+      "sha256": "51499d801a252c279d9a852efb130d16081234c2bbdc1d5b5774502195ed2455"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+      "sha256": "d535034d1da79ab27e04f871f33400299246bd4ec210c07ff20cd9f3db1a6a2f"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+      "sha256": "a39229e3d120b8926cf9752b8528596effa9c20250d942075f79a7cf07ad3aab"
+    }
+  ]
+}

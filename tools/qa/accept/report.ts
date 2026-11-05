@@ -82,7 +82,7 @@ const remainingChecks: Record<string, string> = {
   'L3-02': 'Make tagged yard-cover arrivals visibly clear the truck within2s; qualify actual rendered bodies, not frustum membership. Preserve five directions, wave totals and20% station-door police census. See fix63-a cover sheet.',
   'L3-04': 'Retain the exact first-of threshold ledger; qualify a natural same-ID uniformed officer conversion before fallback at both qualities.',
   'L3-06': 'Moving fire is implemented and reviewed at zoom1.5 low/high. Fix low3–6m follow failures and obtain high calm survivors while retaining at most2 at army; two tighter-controller trials regressed attrition and were reverted. See fix63-a.',
-  'L3-07': 'Positive officer-kill checker replaces60% share. High still records0 S1 officer kills; low S1 succeeds but later death leaves uninterrupted-route guard unqualified. Diagnose combat without suppressing yard overwhelm. See fix63-a.',
+  'L3-07': 'Measure squad gun hits from formation through segment1, including the yard retreat; kills are not required. Retain player damage for the entire same window and review visible firing. See fix64-a.',
   'L3-08': 'Fix segment population/density failures; retain distinction between authored pending slots and actual live concurrent entities.',
   'L3-11': 'Fix cited competent attack-rate failure; native medkit census and mortal newbie low-health share are now measured.',
   'L3-12': 'Inspect HUD real-destination distance and route readability; native l3-zone marker coordinates are fixed.',

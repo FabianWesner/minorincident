@@ -1,0 +1,26 @@
+diff --git a/src/sim/outbreak/Allies.ts b/src/sim/outbreak/Allies.ts
+index 9396396b4..5833e7fa3 100644
+--- a/src/sim/outbreak/Allies.ts
++++ b/src/sim/outbreak/Allies.ts
+@@ -346,6 +346,21 @@ function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point): bo
+     // Settle into individual spots even after the courier stops. Sending every
+     // blocked slot to her feet left the pull-back squad packed over the van.
+     let goal: Point = d <= 10 && nav.clear(slot.x, slot.z, .4) && nav.visible(e.transform, slot, .4) && nav.visible(slot, p, .4) ? slot : p;
++    if (world.scenario === 'L3' && moving && !a.targetId && goal === slot && velocity
++      && !world.infected!.active.some(o => o.health.current > 0 && dist(o.transform, p) < 20)) {
++      // Track a moving calm slot with the leader's velocity. Braking toward
++      // its current position left the rear row a full stopping distance back;
++      // the nearby speed match then prevented it from closing that gap.
++      let vx = velocity.x + (slot.x - e.transform.x) * 2, vz = velocity.z + (slot.z - e.transform.z) * 2;
++      const speed = Math.hypot(vx, vz), scale = Math.min(1, f.moveMs / Math.max(speed, 1e-9));
++      vx *= scale; vz *= scale;
++      const ahead = { x: e.transform.x + vx * .25, z: e.transform.z + vz * .25 };
++      if (nav.visible(e.transform, ahead, .4) && nav.clear(ahead.x, ahead.z, .4)) {
++        world.npcs!.moveStep(e, vx / 60, vz / 60);
++        world.spatial.set(e.id, e.transform.x, e.transform.z);
++        return true;
++      }
++    }
+     if (spread) {
+       // The van divides the deck: a clear resting spot need not have a
+       // straight sight line to the courier. Shared navigation routes around it;

@@ -1,0 +1,39 @@
+diff --git a/src/render/vfx/Blasts.ts b/src/render/vfx/Blasts.ts
+index 50a8ef482..e822de5cf 100644
+--- a/src/render/vfx/Blasts.ts
++++ b/src/render/vfx/Blasts.ts
+@@ -551,7 +551,9 @@ export class Blasts extends Group {
+           const ground = this.world.districts?.groundHeight(plume.x, plume.z) ?? 0;
+           this.sourcePoint.set(plume.x, ground + plume.baseY + 1, plume.z).project(camera);
+           const right = this.sourcePoint.x * side;
+-          if (right < .18 || right > .7 || this.sourcePoint.y < -.25 || this.sourcePoint.y > .98 || Math.abs(this.sourcePoint.z) > 1) continue;
++          if (right < .18 || right > .7 || this.sourcePoint.y < -.7 || this.sourcePoint.y > .3 || Math.abs(this.sourcePoint.z) > 1) continue;
++          this.sourcePoint.set(plume.x, ground + plume.baseY + 4, plume.z).project(camera);
++          if (this.sourcePoint.y > .98) continue;
+           this.sourcePoint.set(plume.x, ground + plume.baseY + 1.5, plume.z);
+           if (this.world.combat && !this.world.combat.query.visible(camera.position, this.sourcePoint)) continue;
+           retained = i; break;
+@@ -570,14 +572,21 @@ export class Blasts extends Group {
+             // the viewport can still provide a complete readable smoke column.
+             this.sourcePoint.set(plume.x, (this.world.districts?.groundHeight(plume.x, plume.z) ?? 0) + plume.baseY + 1, plume.z).project(camera);
+             right = this.sourcePoint.x * side; vertical = this.sourcePoint.y;
+-            if (right < .2 || right > .65 || vertical < -.2 || vertical > .9 || Math.abs(this.sourcePoint.z) > 1) continue;
++            if (right < .2 || right > .65 || vertical < -.7 || vertical > .5 || Math.abs(this.sourcePoint.z) > 1) continue;
+           } else if (right < 1.2 || right > 2.4) continue;
+           // A projected base can sit behind a parked car or frontage. Prefer
+           // an unobstructed lower stem, where the rising shape is readable;
+           // retain the projected fallback when the camera itself is enclosed.
+           this.sourcePoint.set(plume.x, (this.world.districts?.groundHeight(plume.x, plume.z) ?? 0) + plume.baseY + 1.5, plume.z);
+           const obscured = camera && this.world.combat && !this.world.combat.query.visible(camera.position, this.sourcePoint);
+-          const distance = (right - (camera ? .4 : 1.8)) ** 2 + (vertical - (camera ? .55 : 0)) ** 2 + (obscured ? 10 : 0) + (foreground ? 2 : 0);
++          // Leave room above the lower stem for the rising shape. A base
++          // selected near the top of a close frame showed only cropped haze.
++          let cropped = 0;
++          if (camera) {
++            this.sourcePoint.set(plume.x, (this.world.districts?.groundHeight(plume.x, plume.z) ?? 0) + plume.baseY + 4, plume.z).project(camera);
++            cropped = Math.max(0, this.sourcePoint.y - .9) * 20;
++          }
++          const distance = (right - (camera ? .4 : 1.8)) ** 2 + (vertical - (camera ? -.2 : 0)) ** 2 + cropped + (obscured ? 10 : 0) + (foreground ? 2 : 0);
+           if (distance < score) { score = distance; nearest = i; }
+         }
+         if (nearest >= 0) nearby.push({ i: nearest, plume: l3SmokePlumes[nearest] });

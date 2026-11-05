@@ -19,8 +19,8 @@ export interface L3Report {
   attack: { officers: number; directions: string[]; turnedDuring: number; sameLook: boolean; fallbackCause: string; fallbackAfterS: number } | null;
   /** Section 5.4: squad at the fallback, per-segment-end sizes, losses with causes, officers turned in the corridor. */
   squad: { atFallback: number; segmentEnds: number[]; atCheckpoint: number; losses: { cause: string; t: number }[]; turnedInCorridor: number; protected: number; maxJumpM: number; near8Share: number; followRange: { id: number; samples: number; within3to6: number; minM: number; medianM: number; maxM: number }[] } | null;
-  /** Section 5.4 AC09: segment 1 knockdowns by officers vs the player, player damage in segment 1. */
-  s1: { officerKills: number; playerKills: number; damage: number } | null;
+  /** Section 5.4 AC09: segment 1 officer hits/kills, player kills and player damage. */
+  s1: { completed: boolean; officerHits: number; officerKills: number; playerKills: number; damage: number } | null;
   /** AC05: distances of the player's handgun and melee knockdowns. */
   killDistances: { gun: number[]; melee: number[] };
   /** AC11: largest regression of the progress coordinate after the fallback; streets used. */
@@ -76,7 +76,7 @@ export function runL3(world: SimWorld, mission: Mission, profile: L3Profile, opt
   const timeline: L3Report['timeline'] = [], deathsAt: string[] = [];
   const gun: number[] = [], melee: number[] = [];
   let firstGun = -1, squadAtFallback = 0, handgunShots = 0, turnedDuring = 0, turnedInCorridor = 0, sameLook = true;
-  const s1 = { officerKills: 0, playerKills: 0, damage: 0 };
+  const s1 = { completed: false, officerHits: 0, officerKills: 0, playerKills: 0, damage: 0 };
   const audit = { sightViolations: 0, nonSightAlerts: 0, emerged: 0, emergeSeen: 0 };
   const streets = new Set<string>();
   const near30: number[][] = [[], [], []];
@@ -99,13 +99,18 @@ export function runL3(world: SimWorld, mission: Mission, profile: L3Profile, opt
       if (s.phase === 'attack') turnedDuring++; else if (s.fallbackAt && squadIds.has(e.entityId)) turnedInCorridor++;
       sameLook &&= world.entities.get(e.entityId)?.appearance?.asset === 'npc.police-officer';
     }),
-    world.events.on('player.damaged', e => { if (e.type === 'player.damaged' && mission.state.l3!.fallbackAt && l3Segment(world.entities.get(1)!.transform.x) === 0) s1.damage += e.amount; }),
+    world.events.on('player.damaged', e => { if (e.type === 'player.damaged' && mission.state.l3!.fallbackAt && mission.state.l3!.segment < 1) s1.damage += e.amount; }),
     world.events.on('player.died', e => { const p = world.entities.get(1)!.transform; deathsAt.push(`${((e.tick - start) / 60).toFixed(0)}s@${p.x.toFixed(0)},${p.z.toFixed(0)}/${mission.state.l3!.phase}`); }),
     world.events.on('combat.kill', e => {
       if (e.type !== 'combat.kill' || world.entities.get(e.targetId)?.faction !== 'infected') return;
       const s = mission.state.l3!, src = world.entities.get(e.sourceId);
-      if (s.fallbackAt && l3Segment(e.position.x) === 0) { if (e.sourceId === 1) s1.playerKills++; else if (officers.has(e.sourceId)) s1.officerKills++; }
+      if (s.fallbackAt && s.segment < 1) { if (e.sourceId === 1) s1.playerKills++; else if (officers.has(e.sourceId)) s1.officerKills++; }
       if (e.sourceId === 1 && src) (e.actionId === 'weapon.handgun' ? gun : melee).push(dist(src.transform, e.position));
+    }),
+    world.events.on('combat.hit', e => {
+      if (e.type !== 'combat.hit' || e.amount <= 0 || e.damageType !== 'bullet' || world.entities.get(e.targetId)?.faction !== 'infected') return;
+      const s = mission.state.l3!;
+      if (s.fallbackAt && s.segment < 1 && s.squad.some(q => q.id === e.sourceId)) s1.officerHits++;
     }),
     world.events.on('ai.alerted', e => {
       if (e.type !== 'ai.alerted' || e.sourceId !== 1) return;
@@ -118,6 +123,7 @@ export function runL3(world: SimWorld, mission: Mission, profile: L3Profile, opt
   for (let tick = 0; tick < maxTicks && !bot.finished; tick++) {
     if (opts.stopWhen?.(mission)) break;
     const s = mission.state.l3!, player = world.entities.get(1)!, p = player.transform;
+    if (s.fallbackAt && s.segment >= 1) s1.completed = true;
     // Count the authored population before death-loop relief removes waiting entries.
     for (let k = 0; k < 3; k++) if (!prepopulated[k] && s.populated[k]) prepopulated[k] = s.pending.filter(q => q.segment === k && !q.kind).length;
     maxConcurrent = Math.max(maxConcurrent, world.infected!.director.count);

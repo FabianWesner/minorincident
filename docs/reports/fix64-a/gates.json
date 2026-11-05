@@ -1,0 +1,97 @@
+{
+  "sourceHash": "27857aeadd4b7c6c6837371520e80fa22a6417ceeef45e5aa1ac9c303c8c2d3f",
+  "note": "Acceptance exit1 reflects fresh measured FAILs, not execution/fixture errors. Unit first run timed out at unchanged L4 limit; same zero-argument suite passed after owned browsers stopped. Final literal threat command passed alone with0 flags across all10 levels.",
+  "runs": [
+    {
+      "name": "typecheck",
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "logSha256": "768699d3cead53493237d3322201d28ee449107e90af9a5aa6f5dcab3f066b0c",
+      "log": "\n> typecheck\n> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json\n\n"
+    },
+    {
+      "name": "lint",
+      "command": "npm run lint",
+      "exitCode": 0,
+      "logSha256": "5f9aee6b798507e187dcd3d4fbd5bcf5fdc37488cb89c27a01d5667ca7bb9fa1",
+      "log": "\n> lint\n> eslint src tests tools functions *.config.ts eslint.config.js\n\n"
+    },
+    {
+      "name": "test-first",
+      "command": "npm test",
+      "exitCode": 1,
+      "logSha256": "c593314aab42241e861aa71981ef757fa74f3bcae43c190fdcfaf5ab07151496",
+      "log": "\n> test\n> node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner\n\n[test-budget] 150/150 test cases ({\"vitest\":129,\"e2e\":9,\"invariantsBrowser\":12}), 43/45 files\n\n RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/fix64-a\n\n \u276f |default| tests/engine/l4-contact.test.ts (1 test | 1 failed) 33848ms\n   \u00d7 L4: every contact archetype interrupts approach/lure and attacks within 3 s; soldiers remain biteable and corgi protected 33847ms\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af Failed Tests 1 \u23af\u23af\u23af\u23af\u23af\u23af\u23af\n\n FAIL  |default| tests/engine/l4-contact.test.ts > L4: every contact archetype interrupts approach/lure and attacks within 3 s; soldiers remain biteable and corgi protected\nError: Test timed out in 30000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\n \u276f tests/engine/l4-contact.test.ts:215:1\n    213| }\n    214|\n    215| test('L4: every contact archetype interrupts approach/lure and attacks\u2026\n       | ^\n    216|   expect(followerBarsAlwaysMax, 'five-person groups retain full bars')\u2026\n    217|   expect(followerPipSize, 'larger groups use thin, short pips').toEqua\u2026\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af[1/1]\u23af\n\n\n Test Files  1 failed | 26 passed (27)\n      Tests  1 failed | 106 passed (107)\n   Start at  23:21:01\n   Duration  76.95s (tests 85%, transform 10%, import 5%, setup 1%)\n\n[test-budget] test: 90.1 s (budget 240 s)\n[test-budget] FAIL: test failed (exit 1)\n[test-budget] See docs/qa/test-strategy.md: merge into an existing test or delete one before adding another.\n"
+    },
+    {
+      "name": "test-retry",
+      "command": "npm test",
+      "exitCode": 0,
+      "logSha256": "9ac96a39587d8cae16ddce6164f31b1243c9da8a8df029a663b8fd470ebade9f",
+      "log": "\n> test\n> node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner\n\n[test-budget] 150/150 test cases ({\"vitest\":129,\"e2e\":9,\"invariantsBrowser\":12}), 43/45 files\n\n RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/fix64-a\n\n\n Test Files  27 passed (27)\n      Tests  107 passed (107)\n   Start at  23:36:06\n   Duration  41.24s (tests 89%, transform 5%, import 5%, setup 1%)\n\n[test-budget] test: 45.0 s (budget 240 s)\n"
+    },
+    {
+      "name": "build",
+      "command": "npm run build:qa",
+      "exitCode": 0,
+      "logSha256": "07524841c3e8c0bbd2c976fd297e72bd22e0cde03db23debe2c600e3ea2b946f",
+      "log": "\n> build:qa\n> NODE_ENV=production VITE_QA_HOOKS=1 sh tools/build-cached.sh\n\nvite v6.4.3 building for production...\ntransforming...\n\u2713 649 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/preview/index.html                             1.81 kB \u2502 gzip:     0.75 kB\ndist/index.html                                     2.90 kB \u2502 gzip:     0.96 kB\ndist/build/civilianBakeData-uWj8tNGM.js             4.05 kB\ndist/build/BufferGeometryUtils-B9lQkqNz.js          6.88 kB\ndist/build/civilianBake.worker-4Zs1HaAU.js         28.80 kB\ndist/build/basis_transcoder-o4Hde_L7.js            57.53 kB\ndist/build/three.module-CwjGdtFU.js               206.12 kB\ndist/build/civilianSource-BtQC5jWP.js             410.02 kB\ndist/build/basis_transcoder-VXdx5NbI.wasm         527.33 kB \u2502 gzip:   244.57 kB\ndist/build/prefetch.worker-Cw2P4-P1.js          1,064.51 kB\ndist/build/prepareCivilianGeometry-1mQkWvTK.js  1,971.78 kB\ndist/build/rapier-C6GCbKVJ.wasm                 3,082.10 kB \u2502 gzip: 1,171.17 kB\ndist/build/index-ri5EUQ-C.css                      42.27 kB \u2502 gzip:     9.00 kB\ndist/build/lookViewpoints-BX-OEann.js               0.23 kB \u2502 gzip:     0.16 kB\ndist/build/modulepreload-polyfill-B5Qt9EMX.js       0.71 kB \u2502 gzip:     0.40 kB\ndist/build/three.module-DqN_ba9J.js                 1.10 kB \u2502 gzip:     0.64 kB\ndist/build/preload-helper-BlTxHScW.js               1.11 kB \u2502 gzip:     0.65 kB\ndist/build/controls-BD2KGrGS.js                     1.40 kB \u2502 gzip:     0.75 kB\ndist/build/crowdProbe-B1eWpDLc.js                   1.53 kB \u2502 gzip:     0.88 kB\ndist/build/worldLook-o3T_90Bf.js                    1.96 kB \u2502 gzip:     0.88 kB\ndist/build/DebugInfo-Dl3ARbq1.js                    2.71 kB \u2502 gzip:     1.20 kB\ndist/build/crowd-DVzSxqLP.js                        3.10 kB \u2502 gzip:     1.59 kB\ndist/build/lookPatch-BJ2Iw5hk.js                    5.68 kB \u2502 gzip:     2.83 kB\ndist/build/probe-DKgptAsS.js                        7.52 kB \u2502 gzip:     3.05 kB\ndist/build/footSoles-Df6SRi5O.js                   10.41 kB \u2502 gzip:     3.52 kB\ndist/build/index-BxHTVOHQ.js                       12.43 kB \u2502 gzip:     4.50 kB\ndist/build/Inspection-B6C24A2-.js                  12.86 kB \u2502 gzip:     4.41 kB\ndist/build/MotionLab-Bi7B_fkq.js                   18.38 kB \u2502 gzip:     7.94 kB\ndist/build/LevelFiveBot-mg5FHPDp.js                23.10 kB \u2502 gzip:     6.83 kB\ndist/build/survivor-BII3UeU9.js                    24.55 kB \u2502 gzip:    10.00 kB\ndist/build/index-DS88rKL4.js                       28.31 kB \u2502 gzip:     7.74 kB\ndist/build/LevelSixSubway-DBpmSGS3.js              28.62 kB \u2502 gzip:    10.84 kB\ndist/build/testApi-qFfZb9q2.js                     37.41 kB \u2502 gzip:    13.61 kB\ndist/build/Physics-DCoC7evO.js                     81.83 kB \u2502 gzip:    28.48 kB\ndist/build/Pickups-kC5b6HxW.js                     88.75 kB \u2502 gzip:    28.85 kB\ndist/build/light-anchors-DQGCSUUw.js               90.38 kB \u2502 gzip:     6.79 kB\ndist/build/SceneLab-ClAe92gM.js                   104.70 kB \u2502 gzip:    35.98 kB\ndist/build/PropSystem-D1JB158U.js                 138.16 kB \u2502 gzip:    46.78 kB\ndist/build/Debug-C5mqunPp.js                      155.77 kB \u2502 gzip:    33.00 kB\ndist/build/registry-BLKDX7nQ.js                   209.41 kB \u2502 gzip:    71.12 kB\ndist/build/rapier-ykuY6d4E.js                     212.13 kB \u2502 gzip:    36.15 kB\ndist/build/l6-B5X6T99E.js                         281.02 kB \u2502 gzip:    86.64 kB\ndist/build/three-core-BQst4nj_.js                 307.37 kB \u2502 gzip:    82.33 kB\ndist/build/WeatherView-BisLfS2V.js                364.36 kB \u2502 gzip:    42.28 kB\ndist/build/three-webgpu-CLMNXQt7.js               688.68 kB \u2502 gzip:   192.06 kB\ndist/build/wreck-roofs-GAckelu8.js                755.61 kB \u2502 gzip:   253.19 kB\ndist/build/install-D6sUZWih.js                  1,066.30 kB \u2502 gzip:   198.73 kB\ndist/build/index-DBZrAIfs.js                    1,357.07 kB \u2502 gzip:   424.32 kB\ndist/build/character-clips-CGKWtM3S.js          1,939.70 kB \u2502 gzip:   341.80 kB\n\u2713 built in 46.92s\n"
+    },
+    {
+      "name": "L1-native",
+      "command": "npm run qa:accept -- --level L1 --skip-browser --tier both",
+      "exitCode": 1,
+      "logSha256": "547897a023709679c1d46c41b273707cd3c15f370e820f17dae1de631a43f857",
+      "log": "\n> qa:accept\n> node --import tsx/esm tools/qa/accept.ts --level L1 --skip-browser --tier both\n\n[qa:accept] L1 low/complete: native global and level observation\n[qa:accept] L1 low/complete: complete\n[qa:accept] L1 low/stationary: native global and level observation\n[qa:accept] L1 low/stationary: tick-budget\n[qa:accept] L1 high/complete: native global and level observation\n[qa:accept] L1 high/complete: complete\n[qa:accept] L1 high/stationary: native global and level observation\n[qa:accept] L1 high/stationary: tick-budget\n[qa:accept] L1 low/fixtures: 16 clauses, 0 errors\n[qa:accept] L1 high/fixtures: 16 clauses, 0 errors\n[qa:accept:checkpoint] L1 low/accident: PASS\n[qa:accept:checkpoint] L1 low/bat: PASS\n[qa:accept] L1 low/checkpoints: 2 clauses; control identical; 0 errors\n[qa:accept:checkpoint] L1 high/accident: PASS\n[qa:accept:checkpoint] L1 high/bat: PASS\n[qa:accept] L1 high/checkpoints: 2 clauses; control identical; 0 errors\n[qa:accept] L1: 0 fresh failing rows; 12 incomplete rows; docs/reports/fix51-verify/L1.json\n"
+    },
+    {
+      "name": "L3-native",
+      "command": "npm run qa:accept -- --level L3 --skip-browser --tier both",
+      "exitCode": 1,
+      "logSha256": "a0044b4cda6230f458867dc254f5f974b44a75bdce8215b8c7785a08dc22a2c2",
+      "log": "\n> qa:accept\n> node --import tsx/esm tools/qa/accept.ts --level L3 --skip-browser --tier both\n\n[qa:accept] L3 low/complete: native global and level observation\n[qa:accept] L3 low/complete: complete\n[qa:accept] L3 low/stationary: native global and level observation\n[qa:accept] L3 low/stationary: tick-budget\n[qa:accept] L3 high/complete: native global and level observation\n[qa:accept] L3 high/complete: complete\n[qa:accept] L3 high/stationary: native global and level observation\n[qa:accept] L3 high/stationary: mission-failed\n[qa:accept] L3 low/fixtures: 21 clauses, 0 errors\n[qa:accept] L3 high/fixtures: 21 clauses, 0 errors\n[qa:accept:checkpoint] L3 low/armory: PASS\n[qa:accept:checkpoint] L3 low/fallback: PASS\n[qa:accept:checkpoint] L3 low/segment-2: PASS\n[qa:accept:checkpoint] L3 low/segment-2b: PASS\n[qa:accept:checkpoint] L3 low/segment-3: PASS\n[qa:accept:checkpoint] L3 low/segment-3b: PASS\n[qa:accept] L3 low/checkpoints: 6 clauses; control identical; 0 errors\n[qa:accept:checkpoint] L3 high/armory: PASS\n[qa:accept:checkpoint] L3 high/fallback: PASS\n[qa:accept:checkpoint] L3 high/segment-2: PASS\n[qa:accept:checkpoint] L3 high/segment-2b: PASS\n[qa:accept:checkpoint] L3 high/segment-3: PASS\n[qa:accept:checkpoint] L3 high/segment-3b: PASS\n[qa:accept] L3 high/checkpoints: 6 clauses; control identical; 0 errors\n[qa:accept] L3: 2 fresh failing rows; 8 incomplete rows; docs/reports/fix51-verify/L3.json\n"
+    },
+    {
+      "name": "L1-reuse",
+      "command": "npm run qa:accept -- --level L1 --reuse --skip-browser --tier both",
+      "exitCode": 1,
+      "logSha256": "923ce01ad9a3cf4e5d59ad5656280efa5bb08a6655e4c968c2565548b602f405",
+      "log": "\n> qa:accept\n> node --import tsx/esm tools/qa/accept.ts --level L1 --reuse --skip-browser --tier both\n\n[qa:accept] L1 low/complete: reuse matching receipt\n[qa:accept] L1 low/stationary: reuse matching receipt\n[qa:accept] L1 high/complete: reuse matching receipt\n[qa:accept] L1 high/stationary: reuse matching receipt\n[qa:accept] L1 low/fixtures: 16 clauses, 0 errors\n[qa:accept] L1 high/fixtures: 16 clauses, 0 errors\n[qa:accept] L1 low/checkpoints: 2 clauses; control identical; 0 errors\n[qa:accept] L1 high/checkpoints: 2 clauses; control identical; 0 errors\n[qa:accept] L1: 1 fresh failing rows; 11 incomplete rows; docs/reports/fix51-verify/L1.json\n"
+    },
+    {
+      "name": "L3-reuse",
+      "command": "npm run qa:accept -- --level L3 --reuse --skip-browser --tier both",
+      "exitCode": 1,
+      "logSha256": "1c7fb8456a053f1ffdd400c892dd43f4d7bc76a74434108ff458b31d577d6a49",
+      "log": "\n> qa:accept\n> node --import tsx/esm tools/qa/accept.ts --level L3 --reuse --skip-browser --tier both\n\n[qa:accept] L3 low/complete: reuse matching receipt\n[qa:accept] L3 low/stationary: reuse matching receipt\n[qa:accept] L3 high/complete: reuse matching receipt\n[qa:accept] L3 high/stationary: reuse matching receipt\n[qa:accept] L3 low/fixtures: 21 clauses, 0 errors\n[qa:accept] L3 high/fixtures: 21 clauses, 0 errors\n[qa:accept] L3 low/checkpoints: 6 clauses; control identical; 0 errors\n[qa:accept] L3 high/checkpoints: 6 clauses; control identical; 0 errors\n[qa:accept] L3: 4 fresh failing rows; 6 incomplete rows; docs/reports/fix51-verify/L3.json\n"
+    },
+    {
+      "name": "qa-threat-final",
+      "command": "npm run qa:threat",
+      "arguments": [],
+      "exitCode": 0,
+      "revision": "7fc617d5e751e20170b89095190311bfa58aa9af",
+      "sourceHash": "27857aeadd4b7c6c6837371520e80fa22a6417ceeef45e5aa1ac9c303c8c2d3f",
+      "startedAt": "2026-11-05T22:38:35.483175+00:00",
+      "seconds": 507.170051334,
+      "levels": 10,
+      "flags": [],
+      "receipt": "docs/reports/fix64-a/qa-threat-final.json.gz",
+      "receiptSha256": "ec06e4ab14196797fba975af65050106bdf359ab373a83375b3cf07c40faae91",
+      "rawAuditSha256": "fab8a2c9cca5a23b3cd27cc5d6a032d9c591250567ab25f11a19db757a0f6abd",
+      "logSha256": "efbcfbf32caf96d7e9657197446a707abe852a07b104d7a85e925fff61dae4d1",
+      "log": "\n> qa:threat\n> node tools/qa/test-budget.mjs --name qa-threat --max-seconds 600 -- node --import tsx/esm tools/qa/threat-audit.ts\n\n[test-budget] 150/150 test cases ({\"vitest\":129,\"e2e\":9,\"invariantsBrowser\":12}), 43/45 files\n[qa:threat] L1: skilled and passive native routes, seed=1, low population\n[qa:threat] L1: skilled complete, passive complete, 0 passive flags (23.1s)\n[qa:threat] L2: skilled and passive native routes, seed=1, low population\n[qa:threat] L2: skilled complete, passive complete, 0 passive flags (37.5s)\n[qa:threat] L3: skilled and passive native routes, seed=1, low population\n[qa:threat] L3: skilled complete, passive tick-budget, 0 passive flags (124.2s)\n[qa:threat] L4: skilled and passive native routes, seed=1, low population\n[qa:threat] L4: high-tier native hold census through the line break\n[qa:threat] L4 high hold: {\"tier\":\"high\",\"holdComplete\":true,\"firstBreachLevelSeconds\":52.71666666666667,\"firstBreachAfterTurnSeconds\":19.9,\"aliveAtFirstBreach\":65,\"peakAlive\":93,\"peakPlazaAlive\":90,\"minPlazaAliveAfter45Seconds\":68,\"samplesAfter45Seconds\":8760,\"arrivalEdges\":[0,1,2,3,4,5],\"threeDirectionsAtLeast60Degrees\":true,\"maxGroupAtOneSourcePerTick\":5,\"firstAttackSeconds\":7.716666666666667,\"lineBreakAfterTurnSeconds\":190}\n[qa:threat] L4: skilled complete, passive tick-budget, 0 passive flags (155.3s)\n[qa:threat] L5: skilled and passive native routes, seed=1, low population\n[qa:threat] L5: skilled complete, passive tick-budget, 0 passive flags (83.1s)\n[qa:threat] L6: skilled and passive native routes, seed=1, low population\n[qa:threat] L6: skilled complete, passive tick-budget, 0 passive flags (6.1s)\n[qa:threat] L7: skilled and passive native routes, seed=1, low population\n[qa:threat] L7: skilled complete, passive complete, 0 passive flags (16.9s)\n[qa:threat] L8: skilled and passive native routes, seed=1, low population\n[qa:threat] L8: skilled complete, passive tick-budget, 0 passive flags (20.4s)\n[qa:threat] L9: skilled and passive native routes, seed=1, low population\n[qa:threat] L9: skilled complete, passive complete, 0 passive flags (8.0s)\n[qa:threat] L10: skilled and passive native routes, seed=1, low population\n[qa:threat] L10: skilled complete, passive tick-budget, 0 passive flags (32.5s)\n[qa:threat] 507.2s; 0 fail flags; test-results/qa-threat/README.md\n[test-budget] qa-threat: 511.5 s (budget 600 s)\n",
+      "otherOwnedChecksRunning": false,
+      "gateScope": "Existing threat-audit.ts exit gate aggregates passiveFlags and focused criteria; skilled-route flags are retained as diagnostics.",
+      "skilledRouteDiagnostics": [
+        {
+          "level": "L3",
+          "flags": [
+            "wave/station-0:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+            "wave/station-2:WAVE_NO_ATTACK_WITHIN_20_SECONDS"
+          ]
+        }
+      ]
+    }
+  ]
+}

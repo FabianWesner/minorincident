@@ -1,0 +1,1887 @@
+{
+  "row": "L3-16",
+  "method": "All54 records in the five groups were personally inspected. The final24 are fresh on the current source. Static poses are presentation checks; moving counterexamples use ordinary native complete InputFrames, protected only against courier damage. No route-readability or performance claim.",
+  "groups": [
+    {
+      "name": "baseline-low",
+      "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+      "observerHash": "261eb1a36261d6fe91fba87f83feeabcc2a40bf424d61b8ac4de13518119c9ec",
+      "runs": [
+        {
+          "tier": "low",
+          "frames": [
+            {
+              "file": "test-results/fix64-a/smoke-baseline/captures/low-static-oak-z0.5.png",
+              "sha256": "8aff9f55220cc2dfd08fe50ba52dbf2540971de996402d58cbbb01b2a24d9e1c",
+              "name": "static-oak",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 120,
+                "player": {
+                  "x": -80,
+                  "y": 0.7049999833106995,
+                  "z": 28,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 0.5,
+                "columns": [
+                  {
+                    "id": -2005950,
+                    "x": -81,
+                    "z": 29
+                  },
+                  {
+                    "id": -2005926,
+                    "x": -80,
+                    "z": 26
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix62-a/smoke/captures/low-static-oak-z0.5.png",
+              "seen": true,
+              "what": "Closest pose: the courier/corgi remain visible, but smoke is cropped near the side/top of the frame and does not consistently read as two distinct rising structures. No numerical count is inferred from the emitter ledger."
+            },
+            {
+              "file": "test-results/fix64-a/smoke-baseline/captures/low-static-oak-z1.5.png",
+              "sha256": "961f12398b655808300e2ed127e145f43b4a1473284fae5107d4f5ab13bd6d2d",
+              "name": "static-oak",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 120,
+                "player": {
+                  "x": -80,
+                  "y": 0.7049999833106995,
+                  "z": 28,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 1.5,
+                "columns": [
+                  {
+                    "id": -2005890,
+                    "x": -87,
+                    "z": 29
+                  },
+                  {
+                    "id": -2005929,
+                    "x": -80,
+                    "z": 22
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix62-a/smoke/captures/low-static-oak-z1.5.png",
+              "seen": true,
+              "what": "Default/wide frame: two separate dark vertical smoke forms are discernible beside/behind the courier. Warm amber light and long shadows are visible. The broader street context shows the residential garden/crashed-car, shop-front, or boulevard vehicle-jam setting.",
+              "identifiableColumns": 2
+            },
+            {
+              "file": "test-results/fix64-a/smoke-baseline/captures/low-static-commerce-z0.5.png",
+              "sha256": "1be2e79679a052eac2016b85420c7d8eb509095a6cb14d7bcdc43425e6b3c220",
+              "name": "static-commerce",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 240,
+                "player": {
+                  "x": -40,
+                  "y": 0.7049999833106995,
+                  "z": 0,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 0.5,
+                "columns": [
+                  {
+                    "id": -2003620,
+                    "x": -41,
+                    "z": 1
+                  },
+                  {
+                    "id": -2003596,
+                    "x": -40,
+                    "z": -2
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix62-a/smoke/captures/low-static-commerce-z0.5.png",
+              "seen": true,
+              "what": "Closest Commerce pose: one readable vertical smoke stem is visible at left. The right-hand smoke is a clipped diffuse patch at the top/facade edge, rather than a second identifiable rising column. Courier and street markings remain visible.",
+              "identifiableColumns": 1
+            },
+            {
+              "file": "test-results/fix64-a/smoke-baseline/captures/low-static-commerce-z1.5.png",
+              "sha256": "c6caf239b218cecff610e2fcee543bc90cc55c79a357649eecaf451508dc1be4",
+              "name": "static-commerce",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 240,
+                "player": {
+                  "x": -40,
+                  "y": 0.7049999833106995,
+                  "z": 0,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 1.5,
+                "columns": [
+                  {
+                    "id": -2003560,
+                    "x": -47,
+                    "z": 1
+                  },
+                  {
+                    "id": -2003599,
+                    "x": -40,
+                    "z": -6
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix62-a/smoke/captures/low-static-commerce-z1.5.png",
+              "seen": true,
+              "what": "Default/wide frame: two separate dark vertical smoke forms are discernible beside/behind the courier. Warm amber light and long shadows are visible. The broader street context shows the residential garden/crashed-car, shop-front, or boulevard vehicle-jam setting.",
+              "identifiableColumns": 2
+            },
+            {
+              "file": "test-results/fix64-a/smoke-baseline/captures/low-static-boulevard-z0.5.png",
+              "sha256": "955812d56c91087f275e9cfb1e155419e04d7b3ea4299b23c47802265800d5c4",
+              "name": "static-boulevard",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 360,
+                "player": {
+                  "x": 18,
+                  "y": 0.7049999833106995,
+                  "z": -28,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 0.5,
+                "columns": [
+                  {
+                    "id": -2001470,
+                    "x": 17,
+                    "z": -27
+                  },
+                  {
+                    "id": -2001446,
+                    "x": 18,
+                    "z": -30
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix62-a/smoke/captures/low-static-boulevard-z0.5.png",
+              "seen": true,
+              "what": "Closest pose: the courier/corgi remain visible, but smoke is cropped near the side/top of the frame and does not consistently read as two distinct rising structures. No numerical count is inferred from the emitter ledger."
+            },
+            {
+              "file": "test-results/fix64-a/smoke-baseline/captures/low-static-boulevard-z1.5.png",
+              "sha256": "6a92ed9fad1bd2ed2d725bcee0145109c70d090a831ebef99000d3245320d005",
+              "name": "static-boulevard",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 360,
+                "player": {
+                  "x": 18,
+                  "y": 0.7049999833106995,
+                  "z": -28,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 1.5,
+                "columns": [
+                  {
+                    "id": -2001410,
+                    "x": 11,
+                    "z": -27
+                  },
+                  {
+                    "id": -2001449,
+                    "x": 18,
+                    "z": -34
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix62-a/smoke/captures/low-static-boulevard-z1.5.png",
+              "seen": true,
+              "what": "Default/wide frame: two separate dark vertical smoke forms are discernible beside/behind the courier. Warm amber light and long shadows are visible. The broader street context shows the residential garden/crashed-car, shop-front, or boulevard vehicle-jam setting.",
+              "identifiableColumns": 2
+            },
+            {
+              "file": "test-results/fix64-a/smoke-baseline/captures/low-moving-x-80-z0.5.png",
+              "sha256": "19ab9cbe25e88bd76d201c1afcea98f64355aaec889a94d97f6a65c82dc0065d",
+              "name": "moving-x-80",
+              "method": "Ordinary complete native InputFrames from fresh L3; no relocation, only courier damage protection.",
+              "state": {
+                "tick": 4590,
+                "player": {
+                  "x": -79.5879898071289,
+                  "y": 0.7059999704360962,
+                  "z": 27.802478790283203,
+                  "yaw": 5.900484522832442
+                },
+                "zoom": 0.5,
+                "columns": [
+                  {
+                    "id": -2005950,
+                    "x": -81,
+                    "z": 29
+                  },
+                  {
+                    "id": -2005936,
+                    "x": -79,
+                    "z": 26
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix62-a/smoke/captures/low-moving-x-80-z0.5.png",
+              "seen": true,
+              "what": "Closest pose: the courier/corgi remain visible, but smoke is cropped near the side/top of the frame and does not consistently read as two distinct rising structures. No numerical count is inferred from the emitter ledger."
+            },
+            {
+              "file": "test-results/fix64-a/smoke-baseline/captures/low-moving-x-80-z1.png",
+              "sha256": "e2b9ca76f7c7c0696663be93699dccdb60df8b46cf00fe809d05d17a7dcf0a6e",
+              "name": "moving-x-80",
+              "method": "Ordinary complete native InputFrames from fresh L3; no relocation, only courier damage protection.",
+              "state": {
+                "tick": 4590,
+                "player": {
+                  "x": -79.5879898071289,
+                  "y": 0.7059999704360962,
+                  "z": 27.802478790283203,
+                  "yaw": 5.900484522832442
+                },
+                "zoom": 1,
+                "columns": [
+                  {
+                    "id": -2005950,
+                    "x": -81,
+                    "z": 29
+                  },
+                  {
+                    "id": -2005936,
+                    "x": -79,
+                    "z": 26
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix62-a/smoke/captures/low-moving-x-80-z1.png",
+              "seen": true,
+              "what": "Default/wide frame: two separate dark vertical smoke forms are discernible beside/behind the courier. Warm amber light and long shadows are visible. The broader street context shows the residential garden/crashed-car, shop-front, or boulevard vehicle-jam setting.",
+              "identifiableColumns": 2
+            },
+            {
+              "file": "test-results/fix64-a/smoke-baseline/captures/low-moving-x-80-z1.5.png",
+              "sha256": "603e25297c43708879db33aa069f56556be0e1fe8ec4c7135e8abf6e3a189723",
+              "name": "moving-x-80",
+              "method": "Ordinary complete native InputFrames from fresh L3; no relocation, only courier damage protection.",
+              "state": {
+                "tick": 4590,
+                "player": {
+                  "x": -79.5879898071289,
+                  "y": 0.7059999704360962,
+                  "z": 27.802478790283203,
+                  "yaw": 5.900484522832442
+                },
+                "zoom": 1.5,
+                "columns": [
+                  {
+                    "id": -2005855,
+                    "x": -87,
+                    "z": 27
+                  },
+                  {
+                    "id": -2005929,
+                    "x": -80,
+                    "z": 22
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix62-a/smoke/captures/low-moving-x-80-z1.5.png",
+              "seen": true,
+              "what": "Default/wide frame: two separate dark vertical smoke forms are discernible beside/behind the courier. Warm amber light and long shadows are visible. The broader street context shows the residential garden/crashed-car, shop-front, or boulevard vehicle-jam setting.",
+              "identifiableColumns": 2
+            },
+            {
+              "file": "test-results/fix64-a/smoke-baseline/captures/low-moving-x-40-z0.5.png",
+              "sha256": "646a8cb79904f3fc1079047be743c82a271cb81550091ea053385b1f9a1e0688",
+              "name": "moving-x-40",
+              "method": "Ordinary complete native InputFrames from fresh L3; no relocation, only courier damage protection.",
+              "state": {
+                "tick": 6720,
+                "player": {
+                  "x": -39.84967803955078,
+                  "y": 0.7099999785423279,
+                  "z": 0.046402789652347565,
+                  "yaw": 0.10673599671328711
+                },
+                "zoom": 0.5,
+                "columns": [
+                  {
+                    "id": -2003610,
+                    "x": -42,
+                    "z": 1
+                  },
+                  {
+                    "id": -2003595,
+                    "x": -40,
+                    "z": -1
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix62-a/smoke/captures/low-moving-x-40-z0.5.png",
+              "seen": true,
+              "what": "Closest pose: the courier/corgi remain visible, but smoke is cropped near the side/top of the frame and does not consistently read as two distinct rising structures. No numerical count is inferred from the emitter ledger."
+            },
+            {
+              "file": "test-results/fix64-a/smoke-baseline/captures/low-moving-x-40-z1.png",
+              "sha256": "5e043afa8324901c5de39ee8f19b0bf0da3c1681cf6c878605a18031c7496975",
+              "name": "moving-x-40",
+              "method": "Ordinary complete native InputFrames from fresh L3; no relocation, only courier damage protection.",
+              "state": {
+                "tick": 6720,
+                "player": {
+                  "x": -39.84967803955078,
+                  "y": 0.7099999785423279,
+                  "z": 0.046402789652347565,
+                  "yaw": 0.10673599671328711
+                },
+                "zoom": 1,
+                "columns": [
+                  {
+                    "id": -2003610,
+                    "x": -42,
+                    "z": 1
+                  },
+                  {
+                    "id": -2003608,
+                    "x": -39,
+                    "z": -4
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix62-a/smoke/captures/low-moving-x-40-z1.png",
+              "seen": true,
+              "what": "Default/wide frame: two separate dark vertical smoke forms are discernible beside/behind the courier. Warm amber light and long shadows are visible. The broader street context shows the residential garden/crashed-car, shop-front, or boulevard vehicle-jam setting.",
+              "identifiableColumns": 2
+            },
+            {
+              "file": "test-results/fix64-a/smoke-baseline/captures/low-moving-x-40-z1.5.png",
+              "sha256": "8f288e08420edd21e4b55c7436f066faf600de7b77acba72805fd3fc2a316f52",
+              "name": "moving-x-40",
+              "method": "Ordinary complete native InputFrames from fresh L3; no relocation, only courier damage protection.",
+              "state": {
+                "tick": 6720,
+                "player": {
+                  "x": -39.84967803955078,
+                  "y": 0.7099999785423279,
+                  "z": 0.046402789652347565,
+                  "yaw": 0.10673599671328711
+                },
+                "zoom": 1.5,
+                "columns": [
+                  {
+                    "id": -2003610,
+                    "x": -42,
+                    "z": 1
+                  },
+                  {
+                    "id": -2003608,
+                    "x": -39,
+                    "z": -4
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix62-a/smoke/captures/low-moving-x-40-z1.5.png",
+              "seen": true,
+              "what": "Default/wide frame: two separate dark vertical smoke forms are discernible beside/behind the courier. Warm amber light and long shadows are visible. The broader street context shows the residential garden/crashed-car, shop-front, or boulevard vehicle-jam setting.",
+              "identifiableColumns": 2
+            }
+          ],
+          "routeSamples": {
+            "count": 448,
+            "first": {
+              "tick": 15,
+              "player": {
+                "x": -154.7152099609375,
+                "y": 0.7099999785423279,
+                "z": 1.206532597541809,
+                "yaw": 0.47516382285660846
+              },
+              "columns": []
+            },
+            "last": {
+              "tick": 6720,
+              "player": {
+                "x": -39.84967803955078,
+                "y": 0.7099999785423279,
+                "z": 0.046402789652347565,
+                "yaw": 0.10673599671328711
+              },
+              "columns": [
+                -2003570,
+                -2003608
+              ]
+            }
+          }
+        }
+      ],
+      "rawReceipt": "test-results/fix64-a/smoke-baseline/receipt.json",
+      "rawSha256": "e069124c6da5b776096800ead40f68ca940c5a8fc5d83df9b2e05d68c74c1403"
+    },
+    {
+      "name": "rejected-framing",
+      "sourceHash": "478e22d4ae9c7980c93c0664844f0ac4427b42c527ab17423b73351de84825b2",
+      "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+      "runs": [
+        {
+          "tier": "low",
+          "frames": [
+            {
+              "file": "test-results/fix64-a/smoke-candidate1-low/captures/low-static-oak-z0.5.png",
+              "sha256": "7443131152a0df40f9b984f2d86c36d0fd081fb49db98212cd3fa3232419fb4a",
+              "name": "static-oak",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 120,
+                "player": {
+                  "x": -80,
+                  "y": 0.7049999833106995,
+                  "z": 28,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 0.5,
+                "columns": [
+                  {
+                    "id": -2005972,
+                    "x": -79,
+                    "z": 31
+                  },
+                  {
+                    "id": -2005990,
+                    "x": -77,
+                    "z": 29
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix62-a/smoke/captures/low-static-oak-z0.5.png",
+              "seen": true,
+              "what": "Inspected after the framing trial: smoke sources shifted into the foreground, producing broad grey side curtains at closest zoom. The narrower-size follow-up leaves edge haze at closest zoom, although wide stems are narrower. Neither gives a reliable matrix-wide improvement; both game changes were reverted."
+            },
+            {
+              "file": "test-results/fix64-a/smoke-candidate1-low/captures/low-static-oak-z1.5.png",
+              "sha256": "cfdb6d1e579f22e95b5516ccfa703dbde2e81dca3d78c8c64275e49e6da572dc",
+              "name": "static-oak",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 120,
+                "player": {
+                  "x": -80,
+                  "y": 0.7049999833106995,
+                  "z": 28,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 1.5,
+                "columns": [
+                  {
+                    "id": -2005921,
+                    "x": -84,
+                    "z": 30
+                  },
+                  {
+                    "id": -2005948,
+                    "x": -78,
+                    "z": 24
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix62-a/smoke/captures/low-static-oak-z1.5.png",
+              "seen": true,
+              "what": "Inspected after the framing trial: smoke sources shifted into the foreground, producing broad grey side curtains at closest zoom. The narrower-size follow-up leaves edge haze at closest zoom, although wide stems are narrower. Neither gives a reliable matrix-wide improvement; both game changes were reverted."
+            },
+            {
+              "file": "test-results/fix64-a/smoke-candidate1-low/captures/low-static-commerce-z0.5.png",
+              "sha256": "144c528167e3020365ac023ae10f586f8a72650dd79f12a7cbbde97c8dd0f243",
+              "name": "static-commerce",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 240,
+                "player": {
+                  "x": -40,
+                  "y": 0.7049999833106995,
+                  "z": 0,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 0.5,
+                "columns": [
+                  {
+                    "id": -2003642,
+                    "x": -39,
+                    "z": 3
+                  },
+                  {
+                    "id": -2003660,
+                    "x": -37,
+                    "z": 1
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix62-a/smoke/captures/low-static-commerce-z0.5.png",
+              "seen": true,
+              "what": "Inspected after the framing trial: smoke sources shifted into the foreground, producing broad grey side curtains at closest zoom. The narrower-size follow-up leaves edge haze at closest zoom, although wide stems are narrower. Neither gives a reliable matrix-wide improvement; both game changes were reverted."
+            },
+            {
+              "file": "test-results/fix64-a/smoke-candidate1-low/captures/low-static-commerce-z1.5.png",
+              "sha256": "6d4383971e092970a3145b535f64b4570ee9e4796048e1b8129402e5b9e7d901",
+              "name": "static-commerce",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 240,
+                "player": {
+                  "x": -40,
+                  "y": 0.7049999833106995,
+                  "z": 0,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 1.5,
+                "columns": [
+                  {
+                    "id": -2003591,
+                    "x": -44,
+                    "z": 2
+                  },
+                  {
+                    "id": -2003618,
+                    "x": -38,
+                    "z": -4
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix62-a/smoke/captures/low-static-commerce-z1.5.png",
+              "seen": true,
+              "what": "Inspected after the framing trial: smoke sources shifted into the foreground, producing broad grey side curtains at closest zoom. The narrower-size follow-up leaves edge haze at closest zoom, although wide stems are narrower. Neither gives a reliable matrix-wide improvement; both game changes were reverted."
+            },
+            {
+              "file": "test-results/fix64-a/smoke-candidate1-low/captures/low-static-boulevard-z0.5.png",
+              "sha256": "d7608ad1a1e33557ab2cf516b8bf55b2a1bead6066508b39d19e440da7fefa92",
+              "name": "static-boulevard",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 360,
+                "player": {
+                  "x": 18,
+                  "y": 0.7049999833106995,
+                  "z": -28,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 0.5,
+                "columns": [
+                  {
+                    "id": -2001492,
+                    "x": 19,
+                    "z": -25
+                  },
+                  {
+                    "id": -2001510,
+                    "x": 21,
+                    "z": -27
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix62-a/smoke/captures/low-static-boulevard-z0.5.png",
+              "seen": true,
+              "what": "Inspected after the framing trial: smoke sources shifted into the foreground, producing broad grey side curtains at closest zoom. The narrower-size follow-up leaves edge haze at closest zoom, although wide stems are narrower. Neither gives a reliable matrix-wide improvement; both game changes were reverted."
+            },
+            {
+              "file": "test-results/fix64-a/smoke-candidate1-low/captures/low-static-boulevard-z1.5.png",
+              "sha256": "51672d515abf10ff4ebaa608b001803f448f0758386f7a2f35c94b47a4e4b43e",
+              "name": "static-boulevard",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 360,
+                "player": {
+                  "x": 18,
+                  "y": 0.7049999833106995,
+                  "z": -28,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 1.5,
+                "columns": [
+                  {
+                    "id": -2001441,
+                    "x": 14,
+                    "z": -26
+                  },
+                  {
+                    "id": -2001468,
+                    "x": 20,
+                    "z": -32
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix62-a/smoke/captures/low-static-boulevard-z1.5.png",
+              "seen": true,
+              "what": "Inspected after the framing trial: smoke sources shifted into the foreground, producing broad grey side curtains at closest zoom. The narrower-size follow-up leaves edge haze at closest zoom, although wide stems are narrower. Neither gives a reliable matrix-wide improvement; both game changes were reverted."
+            },
+            {
+              "file": "test-results/fix64-a/smoke-candidate1-low/captures/low-moving-x-80-z0.5.png",
+              "sha256": "bbef05d1b9bca73ba9ec01a249de51cfb0cd5512a1d538808b9c6c3528e7c67d",
+              "name": "moving-x-80",
+              "method": "Ordinary complete native InputFrames from fresh L3; no relocation, only courier damage protection.",
+              "state": {
+                "tick": 4590,
+                "player": {
+                  "x": -79.5879898071289,
+                  "y": 0.7059999704360962,
+                  "z": 27.802478790283203,
+                  "yaw": 5.900484522832442
+                },
+                "zoom": 0.5,
+                "columns": [
+                  {
+                    "id": -2005971,
+                    "x": -79,
+                    "z": 30
+                  },
+                  {
+                    "id": -2005990,
+                    "x": -77,
+                    "z": 29
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix62-a/smoke/captures/low-moving-x-80-z0.5.png",
+              "seen": true,
+              "what": "Inspected after the framing trial: smoke sources shifted into the foreground, producing broad grey side curtains at closest zoom. The narrower-size follow-up leaves edge haze at closest zoom, although wide stems are narrower. Neither gives a reliable matrix-wide improvement; both game changes were reverted."
+            },
+            {
+              "file": "test-results/fix64-a/smoke-candidate1-low/captures/low-moving-x-80-z1.png",
+              "sha256": "ad4e7a327bb9d70a8cff88f13d759de1a71ebd64bdba97b3cb6f947302225bc2",
+              "name": "moving-x-80",
+              "method": "Ordinary complete native InputFrames from fresh L3; no relocation, only courier damage protection.",
+              "state": {
+                "tick": 4590,
+                "player": {
+                  "x": -79.5879898071289,
+                  "y": 0.7059999704360962,
+                  "z": 27.802478790283203,
+                  "yaw": 5.900484522832442
+                },
+                "zoom": 1,
+                "columns": [
+                  {
+                    "id": -2005973,
+                    "x": -79,
+                    "z": 32
+                  },
+                  {
+                    "id": -2005965,
+                    "x": -76,
+                    "z": 27
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix62-a/smoke/captures/low-moving-x-80-z1.png",
+              "seen": true,
+              "what": "Inspected after the framing trial: smoke sources shifted into the foreground, producing broad grey side curtains at closest zoom. The narrower-size follow-up leaves edge haze at closest zoom, although wide stems are narrower. Neither gives a reliable matrix-wide improvement; both game changes were reverted."
+            },
+            {
+              "file": "test-results/fix64-a/smoke-candidate1-low/captures/low-moving-x-80-z1.5.png",
+              "sha256": "831cb0c22eeac2209c88b137ce5016f98ac864c65a1b2a9769f951be1d675b58",
+              "name": "moving-x-80",
+              "method": "Ordinary complete native InputFrames from fresh L3; no relocation, only courier damage protection.",
+              "state": {
+                "tick": 4590,
+                "player": {
+                  "x": -79.5879898071289,
+                  "y": 0.7059999704360962,
+                  "z": 27.802478790283203,
+                  "yaw": 5.900484522832442
+                },
+                "zoom": 1.5,
+                "columns": [
+                  {
+                    "id": -2005973,
+                    "x": -79,
+                    "z": 32
+                  },
+                  {
+                    "id": -2005965,
+                    "x": -76,
+                    "z": 27
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix62-a/smoke/captures/low-moving-x-80-z1.5.png",
+              "seen": true,
+              "what": "Inspected after the framing trial: smoke sources shifted into the foreground, producing broad grey side curtains at closest zoom. The narrower-size follow-up leaves edge haze at closest zoom, although wide stems are narrower. Neither gives a reliable matrix-wide improvement; both game changes were reverted."
+            },
+            {
+              "file": "test-results/fix64-a/smoke-candidate1-low/captures/low-moving-x-40-z0.5.png",
+              "sha256": "144818d496deb89d2dec5ddc7f8ca86feeceb16aa0453c8c0a4d5ffd17fcedbc",
+              "name": "moving-x-40",
+              "method": "Ordinary complete native InputFrames from fresh L3; no relocation, only courier damage protection.",
+              "state": {
+                "tick": 6720,
+                "player": {
+                  "x": -39.84967803955078,
+                  "y": 0.7099999785423279,
+                  "z": 0.046402789652347565,
+                  "yaw": 0.10673599671328711
+                },
+                "zoom": 0.5,
+                "columns": [
+                  {
+                    "id": -2003660,
+                    "x": -37,
+                    "z": 1
+                  },
+                  {
+                    "id": -2003642,
+                    "x": -39,
+                    "z": 3
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix62-a/smoke/captures/low-moving-x-40-z0.5.png",
+              "seen": true,
+              "what": "Inspected after the framing trial: smoke sources shifted into the foreground, producing broad grey side curtains at closest zoom. The narrower-size follow-up leaves edge haze at closest zoom, although wide stems are narrower. Neither gives a reliable matrix-wide improvement; both game changes were reverted."
+            },
+            {
+              "file": "test-results/fix64-a/smoke-candidate1-low/captures/low-moving-x-40-z1.png",
+              "sha256": "3e443143de1a0bf045bce089ddb18559170b02a5d5c55fcd817bec66e2d37deb",
+              "name": "moving-x-40",
+              "method": "Ordinary complete native InputFrames from fresh L3; no relocation, only courier damage protection.",
+              "state": {
+                "tick": 6720,
+                "player": {
+                  "x": -39.84967803955078,
+                  "y": 0.7099999785423279,
+                  "z": 0.046402789652347565,
+                  "yaw": 0.10673599671328711
+                },
+                "zoom": 1,
+                "columns": [
+                  {
+                    "id": -2003660,
+                    "x": -37,
+                    "z": 1
+                  },
+                  {
+                    "id": -2003642,
+                    "x": -39,
+                    "z": 3
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix62-a/smoke/captures/low-moving-x-40-z1.png",
+              "seen": true,
+              "what": "Inspected after the framing trial: smoke sources shifted into the foreground, producing broad grey side curtains at closest zoom. The narrower-size follow-up leaves edge haze at closest zoom, although wide stems are narrower. Neither gives a reliable matrix-wide improvement; both game changes were reverted."
+            },
+            {
+              "file": "test-results/fix64-a/smoke-candidate1-low/captures/low-moving-x-40-z1.5.png",
+              "sha256": "62cc938011575a7071ac31cf58e5cab0863cfcb8cec76f43d2762eb228a0d7e5",
+              "name": "moving-x-40",
+              "method": "Ordinary complete native InputFrames from fresh L3; no relocation, only courier damage protection.",
+              "state": {
+                "tick": 6720,
+                "player": {
+                  "x": -39.84967803955078,
+                  "y": 0.7099999785423279,
+                  "z": 0.046402789652347565,
+                  "yaw": 0.10673599671328711
+                },
+                "zoom": 1.5,
+                "columns": [
+                  {
+                    "id": -2003601,
+                    "x": -43,
+                    "z": 2
+                  },
+                  {
+                    "id": -2003628,
+                    "x": -37,
+                    "z": -4
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix62-a/smoke/captures/low-moving-x-40-z1.5.png",
+              "seen": true,
+              "what": "Inspected after the framing trial: smoke sources shifted into the foreground, producing broad grey side curtains at closest zoom. The narrower-size follow-up leaves edge haze at closest zoom, although wide stems are narrower. Neither gives a reliable matrix-wide improvement; both game changes were reverted."
+            }
+          ],
+          "routeSamples": {
+            "count": 448,
+            "first": {
+              "tick": 15,
+              "player": {
+                "x": -154.7152099609375,
+                "y": 0.7099999785423279,
+                "z": 1.206532597541809,
+                "yaw": 0.47516382285660846
+              },
+              "columns": []
+            },
+            "last": {
+              "tick": 6720,
+              "player": {
+                "x": -39.84967803955078,
+                "y": 0.7099999785423279,
+                "z": 0.046402789652347565,
+                "yaw": 0.10673599671328711
+              },
+              "columns": [
+                -2003660,
+                -2003633
+              ]
+            }
+          }
+        }
+      ],
+      "rawReceipt": "test-results/fix64-a/smoke-candidate1-low/receipt.json",
+      "rawSha256": "c40cbd6f76b16e71c4365a6aa1a3b24b69f9b06661fd1e26a069059c4906e25d"
+    },
+    {
+      "name": "rejected-framing-size",
+      "sourceHash": "5f825c493b4670ecfc4d1183ab65162e66813606a38d4be2b470a8dbed1147ef",
+      "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+      "runs": [
+        {
+          "tier": "low",
+          "frames": [
+            {
+              "file": "test-results/fix64-a/smoke-candidate2-low/captures/low-static-oak-z0.5.png",
+              "sha256": "29020f913023c0d64b956fe08b49f1e5d8366334d336bd70842d1712c7c88aa9",
+              "name": "static-oak",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 120,
+                "player": {
+                  "x": -80,
+                  "y": 0.7049999833106995,
+                  "z": 28,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 0.5,
+                "columns": [
+                  {
+                    "id": -2005972,
+                    "x": -79,
+                    "z": 31
+                  },
+                  {
+                    "id": -2005990,
+                    "x": -77,
+                    "z": 29
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-candidate2-low/captures/low-static-oak-z0.5.png",
+              "seen": true,
+              "what": "Inspected after the framing trial: smoke sources shifted into the foreground, producing broad grey side curtains at closest zoom. The narrower-size follow-up leaves edge haze at closest zoom, although wide stems are narrower. Neither gives a reliable matrix-wide improvement; both game changes were reverted."
+            },
+            {
+              "file": "test-results/fix64-a/smoke-candidate2-low/captures/low-static-oak-z1.5.png",
+              "sha256": "90e6f06f861b3f44378ad645a93127090e72ab2795f732c7b12e11d1179f93a6",
+              "name": "static-oak",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 120,
+                "player": {
+                  "x": -80,
+                  "y": 0.7049999833106995,
+                  "z": 28,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 1.5,
+                "columns": [
+                  {
+                    "id": -2005921,
+                    "x": -84,
+                    "z": 30
+                  },
+                  {
+                    "id": -2005948,
+                    "x": -78,
+                    "z": 24
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-candidate2-low/captures/low-static-oak-z1.5.png",
+              "seen": true,
+              "what": "Inspected after the framing trial: smoke sources shifted into the foreground, producing broad grey side curtains at closest zoom. The narrower-size follow-up leaves edge haze at closest zoom, although wide stems are narrower. Neither gives a reliable matrix-wide improvement; both game changes were reverted."
+            },
+            {
+              "file": "test-results/fix64-a/smoke-candidate2-low/captures/low-static-commerce-z0.5.png",
+              "sha256": "ce8dafc83186a4298e1fe8389e382ecd93f5bb650a0fc4c99778e7193fdda89c",
+              "name": "static-commerce",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 240,
+                "player": {
+                  "x": -40,
+                  "y": 0.7049999833106995,
+                  "z": 0,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 0.5,
+                "columns": [
+                  {
+                    "id": -2003642,
+                    "x": -39,
+                    "z": 3
+                  },
+                  {
+                    "id": -2003660,
+                    "x": -37,
+                    "z": 1
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-candidate2-low/captures/low-static-commerce-z0.5.png",
+              "seen": true,
+              "what": "Inspected after the framing trial: smoke sources shifted into the foreground, producing broad grey side curtains at closest zoom. The narrower-size follow-up leaves edge haze at closest zoom, although wide stems are narrower. Neither gives a reliable matrix-wide improvement; both game changes were reverted."
+            },
+            {
+              "file": "test-results/fix64-a/smoke-candidate2-low/captures/low-static-commerce-z1.5.png",
+              "sha256": "d31a9850cd7135e3d7123853a105b0b2fe694545194724e11e84388f4ce80acb",
+              "name": "static-commerce",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 240,
+                "player": {
+                  "x": -40,
+                  "y": 0.7049999833106995,
+                  "z": 0,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 1.5,
+                "columns": [
+                  {
+                    "id": -2003591,
+                    "x": -44,
+                    "z": 2
+                  },
+                  {
+                    "id": -2003618,
+                    "x": -38,
+                    "z": -4
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-candidate2-low/captures/low-static-commerce-z1.5.png",
+              "seen": true,
+              "what": "Inspected after the framing trial: smoke sources shifted into the foreground, producing broad grey side curtains at closest zoom. The narrower-size follow-up leaves edge haze at closest zoom, although wide stems are narrower. Neither gives a reliable matrix-wide improvement; both game changes were reverted."
+            },
+            {
+              "file": "test-results/fix64-a/smoke-candidate2-low/captures/low-static-boulevard-z0.5.png",
+              "sha256": "43a199762d7301bf6d651a17bc0559018b15e025b661acf707f1489dafac602a",
+              "name": "static-boulevard",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 360,
+                "player": {
+                  "x": 18,
+                  "y": 0.7049999833106995,
+                  "z": -28,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 0.5,
+                "columns": [
+                  {
+                    "id": -2001492,
+                    "x": 19,
+                    "z": -25
+                  },
+                  {
+                    "id": -2001510,
+                    "x": 21,
+                    "z": -27
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-candidate2-low/captures/low-static-boulevard-z0.5.png",
+              "seen": true,
+              "what": "Inspected after the framing trial: smoke sources shifted into the foreground, producing broad grey side curtains at closest zoom. The narrower-size follow-up leaves edge haze at closest zoom, although wide stems are narrower. Neither gives a reliable matrix-wide improvement; both game changes were reverted."
+            },
+            {
+              "file": "test-results/fix64-a/smoke-candidate2-low/captures/low-static-boulevard-z1.5.png",
+              "sha256": "2a3b20a3ffabc338ca8d1772f28a70fb16c2cc45500feb4c457cbc269a97c275",
+              "name": "static-boulevard",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 360,
+                "player": {
+                  "x": 18,
+                  "y": 0.7049999833106995,
+                  "z": -28,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 1.5,
+                "columns": [
+                  {
+                    "id": -2001441,
+                    "x": 14,
+                    "z": -26
+                  },
+                  {
+                    "id": -2001468,
+                    "x": 20,
+                    "z": -32
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-candidate2-low/captures/low-static-boulevard-z1.5.png",
+              "seen": true,
+              "what": "Inspected after the framing trial: smoke sources shifted into the foreground, producing broad grey side curtains at closest zoom. The narrower-size follow-up leaves edge haze at closest zoom, although wide stems are narrower. Neither gives a reliable matrix-wide improvement; both game changes were reverted."
+            }
+          ],
+          "routeSamples": {
+            "count": 0,
+            "first": null,
+            "last": null
+          }
+        }
+      ],
+      "rawReceipt": "test-results/fix64-a/smoke-candidate2-low/receipt.json",
+      "rawSha256": "ca8df0ad21f78becfed2d158d884fdec231b7b5ca17b22c88bbae66f93a02964"
+    },
+    {
+      "name": "final-low",
+      "sourceHash": "27857aeadd4b7c6c6837371520e80fa22a6417ceeef45e5aa1ac9c303c8c2d3f",
+      "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+      "runs": [
+        {
+          "tier": "low",
+          "frames": [
+            {
+              "file": "test-results/fix64-a/smoke-final-low/captures/low-static-oak-z0.5.png",
+              "sha256": "8aff9f55220cc2dfd08fe50ba52dbf2540971de996402d58cbbb01b2a24d9e1c",
+              "name": "static-oak",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 120,
+                "player": {
+                  "x": -80,
+                  "y": 0.7049999833106995,
+                  "z": 28,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 0.5,
+                "columns": [
+                  {
+                    "id": -2005950,
+                    "x": -81,
+                    "z": 29
+                  },
+                  {
+                    "id": -2005926,
+                    "x": -80,
+                    "z": 26
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-final-low/captures/low-static-oak-z0.5.png",
+              "seen": true,
+              "what": "Closest pose: the courier/corgi remain visible, but smoke is cropped near the side/top of the frame and does not consistently read as two distinct rising structures. No numerical count is inferred from the emitter ledger."
+            },
+            {
+              "file": "test-results/fix64-a/smoke-final-low/captures/low-static-oak-z1.5.png",
+              "sha256": "961f12398b655808300e2ed127e145f43b4a1473284fae5107d4f5ab13bd6d2d",
+              "name": "static-oak",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 120,
+                "player": {
+                  "x": -80,
+                  "y": 0.7049999833106995,
+                  "z": 28,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 1.5,
+                "columns": [
+                  {
+                    "id": -2005890,
+                    "x": -87,
+                    "z": 29
+                  },
+                  {
+                    "id": -2005929,
+                    "x": -80,
+                    "z": 22
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-final-low/captures/low-static-oak-z1.5.png",
+              "seen": true,
+              "what": "Default/wide frame: two separate dark vertical smoke forms are discernible beside/behind the courier. Warm amber light and long shadows are visible. The broader street context shows the residential garden/crashed-car, shop-front, or boulevard vehicle-jam setting.",
+              "identifiableColumns": 2
+            },
+            {
+              "file": "test-results/fix64-a/smoke-final-low/captures/low-static-commerce-z0.5.png",
+              "sha256": "1be2e79679a052eac2016b85420c7d8eb509095a6cb14d7bcdc43425e6b3c220",
+              "name": "static-commerce",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 240,
+                "player": {
+                  "x": -40,
+                  "y": 0.7049999833106995,
+                  "z": 0,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 0.5,
+                "columns": [
+                  {
+                    "id": -2003620,
+                    "x": -41,
+                    "z": 1
+                  },
+                  {
+                    "id": -2003596,
+                    "x": -40,
+                    "z": -2
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-final-low/captures/low-static-commerce-z0.5.png",
+              "seen": true,
+              "what": "Closest Commerce pose: one readable vertical smoke stem is visible at left. The right-hand smoke is a clipped diffuse patch at the top/facade edge, rather than a second identifiable rising column. Courier and street markings remain visible.",
+              "identifiableColumns": 1
+            },
+            {
+              "file": "test-results/fix64-a/smoke-final-low/captures/low-static-commerce-z1.5.png",
+              "sha256": "c6caf239b218cecff610e2fcee543bc90cc55c79a357649eecaf451508dc1be4",
+              "name": "static-commerce",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 240,
+                "player": {
+                  "x": -40,
+                  "y": 0.7049999833106995,
+                  "z": 0,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 1.5,
+                "columns": [
+                  {
+                    "id": -2003560,
+                    "x": -47,
+                    "z": 1
+                  },
+                  {
+                    "id": -2003599,
+                    "x": -40,
+                    "z": -6
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-final-low/captures/low-static-commerce-z1.5.png",
+              "seen": true,
+              "what": "Default/wide frame: two separate dark vertical smoke forms are discernible beside/behind the courier. Warm amber light and long shadows are visible. The broader street context shows the residential garden/crashed-car, shop-front, or boulevard vehicle-jam setting.",
+              "identifiableColumns": 2
+            },
+            {
+              "file": "test-results/fix64-a/smoke-final-low/captures/low-static-boulevard-z0.5.png",
+              "sha256": "955812d56c91087f275e9cfb1e155419e04d7b3ea4299b23c47802265800d5c4",
+              "name": "static-boulevard",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 360,
+                "player": {
+                  "x": 18,
+                  "y": 0.7049999833106995,
+                  "z": -28,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 0.5,
+                "columns": [
+                  {
+                    "id": -2001470,
+                    "x": 17,
+                    "z": -27
+                  },
+                  {
+                    "id": -2001446,
+                    "x": 18,
+                    "z": -30
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-final-low/captures/low-static-boulevard-z0.5.png",
+              "seen": true,
+              "what": "Closest pose: the courier/corgi remain visible, but smoke is cropped near the side/top of the frame and does not consistently read as two distinct rising structures. No numerical count is inferred from the emitter ledger."
+            },
+            {
+              "file": "test-results/fix64-a/smoke-final-low/captures/low-static-boulevard-z1.5.png",
+              "sha256": "6a92ed9fad1bd2ed2d725bcee0145109c70d090a831ebef99000d3245320d005",
+              "name": "static-boulevard",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 360,
+                "player": {
+                  "x": 18,
+                  "y": 0.7049999833106995,
+                  "z": -28,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 1.5,
+                "columns": [
+                  {
+                    "id": -2001410,
+                    "x": 11,
+                    "z": -27
+                  },
+                  {
+                    "id": -2001449,
+                    "x": 18,
+                    "z": -34
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-final-low/captures/low-static-boulevard-z1.5.png",
+              "seen": true,
+              "what": "Default/wide frame: two separate dark vertical smoke forms are discernible beside/behind the courier. Warm amber light and long shadows are visible. The broader street context shows the residential garden/crashed-car, shop-front, or boulevard vehicle-jam setting.",
+              "identifiableColumns": 2
+            },
+            {
+              "file": "test-results/fix64-a/smoke-final-low/captures/low-moving-x-80-z0.5.png",
+              "sha256": "19ab9cbe25e88bd76d201c1afcea98f64355aaec889a94d97f6a65c82dc0065d",
+              "name": "moving-x-80",
+              "method": "Ordinary complete native InputFrames from fresh L3; no relocation, only courier damage protection.",
+              "state": {
+                "tick": 4590,
+                "player": {
+                  "x": -79.5879898071289,
+                  "y": 0.7059999704360962,
+                  "z": 27.802478790283203,
+                  "yaw": 5.900484522832442
+                },
+                "zoom": 0.5,
+                "columns": [
+                  {
+                    "id": -2005950,
+                    "x": -81,
+                    "z": 29
+                  },
+                  {
+                    "id": -2005936,
+                    "x": -79,
+                    "z": 26
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-final-low/captures/low-moving-x-80-z0.5.png",
+              "seen": true,
+              "what": "Closest pose: the courier/corgi remain visible, but smoke is cropped near the side/top of the frame and does not consistently read as two distinct rising structures. No numerical count is inferred from the emitter ledger."
+            },
+            {
+              "file": "test-results/fix64-a/smoke-final-low/captures/low-moving-x-80-z1.png",
+              "sha256": "e2b9ca76f7c7c0696663be93699dccdb60df8b46cf00fe809d05d17a7dcf0a6e",
+              "name": "moving-x-80",
+              "method": "Ordinary complete native InputFrames from fresh L3; no relocation, only courier damage protection.",
+              "state": {
+                "tick": 4590,
+                "player": {
+                  "x": -79.5879898071289,
+                  "y": 0.7059999704360962,
+                  "z": 27.802478790283203,
+                  "yaw": 5.900484522832442
+                },
+                "zoom": 1,
+                "columns": [
+                  {
+                    "id": -2005950,
+                    "x": -81,
+                    "z": 29
+                  },
+                  {
+                    "id": -2005936,
+                    "x": -79,
+                    "z": 26
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-final-low/captures/low-moving-x-80-z1.png",
+              "seen": true,
+              "what": "Default/wide frame: two separate dark vertical smoke forms are discernible beside/behind the courier. Warm amber light and long shadows are visible. The broader street context shows the residential garden/crashed-car, shop-front, or boulevard vehicle-jam setting.",
+              "identifiableColumns": 2
+            },
+            {
+              "file": "test-results/fix64-a/smoke-final-low/captures/low-moving-x-80-z1.5.png",
+              "sha256": "603e25297c43708879db33aa069f56556be0e1fe8ec4c7135e8abf6e3a189723",
+              "name": "moving-x-80",
+              "method": "Ordinary complete native InputFrames from fresh L3; no relocation, only courier damage protection.",
+              "state": {
+                "tick": 4590,
+                "player": {
+                  "x": -79.5879898071289,
+                  "y": 0.7059999704360962,
+                  "z": 27.802478790283203,
+                  "yaw": 5.900484522832442
+                },
+                "zoom": 1.5,
+                "columns": [
+                  {
+                    "id": -2005855,
+                    "x": -87,
+                    "z": 27
+                  },
+                  {
+                    "id": -2005929,
+                    "x": -80,
+                    "z": 22
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-final-low/captures/low-moving-x-80-z1.5.png",
+              "seen": true,
+              "what": "Default/wide frame: two separate dark vertical smoke forms are discernible beside/behind the courier. Warm amber light and long shadows are visible. The broader street context shows the residential garden/crashed-car, shop-front, or boulevard vehicle-jam setting.",
+              "identifiableColumns": 2
+            },
+            {
+              "file": "test-results/fix64-a/smoke-final-low/captures/low-moving-x-40-z0.5.png",
+              "sha256": "646a8cb79904f3fc1079047be743c82a271cb81550091ea053385b1f9a1e0688",
+              "name": "moving-x-40",
+              "method": "Ordinary complete native InputFrames from fresh L3; no relocation, only courier damage protection.",
+              "state": {
+                "tick": 6720,
+                "player": {
+                  "x": -39.84967803955078,
+                  "y": 0.7099999785423279,
+                  "z": 0.046402789652347565,
+                  "yaw": 0.10673599671328711
+                },
+                "zoom": 0.5,
+                "columns": [
+                  {
+                    "id": -2003610,
+                    "x": -42,
+                    "z": 1
+                  },
+                  {
+                    "id": -2003595,
+                    "x": -40,
+                    "z": -1
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-final-low/captures/low-moving-x-40-z0.5.png",
+              "seen": true,
+              "what": "Closest pose: the courier/corgi remain visible, but smoke is cropped near the side/top of the frame and does not consistently read as two distinct rising structures. No numerical count is inferred from the emitter ledger."
+            },
+            {
+              "file": "test-results/fix64-a/smoke-final-low/captures/low-moving-x-40-z1.png",
+              "sha256": "5e043afa8324901c5de39ee8f19b0bf0da3c1681cf6c878605a18031c7496975",
+              "name": "moving-x-40",
+              "method": "Ordinary complete native InputFrames from fresh L3; no relocation, only courier damage protection.",
+              "state": {
+                "tick": 6720,
+                "player": {
+                  "x": -39.84967803955078,
+                  "y": 0.7099999785423279,
+                  "z": 0.046402789652347565,
+                  "yaw": 0.10673599671328711
+                },
+                "zoom": 1,
+                "columns": [
+                  {
+                    "id": -2003610,
+                    "x": -42,
+                    "z": 1
+                  },
+                  {
+                    "id": -2003608,
+                    "x": -39,
+                    "z": -4
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-final-low/captures/low-moving-x-40-z1.png",
+              "seen": true,
+              "what": "Default/wide frame: two separate dark vertical smoke forms are discernible beside/behind the courier. Warm amber light and long shadows are visible. The broader street context shows the residential garden/crashed-car, shop-front, or boulevard vehicle-jam setting.",
+              "identifiableColumns": 2
+            },
+            {
+              "file": "test-results/fix64-a/smoke-final-low/captures/low-moving-x-40-z1.5.png",
+              "sha256": "8f288e08420edd21e4b55c7436f066faf600de7b77acba72805fd3fc2a316f52",
+              "name": "moving-x-40",
+              "method": "Ordinary complete native InputFrames from fresh L3; no relocation, only courier damage protection.",
+              "state": {
+                "tick": 6720,
+                "player": {
+                  "x": -39.84967803955078,
+                  "y": 0.7099999785423279,
+                  "z": 0.046402789652347565,
+                  "yaw": 0.10673599671328711
+                },
+                "zoom": 1.5,
+                "columns": [
+                  {
+                    "id": -2003610,
+                    "x": -42,
+                    "z": 1
+                  },
+                  {
+                    "id": -2003608,
+                    "x": -39,
+                    "z": -4
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-final-low/captures/low-moving-x-40-z1.5.png",
+              "seen": true,
+              "what": "Default/wide frame: two separate dark vertical smoke forms are discernible beside/behind the courier. Warm amber light and long shadows are visible. The broader street context shows the residential garden/crashed-car, shop-front, or boulevard vehicle-jam setting.",
+              "identifiableColumns": 2
+            }
+          ],
+          "routeSamples": {
+            "count": 448,
+            "first": {
+              "tick": 15,
+              "player": {
+                "x": -154.7152099609375,
+                "y": 0.7099999785423279,
+                "z": 1.206532597541809,
+                "yaw": 0.47516382285660846
+              },
+              "columns": []
+            },
+            "last": {
+              "tick": 6720,
+              "player": {
+                "x": -39.84967803955078,
+                "y": 0.7099999785423279,
+                "z": 0.046402789652347565,
+                "yaw": 0.10673599671328711
+              },
+              "columns": [
+                -2003570,
+                -2003608
+              ]
+            }
+          }
+        }
+      ],
+      "rawReceipt": "test-results/fix64-a/smoke-final-low/receipt.json",
+      "rawSha256": "99e523c02f4bdd05d249e0c505a8151bad6a3a7b1da79c54923bff63af048597"
+    },
+    {
+      "name": "final-high",
+      "sourceHash": "27857aeadd4b7c6c6837371520e80fa22a6417ceeef45e5aa1ac9c303c8c2d3f",
+      "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+      "runs": [
+        {
+          "tier": "high",
+          "frames": [
+            {
+              "file": "test-results/fix64-a/smoke-final-high/captures/high-static-oak-z0.5.png",
+              "sha256": "988740ff475ec5201e213b2eeb6b03c559e4a1104831829cc9f640b123f33935",
+              "name": "static-oak",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 120,
+                "player": {
+                  "x": -80,
+                  "y": 0.7049999833106995,
+                  "z": 28,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 0.5,
+                "columns": [
+                  {
+                    "id": -2005950,
+                    "x": -81,
+                    "z": 29
+                  },
+                  {
+                    "id": -2005926,
+                    "x": -80,
+                    "z": 26
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-final-high/captures/high-static-oak-z0.5.png",
+              "seen": true,
+              "what": "Closest pose: the courier/corgi remain visible, but smoke is cropped near the side/top of the frame and does not consistently read as two distinct rising structures. No numerical count is inferred from the emitter ledger."
+            },
+            {
+              "file": "test-results/fix64-a/smoke-final-high/captures/high-static-oak-z1.5.png",
+              "sha256": "c884c5453e4b5493ee8f160e9645d648dd151e33846340a909954e21b6fca90f",
+              "name": "static-oak",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 120,
+                "player": {
+                  "x": -80,
+                  "y": 0.7049999833106995,
+                  "z": 28,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 1.5,
+                "columns": [
+                  {
+                    "id": -2005890,
+                    "x": -87,
+                    "z": 29
+                  },
+                  {
+                    "id": -2005929,
+                    "x": -80,
+                    "z": 22
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-final-high/captures/high-static-oak-z1.5.png",
+              "seen": true,
+              "what": "Default/wide frame: two separate dark vertical smoke forms are discernible beside/behind the courier. Warm amber light and long shadows are visible. The broader street context shows the residential garden/crashed-car, shop-front, or boulevard vehicle-jam setting.",
+              "identifiableColumns": 2
+            },
+            {
+              "file": "test-results/fix64-a/smoke-final-high/captures/high-static-commerce-z0.5.png",
+              "sha256": "40fd02011db335ea0c004826c0367ab2684acdb68a0672ac90112c524358f221",
+              "name": "static-commerce",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 240,
+                "player": {
+                  "x": -40,
+                  "y": 0.7049999833106995,
+                  "z": 0,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 0.5,
+                "columns": [
+                  {
+                    "id": -2003620,
+                    "x": -41,
+                    "z": 1
+                  },
+                  {
+                    "id": -2003596,
+                    "x": -40,
+                    "z": -2
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-final-high/captures/high-static-commerce-z0.5.png",
+              "seen": true,
+              "what": "Closest Commerce pose: one readable vertical smoke stem is visible at left. The right-hand smoke is a clipped diffuse patch at the top/facade edge, rather than a second identifiable rising column. Courier and street markings remain visible.",
+              "identifiableColumns": 1
+            },
+            {
+              "file": "test-results/fix64-a/smoke-final-high/captures/high-static-commerce-z1.5.png",
+              "sha256": "77267f1b48ee19d781f20399b9e52a5a1376a5f5c05f41e74b2c4e4fee26f372",
+              "name": "static-commerce",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 240,
+                "player": {
+                  "x": -40,
+                  "y": 0.7049999833106995,
+                  "z": 0,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 1.5,
+                "columns": [
+                  {
+                    "id": -2003560,
+                    "x": -47,
+                    "z": 1
+                  },
+                  {
+                    "id": -2003599,
+                    "x": -40,
+                    "z": -6
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-final-high/captures/high-static-commerce-z1.5.png",
+              "seen": true,
+              "what": "Default/wide frame: two separate dark vertical smoke forms are discernible beside/behind the courier. Warm amber light and long shadows are visible. The broader street context shows the residential garden/crashed-car, shop-front, or boulevard vehicle-jam setting.",
+              "identifiableColumns": 2
+            },
+            {
+              "file": "test-results/fix64-a/smoke-final-high/captures/high-static-boulevard-z0.5.png",
+              "sha256": "437671e7b0ec8e2906679e1394c58a5f5a8e17e0bfc014125faabb145ed18b04",
+              "name": "static-boulevard",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 360,
+                "player": {
+                  "x": 18,
+                  "y": 0.7049999833106995,
+                  "z": -28,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 0.5,
+                "columns": [
+                  {
+                    "id": -2001470,
+                    "x": 17,
+                    "z": -27
+                  },
+                  {
+                    "id": -2001446,
+                    "x": 18,
+                    "z": -30
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-final-high/captures/high-static-boulevard-z0.5.png",
+              "seen": true,
+              "what": "Closest pose: the courier/corgi remain visible, but smoke is cropped near the side/top of the frame and does not consistently read as two distinct rising structures. No numerical count is inferred from the emitter ledger."
+            },
+            {
+              "file": "test-results/fix64-a/smoke-final-high/captures/high-static-boulevard-z1.5.png",
+              "sha256": "8166acddd3881282cfb45471708fe1138bcb91889cb3125caea57ea8677a6f58",
+              "name": "static-boulevard",
+              "method": "Controlled street pose; not route evidence.",
+              "state": {
+                "tick": 360,
+                "player": {
+                  "x": 18,
+                  "y": 0.7049999833106995,
+                  "z": -28,
+                  "yaw": 0.3205919885488634
+                },
+                "zoom": 1.5,
+                "columns": [
+                  {
+                    "id": -2001410,
+                    "x": 11,
+                    "z": -27
+                  },
+                  {
+                    "id": -2001449,
+                    "x": 18,
+                    "z": -34
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-final-high/captures/high-static-boulevard-z1.5.png",
+              "seen": true,
+              "what": "Default/wide frame: two separate dark vertical smoke forms are discernible beside/behind the courier. Warm amber light and long shadows are visible. The broader street context shows the residential garden/crashed-car, shop-front, or boulevard vehicle-jam setting.",
+              "identifiableColumns": 2
+            },
+            {
+              "file": "test-results/fix64-a/smoke-final-high/captures/high-moving-x-80-z0.5.png",
+              "sha256": "417b1ddb74b8d457e0e39a00b771b98a9edee58e9b1f0234ee85d20c7f077466",
+              "name": "moving-x-80",
+              "method": "Ordinary complete native InputFrames from fresh L3; no relocation, only courier damage protection.",
+              "state": {
+                "tick": 3315,
+                "player": {
+                  "x": -79.87092590332031,
+                  "y": 0.7099999785423279,
+                  "z": 27.375865936279297,
+                  "yaw": 4.340723924280255
+                },
+                "zoom": 0.5,
+                "columns": [
+                  {
+                    "id": -2005905,
+                    "x": -82,
+                    "z": 27
+                  },
+                  {
+                    "id": -2005926,
+                    "x": -80,
+                    "z": 26
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-final-high/captures/high-moving-x-80-z0.5.png",
+              "seen": true,
+              "what": "Closest pose: the courier/corgi remain visible, but smoke is cropped near the side/top of the frame and does not consistently read as two distinct rising structures. No numerical count is inferred from the emitter ledger."
+            },
+            {
+              "file": "test-results/fix64-a/smoke-final-high/captures/high-moving-x-80-z1.png",
+              "sha256": "89f51eaf6acf9f9d21814985ffade432274e900b16e7fd6401b311469701c43c",
+              "name": "moving-x-80",
+              "method": "Ordinary complete native InputFrames from fresh L3; no relocation, only courier damage protection.",
+              "state": {
+                "tick": 3315,
+                "player": {
+                  "x": -79.87092590332031,
+                  "y": 0.7099999785423279,
+                  "z": 27.375865936279297,
+                  "yaw": 4.340723924280255
+                },
+                "zoom": 1,
+                "columns": [
+                  {
+                    "id": -2005885,
+                    "x": -84,
+                    "z": 27
+                  },
+                  {
+                    "id": -2005938,
+                    "x": -79,
+                    "z": 24
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-final-high/captures/high-moving-x-80-z1.png",
+              "seen": true,
+              "what": "Default/wide frame: two separate dark vertical smoke forms are discernible beside/behind the courier. Warm amber light and long shadows are visible. The broader street context shows the residential garden/crashed-car, shop-front, or boulevard vehicle-jam setting.",
+              "identifiableColumns": 2
+            },
+            {
+              "file": "test-results/fix64-a/smoke-final-high/captures/high-moving-x-80-z1.5.png",
+              "sha256": "61d0387477661c5a271c43d5b6532cbeca317bd162d7157cf1aa8fc9a817f29d",
+              "name": "moving-x-80",
+              "method": "Ordinary complete native InputFrames from fresh L3; no relocation, only courier damage protection.",
+              "state": {
+                "tick": 3315,
+                "player": {
+                  "x": -79.87092590332031,
+                  "y": 0.7099999785423279,
+                  "z": 27.375865936279297,
+                  "yaw": 4.340723924280255
+                },
+                "zoom": 1.5,
+                "columns": [
+                  {
+                    "id": -2005885,
+                    "x": -84,
+                    "z": 27
+                  },
+                  {
+                    "id": -2005938,
+                    "x": -79,
+                    "z": 24
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-final-high/captures/high-moving-x-80-z1.5.png",
+              "seen": true,
+              "what": "Default/wide frame: two separate dark vertical smoke forms are discernible beside/behind the courier. Warm amber light and long shadows are visible. The broader street context shows the residential garden/crashed-car, shop-front, or boulevard vehicle-jam setting.",
+              "identifiableColumns": 2
+            },
+            {
+              "file": "test-results/fix64-a/smoke-final-high/captures/high-moving-x-40-z0.5.png",
+              "sha256": "8d5f33077268c536b9eff00aad4f5c31a2bfeb874386d64c52b9a84234b76723",
+              "name": "moving-x-40",
+              "method": "Ordinary complete native InputFrames from fresh L3; no relocation, only courier damage protection.",
+              "state": {
+                "tick": 4500,
+                "player": {
+                  "x": -39.481842041015625,
+                  "y": 0.7089999914169312,
+                  "z": -1.2478097677230835,
+                  "yaw": 3.101933017072089
+                },
+                "zoom": 0.5,
+                "columns": [
+                  {
+                    "id": -2003585,
+                    "x": -41,
+                    "z": -1
+                  },
+                  {
+                    "id": -2003607,
+                    "x": -39,
+                    "z": -3
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-final-high/captures/high-moving-x-40-z0.5.png",
+              "seen": true,
+              "what": "Closest pose: the courier/corgi remain visible, but smoke is cropped near the side/top of the frame and does not consistently read as two distinct rising structures. No numerical count is inferred from the emitter ledger."
+            },
+            {
+              "file": "test-results/fix64-a/smoke-final-high/captures/high-moving-x-40-z1.png",
+              "sha256": "4421cb8ad1012dd81076173eb12584ce732f3a7a93e9382ad488cacb73ceae37",
+              "name": "moving-x-40",
+              "method": "Ordinary complete native InputFrames from fresh L3; no relocation, only courier damage protection.",
+              "state": {
+                "tick": 4500,
+                "player": {
+                  "x": -39.481842041015625,
+                  "y": 0.7089999914169312,
+                  "z": -1.2478097677230835,
+                  "yaw": 3.101933017072089
+                },
+                "zoom": 1,
+                "columns": [
+                  {
+                    "id": -2003607,
+                    "x": -39,
+                    "z": -3
+                  },
+                  {
+                    "id": -2003555,
+                    "x": -44,
+                    "z": -1
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-final-high/captures/high-moving-x-40-z1.png",
+              "seen": true,
+              "what": "Default/wide frame: two separate dark vertical smoke forms are discernible beside/behind the courier. Warm amber light and long shadows are visible. The broader street context shows the residential garden/crashed-car, shop-front, or boulevard vehicle-jam setting.",
+              "identifiableColumns": 2
+            },
+            {
+              "file": "test-results/fix64-a/smoke-final-high/captures/high-moving-x-40-z1.5.png",
+              "sha256": "5b8253fd9ffe3caa652d75360ffb883b9a10941e6ee8aee59928591c62be3b71",
+              "name": "moving-x-40",
+              "method": "Ordinary complete native InputFrames from fresh L3; no relocation, only courier damage protection.",
+              "state": {
+                "tick": 4500,
+                "player": {
+                  "x": -39.481842041015625,
+                  "y": 0.7089999914169312,
+                  "z": -1.2478097677230835,
+                  "yaw": 3.101933017072089
+                },
+                "zoom": 1.5,
+                "columns": [
+                  {
+                    "id": -2003555,
+                    "x": -44,
+                    "z": -1
+                  },
+                  {
+                    "id": -2003599,
+                    "x": -40,
+                    "z": -6
+                  }
+                ]
+              },
+              "originalFile": "test-results/fix64-a/smoke-final-high/captures/high-moving-x-40-z1.5.png",
+              "seen": true,
+              "what": "Default/wide frame: two separate dark vertical smoke forms are discernible beside/behind the courier. Warm amber light and long shadows are visible. The broader street context shows the residential garden/crashed-car, shop-front, or boulevard vehicle-jam setting.",
+              "identifiableColumns": 2
+            }
+          ],
+          "routeSamples": {
+            "count": 300,
+            "first": {
+              "tick": 15,
+              "player": {
+                "x": -154.7152099609375,
+                "y": 0.7099999785423279,
+                "z": 1.206532597541809,
+                "yaw": 0.47516382285660846
+              },
+              "columns": []
+            },
+            "last": {
+              "tick": 4500,
+              "player": {
+                "x": -39.481842041015625,
+                "y": 0.7089999914169312,
+                "z": -1.2478097677230835,
+                "yaw": 3.101933017072089
+              },
+              "columns": [
+                -2003525,
+                -2003589
+              ]
+            }
+          }
+        }
+      ],
+      "rawReceipt": "test-results/fix64-a/smoke-final-high/receipt.json",
+      "rawSha256": "10e7684ce22ccb960a769e9ffb129331c9b49c9ba2ffde7d3b8e9d6fac691197"
+    }
+  ],
+  "verdict": "FAIL",
+  "counterexample": "Final low/static-commerce, actual zoom0.5: one identifiable rising column, below2. Default zoom1 moving frames show2; that scoped success does not cover the whole required zoom/street matrix.",
+  "rejectedTrials": "Framing lower stems and reducing puff size did not resolve closest-view readability without foreground smoke curtains; both patches reverted. Counts, emitters, lifetime and pool caps were not reduced in the shipped game.",
+  "poReview": "P: inspect final low/high Oak, Commerce and Boulevard at both zoom limits: does the amber light read late afternoon, and are residential wrecked gardens, looted shop fronts and the boulevard jam sufficiently distinct? Smoke count remains an objective FAIL."
+}

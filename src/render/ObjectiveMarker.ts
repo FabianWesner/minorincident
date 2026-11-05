@@ -37,9 +37,9 @@ export class ObjectiveMarker extends Group {
     if(anchor)this.position.set(anchor.x,markerSurfaceY(this.world,anchor),anchor.z);
     this.routeCue.visible = false;
     const player = this.world.entities.get(1), nav = this.world.infected?.nav;
-    if (this.visible && this.world.scenario === 'L1' && mission?.state.marker === 'parcel-counter' && anchor && player && nav) {
-      // L1's straight destination bearing sent new players into the depot's
-      // rear fence. Show the next walkable leg without moving its destination.
+    if (this.visible && this.world.scenario === 'L1' && (mission?.state.marker === 'parcel-counter' || mission?.state.marker === 'lab-door' || mission?.state.marker === 'garage-door') && anchor && player && nav) {
+      // L1's depot, Annex and garage fences make a direct bearing ambiguous.
+      // Show the next walkable leg without moving the destination.
       if (anchor !== this.cueAnchor) {
         this.cueAnchor = anchor; this.cueRoute.path.length = 0; this.cueRoute.goal = -1; this.cueTick = -Infinity;
       }

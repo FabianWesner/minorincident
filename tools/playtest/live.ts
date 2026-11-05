@@ -1,6 +1,6 @@
 import { createServer } from 'node:http';
 import { spawn, type ChildProcess } from 'node:child_process';
-import { appendFileSync, existsSync, mkdirSync } from 'node:fs';
+import { appendFileSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { launchBrowser } from '../browser-pool/client';
 import { look, type Body, type Eyes } from './eyes';
@@ -103,6 +103,29 @@ const beginMission = async () => {
 };
 await beginMission();
 
+// A route-readability check can begin at the real fallback after an ordinary
+// native InputFrame prefix. The screenshot player receives no route decisions
+// from that setup and owns every input once the checkpoint objective appears.
+if (process.argv.includes('--l3-retreat-prefix')) {
+  if (!screenOnly || level !== 'L3' || !process.env.LUNA_RUN_DIR) throw Error('Retreat prefix requires a recorded screenshot-only L3 session');
+  const prefix = await page.evaluate(async () => {
+    const a = window.__SS__!;
+    a.pause(); a.bot.start('complete', { street: 'auto' });
+    try {
+      for (let i = 0; i < 1800 && !a.missions.state()!.l3!.fallbackAt; i++) await a.step(5);
+    } finally { a.bot.stop(); a.input.clear(); }
+    if (!a.missions.state()!.l3!.fallbackAt) throw Error('Native retreat prefix did not reach fallback');
+    a.camera.follow(); a.camera.zoom(1);
+    return { tick: a.getState().tick, marker: a.missions.state()!.marker, fallbackAt: a.missions.state()!.l3!.fallbackAt,
+      method: 'Ordinary native complete InputFrames through actual fallback; no relocation, actor protection, objective skips or onward route assist.' };
+  });
+  mkdirSync(process.env.LUNA_RUN_DIR, { recursive: true });
+  writeFileSync(resolve(process.env.LUNA_RUN_DIR, 'prefix.json'), JSON.stringify(prefix, null, 2) + '\n');
+  if (!step) await page.evaluate(() => window.__SS__!.resume());
+}
+
+if (step) await page.evaluate(() => window.__SS__!.pause());
+
 // PO 11-01: "a mode where the user cannot die, so an agent has a chance to play it. This is not for judging fun but to check
 // the acceptance criterias". Screen play is immortal unless LUNA_MORTAL=1: attacks still land and are logged, but the courier takes no damage.
 const immortal = screenOnly && process.env.LUNA_MORTAL !== '1';
@@ -164,7 +187,7 @@ let screenBatch: { from: number; to: number } | null = null;
 const deathsByLevel = new Map<string, number>();
 let deathVisible = false;
 const screenResponse = async (action?: Act) => {
-  const out = resolve('test-results/live');
+  const out = resolve(process.env.LUNA_RUN_DIR ?? 'test-results/live');
   mkdirSync(out, { recursive: true });
   const path = resolve(out, 'shot.jpg');
   const keepPath = resolve(out, 'shot-keep.jpg');
@@ -241,7 +264,7 @@ createServer((req, res) => {
         screenBatch = { from: batch.from!, to: batch.to! }; lastInput = Date.now();
         res.end(JSON.stringify({ accepted: true, ...screenBatch }) + '\n'); return;
       }
-      if (req.url === '/shot') { const path = resolve(`test-results/live/shot.jpg`); await page.screenshot({ path, type: 'jpeg', quality: screenOnly ? 60 : 50, scale: 'css', clip: { x: 0, y: 0, width: 1280, height: 720 } }); res.end(path + '\n'); return; }
+      if (req.url === '/shot') { const path = resolve(process.env.LUNA_RUN_DIR ?? 'test-results/live', 'shot.jpg'); await page.screenshot({ path, type: 'jpeg', quality: screenOnly ? 60 : 50, scale: 'css', clip: { x: 0, y: 0, width: 1280, height: 720 } }); res.end(path + '\n'); return; }
       if (req.url === '/act') {
         const a = JSON.parse(data || '{}') as Act;
         if (screenOnly && process.env.LUNA_RUN_DIR && screenBatch && (!Number.isSafeInteger(a.playerTurn) || a.playerTurn! < screenBatch.from || a.playerTurn! > screenBatch.to)) {
@@ -258,7 +281,10 @@ createServer((req, res) => {
             mkdirSync(frames, { recursive: true });
             await page.screenshot({ path: resolve(frames, `turn-${String(a.playerTurn).padStart(6, '0')}-input.jpg`), type: 'jpeg', quality: 70, scale: 'css', clip: { x: 0, y: 0, width: 1280, height: 720 } });
           }
+          const tick = () => page.evaluate(() => (window.__SCENE__ as unknown as { game: { world: { tick: number } } }).game.world.tick);
+          const beforeTick = process.env.LUNA_TIMING_LEDGER === '1' ? await tick() : null;
           await clock(true); await act(a); if (!a.move && !a.hold && !a.wait) await hold(step ? 400 : 700); await clock(false);
+          if (beforeTick !== null && process.env.LUNA_RUN_DIR) appendFileSync(resolve(process.env.LUNA_RUN_DIR, 'timing.jsonl'), JSON.stringify({ playerTurn: a.playerTurn, beforeTick, afterTick: await tick() }) + '\n');
         }
       }
       if (screenOnly) res.end(JSON.stringify(await screenResponse(acceptedAction)) + '\n');

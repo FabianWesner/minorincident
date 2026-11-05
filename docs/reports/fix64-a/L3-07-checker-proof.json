@@ -1,0 +1,112 @@
+{
+  "checkerSha256": "0796a176d69f302647ce2c485a68ba22d60b24d0b1caa0dceba19ce8ff15fb22",
+  "method": "Synthetic clause controls against the same function used by the native battery; the row is limited to visible squad hits and player damage in segment 1.",
+  "cases": [
+    {
+      "name": "one officer hit with no kill qualifies",
+      "report": {
+        "s1": {
+          "completed": true,
+          "officerHits": 1,
+          "officerKills": 0,
+          "playerKills": 99,
+          "damage": 99
+        },
+        "outcome": "complete",
+        "deaths": 0
+      },
+      "expected": true,
+      "actual": true
+    },
+    {
+      "name": "zero officer hits fails despite kills",
+      "report": {
+        "s1": {
+          "completed": true,
+          "officerHits": 0,
+          "officerKills": 5,
+          "playerKills": 0,
+          "damage": 0
+        },
+        "outcome": "complete",
+        "deaths": 0
+      },
+      "expected": false,
+      "actual": false
+    },
+    {
+      "name": "exactly100HP fails",
+      "report": {
+        "s1": {
+          "completed": true,
+          "officerHits": 1,
+          "officerKills": 0,
+          "playerKills": 0,
+          "damage": 100
+        },
+        "outcome": "complete",
+        "deaths": 0
+      },
+      "expected": false,
+      "actual": false
+    },
+    {
+      "name": "later death does not invalidate measured segment",
+      "report": {
+        "s1": {
+          "completed": true,
+          "officerHits": 1,
+          "officerKills": 0,
+          "playerKills": 0,
+          "damage": 0
+        },
+        "outcome": "complete",
+        "deaths": 1
+      },
+      "expected": true,
+      "actual": true
+    },
+    {
+      "name": "unfinished later route does not invalidate measured segment",
+      "report": {
+        "s1": {
+          "completed": true,
+          "officerHits": 1,
+          "officerKills": 0,
+          "playerKills": 0,
+          "damage": 0
+        },
+        "outcome": "timeout",
+        "deaths": 0
+      },
+      "expected": true,
+      "actual": true
+    },
+    {
+      "name": "unfinished segment stays unqualified",
+      "report": {
+        "s1": {
+          "completed": false,
+          "officerHits": 1,
+          "officerKills": 0,
+          "playerKills": 0,
+          "damage": 0
+        },
+        "outcome": "timeout",
+        "deaths": 0
+      },
+      "expected": "NOT CHECKED",
+      "actual": "NOT CHECKED"
+    },
+    {
+      "name": "missing segment observation stays unqualified",
+      "report": {
+        "s1": null,
+        "outcome": "complete",
+        "deaths": 0
+      },
+      "expected": "NOT CHECKED",
+      "actual": "NOT CHECKED"
+    }
+  ]
+}

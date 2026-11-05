@@ -13,9 +13,9 @@ export function l3HumanCensus(humans: { archetype: string; speed: number }[]) {
 }
 export const l3HumansPass = (census: ReturnType<typeof l3HumanCensus>) => census.count > 0 && census.regularMax <= 4 && census.fraction! <= .05;
 
-/** PO 11-05: positive officer contribution replaces the old kill-share floor. */
+/** PO 11-05: a real squad hit replaces the old kill-share floor; segment kills are not required. */
 export function l3SegmentOnePass(report: Pick<ReturnType<typeof runL3>, 's1' | 'outcome' | 'deaths'>): boolean | undefined {
-  return report.s1 && report.outcome === 'complete' && report.deaths === 0 ? report.s1.officerKills > 0 && report.s1.damage < 100 : undefined;
+  return report.s1?.completed ? report.s1.officerHits > 0 && report.s1.damage < 100 : undefined;
 }
 
 /** Reuse the existing production-input batteries. Reports retain the policy and mortality setting;
@@ -207,8 +207,8 @@ export async function batteryFixtures(level: RunnerLevel, tier: Tier, add: Add, 
             report.outcome === 'complete' ? waveCensus.every(row => row.admitted === row.expected && Object.values(row.byDirection).every(count => count > 0) && row.station === row.expected / 5 && row.stationPoliceLook === row.station && row.missingAppearance === 0) : undefined);
           const census = l3HumanCensus(humans);
           add('L3-09', 'native L3 human speed and admitted sprinter fraction', { ...census, outcome: report.outcome, counting: 'spawn transactions; checkpoint-reused IDs are separate admissions' }, 'regular≤4m/s; sprinters≤5% of actual admissions', census.regularMax > 4 ? false : census.count && report.outcome === 'complete' ? l3HumansPass(census) : undefined);
-          const s1 = report.s1, total = s1 ? s1.officerKills + s1.playerKills : 0;
-          add('L3-07', 'mortal segment1 officers land kills and player damage', { ...s1, share: total ? s1!.officerKills / total : null, deaths: report.deaths, outcome: report.outcome }, 'officers land at least one kill; player damage<100HP', l3SegmentOnePass(report));
+          const s1 = report.s1;
+          add('L3-07', 'mortal segment1 officers land hits and player damage', { ...s1, deaths: report.deaths, outcome: report.outcome }, 'officers land at least one hit; player damage<100HP', l3SegmentOnePass(report));
           const density = report.density;
           add('L3-08', 'authored segment populations before admission/death relief', density.prepopulated, '250/625/1000 each±20%; these are pending population slots, not simultaneous live entities', density.prepopulated.every(n => n > 0) ? density.prepopulated.every((n, i) => Math.abs(n - [250, 625, 1000][i]) <= [250, 625, 1000][i] * .2) : undefined);
           add('L3-08', 'median live within30m by traversed segment and concurrent cap', density, 'medianS1<S2<S3;max≤200high/100low', report.outcome === 'complete' ? density.near30[0] < density.near30[1] && density.near30[1] < density.near30[2] && density.maxConcurrent <= (tier === 'low' ? 100 : 200) : undefined);

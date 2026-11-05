@@ -1,0 +1,27 @@
+{
+  "command": "npm run qa:threat",
+  "arguments": [],
+  "exitCode": 0,
+  "revision": "7fc617d5e751e20170b89095190311bfa58aa9af",
+  "sourceHash": "27857aeadd4b7c6c6837371520e80fa22a6417ceeef45e5aa1ac9c303c8c2d3f",
+  "startedAt": "2026-11-05T22:38:35.483175+00:00",
+  "seconds": 507.170051334,
+  "levels": 10,
+  "flags": [],
+  "receipt": "docs/reports/fix64-a/qa-threat-final.json.gz",
+  "receiptSha256": "ec06e4ab14196797fba975af65050106bdf359ab373a83375b3cf07c40faae91",
+  "rawAuditSha256": "fab8a2c9cca5a23b3cd27cc5d6a032d9c591250567ab25f11a19db757a0f6abd",
+  "logSha256": "efbcfbf32caf96d7e9657197446a707abe852a07b104d7a85e925fff61dae4d1",
+  "log": "\n> qa:threat\n> node tools/qa/test-budget.mjs --name qa-threat --max-seconds 600 -- node --import tsx/esm tools/qa/threat-audit.ts\n\n[test-budget] 150/150 test cases ({\"vitest\":129,\"e2e\":9,\"invariantsBrowser\":12}), 43/45 files\n[qa:threat] L1: skilled and passive native routes, seed=1, low population\n[qa:threat] L1: skilled complete, passive complete, 0 passive flags (23.1s)\n[qa:threat] L2: skilled and passive native routes, seed=1, low population\n[qa:threat] L2: skilled complete, passive complete, 0 passive flags (37.5s)\n[qa:threat] L3: skilled and passive native routes, seed=1, low population\n[qa:threat] L3: skilled complete, passive tick-budget, 0 passive flags (124.2s)\n[qa:threat] L4: skilled and passive native routes, seed=1, low population\n[qa:threat] L4: high-tier native hold census through the line break\n[qa:threat] L4 high hold: {\"tier\":\"high\",\"holdComplete\":true,\"firstBreachLevelSeconds\":52.71666666666667,\"firstBreachAfterTurnSeconds\":19.9,\"aliveAtFirstBreach\":65,\"peakAlive\":93,\"peakPlazaAlive\":90,\"minPlazaAliveAfter45Seconds\":68,\"samplesAfter45Seconds\":8760,\"arrivalEdges\":[0,1,2,3,4,5],\"threeDirectionsAtLeast60Degrees\":true,\"maxGroupAtOneSourcePerTick\":5,\"firstAttackSeconds\":7.716666666666667,\"lineBreakAfterTurnSeconds\":190}\n[qa:threat] L4: skilled complete, passive tick-budget, 0 passive flags (155.3s)\n[qa:threat] L5: skilled and passive native routes, seed=1, low population\n[qa:threat] L5: skilled complete, passive tick-budget, 0 passive flags (83.1s)\n[qa:threat] L6: skilled and passive native routes, seed=1, low population\n[qa:threat] L6: skilled complete, passive tick-budget, 0 passive flags (6.1s)\n[qa:threat] L7: skilled and passive native routes, seed=1, low population\n[qa:threat] L7: skilled complete, passive complete, 0 passive flags (16.9s)\n[qa:threat] L8: skilled and passive native routes, seed=1, low population\n[qa:threat] L8: skilled complete, passive tick-budget, 0 passive flags (20.4s)\n[qa:threat] L9: skilled and passive native routes, seed=1, low population\n[qa:threat] L9: skilled complete, passive complete, 0 passive flags (8.0s)\n[qa:threat] L10: skilled and passive native routes, seed=1, low population\n[qa:threat] L10: skilled complete, passive tick-budget, 0 passive flags (32.5s)\n[qa:threat] 507.2s; 0 fail flags; test-results/qa-threat/README.md\n[test-budget] qa-threat: 511.5 s (budget 600 s)\n",
+  "otherOwnedChecksRunning": false,
+  "gateScope": "Existing threat-audit.ts exit gate aggregates passiveFlags and focused criteria; skilled-route flags are retained as diagnostics.",
+  "skilledRouteDiagnostics": [
+    {
+      "level": "L3",
+      "flags": [
+        "wave/station-0:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+        "wave/station-2:WAVE_NO_ATTACK_WITHIN_20_SECONDS"
+      ]
+    }
+  ]
+}

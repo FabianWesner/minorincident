@@ -660,7 +660,7 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
     ...['stationary first real player attack (phase clock)'].map(clause => ({ clause, policy: 'stationary' })),
   ]],
   ['L3-04', ['exact first-of fallback boundary and cause', 'idle fallback deadline and officer identity/uniform', 'controlled first-of fallback boundaries'].map(clause => ({ clause, policy: 'controlled-fixture' }))],
-  ['L3-07', [{ clause: 'mortal segment1 officers land kills and player damage', policy: 'controlled-fixture' }]],
+  ['L3-07', [{ clause: 'mortal segment1 officers land hits and player damage', policy: 'controlled-fixture' }]],
   ['L3-08', ['authored segment populations before admission/death relief', 'median live within30m by traversed segment and concurrent cap'].map(clause => ({ clause, policy: 'controlled-fixture' }))],
   ['L3-09', [{ clause: 'native L3 human speed and admitted sprinter fraction', policy: 'controlled-fixture' }]],
   ['L3-10', ['native idle pressure schedule and offscreen source band', 'native idle pressure actual admissions per full ten-second window', 'native pressure queued admissions stop on advance'].map(clause => ({ clause, policy: 'controlled-fixture' }))], // Exact-clause review must cover the remaining progress lines.

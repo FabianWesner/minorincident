@@ -1,32 +1,42 @@
 {
   "row": "L3-06",
   "status": "FAIL",
-  "reviewer": "Codex fix63-a",
+  "reviewer": "Codex fix64-a",
   "date": "2026-11-05",
-  "commit": "b092ea0463aa87d8a7bad7d912a6609ca681d967",
+  "commit": "91c25c7feccd8e6b58f829304151d2ee62fd6d38",
   "clauses": [
     {
       "clause": "Squad of 3\u20134 forms, follows 3\u20136 m (officers fire while moving, PO 2026-11-05), never teleports; size non-increasing per segment, \u2264 2 at the army line; every loss a bite/kill/separation.",
       "verdict": "FAIL",
-      "note": "Both tiers form4. Low still fails the unchanged3\u20136m calm follow band: back members median6.475/6.364m, max7.814m; high has no calm survivors. Moving-fire code and visual inspection do not excuse that distance failure. Tighter controller trial was rejected after3 reached the army line."
+      "note": "Fresh baseline native low still exceeds3\u20136m (rear medians6.475/6.364m, maximum7.814m), high has no calm survivors. A new calm-only velocity-plus-slot correction improves the rear medians to5.881/5.529m, but4 officers reach the army line and transient samples still exceed6m. The candidate was rejected and reverted; no attrition target or spacing criterion changed. Actual moving-fire presentation is separately proven for both tiers in L3-07."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix63-a/L3-06-native-proof.json",
-      "sha256": "1905753b5b3a7fa8beb7fd1856cb0f4f7d1dac1bb3d0ba7f5176f6c3efd7e674",
-      "what": "Both tiers form4. Low still fails the unchanged3\u20136m calm follow band: back members median6.475/6.364m, max7.814m; high has no calm survivors. Moving-fire code and visual inspection do not excuse that distance failure. Tighter controller trial was rejected after3 reached the army line."
+      "file": "docs/reports/fix64-a/L3-06-current.json",
+      "sha256": "5614dcbb1670032c91943c4842e780e99bf563fee2fddb3b8ee9bd8c555b5881",
+      "what": "Fresh final-source native/fixture checks: low rear medians6.475/6.364m, max7.814m; high loses all4 in yard; final survivors1/0, every loss bite."
     },
     {
-      "file": "docs/reports/fix63-a/L3-visual-proof.json",
-      "sha256": "4c523dea01b2fdf5ecb295e1571516b58eca364c7b6551653261abd63f355321",
-      "what": "Personally inspected low/high presentation. Moving shot speeds are recorded; opening pixel fraction and calm spacing are not inferred from screenshots."
+      "file": "docs/reports/fix64-a/L3-officer-ledger.json",
+      "sha256": "cded0405052a4fcb48e100932d05634643f012f09d428782c3d5402cc9c89c7f",
+      "what": "Original fresh mortal both-tier native reports, full shot/hit/loss ledgers, unchanged baseline follow ranges."
     },
     {
-      "file": "docs/reports/fix63-a/L3-06-reviewed.jpg",
-      "sha256": "c2379eb257b30d0e7106408cc791b1fac29c7510cd67530fb089ce215c65c48a",
-      "what": "Low/high zoom1.5 retreat poses, guns raised while walking/running amid attackers."
+      "file": "docs/reports/fix64-a/L3-06-trial-summary.json",
+      "sha256": "36ad9fa1663b16077ddd249c40c00e80a865ea334a63aaf579d8d464a69bcc66",
+      "what": "Candidate medians, every member band samples, per-segment sizes and4 surviving army arrivals; explains rejection."
+    },
+    {
+      "file": "docs/reports/fix64-a/L3-06-rejected-trial.json.gz",
+      "sha256": "2eee37b61b48abe6e4a0247aa353cbe7872106721b11680a76754cc7f2474d41",
+      "what": "Complete candidate report and read-only event ledger; exact game source hash for the rejected change."
+    },
+    {
+      "file": "docs/reports/fix64-a/L3-06-rejected-trial.patch",
+      "sha256": "67707dc57b9eb5a0a26f6a2c447429de868fd1cbd897eb3e8ed9d956fae3b420",
+      "what": "Exact calm-only feedforward controller trial, reverted byte-for-byte after the cardinality regression."
     }
   ],
-  "notes": "Current exact PO criterion. Historical superseded review is archived in fix63-a; no old receipt was rebound."
+  "notes": "Final source refresh: native low/high and all controlled fixtures rerun after the L1 marker change. Calm spacing still fails; rejected candidate remains reverted. Measured FAIL remains. The trial changed only calm movement, not damage immunity, counts, cap, timers or combat. The requirement\u22642 at army prevents shipping this otherwise promising spacing improvement."
 }

@@ -6,7 +6,7 @@ import { SceneSession, stopServer } from '../scenelab/session';
 import { provenance } from './accept/probe';
 import type { Game } from '../../src/Game';
 
-const out = 'test-results/fix62-a/smoke';
+const out = process.env.SMOKE_OUT ?? 'test-results/fix62-a/smoke';
 mkdirSync(`${out}/captures`, { recursive: true });
 const runs = [];
 try {

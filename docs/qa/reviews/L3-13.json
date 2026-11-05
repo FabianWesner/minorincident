@@ -1,47 +1,42 @@
 {
   "row": "L3-13",
   "status": "FAIL",
-  "reviewer": "Codex fix62-a",
+  "reviewer": "Codex fix64-a",
   "date": "2026-11-05",
-  "commit": "ba261cb1a0076bb617f99ea85488ff713b79635a",
+  "commit": "f8d88ddc14f6c9608e9004f80aa757788d795b8a",
   "clauses": [
     {
       "clause": "Raised corridor: no deck gaps or dark seams at the ramps; no infected clumps stuck between barrier rows; no body hanging on walls.",
       "verdict": "FAIL",
-      "note": "Fresh both-tier physical entry-bend traversal at zoom0.5/1.5 still shows living infected bodies beyond inner barrier ends at x144/x156 and after5/10s settling. All32 images personally reviewed; ledger retains health, transform and figure feet for existing infected including converted humans. Scope stopsx157; no claim on later corridor. No small proven game fix established; keep FAIL."
+      "note": "Fresh full physical traversal from x135 to216 at both tiers, followed by10s settling. All72 frames inspected. The entry S-bends still show interrupted deck/rail surfaces and living infected appearing suspended beyond the visible inner edge, notably high/x150 close view. The trajectory/foot ledger and support audit do not prove actor roots outside the nominal deck width; rendering/occlusion versus physical support remains unresolved. Keep FAIL; no small causal game fix established. Final rescue camera locks the requested zoom pair, so no independent late-route zoom qualification is claimed. Final-source refresh after the unrelated L1 cue change: all16 high entry images inspected at recorded actualzoom0.5/1.5; the same living body appears past the broken inner edge atx150 and remains visible after10s atx157. This fresh counterexample retains FAIL."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix62-a/L3-13-browser.json.gz",
-      "sha256": "1d0953bd7200cf2aa68d1b339830f8520038d4a1c225bb90f1b814ee98ccf123",
-      "what": "Fresh both-tier physical entry-bend traversal at zoom0.5/1.5 still shows living infected bodies beyond inner barrier ends at x144/x156 and after5/10s settling. All32 images personally reviewed; ledger retains health, transform and figure feet for existing infected including converted humans. Scope stopsx157; no claim on later corridor. No small proven game fix established; keep FAIL."
+      "file": "docs/reports/fix64-a/L3-13-entry-high.json.gz",
+      "sha256": "67d417100fb2494f7cd23ff9df5509236baa052cda10456d049ed305ded35caf",
+      "what": "Current-source actual camera, actor health, transform and rendered-foot states; native physical entry traversal and10s settling. Raw53MB command duplication omitted; full receipt hash retained."
     },
     {
-      "file": "docs/reports/fix62-a/L3-13-image-review.json",
-      "sha256": "b391778c6af6c123ad6626a568d9ebb13b969d69503945b344fc31f452559beb",
-      "what": "Fresh both-tier physical entry-bend traversal at zoom0.5/1.5 still shows living infected bodies beyond inner barrier ends at x144/x156 and after5/10s settling. All32 images personally reviewed; ledger retains health, transform and figure feet for existing infected including converted humans. Scope stopsx157; no claim on later corridor. No small proven game fix established; keep FAIL."
+      "file": "docs/reports/fix64-a/L3-13-entry-high-images.json",
+      "sha256": "ada5e8da2b461f8c3436316a37522d6effd8f2bc8243ccdabe2ee969ddc7bc2b",
+      "what": "Personally inspected all16 current-source high entry images, actual zoom0.5/1.5; ten-second settling atx157. Living wall-body appearance persists. Collision root penetration is not established."
     },
     {
-      "file": "docs/reports/fix62-a/reviewed/ramp-high-1.jpg",
-      "sha256": "015eb4093e8a44679a2cb352132b124a0a15a0544bacb4ba145935cb6dd56ef2",
-      "what": "Fresh both-tier physical entry-bend traversal at zoom0.5/1.5 still shows living infected bodies beyond inner barrier ends at x144/x156 and after5/10s settling. All32 images personally reviewed; ledger retains health, transform and figure feet for existing infected including converted humans. Scope stopsx157; no claim on later corridor. No small proven game fix established; keep FAIL."
+      "file": "docs/reports/fix64-a/L3-13-image-review.json",
+      "sha256": "c0921ce211634204f4aa9e4b99b57471260308a286f99c5519468eba276afbf8",
+      "what": "Personally inspected all72 captures; exact per-image hashes, observations, full-route command count/tick endpoints and actual camera limitation."
     },
     {
-      "file": "docs/reports/fix62-a/reviewed/ramp-high-2.jpg",
-      "sha256": "811cb59ae4331cba9543774014d8f72ee5f025c5ccdde52d0e0949b8c86c87c4",
-      "what": "Fresh both-tier physical entry-bend traversal at zoom0.5/1.5 still shows living infected bodies beyond inner barrier ends at x144/x156 and after5/10s settling. All32 images personally reviewed; ledger retains health, transform and figure feet for existing infected including converted humans. Scope stopsx157; no claim on later corridor. No small proven game fix established; keep FAIL."
+      "file": "docs/reports/fix64-a/L3-13-frames.json.gz",
+      "sha256": "d95fabb8a9b7b051b87c062692d97ffcda6b524b148aa94a7fb42a8d5888a9eb",
+      "what": "Exact captured actor health/transforms and rendered-foot samples for both tiers across the full route; compressed from the physical traversal receipts."
     },
     {
-      "file": "docs/reports/fix62-a/reviewed/ramp-low-1.jpg",
-      "sha256": "7befde972055aa6f9f5f219e8133f263c1073e3152d9ff8f63aa445fe6bf9d66",
-      "what": "Fresh both-tier physical entry-bend traversal at zoom0.5/1.5 still shows living infected bodies beyond inner barrier ends at x144/x156 and after5/10s settling. All32 images personally reviewed; ledger retains health, transform and figure feet for existing infected including converted humans. Scope stopsx157; no claim on later corridor. No small proven game fix established; keep FAIL."
-    },
-    {
-      "file": "docs/reports/fix62-a/reviewed/ramp-low-2.jpg",
-      "sha256": "171a6ba9dba829ab673b12d442a3cdc4a7bf1e229f3a0d42f5c18d6f50072396",
-      "what": "Fresh both-tier physical entry-bend traversal at zoom0.5/1.5 still shows living infected bodies beyond inner barrier ends at x144/x156 and after5/10s settling. All32 images personally reviewed; ledger retains health, transform and figure feet for existing infected including converted humans. Scope stopsx157; no claim on later corridor. No small proven game fix established; keep FAIL."
+      "file": "docs/reports/fix64-a/L3-13-support-audit.json",
+      "sha256": "f8f91efc0e90644ec335863554c197da91c64348c41a1b64a5aa8ee852b426c9",
+      "what": "Read-only native support/formula correlation:167 root/foot witnesses,0 outside-width roots. Prevents falsely attributing the visible hanging appearance to actor-root penetration."
     }
   ],
-  "notes": "Courier damage suppressed solely for geometry observation. No relocation/spawns/progression skip. No wall, body, nav or target changes. WebGL2/Metal headless pool. First low setup failure excluded; successful repeat retained."
+  "notes": "All captures are under test-results and will be deleted after recording their SHA-256 and observations. No targets, counts, timers or collision geometry were changed."
 }
