@@ -556,7 +556,7 @@ export class CrowdView extends Group {
           if (blastParts) this.staticCorpses.prepare(`${key}:${death}:31`, source, material, corpseClip, frame, false, blastParts);
         }
       }
-      if (lod === 'lod1' && regularInfectedModels.some(id => id === asset)) for (const death of corpsePoses) {
+      if (lod === 'lod1' && (regularInfectedModels.some(id => id === asset) || this.world.scenario === 'L4' && human && !alpha)) for (const death of corpsePoses) {
         const frame = infectedClips.indexOf(death) * framesPerClip + framesPerClip - 1;
         this.staticCorpses.prepare(`${key}:${death}:0:near`, mesh.geometry, material, baked.clip, frame, true);
         if (blastParts) this.staticCorpses.prepare(`${key}:${death}:31:near`, mesh.geometry, material, baked.clip, frame, true, blastParts);
@@ -666,6 +666,10 @@ export class CrowdView extends Group {
       }
       if (view && !e.corpse && !this.frustum.intersectsSphere(this.bounds)) continue;
       let lod: 'lod0' | 'lod1' | 'lod2' = this.low ? this.nearIds.has(e.id) ? 'lod1' : 'lod2' : e.health.current <= 0 || (this.world.infected?.active.length ?? 0) >= 100 ? 'lod2' : this.roleLods.get(key) ?? 'lod2';
+      // Recoverable downed bodies are still animated, rather than frozen pages.
+      // Keep their close surface as detailed as the living figure beside them.
+      if (this.world.scenario === 'L4' && e.health.current <= 0 && !e.corpse
+        && crowdLod(this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, Math.max(dimensions.y, crowdStandingLodHeight)), this.footBands.get(e.id)) === 'lod1') lod = 'lod1';
       if (heroes.has(e.id) || e.corpse && alphaLookAssets.includes(def.asset)) lod = 'lod0';
       if (!this.batches.has(`${key}:${lod}`)) void this.requestBatch(def, lod);
       // Quality changes/streaming may not have the requested tier yet. Keep the loaded figure.
@@ -728,7 +732,7 @@ export class CrowdView extends Group {
           // Use the complete page warmed during load for every death cause.
           const look = resolveCrowdAppearance(e), source = this.corpseGeometry.get(key) ?? batch.mesh.geometry.userData.inlineBody ?? batch.mesh.geometry;
           const frozenSource = !batch.animal ? this.accessories?.corpseSource(e, source, def.asset, batch.poses.clip.parts.indexOf('head')) ?? source : source;
-          const nearBatch = regularInfectedModels.some(id => id === def.asset) ? this.batches.get(`${key}:lod1`) : undefined;
+          const nearBatch = regularInfectedModels.some(id => id === def.asset) || this.world.scenario === 'L4' && !batch.animal && !alphaLookAssets.includes(def.asset) ? this.batches.get(`${key}:lod1`) : undefined;
           const frame = infectedClips.indexOf(death) * framesPerClip + framesPerClip - 1;
           const near = nearBatch ? { source: this.accessories?.corpseSource(e, nearBatch.mesh.geometry, def.asset, nearBatch.poses.clip.parts.indexOf('head')) ?? nearBatch.mesh.geometry, material: nearBatch.mesh.material as MeshLambertNodeMaterial, clip: nearBatch.poses.clip, frame } : undefined;
           const mask = this.goreEnabled ? (feedback?.mask ?? 0) | (b.legLost ? 4 : 0) : 0;
@@ -784,7 +788,7 @@ export class CrowdView extends Group {
       if (e.archetype !== 'infected.crow') { this.transform.makeTranslation(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); }
       // Attack ground warnings belong to Vfx: one pooled decal per attack.
     }
-    this.staticCorpses.updateDetail(player.transform, !this.low);
+    this.staticCorpses.updateDetail(player.transform, !this.low || this.world.scenario === 'L4');
     if (view) this.staticCorpses.cull(this.frustum);
     for (const batch of this.batches.values()) {
       batch.mesh.count = batch.count; batch.mesh.visible = batch.count > 0;

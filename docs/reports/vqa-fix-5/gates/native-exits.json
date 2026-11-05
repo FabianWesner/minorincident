@@ -1,0 +1,73 @@
+[
+  {
+    "name": "tsc",
+    "command": [
+      "npx",
+      "tsc",
+      "--noEmit"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "lint",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "test",
+    "command": [
+      "npm",
+      "test"
+    ],
+    "exit": 1
+  },
+  {
+    "name": "accept-L4",
+    "command": [
+      "npm",
+      "run",
+      "qa:accept",
+      "--",
+      "--level",
+      "L4",
+      "--tier",
+      "both",
+      "--skip-browser"
+    ],
+    "exit": 1
+  },
+  {
+    "name": "accept-L5",
+    "command": [
+      "npm",
+      "run",
+      "qa:accept",
+      "--",
+      "--level",
+      "L5",
+      "--tier",
+      "both",
+      "--skip-browser"
+    ],
+    "exit": 1
+  },
+  {
+    "name": "accept-L6",
+    "command": [
+      "npm",
+      "run",
+      "qa:accept",
+      "--",
+      "--level",
+      "L6",
+      "--tier",
+      "both",
+      "--skip-browser"
+    ],
+    "exit": 1
+  }
+]

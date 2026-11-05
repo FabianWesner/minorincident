@@ -1,4 +1,5 @@
 // Adapted from Bruno Simon folio-2025 Materials/MeshDefaultMaterial.js (MIT).
+import { courierForegroundOn } from './characters/courierDepth';
 import { weatherSurface, trackMask, weatherMaterialFlags } from './WeatherView';
 import { MeshLambertNodeMaterial, NodeUpdateType, type Texture, type Node, type Color } from 'three/webgpu';
 import { sharedUniformGroup, Fn, If, Discard, attribute, float, max, vec3, mix, normalWorld, normalView, positionWorld, texture, uniform, vec2, vec4, luminance, rangeFogFactor, positionGeometry, color, positionViewDirection, cameraPosition, reflect } from 'three/tsl';
@@ -262,6 +263,13 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         result.mulAssign(mix(1, float(.1).div(luminance(result).max(.1)), body));
       }
       result.addAssign(this.hitFlash);
+      // Palette output bypasses three's emissiveNode. Apply the foreground
+      // courier contour here as well so its full edge survives at distant zoom.
+      If(this.heroFigure.mul(courierForegroundOn).greaterThan(0), () => {
+        const distant = cameraPosition.distance(positionWorld).smoothstep(14, 26);
+        const courierEdge = normalView.dot(positionViewDirection).abs().oneMinus().pow(mix(3, 1.5, distant));
+        result.addAssign(color('#ffd17d').mul(courierEdge).mul(mix(.25, 1.2, distant)));
+      });
       // Opaque courier meshes use scene alpha as a grade-protection mask. The
       // composite consumes it and writes opaque canvas alpha; no extra render pass.
       return vec4(result, this.fade.mul(nodes?.opacity ?? 1).mul(courierRead.oneMinus()).mul(graded));

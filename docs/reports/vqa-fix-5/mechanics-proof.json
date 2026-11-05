@@ -1,0 +1,87 @@
+{
+  "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
+  "observerHash": "c064240bbd1dfb4a4ffb12922fa39e6d24b69753af3eda1e03e9a81a51ce4a4a",
+  "revision": "bcac23d68815b1013b2bfb8c0bf6e04930347abe",
+  "cases": [
+    {
+      "tier": "low",
+      "case": "L5 hiding contact contract",
+      "visiblePetBlocks": true,
+      "courageHiddenPetBlocks": false,
+      "controlledOverlap": true
+    },
+    {
+      "tier": "low",
+      "case": "L5 rescue grace",
+      "protectedThroughTicks": 599,
+      "mortalAtTicks": 600,
+      "attackAlarm": true,
+      "lossAlarm": true,
+      "expiredControlKilled": true
+    },
+    {
+      "tier": "low",
+      "case": "L6 escort alarms",
+      "attackAlarm": true,
+      "lossAlarm": true
+    },
+    {
+      "tier": "low",
+      "case": "L6 frontal shield",
+      "distance": 1,
+      "seconds": 1.7333333333333334,
+      "hp": 0,
+      "brokenAt": null,
+      "isolatedAI": true
+    },
+    {
+      "tier": "low",
+      "case": "L6 frontal shield",
+      "distance": 6,
+      "seconds": 3.7,
+      "hp": 0,
+      "brokenAt": 156,
+      "isolatedAI": true
+    },
+    {
+      "tier": "high",
+      "case": "L5 hiding contact contract",
+      "visiblePetBlocks": true,
+      "courageHiddenPetBlocks": false,
+      "controlledOverlap": true
+    },
+    {
+      "tier": "high",
+      "case": "L5 rescue grace",
+      "protectedThroughTicks": 599,
+      "mortalAtTicks": 600,
+      "attackAlarm": true,
+      "lossAlarm": true,
+      "expiredControlKilled": true
+    },
+    {
+      "tier": "high",
+      "case": "L6 escort alarms",
+      "attackAlarm": true,
+      "lossAlarm": true
+    },
+    {
+      "tier": "high",
+      "case": "L6 frontal shield",
+      "distance": 1,
+      "seconds": 1.7333333333333334,
+      "hp": 0,
+      "brokenAt": null,
+      "isolatedAI": true
+    },
+    {
+      "tier": "high",
+      "case": "L6 frontal shield",
+      "distance": 6,
+      "seconds": 3.7,
+      "hp": 0,
+      "brokenAt": 156,
+      "isolatedAI": true
+    }
+  ]
+}

@@ -51,23 +51,23 @@ export function damageAmount(hit: DamageEvent, target: EntitySnapshot, shieldOpe
 export class Damage {
   god = false;
   private amount(hit: DamageEvent, target: EntitySnapshot): number {
-    // L4's riot counter: a flinch lowers the shield, and a muzzle inside its
+    // L4/L6 riot counter: a flinch lowers the shield, and a muzzle inside its
     // forward edge can shoot past it at contact distance. Hit origins are body
     // centres: 0.8 m includes the raised gun's barrel and the shield offset.
     const origin = hit.shotOrigin ?? hit.origin;
     const glance = this.shieldGlance(hit, target);
-    const open = this.world.scenario === 'L4' && !!target.combat?.shield &&
+    const open = (this.world.scenario === 'L4' || this.world.scenario === 'L6') && !!target.combat?.shield &&
       (glance || Status.stunned(target, this.world.tick) || this.world.tick < (target.combat.shieldBrokenUntil ?? 0) || Math.hypot(origin.x - target.transform.x, origin.z - target.transform.z) <= target.combat.radius + .8);
-    const faceDot = target.archetype === 'infected.riot' && this.world.scenario === 'L4' ? Math.cos(riotShieldResponse.faceHalfAngleDeg * Math.PI / 180) : 0.5;
+    const faceDot = target.archetype === 'infected.riot' && (this.world.scenario === 'L4' || this.world.scenario === 'L6') ? Math.cos(riotShieldResponse.faceHalfAngleDeg * Math.PI / 180) : 0.5;
     // Retain other levels' authored segment-origin shield behavior, especially
-    // the frozen L5 balance. L4 counters use the original launch point only.
-    const directionalHit = this.world.scenario === 'L4' && target.combat?.shield && hit.shotOrigin ? { ...hit, origin } : hit;
+    // the frozen L5 balance. Shield counters use the original launch point only.
+    const directionalHit = (this.world.scenario === 'L4' || this.world.scenario === 'L6') && target.combat?.shield && hit.shotOrigin ? { ...hit, origin } : hit;
     const amount = damageAmount(directionalHit, target, open, faceDot);
     return glance ? amount * riotShieldResponse.chipFraction : amount;
   }
-  /** True only for an actual frontal L4 riot shield firearm hit outside contact and break windows. */
+  /** True only for an actual frontal L4/L6 riot shield firearm hit outside contact and break windows. */
   private shieldGlance(hit: DamageEvent, target: EntitySnapshot): boolean {
-    if (this.world.scenario !== 'L4' || target.archetype !== 'infected.riot' || !target.combat?.shield || hit.type !== 'bullet' ||
+    if (this.world.scenario !== 'L4' && this.world.scenario !== 'L6' || target.archetype !== 'infected.riot' || !target.combat?.shield || hit.type !== 'bullet' ||
         Status.stunned(target, this.world.tick) || this.world.tick < (target.combat.shieldBrokenUntil ?? 0)) return false;
     const origin = hit.shotOrigin ?? hit.origin, dx = origin.x - target.transform.x, dz = origin.z - target.transform.z, distance = Math.hypot(dx, dz);
     if (distance <= target.combat.radius + .8) return false;

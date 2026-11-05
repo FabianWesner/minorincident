@@ -16,7 +16,21 @@ const ticks = (s: number) => Math.round(s*60);
 /** Beat controller; all mutable state is checkpointed on the mission. Infection remains the shared outbreak system. */
 export class LevelSixSubway {
   private readonly aroundCourier = new Map<number, Point>();
-  constructor(private readonly mission: Mission) {}
+  constructor(private readonly mission: Mission) {
+    for (const type of ['infected.attack', 'civilian.grabbed'] as const) mission.world.events.on(type, event => {
+      if (event.type !== 'infected.attack' && event.type !== 'civilian.grabbed') return;
+      const target = mission.world.entities.get(event.targetId), row = this.s?.survivors.find(r => r.id === target?.id && (r.status === 'following' || r.status === 'shelter'));
+      if (target && row) this.alarm(target, 'attack');
+    });
+  }
+  private alarm(e: EntitySnapshot, kind: 'attack' | 'lost'): void {
+    const w = this.w, current = this.s.alarm;
+    if (current && w.tick < current.until && current.kind === 'lost') return;
+    if (current && w.tick < current.until && kind === 'attack') return;
+    this.s.alarm = { key: `l6-${e.id}-${w.tick}`, id: e.id, x: e.transform.x, z: e.transform.z,
+      text: kind === 'lost' ? 'Survivor lost!' : 'Survivor under attack! Turn back!', until: w.tick + 300, kind };
+    w.events.emit({ type: 'l7.follower-alarm', tick: w.tick, id: e.id, kind, position: { x: e.transform.x, z: e.transform.z } });
+  }
   private get w() { return this.mission.world; }
   /** Nearest clear crowd point; `toward` breaks ties within a ring (a tunnel entry opens on the courier's side of its pier). */
   private snap(p:Point,toward?:Point):Point {const nav=this.w.infected!.nav;for(let d=0;d<=8;d+=.5){let best:Point|null=null;for(let i=0;i<(d?16:1);i++){const at={x:p.x+Math.cos(i*Math.PI/8)*d,z:p.z+Math.sin(i*Math.PI/8)*d};if(nav.clear(at.x,at.z,.4)){if(!toward)return at;if(!best||distance(at,toward)<distance(best,toward))best=at;}}if(best)return best;}throw new Error(`No clear metro point ${p.x},${p.z}`);}
@@ -322,7 +336,7 @@ export class LevelSixSubway {
     // allowed to remain in the shelter-only follower state.
     if(s.phase==='retreat'||s.phase==='exit') for(const r of s.survivors) if(r.status==='shelter') this.startWalking(r);
     if(s.phase==='shelter'&&t===s.startAt+300)this.say(s.survivors.find(r=>r.injured)!.id,l6InjuryLines.patient);
-    for(const r of this.living()){const e=w.entities.get(r.id);if(!e||e.health.current<=0||e.civilian?.state==='finished')r.status='dead';else if(e.infection||e.infected)r.status='turned';}
+    for(const r of this.living()){const e=w.entities.get(r.id);if(!e||e.health.current<=0||e.civilian?.state==='finished'){r.status='dead';if(e)this.alarm(e,'lost');}else if(e.infection||e.infected){r.status='turned';this.alarm(e,'lost');}}
     if(!s.firstBang&&t>=s.breach1At-120){s.firstBang=true;this.bang(false);}
     if(!s.secondBang&&t>=s.breach2At-120){s.secondBang=true;this.bang(true);}
     if(s.phase==='shelter'&&t>=s.breach1At)this.breach(false);
@@ -469,6 +483,7 @@ export class LevelSixSubway {
     if(s.waitFor?.kind==='fetch'||s.waitFor?.kind==='bring'){delete s.waitFor;s.waitFlipAt=0;}
     for(const e of s.entries??[]){if(e.warnedAt)e.warnedAt+=delta;if(e.nextAt)e.nextAt+=delta;if(e.closedAt)e.closedAt+=delta;if(e.hitAt)e.hitAt+=delta;if(e.brokenAt)e.brokenAt+=delta;}
     if(s.arrivals)s.arrivals.nextAt+=delta;
+    if(s.alarm)s.alarm.until+=delta;
     for(const key of ['startAt','breach1At','breach2At','abandonAt','nextWave','exitAt','gateAt','injuryLineAt','lastShot'] as const)if(s[key])s[key]+=delta;
     for(const g of s.gates)if(g.closedAt)g.closedAt+=delta;this.power();
   }

@@ -22,8 +22,9 @@ export function actorRadius(e: EntitySnapshot): number {
 export function solidLargeCorpse(e: EntitySnapshot): boolean {
   return e.health.current <= 0 && (!!e.civilian?.zooAnimal || /^infected\.(alpha|lion|gorilla|elephant|zebra|flamingo)$/.test(e.archetype ?? '') || !!e.infected?.variant?.includes('mega-alpha'));
 }
+// A courage-hiding pet is invisible and follows without crowd contact; navigation still keeps it outside static walls.
 function actor(e: EntitySnapshot): boolean {
-  return !!(e.survivor || e.infected || e.civilian || e.companion || e.escort) && (e.health.current > 0 && !e.corpse && e.civilian?.state !== 'finished' || solidLargeCorpse(e)) && !e.hidden && !e.infected?.hidden && !e.pendingAdmission && e.passengerOf === undefined;
+  return !!(e.survivor || e.infected || e.civilian || e.companion || e.escort) && (e.health.current > 0 && !e.corpse && e.civilian?.state !== 'finished' || solidLargeCorpse(e)) && !e.hidden && e.companion?.state !== 'hide' && !e.infected?.hidden && !e.pendingAdmission && e.passengerOf === undefined;
 }
 /** Passengers and clingers have an explicit owner. Cosmetics (dead bodies, debris) have no actor mask. */
 function pairExempt(a: EntitySnapshot | undefined, b: EntitySnapshot): boolean {

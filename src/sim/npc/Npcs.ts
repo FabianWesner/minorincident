@@ -43,7 +43,12 @@ export class Npcs {
     // L7's whole party crosses the same narrow, body-clear ruined-city passages.
     // Extra routing padding and full-speed tiny waypoints made it circle
     // beside the final corridor until the departure hid it far behind.
-    const routeFollower = !!(e.civilian?.ally?.follow || e.companion) && !!this.world.missions?.def.l3 || this.world.scenario === 'L7' && (!!e.companion || e.civilian?.survivor?.mode === 'follow');
+    // L5's corgi uses the same body-clear corner routing and waypoint braking:
+    // extra padding/full-speed tiny waypoints left it circling plaza wreckage
+    // while the courier moved nearly twenty metres away.
+    const routeFollower = !!(e.civilian?.ally?.follow || e.companion) && !!this.world.missions?.def.l3
+      || this.world.scenario === 'L5' && !!e.companion
+      || this.world.scenario === 'L7' && (!!e.companion || e.civilian?.survivor?.mode === 'follow');
     const cell = routeFollower ? nav.nearestCell(e.transform.x, e.transform.z, footprint) : -1;
     const flowNext = routeFollower && distance > 30 ? nav.flowNext(cell) : -1;
     if (routeFollower && cell < 0) {

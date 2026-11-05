@@ -2,13 +2,13 @@ import type { EntitySnapshot } from '../sim/world/types';
 
 /** Metres to the nearest living Mega Alpha below which the courier draws in the near-camera depth slice. */
 export const megaForegroundM = 14;
-/** Five living bodies within three metres count as a close crowd on any level. */
-export function crowdSurroundsCourier(at: { x: number; z: number }, figures: Iterable<EntitySnapshot>): boolean {
+/** Five living bodies inside the caller's overlap radius count as a close crowd. */
+export function crowdSurroundsCourier(at: { x: number; z: number }, figures: Iterable<EntitySnapshot>, radiusM = 3): boolean {
   let nearby = 0;
   for (const e of figures) {
     if (e.id === 1 || e.hidden || e.health.current <= 0 || e.infected?.hidden || !(e.civilian || e.infected || e.escort)) continue;
     const dx = e.transform.x - at.x, dz = e.transform.z - at.z;
-    if (dx * dx + dz * dz < 9 && ++nearby >= 5) return true;
+    if (dx * dx + dz * dz < radiusM * radiusM && ++nearby >= 5) return true;
   }
   return false;
 }

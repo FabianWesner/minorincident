@@ -308,9 +308,10 @@ export class Hud {
     this.threatCount = pinCount;
     const absentCompanion = !corgi && (world.scenario === 'L8' || world.scenario === 'L9');
     setHidden(this.companion.parentElement!, absentCompanion); setHidden(this.corgiBadge, absentCompanion);
-    const corgiStatus = corgi ? corgi.hidden ? 'Corgi · hiding' : 'Corgi · following' : 'Corgi · awaiting rescue';
+    const corgiHiding = corgi?.hidden || corgi?.companion?.state === 'hide';
+    const corgiStatus = corgi ? corgiHiding ? 'Corgi · hiding' : 'Corgi · following' : 'Corgi · awaiting rescue';
     text(this.companion, corgiStatus); attribute(this.corgiBadge, 'title', corgiStatus); attribute(this.corgiBadge, 'aria-label', corgiStatus);
-    attribute(this.corgiBadge, 'data-state', corgi ? corgi.hidden ? 'hiding' : 'following' : 'awaiting-rescue');
+    attribute(this.corgiBadge, 'data-state', corgi ? corgiHiding ? 'hiding' : 'following' : 'awaiting-rescue');
     this.place(this.playerPin, px, pz, px, pz); style(this.playerPin, 'rotate', `${-player.transform.yaw + Math.PI / 2}rad`);
     const anchor = markerAnchor(mission);
     const cellarDistance = mission?.def.l4 && mission.state.l4?.phase === 'collapse' ? mission.l4!.cellarDistance(this.cellarTurn) : null;
@@ -502,8 +503,10 @@ export class Hud {
     setHidden(this.cueText, !cueLabel); if (cueLabel) text(this.cueText, cueLabel);
   }
   private updateSurvivorCue(mission: Mission | null | undefined, px: number, pz: number): void {
-    const alarm = this.game.world.l7Encounters?.state.alarm;
-    const cue = alarm ?? mission?.state.l5?.cue, tick = this.game.world.tick;
+    const tick = this.game.world.tick;
+    const warning = this.game.world.l7Encounters?.state.alarm ?? mission?.state.l5?.alarm ?? mission?.state.l6?.alarm;
+    const alarm = warning && tick < warning.until ? warning : undefined;
+    const cue = alarm ?? mission?.state.l5?.cue;
     attribute(this.survivorCue, 'data-alarm', String(!!alarm));
     if (!cue || tick >= cue.until || !alarm && (!mission?.state.l5 || mission.state.l5.phase === 'cellar' || Math.hypot(cue.x - px, cue.z - pz) > l5.survivors.cueRangeM)) {
       setHidden(this.survivorCue, true); return;
@@ -534,7 +537,9 @@ export class Hud {
       top = Math.max(18, Math.min(92, top));
     }
     const remaining = (cue.until - tick) / (60 * (alarm ? 5 : l5.survivors.pingS));
-    const opacity = Math.min(1, (1 - remaining) * 6, remaining * 6);
+    // A grab's rescue window is only one second: urgent alarms must be fully
+    // readable on arrival, rather than spending that window fading in.
+    const opacity = alarm ? Math.min(1, remaining * 6) : Math.min(1, (1 - remaining) * 6, remaining * 6);
     text(this.survivorCueLine, cue.text); setHidden(this.survivorCue, false);
     const signature = `${cue.key}:${cue.until}:${innerWidth}:${innerHeight}:${mission?.state.l5?.found}:${this.tracker.textContent}`;
     if (signature !== this.cueLayoutSignature) {

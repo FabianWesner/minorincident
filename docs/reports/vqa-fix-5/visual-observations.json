@@ -1,0 +1,939 @@
+[
+  {
+    "file": "test-results/vqa-1b/vf5s-guard-high/captures/vf5s-guard-high-escort-alarm-attack-2036.jpg",
+    "sha256": "afc8efe4cf6c48cd9bbb961ef49efeb1199e9f86134d8854a4a00af06692f5b2",
+    "finding": "L5 attack alarm",
+    "observation": "Full-size inspection: fully opaque orange-bordered central caption says Survivor under attack! Turn back!; Mia card remains 60/60 while courier is under pressure. Caption is visually clear.",
+    "scope": "Mortal real-input WebGPU high zoom 1.5; unpaused; not evidence of 30-second survival yet.",
+    "sourceHash": "315ba38c0910afe1973e867e2e05553c30d0a1ddf120b0c67bdbba7f729c1850",
+    "qualification": "selected-L5-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5s-guard-low/captures/vf5s-guard-low-l5-guard-result.jpg",
+    "sha256": "54395651fd593295120e2d7c0640ef64e00729157823caa434d5b3752e15f4cc",
+    "finding": "L5 first rescue survivability",
+    "observation": "Full-size inspection: Mia is standing to the right of the courier with a full teal bar; her HUD card says 60/60. Both figures are readable among the downed attackers. low quality.",
+    "scope": "Mortal WebGPU zoom 1.5; real-input guard; unpaused; matching guard result records 30 seconds, zero deaths, god=false.",
+    "sourceHash": "315ba38c0910afe1973e867e2e05553c30d0a1ddf120b0c67bdbba7f729c1850",
+    "qualification": "selected-L5-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": [
+      {
+        "file": "test-results/vqa-fix-5/escort.jpg",
+        "sha256": "17dc21d32fbad849487ad5554821be191577d2ebd3c7e94b19618afedc2c83c9",
+        "crop": null
+      }
+    ]
+  },
+  {
+    "file": "test-results/vqa-1b/vf5s-guard-high/captures/vf5s-guard-high-l5-guard-result.jpg",
+    "sha256": "68fb43e9948a57c9c8d0c978b137acf50252a363101dd54a83928028b21e2267",
+    "finding": "L5 first rescue survivability",
+    "observation": "Full-size inspection: Mia is standing to the right of the courier with a full teal bar; her HUD card says 60/60. Both figures are readable among the downed attackers. high quality.",
+    "scope": "Mortal WebGPU zoom 1.5; real-input guard; unpaused; matching guard result records 30 seconds, zero deaths, god=false.",
+    "sourceHash": "315ba38c0910afe1973e867e2e05553c30d0a1ddf120b0c67bdbba7f729c1850",
+    "qualification": "selected-L5-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5s-L5-webgpu-low-z1.5/captures/vf5s-L5-webgpu-low-z1.5-escort-alarm-lost-2678.jpg",
+    "sha256": "d1f2b306cee4c7a123aa026083950f6425a0264b4de9d35eb56564dbd014ff25",
+    "finding": "L5 loss alarm",
+    "observation": "Full-size inspection: large orange-bordered Survivor lost! caption is opaque and unmistakable above the combat centre. Mia card has disappeared, accompanied by explicit loss feedback.",
+    "scope": "Real-input WebGPU low zoom 1.5, unpaused, courier god mode, immediate onward tour abandons follower.",
+    "sourceHash": "315ba38c0910afe1973e867e2e05553c30d0a1ddf120b0c67bdbba7f729c1850",
+    "qualification": "selected-L5-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5s-L5-webgpu-high-z1.5/captures/vf5s-L5-webgpu-high-z1.5-escort-alarm-lost-2161.jpg",
+    "sha256": "d295ced4d21a613d0efaf734cf745e7281958e1646164c15ecc8550f8585e24b",
+    "finding": "L5 loss alarm",
+    "observation": "Full-size inspection: large orange-bordered Survivor lost! caption is opaque and unmistakable above the combat centre. Mia card has disappeared, accompanied by explicit loss feedback.",
+    "scope": "Real-input WebGPU high zoom 1.5, unpaused, courier god mode, immediate onward tour abandons follower.",
+    "sourceHash": "315ba38c0910afe1973e867e2e05553c30d0a1ddf120b0c67bdbba7f729c1850",
+    "qualification": "selected-L5-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5s-L5-webgpu-high-z1.5/captures/vf5s-L5-webgpu-high-z1.5-L5-metro-unpaused-z0-5.jpg",
+    "sha256": "28eeee8865cff52186e3656682682cef56faed8b16762bc3fbd17ed7cc532596",
+    "finding": "L5 truck framing",
+    "observation": "Full-size inspection: the foreground truck no longer occupies the frame. Courier, dog and Dale are clearly visible against the opened foreground. The broad lens cut removes the supporting truck surface too; PO taste review should judge that open composition.",
+    "scope": "Physically reached final rescue and Metro objective; unpaused close-zoom photo; webgpu high",
+    "sourceHash": "315ba38c0910afe1973e867e2e05553c30d0a1ddf120b0c67bdbba7f729c1850",
+    "qualification": "selected-L5-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5s-L5-webgpu-low-z1.5/captures/vf5s-L5-webgpu-low-z1.5-L5-metro-unpaused-z0-5.jpg",
+    "sha256": "7c0c6f4b477bc5b1198bec006b57bad5dcbc3073606ccc23a6af7b578201d921",
+    "finding": "L5 truck framing",
+    "observation": "Full-size inspection: the foreground truck no longer occupies the frame. Courier, dog and Dale are clearly visible against the opened foreground. The broad lens cut removes the supporting truck surface too; PO taste review should judge that open composition.",
+    "scope": "Physically reached final rescue and Metro objective; unpaused close-zoom photo; webgpu low",
+    "sourceHash": "315ba38c0910afe1973e867e2e05553c30d0a1ddf120b0c67bdbba7f729c1850",
+    "qualification": "selected-L5-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5s-L5-webgpu-low-z1.5/captures/vf5s-L5-webgpu-low-z1.5-escort-alarm-attack-9086.jpg",
+    "sha256": "26d21bbf21ceabad36526c3909ff4c1b39508db2114891b1586d9f932dd2da6f",
+    "finding": "L5 corgi status",
+    "observation": "Full-size inspection: companion card explicitly says Corgi \u00b7 hiding while the dog is intentionally invisible. Courier and Okafor remain visible; the attack alarm is clear.",
+    "scope": "Low WebGPU zoom 1.5; unpaused; trace at tick 9090 places hiding dog about 2.55 m from courier.",
+    "sourceHash": "315ba38c0910afe1973e867e2e05553c30d0a1ddf120b0c67bdbba7f729c1850",
+    "qualification": "selected-L5-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5s-L5-webgl2-low-z1.5/captures/vf5s-L5-webgl2-low-z1.5-escort-alarm-attack-1749.jpg",
+    "sha256": "09a3b82db7f3c30452eb58aa58075af6deabdd7527453e73a7639bd0dcf072a7",
+    "finding": "L5 attack alarm",
+    "observation": "Full-size inspection: orange-bordered Survivor under attack! Turn back! is fully opaque, clearly readable alongside Mia's rescue dialogue and her 60/60 HUD card.",
+    "scope": "Real-input low WebGL2 fallback (reported backend webgl), zoom 1.5, unpaused.",
+    "sourceHash": "315ba38c0910afe1973e867e2e05553c30d0a1ddf120b0c67bdbba7f729c1850",
+    "qualification": "selected-L5-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5s-L5-webgl2-high-z1.5/captures/vf5s-L5-webgl2-high-z1.5-escort-alarm-attack-1652.jpg",
+    "sha256": "397a567e61e84e0e7371612d8350743b2bd3ce1e20a4091e9f04cc2a76bc4d9d",
+    "finding": "L5 attack alarm",
+    "observation": "Full-size inspection: orange-bordered Survivor under attack! Turn back! is fully opaque, clearly readable alongside Mia's rescue dialogue and her 60/60 HUD card.",
+    "scope": "Real-input high WebGL2 fallback (reported backend webgl), zoom 1.5, unpaused.",
+    "sourceHash": "315ba38c0910afe1973e867e2e05553c30d0a1ddf120b0c67bdbba7f729c1850",
+    "qualification": "selected-L5-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5s-L5-webgl2-low-z1.5/captures/vf5s-L5-webgl2-low-z1.5-L5-metro-unpaused-z0-5.jpg",
+    "sha256": "4ccac647e718f315a627b93e2d7f28b55cb9266d5f1f275e56dcb5cf2faa10d0",
+    "finding": "L5 truck framing",
+    "observation": "Full-size inspection: courier, dog and Dale remain visible; the truck occupying the lens has been cut away. The high-tier frame also shows a clear directional Survivor lost! warning at the upper edge.",
+    "scope": "WebGL2 fallback low, physically reached final rescue / Metro handoff, unpaused zoom 0.5 photo. Broad open foreground remains a PO taste item.",
+    "sourceHash": "315ba38c0910afe1973e867e2e05553c30d0a1ddf120b0c67bdbba7f729c1850",
+    "qualification": "selected-L5-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5s-L5-webgl2-high-z1.5/captures/vf5s-L5-webgl2-high-z1.5-L5-metro-unpaused-z0-5.jpg",
+    "sha256": "d5da0caff0d3fd48e64a821bf68f7ce6c0b3e283bc067f2e4d57516642010e6b",
+    "finding": "L5 truck framing",
+    "observation": "Full-size inspection: courier, dog and Dale remain visible; the truck occupying the lens has been cut away. The high-tier frame also shows a clear directional Survivor lost! warning at the upper edge.",
+    "scope": "WebGL2 fallback high, physically reached final rescue / Metro handoff, unpaused zoom 0.5 photo. Broad open foreground remains a PO taste item.",
+    "sourceHash": "315ba38c0910afe1973e867e2e05553c30d0a1ddf120b0c67bdbba7f729c1850",
+    "qualification": "selected-L5-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5s-L5-webgpu-low-z0.5/captures/vf5s-L5-webgpu-low-z0.5-escort-alarm-attack-1839.jpg",
+    "sha256": "0555cdcac06766b0d8ba62bced31ab4bc2c07bcea81150a2a628ad49ec3f57d5",
+    "finding": "L5 attack alarm",
+    "observation": "Full-size inspection: the attack warning is opaque and readable at the screen edge or beside the attacked follower. It stays inside the viewport and clear of the persistent HUD cards; Mia remains on the HUD at 60/60.",
+    "scope": "webgpu low zoom 0.5, real input, unpaused.",
+    "sourceHash": "315ba38c0910afe1973e867e2e05553c30d0a1ddf120b0c67bdbba7f729c1850",
+    "qualification": "selected-L5-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5s-L5-webgpu-high-z0.5/captures/vf5s-L5-webgpu-high-z0.5-escort-alarm-attack-2118.jpg",
+    "sha256": "f75af9053654f38534c1626d21858278aaee75da0d8b56f60234972e132e7eb4",
+    "finding": "L5 attack alarm",
+    "observation": "Full-size inspection: the attack warning is opaque and readable at the screen edge or beside the attacked follower. It stays inside the viewport and clear of the persistent HUD cards; Mia remains on the HUD at 60/60.",
+    "scope": "webgpu high zoom 0.5, real input, unpaused.",
+    "sourceHash": "315ba38c0910afe1973e867e2e05553c30d0a1ddf120b0c67bdbba7f729c1850",
+    "qualification": "selected-L5-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5s-L5-webgl2-low-z0.5/captures/vf5s-L5-webgl2-low-z0.5-escort-alarm-attack-1772.jpg",
+    "sha256": "a42df3bc95b295f1b5692117724e4525ef5c09e82bd2a8fe22432caa5a566b68",
+    "finding": "L5 attack alarm",
+    "observation": "Full-size inspection: the attack warning is opaque and readable at the screen edge or beside the attacked follower. It stays inside the viewport and clear of the persistent HUD cards; Mia remains on the HUD at 60/60.",
+    "scope": "webgl2 low zoom 0.5, real input, unpaused.",
+    "sourceHash": "315ba38c0910afe1973e867e2e05553c30d0a1ddf120b0c67bdbba7f729c1850",
+    "qualification": "selected-L5-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5s-L5-webgl2-high-z0.5/captures/vf5s-L5-webgl2-high-z0.5-escort-alarm-attack-2181.jpg",
+    "sha256": "0f08c239049f83339a7515ce73e1de2c06a70972bddb713cdeb60ab02f420ae7",
+    "finding": "L5 attack alarm",
+    "observation": "Full-size inspection: the attack warning is opaque and readable at the screen edge or beside the attacked follower. It stays inside the viewport and clear of the persistent HUD cards; Mia remains on the HUD at 60/60.",
+    "scope": "webgl2 high zoom 0.5, real input, unpaused.",
+    "sourceHash": "315ba38c0910afe1973e867e2e05553c30d0a1ddf120b0c67bdbba7f729c1850",
+    "qualification": "selected-L5-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5s-L4-webgpu-low-z1.5/captures/vf5s-L4-webgpu-low-z1.5-L4-t7294.jpg",
+    "sha256": "ebd2437bad2fa173a18b4f839f47a1f96fe1ee3c7002c4a141b155a377e9ce98",
+    "finding": "L4 courier readability",
+    "observation": "Full-size inspection: the complete gold head, torso, arms and leg outline identifies the courier inside the breach crowd. The bar ladder is reduced to 6 visible bars in the metadata; no 15\u201325-bar wall hides her. The high-tier rim is thin but continuous; low has a stronger filled gold centre.",
+    "scope": "WebGPU low zoom 1.5, unpaused real-input breach fight. PO should judge the gold silhouette treatment.",
+    "sourceHash": "315ba38c0910afe1973e867e2e05553c30d0a1ddf120b0c67bdbba7f729c1850",
+    "qualification": "diagnostic-before-L4-radius-refinement",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5s-L4-webgpu-high-z1.5/captures/vf5s-L4-webgpu-high-z1.5-L4-t6371.jpg",
+    "sha256": "e64797f6331a4a48b4cfe460f8520890fffeff433b89591aad93fc433a674129",
+    "finding": "L4 courier readability",
+    "observation": "Full-size inspection: the complete gold head, torso, arms and leg outline identifies the courier inside the breach crowd. The bar ladder is reduced to 3 visible bars in the metadata; no 15\u201325-bar wall hides her. The high-tier rim is thin but continuous; low has a stronger filled gold centre.",
+    "scope": "WebGPU high zoom 1.5, unpaused real-input breach fight. PO should judge the gold silhouette treatment.",
+    "sourceHash": "315ba38c0910afe1973e867e2e05553c30d0a1ddf120b0c67bdbba7f729c1850",
+    "qualification": "diagnostic-before-L4-radius-refinement",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5s-L4-webgpu-high-z1.5/captures/vf5s-L4-webgpu-high-z1.5-L4-t3638.jpg",
+    "sha256": "556a9b557451e5a897afbd5aa03c369564edb934b06a6724e7863f8a7d861f99",
+    "finding": "L4 courier readability",
+    "observation": "Full-size inspection of the largest recorded bar count in this run (8): courier remains easy to locate. Low-tier courier keeps a gold torso/limb contour inside the horde; high-tier courier is unobscured beside the yellow generator. Mandatory bars explain counts above the six-bar budget.",
+    "scope": "WebGPU high zoom 1.5, real input, unpaused; count is all visible bars, not a six-bar hard-cap assertion.",
+    "sourceHash": "315ba38c0910afe1973e867e2e05553c30d0a1ddf120b0c67bdbba7f729c1850",
+    "qualification": "diagnostic-before-L4-radius-refinement",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5s-L4-webgpu-low-z1.5/captures/vf5s-L4-webgpu-low-z1.5-L4-t5470.jpg",
+    "sha256": "b4a5f21043a19644ff955227c9d156fff3c77d05690f5e92feef2e389c6f997f",
+    "finding": "L4 courier readability",
+    "observation": "Full-size inspection of the largest recorded bar count in this run (7): courier remains easy to locate. Low-tier courier keeps a gold torso/limb contour inside the horde; high-tier courier is unobscured beside the yellow generator. Mandatory bars explain counts above the six-bar budget.",
+    "scope": "WebGPU low zoom 1.5, real input, unpaused; count is all visible bars, not a six-bar hard-cap assertion.",
+    "sourceHash": "315ba38c0910afe1973e867e2e05553c30d0a1ddf120b0c67bdbba7f729c1850",
+    "qualification": "diagnostic-before-L4-radius-refinement",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5s-L4-webgpu-low-z0.5/captures/vf5s-L4-webgpu-low-z0.5-L4-t5497.jpg",
+    "sha256": "59fa009f21c07873c969a89cbdc10abe42ca8e64d0eab28901ba260f628fc950",
+    "finding": "L4 courier readability",
+    "observation": "Full-size inspection: courier retains normal green clothing and orange/white shoes at close zoom. Low-tier courier is readable in a tightly packed horde; high-tier courier is fully visible on the steps. The distant gold treatment no longer turns the close figure into a gold statue.",
+    "scope": "WebGPU low zoom 0.5, unpaused real input. These frames are not used to qualify corpse surfaces because the nearby bodies are mostly obscured or clipped by the frame.",
+    "sourceHash": "315ba38c0910afe1973e867e2e05553c30d0a1ddf120b0c67bdbba7f729c1850",
+    "qualification": "diagnostic-before-L4-radius-refinement",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5s-L4-webgpu-high-z0.5/captures/vf5s-L4-webgpu-high-z0.5-L4-t5516.jpg",
+    "sha256": "1ce863bb0e668efe282f5772b83dfd17b76ec49126a61cf8feef14619b3da099",
+    "finding": "L4 courier readability",
+    "observation": "Full-size inspection: courier retains normal green clothing and orange/white shoes at close zoom. Low-tier courier is readable in a tightly packed horde; high-tier courier is fully visible on the steps. The distant gold treatment no longer turns the close figure into a gold statue.",
+    "scope": "WebGPU high zoom 0.5, unpaused real input. These frames are not used to qualify corpse surfaces because the nearby bodies are mostly obscured or clipped by the frame.",
+    "sourceHash": "315ba38c0910afe1973e867e2e05553c30d0a1ddf120b0c67bdbba7f729c1850",
+    "qualification": "diagnostic-before-L4-radius-refinement",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5s-L4-webgpu-high-z0.5/captures/vf5s-L4-webgpu-high-z0.5-L4-t13713.jpg",
+    "sha256": "f74ba0da07a667f33a54a73f90b974606a898624cb622d7efedbde5174a46a2c",
+    "finding": "L4 foreground detector counterexample",
+    "observation": "Full-size inspection: courier is reduced to head/upper torso behind a large firefighter/hazmat crowd at the close zoom. Render metadata confirms courierForeground=false. The nearby input log at tick13681 contains body centres at 2.69,2.78,2.99,3.70,4.08m; the five-within-three-metres trigger misses this visual overlap.",
+    "scope": "Pre-final-radius WebGPU high zoom0.5; FAIL diagnostic. L4 detector widened to4.5m afterward; this image cannot qualify the refinement.",
+    "sourceHash": "315ba38c0910afe1973e867e2e05553c30d0a1ddf120b0c67bdbba7f729c1850",
+    "qualification": "diagnostic-before-L4-radius-refinement",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5t-L4-webgpu-low-z1.5/captures/vf5t-L4-webgpu-low-z1.5-L4-t6375.jpg",
+    "sha256": "8ef6780cc6664fa7419546d38d63f71f9bedd706430da19b4e18df39858dc458",
+    "finding": "L4 courier readability",
+    "observation": "Full-size inspection: full head, torso and limb contour remains visible at wide zoom. Ordinary clothing remains readable on low; high uses a thin continuous gold rim. This particular frame has space around her; denser crowd frames are reviewed separately.",
+    "scope": "Final-radius WebGPU low zoom1.5, real input, unpaused.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-final-L4-L6-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5t-L4-webgpu-high-z1.5/captures/vf5t-L4-webgpu-high-z1.5-L4-t6387.jpg",
+    "sha256": "e7fa44335a7655c545184060348a9c2b4f62ba39941033a121ac67653b8561d7",
+    "finding": "L4 courier readability",
+    "observation": "Full-size inspection: full head, torso and limb contour remains visible at wide zoom. Ordinary clothing remains readable on low; high uses a thin continuous gold rim. This particular frame has space around her; denser crowd frames are reviewed separately.",
+    "scope": "Final-radius WebGPU high zoom1.5, real input, unpaused.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-final-L4-L6-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5t-L4-webgpu-low-z1.5/captures/vf5t-L4-webgpu-low-z1.5-L4-t12751.jpg",
+    "sha256": "8e92d66ccc3f8f9180ad23e47e2e18e4cef0c04b3b9574b1a3606bfee7cf2c3d",
+    "finding": "L4 courier readability",
+    "observation": "Full-size inspection: Courier is clearly identified by the gold head, torso and limb outline with an open patch around her; the larger horde remains nearby. Existing P3 persists: SHIELD STRAIN \u00b7 CHIP overlaps the corgi HUD card.",
+    "scope": "Final-radius WebGPU low zoom1.5, real input, unpaused.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-final-L4-L6-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5t-L4-webgpu-high-z1.5/captures/vf5t-L4-webgpu-high-z1.5-L4-t9126.jpg",
+    "sha256": "345aada4ea166b556b87127b00e0fa568eab3fdf496ce374f4276da6ba49a249",
+    "finding": "L4 courier readability",
+    "observation": "Full-size inspection: Courier's full head, torso, gun arm and legs are traced gold inside the dense shield/firefighter horde. She is easy to locate despite ten visible bars; mandatory shields/Alphas exceed the six-bar budget. The old head-and-gun-only silhouette is absent here.",
+    "scope": "Final-radius WebGPU high zoom1.5, real input, unpaused.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-final-L4-L6-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": [
+      {
+        "file": "test-results/vqa-fix-5/courier.jpg",
+        "sha256": "2f1510f531ed0b038d6248965c429080730ae899b4888ba95c2d25519b8f16d0",
+        "crop": null
+      }
+    ]
+  },
+  {
+    "file": "test-results/vqa-1b/vf5t-L4-webgpu-low-z0.5/captures/vf5t-L4-webgpu-low-z0.5-L4-t10032.jpg",
+    "sha256": "5966d04c7f68b71b6dc0bec4ce6b88da19bf01ffe0ca383dacac5cbcd829df2c",
+    "finding": "L4 courier readability",
+    "observation": "Full-size inspection: the full close courier figure is readable in normal green clothing, with restrained warm edges. The silhouette has clear separation from nearby bodies and props; the distance-scaled contour preserves the clothing colors.",
+    "scope": "Final-radius WebGPU low zoom0.5, unpaused real input.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-final-L4-L6-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": [
+      {
+        "file": "test-results/vqa-fix-5/corpses.jpg",
+        "sha256": "29967c13575a68300a69b64bb6192b5879996c8b9de211535787520afd8c855d",
+        "crop": [
+          160,
+          420,
+          1050,
+          720
+        ]
+      }
+    ]
+  },
+  {
+    "file": "test-results/vqa-1b/vf5t-L4-webgpu-high-z0.5/captures/vf5t-L4-webgpu-high-z0.5-L4-t10075.jpg",
+    "sha256": "ed651b4920a8fa6249e430429c2aaf429c86345f76616f8e99bff19358e9f2cf",
+    "finding": "L4 courier readability",
+    "observation": "Full-size inspection: the full close courier figure is readable in normal green clothing, with restrained warm edges. The silhouette has clear separation from nearby bodies and props; the distance-scaled contour preserves the clothing colors.",
+    "scope": "Final-radius WebGPU high zoom0.5, unpaused real input.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-final-L4-L6-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5t-L4-webgpu-low-z0.5/captures/vf5t-L4-webgpu-low-z0.5-L4-t13690.jpg",
+    "sha256": "e51bfc8f6f56702084896d2b7f8f5482798841526def0f728dfd7e3f1910783b",
+    "finding": "L4 courier readability",
+    "observation": "Full-size inspection at the late-breach fallback: full courier head, green torso, gun arm, legs and shoes remain visible among large firefighter, hazmat and shield bodies. The high-tier figure now draws clearly in front of the overlapping crowd. Metadata reports foreground=true on both tiers.",
+    "scope": "Final-radius WebGPU low zoom0.5, real input, unpaused. Comparable late phase to the earlier radius counterexample; not a frame-identical A/B.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-final-L4-L6-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5t-L4-webgpu-high-z0.5/captures/vf5t-L4-webgpu-high-z0.5-L4-t13732.jpg",
+    "sha256": "c9ca2eb63a31a3816fd8931667872d694e17e6f3b1f019f92dee2a4c698bb2f5",
+    "finding": "L4 courier readability",
+    "observation": "Full-size inspection at the late-breach fallback: full courier head, green torso, gun arm, legs and shoes remain visible among large firefighter, hazmat and shield bodies. The high-tier figure now draws clearly in front of the overlapping crowd. Metadata reports foreground=true on both tiers.",
+    "scope": "Final-radius WebGPU high zoom0.5, real input, unpaused. Comparable late phase to the earlier radius counterexample; not a frame-identical A/B.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-final-L4-L6-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": [
+      {
+        "file": "test-results/vqa-fix-5/courier.jpg",
+        "sha256": "2f1510f531ed0b038d6248965c429080730ae899b4888ba95c2d25519b8f16d0",
+        "crop": null
+      }
+    ]
+  },
+  {
+    "file": "test-results/vqa-1b/vf5t-L4-webgl2-low-z1.5/captures/vf5t-L4-webgl2-low-z1.5-L4-t5577.jpg",
+    "sha256": "6fa035753725eb28d3248236b6ae4bc7980b7daed080055b1dbffa891fa37067",
+    "finding": "L4 courier readability",
+    "observation": "Full-size inspection: courier's gold head, torso, arms and leg outline remains readily identifiable inside the breach crowd. 12 bars are visible in the render audit; low-tier mandatory riot/Alpha bars still form a stack above her, while her body remains clear beneath it. This is decluttering with mandatory exceptions, not a six-bar hard cap.",
+    "scope": "Final-radius WebGL2 fallback low zoom1.5, real input, unpaused.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-final-L4-L6-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5t-L4-webgl2-high-z1.5/captures/vf5t-L4-webgl2-high-z1.5-L4-t6512.jpg",
+    "sha256": "cfcf511476c9a98658cd26a39bb426c7fccec9fc4eae4e66d1d4486d27cd2cda",
+    "finding": "L4 courier readability",
+    "observation": "Full-size inspection: courier's gold head, torso, arms and leg outline remains readily identifiable inside the breach crowd. 4 bars are visible in the render audit; low-tier mandatory riot/Alpha bars still form a stack above her, while her body remains clear beneath it. This is decluttering with mandatory exceptions, not a six-bar hard cap.",
+    "scope": "Final-radius WebGL2 fallback high zoom1.5, real input, unpaused.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-final-L4-L6-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5t-L4-webgpu-low-z0.5/captures/vf5t-L4-webgpu-low-z0.5-L4-t10032.jpg",
+    "sha256": "5966d04c7f68b71b6dc0bec4ce6b88da19bf01ffe0ca383dacac5cbcd829df2c",
+    "finding": "L4 corpse detail",
+    "observation": "Full-size inspection: Settled bodies surrounding the open step retain coherent blue/green clothing, skin and boots. They are still angular and several sit at the frame edge. Metadata includes16 nearby settled LOD1 bodies, with8 drawn body records overall; this supports the detail change but is not a blanket visual approval.",
+    "scope": "Final-radius WebGPU low zoom0.5, real input, unpaused. P: judge folded poses and clothing coherence for P1-117; entire acceptance row remains NOT CHECKED.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-final-L4-L6-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": [
+      {
+        "file": "test-results/vqa-fix-5/corpses.jpg",
+        "sha256": "29967c13575a68300a69b64bb6192b5879996c8b9de211535787520afd8c855d",
+        "crop": [
+          160,
+          420,
+          1050,
+          720
+        ]
+      }
+    ]
+  },
+  {
+    "file": "test-results/vqa-1b/vf5t-L4-webgpu-high-z0.5/captures/vf5t-L4-webgpu-high-z0.5-L4-t4609.jpg",
+    "sha256": "c14c2895fc7ef18f47c5eedd1dc3d4831d04145939b99026437474161f3498e5",
+    "finding": "L4 corpse detail",
+    "observation": "Full-size inspection: The fallen firefighter to the courier's right has coherent tan clothing, reflective bands and dark boots instead of the old red/yellow/black triangle patchwork. Yellow hazmat bodies also retain a continuous clothing surface. The folded death poses remain angular and need PO taste review.",
+    "scope": "Final-radius WebGPU high zoom0.5, real input, unpaused. P: judge folded poses and clothing coherence for P1-117; entire acceptance row remains NOT CHECKED.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-final-L4-L6-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": [
+      {
+        "file": "test-results/vqa-fix-5/corpses.jpg",
+        "sha256": "29967c13575a68300a69b64bb6192b5879996c8b9de211535787520afd8c855d",
+        "crop": [
+          360,
+          140,
+          1040,
+          640
+        ]
+      }
+    ]
+  },
+  {
+    "file": "test-results/vqa-1b/vf5t-L4-webgl2-low-z0.5/captures/vf5t-L4-webgl2-low-z0.5-L4-t8193.jpg",
+    "sha256": "e8278fab6e577e621a767c161bdc0830d615a2e028d41762da9eabbfdef8e75c",
+    "scope": "Final-radius WebGL2 fallback low zoom0.5, real input, unpaused.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-final-L4-L6-evidence",
+    "finding": "L4 courier readability",
+    "observation": "Full-size inspection: courier's complete head, green torso, arms, legs and orange/white shoes are visible in front of the overlapping crowd. Low is surrounded by large shield/firefighter bodies; high remains clear beside the soldiers. Warm edges are restrained at close zoom.",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": [
+      {
+        "file": "test-results/vqa-fix-5/courier.jpg",
+        "sha256": "2f1510f531ed0b038d6248965c429080730ae899b4888ba95c2d25519b8f16d0",
+        "crop": null
+      },
+      {
+        "file": "test-results/vqa-fix-5/corpses.jpg",
+        "sha256": "29967c13575a68300a69b64bb6192b5879996c8b9de211535787520afd8c855d",
+        "crop": [
+          640,
+          240,
+          1060,
+          660
+        ]
+      }
+    ]
+  },
+  {
+    "file": "test-results/vqa-1b/vf5t-L4-webgl2-low-z0.5/captures/vf5t-L4-webgl2-low-z0.5-L4-t8193.jpg",
+    "sha256": "e8278fab6e577e621a767c161bdc0830d615a2e028d41762da9eabbfdef8e75c",
+    "scope": "Final-radius WebGL2 fallback low zoom0.5, real input, unpaused.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-final-L4-L6-evidence",
+    "finding": "L4 corpse detail",
+    "observation": "Full-size inspection: The dark downed figure to the courier's lower right keeps a coherent black/gray coat surface, but its folded limbs and head remain jagged. Tan firefighter bodies keep identifiable clothing. P: the dark corpse pose still needs PO judgment.",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": [
+      {
+        "file": "test-results/vqa-fix-5/courier.jpg",
+        "sha256": "2f1510f531ed0b038d6248965c429080730ae899b4888ba95c2d25519b8f16d0",
+        "crop": null
+      },
+      {
+        "file": "test-results/vqa-fix-5/corpses.jpg",
+        "sha256": "29967c13575a68300a69b64bb6192b5879996c8b9de211535787520afd8c855d",
+        "crop": [
+          640,
+          240,
+          1060,
+          660
+        ]
+      }
+    ]
+  },
+  {
+    "file": "test-results/vqa-1b/vf5t-L4-webgl2-high-z0.5/captures/vf5t-L4-webgl2-high-z0.5-L4-t7306.jpg",
+    "sha256": "4f9940905e9c43f7556e7479c2da96ad0939a42e284e854ceb97be180e26b4f0",
+    "scope": "Final-radius WebGL2 fallback high zoom0.5, real input, unpaused.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-final-L4-L6-evidence",
+    "finding": "L4 courier readability",
+    "observation": "Full-size inspection: courier's complete head, green torso, arms, legs and orange/white shoes are visible in front of the overlapping crowd. Low is surrounded by large shield/firefighter bodies; high remains clear beside the soldiers. Warm edges are restrained at close zoom.",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": [
+      {
+        "file": "test-results/vqa-fix-5/corpses.jpg",
+        "sha256": "29967c13575a68300a69b64bb6192b5879996c8b9de211535787520afd8c855d",
+        "crop": [
+          700,
+          200,
+          1240,
+          650
+        ]
+      }
+    ]
+  },
+  {
+    "file": "test-results/vqa-1b/vf5t-L4-webgl2-high-z0.5/captures/vf5t-L4-webgl2-high-z0.5-L4-t7306.jpg",
+    "sha256": "4f9940905e9c43f7556e7479c2da96ad0939a42e284e854ceb97be180e26b4f0",
+    "scope": "Final-radius WebGL2 fallback high zoom0.5, real input, unpaused.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-final-L4-L6-evidence",
+    "finding": "L4 corpse detail",
+    "observation": "Full-size inspection: The fallen firefighter at the right keeps tan clothing, reflective bands and boots; the surface reads as clothing rather than a red/yellow/black mosaic. Folded posing remains angular. P: judge the final corpse appearance for P1-117.",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": [
+      {
+        "file": "test-results/vqa-fix-5/corpses.jpg",
+        "sha256": "29967c13575a68300a69b64bb6192b5879996c8b9de211535787520afd8c855d",
+        "crop": [
+          700,
+          200,
+          1240,
+          650
+        ]
+      }
+    ]
+  },
+  {
+    "file": "test-results/vqa-1b/vf5t-L6-webgpu-low-z1.5/captures/vf5t-L6-webgpu-low-z1.5-escort-alarm-lost-6541.jpg",
+    "sha256": "1cf7fb01f68cf421d59bc85d9d082dd3de0a440fbcfffca93130d77794b4f8cf",
+    "finding": "L6 loss alarm",
+    "observation": "Full-size inspection: opaque orange-bordered Survivor lost! caption is clearly readable beside the HUD while the group retreats through the tunnel. It does not silently remove a follower. The player and following line remain visible.",
+    "scope": "Final-source fresh L6 WebGPU low zoom1.5, real input, unpaused. Debug Controls/Sound strip belongs to fresh-entry harness.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-final-L4-L6-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5t-L6-webgpu-high-z1.5/captures/vf5t-L6-webgpu-high-z1.5-escort-alarm-lost-6530.jpg",
+    "sha256": "6273c3d9e5bd2cb2b91c0edb9e03d12fce66ce1a8e24db6847520946b1abbc08",
+    "finding": "L6 loss alarm",
+    "observation": "Full-size inspection: opaque orange-bordered Survivor lost! caption is clearly readable beside the HUD while the group retreats through the tunnel. It does not silently remove a follower. The player and following line remain visible.",
+    "scope": "Final-source fresh L6 WebGPU high zoom1.5, real input, unpaused. Debug Controls/Sound strip belongs to fresh-entry harness.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-final-L4-L6-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5t-L6-webgpu-low-z0.5/captures/vf5t-L6-webgpu-low-z0.5-L6-t3639.jpg",
+    "sha256": "5cfa04a05495b7e463935b5461c8daa49bf4bb1ec425220470e993bbe4e16d21",
+    "finding": "L6 riot shield",
+    "observation": "Full-size inspection: The courier fires beside the glowing platform ledge and SHIELD BROKEN \u00b7 1.5s is visible above the cop. Metadata places the courier at(-1.525,-27.999), within0.43m of the reported pin point. This is the original low/WebGPU/close-zoom case, with a finite shield opening. The same image shows a clear Survivor lost! directional caption.",
+    "scope": "Final-source fresh L6 WebGPU low zoom0.5, real input, unpaused. No actor relocation.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-final-L4-L6-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": [
+      {
+        "file": "test-results/vqa-fix-5/riot.jpg",
+        "sha256": "c3c0e1179340e17818071ce66baf34488ff404ff4dd705da625d6f298de328db",
+        "crop": null
+      }
+    ]
+  },
+  {
+    "file": "test-results/vqa-1b/vf5t-L6-webgpu-high-z0.5/captures/vf5t-L6-webgpu-high-z0.5-escort-alarm-attack-7988.jpg",
+    "sha256": "b501983d159b59ee858e66cd7fcb5ada7597075c1bccc8efd92c8164439c9727",
+    "finding": "L6 riot shield",
+    "observation": "Full-size inspection: SHIELD BROKEN \u00b7 1.5s is visible during the tunnel fight while the courier continues retreating. The explicit Survivor under attack! Turn back! caption is fully readable. Existing P3 remains: the shield label overlaps the player HUD.",
+    "scope": "Final-source fresh L6 WebGPU high zoom0.5, real input, unpaused. No actor relocation.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-final-L4-L6-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": [
+      {
+        "file": "test-results/vqa-fix-5/riot.jpg",
+        "sha256": "c3c0e1179340e17818071ce66baf34488ff404ff4dd705da625d6f298de328db",
+        "crop": null
+      }
+    ]
+  },
+  {
+    "file": "test-results/vqa-1b/vf5t-L6-webgpu-low-z0.5/captures/vf5t-L6-webgpu-low-z0.5-escort-alarm-attack-14382.jpg",
+    "sha256": "1f75734c45b14b568551e5bb0da2def27da4cac940beabaae3018818a9b8f002",
+    "finding": "L6 route progress",
+    "observation": "Full-size inspection: Same close-zoom low run has progressed from the reported ledge to x185.17 in the tunnel; HUD now shows57m left. The attack alarm is fully readable over the live follower fight. This establishes physical progress beyond the early shield-break frame, without repositioning the actor.",
+    "scope": "Final-source fresh L6 WebGPU low zoom0.5, real input, unpaused.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-final-L4-L6-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": [
+      {
+        "file": "test-results/vqa-fix-5/riot.jpg",
+        "sha256": "c3c0e1179340e17818071ce66baf34488ff404ff4dd705da625d6f298de328db",
+        "crop": null
+      }
+    ]
+  },
+  {
+    "file": "test-results/vqa-1b/vf5t-L6-webgpu-high-z0.5/captures/vf5t-L6-webgpu-high-z0.5-L6-t13665.jpg",
+    "sha256": "240651418bcb41794aae698fc780df1650e6dd13b7a79c9a7d57d3f70809d7a9",
+    "finding": "L6 route progress",
+    "observation": "Full-size inspection: Courier has reached the exit-platform ring at x245.25; HUD shows Bring the survivors into the night \u00b7 1/1 out \u00b7 28m. This close-zoom high run progressed through the retreat rather than staying pinned at the entry.",
+    "scope": "Final-source fresh L6 WebGPU high zoom0.5, real input, unpaused.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-final-L4-L6-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": [
+      {
+        "file": "test-results/vqa-fix-5/riot.jpg",
+        "sha256": "c3c0e1179340e17818071ce66baf34488ff404ff4dd705da625d6f298de328db",
+        "crop": null
+      }
+    ]
+  },
+  {
+    "file": "test-results/vqa-1b/vf5t-L6-webgl2-low-z1.5/captures/vf5t-L6-webgl2-low-z1.5-escort-alarm-attack-3502.jpg",
+    "sha256": "890a4e07221a8cb5f5f965eeb04a36bd9174520c2cfe7184caa467593cd67622",
+    "finding": "L6 attack alarm",
+    "observation": "Full-size inspection: Survivor under attack! Turn back! is fully opaque and readable at the upper screen edge, above the off-screen group fight. It remains inside the viewport and clear of the player/corgi cards and minimap. The courier remains visible in the shelter foreground.",
+    "scope": "Final-source fresh L6 WebGL2 fallback low zoom1.5, real input, unpaused.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-final-L4-L6-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5t-L6-webgl2-high-z1.5/captures/vf5t-L6-webgl2-high-z1.5-escort-alarm-attack-3511.jpg",
+    "sha256": "667aab4130ee29455b91a2d883f388a667432639bd84f228ceb3e078401e474a",
+    "finding": "L6 attack alarm",
+    "observation": "Full-size inspection: Survivor under attack! Turn back! is fully opaque and readable at the upper screen edge, above the off-screen group fight. It remains inside the viewport and clear of the player/corgi cards and minimap. The courier remains visible in the shelter foreground.",
+    "scope": "Final-source fresh L6 WebGL2 fallback high zoom1.5, real input, unpaused.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-final-L4-L6-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5t-L6-webgl2-low-z0.5/captures/vf5t-L6-webgl2-low-z0.5-escort-alarm-lost-3009.jpg",
+    "sha256": "f6de2fd8bcc1ef9c4ee611eedce5f61ada80fe9475cabec5f40bf8dc215bb1e9",
+    "finding": "L6 loss alarm",
+    "observation": "Full-size inspection: large opaque Survivor lost! caption with a left-pointing direction marker clearly signals the loss. It is inside the viewport, separate from the persistent HUD cards, while the courier remains readable at close zoom.",
+    "scope": "Final-source fresh L6 WebGL2 fallback low zoom0.5, real input, unpaused.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-final-L4-L6-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5t-L6-webgl2-high-z0.5/captures/vf5t-L6-webgl2-high-z0.5-escort-alarm-lost-3338.jpg",
+    "sha256": "91d322afaefc0169b404c0508847459333955e97085115b53ad8a2d13402fbb0",
+    "finding": "L6 loss alarm",
+    "observation": "Full-size inspection: large opaque Survivor lost! caption with a left-pointing direction marker clearly signals the loss. It is inside the viewport, separate from the persistent HUD cards, while the courier remains readable at close zoom.",
+    "scope": "Final-source fresh L6 WebGL2 fallback high zoom0.5, real input, unpaused.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-final-L4-L6-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": [
+      {
+        "file": "test-results/vqa-fix-5/escort.jpg",
+        "sha256": "17dc21d32fbad849487ad5554821be191577d2ebd3c7e94b19618afedc2c83c9",
+        "crop": null
+      }
+    ]
+  },
+  {
+    "file": "test-results/vqa-1b/vf5u-L5-webgpu-low-z1.5/captures/vf5u-L5-webgpu-low-z1.5-escort-alarm-attack-1649.jpg",
+    "sha256": "0b8f1e81081f6c5cd122faf9b9f27cf2cde5137283079f5b712a68d92cf603d8",
+    "finding": "L5 attack alarm",
+    "observation": "Full-size inspection: Opaque Survivor under attack! Turn back! caption is clearly readable alongside Mia's rescue dialogue and60/60 health card.",
+    "scope": "Settled-source L5 WebGPU low zoom1.5, real input, unpaused. Tour proceeds onward rather than guarding the follower.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-final-L5-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": [
+      {
+        "file": "test-results/vqa-fix-5/escort.jpg",
+        "sha256": "17dc21d32fbad849487ad5554821be191577d2ebd3c7e94b19618afedc2c83c9",
+        "crop": null
+      }
+    ]
+  },
+  {
+    "file": "test-results/vqa-1b/vf5u-L5-webgpu-high-z1.5/captures/vf5u-L5-webgpu-high-z1.5-escort-alarm-lost-2622.jpg",
+    "sha256": "7a592c7eff2422af176a2ba3e1a84bb46aca08c5a9b99aa2efa451e58189619c",
+    "finding": "L5 lost alarm",
+    "observation": "Full-size inspection: Opaque Survivor lost! caption clearly accompanies the disappearing Mia card while the tour continues. Loss is explicitly signalled rather than silent.",
+    "scope": "Settled-source L5 WebGPU high zoom1.5, real input, unpaused. Tour proceeds onward rather than guarding the follower.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-final-L5-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5u-L5-webgpu-low-z1.5/captures/vf5u-L5-webgpu-low-z1.5-L5-metro-unpaused-z0-5.jpg",
+    "sha256": "a4012c2a022a168dfd3d377b37d9f344dc24f120e3892271639da5372232b8e4",
+    "finding": "L5 truck framing",
+    "observation": "Full-size inspection: courier and Dale are visible beyond the opened foreground truck. Corgi is intentionally hiding and HUD matches.",
+    "scope": "Physically reached Metro handoff, real input, unpaused zoom0.5. Preceding6bd source; later change only courage-hidden pet crowd contact.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-framing",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5u-L5-webgpu-high-z1.5/captures/vf5u-L5-webgpu-high-z1.5-L5-metro-unpaused-z0-5.jpg",
+    "sha256": "67d4b439bf8b506f27acc245b445ca76633fd7776565cdece07ce255e401c737",
+    "finding": "L5 truck framing",
+    "observation": "Full-size inspection: courier, following corgi, Dale and Okafor are visible around the open truck foreground. The broad cut also removes the supporting truck surface.",
+    "scope": "Physically reached Metro handoff, real input, unpaused zoom0.5. Preceding6bd source; later change only courage-hidden pet crowd contact.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-framing",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5v-L5-webgpu-low-z1.5/captures/vf5v-L5-webgpu-low-z1.5-L5-t7404.jpg",
+    "sha256": "05c069740b7307f2ae48820fdeece4d65c56431c62698f579c7a1a5acd370456",
+    "finding": "L5 corgi status",
+    "observation": "Full-size inspection and sheet cross-check: the following corgi, recognizable by orange ears and dark pack, is visible just down/right of the courier near the bench; HUD reads following. The courier\u2019s shoes are not the dog.",
+    "scope": "Finaldf69 source, WebGPU low, zoom1.5, real input, unpaused. Position trace separately measures whole-run separation.",
+    "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
+    "qualification": "selected-final-L5-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": [
+      {
+        "file": "test-results/vqa-fix-5/corgi.jpg",
+        "sha256": "f8c72fe83a10b027b92d6e98e4a031c77b60e6270d2425e680a0d6bcb2572a47",
+        "crop": null
+      }
+    ]
+  },
+  {
+    "file": "test-results/vqa-1b/vf5v-L5-webgpu-high-z1.5/captures/vf5v-L5-webgpu-high-z1.5-L5-t12007.jpg",
+    "sha256": "bad80a6f371732c87799b9dfda19d61a89ebd2363dcdcb9b037d8dbcf5e9d16d",
+    "finding": "L5 corgi status",
+    "observation": "Full-size inspection: courage-hidden dog is absent and the HUD explicitly says hiding. Courier remains visible while enemies close in near Metro.",
+    "scope": "Final df69 source, WebGPU high, zoom1.5, real input, unpaused; trace independently measures proximity during hidden state.",
+    "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
+    "qualification": "selected-final-L5-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5v-L5-webgpu-low-z1.5/captures/vf5v-L5-webgpu-low-z1.5-L5-metro-unpaused-z0-5.jpg",
+    "sha256": "ec6766f35bb83ea2ea2132f83f53d95b61416b42b4bf80aab804b1c7a1d63e11",
+    "finding": "L5 truck framing",
+    "observation": "Full-size inspection: at the physically reached Dale/Metro handoff the truck hull no longer fills the frame; courier and following corgi are visible in the enemy group. The lens cut removes the whole foreground truck/support surface, leaving broad plain ground. P: PO should judge this cut.",
+    "scope": "Final df69 source, WebGPU low, unpaused camera zoom0.5 photograph during zoom1.5 tour; camera only changed, no actor relocation.",
+    "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
+    "qualification": "selected-final-framing",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": [
+      {
+        "file": "test-results/vqa-fix-5/truck.jpg",
+        "sha256": "e366e5633a8a1207813d8a9a84f80ef8abd434ccf76a18a0b2b93fca8558da70",
+        "crop": null
+      }
+    ]
+  },
+  {
+    "file": "test-results/vqa-1b/vf5v-L5-webgpu-high-z1.5/captures/vf5v-L5-webgpu-high-z1.5-L5-metro-unpaused-z0-5.jpg",
+    "sha256": "af1049dc1a027fac545bebe1be1e534955b5820b7e44fa4ba02ac0ffde97d5d5",
+    "finding": "L5 truck framing",
+    "observation": "Full-size inspection: at the physically reached Dale/Metro handoff the truck hull no longer fills the frame; courier and following corgi are visible in the enemy group. The lens cut removes the whole foreground truck/support surface, leaving broad plain ground. P: PO should judge this cut.",
+    "scope": "Final df69 source, WebGPU high, unpaused camera zoom0.5 photograph during zoom1.5 tour; camera only changed, no actor relocation.",
+    "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
+    "qualification": "selected-final-framing",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": [
+      {
+        "file": "test-results/vqa-fix-5/truck.jpg",
+        "sha256": "e366e5633a8a1207813d8a9a84f80ef8abd434ccf76a18a0b2b93fca8558da70",
+        "crop": null
+      }
+    ]
+  },
+  {
+    "file": "test-results/vqa-1b/vf5v-L5-webgpu-low-z0.5/captures/vf5v-L5-webgpu-low-z0.5-L5-t6356.jpg",
+    "sha256": "dcbc1c09a71a69cfc20d9e87250b989adecf76a590c7cf088f4c9d9f28c4b530",
+    "finding": "L5 corgi status",
+    "observation": "Full-size inspection: following corgi is clearly beside the courier on the pharmacy approach, with matching following HUD.",
+    "scope": "Final df69 source, WebGPU low, zoom0.5, physical input, unpaused.",
+    "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
+    "qualification": "selected-final-L5-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5v-L5-webgpu-high-z0.5/captures/vf5v-L5-webgpu-high-z0.5-L5-t6382.jpg",
+    "sha256": "8eb1ce332a5e45c780987cfe30d6f7249dfea98716f12681e5d20d8096e4cfa5",
+    "finding": "L5 corgi status",
+    "observation": "Full-size inspection: courier is visible in a dense horde; I cannot distinguish the corgi amid the overlapping bodies although HUD says following. This frame does not independently prove pet pixel visibility. The exported render-root/position trace qualifies proximity separately.",
+    "scope": "Final df69 source, WebGPU high, zoom0.5, physical input, unpaused.",
+    "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
+    "qualification": "selected-final-L5-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5v-L5-webgl2-low-z1.5/captures/vf5v-L5-webgl2-low-z1.5-L5-t8310.jpg",
+    "sha256": "ea286a9cb21b656eadcae4d9a42bbd136d8baaa15a28a82f18d88c686fafdb69",
+    "finding": "L5 corgi status",
+    "observation": "Full-size inspection: no dog is drawn beside the courier while HUD explicitly says hiding; nearby dark/red props and shadows are not treated as dog proof.",
+    "scope": "Final df69 source, WebGL2 low, zoom1.5, real input, unpaused.",
+    "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
+    "qualification": "selected-final-L5-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5v-L5-webgl2-high-z1.5/captures/vf5v-L5-webgl2-high-z1.5-L5-t8364.jpg",
+    "sha256": "1bcd986ff38f0eecd8659e84c6b52adfb9f7d5e17436226ee07d4c1307c4c918",
+    "finding": "L5 corgi status and loss alarm",
+    "observation": "Full-size inspection: courage-hidden dog is absent with matching hiding HUD. Survivor lost! is fully readable in an opaque red warning panel below the corgi badge as the courier leaves the horde.",
+    "scope": "Final df69 source, WebGL2 high, zoom1.5, real input, unpaused.",
+    "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
+    "qualification": "selected-final-L5-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": [
+      {
+        "file": "test-results/vqa-fix-5/corgi.jpg",
+        "sha256": "f8c72fe83a10b027b92d6e98e4a031c77b60e6270d2425e680a0d6bcb2572a47",
+        "crop": null
+      },
+      {
+        "file": "test-results/vqa-fix-5/escort.jpg",
+        "sha256": "17dc21d32fbad849487ad5554821be191577d2ebd3c7e94b19618afedc2c83c9",
+        "crop": null
+      }
+    ]
+  },
+  {
+    "file": "test-results/vqa-1b/vf5v-L5-webgl2-low-z1.5/captures/vf5v-L5-webgl2-low-z1.5-L5-metro-unpaused-z0-5.jpg",
+    "sha256": "dc8a9b6073690c404025fa6cb7eabf2d7c9c7b60c12ca1d79403c344e431a2d7",
+    "finding": "L5 truck framing",
+    "observation": "Full-size inspection: truck hull is cut away; courier, following corgi and follower are visible at the physical Dale/Metro handoff. Broad empty support surface remains a PO framing judgment.",
+    "scope": "Final df69 source, WebGL2 low, camera-only unpaused zoom0.5 photograph during the zoom1.5 physical tour; no actor relocation.",
+    "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
+    "qualification": "selected-final-framing",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": [
+      {
+        "file": "test-results/vqa-fix-5/truck.jpg",
+        "sha256": "e366e5633a8a1207813d8a9a84f80ef8abd434ccf76a18a0b2b93fca8558da70",
+        "crop": null
+      }
+    ]
+  },
+  {
+    "file": "test-results/vqa-1b/vf5v-L5-webgl2-high-z1.5/captures/vf5v-L5-webgl2-high-z1.5-L5-metro-unpaused-z0-5.jpg",
+    "sha256": "59b44767315b9f544b20bbfe62dda6b4dee2f34bf46d988b50f2bb10dc5482a2",
+    "finding": "L5 truck framing",
+    "observation": "Full-size inspection: truck hull is cut away and courier remains visible amid enemies at the physical Dale/Metro handoff. Dog is courage-hidden with correct hiding HUD. An additional discovery cue overlaps the scene; the broad empty support surface remains a PO framing judgment.",
+    "scope": "Final df69 source, WebGL2 high, camera-only unpaused zoom0.5 photograph during the zoom1.5 physical tour; no actor relocation.",
+    "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
+    "qualification": "selected-final-framing",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": [
+      {
+        "file": "test-results/vqa-fix-5/truck.jpg",
+        "sha256": "e366e5633a8a1207813d8a9a84f80ef8abd434ccf76a18a0b2b93fca8558da70",
+        "crop": null
+      }
+    ]
+  },
+  {
+    "file": "test-results/vqa-1b/vf5v-L5-webgl2-low-z1.5/captures/vf5v-L5-webgl2-low-z1.5-L5-t9225.jpg",
+    "sha256": "274ef06b26e8452f695ed606c9f208275d1321b4a55d6d6c4190e31053ec0ac2",
+    "finding": "L5 corgi remaining route separation",
+    "observation": "Full-size inspection: no corgi beside courier; downward paw direction cue and following HUD remain visible. Nearest metadata tick9240 matches the exported trace at12.85 m, falling from the45.47 m peak at8910. The still is after the peak and does not visually prove45 m itself. Mark remaining spatial detour PARTIAL/P1 open.",
+    "scope": "Final df69 source, WebGL2 low, zoom1.5, real input, unpaused. Whole detour is in the retained source-bound position trace.",
+    "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
+    "qualification": "remaining-open-counterexample",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": [
+      {
+        "file": "test-results/vqa-fix-5/corgi.jpg",
+        "sha256": "f8c72fe83a10b027b92d6e98e4a031c77b60e6270d2425e680a0d6bcb2572a47",
+        "crop": null
+      }
+    ]
+  },
+  {
+    "file": "test-results/vqa-1b/vf5v-L5-webgl2-low-z0.5/captures/vf5v-L5-webgl2-low-z0.5-L5-t10020.jpg",
+    "sha256": "f104018d4a9f0492d0765209f5100b3827cb7accd46b54d2ae54f1b731e12628",
+    "finding": "L5 corgi status",
+    "observation": "Full-size inspection: dog is intentionally absent in a close enemy group and HUD explicitly says hiding.",
+    "scope": "Final df69 source, WebGL2 low, zoom0.5, real input, unpaused. Source-bound trace measures whole-run route separation separately.",
+    "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
+    "qualification": "selected-final-L5-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": []
+  },
+  {
+    "file": "test-results/vqa-1b/vf5v-L5-webgl2-high-z0.5/captures/vf5v-L5-webgl2-high-z0.5-L5-t10032.jpg",
+    "sha256": "7f227d9e1c97885875a31ed52f9bbcd74dd382f23b1b03399bea9440a9b3db9f",
+    "finding": "L5 corgi status",
+    "observation": "Full-size inspection: following corgi with pack is clearly visible to the left of the courier in a dense horde; HUD says following. Courier is also visible, with many L5 enemy bars (the new cap is scoped to L4).",
+    "scope": "Final df69 source, WebGL2 high, zoom0.5, real input, unpaused. Source-bound trace measures whole-run route separation separately.",
+    "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
+    "qualification": "selected-final-L5-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": [
+      {
+        "file": "test-results/vqa-fix-5/corgi.jpg",
+        "sha256": "f8c72fe83a10b027b92d6e98e4a031c77b60e6270d2425e680a0d6bcb2572a47",
+        "crop": null
+      }
+    ]
+  },
+  {
+    "file": "test-results/vqa-1b/vf5t-L4-webgl2-high-z1.5/captures/vf5t-L4-webgl2-high-z1.5-L4-t11073.jpg",
+    "sha256": "20d827d8ed5cf8389643054b64ce081df02cf0c366897ec23a282565cf66c7ae",
+    "finding": "L4 courier max mandatory-bar frame",
+    "observation": "Full-size inspection: full gold courier silhouette, including torso and legs, remains distinguishable in the centre of the breach horde. Metadata records15 bars, the maximum across selected L4 cells. The many mandatory special-threat bars still form a red stack above the crowd; the six-bar budget is not a hard total cap. P: judge this remaining special-bar clutter and gold style.",
+    "scope": "Preceding6bd source, WebGL2 high, zoom1.5, real input, unpaused; later game change affects courage-hidden pet contact only.",
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "qualification": "selected-final-L4-evidence",
+    "rawRemovedAfterReview": true,
+    "retainedSheetViews": [
+      {
+        "file": "test-results/vqa-fix-5/courier.jpg",
+        "sha256": "2f1510f531ed0b038d6248965c429080730ae899b4888ba95c2d25519b8f16d0",
+        "crop": null
+      }
+    ]
+  }
+]

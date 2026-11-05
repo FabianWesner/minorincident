@@ -1,0 +1,233 @@
+{
+  "commands": "npm run qa:accept -- --level L4|L5|L6 --tier both --skip-browser; separate real-input 24-cell matrix",
+  "exit": 1,
+  "sharedIndexError": "Review L3-07 has no clause matching its exact criterion text",
+  "baseline": "f701c8dce6fc704983391ed6f4680b9bf44a2d1f",
+  "levels": [
+    {
+      "level": "L4",
+      "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
+      "report": "docs/reports/fix51-verify/L4.json",
+      "sha256": "c61049b987ab5945bfb3e35c2525ec85a7fbcabee67bf474b16e022c9af004d1",
+      "policies": [
+        {
+          "tier": "low",
+          "policy": "complete",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L4-low-complete.json"
+        },
+        {
+          "tier": "low",
+          "policy": "stationary",
+          "outcome": "tick-budget",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L4-low-stationary.json"
+        },
+        {
+          "tier": "high",
+          "policy": "complete",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L4-high-complete.json"
+        },
+        {
+          "tier": "high",
+          "policy": "stationary",
+          "outcome": "tick-budget",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
+        },
+        {
+          "tier": "low",
+          "policy": "controlled-fixtures",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L4-low-fixtures.json"
+        },
+        {
+          "tier": "high",
+          "policy": "controlled-fixtures",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L4-high-fixtures.json"
+        },
+        {
+          "tier": "low",
+          "policy": "checkpoint-death-control",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L4-low-checkpoints.json"
+        },
+        {
+          "tier": "high",
+          "policy": "checkpoint-death-control",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L4-high-checkpoints.json"
+        }
+      ],
+      "currentStatusCounts": {
+        "PASS": 3,
+        "NOT CHECKED": 14,
+        "FAIL": 1
+      },
+      "failures": [
+        {
+          "id": "L4-06",
+          "baseStatus": "FAIL",
+          "baseCurrentStatus": "FAIL",
+          "currentStatus": "FAIL",
+          "value": "low/stationary living infected at first breach: 58 (target 60 \u2264 value \u2264 Infinity; FAIL)"
+        }
+      ]
+    },
+    {
+      "level": "L5",
+      "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
+      "report": "docs/reports/fix51-verify/L5.json",
+      "sha256": "c0348cb9bcbfc4815d0ea816a360be9c48c1926ba42cc390e8890d64e22b84bc",
+      "policies": [
+        {
+          "tier": "low",
+          "policy": "complete",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L5-low-complete.json"
+        },
+        {
+          "tier": "low",
+          "policy": "stationary",
+          "outcome": "tick-budget",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L5-low-stationary.json"
+        },
+        {
+          "tier": "high",
+          "policy": "complete",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L5-high-complete.json"
+        },
+        {
+          "tier": "high",
+          "policy": "stationary",
+          "outcome": "tick-budget",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L5-high-stationary.json"
+        },
+        {
+          "tier": "low",
+          "policy": "controlled-fixtures",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L5-low-fixtures.json"
+        },
+        {
+          "tier": "high",
+          "policy": "controlled-fixtures",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L5-high-fixtures.json"
+        },
+        {
+          "tier": "low",
+          "policy": "checkpoint-death-control",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L5-low-checkpoints.json"
+        },
+        {
+          "tier": "high",
+          "policy": "checkpoint-death-control",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L5-high-checkpoints.json"
+        }
+      ],
+      "currentStatusCounts": {
+        "PASS": 4,
+        "NOT CHECKED": 9,
+        "FAIL": 1
+      },
+      "failures": [
+        {
+          "id": "L5-08",
+          "baseStatus": "FAIL",
+          "baseCurrentStatus": "FAIL",
+          "currentStatus": "FAIL",
+          "value": "low/complete calm straight-walk follower distance tolerance: [{\"id\":31,\"followAt\":1921,\"calmTicks\":8966,\"within8Ticks\":8966,\"movingCalmTicks\":5050,\"behind2To5Ticks\":4536,\"maxMotionSpeed\":301.734983056324,\"straightTicks\":1670,\"inBandStraightTicks\":1574,\"badStraightTicks\":96,\"badRun\":0,\"maxBadRun\":96,\"counterexample\":{\"tick\":4182,\"behind\":5.134003961294162,\"distance\":5.145803527746529,\"player\":{\"x\":-38.33531188964844,\"z\":13.338467597961426},\"follower\":{\"x\":-3\u2026 (full values in JSON) (target at least95% of calm straight-walk ticks 2\u20135m behind; no out-of-band run longer than2s; FAIL); high/complete observed human follower pace versus phase group median: [{\"phase\":\"step/look\",\"id\":31,\"samples\":131,\"median\":4.437277801144634,\"groupMedian\":4.2066202022466985,\"ratio\":1.0548320475365816},{\"phase\":\"step/look\",\"id\":30,\"samples\":109,\"median\":4.277922475470496,\"groupMedian\":4.2066202022466985,\"ratio\":1.01695001445239},{\"phase\":\"step/look\",\"id\":32,\"samples\":80,\"median\":4.1353179290229,\"groupMedian\":4.2066202022466985,\"ratio\":0.9830499855476097},{\"phase\":\"s\u2026 (full values in JSON) (target every ratio\u22650.95; bar pixels and absolute formation remain open; FAIL); high/complete calm straight-walk follower distance tolerance: [{\"id\":31,\"followAt\":2126,\"calmTicks\":9433,\"within8Ticks\":9414,\"movingCalmTicks\":5009,\"behind2To5Ticks\":4602,\"maxMotionSpeed\":301.734983056324,\"straightTicks\":1571,\"inBandStraightTicks\":1571,\"badStraightTicks\":0,\"badRun\":0,\"maxBadRun\":0,\"counterexample\":null,\"lastStraightTick\":13267,\"within8Share\":0.9979857945510442,\"inBandStraightShare\":1},{\"id\":30,\"followAt\":4016,\"calmTicks\":7886,\"within8Ticks\":\u2026 (full values in JSON) (target at least95% of calm straight-walk ticks 2\u20135m behind; no out-of-band run longer than2s; FAIL) Manual review FAIL (STALE, Codex fix63-a): PO tolerance is applied to every calm straight-walk tick, including catch-up. Low followers31/32/28 reach92.12/89.22/85.26percent and fail95percent; maximum excursions50/115/87ticks meet120tick cap. High all five reach96.81\u2013100percent with maximum44ticks and pass this band clause. Both native routes complete. Other visual and combat-speed subclauses remain unqualified; no L5 game/controller change. Open prior FAIL: Native L5 civilian follower28:94.8% of phase group median over55 qualified movement samples, below the global95% floor. Distance2-5 m/80%-within8 m and absolute3.8 m/s clauses are not fully measured."
+        }
+      ]
+    },
+    {
+      "level": "L6",
+      "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
+      "report": "docs/reports/fix51-verify/L6.json",
+      "sha256": "3cad0a9620bbf5a39a804a420139901f97575fb6aeca541c89e3c2fa04705f7a",
+      "policies": [
+        {
+          "tier": "low",
+          "policy": "complete",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L6-low-complete.json"
+        },
+        {
+          "tier": "low",
+          "policy": "stationary",
+          "outcome": "tick-budget",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L6-low-stationary.json"
+        },
+        {
+          "tier": "high",
+          "policy": "complete",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L6-high-complete.json"
+        },
+        {
+          "tier": "high",
+          "policy": "stationary",
+          "outcome": "tick-budget",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L6-high-stationary.json"
+        },
+        {
+          "tier": "low",
+          "policy": "controlled-fixtures",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L6-low-fixtures.json"
+        },
+        {
+          "tier": "high",
+          "policy": "controlled-fixtures",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L6-high-fixtures.json"
+        },
+        {
+          "tier": "low",
+          "policy": "checkpoint-death-control",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L6-low-checkpoints.json"
+        },
+        {
+          "tier": "high",
+          "policy": "checkpoint-death-control",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L6-high-checkpoints.json"
+        }
+      ],
+      "currentStatusCounts": {
+        "NOT CHECKED": 9,
+        "PASS": 5
+      },
+      "failures": []
+    }
+  ]
+}

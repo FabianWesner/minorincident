@@ -2,7 +2,7 @@
   "version": 1,
   "level": "L6",
   "tier": "high",
-  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+  "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
   "fixtureHash": "df526016e398100e295b42766eea3ea1190e551b57fa24999faa743cf1e3f7c4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
   "checks": [
@@ -117,7 +117,7 @@
       "value": {
         "checkpoint": "abandon",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "01114e4d73d98c569528b69b7d09f13b25255da91623f003962c0039489c9000",
+        "snapshotSha256": "123b0d14a79422fb2d451bb25aaadb972dc2776d4e163a2fdea0483227ae2275",
         "damage": 100,
         "expected": {
           "id": "abandon",
@@ -125,7 +125,7 @@
             "x": 0.33253079652786255,
             "y": 1.3200000524520874,
             "z": 3.5566253662109375,
-            "yaw": 0.06647050806946597
+            "yaw": 0.07806089859402861
           },
           "gates": {},
           "racks": {
@@ -142,6 +142,7 @@
           },
           "followers": [
             16,
+            17,
             18,
             19,
             20,
@@ -218,7 +219,7 @@
       "value": {
         "checkpoint": "gate-90",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "666da13e07dd42db0901457e74bf7746aab7d8cbdf384998bff3218d8d9ad82c",
+        "snapshotSha256": "03ee61e1bd4fc88d601e7a5c5a0248046510dc103d0db78b829fde5efbc4eec7",
         "damage": 100,
         "expected": {
           "id": "gate-90",
@@ -226,7 +227,7 @@
             "x": 92.4,
             "y": 1.2699999809265137,
             "z": 17.3,
-            "yaw": -2.079497166826161
+            "yaw": -0.02127291666444298
           },
           "gates": {},
           "racks": {
@@ -243,6 +244,7 @@
           },
           "followers": [
             16,
+            17,
             18,
             19,
             20,
@@ -319,7 +321,7 @@
       "value": {
         "checkpoint": "gate-150",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "d74f46650f28830cf8dfa65424c36cde243273d0ac6f4000b48d3d1f20301ab5",
+        "snapshotSha256": "eec04fbc9c0f924d10ffd4f73593b0d92d4654171a301e0c0992392e8cebcf8f",
         "damage": 100,
         "expected": {
           "id": "gate-150",
@@ -327,7 +329,7 @@
             "x": 152.4,
             "y": 1.2699999809265137,
             "z": 17.3,
-            "yaw": 0.008924528151774047
+            "yaw": 0.008885952856761787
           },
           "gates": {},
           "racks": {
@@ -344,6 +346,7 @@
           },
           "followers": [
             16,
+            17,
             18,
             19,
             20,
@@ -354,13 +357,12 @@
             25,
             26,
             27,
-            28,
-            29,
             30,
             32,
             33,
             35,
-            36,
+            37,
+            38,
             41
           ],
           "pickups": [
@@ -411,15 +413,15 @@
       "value": {
         "checkpoint": "mid-tunnel",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "23e273c3e226f3929df354431c9a2d7bcd4bf13228a5175ef4af93ae6ea4965d",
+        "snapshotSha256": "bcba6ee2da5ef30c1b5dfed69fde599a51bbbc9a9f59290c800ba4ec03f60739",
         "damage": 100,
         "expected": {
           "id": "mid-tunnel",
           "anchor": {
-            "x": 150.050048828125,
+            "x": 150.03628540039062,
             "y": 1.2699999809265137,
-            "z": 15.464925765991211,
-            "yaw": -0.23324745719762918
+            "z": 15.462944030761719,
+            "yaw": -0.2322436516924178
           },
           "gates": {},
           "racks": {
@@ -436,6 +438,7 @@
           },
           "followers": [
             16,
+            17,
             18,
             19,
             20,
@@ -446,13 +449,12 @@
             25,
             26,
             27,
-            28,
-            29,
             30,
             32,
             33,
             35,
-            36,
+            37,
+            38,
             41
           ],
           "pickups": [
@@ -464,8 +466,8 @@
         "observed": {
           "id": "mid-tunnel",
           "position": {
-            "x": 150.050048828125,
-            "z": 15.464925765991211
+            "x": 150.03628540039062,
+            "z": 15.462944030761719
           },
           "gates": {},
           "racks": {
@@ -503,7 +505,7 @@
       "value": {
         "checkpoint": "gate-210",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "956d8847ce0bf621970576243cc9153c8099370bef0540af059bcb8d3c858000",
+        "snapshotSha256": "8ca7a21ddccf516b54c91d2926d81f42e3167576a829b21abe42f55ddfb8a152",
         "damage": 100,
         "expected": {
           "id": "gate-210",
@@ -511,7 +513,7 @@
             "x": 212.4,
             "y": 1.2699999809265137,
             "z": 17.3,
-            "yaw": 0.0000060486188444022095
+            "yaw": 2.6028726517829046
           },
           "gates": {},
           "racks": {
@@ -528,6 +530,7 @@
           },
           "followers": [
             16,
+            17,
             18,
             19,
             20,
@@ -538,13 +541,12 @@
             25,
             26,
             27,
-            28,
-            29,
             30,
             32,
             33,
             35,
-            36,
+            37,
+            38,
             41
           ],
           "pickups": [
@@ -595,15 +597,15 @@
       "value": {
         "checkpoint": "exit-platform",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "bdc1db53a3f184ccb7a72be69baea6e680f7af18e510aee3c9fb43fc12fee7d2",
+        "snapshotSha256": "04c641de0a7eeb00b07e8d2c4d770755601175f66ccd5e5ab6bd3592c9017be8",
         "damage": 100,
         "expected": {
           "id": "exit-platform",
           "anchor": {
-            "x": 240.06991577148438,
+            "x": 240.0047149658203,
             "y": 1.2699999809265137,
-            "z": 15.223979949951172,
-            "yaw": 0.034119081273671394
+            "z": 15.000007629394531,
+            "yaw": 0.000009431553955390565
           },
           "gates": {},
           "racks": {
@@ -619,6 +621,8 @@
             ]
           },
           "followers": [
+            16,
+            17,
             18,
             19,
             20,
@@ -629,13 +633,12 @@
             25,
             26,
             27,
-            28,
-            29,
             30,
             32,
             33,
             35,
-            36,
+            37,
+            38,
             41
           ],
           "pickups": [
@@ -647,8 +650,8 @@
         "observed": {
           "id": "exit-platform",
           "position": {
-            "x": 240.06991577148438,
-            "z": 15.223979949951172
+            "x": 240.0047149658203,
+            "z": 15.000007629394531
           },
           "gates": {},
           "racks": {
@@ -680,8 +683,8 @@
   ],
   "errors": [],
   "control": {
-    "observed": "66ed1fa4",
-    "control": "66ed1fa4",
+    "observed": "fd135572",
+    "control": "fd135572",
     "identical": true
   }
 }

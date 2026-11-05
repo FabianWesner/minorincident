@@ -228,6 +228,11 @@ test('crowd registration retains converted textured variants with their own mode
 
   const bodies = Array.from({ length: 5 }, (_, i) => ({ id: i + 2, transform: { x: 1 + i * .1, y: 0, z: 0 }, health: { current: 100, max: 100 }, infected: { hidden: false } } as unknown as EntitySnapshot));
   expect(crowdSurroundsCourier({ x: 0, z: 0 }, bodies)).toBe(true);
+  // L4 t13681: bulky bodies already cover her before five centres enter 3 m.
+  const l4Overlap = bodies.map((body, i) => ({ ...body, transform: { ...body.transform, x: [2.69, 2.78, 2.99, 3.70, 4.08][i] } }));
+  expect(crowdSurroundsCourier({ x: 0, z: 0 }, l4Overlap)).toBe(false);
+  expect(crowdSurroundsCourier({ x: 0, z: 0 }, l4Overlap, 4.5)).toBe(true);
+
   expect(crowdSurroundsCourier({ x: 0, z: 0 }, bodies.slice(0, 4))).toBe(false);
   expect(crowdSurroundsCourier({ x: 0, z: 0 }, bodies.map(body => ({ ...body, transform: { ...body.transform, x: 4 } })))).toBe(false);
   expect(crowdSurroundsCourier({ x: 0, z: 0 }, bodies.map(body => ({ ...body, health: { current: 0, max: 100 } })))).toBe(false);

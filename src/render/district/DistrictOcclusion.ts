@@ -278,9 +278,11 @@ export class DistrictOcclusion {
           }
           if (enter <= exit && enter < .98 && (!contact || exit < 1)) {
             if (this.vehicleSilhouette && entry.id.startsWith('veh.')) this.courierOccluded = true;
-            else this.cutPlacements.add(ref);
+            // Static wrecks need the same cut eligibility as other foreground
+            // solids. Keep the courier behind the hull while opening its surface.
+            this.cutPlacements.add(ref);
             if (tucked) this.courierTucked = true;
-            if ('hero' in entry && (tucked || entry.id.startsWith('bld.') && this.coversLens(view, entry, ref))) this.lensPlacements.add(ref);
+            if ('hero' in entry && (tucked || (entry.id.startsWith('bld.') || entry.id.startsWith('veh.')) && this.coversLens(view, entry, ref))) this.lensPlacements.add(ref);
             this.occluderId = `${entry.id}@${(x).toFixed(1)},${(z).toFixed(1)}`; blocked = true; break;
           }
         }

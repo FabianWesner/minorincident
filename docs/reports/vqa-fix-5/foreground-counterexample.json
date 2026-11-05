@@ -1,0 +1,554 @@
+{
+  "sourceHash": "315ba38c0910afe1973e867e2e05553c30d0a1ddf120b0c67bdbba7f729c1850",
+  "captureMetadata": {
+    "tick": 13722,
+    "alarmCue": {
+      "text": "\u203a",
+      "hidden": true,
+      "alarm": "false",
+      "opacity": "0",
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    "paused": false,
+    "backend": "webgpu",
+    "quality": "high",
+    "healthBars": {
+      "count": 0,
+      "draws": 0,
+      "bars": []
+    },
+    "bodies": [
+      {
+        "id": 1496235316,
+        "archetype": "prop.crates",
+        "at": {
+          "x": -30.8431396484375,
+          "y": -4.652142524719238e-05,
+          "z": 3.781493663787842,
+          "yaw": 0.2
+        },
+        "corpse": false
+      },
+      {
+        "id": 1546568173,
+        "archetype": "prop.crates",
+        "at": {
+          "x": -28.974567413330078,
+          "y": -4.678964614868164e-05,
+          "z": 1.0975182056427002,
+          "yaw": -0.1
+        },
+        "corpse": false
+      },
+      {
+        "id": 1529790554,
+        "archetype": "prop.crates",
+        "at": {
+          "x": -29.799419403076172,
+          "y": -4.652142524719238e-05,
+          "z": 3.83821177482605,
+          "yaw": 0.1
+        },
+        "corpse": false
+      },
+      {
+        "id": 1311681507,
+        "archetype": "prop.crates",
+        "at": {
+          "x": -20.799999237060547,
+          "y": -0.001703113317489624,
+          "z": 3.4000000953674316,
+          "yaw": 0
+        },
+        "corpse": false
+      },
+      {
+        "id": 1318457301,
+        "archetype": "prop.light-tower",
+        "at": {
+          "x": -18,
+          "y": -0.0017030835151672363,
+          "z": -10.699999809265137,
+          "yaw": 3.141592653589793
+        },
+        "corpse": false
+      },
+      {
+        "id": 41,
+        "archetype": "npc.delivery-driver",
+        "at": {
+          "x": -32.14547587870902,
+          "z": -1.7210541046349421,
+          "y": 0.7,
+          "yaw": -28.22571463067916
+        },
+        "corpse": false,
+        "lod": "lod2",
+        "clip": "death-back",
+        "drawn": false
+      },
+      {
+        "id": 55,
+        "archetype": "npc.bbq-dad",
+        "at": {
+          "x": -31.678229353524365,
+          "z": -1.0641306024943349,
+          "y": 0.7,
+          "yaw": -2.513456479844648
+        },
+        "corpse": false,
+        "lod": "lod2",
+        "clip": "death-back",
+        "drawn": false
+      },
+      {
+        "id": 219,
+        "archetype": "infected.riot",
+        "at": {
+          "x": -21.839785590974152,
+          "y": 0.75,
+          "z": 0.24618083167681648,
+          "yaw": 2.114720896757603
+        },
+        "corpse": true,
+        "state": "dead",
+        "lod": "lod1",
+        "clip": "death-back",
+        "drawn": false
+      },
+      {
+        "id": 262,
+        "archetype": "infected.riot",
+        "at": {
+          "x": -24.756472989583088,
+          "y": 0.75,
+          "z": -2.0609745718035213,
+          "yaw": 1.5258967459360444
+        },
+        "corpse": true,
+        "state": "dead",
+        "lod": "lod1",
+        "clip": "death-back",
+        "drawn": true
+      },
+      {
+        "id": 249,
+        "archetype": "infected.riot",
+        "at": {
+          "x": -24.096422159939348,
+          "y": 0.75,
+          "z": -4.374624128724187,
+          "yaw": -0.022952476487975684
+        },
+        "corpse": true,
+        "state": "dead",
+        "lod": "lod1",
+        "clip": "death-back",
+        "drawn": true
+      },
+      {
+        "id": 207,
+        "archetype": "infected.firefighter",
+        "at": {
+          "x": -21.954569163889662,
+          "y": 0.75,
+          "z": -4.353686129631456,
+          "yaw": -0.1255260653852215
+        },
+        "corpse": true,
+        "state": "dead",
+        "lod": "lod1",
+        "clip": "death-back",
+        "drawn": false
+      },
+      {
+        "id": 218,
+        "archetype": "infected.firefighter",
+        "at": {
+          "x": -21.468606193781724,
+          "y": 0.75,
+          "z": -3.509316958493248,
+          "yaw": 0.8104203687519227
+        },
+        "corpse": true,
+        "state": "dead",
+        "lod": "lod1",
+        "clip": "death-back",
+        "drawn": false
+      },
+      {
+        "id": 210,
+        "archetype": "infected.hazmat",
+        "at": {
+          "x": -21.22471944569661,
+          "y": 0.75,
+          "z": -2.7382070458870644,
+          "yaw": 3.4918380613017934
+        },
+        "corpse": true,
+        "state": "dead",
+        "lod": "lod1",
+        "clip": "death-back",
+        "drawn": false
+      },
+      {
+        "id": 222,
+        "archetype": "infected.hazmat",
+        "at": {
+          "x": -24.408617737939682,
+          "y": 0.75,
+          "z": -2.6905313632693075,
+          "yaw": -2.3524983803479063
+        },
+        "corpse": true,
+        "state": "dead",
+        "lod": "lod1",
+        "clip": "death-back",
+        "drawn": true
+      },
+      {
+        "id": 281,
+        "archetype": "infected.riot",
+        "at": {
+          "x": -24.449961986213122,
+          "y": 0.75,
+          "z": -0.7041553022078284,
+          "yaw": 1.8898437891277777
+        },
+        "corpse": true,
+        "state": "dead",
+        "lod": "lod1",
+        "clip": "death-back",
+        "drawn": false
+      },
+      {
+        "id": 206,
+        "archetype": "infected.sprinter",
+        "at": {
+          "x": -25.715133947716577,
+          "y": 0.75,
+          "z": -2.2169161320145356,
+          "yaw": 1.0767578507504334
+        },
+        "corpse": true,
+        "state": "dead",
+        "lod": "lod1",
+        "clip": "death-back",
+        "drawn": true
+      },
+      {
+        "id": 214,
+        "archetype": "infected.sprinter",
+        "at": {
+          "x": -24.617567081369685,
+          "y": 0.75,
+          "z": 4.688109583030342,
+          "yaw": -0.054688633366274816
+        },
+        "corpse": true,
+        "state": "dead",
+        "lod": "lod2",
+        "clip": "death-back",
+        "drawn": false
+      },
+      {
+        "id": 264,
+        "archetype": "infected.runner",
+        "at": {
+          "x": -28.73784570504004,
+          "y": 0.75,
+          "z": 5.671144083622264,
+          "yaw": -2.1631764147735852
+        },
+        "corpse": true,
+        "state": "dead",
+        "lod": "lod2",
+        "clip": "death-back",
+        "drawn": false
+      },
+      {
+        "id": 216,
+        "archetype": "infected.hazmat",
+        "at": {
+          "x": -23.235796301048175,
+          "y": 0.75,
+          "z": -3.5021432258587124,
+          "yaw": 1.8958732587976963
+        },
+        "corpse": true,
+        "state": "dead",
+        "lod": "lod1",
+        "clip": "death-back",
+        "drawn": false
+      },
+      {
+        "id": 209,
+        "archetype": "infected.riot",
+        "at": {
+          "x": -21.428258384391352,
+          "y": 0.75,
+          "z": -1.0804041340722643,
+          "yaw": -2.5758892218699083
+        },
+        "corpse": true,
+        "state": "dead",
+        "lod": "lod1",
+        "clip": "death-back",
+        "drawn": false
+      },
+      {
+        "id": 251,
+        "archetype": "infected.hazmat",
+        "at": {
+          "x": -24.806786978326073,
+          "y": 0.75,
+          "z": -4.331404370355752,
+          "yaw": -0.046133703204599294
+        },
+        "corpse": true,
+        "state": "dead",
+        "lod": "lod1",
+        "clip": "death-back",
+        "drawn": true
+      },
+      {
+        "id": 238,
+        "archetype": "infected.riot",
+        "at": {
+          "x": -23.706933379846433,
+          "y": 0.75,
+          "z": -3.454914829145771,
+          "yaw": 2.227139874627886
+        },
+        "corpse": true,
+        "state": "dead",
+        "lod": "lod1",
+        "clip": "death-back",
+        "drawn": true
+      },
+      {
+        "id": 215,
+        "archetype": "infected.firefighter",
+        "at": {
+          "x": -25.683925466757625,
+          "y": 0.75,
+          "z": -3.2595524282735937,
+          "yaw": 1.7062302204147943
+        },
+        "corpse": true,
+        "state": "dead",
+        "lod": "lod1",
+        "clip": "death-back",
+        "drawn": true
+      },
+      {
+        "id": 263,
+        "archetype": "infected.firefighter",
+        "at": {
+          "x": -25.80438370520219,
+          "y": 0.75,
+          "z": -2.810837896885463,
+          "yaw": 1.4256231733161475
+        },
+        "corpse": true,
+        "state": "dead",
+        "lod": "lod1",
+        "clip": "death-back",
+        "drawn": true
+      },
+      {
+        "id": 257,
+        "archetype": "infected.hazmat",
+        "at": {
+          "x": -23.5749576086281,
+          "y": 0.75,
+          "z": -3.3099283282609386,
+          "yaw": 1.8224421470300682
+        },
+        "corpse": true,
+        "state": "dead",
+        "lod": "lod1",
+        "clip": "death-back",
+        "drawn": true
+      },
+      {
+        "id": 212,
+        "archetype": "infected.riot",
+        "at": {
+          "x": -22.57509980517007,
+          "y": 0.75,
+          "z": -3.9702241035040933,
+          "yaw": 2.8736333027991465
+        },
+        "corpse": true,
+        "state": "dead",
+        "lod": "lod1",
+        "clip": "death-back",
+        "drawn": true
+      },
+      {
+        "id": 250,
+        "archetype": "infected.firefighter",
+        "at": {
+          "x": -24.667354582485682,
+          "y": 0.75,
+          "z": -4.376436540776898,
+          "yaw": -0.018366324917915143
+        },
+        "corpse": true,
+        "state": "dead",
+        "lod": "lod1",
+        "clip": "death-back",
+        "drawn": false
+      },
+      {
+        "id": 260,
+        "archetype": "infected.hazmat",
+        "at": {
+          "x": -21.820190886872865,
+          "y": 0.75,
+          "z": -3.6613793713978837,
+          "yaw": 0.5862130375345589
+        },
+        "corpse": true,
+        "state": "dead",
+        "lod": "lod1",
+        "clip": "death-back",
+        "drawn": true
+      },
+      {
+        "id": 312,
+        "archetype": "infected.sprinter",
+        "at": {
+          "x": -23.27299005636503,
+          "y": 0.75,
+          "z": -2.6849257259460844,
+          "yaw": 0.5893706509990428
+        },
+        "corpse": true,
+        "state": "dead",
+        "lod": "lod1",
+        "clip": "death-back",
+        "drawn": false
+      },
+      {
+        "id": 313,
+        "archetype": "infected.sprinter",
+        "at": {
+          "x": -21.939349799883974,
+          "y": 0.75,
+          "z": -4.376460696537264,
+          "yaw": 2.868473888036348
+        },
+        "corpse": true,
+        "state": "dead",
+        "lod": "lod1",
+        "clip": "death-back",
+        "drawn": false
+      }
+    ],
+    "player": {
+      "x": -27.537853240966797,
+      "y": 0.7099999785423279,
+      "z": -6.048086166381836
+    },
+    "camera": {
+      "zoom": 0.5,
+      "targetZoom": 0.5,
+      "zoomLimits": [
+        0.5,
+        1.5
+      ],
+      "fov": 25,
+      "azimuth": 0.7853981633974483,
+      "polar": 0.9424777960769379,
+      "radius": 9.5,
+      "regionScale": 1,
+      "focus": [
+        -27.53520825002708,
+        2.5e-323,
+        -5.740293736957077
+      ],
+      "target": [
+        -27.53520825002708,
+        2.5e-323,
+        -5.740293736957077
+      ],
+      "position": [
+        -22.100353435030073,
+        5.583959857236622,
+        -0.27411551925334904
+      ],
+      "spot": null
+    },
+    "audit": {
+      "strength": 1,
+      "cover": 0,
+      "solidRadius": 0.42819496792736406,
+      "center": [
+        0.5352070275832186,
+        0.2753749642963365
+      ],
+      "occluder": "kit.reception-plaza@-26.0,-8.8",
+      "cutLowProps": [
+        "prop.garden-bush-small",
+        "prop.hedge"
+      ],
+      "cutPlacements": [
+        "kit.reception-plaza@-26.0,-8.8"
+      ],
+      "lensPlacements": []
+    },
+    "courierForeground": false
+  },
+  "captureMetadataSha256": "7c1004458a2d1c97cfa5151ac658263a5af3bf1fcf8d656a6d33094fa366060b",
+  "controlSamples": [
+    {
+      "tick": 13681,
+      "visible": [
+        {
+          "id": 501,
+          "d": 2.694224471698757,
+          "archetype": "infected.hazmat"
+        },
+        {
+          "id": 594,
+          "d": 2.782521732106004,
+          "archetype": "infected.firefighter"
+        },
+        {
+          "id": 561,
+          "d": 2.9857218950348607,
+          "archetype": "infected.runner"
+        },
+        {
+          "id": 617,
+          "d": 3.699983136765206,
+          "archetype": "infected.riot"
+        },
+        {
+          "id": 539,
+          "d": 4.0783120489016556,
+          "archetype": "infected.firefighter"
+        }
+      ]
+    },
+    {
+      "tick": 13749,
+      "visible": [
+        {
+          "id": 598,
+          "d": 3.0353886107447976,
+          "archetype": "infected.hazmat"
+        }
+      ]
+    }
+  ],
+  "rawLogSha256": "fd8aa52c5127cf6dcadb3040f7e472ccc0e6a0beaf63b3bbcab43a1a4d66f982",
+  "qualification": "Pre-radius counterexample. Playtest eyes excludes dead/corpse enemies before emitting these visible targets; screenshot and log samples differ by up to32 ticks."
+}

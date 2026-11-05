@@ -52,7 +52,9 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   if (o.saveOnYield && (o.levels.length !== 1 || o.levels[0] !== 'L10' || !o.sampleSeconds)) throw new Error('Resume batches require one bounded L10 route');
   let yielded = false;
   const visibleOnly = process.env.PLAYTEST_VISIBLE_ONLY === '1';
-  const plannedL5Search = process.env.PLAYTEST_L5_TOUR === '1' && !visibleOnly;
+  const l5Order = process.env.PLAYTEST_L5_ORDER?.split(',');
+  if (l5Order && (new Set(l5Order).size !== 5 || l5Order.some(key => !l5Survivors.some(s => s.key === key)))) throw new Error('PLAYTEST_L5_ORDER requires all five survivor keys once');
+  const plannedL5Search = (process.env.PLAYTEST_L5_TOUR === '1' || !!l5Order) && !visibleOnly;
   mkdirSync(o.out, { recursive: true }); mkdirSync(join(o.out, 'captures'), { recursive: true });
   const logFile = join(o.out, `log-${o.tag}.jsonl`);
   const log = (entry: object) => appendFileSync(logFile, JSON.stringify({ t: new Date().toISOString(), ...entry }) + '\n');
@@ -108,9 +110,16 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       await page.screenshot({ path: join(o.out, file), type: 'jpeg', quality: 72 });
       // Reveal diagnostics beside each capture (courier, camera, see-through cut placements, foreground state).
       if (process.env.PLAYTEST_REVEAL_AUDIT === '1') writeFileSync(join(o.out, file.replace(/\.jpg$/, '.json')), JSON.stringify(await page.evaluate(() => {
-        const g = (window.__SCENE__ as unknown as { game: Game }).game as unknown as { world: Game['world']; view: { districts?: { seeThroughAudit(): unknown }; view: { getState(): unknown }; courierForeground?: boolean } };
-        const p = g.world.entities.get(1)!.transform;
-        return { tick: g.world.tick, player: { x: p.x, y: p.y, z: p.z }, camera: g.view.view.getState(), audit: g.view.districts?.seeThroughAudit(), courierForeground: g.view.courierForeground };
+        const g = (window.__SCENE__ as unknown as { game: Game }).game as unknown as { world: Game['world']; clock: { paused: boolean }; view: { districts?: { seeThroughAudit(): unknown }; view: { getState(): unknown }; courierForeground?: boolean } };
+        const p = g.world.entities.get(1)!.transform, a = window.__SS__!;
+        const render = a.getState().render as { backend: string; quality: string; healthBars?: unknown };
+        const figures = new Map(a.crowdFigures().map(f => [f.id, f]));
+        const bodies = [...g.world.entities.iterate()].filter(e => e.health.current <= 0 && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) <= 12).slice(0, 30).map(e => ({
+          id: e.id, archetype: e.archetype, at: { ...e.transform }, corpse: !!e.corpse, state: e.infected?.state,
+          lod: figures.get(e.id)?.lod, clip: figures.get(e.id)?.clip, drawn: figures.get(e.id)?.drawn }));
+        const cue = document.querySelector<HTMLElement>('[data-testid=survivor-world-cue]'), box = cue?.getBoundingClientRect();
+        const alarmCue = cue ? { text: cue.innerText, hidden: cue.hidden, alarm: cue.dataset.alarm, opacity: getComputedStyle(cue).opacity, box: box && { x: box.x, y: box.y, width: box.width, height: box.height } } : null;
+        return { tick: g.world.tick, alarmCue, paused: g.clock.paused, backend: render.backend, quality: render.quality, healthBars: render.healthBars, bodies, player: { x: p.x, y: p.y, z: p.z }, camera: g.view.view.getState(), audit: g.view.districts?.seeThroughAudit(), courierForeground: g.view.courierForeground };
       }), null, 1));
     } catch { /* page busy */ }
     finally { if (resume) await page.evaluate(() => window.__SS__!.resume()).catch(() => undefined); }
@@ -139,13 +148,33 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   const handoversCaptured = new Set<string>();
   let acceptanceTick = -Infinity;
   let l6FightCaptured = false, l6RetreatFightCaptured = false;
+  let l5GuardStarted = false, l5GuardDone = false, l5MetroPhoto = false;
   let l6DeathExercise = process.env.PLAYTEST_L6_DIE_ONCE === '1';
   let l10DeathExercise = process.env.PLAYTEST_L10_DIE_ONCE === '1', l10Mortal = false;
   let l10ConsoleWalk = process.env.PLAYTEST_L10_CONSOLE_WALK === '1' ? 0 : -1;
   let l10PullAway = process.env.PLAYTEST_L10_PULL_AWAY === '1';
+  const escortAlarms = new Set<string>();
   const l6GroupMemory: { rear: { x: number; z: number; tick: number } | null } = { rear: null };
   const see = async () => {
     eyes = await observeWithin(page.evaluate(look));
+    if (process.env.PLAYTEST_COMPANION_TRACE === '1' && eyes.phase === 'playing' && !eyes.loading) {
+      const alarm = await page.evaluate(() => {
+        const g = (window.__SCENE__ as unknown as { game: Game }).game;
+        const a = g.world.missions?.state.l5?.alarm ?? g.world.missions?.state.l6?.alarm;
+        const cue = document.querySelector<HTMLElement>('[data-testid=survivor-world-cue]');
+        return a && g.world.tick < a.until ? { ...a, tick: g.world.tick, painted: !!cue && !cue.hidden && cue.dataset.alarm === 'true' && cue.innerText.includes(a.text) && Number(getComputedStyle(cue).opacity) >= .85 } : null;
+      });
+      if (alarm?.painted && !escortAlarms.has(alarm.key)) { escortAlarms.add(alarm.key); await capture(`escort-alarm-${alarm.kind}-${alarm.tick}`); }
+    }
+    if (process.env.PLAYTEST_L5_TRUCK_PHOTO === '1' && !l5MetroPhoto && eyes.level === 'L5' && eyes.step === 'metro' && eyes.phase === 'playing' && !eyes.loading) {
+      l5MetroPhoto = true; await press([]); await releaseAim();
+      try {
+        // Photo framing only, at the physically reached final rescue; clock stays live.
+        await page.evaluate(async () => { window.__SS__!.camera.zoom(.5); await window.__SS__!.screenshotReady(); });
+        await capture('L5-metro-unpaused-z0.5');
+      } finally { await page.evaluate(z => window.__SS__!.camera.zoom(z), o.zoom); }
+      eyes = await observeWithin(page.evaluate(look));
+    }
     if (process.env.PLAYTEST_L1_HANDOVERS === '1' && eyes.level === 'L1' && eyes.phase === 'playing' && !eyes.loading) {
       const beat = await page.evaluate(() => {
         const beat = window.__SS__!.missions.state()?.l1?.beat;
@@ -402,32 +431,53 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     escortClearance = new EscortClearance();
     if(process.env.PLAYTEST_GOD==='1'){await page.evaluate(()=>window.__SS__!.cheats.god(true));log({fixture:'god-mode',level:e.level});}
     run = { level: e.level!, entry: o.entry, heroine: o.heroine, finished: false, skipped: [], wallSeconds: 0, simSeconds: 0, maxNoProgressSeconds: 0, deaths: 0, assists: 0, attacks: {}, weaponsStart: e.player?.weapons ?? [], weaponsEnd: [], steps: [] };
-    await page.evaluate(audit => {
+    await page.evaluate(({ audit, companionTrace }) => {
       const observation = window as unknown as { __playtestAttacks: Record<string, number>; __playtestCompleted?: unknown[]; __playtestDamage: unknown[] };
       observation.__playtestAttacks = {};
       observation.__playtestCompleted ??= [];
-      const world = (window.__SCENE__ as unknown as { game: { world: import('../../src/sim/world/SimWorld').SimWorld } }).game.world;
+      const game = (window.__SCENE__ as unknown as { game: Game }).game, world = game.world;
       const mission = world.missions!;
+      if ((world.scenario === 'L5' || world.scenario === 'L6') && companionTrace) {
+        const trace = (window as unknown as { __playtestCompanionTrace?: unknown[]; __playtestEscortEvents?: unknown[] });
+        trace.__playtestCompanionTrace = []; trace.__playtestEscortEvents = [];
+        for (const type of ['l5.found', 'l5.lost', 'civilian.grabbed', 'infected.attack', 'combat.hit', 'l7.follower-alarm'] as const) world.events.on(type, event => {
+          const id = 'targetId' in event ? event.targetId : 'id' in event ? event.id : -1;
+          if (typeof id === 'number' && world.entities.get(id)?.civilian?.survivor) trace.__playtestEscortEvents!.push(structuredClone(event));
+        });
+        world.events.on('sim.tick', event => {
+          if (event.type !== 'sim.tick' || world.tick % 30 !== 0) return;
+          const player = world.entities.get(1), dog = [...world.entities.iterate()].find(actor => actor.companion);
+          const root = dog && game.view.labProbes().npcs?.heroRoot(dog.id);
+          if (player && dog) trace.__playtestCompanionTrace!.push({ tick: world.tick, paused: game.clock.paused,
+            render: { present: !!root, visible: root?.visible, parentVisible: root?.parent?.visible, world: root?.matrixWorld.elements.slice(12, 15) },
+            hud: document.querySelector('[data-testid=corgi-state]')?.textContent,
+            survivors: (mission.state.l5?.survivors ?? mission.state.l6?.survivors ?? []).map(row => ({ id: row.id, status: row.status, hp: world.entities.get(row.id)?.health.current })),
+            player: { x: player.transform.x, z: player.transform.z },
+            corgi: { id: dog.id, x: dog.transform.x, z: dog.transform.z, hidden: !!dog.hidden, state: dog.companion!.state, following: dog.companion!.following,
+              path: dog.companion!.path.slice(), goal: dog.companion!.goal, pathIndex: dog.companion!.pathIndex, velocity: dog.companion!.velocity, motion: dog.motion?.speed },
+            distance: Math.hypot(player.transform.x - dog.transform.x, player.transform.z - dog.transform.z) });
+        });
+      }
       world.events.on('level.completed', event => {
         if (event.type !== 'level.completed') return;
         observation.__playtestCompleted!.push({ level: event.id, tick: world.tick, result: structuredClone(event.result), steps: mission.def.steps.map(s => ({ id: s.id, optional: !!s.optional, status: mission.state.steps[s.id].status })) });
       });
       world.events.on('combat.attack', event => { if (event.type === 'combat.attack' && event.sourceId === 1) observation.__playtestAttacks[event.actionId] = (observation.__playtestAttacks[event.actionId] ?? 0) + 1; });
       observation.__playtestDamage = [];
-      if (world.scenario === 'L4' || audit) {
+      if (world.scenario === 'L4' || audit || companionTrace) {
         world.events.on('combat.hit', event => {
-          if (event.type === 'combat.hit' && (event.sourceId === 1 || event.targetId === 1)) observation.__playtestDamage.push({ ...event, source: world.entities.get(event.sourceId)?.archetype, target: world.entities.get(event.targetId)?.archetype });
+          if (event.type === 'combat.hit' && (event.sourceId === 1 || event.targetId === 1)) observation.__playtestDamage.push({ ...event, source: world.entities.get(event.sourceId)?.archetype, target: world.entities.get(event.targetId)?.archetype, targetHp: world.entities.get(event.targetId)?.health.current, shieldBrokenUntil: world.entities.get(event.targetId)?.combat?.shieldBrokenUntil });
         });
         world.events.on('player.damaged', event => { if (event.type === 'player.damaged') observation.__playtestDamage.push(event); });
         world.events.on('vehicle.durability-hit', event => { if (event.type === 'vehicle.durability-hit') observation.__playtestDamage.push(event); });
       }
 
-    }, process.env.PLAYTEST_COMBAT_AUDIT === '1');
+    }, { audit: process.env.PLAYTEST_COMBAT_AUDIT === '1', companionTrace: process.env.PLAYTEST_COMPANION_TRACE === '1' });
     runs.push(run); lastShot = -1e9; wallStart = Date.now(); tickStart = e.tick; zoomed = false; assistMode = false; stuckLogged = new Set(); allyWatch.clear(); enemyWatch.clear(); fetchHint = null; escort = null;
     lastProgress = { key: '', tick: e.tick, wall: Date.now(), best: Infinity };
     visibleProgress = new PlaytestProgress();lastObservation=0;
     marketWaypoint = 0; marketWalkLogged = false; marketLastPosition = null;
-    log({ levelStart: e.level, tick: e.tick, weapons: run.weaponsStart, owned: await page.evaluate(() => window.__SS__!.campaign.state()?.ownedActions ?? []) });
+    log({ levelStart: e.level, tick: e.tick, ...(e.level === 'L5' && l5Order ? { authoredMapTourOrder: l5Order } : {}), weapons: run.weaponsStart, owned: await page.evaluate(() => window.__SS__!.campaign.state()?.ownedActions ?? []) });
     if (e.level === 'L6') writeFileSync(join(o.out, 'campaign-L6.json'), JSON.stringify(await page.evaluate(() => window.__SS__!.campaign.state())));
   };
   const finishLevel = async (e: Eyes) => {
@@ -1036,7 +1086,9 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         // Keep a heard, visible minimap cue after its short sound ping fades.
         // Otherwise every new decision loses the destination mid-approach.
         const cueKey = e.cue && `heard:${e.cue.x}:${e.cue.z}`;
-        const next = e.cue && cueKey && !searchedL5Places.has(cueKey)
+        const next = plannedL5Search && l5Order
+          ? l5Survivors.filter(s => !searchedL5Places.has(s.key)).sort((a, b) => l5Order.indexOf(a.key) - l5Order.indexOf(b.key))[0]
+          : e.cue && cueKey && !searchedL5Places.has(cueKey)
           ? { key: cueKey, ringAt: [e.cue.x, e.cue.z], place: e.cue.text }
           : plannedL5Search ? l5Survivors.filter(s => !searchedL5Places.has(s.key)).sort((a, b) => Math.hypot(a.ringAt[0] - e.player!.x, a.ringAt[1] - e.player!.z) - Math.hypot(b.ringAt[0] - e.player!.x, b.ringAt[1] - e.player!.z))[0]
             : l5SearchStreets.filter(s => !searchedL5Places.has(s.key)).sort((a, b) => Math.hypot(a.ringAt[0] - e.player!.x, a.ringAt[1] - e.player!.z) - Math.hypot(b.ringAt[0] - e.player!.x, b.ringAt[1] - e.player!.z))[0];
@@ -1122,7 +1174,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         const shot = metro.shutterAt ? 'closed' : metro.metroAt ? metro.tick - metro.metroAt >= 600 ? 'waiting-10s' : 'arrival' : null;
         if (shot && !metroShots.has(shot)) { metroShots.add(shot); await capture(`metro-${shot}`); }
       }
-      if (e.level === 'L4' || process.env.PLAYTEST_COMBAT_AUDIT === '1') {
+      if (e.level === 'L4' || process.env.PLAYTEST_COMBAT_AUDIT === '1' || process.env.PLAYTEST_COMPANION_TRACE === '1') {
         const damage = await page.evaluate(() => {
           const observation = window as unknown as { __playtestDamage?: unknown[] };
           return observation.__playtestDamage?.splice(0) ?? [];
@@ -1153,6 +1205,30 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     if (e.player && e.player.hp <= 0) { await releaseAim(); await press([]); lastHp = 0; await hold(120); continue; }
     lastHp = e.player?.hp ?? 0;
     await watchAllies(e);
+    if (process.env.PLAYTEST_L5_GUARD_FIRST === '1' && !l5GuardDone && e.level === 'L5' && e.player) {
+      const guard = await page.evaluate(() => {
+        const w = (window.__SCENE__ as unknown as { game: Game }).game.world;
+        const row = w.missions?.state.l5?.survivors.filter(r => r.foundAt > 0).sort((a, b) => a.foundAt - b.foundAt)[0];
+        const actor = row && w.entities.get(row.id);
+        return row && actor ? { tick: w.tick, foundAt: row.foundAt, id: row.id, status: row.status,
+          hp: actor.health.current, at: { ...actor.transform }, playerHp: w.entities.get(1)!.health.current,
+          deaths: w.missions!.state.stats.deaths, god: w.combat!.damage.god } : null;
+      });
+      if (guard) {
+        if (!l5GuardStarted) { l5GuardStarted = true; log({ l5GuardStart: guard, policy: 'Stay within five metres for 30 sim seconds and use ordinary mouse fire; physical input only' }); await capture('l5-guard-start'); }
+        if (guard.tick >= guard.foundAt + 1800 || guard.hp <= 0 || guard.status !== 'following') {
+          l5GuardDone = true; log({ l5GuardResult: guard, protectedSeconds: (guard.tick - guard.foundAt) / 60 }); await capture('l5-guard-result');
+        } else {
+          if (Math.hypot(guard.at.x - e.player.x, guard.at.z - e.player.z) > 5) {
+            const point = await page.evaluate(at => window.__SS__!.input.project(at, 'player'), guard.at);
+            await press(wasdToward(e, point.x, point.y));
+          } else {
+            const engaged = await fight(e); await press([]); if (!engaged) await releaseAim();
+          }
+          await hold(120); continue;
+        }
+      }
+    }
     // Retry qualification: walk into a visible attack and withhold attacks
     // until one ordinary mortal death, then resume the normal input policy.
     if (l6DeathExercise && e.level === 'L6' && e.player && (e.step === 'stop' || e.step === 'retreat')) {
@@ -1561,6 +1637,10 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     run.weaponsEnd = finalView.player?.weapons ?? [];
   }
   writeFileSync(join(o.out, `runs-${o.tag}.json`), JSON.stringify(runs, null, 2));
+  if (process.env.PLAYTEST_COMPANION_TRACE === '1') {
+    writeFileSync(join(o.out, `${o.tag}-companion-trace.json`), JSON.stringify(await page.evaluate(() => (window as unknown as { __playtestCompanionTrace?: unknown[] }).__playtestCompanionTrace ?? []), null, 2));
+    writeFileSync(join(o.out, `${o.tag}-escort-events.json`), JSON.stringify(await page.evaluate(() => (window as unknown as { __playtestEscortEvents?: unknown[] }).__playtestEscortEvents ?? []), null, 2));
+  }
   writeFileSync(join(o.out, `issues-${o.tag}.json`), JSON.stringify(issues, null, 2));
   if (process.env.PLAYTEST_SOFTLOCK_AUDIT === '1') writeFileSync(join(o.out, `${o.tag}-softlocks.json`), JSON.stringify(await page.evaluate('window.__softlockAudit ?? []')));
   if (process.env.PLAYTEST_METRO_AUDIT === '1') writeFileSync(join(o.out, `metro-ticks-${o.tag}.json`), JSON.stringify(await page.evaluate('window.__metroTicks ?? []')));

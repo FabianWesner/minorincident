@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L5",
-  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+  "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
   "observerHash": "c064240bbd1dfb4a4ffb12922fa39e6d24b69753af3eda1e03e9a81a51ce4a4a",
   "fixtureHash": "df526016e398100e295b42766eea3ea1190e551b57fa24999faa743cf1e3f7c4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-05T20:14:55.941Z",
+  "generatedAt": "2026-11-05T22:39:49.018Z",
   "policies": [
     {
       "tier": "low",
@@ -272,7 +272,7 @@
       "id": "G-08",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l5-brace\",\"x\":74.6,\"z\":-1.4,\"samples\":59,\"maxDisplacement\":0},{\"id\":\"l5-metro-in\",\"x\":37.485400000000006,\"z\":-48.44,\"samples\":2598,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"emerge\",\"marker\":\"l5-brace\",\"x\":74.6,\"z\":-1.4},{\"tick\":60,\"step\":\"\",\"marker\":null},{\"tick\":699,\"step\":\"look\",\"marker\":null},{\"tick\":10137,\"step\":\"metro\",\"marker\":\"l5-metro-in\",\"x\":37.485400000000006,… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); low/stationary fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l5-brace\",\"x\":74.6,\"z\":-1.4,\"samples\":59,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"emerge\",\"marker\":\"l5-brace\",\"x\":74.6,\"z\":-1.4},{\"tick\":60,\"step\":\"\",\"marker\":null},{\"tick\":699,\"step\":\"look\",\"marker\":null}]} (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); high/complete fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l5-brace\",\"x\":74.6,\"z\":-1.4,\"samples\":59,\"maxDisplacement\":0},{\"id\":\"l5-metro-in\",\"x\":37.485400000000006,\"z\":-48.44,\"samples\":2887,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"emerge\",\"marker\":\"l5-brace\",\"x\":74.6,\"z\":-1.4},{\"tick\":60,\"step\":\"\",\"marker\":null},{\"tick\":699,\"step\":\"look\",\"marker\":null},{\"tick\":10410,\"step\":\"metro\",\"marker\":\"l5-metro-in\",\"x\":37.485400000000006,… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); high/stationary fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l5-brace\",\"x\":74.6,\"z\":-1.4,\"samples\":59,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"emerge\",\"marker\":\"l5-brace\",\"x\":74.6,\"z\":-1.4},{\"tick\":60,\"step\":\"\",\"marker\":null},{\"tick\":699,\"step\":\"look\",\"marker\":null}]} (target fixed action points; reused gate/boss anchors require a position trajectory; PASS)",
+      "value": "low/complete fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l5-brace\",\"x\":74.6,\"z\":-1.4,\"samples\":59,\"maxDisplacement\":0},{\"id\":\"l5-metro-in\",\"x\":37.485400000000006,\"z\":-48.44,\"samples\":2796,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"emerge\",\"marker\":\"l5-brace\",\"x\":74.6,\"z\":-1.4},{\"tick\":60,\"step\":\"\",\"marker\":null},{\"tick\":699,\"step\":\"look\",\"marker\":null},{\"tick\":9472,\"step\":\"metro\",\"marker\":\"l5-metro-in\",\"x\":37.485400000000006,\"… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); low/stationary fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l5-brace\",\"x\":74.6,\"z\":-1.4,\"samples\":59,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"emerge\",\"marker\":\"l5-brace\",\"x\":74.6,\"z\":-1.4},{\"tick\":60,\"step\":\"\",\"marker\":null},{\"tick\":699,\"step\":\"look\",\"marker\":null}]} (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); high/complete fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l5-brace\",\"x\":74.6,\"z\":-1.4,\"samples\":59,\"maxDisplacement\":0},{\"id\":\"l5-metro-in\",\"x\":37.485400000000006,\"z\":-48.44,\"samples\":3032,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"emerge\",\"marker\":\"l5-brace\",\"x\":74.6,\"z\":-1.4},{\"tick\":60,\"step\":\"\",\"marker\":null},{\"tick\":699,\"step\":\"look\",\"marker\":null},{\"tick\":10651,\"step\":\"metro\",\"marker\":\"l5-metro-in\",\"x\":37.485400000000006,… (full values in JSON) (target fixed action points; reused gate/boss anchors require a position trajectory; PASS); high/stationary fixed anchor positions during the observed native route: {\"anchors\":[{\"id\":\"l5-brace\",\"x\":74.6,\"z\":-1.4,\"samples\":59,\"maxDisplacement\":0}],\"changes\":[{\"tick\":1,\"step\":\"emerge\",\"marker\":\"l5-brace\",\"x\":74.6,\"z\":-1.4},{\"tick\":60,\"step\":\"\",\"marker\":null},{\"tick\":699,\"step\":\"look\",\"marker\":null}]} (target fixed action points; reused gate/boss anchors require a position trajectory; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L5-low-complete.json",
@@ -302,7 +302,7 @@
                 "id": "l5-metro-in",
                 "x": 37.485400000000006,
                 "z": -48.44,
-                "samples": 2598,
+                "samples": 2796,
                 "maxDisplacement": 0
               }
             ],
@@ -325,14 +325,14 @@
                 "marker": null
               },
               {
-                "tick": 10137,
+                "tick": 9472,
                 "step": "metro",
                 "marker": "l5-metro-in",
                 "x": 37.485400000000006,
                 "z": -48.44
               },
               {
-                "tick": 12735,
+                "tick": 12268,
                 "step": "",
                 "marker": null
               }
@@ -401,7 +401,7 @@
                 "id": "l5-metro-in",
                 "x": 37.485400000000006,
                 "z": -48.44,
-                "samples": 2887,
+                "samples": 3032,
                 "maxDisplacement": 0
               }
             ],
@@ -424,14 +424,14 @@
                 "marker": null
               },
               {
-                "tick": 10410,
+                "tick": 10651,
                 "step": "metro",
                 "marker": "l5-metro-in",
                 "x": 37.485400000000006,
                 "z": -48.44
               },
               {
-                "tick": 13297,
+                "tick": 13683,
                 "step": "",
                 "marker": null
               }
@@ -514,7 +514,7 @@
       "id": "G-10",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete observed approach collection distances; E-free causality needs an input fixture: [{\"tick\":19,\"id\":19,\"item\":\"weapon.shotgun\",\"collector\":1,\"distance\":2.1742610347065967,\"shelf\":true,\"interact\":false,\"speed\":0}] (target ground ≤1.5 m; shelf ≤2.2 m; PASS); low/stationary observed approach collection distances; E-free causality needs an input fixture: [{\"tick\":19,\"id\":19,\"item\":\"weapon.shotgun\",\"collector\":1,\"distance\":2.1742610347065967,\"shelf\":true,\"interact\":false,\"speed\":0}] (target ground ≤1.5 m; shelf ≤2.2 m; PASS); high/complete observed approach collection distances; E-free causality needs an input fixture: [{\"tick\":19,\"id\":19,\"item\":\"weapon.shotgun\",\"collector\":1,\"distance\":2.1742610347065967,\"shelf\":true,\"interact\":false,\"speed\":0}] (target ground ≤1.5 m; shelf ≤2.2 m; PASS); high/stationary observed approach collection distances; E-free causality needs an input fixture: [{\"tick\":19,\"id\":19,\"item\":\"weapon.shotgun\",\"collector\":1,\"distance\":2.1742610347065967,\"shelf\":true,\"interact\":false,\"speed\":0}] (target ground ≤1.5 m; shelf ≤2.2 m; PASS); low/controlled-fixture isolated ground/shelf weapon approach with E continuously false: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one collection per specimen; ground≤1.5 m; shelf≤2.2 m; PASS); high/controlled-fixture isolated ground/shelf weapon approach with E continuously false: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one collection per specimen; ground≤1.5 m; shelf≤2.2 m; PASS)",
+      "value": "low/complete observed approach collection distances; E-free causality needs an input fixture: [{\"tick\":19,\"id\":19,\"item\":\"weapon.shotgun\",\"collector\":1,\"distance\":2.1742610347065967,\"shelf\":true,\"interact\":false,\"speed\":0}] (target ground ≤1.5 m; shelf ≤2.2 m; PASS); low/stationary observed approach collection distances; E-free causality needs an input fixture: [{\"tick\":19,\"id\":19,\"item\":\"weapon.shotgun\",\"collector\":1,\"distance\":2.1742610347065967,\"shelf\":true,\"interact\":false,\"speed\":0}] (target ground ≤1.5 m; shelf ≤2.2 m; PASS); high/complete observed approach collection distances; E-free causality needs an input fixture: [{\"tick\":19,\"id\":19,\"item\":\"weapon.shotgun\",\"collector\":1,\"distance\":2.1742610347065967,\"shelf\":true,\"interact\":false,\"speed\":0},{\"tick\":4001,\"id\":386,\"item\":null,\"collector\":null,\"distance\":0.07040816963787619,\"shelf\":false,\"interact\":false,\"speed\":0}] (target ground ≤1.5 m; shelf ≤2.2 m; PASS); high/stationary observed approach collection distances; E-free causality needs an input fixture: [{\"tick\":19,\"id\":19,\"item\":\"weapon.shotgun\",\"collector\":1,\"distance\":2.1742610347065967,\"shelf\":true,\"interact\":false,\"speed\":0}] (target ground ≤1.5 m; shelf ≤2.2 m; PASS); low/controlled-fixture isolated ground/shelf weapon approach with E continuously false: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one collection per specimen; ground≤1.5 m; shelf≤2.2 m; PASS); high/controlled-fixture isolated ground/shelf weapon approach with E continuously false: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one collection per specimen; ground≤1.5 m; shelf≤2.2 m; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L5-low-complete.json",
@@ -585,6 +585,16 @@
               "collector": 1,
               "distance": 2.1742610347065967,
               "shelf": true,
+              "interact": false,
+              "speed": 0
+            },
+            {
+              "tick": 4001,
+              "id": 386,
+              "item": null,
+              "collector": null,
+              "distance": 0.07040816963787619,
+              "shelf": false,
               "interact": false,
               "speed": 0
             }
@@ -875,7 +885,7 @@
         ],
         "notes": "Raw PNGs deleted after full-size inspection; compact derived JPGs and hashes retained. Controlled renderer fixture; no timing claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "eb283794d5814d498a5364a25f00d77cc5a4d572"
       }
     },
     {
@@ -1004,14 +1014,14 @@
         ],
         "notes": "Raw PNG captures deleted after inspection. Compact derived contact sheets, raw hashes, metadata and individual bar pixel measurements are retained. No timing was collected.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "eb283794d5814d498a5364a25f00d77cc5a4d572"
       }
     },
     {
       "id": "G-13",
       "status": "FAIL",
       "currentStatus": "FAIL",
-      "value": "high/complete each observed follower median versus its phase group median: [{\"phase\":\"step/look\",\"id\":31,\"samples\":134,\"median\":4.418715355302714,\"groupMedian\":4.412839882334156,\"ratio\":1.0013314493897862},{\"phase\":\"step/look\",\"id\":30,\"samples\":111,\"median\":4.406964409365598,\"groupMedian\":4.412839882334156,\"ratio\":0.9986685506102138},{\"phase\":\"step/look\",\"id\":32,\"samples\":82,\"median\":4.4367716695160375,\"groupMedian\":4.412839882334156,\"ratio\":1.0054232167538386},{\"phase\":… (full values in JSON) (target every ratio ≥0.95; ≥10 walking samples/follower; FAIL) Open prior FAIL: Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
+      "value": "high/complete each observed follower median versus its phase group median: [{\"phase\":\"step/look\",\"id\":31,\"samples\":131,\"median\":4.437277801144634,\"groupMedian\":4.2066202022466985,\"ratio\":1.0548320475365816},{\"phase\":\"step/look\",\"id\":30,\"samples\":109,\"median\":4.277922475470496,\"groupMedian\":4.2066202022466985,\"ratio\":1.01695001445239},{\"phase\":\"step/look\",\"id\":32,\"samples\":80,\"median\":4.1353179290229,\"groupMedian\":4.2066202022466985,\"ratio\":0.9830499855476097},{\"phase\":\"s… (full values in JSON) (target every ratio ≥0.95; ≥10 walking samples/follower; FAIL) Open prior FAIL: Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L5-low-complete.json",
@@ -1031,74 +1041,74 @@
             {
               "phase": "step/look",
               "id": 31,
-              "samples": 126,
-              "median": 4.313827444645917,
-              "groupMedian": 4.354374204831605,
-              "ratio": 0.9906882692487253
+              "samples": 127,
+              "median": 4.369714472081229,
+              "groupMedian": 4.352057046581596,
+              "ratio": 1.004057259661498
             },
             {
               "phase": "step/look",
               "id": 30,
-              "samples": 107,
+              "samples": 109,
               "median": 4.394920965017293,
-              "groupMedian": 4.354374204831605,
-              "ratio": 1.0093117307512747
+              "groupMedian": 4.352057046581596,
+              "ratio": 1.009849116860581
             },
             {
               "phase": "step/look",
               "id": 32,
-              "samples": 75,
-              "median": 4.464581021850427,
-              "groupMedian": 4.354374204831605,
-              "ratio": 1.025309450183803
+              "samples": 78,
+              "median": 4.251685199089218,
+              "groupMedian": 4.352057046581596,
+              "ratio": 0.9769369182393377
             },
             {
               "phase": "step/look",
               "id": 28,
               "samples": 43,
-              "median": 4.20026521733215,
-              "groupMedian": 4.354374204831605,
-              "ratio": 0.9646082352480282
+              "median": 4.334399621081962,
+              "groupMedian": 4.352057046581596,
+              "ratio": 0.995942740338502
             },
             {
               "phase": "step/metro",
               "id": 28,
-              "samples": 45,
-              "median": 4.499335285977048,
-              "groupMedian": 4.47260275683204,
-              "ratio": 1.0059769513633137
+              "samples": 46,
+              "median": 4.493800354953372,
+              "groupMedian": 4.444157214410096,
+              "ratio": 1.0111704285308156
             },
             {
               "phase": "step/metro",
               "id": 30,
-              "samples": 44,
-              "median": 4.335509161536912,
-              "groupMedian": 4.47260275683204,
-              "ratio": 0.969348139607142
+              "samples": 53,
+              "median": 4.386452510060453,
+              "groupMedian": 4.444157214410096,
+              "ratio": 0.9870156023818113
             },
             {
               "phase": "step/metro",
               "id": 31,
-              "samples": 43,
-              "median": 4.47260275683204,
-              "groupMedian": 4.47260275683204,
-              "ratio": 1
+              "samples": 46,
+              "median": 4.36836628662436,
+              "groupMedian": 4.444157214410096,
+              "ratio": 0.9829459390995473
             },
             {
               "phase": "step/metro",
               "id": 32,
-              "samples": 45,
-              "median": 4.388495505279773,
-              "groupMedian": 4.47260275683204,
-              "ratio": 0.981195009678919
+              "samples": 47,
+              "median": 4.459024530116346,
+              "groupMedian": 4.444157214410096,
+              "ratio": 1.0033453622338209
             },
             {
               "phase": "step/metro",
               "id": 29,
-              "samples": 42,
-              "median": 4.499695589220374,
-              "groupMedian": 4.47260275683204,
-              "ratio": 1.0060575092091397
+              "samples": 52,
+              "median": 4.444157214410096,
+              "groupMedian": 4.444157214410096,
+              "ratio": 1
             }
           ],
           "target": "every ratio ≥0.95; ≥10 walking samples/follower",
@@ -1112,38 +1122,38 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "escortTicks": 12734,
-            "stationaryFarTicks": 757,
-            "upperBoundPercent": 5.944714936390765,
+            "escortTicks": 12267,
+            "stationaryFarTicks": 443,
+            "upperBoundPercent": 3.611314909920926,
             "followers": [
               {
                 "id": 18,
-                "escortTicks": 12734,
-                "stationaryFarTicks": 56
+                "escortTicks": 12267,
+                "stationaryFarTicks": 0
               },
               {
                 "id": 31,
-                "escortTicks": 10688,
-                "stationaryFarTicks": 701
+                "escortTicks": 10187,
+                "stationaryFarTicks": 0
               },
               {
                 "id": 30,
-                "escortTicks": 8617,
+                "escortTicks": 8375,
                 "stationaryFarTicks": 0
               },
               {
                 "id": 32,
-                "escortTicks": 7329,
-                "stationaryFarTicks": 0
+                "escortTicks": 6758,
+                "stationaryFarTicks": 443
               },
               {
                 "id": 28,
-                "escortTicks": 5677,
+                "escortTicks": 5178,
                 "stationaryFarTicks": 0
               },
               {
                 "id": 29,
-                "escortTicks": 2567,
+                "escortTicks": 2744,
                 "stationaryFarTicks": 0
               }
             ]
@@ -1162,74 +1172,74 @@
             {
               "phase": "step/look",
               "id": 31,
-              "samples": 134,
-              "median": 4.418715355302714,
-              "groupMedian": 4.412839882334156,
-              "ratio": 1.0013314493897862
+              "samples": 131,
+              "median": 4.437277801144634,
+              "groupMedian": 4.2066202022466985,
+              "ratio": 1.0548320475365816
             },
             {
               "phase": "step/look",
               "id": 30,
-              "samples": 111,
-              "median": 4.406964409365598,
-              "groupMedian": 4.412839882334156,
-              "ratio": 0.9986685506102138
+              "samples": 109,
+              "median": 4.277922475470496,
+              "groupMedian": 4.2066202022466985,
+              "ratio": 1.01695001445239
             },
             {
               "phase": "step/look",
               "id": 32,
-              "samples": 82,
-              "median": 4.4367716695160375,
-              "groupMedian": 4.412839882334156,
-              "ratio": 1.0054232167538386
+              "samples": 80,
+              "median": 4.1353179290229,
+              "groupMedian": 4.2066202022466985,
+              "ratio": 0.9830499855476097
             },
             {
               "phase": "step/look",
               "id": 28,
-              "samples": 47,
-              "median": 4.158716771761795,
-              "groupMedian": 4.412839882334156,
-              "ratio": 0.9424127959888852
+              "samples": 45,
+              "median": 3.9368955791432456,
+              "groupMedian": 4.2066202022466985,
+              "ratio": 0.9358809186150447
             },
             {
               "phase": "step/metro",
               "id": 28,
               "samples": 46,
-              "median": 4.2394515990302395,
-              "groupMedian": 4.203995757925035,
-              "ratio": 1.008433843216508
-            },
-            {
-              "phase": "step/metro",
-              "id": 29,
-              "samples": 46,
-              "median": 4.188244921676869,
-              "groupMedian": 4.203995757925035,
-              "ratio": 0.9962533653326188
+              "median": 4.164277375085569,
+              "groupMedian": 4.40291686803136,
+              "ratio": 0.9457996823245741
             },
             {
               "phase": "step/metro",
               "id": 30,
-              "samples": 46,
-              "median": 4.190480428856722,
-              "groupMedian": 4.203995757925035,
-              "ratio": 0.9967851230480347
+              "samples": 47,
+              "median": 4.40291686803136,
+              "groupMedian": 4.40291686803136,
+              "ratio": 1
             },
             {
               "phase": "step/metro",
               "id": 31,
               "samples": 46,
-              "median": 4.203995757925035,
-              "groupMedian": 4.203995757925035,
-              "ratio": 1
+              "median": 4.321341363513971,
+              "groupMedian": 4.40291686803136,
+              "ratio": 0.9814723950139301
             },
             {
               "phase": "step/metro",
               "id": 32,
               "samples": 46,
-              "median": 4.215431772861315,
-              "groupMedian": 4.203995757925035,
-              "ratio": 1.0027202727107234
+              "median": 4.403696882518835,
+              "groupMedian": 4.40291686803136,
+              "ratio": 1.0001771585771102
+            },
+            {
+              "phase": "step/metro",
+              "id": 29,
+              "samples": 45,
+              "median": 4.472693588212815,
+              "groupMedian": 4.40291686803136,
+              "ratio": 1.0158478395738264
             }
           ],
           "target": "every ratio ≥0.95; ≥10 walking samples/follower",
@@ -1243,38 +1253,38 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "escortTicks": 13296,
-            "stationaryFarTicks": 1,
-            "upperBoundPercent": 0.007521058965102286,
+            "escortTicks": 13682,
+            "stationaryFarTicks": 0,
+            "upperBoundPercent": 0,
             "followers": [
               {
                 "id": 18,
-                "escortTicks": 13125,
-                "stationaryFarTicks": 1
+                "escortTicks": 13612,
+                "stationaryFarTicks": 0
               },
               {
                 "id": 31,
-                "escortTicks": 10373,
+                "escortTicks": 11013,
                 "stationaryFarTicks": 0
               },
               {
                 "id": 30,
-                "escortTicks": 8800,
+                "escortTicks": 9291,
                 "stationaryFarTicks": 0
               },
               {
                 "id": 32,
-                "escortTicks": 6840,
+                "escortTicks": 7315,
                 "stationaryFarTicks": 0
               },
               {
                 "id": 28,
-                "escortTicks": 4559,
+                "escortTicks": 5315,
                 "stationaryFarTicks": 0
               },
               {
                 "id": 29,
-                "escortTicks": 2804,
+                "escortTicks": 3032,
                 "stationaryFarTicks": 0
               }
             ]
@@ -1467,7 +1477,7 @@
       "id": "G-19",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete corgi health and real infected attack targets: {\"ids\":[18],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":12735} (target health fraction=1; zero target windups and damaging hits; PASS); low/stationary corgi health and real infected attack targets: {\"ids\":[18],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":14400} (target health fraction=1; zero target windups and damaging hits; PASS); high/complete corgi health and real infected attack targets: {\"ids\":[18],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":13297} (target health fraction=1; zero target windups and damaging hits; PASS); high/stationary corgi health and real infected attack targets: {\"ids\":[18],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":14400} (target health fraction=1; zero target windups and damaging hits; PASS)",
+      "value": "low/complete corgi health and real infected attack targets: {\"ids\":[18],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":12268} (target health fraction=1; zero target windups and damaging hits; PASS); low/stationary corgi health and real infected attack targets: {\"ids\":[18],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":14400} (target health fraction=1; zero target windups and damaging hits; PASS); high/complete corgi health and real infected attack targets: {\"ids\":[18],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":13683} (target health fraction=1; zero target windups and damaging hits; PASS); high/stationary corgi health and real infected attack targets: {\"ids\":[18],\"targeted\":0,\"hit\":0,\"minimumHealthFraction\":1,\"samples\":14400} (target health fraction=1; zero target windups and damaging hits; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L5-low-complete.json",
@@ -1491,7 +1501,7 @@
             "targeted": 0,
             "hit": 0,
             "minimumHealthFraction": 1,
-            "samples": 12735
+            "samples": 12268
           },
           "target": "health fraction=1; zero target windups and damaging hits",
           "receipt": "docs/reports/fix51-verify/receipts/L5-low-complete.json"
@@ -1529,7 +1539,7 @@
             "targeted": 0,
             "hit": 0,
             "minimumHealthFraction": 1,
-            "samples": 13297
+            "samples": 13683
           },
           "target": "health fraction=1; zero target windups and damaging hits",
           "receipt": "docs/reports/fix51-verify/receipts/L5-high-complete.json"
@@ -1637,7 +1647,7 @@
       "id": "G-21",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/checkpoint-death-fixture mortal checkpoint restore at L5/outside: {\"checkpoint\":\"outside\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"dfba4a22bda9084e3031070385b2d626101990fd7e4fb2c86bb217d6c48c59c6\",\"damage\":100,\"expected\":{\"id\":\"outside\",\"anchor\":{\"x\":-79.29999999999998,\"y\":0.7049999833106995,\"z\":-44.2801,\"yaw\":-1.5707963267948966},\"gates\":{\"l5-metro-shutter\":true},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.army-mg\",\"weap… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L5/survivor-1: {\"checkpoint\":\"survivor-1\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"1722131622c9cfda034b391bb90b0296431950fa2e5757c06a25b30d98d21eda\",\"damage\":100,\"expected\":{\"id\":\"survivor-1\",\"anchor\":{\"x\":-31.137277603149414,\"y\":0.8500000238418579,\"z\":-44.74943542480469,\"yaw\":-3.116029776211724},\"gates\":{\"l5-metro-shutter\":true},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapo… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L5/survivor-2: {\"checkpoint\":\"survivor-2\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"e81835537edb08fc395770655ec374e6f2993ea3e85ed64cff66aac3a9007c10\",\"damage\":100,\"expected\":{\"id\":\"survivor-2\",\"anchor\":{\"x\":-33.17979431152344,\"y\":0.7089999914169312,\"z\":-2.960272789001465,\"yaw\":3.8241088060063415},\"gates\":{\"l5-metro-shutter\":true},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L5/survivor-3: {\"checkpoint\":\"survivor-3\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"e92bb934e51137e40e4eb6c7d46314011cd58c15b1e3911de25557267a2f6366\",\"damage\":100,\"expected\":{\"id\":\"survivor-3\",\"anchor\":{\"x\":-46.994911193847656,\"y\":0.7049999833106995,\"z\":49.265785217285156,\"yaw\":-0.7155435787634244},\"gates\":{\"l5-metro-shutter\":true},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weap… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L5/survivor-4: {\"checkpoint\":\"survivor-4\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"9bbe1204fdc5141663c43b4922fd0b2b0fd8f1f4a75dde3e7164398fefa2883b\",\"damage\":100,\"expected\":{\"id\":\"survivor-4\",\"anchor\":{\"x\":-4.803534507751465,\"y\":0.7089999914169312,\"z\":2.694951295852661,\"yaw\":0.23155469862689143},\"gates\":{\"l5-metro-shutter\":true},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L5/survivor-5: {\"checkpoint\":\"survivor-5\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"628e4ce3727af990bca92919fb2f92d736cf17f2afeacdfc556678f538992149\",\"damage\":100,\"expected\":{\"id\":\"survivor-5\",\"anchor\":{\"x\":57.57737350463867,\"y\":0.8500000238418579,\"z\":41.31705093383789,\"yaw\":0.04032007814377062},\"gates\":{\"l5-metro-shutter\":true},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L5/outside: {\"checkpoint\":\"outside\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"6c8bebdc011103c9f2cea18f9971381ac23cb95336ea0ad6e8019f96f3ada528\",\"damage\":100,\"expected\":{\"id\":\"outside\",\"anchor\":{\"x\":-79.29999999999998,\"y\":0.7049999833106995,\"z\":-44.2801,\"yaw\":-1.5707963267948966},\"gates\":{\"l5-metro-shutter\":true},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.army-mg\",\"weap… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L5/survivor-1: {\"checkpoint\":\"survivor-1\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"b075d582899ffaa5f1285d152d5f5327e0f55d5dd0d2cf1e9d9c517c74ee0c0b\",\"damage\":100,\"expected\":{\"id\":\"survivor-1\",\"anchor\":{\"x\":-31.989120483398438,\"y\":0.8500000238418579,\"z\":-44.748626708984375,\"yaw\":-0.4827540913417517},\"gates\":{\"l5-metro-shutter\":true},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"wea… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L5/survivor-2: {\"checkpoint\":\"survivor-2\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"0c4efdd93dd14d1eba3cb696664d5a4feba2e7ca9ca3d3f4c686ecdc74c92774\",\"damage\":100,\"expected\":{\"id\":\"survivor-2\",\"anchor\":{\"x\":-33.17937469482422,\"y\":0.7089999914169312,\"z\":-2.9624617099761963,\"yaw\":-2.4556129052844375},\"gates\":{\"l5-metro-shutter\":true},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weap… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L5/survivor-3: {\"checkpoint\":\"survivor-3\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"1fb07def32dd6829e3234e3197cdfc340ff68ddabec34bd00e3e9cbae95915c4\",\"damage\":100,\"expected\":{\"id\":\"survivor-3\",\"anchor\":{\"x\":-45.39025115966797,\"y\":0.8500000238418579,\"z\":49.856407165527344,\"yaw\":-0.35257871746777325},\"gates\":{\"l5-metro-shutter\":true},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weap… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L5/survivor-4: {\"checkpoint\":\"survivor-4\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"d792bae797f198ca11fa33157e3e5d71e3be63d2215b691757958a2cccdafd13\",\"damage\":100,\"expected\":{\"id\":\"survivor-4\",\"anchor\":{\"x\":-4.805240631103516,\"y\":0.7089999914169312,\"z\":2.6965067386627197,\"yaw\":0.23425459973531562},\"gates\":{\"l5-metro-shutter\":true},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapo… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L5/survivor-5: {\"checkpoint\":\"survivor-5\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"848f77c81843ba0fbc01a2f994beb1fae74335bdb53fbfaf561ae3fbad84e018\",\"damage\":100,\"expected\":{\"id\":\"survivor-5\",\"anchor\":{\"x\":57.566429138183594,\"y\":0.8500000238418579,\"z\":41.29701614379883,\"yaw\":-0.00688335406922374},\"gates\":{\"l5-metro-shutter\":true},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapo… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS)",
+      "value": "low/checkpoint-death-fixture mortal checkpoint restore at L5/outside: {\"checkpoint\":\"outside\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"1271742de265fc34e67db94a6e8dae8f71c7449d0fb3cf1c7af4a57ddae0eaac\",\"damage\":100,\"expected\":{\"id\":\"outside\",\"anchor\":{\"x\":-79.29999999999998,\"y\":0.7049999833106995,\"z\":-44.2801,\"yaw\":-1.5707963267948966},\"gates\":{\"l5-metro-shutter\":true},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.army-mg\",\"weap… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L5/survivor-1: {\"checkpoint\":\"survivor-1\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"50b758fddc9317bc93fe6c86a73f872302d1b12433ee9658f20999ab7a599118\",\"damage\":100,\"expected\":{\"id\":\"survivor-1\",\"anchor\":{\"x\":-31.137277603149414,\"y\":0.8500000238418579,\"z\":-44.74943542480469,\"yaw\":-3.116029776211724},\"gates\":{\"l5-metro-shutter\":true},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapo… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L5/survivor-2: {\"checkpoint\":\"survivor-2\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"a27ea2959c1ab43aabe971cf88da5cca9ef4ad1ad42e0fb3fb6d88132429d4f3\",\"damage\":100,\"expected\":{\"id\":\"survivor-2\",\"anchor\":{\"x\":-33.17979431152344,\"y\":0.7089999914169312,\"z\":-2.960272789001465,\"yaw\":3.8241088060063415},\"gates\":{\"l5-metro-shutter\":true},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L5/survivor-3: {\"checkpoint\":\"survivor-3\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"d686ec7b2d0c9c6af80101b1df5be5e8ce94d204881b5ee8a1604a86be7cea31\",\"damage\":100,\"expected\":{\"id\":\"survivor-3\",\"anchor\":{\"x\":-45.399967193603516,\"y\":0.8500000238418579,\"z\":49.85188293457031,\"yaw\":-0.354662831382354},\"gates\":{\"l5-metro-shutter\":true},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L5/survivor-4: {\"checkpoint\":\"survivor-4\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"deb26206da6002a991798d958ca3a5658649640e27c90fa191a6d2b68c483f99\",\"damage\":100,\"expected\":{\"id\":\"survivor-4\",\"anchor\":{\"x\":-4.899144172668457,\"y\":0.7049999833106995,\"z\":2.7178773880004883,\"yaw\":1.610237414297204},\"gates\":{\"l5-metro-shutter\":true},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L5/survivor-5: {\"checkpoint\":\"survivor-5\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"1d5bd9a3e1db49d80f159265d19be3b60b5569089861a66c31bc0bc485aa5b5b\",\"damage\":100,\"expected\":{\"id\":\"survivor-5\",\"anchor\":{\"x\":57.57008361816406,\"y\":0.8500000238418579,\"z\":41.30814743041992,\"yaw\":0.01894919856387086},\"gates\":{\"l5-metro-shutter\":true},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L5/outside: {\"checkpoint\":\"outside\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"abebe9b05e732fe3bab14340e79feb70e815d19bbfd7515afff241e735ff40d1\",\"damage\":100,\"expected\":{\"id\":\"outside\",\"anchor\":{\"x\":-79.29999999999998,\"y\":0.7049999833106995,\"z\":-44.2801,\"yaw\":-1.5707963267948966},\"gates\":{\"l5-metro-shutter\":true},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.army-mg\",\"weap… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L5/survivor-1: {\"checkpoint\":\"survivor-1\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"131009395138604be2b0deb396b92983e2c3e951fc7ebd6036abcd41462962e5\",\"damage\":100,\"expected\":{\"id\":\"survivor-1\",\"anchor\":{\"x\":-31.989120483398438,\"y\":0.8500000238418579,\"z\":-44.748626708984375,\"yaw\":-0.4827540913417517},\"gates\":{\"l5-metro-shutter\":true},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"wea… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L5/survivor-2: {\"checkpoint\":\"survivor-2\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"15e242d34a8d469e07a5e9702b194f2911d8058909f94189da41096608c23a28\",\"damage\":100,\"expected\":{\"id\":\"survivor-2\",\"anchor\":{\"x\":-33.17937469482422,\"y\":0.7089999914169312,\"z\":-2.9624617099761963,\"yaw\":-2.4556129052844375},\"gates\":{\"l5-metro-shutter\":true},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weap… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L5/survivor-3: {\"checkpoint\":\"survivor-3\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"86ee161f584b2827d8b99f57a8fe5737d0a17b7f2506e913f989f473b1b2c13e\",\"damage\":100,\"expected\":{\"id\":\"survivor-3\",\"anchor\":{\"x\":-45.39076614379883,\"y\":0.8500000238418579,\"z\":49.8560676574707,\"yaw\":5.930268425121925},\"gates\":{\"l5-metro-shutter\":true},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon.ar… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L5/survivor-4: {\"checkpoint\":\"survivor-4\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"fd124db897031d1b42393d98328814d36bb8ca403aaeba45056c0c7564206b4d\",\"damage\":100,\"expected\":{\"id\":\"survivor-4\",\"anchor\":{\"x\":-4.80454683303833,\"y\":0.7089999914169312,\"z\":2.6959431171417236,\"yaw\":0.23332158771916522},\"gates\":{\"l5-metro-shutter\":true},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weapon… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L5/survivor-5: {\"checkpoint\":\"survivor-5\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"995985c90cc531aef101cb9727337585535688a7341d11abdc8a552fe6fd8992\",\"damage\":100,\"expected\":{\"id\":\"survivor-5\",\"anchor\":{\"x\":57.572967529296875,\"y\":0.8500000238418579,\"z\":41.308963775634766,\"yaw\":0.020984743520537138},\"gates\":{\"l5-metro-shutter\":true},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\"],\"RIGHT\":[\"weap… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L5-low-checkpoints.json",
@@ -1654,7 +1664,7 @@
           "value": {
             "checkpoint": "outside",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "dfba4a22bda9084e3031070385b2d626101990fd7e4fb2c86bb217d6c48c59c6",
+            "snapshotSha256": "1271742de265fc34e67db94a6e8dae8f71c7449d0fb3cf1c7af4a57ddae0eaac",
             "damage": 100,
             "expected": {
               "id": "outside",
@@ -1745,7 +1755,7 @@
           "value": {
             "checkpoint": "survivor-1",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "1722131622c9cfda034b391bb90b0296431950fa2e5757c06a25b30d98d21eda",
+            "snapshotSha256": "50b758fddc9317bc93fe6c86a73f872302d1b12433ee9658f20999ab7a599118",
             "damage": 100,
             "expected": {
               "id": "survivor-1",
@@ -1838,7 +1848,7 @@
           "value": {
             "checkpoint": "survivor-2",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "e81835537edb08fc395770655ec374e6f2993ea3e85ed64cff66aac3a9007c10",
+            "snapshotSha256": "a27ea2959c1ab43aabe971cf88da5cca9ef4ad1ad42e0fb3fb6d88132429d4f3",
             "damage": 100,
             "expected": {
               "id": "survivor-2",
@@ -1932,15 +1942,15 @@
           "value": {
             "checkpoint": "survivor-3",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "e92bb934e51137e40e4eb6c7d46314011cd58c15b1e3911de25557267a2f6366",
+            "snapshotSha256": "d686ec7b2d0c9c6af80101b1df5be5e8ce94d204881b5ee8a1604a86be7cea31",
             "damage": 100,
             "expected": {
               "id": "survivor-3",
               "anchor": {
-                "x": -46.994911193847656,
-                "y": 0.7049999833106995,
-                "z": 49.265785217285156,
-                "yaw": -0.7155435787634244
+                "x": -45.399967193603516,
+                "y": 0.8500000238418579,
+                "z": 49.85188293457031,
+                "yaw": -0.354662831382354
               },
               "gates": {
                 "l5-metro-shutter": true
@@ -1985,8 +1995,8 @@
             "observed": {
               "id": "survivor-3",
               "position": {
-                "x": -46.994911193847656,
-                "z": 49.265785217285156
+                "x": -45.399967193603516,
+                "z": 49.85188293457031
               },
               "gates": {
                 "l5-metro-shutter": true
@@ -2027,15 +2037,15 @@
           "value": {
             "checkpoint": "survivor-4",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "9bbe1204fdc5141663c43b4922fd0b2b0fd8f1f4a75dde3e7164398fefa2883b",
+            "snapshotSha256": "deb26206da6002a991798d958ca3a5658649640e27c90fa191a6d2b68c483f99",
             "damage": 100,
             "expected": {
               "id": "survivor-4",
               "anchor": {
-                "x": -4.803534507751465,
-                "y": 0.7089999914169312,
-                "z": 2.694951295852661,
-                "yaw": 0.23155469862689143
+                "x": -4.899144172668457,
+                "y": 0.7049999833106995,
+                "z": 2.7178773880004883,
+                "yaw": 1.610237414297204
               },
               "gates": {
                 "l5-metro-shutter": true
@@ -2080,8 +2090,8 @@
             "observed": {
               "id": "survivor-4",
               "position": {
-                "x": -4.803534507751465,
-                "z": 2.694951295852661
+                "x": -4.899144172668457,
+                "z": 2.7178773880004883
               },
               "gates": {
                 "l5-metro-shutter": true
@@ -2122,15 +2132,15 @@
           "value": {
             "checkpoint": "survivor-5",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "628e4ce3727af990bca92919fb2f92d736cf17f2afeacdfc556678f538992149",
+            "snapshotSha256": "1d5bd9a3e1db49d80f159265d19be3b60b5569089861a66c31bc0bc485aa5b5b",
             "damage": 100,
             "expected": {
               "id": "survivor-5",
               "anchor": {
-                "x": 57.57737350463867,
+                "x": 57.57008361816406,
                 "y": 0.8500000238418579,
-                "z": 41.31705093383789,
-                "yaw": 0.04032007814377062
+                "z": 41.30814743041992,
+                "yaw": 0.01894919856387086
               },
               "gates": {
                 "l5-metro-shutter": true
@@ -2176,8 +2186,8 @@
             "observed": {
               "id": "survivor-5",
               "position": {
-                "x": 57.57737350463867,
-                "z": 41.31705093383789
+                "x": 57.57008361816406,
+                "z": 41.30814743041992
               },
               "gates": {
                 "l5-metro-shutter": true
@@ -2218,7 +2228,7 @@
           "value": {
             "checkpoint": "outside",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "6c8bebdc011103c9f2cea18f9971381ac23cb95336ea0ad6e8019f96f3ada528",
+            "snapshotSha256": "abebe9b05e732fe3bab14340e79feb70e815d19bbfd7515afff241e735ff40d1",
             "damage": 100,
             "expected": {
               "id": "outside",
@@ -2309,7 +2319,7 @@
           "value": {
             "checkpoint": "survivor-1",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "b075d582899ffaa5f1285d152d5f5327e0f55d5dd0d2cf1e9d9c517c74ee0c0b",
+            "snapshotSha256": "131009395138604be2b0deb396b92983e2c3e951fc7ebd6036abcd41462962e5",
             "damage": 100,
             "expected": {
               "id": "survivor-1",
@@ -2402,7 +2412,7 @@
           "value": {
             "checkpoint": "survivor-2",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "0c4efdd93dd14d1eba3cb696664d5a4feba2e7ca9ca3d3f4c686ecdc74c92774",
+            "snapshotSha256": "15e242d34a8d469e07a5e9702b194f2911d8058909f94189da41096608c23a28",
             "damage": 100,
             "expected": {
               "id": "survivor-2",
@@ -2444,7 +2454,6 @@
                 383,
                 384,
                 385,
-                386,
                 387,
                 388
               ],
@@ -2496,15 +2505,15 @@
           "value": {
             "checkpoint": "survivor-3",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "1fb07def32dd6829e3234e3197cdfc340ff68ddabec34bd00e3e9cbae95915c4",
+            "snapshotSha256": "86ee161f584b2827d8b99f57a8fe5737d0a17b7f2506e913f989f473b1b2c13e",
             "damage": 100,
             "expected": {
               "id": "survivor-3",
               "anchor": {
-                "x": -45.39025115966797,
+                "x": -45.39076614379883,
                 "y": 0.8500000238418579,
-                "z": 49.856407165527344,
-                "yaw": -0.35257871746777325
+                "z": 49.8560676574707,
+                "yaw": 5.930268425121925
               },
               "gates": {
                 "l5-metro-shutter": true
@@ -2539,7 +2548,6 @@
                 383,
                 384,
                 385,
-                386,
                 387,
                 388
               ],
@@ -2549,8 +2557,8 @@
             "observed": {
               "id": "survivor-3",
               "position": {
-                "x": -45.39025115966797,
-                "z": 49.856407165527344
+                "x": -45.39076614379883,
+                "z": 49.8560676574707
               },
               "gates": {
                 "l5-metro-shutter": true
@@ -2591,15 +2599,15 @@
           "value": {
             "checkpoint": "survivor-4",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "d792bae797f198ca11fa33157e3e5d71e3be63d2215b691757958a2cccdafd13",
+            "snapshotSha256": "fd124db897031d1b42393d98328814d36bb8ca403aaeba45056c0c7564206b4d",
             "damage": 100,
             "expected": {
               "id": "survivor-4",
               "anchor": {
-                "x": -4.805240631103516,
+                "x": -4.80454683303833,
                 "y": 0.7089999914169312,
-                "z": 2.6965067386627197,
-                "yaw": 0.23425459973531562
+                "z": 2.6959431171417236,
+                "yaw": 0.23332158771916522
               },
               "gates": {
                 "l5-metro-shutter": true
@@ -2634,7 +2642,6 @@
                 383,
                 384,
                 385,
-                386,
                 387,
                 388
               ],
@@ -2644,8 +2651,8 @@
             "observed": {
               "id": "survivor-4",
               "position": {
-                "x": -4.805240631103516,
-                "z": 2.6965067386627197
+                "x": -4.80454683303833,
+                "z": 2.6959431171417236
               },
               "gates": {
                 "l5-metro-shutter": true
@@ -2686,15 +2693,15 @@
           "value": {
             "checkpoint": "survivor-5",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "848f77c81843ba0fbc01a2f994beb1fae74335bdb53fbfaf561ae3fbad84e018",
+            "snapshotSha256": "995985c90cc531aef101cb9727337585535688a7341d11abdc8a552fe6fd8992",
             "damage": 100,
             "expected": {
               "id": "survivor-5",
               "anchor": {
-                "x": 57.566429138183594,
+                "x": 57.572967529296875,
                 "y": 0.8500000238418579,
-                "z": 41.29701614379883,
-                "yaw": -0.00688335406922374
+                "z": 41.308963775634766,
+                "yaw": 0.020984743520537138
               },
               "gates": {
                 "l5-metro-shutter": true
@@ -2730,7 +2737,6 @@
                 383,
                 384,
                 385,
-                386,
                 387,
                 388
               ],
@@ -2740,8 +2746,8 @@
             "observed": {
               "id": "survivor-5",
               "position": {
-                "x": 57.566429138183594,
-                "z": 41.29701614379883
+                "x": 57.572967529296875,
+                "z": 41.308963775634766
               },
               "gates": {
                 "l5-metro-shutter": true
@@ -3040,7 +3046,7 @@
         ],
         "notes": "Raw PNGs removed after inspection. Compact contact sheets, exact captured driver, SHA-256 and per-state measurements retained. Fixture scope; no route or performance claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "eb283794d5814d498a5364a25f00d77cc5a4d572"
       }
     },
     {
@@ -3172,7 +3178,7 @@
         ],
         "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "eb283794d5814d498a5364a25f00d77cc5a4d572"
       }
     }
   ],
@@ -3568,7 +3574,7 @@
       "id": "L5-04",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/complete live initial Alpha identities: 2 (target 2 ≤ value ≤ Infinity; PASS); low/stationary live initial Alpha identities: 2 (target 2 ≤ value ≤ Infinity; PASS); high/complete live initial Alpha identities: 2 (target 2 ≤ value ≤ Infinity; PASS); high/stationary live initial Alpha identities: 2 (target 2 ≤ value ≤ Infinity; PASS); low/controlled-fixture living Alphas have body-clear routes after actual cellar exit: {\"tier\":\"low\",\"run\":{\"level\":\"L5\",\"policy\":\"complete\",\"seed\":1,\"completed\":true,\"time\":212.25,\"deaths\":0,\"kills\":79,\"damageTaken\":75,\"failures\":{},\"objectiveTimeline\":[{\"id\":\"emerge\",\"t\":1},{\"id\":\"look\",\"t\":168.95},{\"id\":\"metro\",\"t\":212.25}],\"furthestObjective\":\"metro\",\"activeObjectives\":[],\"outcome\":\"complete\",\"blocker\":null,\"collision\":{\"failures\":0,\"pending\":0,\"admitted\":275,\"deferred\":0,\"reque… (full values in JSON) (target at least2 living Alphas; every actual body has a legal path to the street courier; PASS); high/controlled-fixture living Alphas have body-clear routes after actual cellar exit: {\"tier\":\"high\",\"run\":{\"level\":\"L5\",\"policy\":\"complete\",\"seed\":1,\"completed\":true,\"time\":221.61666666666667,\"deaths\":0,\"kills\":108,\"damageTaken\":37.5,\"failures\":{},\"objectiveTimeline\":[{\"id\":\"emerge\",\"t\":1},{\"id\":\"look\",\"t\":173.5},{\"id\":\"metro\",\"t\":221.61666666666667}],\"furthestObjective\":\"metro\",\"activeObjectives\":[],\"outcome\":\"complete\",\"blocker\":null,\"collision\":{\"failures\":0,\"pending\":0,\"admitt… (full values in JSON) (target at least2 living Alphas; every actual body has a legal path to the street courier; PASS)",
+      "value": "low/complete live initial Alpha identities: 2 (target 2 ≤ value ≤ Infinity; PASS); low/stationary live initial Alpha identities: 2 (target 2 ≤ value ≤ Infinity; PASS); high/complete live initial Alpha identities: 2 (target 2 ≤ value ≤ Infinity; PASS); high/stationary live initial Alpha identities: 2 (target 2 ≤ value ≤ Infinity; PASS); low/controlled-fixture living Alphas have body-clear routes after actual cellar exit: {\"tier\":\"low\",\"run\":{\"level\":\"L5\",\"policy\":\"complete\",\"seed\":1,\"completed\":true,\"time\":204.46666666666667,\"deaths\":0,\"kills\":79,\"damageTaken\":50,\"failures\":{},\"objectiveTimeline\":[{\"id\":\"emerge\",\"t\":1},{\"id\":\"look\",\"t\":157.86666666666667},{\"id\":\"metro\",\"t\":204.46666666666667}],\"furthestObjective\":\"metro\",\"activeObjectives\":[],\"outcome\":\"complete\",\"blocker\":null,\"collision\":{\"failures\":0,\"pending\":… (full values in JSON) (target at least2 living Alphas; every actual body has a legal path to the street courier; PASS); high/controlled-fixture living Alphas have body-clear routes after actual cellar exit: {\"tier\":\"high\",\"run\":{\"level\":\"L5\",\"policy\":\"complete\",\"seed\":1,\"completed\":true,\"time\":228.05,\"deaths\":0,\"kills\":113,\"damageTaken\":25,\"failures\":{},\"objectiveTimeline\":[{\"id\":\"emerge\",\"t\":1},{\"id\":\"look\",\"t\":177.51666666666668},{\"id\":\"metro\",\"t\":228.05}],\"furthestObjective\":\"metro\",\"activeObjectives\":[],\"outcome\":\"complete\",\"blocker\":null,\"collision\":{\"failures\":0,\"pending\":0,\"admitted\":375,\"defe… (full values in JSON) (target at least2 living Alphas; every actual body has a legal path to the street courier; PASS)",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L5-low-complete.json",
@@ -3634,10 +3640,10 @@
               "policy": "complete",
               "seed": 1,
               "completed": true,
-              "time": 212.25,
+              "time": 204.46666666666667,
               "deaths": 0,
               "kills": 79,
-              "damageTaken": 75,
+              "damageTaken": 50,
               "failures": {},
               "objectiveTimeline": [
                 {
@@ -3646,11 +3652,11 @@
                 },
                 {
                   "id": "look",
-                  "t": 168.95
+                  "t": 157.86666666666667
                 },
                 {
                   "id": "metro",
-                  "t": 212.25
+                  "t": 204.46666666666667
                 }
               ],
               "furthestObjective": "metro",
@@ -3695,7 +3701,7 @@
                 }
               ]
             },
-            "finalHash": "24f9ebfe"
+            "finalHash": "50818562"
           },
           "target": "at least2 living Alphas; every actual body has a legal path to the street courier",
           "status": "PASS",
@@ -3714,10 +3720,10 @@
               "policy": "complete",
               "seed": 1,
               "completed": true,
-              "time": 221.61666666666667,
+              "time": 228.05,
               "deaths": 0,
-              "kills": 108,
-              "damageTaken": 37.5,
+              "kills": 113,
+              "damageTaken": 25,
               "failures": {},
               "objectiveTimeline": [
                 {
@@ -3726,11 +3732,11 @@
                 },
                 {
                   "id": "look",
-                  "t": 173.5
+                  "t": 177.51666666666668
                 },
                 {
                   "id": "metro",
-                  "t": 221.61666666666667
+                  "t": 228.05
                 }
               ],
               "furthestObjective": "metro",
@@ -3775,7 +3781,7 @@
                 }
               ]
             },
-            "finalHash": "ced11a1e"
+            "finalHash": "14c27efd"
           },
           "target": "at least2 living Alphas; every actual body has a legal path to the street courier",
           "status": "PASS",
@@ -3798,9 +3804,9 @@
     {
       "id": "L5-05",
       "status": "FAIL",
-      "currentStatus": "FAIL",
-      "value": "high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 88.88888888888889 (target 90 ≤ value ≤ 100; FAIL) Open prior FAIL: Native low competent look/search phase145.6 s:0 player and0 group attack windups/min, below >=3/min. Passive first7.55 s,182.57/min and90/90 reach demonstrate potential contact; they do not satisfy the competent-route clause. Per-40 m route density/high counterpart remain unmeasured.",
-      "automatedComplete": false,
+      "currentStatus": "PASS",
+      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":146.21666666666667,\"playerWindups\":11,\"groupWindups\":0,\"attacksPerMinute\":4.513849310384133} (target nonzero player windups in each combat policy; PASS); low/complete real player/group windups per minute: 4.513849310384133 (target 3 ≤ value ≤ Infinity; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/complete competent route visible infected encounters per40m: 5.550071872393467 (target 1 ≤ value ≤ Infinity; PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":228.35,\"playerWindups\":686,\"groupWindups\":0,\"attacksPerMinute\":180.24961681629077} (target nonzero player windups in each combat policy; PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":0.05,\"windowSeconds\":228.35} (target ≤20 s; PASS); low/stationary real player/group windups per minute: 180.24961681629077 (target 3 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":165.86666666666667,\"playerWindups\":11,\"groupWindups\":1,\"attacksPerMinute\":3.9790996784565915} (target nonzero player windups in each combat policy; PASS); high/complete real player/group windups per minute: 4.340836012861736 (target 3 ≤ value ≤ Infinity; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/complete competent route visible infected encounters per40m: 9.439193055979066 (target 1 ≤ value ≤ Infinity; PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":228.35,\"playerWindups\":1206,\"groupWindups\":0,\"attacksPerMinute\":316.8819794175608} (target nonzero player windups in each combat policy; PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":0.7166666666666667,\"windowSeconds\":228.35} (target ≤20 s; PASS); high/stationary real player/group windups per minute: 316.8819794175608 (target 3 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS) Open prior FAIL: Native low competent look/search phase145.6 s:0 player and0 group attack windups/min, below >=3/min. Passive first7.55 s,182.57/min and90/90 reach demonstrate potential contact; they do not satisfy the competent-route clause. Per-40 m route density/high counterpart remain unmeasured.",
+      "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L5-low-complete.json",
         "docs/reports/fix51-verify/receipts/L5-low-stationary.json",
@@ -3818,10 +3824,10 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "seconds": 157.3,
-            "playerWindups": 12,
+            "seconds": 146.21666666666667,
+            "playerWindups": 11,
             "groupWindups": 0,
-            "attacksPerMinute": 4.577240940877305
+            "attacksPerMinute": 4.513849310384133
           },
           "target": "nonzero player windups in each combat policy",
           "receipt": "docs/reports/fix51-verify/receipts/L5-low-complete.json"
@@ -3833,7 +3839,7 @@
           "tier": "low",
           "policy": "complete",
           "status": "PASS",
-          "value": 4.577240940877305,
+          "value": 4.513849310384133,
           "target": "3 ≤ value ≤ Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L5-low-complete.json"
         },
@@ -3855,7 +3861,7 @@
           "tier": "low",
           "policy": "complete",
           "status": "PASS",
-          "value": 5.595743337924693,
+          "value": 5.550071872393467,
           "target": "1 ≤ value ≤ Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L5-low-complete.json"
         },
@@ -3919,10 +3925,10 @@
           "policy": "complete",
           "status": "PASS",
           "value": {
-            "seconds": 161.85,
-            "playerWindups": 16,
-            "groupWindups": 0,
-            "attacksPerMinute": 5.9314179796107505
+            "seconds": 165.86666666666667,
+            "playerWindups": 11,
+            "groupWindups": 1,
+            "attacksPerMinute": 3.9790996784565915
           },
           "target": "nonzero player windups in each combat policy",
           "receipt": "docs/reports/fix51-verify/receipts/L5-high-complete.json"
@@ -3934,7 +3940,7 @@
           "tier": "high",
           "policy": "complete",
           "status": "PASS",
-          "value": 5.9314179796107505,
+          "value": 4.340836012861736,
           "target": "3 ≤ value ≤ Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L5-high-complete.json"
         },
@@ -3944,8 +3950,8 @@
           "level": "L5",
           "tier": "high",
           "policy": "complete",
-          "status": "FAIL",
-          "value": 88.88888888888889,
+          "status": "PASS",
+          "value": 100,
           "target": "90 ≤ value ≤ 100",
           "receipt": "docs/reports/fix51-verify/receipts/L5-high-complete.json"
         },
@@ -3956,7 +3962,7 @@
           "tier": "high",
           "policy": "complete",
           "status": "PASS",
-          "value": 9.35951004093691,
+          "value": 9.439193055979066,
           "target": "1 ≤ value ≤ Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L5-high-complete.json"
         },
@@ -4023,7 +4029,7 @@
         ],
         "method": "Compare the complete-policy step/look ledger with its passive counterpart; actual windups, not damage or kills. The competent bot fires, so zero windups alone is not called proof that an unarmed walk is safe. NEXT: matched competent real-input and no-fire routes with distance/contact ledgers at both tiers."
       },
-      "remaining": "Reachability/contact clauses are measured; qualify competent route density≥1 infected per40m. Perceived rescue pressure is a separate PO question.",
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
       "review": {
         "tag": "P",
         "instruction": "PO: can a competent player still just walk, pick up the survivors and walk away? Review perceived rescue pressure only; reachability, route density, attack rate and first-attack clock retain numeric checks."
@@ -4076,7 +4082,7 @@
       "id": "L5-08",
       "status": "FAIL",
       "currentStatus": "FAIL",
-      "value": "low/complete calm straight-walk follower distance tolerance: [{\"id\":31,\"followAt\":1921,\"calmTicks\":9189,\"within8Ticks\":8787,\"movingCalmTicks\":5059,\"behind2To5Ticks\":4182,\"maxMotionSpeed\":301.734983056324,\"straightTicks\":1637,\"inBandStraightTicks\":1508,\"badStraightTicks\":129,\"badRun\":0,\"maxBadRun\":50,\"counterexample\":{\"tick\":6224,\"behind\":5.011649096605552,\"distance\":5.1057151354920265,\"player\":{\"x\":-14.049386978149414,\"z\":24.590473175048828},\"follower\":{\"x\"… (full values in JSON) (target at least95% of calm straight-walk ticks 2–5m behind; no out-of-band run longer than2s; FAIL); high/complete observed human follower pace versus phase group median: [{\"phase\":\"step/look\",\"id\":31,\"samples\":134,\"median\":4.418715355302714,\"groupMedian\":4.412839882334156,\"ratio\":1.0013314493897862},{\"phase\":\"step/look\",\"id\":30,\"samples\":111,\"median\":4.406964409365598,\"groupMedian\":4.412839882334156,\"ratio\":0.9986685506102138},{\"phase\":\"step/look\",\"id\":32,\"samples\":82,\"median\":4.4367716695160375,\"groupMedian\":4.412839882334156,\"ratio\":1.0054232167538386},{\"phase\":… (full values in JSON) (target every ratio≥0.95; bar pixels and absolute formation remain open; FAIL) Manual review FAIL (STALE, Codex fix63-a): PO tolerance is applied to every calm straight-walk tick, including catch-up. Low followers31/32/28 reach92.12/89.22/85.26percent and fail95percent; maximum excursions50/115/87ticks meet120tick cap. High all five reach96.81–100percent with maximum44ticks and pass this band clause. Both native routes complete. Other visual and combat-speed subclauses remain unqualified; no L5 game/controller change. Open prior FAIL: Native L5 civilian follower28:94.8% of phase group median over55 qualified movement samples, below the global95% floor. Distance2-5 m/80%-within8 m and absolute3.8 m/s clauses are not fully measured.",
+      "value": "low/complete calm straight-walk follower distance tolerance: [{\"id\":31,\"followAt\":1921,\"calmTicks\":8966,\"within8Ticks\":8966,\"movingCalmTicks\":5050,\"behind2To5Ticks\":4536,\"maxMotionSpeed\":301.734983056324,\"straightTicks\":1670,\"inBandStraightTicks\":1574,\"badStraightTicks\":96,\"badRun\":0,\"maxBadRun\":96,\"counterexample\":{\"tick\":4182,\"behind\":5.134003961294162,\"distance\":5.145803527746529,\"player\":{\"x\":-38.33531188964844,\"z\":13.338467597961426},\"follower\":{\"x\":-3… (full values in JSON) (target at least95% of calm straight-walk ticks 2–5m behind; no out-of-band run longer than2s; FAIL); high/complete observed human follower pace versus phase group median: [{\"phase\":\"step/look\",\"id\":31,\"samples\":131,\"median\":4.437277801144634,\"groupMedian\":4.2066202022466985,\"ratio\":1.0548320475365816},{\"phase\":\"step/look\",\"id\":30,\"samples\":109,\"median\":4.277922475470496,\"groupMedian\":4.2066202022466985,\"ratio\":1.01695001445239},{\"phase\":\"step/look\",\"id\":32,\"samples\":80,\"median\":4.1353179290229,\"groupMedian\":4.2066202022466985,\"ratio\":0.9830499855476097},{\"phase\":\"s… (full values in JSON) (target every ratio≥0.95; bar pixels and absolute formation remain open; FAIL); high/complete calm straight-walk follower distance tolerance: [{\"id\":31,\"followAt\":2126,\"calmTicks\":9433,\"within8Ticks\":9414,\"movingCalmTicks\":5009,\"behind2To5Ticks\":4602,\"maxMotionSpeed\":301.734983056324,\"straightTicks\":1571,\"inBandStraightTicks\":1571,\"badStraightTicks\":0,\"badRun\":0,\"maxBadRun\":0,\"counterexample\":null,\"lastStraightTick\":13267,\"within8Share\":0.9979857945510442,\"inBandStraightShare\":1},{\"id\":30,\"followAt\":4016,\"calmTicks\":7886,\"within8Ticks\":… (full values in JSON) (target at least95% of calm straight-walk ticks 2–5m behind; no out-of-band run longer than2s; FAIL) Manual review FAIL (STALE, Codex fix63-a): PO tolerance is applied to every calm straight-walk tick, including catch-up. Low followers31/32/28 reach92.12/89.22/85.26percent and fail95percent; maximum excursions50/115/87ticks meet120tick cap. High all five reach96.81–100percent with maximum44ticks and pass this band clause. Both native routes complete. Other visual and combat-speed subclauses remain unqualified; no L5 game/controller change. Open prior FAIL: Native L5 civilian follower28:94.8% of phase group median over55 qualified movement samples, below the global95% floor. Distance2-5 m/80%-within8 m and absolute3.8 m/s clauses are not fully measured.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L5-low-complete.json",
@@ -4098,74 +4104,74 @@
             {
               "phase": "step/look",
               "id": 31,
-              "samples": 126,
-              "median": 4.313827444645917,
-              "groupMedian": 4.354374204831605,
-              "ratio": 0.9906882692487253
+              "samples": 127,
+              "median": 4.369714472081229,
+              "groupMedian": 4.352057046581596,
+              "ratio": 1.004057259661498
             },
             {
               "phase": "step/look",
               "id": 30,
-              "samples": 107,
+              "samples": 109,
               "median": 4.394920965017293,
-              "groupMedian": 4.354374204831605,
-              "ratio": 1.0093117307512747
+              "groupMedian": 4.352057046581596,
+              "ratio": 1.009849116860581
             },
             {
               "phase": "step/look",
               "id": 32,
-              "samples": 75,
-              "median": 4.464581021850427,
-              "groupMedian": 4.354374204831605,
-              "ratio": 1.025309450183803
+              "samples": 78,
+              "median": 4.251685199089218,
+              "groupMedian": 4.352057046581596,
+              "ratio": 0.9769369182393377
             },
             {
               "phase": "step/look",
               "id": 28,
               "samples": 43,
-              "median": 4.20026521733215,
-              "groupMedian": 4.354374204831605,
-              "ratio": 0.9646082352480282
+              "median": 4.334399621081962,
+              "groupMedian": 4.352057046581596,
+              "ratio": 0.995942740338502
             },
             {
               "phase": "step/metro",
               "id": 28,
-              "samples": 45,
-              "median": 4.499335285977048,
-              "groupMedian": 4.47260275683204,
-              "ratio": 1.0059769513633137
+              "samples": 46,
+              "median": 4.493800354953372,
+              "groupMedian": 4.444157214410096,
+              "ratio": 1.0111704285308156
             },
             {
               "phase": "step/metro",
               "id": 30,
-              "samples": 44,
-              "median": 4.335509161536912,
-              "groupMedian": 4.47260275683204,
-              "ratio": 0.969348139607142
+              "samples": 53,
+              "median": 4.386452510060453,
+              "groupMedian": 4.444157214410096,
+              "ratio": 0.9870156023818113
             },
             {
               "phase": "step/metro",
               "id": 31,
-              "samples": 43,
-              "median": 4.47260275683204,
-              "groupMedian": 4.47260275683204,
-              "ratio": 1
+              "samples": 46,
+              "median": 4.36836628662436,
+              "groupMedian": 4.444157214410096,
+              "ratio": 0.9829459390995473
             },
             {
               "phase": "step/metro",
               "id": 32,
-              "samples": 45,
-              "median": 4.388495505279773,
-              "groupMedian": 4.47260275683204,
-              "ratio": 0.981195009678919
+              "samples": 47,
+              "median": 4.459024530116346,
+              "groupMedian": 4.444157214410096,
+              "ratio": 1.0033453622338209
             },
             {
               "phase": "step/metro",
               "id": 29,
-              "samples": 42,
-              "median": 4.499695589220374,
-              "groupMedian": 4.47260275683204,
-              "ratio": 1.0060575092091397
+              "samples": 52,
+              "median": 4.444157214410096,
+              "groupMedian": 4.444157214410096,
+              "ratio": 1
             }
           ],
           "target": "every ratio≥0.95; bar pixels and absolute formation remain open",
@@ -4182,129 +4188,129 @@
             {
               "id": 31,
               "followAt": 1921,
-              "calmTicks": 9189,
-              "within8Ticks": 8787,
-              "movingCalmTicks": 5059,
-              "behind2To5Ticks": 4182,
+              "calmTicks": 8966,
+              "within8Ticks": 8966,
+              "movingCalmTicks": 5050,
+              "behind2To5Ticks": 4536,
               "maxMotionSpeed": 301.734983056324,
-              "straightTicks": 1637,
-              "inBandStraightTicks": 1508,
-              "badStraightTicks": 129,
+              "straightTicks": 1670,
+              "inBandStraightTicks": 1574,
+              "badStraightTicks": 96,
               "badRun": 0,
-              "maxBadRun": 50,
+              "maxBadRun": 96,
               "counterexample": {
-                "tick": 6224,
-                "behind": 5.011649096605552,
-                "distance": 5.1057151354920265,
+                "tick": 4182,
+                "behind": 5.134003961294162,
+                "distance": 5.145803527746529,
                 "player": {
-                  "x": -14.049386978149414,
-                  "z": 24.590473175048828
+                  "x": -38.33531188964844,
+                  "z": 13.338467597961426
                 },
                 "follower": {
-                  "x": -14.310384159850951,
-                  "z": 29.689513037212706
+                  "x": -36.32991929095839,
+                  "z": 8.599512600149378
                 },
-                "playerSpeed": 4.5000442298778625
+                "playerSpeed": 4.4999632412608905
               },
-              "lastStraightTick": 12332,
-              "within8Share": 0.9562520404831865,
-              "inBandStraightShare": 0.9211973121563837
+              "lastStraightTick": 11865,
+              "within8Share": 1,
+              "inBandStraightShare": 0.9425149700598803
             },
             {
               "id": 30,
               "followAt": 3793,
-              "calmTicks": 7440,
-              "within8Ticks": 7440,
-              "movingCalmTicks": 4378,
-              "behind2To5Ticks": 3874,
+              "calmTicks": 7227,
+              "within8Ticks": 7227,
+              "movingCalmTicks": 4376,
+              "behind2To5Ticks": 3848,
               "maxMotionSpeed": 271.66155414412253,
-              "straightTicks": 1447,
-              "inBandStraightTicks": 1447,
+              "straightTicks": 1479,
+              "inBandStraightTicks": 1479,
               "badStraightTicks": 0,
               "badRun": 0,
               "maxBadRun": 0,
               "counterexample": null,
-              "lastStraightTick": 12332,
+              "lastStraightTick": 11865,
               "within8Share": 1,
               "inBandStraightShare": 1
             },
             {
               "id": 32,
-              "followAt": 5379,
-              "calmTicks": 5992,
-              "within8Ticks": 5992,
-              "movingCalmTicks": 3521,
-              "behind2To5Ticks": 3066,
-              "maxMotionSpeed": 222.00000000000017,
-              "straightTicks": 1243,
-              "inBandStraightTicks": 1109,
-              "badStraightTicks": 134,
+              "followAt": 5510,
+              "calmTicks": 5725,
+              "within8Ticks": 5372,
+              "movingCalmTicks": 3503,
+              "behind2To5Ticks": 3117,
+              "maxMotionSpeed": 224.01785643113382,
+              "straightTicks": 1211,
+              "inBandStraightTicks": 1161,
+              "badStraightTicks": 50,
               "badRun": 0,
-              "maxBadRun": 115,
+              "maxBadRun": 43,
               "counterexample": {
-                "tick": 7028,
-                "behind": 5.117607386617666,
-                "distance": 5.14160181078433,
+                "tick": 9454,
+                "behind": 5.002229487679164,
+                "distance": 5.0726642372802875,
                 "player": {
-                  "x": 8.361266136169434,
-                  "z": 3.4615345001220703
+                  "x": 56.679561614990234,
+                  "z": 41.325016021728516
                 },
                 "follower": {
-                  "x": 3.223319955151699,
-                  "z": 3.655385529590527
+                  "x": 51.69416665513439,
+                  "z": 42.26190425328356
                 },
-                "playerSpeed": 4.5000196024139365
+                "playerSpeed": 4.499935833512603
               },
-              "lastStraightTick": 12332,
-              "within8Share": 1,
-              "inBandStraightShare": 0.8921962992759453
+              "lastStraightTick": 11865,
+              "within8Share": 0.9383406113537118,
+              "inBandStraightShare": 0.9587118084227911
             },
             {
               "id": 28,
-              "followAt": 6850,
-              "calmTicks": 4782,
-              "within8Ticks": 4782,
-              "movingCalmTicks": 2603,
-              "behind2To5Ticks": 2241,
-              "maxMotionSpeed": 188.403821617291,
-              "straightTicks": 848,
-              "inBandStraightTicks": 723,
-              "badStraightTicks": 125,
+              "followAt": 7038,
+              "calmTicks": 4338,
+              "within8Ticks": 4338,
+              "movingCalmTicks": 2581,
+              "behind2To5Ticks": 2196,
+              "maxMotionSpeed": 186.60385848100782,
+              "straightTicks": 902,
+              "inBandStraightTicks": 773,
+              "badStraightTicks": 129,
               "badRun": 0,
-              "maxBadRun": 87,
+              "maxBadRun": 111,
               "counterexample": {
-                "tick": 8019,
-                "behind": 5.000989646899501,
-                "distance": 5.0042222725233705,
+                "tick": 8370,
+                "behind": 5.353129695830533,
+                "distance": 5.353900884332655,
                 "player": {
-                  "x": 30.912607192993164,
-                  "z": 41.11424255371094
+                  "x": 32.779972076416016,
+                  "z": 41.12452697753906
                 },
                 "follower": {
-                  "x": 25.912970305337836,
-                  "z": 40.90006612079848
+                  "x": 27.427600663733553,
+                  "z": 40.99656237322393
                 },
-                "playerSpeed": 4.500037419279525
+                "playerSpeed": 3.5999399637570417
               },
-              "lastStraightTick": 12332,
+              "lastStraightTick": 11865,
               "within8Share": 1,
-              "inBandStraightShare": 0.8525943396226415
+              "inBandStraightShare": 0.8569844789356984
             },
             {
               "id": 29,
-              "followAt": 10137,
-              "calmTicks": 2176,
-              "within8Ticks": 2176,
-              "movingCalmTicks": 1263,
-              "behind2To5Ticks": 1228,
+              "followAt": 9472,
+              "calmTicks": 2399,
+              "within8Ticks": 2399,
+              "movingCalmTicks": 1384,
+              "behind2To5Ticks": 1257,
               "maxMotionSpeed": 271.66155414412253,
-              "straightTicks": 420,
-              "inBandStraightTicks": 420,
+              "straightTicks": 505,
+              "inBandStraightTicks": 505,
               "badStraightTicks": 0,
               "badRun": 0,
               "maxBadRun": 0,
               "counterexample": null,
-              "lastStraightTick": 12332,
+              "lastStraightTick": 11865,
               "within8Share": 1,
               "inBandStraightShare": 1
             }
@@ -4323,129 +4329,129 @@
             {
               "id": 31,
               "followAt": 1921,
-              "calmTicks": 9189,
-              "within8Ticks": 8787,
-              "movingCalmTicks": 5059,
-              "behind2To5Ticks": 4182,
+              "calmTicks": 8966,
+              "within8Ticks": 8966,
+              "movingCalmTicks": 5050,
+              "behind2To5Ticks": 4536,
               "maxMotionSpeed": 301.734983056324,
-              "straightTicks": 1637,
-              "inBandStraightTicks": 1508,
-              "badStraightTicks": 129,
+              "straightTicks": 1670,
+              "inBandStraightTicks": 1574,
+              "badStraightTicks": 96,
               "badRun": 0,
-              "maxBadRun": 50,
+              "maxBadRun": 96,
               "counterexample": {
-                "tick": 6224,
-                "behind": 5.011649096605552,
-                "distance": 5.1057151354920265,
+                "tick": 4182,
+                "behind": 5.134003961294162,
+                "distance": 5.145803527746529,
                 "player": {
-                  "x": -14.049386978149414,
-                  "z": 24.590473175048828
+                  "x": -38.33531188964844,
+                  "z": 13.338467597961426
                 },
                 "follower": {
-                  "x": -14.310384159850951,
-                  "z": 29.689513037212706
+                  "x": -36.32991929095839,
+                  "z": 8.599512600149378
                 },
-                "playerSpeed": 4.5000442298778625
+                "playerSpeed": 4.4999632412608905
               },
-              "lastStraightTick": 12332,
-              "within8Share": 0.9562520404831865,
-              "inBandStraightShare": 0.9211973121563837
+              "lastStraightTick": 11865,
+              "within8Share": 1,
+              "inBandStraightShare": 0.9425149700598803
             },
             {
               "id": 30,
               "followAt": 3793,
-              "calmTicks": 7440,
-              "within8Ticks": 7440,
-              "movingCalmTicks": 4378,
-              "behind2To5Ticks": 3874,
+              "calmTicks": 7227,
+              "within8Ticks": 7227,
+              "movingCalmTicks": 4376,
+              "behind2To5Ticks": 3848,
               "maxMotionSpeed": 271.66155414412253,
-              "straightTicks": 1447,
-              "inBandStraightTicks": 1447,
+              "straightTicks": 1479,
+              "inBandStraightTicks": 1479,
               "badStraightTicks": 0,
               "badRun": 0,
               "maxBadRun": 0,
               "counterexample": null,
-              "lastStraightTick": 12332,
+              "lastStraightTick": 11865,
               "within8Share": 1,
               "inBandStraightShare": 1
             },
             {
               "id": 32,
-              "followAt": 5379,
-              "calmTicks": 5992,
-              "within8Ticks": 5992,
-              "movingCalmTicks": 3521,
-              "behind2To5Ticks": 3066,
-              "maxMotionSpeed": 222.00000000000017,
-              "straightTicks": 1243,
-              "inBandStraightTicks": 1109,
-              "badStraightTicks": 134,
+              "followAt": 5510,
+              "calmTicks": 5725,
+              "within8Ticks": 5372,
+              "movingCalmTicks": 3503,
+              "behind2To5Ticks": 3117,
+              "maxMotionSpeed": 224.01785643113382,
+              "straightTicks": 1211,
+              "inBandStraightTicks": 1161,
+              "badStraightTicks": 50,
               "badRun": 0,
-              "maxBadRun": 115,
+              "maxBadRun": 43,
               "counterexample": {
-                "tick": 7028,
-                "behind": 5.117607386617666,
-                "distance": 5.14160181078433,
+                "tick": 9454,
+                "behind": 5.002229487679164,
+                "distance": 5.0726642372802875,
                 "player": {
-                  "x": 8.361266136169434,
-                  "z": 3.4615345001220703
+                  "x": 56.679561614990234,
+                  "z": 41.325016021728516
                 },
                 "follower": {
-                  "x": 3.223319955151699,
-                  "z": 3.655385529590527
+                  "x": 51.69416665513439,
+                  "z": 42.26190425328356
                 },
-                "playerSpeed": 4.5000196024139365
+                "playerSpeed": 4.499935833512603
               },
-              "lastStraightTick": 12332,
-              "within8Share": 1,
-              "inBandStraightShare": 0.8921962992759453
+              "lastStraightTick": 11865,
+              "within8Share": 0.9383406113537118,
+              "inBandStraightShare": 0.9587118084227911
             },
             {
               "id": 28,
-              "followAt": 6850,
-              "calmTicks": 4782,
-              "within8Ticks": 4782,
-              "movingCalmTicks": 2603,
-              "behind2To5Ticks": 2241,
-              "maxMotionSpeed": 188.403821617291,
-              "straightTicks": 848,
-              "inBandStraightTicks": 723,
-              "badStraightTicks": 125,
+              "followAt": 7038,
+              "calmTicks": 4338,
+              "within8Ticks": 4338,
+              "movingCalmTicks": 2581,
+              "behind2To5Ticks": 2196,
+              "maxMotionSpeed": 186.60385848100782,
+              "straightTicks": 902,
+              "inBandStraightTicks": 773,
+              "badStraightTicks": 129,
               "badRun": 0,
-              "maxBadRun": 87,
+              "maxBadRun": 111,
               "counterexample": {
-                "tick": 8019,
-                "behind": 5.000989646899501,
-                "distance": 5.0042222725233705,
+                "tick": 8370,
+                "behind": 5.353129695830533,
+                "distance": 5.353900884332655,
                 "player": {
-                  "x": 30.912607192993164,
-                  "z": 41.11424255371094
+                  "x": 32.779972076416016,
+                  "z": 41.12452697753906
                 },
                 "follower": {
-                  "x": 25.912970305337836,
-                  "z": 40.90006612079848
+                  "x": 27.427600663733553,
+                  "z": 40.99656237322393
                 },
-                "playerSpeed": 4.500037419279525
+                "playerSpeed": 3.5999399637570417
               },
-              "lastStraightTick": 12332,
+              "lastStraightTick": 11865,
               "within8Share": 1,
-              "inBandStraightShare": 0.8525943396226415
+              "inBandStraightShare": 0.8569844789356984
             },
             {
               "id": 29,
-              "followAt": 10137,
-              "calmTicks": 2176,
-              "within8Ticks": 2176,
-              "movingCalmTicks": 1263,
-              "behind2To5Ticks": 1228,
+              "followAt": 9472,
+              "calmTicks": 2399,
+              "within8Ticks": 2399,
+              "movingCalmTicks": 1384,
+              "behind2To5Ticks": 1257,
               "maxMotionSpeed": 271.66155414412253,
-              "straightTicks": 420,
-              "inBandStraightTicks": 420,
+              "straightTicks": 505,
+              "inBandStraightTicks": 505,
               "badStraightTicks": 0,
               "badRun": 0,
               "maxBadRun": 0,
               "counterexample": null,
-              "lastStraightTick": 12332,
+              "lastStraightTick": 11865,
               "within8Share": 1,
               "inBandStraightShare": 1
             }
@@ -4464,74 +4470,74 @@
             {
               "phase": "step/look",
               "id": 31,
-              "samples": 134,
-              "median": 4.418715355302714,
-              "groupMedian": 4.412839882334156,
-              "ratio": 1.0013314493897862
+              "samples": 131,
+              "median": 4.437277801144634,
+              "groupMedian": 4.2066202022466985,
+              "ratio": 1.0548320475365816
             },
             {
               "phase": "step/look",
               "id": 30,
-              "samples": 111,
-              "median": 4.406964409365598,
-              "groupMedian": 4.412839882334156,
-              "ratio": 0.9986685506102138
+              "samples": 109,
+              "median": 4.277922475470496,
+              "groupMedian": 4.2066202022466985,
+              "ratio": 1.01695001445239
             },
             {
               "phase": "step/look",
               "id": 32,
-              "samples": 82,
-              "median": 4.4367716695160375,
-              "groupMedian": 4.412839882334156,
-              "ratio": 1.0054232167538386
+              "samples": 80,
+              "median": 4.1353179290229,
+              "groupMedian": 4.2066202022466985,
+              "ratio": 0.9830499855476097
             },
             {
               "phase": "step/look",
               "id": 28,
-              "samples": 47,
-              "median": 4.158716771761795,
-              "groupMedian": 4.412839882334156,
-              "ratio": 0.9424127959888852
+              "samples": 45,
+              "median": 3.9368955791432456,
+              "groupMedian": 4.2066202022466985,
+              "ratio": 0.9358809186150447
             },
             {
               "phase": "step/metro",
               "id": 28,
               "samples": 46,
-              "median": 4.2394515990302395,
-              "groupMedian": 4.203995757925035,
-              "ratio": 1.008433843216508
-            },
-            {
-              "phase": "step/metro",
-              "id": 29,
-              "samples": 46,
-              "median": 4.188244921676869,
-              "groupMedian": 4.203995757925035,
-              "ratio": 0.9962533653326188
+              "median": 4.164277375085569,
+              "groupMedian": 4.40291686803136,
+              "ratio": 0.9457996823245741
             },
             {
               "phase": "step/metro",
               "id": 30,
-              "samples": 46,
-              "median": 4.190480428856722,
-              "groupMedian": 4.203995757925035,
-              "ratio": 0.9967851230480347
+              "samples": 47,
+              "median": 4.40291686803136,
+              "groupMedian": 4.40291686803136,
+              "ratio": 1
             },
             {
               "phase": "step/metro",
               "id": 31,
               "samples": 46,
-              "median": 4.203995757925035,
-              "groupMedian": 4.203995757925035,
-              "ratio": 1
+              "median": 4.321341363513971,
+              "groupMedian": 4.40291686803136,
+              "ratio": 0.9814723950139301
             },
             {
               "phase": "step/metro",
               "id": 32,
               "samples": 46,
-              "median": 4.215431772861315,
-              "groupMedian": 4.203995757925035,
-              "ratio": 1.0027202727107234
+              "median": 4.403696882518835,
+              "groupMedian": 4.40291686803136,
+              "ratio": 1.0001771585771102
+            },
+            {
+              "phase": "step/metro",
+              "id": 29,
+              "samples": 45,
+              "median": 4.472693588212815,
+              "groupMedian": 4.40291686803136,
+              "ratio": 1.0158478395738264
             }
           ],
           "target": "every ratio≥0.95; bar pixels and absolute formation remain open",
@@ -4548,131 +4554,131 @@
             {
               "id": 31,
               "followAt": 2126,
-              "calmTicks": 8938,
-              "within8Ticks": 8919,
-              "movingCalmTicks": 5048,
-              "behind2To5Ticks": 4249,
+              "calmTicks": 9433,
+              "within8Ticks": 9414,
+              "movingCalmTicks": 5009,
+              "behind2To5Ticks": 4602,
               "maxMotionSpeed": 301.734983056324,
-              "straightTicks": 1628,
-              "inBandStraightTicks": 1576,
-              "badStraightTicks": 52,
+              "straightTicks": 1571,
+              "inBandStraightTicks": 1571,
+              "badStraightTicks": 0,
               "badRun": 0,
-              "maxBadRun": 44,
-              "counterexample": {
-                "tick": 9646,
-                "behind": 5.8402410998131025,
-                "distance": 5.844650367535733,
-                "player": {
-                  "x": 37.32002258300781,
-                  "z": 41.15632629394531
-                },
-                "follower": {
-                  "x": 31.48149476352949,
-                  "z": 40.888873831041565
-                },
-                "playerSpeed": 3.5999399637570417
-              },
-              "lastStraightTick": 12894,
-              "within8Share": 0.9978742447974939,
-              "inBandStraightShare": 0.9680589680589681
+              "maxBadRun": 0,
+              "counterexample": null,
+              "lastStraightTick": 13267,
+              "within8Share": 0.9979857945510442,
+              "inBandStraightShare": 1
             },
             {
               "id": 30,
               "followAt": 4016,
-              "calmTicks": 7434,
-              "within8Ticks": 7434,
-              "movingCalmTicks": 4442,
-              "behind2To5Ticks": 4031,
+              "calmTicks": 7886,
+              "within8Ticks": 7886,
+              "movingCalmTicks": 4396,
+              "behind2To5Ticks": 3688,
               "maxMotionSpeed": 271.66155414412253,
-              "straightTicks": 1466,
-              "inBandStraightTicks": 1466,
-              "badStraightTicks": 0,
+              "straightTicks": 1409,
+              "inBandStraightTicks": 1234,
+              "badStraightTicks": 175,
               "badRun": 0,
-              "maxBadRun": 0,
-              "counterexample": null,
-              "lastStraightTick": 12894,
+              "maxBadRun": 99,
+              "counterexample": {
+                "tick": 8439,
+                "behind": 5.198028825284039,
+                "distance": 5.19921120330009,
+                "player": {
+                  "x": 7.162839412689209,
+                  "z": 3.3911499977111816
+                },
+                "follower": {
+                  "x": 1.9672947993236374,
+                  "z": 3.1959237006885717
+                },
+                "playerSpeed": 4.500006126651365
+              },
+              "lastStraightTick": 13267,
               "within8Share": 1,
-              "inBandStraightShare": 1
+              "inBandStraightShare": 0.8757984386089425
             },
             {
               "id": 32,
-              "followAt": 6389,
-              "calmTicks": 5473,
-              "within8Ticks": 5473,
-              "movingCalmTicks": 3559,
-              "behind2To5Ticks": 3040,
+              "followAt": 6368,
+              "calmTicks": 6079,
+              "within8Ticks": 6079,
+              "movingCalmTicks": 3517,
+              "behind2To5Ticks": 3218,
               "maxMotionSpeed": 224.01785643113382,
-              "straightTicks": 1177,
-              "inBandStraightTicks": 1129,
-              "badStraightTicks": 48,
-              "badRun": 0,
-              "maxBadRun": 37,
-              "counterexample": {
-                "tick": 11485,
-                "behind": 5.200209728636283,
-                "distance": 5.301102769208715,
-                "player": {
-                  "x": 51.65021896362305,
-                  "z": 18.190195083618164
-                },
-                "follower": {
-                  "x": 53.41093271692071,
-                  "z": 23.190352845995342
-                },
-                "playerSpeed": 4.499959886651979
-              },
-              "lastStraightTick": 12894,
-              "within8Share": 1,
-              "inBandStraightShare": 0.9592183517417162
-            },
-            {
-              "id": 28,
-              "followAt": 8326,
-              "calmTicks": 3857,
-              "within8Ticks": 3857,
-              "movingCalmTicks": 2642,
-              "behind2To5Ticks": 2432,
-              "maxMotionSpeed": 188.403821617291,
-              "straightTicks": 790,
-              "inBandStraightTicks": 777,
-              "badStraightTicks": 13,
-              "badRun": 0,
-              "maxBadRun": 13,
-              "counterexample": {
-                "tick": 8516,
-                "behind": 5.27752522830487,
-                "distance": 5.279245788750161,
-                "player": {
-                  "x": 9.258821487426758,
-                  "z": 3.5148274898529053
-                },
-                "follower": {
-                  "x": 3.9825063446798667,
-                  "z": 3.3389451074032612
-                },
-                "playerSpeed": 4.499997710190983
-              },
-              "lastStraightTick": 12894,
-              "within8Share": 1,
-              "inBandStraightShare": 0.9835443037974684
-            },
-            {
-              "id": 29,
-              "followAt": 10410,
-              "calmTicks": 2307,
-              "within8Ticks": 2307,
-              "movingCalmTicks": 1334,
-              "behind2To5Ticks": 1270,
-              "maxMotionSpeed": 271.66155414412253,
-              "straightTicks": 407,
-              "inBandStraightTicks": 407,
+              "straightTicks": 1033,
+              "inBandStraightTicks": 1033,
               "badStraightTicks": 0,
               "badRun": 0,
               "maxBadRun": 0,
               "counterexample": null,
-              "lastStraightTick": 12894,
+              "lastStraightTick": 13267,
               "within8Share": 1,
               "inBandStraightShare": 1
+            },
+            {
+              "id": 28,
+              "followAt": 8277,
+              "calmTicks": 4547,
+              "within8Ticks": 4547,
+              "movingCalmTicks": 2646,
+              "behind2To5Ticks": 2277,
+              "maxMotionSpeed": 188.403821617291,
+              "straightTicks": 758,
+              "inBandStraightTicks": 705,
+              "badStraightTicks": 53,
+              "badRun": 0,
+              "maxBadRun": 53,
+              "counterexample": {
+                "tick": 9745,
+                "behind": 5.276540253066854,
+                "distance": 5.347690183549533,
+                "player": {
+                  "x": 41.16644287109375,
+                  "z": 41.65458679199219
+                },
+                "follower": {
+                  "x": 36.02077233732334,
+                  "z": 43.11056242953528
+                },
+                "playerSpeed": 4.500080025276139
+              },
+              "lastStraightTick": 13267,
+              "within8Share": 1,
+              "inBandStraightShare": 0.9300791556728232
+            },
+            {
+              "id": 29,
+              "followAt": 10651,
+              "calmTicks": 2488,
+              "within8Ticks": 2488,
+              "movingCalmTicks": 1311,
+              "behind2To5Ticks": 1241,
+              "maxMotionSpeed": 271.66155414412253,
+              "straightTicks": 510,
+              "inBandStraightTicks": 502,
+              "badStraightTicks": 8,
+              "badRun": 0,
+              "maxBadRun": 8,
+              "counterexample": {
+                "tick": 12014,
+                "behind": 5.001936083616454,
+                "distance": 5.002381640925764,
+                "player": {
+                  "x": 49.49920654296875,
+                  "z": 1.3931524753570557
+                },
+                "follower": {
+                  "x": 49.94186692992938,
+                  "z": 6.375910131844776
+                },
+                "playerSpeed": 4.499995349686612
+              },
+              "lastStraightTick": 13267,
+              "within8Share": 1,
+              "inBandStraightShare": 0.984313725490196
             }
           ],
           "target": "each living follower within8m for at least80percent of calm ticks",
@@ -4684,136 +4690,136 @@
           "level": "L5",
           "tier": "high",
           "policy": "complete",
-          "status": "PASS",
+          "status": "FAIL",
           "value": [
             {
               "id": 31,
               "followAt": 2126,
-              "calmTicks": 8938,
-              "within8Ticks": 8919,
-              "movingCalmTicks": 5048,
-              "behind2To5Ticks": 4249,
+              "calmTicks": 9433,
+              "within8Ticks": 9414,
+              "movingCalmTicks": 5009,
+              "behind2To5Ticks": 4602,
               "maxMotionSpeed": 301.734983056324,
-              "straightTicks": 1628,
-              "inBandStraightTicks": 1576,
-              "badStraightTicks": 52,
+              "straightTicks": 1571,
+              "inBandStraightTicks": 1571,
+              "badStraightTicks": 0,
               "badRun": 0,
-              "maxBadRun": 44,
-              "counterexample": {
-                "tick": 9646,
-                "behind": 5.8402410998131025,
-                "distance": 5.844650367535733,
-                "player": {
-                  "x": 37.32002258300781,
-                  "z": 41.15632629394531
-                },
-                "follower": {
-                  "x": 31.48149476352949,
-                  "z": 40.888873831041565
-                },
-                "playerSpeed": 3.5999399637570417
-              },
-              "lastStraightTick": 12894,
-              "within8Share": 0.9978742447974939,
-              "inBandStraightShare": 0.9680589680589681
+              "maxBadRun": 0,
+              "counterexample": null,
+              "lastStraightTick": 13267,
+              "within8Share": 0.9979857945510442,
+              "inBandStraightShare": 1
             },
             {
               "id": 30,
               "followAt": 4016,
-              "calmTicks": 7434,
-              "within8Ticks": 7434,
-              "movingCalmTicks": 4442,
-              "behind2To5Ticks": 4031,
+              "calmTicks": 7886,
+              "within8Ticks": 7886,
+              "movingCalmTicks": 4396,
+              "behind2To5Ticks": 3688,
               "maxMotionSpeed": 271.66155414412253,
-              "straightTicks": 1466,
-              "inBandStraightTicks": 1466,
-              "badStraightTicks": 0,
+              "straightTicks": 1409,
+              "inBandStraightTicks": 1234,
+              "badStraightTicks": 175,
               "badRun": 0,
-              "maxBadRun": 0,
-              "counterexample": null,
-              "lastStraightTick": 12894,
+              "maxBadRun": 99,
+              "counterexample": {
+                "tick": 8439,
+                "behind": 5.198028825284039,
+                "distance": 5.19921120330009,
+                "player": {
+                  "x": 7.162839412689209,
+                  "z": 3.3911499977111816
+                },
+                "follower": {
+                  "x": 1.9672947993236374,
+                  "z": 3.1959237006885717
+                },
+                "playerSpeed": 4.500006126651365
+              },
+              "lastStraightTick": 13267,
               "within8Share": 1,
-              "inBandStraightShare": 1
+              "inBandStraightShare": 0.8757984386089425
             },
             {
               "id": 32,
-              "followAt": 6389,
-              "calmTicks": 5473,
-              "within8Ticks": 5473,
-              "movingCalmTicks": 3559,
-              "behind2To5Ticks": 3040,
+              "followAt": 6368,
+              "calmTicks": 6079,
+              "within8Ticks": 6079,
+              "movingCalmTicks": 3517,
+              "behind2To5Ticks": 3218,
               "maxMotionSpeed": 224.01785643113382,
-              "straightTicks": 1177,
-              "inBandStraightTicks": 1129,
-              "badStraightTicks": 48,
-              "badRun": 0,
-              "maxBadRun": 37,
-              "counterexample": {
-                "tick": 11485,
-                "behind": 5.200209728636283,
-                "distance": 5.301102769208715,
-                "player": {
-                  "x": 51.65021896362305,
-                  "z": 18.190195083618164
-                },
-                "follower": {
-                  "x": 53.41093271692071,
-                  "z": 23.190352845995342
-                },
-                "playerSpeed": 4.499959886651979
-              },
-              "lastStraightTick": 12894,
-              "within8Share": 1,
-              "inBandStraightShare": 0.9592183517417162
-            },
-            {
-              "id": 28,
-              "followAt": 8326,
-              "calmTicks": 3857,
-              "within8Ticks": 3857,
-              "movingCalmTicks": 2642,
-              "behind2To5Ticks": 2432,
-              "maxMotionSpeed": 188.403821617291,
-              "straightTicks": 790,
-              "inBandStraightTicks": 777,
-              "badStraightTicks": 13,
-              "badRun": 0,
-              "maxBadRun": 13,
-              "counterexample": {
-                "tick": 8516,
-                "behind": 5.27752522830487,
-                "distance": 5.279245788750161,
-                "player": {
-                  "x": 9.258821487426758,
-                  "z": 3.5148274898529053
-                },
-                "follower": {
-                  "x": 3.9825063446798667,
-                  "z": 3.3389451074032612
-                },
-                "playerSpeed": 4.499997710190983
-              },
-              "lastStraightTick": 12894,
-              "within8Share": 1,
-              "inBandStraightShare": 0.9835443037974684
-            },
-            {
-              "id": 29,
-              "followAt": 10410,
-              "calmTicks": 2307,
-              "within8Ticks": 2307,
-              "movingCalmTicks": 1334,
-              "behind2To5Ticks": 1270,
-              "maxMotionSpeed": 271.66155414412253,
-              "straightTicks": 407,
-              "inBandStraightTicks": 407,
+              "straightTicks": 1033,
+              "inBandStraightTicks": 1033,
               "badStraightTicks": 0,
               "badRun": 0,
               "maxBadRun": 0,
               "counterexample": null,
-              "lastStraightTick": 12894,
+              "lastStraightTick": 13267,
               "within8Share": 1,
               "inBandStraightShare": 1
+            },
+            {
+              "id": 28,
+              "followAt": 8277,
+              "calmTicks": 4547,
+              "within8Ticks": 4547,
+              "movingCalmTicks": 2646,
+              "behind2To5Ticks": 2277,
+              "maxMotionSpeed": 188.403821617291,
+              "straightTicks": 758,
+              "inBandStraightTicks": 705,
+              "badStraightTicks": 53,
+              "badRun": 0,
+              "maxBadRun": 53,
+              "counterexample": {
+                "tick": 9745,
+                "behind": 5.276540253066854,
+                "distance": 5.347690183549533,
+                "player": {
+                  "x": 41.16644287109375,
+                  "z": 41.65458679199219
+                },
+                "follower": {
+                  "x": 36.02077233732334,
+                  "z": 43.11056242953528
+                },
+                "playerSpeed": 4.500080025276139
+              },
+              "lastStraightTick": 13267,
+              "within8Share": 1,
+              "inBandStraightShare": 0.9300791556728232
+            },
+            {
+              "id": 29,
+              "followAt": 10651,
+              "calmTicks": 2488,
+              "within8Ticks": 2488,
+              "movingCalmTicks": 1311,
+              "behind2To5Ticks": 1241,
+              "maxMotionSpeed": 271.66155414412253,
+              "straightTicks": 510,
+              "inBandStraightTicks": 502,
+              "badStraightTicks": 8,
+              "badRun": 0,
+              "maxBadRun": 8,
+              "counterexample": {
+                "tick": 12014,
+                "behind": 5.001936083616454,
+                "distance": 5.002381640925764,
+                "player": {
+                  "x": 49.49920654296875,
+                  "z": 1.3931524753570557
+                },
+                "follower": {
+                  "x": 49.94186692992938,
+                  "z": 6.375910131844776
+                },
+                "playerSpeed": 4.499995349686612
+              },
+              "lastStraightTick": 13267,
+              "within8Share": 1,
+              "inBandStraightShare": 0.984313725490196
             }
           ],
           "target": "at least95% of calm straight-walk ticks 2–5m behind; no out-of-band run longer than2s",
@@ -4858,7 +4864,7 @@
         ],
         "notes": "Current PO tolerance; measured low-tier failure remains. Previous criterion review archived without rebinding.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "eb283794d5814d498a5364a25f00d77cc5a4d572"
       }
     },
     {
@@ -5007,7 +5013,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "eb283794d5814d498a5364a25f00d77cc5a4d572"
       }
     },
     {
@@ -5085,7 +5091,7 @@
       "id": "L5-13",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/controlled-fixture zero-survivor ordinary route and rescued result: {\"setup\":\"all five survivor entities start at0HP; native controller accounts for loss\",\"lost\":[28,29,30,31,32],\"run\":{\"level\":\"L5\",\"policy\":\"complete\",\"seed\":1,\"completed\":true,\"time\":57.06666666666667,\"deaths\":0,\"kills\":14,\"damageTaken\":12.5,\"failures\":{},\"objectiveTimeline\":[{\"id\":\"emerge\",\"t\":1},{\"id\":\"look\",\"t\":1.6666666666666667},{\"id\":\"metro\",\"t\":57.06666666666667}],\"furthestObjective\":\"metr… (full values in JSON) (target complete with rescued0; PASS); high/controlled-fixture zero-survivor ordinary route and rescued result: {\"setup\":\"all five survivor entities start at0HP; native controller accounts for loss\",\"lost\":[28,29,30,31,32],\"run\":{\"level\":\"L5\",\"policy\":\"complete\",\"seed\":1,\"completed\":true,\"time\":55.88333333333333,\"deaths\":0,\"kills\":27,\"damageTaken\":0,\"failures\":{},\"objectiveTimeline\":[{\"id\":\"emerge\",\"t\":1},{\"id\":\"look\",\"t\":1.6666666666666667},{\"id\":\"metro\",\"t\":55.88333333333333}],\"furthestObjective\":\"metro\",… (full values in JSON) (target complete with rescued0; PASS)",
+      "value": "low/controlled-fixture zero-survivor ordinary route and rescued result: {\"setup\":\"all five survivor entities start at0HP; native controller accounts for loss\",\"lost\":[28,29,30,31,32],\"run\":{\"level\":\"L5\",\"policy\":\"complete\",\"seed\":1,\"completed\":true,\"time\":61.36666666666667,\"deaths\":0,\"kills\":21,\"damageTaken\":0,\"failures\":{},\"objectiveTimeline\":[{\"id\":\"emerge\",\"t\":1},{\"id\":\"look\",\"t\":1.6666666666666667},{\"id\":\"metro\",\"t\":61.36666666666667}],\"furthestObjective\":\"metro\",… (full values in JSON) (target complete with rescued0; PASS); high/controlled-fixture zero-survivor ordinary route and rescued result: {\"setup\":\"all five survivor entities start at0HP; native controller accounts for loss\",\"lost\":[28,29,30,31,32],\"run\":{\"level\":\"L5\",\"policy\":\"complete\",\"seed\":1,\"completed\":true,\"time\":61.583333333333336,\"deaths\":0,\"kills\":27,\"damageTaken\":0,\"failures\":{},\"objectiveTimeline\":[{\"id\":\"emerge\",\"t\":1},{\"id\":\"look\",\"t\":1.6666666666666667},{\"id\":\"metro\",\"t\":61.583333333333336}],\"furthestObjective\":\"metro… (full values in JSON) (target complete with rescued0; PASS)",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L5-low-fixtures.json",
@@ -5110,10 +5116,10 @@
               "policy": "complete",
               "seed": 1,
               "completed": true,
-              "time": 57.06666666666667,
+              "time": 61.36666666666667,
               "deaths": 0,
-              "kills": 14,
-              "damageTaken": 12.5,
+              "kills": 21,
+              "damageTaken": 0,
               "failures": {},
               "objectiveTimeline": [
                 {
@@ -5126,7 +5132,7 @@
                 },
                 {
                   "id": "metro",
-                  "t": 57.06666666666667
+                  "t": 61.36666666666667
                 }
               ],
               "furthestObjective": "metro",
@@ -5143,10 +5149,10 @@
               }
             },
             "result": {
-              "time": 57.06666666666667,
-              "kills": 14,
-              "knockdowns": 2,
-              "damage": 12.5,
+              "time": 61.36666666666667,
+              "kills": 21,
+              "knockdowns": 1,
+              "damage": 0,
               "deaths": 0,
               "rescued": 0,
               "optionalObjectives": [],
@@ -7772,7 +7778,7 @@
               "policy": "complete",
               "seed": 1,
               "completed": true,
-              "time": 55.88333333333333,
+              "time": 61.583333333333336,
               "deaths": 0,
               "kills": 27,
               "damageTaken": 0,
@@ -7788,7 +7794,7 @@
                 },
                 {
                   "id": "metro",
-                  "t": 55.88333333333333
+                  "t": 61.583333333333336
                 }
               ],
               "furthestObjective": "metro",
@@ -7798,14 +7804,14 @@
               "collision": {
                 "failures": 0,
                 "pending": 0,
-                "admitted": 371,
+                "admitted": 370,
                 "deferred": 0,
                 "requests": [],
                 "offenders": []
               }
             },
             "result": {
-              "time": 55.88333333333333,
+              "time": 61.583333333333336,
               "kills": 27,
               "knockdowns": 1,
               "damage": 0,

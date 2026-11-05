@@ -253,6 +253,7 @@ export interface L5State {
   gloom: number;
   /** The latest sign of life the courier heard (HUD ping), and the "Wait!" bark. */
   cue: { key: string; x: number; z: number; until: number; text: string } | null;
+  alarm?: { key: string; id: number; x: number; z: number; text: string; until: number; kind: 'attack' | 'lost' };
   lastShot: Record<number, number>; waitedAt: number; infectedMax: number; deadAtMetro: number;
 }
 export interface StepState { status: 'pending' | 'active' | 'completed' | 'cancelled'; started: number; kills: number[]; events: Record<string, number>; interaction: number; driveArrived?: boolean; holds?: Record<string, number> }
@@ -302,6 +303,7 @@ export interface MissionCheckpoint {
 
 /** E24 checkpoint state. Times are simulation ticks. */
 export interface L6State {
+  alarm?: { key: string; id: number; x: number; z: number; text: string; until: number; kind: 'attack' | 'lost' };
   /** Checkpointed dialogue uses the same HUD bubble as earlier story levels. */
   say?: { id: number; text: string; at: number; until: number };
   phase: 'shelter'|'first'|'fails'|'retreat'|'exit'|'done';

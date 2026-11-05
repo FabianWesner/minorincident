@@ -1102,7 +1102,8 @@ export class GameView implements Lifecycle {
     // Reuse the foreground silhouette at the boss and in close crowds on any level. Building blockers no longer trigger it: their
     // placement cut already clears the whole subject disc, and the near-camera depth slice drew the courier over every
     // nearer person and prop (PO #9 L2 start: on top of firefighter "2"; #26 L1: in front of the closed bay leaf and the horde).
-    this.courierForeground = !!current && courierForegroundWanted(crowdSurroundsCourier(current, this.world.entities.iterate()) || this.nearLargeCorpse(current) || !!this.districts?.occlusion.courierTucked, this.megaDistance(current), this.vehicles?.courierOccluded || this.entityAssets?.courierOccluded || this.districts?.occlusion.courierOccluded);
+    // L4's bulky riot/firefighter bodies overlap her well before five centres enter the usual 3 m band.
+    this.courierForeground = !!current && courierForegroundWanted(crowdSurroundsCourier(current, this.world.entities.iterate(), this.world.scenario === 'L4' ? 4.5 : 3) || this.nearLargeCorpse(current) || !!this.districts?.occlusion.courierTucked, this.megaDistance(current), this.vehicles?.courierOccluded || this.entityAssets?.courierOccluded || this.districts?.occlusion.courierOccluded);
     // The seated copy shares the courier's prewarmed depth slice: retain her
     // silhouette among the crew as the scripted truck turns under the camera.
     this.character?.setForeground(this.courierForeground || !!this.world.missions?.state.l2?.seated);

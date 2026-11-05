@@ -28,7 +28,21 @@ const fresh = (): L5State => ({
 export class LevelFiveAftermath {
   /** The lowest gloom reached so far: a checkpoint restore never brightens the sunset again. */
   private lowest = 1;
-  constructor(private readonly mission: Mission) {}
+  constructor(private readonly mission: Mission) {
+    for (const type of ['infected.attack', 'civilian.grabbed'] as const) mission.world.events.on(type, event => {
+      if (event.type !== 'infected.attack' && event.type !== 'civilian.grabbed') return;
+      const target = mission.world.entities.get(event.targetId), row = this.s?.survivors.find(r => r.id === target?.id && r.status === 'following');
+      if (target && row) this.alarm(target, 'attack');
+    });
+  }
+  private alarm(e: EntitySnapshot, kind: 'attack' | 'lost'): void {
+    const w = this.world, current = this.s.alarm;
+    if (current && w.tick < current.until && current.kind === 'lost') return;
+    if (current && w.tick < current.until && kind === 'attack') return;
+    this.s.alarm = { key: `l5-${e.id}-${w.tick}`, id: e.id, x: e.transform.x, z: e.transform.z,
+      text: kind === 'lost' ? 'Survivor lost!' : 'Survivor under attack! Turn back!', until: w.tick + 300, kind };
+    w.events.emit({ type: 'l7.follower-alarm', tick: w.tick, id: e.id, kind, position: { x: e.transform.x, z: e.transform.z } });
+  }
   private get s(): L5State { return this.mission.state.l5!; }
   /** True while the screen is dark for the cellar exit (UI fade, like TrapRescue.fading). */
   get fading(): boolean { const s = this.mission.state.l5; return !!s && s.phase === 'cellar' && !!s.emergeFadeAt; }
@@ -277,6 +291,7 @@ export class LevelFiveAftermath {
       const dead = !e || e.health.current <= 0 || c?.state === 'finished';
       if (!turned && !dead) continue;
       r.status = turned && !dead ? 'turned' : 'dead'; r.lostAt = tick;
+      if (e) this.alarm(e, 'lost');
       if (c?.survivor) c.survivor.mode = 'hidden';
       world.events.emit({ type: 'l5.lost', tick, key: r.key, id: r.id, cause: r.status });
     }
@@ -457,6 +472,7 @@ export class LevelFiveAftermath {
     for (const key of ['emergeFadeAt', 'startAt', 'emergedAt', 'searchAt', 'accountedAt', 'metroAt', 'shutterAt', 'doneAt', 'waitedAt'] as const) if (s[key]) s[key] += delta;
     for (const r of s.survivors) for (const key of ['foundAt', 'cueAt', 'lostAt'] as const) if (r[key]) r[key] += delta;
     if (s.cue) s.cue.until += delta;
+    if (s.alarm) s.alarm.until += delta;
     s.gloom = Math.min(s.gloom, this.lowest);
     for (const k of Object.keys(s.lastShot)) s.lastShot[Number(k)] += delta;
     this.outbreak()?.humans.invalidate();

@@ -1,3 +1,4 @@
+import { l5 } from '../../data/l5';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 
@@ -22,7 +23,11 @@ export function storyProtected(world: SimWorld, entity: EntitySnapshot): boolean
   if (s.l4 && !s.l4.gunAt && id === s.l4.qmId) return true;
   if (s.l5) {
     if (id === s.l5.lookoutId && !s.l5.shutterAt || s.l5.stationIds.includes(id)) return true;
-    if (s.l5.survivors.some(r => r.id === id && r.status === 'hidden')) return true;
+    // A newly opened hiding place needs a short regrouping window before
+    // ordinary bites/grabs can kill or turn its unarmed survivor. The mission
+    // clock is checkpointed and shifted on restore with the rescue record.
+    if (s.l5.survivors.some(r => r.id === id && (r.status === 'hidden'
+      || r.status === 'following' && world.tick < r.foundAt + l5.follow.rescueGraceS * 60))) return true;
   }
   if (s.l6) {
     if (id === s.l6.survivors[0]?.id && !s.l6.gateAt) return true;

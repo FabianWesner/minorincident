@@ -1,0 +1,5871 @@
+[
+  {
+    "tag": "vf5t-L4-webgl2-high-z0.5",
+    "runs": [
+      {
+        "level": "L4",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 300,
+        "simSeconds": 291,
+        "maxNoProgressSeconds": 11.55,
+        "deaths": 0,
+        "assists": 2,
+        "attacks": {
+          "weapon.army-mg": 1366
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "steps": [
+          {
+            "id": "ride",
+            "text": "Ride into Fairhaven with the convoy \u00b7 57\u00a0m",
+            "tick": 13,
+            "marker": {
+              "anchor": "l4-plaza",
+              "ring": {
+                "x": -17,
+                "y": 0,
+                "z": 3
+              },
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "quartermaster",
+            "text": "Report to the quartermaster \u00b7 8\u00a0m",
+            "tick": 1873,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": {
+                "x": -23.2,
+                "y": 0,
+                "z": 0.6
+              },
+              "drawn": [
+                -23.2,
+                0.05,
+                0.6
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "hold",
+            "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+            "tick": 2190,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "hide",
+            "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 321\u00a0m",
+            "tick": 13588,
+            "marker": {
+              "anchor": "l4-cellar-door",
+              "ring": {
+                "x": -79.29999999999998,
+                "y": 0,
+                "z": -45.2801
+              },
+              "drawn": [
+                -79.3,
+                0.13,
+                -45.28
+              ],
+              "playerY": 0.7099999785423279,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [
+      {
+        "level": "L4",
+        "tick": 7035,
+        "x": -22.4,
+        "z": -6.4,
+        "severity": "P2",
+        "kind": "enemy-frozen",
+        "text": "Infected #346 in state chase 4.7 m away has not moved for ~5 s",
+        "captures": [
+          "captures/vf5t-L4-webgl2-high-z0.5-L4-7035-enemy-frozen.jpg"
+        ],
+        "step": "hold",
+        "objective": "Hold the north breach \u00b7 1:50 remaining \u00b7 3\u00a0m"
+      }
+    ],
+    "riotCombat": [
+      {
+        "id": 209,
+        "firstPlayerHitTick": 2625,
+        "firstObservedDownTick": 3164,
+        "elapsedSimSeconds": 8.983333333333333,
+        "positiveFrontGlanceHits": 21,
+        "firstBreakTick": 3157,
+        "brokenWindowHits": 2,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 262,
+        "firstPlayerHitTick": 2787,
+        "firstObservedDownTick": 3171,
+        "elapsedSimSeconds": 6.4,
+        "positiveFrontGlanceHits": 8,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 219,
+        "firstPlayerHitTick": 2831,
+        "firstObservedDownTick": 3469,
+        "elapsedSimSeconds": 10.633333333333333,
+        "positiveFrontGlanceHits": 6,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 212,
+        "firstPlayerHitTick": 3039,
+        "firstObservedDownTick": 3349,
+        "elapsedSimSeconds": 5.166666666666667,
+        "positiveFrontGlanceHits": 2,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 249,
+        "firstPlayerHitTick": 3247,
+        "firstObservedDownTick": 6050,
+        "elapsedSimSeconds": 46.71666666666667,
+        "positiveFrontGlanceHits": 23,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 238,
+        "firstPlayerHitTick": 3544,
+        "firstObservedDownTick": 6942,
+        "elapsedSimSeconds": 56.63333333333333,
+        "positiveFrontGlanceHits": 3,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 340,
+        "firstPlayerHitTick": 4498,
+        "firstObservedDownTick": 6236,
+        "elapsedSimSeconds": 28.966666666666665,
+        "positiveFrontGlanceHits": 9,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 325,
+        "firstPlayerHitTick": 4961,
+        "firstObservedDownTick": 5472,
+        "elapsedSimSeconds": 8.516666666666667,
+        "positiveFrontGlanceHits": 2,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 322,
+        "firstPlayerHitTick": 5076,
+        "firstObservedDownTick": 5368,
+        "elapsedSimSeconds": 4.866666666666666,
+        "positiveFrontGlanceHits": 0,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 334,
+        "firstPlayerHitTick": 5213,
+        "firstObservedDownTick": 6682,
+        "elapsedSimSeconds": 24.483333333333334,
+        "positiveFrontGlanceHits": 11,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 330,
+        "firstPlayerHitTick": 5831,
+        "firstObservedDownTick": 8031,
+        "elapsedSimSeconds": 36.666666666666664,
+        "positiveFrontGlanceHits": 5,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 351,
+        "firstPlayerHitTick": 6446,
+        "firstObservedDownTick": 8752,
+        "elapsedSimSeconds": 38.43333333333333,
+        "positiveFrontGlanceHits": 0,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 399,
+        "firstPlayerHitTick": 6806,
+        "firstObservedDownTick": 8931,
+        "elapsedSimSeconds": 35.416666666666664,
+        "positiveFrontGlanceHits": 22,
+        "firstBreakTick": 8848,
+        "brokenWindowHits": 11,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 244,
+        "firstPlayerHitTick": 7278,
+        "firstObservedDownTick": 7846,
+        "elapsedSimSeconds": 9.466666666666667,
+        "positiveFrontGlanceHits": 10,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 452,
+        "firstPlayerHitTick": 8205,
+        "firstObservedDownTick": 9815,
+        "elapsedSimSeconds": 26.833333333333332,
+        "positiveFrontGlanceHits": 16,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 459,
+        "firstPlayerHitTick": 8543,
+        "firstObservedDownTick": 9576,
+        "elapsedSimSeconds": 17.216666666666665,
+        "positiveFrontGlanceHits": 5,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 405,
+        "firstPlayerHitTick": 9616,
+        "firstObservedDownTick": 10088,
+        "elapsedSimSeconds": 7.866666666666666,
+        "positiveFrontGlanceHits": 2,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 395,
+        "firstPlayerHitTick": 10207,
+        "firstObservedDownTick": 10952,
+        "elapsedSimSeconds": 12.416666666666666,
+        "positiveFrontGlanceHits": 8,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 510,
+        "firstPlayerHitTick": 11285,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 2,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 476,
+        "firstPlayerHitTick": 12091,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 9,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 489,
+        "firstPlayerHitTick": 12230,
+        "firstObservedDownTick": 13231,
+        "elapsedSimSeconds": 16.683333333333334,
+        "positiveFrontGlanceHits": 4,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 474,
+        "firstPlayerHitTick": 12275,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 6,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 512,
+        "firstPlayerHitTick": 12342,
+        "firstObservedDownTick": 12658,
+        "elapsedSimSeconds": 5.266666666666667,
+        "positiveFrontGlanceHits": 9,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 379,
+        "firstPlayerHitTick": 12395,
+        "firstObservedDownTick": 12488,
+        "elapsedSimSeconds": 1.55,
+        "positiveFrontGlanceHits": 0,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 376,
+        "firstPlayerHitTick": 12506,
+        "firstObservedDownTick": 13503,
+        "elapsedSimSeconds": 16.616666666666667,
+        "positiveFrontGlanceHits": 2,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 362,
+        "firstPlayerHitTick": 12757,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 1,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      }
+    ],
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "photoCount": 22,
+    "backend": [
+      "webgl"
+    ],
+    "qualities": [
+      "high"
+    ],
+    "allPhotosUnpaused": true,
+    "maxBars": 4
+  },
+  {
+    "tag": "vf5t-L4-webgl2-high-z1.5",
+    "runs": [
+      {
+        "level": "L4",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 265,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 12.048,
+        "deaths": 0,
+        "assists": 0,
+        "attacks": {
+          "weapon.army-mg": 1287
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "steps": [
+          {
+            "id": "ride",
+            "text": "Ride into Fairhaven with the convoy \u00b7 57\u00a0m",
+            "tick": 13,
+            "marker": {
+              "anchor": "l4-plaza",
+              "ring": {
+                "x": -17,
+                "y": 0,
+                "z": 3
+              },
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "quartermaster",
+            "text": "Report to the quartermaster \u00b7 10\u00a0m",
+            "tick": 1829,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": {
+                "x": -23.2,
+                "y": 0,
+                "z": 0.6
+              },
+              "drawn": [
+                -23.2,
+                0.05,
+                0.6
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "hold",
+            "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+            "tick": 2176,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "hide",
+            "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 324\u00a0m",
+            "tick": 12861,
+            "marker": {
+              "anchor": "l4-cellar-door",
+              "ring": {
+                "x": -79.29999999999998,
+                "y": 0,
+                "z": -45.2801
+              },
+              "drawn": [
+                -79.3,
+                0.13,
+                -45.28
+              ],
+              "playerY": 0.7099999785423279,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "bar",
+            "text": "Bar the cellar door \u00b7 5\u00a0m",
+            "tick": 14647,
+            "marker": {
+              "anchor": "l4-brace",
+              "ring": {
+                "x": 74.6,
+                "y": 0,
+                "z": -1.7999999999999998
+              },
+              "drawn": [
+                74.6,
+                0.05,
+                -1.8
+              ],
+              "playerY": 0.7059999704360962,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "wait",
+            "text": "Stay down \u00b7 0:07 remaining",
+            "tick": 14818,
+            "marker": {
+              "anchor": "l4-brace",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [],
+    "riotCombat": [
+      {
+        "id": 209,
+        "firstPlayerHitTick": 2587,
+        "firstObservedDownTick": 5179,
+        "elapsedSimSeconds": 43.2,
+        "positiveFrontGlanceHits": 14,
+        "firstBreakTick": 4548,
+        "brokenWindowHits": 2,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 219,
+        "firstPlayerHitTick": 2616,
+        "firstObservedDownTick": 3074,
+        "elapsedSimSeconds": 7.633333333333334,
+        "positiveFrontGlanceHits": 10,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 212,
+        "firstPlayerHitTick": 2710,
+        "firstObservedDownTick": 2731,
+        "elapsedSimSeconds": 0.35,
+        "positiveFrontGlanceHits": 1,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 249,
+        "firstPlayerHitTick": 3177,
+        "firstObservedDownTick": 4769,
+        "elapsedSimSeconds": 26.533333333333335,
+        "positiveFrontGlanceHits": 13,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 262,
+        "firstPlayerHitTick": 3399,
+        "firstObservedDownTick": 5185,
+        "elapsedSimSeconds": 29.766666666666666,
+        "positiveFrontGlanceHits": 10,
+        "firstBreakTick": 5011,
+        "brokenWindowHits": 3,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 294,
+        "firstPlayerHitTick": 3933,
+        "firstObservedDownTick": 6537,
+        "elapsedSimSeconds": 43.4,
+        "positiveFrontGlanceHits": 14,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 238,
+        "firstPlayerHitTick": 4701,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 1,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 253,
+        "firstPlayerHitTick": 5034,
+        "firstObservedDownTick": 6293,
+        "elapsedSimSeconds": 20.983333333333334,
+        "positiveFrontGlanceHits": 3,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 273,
+        "firstPlayerHitTick": 5120,
+        "firstObservedDownTick": 5891,
+        "elapsedSimSeconds": 12.85,
+        "positiveFrontGlanceHits": 6,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 333,
+        "firstPlayerHitTick": 6165,
+        "firstObservedDownTick": 8976,
+        "elapsedSimSeconds": 46.85,
+        "positiveFrontGlanceHits": 18,
+        "firstBreakTick": 8383,
+        "brokenWindowHits": 2,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 352,
+        "firstPlayerHitTick": 6685,
+        "firstObservedDownTick": 7291,
+        "elapsedSimSeconds": 10.1,
+        "positiveFrontGlanceHits": 12,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 329,
+        "firstPlayerHitTick": 6871,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 10,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 372,
+        "firstPlayerHitTick": 6886,
+        "firstObservedDownTick": 12021,
+        "elapsedSimSeconds": 85.58333333333333,
+        "positiveFrontGlanceHits": 44,
+        "firstBreakTick": 9707,
+        "brokenWindowHits": 1,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 348,
+        "firstPlayerHitTick": 7297,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 9,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 244,
+        "firstPlayerHitTick": 7367,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 6,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 292,
+        "firstPlayerHitTick": 7380,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 25,
+        "firstBreakTick": 9814,
+        "brokenWindowHits": 1,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 394,
+        "firstPlayerHitTick": 7393,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 15,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 393,
+        "firstPlayerHitTick": 7419,
+        "firstObservedDownTick": 10749,
+        "elapsedSimSeconds": 55.5,
+        "positiveFrontGlanceHits": 20,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 302,
+        "firstPlayerHitTick": 7651,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 6,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 346,
+        "firstPlayerHitTick": 8085,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 10,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 441,
+        "firstPlayerHitTick": 9076,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 13,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 403,
+        "firstPlayerHitTick": 9347,
+        "firstObservedDownTick": 11890,
+        "elapsedSimSeconds": 42.38333333333333,
+        "positiveFrontGlanceHits": 8,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 366,
+        "firstPlayerHitTick": 9452,
+        "firstObservedDownTick": 11159,
+        "elapsedSimSeconds": 28.45,
+        "positiveFrontGlanceHits": 4,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 506,
+        "firstPlayerHitTick": 10787,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 14,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 512,
+        "firstPlayerHitTick": 10873,
+        "firstObservedDownTick": 11791,
+        "elapsedSimSeconds": 15.3,
+        "positiveFrontGlanceHits": 13,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 504,
+        "firstPlayerHitTick": 11067,
+        "firstObservedDownTick": 11306,
+        "elapsedSimSeconds": 3.9833333333333334,
+        "positiveFrontGlanceHits": 0,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 507,
+        "firstPlayerHitTick": 11270,
+        "firstObservedDownTick": 11685,
+        "elapsedSimSeconds": 6.916666666666667,
+        "positiveFrontGlanceHits": 0,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 268,
+        "firstPlayerHitTick": 11333,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 1,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 563,
+        "firstPlayerHitTick": 12374,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 1,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 557,
+        "firstPlayerHitTick": 12530,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 2,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 561,
+        "firstPlayerHitTick": 12603,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 2,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 568,
+        "firstPlayerHitTick": 12711,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 0,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 570,
+        "firstPlayerHitTick": 12741,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 2,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 564,
+        "firstPlayerHitTick": 12753,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 0,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 559,
+        "firstPlayerHitTick": 12810,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 0,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      }
+    ],
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "photoCount": 18,
+    "backend": [
+      "webgl"
+    ],
+    "qualities": [
+      "high"
+    ],
+    "allPhotosUnpaused": true,
+    "maxBars": 15
+  },
+  {
+    "tag": "vf5t-L4-webgl2-low-z0.5",
+    "runs": [
+      {
+        "level": "L4",
+        "entry": "continue",
+        "heroine": "male",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 255,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 11.757,
+        "deaths": 0,
+        "assists": 0,
+        "attacks": {
+          "weapon.army-mg": 1316
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "steps": [
+          {
+            "id": "ride",
+            "text": "Ride into Fairhaven with the convoy \u00b7 57\u00a0m",
+            "tick": 15,
+            "marker": {
+              "anchor": "l4-plaza",
+              "ring": {
+                "x": -17,
+                "y": 0,
+                "z": 3
+              },
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "quartermaster",
+            "text": "Report to the quartermaster \u00b7 7\u00a0m",
+            "tick": 1879,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": {
+                "x": -23.2,
+                "y": 0,
+                "z": 0.6
+              },
+              "drawn": [
+                -23.2,
+                0.05,
+                0.6
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "hold",
+            "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+            "tick": 2181,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "hide",
+            "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 327\u00a0m",
+            "tick": 12880,
+            "marker": {
+              "anchor": "l4-cellar-door",
+              "ring": {
+                "x": -79.29999999999998,
+                "y": 0,
+                "z": -45.2801
+              },
+              "drawn": [
+                -79.3,
+                0.13,
+                -45.28
+              ],
+              "playerY": 0.7099999785423279,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "bar",
+            "text": "Bar the cellar door \u00b7 5\u00a0m",
+            "tick": 14109,
+            "marker": {
+              "anchor": "l4-brace",
+              "ring": {
+                "x": 74.6,
+                "y": 0,
+                "z": -1.7999999999999998
+              },
+              "drawn": [
+                74.6,
+                0.05,
+                -1.8
+              ],
+              "playerY": 0.8300000429153442,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "wait",
+            "text": "Stay down \u00b7 0:07 remaining",
+            "tick": 14341,
+            "marker": {
+              "anchor": "l4-brace",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [],
+    "riotCombat": [
+      {
+        "id": 169,
+        "firstPlayerHitTick": 2624,
+        "firstObservedDownTick": 6109,
+        "elapsedSimSeconds": 58.083333333333336,
+        "positiveFrontGlanceHits": 5,
+        "firstBreakTick": 2747,
+        "brokenWindowHits": 2,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 166,
+        "firstPlayerHitTick": 2766,
+        "firstObservedDownTick": 3003,
+        "elapsedSimSeconds": 3.95,
+        "positiveFrontGlanceHits": 21,
+        "firstBreakTick": 3003,
+        "brokenWindowHits": 1,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 196,
+        "firstPlayerHitTick": 3186,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 14,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 190,
+        "firstPlayerHitTick": 3557,
+        "firstObservedDownTick": 6801,
+        "elapsedSimSeconds": 54.06666666666667,
+        "positiveFrontGlanceHits": 15,
+        "firstBreakTick": 6193,
+        "brokenWindowHits": 2,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 182,
+        "firstPlayerHitTick": 3628,
+        "firstObservedDownTick": 7131,
+        "elapsedSimSeconds": 58.38333333333333,
+        "positiveFrontGlanceHits": 11,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 211,
+        "firstPlayerHitTick": 3758,
+        "firstObservedDownTick": 11397,
+        "elapsedSimSeconds": 127.31666666666666,
+        "positiveFrontGlanceHits": 25,
+        "firstBreakTick": 11397,
+        "brokenWindowHits": 1,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 236,
+        "firstPlayerHitTick": 3884,
+        "firstObservedDownTick": 4651,
+        "elapsedSimSeconds": 12.783333333333333,
+        "positiveFrontGlanceHits": 13,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 253,
+        "firstPlayerHitTick": 4109,
+        "firstObservedDownTick": 8018,
+        "elapsedSimSeconds": 65.15,
+        "positiveFrontGlanceHits": 17,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 251,
+        "firstPlayerHitTick": 4236,
+        "firstObservedDownTick": 4695,
+        "elapsedSimSeconds": 7.65,
+        "positiveFrontGlanceHits": 9,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 270,
+        "firstPlayerHitTick": 4592,
+        "firstObservedDownTick": 5447,
+        "elapsedSimSeconds": 14.25,
+        "positiveFrontGlanceHits": 2,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 222,
+        "firstPlayerHitTick": 5101,
+        "firstObservedDownTick": 8476,
+        "elapsedSimSeconds": 56.25,
+        "positiveFrontGlanceHits": 17,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 295,
+        "firstPlayerHitTick": 5646,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 15,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 228,
+        "firstPlayerHitTick": 6897,
+        "firstObservedDownTick": 6897,
+        "elapsedSimSeconds": 0.0,
+        "positiveFrontGlanceHits": 0,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 226,
+        "firstPlayerHitTick": 6904,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 0,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 324,
+        "firstPlayerHitTick": 7366,
+        "firstObservedDownTick": 9926,
+        "elapsedSimSeconds": 42.666666666666664,
+        "positiveFrontGlanceHits": 19,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 322,
+        "firstPlayerHitTick": 7500,
+        "firstObservedDownTick": 9596,
+        "elapsedSimSeconds": 34.93333333333333,
+        "positiveFrontGlanceHits": 7,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 343,
+        "firstPlayerHitTick": 8139,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 24,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 327,
+        "firstPlayerHitTick": 8265,
+        "firstObservedDownTick": 12805,
+        "elapsedSimSeconds": 75.66666666666667,
+        "positiveFrontGlanceHits": 23,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 366,
+        "firstPlayerHitTick": 8494,
+        "firstObservedDownTick": 9541,
+        "elapsedSimSeconds": 17.45,
+        "positiveFrontGlanceHits": 14,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 346,
+        "firstPlayerHitTick": 10642,
+        "firstObservedDownTick": 10701,
+        "elapsedSimSeconds": 0.9833333333333333,
+        "positiveFrontGlanceHits": 2,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 344,
+        "firstPlayerHitTick": 10955,
+        "firstObservedDownTick": 11699,
+        "elapsedSimSeconds": 12.4,
+        "positiveFrontGlanceHits": 2,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 215,
+        "firstPlayerHitTick": 11046,
+        "firstObservedDownTick": 11469,
+        "elapsedSimSeconds": 7.05,
+        "positiveFrontGlanceHits": 17,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 451,
+        "firstPlayerHitTick": 12449,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 0,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 404,
+        "firstPlayerHitTick": 12505,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 15,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 424,
+        "firstPlayerHitTick": 12553,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 2,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      }
+    ],
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "photoCount": 18,
+    "backend": [
+      "webgl"
+    ],
+    "qualities": [
+      "low"
+    ],
+    "allPhotosUnpaused": true,
+    "maxBars": 8
+  },
+  {
+    "tag": "vf5t-L4-webgl2-low-z1.5",
+    "runs": [
+      {
+        "level": "L4",
+        "entry": "continue",
+        "heroine": "male",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 266,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 11.806,
+        "deaths": 0,
+        "assists": 0,
+        "attacks": {
+          "weapon.army-mg": 1365
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "steps": [
+          {
+            "id": "ride",
+            "text": "Ride into Fairhaven with the convoy \u00b7 57\u00a0m",
+            "tick": 14,
+            "marker": {
+              "anchor": "l4-plaza",
+              "ring": {
+                "x": -17,
+                "y": 0,
+                "z": 3
+              },
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "quartermaster",
+            "text": "Report to the quartermaster \u00b7 10\u00a0m",
+            "tick": 1829,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": {
+                "x": -23.2,
+                "y": 0,
+                "z": 0.6
+              },
+              "drawn": [
+                -23.2,
+                0.05,
+                0.6
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "hold",
+            "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+            "tick": 2179,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "hide",
+            "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 311\u00a0m",
+            "tick": 13132,
+            "marker": {
+              "anchor": "l4-cellar-door",
+              "ring": {
+                "x": -79.29999999999998,
+                "y": 0,
+                "z": -45.2801
+              },
+              "drawn": [
+                -79.3,
+                0.13,
+                -45.28
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "bar",
+            "text": "Bar the cellar door \u00b7 5\u00a0m",
+            "tick": 14802,
+            "marker": {
+              "anchor": "l4-brace",
+              "ring": {
+                "x": 74.6,
+                "y": 0,
+                "z": -1.7999999999999998
+              },
+              "drawn": [
+                74.6,
+                0.05,
+                -1.8
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "wait",
+            "text": "Stay down \u00b7 0:07 remaining",
+            "tick": 14971,
+            "marker": {
+              "anchor": "l4-brace",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [],
+    "riotCombat": [
+      {
+        "id": 166,
+        "firstPlayerHitTick": 2608,
+        "firstObservedDownTick": 5750,
+        "elapsedSimSeconds": 52.36666666666667,
+        "positiveFrontGlanceHits": 14,
+        "firstBreakTick": 2741,
+        "brokenWindowHits": 3,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 169,
+        "firstPlayerHitTick": 2673,
+        "firstObservedDownTick": 7781,
+        "elapsedSimSeconds": 85.13333333333334,
+        "positiveFrontGlanceHits": 27,
+        "firstBreakTick": 4686,
+        "brokenWindowHits": 4,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 196,
+        "firstPlayerHitTick": 2834,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 16,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 190,
+        "firstPlayerHitTick": 3027,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 15,
+        "firstBreakTick": 7441,
+        "brokenWindowHits": 1,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 182,
+        "firstPlayerHitTick": 3397,
+        "firstObservedDownTick": 3616,
+        "elapsedSimSeconds": 3.65,
+        "positiveFrontGlanceHits": 0,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 218,
+        "firstPlayerHitTick": 3919,
+        "firstObservedDownTick": 6837,
+        "elapsedSimSeconds": 48.63333333333333,
+        "positiveFrontGlanceHits": 11,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 261,
+        "firstPlayerHitTick": 3930,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 33,
+        "firstBreakTick": 8928,
+        "brokenWindowHits": 2,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 254,
+        "firstPlayerHitTick": 4060,
+        "firstObservedDownTick": 8124,
+        "elapsedSimSeconds": 67.73333333333333,
+        "positiveFrontGlanceHits": 25,
+        "firstBreakTick": 7787,
+        "brokenWindowHits": 1,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 248,
+        "firstPlayerHitTick": 4610,
+        "firstObservedDownTick": 8205,
+        "elapsedSimSeconds": 59.916666666666664,
+        "positiveFrontGlanceHits": 11,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 207,
+        "firstPlayerHitTick": 5559,
+        "firstObservedDownTick": 12048,
+        "elapsedSimSeconds": 108.15,
+        "positiveFrontGlanceHits": 18,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 211,
+        "firstPlayerHitTick": 6764,
+        "firstObservedDownTick": 7521,
+        "elapsedSimSeconds": 12.616666666666667,
+        "positiveFrontGlanceHits": 7,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 267,
+        "firstPlayerHitTick": 6808,
+        "firstObservedDownTick": 7998,
+        "elapsedSimSeconds": 19.833333333333332,
+        "positiveFrontGlanceHits": 3,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 222,
+        "firstPlayerHitTick": 7271,
+        "firstObservedDownTick": 7774,
+        "elapsedSimSeconds": 8.383333333333333,
+        "positiveFrontGlanceHits": 2,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 235,
+        "firstPlayerHitTick": 8766,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 1,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 361,
+        "firstPlayerHitTick": 9424,
+        "firstObservedDownTick": 11392,
+        "elapsedSimSeconds": 32.8,
+        "positiveFrontGlanceHits": 14,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 422,
+        "firstPlayerHitTick": 10273,
+        "firstObservedDownTick": 11587,
+        "elapsedSimSeconds": 21.9,
+        "positiveFrontGlanceHits": 12,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 420,
+        "firstPlayerHitTick": 10518,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 3,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 415,
+        "firstPlayerHitTick": 10610,
+        "firstObservedDownTick": 10986,
+        "elapsedSimSeconds": 6.266666666666667,
+        "positiveFrontGlanceHits": 2,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 419,
+        "firstPlayerHitTick": 10998,
+        "firstObservedDownTick": 11209,
+        "elapsedSimSeconds": 3.5166666666666666,
+        "positiveFrontGlanceHits": 0,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 242,
+        "firstPlayerHitTick": 11520,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 13,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 423,
+        "firstPlayerHitTick": 12515,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 9,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 379,
+        "firstPlayerHitTick": 12784,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 14,
+        "firstBreakTick": 13140,
+        "brokenWindowHits": 3,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 479,
+        "firstPlayerHitTick": 12920,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 16,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      }
+    ],
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "photoCount": 18,
+    "backend": [
+      "webgl"
+    ],
+    "qualities": [
+      "low"
+    ],
+    "allPhotosUnpaused": true,
+    "maxBars": 12
+  },
+  {
+    "tag": "vf5t-L4-webgpu-high-z0.5",
+    "runs": [
+      {
+        "level": "L4",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 300,
+        "simSeconds": 291,
+        "maxNoProgressSeconds": 11.916666666666666,
+        "deaths": 0,
+        "assists": 0,
+        "attacks": {
+          "weapon.army-mg": 1346
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "steps": [
+          {
+            "id": "ride",
+            "text": "Ride into Fairhaven with the convoy \u00b7 57\u00a0m",
+            "tick": 12,
+            "marker": {
+              "anchor": "l4-plaza",
+              "ring": {
+                "x": -17,
+                "y": 0,
+                "z": 3
+              },
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "quartermaster",
+            "text": "Report to the quartermaster \u00b7 8\u00a0m",
+            "tick": 1875,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": {
+                "x": -23.2,
+                "y": 0,
+                "z": 0.6
+              },
+              "drawn": [
+                -23.2,
+                0.05,
+                0.6
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "hold",
+            "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+            "tick": 2190,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "hide",
+            "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 323\u00a0m",
+            "tick": 13583,
+            "marker": {
+              "anchor": "l4-cellar-door",
+              "ring": {
+                "x": -79.29999999999998,
+                "y": 0,
+                "z": -45.2801
+              },
+              "drawn": [
+                -79.3,
+                0.13,
+                -45.28
+              ],
+              "playerY": 0.7099999785423279,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "bar",
+            "text": "Bar the cellar door \u00b7 5\u00a0m",
+            "tick": 16861,
+            "marker": {
+              "anchor": "l4-brace",
+              "ring": {
+                "x": 74.6,
+                "y": 0,
+                "z": -1.7999999999999998
+              },
+              "drawn": [
+                74.6,
+                0.05,
+                -1.8
+              ],
+              "playerY": 0.7700001001358032,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "wait",
+            "text": "Stay down \u00b7 0:07 remaining",
+            "tick": 17095,
+            "marker": {
+              "anchor": "l4-brace",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [
+      {
+        "level": "L4",
+        "tick": 7607,
+        "x": -25.3,
+        "z": -6.5,
+        "severity": "P2",
+        "kind": "enemy-frozen",
+        "text": "Infected #361 in state chase 2.3 m away has not moved for ~5 s",
+        "captures": [
+          "captures/vf5t-L4-webgpu-high-z0.5-L4-7607-enemy-frozen.jpg"
+        ],
+        "step": "hold",
+        "objective": "Hold the north breach \u00b7 1:40 remaining \u00b7 5\u00a0m"
+      },
+      {
+        "level": "L4",
+        "tick": 7607,
+        "x": -25.3,
+        "z": -6.5,
+        "severity": "P2",
+        "kind": "enemy-frozen",
+        "text": "Infected #363 in state chase 3.3 m away has not moved for ~5 s",
+        "captures": [
+          "captures/vf5t-L4-webgpu-high-z0.5-L4-7607-enemy-frozen.jpg"
+        ],
+        "step": "hold",
+        "objective": "Hold the north breach \u00b7 1:40 remaining \u00b7 5\u00a0m"
+      },
+      {
+        "level": "L4",
+        "tick": 8067,
+        "x": -25.3,
+        "z": -6.5,
+        "severity": "P2",
+        "kind": "enemy-frozen",
+        "text": "Infected #365 in state chase 2.7 m away has not moved for ~5 s",
+        "captures": [
+          "captures/vf5t-L4-webgpu-high-z0.5-L4-8067-enemy-frozen.jpg"
+        ],
+        "step": "hold",
+        "objective": "Hold the north breach \u00b7 1:32 remaining \u00b7 5\u00a0m"
+      },
+      {
+        "level": "L4",
+        "tick": 8148,
+        "x": -25.3,
+        "z": -6.5,
+        "severity": "P2",
+        "kind": "enemy-frozen",
+        "text": "Infected #358 in state chase 2.6 m away has not moved for ~5 s",
+        "captures": [
+          "captures/vf5t-L4-webgpu-high-z0.5-L4-8148-enemy-frozen.jpg"
+        ],
+        "step": "hold",
+        "objective": "Hold the north breach \u00b7 1:31 remaining \u00b7 5\u00a0m"
+      },
+      {
+        "level": "L4",
+        "tick": 8244,
+        "x": -25.3,
+        "z": -6.5,
+        "severity": "P2",
+        "kind": "enemy-frozen",
+        "text": "Infected #343 in state chase 2.0 m away has not moved for ~5 s",
+        "captures": [
+          "captures/vf5t-L4-webgpu-high-z0.5-L4-8244-enemy-frozen.jpg"
+        ],
+        "step": "hold",
+        "objective": "Hold the north breach \u00b7 1:29 remaining \u00b7 5\u00a0m"
+      }
+    ],
+    "riotCombat": [
+      {
+        "id": 209,
+        "firstPlayerHitTick": 2576,
+        "firstObservedDownTick": 4689,
+        "elapsedSimSeconds": 35.21666666666667,
+        "positiveFrontGlanceHits": 20,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 219,
+        "firstPlayerHitTick": 2746,
+        "firstObservedDownTick": 4404,
+        "elapsedSimSeconds": 27.633333333333333,
+        "positiveFrontGlanceHits": 9,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 212,
+        "firstPlayerHitTick": 2777,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 11,
+        "firstBreakTick": 3077,
+        "brokenWindowHits": 5,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 249,
+        "firstPlayerHitTick": 3026,
+        "firstObservedDownTick": 4295,
+        "elapsedSimSeconds": 21.15,
+        "positiveFrontGlanceHits": 12,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 238,
+        "firstPlayerHitTick": 3400,
+        "firstObservedDownTick": 8079,
+        "elapsedSimSeconds": 77.98333333333333,
+        "positiveFrontGlanceHits": 29,
+        "firstBreakTick": 5977,
+        "brokenWindowHits": 4,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 265,
+        "firstPlayerHitTick": 3424,
+        "firstObservedDownTick": 4505,
+        "elapsedSimSeconds": 18.016666666666666,
+        "positiveFrontGlanceHits": 7,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 274,
+        "firstPlayerHitTick": 4013,
+        "firstObservedDownTick": 4725,
+        "elapsedSimSeconds": 11.866666666666667,
+        "positiveFrontGlanceHits": 0,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 343,
+        "firstPlayerHitTick": 6281,
+        "firstObservedDownTick": 9636,
+        "elapsedSimSeconds": 55.916666666666664,
+        "positiveFrontGlanceHits": 3,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 349,
+        "firstPlayerHitTick": 6563,
+        "firstObservedDownTick": 7920,
+        "elapsedSimSeconds": 22.616666666666667,
+        "positiveFrontGlanceHits": 10,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 244,
+        "firstPlayerHitTick": 7215,
+        "firstObservedDownTick": 7449,
+        "elapsedSimSeconds": 3.9,
+        "positiveFrontGlanceHits": 0,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 384,
+        "firstPlayerHitTick": 7222,
+        "firstObservedDownTick": 9941,
+        "elapsedSimSeconds": 45.31666666666667,
+        "positiveFrontGlanceHits": 11,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 393,
+        "firstPlayerHitTick": 7526,
+        "firstObservedDownTick": 8876,
+        "elapsedSimSeconds": 22.5,
+        "positiveFrontGlanceHits": 9,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 330,
+        "firstPlayerHitTick": 8644,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 0,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 377,
+        "firstPlayerHitTick": 10017,
+        "firstObservedDownTick": 10023,
+        "elapsedSimSeconds": 0.1,
+        "positiveFrontGlanceHits": 0,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 358,
+        "firstPlayerHitTick": 10133,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 5,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 270,
+        "firstPlayerHitTick": 10815,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 1,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 447,
+        "firstPlayerHitTick": 13120,
+        "firstObservedDownTick": 13500,
+        "elapsedSimSeconds": 6.333333333333333,
+        "positiveFrontGlanceHits": 4,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 408,
+        "firstPlayerHitTick": 13127,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 3,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      }
+    ],
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "photoCount": 25,
+    "backend": [
+      "webgpu"
+    ],
+    "qualities": [
+      "high"
+    ],
+    "allPhotosUnpaused": true,
+    "maxBars": 8
+  },
+  {
+    "tag": "vf5t-L4-webgpu-high-z1.5",
+    "runs": [
+      {
+        "level": "L4",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 266,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 11.4,
+        "deaths": 0,
+        "assists": 0,
+        "attacks": {
+          "weapon.army-mg": 1433
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "steps": [
+          {
+            "id": "ride",
+            "text": "Ride into Fairhaven with the convoy \u00b7 57\u00a0m",
+            "tick": 14,
+            "marker": {
+              "anchor": "l4-plaza",
+              "ring": {
+                "x": -17,
+                "y": 0,
+                "z": 3
+              },
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "quartermaster",
+            "text": "Report to the quartermaster \u00b7 10\u00a0m",
+            "tick": 1843,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": {
+                "x": -23.2,
+                "y": 0,
+                "z": 0.6
+              },
+              "drawn": [
+                -23.2,
+                0.05,
+                0.6
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "hold",
+            "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+            "tick": 2212,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "hide",
+            "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 325\u00a0m",
+            "tick": 13620,
+            "marker": {
+              "anchor": "l4-cellar-door",
+              "ring": {
+                "x": -79.29999999999998,
+                "y": 0,
+                "z": -45.2801
+              },
+              "drawn": [
+                -79.3,
+                0.13,
+                -45.28
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "bar",
+            "text": "Bar the cellar door \u00b7 5\u00a0m",
+            "tick": 14862,
+            "marker": {
+              "anchor": "l4-brace",
+              "ring": {
+                "x": 74.6,
+                "y": 0,
+                "z": -1.7999999999999998
+              },
+              "drawn": [
+                74.6,
+                0.05,
+                -1.8
+              ],
+              "playerY": 0.8100000619888306,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "wait",
+            "text": "Stay down \u00b7 0:07 remaining",
+            "tick": 15015,
+            "marker": {
+              "anchor": "l4-brace",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [
+      {
+        "level": "L4",
+        "tick": 12498,
+        "x": -26.1,
+        "z": -6.6,
+        "severity": "P2",
+        "kind": "enemy-frozen",
+        "text": "Infected #476 in state chase 9.4 m away has not moved for ~5 s",
+        "captures": [
+          "captures/vf5t-L4-webgpu-high-z1.5-L4-12498-enemy-frozen.jpg"
+        ],
+        "step": "hold",
+        "objective": "Hold the north breach \u00b7 0:19 remaining \u00b7 6\u00a0m"
+      }
+    ],
+    "riotCombat": [
+      {
+        "id": 209,
+        "firstPlayerHitTick": 2604,
+        "firstObservedDownTick": 4835,
+        "elapsedSimSeconds": 37.18333333333333,
+        "positiveFrontGlanceHits": 17,
+        "firstBreakTick": 2886,
+        "brokenWindowHits": 3,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 219,
+        "firstPlayerHitTick": 2657,
+        "firstObservedDownTick": 4428,
+        "elapsedSimSeconds": 29.516666666666666,
+        "positiveFrontGlanceHits": 17,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 212,
+        "firstPlayerHitTick": 2875,
+        "firstObservedDownTick": 7301,
+        "elapsedSimSeconds": 73.76666666666667,
+        "positiveFrontGlanceHits": 28,
+        "firstBreakTick": 5023,
+        "brokenWindowHits": 2,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 266,
+        "firstPlayerHitTick": 3086,
+        "firstObservedDownTick": 6327,
+        "elapsedSimSeconds": 54.016666666666666,
+        "positiveFrontGlanceHits": 25,
+        "firstBreakTick": 6246,
+        "brokenWindowHits": 3,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 249,
+        "firstPlayerHitTick": 3293,
+        "firstObservedDownTick": 4501,
+        "elapsedSimSeconds": 20.133333333333333,
+        "positiveFrontGlanceHits": 9,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 262,
+        "firstPlayerHitTick": 3306,
+        "firstObservedDownTick": 4109,
+        "elapsedSimSeconds": 13.383333333333333,
+        "positiveFrontGlanceHits": 2,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 297,
+        "firstPlayerHitTick": 3610,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 12,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 273,
+        "firstPlayerHitTick": 4315,
+        "firstObservedDownTick": 4601,
+        "elapsedSimSeconds": 4.766666666666667,
+        "positiveFrontGlanceHits": 0,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 253,
+        "firstPlayerHitTick": 4651,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 0,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 238,
+        "firstPlayerHitTick": 5016,
+        "firstObservedDownTick": 5016,
+        "elapsedSimSeconds": 0.0,
+        "positiveFrontGlanceHits": 0,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 344,
+        "firstPlayerHitTick": 5783,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 11,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 349,
+        "firstPlayerHitTick": 5850,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 29,
+        "firstBreakTick": 9237,
+        "brokenWindowHits": 2,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 331,
+        "firstPlayerHitTick": 5965,
+        "firstObservedDownTick": 7963,
+        "elapsedSimSeconds": 33.3,
+        "positiveFrontGlanceHits": 15,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 337,
+        "firstPlayerHitTick": 6012,
+        "firstObservedDownTick": 11773,
+        "elapsedSimSeconds": 96.01666666666667,
+        "positiveFrontGlanceHits": 28,
+        "firstBreakTick": 9505,
+        "brokenWindowHits": 3,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 355,
+        "firstPlayerHitTick": 6037,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 0,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 327,
+        "firstPlayerHitTick": 6222,
+        "firstObservedDownTick": 7381,
+        "elapsedSimSeconds": 19.316666666666666,
+        "positiveFrontGlanceHits": 8,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 409,
+        "firstPlayerHitTick": 7270,
+        "firstObservedDownTick": 8031,
+        "elapsedSimSeconds": 12.683333333333334,
+        "positiveFrontGlanceHits": 6,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 405,
+        "firstPlayerHitTick": 7355,
+        "firstObservedDownTick": 10490,
+        "elapsedSimSeconds": 52.25,
+        "positiveFrontGlanceHits": 21,
+        "firstBreakTick": 10328,
+        "brokenWindowHits": 10,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 407,
+        "firstPlayerHitTick": 7361,
+        "firstObservedDownTick": 11954,
+        "elapsedSimSeconds": 76.55,
+        "positiveFrontGlanceHits": 9,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 414,
+        "firstPlayerHitTick": 7435,
+        "firstObservedDownTick": 9473,
+        "elapsedSimSeconds": 33.96666666666667,
+        "positiveFrontGlanceHits": 7,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 426,
+        "firstPlayerHitTick": 7898,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 14,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 430,
+        "firstPlayerHitTick": 8202,
+        "firstObservedDownTick": 8908,
+        "elapsedSimSeconds": 11.766666666666667,
+        "positiveFrontGlanceHits": 7,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 432,
+        "firstPlayerHitTick": 8208,
+        "firstObservedDownTick": 9950,
+        "elapsedSimSeconds": 29.033333333333335,
+        "positiveFrontGlanceHits": 12,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 462,
+        "firstPlayerHitTick": 10397,
+        "firstObservedDownTick": 11884,
+        "elapsedSimSeconds": 24.783333333333335,
+        "positiveFrontGlanceHits": 7,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 450,
+        "firstPlayerHitTick": 10424,
+        "firstObservedDownTick": 11755,
+        "elapsedSimSeconds": 22.183333333333334,
+        "positiveFrontGlanceHits": 8,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 492,
+        "firstPlayerHitTick": 10538,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 23,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 460,
+        "firstPlayerHitTick": 10576,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 0,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 244,
+        "firstPlayerHitTick": 10653,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 0,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 488,
+        "firstPlayerHitTick": 10885,
+        "firstObservedDownTick": 11827,
+        "elapsedSimSeconds": 15.7,
+        "positiveFrontGlanceHits": 11,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 486,
+        "firstPlayerHitTick": 11554,
+        "firstObservedDownTick": 11919,
+        "elapsedSimSeconds": 6.083333333333333,
+        "positiveFrontGlanceHits": 13,
+        "firstBreakTick": 11863,
+        "brokenWindowHits": 4,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      }
+    ],
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "photoCount": 19,
+    "backend": [
+      "webgpu"
+    ],
+    "qualities": [
+      "high"
+    ],
+    "allPhotosUnpaused": true,
+    "maxBars": 10
+  },
+  {
+    "tag": "vf5t-L4-webgpu-low-z0.5",
+    "runs": [
+      {
+        "level": "L4",
+        "entry": "continue",
+        "heroine": "male",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 283,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 11.866,
+        "deaths": 0,
+        "assists": 0,
+        "attacks": {
+          "weapon.army-mg": 1509
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "steps": [
+          {
+            "id": "ride",
+            "text": "Ride into Fairhaven with the convoy \u00b7 58\u00a0m",
+            "tick": 11,
+            "marker": {
+              "anchor": "l4-plaza",
+              "ring": {
+                "x": -17,
+                "y": 0,
+                "z": 3
+              },
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "quartermaster",
+            "text": "Report to the quartermaster \u00b7 8\u00a0m",
+            "tick": 1871,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": {
+                "x": -23.2,
+                "y": 0,
+                "z": 0.6
+              },
+              "drawn": [
+                -23.2,
+                0.05,
+                0.6
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "hold",
+            "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+            "tick": 2180,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "hide",
+            "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 325\u00a0m",
+            "tick": 13586,
+            "marker": {
+              "anchor": "l4-cellar-door",
+              "ring": {
+                "x": -79.29999999999998,
+                "y": 0,
+                "z": -45.2801
+              },
+              "drawn": [
+                -79.3,
+                0.13,
+                -45.28
+              ],
+              "playerY": 0.7099999785423279,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "bar",
+            "text": "Bar the cellar door \u00b7 5\u00a0m",
+            "tick": 15864,
+            "marker": {
+              "anchor": "l4-brace",
+              "ring": {
+                "x": 74.6,
+                "y": 0,
+                "z": -1.7999999999999998
+              },
+              "drawn": [
+                74.6,
+                0.05,
+                -1.8
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "wait",
+            "text": "Stay down \u00b7 0:07 remaining",
+            "tick": 16072,
+            "marker": {
+              "anchor": "l4-brace",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [
+      {
+        "level": "L4",
+        "tick": 9307,
+        "x": -21,
+        "z": -6.5,
+        "severity": "P2",
+        "kind": "enemy-frozen",
+        "text": "Infected #296 in state chase 2.2 m away has not moved for ~5 s",
+        "captures": [
+          "captures/vf5t-L4-webgpu-low-z0.5-L4-9307-enemy-frozen.jpg"
+        ],
+        "step": "hold",
+        "objective": "Hold the north breach \u00b7 1:12 remaining \u00b7 3\u00a0m"
+      }
+    ],
+    "riotCombat": [
+      {
+        "id": 166,
+        "firstPlayerHitTick": 2633,
+        "firstObservedDownTick": 5876,
+        "elapsedSimSeconds": 54.05,
+        "positiveFrontGlanceHits": 20,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 169,
+        "firstPlayerHitTick": 2959,
+        "firstObservedDownTick": 8230,
+        "elapsedSimSeconds": 87.85,
+        "positiveFrontGlanceHits": 7,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 182,
+        "firstPlayerHitTick": 3238,
+        "firstObservedDownTick": 7920,
+        "elapsedSimSeconds": 78.03333333333333,
+        "positiveFrontGlanceHits": 7,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 196,
+        "firstPlayerHitTick": 3286,
+        "firstObservedDownTick": 3312,
+        "elapsedSimSeconds": 0.43333333333333335,
+        "positiveFrontGlanceHits": 1,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 190,
+        "firstPlayerHitTick": 3398,
+        "firstObservedDownTick": 3417,
+        "elapsedSimSeconds": 0.31666666666666665,
+        "positiveFrontGlanceHits": 0,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 237,
+        "firstPlayerHitTick": 3438,
+        "firstObservedDownTick": 5855,
+        "elapsedSimSeconds": 40.28333333333333,
+        "positiveFrontGlanceHits": 41,
+        "firstBreakTick": 4134,
+        "brokenWindowHits": 5,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 217,
+        "firstPlayerHitTick": 3814,
+        "firstObservedDownTick": 5245,
+        "elapsedSimSeconds": 23.85,
+        "positiveFrontGlanceHits": 4,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 254,
+        "firstPlayerHitTick": 3876,
+        "firstObservedDownTick": 8193,
+        "elapsedSimSeconds": 71.95,
+        "positiveFrontGlanceHits": 15,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 242,
+        "firstPlayerHitTick": 4000,
+        "firstObservedDownTick": 7451,
+        "elapsedSimSeconds": 57.516666666666666,
+        "positiveFrontGlanceHits": 10,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 249,
+        "firstPlayerHitTick": 4140,
+        "firstObservedDownTick": 8059,
+        "elapsedSimSeconds": 65.31666666666666,
+        "positiveFrontGlanceHits": 16,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 247,
+        "firstPlayerHitTick": 4506,
+        "firstObservedDownTick": 7532,
+        "elapsedSimSeconds": 50.43333333333333,
+        "positiveFrontGlanceHits": 13,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 221,
+        "firstPlayerHitTick": 4700,
+        "firstObservedDownTick": 5547,
+        "elapsedSimSeconds": 14.116666666666667,
+        "positiveFrontGlanceHits": 9,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 260,
+        "firstPlayerHitTick": 4938,
+        "firstObservedDownTick": 8006,
+        "elapsedSimSeconds": 51.13333333333333,
+        "positiveFrontGlanceHits": 14,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 210,
+        "firstPlayerHitTick": 5699,
+        "firstObservedDownTick": 9697,
+        "elapsedSimSeconds": 66.63333333333334,
+        "positiveFrontGlanceHits": 13,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 316,
+        "firstPlayerHitTick": 6419,
+        "firstObservedDownTick": 6808,
+        "elapsedSimSeconds": 6.483333333333333,
+        "positiveFrontGlanceHits": 3,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 318,
+        "firstPlayerHitTick": 7045,
+        "firstObservedDownTick": 7167,
+        "elapsedSimSeconds": 2.033333333333333,
+        "positiveFrontGlanceHits": 2,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 317,
+        "firstPlayerHitTick": 7495,
+        "firstObservedDownTick": 7501,
+        "elapsedSimSeconds": 0.1,
+        "positiveFrontGlanceHits": 0,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 356,
+        "firstPlayerHitTick": 10473,
+        "firstObservedDownTick": 12621,
+        "elapsedSimSeconds": 35.8,
+        "positiveFrontGlanceHits": 25,
+        "firstBreakTick": 11368,
+        "brokenWindowHits": 3,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 344,
+        "firstPlayerHitTick": 10511,
+        "firstObservedDownTick": 10699,
+        "elapsedSimSeconds": 3.1333333333333333,
+        "positiveFrontGlanceHits": 23,
+        "firstBreakTick": 10664,
+        "brokenWindowHits": 6,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 404,
+        "firstPlayerHitTick": 10742,
+        "firstObservedDownTick": 11052,
+        "elapsedSimSeconds": 5.166666666666667,
+        "positiveFrontGlanceHits": 8,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 415,
+        "firstPlayerHitTick": 11065,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 7,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 393,
+        "firstPlayerHitTick": 11469,
+        "firstObservedDownTick": 12440,
+        "elapsedSimSeconds": 16.183333333333334,
+        "positiveFrontGlanceHits": 8,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 375,
+        "firstPlayerHitTick": 11994,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 9,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      }
+    ],
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "photoCount": 21,
+    "backend": [
+      "webgpu"
+    ],
+    "qualities": [
+      "low"
+    ],
+    "allPhotosUnpaused": true,
+    "maxBars": 12
+  },
+  {
+    "tag": "vf5t-L4-webgpu-low-z1.5",
+    "runs": [
+      {
+        "level": "L4",
+        "entry": "continue",
+        "heroine": "male",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 273,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 11.983333333333333,
+        "deaths": 0,
+        "assists": 0,
+        "attacks": {
+          "weapon.army-mg": 1558
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "steps": [
+          {
+            "id": "ride",
+            "text": "Ride into Fairhaven with the convoy \u00b7 57\u00a0m",
+            "tick": 12,
+            "marker": {
+              "anchor": "l4-plaza",
+              "ring": {
+                "x": -17,
+                "y": 0,
+                "z": 3
+              },
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "quartermaster",
+            "text": "Report to the quartermaster \u00b7 10\u00a0m",
+            "tick": 1838,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": {
+                "x": -23.2,
+                "y": 0,
+                "z": 0.6
+              },
+              "drawn": [
+                -23.2,
+                0.05,
+                0.6
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "hold",
+            "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+            "tick": 2196,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "hide",
+            "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 311\u00a0m",
+            "tick": 13611,
+            "marker": {
+              "anchor": "l4-cellar-door",
+              "ring": {
+                "x": -79.29999999999998,
+                "y": 0,
+                "z": -45.2801
+              },
+              "drawn": [
+                -79.3,
+                0.13,
+                -45.28
+              ],
+              "playerY": 0.7099999785423279,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "bar",
+            "text": "Bar the cellar door \u00b7 5\u00a0m",
+            "tick": 15374,
+            "marker": {
+              "anchor": "l4-brace",
+              "ring": {
+                "x": 74.6,
+                "y": 0,
+                "z": -1.7999999999999998
+              },
+              "drawn": [
+                74.6,
+                0.05,
+                -1.8
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "wait",
+            "text": "Stay down \u00b7 0:07 remaining",
+            "tick": 15521,
+            "marker": {
+              "anchor": "l4-brace",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [],
+    "riotCombat": [
+      {
+        "id": 166,
+        "firstPlayerHitTick": 2546,
+        "firstObservedDownTick": 2912,
+        "elapsedSimSeconds": 6.1,
+        "positiveFrontGlanceHits": 21,
+        "firstBreakTick": 2912,
+        "brokenWindowHits": 1,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 169,
+        "firstPlayerHitTick": 2715,
+        "firstObservedDownTick": 2966,
+        "elapsedSimSeconds": 4.183333333333334,
+        "positiveFrontGlanceHits": 23,
+        "firstBreakTick": 2960,
+        "brokenWindowHits": 2,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 196,
+        "firstPlayerHitTick": 2920,
+        "firstObservedDownTick": 4598,
+        "elapsedSimSeconds": 27.966666666666665,
+        "positiveFrontGlanceHits": 15,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 190,
+        "firstPlayerHitTick": 3037,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 7,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 182,
+        "firstPlayerHitTick": 3328,
+        "firstObservedDownTick": 3683,
+        "elapsedSimSeconds": 5.916666666666667,
+        "positiveFrontGlanceHits": 13,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 212,
+        "firstPlayerHitTick": 3893,
+        "firstObservedDownTick": 4505,
+        "elapsedSimSeconds": 10.2,
+        "positiveFrontGlanceHits": 7,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 223,
+        "firstPlayerHitTick": 5508,
+        "firstObservedDownTick": 5882,
+        "elapsedSimSeconds": 6.233333333333333,
+        "positiveFrontGlanceHits": 1,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 251,
+        "firstPlayerHitTick": 5842,
+        "firstObservedDownTick": 6309,
+        "elapsedSimSeconds": 7.783333333333333,
+        "positiveFrontGlanceHits": 2,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 329,
+        "firstPlayerHitTick": 6542,
+        "firstObservedDownTick": 7346,
+        "elapsedSimSeconds": 13.4,
+        "positiveFrontGlanceHits": 21,
+        "firstBreakTick": 7338,
+        "brokenWindowHits": 2,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 367,
+        "firstPlayerHitTick": 8427,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 7,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 336,
+        "firstPlayerHitTick": 8621,
+        "firstObservedDownTick": 9245,
+        "elapsedSimSeconds": 10.4,
+        "positiveFrontGlanceHits": 3,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 227,
+        "firstPlayerHitTick": 11361,
+        "firstObservedDownTick": 11818,
+        "elapsedSimSeconds": 7.616666666666666,
+        "positiveFrontGlanceHits": 20,
+        "firstBreakTick": 11782,
+        "brokenWindowHits": 6,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 225,
+        "firstPlayerHitTick": 11484,
+        "firstObservedDownTick": 11956,
+        "elapsedSimSeconds": 7.866666666666666,
+        "positiveFrontGlanceHits": 18,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 238,
+        "firstPlayerHitTick": 11989,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 5,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 463,
+        "firstPlayerHitTick": 12304,
+        "firstObservedDownTick": 12617,
+        "elapsedSimSeconds": 5.216666666666667,
+        "positiveFrontGlanceHits": 2,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 230,
+        "firstPlayerHitTick": 12408,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 1,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 464,
+        "firstPlayerHitTick": 12505,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 24,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 272,
+        "firstPlayerHitTick": 12558,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 15,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 301,
+        "firstPlayerHitTick": 12604,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 2,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 217,
+        "firstPlayerHitTick": 12870,
+        "firstObservedDownTick": 13237,
+        "elapsedSimSeconds": 6.116666666666666,
+        "positiveFrontGlanceHits": 4,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 236,
+        "firstPlayerHitTick": 13114,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 4,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 256,
+        "firstPlayerHitTick": 13267,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 5,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 288,
+        "firstPlayerHitTick": 13430,
+        "firstObservedDownTick": null,
+        "elapsedSimSeconds": null,
+        "positiveFrontGlanceHits": 0,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      }
+    ],
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "photoCount": 19,
+    "backend": [
+      "webgpu"
+    ],
+    "qualities": [
+      "low"
+    ],
+    "allPhotosUnpaused": true,
+    "maxBars": 5
+  },
+  {
+    "tag": "vf5t-L6-webgl2-high-z0.5",
+    "runs": [
+      {
+        "level": "L6",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 301,
+        "simSeconds": 285,
+        "maxNoProgressSeconds": 75.08333333333333,
+        "deaths": 0,
+        "assists": 1,
+        "attacks": {
+          "weapon.army-mg": 1529,
+          "weapon.fire-axe": 2
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "steps": [
+          {
+            "id": "shelter",
+            "text": "Look around the shelter \u00b7 rest while you can",
+            "tick": 20,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "stop",
+            "text": "Stop the infected \u00b7 Retreat in 0:36",
+            "tick": 1997,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "retreat",
+            "text": "Cover the retreat through the tunnel \u00b7 241\u00a0m",
+            "tick": 3515,
+            "marker": {
+              "anchor": "l6-next",
+              "ring": {
+                "x": 242,
+                "y": 0.6,
+                "z": 15
+              },
+              "drawn": [
+                242,
+                0.6,
+                15
+              ],
+              "playerY": 1.440000057220459,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [
+      {
+        "level": "L6",
+        "tick": 1227,
+        "x": 3,
+        "z": 0,
+        "severity": "P2",
+        "kind": "stuck-navigating",
+        "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look around the shelter \u00b7 rest while you can\"",
+        "captures": [
+          "captures/vf5t-L6-webgl2-high-z0.5-L6-1227-stuck-navigating.jpg"
+        ],
+        "step": "shelter",
+        "objective": "Look around the shelter \u00b7 rest while you can"
+      },
+      {
+        "level": "L6",
+        "tick": 9171,
+        "x": 30,
+        "z": -28,
+        "severity": "P2",
+        "kind": "stuck-navigating",
+        "text": "20 s without objective progress (distance 216.0 m, no marker: false); HUD: \"Stay with the group \u00b7 216\u00a0m\"",
+        "captures": [
+          "captures/vf5t-L6-webgl2-high-z0.5-L6-9171-stuck-navigating.jpg"
+        ],
+        "step": "retreat",
+        "objective": "Stay with the group \u00b7 216\u00a0m"
+      }
+    ],
+    "riotCombat": [
+      {
+        "id": 59,
+        "firstPlayerHitTick": 2103,
+        "firstObservedDownTick": 2826,
+        "elapsedSimSeconds": 12.05,
+        "positiveFrontGlanceHits": 47,
+        "firstBreakTick": 2778,
+        "brokenWindowHits": 9,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 72,
+        "firstPlayerHitTick": 3655,
+        "firstObservedDownTick": 5211,
+        "elapsedSimSeconds": 25.933333333333334,
+        "positiveFrontGlanceHits": 25,
+        "firstBreakTick": 4803,
+        "brokenWindowHits": 3,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      }
+    ],
+    "trace": {
+      "samples": 570,
+      "startTick": 30,
+      "endTick": 17100,
+      "maxDistance": 7.771380108627129,
+      "finalDistance": 1.680587160774507,
+      "longestAbove10s": 0,
+      "longestAbove8s": 0,
+      "longestInvisibleOutsideHideS": 0,
+      "invisibleStateCounts": {
+        "hide": 20
+      },
+      "hidingHudCounts": {
+        "Corgi \u00b7 hiding": 20
+      },
+      "longestPlatformDwellS": 0,
+      "minPlatformDistance": 16.56706256628226,
+      "playerStart": {
+        "x": 3,
+        "z": 0
+      },
+      "playerEnd": {
+        "x": 29.999055862426758,
+        "z": -27.99735450744629
+      },
+      "playerZRange": [
+        -27.99735450744629,
+        0
+      ],
+      "missingRenderRootSamples": 0,
+      "parentInvisibleOutsideHideSamples": 0,
+      "maxRenderWorldXZErrorM": 0.024644502557953453
+    },
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "photoCount": 69,
+    "backend": [
+      "webgl"
+    ],
+    "qualities": [
+      "high"
+    ],
+    "allPhotosUnpaused": true,
+    "maxBars": 9
+  },
+  {
+    "tag": "vf5t-L6-webgl2-high-z1.5",
+    "runs": [
+      {
+        "level": "L6",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 240,
+        "simSeconds": 225,
+        "maxNoProgressSeconds": 32.248,
+        "deaths": 0,
+        "assists": 1,
+        "attacks": {
+          "weapon.army-mg": 1497,
+          "weapon.fire-axe": 6
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "steps": [
+          {
+            "id": "shelter",
+            "text": "Look around the shelter \u00b7 rest while you can",
+            "tick": 12,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "stop",
+            "text": "Stop the infected \u00b7 Retreat in 0:36",
+            "tick": 1995,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "retreat",
+            "text": "Cover the retreat through the tunnel \u00b7 244\u00a0m",
+            "tick": 4154,
+            "marker": {
+              "anchor": "l6-next",
+              "ring": {
+                "x": 242,
+                "y": 0.6,
+                "z": 15
+              },
+              "drawn": [
+                242,
+                0.6,
+                15
+              ],
+              "playerY": 1.3200000524520874,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "exit",
+            "text": "Bring the survivors into the night \u00b7 1/3 out \u00b7 25\u00a0m",
+            "tick": 12086,
+            "marker": {
+              "anchor": "night-exit",
+              "ring": {
+                "x": 273,
+                "y": 3.9,
+                "z": 15
+              },
+              "drawn": [
+                273,
+                3.9,
+                15
+              ],
+              "playerY": 1.3200000524520874,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [
+      {
+        "level": "L6",
+        "tick": 1254,
+        "x": 3,
+        "z": 0,
+        "severity": "P2",
+        "kind": "stuck-navigating",
+        "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look around the shelter \u00b7 rest while you can\"",
+        "captures": [
+          "captures/vf5t-L6-webgl2-high-z1.5-L6-1254-stuck-navigating.jpg"
+        ],
+        "step": "shelter",
+        "objective": "Look around the shelter \u00b7 rest while you can"
+      }
+    ],
+    "riotCombat": [
+      {
+        "id": 72,
+        "firstPlayerHitTick": 3532,
+        "firstObservedDownTick": 4051,
+        "elapsedSimSeconds": 8.65,
+        "positiveFrontGlanceHits": 80,
+        "firstBreakTick": 3748,
+        "brokenWindowHits": 7,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 59,
+        "firstPlayerHitTick": 4342,
+        "firstObservedDownTick": 4643,
+        "elapsedSimSeconds": 5.016666666666667,
+        "positiveFrontGlanceHits": 56,
+        "firstBreakTick": 4589,
+        "brokenWindowHits": 11,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      }
+    ],
+    "trace": {
+      "samples": 449,
+      "startTick": 30,
+      "endTick": 13470,
+      "maxDistance": 8.055553111744105,
+      "finalDistance": 1.57881816424944,
+      "longestAbove10s": 0,
+      "longestAbove8s": 0.5,
+      "longestInvisibleOutsideHideS": 0,
+      "invisibleStateCounts": {
+        "hide": 20
+      },
+      "hidingHudCounts": {
+        "Corgi \u00b7 hiding": 20
+      },
+      "longestPlatformDwellS": 0,
+      "minPlatformDistance": 28.07551746086336,
+      "playerStart": {
+        "x": 3,
+        "z": 0
+      },
+      "playerEnd": {
+        "x": 264.8098449707031,
+        "z": 10.418059349060059
+      },
+      "playerZRange": [
+        0,
+        18.86768913269043
+      ],
+      "missingRenderRootSamples": 0,
+      "parentInvisibleOutsideHideSamples": 0,
+      "maxRenderWorldXZErrorM": 0.1535883515084264
+    },
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "photoCount": 44,
+    "backend": [
+      "webgl"
+    ],
+    "qualities": [
+      "high"
+    ],
+    "allPhotosUnpaused": true,
+    "maxBars": 26
+  },
+  {
+    "tag": "vf5t-L6-webgl2-low-z0.5",
+    "runs": [
+      {
+        "level": "L6",
+        "entry": "debug",
+        "heroine": "male",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 301,
+        "simSeconds": 283,
+        "maxNoProgressSeconds": 72,
+        "deaths": 0,
+        "assists": 1,
+        "attacks": {
+          "weapon.army-mg": 1923,
+          "weapon.fire-axe": 3
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "steps": [
+          {
+            "id": "shelter",
+            "text": "Look around the shelter \u00b7 rest while you can",
+            "tick": 27,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "stop",
+            "text": "Stop the infected \u00b7 Retreat in 0:36",
+            "tick": 1996,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "retreat",
+            "text": "Cover the retreat through the tunnel \u00b7 241\u00a0m",
+            "tick": 3363,
+            "marker": {
+              "anchor": "l6-next",
+              "ring": {
+                "x": 242,
+                "y": 0.6,
+                "z": 15
+              },
+              "drawn": [
+                242,
+                0.6,
+                15
+              ],
+              "playerY": 1.440000057220459,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [
+      {
+        "level": "L6",
+        "tick": 1231,
+        "x": 3,
+        "z": 0,
+        "severity": "P2",
+        "kind": "stuck-navigating",
+        "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look around the shelter \u00b7 rest while you can\"",
+        "captures": [
+          "captures/vf5t-L6-webgl2-low-z0.5-L6-1231-stuck-navigating.jpg"
+        ],
+        "step": "shelter",
+        "objective": "Look around the shelter \u00b7 rest while you can"
+      },
+      {
+        "level": "L6",
+        "tick": 13018,
+        "x": 56.6,
+        "z": 14.6,
+        "severity": "P2",
+        "kind": "stuck-navigating",
+        "text": "20 s without objective progress (distance 185.0 m, no marker: false); HUD: \"Stay with the group \u00b7 185\u00a0m\"",
+        "captures": [
+          "captures/vf5t-L6-webgl2-low-z0.5-L6-13018-stuck-navigating.jpg"
+        ],
+        "step": "retreat",
+        "objective": "Stay with the group \u00b7 185\u00a0m"
+      }
+    ],
+    "riotCombat": [
+      {
+        "id": 59,
+        "firstPlayerHitTick": 2098,
+        "firstObservedDownTick": 3215,
+        "elapsedSimSeconds": 18.616666666666667,
+        "positiveFrontGlanceHits": 54,
+        "firstBreakTick": 2896,
+        "brokenWindowHits": 3,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 73,
+        "firstPlayerHitTick": 4576,
+        "firstObservedDownTick": 5816,
+        "elapsedSimSeconds": 20.666666666666668,
+        "positiveFrontGlanceHits": 23,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      }
+    ],
+    "trace": {
+      "samples": 567,
+      "startTick": 30,
+      "endTick": 17010,
+      "maxDistance": 6.169622235719875,
+      "finalDistance": 1.2787168055263494,
+      "longestAbove10s": 0,
+      "longestAbove8s": 0,
+      "longestInvisibleOutsideHideS": 0,
+      "invisibleStateCounts": {
+        "hide": 40
+      },
+      "hidingHudCounts": {
+        "Corgi \u00b7 hiding": 40
+      },
+      "longestPlatformDwellS": 0,
+      "minPlatformDistance": 18.633893585404625,
+      "playerStart": {
+        "x": 3,
+        "z": 0
+      },
+      "playerEnd": {
+        "x": 95.58518981933594,
+        "z": 14.339646339416504
+      },
+      "playerZRange": [
+        -9.694904327392578,
+        18.611867904663086
+      ],
+      "missingRenderRootSamples": 0,
+      "parentInvisibleOutsideHideSamples": 0,
+      "maxRenderWorldXZErrorM": 0.13949901513384375
+    },
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "photoCount": 59,
+    "backend": [
+      "webgl"
+    ],
+    "qualities": [
+      "low"
+    ],
+    "allPhotosUnpaused": true,
+    "maxBars": 18
+  },
+  {
+    "tag": "vf5t-L6-webgl2-low-z1.5",
+    "runs": [
+      {
+        "level": "L6",
+        "entry": "debug",
+        "heroine": "male",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 227,
+        "simSeconds": 217,
+        "maxNoProgressSeconds": 32.267,
+        "deaths": 0,
+        "assists": 1,
+        "attacks": {
+          "weapon.army-mg": 1387,
+          "weapon.fire-axe": 9
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "steps": [
+          {
+            "id": "shelter",
+            "text": "Look around the shelter \u00b7 rest while you can",
+            "tick": 13,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "stop",
+            "text": "Stop the infected \u00b7 Retreat in 0:36",
+            "tick": 1996,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "retreat",
+            "text": "Cover the retreat through the tunnel \u00b7 244\u00a0m",
+            "tick": 4091,
+            "marker": {
+              "anchor": "l6-next",
+              "ring": {
+                "x": 242,
+                "y": 0.6,
+                "z": 15
+              },
+              "drawn": [
+                242,
+                0.6,
+                15
+              ],
+              "playerY": 1.3200000524520874,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "exit",
+            "text": "Bring the survivors into the night \u00b7 0/6 out \u00b7 23\u00a0m",
+            "tick": 11435,
+            "marker": {
+              "anchor": "night-exit",
+              "ring": {
+                "x": 273,
+                "y": 3.9,
+                "z": 15
+              },
+              "drawn": [
+                273,
+                3.9,
+                15
+              ],
+              "playerY": 0.9437977075576782,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [
+      {
+        "level": "L6",
+        "tick": 1256,
+        "x": 3,
+        "z": 0,
+        "severity": "P2",
+        "kind": "stuck-navigating",
+        "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look around the shelter \u00b7 rest while you can\"",
+        "captures": [
+          "captures/vf5t-L6-webgl2-low-z1.5-L6-1256-stuck-navigating.jpg"
+        ],
+        "step": "shelter",
+        "objective": "Look around the shelter \u00b7 rest while you can"
+      }
+    ],
+    "riotCombat": [
+      {
+        "id": 72,
+        "firstPlayerHitTick": 3529,
+        "firstObservedDownTick": 3876,
+        "elapsedSimSeconds": 5.783333333333333,
+        "positiveFrontGlanceHits": 50,
+        "firstBreakTick": 3858,
+        "brokenWindowHits": 9,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 59,
+        "firstPlayerHitTick": 4268,
+        "firstObservedDownTick": 4480,
+        "elapsedSimSeconds": 3.533333333333333,
+        "positiveFrontGlanceHits": 55,
+        "firstBreakTick": 4442,
+        "brokenWindowHits": 11,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      }
+    ],
+    "trace": {
+      "samples": 433,
+      "startTick": 30,
+      "endTick": 12990,
+      "maxDistance": 11.701599476531964,
+      "finalDistance": 1.2640168535459149,
+      "longestAbove10s": 2.5,
+      "longestAbove8s": 3.5,
+      "longestInvisibleOutsideHideS": 0,
+      "invisibleStateCounts": {
+        "hide": 40
+      },
+      "hidingHudCounts": {
+        "Corgi \u00b7 hiding": 40
+      },
+      "longestPlatformDwellS": 0,
+      "minPlatformDistance": 28.14303127009859,
+      "playerStart": {
+        "x": 3,
+        "z": 0
+      },
+      "playerEnd": {
+        "x": 266.5679931640625,
+        "z": 13.629570007324219
+      },
+      "playerZRange": [
+        -0.026884881779551506,
+        18.546037673950195
+      ],
+      "missingRenderRootSamples": 0,
+      "parentInvisibleOutsideHideSamples": 0,
+      "maxRenderWorldXZErrorM": 0.21285921659573548
+    },
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "photoCount": 44,
+    "backend": [
+      "webgl"
+    ],
+    "qualities": [
+      "low"
+    ],
+    "allPhotosUnpaused": true,
+    "maxBars": 25
+  },
+  {
+    "tag": "vf5t-L6-webgpu-high-z0.5",
+    "runs": [
+      {
+        "level": "L6",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 300,
+        "simSeconds": 294,
+        "maxNoProgressSeconds": 32.109,
+        "deaths": 0,
+        "assists": 1,
+        "attacks": {
+          "weapon.army-mg": 1675,
+          "weapon.fire-axe": 38
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "steps": [
+          {
+            "id": "shelter",
+            "text": "Look around the shelter \u00b7 rest while you can",
+            "tick": 13,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "stop",
+            "text": "Stop the infected \u00b7 Retreat in 0:36",
+            "tick": 1994,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "retreat",
+            "text": "Cover the retreat through the tunnel \u00b7 239\u00a0m",
+            "tick": 3690,
+            "marker": {
+              "anchor": "l6-next",
+              "ring": {
+                "x": 242,
+                "y": 0.6,
+                "z": 15
+              },
+              "drawn": [
+                242,
+                0.6,
+                15
+              ],
+              "playerY": 1.2699999809265137,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "exit",
+            "text": "Bring the survivors into the night \u00b7 1/1 out \u00b7 32\u00a0m",
+            "tick": 12598,
+            "marker": {
+              "anchor": "night-exit",
+              "ring": {
+                "x": 273,
+                "y": 3.9,
+                "z": 15
+              },
+              "drawn": [
+                273,
+                3.9,
+                15
+              ],
+              "playerY": 1.2699999809265137,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [
+      {
+        "level": "L6",
+        "tick": 1255,
+        "x": 3,
+        "z": 0,
+        "severity": "P2",
+        "kind": "stuck-navigating",
+        "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look around the shelter \u00b7 rest while you can\"",
+        "captures": [
+          "captures/vf5t-L6-webgpu-high-z0.5-L6-1255-stuck-navigating.jpg"
+        ],
+        "step": "shelter",
+        "objective": "Look around the shelter \u00b7 rest while you can"
+      }
+    ],
+    "riotCombat": [
+      {
+        "id": 59,
+        "firstPlayerHitTick": 2087,
+        "firstObservedDownTick": 3426,
+        "elapsedSimSeconds": 22.316666666666666,
+        "positiveFrontGlanceHits": 92,
+        "firstBreakTick": 3011,
+        "brokenWindowHits": 6,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 72,
+        "firstPlayerHitTick": 4292,
+        "firstObservedDownTick": 5130,
+        "elapsedSimSeconds": 13.966666666666667,
+        "positiveFrontGlanceHits": 51,
+        "firstBreakTick": 7978,
+        "brokenWindowHits": 3,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      }
+    ],
+    "trace": {
+      "samples": 587,
+      "startTick": 30,
+      "endTick": 17610,
+      "maxDistance": 13.198925085914814,
+      "finalDistance": 1.6398412353739615,
+      "longestAbove10s": 2.5,
+      "longestAbove8s": 3.5,
+      "longestInvisibleOutsideHideS": 0,
+      "invisibleStateCounts": {
+        "hide": 80
+      },
+      "hidingHudCounts": {
+        "Corgi \u00b7 hiding": 80
+      },
+      "longestPlatformDwellS": 0,
+      "minPlatformDistance": 28.072769669859603,
+      "playerStart": {
+        "x": 3,
+        "z": 0
+      },
+      "playerEnd": {
+        "x": 216.8950958251953,
+        "z": 17.618921279907227
+      },
+      "playerZRange": [
+        -1.6328958220358553e-16,
+        18.85672378540039
+      ],
+      "missingRenderRootSamples": 0,
+      "parentInvisibleOutsideHideSamples": 0,
+      "maxRenderWorldXZErrorM": 0.060946943301983844
+    },
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "photoCount": 44,
+    "backend": [
+      "webgpu"
+    ],
+    "qualities": [
+      "high"
+    ],
+    "allPhotosUnpaused": true,
+    "maxBars": 11
+  },
+  {
+    "tag": "vf5t-L6-webgpu-high-z1.5",
+    "runs": [
+      {
+        "level": "L6",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 212,
+        "simSeconds": 199,
+        "maxNoProgressSeconds": 32.81666666666667,
+        "deaths": 0,
+        "assists": 1,
+        "attacks": {
+          "weapon.army-mg": 1240
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "steps": [
+          {
+            "id": "shelter",
+            "text": "Look around the shelter \u00b7 rest while you can",
+            "tick": 11,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "stop",
+            "text": "Stop the infected \u00b7 Retreat in 0:36",
+            "tick": 1996,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "retreat",
+            "text": "Cover the retreat through the tunnel \u00b7 242\u00a0m",
+            "tick": 4156,
+            "marker": {
+              "anchor": "l6-next",
+              "ring": {
+                "x": 242,
+                "y": 0.6,
+                "z": 15
+              },
+              "drawn": [
+                242,
+                0.6,
+                15
+              ],
+              "playerY": 1.3200000524520874,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "exit",
+            "text": "Bring the survivors into the night \u00b7 0/2 out \u00b7 25\u00a0m",
+            "tick": 11387,
+            "marker": {
+              "anchor": "night-exit",
+              "ring": {
+                "x": 273,
+                "y": 3.9,
+                "z": 15
+              },
+              "drawn": [
+                273,
+                3.9,
+                15
+              ],
+              "playerY": 1.3200000524520874,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [
+      {
+        "level": "L6",
+        "tick": 1247,
+        "x": 3,
+        "z": 0,
+        "severity": "P2",
+        "kind": "stuck-navigating",
+        "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look around the shelter \u00b7 rest while you can\"",
+        "captures": [
+          "captures/vf5t-L6-webgpu-high-z1.5-L6-1247-stuck-navigating.jpg"
+        ],
+        "step": "shelter",
+        "objective": "Look around the shelter \u00b7 rest while you can"
+      }
+    ],
+    "riotCombat": [
+      {
+        "id": 72,
+        "firstPlayerHitTick": 3535,
+        "firstObservedDownTick": 4151,
+        "elapsedSimSeconds": 10.266666666666667,
+        "positiveFrontGlanceHits": 68,
+        "firstBreakTick": 3887,
+        "brokenWindowHits": 6,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 59,
+        "firstPlayerHitTick": 4053,
+        "firstObservedDownTick": 4493,
+        "elapsedSimSeconds": 7.333333333333333,
+        "positiveFrontGlanceHits": 45,
+        "firstBreakTick": 4468,
+        "brokenWindowHits": 5,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      }
+    ],
+    "trace": {
+      "samples": 398,
+      "startTick": 30,
+      "endTick": 11940,
+      "maxDistance": 7.303684390027333,
+      "finalDistance": 2.2657878625960284,
+      "longestAbove10s": 0,
+      "longestAbove8s": 0,
+      "longestInvisibleOutsideHideS": 0,
+      "invisibleStateCounts": {
+        "hide": 20
+      },
+      "hidingHudCounts": {
+        "Corgi \u00b7 hiding": 20
+      },
+      "longestPlatformDwellS": 0,
+      "minPlatformDistance": 28.158480529569328,
+      "playerStart": {
+        "x": 3,
+        "z": 0
+      },
+      "playerEnd": {
+        "x": 273.3605651855469,
+        "z": 15.456835746765137
+      },
+      "playerZRange": [
+        0,
+        17.371660232543945
+      ],
+      "missingRenderRootSamples": 0,
+      "parentInvisibleOutsideHideSamples": 0,
+      "maxRenderWorldXZErrorM": 0.41099942592567684
+    },
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "photoCount": 41,
+    "backend": [
+      "webgpu"
+    ],
+    "qualities": [
+      "high"
+    ],
+    "allPhotosUnpaused": true,
+    "maxBars": 30
+  },
+  {
+    "tag": "vf5t-L6-webgpu-low-z0.5",
+    "runs": [
+      {
+        "level": "L6",
+        "entry": "debug",
+        "heroine": "male",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 300,
+        "simSeconds": 294,
+        "maxNoProgressSeconds": 32.238,
+        "deaths": 0,
+        "assists": 1,
+        "attacks": {
+          "weapon.army-mg": 1844,
+          "weapon.fire-axe": 14
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "steps": [
+          {
+            "id": "shelter",
+            "text": "Look around the shelter \u00b7 rest while you can",
+            "tick": 12,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "stop",
+            "text": "Stop the infected \u00b7 Retreat in 0:36",
+            "tick": 1995,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "retreat",
+            "text": "Cover the retreat through the tunnel \u00b7 247\u00a0m",
+            "tick": 3337,
+            "marker": {
+              "anchor": "l6-next",
+              "ring": {
+                "x": 242,
+                "y": 0.6,
+                "z": 15
+              },
+              "drawn": [
+                242,
+                0.6,
+                15
+              ],
+              "playerY": 1.2459996938705444,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "exit",
+            "text": "Bring the survivors into the night \u00b7 0/1 out \u00b7 25\u00a0m",
+            "tick": 15929,
+            "marker": {
+              "anchor": "night-exit",
+              "ring": {
+                "x": 273,
+                "y": 3.9,
+                "z": 15
+              },
+              "drawn": [
+                273,
+                3.9,
+                15
+              ],
+              "playerY": 1.3200000524520874,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [
+      {
+        "level": "L6",
+        "tick": 1257,
+        "x": 3,
+        "z": 0,
+        "severity": "P2",
+        "kind": "stuck-navigating",
+        "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look around the shelter \u00b7 rest while you can\"",
+        "captures": [
+          "captures/vf5t-L6-webgpu-low-z0.5-L6-1257-stuck-navigating.jpg"
+        ],
+        "step": "shelter",
+        "objective": "Look around the shelter \u00b7 rest while you can"
+      }
+    ],
+    "riotCombat": [
+      {
+        "id": 59,
+        "firstPlayerHitTick": 2086,
+        "firstObservedDownTick": 3595,
+        "elapsedSimSeconds": 25.15,
+        "positiveFrontGlanceHits": 49,
+        "firstBreakTick": 3149,
+        "brokenWindowHits": 2,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 72,
+        "firstPlayerHitTick": 3470,
+        "firstObservedDownTick": 3769,
+        "elapsedSimSeconds": 4.983333333333333,
+        "positiveFrontGlanceHits": 5,
+        "firstBreakTick": null,
+        "brokenWindowHits": 0,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      }
+    ],
+    "trace": {
+      "samples": 588,
+      "startTick": 30,
+      "endTick": 17640,
+      "maxDistance": 13.32014712951592,
+      "finalDistance": 1.265000000000001,
+      "longestAbove10s": 2.5,
+      "longestAbove8s": 3.5,
+      "longestInvisibleOutsideHideS": 0.5,
+      "invisibleStateCounts": {
+        "hide": 60,
+        "follow": 1
+      },
+      "hidingHudCounts": {
+        "Corgi \u00b7 hiding": 60
+      },
+      "longestPlatformDwellS": 11.5,
+      "minPlatformDistance": 0.24499643659921974,
+      "playerStart": {
+        "x": 3,
+        "z": 0
+      },
+      "playerEnd": {
+        "x": 248.60653686523438,
+        "z": 18.370885848999023
+      },
+      "playerZRange": [
+        -27.9986572265625,
+        18.370885848999023
+      ],
+      "missingRenderRootSamples": 0,
+      "parentInvisibleOutsideHideSamples": 0,
+      "maxRenderWorldXZErrorM": 0.1606278444790248
+    },
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "photoCount": 63,
+    "backend": [
+      "webgpu"
+    ],
+    "qualities": [
+      "low"
+    ],
+    "allPhotosUnpaused": true,
+    "maxBars": 10
+  },
+  {
+    "tag": "vf5t-L6-webgpu-low-z1.5",
+    "runs": [
+      {
+        "level": "L6",
+        "entry": "debug",
+        "heroine": "male",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 217,
+        "simSeconds": 205,
+        "maxNoProgressSeconds": 32.8,
+        "deaths": 0,
+        "assists": 1,
+        "attacks": {
+          "weapon.army-mg": 1339,
+          "weapon.fire-axe": 2
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "steps": [
+          {
+            "id": "shelter",
+            "text": "Look around the shelter \u00b7 rest while you can",
+            "tick": 11,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "stop",
+            "text": "Stop the infected \u00b7 Retreat in 0:36",
+            "tick": 1993,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "retreat",
+            "text": "Cover the retreat through the tunnel \u00b7 241\u00a0m",
+            "tick": 4155,
+            "marker": {
+              "anchor": "l6-next",
+              "ring": {
+                "x": 242,
+                "y": 0.6,
+                "z": 15
+              },
+              "drawn": [
+                242,
+                0.6,
+                15
+              ],
+              "playerY": 1.3200000524520874,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "exit",
+            "text": "Bring the survivors into the night \u00b7 0/1 out \u00b7 24\u00a0m",
+            "tick": 11338,
+            "marker": {
+              "anchor": "night-exit",
+              "ring": {
+                "x": 273,
+                "y": 3.9,
+                "z": 15
+              },
+              "drawn": [
+                273,
+                3.9,
+                15
+              ],
+              "playerY": 1.3200000524520874,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [
+      {
+        "level": "L6",
+        "tick": 1237,
+        "x": 3,
+        "z": 0,
+        "severity": "P2",
+        "kind": "stuck-navigating",
+        "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look around the shelter \u00b7 rest while you can\"",
+        "captures": [
+          "captures/vf5t-L6-webgpu-low-z1.5-L6-1237-stuck-navigating.jpg"
+        ],
+        "step": "shelter",
+        "objective": "Look around the shelter \u00b7 rest while you can"
+      }
+    ],
+    "riotCombat": [
+      {
+        "id": 72,
+        "firstPlayerHitTick": 3529,
+        "firstObservedDownTick": 4110,
+        "elapsedSimSeconds": 9.683333333333334,
+        "positiveFrontGlanceHits": 74,
+        "firstBreakTick": 3733,
+        "brokenWindowHits": 5,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      },
+      {
+        "id": 59,
+        "firstPlayerHitTick": 4274,
+        "firstObservedDownTick": 4521,
+        "elapsedSimSeconds": 4.116666666666666,
+        "positiveFrontGlanceHits": 50,
+        "firstBreakTick": 4468,
+        "brokenWindowHits": 14,
+        "scope": "Observed player hits; elapsed time includes retargeting and other actors may also damage the target. Down is recoverable, not permanent death."
+      }
+    ],
+    "trace": {
+      "samples": 409,
+      "startTick": 30,
+      "endTick": 12270,
+      "maxDistance": 8.86594727610462,
+      "finalDistance": 1.2645375631050064,
+      "longestAbove10s": 0,
+      "longestAbove8s": 1.5,
+      "longestInvisibleOutsideHideS": 0,
+      "invisibleStateCounts": {
+        "hide": 20
+      },
+      "hidingHudCounts": {
+        "Corgi \u00b7 hiding": 20
+      },
+      "longestPlatformDwellS": 0,
+      "minPlatformDistance": 28.09760844987579,
+      "playerStart": {
+        "x": 3,
+        "z": 0
+      },
+      "playerEnd": {
+        "x": 263.7727966308594,
+        "z": 11.5240478515625
+      },
+      "playerZRange": [
+        -1.3816812023523988e-16,
+        17.084247589111328
+      ],
+      "missingRenderRootSamples": 0,
+      "parentInvisibleOutsideHideSamples": 0,
+      "maxRenderWorldXZErrorM": 0.14762591969891747
+    },
+    "sourceHash": "6bdba4b39785f5dce248166e3b5a76752ac29ea9266a763511f0340559275af5",
+    "photoCount": 41,
+    "backend": [
+      "webgpu"
+    ],
+    "qualities": [
+      "low"
+    ],
+    "allPhotosUnpaused": true,
+    "maxBars": 26
+  },
+  {
+    "tag": "vf5v-L5-webgl2-high-z0.5",
+    "runs": [
+      {
+        "level": "L5",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 421,
+        "simSeconds": 413,
+        "maxNoProgressSeconds": 84.15,
+        "deaths": 0,
+        "assists": 2,
+        "attacks": {
+          "weapon.army-mg": 3694
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "steps": [
+          {
+            "id": "emerge",
+            "text": "Unbar the cellar door \u00b7 4\u00a0m",
+            "tick": 14,
+            "marker": {
+              "anchor": "l5-brace",
+              "ring": {
+                "x": 74.6,
+                "y": 0,
+                "z": -1.4
+              },
+              "drawn": [
+                74.6,
+                0.05,
+                -1.4
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "look",
+            "text": "Look for anyone still alive",
+            "tick": 871,
+            "marker": {
+              "anchor": "l5-brace",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.8500000238418579,
+              "pinVisible": false
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [
+      {
+        "level": "L5",
+        "tick": 9319,
+        "x": -32.8,
+        "z": -11.1,
+        "severity": "P2",
+        "kind": "stuck-navigating",
+        "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look for anyone still alive \u00b7 Survivors found 1/5\"",
+        "captures": [
+          "captures/vf5v-L5-webgl2-high-z0.5-L5-9319-stuck-navigating.jpg"
+        ],
+        "step": "look",
+        "objective": "Look for anyone still alive"
+      }
+    ],
+    "riotCombat": [],
+    "trace": {
+      "samples": 825,
+      "startTick": 30,
+      "endTick": 24750,
+      "maxDistance": 16.524474053186687,
+      "finalDistance": 2.4796352766590095,
+      "longestAbove10s": 3.5,
+      "longestAbove8s": 3.5,
+      "longestInvisibleOutsideHideS": 0,
+      "invisibleStateCounts": {
+        "hide": 20
+      },
+      "hidingHudCounts": {
+        "Corgi \u00b7 hiding": 20
+      },
+      "longestPlatformDwellS": 0,
+      "minPlatformDistance": 8.170530319245135,
+      "playerStart": {
+        "x": 75.30000305175781,
+        "z": -5.400000095367432
+      },
+      "playerEnd": {
+        "x": -32.79620361328125,
+        "z": -11.287874221801758
+      },
+      "playerZRange": [
+        -45.536991119384766,
+        -1.0550035238265991
+      ],
+      "missingRenderRootSamples": 0,
+      "parentInvisibleOutsideHideSamples": 0,
+      "maxRenderWorldXZErrorM": 0.04480973370268408
+    },
+    "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
+    "photoCount": 32,
+    "backend": [
+      "webgl"
+    ],
+    "qualities": [
+      "high"
+    ],
+    "allPhotosUnpaused": true,
+    "maxBars": 30
+  },
+  {
+    "tag": "vf5v-L5-webgl2-high-z1.5",
+    "runs": [
+      {
+        "level": "L5",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 210,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 7.516666666666667,
+        "deaths": 0,
+        "assists": 5,
+        "attacks": {
+          "weapon.army-mg": 1313
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "steps": [
+          {
+            "id": "emerge",
+            "text": "Unbar the cellar door \u00b7 4\u00a0m",
+            "tick": 21,
+            "marker": {
+              "anchor": "l5-brace",
+              "ring": {
+                "x": 74.6,
+                "y": 0,
+                "z": -1.4
+              },
+              "drawn": [
+                74.6,
+                0.05,
+                -1.4
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "look",
+            "text": "Look for anyone still alive",
+            "tick": 838,
+            "marker": {
+              "anchor": "l5-brace",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.8500000238418579,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "metro",
+            "text": "Lead the survivors down into the Metro \u00b7 Survivors in 0/1 \u00b7 67\u00a0m",
+            "tick": 10142,
+            "marker": {
+              "anchor": "l5-metro-in",
+              "ring": {
+                "x": 37.485400000000006,
+                "y": 0.94,
+                "z": -48.44
+              },
+              "drawn": [
+                37.49,
+                0.94,
+                -48.44
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [],
+    "riotCombat": [],
+    "trace": {
+      "samples": 407,
+      "startTick": 30,
+      "endTick": 12210,
+      "maxDistance": 25.183369938836137,
+      "finalDistance": 0.9852547877097211,
+      "longestAbove10s": 3.0,
+      "longestAbove8s": 4.5,
+      "longestInvisibleOutsideHideS": 0,
+      "invisibleStateCounts": {
+        "hide": 60
+      },
+      "hidingHudCounts": {
+        "Corgi \u00b7 hiding": 60
+      },
+      "longestPlatformDwellS": 0,
+      "minPlatformDistance": 5.428340354039213,
+      "playerStart": {
+        "x": 75.30000305175781,
+        "z": -5.400000095367432
+      },
+      "playerEnd": {
+        "x": 38.16441345214844,
+        "z": -48.62504196166992
+      },
+      "playerZRange": [
+        -48.62504196166992,
+        56.30033874511719
+      ],
+      "missingRenderRootSamples": 0,
+      "parentInvisibleOutsideHideSamples": 0,
+      "maxRenderWorldXZErrorM": 0.1624969099637627
+    },
+    "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
+    "photoCount": 30,
+    "backend": [
+      "webgl"
+    ],
+    "qualities": [
+      "high"
+    ],
+    "allPhotosUnpaused": true,
+    "maxBars": 20
+  },
+  {
+    "tag": "vf5v-L5-webgl2-low-z0.5",
+    "runs": [
+      {
+        "level": "L5",
+        "entry": "continue",
+        "heroine": "male",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 421,
+        "simSeconds": 412,
+        "maxNoProgressSeconds": 52.483333333333334,
+        "deaths": 0,
+        "assists": 5,
+        "attacks": {
+          "weapon.army-mg": 2682
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick"
+        ],
+        "steps": [
+          {
+            "id": "emerge",
+            "text": "Unbar the cellar door \u00b7 4\u00a0m",
+            "tick": 17,
+            "marker": {
+              "anchor": "l5-brace",
+              "ring": {
+                "x": 74.6,
+                "y": 0,
+                "z": -1.4
+              },
+              "drawn": [
+                74.6,
+                0.05,
+                -1.4
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "look",
+            "text": "Look for anyone still alive",
+            "tick": 876,
+            "marker": {
+              "anchor": "l5-brace",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.8500000238418579,
+              "pinVisible": false
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [
+      {
+        "level": "L5",
+        "tick": 10894,
+        "x": 5.5,
+        "z": 41.5,
+        "severity": "P2",
+        "kind": "stuck-navigating",
+        "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look for anyone still alive \u00b7 Survivors found 1/5\"",
+        "captures": [
+          "captures/vf5v-L5-webgl2-low-z0.5-L5-10894-stuck-navigating.jpg"
+        ],
+        "step": "look",
+        "objective": "Look for anyone still alive"
+      }
+    ],
+    "riotCombat": [],
+    "trace": {
+      "samples": 825,
+      "startTick": 30,
+      "endTick": 24750,
+      "maxDistance": 14.142423119340927,
+      "finalDistance": 1.180379143382712,
+      "longestAbove10s": 2.5,
+      "longestAbove8s": 4.0,
+      "longestInvisibleOutsideHideS": 0,
+      "invisibleStateCounts": {
+        "hide": 160
+      },
+      "hidingHudCounts": {
+        "Corgi \u00b7 hiding": 160
+      },
+      "longestPlatformDwellS": 0,
+      "minPlatformDistance": 12.18279497479467,
+      "playerStart": {
+        "x": 75.30000305175781,
+        "z": -5.400000095367432
+      },
+      "playerEnd": {
+        "x": -35.75037384033203,
+        "z": 3.0085103511810303
+      },
+      "playerZRange": [
+        -45.47441482543945,
+        56.317161560058594
+      ],
+      "missingRenderRootSamples": 0,
+      "parentInvisibleOutsideHideSamples": 0,
+      "maxRenderWorldXZErrorM": 0.28407295375615227
+    },
+    "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
+    "photoCount": 42,
+    "backend": [
+      "webgl"
+    ],
+    "qualities": [
+      "low"
+    ],
+    "allPhotosUnpaused": true,
+    "maxBars": 17
+  },
+  {
+    "tag": "vf5v-L5-webgl2-low-z1.5",
+    "runs": [
+      {
+        "level": "L5",
+        "entry": "continue",
+        "heroine": "male",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 212,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 12.816666666666666,
+        "deaths": 0,
+        "assists": 5,
+        "attacks": {
+          "weapon.army-mg": 1030
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "steps": [
+          {
+            "id": "emerge",
+            "text": "Unbar the cellar door \u00b7 4\u00a0m",
+            "tick": 27,
+            "marker": {
+              "anchor": "l5-brace",
+              "ring": {
+                "x": 74.6,
+                "y": 0,
+                "z": -1.4
+              },
+              "drawn": [
+                74.6,
+                0.05,
+                -1.4
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "look",
+            "text": "Look for anyone still alive",
+            "tick": 876,
+            "marker": {
+              "anchor": "l5-brace",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.8500000238418579,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "metro",
+            "text": "Lead the survivors down into the Metro \u00b7 Survivors in 0/1 \u00b7 66\u00a0m",
+            "tick": 10364,
+            "marker": {
+              "anchor": "l5-metro-in",
+              "ring": {
+                "x": 37.485400000000006,
+                "y": 0.94,
+                "z": -48.44
+              },
+              "drawn": [
+                37.49,
+                0.94,
+                -48.44
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [],
+    "riotCombat": [],
+    "trace": {
+      "samples": 412,
+      "startTick": 30,
+      "endTick": 12360,
+      "maxDistance": 45.469498124383506,
+      "finalDistance": 0.8951078498059359,
+      "longestAbove10s": 9.5,
+      "longestAbove8s": 10.0,
+      "longestInvisibleOutsideHideS": 0,
+      "invisibleStateCounts": {
+        "hide": 40
+      },
+      "hidingHudCounts": {
+        "Corgi \u00b7 hiding": 40
+      },
+      "longestPlatformDwellS": 0,
+      "minPlatformDistance": 5.893121726361146,
+      "playerStart": {
+        "x": 75.30000305175781,
+        "z": -5.400000095367432
+      },
+      "playerEnd": {
+        "x": 37.18582534790039,
+        "z": -48.89531326293945
+      },
+      "playerZRange": [
+        -48.89531326293945,
+        56.29606628417969
+      ],
+      "missingRenderRootSamples": 0,
+      "parentInvisibleOutsideHideSamples": 0,
+      "maxRenderWorldXZErrorM": 0.1817881581576227
+    },
+    "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
+    "photoCount": 28,
+    "backend": [
+      "webgl"
+    ],
+    "qualities": [
+      "low"
+    ],
+    "allPhotosUnpaused": true,
+    "maxBars": 9
+  },
+  {
+    "tag": "vf5v-L5-webgpu-high-z0.5",
+    "runs": [
+      {
+        "level": "L5",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 299,
+        "simSeconds": 293,
+        "maxNoProgressSeconds": 90.01666666666667,
+        "deaths": 0,
+        "assists": 5,
+        "attacks": {},
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick"
+        ],
+        "steps": [
+          {
+            "id": "emerge",
+            "text": "Unbar the cellar door \u00b7 4\u00a0m",
+            "tick": 26,
+            "marker": {
+              "anchor": "l5-brace",
+              "ring": {
+                "x": 74.6,
+                "y": 0,
+                "z": -1.4
+              },
+              "drawn": [
+                74.6,
+                0.05,
+                -1.4
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "look",
+            "text": "Look for anyone still alive",
+            "tick": 873,
+            "marker": {
+              "anchor": "l5-brace",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.8500000238418579,
+              "pinVisible": false
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [
+      {
+        "level": "L5",
+        "tick": 13398,
+        "x": -42.9,
+        "z": 3,
+        "severity": "P2",
+        "kind": "stuck-navigating",
+        "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look for anyone still alive \u00b7 Survivors found 3/5\"",
+        "captures": [
+          "captures/vf5v-L5-webgpu-high-z0.5-L5-13398-stuck-navigating.jpg"
+        ],
+        "step": "look",
+        "objective": "Look for anyone still alive"
+      },
+      {
+        "level": "L5",
+        "tick": 17591,
+        "x": -36.8,
+        "z": 3,
+        "severity": "P0",
+        "kind": "cannot-finish",
+        "text": "No visible progress for 90.0 s; stopping without advancing the objective",
+        "captures": [
+          "captures/vf5v-L5-webgpu-high-z0.5-L5-17591-cannot-finish.jpg"
+        ],
+        "step": "look",
+        "objective": "Look for anyone still alive"
+      }
+    ],
+    "riotCombat": [],
+    "trace": {
+      "samples": 586,
+      "startTick": 30,
+      "endTick": 17580,
+      "maxDistance": 9.83197158596589,
+      "finalDistance": 0.8256774213255693,
+      "longestAbove10s": 0,
+      "longestAbove8s": 1.5,
+      "longestInvisibleOutsideHideS": 0,
+      "invisibleStateCounts": {
+        "hide": 171
+      },
+      "hidingHudCounts": {
+        "Corgi \u00b7 hiding": 171
+      },
+      "longestPlatformDwellS": 0,
+      "minPlatformDistance": 12.042906557600238,
+      "playerStart": {
+        "x": 75.30000305175781,
+        "z": -5.400000095367432
+      },
+      "playerEnd": {
+        "x": -35.92924118041992,
+        "z": 3.0081076622009277
+      },
+      "playerZRange": [
+        -45.47444534301758,
+        49.162723541259766
+      ],
+      "missingRenderRootSamples": 0,
+      "parentInvisibleOutsideHideSamples": 0,
+      "maxRenderWorldXZErrorM": 0.3524387311774885
+    },
+    "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
+    "photoCount": 29,
+    "backend": [
+      "webgpu"
+    ],
+    "qualities": [
+      "high"
+    ],
+    "allPhotosUnpaused": true,
+    "maxBars": 40
+  },
+  {
+    "tag": "vf5v-L5-webgpu-high-z1.5",
+    "runs": [
+      {
+        "level": "L5",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 420,
+        "simSeconds": 391,
+        "maxNoProgressSeconds": 65.88333333333334,
+        "deaths": 0,
+        "assists": 5,
+        "attacks": {
+          "weapon.army-mg": 3203
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick"
+        ],
+        "steps": [
+          {
+            "id": "emerge",
+            "text": "Unbar the cellar door \u00b7 4\u00a0m",
+            "tick": 20,
+            "marker": {
+              "anchor": "l5-brace",
+              "ring": {
+                "x": 74.6,
+                "y": 0,
+                "z": -1.4
+              },
+              "drawn": [
+                74.6,
+                0.05,
+                -1.4
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "look",
+            "text": "Look for anyone still alive",
+            "tick": 859,
+            "marker": {
+              "anchor": "l5-brace",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.8500000238418579,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "metro",
+            "text": "Lead the survivors down into the Metro \u00b7 Survivors in 0/1 \u00b7 66\u00a0m",
+            "tick": 10874,
+            "marker": {
+              "anchor": "l5-metro-in",
+              "ring": {
+                "x": 37.485400000000006,
+                "y": 0.94,
+                "z": -48.44
+              },
+              "drawn": [
+                37.49,
+                0.94,
+                -48.44
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [
+      {
+        "level": "L5",
+        "tick": 18821,
+        "x": 37.9,
+        "z": -47.7,
+        "severity": "P2",
+        "kind": "stuck-at-ring",
+        "text": "20 s without objective progress standing at the ring (1.0 m); HUD: \"Lead the survivors down into the Metro \u00b7 Go down the stairs \u00b7 1\u00a0m\"",
+        "captures": [
+          "captures/vf5v-L5-webgpu-high-z1.5-L5-18821-stuck-at-ring.jpg"
+        ],
+        "step": "metro",
+        "objective": "Lead the survivors down into the Metro \u00b7 Go down the stairs \u00b7 1\u00a0m"
+      }
+    ],
+    "riotCombat": [],
+    "trace": {
+      "samples": 781,
+      "startTick": 30,
+      "endTick": 23430,
+      "maxDistance": 9.896902834004806,
+      "finalDistance": 3.4846599644452976,
+      "longestAbove10s": 0,
+      "longestAbove8s": 1.5,
+      "longestInvisibleOutsideHideS": 0,
+      "invisibleStateCounts": {
+        "hide": 260
+      },
+      "hidingHudCounts": {
+        "Corgi \u00b7 hiding": 260
+      },
+      "longestPlatformDwellS": 0,
+      "minPlatformDistance": 16.938897201013297,
+      "playerStart": {
+        "x": 75.30000305175781,
+        "z": -5.400000095367432
+      },
+      "playerEnd": {
+        "x": 37.89126205444336,
+        "z": -47.756961822509766
+      },
+      "playerZRange": [
+        -47.756961822509766,
+        56.302371978759766
+      ],
+      "missingRenderRootSamples": 0,
+      "parentInvisibleOutsideHideSamples": 0,
+      "maxRenderWorldXZErrorM": 0.39580156437311503
+    },
+    "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
+    "photoCount": 41,
+    "backend": [
+      "webgpu"
+    ],
+    "qualities": [
+      "high"
+    ],
+    "allPhotosUnpaused": true,
+    "maxBars": 20
+  },
+  {
+    "tag": "vf5v-L5-webgpu-low-z0.5",
+    "runs": [
+      {
+        "level": "L5",
+        "entry": "continue",
+        "heroine": "male",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 272,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 16.929,
+        "deaths": 0,
+        "assists": 5,
+        "attacks": {
+          "weapon.army-mg": 1303
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "steps": [
+          {
+            "id": "emerge",
+            "text": "Unbar the cellar door \u00b7 4\u00a0m",
+            "tick": 13,
+            "marker": {
+              "anchor": "l5-brace",
+              "ring": {
+                "x": 74.6,
+                "y": 0,
+                "z": -1.4
+              },
+              "drawn": [
+                74.6,
+                0.05,
+                -1.4
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "look",
+            "text": "Look for anyone still alive",
+            "tick": 875,
+            "marker": {
+              "anchor": "l5-brace",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.8500000238418579,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "metro",
+            "text": "Lead the survivors down into the Metro \u00b7 Survivors in 0/1 \u00b7 66\u00a0m",
+            "tick": 14429,
+            "marker": {
+              "anchor": "l5-metro-in",
+              "ring": {
+                "x": 37.485400000000006,
+                "y": 0.94,
+                "z": -48.44
+              },
+              "drawn": [
+                37.49,
+                0.94,
+                -48.44
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [],
+    "riotCombat": [],
+    "trace": {
+      "samples": 534,
+      "startTick": 30,
+      "endTick": 16020,
+      "maxDistance": 7.334674728675498,
+      "finalDistance": 1.5100377603830062,
+      "longestAbove10s": 0,
+      "longestAbove8s": 0,
+      "longestInvisibleOutsideHideS": 0,
+      "invisibleStateCounts": {
+        "hide": 80
+      },
+      "hidingHudCounts": {
+        "Corgi \u00b7 hiding": 80
+      },
+      "longestPlatformDwellS": 0,
+      "minPlatformDistance": 9.552763997442735,
+      "playerStart": {
+        "x": 75.30000305175781,
+        "z": -5.400000095367432
+      },
+      "playerEnd": {
+        "x": 37.19041061401367,
+        "z": -48.57811737060547
+      },
+      "playerZRange": [
+        -50.092116380619125,
+        52.644222259521484
+      ],
+      "missingRenderRootSamples": 0,
+      "parentInvisibleOutsideHideSamples": 0,
+      "maxRenderWorldXZErrorM": 0.20262136087236912
+    },
+    "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
+    "photoCount": 40,
+    "backend": [
+      "webgpu"
+    ],
+    "qualities": [
+      "low"
+    ],
+    "allPhotosUnpaused": true,
+    "maxBars": 5
+  },
+  {
+    "tag": "vf5v-L5-webgpu-low-z1.5",
+    "runs": [
+      {
+        "level": "L5",
+        "entry": "continue",
+        "heroine": "male",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 341,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 25.85,
+        "deaths": 0,
+        "assists": 5,
+        "attacks": {
+          "weapon.army-mg": 1388
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick"
+        ],
+        "steps": [
+          {
+            "id": "emerge",
+            "text": "Unbar the cellar door \u00b7 4\u00a0m",
+            "tick": 27,
+            "marker": {
+              "anchor": "l5-brace",
+              "ring": {
+                "x": 74.6,
+                "y": 0,
+                "z": -1.4
+              },
+              "drawn": [
+                74.6,
+                0.05,
+                -1.4
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "look",
+            "text": "Look for anyone still alive",
+            "tick": 832,
+            "marker": {
+              "anchor": "l5-brace",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.8500000238418579,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "metro",
+            "text": "Lead the survivors down into the Metro \u00b7 Survivors in 0/2 \u00b7 66\u00a0m",
+            "tick": 16949,
+            "marker": {
+              "anchor": "l5-metro-in",
+              "ring": {
+                "x": 37.485400000000006,
+                "y": 0.94,
+                "z": -48.44
+              },
+              "drawn": [
+                37.49,
+                0.94,
+                -48.44
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [
+      {
+        "level": "L5",
+        "tick": 14896,
+        "x": -40.8,
+        "z": 5.8,
+        "severity": "P2",
+        "kind": "stuck-navigating",
+        "text": "22 s without objective progress (distance none m, no marker: true); HUD: \"Look for anyone still alive \u00b7 Survivors found 3/5\"",
+        "captures": [
+          "captures/vf5v-L5-webgpu-low-z1.5-L5-14896-stuck-navigating.jpg"
+        ],
+        "step": "look",
+        "objective": "Look for anyone still alive"
+      }
+    ],
+    "riotCombat": [],
+    "trace": {
+      "samples": 635,
+      "startTick": 30,
+      "endTick": 19050,
+      "maxDistance": 8.116964502826756,
+      "finalDistance": 1.8282417017803017,
+      "longestAbove10s": 0,
+      "longestAbove8s": 0.5,
+      "longestInvisibleOutsideHideS": 0,
+      "invisibleStateCounts": {
+        "hide": 60
+      },
+      "hidingHudCounts": {
+        "Corgi \u00b7 hiding": 60
+      },
+      "longestPlatformDwellS": 0,
+      "minPlatformDistance": 6.640121758698845,
+      "playerStart": {
+        "x": 75.30000305175781,
+        "z": -5.400000095367432
+      },
+      "playerEnd": {
+        "x": 38.380340576171875,
+        "z": -49.12138748168945
+      },
+      "playerZRange": [
+        -49.12138748168945,
+        54.847068786621094
+      ],
+      "missingRenderRootSamples": 0,
+      "parentInvisibleOutsideHideSamples": 0,
+      "maxRenderWorldXZErrorM": 0.43133356089185515
+    },
+    "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
+    "photoCount": 41,
+    "backend": [
+      "webgpu"
+    ],
+    "qualities": [
+      "low"
+    ],
+    "allPhotosUnpaused": true,
+    "maxBars": 14
+  }
+]

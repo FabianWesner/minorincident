@@ -2,7 +2,7 @@
   "version": 1,
   "level": "L5",
   "tier": "high",
-  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+  "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
   "fixtureHash": "df526016e398100e295b42766eea3ea1190e551b57fa24999faa743cf1e3f7c4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
   "checks": [
@@ -15,7 +15,7 @@
       "value": {
         "checkpoint": "outside",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "6c8bebdc011103c9f2cea18f9971381ac23cb95336ea0ad6e8019f96f3ada528",
+        "snapshotSha256": "abebe9b05e732fe3bab14340e79feb70e815d19bbfd7515afff241e735ff40d1",
         "damage": 100,
         "expected": {
           "id": "outside",
@@ -105,7 +105,7 @@
       "value": {
         "checkpoint": "survivor-1",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "b075d582899ffaa5f1285d152d5f5327e0f55d5dd0d2cf1e9d9c517c74ee0c0b",
+        "snapshotSha256": "131009395138604be2b0deb396b92983e2c3e951fc7ebd6036abcd41462962e5",
         "damage": 100,
         "expected": {
           "id": "survivor-1",
@@ -197,7 +197,7 @@
       "value": {
         "checkpoint": "survivor-2",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "0c4efdd93dd14d1eba3cb696664d5a4feba2e7ca9ca3d3f4c686ecdc74c92774",
+        "snapshotSha256": "15e242d34a8d469e07a5e9702b194f2911d8058909f94189da41096608c23a28",
         "damage": 100,
         "expected": {
           "id": "survivor-2",
@@ -239,7 +239,6 @@
             383,
             384,
             385,
-            386,
             387,
             388
           ],
@@ -290,15 +289,15 @@
       "value": {
         "checkpoint": "survivor-3",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "1fb07def32dd6829e3234e3197cdfc340ff68ddabec34bd00e3e9cbae95915c4",
+        "snapshotSha256": "86ee161f584b2827d8b99f57a8fe5737d0a17b7f2506e913f989f473b1b2c13e",
         "damage": 100,
         "expected": {
           "id": "survivor-3",
           "anchor": {
-            "x": -45.39025115966797,
+            "x": -45.39076614379883,
             "y": 0.8500000238418579,
-            "z": 49.856407165527344,
-            "yaw": -0.35257871746777325
+            "z": 49.8560676574707,
+            "yaw": 5.930268425121925
           },
           "gates": {
             "l5-metro-shutter": true
@@ -333,7 +332,6 @@
             383,
             384,
             385,
-            386,
             387,
             388
           ],
@@ -343,8 +341,8 @@
         "observed": {
           "id": "survivor-3",
           "position": {
-            "x": -45.39025115966797,
-            "z": 49.856407165527344
+            "x": -45.39076614379883,
+            "z": 49.8560676574707
           },
           "gates": {
             "l5-metro-shutter": true
@@ -384,15 +382,15 @@
       "value": {
         "checkpoint": "survivor-4",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "d792bae797f198ca11fa33157e3e5d71e3be63d2215b691757958a2cccdafd13",
+        "snapshotSha256": "fd124db897031d1b42393d98328814d36bb8ca403aaeba45056c0c7564206b4d",
         "damage": 100,
         "expected": {
           "id": "survivor-4",
           "anchor": {
-            "x": -4.805240631103516,
+            "x": -4.80454683303833,
             "y": 0.7089999914169312,
-            "z": 2.6965067386627197,
-            "yaw": 0.23425459973531562
+            "z": 2.6959431171417236,
+            "yaw": 0.23332158771916522
           },
           "gates": {
             "l5-metro-shutter": true
@@ -427,7 +425,6 @@
             383,
             384,
             385,
-            386,
             387,
             388
           ],
@@ -437,8 +434,8 @@
         "observed": {
           "id": "survivor-4",
           "position": {
-            "x": -4.805240631103516,
-            "z": 2.6965067386627197
+            "x": -4.80454683303833,
+            "z": 2.6959431171417236
           },
           "gates": {
             "l5-metro-shutter": true
@@ -478,15 +475,15 @@
       "value": {
         "checkpoint": "survivor-5",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "848f77c81843ba0fbc01a2f994beb1fae74335bdb53fbfaf561ae3fbad84e018",
+        "snapshotSha256": "995985c90cc531aef101cb9727337585535688a7341d11abdc8a552fe6fd8992",
         "damage": 100,
         "expected": {
           "id": "survivor-5",
           "anchor": {
-            "x": 57.566429138183594,
+            "x": 57.572967529296875,
             "y": 0.8500000238418579,
-            "z": 41.29701614379883,
-            "yaw": -0.00688335406922374
+            "z": 41.308963775634766,
+            "yaw": 0.020984743520537138
           },
           "gates": {
             "l5-metro-shutter": true
@@ -522,7 +519,6 @@
             383,
             384,
             385,
-            386,
             387,
             388
           ],
@@ -532,8 +528,8 @@
         "observed": {
           "id": "survivor-5",
           "position": {
-            "x": 57.566429138183594,
-            "z": 41.29701614379883
+            "x": 57.572967529296875,
+            "z": 41.308963775634766
           },
           "gates": {
             "l5-metro-shutter": true
@@ -567,8 +563,8 @@
   ],
   "errors": [],
   "control": {
-    "observed": "ced11a1e",
-    "control": "ced11a1e",
+    "observed": "14c27efd",
+    "control": "14c27efd",
     "identical": true
   }
 }

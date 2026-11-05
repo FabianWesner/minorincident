@@ -31,7 +31,7 @@ const server = spawn(process.execPath, ['node_modules/vite/bin/vite.js', 'previe
 let code = 0;
 try {
   for (let i = 0; i < 100; i++) { try { if ((await fetch(origin)).ok) break; } catch { /* startup */ } await new Promise(done => setTimeout(done, 100)); }
-  Object.assign(process.env, { PLAYTEST_BACKEND: backend, PLAYTEST_GOD: '1', PLAYTEST_NO_FRAME_TIMING: '1', PLAYTEST_FRAME_GATE: '0', PLAYTEST_CPU_PROFILE: '0', PLAYTEST_ACCEPTANCE_CAPTURES: '1', PLAYTEST_SHOT_SECONDS: process.env.PLAYTEST_SHOT_SECONDS ?? '5' });
+  Object.assign(process.env, { PLAYTEST_BACKEND: backend, PLAYTEST_GOD: process.env.PLAYTEST_GOD ?? '1', PLAYTEST_NO_FRAME_TIMING: '1', PLAYTEST_FRAME_GATE: '0', PLAYTEST_CPU_PROFILE: '0', PLAYTEST_ACCEPTANCE_CAPTURES: process.env.PLAYTEST_ACCEPTANCE_CAPTURES ?? '1', PLAYTEST_SHOT_SECONDS: process.env.PLAYTEST_SHOT_SECONDS ?? '5' });
   const result = await runSession({ origin, out, levels: [level], quality: tier as 'low' | 'high', zoom: Number(zoom), heroine: heroine as 'female' | 'male', weapon,
     entry: source === 'fresh' ? 'debug' : 'continue', profile, levelMinutes: 9, sampleSeconds: Number(seconds), stopAfterLevel: true, tag: label, noSkip: true,
     saveOnYield: level === 'L10' ? true : undefined } as Parameters<typeof runSession>[0]);
