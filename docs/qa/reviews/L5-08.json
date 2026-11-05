@@ -1,27 +1,22 @@
 {
   "row": "L5-08",
   "status": "FAIL",
-  "reviewer": "Codex fix63-a",
-  "date": "2026-11-05",
-  "commit": "eabc9e2263ceb6c27d9811f8566b1eb05b3b5c7e",
+  "reviewer": "Codex/sweep-b",
+  "date": "2026-11-06",
+  "commit": "e68096dc4a993f83d9c3e100efc58c7a49505c2f",
   "clauses": [
     {
       "clause": "Followers: 2\u20135 m behind (PO 2026-11-05 tolerance: \u2265 95 % of calm straight-walk ticks in 2\u20135 m and no out-of-band run longer than 2 s), within 8 m \u2265 80 % of non-combat time, run 3.8 m/s (0.84\u00d7 player) in combat; outside combat a follower more than 5 m behind catches up at up to 1.05\u00d7 the courier's current speed until back in the band (orchestrator 2026-11-04: a fixed 3.8 m/s could never hold 2\u20135 m behind a 4.5 m/s courier, fix53-b); none slower than the group (G-13); every follower's bar visible.",
       "verdict": "FAIL",
-      "note": "PO tolerance is applied to every calm straight-walk tick, including catch-up. Low followers31/32/28 reach92.12/89.22/85.26percent and fail95percent; maximum excursions50/115/87ticks meet120tick cap. High all five reach96.81\u2013100percent with maximum44ticks and pass this band clause. Both native routes complete. Other visual and combat-speed subclauses remain unqualified; no L5 game/controller change."
+      "note": "Current source fails calm straight-walk formation tolerance at both tiers and an individual low-tier pace ratio. Full per-ID95%/2s counters and counterexample ticks/positions are retained. Within8m calm share passes. Combat3.8m/s and every visible bar are still unqualified; neither is inferred from route medians. Whole-row FAIL is established by formation counterexamples."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix63-a/L5-08-native-proof.json",
-      "sha256": "61e0fd99301de708c5d4a4c0d206426de8d9efe5f86e9fc8cd87d8a9b6695531",
-      "what": "PO tolerance is applied to every calm straight-walk tick, including catch-up. Low followers31/32/28 reach92.12/89.22/85.26percent and fail95percent; maximum excursions50/115/87ticks meet120tick cap. High all five reach96.81\u2013100percent with maximum44ticks and pass this band clause. Both native routes complete. Other visual and combat-speed subclauses remain unqualified; no L5 game/controller change."
-    },
-    {
-      "file": "docs/reports/fix63-a/L5-08-tolerance-proof.json",
-      "sha256": "d0c7aad1a6b293869dcab5f0b30d5cd655ef62b48238458f4866cb1685af40f7",
-      "what": "Boundary and absent-coverage controls for exact95percent and120ticks."
+      "file": "docs/reports/sweep-b/rows/L5-08.json",
+      "sha256": "d742e843e1264ae52ef2c516504788f2559f9385e399b247ff16daec4e8ffb0c",
+      "what": "Current source fails calm straight-walk formation tolerance at both tiers and an individual low-tier pace ratio. Full per-ID95%/2s counters and counterexample ticks/positions are retained. Within8m calm share passes. Combat3.8m/s and every visible bar are still unqualified; neither is inferred from route medians. Whole-row FAIL is established by formation counterexamples."
     }
   ],
-  "notes": "Current PO tolerance; measured low-tier failure remains. Previous criterion review archived without rebinding."
+  "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS."
 }

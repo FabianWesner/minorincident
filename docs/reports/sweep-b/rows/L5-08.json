@@ -1,0 +1,805 @@
+{
+  "row": "L5-08",
+  "status": "FAIL",
+  "revision": "e68096dc4a993f83d9c3e100efc58c7a49505c2f",
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "criterion": "Followers: 2\u20135 m behind (PO 2026-11-05 tolerance: \u2265 95 % of calm straight-walk ticks in 2\u20135 m and no out-of-band run longer than 2 s), within 8 m \u2265 80 % of non-combat time, run 3.8 m/s (0.84\u00d7 player) in combat; outside combat a follower more than 5 m behind catches up at up to 1.05\u00d7 the courier's current speed until back in the band (orchestrator 2026-11-04: a fixed 3.8 m/s could never hold 2\u20135 m behind a 4.5 m/s courier, fix53-b); none slower than the group (G-13); every follower's bar visible.",
+  "criteriaSha256": "144ccc0bf29d3dab1d91e5b38e3bf40c1ee16f78c83917ef9c55207fcccbd63a",
+  "observation": "Current source fails calm straight-walk formation tolerance at both tiers and an individual low-tier pace ratio. Full per-ID95%/2s counters and counterexample ticks/positions are retained. Within8m calm share passes. Combat3.8m/s and every visible bar are still unqualified; neither is inferred from route medians. Whole-row FAIL is established by formation counterexamples.",
+  "checks": [
+    {
+      "id": "L5-08",
+      "clause": "observed human follower pace versus phase group median",
+      "level": "L5",
+      "tier": "low",
+      "policy": "complete",
+      "status": "FAIL",
+      "value": [
+        {
+          "phase": "step/look",
+          "id": 31,
+          "samples": 124,
+          "median": 4.451660289061458,
+          "groupMedian": 4.384109979816799,
+          "ratio": 1.0154079869245163
+        },
+        {
+          "phase": "step/look",
+          "id": 30,
+          "samples": 105,
+          "median": 4.3775301590234825,
+          "groupMedian": 4.384109979816799,
+          "ratio": 0.9984991661195527
+        },
+        {
+          "phase": "step/look",
+          "id": 32,
+          "samples": 77,
+          "median": 4.390689800610116,
+          "groupMedian": 4.384109979816799,
+          "ratio": 1.0015008338804476
+        },
+        {
+          "phase": "step/look",
+          "id": 28,
+          "samples": 45,
+          "median": 4.344867317209644,
+          "groupMedian": 4.384109979816799,
+          "ratio": 0.9910488872797861
+        },
+        {
+          "phase": "step/metro",
+          "id": 28,
+          "samples": 45,
+          "median": 4.435127091592671,
+          "groupMedian": 4.438702367524372,
+          "ratio": 0.9991945222644664
+        },
+        {
+          "phase": "step/metro",
+          "id": 29,
+          "samples": 45,
+          "median": 4.499597167977525,
+          "groupMedian": 4.438702367524372,
+          "ratio": 1.013719054672079
+        },
+        {
+          "phase": "step/metro",
+          "id": 30,
+          "samples": 45,
+          "median": 4.1031577293334065,
+          "groupMedian": 4.438702367524372,
+          "ratio": 0.9244047898669738
+        },
+        {
+          "phase": "step/metro",
+          "id": 31,
+          "samples": 44,
+          "median": 4.445002359117005,
+          "groupMedian": 4.438702367524372,
+          "ratio": 1.001419331838676
+        },
+        {
+          "phase": "step/metro",
+          "id": 32,
+          "samples": 45,
+          "median": 4.438702367524372,
+          "groupMedian": 4.438702367524372,
+          "ratio": 1
+        }
+      ],
+      "target": "every ratio\u22650.95; bar pixels and absolute formation remain open",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-complete.json"
+    },
+    {
+      "id": "L5-08",
+      "clause": "non-combat follower share within8m",
+      "level": "L5",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        {
+          "id": 31,
+          "followAt": 1921,
+          "calmTicks": 9398,
+          "within8Ticks": 9398,
+          "movingCalmTicks": 5023,
+          "behind2To5Ticks": 4514,
+          "maxMotionSpeed": 301.734983056324,
+          "straightTicks": 1346,
+          "inBandStraightTicks": 1324,
+          "badStraightTicks": 22,
+          "badRun": 0,
+          "maxBadRun": 18,
+          "counterexample": {
+            "tick": 8288,
+            "behind": 5.735864410244212,
+            "distance": 5.743286901752293,
+            "player": {
+              "x": 18.10102653503418,
+              "z": 37.75908660888672
+            },
+            "follower": {
+              "x": 18.148180096022166,
+              "z": 32.01599328059006
+            },
+            "playerSpeed": 4.500015345608727
+          },
+          "lastStraightTick": 11993,
+          "within8Share": 1,
+          "inBandStraightShare": 0.9836552748885586
+        },
+        {
+          "id": 30,
+          "followAt": 3770,
+          "calmTicks": 7641,
+          "within8Ticks": 7641,
+          "movingCalmTicks": 4347,
+          "behind2To5Ticks": 3645,
+          "maxMotionSpeed": 271.66155414412253,
+          "straightTicks": 1156,
+          "inBandStraightTicks": 1122,
+          "badStraightTicks": 34,
+          "badRun": 0,
+          "maxBadRun": 22,
+          "counterexample": {
+            "tick": 8589,
+            "behind": 5.634054937364163,
+            "distance": 5.751323092086743,
+            "player": {
+              "x": 25.04803466796875,
+              "z": 41.076026916503906
+            },
+            "follower": {
+              "x": 19.40624959757449,
+              "z": 42.19315651017093
+            },
+            "playerSpeed": 3.600051258759377
+          },
+          "lastStraightTick": 11993,
+          "within8Share": 1,
+          "inBandStraightShare": 0.9705882352941176
+        },
+        {
+          "id": 32,
+          "followAt": 5861,
+          "calmTicks": 5566,
+          "within8Ticks": 5566,
+          "movingCalmTicks": 3465,
+          "behind2To5Ticks": 3117,
+          "maxMotionSpeed": 222.00000000000017,
+          "straightTicks": 932,
+          "inBandStraightTicks": 892,
+          "badStraightTicks": 40,
+          "badRun": 0,
+          "maxBadRun": 40,
+          "counterexample": {
+            "tick": 8882,
+            "behind": 5.041010743919834,
+            "distance": 5.701173946139887,
+            "player": {
+              "x": 44.71242904663086,
+              "z": 41.209774017333984
+            },
+            "follower": {
+              "x": 39.653385118453116,
+              "z": 43.83835897828011
+            },
+            "playerSpeed": 4.499921415246303
+          },
+          "lastStraightTick": 11993,
+          "within8Share": 1,
+          "inBandStraightShare": 0.9570815450643777
+        },
+        {
+          "id": 28,
+          "followAt": 7381,
+          "calmTicks": 4208,
+          "within8Ticks": 4208,
+          "movingCalmTicks": 2543,
+          "behind2To5Ticks": 2190,
+          "maxMotionSpeed": 188.403821617291,
+          "straightTicks": 660,
+          "inBandStraightTicks": 625,
+          "badStraightTicks": 35,
+          "badRun": 0,
+          "maxBadRun": 23,
+          "counterexample": {
+            "tick": 8589,
+            "behind": 6.016777492635095,
+            "distance": 6.028835924663143,
+            "player": {
+              "x": 25.04803466796875,
+              "z": 41.076026916503906
+            },
+            "follower": {
+              "x": 19.02880373421545,
+              "z": 41.416205652841576
+            },
+            "playerSpeed": 3.600051258759377
+          },
+          "lastStraightTick": 11993,
+          "within8Share": 1,
+          "inBandStraightShare": 0.946969696969697
+        },
+        {
+          "id": 29,
+          "followAt": 9797,
+          "calmTicks": 2087,
+          "within8Ticks": 2087,
+          "movingCalmTicks": 1233,
+          "behind2To5Ticks": 1213,
+          "maxMotionSpeed": 271.66155414412253,
+          "straightTicks": 345,
+          "inBandStraightTicks": 345,
+          "badStraightTicks": 0,
+          "badRun": 0,
+          "maxBadRun": 0,
+          "counterexample": null,
+          "lastStraightTick": 11993,
+          "within8Share": 1,
+          "inBandStraightShare": 1
+        }
+      ],
+      "target": "each living follower within8m for at least80percent of calm ticks",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-complete.json"
+    },
+    {
+      "id": "L5-08",
+      "clause": "calm straight-walk follower distance tolerance",
+      "level": "L5",
+      "tier": "low",
+      "policy": "complete",
+      "status": "FAIL",
+      "value": [
+        {
+          "id": 31,
+          "followAt": 1921,
+          "calmTicks": 9398,
+          "within8Ticks": 9398,
+          "movingCalmTicks": 5023,
+          "behind2To5Ticks": 4514,
+          "maxMotionSpeed": 301.734983056324,
+          "straightTicks": 1346,
+          "inBandStraightTicks": 1324,
+          "badStraightTicks": 22,
+          "badRun": 0,
+          "maxBadRun": 18,
+          "counterexample": {
+            "tick": 8288,
+            "behind": 5.735864410244212,
+            "distance": 5.743286901752293,
+            "player": {
+              "x": 18.10102653503418,
+              "z": 37.75908660888672
+            },
+            "follower": {
+              "x": 18.148180096022166,
+              "z": 32.01599328059006
+            },
+            "playerSpeed": 4.500015345608727
+          },
+          "lastStraightTick": 11993,
+          "within8Share": 1,
+          "inBandStraightShare": 0.9836552748885586
+        },
+        {
+          "id": 30,
+          "followAt": 3770,
+          "calmTicks": 7641,
+          "within8Ticks": 7641,
+          "movingCalmTicks": 4347,
+          "behind2To5Ticks": 3645,
+          "maxMotionSpeed": 271.66155414412253,
+          "straightTicks": 1156,
+          "inBandStraightTicks": 1122,
+          "badStraightTicks": 34,
+          "badRun": 0,
+          "maxBadRun": 22,
+          "counterexample": {
+            "tick": 8589,
+            "behind": 5.634054937364163,
+            "distance": 5.751323092086743,
+            "player": {
+              "x": 25.04803466796875,
+              "z": 41.076026916503906
+            },
+            "follower": {
+              "x": 19.40624959757449,
+              "z": 42.19315651017093
+            },
+            "playerSpeed": 3.600051258759377
+          },
+          "lastStraightTick": 11993,
+          "within8Share": 1,
+          "inBandStraightShare": 0.9705882352941176
+        },
+        {
+          "id": 32,
+          "followAt": 5861,
+          "calmTicks": 5566,
+          "within8Ticks": 5566,
+          "movingCalmTicks": 3465,
+          "behind2To5Ticks": 3117,
+          "maxMotionSpeed": 222.00000000000017,
+          "straightTicks": 932,
+          "inBandStraightTicks": 892,
+          "badStraightTicks": 40,
+          "badRun": 0,
+          "maxBadRun": 40,
+          "counterexample": {
+            "tick": 8882,
+            "behind": 5.041010743919834,
+            "distance": 5.701173946139887,
+            "player": {
+              "x": 44.71242904663086,
+              "z": 41.209774017333984
+            },
+            "follower": {
+              "x": 39.653385118453116,
+              "z": 43.83835897828011
+            },
+            "playerSpeed": 4.499921415246303
+          },
+          "lastStraightTick": 11993,
+          "within8Share": 1,
+          "inBandStraightShare": 0.9570815450643777
+        },
+        {
+          "id": 28,
+          "followAt": 7381,
+          "calmTicks": 4208,
+          "within8Ticks": 4208,
+          "movingCalmTicks": 2543,
+          "behind2To5Ticks": 2190,
+          "maxMotionSpeed": 188.403821617291,
+          "straightTicks": 660,
+          "inBandStraightTicks": 625,
+          "badStraightTicks": 35,
+          "badRun": 0,
+          "maxBadRun": 23,
+          "counterexample": {
+            "tick": 8589,
+            "behind": 6.016777492635095,
+            "distance": 6.028835924663143,
+            "player": {
+              "x": 25.04803466796875,
+              "z": 41.076026916503906
+            },
+            "follower": {
+              "x": 19.02880373421545,
+              "z": 41.416205652841576
+            },
+            "playerSpeed": 3.600051258759377
+          },
+          "lastStraightTick": 11993,
+          "within8Share": 1,
+          "inBandStraightShare": 0.946969696969697
+        },
+        {
+          "id": 29,
+          "followAt": 9797,
+          "calmTicks": 2087,
+          "within8Ticks": 2087,
+          "movingCalmTicks": 1233,
+          "behind2To5Ticks": 1213,
+          "maxMotionSpeed": 271.66155414412253,
+          "straightTicks": 345,
+          "inBandStraightTicks": 345,
+          "badStraightTicks": 0,
+          "badRun": 0,
+          "maxBadRun": 0,
+          "counterexample": null,
+          "lastStraightTick": 11993,
+          "within8Share": 1,
+          "inBandStraightShare": 1
+        }
+      ],
+      "target": "at least95% of calm straight-walk ticks 2\u20135m behind; no out-of-band run longer than2s",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-complete.json"
+    },
+    {
+      "id": "L5-08",
+      "clause": "observed human follower pace versus phase group median",
+      "level": "L5",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        {
+          "phase": "step/look",
+          "id": 31,
+          "samples": 136,
+          "median": 4.352629694952132,
+          "groupMedian": 4.324321398406724,
+          "ratio": 1.0065462980054716
+        },
+        {
+          "phase": "step/look",
+          "id": 30,
+          "samples": 113,
+          "median": 4.296013101861317,
+          "groupMedian": 4.324321398406724,
+          "ratio": 0.9934537019945286
+        },
+        {
+          "phase": "step/look",
+          "id": 32,
+          "samples": 80,
+          "median": 4.392474313859711,
+          "groupMedian": 4.324321398406724,
+          "ratio": 1.015760372362262
+        },
+        {
+          "phase": "step/look",
+          "id": 28,
+          "samples": 44,
+          "median": 4.264824515286881,
+          "groupMedian": 4.324321398406724,
+          "ratio": 0.9862413364691707
+        },
+        {
+          "phase": "step/metro",
+          "id": 28,
+          "samples": 47,
+          "median": 4.384917746609319,
+          "groupMedian": 4.465745744908024,
+          "ratio": 0.9819004477827992
+        },
+        {
+          "phase": "step/metro",
+          "id": 30,
+          "samples": 48,
+          "median": 4.473568847078065,
+          "groupMedian": 4.465745744908024,
+          "ratio": 1.0017518019647582
+        },
+        {
+          "phase": "step/metro",
+          "id": 31,
+          "samples": 48,
+          "median": 4.365570527625303,
+          "groupMedian": 4.465745744908024,
+          "ratio": 0.9775680876151662
+        },
+        {
+          "phase": "step/metro",
+          "id": 32,
+          "samples": 49,
+          "median": 4.465745744908024,
+          "groupMedian": 4.465745744908024,
+          "ratio": 1
+        },
+        {
+          "phase": "step/metro",
+          "id": 29,
+          "samples": 46,
+          "median": 4.501431066063329,
+          "groupMedian": 4.465745744908024,
+          "ratio": 1.0079908985405168
+        }
+      ],
+      "target": "every ratio\u22650.95; bar pixels and absolute formation remain open",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-high-complete.json"
+    },
+    {
+      "id": "L5-08",
+      "clause": "non-combat follower share within8m",
+      "level": "L5",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        {
+          "id": 31,
+          "followAt": 2126,
+          "calmTicks": 8712,
+          "within8Ticks": 8712,
+          "movingCalmTicks": 5053,
+          "behind2To5Ticks": 4512,
+          "maxMotionSpeed": 301.734983056324,
+          "straightTicks": 1822,
+          "inBandStraightTicks": 1807,
+          "badStraightTicks": 15,
+          "badRun": 0,
+          "maxBadRun": 15,
+          "counterexample": {
+            "tick": 8961,
+            "behind": 6.000654907942461,
+            "distance": 6.040405299412904,
+            "player": {
+              "x": 24.365001678466797,
+              "z": 41.06989669799805
+            },
+            "follower": {
+              "x": 18.35973783794514,
+              "z": 41.72051362591998
+            },
+            "playerSpeed": 3.600052823067651
+          },
+          "lastStraightTick": 12302,
+          "within8Share": 1,
+          "inBandStraightShare": 0.9917672886937431
+        },
+        {
+          "id": 30,
+          "followAt": 4028,
+          "calmTicks": 7087,
+          "within8Ticks": 6816,
+          "movingCalmTicks": 4417,
+          "behind2To5Ticks": 3818,
+          "maxMotionSpeed": 270,
+          "straightTicks": 1695,
+          "inBandStraightTicks": 1651,
+          "badStraightTicks": 44,
+          "badRun": 0,
+          "maxBadRun": 37,
+          "counterexample": {
+            "tick": 6362,
+            "behind": 1.9811481390667647,
+            "distance": 2.009975991051394,
+            "player": {
+              "x": -37.456600189208984,
+              "z": 48.06306457519531
+            },
+            "follower": {
+              "x": -39.45964094951773,
+              "z": 48.22989142298909
+            },
+            "playerSpeed": 4.500102079712613
+          },
+          "lastStraightTick": 12302,
+          "within8Share": 0.9617609707915903,
+          "inBandStraightShare": 0.9740412979351032
+        },
+        {
+          "id": 32,
+          "followAt": 6259,
+          "calmTicks": 5345,
+          "within8Ticks": 5345,
+          "movingCalmTicks": 3431,
+          "behind2To5Ticks": 3114,
+          "maxMotionSpeed": 252.00000000000017,
+          "straightTicks": 1234,
+          "inBandStraightTicks": 1215,
+          "badStraightTicks": 19,
+          "badRun": 0,
+          "maxBadRun": 12,
+          "counterexample": {
+            "tick": 8961,
+            "behind": 5.765006450306244,
+            "distance": 5.765033711528169,
+            "player": {
+              "x": 24.365001678466797,
+              "z": 41.06989669799805
+            },
+            "follower": {
+              "x": 18.60000939595898,
+              "z": 41.04804085938276
+            },
+            "playerSpeed": 3.600052823067651
+          },
+          "lastStraightTick": 12302,
+          "within8Share": 1,
+          "inBandStraightShare": 0.9846029173419774
+        },
+        {
+          "id": 28,
+          "followAt": 7593,
+          "calmTicks": 4197,
+          "within8Ticks": 3909,
+          "movingCalmTicks": 2554,
+          "behind2To5Ticks": 1999,
+          "maxMotionSpeed": 186,
+          "straightTicks": 818,
+          "inBandStraightTicks": 749,
+          "badStraightTicks": 69,
+          "badRun": 0,
+          "maxBadRun": 36,
+          "counterexample": {
+            "tick": 8527,
+            "behind": 5.002290801606367,
+            "distance": 5.002305837272471,
+            "player": {
+              "x": 16.367469787597656,
+              "z": 23.91553497314453
+            },
+            "follower": {
+              "x": 14.46292895264993,
+              "z": 19.289976855724877
+            },
+            "playerSpeed": 4.499964642257755
+          },
+          "lastStraightTick": 12302,
+          "within8Share": 0.9313795568263045,
+          "inBandStraightShare": 0.9156479217603912
+        },
+        {
+          "id": 29,
+          "followAt": 10154,
+          "calmTicks": 1981,
+          "within8Ticks": 1981,
+          "movingCalmTicks": 1266,
+          "behind2To5Ticks": 1236,
+          "maxMotionSpeed": 271.66155414412253,
+          "straightTicks": 541,
+          "inBandStraightTicks": 541,
+          "badStraightTicks": 0,
+          "badRun": 0,
+          "maxBadRun": 0,
+          "counterexample": null,
+          "lastStraightTick": 12302,
+          "within8Share": 1,
+          "inBandStraightShare": 1
+        }
+      ],
+      "target": "each living follower within8m for at least80percent of calm ticks",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-high-complete.json"
+    },
+    {
+      "id": "L5-08",
+      "clause": "calm straight-walk follower distance tolerance",
+      "level": "L5",
+      "tier": "high",
+      "policy": "complete",
+      "status": "FAIL",
+      "value": [
+        {
+          "id": 31,
+          "followAt": 2126,
+          "calmTicks": 8712,
+          "within8Ticks": 8712,
+          "movingCalmTicks": 5053,
+          "behind2To5Ticks": 4512,
+          "maxMotionSpeed": 301.734983056324,
+          "straightTicks": 1822,
+          "inBandStraightTicks": 1807,
+          "badStraightTicks": 15,
+          "badRun": 0,
+          "maxBadRun": 15,
+          "counterexample": {
+            "tick": 8961,
+            "behind": 6.000654907942461,
+            "distance": 6.040405299412904,
+            "player": {
+              "x": 24.365001678466797,
+              "z": 41.06989669799805
+            },
+            "follower": {
+              "x": 18.35973783794514,
+              "z": 41.72051362591998
+            },
+            "playerSpeed": 3.600052823067651
+          },
+          "lastStraightTick": 12302,
+          "within8Share": 1,
+          "inBandStraightShare": 0.9917672886937431
+        },
+        {
+          "id": 30,
+          "followAt": 4028,
+          "calmTicks": 7087,
+          "within8Ticks": 6816,
+          "movingCalmTicks": 4417,
+          "behind2To5Ticks": 3818,
+          "maxMotionSpeed": 270,
+          "straightTicks": 1695,
+          "inBandStraightTicks": 1651,
+          "badStraightTicks": 44,
+          "badRun": 0,
+          "maxBadRun": 37,
+          "counterexample": {
+            "tick": 6362,
+            "behind": 1.9811481390667647,
+            "distance": 2.009975991051394,
+            "player": {
+              "x": -37.456600189208984,
+              "z": 48.06306457519531
+            },
+            "follower": {
+              "x": -39.45964094951773,
+              "z": 48.22989142298909
+            },
+            "playerSpeed": 4.500102079712613
+          },
+          "lastStraightTick": 12302,
+          "within8Share": 0.9617609707915903,
+          "inBandStraightShare": 0.9740412979351032
+        },
+        {
+          "id": 32,
+          "followAt": 6259,
+          "calmTicks": 5345,
+          "within8Ticks": 5345,
+          "movingCalmTicks": 3431,
+          "behind2To5Ticks": 3114,
+          "maxMotionSpeed": 252.00000000000017,
+          "straightTicks": 1234,
+          "inBandStraightTicks": 1215,
+          "badStraightTicks": 19,
+          "badRun": 0,
+          "maxBadRun": 12,
+          "counterexample": {
+            "tick": 8961,
+            "behind": 5.765006450306244,
+            "distance": 5.765033711528169,
+            "player": {
+              "x": 24.365001678466797,
+              "z": 41.06989669799805
+            },
+            "follower": {
+              "x": 18.60000939595898,
+              "z": 41.04804085938276
+            },
+            "playerSpeed": 3.600052823067651
+          },
+          "lastStraightTick": 12302,
+          "within8Share": 1,
+          "inBandStraightShare": 0.9846029173419774
+        },
+        {
+          "id": 28,
+          "followAt": 7593,
+          "calmTicks": 4197,
+          "within8Ticks": 3909,
+          "movingCalmTicks": 2554,
+          "behind2To5Ticks": 1999,
+          "maxMotionSpeed": 186,
+          "straightTicks": 818,
+          "inBandStraightTicks": 749,
+          "badStraightTicks": 69,
+          "badRun": 0,
+          "maxBadRun": 36,
+          "counterexample": {
+            "tick": 8527,
+            "behind": 5.002290801606367,
+            "distance": 5.002305837272471,
+            "player": {
+              "x": 16.367469787597656,
+              "z": 23.91553497314453
+            },
+            "follower": {
+              "x": 14.46292895264993,
+              "z": 19.289976855724877
+            },
+            "playerSpeed": 4.499964642257755
+          },
+          "lastStraightTick": 12302,
+          "within8Share": 0.9313795568263045,
+          "inBandStraightShare": 0.9156479217603912
+        },
+        {
+          "id": 29,
+          "followAt": 10154,
+          "calmTicks": 1981,
+          "within8Ticks": 1981,
+          "movingCalmTicks": 1266,
+          "behind2To5Ticks": 1236,
+          "maxMotionSpeed": 271.66155414412253,
+          "straightTicks": 541,
+          "inBandStraightTicks": 541,
+          "badStraightTicks": 0,
+          "badRun": 0,
+          "maxBadRun": 0,
+          "counterexample": null,
+          "lastStraightTick": 12302,
+          "within8Share": 1,
+          "inBandStraightShare": 1
+        }
+      ],
+      "target": "at least95% of calm straight-walk ticks 2\u20135m behind; no out-of-band run longer than2s",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-high-complete.json"
+    }
+  ],
+  "receipts": [
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-high-complete.json",
+      "sha256": "f3e1e9abd297cd878561ac56000a12bf98aa4d9a31a6f8bd680bab1b4e25c0a9"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-low-complete.json",
+      "sha256": "db7cf0854e3d5937c6c558a0a6649371601f8ea1b1f73d97f8424c6fbe58f40f"
+    }
+  ]
+}
