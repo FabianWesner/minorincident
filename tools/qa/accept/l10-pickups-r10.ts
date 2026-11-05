@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { gzipSync } from 'node:zlib';
 import { loadLevel, runLevel } from '../../sim-runner/levels';
 import { preset } from '../../../src/sim/progression/Campaign';
 import { transactArsenal } from '../../../src/sim/progression/arsenal';
@@ -8,6 +9,7 @@ import type { MissionCheckpoint } from '../../../src/sim/missions/types';
 import { stateHash } from '../../../src/sim/world/stateHash';
 import { provenance, type NativeReceipt } from './probe';
 import { atomicJson } from './report';
+import { validateSave } from '../../../src/sim/progression/Save';
 
 const expected = [
   { weapon: 'weapon.pistol', checkpoint: 'cure-residential' },
@@ -53,10 +55,19 @@ for (const tier of ['low', 'high'] as const) {
     beforeDispose: world => { finalHash = stateHash(world.getState()); },
   });
   assert(run.completed); assert.equal(finalHash, control.nativeStateHash, 'pickup observation must leave canonical control identical');
-  const inventoryCases = [];
+  const inventoryCases = [], physicalSeeds = [];
   for (const target of expected) {
     const resume = beforePickups.get(target.weapon);
     assert(resume, `Missing naturally reached before-pickup snapshot for ${target.weapon}`);
+    const physicalSave = preset('L10-default'); physicalSave.settings.quality = tier;
+    assert(resume.current.arsenal);
+    Object.assign(physicalSave, structuredClone(resume.current.arsenal));
+    physicalSave.cureResume = structuredClone(resume);
+    assert(validateSave(physicalSave));
+    const path = `docs/reports/sweep-c4/L10-05-${tier}-${target.checkpoint}-save.json.gz`;
+    mkdirSync('docs/reports/sweep-c4', { recursive: true });
+    const bytes = gzipSync(JSON.stringify(physicalSave)); writeFileSync(path, bytes);
+    physicalSeeds.push({ ...target, path, sha256: createHash('sha256').update(bytes).digest('hex'), tick: resume.current.tick });
     const cases = [];
     for (const add of [[], [target.weapon], expected.map(row => row.weapon)]) {
       const seed = preset('L10-default'); seed.settings.quality = tier;
@@ -84,7 +95,7 @@ for (const tier of ['low', 'high'] as const) {
     inventoryCases.push({ weapon: target.weapon, snapshotTick: resume.current.tick, snapshotSha256: createHash('sha256').update(JSON.stringify(resume)).digest('hex'), cases, identical });
   }
   const inventoryOnlyIdentical = inventoryCases.every(row => row.identical);
-  rows.push({ tier, acquisitions, expected, nativeStateHash: finalHash, controlIdentical: true, inventorySeconds: 4, inventoryCases, inventoryOnlyIdentical });
+  rows.push({ tier, acquisitions, expected, physicalSeeds, nativeStateHash: finalHash, controlIdentical: true, inventorySeconds: 4, inventoryCases, inventoryOnlyIdentical });
   console.log(tier, { acquisitions, inventoryOnlyIdentical, baselineBirths: inventoryCases.map(row => row.cases[0].births.length) });
 }
 atomicJson('docs/reports/fix51-r10c/L10-pickups-proof.json', { ...identity,

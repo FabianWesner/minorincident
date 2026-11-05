@@ -111,6 +111,7 @@ export function rowResult(source: SourceRow, checks: Clause[]): AcceptanceRow {
     'L9-02': source.expected,
     'L9-05': source.expected,
     'L9-07': source.expected,
+    'L10-05': source.expected, // Physical pickup approaches supplement native transaction controls.
     'L1-02': source.expected,
     'L1-04': source.expected,
     'L1-03': 'Inspect the continuous same-actor depot handover, walk back through the shop door and door closure in both qualities.',
