@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { gzipSync } from 'node:zlib';
 import { loadLevel, runLevel } from '../../sim-runner/levels';
 import { emptyInput } from '../../../src/input/InputFrame';
 import type { MissionCheckpoint } from '../../../src/sim/missions/types';
@@ -8,6 +9,7 @@ import { preset } from '../../../src/sim/progression/Campaign';
 import { stateHash } from '../../../src/sim/world/stateHash';
 import { provenance, type NativeReceipt } from './probe';
 import { atomicJson } from './report';
+import { validateSave } from '../../../src/sim/progression/Save';
 
 const identity = provenance(), rows = [];
 for (const tier of ['low', 'high'] as const) {
@@ -18,6 +20,7 @@ for (const tier of ['low', 'high'] as const) {
   const distances = { before: [] as number[], carried: [] as number[] };
   let grant: { tick: number; before: { LEFT: string[]; RIGHT: string[] }; after: { LEFT: string[]; RIGHT: string[] }; carried: boolean; installed: boolean; item: boolean } | null = null;
   const snapshots: { current: MissionCheckpoint; checkpoint: MissionCheckpoint }[] = [];
+  const researchSnapshots: { current: MissionCheckpoint; checkpoint: MissionCheckpoint }[] = [];
   let finalHash = '', previous: { x: number; z: number } | null = null, windowKey = '', window: number[] = [];
   const run = await runLevel('L10', 'complete', 1, undefined, 'auto', campaign, undefined, 0, {
     quality: tier,
@@ -28,6 +31,8 @@ for (const tier of ['low', 'high'] as const) {
       };
       const update = world.update.bind(world);
       world.update = () => {
+        const mission = world.missions!, terminal = mission.def.anchors['cure-terminal'], courier = world.entities.get(1)!;
+        if (!researchSnapshots.length && mission.state.steps.research?.status === 'active' && Math.hypot(courier.transform.x - terminal.x, courier.transform.z - terminal.z) <= terminal.radius + 1) researchSnapshots.push(mission.saveResume());
         const beforeRacks = racks(), beforeItem = world.missions!.state.items.includes('cure-canister');
         update();
         const state = world.missions!.state, player = world.entities.get(1)!;
@@ -51,6 +56,17 @@ for (const tier of ['low', 'high'] as const) {
   assert(run.completed); assert.equal(finalHash, control.nativeStateHash, 'cure observation must preserve canonical control');
   for (const key of ['before', 'carried'] as const) { const sorted = distances[key].sort((a, b) => a - b); movement[key].median60TickMetres = sorted.length ? sorted[Math.floor(sorted.length / 2)] : 0; }
   assert.equal(snapshots.length, 1, 'Exactly one ordinary canister acquisition');
+  assert.equal(researchSnapshots.length, 1, 'Need naturally reached pre-recording state');
+  const researchBefore = researchSnapshots[0];
+  const physicalSave = preset('L10-default'); physicalSave.settings.quality = tier;
+  assert(researchBefore.current.arsenal);
+  Object.assign(physicalSave, structuredClone(researchBefore.current.arsenal));
+  physicalSave.cureResume = structuredClone(researchBefore);
+  assert(validateSave(physicalSave));
+  const physicalSeed = { path: `docs/reports/sweep-c4/L10-09-${tier}-research-save.json.gz`, sha256: '' };
+  mkdirSync('docs/reports/sweep-c4', { recursive: true });
+  const bytes = gzipSync(JSON.stringify(physicalSave)); writeFileSync(physicalSeed.path, bytes);
+  physicalSeed.sha256 = createHash('sha256').update(bytes).digest('hex');
   const snapshot = snapshots[0], controlledMovement = [];
   for (const move of [{ x: 1, z: 0 }, { x: -1, z: 0 }, { x: 0, z: 1 }, { x: 0, z: -1 }]) {
     const cases = [];
@@ -74,7 +90,7 @@ for (const tier of ['low', 'high'] as const) {
     }
     controlledMovement.push({ move, ticks: 120, cases, identical: cases[0].trajectorySha256 === cases[1].trajectorySha256 });
   }
-  rows.push({ tier, grant, movement, controlledMovement, snapshotSha256: createHash('sha256').update(JSON.stringify(snapshot)).digest('hex'), nativeStateHash: finalHash, controlIdentical: true });
+  rows.push({ tier, grant, movement, controlledMovement, physicalSeed, snapshotSha256: createHash('sha256').update(JSON.stringify(snapshot)).digest('hex'), nativeStateHash: finalHash, controlIdentical: true });
   console.log(tier, { grant, movement, controlledMovement });
 }
 atomicJson('docs/reports/fix51-r10c/L10-cure-proof.json', { ...identity,

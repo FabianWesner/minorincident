@@ -5,7 +5,7 @@
   "observerHash": "c064240bbd1dfb4a4ffb12922fa39e6d24b69753af3eda1e03e9a81a51ce4a4a",
   "fixtureHash": "df526016e398100e295b42766eea3ea1190e551b57fa24999faa743cf1e3f7c4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-05T23:04:33.298Z",
+  "generatedAt": "2026-11-05T23:14:47.082Z",
   "policies": [
     {
       "tier": "low",
@@ -43,11 +43,25 @@
       "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json"
     },
     {
+      "tier": "low",
+      "policy": "controlled-fixtures",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-sweep-c4-cure.json"
+    },
+    {
       "tier": "high",
       "policy": "controlled-fixtures",
       "outcome": "complete",
       "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L10-high-fixtures.json"
+    },
+    {
+      "tier": "high",
+      "policy": "controlled-fixtures",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L10-high-sweep-c4-cure.json"
     },
     {
       "tier": "low",
@@ -7569,13 +7583,726 @@
     },
     {
       "id": "L10-09",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "Research subtitles explain the airborne cure and the canister pickup is visible. No-slowdown/no-slot and death-restored cure require the explicit checkpoint experiment.",
-      "automatedComplete": false,
-      "receipt": [],
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete actual cure grant preserves both weapon racks: {\"tick\":35641,\"before\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",\"weapon.shotgun\",\"weapon.army-mg\"]},\"after\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",\"weapon.shotgun\",\"weapon.army-mg\"]},\"carried\":true,\"installed\":false,\"item\":true} (target actual canister acquisition; carried item true, installed false; exact unchanged LEFT/RIGHT racks; PASS); low/complete canister-only controlled movement trajectories: {\"routeWindows\":{\"before\":{\"best60TickMetres\":4.501303793196814,\"median60TickMetres\":4.497243626167915,\"windows\":35516},\"carried\":{\"best60TickMetres\":4.506767290076995,\"median60TickMetres\":4.49714078910103,\"windows\":21061}},\"controls\":[{\"move\":{\"x\":1,\"z\":0},\"ticks\":120,\"cases\":[{\"carried\":false,\"displacement\":8.749755859375,\"trajectorySha256\":\"e6c45f040aa6bc1350117a32af50eba4f220c576d4083e1e9ead2d… (full values in JSON) (target same production Resume; only canister flag/item differ; four cardinal keyboard inputs for120ticks; identical every-tick XYZ; at least one unblocked ≥4m traversal; PASS); high/complete actual cure grant preserves both weapon racks: {\"tick\":35716,\"before\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",\"weapon.shotgun\",\"weapon.army-mg\"]},\"after\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",\"weapon.shotgun\",\"weapon.army-mg\"]},\"carried\":true,\"installed\":false,\"item\":true} (target actual canister acquisition; carried item true, installed false; exact unchanged LEFT/RIGHT racks; PASS); high/complete canister-only controlled movement trajectories: {\"routeWindows\":{\"before\":{\"best60TickMetres\":4.501303793196814,\"median60TickMetres\":4.497251021245441,\"windows\":35655},\"carried\":{\"best60TickMetres\":4.505352482463229,\"median60TickMetres\":4.497107589517475,\"windows\":21110}},\"controls\":[{\"move\":{\"x\":1,\"z\":0},\"ticks\":120,\"cases\":[{\"carried\":false,\"displacement\":8.749755859375,\"trajectorySha256\":\"39aaf541dea5b9c5ac518b9a10a02296f48f3a30e41939d05106b… (full values in JSON) (target same production Resume; only canister flag/item differ; four cardinal keyboard inputs for120ticks; identical every-tick XYZ; at least one unblocked ≥4m traversal; PASS); low/real-input-webgl2 reviewed airborne research subtitles and backpack canister: {\"initial\":true,\"recording\":[{\"stage\":\"recording\",\"tick\":26,\"position\":{\"x\":2705.735595703125,\"y\":0.7080000042915344,\"z\":41.34172821044922,\"yaw\":-6.283185307179586},\"states\":{\"charge-active\":false,\"console-held\":false,\"terminal-read\":true,\"cure-carried\":false,\"cure-installed\":false,\"charge-ready\":false,\"mega-dead\":false,\"cure-released\":false,\"epilogue-finished\":false,\"credits-finished\":false,\"anch… (full values in JSON) (target actual WASD/E terminal, canister and lab exit; full rendered recording meaning and visible backpack at both PO zooms; unchanged racks and carried retry snapshot; PASS); low/checkpoint-death-fixture carried canister restored by actual checkpoint death: {\"checkpoint\":\"cure-research\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"6153238bcbd1f2a28678d065b61b813e243f71c28762ce140a29dab187e19fb1\",\"damage\":100,\"expected\":{\"id\":\"cure-research\",\"anchor\":{\"x\":2805.035400390625,\"y\":0.7099999785423279,\"z\":44.9234504699707,\"yaw\":-0.038945538967957834},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",\"we… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); high/real-input-webgl2 reviewed airborne research subtitles and backpack canister: {\"initial\":true,\"recording\":[{\"stage\":\"recording\",\"tick\":32,\"position\":{\"x\":2706.11572265625,\"y\":0.7080000042915344,\"z\":41.343910217285156,\"yaw\":-6.283185307179586},\"states\":{\"charge-active\":false,\"console-held\":false,\"terminal-read\":true,\"cure-carried\":false,\"cure-installed\":false,\"charge-ready\":false,\"mega-dead\":false,\"cure-released\":false,\"epilogue-finished\":false,\"credits-finished\":false,\"anch… (full values in JSON) (target actual WASD/E terminal, canister and lab exit; full rendered recording meaning and visible backpack at both PO zooms; unchanged racks and carried retry snapshot; PASS); high/checkpoint-death-fixture carried canister restored by actual checkpoint death: {\"checkpoint\":\"cure-research\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"258baabe7e1897e32f86d1646522c4cb9c7acdae31e0ca1246c1b95031b86919\",\"damage\":100,\"expected\":{\"id\":\"cure-research\",\"anchor\":{\"x\":2805.040771484375,\"y\":0.7099999785423279,\"z\":44.92366027832031,\"yaw\":3.107531557619785},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",\"weapo… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS)",
+      "automatedComplete": true,
+      "receipt": [
+        "docs/reports/fix51-r10c/L10-cure-proof.json",
+        "docs/reports/sweep-c4/L10-09-low-physical.json.gz",
+        "docs/reports/fix51-verify/receipts/L10-low-checkpoints.json",
+        "docs/reports/sweep-c4/L10-09-high-physical.json.gz",
+        "docs/reports/fix51-verify/receipts/L10-high-checkpoints.json"
+      ],
       "expected": "Recording explains the airborne cure (subtitles); canister is a visible backpack, no slot, no slowdown, restored on death.",
-      "checks": [],
+      "checks": [
+        {
+          "id": "L10-09",
+          "clause": "actual cure grant preserves both weapon racks",
+          "level": "L10",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "tick": 35641,
+            "before": {
+              "LEFT": [
+                "weapon.fire-axe"
+              ],
+              "RIGHT": [
+                "weapon.fire-axe",
+                "weapon.pistol",
+                "weapon.shotgun",
+                "weapon.army-mg"
+              ]
+            },
+            "after": {
+              "LEFT": [
+                "weapon.fire-axe"
+              ],
+              "RIGHT": [
+                "weapon.fire-axe",
+                "weapon.pistol",
+                "weapon.shotgun",
+                "weapon.army-mg"
+              ]
+            },
+            "carried": true,
+            "installed": false,
+            "item": true
+          },
+          "target": "actual canister acquisition; carried item true, installed false; exact unchanged LEFT/RIGHT racks",
+          "receipt": "docs/reports/fix51-r10c/L10-cure-proof.json"
+        },
+        {
+          "id": "L10-09",
+          "clause": "canister-only controlled movement trajectories",
+          "level": "L10",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "routeWindows": {
+              "before": {
+                "best60TickMetres": 4.501303793196814,
+                "median60TickMetres": 4.497243626167915,
+                "windows": 35516
+              },
+              "carried": {
+                "best60TickMetres": 4.506767290076995,
+                "median60TickMetres": 4.49714078910103,
+                "windows": 21061
+              }
+            },
+            "controls": [
+              {
+                "move": {
+                  "x": 1,
+                  "z": 0
+                },
+                "ticks": 120,
+                "cases": [
+                  {
+                    "carried": false,
+                    "displacement": 8.749755859375,
+                    "trajectorySha256": "e6c45f040aa6bc1350117a32af50eba4f220c576d4083e1e9ead2d8504db838a",
+                    "finalCarried": false,
+                    "finalItem": false
+                  },
+                  {
+                    "carried": true,
+                    "displacement": 8.749755859375,
+                    "trajectorySha256": "e6c45f040aa6bc1350117a32af50eba4f220c576d4083e1e9ead2d8504db838a",
+                    "finalCarried": true,
+                    "finalItem": true
+                  }
+                ],
+                "identical": true
+              },
+              {
+                "move": {
+                  "x": -1,
+                  "z": 0
+                },
+                "ticks": 120,
+                "cases": [
+                  {
+                    "carried": false,
+                    "displacement": 8.749755859375,
+                    "trajectorySha256": "366740288c6928c9b7fe420853214a01cd9104ddd4327a26c8ae687deb8a52aa",
+                    "finalCarried": false,
+                    "finalItem": false
+                  },
+                  {
+                    "carried": true,
+                    "displacement": 8.749755859375,
+                    "trajectorySha256": "366740288c6928c9b7fe420853214a01cd9104ddd4327a26c8ae687deb8a52aa",
+                    "finalCarried": true,
+                    "finalItem": true
+                  }
+                ],
+                "identical": true
+              },
+              {
+                "move": {
+                  "x": 0,
+                  "z": 1
+                },
+                "ticks": 120,
+                "cases": [
+                  {
+                    "carried": false,
+                    "displacement": 8.755084991455078,
+                    "trajectorySha256": "aaafdfce21c248aead535c9e4a3d52f1d0403e929d9f907b71f72234a756649b",
+                    "finalCarried": false,
+                    "finalItem": false
+                  },
+                  {
+                    "carried": true,
+                    "displacement": 8.755084991455078,
+                    "trajectorySha256": "aaafdfce21c248aead535c9e4a3d52f1d0403e929d9f907b71f72234a756649b",
+                    "finalCarried": true,
+                    "finalItem": true
+                  }
+                ],
+                "identical": true
+              },
+              {
+                "move": {
+                  "x": 0,
+                  "z": -1
+                },
+                "ticks": 120,
+                "cases": [
+                  {
+                    "carried": false,
+                    "displacement": 8.755084991455078,
+                    "trajectorySha256": "52ee4f233658e5b0653719e251b5d23091d6b95f7be86f6e371f8a1680402de0",
+                    "finalCarried": false,
+                    "finalItem": false
+                  },
+                  {
+                    "carried": true,
+                    "displacement": 8.755084991455078,
+                    "trajectorySha256": "52ee4f233658e5b0653719e251b5d23091d6b95f7be86f6e371f8a1680402de0",
+                    "finalCarried": true,
+                    "finalItem": true
+                  }
+                ],
+                "identical": true
+              }
+            ]
+          },
+          "target": "same production Resume; only canister flag/item differ; four cardinal keyboard inputs for120ticks; identical every-tick XYZ; at least one unblocked ≥4m traversal",
+          "receipt": "docs/reports/fix51-r10c/L10-cure-proof.json"
+        },
+        {
+          "id": "L10-09",
+          "clause": "actual cure grant preserves both weapon racks",
+          "level": "L10",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "tick": 35716,
+            "before": {
+              "LEFT": [
+                "weapon.fire-axe"
+              ],
+              "RIGHT": [
+                "weapon.fire-axe",
+                "weapon.pistol",
+                "weapon.shotgun",
+                "weapon.army-mg"
+              ]
+            },
+            "after": {
+              "LEFT": [
+                "weapon.fire-axe"
+              ],
+              "RIGHT": [
+                "weapon.fire-axe",
+                "weapon.pistol",
+                "weapon.shotgun",
+                "weapon.army-mg"
+              ]
+            },
+            "carried": true,
+            "installed": false,
+            "item": true
+          },
+          "target": "actual canister acquisition; carried item true, installed false; exact unchanged LEFT/RIGHT racks",
+          "receipt": "docs/reports/fix51-r10c/L10-cure-proof.json"
+        },
+        {
+          "id": "L10-09",
+          "clause": "canister-only controlled movement trajectories",
+          "level": "L10",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "routeWindows": {
+              "before": {
+                "best60TickMetres": 4.501303793196814,
+                "median60TickMetres": 4.497251021245441,
+                "windows": 35655
+              },
+              "carried": {
+                "best60TickMetres": 4.505352482463229,
+                "median60TickMetres": 4.497107589517475,
+                "windows": 21110
+              }
+            },
+            "controls": [
+              {
+                "move": {
+                  "x": 1,
+                  "z": 0
+                },
+                "ticks": 120,
+                "cases": [
+                  {
+                    "carried": false,
+                    "displacement": 8.749755859375,
+                    "trajectorySha256": "39aaf541dea5b9c5ac518b9a10a02296f48f3a30e41939d05106beee64933d0c",
+                    "finalCarried": false,
+                    "finalItem": false
+                  },
+                  {
+                    "carried": true,
+                    "displacement": 8.749755859375,
+                    "trajectorySha256": "39aaf541dea5b9c5ac518b9a10a02296f48f3a30e41939d05106beee64933d0c",
+                    "finalCarried": true,
+                    "finalItem": true
+                  }
+                ],
+                "identical": true
+              },
+              {
+                "move": {
+                  "x": -1,
+                  "z": 0
+                },
+                "ticks": 120,
+                "cases": [
+                  {
+                    "carried": false,
+                    "displacement": 8.749755859375,
+                    "trajectorySha256": "8165f394cf76b63788e2e638e428073c26d926a4cbb43e765bea16cb2b8150be",
+                    "finalCarried": false,
+                    "finalItem": false
+                  },
+                  {
+                    "carried": true,
+                    "displacement": 8.749755859375,
+                    "trajectorySha256": "8165f394cf76b63788e2e638e428073c26d926a4cbb43e765bea16cb2b8150be",
+                    "finalCarried": true,
+                    "finalItem": true
+                  }
+                ],
+                "identical": true
+              },
+              {
+                "move": {
+                  "x": 0,
+                  "z": 1
+                },
+                "ticks": 120,
+                "cases": [
+                  {
+                    "carried": false,
+                    "displacement": 8.755084991455078,
+                    "trajectorySha256": "06826a29b71527f58e5141b2267b903b6cc76a6359f6d5bfc58338a5f6e33f71",
+                    "finalCarried": false,
+                    "finalItem": false
+                  },
+                  {
+                    "carried": true,
+                    "displacement": 8.755084991455078,
+                    "trajectorySha256": "06826a29b71527f58e5141b2267b903b6cc76a6359f6d5bfc58338a5f6e33f71",
+                    "finalCarried": true,
+                    "finalItem": true
+                  }
+                ],
+                "identical": true
+              },
+              {
+                "move": {
+                  "x": 0,
+                  "z": -1
+                },
+                "ticks": 120,
+                "cases": [
+                  {
+                    "carried": false,
+                    "displacement": 8.755084991455078,
+                    "trajectorySha256": "1998bf15dd4ca5fc3723792e54be8281783c630ee61dd41425e34be156b9c38f",
+                    "finalCarried": false,
+                    "finalItem": false
+                  },
+                  {
+                    "carried": true,
+                    "displacement": 8.755084991455078,
+                    "trajectorySha256": "1998bf15dd4ca5fc3723792e54be8281783c630ee61dd41425e34be156b9c38f",
+                    "finalCarried": true,
+                    "finalItem": true
+                  }
+                ],
+                "identical": true
+              }
+            ]
+          },
+          "target": "same production Resume; only canister flag/item differ; four cardinal keyboard inputs for120ticks; identical every-tick XYZ; at least one unblocked ≥4m traversal",
+          "receipt": "docs/reports/fix51-r10c/L10-cure-proof.json"
+        },
+        {
+          "id": "L10-09",
+          "clause": "reviewed airborne research subtitles and backpack canister",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "initial": true,
+            "recording": [
+              {
+                "stage": "recording",
+                "tick": 26,
+                "position": {
+                  "x": 2705.735595703125,
+                  "y": 0.7080000042915344,
+                  "z": 41.34172821044922,
+                  "yaw": -6.283185307179586
+                },
+                "states": {
+                  "charge-active": false,
+                  "console-held": false,
+                  "terminal-read": true,
+                  "cure-carried": false,
+                  "cure-installed": false,
+                  "charge-ready": false,
+                  "mega-dead": false,
+                  "cure-released": false,
+                  "epilogue-finished": false,
+                  "credits-finished": false,
+                  "anchor-unavailable": false
+                },
+                "items": [],
+                "checkpoint": "cure-research-entry",
+                "racks": {
+                  "LEFT": [
+                    "weapon.fire-axe"
+                  ],
+                  "RIGHT": [
+                    "weapon.fire-axe",
+                    "weapon.pistol",
+                    "weapon.shotgun",
+                    "weapon.army-mg"
+                  ]
+                },
+                "saved": {
+                  "tick": 31726,
+                  "carried": false,
+                  "items": []
+                },
+                "subtitle": "Research recording: The cure is an airborne agent, not a vaccine. It is harmless to healthy humans and animals, but immediately kills infected humans and animals. It never reverses infection. Carry the canister to the regional dispersal complex to release it.",
+                "quality": "low",
+                "zoom": 0.5
+              },
+              {
+                "stage": "recording",
+                "tick": 26,
+                "position": {
+                  "x": 2705.735595703125,
+                  "y": 0.7080000042915344,
+                  "z": 41.34172821044922,
+                  "yaw": -6.283185307179586
+                },
+                "states": {
+                  "charge-active": false,
+                  "console-held": false,
+                  "terminal-read": true,
+                  "cure-carried": false,
+                  "cure-installed": false,
+                  "charge-ready": false,
+                  "mega-dead": false,
+                  "cure-released": false,
+                  "epilogue-finished": false,
+                  "credits-finished": false,
+                  "anchor-unavailable": false
+                },
+                "items": [],
+                "checkpoint": "cure-research-entry",
+                "racks": {
+                  "LEFT": [
+                    "weapon.fire-axe"
+                  ],
+                  "RIGHT": [
+                    "weapon.fire-axe",
+                    "weapon.pistol",
+                    "weapon.shotgun",
+                    "weapon.army-mg"
+                  ]
+                },
+                "saved": {
+                  "tick": 31726,
+                  "carried": false,
+                  "items": []
+                },
+                "subtitle": "Research recording: The cure is an airborne agent, not a vaccine. It is harmless to healthy humans and animals, but immediately kills infected humans and animals. It never reverses infection. Carry the canister to the regional dispersal complex to release it.",
+                "quality": "low",
+                "zoom": 1.5
+              }
+            ],
+            "paired": [
+              {
+                "stage": "recording",
+                "pass": true
+              },
+              {
+                "stage": "carried",
+                "pass": true
+              },
+              {
+                "stage": "exit",
+                "pass": true
+              }
+            ],
+            "seen": true,
+            "reviewPath": "docs/reports/sweep-c4/L10-09-review.json",
+            "proofPath": "docs/reports/sweep-c4/L10-09-low-physical.json.gz"
+          },
+          "target": "actual WASD/E terminal, canister and lab exit; full rendered recording meaning and visible backpack at both PO zooms; unchanged racks and carried retry snapshot",
+          "receipt": "docs/reports/sweep-c4/L10-09-low-physical.json.gz",
+          "level": "L10"
+        },
+        {
+          "id": "L10-09",
+          "clause": "carried canister restored by actual checkpoint death",
+          "tier": "low",
+          "policy": "checkpoint-death-fixture",
+          "status": "PASS",
+          "value": {
+            "checkpoint": "cure-research",
+            "contract": "checkpoint snapshot restored",
+            "snapshotSha256": "6153238bcbd1f2a28678d065b61b813e243f71c28762ce140a29dab187e19fb1",
+            "damage": 100,
+            "expected": {
+              "id": "cure-research",
+              "anchor": {
+                "x": 2805.035400390625,
+                "y": 0.7099999785423279,
+                "z": 44.9234504699707,
+                "yaw": -0.038945538967957834
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.fire-axe",
+                  "weapon.pistol",
+                  "weapon.shotgun",
+                  "weapon.army-mg"
+                ]
+              },
+              "followers": [],
+              "pickups": [
+                286
+              ],
+              "removedPickups": [],
+              "cure": true,
+              "bossHp": 3000,
+              "bossMode": "coarse"
+            },
+            "observed": {
+              "id": "cure-research",
+              "position": {
+                "x": 2805.035400390625,
+                "z": 44.9234504699707
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.fire-axe",
+                  "weapon.pistol",
+                  "weapon.shotgun",
+                  "weapon.army-mg"
+                ]
+              },
+              "followerMismatches": [],
+              "missingPickups": [],
+              "unexpectedPickups": [],
+              "cure": true,
+              "bossMode": "coarse",
+              "bossHp": 3000
+            },
+            "positionError": 0,
+            "gateMatch": true,
+            "rackMatch": true
+          },
+          "target": "captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-low-checkpoints.json",
+          "level": "L10"
+        },
+        {
+          "id": "L10-09",
+          "clause": "reviewed airborne research subtitles and backpack canister",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "initial": true,
+            "recording": [
+              {
+                "stage": "recording",
+                "tick": 32,
+                "position": {
+                  "x": 2706.11572265625,
+                  "y": 0.7080000042915344,
+                  "z": 41.343910217285156,
+                  "yaw": -6.283185307179586
+                },
+                "states": {
+                  "charge-active": false,
+                  "console-held": false,
+                  "terminal-read": true,
+                  "cure-carried": false,
+                  "cure-installed": false,
+                  "charge-ready": false,
+                  "mega-dead": false,
+                  "cure-released": false,
+                  "epilogue-finished": false,
+                  "credits-finished": false,
+                  "anchor-unavailable": false
+                },
+                "items": [],
+                "checkpoint": "cure-research-entry",
+                "racks": {
+                  "LEFT": [
+                    "weapon.fire-axe"
+                  ],
+                  "RIGHT": [
+                    "weapon.fire-axe",
+                    "weapon.pistol",
+                    "weapon.shotgun",
+                    "weapon.army-mg"
+                  ]
+                },
+                "saved": {
+                  "tick": 31769,
+                  "carried": false,
+                  "items": []
+                },
+                "subtitle": "Research recording: The cure is an airborne agent, not a vaccine. It is harmless to healthy humans and animals, but immediately kills infected humans and animals. It never reverses infection. Carry the canister to the regional dispersal complex to release it.",
+                "quality": "high",
+                "zoom": 0.5
+              },
+              {
+                "stage": "recording",
+                "tick": 32,
+                "position": {
+                  "x": 2706.11572265625,
+                  "y": 0.7080000042915344,
+                  "z": 41.343910217285156,
+                  "yaw": -6.283185307179586
+                },
+                "states": {
+                  "charge-active": false,
+                  "console-held": false,
+                  "terminal-read": true,
+                  "cure-carried": false,
+                  "cure-installed": false,
+                  "charge-ready": false,
+                  "mega-dead": false,
+                  "cure-released": false,
+                  "epilogue-finished": false,
+                  "credits-finished": false,
+                  "anchor-unavailable": false
+                },
+                "items": [],
+                "checkpoint": "cure-research-entry",
+                "racks": {
+                  "LEFT": [
+                    "weapon.fire-axe"
+                  ],
+                  "RIGHT": [
+                    "weapon.fire-axe",
+                    "weapon.pistol",
+                    "weapon.shotgun",
+                    "weapon.army-mg"
+                  ]
+                },
+                "saved": {
+                  "tick": 31769,
+                  "carried": false,
+                  "items": []
+                },
+                "subtitle": "Research recording: The cure is an airborne agent, not a vaccine. It is harmless to healthy humans and animals, but immediately kills infected humans and animals. It never reverses infection. Carry the canister to the regional dispersal complex to release it.",
+                "quality": "high",
+                "zoom": 1.5
+              }
+            ],
+            "paired": [
+              {
+                "stage": "recording",
+                "pass": true
+              },
+              {
+                "stage": "carried",
+                "pass": true
+              },
+              {
+                "stage": "exit",
+                "pass": true
+              }
+            ],
+            "seen": true,
+            "reviewPath": "docs/reports/sweep-c4/L10-09-review.json",
+            "proofPath": "docs/reports/sweep-c4/L10-09-high-physical.json.gz"
+          },
+          "target": "actual WASD/E terminal, canister and lab exit; full rendered recording meaning and visible backpack at both PO zooms; unchanged racks and carried retry snapshot",
+          "receipt": "docs/reports/sweep-c4/L10-09-high-physical.json.gz",
+          "level": "L10"
+        },
+        {
+          "id": "L10-09",
+          "clause": "carried canister restored by actual checkpoint death",
+          "tier": "high",
+          "policy": "checkpoint-death-fixture",
+          "status": "PASS",
+          "value": {
+            "checkpoint": "cure-research",
+            "contract": "checkpoint snapshot restored",
+            "snapshotSha256": "258baabe7e1897e32f86d1646522c4cb9c7acdae31e0ca1246c1b95031b86919",
+            "damage": 100,
+            "expected": {
+              "id": "cure-research",
+              "anchor": {
+                "x": 2805.040771484375,
+                "y": 0.7099999785423279,
+                "z": 44.92366027832031,
+                "yaw": 3.107531557619785
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.fire-axe",
+                  "weapon.pistol",
+                  "weapon.shotgun",
+                  "weapon.army-mg"
+                ]
+              },
+              "followers": [],
+              "pickups": [
+                331
+              ],
+              "removedPickups": [],
+              "cure": true,
+              "bossHp": 3000,
+              "bossMode": "coarse"
+            },
+            "observed": {
+              "id": "cure-research",
+              "position": {
+                "x": 2805.040771484375,
+                "z": 44.92366027832031
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.fire-axe",
+                  "weapon.pistol",
+                  "weapon.shotgun",
+                  "weapon.army-mg"
+                ]
+              },
+              "followerMismatches": [],
+              "missingPickups": [],
+              "unexpectedPickups": [],
+              "cure": true,
+              "bossMode": "coarse",
+              "bossHp": 3000
+            },
+            "positionError": 0,
+            "gateMatch": true,
+            "rackMatch": true
+          },
+          "target": "captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-high-checkpoints.json",
+          "level": "L10"
+        }
+      ],
       "historical": {
         "id": "L10-09",
         "level": "L10",
@@ -7586,7 +8313,7 @@
         ],
         "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record the actual research subtitles and visible canister, compare movement speed, then die after collection and verify the checkpoint restores cure state."
       },
-      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record the actual research subtitles and visible canister, compare movement speed, then die after collection and verify the checkpoint restores cure state."
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
     },
     {
       "id": "L10-10",
