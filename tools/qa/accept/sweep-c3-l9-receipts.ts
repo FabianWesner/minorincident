@@ -21,6 +21,13 @@ export function sweepC3L9Receipts(sourceHash: string, browserHash: string): { pa
     full: Hashed; zero: Hashed; speed: Hashed; fullProducer: Hashed; zeroProducer: Hashed; speedProducer: Hashed; fullReview: Hashed; zeroReview: Hashed;
     visual: { smokeObserved: boolean; wholeHullAndAttachedWheels: boolean; what: string };
   };
+  // Pruned snapshots may retain the old manifest but omit large compressed
+  // captures. Such historical evidence cannot contribute a current receipt;
+  // skip it and let the remaining current-source checks run.
+  const requiredFiles = [manifest.full, manifest.zero, manifest.speed,
+    manifest.fullProducer, manifest.zeroProducer, manifest.speedProducer,
+    manifest.fullReview, manifest.zeroReview];
+  if (requiredFiles.some(file => !existsSync(file.file))) return [];
   const sha = (b: Buffer) => createHash('sha256').update(b).digest('hex');
   const read = (ref: Hashed) => {
     const b = readFileSync(ref.file);

@@ -1,0 +1,201 @@
+{
+  "version": 1,
+  "level": "L10",
+  "tier": "low",
+  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+  "fixtureHash": "ac184704f5ee3b7a713c7370cf055be58d750dbd2f73289ac710a0ecd58143bf",
+  "errors": [],
+  "checks": [
+    {
+      "id": "L10-09",
+      "clause": "reviewed airborne research subtitles and backpack canister",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "initial": true,
+        "recording": [
+          {
+            "stage": "recording",
+            "tick": 26,
+            "position": {
+              "x": 2705.735595703125,
+              "y": 0.7080000042915344,
+              "z": 41.34172821044922,
+              "yaw": -6.283185307179586
+            },
+            "states": {
+              "charge-active": false,
+              "console-held": false,
+              "terminal-read": true,
+              "cure-carried": false,
+              "cure-installed": false,
+              "charge-ready": false,
+              "mega-dead": false,
+              "cure-released": false,
+              "epilogue-finished": false,
+              "credits-finished": false,
+              "anchor-unavailable": false
+            },
+            "items": [],
+            "checkpoint": "cure-research-entry",
+            "racks": {
+              "LEFT": [
+                "weapon.fire-axe"
+              ],
+              "RIGHT": [
+                "weapon.fire-axe",
+                "weapon.pistol",
+                "weapon.shotgun",
+                "weapon.army-mg"
+              ]
+            },
+            "saved": {
+              "tick": 31726,
+              "carried": false,
+              "items": []
+            },
+            "subtitle": "Research recording: The cure is an airborne agent, not a vaccine. It is harmless to healthy humans and animals, but immediately kills infected humans and animals. It never reverses infection. Carry the canister to the regional dispersal complex to release it.",
+            "quality": "low",
+            "zoom": 0.5
+          },
+          {
+            "stage": "recording",
+            "tick": 26,
+            "position": {
+              "x": 2705.735595703125,
+              "y": 0.7080000042915344,
+              "z": 41.34172821044922,
+              "yaw": -6.283185307179586
+            },
+            "states": {
+              "charge-active": false,
+              "console-held": false,
+              "terminal-read": true,
+              "cure-carried": false,
+              "cure-installed": false,
+              "charge-ready": false,
+              "mega-dead": false,
+              "cure-released": false,
+              "epilogue-finished": false,
+              "credits-finished": false,
+              "anchor-unavailable": false
+            },
+            "items": [],
+            "checkpoint": "cure-research-entry",
+            "racks": {
+              "LEFT": [
+                "weapon.fire-axe"
+              ],
+              "RIGHT": [
+                "weapon.fire-axe",
+                "weapon.pistol",
+                "weapon.shotgun",
+                "weapon.army-mg"
+              ]
+            },
+            "saved": {
+              "tick": 31726,
+              "carried": false,
+              "items": []
+            },
+            "subtitle": "Research recording: The cure is an airborne agent, not a vaccine. It is harmless to healthy humans and animals, but immediately kills infected humans and animals. It never reverses infection. Carry the canister to the regional dispersal complex to release it.",
+            "quality": "low",
+            "zoom": 1.5
+          }
+        ],
+        "paired": [
+          {
+            "stage": "recording",
+            "pass": true
+          },
+          {
+            "stage": "carried",
+            "pass": true
+          },
+          {
+            "stage": "exit",
+            "pass": true
+          }
+        ],
+        "seen": true,
+        "reviewPath": "docs/reports/sweep-c4/L10-09-review.json",
+        "proofPath": "docs/reports/sweep-c4/L10-09-low-physical.json.gz"
+      },
+      "target": "actual WASD/E terminal, canister and lab exit; full rendered recording meaning and visible backpack at both PO zooms; unchanged racks and carried retry snapshot",
+      "receipt": "docs/reports/sweep-c4/L10-09-low-physical.json.gz"
+    },
+    {
+      "id": "L10-09",
+      "clause": "carried canister restored by actual checkpoint death",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cure-research",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "6153238bcbd1f2a28678d065b61b813e243f71c28762ce140a29dab187e19fb1",
+        "damage": 100,
+        "expected": {
+          "id": "cure-research",
+          "anchor": {
+            "x": 2805.035400390625,
+            "y": 0.7099999785423279,
+            "z": 44.9234504699707,
+            "yaw": -0.038945538967957834
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ]
+          },
+          "followers": [],
+          "pickups": [
+            286
+          ],
+          "removedPickups": [],
+          "cure": true,
+          "bossHp": 3000,
+          "bossMode": "coarse"
+        },
+        "observed": {
+          "id": "cure-research",
+          "position": {
+            "x": 2805.035400390625,
+            "z": 44.9234504699707
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": true,
+          "bossMode": "coarse",
+          "bossHp": 3000
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-checkpoints.json"
+    }
+  ]
+}

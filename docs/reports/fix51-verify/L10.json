@@ -5,7 +5,7 @@
   "observerHash": "c064240bbd1dfb4a4ffb12922fa39e6d24b69753af3eda1e03e9a81a51ce4a4a",
   "fixtureHash": "df526016e398100e295b42766eea3ea1190e551b57fa24999faa743cf1e3f7c4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-05T20:15:06.021Z",
+  "generatedAt": "2026-11-05T23:14:47.082Z",
   "policies": [
     {
       "tier": "low",
@@ -43,11 +43,25 @@
       "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json"
     },
     {
+      "tier": "low",
+      "policy": "controlled-fixtures",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-sweep-c4-cure.json"
+    },
+    {
       "tier": "high",
       "policy": "controlled-fixtures",
       "outcome": "complete",
       "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L10-high-fixtures.json"
+    },
+    {
+      "tier": "high",
+      "policy": "controlled-fixtures",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L10-high-sweep-c4-cure.json"
     },
     {
       "tier": "low",
@@ -62,6 +76,34 @@
       "outcome": "complete",
       "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L10-high-checkpoints.json"
+    },
+    {
+      "tier": "low",
+      "policy": "real-input-browser",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-dog-z0.5-browser.json"
+    },
+    {
+      "tier": "low",
+      "policy": "real-input-browser",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-dog-z1.5-browser.json"
+    },
+    {
+      "tier": "high",
+      "policy": "real-input-browser",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L10-high-dog-z0.5-browser.json"
+    },
+    {
+      "tier": "high",
+      "policy": "real-input-browser",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L10-high-dog-z1.5-browser.json"
     }
   ],
   "globals": [
@@ -1413,7 +1455,7 @@
         ],
         "notes": "Raw PNGs deleted after full-size inspection; compact derived JPGs and hashes retained. Controlled renderer fixture; no timing claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7"
       }
     },
     {
@@ -1542,7 +1584,7 @@
         ],
         "notes": "Raw PNG captures deleted after inspection. Compact derived contact sheets, raw hashes, metadata and individual bar pixel measurements are retained. No timing was collected.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7"
       }
     },
     {
@@ -3595,7 +3637,7 @@
         ],
         "notes": "Raw PNGs removed after inspection. Compact contact sheets, exact captured driver, SHA-256 and per-state measurements retained. Fixture scope; no route or performance claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7"
       }
     },
     {
@@ -3727,7 +3769,7 @@
         ],
         "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7"
       }
     }
   ],
@@ -4111,12 +4153,13 @@
     },
     {
       "id": "L10-02",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete actual Mega introduction time: 90 (target 0 ≤ value ≤ 120; PASS); low/complete Mega distance on introduction: 119.37333755479696 (target 80 ≤ value ≤ Infinity; PASS); low/stationary actual Mega introduction time: 90 (target 0 ≤ value ≤ 120; PASS); low/stationary Mega distance on introduction: 116.40655655713752 (target 80 ≤ value ≤ Infinity; PASS); high/complete actual Mega introduction time: 90 (target 0 ≤ value ≤ 120; PASS); high/complete Mega distance on introduction: 118.9586452170241 (target 80 ≤ value ≤ Infinity; PASS); high/stationary actual Mega introduction time: 90 (target 0 ≤ value ≤ 120; PASS); high/stationary Mega distance on introduction: 118.9586452170241 (target 80 ≤ value ≤ Infinity; PASS)",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete actual Mega introduction time: 90 (target 0 ≤ value ≤ 120; PASS); low/complete Mega distance on introduction: 119.37333755479696 (target 80 ≤ value ≤ Infinity; PASS); low/complete actual Mega roar and impact introduction events: [{\"type\":\"mega.cue\",\"tick\":5401,\"sourceId\":119,\"kind\":\"roar\",\"band\":\"approaching\"},{\"type\":\"mega.cue\",\"tick\":5401,\"sourceId\":119,\"kind\":\"impact\",\"band\":\"approaching\"},{\"type\":\"mega.cue\",\"tick\":7085,\"sourceId\":119,\"kind\":\"roar\",\"band\":\"approaching\"},{\"type\":\"mega.cue\",\"tick\":7085,\"sourceId\":119,\"kind\":\"impact\",\"band\":\"approaching\"}] (target same persistent Mega emits roar and impact by tick7200; PASS); low/complete Mega introduction actual body-clear route: {\"tick\":5400,\"observedTick\":5400,\"id\":119,\"position\":{\"x\":747,\"y\":0.702,\"z\":25,\"yaw\":-0.46693471992819774},\"player\":{\"x\":853.6096801757812,\"y\":0.7099999785423279,\"z\":78.70632934570312,\"yaw\":-3.09657018518757},\"direct\":119.37333755479696,\"radius\":0.55,\"pathMetres\":154.7137704533486,\"hidden\":false,\"residentPathMetres\":154.7137704533486,\"fullSourceRoute\":{\"ground\":{\"width\":226.60968017578125,\"depth\":… (full values in JSON) (target reachable own-clearance route; inactive streaming window is inconclusive; PASS); low/stationary actual Mega introduction time: 90 (target 0 ≤ value ≤ 120; PASS); low/stationary Mega distance on introduction: 116.40655655713752 (target 80 ≤ value ≤ Infinity; PASS); high/complete actual Mega introduction time: 90 (target 0 ≤ value ≤ 120; PASS); high/complete Mega distance on introduction: 118.9586452170241 (target 80 ≤ value ≤ Infinity; PASS); high/complete actual Mega roar and impact introduction events: [{\"type\":\"mega.cue\",\"tick\":5401,\"sourceId\":122,\"kind\":\"roar\",\"band\":\"approaching\"},{\"type\":\"mega.cue\",\"tick\":5401,\"sourceId\":122,\"kind\":\"impact\",\"band\":\"approaching\"},{\"type\":\"mega.cue\",\"tick\":7085,\"sourceId\":122,\"kind\":\"roar\",\"band\":\"approaching\"},{\"type\":\"mega.cue\",\"tick\":7085,\"sourceId\":122,\"kind\":\"impact\",\"band\":\"approaching\"}] (target same persistent Mega emits roar and impact by tick7200; PASS); high/complete Mega introduction actual body-clear route: {\"tick\":5400,\"observedTick\":5400,\"id\":122,\"position\":{\"x\":747,\"y\":0.702,\"z\":25,\"yaw\":-0.4684083101773735},\"player\":{\"x\":853.1604614257812,\"y\":0.7099999785423279,\"z\":78.676025390625,\"yaw\":3.048283639993729},\"direct\":118.9586452170241,\"radius\":0.55,\"pathMetres\":155.04193663026,\"hidden\":false,\"residentPathMetres\":155.04193663026,\"fullSourceRoute\":{\"ground\":{\"width\":226.16046142578125,\"depth\":173.6760… (full values in JSON) (target reachable own-clearance route; inactive streaming window is inconclusive; PASS); high/stationary actual Mega introduction time: 90 (target 0 ≤ value ≤ 120; PASS); high/stationary Mega distance on introduction: 118.9586452170241 (target 80 ≤ value ≤ Infinity; PASS)",
+      "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
+        "docs/reports/fix51-r10c/L10-introduction-proof.json",
         "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L10-high-complete.json",
         "docs/reports/fix51-verify/receipts/L10-high-stationary.json"
@@ -4144,6 +4187,102 @@
           "value": 119.37333755479696,
           "target": "80 ≤ value ≤ Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L10-low-complete.json"
+        },
+        {
+          "id": "L10-02",
+          "clause": "actual Mega roar and impact introduction events",
+          "level": "L10",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "type": "mega.cue",
+              "tick": 5401,
+              "sourceId": 119,
+              "kind": "roar",
+              "band": "approaching"
+            },
+            {
+              "type": "mega.cue",
+              "tick": 5401,
+              "sourceId": 119,
+              "kind": "impact",
+              "band": "approaching"
+            },
+            {
+              "type": "mega.cue",
+              "tick": 7085,
+              "sourceId": 119,
+              "kind": "roar",
+              "band": "approaching"
+            },
+            {
+              "type": "mega.cue",
+              "tick": 7085,
+              "sourceId": 119,
+              "kind": "impact",
+              "band": "approaching"
+            }
+          ],
+          "target": "same persistent Mega emits roar and impact by tick7200",
+          "receipt": "docs/reports/fix51-r10c/L10-introduction-proof.json"
+        },
+        {
+          "id": "L10-02",
+          "clause": "Mega introduction actual body-clear route",
+          "level": "L10",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "tick": 5400,
+            "observedTick": 5400,
+            "id": 119,
+            "position": {
+              "x": 747,
+              "y": 0.702,
+              "z": 25,
+              "yaw": -0.46693471992819774
+            },
+            "player": {
+              "x": 853.6096801757812,
+              "y": 0.7099999785423279,
+              "z": 78.70632934570312,
+              "yaw": -3.09657018518757
+            },
+            "direct": 119.37333755479696,
+            "radius": 0.55,
+            "pathMetres": 154.7137704533486,
+            "hidden": false,
+            "residentPathMetres": 154.7137704533486,
+            "fullSourceRoute": {
+              "ground": {
+                "width": 226.60968017578125,
+                "depth": 173.70632934570312
+              },
+              "center": {
+                "x": 800.3048400878906,
+                "z": 51.85316467285156
+              },
+              "clearance": 0.55,
+              "wallCount": 3185,
+              "wallsSha256": "cbb9165a936aac15bf820d8c041a69ffcd7ea19eb4349b1defecddd70917c2c3",
+              "severedControlRejected": true
+            },
+            "grid": {
+              "width": 300,
+              "depth": 300,
+              "center": {
+                "x": 850,
+                "z": 50
+              },
+              "clearance": 0.55,
+              "mask": false
+            }
+          },
+          "target": "reachable own-clearance route; inactive streaming window is inconclusive",
+          "receipt": "docs/reports/fix51-r10c/L10-introduction-proof.json"
         },
         {
           "id": "L10-02",
@@ -4191,6 +4330,102 @@
         },
         {
           "id": "L10-02",
+          "clause": "actual Mega roar and impact introduction events",
+          "level": "L10",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "type": "mega.cue",
+              "tick": 5401,
+              "sourceId": 122,
+              "kind": "roar",
+              "band": "approaching"
+            },
+            {
+              "type": "mega.cue",
+              "tick": 5401,
+              "sourceId": 122,
+              "kind": "impact",
+              "band": "approaching"
+            },
+            {
+              "type": "mega.cue",
+              "tick": 7085,
+              "sourceId": 122,
+              "kind": "roar",
+              "band": "approaching"
+            },
+            {
+              "type": "mega.cue",
+              "tick": 7085,
+              "sourceId": 122,
+              "kind": "impact",
+              "band": "approaching"
+            }
+          ],
+          "target": "same persistent Mega emits roar and impact by tick7200",
+          "receipt": "docs/reports/fix51-r10c/L10-introduction-proof.json"
+        },
+        {
+          "id": "L10-02",
+          "clause": "Mega introduction actual body-clear route",
+          "level": "L10",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "tick": 5400,
+            "observedTick": 5400,
+            "id": 122,
+            "position": {
+              "x": 747,
+              "y": 0.702,
+              "z": 25,
+              "yaw": -0.4684083101773735
+            },
+            "player": {
+              "x": 853.1604614257812,
+              "y": 0.7099999785423279,
+              "z": 78.676025390625,
+              "yaw": 3.048283639993729
+            },
+            "direct": 118.9586452170241,
+            "radius": 0.55,
+            "pathMetres": 155.04193663026,
+            "hidden": false,
+            "residentPathMetres": 155.04193663026,
+            "fullSourceRoute": {
+              "ground": {
+                "width": 226.16046142578125,
+                "depth": 173.676025390625
+              },
+              "center": {
+                "x": 800.0802307128906,
+                "z": 51.8380126953125
+              },
+              "clearance": 0.55,
+              "wallCount": 3185,
+              "wallsSha256": "cbb9165a936aac15bf820d8c041a69ffcd7ea19eb4349b1defecddd70917c2c3",
+              "severedControlRejected": true
+            },
+            "grid": {
+              "width": 500,
+              "depth": 500,
+              "center": {
+                "x": 850,
+                "z": 50
+              },
+              "clearance": 0.55,
+              "mask": false
+            }
+          },
+          "target": "reachable own-clearance route; inactive streaming window is inconclusive",
+          "receipt": "docs/reports/fix51-r10c/L10-introduction-proof.json"
+        },
+        {
+          "id": "L10-02",
           "clause": "actual Mega introduction time",
           "level": "L10",
           "tier": "high",
@@ -4220,7 +4455,7 @@
         "evidence": [],
         "method": "NEXT: Record actual roar/impact introduction by two minutes, Mega distance and its native reachable route from a fresh crash start."
       },
-      "remaining": "NEXT: Record actual roar/impact introduction by two minutes, Mega distance and its native reachable route from a fresh crash start."
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
     },
     {
       "id": "L10-03",
@@ -5762,18 +5997,494 @@
         ],
         "notes": "Original current-source producer, measured unchanged criterion.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7"
       }
     },
     {
       "id": "L10-05",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "Not measured by this batch run.",
-      "automatedComplete": false,
-      "receipt": [],
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete all four named checkpoint pickup and snapshot transactions: [{\"weapon\":\"weapon.pistol\",\"tick\":3497,\"x\":765.1019897460938,\"z\":24.9973201751709,\"interact\":true,\"checkpoint\":\"cure-residential\",\"snapshotTick\":3497,\"snapshotWeapons\":[\"weapon.fire-axe\",\"weapon.pistol\"],\"expectedDistance\":1.8980121457446952,\"expectedRadius\":2},{\"weapon\":\"weapon.shotgun\",\"tick\":11461,\"x\":1256.1455078125,\"z\":25.00066375732422,\"interact\":true,\"checkpoint\":\"cure-industrial\",\"snapshot… (full values in JSON) (target exactly four expected weapons; named anchor distance≤2m; actual approach interaction; same-tick checkpoint includes weapon; PASS); low/complete inventory changes alone spawn zero enemies at every weapon approach: [{\"weapon\":\"weapon.pistol\",\"snapshotTick\":3483,\"snapshotSha256\":\"3d4ff0bd112359908d194a544e630a8e9e6dbd00c5826b2832655e8636785959\",\"cases\":[{\"add\":[],\"before\":6,\"births\":[],\"censusSha256\":\"bd63472d5b8b2603d00f455dc8ad056f28f8ba748e75ae9111343d662dcf476d\",\"checkpoint\":\"cure-crash\"},{\"add\":[\"weapon.pistol\"],\"before\":6,\"births\":[],\"censusSha256\":\"bd63472d5b8b2603d00f455dc8ad056f28f8ba748e75ae9111343d… (full values in JSON) (target four naturally reached pre-pickup Resume snapshots; unchanged baseline vs named/all weapons; zero births and identical every-tick infected census for4s; PASS); high/complete all four named checkpoint pickup and snapshot transactions: [{\"weapon\":\"weapon.pistol\",\"tick\":3497,\"x\":765.1019897460938,\"z\":24.9973201751709,\"interact\":true,\"checkpoint\":\"cure-residential\",\"snapshotTick\":3497,\"snapshotWeapons\":[\"weapon.fire-axe\",\"weapon.pistol\"],\"expectedDistance\":1.8980121457446952,\"expectedRadius\":2},{\"weapon\":\"weapon.shotgun\",\"tick\":11461,\"x\":1255.7462158203125,\"z\":25.001005172729492,\"interact\":true,\"checkpoint\":\"cure-industrial\",\"snap… (full values in JSON) (target exactly four expected weapons; named anchor distance≤2m; actual approach interaction; same-tick checkpoint includes weapon; PASS); high/complete inventory changes alone spawn zero enemies at every weapon approach: [{\"weapon\":\"weapon.pistol\",\"snapshotTick\":3483,\"snapshotSha256\":\"6de815b356dd857cfc8029981d9e7b272cf0217e517a40e4ae40242a57c5c8e1\",\"cases\":[{\"add\":[],\"before\":7,\"births\":[],\"censusSha256\":\"66f080b55bc842c4020b7e54eedb7bf9550eec448a4caa0235c86985abc4d9a2\",\"checkpoint\":\"cure-crash\"},{\"add\":[\"weapon.pistol\"],\"before\":7,\"births\":[],\"censusSha256\":\"66f080b55bc842c4020b7e54eedb7bf9550eec448a4caa0235c869… (full values in JSON) (target four naturally reached pre-pickup Resume snapshots; unchanged baseline vs named/all weapons; zero births and identical every-tick infected census for4s; PASS) Manual review PASS (FRESH, Codex sweep-c4): Both full ordinary native routes preserve canonical final states and collect all four weapons at named anchors, with same-tick checkpoint arsenals. At each naturally reached pre-pickup state, four-second inventory-only comparisons(named/all weapons versus unchanged) produce zero births and identical infected censuses. Eight current physical WASD approach slices then independently collect handgun/shotgun/MG/rocket within authored radius with no E input; snapshot tick equals actual collection tick51/52 and stores new weapon/checkpoint. Zero spawn calls on each collection tick. Rocket approaches admit one dog at tick50 before pickup51/52, retained as normal positional admission rather than an inventory trigger. All16 before/after captures personally inspected,hashed and deleted: ring3m ahead before, new held weapon and advanced objective after; Security booth,medkits,Corgi and canister readable.",
+      "automatedComplete": true,
+      "receipt": [
+        "docs/reports/fix51-r10c/L10-pickups-proof.json",
+        "docs/reports/sweep-c4/L10-05-review.json",
+        "docs/reports/sweep-c4/L10-05-summary.json",
+        "docs/reports/sweep-c4/L10-05-low-physical.json.gz",
+        "docs/reports/sweep-c4/L10-05-high-physical.json.gz",
+        "tools/qa/accept/sweep-c4-l10-pickups.mjs"
+      ],
       "expected": "Weapons only at their named checkpoints, taken on approach, snapshot with the pickup; picking one up spawns nothing.",
-      "checks": [],
+      "checks": [
+        {
+          "id": "L10-05",
+          "clause": "all four named checkpoint pickup and snapshot transactions",
+          "level": "L10",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "weapon": "weapon.pistol",
+              "tick": 3497,
+              "x": 765.1019897460938,
+              "z": 24.9973201751709,
+              "interact": true,
+              "checkpoint": "cure-residential",
+              "snapshotTick": 3497,
+              "snapshotWeapons": [
+                "weapon.fire-axe",
+                "weapon.pistol"
+              ],
+              "expectedDistance": 1.8980121457446952,
+              "expectedRadius": 2
+            },
+            {
+              "weapon": "weapon.shotgun",
+              "tick": 11461,
+              "x": 1256.1455078125,
+              "z": 25.00066375732422,
+              "interact": true,
+              "checkpoint": "cure-industrial",
+              "snapshotTick": 11461,
+              "snapshotWeapons": [
+                "weapon.fire-axe",
+                "weapon.pistol",
+                "weapon.shotgun"
+              ],
+              "expectedDistance": 0.8544924452985647,
+              "expectedRadius": 2
+            },
+            {
+              "weapon": "weapon.army-mg",
+              "tick": 21369,
+              "x": 1855.1417236328125,
+              "z": 25.002906799316406,
+              "interact": true,
+              "checkpoint": "cure-military",
+              "snapshotTick": 21369,
+              "snapshotWeapons": [
+                "weapon.fire-axe",
+                "weapon.pistol",
+                "weapon.shotgun",
+                "weapon.army-mg"
+              ],
+              "expectedDistance": 1.8582786406591019,
+              "expectedRadius": 2
+            },
+            {
+              "weapon": "weapon.rocket-launcher",
+              "tick": 39247,
+              "x": 2935.140625,
+              "z": -4.997618198394775,
+              "interact": true,
+              "checkpoint": "cure-corridor",
+              "snapshotTick": 39247,
+              "snapshotWeapons": [
+                "weapon.fire-axe",
+                "weapon.pistol",
+                "weapon.shotgun",
+                "weapon.army-mg",
+                "weapon.rocket-launcher"
+              ],
+              "expectedDistance": 1.8593765255063015,
+              "expectedRadius": 2
+            }
+          ],
+          "target": "exactly four expected weapons; named anchor distance≤2m; actual approach interaction; same-tick checkpoint includes weapon",
+          "receipt": "docs/reports/fix51-r10c/L10-pickups-proof.json"
+        },
+        {
+          "id": "L10-05",
+          "clause": "inventory changes alone spawn zero enemies at every weapon approach",
+          "level": "L10",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "weapon": "weapon.pistol",
+              "snapshotTick": 3483,
+              "snapshotSha256": "3d4ff0bd112359908d194a544e630a8e9e6dbd00c5826b2832655e8636785959",
+              "cases": [
+                {
+                  "add": [],
+                  "before": 6,
+                  "births": [],
+                  "censusSha256": "bd63472d5b8b2603d00f455dc8ad056f28f8ba748e75ae9111343d662dcf476d",
+                  "checkpoint": "cure-crash"
+                },
+                {
+                  "add": [
+                    "weapon.pistol"
+                  ],
+                  "before": 6,
+                  "births": [],
+                  "censusSha256": "bd63472d5b8b2603d00f455dc8ad056f28f8ba748e75ae9111343d662dcf476d",
+                  "checkpoint": "cure-crash"
+                },
+                {
+                  "add": [
+                    "weapon.pistol",
+                    "weapon.shotgun",
+                    "weapon.army-mg",
+                    "weapon.rocket-launcher"
+                  ],
+                  "before": 6,
+                  "births": [],
+                  "censusSha256": "bd63472d5b8b2603d00f455dc8ad056f28f8ba748e75ae9111343d662dcf476d",
+                  "checkpoint": "cure-crash"
+                }
+              ],
+              "identical": true
+            },
+            {
+              "weapon": "weapon.shotgun",
+              "snapshotTick": 11432,
+              "snapshotSha256": "293e71ecb9a61538f5d8ed678785b77c3a53c6fea7fb29b65a77b007110403fd",
+              "cases": [
+                {
+                  "add": [],
+                  "before": 9,
+                  "births": [],
+                  "censusSha256": "9ea576627397dde0c057532c33ce19f52016a5ef69f239152e68889fc544342e",
+                  "checkpoint": "cure-residential"
+                },
+                {
+                  "add": [
+                    "weapon.shotgun"
+                  ],
+                  "before": 9,
+                  "births": [],
+                  "censusSha256": "9ea576627397dde0c057532c33ce19f52016a5ef69f239152e68889fc544342e",
+                  "checkpoint": "cure-residential"
+                },
+                {
+                  "add": [
+                    "weapon.pistol",
+                    "weapon.shotgun",
+                    "weapon.army-mg",
+                    "weapon.rocket-launcher"
+                  ],
+                  "before": 9,
+                  "births": [],
+                  "censusSha256": "9ea576627397dde0c057532c33ce19f52016a5ef69f239152e68889fc544342e",
+                  "checkpoint": "cure-residential"
+                }
+              ],
+              "identical": true
+            },
+            {
+              "weapon": "weapon.army-mg",
+              "snapshotTick": 21354,
+              "snapshotSha256": "6e52bd646912af1833d05e30097eaabd9589cfae6446d9cca1d30ec4162a6a5f",
+              "cases": [
+                {
+                  "add": [],
+                  "before": 5,
+                  "births": [],
+                  "censusSha256": "febab9c41dfa040a03361fdeb5d137f6ce54307e7dfe92542f035597907f538c",
+                  "checkpoint": "cure-industrial"
+                },
+                {
+                  "add": [
+                    "weapon.army-mg"
+                  ],
+                  "before": 5,
+                  "births": [],
+                  "censusSha256": "febab9c41dfa040a03361fdeb5d137f6ce54307e7dfe92542f035597907f538c",
+                  "checkpoint": "cure-industrial"
+                },
+                {
+                  "add": [
+                    "weapon.pistol",
+                    "weapon.shotgun",
+                    "weapon.army-mg",
+                    "weapon.rocket-launcher"
+                  ],
+                  "before": 5,
+                  "births": [],
+                  "censusSha256": "febab9c41dfa040a03361fdeb5d137f6ce54307e7dfe92542f035597907f538c",
+                  "checkpoint": "cure-industrial"
+                }
+              ],
+              "identical": true
+            },
+            {
+              "weapon": "weapon.rocket-launcher",
+              "snapshotTick": 39232,
+              "snapshotSha256": "c461fa918bc817714244ad21c3297c9121ffd47afe207035c9acac1eaeb423ff",
+              "cases": [
+                {
+                  "add": [],
+                  "before": 23,
+                  "births": [],
+                  "censusSha256": "554a03dabb64091a5fee66a4a9e3e6a548d5c9efd94cc77a683bbfb7b3a7a344",
+                  "checkpoint": "cure-research"
+                },
+                {
+                  "add": [
+                    "weapon.rocket-launcher"
+                  ],
+                  "before": 23,
+                  "births": [],
+                  "censusSha256": "554a03dabb64091a5fee66a4a9e3e6a548d5c9efd94cc77a683bbfb7b3a7a344",
+                  "checkpoint": "cure-research"
+                },
+                {
+                  "add": [
+                    "weapon.pistol",
+                    "weapon.shotgun",
+                    "weapon.army-mg",
+                    "weapon.rocket-launcher"
+                  ],
+                  "before": 23,
+                  "births": [],
+                  "censusSha256": "554a03dabb64091a5fee66a4a9e3e6a548d5c9efd94cc77a683bbfb7b3a7a344",
+                  "checkpoint": "cure-research"
+                }
+              ],
+              "identical": true
+            }
+          ],
+          "target": "four naturally reached pre-pickup Resume snapshots; unchanged baseline vs named/all weapons; zero births and identical every-tick infected census for4s",
+          "receipt": "docs/reports/fix51-r10c/L10-pickups-proof.json"
+        },
+        {
+          "id": "L10-05",
+          "clause": "all four named checkpoint pickup and snapshot transactions",
+          "level": "L10",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "weapon": "weapon.pistol",
+              "tick": 3497,
+              "x": 765.1019897460938,
+              "z": 24.9973201751709,
+              "interact": true,
+              "checkpoint": "cure-residential",
+              "snapshotTick": 3497,
+              "snapshotWeapons": [
+                "weapon.fire-axe",
+                "weapon.pistol"
+              ],
+              "expectedDistance": 1.8980121457446952,
+              "expectedRadius": 2
+            },
+            {
+              "weapon": "weapon.shotgun",
+              "tick": 11461,
+              "x": 1255.7462158203125,
+              "z": 25.001005172729492,
+              "interact": true,
+              "checkpoint": "cure-industrial",
+              "snapshotTick": 11461,
+              "snapshotWeapons": [
+                "weapon.fire-axe",
+                "weapon.pistol",
+                "weapon.shotgun"
+              ],
+              "expectedDistance": 1.2537845826165168,
+              "expectedRadius": 2
+            },
+            {
+              "weapon": "weapon.army-mg",
+              "tick": 21450,
+              "x": 1855.1417236328125,
+              "z": 25.002906799316406,
+              "interact": true,
+              "checkpoint": "cure-military",
+              "snapshotTick": 21450,
+              "snapshotWeapons": [
+                "weapon.fire-axe",
+                "weapon.pistol",
+                "weapon.shotgun",
+                "weapon.army-mg"
+              ],
+              "expectedDistance": 1.8582786406591019,
+              "expectedRadius": 2
+            },
+            {
+              "weapon": "weapon.rocket-launcher",
+              "tick": 39367,
+              "x": 2935.12109375,
+              "z": -4.9975690841674805,
+              "interact": true,
+              "checkpoint": "cure-corridor",
+              "snapshotTick": 39367,
+              "snapshotWeapons": [
+                "weapon.fire-axe",
+                "weapon.pistol",
+                "weapon.shotgun",
+                "weapon.army-mg",
+                "weapon.rocket-launcher"
+              ],
+              "expectedDistance": 1.8789078225503368,
+              "expectedRadius": 2
+            }
+          ],
+          "target": "exactly four expected weapons; named anchor distance≤2m; actual approach interaction; same-tick checkpoint includes weapon",
+          "receipt": "docs/reports/fix51-r10c/L10-pickups-proof.json"
+        },
+        {
+          "id": "L10-05",
+          "clause": "inventory changes alone spawn zero enemies at every weapon approach",
+          "level": "L10",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "weapon": "weapon.pistol",
+              "snapshotTick": 3483,
+              "snapshotSha256": "6de815b356dd857cfc8029981d9e7b272cf0217e517a40e4ae40242a57c5c8e1",
+              "cases": [
+                {
+                  "add": [],
+                  "before": 7,
+                  "births": [],
+                  "censusSha256": "66f080b55bc842c4020b7e54eedb7bf9550eec448a4caa0235c86985abc4d9a2",
+                  "checkpoint": "cure-crash"
+                },
+                {
+                  "add": [
+                    "weapon.pistol"
+                  ],
+                  "before": 7,
+                  "births": [],
+                  "censusSha256": "66f080b55bc842c4020b7e54eedb7bf9550eec448a4caa0235c86985abc4d9a2",
+                  "checkpoint": "cure-crash"
+                },
+                {
+                  "add": [
+                    "weapon.pistol",
+                    "weapon.shotgun",
+                    "weapon.army-mg",
+                    "weapon.rocket-launcher"
+                  ],
+                  "before": 7,
+                  "births": [],
+                  "censusSha256": "66f080b55bc842c4020b7e54eedb7bf9550eec448a4caa0235c86985abc4d9a2",
+                  "checkpoint": "cure-crash"
+                }
+              ],
+              "identical": true
+            },
+            {
+              "weapon": "weapon.shotgun",
+              "snapshotTick": 11438,
+              "snapshotSha256": "3e0de086cf4ae22bdf9d4cd4263edf6f7f0193f88f31ab699758161898cdebfe",
+              "cases": [
+                {
+                  "add": [],
+                  "before": 17,
+                  "births": [],
+                  "censusSha256": "e6446b4f61587e43f0b7c041959e85a9d473502c0771a5ffee1e824102b24de9",
+                  "checkpoint": "cure-residential"
+                },
+                {
+                  "add": [
+                    "weapon.shotgun"
+                  ],
+                  "before": 17,
+                  "births": [],
+                  "censusSha256": "e6446b4f61587e43f0b7c041959e85a9d473502c0771a5ffee1e824102b24de9",
+                  "checkpoint": "cure-residential"
+                },
+                {
+                  "add": [
+                    "weapon.pistol",
+                    "weapon.shotgun",
+                    "weapon.army-mg",
+                    "weapon.rocket-launcher"
+                  ],
+                  "before": 17,
+                  "births": [],
+                  "censusSha256": "e6446b4f61587e43f0b7c041959e85a9d473502c0771a5ffee1e824102b24de9",
+                  "checkpoint": "cure-residential"
+                }
+              ],
+              "identical": true
+            },
+            {
+              "weapon": "weapon.army-mg",
+              "snapshotTick": 21435,
+              "snapshotSha256": "adac5a361d23e0e805cc1cc4780ffee836fa051a3824d6e973250c30bfed29d2",
+              "cases": [
+                {
+                  "add": [],
+                  "before": 7,
+                  "births": [],
+                  "censusSha256": "f8c0cddd64f4c8bb12c3bff1a7f962c43cefb99beb76d1b4e0f31ec28ee0c11c",
+                  "checkpoint": "cure-industrial"
+                },
+                {
+                  "add": [
+                    "weapon.army-mg"
+                  ],
+                  "before": 7,
+                  "births": [],
+                  "censusSha256": "f8c0cddd64f4c8bb12c3bff1a7f962c43cefb99beb76d1b4e0f31ec28ee0c11c",
+                  "checkpoint": "cure-industrial"
+                },
+                {
+                  "add": [
+                    "weapon.pistol",
+                    "weapon.shotgun",
+                    "weapon.army-mg",
+                    "weapon.rocket-launcher"
+                  ],
+                  "before": 7,
+                  "births": [],
+                  "censusSha256": "f8c0cddd64f4c8bb12c3bff1a7f962c43cefb99beb76d1b4e0f31ec28ee0c11c",
+                  "checkpoint": "cure-industrial"
+                }
+              ],
+              "identical": true
+            },
+            {
+              "weapon": "weapon.rocket-launcher",
+              "snapshotTick": 39353,
+              "snapshotSha256": "2d07aab77f4156fb78876be037dfcc9a2a47ecfd5d545a2d98fa26c79383a1aa",
+              "cases": [
+                {
+                  "add": [],
+                  "before": 37,
+                  "births": [],
+                  "censusSha256": "05d586796fc635f7c5824d02b74318ce092444030100dfcdd8b742a1069e24ae",
+                  "checkpoint": "cure-research"
+                },
+                {
+                  "add": [
+                    "weapon.rocket-launcher"
+                  ],
+                  "before": 37,
+                  "births": [],
+                  "censusSha256": "05d586796fc635f7c5824d02b74318ce092444030100dfcdd8b742a1069e24ae",
+                  "checkpoint": "cure-research"
+                },
+                {
+                  "add": [
+                    "weapon.pistol",
+                    "weapon.shotgun",
+                    "weapon.army-mg",
+                    "weapon.rocket-launcher"
+                  ],
+                  "before": 37,
+                  "births": [],
+                  "censusSha256": "05d586796fc635f7c5824d02b74318ce092444030100dfcdd8b742a1069e24ae",
+                  "checkpoint": "cure-research"
+                }
+              ],
+              "identical": true
+            }
+          ],
+          "target": "four naturally reached pre-pickup Resume snapshots; unchanged baseline vs named/all weapons; zero births and identical every-tick infected census for4s",
+          "receipt": "docs/reports/fix51-r10c/L10-pickups-proof.json"
+        }
+      ],
       "historical": {
         "id": "L10-05",
         "level": "L10",
@@ -5782,17 +6493,75 @@
         "evidence": [],
         "method": "NEXT: Record named weapon approach pickups, snapshot timing and spawn calls before/after each pickup in the real-input regional route."
       },
-      "remaining": "NEXT: Record named weapon approach pickups, snapshot timing and spawn calls before/after each pickup in the real-input regional route."
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "review": {
+        "tag": "O",
+        "instruction": "Weapons only at their named checkpoints, taken on approach, snapshot with the pickup; picking one up spawns nothing.",
+        "clause": "Weapons only at their named checkpoints, taken on approach, snapshot with the pickup; picking one up spawns nothing."
+      },
+      "reviewDecision": {
+        "row": "L10-05",
+        "status": "PASS",
+        "reviewer": "Codex sweep-c4",
+        "date": "2026-11-06",
+        "commit": "9d6c6d5be84d8755c4f2a58352c9fff7548e8b45",
+        "clauses": [
+          {
+            "clause": "Weapons only at their named checkpoints, taken on approach, snapshot with the pickup; picking one up spawns nothing.",
+            "verdict": "PASS",
+            "note": "Both full ordinary native routes preserve canonical final states and collect all four weapons at named anchors, with same-tick checkpoint arsenals. At each naturally reached pre-pickup state, four-second inventory-only comparisons(named/all weapons versus unchanged) produce zero births and identical infected censuses. Eight current physical WASD approach slices then independently collect handgun/shotgun/MG/rocket within authored radius with no E input; snapshot tick equals actual collection tick51/52 and stores new weapon/checkpoint. Zero spawn calls on each collection tick. Rocket approaches admit one dog at tick50 before pickup51/52, retained as normal positional admission rather than an inventory trigger. All16 before/after captures personally inspected,hashed and deleted: ring3m ahead before, new held weapon and advanced objective after; Security booth,medkits,Corgi and canister readable."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/fix51-r10c/L10-pickups-proof.json",
+            "sha256": "4faa464da6a7a6071e9033b9584d81c98edba3182e5644812419471b3e072ca2",
+            "what": "Source-bound full native route/inventory controls, exact progressed Resume seeds, actual physical keyboard approaches with pickup/snapshot/spawn events, or personally inspected16-frame SHA256 review."
+          },
+          {
+            "file": "docs/reports/sweep-c4/L10-05-review.json",
+            "sha256": "a72b741d91dd3949a10d51bcb938f52a77f9aa684d2d34acddf7a587ca8093b1",
+            "what": "Source-bound full native route/inventory controls, exact progressed Resume seeds, actual physical keyboard approaches with pickup/snapshot/spawn events, or personally inspected16-frame SHA256 review."
+          },
+          {
+            "file": "docs/reports/sweep-c4/L10-05-summary.json",
+            "sha256": "1d75baf5fd0170b986c7accf04e680a66f49e661517e7ce1fcb63abf56c5ac88",
+            "what": "Source-bound full native route/inventory controls, exact progressed Resume seeds, actual physical keyboard approaches with pickup/snapshot/spawn events, or personally inspected16-frame SHA256 review."
+          },
+          {
+            "file": "docs/reports/sweep-c4/L10-05-low-physical.json.gz",
+            "sha256": "0f6dc8f04e2093e02523a8ea981d457a100fbdb05bf5563723d06a4516a9b7d5",
+            "what": "Source-bound full native route/inventory controls, exact progressed Resume seeds, actual physical keyboard approaches with pickup/snapshot/spawn events, or personally inspected16-frame SHA256 review."
+          },
+          {
+            "file": "docs/reports/sweep-c4/L10-05-high-physical.json.gz",
+            "sha256": "96983e55c2823908f64593de83c49c2a87849f5dbc7789fda9b42dfc6c8b3e50",
+            "what": "Source-bound full native route/inventory controls, exact progressed Resume seeds, actual physical keyboard approaches with pickup/snapshot/spawn events, or personally inspected16-frame SHA256 review."
+          },
+          {
+            "file": "tools/qa/accept/sweep-c4-l10-pickups.mjs",
+            "sha256": "19aef51aa006232cecd65c3279ecb9c2d8dfb1bdcdc483b1850ca9b2025dbb22",
+            "what": "Source-bound full native route/inventory controls, exact progressed Resume seeds, actual physical keyboard approaches with pickup/snapshot/spawn events, or personally inspected16-frame SHA256 review."
+          }
+        ],
+        "notes": "Focused regional approach capability from native-generated snapshots, not a continuous physical finale. Save validation rejected initial mismatched export; exporter now copies exact snapshot arsenal and retains the validation guard. Added exact-criterion review requirement so native-only measurements cannot silently replace the tracker physical NEXT. No game/criteria/count/timer/cap changes.",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7"
+      }
     },
     {
       "id": "L10-06",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/controlled-fixture native dog speed ratio: 1.1 (target 1.1× run; PASS); low/controlled-fixture actual dog hit damage/reach: [{\"tick\":40,\"amount\":10,\"reach\":1.08,\"attackId\":1},{\"tick\":199,\"amount\":10,\"reach\":1.08,\"attackId\":2},{\"tick\":358,\"amount\":10,\"reach\":1.08,\"attackId\":3},{\"tick\":517,\"amount\":10,\"reach\":1.08,\"attackId\":4}] (target 10 HP each; reach≤2 m; PASS); low/controlled-fixture actual dog telegraph duration: [{\"type\":\"telegraph\",\"tick\":1,\"sourceId\":2,\"attackId\":1,\"special\":\"pounce\",\"duration\":0.65,\"target\":{\"id\":1,\"x\":0,\"z\":0}},{\"type\":\"telegraph\",\"tick\":160,\"sourceId\":2,\"attackId\":2,\"special\":\"pounce\",\"duration\":0.65,\"target\":{\"id\":1,\"x\":-7.628862874753395e-8,\"z\":-7.628862874753395e-8}},{\"type\":\"telegraph\",\"tick\":319,\"sourceId\":2,\"attackId\":3,\"special\":\"pounce\",\"duration\":0.65,\"target\":{\"id\":1,\"x\":0,… (full values in JSON) (target ≥0.6 s; PASS); low/controlled-fixture dog cooldown between hit and next windup: [2,2,2] (target ≥2 s; PASS); high/controlled-fixture native dog speed ratio: 1.1 (target 1.1× run; PASS); high/controlled-fixture actual dog hit damage/reach: [{\"tick\":40,\"amount\":10,\"reach\":1.08,\"attackId\":1},{\"tick\":199,\"amount\":10,\"reach\":1.08,\"attackId\":2},{\"tick\":358,\"amount\":10,\"reach\":1.08,\"attackId\":3},{\"tick\":517,\"amount\":10,\"reach\":1.08,\"attackId\":4}] (target 10 HP each; reach≤2 m; PASS); high/controlled-fixture actual dog telegraph duration: [{\"type\":\"telegraph\",\"tick\":1,\"sourceId\":2,\"attackId\":1,\"special\":\"pounce\",\"duration\":0.65,\"target\":{\"id\":1,\"x\":0,\"z\":0}},{\"type\":\"telegraph\",\"tick\":160,\"sourceId\":2,\"attackId\":2,\"special\":\"pounce\",\"duration\":0.65,\"target\":{\"id\":1,\"x\":-7.628862874753395e-8,\"z\":-7.628862874753395e-8}},{\"type\":\"telegraph\",\"tick\":319,\"sourceId\":2,\"attackId\":3,\"special\":\"pounce\",\"duration\":0.65,\"target\":{\"id\":1,\"x\":0,… (full values in JSON) (target ≥0.6 s; PASS); high/controlled-fixture dog cooldown between hit and next windup: [2,2,2] (target ≥2 s; PASS)",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/controlled-fixture native dog speed ratio: 1.1 (target 1.1× run; PASS); low/controlled-fixture actual dog hit damage/reach: [{\"tick\":40,\"amount\":10,\"reach\":1.08,\"attackId\":1},{\"tick\":199,\"amount\":10,\"reach\":1.08,\"attackId\":2},{\"tick\":358,\"amount\":10,\"reach\":1.08,\"attackId\":3},{\"tick\":517,\"amount\":10,\"reach\":1.08,\"attackId\":4}] (target 10 HP each; reach≤2 m; PASS); low/controlled-fixture actual dog telegraph duration: [{\"type\":\"telegraph\",\"tick\":1,\"sourceId\":2,\"attackId\":1,\"special\":\"pounce\",\"duration\":0.65,\"target\":{\"id\":1,\"x\":0,\"z\":0}},{\"type\":\"telegraph\",\"tick\":160,\"sourceId\":2,\"attackId\":2,\"special\":\"pounce\",\"duration\":0.65,\"target\":{\"id\":1,\"x\":-7.628862874753395e-8,\"z\":-7.628862874753395e-8}},{\"type\":\"telegraph\",\"tick\":319,\"sourceId\":2,\"attackId\":3,\"special\":\"pounce\",\"duration\":0.65,\"target\":{\"id\":1,\"x\":0,… (full values in JSON) (target ≥0.6 s; PASS); low/controlled-fixture dog cooldown between hit and next windup: [2,2,2] (target ≥2 s; PASS); high/controlled-fixture native dog speed ratio: 1.1 (target 1.1× run; PASS); high/controlled-fixture actual dog hit damage/reach: [{\"tick\":40,\"amount\":10,\"reach\":1.08,\"attackId\":1},{\"tick\":199,\"amount\":10,\"reach\":1.08,\"attackId\":2},{\"tick\":358,\"amount\":10,\"reach\":1.08,\"attackId\":3},{\"tick\":517,\"amount\":10,\"reach\":1.08,\"attackId\":4}] (target 10 HP each; reach≤2 m; PASS); high/controlled-fixture actual dog telegraph duration: [{\"type\":\"telegraph\",\"tick\":1,\"sourceId\":2,\"attackId\":1,\"special\":\"pounce\",\"duration\":0.65,\"target\":{\"id\":1,\"x\":0,\"z\":0}},{\"type\":\"telegraph\",\"tick\":160,\"sourceId\":2,\"attackId\":2,\"special\":\"pounce\",\"duration\":0.65,\"target\":{\"id\":1,\"x\":-7.628862874753395e-8,\"z\":-7.628862874753395e-8}},{\"type\":\"telegraph\",\"tick\":319,\"sourceId\":2,\"attackId\":3,\"special\":\"pounce\",\"duration\":0.65,\"target\":{\"id\":1,\"x\":0,… (full values in JSON) (target ≥0.6 s; PASS); high/controlled-fixture dog cooldown between hit and next windup: [2,2,2] (target ≥2 s; PASS); low/real-input-webgl2 reviewed living infected dog distinct from corgi at zoom0.5: {\"runtimeMatches\":true,\"execution\":true,\"photosMatch\":true,\"review\":{\"row\":\"L10-06\",\"visibleLivingDog\":true,\"lowAnimalSilhouette\":true,\"distinctFromCorgi\":true,\"corgiVisible\":true,\"evidence\":[{\"file\":\"dog-look-living-dog-0.jpg\",\"sha256\":\"3ef68f231de722707fc261238dc360617dc6ca1cb6126e808f5e0bf99340d1f8\"},{\"file\":\"dog-look-living-dog-1.jpg\",\"sha256\":\"40f3f59e1c75c83a463593b53dbc578ea0f53a7a627c2f575… (full values in JSON) (target naturally reached living dog and corgi; physical sidestep; observed quality/zoom; reviewed low animal silhouette and distinct non-corgi appearance; no actor writes/skips or runtime errors; PASS); low/real-input-webgl2 reviewed living infected dog distinct from corgi at zoom1.5: {\"runtimeMatches\":true,\"execution\":true,\"photosMatch\":true,\"review\":{\"row\":\"L10-06\",\"visibleLivingDog\":true,\"lowAnimalSilhouette\":true,\"distinctFromCorgi\":true,\"corgiVisible\":true,\"evidence\":[{\"file\":\"dog-look-living-dog-0.jpg\",\"sha256\":\"04dacad99a8233aaf71ee6ef498d4d4eb87cd3274ce6882e2dfca8ef0cac5865\"},{\"file\":\"dog-look-living-dog-1.jpg\",\"sha256\":\"fe8a9c4f17349bf171882a14b85aea03c86a4e96250be9d8c… (full values in JSON) (target naturally reached living dog and corgi; physical sidestep; observed quality/zoom; reviewed low animal silhouette and distinct non-corgi appearance; no actor writes/skips or runtime errors; PASS); high/real-input-webgl2 reviewed living infected dog distinct from corgi at zoom0.5: {\"runtimeMatches\":true,\"execution\":true,\"photosMatch\":true,\"review\":{\"row\":\"L10-06\",\"visibleLivingDog\":true,\"lowAnimalSilhouette\":true,\"distinctFromCorgi\":true,\"corgiVisible\":true,\"evidence\":[{\"file\":\"dog-look-living-dog-0.jpg\",\"sha256\":\"501f2325d12b4fea5858bf60804a56e03d600bc87ddbcee16a0e5cec8336bc3b\"},{\"file\":\"dog-look-living-dog-1.jpg\",\"sha256\":\"c2db1e529ae19a9871d6a5fd7d9c69c4123c97aa156831904… (full values in JSON) (target naturally reached living dog and corgi; physical sidestep; observed quality/zoom; reviewed low animal silhouette and distinct non-corgi appearance; no actor writes/skips or runtime errors; PASS); high/real-input-webgl2 reviewed living infected dog distinct from corgi at zoom1.5: {\"runtimeMatches\":true,\"execution\":true,\"photosMatch\":true,\"review\":{\"row\":\"L10-06\",\"visibleLivingDog\":true,\"lowAnimalSilhouette\":true,\"distinctFromCorgi\":true,\"corgiVisible\":true,\"evidence\":[{\"file\":\"dog-look-living-dog-0.jpg\",\"sha256\":\"ec6cfd3cf1adb77ea231be8de68e55e8a5cc1a35143d57e828b0ba6dfdc31e6a\"},{\"file\":\"dog-look-living-dog-1.jpg\",\"sha256\":\"90ed685444de4134deb6d4d5d6a8c2acf08a7a7ab19a6db14… (full values in JSON) (target naturally reached living dog and corgi; physical sidestep; observed quality/zoom; reviewed low animal silhouette and distinct non-corgi appearance; no actor writes/skips or runtime errors; PASS)",
+      "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L10-high-fixtures.json"
+        "docs/reports/fix51-verify/receipts/L10-high-fixtures.json",
+        "docs/reports/fix51-verify/receipts/L10-low-dog-z0.5-browser.json",
+        "docs/reports/fix51-verify/receipts/L10-low-dog-z1.5-browser.json",
+        "docs/reports/fix51-verify/receipts/L10-high-dog-z0.5-browser.json",
+        "docs/reports/fix51-verify/receipts/L10-high-dog-z1.5-browser.json"
       ],
       "expected": "Dogs: 1.1× run, ≥ 0.6 s telegraph, ≤ 2 m reach, ≥ 2 s cooldown, 10 HP/bite; low, distinct from the corgi.",
       "checks": [
@@ -6047,6 +6816,162 @@
           "policy": "controlled-fixture",
           "receipt": "docs/reports/fix51-verify/receipts/L10-high-fixtures.json",
           "level": "L10"
+        },
+        {
+          "id": "L10-06",
+          "clause": "reviewed living infected dog distinct from corgi at zoom0.5",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "runtimeMatches": true,
+            "execution": true,
+            "photosMatch": true,
+            "review": {
+              "row": "L10-06",
+              "visibleLivingDog": true,
+              "lowAnimalSilhouette": true,
+              "distinctFromCorgi": true,
+              "corgiVisible": true,
+              "evidence": [
+                {
+                  "file": "dog-look-living-dog-0.jpg",
+                  "sha256": "3ef68f231de722707fc261238dc360617dc6ca1cb6126e808f5e0bf99340d1f8"
+                },
+                {
+                  "file": "dog-look-living-dog-1.jpg",
+                  "sha256": "40f3f59e1c75c83a463593b53dbc578ea0f53a7a627c2f575ebb72d2179a3963"
+                },
+                {
+                  "file": "dog-look-living-dog-2.jpg",
+                  "sha256": "2582fde961447732b47aadb2282482377820ee37931cfcbadb79d1347f6df047"
+                }
+              ]
+            },
+            "inputPath": "docs/reports/fix51-r10c/L10-low-dog-z0.5-input.json",
+            "reviewPath": "docs/reports/fix51-r10c/L10-low-dog-z0.5/review.json",
+            "provenancePath": "docs/reports/fix51-r10c/L10-dog-save-provenance.json"
+          },
+          "target": "naturally reached living dog and corgi; physical sidestep; observed quality/zoom; reviewed low animal silhouette and distinct non-corgi appearance; no actor writes/skips or runtime errors",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-low-dog-z0.5-browser.json",
+          "level": "L10"
+        },
+        {
+          "id": "L10-06",
+          "clause": "reviewed living infected dog distinct from corgi at zoom1.5",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "runtimeMatches": true,
+            "execution": true,
+            "photosMatch": true,
+            "review": {
+              "row": "L10-06",
+              "visibleLivingDog": true,
+              "lowAnimalSilhouette": true,
+              "distinctFromCorgi": true,
+              "corgiVisible": true,
+              "evidence": [
+                {
+                  "file": "dog-look-living-dog-0.jpg",
+                  "sha256": "04dacad99a8233aaf71ee6ef498d4d4eb87cd3274ce6882e2dfca8ef0cac5865"
+                },
+                {
+                  "file": "dog-look-living-dog-1.jpg",
+                  "sha256": "fe8a9c4f17349bf171882a14b85aea03c86a4e96250be9d8c78097275ac05595"
+                },
+                {
+                  "file": "dog-look-living-dog-2.jpg",
+                  "sha256": "63d21800210573ff2eb6f7434abced79f478382e62b5e7b5a6f6a702db7a2fa6"
+                }
+              ]
+            },
+            "inputPath": "docs/reports/fix51-r10c/L10-low-dog-z1.5-input.json",
+            "reviewPath": "docs/reports/fix51-r10c/L10-low-dog-z1.5/review.json",
+            "provenancePath": "docs/reports/fix51-r10c/L10-dog-save-provenance.json"
+          },
+          "target": "naturally reached living dog and corgi; physical sidestep; observed quality/zoom; reviewed low animal silhouette and distinct non-corgi appearance; no actor writes/skips or runtime errors",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-low-dog-z1.5-browser.json",
+          "level": "L10"
+        },
+        {
+          "id": "L10-06",
+          "clause": "reviewed living infected dog distinct from corgi at zoom0.5",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "runtimeMatches": true,
+            "execution": true,
+            "photosMatch": true,
+            "review": {
+              "row": "L10-06",
+              "visibleLivingDog": true,
+              "lowAnimalSilhouette": true,
+              "distinctFromCorgi": true,
+              "corgiVisible": true,
+              "evidence": [
+                {
+                  "file": "dog-look-living-dog-0.jpg",
+                  "sha256": "501f2325d12b4fea5858bf60804a56e03d600bc87ddbcee16a0e5cec8336bc3b"
+                },
+                {
+                  "file": "dog-look-living-dog-1.jpg",
+                  "sha256": "c2db1e529ae19a9871d6a5fd7d9c69c4123c97aa1568319047a281f6685704cc"
+                },
+                {
+                  "file": "dog-look-living-dog-2.jpg",
+                  "sha256": "dc0b45b6860628a9f133833ca4941ea326d7ac6ae28deaef32be2bf2f91cf79b"
+                }
+              ]
+            },
+            "inputPath": "docs/reports/fix51-r10c/L10-high-dog-z0.5-input.json",
+            "reviewPath": "docs/reports/fix51-r10c/L10-high-dog-z0.5/review.json",
+            "provenancePath": "docs/reports/fix51-r10c/L10-dog-save-provenance.json"
+          },
+          "target": "naturally reached living dog and corgi; physical sidestep; observed quality/zoom; reviewed low animal silhouette and distinct non-corgi appearance; no actor writes/skips or runtime errors",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-high-dog-z0.5-browser.json",
+          "level": "L10"
+        },
+        {
+          "id": "L10-06",
+          "clause": "reviewed living infected dog distinct from corgi at zoom1.5",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "runtimeMatches": true,
+            "execution": true,
+            "photosMatch": true,
+            "review": {
+              "row": "L10-06",
+              "visibleLivingDog": true,
+              "lowAnimalSilhouette": true,
+              "distinctFromCorgi": true,
+              "corgiVisible": true,
+              "evidence": [
+                {
+                  "file": "dog-look-living-dog-0.jpg",
+                  "sha256": "ec6cfd3cf1adb77ea231be8de68e55e8a5cc1a35143d57e828b0ba6dfdc31e6a"
+                },
+                {
+                  "file": "dog-look-living-dog-1.jpg",
+                  "sha256": "90ed685444de4134deb6d4d5d6a8c2acf08a7a7ab19a6db14fb4ffffea7380f0"
+                },
+                {
+                  "file": "dog-look-living-dog-2.jpg",
+                  "sha256": "a38df0d1c6eb143592ce8d4b77911577b3f0a8e68379095dc810721f61075f42"
+                }
+              ]
+            },
+            "inputPath": "docs/reports/fix51-r10c/L10-high-dog-z1.5-input.json",
+            "reviewPath": "docs/reports/fix51-r10c/L10-high-dog-z1.5/review.json",
+            "provenancePath": "docs/reports/fix51-r10c/L10-dog-save-provenance.json"
+          },
+          "target": "naturally reached living dog and corgi; physical sidestep; observed quality/zoom; reviewed low animal silhouette and distinct non-corgi appearance; no actor writes/skips or runtime errors",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-high-dog-z1.5-browser.json",
+          "level": "L10"
         }
       ],
       "historical": {
@@ -6059,7 +6984,7 @@
         ],
         "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L10 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Dogs: 1.1× run, ≥ 0.6 s telegraph, ≤ 2 m reach, ≥ 2 s cooldown, 10 HP/bite; low, distinct from the corgi."
       },
-      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L10 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Dogs: 1.1× run, ≥ 0.6 s telegraph, ≤ 2 m reach, ≥ 2 s cooldown, 10 HP/bite; low, distinct from the corgi."
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
     },
     {
       "id": "L10-07",
@@ -6084,11 +7009,566 @@
       "id": "L10-08",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Wide road/field framing and dark suit crowds are sampled. Exact1.3 region scale,max2.0 and finale slam-ground-effect clauses are not fully instrumented.",
+      "value": "low/complete production road and finale base framing: [{\"tier\":\"low\",\"position\":{\"id\":\"road\",\"x\":200,\"z\":0},\"weapon\":\"weapon.pistol\",\"regionScale\":1.3,\"playerZoom\":1.5,\"zoomLimits\":[0.5,1.5],\"radius\":37.050000000000004,\"combined\":1.9500000000000002,\"expectedBase\":1.3,\"basePass\":true,\"maxPass\":true,\"nominalRadius\":19},{\"tier\":\"low\",\"position\":{\"id\":\"road\",\"x\":200,\"z\":0},\"weapon\":\"weapon.rocket-launcher\",\"regionScale\":1.3,\"playerZoom\":1.538461538461538… (full values in JSON) (target road base1.3; corridor/finale base1; actual View rig; PASS); low/complete production base times maximum user zoom: [{\"tier\":\"low\",\"position\":{\"id\":\"road\",\"x\":200,\"z\":0},\"weapon\":\"weapon.pistol\",\"regionScale\":1.3,\"playerZoom\":1.5,\"zoomLimits\":[0.5,1.5],\"radius\":37.050000000000004,\"combined\":1.9500000000000002,\"expectedBase\":1.3,\"basePass\":true,\"maxPass\":true,\"nominalRadius\":19},{\"tier\":\"low\",\"position\":{\"id\":\"road\",\"x\":200,\"z\":0},\"weapon\":\"weapon.rocket-launcher\",\"regionScale\":1.3,\"playerZoom\":1.538461538461538… (full values in JSON) (target every ordinary and rocket-equipped camera combination≤2.0; PASS); high/complete production road and finale base framing: [{\"tier\":\"high\",\"position\":{\"id\":\"road\",\"x\":200,\"z\":0},\"weapon\":\"weapon.pistol\",\"regionScale\":1.3,\"playerZoom\":1.5,\"zoomLimits\":[0.5,1.5],\"radius\":37.050000000000004,\"combined\":1.9500000000000002,\"expectedBase\":1.3,\"basePass\":true,\"maxPass\":true,\"nominalRadius\":19},{\"tier\":\"high\",\"position\":{\"id\":\"road\",\"x\":200,\"z\":0},\"weapon\":\"weapon.rocket-launcher\",\"regionScale\":1.3,\"playerZoom\":1.5384615384615… (full values in JSON) (target road base1.3; corridor/finale base1; actual View rig; PASS); high/complete production base times maximum user zoom: [{\"tier\":\"high\",\"position\":{\"id\":\"road\",\"x\":200,\"z\":0},\"weapon\":\"weapon.pistol\",\"regionScale\":1.3,\"playerZoom\":1.5,\"zoomLimits\":[0.5,1.5],\"radius\":37.050000000000004,\"combined\":1.9500000000000002,\"expectedBase\":1.3,\"basePass\":true,\"maxPass\":true,\"nominalRadius\":19},{\"tier\":\"high\",\"position\":{\"id\":\"road\",\"x\":200,\"z\":0},\"weapon\":\"weapon.rocket-launcher\",\"regionScale\":1.3,\"playerZoom\":1.5384615384615… (full values in JSON) (target every ordinary and rocket-equipped camera combination≤2.0; PASS)",
       "automatedComplete": false,
-      "receipt": [],
+      "receipt": [
+        "docs/reports/fix56-c/L10-camera.json"
+      ],
       "expected": "Road regions framed ×1.3 (verges/fields in frame), base × max zoom ≤ 2.0; not in the finale. Suit crowds readable at night, slam telegraph is a ground effect.",
-      "checks": [],
+      "checks": [
+        {
+          "id": "L10-08",
+          "clause": "production road and finale base framing",
+          "level": "L10",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "tier": "low",
+              "position": {
+                "id": "road",
+                "x": 200,
+                "z": 0
+              },
+              "weapon": "weapon.pistol",
+              "regionScale": 1.3,
+              "playerZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "radius": 37.050000000000004,
+              "combined": 1.9500000000000002,
+              "expectedBase": 1.3,
+              "basePass": true,
+              "maxPass": true,
+              "nominalRadius": 19
+            },
+            {
+              "tier": "low",
+              "position": {
+                "id": "road",
+                "x": 200,
+                "z": 0
+              },
+              "weapon": "weapon.rocket-launcher",
+              "regionScale": 1.3,
+              "playerZoom": 1.5384615384615383,
+              "zoomLimits": [
+                0.5,
+                1.5384615384615383
+              ],
+              "radius": 37.99999999999999,
+              "combined": 2,
+              "expectedBase": 1.3,
+              "basePass": true,
+              "maxPass": true,
+              "nominalRadius": 19
+            },
+            {
+              "tier": "low",
+              "position": {
+                "id": "corridor",
+                "x": 3100,
+                "z": 0
+              },
+              "weapon": "weapon.pistol",
+              "regionScale": 1,
+              "playerZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "radius": 28.5,
+              "combined": 1.5,
+              "expectedBase": 1,
+              "basePass": true,
+              "maxPass": true,
+              "nominalRadius": 19
+            },
+            {
+              "tier": "low",
+              "position": {
+                "id": "corridor",
+                "x": 3100,
+                "z": 0
+              },
+              "weapon": "weapon.rocket-launcher",
+              "regionScale": 1,
+              "playerZoom": 2,
+              "zoomLimits": [
+                0.5,
+                2
+              ],
+              "radius": 38,
+              "combined": 2,
+              "expectedBase": 1,
+              "basePass": true,
+              "maxPass": true,
+              "nominalRadius": 19
+            },
+            {
+              "tier": "low",
+              "position": {
+                "id": "finale",
+                "x": 4000,
+                "z": 0
+              },
+              "weapon": "weapon.pistol",
+              "regionScale": 1,
+              "playerZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "radius": 28.5,
+              "combined": 1.5,
+              "expectedBase": 1,
+              "basePass": true,
+              "maxPass": true,
+              "nominalRadius": 19
+            },
+            {
+              "tier": "low",
+              "position": {
+                "id": "finale",
+                "x": 4000,
+                "z": 0
+              },
+              "weapon": "weapon.rocket-launcher",
+              "regionScale": 1,
+              "playerZoom": 2,
+              "zoomLimits": [
+                0.5,
+                2
+              ],
+              "radius": 38,
+              "combined": 2,
+              "expectedBase": 1,
+              "basePass": true,
+              "maxPass": true,
+              "nominalRadius": 19
+            }
+          ],
+          "target": "road base1.3; corridor/finale base1; actual View rig",
+          "receipt": "docs/reports/fix56-c/L10-camera.json"
+        },
+        {
+          "id": "L10-08",
+          "clause": "production base times maximum user zoom",
+          "level": "L10",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "tier": "low",
+              "position": {
+                "id": "road",
+                "x": 200,
+                "z": 0
+              },
+              "weapon": "weapon.pistol",
+              "regionScale": 1.3,
+              "playerZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "radius": 37.050000000000004,
+              "combined": 1.9500000000000002,
+              "expectedBase": 1.3,
+              "basePass": true,
+              "maxPass": true,
+              "nominalRadius": 19
+            },
+            {
+              "tier": "low",
+              "position": {
+                "id": "road",
+                "x": 200,
+                "z": 0
+              },
+              "weapon": "weapon.rocket-launcher",
+              "regionScale": 1.3,
+              "playerZoom": 1.5384615384615383,
+              "zoomLimits": [
+                0.5,
+                1.5384615384615383
+              ],
+              "radius": 37.99999999999999,
+              "combined": 2,
+              "expectedBase": 1.3,
+              "basePass": true,
+              "maxPass": true,
+              "nominalRadius": 19
+            },
+            {
+              "tier": "low",
+              "position": {
+                "id": "corridor",
+                "x": 3100,
+                "z": 0
+              },
+              "weapon": "weapon.pistol",
+              "regionScale": 1,
+              "playerZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "radius": 28.5,
+              "combined": 1.5,
+              "expectedBase": 1,
+              "basePass": true,
+              "maxPass": true,
+              "nominalRadius": 19
+            },
+            {
+              "tier": "low",
+              "position": {
+                "id": "corridor",
+                "x": 3100,
+                "z": 0
+              },
+              "weapon": "weapon.rocket-launcher",
+              "regionScale": 1,
+              "playerZoom": 2,
+              "zoomLimits": [
+                0.5,
+                2
+              ],
+              "radius": 38,
+              "combined": 2,
+              "expectedBase": 1,
+              "basePass": true,
+              "maxPass": true,
+              "nominalRadius": 19
+            },
+            {
+              "tier": "low",
+              "position": {
+                "id": "finale",
+                "x": 4000,
+                "z": 0
+              },
+              "weapon": "weapon.pistol",
+              "regionScale": 1,
+              "playerZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "radius": 28.5,
+              "combined": 1.5,
+              "expectedBase": 1,
+              "basePass": true,
+              "maxPass": true,
+              "nominalRadius": 19
+            },
+            {
+              "tier": "low",
+              "position": {
+                "id": "finale",
+                "x": 4000,
+                "z": 0
+              },
+              "weapon": "weapon.rocket-launcher",
+              "regionScale": 1,
+              "playerZoom": 2,
+              "zoomLimits": [
+                0.5,
+                2
+              ],
+              "radius": 38,
+              "combined": 2,
+              "expectedBase": 1,
+              "basePass": true,
+              "maxPass": true,
+              "nominalRadius": 19
+            }
+          ],
+          "target": "every ordinary and rocket-equipped camera combination≤2.0",
+          "receipt": "docs/reports/fix56-c/L10-camera.json"
+        },
+        {
+          "id": "L10-08",
+          "clause": "production road and finale base framing",
+          "level": "L10",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "tier": "high",
+              "position": {
+                "id": "road",
+                "x": 200,
+                "z": 0
+              },
+              "weapon": "weapon.pistol",
+              "regionScale": 1.3,
+              "playerZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "radius": 37.050000000000004,
+              "combined": 1.9500000000000002,
+              "expectedBase": 1.3,
+              "basePass": true,
+              "maxPass": true,
+              "nominalRadius": 19
+            },
+            {
+              "tier": "high",
+              "position": {
+                "id": "road",
+                "x": 200,
+                "z": 0
+              },
+              "weapon": "weapon.rocket-launcher",
+              "regionScale": 1.3,
+              "playerZoom": 1.5384615384615383,
+              "zoomLimits": [
+                0.5,
+                1.5384615384615383
+              ],
+              "radius": 37.99999999999999,
+              "combined": 2,
+              "expectedBase": 1.3,
+              "basePass": true,
+              "maxPass": true,
+              "nominalRadius": 19
+            },
+            {
+              "tier": "high",
+              "position": {
+                "id": "corridor",
+                "x": 3100,
+                "z": 0
+              },
+              "weapon": "weapon.pistol",
+              "regionScale": 1,
+              "playerZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "radius": 28.5,
+              "combined": 1.5,
+              "expectedBase": 1,
+              "basePass": true,
+              "maxPass": true,
+              "nominalRadius": 19
+            },
+            {
+              "tier": "high",
+              "position": {
+                "id": "corridor",
+                "x": 3100,
+                "z": 0
+              },
+              "weapon": "weapon.rocket-launcher",
+              "regionScale": 1,
+              "playerZoom": 2,
+              "zoomLimits": [
+                0.5,
+                2
+              ],
+              "radius": 38,
+              "combined": 2,
+              "expectedBase": 1,
+              "basePass": true,
+              "maxPass": true,
+              "nominalRadius": 19
+            },
+            {
+              "tier": "high",
+              "position": {
+                "id": "finale",
+                "x": 4000,
+                "z": 0
+              },
+              "weapon": "weapon.pistol",
+              "regionScale": 1,
+              "playerZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "radius": 28.5,
+              "combined": 1.5,
+              "expectedBase": 1,
+              "basePass": true,
+              "maxPass": true,
+              "nominalRadius": 19
+            },
+            {
+              "tier": "high",
+              "position": {
+                "id": "finale",
+                "x": 4000,
+                "z": 0
+              },
+              "weapon": "weapon.rocket-launcher",
+              "regionScale": 1,
+              "playerZoom": 2,
+              "zoomLimits": [
+                0.5,
+                2
+              ],
+              "radius": 38,
+              "combined": 2,
+              "expectedBase": 1,
+              "basePass": true,
+              "maxPass": true,
+              "nominalRadius": 19
+            }
+          ],
+          "target": "road base1.3; corridor/finale base1; actual View rig",
+          "receipt": "docs/reports/fix56-c/L10-camera.json"
+        },
+        {
+          "id": "L10-08",
+          "clause": "production base times maximum user zoom",
+          "level": "L10",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "tier": "high",
+              "position": {
+                "id": "road",
+                "x": 200,
+                "z": 0
+              },
+              "weapon": "weapon.pistol",
+              "regionScale": 1.3,
+              "playerZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "radius": 37.050000000000004,
+              "combined": 1.9500000000000002,
+              "expectedBase": 1.3,
+              "basePass": true,
+              "maxPass": true,
+              "nominalRadius": 19
+            },
+            {
+              "tier": "high",
+              "position": {
+                "id": "road",
+                "x": 200,
+                "z": 0
+              },
+              "weapon": "weapon.rocket-launcher",
+              "regionScale": 1.3,
+              "playerZoom": 1.5384615384615383,
+              "zoomLimits": [
+                0.5,
+                1.5384615384615383
+              ],
+              "radius": 37.99999999999999,
+              "combined": 2,
+              "expectedBase": 1.3,
+              "basePass": true,
+              "maxPass": true,
+              "nominalRadius": 19
+            },
+            {
+              "tier": "high",
+              "position": {
+                "id": "corridor",
+                "x": 3100,
+                "z": 0
+              },
+              "weapon": "weapon.pistol",
+              "regionScale": 1,
+              "playerZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "radius": 28.5,
+              "combined": 1.5,
+              "expectedBase": 1,
+              "basePass": true,
+              "maxPass": true,
+              "nominalRadius": 19
+            },
+            {
+              "tier": "high",
+              "position": {
+                "id": "corridor",
+                "x": 3100,
+                "z": 0
+              },
+              "weapon": "weapon.rocket-launcher",
+              "regionScale": 1,
+              "playerZoom": 2,
+              "zoomLimits": [
+                0.5,
+                2
+              ],
+              "radius": 38,
+              "combined": 2,
+              "expectedBase": 1,
+              "basePass": true,
+              "maxPass": true,
+              "nominalRadius": 19
+            },
+            {
+              "tier": "high",
+              "position": {
+                "id": "finale",
+                "x": 4000,
+                "z": 0
+              },
+              "weapon": "weapon.pistol",
+              "regionScale": 1,
+              "playerZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "radius": 28.5,
+              "combined": 1.5,
+              "expectedBase": 1,
+              "basePass": true,
+              "maxPass": true,
+              "nominalRadius": 19
+            },
+            {
+              "tier": "high",
+              "position": {
+                "id": "finale",
+                "x": 4000,
+                "z": 0
+              },
+              "weapon": "weapon.rocket-launcher",
+              "regionScale": 1,
+              "playerZoom": 2,
+              "zoomLimits": [
+                0.5,
+                2
+              ],
+              "radius": 38,
+              "combined": 2,
+              "expectedBase": 1,
+              "basePass": true,
+              "maxPass": true,
+              "nominalRadius": 19
+            }
+          ],
+          "target": "every ordinary and rocket-equipped camera combination≤2.0",
+          "receipt": "docs/reports/fix56-c/L10-camera.json"
+        }
+      ],
       "historical": {
         "id": "L10-08",
         "level": "L10",
@@ -6103,13 +7583,726 @@
     },
     {
       "id": "L10-09",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "Research subtitles explain the airborne cure and the canister pickup is visible. No-slowdown/no-slot and death-restored cure require the explicit checkpoint experiment.",
-      "automatedComplete": false,
-      "receipt": [],
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete actual cure grant preserves both weapon racks: {\"tick\":35641,\"before\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",\"weapon.shotgun\",\"weapon.army-mg\"]},\"after\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",\"weapon.shotgun\",\"weapon.army-mg\"]},\"carried\":true,\"installed\":false,\"item\":true} (target actual canister acquisition; carried item true, installed false; exact unchanged LEFT/RIGHT racks; PASS); low/complete canister-only controlled movement trajectories: {\"routeWindows\":{\"before\":{\"best60TickMetres\":4.501303793196814,\"median60TickMetres\":4.497243626167915,\"windows\":35516},\"carried\":{\"best60TickMetres\":4.506767290076995,\"median60TickMetres\":4.49714078910103,\"windows\":21061}},\"controls\":[{\"move\":{\"x\":1,\"z\":0},\"ticks\":120,\"cases\":[{\"carried\":false,\"displacement\":8.749755859375,\"trajectorySha256\":\"e6c45f040aa6bc1350117a32af50eba4f220c576d4083e1e9ead2d… (full values in JSON) (target same production Resume; only canister flag/item differ; four cardinal keyboard inputs for120ticks; identical every-tick XYZ; at least one unblocked ≥4m traversal; PASS); high/complete actual cure grant preserves both weapon racks: {\"tick\":35716,\"before\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",\"weapon.shotgun\",\"weapon.army-mg\"]},\"after\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",\"weapon.shotgun\",\"weapon.army-mg\"]},\"carried\":true,\"installed\":false,\"item\":true} (target actual canister acquisition; carried item true, installed false; exact unchanged LEFT/RIGHT racks; PASS); high/complete canister-only controlled movement trajectories: {\"routeWindows\":{\"before\":{\"best60TickMetres\":4.501303793196814,\"median60TickMetres\":4.497251021245441,\"windows\":35655},\"carried\":{\"best60TickMetres\":4.505352482463229,\"median60TickMetres\":4.497107589517475,\"windows\":21110}},\"controls\":[{\"move\":{\"x\":1,\"z\":0},\"ticks\":120,\"cases\":[{\"carried\":false,\"displacement\":8.749755859375,\"trajectorySha256\":\"39aaf541dea5b9c5ac518b9a10a02296f48f3a30e41939d05106b… (full values in JSON) (target same production Resume; only canister flag/item differ; four cardinal keyboard inputs for120ticks; identical every-tick XYZ; at least one unblocked ≥4m traversal; PASS); low/real-input-webgl2 reviewed airborne research subtitles and backpack canister: {\"initial\":true,\"recording\":[{\"stage\":\"recording\",\"tick\":26,\"position\":{\"x\":2705.735595703125,\"y\":0.7080000042915344,\"z\":41.34172821044922,\"yaw\":-6.283185307179586},\"states\":{\"charge-active\":false,\"console-held\":false,\"terminal-read\":true,\"cure-carried\":false,\"cure-installed\":false,\"charge-ready\":false,\"mega-dead\":false,\"cure-released\":false,\"epilogue-finished\":false,\"credits-finished\":false,\"anch… (full values in JSON) (target actual WASD/E terminal, canister and lab exit; full rendered recording meaning and visible backpack at both PO zooms; unchanged racks and carried retry snapshot; PASS); low/checkpoint-death-fixture carried canister restored by actual checkpoint death: {\"checkpoint\":\"cure-research\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"6153238bcbd1f2a28678d065b61b813e243f71c28762ce140a29dab187e19fb1\",\"damage\":100,\"expected\":{\"id\":\"cure-research\",\"anchor\":{\"x\":2805.035400390625,\"y\":0.7099999785423279,\"z\":44.9234504699707,\"yaw\":-0.038945538967957834},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",\"we… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS); high/real-input-webgl2 reviewed airborne research subtitles and backpack canister: {\"initial\":true,\"recording\":[{\"stage\":\"recording\",\"tick\":32,\"position\":{\"x\":2706.11572265625,\"y\":0.7080000042915344,\"z\":41.343910217285156,\"yaw\":-6.283185307179586},\"states\":{\"charge-active\":false,\"console-held\":false,\"terminal-read\":true,\"cure-carried\":false,\"cure-installed\":false,\"charge-ready\":false,\"mega-dead\":false,\"cure-released\":false,\"epilogue-finished\":false,\"credits-finished\":false,\"anch… (full values in JSON) (target actual WASD/E terminal, canister and lab exit; full rendered recording meaning and visible backpack at both PO zooms; unchanged racks and carried retry snapshot; PASS); high/checkpoint-death-fixture carried canister restored by actual checkpoint death: {\"checkpoint\":\"cure-research\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"258baabe7e1897e32f86d1646522c4cb9c7acdae31e0ca1246c1b95031b86919\",\"damage\":100,\"expected\":{\"id\":\"cure-research\",\"anchor\":{\"x\":2805.040771484375,\"y\":0.7099999785423279,\"z\":44.92366027832031,\"yaw\":3.107531557619785},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.fire-axe\",\"weapon.pistol\",\"weapo… (full values in JSON) (target captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death; PASS)",
+      "automatedComplete": true,
+      "receipt": [
+        "docs/reports/fix51-r10c/L10-cure-proof.json",
+        "docs/reports/sweep-c4/L10-09-low-physical.json.gz",
+        "docs/reports/fix51-verify/receipts/L10-low-checkpoints.json",
+        "docs/reports/sweep-c4/L10-09-high-physical.json.gz",
+        "docs/reports/fix51-verify/receipts/L10-high-checkpoints.json"
+      ],
       "expected": "Recording explains the airborne cure (subtitles); canister is a visible backpack, no slot, no slowdown, restored on death.",
-      "checks": [],
+      "checks": [
+        {
+          "id": "L10-09",
+          "clause": "actual cure grant preserves both weapon racks",
+          "level": "L10",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "tick": 35641,
+            "before": {
+              "LEFT": [
+                "weapon.fire-axe"
+              ],
+              "RIGHT": [
+                "weapon.fire-axe",
+                "weapon.pistol",
+                "weapon.shotgun",
+                "weapon.army-mg"
+              ]
+            },
+            "after": {
+              "LEFT": [
+                "weapon.fire-axe"
+              ],
+              "RIGHT": [
+                "weapon.fire-axe",
+                "weapon.pistol",
+                "weapon.shotgun",
+                "weapon.army-mg"
+              ]
+            },
+            "carried": true,
+            "installed": false,
+            "item": true
+          },
+          "target": "actual canister acquisition; carried item true, installed false; exact unchanged LEFT/RIGHT racks",
+          "receipt": "docs/reports/fix51-r10c/L10-cure-proof.json"
+        },
+        {
+          "id": "L10-09",
+          "clause": "canister-only controlled movement trajectories",
+          "level": "L10",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "routeWindows": {
+              "before": {
+                "best60TickMetres": 4.501303793196814,
+                "median60TickMetres": 4.497243626167915,
+                "windows": 35516
+              },
+              "carried": {
+                "best60TickMetres": 4.506767290076995,
+                "median60TickMetres": 4.49714078910103,
+                "windows": 21061
+              }
+            },
+            "controls": [
+              {
+                "move": {
+                  "x": 1,
+                  "z": 0
+                },
+                "ticks": 120,
+                "cases": [
+                  {
+                    "carried": false,
+                    "displacement": 8.749755859375,
+                    "trajectorySha256": "e6c45f040aa6bc1350117a32af50eba4f220c576d4083e1e9ead2d8504db838a",
+                    "finalCarried": false,
+                    "finalItem": false
+                  },
+                  {
+                    "carried": true,
+                    "displacement": 8.749755859375,
+                    "trajectorySha256": "e6c45f040aa6bc1350117a32af50eba4f220c576d4083e1e9ead2d8504db838a",
+                    "finalCarried": true,
+                    "finalItem": true
+                  }
+                ],
+                "identical": true
+              },
+              {
+                "move": {
+                  "x": -1,
+                  "z": 0
+                },
+                "ticks": 120,
+                "cases": [
+                  {
+                    "carried": false,
+                    "displacement": 8.749755859375,
+                    "trajectorySha256": "366740288c6928c9b7fe420853214a01cd9104ddd4327a26c8ae687deb8a52aa",
+                    "finalCarried": false,
+                    "finalItem": false
+                  },
+                  {
+                    "carried": true,
+                    "displacement": 8.749755859375,
+                    "trajectorySha256": "366740288c6928c9b7fe420853214a01cd9104ddd4327a26c8ae687deb8a52aa",
+                    "finalCarried": true,
+                    "finalItem": true
+                  }
+                ],
+                "identical": true
+              },
+              {
+                "move": {
+                  "x": 0,
+                  "z": 1
+                },
+                "ticks": 120,
+                "cases": [
+                  {
+                    "carried": false,
+                    "displacement": 8.755084991455078,
+                    "trajectorySha256": "aaafdfce21c248aead535c9e4a3d52f1d0403e929d9f907b71f72234a756649b",
+                    "finalCarried": false,
+                    "finalItem": false
+                  },
+                  {
+                    "carried": true,
+                    "displacement": 8.755084991455078,
+                    "trajectorySha256": "aaafdfce21c248aead535c9e4a3d52f1d0403e929d9f907b71f72234a756649b",
+                    "finalCarried": true,
+                    "finalItem": true
+                  }
+                ],
+                "identical": true
+              },
+              {
+                "move": {
+                  "x": 0,
+                  "z": -1
+                },
+                "ticks": 120,
+                "cases": [
+                  {
+                    "carried": false,
+                    "displacement": 8.755084991455078,
+                    "trajectorySha256": "52ee4f233658e5b0653719e251b5d23091d6b95f7be86f6e371f8a1680402de0",
+                    "finalCarried": false,
+                    "finalItem": false
+                  },
+                  {
+                    "carried": true,
+                    "displacement": 8.755084991455078,
+                    "trajectorySha256": "52ee4f233658e5b0653719e251b5d23091d6b95f7be86f6e371f8a1680402de0",
+                    "finalCarried": true,
+                    "finalItem": true
+                  }
+                ],
+                "identical": true
+              }
+            ]
+          },
+          "target": "same production Resume; only canister flag/item differ; four cardinal keyboard inputs for120ticks; identical every-tick XYZ; at least one unblocked ≥4m traversal",
+          "receipt": "docs/reports/fix51-r10c/L10-cure-proof.json"
+        },
+        {
+          "id": "L10-09",
+          "clause": "actual cure grant preserves both weapon racks",
+          "level": "L10",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "tick": 35716,
+            "before": {
+              "LEFT": [
+                "weapon.fire-axe"
+              ],
+              "RIGHT": [
+                "weapon.fire-axe",
+                "weapon.pistol",
+                "weapon.shotgun",
+                "weapon.army-mg"
+              ]
+            },
+            "after": {
+              "LEFT": [
+                "weapon.fire-axe"
+              ],
+              "RIGHT": [
+                "weapon.fire-axe",
+                "weapon.pistol",
+                "weapon.shotgun",
+                "weapon.army-mg"
+              ]
+            },
+            "carried": true,
+            "installed": false,
+            "item": true
+          },
+          "target": "actual canister acquisition; carried item true, installed false; exact unchanged LEFT/RIGHT racks",
+          "receipt": "docs/reports/fix51-r10c/L10-cure-proof.json"
+        },
+        {
+          "id": "L10-09",
+          "clause": "canister-only controlled movement trajectories",
+          "level": "L10",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "routeWindows": {
+              "before": {
+                "best60TickMetres": 4.501303793196814,
+                "median60TickMetres": 4.497251021245441,
+                "windows": 35655
+              },
+              "carried": {
+                "best60TickMetres": 4.505352482463229,
+                "median60TickMetres": 4.497107589517475,
+                "windows": 21110
+              }
+            },
+            "controls": [
+              {
+                "move": {
+                  "x": 1,
+                  "z": 0
+                },
+                "ticks": 120,
+                "cases": [
+                  {
+                    "carried": false,
+                    "displacement": 8.749755859375,
+                    "trajectorySha256": "39aaf541dea5b9c5ac518b9a10a02296f48f3a30e41939d05106beee64933d0c",
+                    "finalCarried": false,
+                    "finalItem": false
+                  },
+                  {
+                    "carried": true,
+                    "displacement": 8.749755859375,
+                    "trajectorySha256": "39aaf541dea5b9c5ac518b9a10a02296f48f3a30e41939d05106beee64933d0c",
+                    "finalCarried": true,
+                    "finalItem": true
+                  }
+                ],
+                "identical": true
+              },
+              {
+                "move": {
+                  "x": -1,
+                  "z": 0
+                },
+                "ticks": 120,
+                "cases": [
+                  {
+                    "carried": false,
+                    "displacement": 8.749755859375,
+                    "trajectorySha256": "8165f394cf76b63788e2e638e428073c26d926a4cbb43e765bea16cb2b8150be",
+                    "finalCarried": false,
+                    "finalItem": false
+                  },
+                  {
+                    "carried": true,
+                    "displacement": 8.749755859375,
+                    "trajectorySha256": "8165f394cf76b63788e2e638e428073c26d926a4cbb43e765bea16cb2b8150be",
+                    "finalCarried": true,
+                    "finalItem": true
+                  }
+                ],
+                "identical": true
+              },
+              {
+                "move": {
+                  "x": 0,
+                  "z": 1
+                },
+                "ticks": 120,
+                "cases": [
+                  {
+                    "carried": false,
+                    "displacement": 8.755084991455078,
+                    "trajectorySha256": "06826a29b71527f58e5141b2267b903b6cc76a6359f6d5bfc58338a5f6e33f71",
+                    "finalCarried": false,
+                    "finalItem": false
+                  },
+                  {
+                    "carried": true,
+                    "displacement": 8.755084991455078,
+                    "trajectorySha256": "06826a29b71527f58e5141b2267b903b6cc76a6359f6d5bfc58338a5f6e33f71",
+                    "finalCarried": true,
+                    "finalItem": true
+                  }
+                ],
+                "identical": true
+              },
+              {
+                "move": {
+                  "x": 0,
+                  "z": -1
+                },
+                "ticks": 120,
+                "cases": [
+                  {
+                    "carried": false,
+                    "displacement": 8.755084991455078,
+                    "trajectorySha256": "1998bf15dd4ca5fc3723792e54be8281783c630ee61dd41425e34be156b9c38f",
+                    "finalCarried": false,
+                    "finalItem": false
+                  },
+                  {
+                    "carried": true,
+                    "displacement": 8.755084991455078,
+                    "trajectorySha256": "1998bf15dd4ca5fc3723792e54be8281783c630ee61dd41425e34be156b9c38f",
+                    "finalCarried": true,
+                    "finalItem": true
+                  }
+                ],
+                "identical": true
+              }
+            ]
+          },
+          "target": "same production Resume; only canister flag/item differ; four cardinal keyboard inputs for120ticks; identical every-tick XYZ; at least one unblocked ≥4m traversal",
+          "receipt": "docs/reports/fix51-r10c/L10-cure-proof.json"
+        },
+        {
+          "id": "L10-09",
+          "clause": "reviewed airborne research subtitles and backpack canister",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "initial": true,
+            "recording": [
+              {
+                "stage": "recording",
+                "tick": 26,
+                "position": {
+                  "x": 2705.735595703125,
+                  "y": 0.7080000042915344,
+                  "z": 41.34172821044922,
+                  "yaw": -6.283185307179586
+                },
+                "states": {
+                  "charge-active": false,
+                  "console-held": false,
+                  "terminal-read": true,
+                  "cure-carried": false,
+                  "cure-installed": false,
+                  "charge-ready": false,
+                  "mega-dead": false,
+                  "cure-released": false,
+                  "epilogue-finished": false,
+                  "credits-finished": false,
+                  "anchor-unavailable": false
+                },
+                "items": [],
+                "checkpoint": "cure-research-entry",
+                "racks": {
+                  "LEFT": [
+                    "weapon.fire-axe"
+                  ],
+                  "RIGHT": [
+                    "weapon.fire-axe",
+                    "weapon.pistol",
+                    "weapon.shotgun",
+                    "weapon.army-mg"
+                  ]
+                },
+                "saved": {
+                  "tick": 31726,
+                  "carried": false,
+                  "items": []
+                },
+                "subtitle": "Research recording: The cure is an airborne agent, not a vaccine. It is harmless to healthy humans and animals, but immediately kills infected humans and animals. It never reverses infection. Carry the canister to the regional dispersal complex to release it.",
+                "quality": "low",
+                "zoom": 0.5
+              },
+              {
+                "stage": "recording",
+                "tick": 26,
+                "position": {
+                  "x": 2705.735595703125,
+                  "y": 0.7080000042915344,
+                  "z": 41.34172821044922,
+                  "yaw": -6.283185307179586
+                },
+                "states": {
+                  "charge-active": false,
+                  "console-held": false,
+                  "terminal-read": true,
+                  "cure-carried": false,
+                  "cure-installed": false,
+                  "charge-ready": false,
+                  "mega-dead": false,
+                  "cure-released": false,
+                  "epilogue-finished": false,
+                  "credits-finished": false,
+                  "anchor-unavailable": false
+                },
+                "items": [],
+                "checkpoint": "cure-research-entry",
+                "racks": {
+                  "LEFT": [
+                    "weapon.fire-axe"
+                  ],
+                  "RIGHT": [
+                    "weapon.fire-axe",
+                    "weapon.pistol",
+                    "weapon.shotgun",
+                    "weapon.army-mg"
+                  ]
+                },
+                "saved": {
+                  "tick": 31726,
+                  "carried": false,
+                  "items": []
+                },
+                "subtitle": "Research recording: The cure is an airborne agent, not a vaccine. It is harmless to healthy humans and animals, but immediately kills infected humans and animals. It never reverses infection. Carry the canister to the regional dispersal complex to release it.",
+                "quality": "low",
+                "zoom": 1.5
+              }
+            ],
+            "paired": [
+              {
+                "stage": "recording",
+                "pass": true
+              },
+              {
+                "stage": "carried",
+                "pass": true
+              },
+              {
+                "stage": "exit",
+                "pass": true
+              }
+            ],
+            "seen": true,
+            "reviewPath": "docs/reports/sweep-c4/L10-09-review.json",
+            "proofPath": "docs/reports/sweep-c4/L10-09-low-physical.json.gz"
+          },
+          "target": "actual WASD/E terminal, canister and lab exit; full rendered recording meaning and visible backpack at both PO zooms; unchanged racks and carried retry snapshot",
+          "receipt": "docs/reports/sweep-c4/L10-09-low-physical.json.gz",
+          "level": "L10"
+        },
+        {
+          "id": "L10-09",
+          "clause": "carried canister restored by actual checkpoint death",
+          "tier": "low",
+          "policy": "checkpoint-death-fixture",
+          "status": "PASS",
+          "value": {
+            "checkpoint": "cure-research",
+            "contract": "checkpoint snapshot restored",
+            "snapshotSha256": "6153238bcbd1f2a28678d065b61b813e243f71c28762ce140a29dab187e19fb1",
+            "damage": 100,
+            "expected": {
+              "id": "cure-research",
+              "anchor": {
+                "x": 2805.035400390625,
+                "y": 0.7099999785423279,
+                "z": 44.9234504699707,
+                "yaw": -0.038945538967957834
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.fire-axe",
+                  "weapon.pistol",
+                  "weapon.shotgun",
+                  "weapon.army-mg"
+                ]
+              },
+              "followers": [],
+              "pickups": [
+                286
+              ],
+              "removedPickups": [],
+              "cure": true,
+              "bossHp": 3000,
+              "bossMode": "coarse"
+            },
+            "observed": {
+              "id": "cure-research",
+              "position": {
+                "x": 2805.035400390625,
+                "z": 44.9234504699707
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.fire-axe",
+                  "weapon.pistol",
+                  "weapon.shotgun",
+                  "weapon.army-mg"
+                ]
+              },
+              "followerMismatches": [],
+              "missingPickups": [],
+              "unexpectedPickups": [],
+              "cure": true,
+              "bossMode": "coarse",
+              "bossHp": 3000
+            },
+            "positionError": 0,
+            "gateMatch": true,
+            "rackMatch": true
+          },
+          "target": "captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-low-checkpoints.json",
+          "level": "L10"
+        },
+        {
+          "id": "L10-09",
+          "clause": "reviewed airborne research subtitles and backpack canister",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "initial": true,
+            "recording": [
+              {
+                "stage": "recording",
+                "tick": 32,
+                "position": {
+                  "x": 2706.11572265625,
+                  "y": 0.7080000042915344,
+                  "z": 41.343910217285156,
+                  "yaw": -6.283185307179586
+                },
+                "states": {
+                  "charge-active": false,
+                  "console-held": false,
+                  "terminal-read": true,
+                  "cure-carried": false,
+                  "cure-installed": false,
+                  "charge-ready": false,
+                  "mega-dead": false,
+                  "cure-released": false,
+                  "epilogue-finished": false,
+                  "credits-finished": false,
+                  "anchor-unavailable": false
+                },
+                "items": [],
+                "checkpoint": "cure-research-entry",
+                "racks": {
+                  "LEFT": [
+                    "weapon.fire-axe"
+                  ],
+                  "RIGHT": [
+                    "weapon.fire-axe",
+                    "weapon.pistol",
+                    "weapon.shotgun",
+                    "weapon.army-mg"
+                  ]
+                },
+                "saved": {
+                  "tick": 31769,
+                  "carried": false,
+                  "items": []
+                },
+                "subtitle": "Research recording: The cure is an airborne agent, not a vaccine. It is harmless to healthy humans and animals, but immediately kills infected humans and animals. It never reverses infection. Carry the canister to the regional dispersal complex to release it.",
+                "quality": "high",
+                "zoom": 0.5
+              },
+              {
+                "stage": "recording",
+                "tick": 32,
+                "position": {
+                  "x": 2706.11572265625,
+                  "y": 0.7080000042915344,
+                  "z": 41.343910217285156,
+                  "yaw": -6.283185307179586
+                },
+                "states": {
+                  "charge-active": false,
+                  "console-held": false,
+                  "terminal-read": true,
+                  "cure-carried": false,
+                  "cure-installed": false,
+                  "charge-ready": false,
+                  "mega-dead": false,
+                  "cure-released": false,
+                  "epilogue-finished": false,
+                  "credits-finished": false,
+                  "anchor-unavailable": false
+                },
+                "items": [],
+                "checkpoint": "cure-research-entry",
+                "racks": {
+                  "LEFT": [
+                    "weapon.fire-axe"
+                  ],
+                  "RIGHT": [
+                    "weapon.fire-axe",
+                    "weapon.pistol",
+                    "weapon.shotgun",
+                    "weapon.army-mg"
+                  ]
+                },
+                "saved": {
+                  "tick": 31769,
+                  "carried": false,
+                  "items": []
+                },
+                "subtitle": "Research recording: The cure is an airborne agent, not a vaccine. It is harmless to healthy humans and animals, but immediately kills infected humans and animals. It never reverses infection. Carry the canister to the regional dispersal complex to release it.",
+                "quality": "high",
+                "zoom": 1.5
+              }
+            ],
+            "paired": [
+              {
+                "stage": "recording",
+                "pass": true
+              },
+              {
+                "stage": "carried",
+                "pass": true
+              },
+              {
+                "stage": "exit",
+                "pass": true
+              }
+            ],
+            "seen": true,
+            "reviewPath": "docs/reports/sweep-c4/L10-09-review.json",
+            "proofPath": "docs/reports/sweep-c4/L10-09-high-physical.json.gz"
+          },
+          "target": "actual WASD/E terminal, canister and lab exit; full rendered recording meaning and visible backpack at both PO zooms; unchanged racks and carried retry snapshot",
+          "receipt": "docs/reports/sweep-c4/L10-09-high-physical.json.gz",
+          "level": "L10"
+        },
+        {
+          "id": "L10-09",
+          "clause": "carried canister restored by actual checkpoint death",
+          "tier": "high",
+          "policy": "checkpoint-death-fixture",
+          "status": "PASS",
+          "value": {
+            "checkpoint": "cure-research",
+            "contract": "checkpoint snapshot restored",
+            "snapshotSha256": "258baabe7e1897e32f86d1646522c4cb9c7acdae31e0ca1246c1b95031b86919",
+            "damage": 100,
+            "expected": {
+              "id": "cure-research",
+              "anchor": {
+                "x": 2805.040771484375,
+                "y": 0.7099999785423279,
+                "z": 44.92366027832031,
+                "yaw": 3.107531557619785
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.fire-axe",
+                  "weapon.pistol",
+                  "weapon.shotgun",
+                  "weapon.army-mg"
+                ]
+              },
+              "followers": [],
+              "pickups": [
+                331
+              ],
+              "removedPickups": [],
+              "cure": true,
+              "bossHp": 3000,
+              "bossMode": "coarse"
+            },
+            "observed": {
+              "id": "cure-research",
+              "position": {
+                "x": 2805.040771484375,
+                "z": 44.92366027832031
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.fire-axe",
+                  "weapon.pistol",
+                  "weapon.shotgun",
+                  "weapon.army-mg"
+                ]
+              },
+              "followerMismatches": [],
+              "missingPickups": [],
+              "unexpectedPickups": [],
+              "cure": true,
+              "bossMode": "coarse",
+              "bossHp": 3000
+            },
+            "positionError": 0,
+            "gateMatch": true,
+            "rackMatch": true
+          },
+          "target": "captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death",
+          "receipt": "docs/reports/fix51-verify/receipts/L10-high-checkpoints.json",
+          "level": "L10"
+        }
+      ],
       "historical": {
         "id": "L10-09",
         "level": "L10",
@@ -6120,7 +8313,7 @@
         ],
         "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record the actual research subtitles and visible canister, compare movement speed, then die after collection and verify the checkpoint restores cure state."
       },
-      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record the actual research subtitles and visible canister, compare movement speed, then die after collection and verify the checkpoint restores cure state."
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
     },
     {
       "id": "L10-10",
@@ -6585,7 +8778,7 @@
         ],
         "notes": "Original current-source producer, measured unchanged criterion.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7"
       }
     },
     {

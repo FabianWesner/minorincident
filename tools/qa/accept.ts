@@ -13,9 +13,11 @@ import { fix55L10EndingReceipts } from './accept/fix55-l10-ending-receipts';
 import { l9RouteReceipts } from './accept/l9-route-receipts-r10';
 import { l8CalmReceipts } from './accept/l8-calm-receipts-r10';
 import { l8ArrivalReceipts } from './accept/l8-arrival-receipts-r10';
+import { sweepC4L10CureReceipts } from './accept/sweep-c4-l10-cure-receipts';
 import { l10CureReceipts } from './accept/l10-cure-receipts-r10';
 import { l10DogReceipts } from './accept/l10-dog-receipts-r10';
 import { sweepC3L9Receipts } from './accept/sweep-c3-l9-receipts';
+import { sweepC4L9RouteReceipts } from './accept/sweep-c4-l9-route-receipts';
 
 const { values } = parseArgs({ options: { level: { type: 'string' }, reuse: { type: 'boolean' }, browser: { type: 'boolean' }, 'skip-browser': { type: 'boolean' }, tier: { type: 'string', default: 'both' }, policy: { type: 'string', default: 'both' }, backend: { type: 'string', default: 'webgl2' }, zoom: { type: 'string', default: '1.5' } } });
 const selected = values.level === 'all' ? [...runnerLevels] : runnerLevels.filter(level => level === values.level);
@@ -72,8 +74,8 @@ for (const level of selected) {
   }
   if (level === 'L8') fixtures.push(...l8CalmReceipts(identity.sourceHash, browserHash()), ...l8ArrivalReceipts(identity.sourceHash, browserHash()));
   if (level === 'L7') fixtures.push(...fix55RocketReceipts(identity.sourceHash, browserHash()));
-  if (level === 'L9') fixtures.push(...l9RouteReceipts(identity.sourceHash, browserHash()), ...fix55L9Receipts(identity.sourceHash), ...sweepC3L9Receipts(identity.sourceHash, browserHash()));
-  if (level === 'L10') fixtures.push(...l10CureReceipts(identity.sourceHash, browserHash()), ...l10DogReceipts(identity.sourceHash, browserHash()), ...fix55L10EndingReceipts(identity.sourceHash, browserHash(), 3), ...fix55L10EndingReceipts(identity.sourceHash, browserHash(), 4));
+  if (level === 'L9') fixtures.push(...l9RouteReceipts(identity.sourceHash, browserHash()), ...fix55L9Receipts(identity.sourceHash), ...sweepC3L9Receipts(identity.sourceHash, browserHash()), ...sweepC4L9RouteReceipts(identity.sourceHash, browserHash()));
+  if (level === 'L10') fixtures.push(...l10CureReceipts(identity.sourceHash, browserHash()), ...sweepC4L10CureReceipts(identity.sourceHash, browserHash()), ...l10DogReceipts(identity.sourceHash, browserHash()), ...fix55L10EndingReceipts(identity.sourceHash, browserHash(), 3), ...fix55L10EndingReceipts(identity.sourceHash, browserHash(), 4));
   const report = buildLevelReport(level, receipts, fixtures, checkpointHash());
   atomicJson(join(reportRoot, `${level}.json`), report);
   failed ||= report.policies.some(policy => !!policy.error) || [...report.globals, ...report.rows].some(row => row.status === 'FAIL');

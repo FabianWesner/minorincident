@@ -2,9 +2,9 @@
   "version": 1,
   "level": "L7",
   "tier": "high",
-  "sourceHash": "f391528642e59e50e87144a28037c615102c6d8dde589efcaacbe1ec580db3c1",
-  "fixtureHash": "559cccef694ba7da8fa02937ae85002377ba71139b6c9128fbe55791c4a50e27",
-  "browserHash": "559cccef694ba7da8fa02937ae85002377ba71139b6c9128fbe55791c4a50e27",
+  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+  "fixtureHash": "336baba6734d8c168df05ea1f105c6d9831e717b83d278b41fd272eecb4dba88",
+  "browserHash": "336baba6734d8c168df05ea1f105c6d9831e717b83d278b41fd272eecb4dba88",
   "checks": [
     {
       "id": "G-25",
@@ -33,13 +33,13 @@
       "heroine": "female",
       "finished": true,
       "skipped": [],
-      "wallSeconds": 216,
-      "simSeconds": 0,
-      "maxNoProgressSeconds": 34.93333333333333,
+      "wallSeconds": 185,
+      "simSeconds": 168,
+      "maxNoProgressSeconds": 7.385,
       "deaths": 0,
-      "assists": 1,
+      "assists": 0,
       "attacks": {
-        "weapon.rocket-launcher": 66
+        "weapon.rocket-launcher": 73
       },
       "weaponsStart": [
         "weapon.bat",
@@ -65,7 +65,7 @@
             "anchor": "l7-rocket",
             "ring": {
               "x": 276,
-              "y": 3.9,
+              "y": 4.619999885559082,
               "z": 15
             },
             "drawn": [
@@ -85,7 +85,7 @@
             "anchor": "l7-corridor-east",
             "ring": {
               "x": -30,
-              "y": 0,
+              "y": 4.619999885559082,
               "z": 50
             },
             "drawn": [
@@ -99,13 +99,13 @@
         },
         {
           "id": "departure",
-          "text": "Get everyone aboard the bus · 44 m",
-          "tick": 6663,
+          "text": "Get everyone aboard the bus · 46 m",
+          "tick": 8777,
           "marker": {
             "anchor": "l7-bus-boarding",
             "ring": {
               "x": -70.5,
-              "y": 0,
+              "y": 0.7049999833106995,
               "z": 47.5
             },
             "drawn": [
@@ -113,29 +113,14 @@
               0,
               47.5
             ],
-            "playerY": 0.8500000238418579,
+            "playerY": 0.7049999833106995,
             "pinVisible": true
           }
         }
       ]
     }
   ],
-  "issues": [
-    {
-      "level": "L7",
-      "tick": 9436,
-      "x": -70.5,
-      "z": 47.2,
-      "severity": "P2",
-      "kind": "stuck-at-ring",
-      "text": "20 s without objective progress standing at the ring (0.0 m); HUD: \"Get everyone aboard the bus · 0 m · Aboard 23/24 · Waiting for a survivor · 1 m\"",
-      "captures": [
-        "captures/accept-L7-9436-stuck-at-ring.jpg"
-      ],
-      "step": "departure",
-      "objective": "Get everyone aboard the bus · 0 m"
-    }
-  ],
+  "issues": [],
   "frameTiming": false,
   "backend": "webgl2",
   "zoom": 1.5

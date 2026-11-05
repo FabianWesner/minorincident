@@ -2,8 +2,8 @@
   "version": 1,
   "level": "L7",
   "tier": "low",
-  "sourceHash": "8765679a0037252db07eb05019218cdde5e251274ed3280aed0ecfd632b14431",
-  "fixtureHash": "03bb7c76fd355bfbdce44a06ed054b99e54fd058330488f5929d1c4ff3ff2abe",
+  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+  "fixtureHash": "03e645210695297de6b1f93e671101b4a6a086bc9129d20b500aa73b1a762125",
   "errors": [],
   "checks": [
     {
@@ -2379,6 +2379,98 @@
       "tier": "low",
       "policy": "real-input-webgl2",
       "receipt": "docs/reports/fix55-c/L7-03-physical.json"
+    },
+    {
+      "id": "L7-03",
+      "clause": "physical rocket first-hit detonation",
+      "value": {
+        "point": {
+          "x": 12,
+          "z": 0
+        },
+        "origin": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0,
+          "yaw": -1.1115519537589818e-7
+        },
+        "impact": {
+          "x": 5.6500000000005635,
+          "y": 0.6111874819617147,
+          "z": 6.280268538738899e-7
+        },
+        "distance": 5.650000000000599,
+        "target": {
+          "id": 2,
+          "hp": 60,
+          "maxHp": 60,
+          "position": {
+            "x": 6,
+            "y": 0.7,
+            "z": 0,
+            "yaw": 0
+          }
+        }
+      },
+      "target": "actual ground click beyond ordinary60HP body; one rocket detonates at first body surface",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "receipt": "docs/reports/sweep-c4/L7-03-ballistics.json"
+    },
+    {
+      "id": "L7-03",
+      "clause": "physical rocket clicked point beyond catalog range",
+      "value": {
+        "point": {
+          "x": 50,
+          "z": 0
+        },
+        "origin": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0,
+          "yaw": -2.993301967268787e-8
+        },
+        "impact": {
+          "x": 49.9999999095032,
+          "y": 0,
+          "z": 0.0000014966509809255513
+        },
+        "distance": 49.999999909503224
+      },
+      "target": "E29 §5.2 clicked world point is honored, including beyond direction-only catalog range",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "receipt": "docs/reports/sweep-c4/L7-03-ballistics.json"
+    },
+    {
+      "id": "L7-03",
+      "clause": "physical rocket catalog max-range detonation",
+      "value": {
+        "point": {
+          "x": 12,
+          "z": 0
+        },
+        "origin": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0,
+          "yaw": 0.3205919885488634
+        },
+        "impact": {
+          "x": 33.21671611865588,
+          "y": 0,
+          "z": -11.029495468634401
+        },
+        "distance": 35
+      },
+      "target": "actual Space with no aimPoint; empty-ground detonation at catalog35m range ±0.1m",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "receipt": "docs/reports/sweep-c4/L7-03-ballistics.json"
     }
   ],
   "observations": {

@@ -83,7 +83,7 @@ try {
     await delay(100);
   }
   result = await live;
-  if (existsSync(join(out, 'latest.jpg'))) rmSync(join(out, 'latest.jpg'));
+  // Retain the final preview for the same personal review and hash cleanup as captures.
   assert(shots > 0, 'Need actual living dog near the courier in camera');
 } catch (caught) { error = String(caught); }
 finally { server.kill('SIGTERM'); rmSync(join(out, 'profile'), { recursive: true, force: true }); }

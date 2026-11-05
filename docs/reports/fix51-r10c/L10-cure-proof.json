@@ -1,14 +1,14 @@
 {
-  "sourceHash": "2965448be995b55a14a860818a00166d2b245ea20cb1582109735b797dca8ef3",
-  "observerHash": "d670b5f6ea8dfd19759dbac228488c9fe988422b1866480ea8f6eef07dbd0c71",
-  "revision": "3487b52b368db3ebfbeb6fa06c1ae689b8b7c63c",
-  "toolSha256": "eb5cb73ad1d6c9b89c094d76517e430f6bc50c1a7ed5fee57687bdf71382ed33",
+  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+  "observerHash": "c064240bbd1dfb4a4ffb12922fa39e6d24b69753af3eda1e03e9a81a51ce4a4a",
+  "revision": "23de2d3150cd0b2abd9a06616602a844de4718c6",
+  "toolSha256": "fd536452d6bc90e1a74d96c09b844b65843b321ebbdfe39966ba0f3fdb27b180",
   "method": "Read-only actual native cure grant and route movement observations; canonical final state identical. Separately replay the naturally reached post-grant production Resume snapshot with and without only the canister flag/item. All actors, positions, objectives, time and RNG identical. Four cardinal keyboard inputs for120ticks each; compare every-tick XYZ trajectory hashes exactly, retaining displacements to rule out an entirely blocked setup. Checkpoint death and physical subtitle/backpack appearance are separate evidence.",
   "rows": [
     {
       "tier": "low",
       "grant": {
-        "tick": 35682,
+        "tick": 35641,
         "before": {
           "LEFT": [
             "weapon.fire-axe"
@@ -39,12 +39,12 @@
         "before": {
           "best60TickMetres": 4.501303793196814,
           "median60TickMetres": 4.497243626167915,
-          "windows": 35557
+          "windows": 35516
         },
         "carried": {
-          "best60TickMetres": 4.505357339637445,
+          "best60TickMetres": 4.506767290076995,
           "median60TickMetres": 4.49714078910103,
-          "windows": 21000
+          "windows": 21061
         }
       },
       "controlledMovement": [
@@ -58,14 +58,14 @@
             {
               "carried": false,
               "displacement": 8.749755859375,
-              "trajectorySha256": "73145d085d319e1a12a8de4f392893bfb7fe0fdeed6cd8066bf376c98c829480",
+              "trajectorySha256": "e6c45f040aa6bc1350117a32af50eba4f220c576d4083e1e9ead2d8504db838a",
               "finalCarried": false,
               "finalItem": false
             },
             {
               "carried": true,
               "displacement": 8.749755859375,
-              "trajectorySha256": "73145d085d319e1a12a8de4f392893bfb7fe0fdeed6cd8066bf376c98c829480",
+              "trajectorySha256": "e6c45f040aa6bc1350117a32af50eba4f220c576d4083e1e9ead2d8504db838a",
               "finalCarried": true,
               "finalItem": true
             }
@@ -82,14 +82,14 @@
             {
               "carried": false,
               "displacement": 8.749755859375,
-              "trajectorySha256": "bf649ab655916f5e31cea1557adb4a510f0847f1a4f2d4232ec5d1ca96282bcb",
+              "trajectorySha256": "366740288c6928c9b7fe420853214a01cd9104ddd4327a26c8ae687deb8a52aa",
               "finalCarried": false,
               "finalItem": false
             },
             {
               "carried": true,
               "displacement": 8.749755859375,
-              "trajectorySha256": "bf649ab655916f5e31cea1557adb4a510f0847f1a4f2d4232ec5d1ca96282bcb",
+              "trajectorySha256": "366740288c6928c9b7fe420853214a01cd9104ddd4327a26c8ae687deb8a52aa",
               "finalCarried": true,
               "finalItem": true
             }
@@ -106,14 +106,14 @@
             {
               "carried": false,
               "displacement": 8.755084991455078,
-              "trajectorySha256": "3b6a02f6a08754bb83d6e6768a02ff643a5f3a42a4e7a40fa71a677e765975ce",
+              "trajectorySha256": "aaafdfce21c248aead535c9e4a3d52f1d0403e929d9f907b71f72234a756649b",
               "finalCarried": false,
               "finalItem": false
             },
             {
               "carried": true,
               "displacement": 8.755084991455078,
-              "trajectorySha256": "3b6a02f6a08754bb83d6e6768a02ff643a5f3a42a4e7a40fa71a677e765975ce",
+              "trajectorySha256": "aaafdfce21c248aead535c9e4a3d52f1d0403e929d9f907b71f72234a756649b",
               "finalCarried": true,
               "finalItem": true
             }
@@ -130,14 +130,14 @@
             {
               "carried": false,
               "displacement": 8.755084991455078,
-              "trajectorySha256": "d6910b0bf6f8bc6a2bc53603f2ad1cdfd24f1d3ee4f599105a1024fc6d3a560f",
+              "trajectorySha256": "52ee4f233658e5b0653719e251b5d23091d6b95f7be86f6e371f8a1680402de0",
               "finalCarried": false,
               "finalItem": false
             },
             {
               "carried": true,
               "displacement": 8.755084991455078,
-              "trajectorySha256": "d6910b0bf6f8bc6a2bc53603f2ad1cdfd24f1d3ee4f599105a1024fc6d3a560f",
+              "trajectorySha256": "52ee4f233658e5b0653719e251b5d23091d6b95f7be86f6e371f8a1680402de0",
               "finalCarried": true,
               "finalItem": true
             }
@@ -145,14 +145,18 @@
           "identical": true
         }
       ],
-      "snapshotSha256": "0f12543626e93c4095c51d31306ab344b2ff2b71ecb49b15d856b7043a9e54e5",
-      "nativeStateHash": "dfd494df",
+      "physicalSeed": {
+        "path": "docs/reports/sweep-c4/L10-09-low-research-save.json.gz",
+        "sha256": "0fa4e8d65cce28e2092c95ec0b7f38cfe4982af26a45aa0703dab2863b993f33"
+      },
+      "snapshotSha256": "af55204443b699bc844b64270fe4dceec7365b546248e2afda6f3920c89370e3",
+      "nativeStateHash": "97317249",
       "controlIdentical": true
     },
     {
       "tier": "high",
       "grant": {
-        "tick": 35728,
+        "tick": 35716,
         "before": {
           "LEFT": [
             "weapon.fire-axe"
@@ -183,12 +187,12 @@
         "before": {
           "best60TickMetres": 4.501303793196814,
           "median60TickMetres": 4.497251021245441,
-          "windows": 35667
+          "windows": 35655
         },
         "carried": {
-          "best60TickMetres": 4.825009658192144,
+          "best60TickMetres": 4.505352482463229,
           "median60TickMetres": 4.497107589517475,
-          "windows": 21087
+          "windows": 21110
         }
       },
       "controlledMovement": [
@@ -202,14 +206,14 @@
             {
               "carried": false,
               "displacement": 8.749755859375,
-              "trajectorySha256": "1ca6e144f42b35c910e48244f14032ba9fc6e2b7ea2cd6a1944c5b2f743dcf20",
+              "trajectorySha256": "39aaf541dea5b9c5ac518b9a10a02296f48f3a30e41939d05106beee64933d0c",
               "finalCarried": false,
               "finalItem": false
             },
             {
               "carried": true,
               "displacement": 8.749755859375,
-              "trajectorySha256": "1ca6e144f42b35c910e48244f14032ba9fc6e2b7ea2cd6a1944c5b2f743dcf20",
+              "trajectorySha256": "39aaf541dea5b9c5ac518b9a10a02296f48f3a30e41939d05106beee64933d0c",
               "finalCarried": true,
               "finalItem": true
             }
@@ -226,14 +230,14 @@
             {
               "carried": false,
               "displacement": 8.749755859375,
-              "trajectorySha256": "1935f8c507f5ae37a13031928cccbcfa5d9b46586748ca4dbcb449ed7c220aad",
+              "trajectorySha256": "8165f394cf76b63788e2e638e428073c26d926a4cbb43e765bea16cb2b8150be",
               "finalCarried": false,
               "finalItem": false
             },
             {
               "carried": true,
               "displacement": 8.749755859375,
-              "trajectorySha256": "1935f8c507f5ae37a13031928cccbcfa5d9b46586748ca4dbcb449ed7c220aad",
+              "trajectorySha256": "8165f394cf76b63788e2e638e428073c26d926a4cbb43e765bea16cb2b8150be",
               "finalCarried": true,
               "finalItem": true
             }
@@ -250,14 +254,14 @@
             {
               "carried": false,
               "displacement": 8.755084991455078,
-              "trajectorySha256": "3a97e7d82a3fabc81382320c1a93b8199dbf2ffcfe58cb95c93549265d9d61de",
+              "trajectorySha256": "06826a29b71527f58e5141b2267b903b6cc76a6359f6d5bfc58338a5f6e33f71",
               "finalCarried": false,
               "finalItem": false
             },
             {
               "carried": true,
               "displacement": 8.755084991455078,
-              "trajectorySha256": "3a97e7d82a3fabc81382320c1a93b8199dbf2ffcfe58cb95c93549265d9d61de",
+              "trajectorySha256": "06826a29b71527f58e5141b2267b903b6cc76a6359f6d5bfc58338a5f6e33f71",
               "finalCarried": true,
               "finalItem": true
             }
@@ -274,14 +278,14 @@
             {
               "carried": false,
               "displacement": 8.755084991455078,
-              "trajectorySha256": "881cbea4cd8bdac00f11fa6449f9e5e8e12d2f0d8ac6c99107cc54175bc75f42",
+              "trajectorySha256": "1998bf15dd4ca5fc3723792e54be8281783c630ee61dd41425e34be156b9c38f",
               "finalCarried": false,
               "finalItem": false
             },
             {
               "carried": true,
               "displacement": 8.755084991455078,
-              "trajectorySha256": "881cbea4cd8bdac00f11fa6449f9e5e8e12d2f0d8ac6c99107cc54175bc75f42",
+              "trajectorySha256": "1998bf15dd4ca5fc3723792e54be8281783c630ee61dd41425e34be156b9c38f",
               "finalCarried": true,
               "finalItem": true
             }
@@ -289,8 +293,12 @@
           "identical": true
         }
       ],
-      "snapshotSha256": "115eae29d427ac3cb8bdd4d20fcc6a50be593eee5a7ee429bc63a0d14c22084a",
-      "nativeStateHash": "e6a360b4",
+      "physicalSeed": {
+        "path": "docs/reports/sweep-c4/L10-09-high-research-save.json.gz",
+        "sha256": "2b0096553fca5e4a17fff5e699228be779406e6d729dc66da62274c666ad1999"
+      },
+      "snapshotSha256": "3979fc91400e90f3a2fbe1f9fade242ad599518a812bbae1fdd5d79fb9309318",
+      "nativeStateHash": "d97376d0",
       "controlIdentical": true
     }
   ]

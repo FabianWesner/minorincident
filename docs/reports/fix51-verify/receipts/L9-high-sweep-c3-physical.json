@@ -2,8 +2,8 @@
   "version": 1,
   "level": "L9",
   "tier": "high",
-  "sourceHash": "8765679a0037252db07eb05019218cdde5e251274ed3280aed0ecfd632b14431",
-  "fixtureHash": "ececa6253370654d50b736c7b297bd2c34bc4fd9f360ea54c1ebe8620fb0ff48",
+  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+  "fixtureHash": "b77cbe5343281da6c9136ba170ee1edff61f26cfe196795cd2fe737809d3b601",
   "errors": [],
   "checks": [
     {
@@ -14,15 +14,15 @@
       "status": "PASS",
       "value": {
         "validPair": true,
-        "healthyPeak": 17.655035059560635,
+        "healthyPeak": 17.744627516552672,
         "emptyPeak": 10.710992914190859,
-        "ratio": 0.6066820529133186,
-        "metres": 1610.41753951467,
-        "drivingSamples": 1034,
+        "ratio": 0.6036189209494172,
+        "metres": 1541.4836405368396,
+        "drivingSamples": 843,
         "smoke": {
           "smokeObserved": true,
           "wholeHullAndAttachedWheels": true,
-          "what": "All original-size panels personally inspected. Zero APC trails an opaque grey exhaust cloud in wide road frames, healthy control does not; close front camera crops the rear plume. Full/zero hulls stay whole with attached wheels through falling frames; post-impact wreck visible. Cinematic controls its own camera and overrides requested zoom."
+          "what": "All96 current captures personally inspected. Wide0HP road photos show large grey multi-billow smoke cloud behind APC; healthy road photos lack that cloud. Tight road crops clip trail. All fall0–9 frames keep whole hull and visible side wheels attached, body and headlights descend together. Postimpact bright flash/fire retains wreck and courier outside; Get clear appears then. Fall camera overrides requestedzoom, yielding duplicate paired framing; not independentzoom proof."
         }
       },
       "target": "actual 0HP, >1km physical drive to crash; matched straight-road speed58–62% of healthy; road cap0.6; all driving samples smoking; reviewed dense plume",
@@ -42,7 +42,7 @@
             "impacts": [
               {
                 "type": "mission.signal",
-                "tick": 6858,
+                "tick": 7305,
                 "name": "l9.crash-impact",
                 "actorId": 667
               }
@@ -51,7 +51,7 @@
               {
                 "type": "objective.started",
                 "id": "reach-outskirts",
-                "tick": 6858
+                "tick": 7305
               }
             ],
             "fallSamples": 10,
@@ -63,7 +63,7 @@
             "impacts": [
               {
                 "type": "mission.signal",
-                "tick": 12762,
+                "tick": 10473,
                 "name": "l9.crash-impact",
                 "actorId": 667
               }
@@ -72,7 +72,7 @@
               {
                 "type": "objective.started",
                 "id": "reach-outskirts",
-                "tick": 12762
+                "tick": 10473
               }
             ],
             "fallSamples": 10,
@@ -88,6 +88,6 @@
   ],
   "observations": {
     "manifestPath": "docs/reports/sweep-c3/L9-05/qualification.json",
-    "browserHash": "559cccef694ba7da8fa02937ae85002377ba71139b6c9128fbe55791c4a50e27"
+    "browserHash": "336baba6734d8c168df05ea1f105c6d9831e717b83d278b41fd272eecb4dba88"
   }
 }

@@ -1,0 +1,37 @@
+{
+  "row": "L7-10",
+  "status": "PASS",
+  "reviewer": "Codex sweep-c4",
+  "date": "2026-11-05",
+  "commit": "760be7c793fa38d57aea7b98d82cb8d17830662b",
+  "clauses": [
+    {
+      "clause": "Every living follower physically boards (one per 15 ticks, recovery after 20 s stall); boarding can finish with \u2265 10 infected alive elsewhere.",
+      "verdict": "PASS",
+      "note": "Fresh both-tier native complete routes physically board all24 living follower IDs. Actual door-entry records preserve minimum15tick spacing and every entry finishes. Separate departure controls finish with10 living admitted infected elsewhere. Existing isolated offscreen stationary-follower controller fixture observes recovery exactly1200ticks after stall, no early recovery, then same actor boards after ordinary36tick entry. Other roster members start dead only in that isolated recovery fixture; full24-body native route is independent. Both tiers and all8 clauses pass. Physical counter routes with0human survivors are explicitly not used as boarding proof."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-high-complete.json",
+      "sha256": "c468a0f1b109c8981ae2f04363bdf39bc0b96234c8a831653bf08e4d1be80f18",
+      "what": "Current-source canonical full living-roster identity ledger or existing isolated door-spacing, live-infected and20s-stall controller fixture; actual production boarding events."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-high-fixtures.json",
+      "sha256": "fc7e906b700196ccf95d90f0e338677623cbdd6019a17f88d6ee7895d73e3a4a",
+      "what": "Current-source canonical full living-roster identity ledger or existing isolated door-spacing, live-infected and20s-stall controller fixture; actual production boarding events."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-low-complete.json",
+      "sha256": "121e002dec63c5753d3a4d2e89cb7995ec4cd153110db443dbeb9a4ba72fd362",
+      "what": "Current-source canonical full living-roster identity ledger or existing isolated door-spacing, live-infected and20s-stall controller fixture; actual production boarding events."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-low-fixtures.json",
+      "sha256": "7d462574116b4b6fa54e83a76e311222e2a51f7aac2a2f29605a3b1f14f98280",
+      "what": "Current-source canonical full living-roster identity ledger or existing isolated door-spacing, live-infected and20s-stall controller fixture; actual production boarding events."
+    }
+  ],
+  "notes": "Native simulation physics/controller qualification, not a rendered cinematics verdict. No counts, timers, caps or game source changed."
+}

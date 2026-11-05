@@ -2,9 +2,9 @@
   "version": 1,
   "level": "L7",
   "tier": "low",
-  "sourceHash": "f391528642e59e50e87144a28037c615102c6d8dde589efcaacbe1ec580db3c1",
-  "fixtureHash": "559cccef694ba7da8fa02937ae85002377ba71139b6c9128fbe55791c4a50e27",
-  "browserHash": "559cccef694ba7da8fa02937ae85002377ba71139b6c9128fbe55791c4a50e27",
+  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+  "fixtureHash": "336baba6734d8c168df05ea1f105c6d9831e717b83d278b41fd272eecb4dba88",
+  "browserHash": "336baba6734d8c168df05ea1f105c6d9831e717b83d278b41fd272eecb4dba88",
   "checks": [
     {
       "id": "G-25",
@@ -33,13 +33,13 @@
       "heroine": "female",
       "finished": true,
       "skipped": [],
-      "wallSeconds": 166,
+      "wallSeconds": 207,
       "simSeconds": 0,
-      "maxNoProgressSeconds": 12.45,
+      "maxNoProgressSeconds": 8.533333333333333,
       "deaths": 0,
-      "assists": 1,
+      "assists": 0,
       "attacks": {
-        "weapon.rocket-launcher": 58
+        "weapon.rocket-launcher": 59
       },
       "weaponsStart": [
         "weapon.bat",
@@ -60,12 +60,12 @@
         {
           "id": "rocket",
           "text": "Recover the rocket launcher beside the exit · 3 m",
-          "tick": 10,
+          "tick": 9,
           "marker": {
             "anchor": "l7-rocket",
             "ring": {
               "x": 276,
-              "y": 3.9,
+              "y": 4.619999885559082,
               "z": 15
             },
             "drawn": [
@@ -80,12 +80,12 @@
         {
           "id": "corridor",
           "text": "Bring the group to the evacuation corridor · Group 24/24 nearby · 307 m",
-          "tick": 98,
+          "tick": 117,
           "marker": {
             "anchor": "l7-corridor-east",
             "ring": {
               "x": -30,
-              "y": 0,
+              "y": 4.619999885559082,
               "z": 50
             },
             "drawn": [
@@ -99,13 +99,13 @@
         },
         {
           "id": "departure",
-          "text": "Get everyone aboard the bus · 45 m",
-          "tick": 7028,
+          "text": "Get everyone aboard the bus · 46 m",
+          "tick": 10429,
           "marker": {
             "anchor": "l7-bus-boarding",
             "ring": {
               "x": -70.5,
-              "y": 0,
+              "y": 0.8500000238418579,
               "z": 47.5
             },
             "drawn": [
@@ -113,7 +113,7 @@
               0,
               47.5
             ],
-            "playerY": 0.7089999914169312,
+            "playerY": 0.8500000238418579,
             "pinVisible": true
           }
         }
