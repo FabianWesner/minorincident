@@ -5,7 +5,7 @@
   "observerHash": "c064240bbd1dfb4a4ffb12922fa39e6d24b69753af3eda1e03e9a81a51ce4a4a",
   "fixtureHash": "df526016e398100e295b42766eea3ea1190e551b57fa24999faa743cf1e3f7c4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-05T21:43:15.779Z",
+  "generatedAt": "2026-11-05T22:20:58.938Z",
   "policies": [
     {
       "tier": "low",
@@ -65,10 +65,24 @@
     },
     {
       "tier": "low",
+      "policy": "real-input-webgl2",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L7-low-browser.json"
+    },
+    {
+      "tier": "low",
       "policy": "real-input-browser",
       "outcome": "complete",
       "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L7-low-rocket-browser.json"
+    },
+    {
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L7-high-browser.json"
     },
     {
       "tier": "high",
@@ -3343,14 +3357,55 @@
       "id": "G-25",
       "status": "FAIL",
       "currentStatus": "NOT CHECKED",
-      "value": "Open prior FAIL: L4 mortal high: destroyed ShadowDepthTexture submission, renderer.clear before init and null getSupportedExtensions; world froze at tick 5826. Isolated ordinary Settings low -> high reproduced GPU errors and froze at tick 147 in a sole WebGPU context.",
+      "value": "low/real-input-webgl2 physical WASD/mouse full-level browser console: {\"backend\":\"webgl2\",\"zoom\":1.5,\"completed\":true,\"skipped\":[],\"consoleErrors\":[],\"immortal\":true,\"frameTiming\":false} (target complete ordinary-input route; zero console/page errors; no objective skips; PASS); high/real-input-webgl2 physical WASD/mouse full-level browser console: {\"backend\":\"webgl2\",\"zoom\":1.5,\"completed\":true,\"skipped\":[],\"consoleErrors\":[],\"immortal\":true,\"frameTiming\":false} (target complete ordinary-input route; zero console/page errors; no objective skips; PASS) Open prior FAIL: L4 mortal high: destroyed ShadowDepthTexture submission, renderer.clear before init and null getSupportedExtensions; world froze at tick 5826. Isolated ordinary Settings low -> high reproduced GPU errors and froze at tick 147 in a sole WebGPU context.",
       "automatedComplete": false,
       "receipt": [
+        "docs/reports/fix51-verify/receipts/L7-low-browser.json",
+        "docs/reports/fix51-verify/receipts/L7-high-browser.json",
         "docs/reports/batch51-qa/quality-repro.json",
         "docs/reports/batch51-qa/gates/visual-L4.log"
       ],
       "expected": "Zero console errors over a full real-input play-through of the level.",
-      "checks": [],
+      "checks": [
+        {
+          "id": "G-25",
+          "clause": "physical WASD/mouse full-level browser console",
+          "tier": "low",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "completed": true,
+            "skipped": [],
+            "consoleErrors": [],
+            "immortal": true,
+            "frameTiming": false
+          },
+          "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-low-browser.json",
+          "level": "L7"
+        },
+        {
+          "id": "G-25",
+          "clause": "physical WASD/mouse full-level browser console",
+          "tier": "high",
+          "policy": "real-input-webgl2",
+          "status": "PASS",
+          "value": {
+            "backend": "webgl2",
+            "zoom": 1.5,
+            "completed": true,
+            "skipped": [],
+            "consoleErrors": [],
+            "immortal": true,
+            "frameTiming": false
+          },
+          "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-high-browser.json",
+          "level": "L7"
+        }
+      ],
       "historical": {
         "id": "G-25",
         "level": "global",
@@ -8971,12 +9026,13 @@
     },
     {
       "id": "L7-07",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete corridor marker identity changes: [\"l7-corridor-east\"] (target one fixed corridor destination; PASS); high/complete corridor marker identity changes: [\"l7-corridor-east\"] (target one fixed corridor destination; PASS)",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete corridor marker identity changes: [\"l7-corridor-east\"] (target one fixed corridor destination; PASS); low/complete every corridor HUD counter matches independent live roster census: {\"tier\":\"low\",\"samples\":4427,\"mismatches\":0,\"movingMarkers\":0,\"expectedAnchor\":{\"x\":-30,\"z\":50},\"nativeStateHash\":\"369f0b52\",\"controlIdentical\":true,\"values\":[{\"tick\":60,\"near\":24,\"total\":24,\"text\":\"Bring the group to the evacuation corridor · Group 24/24 nearby\",\"marker\":\"l7-corridor-east\",\"anchor\":{\"x\":-30,\"z\":50}},{\"tick\":120,\"near\":24,\"total\":24,\"text\":\"Bring the group to the evacuation corrid… (full values in JSON) (target nonempty sample; zero count mismatches and zero moving marker ticks; PASS); high/complete corridor marker identity changes: [\"l7-corridor-east\"] (target one fixed corridor destination; PASS); high/complete every corridor HUD counter matches independent live roster census: {\"tier\":\"high\",\"samples\":4395,\"mismatches\":0,\"movingMarkers\":0,\"expectedAnchor\":{\"x\":-30,\"z\":50},\"nativeStateHash\":\"314c7057\",\"controlIdentical\":true,\"values\":[{\"tick\":60,\"near\":24,\"total\":24,\"text\":\"Bring the group to the evacuation corridor · Group 24/24 nearby\",\"marker\":\"l7-corridor-east\",\"anchor\":{\"x\":-30,\"z\":50}},{\"tick\":120,\"near\":24,\"total\":24,\"text\":\"Bring the group to the evacuation corri… (full values in JSON) (target nonempty sample; zero count mismatches and zero moving marker ticks; PASS)",
+      "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L7-low-complete.json",
+        "docs/reports/fix51-verify/receipts/L7-counter.json",
         "docs/reports/fix51-verify/receipts/L7-high-complete.json"
       ],
       "expected": "Corridor ring fixed (not the nearest of several moving entrances); group counter \"Group n/n\" correct.",
@@ -8996,6 +9052,844 @@
         },
         {
           "id": "L7-07",
+          "clause": "every corridor HUD counter matches independent live roster census",
+          "level": "L7",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "tier": "low",
+            "samples": 4427,
+            "mismatches": 0,
+            "movingMarkers": 0,
+            "expectedAnchor": {
+              "x": -30,
+              "z": 50
+            },
+            "nativeStateHash": "369f0b52",
+            "controlIdentical": true,
+            "values": [
+              {
+                "tick": 60,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 120,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 180,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 240,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 300,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 360,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 420,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 480,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 540,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 600,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 660,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 720,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 780,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 840,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 900,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 960,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1020,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1080,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1140,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1200,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1260,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1320,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1380,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1440,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1500,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1560,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1620,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1680,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1740,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1800,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1860,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1920,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1980,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2040,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2100,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2160,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2220,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2280,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2340,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2400,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2460,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2520,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2580,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2640,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2700,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2760,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2820,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2880,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2940,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3000,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3060,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3120,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3180,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3240,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3300,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3360,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3420,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3480,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3540,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3600,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3660,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3720,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3780,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3840,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3900,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3960,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 4020,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 4080,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 4140,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 4200,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 4260,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 4320,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 4380,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 4440,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              }
+            ]
+          },
+          "target": "nonempty sample; zero count mismatches and zero moving marker ticks",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-counter.json"
+        },
+        {
+          "id": "L7-07",
           "clause": "corridor marker identity changes",
           "level": "L7",
           "tier": "high",
@@ -9006,6 +9900,833 @@
           ],
           "target": "one fixed corridor destination",
           "receipt": "docs/reports/fix51-verify/receipts/L7-high-complete.json"
+        },
+        {
+          "id": "L7-07",
+          "clause": "every corridor HUD counter matches independent live roster census",
+          "level": "L7",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "tier": "high",
+            "samples": 4395,
+            "mismatches": 0,
+            "movingMarkers": 0,
+            "expectedAnchor": {
+              "x": -30,
+              "z": 50
+            },
+            "nativeStateHash": "314c7057",
+            "controlIdentical": true,
+            "values": [
+              {
+                "tick": 60,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 120,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 180,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 240,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 300,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 360,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 420,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 480,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 540,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 600,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 660,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 720,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 780,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 840,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 900,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 960,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1020,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1080,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1140,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1200,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1260,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1320,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1380,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1440,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1500,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1560,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1620,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1680,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1740,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1800,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1860,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1920,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 1980,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2040,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2100,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2160,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2220,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2280,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2340,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2400,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2460,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2520,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2580,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2640,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2700,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2760,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2820,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2880,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 2940,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3000,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3060,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3120,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3180,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3240,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3300,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3360,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3420,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3480,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3540,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3600,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3660,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3720,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3780,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3840,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3900,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 3960,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 4020,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 4080,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 4140,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 4200,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 4260,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 4320,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              },
+              {
+                "tick": 4380,
+                "near": 24,
+                "total": 24,
+                "text": "Bring the group to the evacuation corridor · Group 24/24 nearby",
+                "marker": "l7-corridor-east",
+                "anchor": {
+                  "x": -30,
+                  "z": 50
+                }
+              }
+            ]
+          },
+          "target": "nonempty sample; zero count mismatches and zero moving marker ticks",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-counter.json"
         }
       ],
       "historical": {
@@ -9016,7 +10737,7 @@
         "evidence": [],
         "method": "NEXT: Extend the existing L7 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Corridor ring fixed (not the nearest of several moving entrances); group counter \"Group n/n\" correct."
       },
-      "remaining": "NEXT: Extend the existing L7 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Corridor ring fixed (not the nearest of several moving entrances); group counter \"Group n/n\" correct."
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
     },
     {
       "id": "L7-08",
