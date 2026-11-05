@@ -5,7 +5,7 @@
   "observerHash": "c064240bbd1dfb4a4ffb12922fa39e6d24b69753af3eda1e03e9a81a51ce4a4a",
   "fixtureHash": "df526016e398100e295b42766eea3ea1190e551b57fa24999faa743cf1e3f7c4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-05T20:14:58.287Z",
+  "generatedAt": "2026-11-05T21:16:59.393Z",
   "policies": [
     {
       "tier": "low",
@@ -891,7 +891,7 @@
         ],
         "notes": "Raw PNGs deleted after full-size inspection; compact derived JPGs and hashes retained. Controlled renderer fixture; no timing claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7"
       }
     },
     {
@@ -1020,7 +1020,7 @@
         ],
         "notes": "Raw PNG captures deleted after inspection. Compact derived contact sheets, raw hashes, metadata and individual bar pixel measurements are retained. No timing was collected.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7"
       }
     },
     {
@@ -3322,7 +3322,7 @@
         ],
         "notes": "Raw PNGs removed after inspection. Compact contact sheets, exact captured driver, SHA-256 and per-state measurements retained. Fixture scope; no route or performance claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7"
       }
     },
     {
@@ -3454,7 +3454,7 @@
         ],
         "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7"
       }
     }
   ],
@@ -3979,7 +3979,7 @@
         ],
         "notes": "Historical FAIL remains open after full current-source remeasurement. No visual/manual clauses apply.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7"
       }
     },
     {
@@ -4056,11 +4056,2092 @@
       "id": "L7-08",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Not measured by this batch run.",
+      "value": "low/complete initial live final-corridor cohort: {\"regulars\":[{\"id\":77,\"archetype\":\"infected.runner\",\"hp\":60,\"position\":{\"x\":-76.6,\"y\":0.7,\"z\":36,\"yaw\":3.141592653589793}},{\"id\":78,\"archetype\":\"infected.runner\",\"hp\":60,\"position\":{\"x\":-73.8,\"y\":0.7,\"z\":36,\"yaw\":3.141592653589793}},{\"id\":79,\"archetype\":\"infected.runner\",\"hp\":60,\"position\":{\"x\":-71,\"y\":0.7,\"z\":36,\"yaw\":3.141592653589793}},{\"id\":80,\"archetype\":\"infected.runner\",\"hp\":60,\"position\":{… (full values in JSON) (target at least60 live regulars and2Alphas admitted before first tick; PASS); low/complete observed native survivor crossing prior rocket footprint: [] (target living visible unboarded human beyondx=-68 within6m of an earlier actual rocket impact; zero observations remain inconclusive; NOT CHECKED); high/complete initial live final-corridor cohort: {\"regulars\":[{\"id\":77,\"archetype\":\"infected.runner\",\"hp\":60,\"position\":{\"x\":-76.6,\"y\":0.7,\"z\":36,\"yaw\":3.141592653589793}},{\"id\":78,\"archetype\":\"infected.runner\",\"hp\":60,\"position\":{\"x\":-73.8,\"y\":0.7,\"z\":36,\"yaw\":3.141592653589793}},{\"id\":79,\"archetype\":\"infected.runner\",\"hp\":60,\"position\":{\"x\":-71,\"y\":0.7,\"z\":36,\"yaw\":3.141592653589793}},{\"id\":80,\"archetype\":\"infected.runner\",\"hp\":60,\"position\":{… (full values in JSON) (target at least120 live regulars and2Alphas admitted before first tick; PASS); high/complete observed native survivor crossing prior rocket footprint: [] (target living visible unboarded human beyondx=-68 within6m of an earlier actual rocket impact; zero observations remain inconclusive; NOT CHECKED)",
       "automatedComplete": false,
-      "receipt": [],
+      "receipt": [
+        "docs/reports/fix55-c/L7-corridor.json"
+      ],
       "expected": "Final corridor starts blocked by ≥ 120 / 60 regulars + ≥ 2 Alphas; the player opens a gap ≥ 1 survivor uses.",
-      "checks": [],
+      "checks": [
+        {
+          "id": "L7-08",
+          "clause": "initial live final-corridor cohort",
+          "level": "L7",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "regulars": [
+              {
+                "id": 77,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -76.6,
+                  "y": 0.7,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 78,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.8,
+                  "y": 0.7,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 79,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.7,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 80,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -70.2,
+                  "y": 0.9201999999999999,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 81,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -63.400000000000006,
+                  "y": 0.7,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 82,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.7,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 83,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.8,
+                  "y": 0.7,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 84,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57,
+                  "y": 0.7,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 85,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -54.2,
+                  "y": 0.83,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 86,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -50.93806023374435,
+                  "y": 0.7,
+                  "z": 36.19134171618254,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 87,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -76.6,
+                  "y": 0.7,
+                  "z": 40,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 88,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.8,
+                  "y": 0.7,
+                  "z": 40,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 89,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.7,
+                  "z": 40,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 90,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -68.2,
+                  "y": 0.7,
+                  "z": 40,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 91,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -65.4,
+                  "y": 0.7,
+                  "z": 40,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 92,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.7,
+                  "z": 40,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 93,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.8,
+                  "y": 0.7,
+                  "z": 40,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 94,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57,
+                  "y": 0.7,
+                  "z": 40,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 95,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -54.2,
+                  "y": 0.83,
+                  "z": 40,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 96,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -51.4,
+                  "y": 0.7,
+                  "z": 40,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 97,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -76.6,
+                  "y": 0.7,
+                  "z": 44,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 98,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.8,
+                  "y": 0.7,
+                  "z": 44,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 99,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.7,
+                  "z": 44,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 100,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -68.2,
+                  "y": 0.7,
+                  "z": 44,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 101,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -66.46066017177982,
+                  "y": 0.7,
+                  "z": 45.06066017177982,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 102,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -61.83463313526982,
+                  "y": 0.7,
+                  "z": 45.84775906502257,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 103,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -58.3,
+                  "y": 0.7,
+                  "z": 44,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 104,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57,
+                  "y": 0.7,
+                  "z": 44,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 105,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -54.2,
+                  "y": 0.7,
+                  "z": 44,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 106,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -51.4,
+                  "y": 0.7,
+                  "z": 44,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 107,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -77.66066017177981,
+                  "y": 0.7,
+                  "z": 49.06066017177982,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 108,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.3,
+                  "y": 0.7,
+                  "z": 48,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 109,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.7,
+                  "z": 48,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 110,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -68.2,
+                  "y": 0.7,
+                  "z": 48,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 111,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -65.4,
+                  "y": 0.7,
+                  "z": 48,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 112,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.7,
+                  "z": 48,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 113,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.8,
+                  "y": 0.7,
+                  "z": 48,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 114,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57,
+                  "y": 0.7,
+                  "z": 48,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 115,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -54.2,
+                  "y": 0.7,
+                  "z": 48,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 116,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -51.4,
+                  "y": 0.7,
+                  "z": 48,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 117,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -76.79134171618254,
+                  "y": 0.8099999999999999,
+                  "z": 52.46193976625565,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 118,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -74.72387953251129,
+                  "y": 0.8099999999999999,
+                  "z": 52.38268343236509,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 119,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -70.53806023374436,
+                  "y": 0.8099999999999999,
+                  "z": 52.19134171618254,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 120,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -70.04775906502257,
+                  "y": 0.8099999999999999,
+                  "z": 52.76536686473018,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 121,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -66.16536686473019,
+                  "y": 0.83,
+                  "z": 50.15224093497743,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 122,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.8099999999999999,
+                  "z": 52,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 123,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.3,
+                  "y": 0.8099999999999999,
+                  "z": 52,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 124,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57,
+                  "y": 0.8099999999999999,
+                  "z": 52,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 125,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -54.2,
+                  "y": 0.8099999999999999,
+                  "z": 52,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 126,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -52.107106781186545,
+                  "y": 0.8099999999999999,
+                  "z": 52.707106781186546,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 127,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -76.6,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 128,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.8,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 129,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 130,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -68.2,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 131,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -65.4,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 132,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 133,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.8,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 134,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -55.93933982822018,
+                  "y": 0.7,
+                  "z": 57.06066017177982,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 135,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -53.7,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 136,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -51.4,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              }
+            ],
+            "alphas": [
+              {
+                "id": 75,
+                "archetype": "infected.alpha",
+                "hp": 300,
+                "position": {
+                  "x": -64,
+                  "y": 0.83,
+                  "z": 50,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 76,
+                "archetype": "infected.alpha",
+                "hp": 300,
+                "position": {
+                  "x": -43,
+                  "y": 0.83,
+                  "z": 41.7,
+                  "yaw": 3.141592653589793
+                }
+              }
+            ]
+          },
+          "target": "at least60 live regulars and2Alphas admitted before first tick",
+          "receipt": "docs/reports/fix55-c/L7-corridor.json"
+        },
+        {
+          "id": "L7-08",
+          "clause": "observed native survivor crossing prior rocket footprint",
+          "level": "L7",
+          "tier": "low",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": [],
+          "target": "living visible unboarded human beyondx=-68 within6m of an earlier actual rocket impact; zero observations remain inconclusive",
+          "receipt": "docs/reports/fix55-c/L7-corridor.json"
+        },
+        {
+          "id": "L7-08",
+          "clause": "initial live final-corridor cohort",
+          "level": "L7",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "regulars": [
+              {
+                "id": 77,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -76.6,
+                  "y": 0.7,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 78,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.8,
+                  "y": 0.7,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 79,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.7,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 80,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -70.2,
+                  "y": 0.9201999999999999,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 81,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -63.400000000000006,
+                  "y": 0.7,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 82,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.7,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 83,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.8,
+                  "y": 0.7,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 84,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57,
+                  "y": 0.7,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 85,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -54.2,
+                  "y": 0.83,
+                  "z": 36,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 86,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -50.93806023374435,
+                  "y": 0.7,
+                  "z": 36.19134171618254,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 87,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -76.6,
+                  "y": 0.7,
+                  "z": 37.81818181818182,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 88,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.8,
+                  "y": 0.7,
+                  "z": 37.81818181818182,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 89,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.7,
+                  "z": 37.81818181818182,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 90,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -68.2,
+                  "y": 0.9201999999999999,
+                  "z": 39.31818181818182,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 91,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -65.4,
+                  "y": 0.9201999999999999,
+                  "z": 39.31818181818182,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 92,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.7,
+                  "z": 37.81818181818182,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 93,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.8,
+                  "y": 0.7,
+                  "z": 37.81818181818182,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 94,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57,
+                  "y": 0.7,
+                  "z": 37.81818181818182,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 95,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -54.2,
+                  "y": 0.83,
+                  "z": 37.81818181818182,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 96,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -51.4,
+                  "y": 0.7,
+                  "z": 37.81818181818182,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 97,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -76.6,
+                  "y": 0.7,
+                  "z": 39.63636363636364,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 98,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.8,
+                  "y": 0.7,
+                  "z": 39.63636363636364,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 99,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.7,
+                  "z": 39.63636363636364,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 100,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -67.84644660940673,
+                  "y": 0.7,
+                  "z": 39.98991702695692,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 101,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -65.04644660940673,
+                  "y": 0.7,
+                  "z": 39.98991702695692,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 102,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.7,
+                  "z": 39.63636363636364,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 103,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.8,
+                  "y": 0.7,
+                  "z": 39.63636363636364,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 104,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57,
+                  "y": 0.7,
+                  "z": 39.63636363636364,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 105,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -54.2,
+                  "y": 0.83,
+                  "z": 39.63636363636364,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 106,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -51.4,
+                  "y": 0.7,
+                  "z": 39.63636363636364,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 107,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -76.6,
+                  "y": 0.83,
+                  "z": 41.45454545454545,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 108,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.8,
+                  "y": 0.83,
+                  "z": 41.45454545454545,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 109,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.83,
+                  "z": 41.45454545454545,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 110,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -68.2,
+                  "y": 0.83,
+                  "z": 41.45454545454545,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 111,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -65.4,
+                  "y": 0.83,
+                  "z": 41.45454545454545,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 112,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.83,
+                  "z": 41.45454545454545,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 113,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.8,
+                  "y": 0.7,
+                  "z": 41.45454545454545,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 114,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57,
+                  "y": 0.7,
+                  "z": 41.45454545454545,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 115,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -54.2,
+                  "y": 0.83,
+                  "z": 41.45454545454545,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 116,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -51.4,
+                  "y": 0.83,
+                  "z": 41.45454545454545,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 117,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -76.6,
+                  "y": 0.7,
+                  "z": 43.27272727272727,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 118,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.8,
+                  "y": 0.7,
+                  "z": 43.27272727272727,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 119,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.7,
+                  "z": 43.27272727272727,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 120,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -68.2,
+                  "y": 0.7,
+                  "z": 43.27272727272727,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 121,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -66.46066017177982,
+                  "y": 0.7,
+                  "z": 44.333387444507096,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 122,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -63.365366864730184,
+                  "y": 0.83,
+                  "z": 41.4249682077047,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 123,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -58.3,
+                  "y": 0.7,
+                  "z": 43.27272727272727,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 124,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57,
+                  "y": 0.7,
+                  "z": 43.27272727272727,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 125,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -54.2,
+                  "y": 0.7,
+                  "z": 43.27272727272727,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 126,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -51.4,
+                  "y": 0.7,
+                  "z": 43.27272727272727,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 127,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -76.6,
+                  "y": 0.7,
+                  "z": 45.09090909090909,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 128,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.8,
+                  "y": 0.7,
+                  "z": 45.09090909090909,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 129,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.7,
+                  "z": 45.09090909090909,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 130,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -68.2,
+                  "y": 0.7,
+                  "z": 45.09090909090909,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 131,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -65.01731656763492,
+                  "y": 0.7,
+                  "z": 46.01478862342038,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 132,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.21731656763491,
+                  "y": 0.7,
+                  "z": 46.01478862342038,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 133,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.417316567634906,
+                  "y": 0.7,
+                  "z": 46.01478862342038,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 134,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57,
+                  "y": 0.7,
+                  "z": 45.09090909090909,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 135,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -54.2,
+                  "y": 0.7,
+                  "z": 45.09090909090909,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 136,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -51.4,
+                  "y": 0.7,
+                  "z": 45.09090909090909,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 137,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -77.36536686473018,
+                  "y": 0.7,
+                  "z": 45.061331844068334,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 138,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.3,
+                  "y": 0.7,
+                  "z": 46.90909090909091,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 139,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.7,
+                  "z": 46.90909090909091,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 140,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -68.2,
+                  "y": 0.7,
+                  "z": 46.90909090909091,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 141,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -65.4,
+                  "y": 0.7,
+                  "z": 46.90909090909091,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 142,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.7,
+                  "z": 46.90909090909091,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 143,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.8,
+                  "y": 0.7,
+                  "z": 46.90909090909091,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 144,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57,
+                  "y": 0.7,
+                  "z": 46.90909090909091,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 145,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -54.2,
+                  "y": 0.7,
+                  "z": 46.90909090909091,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 146,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -51.4,
+                  "y": 0.7,
+                  "z": 46.90909090909091,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 147,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -77.52387953251129,
+                  "y": 0.7,
+                  "z": 49.10995615963782,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 148,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.3,
+                  "y": 0.7,
+                  "z": 48.72727272727273,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 149,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.7,
+                  "z": 48.72727272727273,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 150,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -68.2,
+                  "y": 0.7,
+                  "z": 48.72727272727273,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 151,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -65.4,
+                  "y": 0.7,
+                  "z": 48.72727272727273,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 152,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.7,
+                  "z": 48.72727272727273,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 153,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.8,
+                  "y": 0.7,
+                  "z": 48.72727272727273,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 154,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57,
+                  "y": 0.7,
+                  "z": 48.72727272727273,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 155,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -54.2,
+                  "y": 0.7,
+                  "z": 48.72727272727273,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 156,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -51.4,
+                  "y": 0.7,
+                  "z": 48.72727272727273,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 157,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -75.89289321881344,
+                  "y": 0.83,
+                  "z": 51.25256132664109,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 158,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.3,
+                  "y": 0.83,
+                  "z": 50.54545454545455,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 159,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.8099999999999999,
+                  "z": 52.04545454545455,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 160,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -68.66193976625564,
+                  "y": 0.83,
+                  "z": 50.354112829272005,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 161,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -65.86193976625565,
+                  "y": 0.83,
+                  "z": 50.354112829272005,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 162,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.83,
+                  "z": 50.54545454545455,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 163,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.8,
+                  "y": 0.83,
+                  "z": 50.54545454545455,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 164,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57,
+                  "y": 0.83,
+                  "z": 50.54545454545455,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 165,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -54.2,
+                  "y": 0.83,
+                  "z": 50.54545454545455,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 166,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -51.4,
+                  "y": 0.83,
+                  "z": 50.54545454545455,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 167,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -76.79134171618254,
+                  "y": 0.8099999999999999,
+                  "z": 52.825576129892006,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 168,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -74.72387953251129,
+                  "y": 0.8099999999999999,
+                  "z": 52.74631979600145,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 169,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -70.64644660940672,
+                  "y": 0.8099999999999999,
+                  "z": 52.717189754229636,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 170,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -70.04775906502257,
+                  "y": 0.8099999999999999,
+                  "z": 53.12900322836654,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 171,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -65.15,
+                  "y": 0.83,
+                  "z": 50.36363636363636,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 172,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.8099999999999999,
+                  "z": 52.36363636363636,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 173,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.3,
+                  "y": 0.8099999999999999,
+                  "z": 52.36363636363636,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 174,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -57.35355339059328,
+                  "y": 0.8099999999999999,
+                  "z": 52.01008297304308,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 175,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -53.7,
+                  "y": 0.8099999999999999,
+                  "z": 52.36363636363636,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 176,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -52.107106781186545,
+                  "y": 0.8099999999999999,
+                  "z": 53.070743144822906,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 177,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -76.6,
+                  "y": 0.8099999999999999,
+                  "z": 54.18181818181818,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 178,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.8,
+                  "y": 0.8099999999999999,
+                  "z": 54.18181818181818,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 179,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71.35355339059328,
+                  "y": 0.8099999999999999,
+                  "z": 54.53537157241146,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 180,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -67.62597485145237,
+                  "y": 0.8099999999999999,
+                  "z": 55.56763748058511,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 181,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -64.82597485145237,
+                  "y": 0.8099999999999999,
+                  "z": 55.56763748058511,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 182,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.8099999999999999,
+                  "z": 54.18181818181818,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 183,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.8,
+                  "y": 0.8099999999999999,
+                  "z": 54.18181818181818,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 184,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59,
+                  "y": 0.8099999999999999,
+                  "z": 54.18181818181818,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 185,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -53.7,
+                  "y": 0.8099999999999999,
+                  "z": 54.18181818181818,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 186,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -52.107106781186545,
+                  "y": 0.8099999999999999,
+                  "z": 54.888924963004726,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 187,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -76.6,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 188,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -73.8,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 189,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -71,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 190,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -68.2,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 191,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -65.4,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 192,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -62.6,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 193,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -59.8,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 194,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -55.93933982822018,
+                  "y": 0.7,
+                  "z": 57.06066017177982,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 195,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -53.7,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 196,
+                "archetype": "infected.runner",
+                "hp": 60,
+                "position": {
+                  "x": -51.4,
+                  "y": 0.8099999999999999,
+                  "z": 56,
+                  "yaw": 3.141592653589793
+                }
+              }
+            ],
+            "alphas": [
+              {
+                "id": 75,
+                "archetype": "infected.alpha",
+                "hp": 300,
+                "position": {
+                  "x": -64,
+                  "y": 0.83,
+                  "z": 50,
+                  "yaw": 3.141592653589793
+                }
+              },
+              {
+                "id": 76,
+                "archetype": "infected.alpha",
+                "hp": 300,
+                "position": {
+                  "x": -43,
+                  "y": 0.83,
+                  "z": 41.7,
+                  "yaw": 3.141592653589793
+                }
+              }
+            ]
+          },
+          "target": "at least120 live regulars and2Alphas admitted before first tick",
+          "receipt": "docs/reports/fix55-c/L7-corridor.json"
+        },
+        {
+          "id": "L7-08",
+          "clause": "observed native survivor crossing prior rocket footprint",
+          "level": "L7",
+          "tier": "high",
+          "policy": "complete",
+          "status": "NOT CHECKED",
+          "value": [],
+          "target": "living visible unboarded human beyondx=-68 within6m of an earlier actual rocket impact; zero observations remain inconclusive",
+          "receipt": "docs/reports/fix55-c/L7-corridor.json"
+        }
+      ],
       "historical": {
         "id": "L7-08",
         "level": "L7",
