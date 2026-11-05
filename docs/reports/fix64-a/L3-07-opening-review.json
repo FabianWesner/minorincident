@@ -1,0 +1,2543 @@
+{
+  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+  "observerHash": "261eb1a36261d6fe91fba87f83feeabcc2a40bf424d61b8ac4de13518119c9ec",
+  "revision": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7",
+  "runs": [
+    {
+      "tier": "high",
+      "frames": [
+        {
+          "file": "test-results/fix64-a/L3-07/captures/high-alarm-start.png",
+          "sha256": "05f893029427f97fd77167848bd116217e8a64f6baf285e0b7ddd0d8efeaebb3",
+          "name": "alarm-start",
+          "method": "Fresh mortal native complete InputFrames; default follow camera, no relocation.",
+          "state": {
+            "tick": 567,
+            "player": {
+              "x": -134.94863891601562,
+              "y": 0.7049999833106995,
+              "z": 0.6140632629394531,
+              "yaw": -1.1020611369628868
+            },
+            "zoom": 1,
+            "phase": "attack",
+            "attackAt": 567,
+            "fallbackAt": 0,
+            "cover": [
+              {
+                "id": "l3-alarm-cover",
+                "assetId": "veh.military-truck",
+                "position": [
+                  -131.5,
+                  0,
+                  -5
+                ],
+                "yaw": 0,
+                "scale": [
+                  1,
+                  1,
+                  1
+                ],
+                "minTier": 0,
+                "maxTier": 5,
+                "allowRoad": true,
+                "lightGroup": "l3",
+                "visualAabb": {
+                  "min": [
+                    -132.5,
+                    0,
+                    -6
+                  ],
+                  "max": [
+                    -130.5,
+                    1.5,
+                    -4
+                  ]
+                }
+              }
+            ],
+            "squad": [],
+            "opening": [
+              {
+                "id": 105,
+                "dir": "station",
+                "at": 567,
+                "wave": 0,
+                "transform": {
+                  "x": -144.2,
+                  "z": -6.3,
+                  "y": 0.7,
+                  "yaw": 0.6152186426458959
+                },
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "station",
+                "at": 576,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "station",
+                "at": 585,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "station",
+                "at": 568,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "station",
+                "at": 579,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "station",
+                "at": 590,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "source": "yard-cover",
+                "at": 576,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "source": "yard-cover",
+                "at": 590,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "source": "yard-cover",
+                "at": 625,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "source": "yard-cover",
+                "at": 655,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "source": "yard-cover",
+                "at": 711,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "source": "yard-cover",
+                "at": 767,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 797,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 853,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "at": 909,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "at": 938,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 995,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 1051,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "at": 1080,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "at": 1136,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 1192,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 1222,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "at": 1278,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "at": 1334,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 1364,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 1420,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "at": 1476,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "at": 1505,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 1562,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 1618,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              }
+            ]
+          },
+          "seen": true,
+          "what": "The courier and corgi stand beside the police and supply truck. Infected emerge by the station tables and approach the officers; the first two seconds show guns rising and a tracer, with no crowd around the courier yet."
+        },
+        {
+          "file": "test-results/fix64-a/L3-07/captures/high-alarm-30ticks.png",
+          "sha256": "2ca71bcd1df93380f451760f98dbd85945078cfd42ffe0f3a678b78340a89ee0",
+          "name": "alarm-30ticks",
+          "method": "Exact first alarm +30 ticks; default follow camera. Frustum census is separate from pixel review.",
+          "state": {
+            "tick": 597,
+            "player": {
+              "x": -134.94863891601562,
+              "y": 0.7049999833106995,
+              "z": 0.6140632629394531,
+              "yaw": 1.579936551076499
+            },
+            "zoom": 1,
+            "phase": "attack",
+            "attackAt": 567,
+            "fallbackAt": 0,
+            "cover": [
+              {
+                "id": "l3-alarm-cover",
+                "assetId": "veh.military-truck",
+                "position": [
+                  -131.5,
+                  0,
+                  -5
+                ],
+                "yaw": 0,
+                "scale": [
+                  1,
+                  1,
+                  1
+                ],
+                "minTier": 0,
+                "maxTier": 5,
+                "allowRoad": true,
+                "lightGroup": "l3",
+                "visualAabb": {
+                  "min": [
+                    -132.5,
+                    0,
+                    -6
+                  ],
+                  "max": [
+                    -130.5,
+                    1.5,
+                    -4
+                  ]
+                }
+              }
+            ],
+            "squad": [],
+            "opening": [
+              {
+                "id": 105,
+                "dir": "station",
+                "at": 567,
+                "wave": 0,
+                "transform": {
+                  "x": -144.2018796609977,
+                  "z": -5.868422494666889,
+                  "y": 0.7,
+                  "yaw": -0.7531146906874375
+                },
+                "visible": true
+              },
+              {
+                "id": 0,
+                "dir": "station",
+                "at": 576,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "station",
+                "at": 585,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 107,
+                "dir": "station",
+                "at": 568,
+                "wave": 0,
+                "transform": {
+                  "x": -144.21730111842209,
+                  "z": -6.950821771567408,
+                  "y": 0.7,
+                  "yaw": 3.156549496451017
+                },
+                "visible": true
+              },
+              {
+                "id": 0,
+                "dir": "station",
+                "at": 579,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "station",
+                "at": 590,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 109,
+                "dir": "commerce",
+                "source": "yard-cover",
+                "at": 576,
+                "wave": 0,
+                "transform": {
+                  "x": -135.01826558424057,
+                  "z": -7.003335075719533,
+                  "y": 0.75,
+                  "yaw": 0.1664556251696664
+                },
+                "visible": true
+              },
+              {
+                "id": 111,
+                "dir": "river",
+                "source": "yard-cover",
+                "at": 590,
+                "wave": 0,
+                "transform": {
+                  "x": -133.31153538125335,
+                  "z": -7.001478895032477,
+                  "y": 0.75,
+                  "yaw": 1.2015460592075566
+                },
+                "visible": true
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "source": "yard-cover",
+                "at": 625,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "source": "yard-cover",
+                "at": 655,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "source": "yard-cover",
+                "at": 711,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "source": "yard-cover",
+                "at": 767,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 797,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 853,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "at": 909,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "at": 938,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 995,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 1051,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "at": 1080,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "at": 1136,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 1192,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 1222,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "at": 1278,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "at": 1334,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 1364,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 1420,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "at": 1476,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "at": 1505,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 1562,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 1618,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              }
+            ]
+          },
+          "seen": true,
+          "what": "The courier and corgi stand beside the police and supply truck. Infected emerge by the station tables and approach the officers; the first two seconds show guns rising and a tracer, with no crowd around the courier yet."
+        },
+        {
+          "file": "test-results/fix64-a/L3-07/captures/high-alarm-60ticks.png",
+          "sha256": "8d6b4dae7c3b21d63dded6adb91d60534f086ade94df588c33498951d63e2da6",
+          "name": "alarm-60ticks",
+          "method": "Exact first alarm +60 ticks; default follow camera. Frustum census is separate from pixel review.",
+          "state": {
+            "tick": 627,
+            "player": {
+              "x": -134.94863891601562,
+              "y": 0.7049999833106995,
+              "z": 0.6140632629394531,
+              "yaw": 1.5775694039463948
+            },
+            "zoom": 1,
+            "phase": "attack",
+            "attackAt": 567,
+            "fallbackAt": 0,
+            "cover": [
+              {
+                "id": "l3-alarm-cover",
+                "assetId": "veh.military-truck",
+                "position": [
+                  -131.5,
+                  0,
+                  -5
+                ],
+                "yaw": 0,
+                "scale": [
+                  1,
+                  1,
+                  1
+                ],
+                "minTier": 0,
+                "maxTier": 5,
+                "allowRoad": true,
+                "lightGroup": "l3",
+                "visualAabb": {
+                  "min": [
+                    -132.5,
+                    0,
+                    -6
+                  ],
+                  "max": [
+                    -130.5,
+                    1.5,
+                    -4
+                  ]
+                }
+              }
+            ],
+            "squad": [],
+            "opening": [
+              {
+                "id": 105,
+                "dir": "station",
+                "at": 567,
+                "wave": 0,
+                "transform": {
+                  "x": -143.351434801025,
+                  "z": -4.909030164801964,
+                  "y": 0.7,
+                  "yaw": -1.6497813573541036
+                },
+                "visible": true
+              },
+              {
+                "id": 113,
+                "dir": "station",
+                "at": 576,
+                "wave": 0,
+                "transform": {
+                  "x": -144.20909507693497,
+                  "z": -7.208963922071133,
+                  "y": 0.7,
+                  "yaw": -0.6303824427454716
+                },
+                "visible": true
+              },
+              {
+                "id": 0,
+                "dir": "station",
+                "at": 585,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 107,
+                "dir": "station",
+                "at": 568,
+                "wave": 0,
+                "transform": {
+                  "x": -144.113611148999,
+                  "z": -5.713538441583454,
+                  "y": 0.7,
+                  "yaw": 5.103216163117685
+                },
+                "visible": true
+              },
+              {
+                "id": 0,
+                "dir": "station",
+                "at": 579,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "station",
+                "at": 590,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 109,
+                "dir": "commerce",
+                "source": "yard-cover",
+                "at": 576,
+                "wave": 0,
+                "transform": {
+                  "x": -135.0428103505847,
+                  "z": -7.0020582881703275,
+                  "y": 0.75,
+                  "yaw": 0.26645562516966637
+                },
+                "visible": true
+              },
+              {
+                "id": 111,
+                "dir": "river",
+                "source": "yard-cover",
+                "at": 590,
+                "wave": 0,
+                "transform": {
+                  "x": -133.3701228355825,
+                  "z": -7.0089901071259675,
+                  "y": 0.75,
+                  "yaw": 1.821155629695486
+                },
+                "visible": true
+              },
+              {
+                "id": 115,
+                "dir": "blvd",
+                "source": "yard-cover",
+                "at": 625,
+                "wave": 0,
+                "transform": {
+                  "x": -135.00083811337197,
+                  "z": -7.000279371123985,
+                  "y": 0.75,
+                  "yaw": 5.299962817781149
+                },
+                "visible": true
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "source": "yard-cover",
+                "at": 655,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "source": "yard-cover",
+                "at": 711,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "source": "yard-cover",
+                "at": 767,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 797,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 853,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "at": 909,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "at": 938,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 995,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 1051,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "at": 1080,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "at": 1136,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 1192,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 1222,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "at": 1278,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "at": 1334,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 1364,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 1420,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "at": 1476,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "at": 1505,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 1562,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 1618,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              }
+            ]
+          },
+          "seen": true,
+          "what": "The courier and corgi stand beside the police and supply truck. Infected emerge by the station tables and approach the officers; the first two seconds show guns rising and a tracer, with no crowd around the courier yet."
+        },
+        {
+          "file": "test-results/fix64-a/L3-07/captures/high-alarm-90ticks.png",
+          "sha256": "1fe3a8b433e8140b9ca8fae0f1c6571da52386606196a14af5cbdd5d677e78b4",
+          "name": "alarm-90ticks",
+          "method": "Exact first alarm +90 ticks; default follow camera. Frustum census is separate from pixel review.",
+          "state": {
+            "tick": 657,
+            "player": {
+              "x": -134.94863891601562,
+              "y": 0.7049999833106995,
+              "z": 0.6140632629394531,
+              "yaw": 1.593251346651979
+            },
+            "zoom": 1,
+            "phase": "attack",
+            "attackAt": 567,
+            "fallbackAt": 0,
+            "cover": [
+              {
+                "id": "l3-alarm-cover",
+                "assetId": "veh.military-truck",
+                "position": [
+                  -131.5,
+                  0,
+                  -5
+                ],
+                "yaw": 0,
+                "scale": [
+                  1,
+                  1,
+                  1
+                ],
+                "minTier": 0,
+                "maxTier": 5,
+                "allowRoad": true,
+                "lightGroup": "l3",
+                "visualAabb": {
+                  "min": [
+                    -132.5,
+                    0,
+                    -6
+                  ],
+                  "max": [
+                    -130.5,
+                    1.5,
+                    -4
+                  ]
+                }
+              }
+            ],
+            "squad": [],
+            "opening": [
+              {
+                "id": 105,
+                "dir": "station",
+                "at": 567,
+                "wave": 0,
+                "transform": {
+                  "x": -142.40487462600674,
+                  "z": -4.247375273869682,
+                  "y": 0.83,
+                  "yaw": -0.7547813573541027
+                },
+                "visible": true
+              },
+              {
+                "id": 113,
+                "dir": "station",
+                "at": 576,
+                "wave": 0,
+                "transform": {
+                  "x": -144.13000726755988,
+                  "z": -5.968495788091108,
+                  "y": 0.7,
+                  "yaw": -2.0190242314916365
+                },
+                "visible": true
+              },
+              {
+                "id": 117,
+                "dir": "station",
+                "at": 585,
+                "wave": 0,
+                "transform": {
+                  "x": -144.20414493504478,
+                  "z": -7.394780711074387,
+                  "y": 0.7,
+                  "yaw": 4.801994310918949
+                },
+                "visible": true
+              },
+              {
+                "id": 107,
+                "dir": "station",
+                "at": 568,
+                "wave": 0,
+                "transform": {
+                  "x": -143.22987232960338,
+                  "z": -4.652722974383429,
+                  "y": 0.7,
+                  "yaw": 5.575333378465971
+                },
+                "visible": true
+              },
+              {
+                "id": 0,
+                "dir": "station",
+                "at": 579,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "station",
+                "at": 590,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 109,
+                "dir": "commerce",
+                "source": "yard-cover",
+                "at": 576,
+                "wave": 0,
+                "transform": {
+                  "x": -135.0428103505847,
+                  "z": -7.0020582881703275,
+                  "y": 0.75,
+                  "yaw": 0.26645562516966637
+                },
+                "visible": true
+              },
+              {
+                "id": 111,
+                "dir": "river",
+                "source": "yard-cover",
+                "at": 590,
+                "wave": 0,
+                "transform": {
+                  "x": -133.42941185308558,
+                  "z": -7.016489921266607,
+                  "y": 0.75,
+                  "yaw": 2.624064397544537
+                },
+                "visible": true
+              },
+              {
+                "id": 115,
+                "dir": "blvd",
+                "source": "yard-cover",
+                "at": 625,
+                "wave": 0,
+                "transform": {
+                  "x": -135.12054402469028,
+                  "z": -7.0401813415634225,
+                  "y": 0.75,
+                  "yaw": 4.7932961511144825
+                },
+                "visible": true
+              },
+              {
+                "id": 119,
+                "dir": "oak",
+                "source": "yard-cover",
+                "at": 655,
+                "wave": 0,
+                "transform": {
+                  "x": -134.30085962181093,
+                  "z": -7.999773783733974,
+                  "y": 0.75,
+                  "yaw": 0.21358871975802546
+                },
+                "visible": true
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "source": "yard-cover",
+                "at": 711,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "source": "yard-cover",
+                "at": 767,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 797,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 853,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "at": 909,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "at": 938,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 995,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 1051,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "at": 1080,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "at": 1136,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 1192,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 1222,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "at": 1278,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "at": 1334,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 1364,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 1420,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "at": 1476,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "at": 1505,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 1562,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 1618,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              }
+            ]
+          },
+          "seen": true,
+          "what": "The courier and corgi stand beside the police and supply truck. Infected emerge by the station tables and approach the officers; the first two seconds show guns rising and a tracer, with no crowd around the courier yet."
+        },
+        {
+          "file": "test-results/fix64-a/L3-07/captures/high-alarm-two-seconds.png",
+          "sha256": "b2ba91f9559ea82d86f0766bf5101c377127e44923da5d4c2f7dea53951f6b84",
+          "name": "alarm-two-seconds",
+          "method": "Exact first alarm +120 ticks; default follow camera. Frustum census is separate from pixel review.",
+          "state": {
+            "tick": 687,
+            "player": {
+              "x": -134.94863891601562,
+              "y": 0.7049999833106995,
+              "z": 0.6140632629394531,
+              "yaw": 2.523288006732803
+            },
+            "zoom": 1,
+            "phase": "attack",
+            "attackAt": 567,
+            "fallbackAt": 0,
+            "cover": [
+              {
+                "id": "l3-alarm-cover",
+                "assetId": "veh.military-truck",
+                "position": [
+                  -131.5,
+                  0,
+                  -5
+                ],
+                "yaw": 0,
+                "scale": [
+                  1,
+                  1,
+                  1
+                ],
+                "minTier": 0,
+                "maxTier": 5,
+                "allowRoad": true,
+                "lightGroup": "l3",
+                "visualAabb": {
+                  "min": [
+                    -132.5,
+                    0,
+                    -6
+                  ],
+                  "max": [
+                    -130.5,
+                    1.5,
+                    -4
+                  ]
+                }
+              }
+            ],
+            "squad": [],
+            "opening": [
+              {
+                "id": 105,
+                "dir": "station",
+                "at": 567,
+                "wave": 0,
+                "transform": {
+                  "x": -141.18818881872167,
+                  "z": -3.853484451753366,
+                  "y": 0.83,
+                  "yaw": -0.5950247483764288
+                },
+                "visible": true
+              },
+              {
+                "id": 113,
+                "dir": "station",
+                "at": 576,
+                "wave": 0,
+                "transform": {
+                  "x": -143.3698317367285,
+                  "z": -5.000250208153841,
+                  "y": 0.7,
+                  "yaw": -0.6667105801473889
+                },
+                "visible": true
+              },
+              {
+                "id": 117,
+                "dir": "station",
+                "at": 585,
+                "wave": 0,
+                "transform": {
+                  "x": -144.19337180011468,
+                  "z": -6.29381587900049,
+                  "y": 0.7,
+                  "yaw": 4.782364635098337
+                },
+                "visible": true
+              },
+              {
+                "id": 107,
+                "dir": "station",
+                "at": 568,
+                "wave": 0,
+                "transform": {
+                  "x": -142.08823292109992,
+                  "z": -3.6666480001933746,
+                  "y": 0.83,
+                  "yaw": 5.708192955262495
+                },
+                "visible": true
+              },
+              {
+                "id": 121,
+                "dir": "station",
+                "at": 579,
+                "wave": 0,
+                "transform": {
+                  "x": -144.20061768197777,
+                  "z": -7.4925266075854315,
+                  "y": 0.7,
+                  "yaw": 0.14713709619733875
+                },
+                "visible": true
+              },
+              {
+                "id": 0,
+                "dir": "station",
+                "at": 590,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 109,
+                "dir": "commerce",
+                "source": "yard-cover",
+                "at": 576,
+                "wave": 0,
+                "transform": {
+                  "x": -135.0428103505847,
+                  "z": -7.0020582881703275,
+                  "y": 0.75,
+                  "yaw": 0.26645562516966637
+                },
+                "visible": true
+              },
+              {
+                "id": 111,
+                "dir": "river",
+                "source": "yard-cover",
+                "at": 590,
+                "wave": 0,
+                "transform": {
+                  "x": -133.55333566911884,
+                  "z": -7.09577811043971,
+                  "y": 0.75,
+                  "yaw": 2.562164917825555
+                },
+                "visible": true
+              },
+              {
+                "id": 115,
+                "dir": "blvd",
+                "source": "yard-cover",
+                "at": 625,
+                "wave": 0,
+                "transform": {
+                  "x": -135.15146441269667,
+                  "z": -6.998103589156534,
+                  "y": 0.75,
+                  "yaw": 4.693296151114483
+                },
+                "visible": true
+              },
+              {
+                "id": 119,
+                "dir": "oak",
+                "source": "yard-cover",
+                "at": 655,
+                "wave": 0,
+                "transform": {
+                  "x": -134.85474445243167,
+                  "z": -7.676915088137707,
+                  "y": 0.75,
+                  "yaw": -0.12974461357530784
+                },
+                "visible": true
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "source": "yard-cover",
+                "at": 711,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "source": "yard-cover",
+                "at": 767,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 797,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 853,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "at": 909,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "at": 938,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 995,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 1051,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "at": 1080,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "at": 1136,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 1192,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 1222,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "at": 1278,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "at": 1334,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 1364,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 1420,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "at": 1476,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "at": 1505,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 1562,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 1618,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              }
+            ]
+          },
+          "seen": true,
+          "what": "The courier and corgi stand beside the police and supply truck. Infected emerge by the station tables and approach the officers; the first two seconds show guns rising and a tracer, with no crowd around the courier yet."
+        },
+        {
+          "file": "test-results/fix64-a/L3-07/captures/high-cover-inspection.png",
+          "sha256": "f6ceb4dd54365021de01504db2cfc069fcc75510f4bd609f39a945015ffb46d5",
+          "name": "cover-inspection",
+          "method": "Scene Lab close view of actual production placement; no actors or props moved.",
+          "state": {
+            "tick": 687,
+            "player": {
+              "x": -134.94863891601562,
+              "y": 0.7049999833106995,
+              "z": 0.6140632629394531,
+              "yaw": 2.523288006732803
+            },
+            "zoom": 1,
+            "phase": "attack",
+            "attackAt": 567,
+            "fallbackAt": 0,
+            "cover": [
+              {
+                "id": "l3-alarm-cover",
+                "assetId": "veh.military-truck",
+                "position": [
+                  -131.5,
+                  0,
+                  -5
+                ],
+                "yaw": 0,
+                "scale": [
+                  1,
+                  1,
+                  1
+                ],
+                "minTier": 0,
+                "maxTier": 5,
+                "allowRoad": true,
+                "lightGroup": "l3",
+                "visualAabb": {
+                  "min": [
+                    -132.5,
+                    0,
+                    -6
+                  ],
+                  "max": [
+                    -130.5,
+                    1.5,
+                    -4
+                  ]
+                }
+              }
+            ],
+            "squad": [],
+            "opening": [
+              {
+                "id": 105,
+                "dir": "station",
+                "at": 567,
+                "wave": 0,
+                "transform": {
+                  "x": -141.18818881872167,
+                  "z": -3.853484451753366,
+                  "y": 0.83,
+                  "yaw": -0.5950247483764288
+                },
+                "visible": true
+              },
+              {
+                "id": 113,
+                "dir": "station",
+                "at": 576,
+                "wave": 0,
+                "transform": {
+                  "x": -143.3698317367285,
+                  "z": -5.000250208153841,
+                  "y": 0.7,
+                  "yaw": -0.6667105801473889
+                },
+                "visible": true
+              },
+              {
+                "id": 117,
+                "dir": "station",
+                "at": 585,
+                "wave": 0,
+                "transform": {
+                  "x": -144.19337180011468,
+                  "z": -6.29381587900049,
+                  "y": 0.7,
+                  "yaw": 4.782364635098337
+                },
+                "visible": true
+              },
+              {
+                "id": 107,
+                "dir": "station",
+                "at": 568,
+                "wave": 0,
+                "transform": {
+                  "x": -142.08823292109992,
+                  "z": -3.6666480001933746,
+                  "y": 0.83,
+                  "yaw": 5.708192955262495
+                },
+                "visible": true
+              },
+              {
+                "id": 121,
+                "dir": "station",
+                "at": 579,
+                "wave": 0,
+                "transform": {
+                  "x": -144.20061768197777,
+                  "z": -7.4925266075854315,
+                  "y": 0.7,
+                  "yaw": 0.14713709619733875
+                },
+                "visible": true
+              },
+              {
+                "id": 0,
+                "dir": "station",
+                "at": 590,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 109,
+                "dir": "commerce",
+                "source": "yard-cover",
+                "at": 576,
+                "wave": 0,
+                "transform": {
+                  "x": -135.0428103505847,
+                  "z": -7.0020582881703275,
+                  "y": 0.75,
+                  "yaw": 0.26645562516966637
+                },
+                "visible": true
+              },
+              {
+                "id": 111,
+                "dir": "river",
+                "source": "yard-cover",
+                "at": 590,
+                "wave": 0,
+                "transform": {
+                  "x": -133.55333566911884,
+                  "z": -7.09577811043971,
+                  "y": 0.75,
+                  "yaw": 2.562164917825555
+                },
+                "visible": true
+              },
+              {
+                "id": 115,
+                "dir": "blvd",
+                "source": "yard-cover",
+                "at": 625,
+                "wave": 0,
+                "transform": {
+                  "x": -135.15146441269667,
+                  "z": -6.998103589156534,
+                  "y": 0.75,
+                  "yaw": 4.693296151114483
+                },
+                "visible": true
+              },
+              {
+                "id": 119,
+                "dir": "oak",
+                "source": "yard-cover",
+                "at": 655,
+                "wave": 0,
+                "transform": {
+                  "x": -134.85474445243167,
+                  "z": -7.676915088137707,
+                  "y": 0.75,
+                  "yaw": -0.12974461357530784
+                },
+                "visible": true
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "source": "yard-cover",
+                "at": 711,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "source": "yard-cover",
+                "at": 767,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 797,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 853,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "at": 909,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "at": 938,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 995,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 1051,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "at": 1080,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "at": 1136,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 1192,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 1222,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "at": 1278,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "at": 1334,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 1364,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 1420,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "commerce",
+                "at": 1476,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "river",
+                "at": 1505,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "blvd",
+                "at": 1562,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              },
+              {
+                "id": 0,
+                "dir": "oak",
+                "at": 1618,
+                "wave": 0,
+                "transform": null,
+                "visible": false
+              }
+            ]
+          },
+          "seen": true,
+          "what": "Truck inspection shows the cargo shell between the station and road, with nearby officers visible."
+        },
+        {
+          "file": "test-results/fix64-a/L3-07/captures/high-following-fire-z1.5.png",
+          "sha256": "4eb09837864390ed4e04030d3a33d042fed67fbc0bdb78295176099c4ef4ca42",
+          "name": "following-fire-z1.5",
+          "method": "Mortal native complete route, actual zoom1.5; shot ledger discloses whether a moving squad shot was reached.",
+          "state": {
+            "tick": 2137,
+            "player": {
+              "x": -134.1438446044922,
+              "y": 0.7099999785423279,
+              "z": 0.6332605481147766,
+              "yaw": -0.023849804192751702
+            },
+            "zoom": 1,
+            "phase": "fallback",
+            "attackAt": 567,
+            "fallbackAt": 2123,
+            "cover": [
+              {
+                "id": "l3-alarm-cover",
+                "assetId": "veh.military-truck",
+                "position": [
+                  -131.5,
+                  0,
+                  -5
+                ],
+                "yaw": 0,
+                "scale": [
+                  1,
+                  1,
+                  1
+                ],
+                "minTier": 0,
+                "maxTier": 5,
+                "allowRoad": true,
+                "lightGroup": "l3",
+                "visualAabb": {
+                  "min": [
+                    -132.5,
+                    0,
+                    -6
+                  ],
+                  "max": [
+                    -130.5,
+                    1.5,
+                    -4
+                  ]
+                }
+              }
+            ],
+            "squad": [
+              {
+                "id": 30,
+                "health": 100,
+                "transform": {
+                  "x": -141.2398097706228,
+                  "z": -12.794590700598448,
+                  "y": 0.7,
+                  "yaw": -1.6998913084622678
+                },
+                "speed": 1.5164752946425626,
+                "story": {
+                  "clip": "shoot",
+                  "start": 2124
+                },
+                "target": 230
+              },
+              {
+                "id": 31,
+                "health": 100,
+                "transform": {
+                  "x": -131.8096058545228,
+                  "z": -2.5077758272955086,
+                  "y": 0.83,
+                  "yaw": 0.03524149329140076
+                },
+                "speed": 1.0359603860019027,
+                "story": {
+                  "clip": "shoot",
+                  "start": 2124
+                },
+                "target": 178
+              },
+              {
+                "id": 32,
+                "health": 100,
+                "transform": {
+                  "x": -133.4891443069061,
+                  "z": -0.9801210475719233,
+                  "y": 0.7,
+                  "yaw": 0.33531217524864176
+                },
+                "speed": 1.0223542079956829,
+                "story": {
+                  "clip": "shoot",
+                  "start": 2137
+                },
+                "target": 178
+              },
+              {
+                "id": 33,
+                "health": 100,
+                "transform": {
+                  "x": -133.1499205323467,
+                  "z": 3.470373006411523,
+                  "y": 0.83,
+                  "yaw": 0.9502004331631081
+                },
+                "speed": 1.801758219016309,
+                "story": {
+                  "clip": "shoot",
+                  "start": 2136
+                },
+                "target": 178
+              }
+            ],
+            "opening": [
+              {
+                "id": 105,
+                "dir": "station",
+                "at": 567,
+                "wave": 0,
+                "transform": {
+                  "x": -136.87496979017294,
+                  "z": -1.5749958010019218,
+                  "y": 0.7,
+                  "yaw": -0.7524087917712895
+                },
+                "visible": true
+              },
+              {
+                "id": 113,
+                "dir": "station",
+                "at": 576,
+                "wave": 0,
+                "transform": {
+                  "x": -136.16744831149762,
+                  "z": -2.139152345446745,
+                  "y": 0.7,
+                  "yaw": -0.7893555699029138
+                },
+                "visible": true
+              },
+              {
+                "id": 117,
+                "dir": "station",
+                "at": 585,
+                "wave": 0,
+                "transform": {
+                  "x": -138.34033291281435,
+                  "z": -2.8066021638482486,
+                  "y": 0.83,
+                  "yaw": -0.6173109720781947
+                },
+                "visible": true
+              },
+              {
+                "id": 107,
+                "dir": "station",
+                "at": 568,
+                "wave": 0,
+                "transform": {
+                  "x": -137.95753486789997,
+                  "z": 2.5887433111662497,
+                  "y": 0.83,
+                  "yaw": 0.5807777436987367
+                },
+                "visible": true
+              },
+              {
+                "id": 121,
+                "dir": "station",
+                "at": 579,
+                "wave": 0,
+                "transform": {
+                  "x": -137.687937188781,
+                  "z": 0.8284705887290634,
+                  "y": 0.7,
+                  "yaw": 0.027910131669860682
+                },
+                "visible": true
+              },
+              {
+                "id": 125,
+                "dir": "station",
+                "at": 590,
+                "wave": 0,
+                "transform": {
+                  "x": -136.20635888261944,
+                  "z": -0.20197809620196275,
+                  "y": 0.7,
+                  "yaw": -0.5689580098385257
+                },
+                "visible": true
+              },
+              {
+                "id": 109,
+                "dir": "commerce",
+                "source": "yard-cover",
+                "at": 576,
+                "wave": 0,
+                "transform": {
+                  "x": -135.0428103505847,
+                  "z": -7.0020582881703275,
+                  "y": 0.75,
+                  "yaw": 0.26645562516966637
+                },
+                "visible": true
+              },
+              {
+                "id": 111,
+                "dir": "river",
+                "source": "yard-cover",
+                "at": 590,
+                "wave": 0,
+                "transform": {
+                  "x": -135.88981559780842,
+                  "z": -4.465703870192483,
+                  "y": 0.83,
+                  "yaw": 5.774227297341054
+                },
+                "visible": true
+              },
+              {
+                "id": 115,
+                "dir": "blvd",
+                "source": "yard-cover",
+                "at": 625,
+                "wave": 0,
+                "transform": {
+                  "x": -133.17999749637545,
+                  "z": -3.081808547862265,
+                  "y": 0.83,
+                  "yaw": -0.3651360134469827
+                },
+                "visible": true
+              },
+              {
+                "id": 119,
+                "dir": "oak",
+                "source": "yard-cover",
+                "at": 655,
+                "wave": 0,
+                "transform": {
+                  "x": -135.44573611117391,
+                  "z": -3.319676177549848,
+                  "y": 0.83,
+                  "yaw": -1.527617382547615
+                },
+                "visible": true
+              },
+              {
+                "id": 123,
+                "dir": "commerce",
+                "source": "yard-cover",
+                "at": 711,
+                "wave": 0,
+                "transform": {
+                  "x": -135.44223883737166,
+                  "z": -2.639745454172848,
+                  "y": 0.83,
+                  "yaw": 4.828654405525241
+                },
+                "visible": true
+              },
+              {
+                "id": 127,
+                "dir": "river",
+                "source": "yard-cover",
+                "at": 767,
+                "wave": 0,
+                "transform": {
+                  "x": -135.252969553202,
+                  "z": -2.205420727251793,
+                  "y": 0.7,
+                  "yaw": 5.173244692409285
+                },
+                "visible": true
+              },
+              {
+                "id": 129,
+                "dir": "blvd",
+                "at": 797,
+                "wave": 0,
+                "transform": {
+                  "x": -126.45317020917501,
+                  "z": -1.6687497807598768,
+                  "y": 0.7,
+                  "yaw": -1.9865724053563327
+                },
+                "visible": true
+              },
+              {
+                "id": 131,
+                "dir": "oak",
+                "at": 853,
+                "wave": 0,
+                "transform": {
+                  "x": -126.47449531821341,
+                  "z": 3.4172319073982282,
+                  "y": 0.83,
+                  "yaw": 2.445870744664823
+                },
+                "visible": true
+              },
+              {
+                "id": 133,
+                "dir": "commerce",
+                "at": 909,
+                "wave": 0,
+                "transform": {
+                  "x": -126.38438158677174,
+                  "z": 0.3191399082570309,
+                  "y": 0.7,
+                  "yaw": 3.176015591054738
+                },
+                "visible": true
+              },
+              {
+                "id": 135,
+                "dir": "river",
+                "at": 938,
+                "wave": 0,
+                "transform": {
+                  "x": -138.50560514958886,
+                  "z": -0.1584163094401344,
+                  "y": 0.7,
+                  "yaw": -0.13264583653368966
+                },
+                "visible": true
+              },
+              {
+                "id": 137,
+                "dir": "blvd",
+                "at": 995,
+                "wave": 0,
+                "transform": {
+                  "x": -126.49515149199055,
+                  "z": -3.3402651569423547,
+                  "y": 0.83,
+                  "yaw": -2.90637540588895
+                },
+                "visible": true
+              },
+              {
+                "id": 139,
+                "dir": "oak",
+                "at": 1051,
+                "wave": 0,
+                "transform": {
+                  "x": -126.83095490292104,
+                  "z": 3.870958966509818,
+                  "y": 0.83,
+                  "yaw": 2.8324081019857843
+                },
+                "visible": true
+              },
+              {
+                "id": 141,
+                "dir": "commerce",
+                "at": 1080,
+                "wave": 0,
+                "transform": {
+                  "x": -122.60054140226546,
+                  "z": 0.07167593944027528,
+                  "y": 0.7,
+                  "yaw": 3.1854721516237863
+                },
+                "visible": false
+              },
+              {
+                "id": 143,
+                "dir": "river",
+                "at": 1136,
+                "wave": 0,
+                "transform": {
+                  "x": -137.20238632895519,
+                  "z": -0.11151804462159241,
+                  "y": 0.7,
+                  "yaw": -0.24452783321628715
+                },
+                "visible": true
+              },
+              {
+                "id": 145,
+                "dir": "blvd",
+                "at": 1192,
+                "wave": 0,
+                "transform": {
+                  "x": -126.91469284259313,
+                  "z": -3.565313692668109,
+                  "y": 0.83,
+                  "yaw": -2.59751558241921
+                },
+                "visible": true
+              },
+              {
+                "id": 147,
+                "dir": "oak",
+                "at": 1222,
+                "wave": 0,
+                "transform": {
+                  "x": -126.56407946344726,
+                  "z": 2.4288577638465294,
+                  "y": 0.7,
+                  "yaw": 2.1421401351208713
+                },
+                "visible": true
+              },
+              {
+                "id": 149,
+                "dir": "commerce",
+                "at": 1278,
+                "wave": 0,
+                "transform": {
+                  "x": -119.39989113581356,
+                  "z": -0.10436608626034684,
+                  "y": 0.7,
+                  "yaw": 3.1723829587629058
+                },
+                "visible": false
+              },
+              {
+                "id": 151,
+                "dir": "river",
+                "at": 1334,
+                "wave": 0,
+                "transform": {
+                  "x": -155.55167213251613,
+                  "z": -23.102761754286377,
+                  "y": 0.83,
+                  "yaw": 4.196113392248999
+                },
+                "visible": false
+              },
+              {
+                "id": 153,
+                "dir": "blvd",
+                "at": 1364,
+                "wave": 0,
+                "transform": {
+                  "x": -127.21563692991187,
+                  "z": -3.287205315424981,
+                  "y": 0.83,
+                  "yaw": -2.649542497212099
+                },
+                "visible": true
+              },
+              {
+                "id": 155,
+                "dir": "oak",
+                "at": 1420,
+                "wave": 0,
+                "transform": {
+                  "x": -126.39127726039035,
+                  "z": 4.060378813640128,
+                  "y": 0.83,
+                  "yaw": 2.8849270816498627
+                },
+                "visible": true
+              },
+              {
+                "id": 158,
+                "dir": "commerce",
+                "at": 1476,
+                "wave": 0,
+                "transform": {
+                  "x": -120.15042956036031,
+                  "z": 0.2029038973680206,
+                  "y": 0.7,
+                  "yaw": 3.1769909984196034
+                },
+                "visible": false
+              },
+              {
+                "id": 160,
+                "dir": "river",
+                "at": 1505,
+                "wave": 0,
+                "transform": {
+                  "x": -155.71245427644652,
+                  "z": -30.320820535700445,
+                  "y": 0.7,
+                  "yaw": 4.6253104642689
+                },
+                "visible": false
+              },
+              {
+                "id": 162,
+                "dir": "blvd",
+                "at": 1562,
+                "wave": 0,
+                "transform": {
+                  "x": -130.6618858529405,
+                  "z": 3.70746260913032,
+                  "y": 0.83,
+                  "yaw": -1.6041767852778914
+                },
+                "visible": true
+              },
+              {
+                "id": 164,
+                "dir": "oak",
+                "at": 1618,
+                "wave": 0,
+                "transform": {
+                  "x": -128.64453707128536,
+                  "z": 3.1369371037004385,
+                  "y": 0.83,
+                  "yaw": 8.238057829792176
+                },
+                "visible": true
+              }
+            ]
+          },
+          "seen": true,
+          "what": "Fallback shows a dense living infected crowd around the courier; officers have pistols raised while stepping through the retreat."
+        }
+      ],
+      "shots": [
+        {
+          "tick": 2137,
+          "id": 33,
+          "speed": 1.7364077403364069,
+          "leaderSpeed": 4.5,
+          "inSquad": true
+        }
+      ],
+      "errors": []
+    }
+  ]
+}

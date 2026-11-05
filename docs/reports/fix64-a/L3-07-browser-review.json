@@ -1,0 +1,149 @@
+{
+  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7",
+  "runs": [
+    {
+      "tier": "low",
+      "state": {
+        "tick": 2173,
+        "movingHit": true,
+        "hits": [
+          {
+            "tick": 2172,
+            "attackId": 0,
+            "actionId": "weapon.pistol",
+            "sourceId": 30,
+            "targetId": 113,
+            "position": {
+              "x": -132.2028887152856,
+              "z": -11.433751338616364,
+              "y": 0.75,
+              "yaw": 1.2909941744033968
+            },
+            "direction": {
+              "x": 0.9875190160483188,
+              "z": -0.1574998188664359
+            },
+            "knockback": 0,
+            "amount": 12.5,
+            "damageType": "bullet",
+            "type": "combat.hit",
+            "speed": 0.11982410850784603,
+            "leaderSpeed": 2.9999999999999987,
+            "source": {
+              "x": -141.0701892697846,
+              "z": -10.019501882685377,
+              "y": 0.7,
+              "yaw": 0.15815835863635044
+            },
+            "sourceHp": 100
+          },
+          {
+            "tick": 2173,
+            "attackId": 0,
+            "actionId": "weapon.pistol",
+            "sourceId": 33,
+            "targetId": 162,
+            "position": {
+              "x": -130.17431999176833,
+              "z": 0.5237755575443239,
+              "y": 0.7,
+              "yaw": -3.104505937069255
+            },
+            "direction": {
+              "x": 0.6182220440753847,
+              "z": -0.7860035014039397
+            },
+            "knockback": 0,
+            "amount": 12.5,
+            "damageType": "bullet",
+            "type": "combat.hit",
+            "speed": 2.0044171782360114,
+            "leaderSpeed": 3.5999999999999974,
+            "source": {
+              "x": -133.3417742895532,
+              "z": 4.550856429950559,
+              "y": 0.83,
+              "yaw": 0.9043176617342856
+            },
+            "sourceHp": 100
+          }
+        ],
+        "player": {
+          "x": -134.7386932373047,
+          "y": 0.7099999785423279,
+          "z": 0.6190713047981262,
+          "yaw": 1.7709052969829187
+        },
+        "phase": "fallback",
+        "fallbackAt": 2167
+      },
+      "frames": [
+        {
+          "file": "test-results/fix64-a/fire/low-hit-z1.png",
+          "zoom": 1,
+          "sha256": "f1b87c0e51a3da16ed8b44ebe9848eb56ce57870b1854354071571cdeea56491",
+          "seen": true,
+          "what": "At the ordinary yard pullback frame, several uniformed officers have pistols raised toward the incoming infected. The courier and corgi remain clear; standing attackers and fallen infected surround the retreat. The same-tick ledger identifies the moving pistol hit for 12.5HP."
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "state": {
+        "tick": 2129,
+        "movingHit": true,
+        "hits": [
+          {
+            "tick": 2129,
+            "attackId": 0,
+            "actionId": "weapon.pistol",
+            "sourceId": 30,
+            "targetId": 230,
+            "position": {
+              "x": -142.54004402260787,
+              "z": -4.066098586290326,
+              "y": 0.83,
+              "yaw": 5.669613322558418
+            },
+            "direction": {
+              "x": -0.20879565250590437,
+              "z": 0.9779592913279335
+            },
+            "knockback": 0,
+            "amount": 12.5,
+            "damageType": "bullet",
+            "type": "combat.hit",
+            "speed": 1.8242394797020078,
+            "leaderSpeed": 0.6,
+            "source": {
+              "x": -140.74833134889153,
+              "z": -12.458141407207615,
+              "y": 0.7,
+              "yaw": -2.7907454845126236
+            },
+            "sourceHp": 100
+          }
+        ],
+        "player": {
+          "x": -134.9386444091797,
+          "y": 0.7099999785423279,
+          "z": 0.6143017411231995,
+          "yaw": 2.4438696636530426
+        },
+        "phase": "fallback",
+        "fallbackAt": 2128
+      },
+      "frames": [
+        {
+          "file": "test-results/fix64-a/fire/high-hit-z1.png",
+          "zoom": 1,
+          "sha256": "122485dbdba102a4a4160ea13e86667a4c0d4923fb17a7e2e17af8ef3b8a875c",
+          "seen": true,
+          "what": "The yard is visibly overrun. Uniformed officers still raise pistols among standing attackers; bodies lie along the road and forecourt. The same-tick ledger records an actual 12.5HP pistol hit by officer30 moving at1.824m/s with the courier moving0.6m/s. This is the production zoom-locked yard view, not a fabricated wide pose."
+        }
+      ]
+    }
+  ]
+}

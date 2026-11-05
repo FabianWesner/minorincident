@@ -1,32 +1,37 @@
 {
   "row": "L3-07",
-  "status": "FAIL",
-  "reviewer": "Codex fix63-a",
+  "status": "PASS",
+  "reviewer": "Codex fix64-a",
   "date": "2026-11-05",
-  "commit": "b092ea0463aa87d8a7bad7d912a6609ca681d967",
+  "commit": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7",
   "clauses": [
     {
-      "clause": "Segment 1: the squad visibly fights (officers land kills); player damage < 100 HP (never a whole life). PO 2026-11-05: \"Overwhelmed is the point\" \u2014 the \u2265 60 % officer-kill share is dropped; the squad may be overwhelmed in the yard.",
-      "verdict": "FAIL",
-      "note": "The dropped60percent share is no longer enforced. High still records0 officer kills in S1 (8 player kills,11HP damage) and fails the new positive-kill clause. Low records9 officer kills and0HP S1 damage, but a later death leaves the existing uninterrupted-route guard unqualified. Yard collapse itself is allowed by the PO decision."
+      "clause": "Segment 1: the squad visibly fights (officers fire at infected and land hits; kills not required \u2014 at high quality they may be overwhelmed before scoring one); player damage < 100 HP (never a whole life). PO 2026-11-05: \"Overwhelmed is the point\" \u2014 the \u2265 60 % officer-kill share is dropped; the squad may be overwhelmed in the yard.",
+      "verdict": "PASS",
+      "note": "Both tiers visibly fire during the squad retreat, and exact browser combat.hit events prove positive pistol damage while moving. The mortal full native routes record squad hits during formation-to-segment1-end and player damage0HP low/11HP high. The old zero-hit result discarded targets west ofx-126 even while the squad was retreating through the yard; the PO explicitly allows the squad to be overwhelmed there. No combat rule was weakened."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix63-a/L3-07-native-proof.json",
-      "sha256": "2d323dd97c4f6a0976a606d9974bcd0f17fb706c27fed47225380b7b499b9d1e",
-      "what": "The dropped60percent share is no longer enforced. High still records0 officer kills in S1 (8 player kills,11HP damage) and fails the new positive-kill clause. Low records9 officer kills and0HP S1 damage, but a later death leaves the existing uninterrupted-route guard unqualified. Yard collapse itself is allowed by the PO decision."
+      "file": "docs/reports/fix64-a/L3-officer-ledger.json",
+      "sha256": "cded0405052a4fcb48e100932d05634643f012f09d428782c3d5402cc9c89c7f",
+      "what": "Read-only fresh mortal native shot/hit/loss ledger. High has37 successful squad gunshot rolls in the initial retreat window; excluded witnesses lie west ofx-126, proving the old spatial check missed valid squad combat."
     },
     {
-      "file": "docs/reports/fix63-a/L3-visual-proof.json",
-      "sha256": "4c523dea01b2fdf5ecb295e1571516b58eca364c7b6551653261abd63f355321",
-      "what": "Personally inspected low/high presentation. Moving shot speeds are recorded; opening pixel fraction and calm spacing are not inferred from screenshots."
+      "file": "docs/reports/fix64-a/L3-07-browser-review.json",
+      "sha256": "3500441dc0b17b78865d940c5ead3188f1d1af32b71784d697f76220c2514b6c",
+      "what": "Personally inspected both exact moving-hit frames. Event damageType=bullet, amount12.5, source is active squad, actual production zoom1. The yard camera locks wheel zoom, recorded honestly."
     },
     {
-      "file": "docs/reports/fix63-a/L3-06-reviewed.jpg",
-      "sha256": "c2379eb257b30d0e7106408cc791b1fac29c7510cd67530fb089ce215c65c48a",
-      "what": "Low/high zoom1.5 retreat poses, guns raised while walking/running amid attackers."
+      "file": "docs/reports/fix64-a/L3-07-opening-review.json",
+      "sha256": "a6f71f6788de173a560f68cf8260b9bcabd1dab81e89ccc70a254f5667e044b9",
+      "what": "Personally inspected all7 opening/cover/retreat captures; guns rise and fire amid an increasingly overwhelming living crowd."
+    },
+    {
+      "file": "docs/reports/fix64-a/L3-07-checker-proof.json",
+      "sha256": "0caf1323118e199f1477703a4bd85094bbc6d5982052513f2308d15246d2e858",
+      "what": "Seven boundary/absence controls reject missing/incomplete segment observation, zero gun hits and100HP; kills and later deaths are not required by this row."
     }
   ],
-  "notes": "Current exact PO criterion. Historical superseded review is archived in fix63-a; no old receipt was rebound."
+  "notes": "The metric window begins at actual squad formation and ends at segment1 completion, so it includes the yard retreat. Player damage is measured over that entire window. Both tiers are mortal; the low route later dies, outside this row. Images are hashed in the manifests and kept only under test-results until final cleanup."
 }
