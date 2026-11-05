@@ -1,0 +1,106 @@
+{
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "3c2522b8a649cc18ee62b3cbfd682c230b84ec55",
+  "tool": "tools/qa/sweep-b-corgi-routes.ts",
+  "toolSha256": "71e793d94e3773529faf5b6b8db827c870219edaef1bb920fcb5894aa4f71925",
+  "method": "Seed1 ordinary complete bot; no actor, AI, loadout, timer or input mutation; post-commit samples every30ticks. Compare final native state hashes with the canonical qa:accept complete receipts.",
+  "results": [
+    {
+      "tier": "low",
+      "run": {
+        "level": "L5",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 206.58333333333334,
+        "deaths": 0,
+        "kills": 78,
+        "damageTaken": 62.5,
+        "failures": {},
+        "objectiveTimeline": [
+          {
+            "id": "emerge",
+            "t": 1
+          },
+          {
+            "id": "look",
+            "t": 163.28333333333333
+          },
+          {
+            "id": "metro",
+            "t": 206.58333333333334
+          }
+        ],
+        "furthestObjective": "metro",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 275,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "nativeStateHash": "41e92b1f",
+      "samples": 413,
+      "within6mShare": 0.9927360774818402,
+      "first180SecondsWithin6mShare": 0.9916666666666667,
+      "maxSeparationM": 8.01510361789942,
+      "longestAbove10mS": 0,
+      "trace": "docs/reports/sweep-b/corgi/native-low-trace.json.gz",
+      "traceSha256": "930f47c624b9f3654089c0d19728c346758783fe927abcbde9cdcbd0de0e1879"
+    },
+    {
+      "tier": "high",
+      "run": {
+        "level": "L5",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 217.45,
+        "deaths": 0,
+        "kills": 99,
+        "damageTaken": 12.5,
+        "failures": {},
+        "objectiveTimeline": [
+          {
+            "id": "emerge",
+            "t": 1
+          },
+          {
+            "id": "look",
+            "t": 169.23333333333332
+          },
+          {
+            "id": "metro",
+            "t": 212.45
+          }
+        ],
+        "furthestObjective": "metro",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 375,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "nativeStateHash": "5493dad2",
+      "samples": 434,
+      "within6mShare": 1,
+      "first180SecondsWithin6mShare": 1,
+      "maxSeparationM": 4.704186471570728,
+      "longestAbove10mS": 0,
+      "trace": "docs/reports/sweep-b/corgi/native-high-trace.json.gz",
+      "traceSha256": "5c6fefefeb66fd2cea691ef7aecb6577f02fa4d325487cc2778e05f2f9e5467e"
+    }
+  ]
+}
