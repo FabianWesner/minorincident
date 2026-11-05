@@ -3,15 +3,25 @@
   "status": "FAIL",
   "reviewer": "Codex fix64-a",
   "date": "2026-11-05",
-  "commit": "1623f1d509a3ccaf1d7fc688e157544a93620ba4",
+  "commit": "f8d88ddc14f6c9608e9004f80aa757788d795b8a",
   "clauses": [
     {
       "clause": "Raised corridor: no deck gaps or dark seams at the ramps; no infected clumps stuck between barrier rows; no body hanging on walls.",
       "verdict": "FAIL",
-      "note": "Fresh full physical traversal from x135 to216 at both tiers, followed by10s settling. All72 frames inspected. The entry S-bends still show interrupted deck/rail surfaces and living infected appearing suspended beyond the visible inner edge, notably high/x150 close view. The trajectory/foot ledger and support audit do not prove actor roots outside the nominal deck width; rendering/occlusion versus physical support remains unresolved. Keep FAIL; no small causal game fix established. Final rescue camera locks the requested zoom pair, so no independent late-route zoom qualification is claimed."
+      "note": "Fresh full physical traversal from x135 to216 at both tiers, followed by10s settling. All72 frames inspected. The entry S-bends still show interrupted deck/rail surfaces and living infected appearing suspended beyond the visible inner edge, notably high/x150 close view. The trajectory/foot ledger and support audit do not prove actor roots outside the nominal deck width; rendering/occlusion versus physical support remains unresolved. Keep FAIL; no small causal game fix established. Final rescue camera locks the requested zoom pair, so no independent late-route zoom qualification is claimed. Final-source refresh after the unrelated L1 cue change: all16 high entry images inspected at recorded actualzoom0.5/1.5; the same living body appears past the broken inner edge atx150 and remains visible after10s atx157. This fresh counterexample retains FAIL."
     }
   ],
   "evidence": [
+    {
+      "file": "docs/reports/fix64-a/L3-13-entry-high.json.gz",
+      "sha256": "67d417100fb2494f7cd23ff9df5509236baa052cda10456d049ed305ded35caf",
+      "what": "Current-source actual camera, actor health, transform and rendered-foot states; native physical entry traversal and10s settling. Raw53MB command duplication omitted; full receipt hash retained."
+    },
+    {
+      "file": "docs/reports/fix64-a/L3-13-entry-high-images.json",
+      "sha256": "ada5e8da2b461f8c3436316a37522d6effd8f2bc8243ccdabe2ee969ddc7bc2b",
+      "what": "Personally inspected all16 current-source high entry images, actual zoom0.5/1.5; ten-second settling atx157. Living wall-body appearance persists. Collision root penetration is not established."
+    },
     {
       "file": "docs/reports/fix64-a/L3-13-image-review.json",
       "sha256": "c0921ce211634204f4aa9e4b99b57471260308a286f99c5519468eba276afbf8",
