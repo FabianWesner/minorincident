@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L6",
-  "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
-  "observerHash": "c064240bbd1dfb4a4ffb12922fa39e6d24b69753af3eda1e03e9a81a51ce4a4a",
-  "fixtureHash": "df526016e398100e295b42766eea3ea1190e551b57fa24999faa743cf1e3f7c4",
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "fixtureHash": "ddf4ffe827cdb6519b9236bf294cb3aa5d95d548536fee4b39f34806eaf1b132",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-05T22:42:52.448Z",
+  "generatedAt": "2026-11-05T23:44:47.390Z",
   "policies": [
     {
       "tier": "low",
@@ -1231,7 +1231,7 @@
         ],
         "notes": "Raw PNGs deleted after full-size inspection; compact derived JPGs and hashes retained. Controlled renderer fixture; no timing claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "eb283794d5814d498a5364a25f00d77cc5a4d572"
+        "latestRelevantCommit": "1ae35ca575aa5c7a450695c99ccaf270eaffe91f"
       }
     },
     {
@@ -1360,7 +1360,7 @@
         ],
         "notes": "Raw PNG captures deleted after inspection. Compact derived contact sheets, raw hashes, metadata and individual bar pixel measurements are retained. No timing was collected.",
         "freshness": "STALE",
-        "latestRelevantCommit": "eb283794d5814d498a5364a25f00d77cc5a4d572"
+        "latestRelevantCommit": "1ae35ca575aa5c7a450695c99ccaf270eaffe91f"
       }
     },
     {
@@ -4072,7 +4072,7 @@
         ],
         "notes": "Raw PNGs removed after inspection. Compact contact sheets, exact captured driver, SHA-256 and per-state measurements retained. Fixture scope; no route or performance claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "eb283794d5814d498a5364a25f00d77cc5a4d572"
+        "latestRelevantCommit": "1ae35ca575aa5c7a450695c99ccaf270eaffe91f"
       }
     },
     {
@@ -4204,7 +4204,7 @@
         ],
         "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "eb283794d5814d498a5364a25f00d77cc5a4d572"
+        "latestRelevantCommit": "1ae35ca575aa5c7a450695c99ccaf270eaffe91f"
       }
     }
   ],
@@ -9099,9 +9099,9 @@
               ]
             },
             "maneuver": {
-              "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
-              "observerHash": "c064240bbd1dfb4a4ffb12922fa39e6d24b69753af3eda1e03e9a81a51ce4a4a",
-              "revision": "e8b4ab7386bd93336ceff65ada05f18b4bee7aec",
+              "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+              "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+              "revision": "c8b0484fffe83c4b3ba17d4f7f13906254d1ed03",
               "tier": "low",
               "setup": "Only unarmed campaign racks at load; mortal courier; ordinary move/aim/fist inputs; no actor/health/clock changes or objective skips.",
               "completed": true,
@@ -12772,9 +12772,9 @@
               ]
             },
             "maneuver": {
-              "sourceHash": "df69f53c8d7c8ce323055ebdabdecb9b606b16e954fa53c0e9d585df33106866",
-              "observerHash": "c064240bbd1dfb4a4ffb12922fa39e6d24b69753af3eda1e03e9a81a51ce4a4a",
-              "revision": "e8b4ab7386bd93336ceff65ada05f18b4bee7aec",
+              "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+              "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+              "revision": "c8b0484fffe83c4b3ba17d4f7f13906254d1ed03",
               "tier": "high",
               "setup": "Only unarmed campaign racks at load; mortal courier; ordinary move/aim/fist inputs; no actor/health/clock changes or objective skips.",
               "completed": true,
