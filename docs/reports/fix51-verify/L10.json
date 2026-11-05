@@ -5,7 +5,7 @@
   "observerHash": "c064240bbd1dfb4a4ffb12922fa39e6d24b69753af3eda1e03e9a81a51ce4a4a",
   "fixtureHash": "df526016e398100e295b42766eea3ea1190e551b57fa24999faa743cf1e3f7c4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-05T21:17:02.271Z",
+  "generatedAt": "2026-11-05T22:39:19.095Z",
   "policies": [
     {
       "tier": "low",
@@ -4111,12 +4111,13 @@
     },
     {
       "id": "L10-02",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete actual Mega introduction time: 90 (target 0 ≤ value ≤ 120; PASS); low/complete Mega distance on introduction: 119.37333755479696 (target 80 ≤ value ≤ Infinity; PASS); low/stationary actual Mega introduction time: 90 (target 0 ≤ value ≤ 120; PASS); low/stationary Mega distance on introduction: 116.40655655713752 (target 80 ≤ value ≤ Infinity; PASS); high/complete actual Mega introduction time: 90 (target 0 ≤ value ≤ 120; PASS); high/complete Mega distance on introduction: 118.9586452170241 (target 80 ≤ value ≤ Infinity; PASS); high/stationary actual Mega introduction time: 90 (target 0 ≤ value ≤ 120; PASS); high/stationary Mega distance on introduction: 118.9586452170241 (target 80 ≤ value ≤ Infinity; PASS)",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete actual Mega introduction time: 90 (target 0 ≤ value ≤ 120; PASS); low/complete Mega distance on introduction: 119.37333755479696 (target 80 ≤ value ≤ Infinity; PASS); low/complete actual Mega roar and impact introduction events: [{\"type\":\"mega.cue\",\"tick\":5401,\"sourceId\":119,\"kind\":\"roar\",\"band\":\"approaching\"},{\"type\":\"mega.cue\",\"tick\":5401,\"sourceId\":119,\"kind\":\"impact\",\"band\":\"approaching\"},{\"type\":\"mega.cue\",\"tick\":7085,\"sourceId\":119,\"kind\":\"roar\",\"band\":\"approaching\"},{\"type\":\"mega.cue\",\"tick\":7085,\"sourceId\":119,\"kind\":\"impact\",\"band\":\"approaching\"}] (target same persistent Mega emits roar and impact by tick7200; PASS); low/complete Mega introduction actual body-clear route: {\"tick\":5400,\"observedTick\":5400,\"id\":119,\"position\":{\"x\":747,\"y\":0.702,\"z\":25,\"yaw\":-0.46693471992819774},\"player\":{\"x\":853.6096801757812,\"y\":0.7099999785423279,\"z\":78.70632934570312,\"yaw\":-3.09657018518757},\"direct\":119.37333755479696,\"radius\":0.55,\"pathMetres\":154.7137704533486,\"hidden\":false,\"residentPathMetres\":154.7137704533486,\"fullSourceRoute\":{\"ground\":{\"width\":226.60968017578125,\"depth\":… (full values in JSON) (target reachable own-clearance route; inactive streaming window is inconclusive; PASS); low/stationary actual Mega introduction time: 90 (target 0 ≤ value ≤ 120; PASS); low/stationary Mega distance on introduction: 116.40655655713752 (target 80 ≤ value ≤ Infinity; PASS); high/complete actual Mega introduction time: 90 (target 0 ≤ value ≤ 120; PASS); high/complete Mega distance on introduction: 118.9586452170241 (target 80 ≤ value ≤ Infinity; PASS); high/complete actual Mega roar and impact introduction events: [{\"type\":\"mega.cue\",\"tick\":5401,\"sourceId\":122,\"kind\":\"roar\",\"band\":\"approaching\"},{\"type\":\"mega.cue\",\"tick\":5401,\"sourceId\":122,\"kind\":\"impact\",\"band\":\"approaching\"},{\"type\":\"mega.cue\",\"tick\":7085,\"sourceId\":122,\"kind\":\"roar\",\"band\":\"approaching\"},{\"type\":\"mega.cue\",\"tick\":7085,\"sourceId\":122,\"kind\":\"impact\",\"band\":\"approaching\"}] (target same persistent Mega emits roar and impact by tick7200; PASS); high/complete Mega introduction actual body-clear route: {\"tick\":5400,\"observedTick\":5400,\"id\":122,\"position\":{\"x\":747,\"y\":0.702,\"z\":25,\"yaw\":-0.4684083101773735},\"player\":{\"x\":853.1604614257812,\"y\":0.7099999785423279,\"z\":78.676025390625,\"yaw\":3.048283639993729},\"direct\":118.9586452170241,\"radius\":0.55,\"pathMetres\":155.04193663026,\"hidden\":false,\"residentPathMetres\":155.04193663026,\"fullSourceRoute\":{\"ground\":{\"width\":226.16046142578125,\"depth\":173.6760… (full values in JSON) (target reachable own-clearance route; inactive streaming window is inconclusive; PASS); high/stationary actual Mega introduction time: 90 (target 0 ≤ value ≤ 120; PASS); high/stationary Mega distance on introduction: 118.9586452170241 (target 80 ≤ value ≤ Infinity; PASS)",
+      "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L10-low-complete.json",
+        "docs/reports/fix51-r10c/L10-introduction-proof.json",
         "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L10-high-complete.json",
         "docs/reports/fix51-verify/receipts/L10-high-stationary.json"
@@ -4144,6 +4145,102 @@
           "value": 119.37333755479696,
           "target": "80 ≤ value ≤ Infinity",
           "receipt": "docs/reports/fix51-verify/receipts/L10-low-complete.json"
+        },
+        {
+          "id": "L10-02",
+          "clause": "actual Mega roar and impact introduction events",
+          "level": "L10",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "type": "mega.cue",
+              "tick": 5401,
+              "sourceId": 119,
+              "kind": "roar",
+              "band": "approaching"
+            },
+            {
+              "type": "mega.cue",
+              "tick": 5401,
+              "sourceId": 119,
+              "kind": "impact",
+              "band": "approaching"
+            },
+            {
+              "type": "mega.cue",
+              "tick": 7085,
+              "sourceId": 119,
+              "kind": "roar",
+              "band": "approaching"
+            },
+            {
+              "type": "mega.cue",
+              "tick": 7085,
+              "sourceId": 119,
+              "kind": "impact",
+              "band": "approaching"
+            }
+          ],
+          "target": "same persistent Mega emits roar and impact by tick7200",
+          "receipt": "docs/reports/fix51-r10c/L10-introduction-proof.json"
+        },
+        {
+          "id": "L10-02",
+          "clause": "Mega introduction actual body-clear route",
+          "level": "L10",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "tick": 5400,
+            "observedTick": 5400,
+            "id": 119,
+            "position": {
+              "x": 747,
+              "y": 0.702,
+              "z": 25,
+              "yaw": -0.46693471992819774
+            },
+            "player": {
+              "x": 853.6096801757812,
+              "y": 0.7099999785423279,
+              "z": 78.70632934570312,
+              "yaw": -3.09657018518757
+            },
+            "direct": 119.37333755479696,
+            "radius": 0.55,
+            "pathMetres": 154.7137704533486,
+            "hidden": false,
+            "residentPathMetres": 154.7137704533486,
+            "fullSourceRoute": {
+              "ground": {
+                "width": 226.60968017578125,
+                "depth": 173.70632934570312
+              },
+              "center": {
+                "x": 800.3048400878906,
+                "z": 51.85316467285156
+              },
+              "clearance": 0.55,
+              "wallCount": 3185,
+              "wallsSha256": "cbb9165a936aac15bf820d8c041a69ffcd7ea19eb4349b1defecddd70917c2c3",
+              "severedControlRejected": true
+            },
+            "grid": {
+              "width": 300,
+              "depth": 300,
+              "center": {
+                "x": 850,
+                "z": 50
+              },
+              "clearance": 0.55,
+              "mask": false
+            }
+          },
+          "target": "reachable own-clearance route; inactive streaming window is inconclusive",
+          "receipt": "docs/reports/fix51-r10c/L10-introduction-proof.json"
         },
         {
           "id": "L10-02",
@@ -4191,6 +4288,102 @@
         },
         {
           "id": "L10-02",
+          "clause": "actual Mega roar and impact introduction events",
+          "level": "L10",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "type": "mega.cue",
+              "tick": 5401,
+              "sourceId": 122,
+              "kind": "roar",
+              "band": "approaching"
+            },
+            {
+              "type": "mega.cue",
+              "tick": 5401,
+              "sourceId": 122,
+              "kind": "impact",
+              "band": "approaching"
+            },
+            {
+              "type": "mega.cue",
+              "tick": 7085,
+              "sourceId": 122,
+              "kind": "roar",
+              "band": "approaching"
+            },
+            {
+              "type": "mega.cue",
+              "tick": 7085,
+              "sourceId": 122,
+              "kind": "impact",
+              "band": "approaching"
+            }
+          ],
+          "target": "same persistent Mega emits roar and impact by tick7200",
+          "receipt": "docs/reports/fix51-r10c/L10-introduction-proof.json"
+        },
+        {
+          "id": "L10-02",
+          "clause": "Mega introduction actual body-clear route",
+          "level": "L10",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "tick": 5400,
+            "observedTick": 5400,
+            "id": 122,
+            "position": {
+              "x": 747,
+              "y": 0.702,
+              "z": 25,
+              "yaw": -0.4684083101773735
+            },
+            "player": {
+              "x": 853.1604614257812,
+              "y": 0.7099999785423279,
+              "z": 78.676025390625,
+              "yaw": 3.048283639993729
+            },
+            "direct": 118.9586452170241,
+            "radius": 0.55,
+            "pathMetres": 155.04193663026,
+            "hidden": false,
+            "residentPathMetres": 155.04193663026,
+            "fullSourceRoute": {
+              "ground": {
+                "width": 226.16046142578125,
+                "depth": 173.676025390625
+              },
+              "center": {
+                "x": 800.0802307128906,
+                "z": 51.8380126953125
+              },
+              "clearance": 0.55,
+              "wallCount": 3185,
+              "wallsSha256": "cbb9165a936aac15bf820d8c041a69ffcd7ea19eb4349b1defecddd70917c2c3",
+              "severedControlRejected": true
+            },
+            "grid": {
+              "width": 500,
+              "depth": 500,
+              "center": {
+                "x": 850,
+                "z": 50
+              },
+              "clearance": 0.55,
+              "mask": false
+            }
+          },
+          "target": "reachable own-clearance route; inactive streaming window is inconclusive",
+          "receipt": "docs/reports/fix51-r10c/L10-introduction-proof.json"
+        },
+        {
+          "id": "L10-02",
           "clause": "actual Mega introduction time",
           "level": "L10",
           "tier": "high",
@@ -4220,7 +4413,7 @@
         "evidence": [],
         "method": "NEXT: Record actual roar/impact introduction by two minutes, Mega distance and its native reachable route from a fresh crash start."
       },
-      "remaining": "NEXT: Record actual roar/impact introduction by two minutes, Mega distance and its native reachable route from a fresh crash start."
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
     },
     {
       "id": "L10-03",
