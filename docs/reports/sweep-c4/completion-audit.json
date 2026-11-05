@@ -1,0 +1,966 @@
+{
+  "date": "2026-11-05T23:44:32.010295+00:00",
+  "revision": "a40c98bb7943d1565bfe0e38e7e1eafd253a862c",
+  "objective": "Complete the rows in the brief; commit per row/fix; README",
+  "brief": {
+    "file": "/Users/wesner/Workspace/minorincident/epics-pipeline/briefs/sweep-c4.md",
+    "sha256": "da088f487aa5b11066ec67a2872762b73f2e2eff4658e4878fbb77458c5e84d6",
+    "timebox": "approximately3hours; end at3hours with report of still-open rows"
+  },
+  "goalAchieved": false,
+  "counts": {
+    "PASS": 18,
+    "FAIL": 4,
+    "NOT CHECKED": 25
+  },
+  "completionContradictions": [
+    "25 current NOT CHECKED compound criteria have missing physical, rendered or ledger evidence.",
+    "Four current FAIL criteria remain; L9-02 and L9-04 have fresh independent measured counterexamples.",
+    "Three historical FAIL rows now have current NOT CHECKED status; neither completion nor a current failure is proven for those full criteria.",
+    "npm run qa:threat failed its fixed wrapper budget. Its unchanged underlying full audit passed with zero flags, which is recorded separately."
+  ],
+  "gates": {
+    "file": "docs/reports/sweep-c4/final-validation.json",
+    "sha256": "3e0645a558ee069f728d689158bcba25713e34f0422036db7cb9e467f4fb6544"
+  },
+  "levels": [
+    {
+      "level": "L7",
+      "authoritativeFile": "docs/reports/fix51-verify/L7.json",
+      "sha256": "821096b11abcf826d5ffc64a4fa3c500868c9f737967383da49937e1ae8ad56b",
+      "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+      "rows": [
+        {
+          "id": "L7-01",
+          "requirement": "Launcher \u2264 5 m from the exit, taken on approach, no hitch (max frame \u2264 50 ms at pickup and first shot).",
+          "displayedStatus": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "automatedComplete": false,
+          "checks": {
+            "PASS": 4,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix51-verify/receipts/L7-low-complete.json",
+            "docs/reports/fix51-verify/receipts/L7-low-stationary.json",
+            "docs/reports/fix51-verify/receipts/L7-high-complete.json",
+            "docs/reports/fix51-verify/receipts/L7-high-stationary.json"
+          ],
+          "remaining": "Inspect approach collection; perform pickup/first-shot frame gate only in orchestrator quiet window. Exit distance is measured."
+        },
+        {
+          "id": "L7-02",
+          "requirement": "All six weapons selectable; L6 roster arrives with same ids at full health in formation (no convergence through the courier).",
+          "displayedStatus": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "automatedComplete": false,
+          "checks": {
+            "PASS": 4,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix51-verify/receipts/L7-low-complete.json",
+            "docs/reports/fix51-verify/receipts/L7-low-stationary.json",
+            "docs/reports/fix51-verify/receipts/L7-high-complete.json",
+            "docs/reports/fix51-verify/receipts/L7-high-stationary.json"
+          ],
+          "remaining": "NEXT: Extend the existing L7 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: All six weapons selectable; L6 roster arrives with same ids at full health in formation (no convergence through the courier)."
+        },
+        {
+          "id": "L7-03",
+          "requirement": "Rocket: cadence **2.4/s**, no wait for impact; detonates at the clicked ground point (or first hit / max range); visible in the dark; one rocket kills \u2265 20/24 regulars within 3 m and opens a \u2265 3 m gap; no white-out at point blank.",
+          "displayedStatus": "PASS",
+          "currentStatus": "PASS",
+          "automatedComplete": true,
+          "checks": {
+            "PASS": 16,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix55-c/L7-03-physical.json",
+            "docs/reports/sweep-c4/L7-03-ballistics.json"
+          ],
+          "remaining": null
+        },
+        {
+          "id": "L7-04",
+          "requirement": "Over the run \u2265 400 / 200 regulars and **4\u20136 Alphas** arrive; concurrent \u2264 200 / 100.",
+          "displayedStatus": "PASS",
+          "currentStatus": "PASS",
+          "automatedComplete": true,
+          "checks": {
+            "PASS": 8,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix51-verify/receipts/L7-low-complete.json",
+            "docs/reports/fix51-verify/receipts/L7-low-stationary.json",
+            "docs/reports/fix51-verify/receipts/L7-high-complete.json",
+            "docs/reports/fix51-verify/receipts/L7-high-stationary.json"
+          ],
+          "remaining": null
+        },
+        {
+          "id": "L7-05",
+          "requirement": "combat: reachable \u2265 90 %; passive first attack \u2264 10 s (measured 4.6 s); attacks on player + group \u2265 6/min (tune).",
+          "displayedStatus": "FAIL",
+          "currentStatus": "FAIL",
+          "automatedComplete": false,
+          "checks": {
+            "PASS": 9,
+            "FAIL": 5,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix51-verify/receipts/L7-low-complete.json",
+            "docs/reports/fix51-verify/receipts/L7-low-stationary.json",
+            "docs/reports/fix51-verify/receipts/L7-high-complete.json",
+            "docs/reports/fix51-verify/receipts/L7-high-stationary.json",
+            "docs/reports/sweep-c3/L7-05/L7-low-complete.json.gz",
+            "docs/reports/sweep-c3/L7-05/L7-low-stationary.json.gz",
+            "docs/reports/sweep-c3/L7-05/L7-high-complete.json.gz",
+            "docs/reports/sweep-c3/L7-05/L7-high-stationary.json.gz",
+            "docs/reports/batch51-qa/native-threat.json"
+          ],
+          "remaining": "Current-head passive corridor route, actual attack windups and independent path snapshot. NEXT: repeat the same complete clause ledger in the other quality tier before closing this row for the full requested scope. Apply the acceptance document literally rather than equating zero audit flags with all criteria passing. Positive passive contact remains evidence of potential threat, not proof of competent-route compliance. NEXT: qualify both policies/tiers; if zero skilled contact is intentionally allowed, obtain a PO criterion clarification before closing the row."
+        },
+        {
+          "id": "L7-06",
+          "requirement": "\u2265 2 connected routes reach the corridor; no dead-end street that looks like the route; no meaningless walk-through wall/slab. PO: \"This street feels like a trap\".",
+          "displayedStatus": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "automatedComplete": false,
+          "checks": {
+            "PASS": 0,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [],
+          "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Physically explore both connected corridor routes and wrong-way edges, then review a screenshot-only route-clarity run and current-source bounds sweep."
+        },
+        {
+          "id": "L7-07",
+          "requirement": "Corridor ring fixed (not the nearest of several moving entrances); group counter \"Group n/n\" correct.",
+          "displayedStatus": "PASS",
+          "currentStatus": "PASS",
+          "automatedComplete": true,
+          "checks": {
+            "PASS": 4,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix51-verify/receipts/L7-low-complete.json",
+            "docs/reports/fix51-verify/receipts/L7-counter.json",
+            "docs/reports/fix51-verify/receipts/L7-high-complete.json"
+          ],
+          "remaining": null
+        },
+        {
+          "id": "L7-08",
+          "requirement": "Final corridor starts blocked by \u2265 120 / 60 regulars + \u2265 2 Alphas; the player opens a gap \u2265 1 survivor uses.",
+          "displayedStatus": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "automatedComplete": false,
+          "checks": {
+            "PASS": 2,
+            "FAIL": 0,
+            "NOT CHECKED": 2
+          },
+          "evidence": [
+            "docs/reports/fix55-c/L7-corridor.json"
+          ],
+          "remaining": "NEXT: Census the initially blocked final corridor at both qualities, then record a physical rocket gap and one actual survivor crossing it."
+        },
+        {
+          "id": "L7-09",
+          "requirement": "Followers keep pace and show bars (G-12/13); pressing crowd never drawn tipped sideways.",
+          "displayedStatus": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "automatedComplete": false,
+          "checks": {
+            "PASS": 2,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix51-verify/receipts/L7-low-complete.json",
+            "docs/reports/fix51-verify/receipts/L7-high-complete.json"
+          ],
+          "remaining": "Inspect all bars and pressing-crowd body orientation; retain the measured individual human pace checks."
+        },
+        {
+          "id": "L7-10",
+          "requirement": "Every living follower physically boards (one per 15 ticks, recovery after 20 s stall); boarding can finish with \u2265 10 infected alive elsewhere.",
+          "displayedStatus": "PASS",
+          "currentStatus": "PASS",
+          "automatedComplete": true,
+          "checks": {
+            "PASS": 8,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix51-verify/receipts/L7-low-complete.json",
+            "docs/reports/fix51-verify/receipts/L7-high-complete.json",
+            "docs/reports/fix51-verify/receipts/L7-low-fixtures.json",
+            "docs/reports/fix51-verify/receipts/L7-high-fixtures.json"
+          ],
+          "remaining": null
+        },
+        {
+          "id": "L7-11",
+          "requirement": "Bus cinematic 6\u201310 s, bus moves \u2265 30 m, burning skyline shrinks; truck lit (not a black silhouette); gore reads as blood; no map edge in the end shot.",
+          "displayedStatus": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "automatedComplete": false,
+          "checks": {
+            "PASS": 2,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix51-verify/receipts/L7-low-fixtures.json",
+            "docs/reports/fix51-verify/receipts/L7-high-fixtures.json"
+          ],
+          "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Capture an uninterrupted real-input end cinematic with timed bus displacement and skyline frames, checking lit truck/gore and absence of map edge."
+        },
+        {
+          "id": "L7-12",
+          "requirement": "Frames: worst destruction so far, Alpha silhouettes human, player contrast \u2265 3:1.",
+          "displayedStatus": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "automatedComplete": false,
+          "checks": {
+            "PASS": 0,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [],
+          "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L7 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Frames: worst destruction so far, Alpha silhouettes human, player contrast \u2265 3:1."
+        }
+      ]
+    },
+    {
+      "level": "L8",
+      "authoritativeFile": "docs/reports/fix51-verify/L8.json",
+      "sha256": "4d32638c4277e238f2cbda9cb0f46950d64e0d63ce8f942a29581e0d3d03f1c0",
+      "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+      "rows": [
+        {
+          "id": "L8-01",
+          "requirement": "L7 roster and arsenal arrive exactly; companions at full health; no weapon pickup in L8; start weapon = last weapon (not the bat).",
+          "displayedStatus": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "automatedComplete": false,
+          "checks": {
+            "PASS": 8,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix51-verify/receipts/L8-low-complete.json",
+            "docs/reports/fix51-verify/receipts/L8-low-stationary.json",
+            "docs/reports/fix51-verify/receipts/L8-high-complete.json",
+            "docs/reports/fix51-verify/receipts/L8-high-stationary.json"
+          ],
+          "remaining": "NEXT: Run the real L7-to-L8 handover from the carried campaign save; compare roster IDs, HP, rack and selected weapon, and census L8 pickups."
+        },
+        {
+          "id": "L8-02",
+          "requirement": "Exactly 60 active sim seconds without objective/waypoint/scripted attack.",
+          "displayedStatus": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "automatedComplete": false,
+          "checks": {
+            "PASS": 4,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix51-verify/receipts/L8-low-complete.json",
+            "docs/reports/fix51-verify/receipts/L8-low-stationary.json",
+            "docs/reports/fix51-verify/receipts/L8-high-complete.json",
+            "docs/reports/fix51-verify/receipts/L8-high-stationary.json"
+          ],
+          "remaining": "NEXT: Use the real-input threat/handover observer for 60 active seconds: require no objective text, tracker, world/HUD/minimap marker or scripted attack."
+        },
+        {
+          "id": "L8-03",
+          "requirement": "\u2265 20 civilians, \u2265 6 soldiers, \u2265 4 staff, \u2265 8 animals (all 5 species, \u2265 2 zebras, \u2265 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s.",
+          "displayedStatus": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "automatedComplete": false,
+          "checks": {
+            "PASS": 28,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix51-verify/receipts/L8-low-complete.json",
+            "docs/reports/fix55-c/L8-05-native.json",
+            "docs/reports/fix51-verify/receipts/L8-low-stationary.json",
+            "docs/reports/fix51-verify/receipts/L8-high-complete.json",
+            "docs/reports/fix51-verify/receipts/L8-high-stationary.json"
+          ],
+          "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L8 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: \u2265 20 civilians, \u2265 6 soldiers, \u2265 4 staff, \u2265 8 animals (all 5 species, \u2265 2 zebras, \u2265 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s."
+        },
+        {
+          "id": "L8-04",
+          "requirement": "Breach at 60 s \u00b1 1 tick at \u2265 3 tunnel outlets \u2265 20 m apart within 1 s; **6 / 3 per point** (\u2265 18 / \u2265 9); no pop-in.",
+          "displayedStatus": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "automatedComplete": false,
+          "checks": {
+            "PASS": 20,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix51-verify/receipts/L8-low-complete.json",
+            "docs/reports/fix55-c/L8-05-native.json",
+            "docs/reports/fix51-verify/receipts/L8-low-stationary.json",
+            "docs/reports/fix51-verify/receipts/L8-high-complete.json",
+            "docs/reports/fix51-verify/receipts/L8-high-stationary.json"
+          ],
+          "remaining": "Current native admitted-cohort ledger. NEXT: current-source low/high entrance frame strips and event timestamps for all spacing/opening/visibility clauses."
+        },
+        {
+          "id": "L8-05",
+          "requirement": "Attacks hit civilians, soldiers, staff and animals; animals turn in 2.5\u20133.5 s keeping id/species; 3\u20135 Alphas over the run; concurrent \u2264 200 / 100.",
+          "displayedStatus": "PASS",
+          "currentStatus": "PASS",
+          "automatedComplete": true,
+          "checks": {
+            "PASS": 24,
+            "FAIL": 0,
+            "NOT CHECKED": 6
+          },
+          "evidence": [
+            "docs/reports/fix51-verify/receipts/L8-low-complete.json",
+            "docs/reports/fix55-c/L8-05-native.json",
+            "docs/reports/fix55-c/L8-bite-fixtures.json",
+            "docs/reports/fix51-verify/receipts/L8-low-stationary.json",
+            "docs/reports/fix51-verify/receipts/L8-high-complete.json",
+            "docs/reports/fix51-verify/receipts/L8-high-stationary.json"
+          ],
+          "remaining": null
+        },
+        {
+          "id": "L8-06",
+          "requirement": "combat: reachable \u2265 90 %; passive first attack \u2264 20 s after the breach (measured 15.7 s from level start sample); attacks on player + group \u2265 4/min (tune).",
+          "displayedStatus": "PASS",
+          "currentStatus": "PASS",
+          "automatedComplete": true,
+          "checks": {
+            "PASS": 14,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix51-verify/receipts/L8-low-complete.json",
+            "docs/reports/fix51-verify/receipts/L8-low-stationary.json",
+            "docs/reports/fix51-verify/receipts/L8-high-complete.json",
+            "docs/reports/fix51-verify/receipts/L8-high-stationary.json",
+            "docs/reports/batch51-qa/native-threat.json"
+          ],
+          "remaining": null
+        },
+        {
+          "id": "L8-07",
+          "requirement": "\u2265 2 escape paths \u2265 2.5 m wide from each enclosure; marker points at the APC (fixed).",
+          "displayedStatus": "PASS",
+          "currentStatus": "PASS",
+          "automatedComplete": true,
+          "checks": {
+            "PASS": 4,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix55-c/L8-enclosure-paths.json",
+            "docs/reports/fix55-c/L8-05-native.json",
+            "docs/reports/sweep-c4/L8-07-low-physical.json.gz",
+            "docs/reports/sweep-c4/L8-07-low-review.json",
+            "docs/reports/sweep-c4/L8-07-low-seed.json",
+            "docs/reports/sweep-c4/L8-07-high-physical.json.gz",
+            "docs/reports/sweep-c4/L8-07-high-review.json",
+            "docs/reports/sweep-c4/L8-07-high-seed.json",
+            "tools/qa/accept/sweep-c4-l8-paths.mjs"
+          ],
+          "remaining": null
+        },
+        {
+          "id": "L8-08",
+          "requirement": "Infected animals read as enemies (lion snarl, wounds visible from the iso camera); zebra legs clean at PO zooms; player readable at night (rim/accents).",
+          "displayedStatus": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "automatedComplete": false,
+          "checks": {
+            "PASS": 0,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/sweep-c3/L8-08/canopy-counterexamples.jpg",
+            "docs/reports/sweep-c3/L8-route/low-review/review.json",
+            "docs/reports/sweep-c3/L8-route/L7-L8-carried-low-input.json",
+            "docs/reports/sweep-c3/L8-route/worker.ts"
+          ],
+          "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L8 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Infected animals read as enemies (lion snarl, wounds visible from the iso camera); zebra legs clean at PO zooms; player readable at night (rim/accents)."
+        },
+        {
+          "id": "L8-09",
+          "requirement": "Every living group member boards; missing survivors visible or marked during the wait; APC has no gun.",
+          "displayedStatus": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "automatedComplete": false,
+          "checks": {
+            "PASS": 2,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix55-c/L8-05-native.json"
+          ],
+          "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record actual boarding of every living follower, late/missing-member guidance and APC weapon inventory through real-input departure."
+        },
+        {
+          "id": "L8-10",
+          "requirement": "L8 \u2192 L9 handover \u2264 6 s inside the same APC (durability kept).",
+          "displayedStatus": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "automatedComplete": false,
+          "checks": {
+            "PASS": 0,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [],
+          "remaining": "NEXT: Time the actual saved APC L8-to-L9 handover with tools/qa/release-ab-handover.mjs; compare durability and vehicle identity, requiring <=6 seconds."
+        },
+        {
+          "id": "L8-11",
+          "requirement": "Frames: strong sanctuary, then mixed battle; Opus \"is it stunning?\" pass.",
+          "displayedStatus": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "automatedComplete": false,
+          "checks": {
+            "PASS": 0,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [],
+          "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L8 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Frames: strong sanctuary, then mixed battle; Opus \"is it stunning?\" pass."
+        }
+      ]
+    },
+    {
+      "level": "L9",
+      "authoritativeFile": "docs/reports/fix51-verify/L9.json",
+      "sha256": "db2f7c12abfabe540876590ebc41c6196ed4b9f20e5344d5177ba395110b38b4",
+      "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+      "rows": [
+        {
+          "id": "L9-01",
+          "requirement": "Driving control \u2264 0.5 s after load; roster + durability carried; corgi never inside the hull; rider's legs inside the cab.",
+          "displayedStatus": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "automatedComplete": false,
+          "checks": {
+            "PASS": 2,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix55-c/L9-native.json"
+          ],
+          "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L9 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Driving control \u2264 0.5 s after load; roster + durability carried; corgi never inside the hull; rider's legs inside the cab."
+        },
+        {
+          "id": "L9-02",
+          "requirement": "Groups on routes: road 2 \u00d7 6, countryside 3 \u00d7 6, shortcut 6 \u00d7 8 incl. 2 Alphas; each avoidable by a detour \u2265 20 m.",
+          "displayedStatus": "FAIL",
+          "currentStatus": "FAIL",
+          "automatedComplete": false,
+          "checks": {
+            "PASS": 2,
+            "FAIL": 2,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix55-c/L9-native.json",
+            "docs/reports/sweep-c/L9-02-census.json",
+            "docs/reports/sweep-c3/L9-02/census.json"
+          ],
+          "remaining": "NEXT: Census every authored route group and physically drive an alternate detour >=20 m around each; retain six/eight-member counts and shortcut Alphas."
+        },
+        {
+          "id": "L9-03",
+          "requirement": "Threat present: on every route \u2265 1 group or wanderer in the camera frame per 60 s of driving (tune; 11-01 strip showed 0 in frame for 30 s).",
+          "displayedStatus": "FAIL",
+          "currentStatus": "NOT CHECKED",
+          "automatedComplete": false,
+          "checks": {
+            "PASS": 0,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/sweep-c3/L9-03/low-road/input.json",
+            "docs/reports/sweep-c3/L9-03/low-road/admitted-review.json",
+            "docs/reports/sweep-c3/L9-03/low-countryside/input.json",
+            "docs/reports/sweep-c3/L9-03/low-countryside/admitted-review.json",
+            "docs/reports/sweep-c3/L9-03/low-dry-shortcut/input.json",
+            "docs/reports/sweep-c3/L9-03/low-dry-shortcut/admitted-review.json",
+            "docs/reports/sweep-c3/L9-03/high-road/input.json",
+            "docs/reports/sweep-c3/L9-03/high-road/admitted-review.json",
+            "docs/reports/sweep-c3/L9-03/high-countryside/input.json",
+            "docs/reports/sweep-c3/L9-03/high-countryside/admitted-review.json",
+            "docs/reports/sweep-c3/L9-03/high-dry-shortcut/input.json",
+            "docs/reports/sweep-c3/L9-03/high-dry-shortcut/admitted-review.json",
+            "docs/reports/batch51-qa/L9.jpg",
+            "docs/reports/batch51-qa/l9-road-low-gap.json",
+            "docs/reports/batch51-qa/visual-runs.json"
+          ],
+          "remaining": "Compare actual on-camera/drawn body samples with actual player x/z intervals; exclude slow/stationary intervals conservatively. Trace follows the authored road at z\u2248-330; the earlier default high drive is a different direct path. NEXT: fix road presence, then repeat all three prescribed routes at both tiers with the same observer."
+        },
+        {
+          "id": "L9-04",
+          "requirement": "Every contact onset \u221210 durability (no per-tick billing); stopped/surrounded attacks 10 dmg, \u2265 0.6 s windup; safe route ends with more HP than the shortcut.",
+          "displayedStatus": "FAIL",
+          "currentStatus": "FAIL",
+          "automatedComplete": false,
+          "checks": {
+            "PASS": 9,
+            "FAIL": 1,
+            "NOT CHECKED": 4
+          },
+          "evidence": [
+            "docs/reports/fix51-verify/receipts/L9-low-complete.json",
+            "docs/reports/fix51-verify/receipts/L9-low-stationary.json",
+            "docs/reports/fix51-verify/receipts/L9-high-complete.json",
+            "docs/reports/fix51-verify/receipts/L9-high-stationary.json",
+            "docs/reports/fix55-c/L9-native.json",
+            "docs/reports/sweep-c3/L9-04/stopped-contact.json.gz",
+            "docs/reports/sweep-c4/L9-04-low-physical.json.gz",
+            "docs/reports/sweep-c4/L9-04-high-physical.json.gz"
+          ],
+          "remaining": "NEXT: Compare controlled collision-onset and stopped-surrounded attacks in native vehicle fixtures, then matched safe/shortcut real-input drives with durability ledgers."
+        },
+        {
+          "id": "L9-05",
+          "requirement": "**0 HP never breaks down:** speed 60 % \u00b1 2 %, heavy smoke, still drivable.",
+          "displayedStatus": "PASS",
+          "currentStatus": "PASS",
+          "automatedComplete": true,
+          "checks": {
+            "PASS": 4,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix55-c/L9-native.json",
+            "docs/reports/sweep-c3/L9-05/qualification.json",
+            "docs/reports/sweep-c3/L9-05/coverage-proof.json",
+            "docs/reports/sweep-c4/L9-05-full-review.json",
+            "docs/reports/sweep-c4/L9-05-zero-review.json",
+            "docs/reports/sweep-c4/L9-05-full-assembled.json.gz",
+            "docs/reports/sweep-c4/L9-05-zero-assembled.json.gz",
+            "docs/reports/sweep-c4/L9-05-speed-assembled.json.gz"
+          ],
+          "remaining": null
+        },
+        {
+          "id": "L9-06",
+          "requirement": "APC cannot wedge off-road before the bridge; no giant flat arrow over it; HUD bar matches durability.",
+          "displayedStatus": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "automatedComplete": false,
+          "checks": {
+            "PASS": 2,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix55-c/L9-native.json"
+          ],
+          "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L9 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: APC cannot wedge off-road before the bridge; no giant flat arrow over it; HUD bar matches durability."
+        },
+        {
+          "id": "L9-07",
+          "requirement": "Crash exactly once (full or 0 HP); APC falls whole (no floating wheels/vanishing hull); \"Get clear of the wreck\" appears only after the crash.",
+          "displayedStatus": "PASS",
+          "currentStatus": "PASS",
+          "automatedComplete": true,
+          "checks": {
+            "PASS": 14,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix51-verify/receipts/L9-low-complete.json",
+            "docs/reports/fix51-verify/receipts/L9-low-stationary.json",
+            "docs/reports/fix51-verify/receipts/L9-high-complete.json",
+            "docs/reports/fix51-verify/receipts/L9-high-stationary.json",
+            "docs/reports/fix55-c/L9-native.json",
+            "docs/reports/sweep-c3/L9-05/qualification.json",
+            "docs/reports/sweep-c3/L9-07/coverage-proof.json",
+            "docs/reports/sweep-c4/L9-05-full-review.json",
+            "docs/reports/sweep-c4/L9-05-zero-review.json",
+            "docs/reports/sweep-c4/L9-05-full-assembled.json.gz",
+            "docs/reports/sweep-c4/L9-05-zero-assembled.json.gz"
+          ],
+          "remaining": null
+        },
+        {
+          "id": "L9-08",
+          "requirement": "L10 starts on foot with exactly [axe], ordinary health, corgi safe.",
+          "displayedStatus": "PASS",
+          "currentStatus": "PASS",
+          "automatedComplete": true,
+          "checks": {
+            "PASS": 2,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix51-verify/receipts/L9-low-fixtures.json",
+            "docs/reports/fix51-verify/receipts/L9-high-fixtures.json"
+          ],
+          "remaining": null
+        },
+        {
+          "id": "L9-09",
+          "requirement": "Terrain seams \u2264 2 cm, \u2264 25 / 9 detailed chunks, no input freeze on streaming.",
+          "displayedStatus": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "automatedComplete": false,
+          "checks": {
+            "PASS": 6,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix51-verify/receipts/L9-low-complete.json",
+            "docs/reports/fix51-verify/receipts/L9-low-stationary.json",
+            "docs/reports/fix51-verify/receipts/L9-high-complete.json",
+            "docs/reports/fix51-verify/receipts/L9-high-stationary.json",
+            "docs/reports/fix55-c/L9-native.json"
+          ],
+          "remaining": "NEXT: Run every driving route while measuring terrain seam positions, live detailed-chunk counts and uninterrupted physical input across streaming boundaries."
+        }
+      ]
+    },
+    {
+      "level": "L10",
+      "authoritativeFile": "docs/reports/fix51-verify/L10.json",
+      "sha256": "9810570ca041de13d5390a9a84827a6218099a0fce5fc65eb938cb2d7d96e4be",
+      "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+      "rows": [
+        {
+          "id": "L10-01",
+          "requirement": "First minute \u2264 8 regulars, no dogs/Alphas; R1 concurrent 4\u20138 (both tiers), singles/pairs.",
+          "displayedStatus": "PASS",
+          "currentStatus": "PASS",
+          "automatedComplete": true,
+          "checks": {
+            "PASS": 22,
+            "FAIL": 0,
+            "NOT CHECKED": 10
+          },
+          "evidence": [
+            "docs/reports/fix51-verify/receipts/L10-low-complete.json",
+            "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
+            "docs/reports/fix51-verify/receipts/L10-high-complete.json",
+            "docs/reports/fix51-verify/receipts/L10-high-stationary.json"
+          ],
+          "remaining": null
+        },
+        {
+          "id": "L10-02",
+          "requirement": "Mega Alpha introduced by roar/impact by 2:00 (authored 1:30), \u2265 80 m behind on a reachable route.",
+          "displayedStatus": "PASS",
+          "currentStatus": "PASS",
+          "automatedComplete": true,
+          "checks": {
+            "PASS": 12,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix51-verify/receipts/L10-low-complete.json",
+            "docs/reports/fix51-r10c/L10-introduction-proof.json",
+            "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
+            "docs/reports/fix51-verify/receipts/L10-high-complete.json",
+            "docs/reports/fix51-verify/receipts/L10-high-stationary.json"
+          ],
+          "remaining": null
+        },
+        {
+          "id": "L10-03",
+          "requirement": "Concurrent local infected per region (high / low): R2 12\u201324 / 8\u201316 (+1\u20132 dogs after pickup); R3 25\u201345 / 16\u201328 (2\u20134 dogs, 1 Alpha); R4 45\u201375 / 28\u201345 (groups 10\u201320, 2\u20134 dogs, 1\u20132 Alphas); R5 55\u201385 / 35\u201355 (2\u20134 dogs, 1\u20132 Alphas); R6 80\u2013130 / 50\u201375 (groups 20\u201335, 3\u20135 dogs, 2\u20133 Alphas); R7 peak 140\u2013190 / 75\u201395.",
+          "displayedStatus": "FAIL",
+          "currentStatus": "FAIL",
+          "automatedComplete": false,
+          "checks": {
+            "PASS": 69,
+            "FAIL": 1,
+            "NOT CHECKED": 14
+          },
+          "evidence": [
+            "docs/reports/fix51-verify/receipts/L10-low-complete.json",
+            "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
+            "docs/reports/fix51-verify/receipts/L10-high-complete.json",
+            "docs/reports/fix51-verify/receipts/L10-high-stationary.json"
+          ],
+          "remaining": "Fix measured regional peak bounds; qualify simultaneous species counts and group sizes. Peak bounds exclude at most one Mega."
+        },
+        {
+          "id": "L10-04",
+          "requirement": "combat in every region: reachable \u2265 90 %; attacks on player \u2265 2/min in R1\u2013R2, \u2265 4/min from R3 (tune); no region crossable with 0 attacks.",
+          "displayedStatus": "FAIL",
+          "currentStatus": "NOT CHECKED",
+          "automatedComplete": false,
+          "checks": {
+            "PASS": 14,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix51-verify/receipts/L10-low-complete.json",
+            "docs/reports/fix51-verify/receipts/L10-high-complete.json",
+            "docs/reports/sweep-c3/L10-04/l10-region-reach-proof.json.gz",
+            "docs/reports/sweep-c3/L10-03/evidence/L10-low-complete.json.gz",
+            "docs/reports/sweep-c3/L10-03/evidence/L10-high-complete.json.gz",
+            "docs/reports/batch51-qa/native-threat.json"
+          ],
+          "remaining": "Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: combat in every region: reachable \u2265 90 %; attacks on player \u2265 2/min in R1\u2013R2, \u2265 4/min from R3 (tune); no region crossable with 0 attacks."
+        },
+        {
+          "id": "L10-05",
+          "requirement": "Weapons only at their named checkpoints, taken on approach, snapshot with the pickup; picking one up spawns nothing.",
+          "displayedStatus": "PASS",
+          "currentStatus": "PASS",
+          "automatedComplete": true,
+          "checks": {
+            "PASS": 4,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix51-r10c/L10-pickups-proof.json",
+            "docs/reports/sweep-c4/L10-05-review.json",
+            "docs/reports/sweep-c4/L10-05-summary.json",
+            "docs/reports/sweep-c4/L10-05-low-physical.json.gz",
+            "docs/reports/sweep-c4/L10-05-high-physical.json.gz",
+            "tools/qa/accept/sweep-c4-l10-pickups.mjs"
+          ],
+          "remaining": null
+        },
+        {
+          "id": "L10-06",
+          "requirement": "Dogs: 1.1\u00d7 run, \u2265 0.6 s telegraph, \u2264 2 m reach, \u2265 2 s cooldown, 10 HP/bite; low, distinct from the corgi.",
+          "displayedStatus": "PASS",
+          "currentStatus": "PASS",
+          "automatedComplete": true,
+          "checks": {
+            "PASS": 12,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix51-verify/receipts/L10-low-fixtures.json",
+            "docs/reports/fix51-verify/receipts/L10-high-fixtures.json",
+            "docs/reports/fix51-verify/receipts/L10-low-dog-z0.5-browser.json",
+            "docs/reports/fix51-verify/receipts/L10-low-dog-z1.5-browser.json",
+            "docs/reports/fix51-verify/receipts/L10-high-dog-z0.5-browser.json",
+            "docs/reports/fix51-verify/receipts/L10-high-dog-z1.5-browser.json"
+          ],
+          "remaining": null
+        },
+        {
+          "id": "L10-07",
+          "requirement": "Mega: cruise 0.7\u00d7 run \u00b1 2 % whenever it is on camera or within 200 m of the courier (orchestrator 2026-11-04: hidden far pursuit beyond 200 m may run faster than cruise (up to 1.15\u00d7 in the regions, up to 6\u00d7 catch-up on the final delivery approach, vqa-fix-2) so the walking arrival of L10-11 holds; it follows connected nav links, never relocates, and the player never sees that speed), always pursuing (no LOS), never trapped, never teleports; minimap shows only a pulsing distance ring; roar/impacts every 20\u201335 s, louder when closer.",
+          "displayedStatus": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "automatedComplete": false,
+          "checks": {
+            "PASS": 0,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [],
+          "remaining": "NEXT: Track the pursuing Mega continuously with native position/event ledgers: speed ratio, no-LOS pursuit, reachable path, no teleport and 20-35-second audio cadence; review minimap presentation."
+        },
+        {
+          "id": "L10-08",
+          "requirement": "Road regions framed \u00d71.3 (verges/fields in frame), base \u00d7 max zoom \u2264 2.0; not in the finale. Suit crowds readable at night, slam telegraph is a ground effect.",
+          "displayedStatus": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "automatedComplete": false,
+          "checks": {
+            "PASS": 4,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix56-c/L10-camera.json"
+          ],
+          "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L10 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Road regions framed \u00d71.3 (verges/fields in frame), base \u00d7 max zoom \u2264 2.0; not in the finale. Suit crowds readable at night, slam telegraph is a ground effect."
+        },
+        {
+          "id": "L10-09",
+          "requirement": "Recording explains the airborne cure (subtitles); canister is a visible backpack, no slot, no slowdown, restored on death.",
+          "displayedStatus": "PASS",
+          "currentStatus": "PASS",
+          "automatedComplete": true,
+          "checks": {
+            "PASS": 8,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix51-r10c/L10-cure-proof.json",
+            "docs/reports/sweep-c4/L10-09-low-physical.json.gz",
+            "docs/reports/fix51-verify/receipts/L10-low-checkpoints.json",
+            "docs/reports/sweep-c4/L10-09-high-physical.json.gz",
+            "docs/reports/fix51-verify/receipts/L10-high-checkpoints.json"
+          ],
+          "remaining": null
+        },
+        {
+          "id": "L10-10",
+          "requirement": "Charge = exactly 3,600 ticks while alive within 25 m; pauses outside with an instruction; minigun 20 rounds/s, heat +12.5 %/s, lock at 100 %, unlock < 40 %.",
+          "displayedStatus": "PASS",
+          "currentStatus": "PASS",
+          "automatedComplete": true,
+          "checks": {
+            "PASS": 12,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix51-verify/receipts/L10-low-complete.json",
+            "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
+            "docs/reports/fix51-verify/receipts/L10-high-complete.json",
+            "docs/reports/fix51-verify/receipts/L10-high-stationary.json",
+            "docs/reports/fix51-verify/receipts/L10-low-fixtures.json",
+            "docs/reports/fix51-verify/receipts/L10-high-fixtures.json"
+          ],
+          "remaining": null
+        },
+        {
+          "id": "L10-11",
+          "requirement": "Assault: infected at the capped peak (140\u2013190 / 75\u201395), reachable \u2265 90 %, attacks on player \u2265 8/min (tune); Mega reaches the arena ~140 s after activation (orchestrator 2026-11-04: \"~140 s\" = 120\u2013160 s, by walking; no relocation).",
+          "displayedStatus": "FAIL",
+          "currentStatus": "NOT CHECKED",
+          "automatedComplete": false,
+          "checks": {
+            "PASS": 14,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix51-verify/receipts/L10-low-complete.json",
+            "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
+            "docs/reports/fix51-verify/receipts/L10-high-complete.json",
+            "docs/reports/fix51-verify/receipts/L10-high-stationary.json",
+            "docs/reports/sweep-c3/L10-11/l10-hold-proof.json.gz",
+            "docs/reports/sweep-c3/L10-03/evidence/L10-low-complete.json.gz",
+            "docs/reports/sweep-c3/L10-03/evidence/L10-high-complete.json.gz",
+            "docs/reports/batch51-qa/native-threat.json"
+          ],
+          "remaining": "Current native hold probe. NEXT: both-tier full assault census and actual Mega arena-arrival tick, beyond the current capped hold window. Apply the acceptance document literally rather than equating zero audit flags with all criteria passing. Positive passive contact remains evidence of potential threat, not proof of competent-route compliance. NEXT: qualify both policies/tiers; if zero skilled contact is intentionally allowed, obtain a PO criterion clarification before closing the row."
+        },
+        {
+          "id": "L10-12",
+          "requirement": "Mega survives 9 direct rockets, dies on the 10th; conventional/minigun never below 90 % HP; charge/slam/grab only inside 12 m; no frame > 200 ms at fight and death; corpse reads as the creature.",
+          "displayedStatus": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "automatedComplete": false,
+          "checks": {
+            "PASS": 4,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix51-verify/receipts/L10-low-fixtures.json",
+            "docs/reports/fix51-verify/receipts/L10-high-fixtures.json"
+          ],
+          "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Use native direct-hit rocket and conventional/minigun fixtures for Mega HP thresholds, then real-input motion/death captures and frame probe within/outside twelve metres."
+        },
+        {
+          "id": "L10-13",
+          "requirement": "Release only with charge 60 + Mega dead + cure installed, player at the console.",
+          "displayedStatus": "PASS",
+          "currentStatus": "PASS",
+          "automatedComplete": true,
+          "checks": {
+            "PASS": 4,
+            "FAIL": 0,
+            "NOT CHECKED": 2
+          },
+          "evidence": [
+            "docs/reports/fix51-verify/receipts/L10-low-complete.json",
+            "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
+            "docs/reports/fix51-verify/receipts/L10-high-complete.json",
+            "docs/reports/fix51-verify/receipts/L10-high-stationary.json",
+            "docs/reports/fix51-verify/receipts/L10-low-fixtures.json",
+            "docs/reports/fix51-verify/receipts/L10-high-fixtures.json"
+          ],
+          "remaining": null
+        },
+        {
+          "id": "L10-14",
+          "requirement": "Mist front ~10 m/s; every touched infected dies within 1 tick (dogs, Alphas, zoo species); no harm to healthy/player/corgi; player keeps control 120\u2013180 s; camera pulls out in the last 30\u201345 s; then title and credits.",
+          "displayedStatus": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "automatedComplete": false,
+          "checks": {
+            "PASS": 6,
+            "FAIL": 0,
+            "NOT CHECKED": 4
+          },
+          "evidence": [
+            "docs/reports/fix51-verify/receipts/L10-low-complete.json",
+            "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
+            "docs/reports/fix51-verify/receipts/L10-high-complete.json",
+            "docs/reports/fix51-verify/receipts/L10-high-stationary.json",
+            "docs/reports/fix51-verify/receipts/L10-low-fixtures.json",
+            "docs/reports/fix51-verify/receipts/L10-high-fixtures.json"
+          ],
+          "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record the complete real-input epilogue with mist-position/event ledger, species kill latency, healthy/corgi immunity, control duration, camera pullback and actual title/credits."
+        },
+        {
+          "id": "L10-15",
+          "requirement": "Death in any region respawns at that region's checkpoint (never level start), with the loadout, cure and boss state of that checkpoint.",
+          "displayedStatus": "PASS",
+          "currentStatus": "PASS",
+          "automatedComplete": true,
+          "checks": {
+            "PASS": 36,
+            "FAIL": 0,
+            "NOT CHECKED": 0
+          },
+          "evidence": [
+            "docs/reports/fix51-verify/receipts/L10-low-checkpoints.json",
+            "docs/reports/fix51-verify/receipts/L10-high-checkpoints.json"
+          ],
+          "remaining": null
+        }
+      ]
+    }
+  ],
+  "nextCandidate": {
+    "id": "L8-04",
+    "verifiedState": "All20 recorded numeric checks PASS; automatedComplete remains false.",
+    "neededEvidence": "Both-tier current rendered outlet emergence frame strips and timestamps for every spacing/opening/visibility clause; personally inspect all captures. Native camera membership does not establish rendered no-pop-in.",
+    "rejectedSubstitution": "Existing fix51-r10c L7-L8-carried input sources/browser hashes are stale; cannot reuse by changing their hashes."
+  },
+  "constraintQuestion": "User asked whether to continue beyond the original three-hour limit. No answer received when this audit was written. Pending input is not authorization to extend the timebox."
+}

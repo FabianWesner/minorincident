@@ -102,3 +102,9 @@ The timebox leaves 25 current NOT CHECKED rows and four fresh FAIL rows. The fol
 | L10-14 | NOT CHECKED / NOT CHECKED | Full epilogue mist/species kill/immunity/control/pullback/title/credits ledger. P: judge mist, pullout and title/credits tone. |
 
 P marks the exact PO taste decision. Quantitative and missing physical evidence alongside those items remains engineering work. No open visual/mechanical clause is waived as taste.
+
+## Continuation completion audit
+
+The goal continuation was checked against the clean committed worktree. `completion-audit.json` binds all47 current row requirements, source/level hashes, check counts, status, evidence references and remaining work. Completion is **not achieved**. In particular, L8-04’s20 passing numeric checks do not prove rendered emergence without pop-in; the older carried-handover inputs have stale source/browser hashes. The next action remains current low/high outlet frame strips, not a status-only reclassification.
+
+The brief’s original three-hour stop constraint remains in force. An asynchronous question asks whether to extend it for the persistent full goal; no answer has been received. No further browser/native check was started while that constraint is unresolved.
