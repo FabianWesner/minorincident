@@ -1,0 +1,22 @@
+{
+  "row": "L6-07",
+  "status": "PASS",
+  "reviewer": "Codex/sweep-b",
+  "date": "2026-11-06",
+  "commit": "3bc507a85326cecb30ad0331d9a69b878edc5692",
+  "clauses": [
+    {
+      "clause": "combat: attacks on player + group \u2265 4/min across the retreat (tune); competent damage taken \u2265 30 HP (tune); concurrent infected \u2264 60 / 30.",
+      "verdict": "PASS",
+      "note": "Both ordinary complete routes finish. Entire retreat records51.070 player/group windups per minute (minimum4),120 actual player HP lost (minimum30), concurrent infected peak18 (caps30low/60high). Native receipt includes the full balanced retreat window; no performance or perceived-pressure claim. Exact unchanged numeric criterion requalified at both qualities."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-b/rows/L6-07.json",
+      "sha256": "2490b069349478f68e5db1e9de15177f6dce44ab7cccffa2b7750a879a79f6d4",
+      "what": "Both ordinary complete routes finish. Entire retreat records51.070 player/group windups per minute (minimum4),120 actual player HP lost (minimum30), concurrent infected peak18 (caps30low/60high). Native receipt includes the full balanced retreat window; no performance or perceived-pressure claim. Exact unchanged numeric criterion requalified at both qualities."
+    }
+  ],
+  "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS."
+}
