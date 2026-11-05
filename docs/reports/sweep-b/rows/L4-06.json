@@ -1,0 +1,87 @@
+{
+  "row": "L4-06",
+  "status": "FAIL",
+  "revision": "4321c37573da59b9e1dcf7d1610f67ed370be0bd",
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "criterion": "**Horde present:** first breach into the plaza at ~45 s (level clock, \u00b115 s) with \u2265 60 alive at once (~74 at the PO-accepted 10-27 level) (PO 10-27 accepted level); alive in the plaza \u2265 40 from +45 s to the line break (tune). PO: \"Almost no fight action. Just two alphas, instead of the Zombie horede\".",
+  "criteriaSha256": "144ccc0bf29d3dab1d91e5b38e3bf40c1ee16f78c83917ef9c55207fcccbd63a",
+  "observation": "Both-tier passive census measured: first physical breach52.7167s; low58 alive fails unchanged minimum60, high65 passes. Sustained post45s plaza minima65/72 pass minimum40. No tuning or criterion change; whole row FAIL on low breach census.",
+  "checks": [
+    {
+      "id": "L4-06",
+      "clause": "first physical breach level clock",
+      "level": "L4",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 52.71666666666667,
+      "target": "30 \u2264 value \u2264 60",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-stationary.json"
+    },
+    {
+      "id": "L4-06",
+      "clause": "living infected at first breach",
+      "level": "L4",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "FAIL",
+      "value": 58,
+      "target": "60 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-stationary.json"
+    },
+    {
+      "id": "L4-06",
+      "clause": "sustained plaza living minimum after +45 s",
+      "level": "L4",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 65,
+      "target": "40 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-stationary.json"
+    },
+    {
+      "id": "L4-06",
+      "clause": "first physical breach level clock",
+      "level": "L4",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 52.71666666666667,
+      "target": "30 \u2264 value \u2264 60",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
+    },
+    {
+      "id": "L4-06",
+      "clause": "living infected at first breach",
+      "level": "L4",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 65,
+      "target": "60 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
+    },
+    {
+      "id": "L4-06",
+      "clause": "sustained plaza living minimum after +45 s",
+      "level": "L4",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 72,
+      "target": "40 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
+    }
+  ],
+  "receipts": [
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-high-stationary.json",
+      "sha256": "7cefb4b7d44343bcf326ce8aa54b82b12a021f8c934c1bd1a0bfe21d0b52ac58"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-low-stationary.json",
+      "sha256": "ba656fe9eae86a0b3f961f31f5e44d6c5ebba6691c624cf226001130bfbf8625"
+    }
+  ]
+}
