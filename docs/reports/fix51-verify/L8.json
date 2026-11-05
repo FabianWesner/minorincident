@@ -5,7 +5,7 @@
   "observerHash": "c064240bbd1dfb4a4ffb12922fa39e6d24b69753af3eda1e03e9a81a51ce4a4a",
   "fixtureHash": "df526016e398100e295b42766eea3ea1190e551b57fa24999faa743cf1e3f7c4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-05T20:15:00.020Z",
+  "generatedAt": "2026-11-05T21:34:48.653Z",
   "policies": [
     {
       "tier": "low",
@@ -793,7 +793,7 @@
         ],
         "notes": "Raw PNGs deleted after full-size inspection; compact derived JPGs and hashes retained. Controlled renderer fixture; no timing claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7"
       }
     },
     {
@@ -922,7 +922,7 @@
         ],
         "notes": "Raw PNG captures deleted after inspection. Compact derived contact sheets, raw hashes, metadata and individual bar pixel measurements are retained. No timing was collected.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7"
       }
     },
     {
@@ -2534,7 +2534,7 @@
         ],
         "notes": "Raw PNGs removed after inspection. Compact contact sheets, exact captured driver, SHA-256 and per-state measurements retained. Fixture scope; no route or performance claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7"
       }
     },
     {
@@ -2666,7 +2666,7 @@
         ],
         "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7"
       }
     }
   ],
@@ -3372,19 +3372,15 @@
     },
     {
       "id": "L8-06",
-      "status": "FAIL",
+      "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":34.38333333333333,\"playerWindups\":3,\"groupWindups\":0,\"attacksPerMinute\":5.23509452253999} (target nonzero player windups in each combat policy; PASS); low/complete real player/group windups per minute: 5.23509452253999 (target 4 ≤ value ≤ Infinity; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":120,\"playerWindups\":1480,\"groupWindups\":31,\"attacksPerMinute\":740} (target nonzero player windups in each combat policy; PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":3.816666666666667,\"windowSeconds\":120} (target ≤20 s; PASS); low/stationary real player/group windups per minute: 755.5 (target 4 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":37.5,\"playerWindups\":3,\"groupWindups\":0,\"attacksPerMinute\":4.8} (target nonzero player windups in each combat policy; PASS); high/complete real player/group windups per minute: 4.8 (target 4 ≤ value ≤ Infinity; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":120,\"playerWindups\":4029,\"groupWindups\":28,\"attacksPerMinute\":2014.5} (target nonzero player windups in each combat policy; PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":3.816666666666667,\"windowSeconds\":120} (target ≤20 s; PASS); high/stationary real player/group windups per minute: 2028.5 (target 4 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS) Manual review PASS (STALE, Codex sweep-c3): Fresh source8765679a low/high complete/stationary remeasurement: all14 unchanged clauses PASS. Competent breach windows34.38333/37.5s each contain3 actual courier windups (5.23509/4.8 per minute, target>=4). Passive first attacks3.81667s both tiers (<=20), total player/group rates755.5/2028.5 per minute. All four minimum within30m bounded-path reachable shares100% (>=90). Full active phase clocks retained; no current clause fails. Zero native/fixture errors, all6 checkpoint controls match. This is current native combat evidence, not a browser completion or mortal balance claim. Open prior FAIL: Native low complete step/escape: 95.75 s,0 player/0 group windups. The acceptance document hard rule forbids zero in a combat phase; the audit treats skilled zero contact as diagnostic. Tested tier meets the measured clauses; full requested-tier coverage is incomplete. Low passive: first attack 17.67 s after breach; 254/min during breached phase; last reach 85/85 = 100%.",
+      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":34.38333333333333,\"playerWindups\":3,\"groupWindups\":0,\"attacksPerMinute\":5.23509452253999} (target nonzero player windups in each combat policy; PASS); low/complete real player/group windups per minute: 5.23509452253999 (target 4 ≤ value ≤ Infinity; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":120,\"playerWindups\":1480,\"groupWindups\":31,\"attacksPerMinute\":740} (target nonzero player windups in each combat policy; PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":3.816666666666667,\"windowSeconds\":120} (target ≤20 s; PASS); low/stationary real player/group windups per minute: 755.5 (target 4 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":37.5,\"playerWindups\":3,\"groupWindups\":0,\"attacksPerMinute\":4.8} (target nonzero player windups in each combat policy; PASS); high/complete real player/group windups per minute: 4.8 (target 4 ≤ value ≤ Infinity; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":120,\"playerWindups\":4029,\"groupWindups\":28,\"attacksPerMinute\":2014.5} (target nonzero player windups in each combat policy; PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":3.816666666666667,\"windowSeconds\":120} (target ≤20 s; PASS); high/stationary real player/group windups per minute: 2028.5 (target 4 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS) Manual review PASS (FRESH, Codex sweep-c4): Current-source low/high complete and stationary native receipts show all 14 clauses PASS. Skilled breach windows are 34.383 s low and 37.5 s high, each with three actual courier windups (5.235 and 4.8 per minute; target ≥4). Passive first attacks occur at 3.817 s in both tiers (target ≤20 s). All four bounded-path reachability samples are 100% (target ≥90%). No clause failed; targets and game source were unchanged. Requalified prior FAIL: Native low complete step/escape: 95.75 s,0 player/0 group windups. The acceptance document hard rule forbids zero in a combat phase; the audit treats skilled zero contact as diagnostic. Tested tier meets the measured clauses; full requested-tier coverage is incomplete. Low passive: first attack 17.67 s after breach; 254/min during breached phase; last reach 85/85 = 100%.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L8-low-complete.json",
         "docs/reports/fix51-verify/receipts/L8-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L8-high-complete.json",
         "docs/reports/fix51-verify/receipts/L8-high-stationary.json",
-        "docs/reports/sweep-c3/L8-06/low-complete.json.gz",
-        "docs/reports/sweep-c3/L8-06/low-stationary.json.gz",
-        "docs/reports/sweep-c3/L8-06/high-complete.json.gz",
-        "docs/reports/sweep-c3/L8-06/high-stationary.json.gz",
         "docs/reports/batch51-qa/native-threat.json"
       ],
       "expected": "combat: reachable ≥ 90 %; passive first attack ≤ 20 s after the breach (measured 15.7 s from level start sample); attacks on player + group ≥ 4/min (tune).",
@@ -3580,45 +3576,45 @@
         ],
         "method": "Current-head native passive route: subtract the exact 60-second calm from first escape attack; actual windups, not proximity. NEXT: repeat the same complete clause ledger in the other quality tier before closing this row for the full requested scope. Apply the acceptance document literally rather than equating zero audit flags with all criteria passing. Positive passive contact remains evidence of potential threat, not proof of competent-route compliance. NEXT: qualify both policies/tiers; if zero skilled contact is intentionally allowed, obtain a PO criterion clarification before closing the row."
       },
-      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "remaining": "All required current clauses pass; fresh exact-criterion review closes the prior finding. Historical evidence is retained.",
       "reviewDecision": {
         "row": "L8-06",
         "status": "PASS",
-        "reviewer": "Codex sweep-c3",
+        "reviewer": "Codex sweep-c4",
         "date": "2026-11-05",
-        "commit": "3ffd875c6ff075bb5dbd407d2ef98ab368321013",
+        "commit": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7",
         "clauses": [
           {
             "clause": "combat: reachable ≥ 90 %; passive first attack ≤ 20 s after the breach (measured 15.7 s from level start sample); attacks on player + group ≥ 4/min (tune).",
             "verdict": "PASS",
-            "note": "Fresh source8765679a low/high complete/stationary remeasurement: all14 unchanged clauses PASS. Competent breach windows34.38333/37.5s each contain3 actual courier windups (5.23509/4.8 per minute, target>=4). Passive first attacks3.81667s both tiers (<=20), total player/group rates755.5/2028.5 per minute. All four minimum within30m bounded-path reachable shares100% (>=90). Full active phase clocks retained; no current clause fails. Zero native/fixture errors, all6 checkpoint controls match. This is current native combat evidence, not a browser completion or mortal balance claim."
+            "note": "Current-source low/high complete and stationary native receipts show all 14 clauses PASS. Skilled breach windows are 34.383 s low and 37.5 s high, each with three actual courier windups (5.235 and 4.8 per minute; target ≥4). Passive first attacks occur at 3.817 s in both tiers (target ≤20 s). All four bounded-path reachability samples are 100% (target ≥90%). No clause failed; targets and game source were unchanged."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/sweep-c3/L8-06/low-complete.json.gz",
-            "sha256": "dad9ed4018afebcf4165aede9b78c419ef5124fe87736d7b36dadd085981e3be",
-            "what": "Fresh current-source full named quality/policy observation, phase clocks, actual windup starts and independent body-clear reachability measurements."
+            "file": "docs/reports/fix51-verify/receipts/L8-low-complete.json",
+            "sha256": "fc9e1b33d9d04066cc9397e82475062d2a826e88d7b0fdafb8d587974c5bb3b5",
+            "what": "Current-source low-tier complete route; actual player windups, phase attack rate, and independent bounded-path reachability."
           },
           {
-            "file": "docs/reports/sweep-c3/L8-06/low-stationary.json.gz",
-            "sha256": "52c4521bfc1317527e6045039cd53148c8cc94f945b8b3cd38e788f3811e8711",
-            "what": "Fresh current-source full named quality/policy observation, phase clocks, actual windup starts and independent body-clear reachability measurements."
+            "file": "docs/reports/fix51-verify/receipts/L8-low-stationary.json",
+            "sha256": "ead3e02ab7fb4d94c8240d9421b4fbdbcd20941a229b9b0aebd78f22eeb9e0a7",
+            "what": "Current-source low-tier passive route; first attack clock, actual player/group attack rate, and independent bounded-path reachability."
           },
           {
-            "file": "docs/reports/sweep-c3/L8-06/high-complete.json.gz",
-            "sha256": "e26c4ef749f93440ddc98577ce419a5f9a4057f73541d4ca069cbcaeb0f0d255",
-            "what": "Fresh current-source full named quality/policy observation, phase clocks, actual windup starts and independent body-clear reachability measurements."
+            "file": "docs/reports/fix51-verify/receipts/L8-high-complete.json",
+            "sha256": "3108e6abed9ca7a64b786d5118e7c68c8df085074e3a814b88922d8b5089beb2",
+            "what": "Current-source high-tier complete route; actual player windups, phase attack rate, and independent bounded-path reachability."
           },
           {
-            "file": "docs/reports/sweep-c3/L8-06/high-stationary.json.gz",
-            "sha256": "8fe1017f485d6faab2c35f1918ce9056a360c745da4af3e26ac37cf99e37324c",
-            "what": "Fresh current-source full named quality/policy observation, phase clocks, actual windup starts and independent body-clear reachability measurements."
+            "file": "docs/reports/fix51-verify/receipts/L8-high-stationary.json",
+            "sha256": "8387aa0a89b593aa3fdff2e04ed6863ae5a46a56682a5fed45afffad13571333",
+            "what": "Current-source high-tier passive route; first attack clock, actual player/group attack rate, and independent bounded-path reachability."
           }
         ],
-        "notes": "Historical FAIL is explicitly requalified for the unchanged complete criterion. All samples independently rerun; old source receipts not rebound. No game, target, timer, cap or checker changes.",
-        "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "notes": "Exact unchanged numerical criterion reviewed against all four current-source receipts. Historical FAIL is requalified. No game, checker, target, timer or cap changes.",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7"
       }
     },
     {
@@ -3686,7 +3682,7 @@
         ],
         "notes": "Complete unchanged criterion: radius-aware clearance + real-input crossings + fixed APC marker; no mortal/performance claim.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7"
       }
     },
     {
@@ -3756,7 +3752,7 @@
         ],
         "notes": "Shared pooled headless Metal WebGL2; actual movement and ordinary actors, protected courier requested; camera/quality photos are presentation overrides only. Any failed clause fails the compound row; no PASS for unmeasured clauses.",
         "freshness": "STALE",
-        "latestRelevantCommit": "4a72d1499cfe27f7102510511a92581027cd5878"
+        "latestRelevantCommit": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7"
       }
     },
     {

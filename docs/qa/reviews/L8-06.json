@@ -1,37 +1,37 @@
 {
   "row": "L8-06",
   "status": "PASS",
-  "reviewer": "Codex sweep-c3",
+  "reviewer": "Codex sweep-c4",
   "date": "2026-11-05",
-  "commit": "3ffd875c6ff075bb5dbd407d2ef98ab368321013",
+  "commit": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7",
   "clauses": [
     {
-      "clause": "combat: reachable \u2265 90 %; passive first attack \u2264 20 s after the breach (measured 15.7 s from level start sample); attacks on player + group \u2265 4/min (tune).",
+      "clause": "combat: reachable ≥ 90 %; passive first attack ≤ 20 s after the breach (measured 15.7 s from level start sample); attacks on player + group ≥ 4/min (tune).",
       "verdict": "PASS",
-      "note": "Fresh source8765679a low/high complete/stationary remeasurement: all14 unchanged clauses PASS. Competent breach windows34.38333/37.5s each contain3 actual courier windups (5.23509/4.8 per minute, target>=4). Passive first attacks3.81667s both tiers (<=20), total player/group rates755.5/2028.5 per minute. All four minimum within30m bounded-path reachable shares100% (>=90). Full active phase clocks retained; no current clause fails. Zero native/fixture errors, all6 checkpoint controls match. This is current native combat evidence, not a browser completion or mortal balance claim."
+      "note": "Current-source low/high complete and stationary native receipts show all 14 clauses PASS. Skilled breach windows are 34.383 s low and 37.5 s high, each with three actual courier windups (5.235 and 4.8 per minute; target ≥4). Passive first attacks occur at 3.817 s in both tiers (target ≤20 s). All four bounded-path reachability samples are 100% (target ≥90%). No clause failed; targets and game source were unchanged."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c3/L8-06/low-complete.json.gz",
-      "sha256": "dad9ed4018afebcf4165aede9b78c419ef5124fe87736d7b36dadd085981e3be",
-      "what": "Fresh current-source full named quality/policy observation, phase clocks, actual windup starts and independent body-clear reachability measurements."
+      "file": "docs/reports/fix51-verify/receipts/L8-low-complete.json",
+      "sha256": "fc9e1b33d9d04066cc9397e82475062d2a826e88d7b0fdafb8d587974c5bb3b5",
+      "what": "Current-source low-tier complete route; actual player windups, phase attack rate, and independent bounded-path reachability."
     },
     {
-      "file": "docs/reports/sweep-c3/L8-06/low-stationary.json.gz",
-      "sha256": "52c4521bfc1317527e6045039cd53148c8cc94f945b8b3cd38e788f3811e8711",
-      "what": "Fresh current-source full named quality/policy observation, phase clocks, actual windup starts and independent body-clear reachability measurements."
+      "file": "docs/reports/fix51-verify/receipts/L8-low-stationary.json",
+      "sha256": "ead3e02ab7fb4d94c8240d9421b4fbdbcd20941a229b9b0aebd78f22eeb9e0a7",
+      "what": "Current-source low-tier passive route; first attack clock, actual player/group attack rate, and independent bounded-path reachability."
     },
     {
-      "file": "docs/reports/sweep-c3/L8-06/high-complete.json.gz",
-      "sha256": "e26c4ef749f93440ddc98577ce419a5f9a4057f73541d4ca069cbcaeb0f0d255",
-      "what": "Fresh current-source full named quality/policy observation, phase clocks, actual windup starts and independent body-clear reachability measurements."
+      "file": "docs/reports/fix51-verify/receipts/L8-high-complete.json",
+      "sha256": "3108e6abed9ca7a64b786d5118e7c68c8df085074e3a814b88922d8b5089beb2",
+      "what": "Current-source high-tier complete route; actual player windups, phase attack rate, and independent bounded-path reachability."
     },
     {
-      "file": "docs/reports/sweep-c3/L8-06/high-stationary.json.gz",
-      "sha256": "8fe1017f485d6faab2c35f1918ce9056a360c745da4af3e26ac37cf99e37324c",
-      "what": "Fresh current-source full named quality/policy observation, phase clocks, actual windup starts and independent body-clear reachability measurements."
+      "file": "docs/reports/fix51-verify/receipts/L8-high-stationary.json",
+      "sha256": "8387aa0a89b593aa3fdff2e04ed6863ae5a46a56682a5fed45afffad13571333",
+      "what": "Current-source high-tier passive route; first attack clock, actual player/group attack rate, and independent bounded-path reachability."
     }
   ],
-  "notes": "Historical FAIL is explicitly requalified for the unchanged complete criterion. All samples independently rerun; old source receipts not rebound. No game, target, timer, cap or checker changes."
+  "notes": "Exact unchanged numerical criterion reviewed against all four current-source receipts. Historical FAIL is requalified. No game, checker, target, timer or cap changes."
 }
