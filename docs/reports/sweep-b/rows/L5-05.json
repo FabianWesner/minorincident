@@ -1,0 +1,231 @@
+{
+  "row": "L5-05",
+  "status": "PASS",
+  "revision": "25165a0dcdb2133715aabc5ae112f9880f343777",
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "criterion": "combat: reachable \u2265 90 %; competent run meets \u2265 1 infected per 40 m of route (tune); attacks on player + group \u2265 3/min (tune); passive first attack \u2264 20 s (measured 10.8 s). PO: \"I can just walk, pick up the survivors and walk away\".",
+  "criteriaSha256": "144ccc0bf29d3dab1d91e5b38e3bf40c1ee16f78c83917ef9c55207fcccbd63a",
+  "observation": "All objective clauses pass low/high on ordinary competent complete and passive policies: bounded-path minimum100%; unique visible living bodies within10m yield4.588/7.758 encounters per40m with continuous route-distance ledger; complete actual player windups3.166/4.188 per minute; passive first attacks0.05/0.717s. P: PO: can a competent player still just walk, pick up the survivors and walk away? Review perceived rescue pressure only. This native verdict does not settle that feel question.",
+  "checks": [
+    {
+      "id": "L5-05",
+      "clause": "combat hard rule on actual player windups",
+      "level": "L5",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "seconds": 151.63333333333333,
+        "playerWindups": 8,
+        "groupWindups": 0,
+        "attacksPerMinute": 3.165530885908991
+      },
+      "target": "nonzero player windups in each combat policy",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-complete.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "real player/group windups per minute",
+      "level": "L5",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 3.165530885908991,
+      "target": "3 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-complete.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+      "level": "L5",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 100,
+      "target": "90 \u2264 value \u2264 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-complete.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "competent route visible infected encounters per40m",
+      "level": "L5",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 4.588214237800679,
+      "target": "1 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-complete.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "combat hard rule on actual player windups",
+      "level": "L5",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "seconds": 228.35,
+        "playerWindups": 686,
+        "groupWindups": 0,
+        "attacksPerMinute": 180.24961681629077
+      },
+      "target": "nonzero player windups in each combat policy",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-stationary.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "stationary first real player attack (phase clock)",
+      "level": "L5",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "seconds": 0.05,
+        "windowSeconds": 228.35
+      },
+      "target": "\u226420 s",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-stationary.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "real player/group windups per minute",
+      "level": "L5",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 180.24961681629077,
+      "target": "3 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-stationary.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+      "level": "L5",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 100,
+      "target": "90 \u2264 value \u2264 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-stationary.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "combat hard rule on actual player windups",
+      "level": "L5",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "seconds": 157.58333333333334,
+        "playerWindups": 11,
+        "groupWindups": 0,
+        "attacksPerMinute": 4.188260179799048
+      },
+      "target": "nonzero player windups in each combat policy",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-high-complete.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "real player/group windups per minute",
+      "level": "L5",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 4.188260179799048,
+      "target": "3 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-high-complete.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+      "level": "L5",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 100,
+      "target": "90 \u2264 value \u2264 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-high-complete.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "competent route visible infected encounters per40m",
+      "level": "L5",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 7.7580410757370695,
+      "target": "1 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-high-complete.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "combat hard rule on actual player windups",
+      "level": "L5",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "seconds": 228.35,
+        "playerWindups": 1206,
+        "groupWindups": 0,
+        "attacksPerMinute": 316.8819794175608
+      },
+      "target": "nonzero player windups in each combat policy",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-high-stationary.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "stationary first real player attack (phase clock)",
+      "level": "L5",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "seconds": 0.7166666666666667,
+        "windowSeconds": 228.35
+      },
+      "target": "\u226420 s",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-high-stationary.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "real player/group windups per minute",
+      "level": "L5",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 316.8819794175608,
+      "target": "3 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-high-stationary.json"
+    },
+    {
+      "id": "L5-05",
+      "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+      "level": "L5",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 100,
+      "target": "90 \u2264 value \u2264 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-high-stationary.json"
+    }
+  ],
+  "receipts": [
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-high-complete.json",
+      "sha256": "f3e1e9abd297cd878561ac56000a12bf98aa4d9a31a6f8bd680bab1b4e25c0a9"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-high-stationary.json",
+      "sha256": "85e3d515cc8656d9694215d8693a0f435f9502988496a8ef377d7dde81909b2f"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-low-complete.json",
+      "sha256": "db7cf0854e3d5937c6c558a0a6649371601f8ea1b1f73d97f8424c6fbe58f40f"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-low-stationary.json",
+      "sha256": "cc8c74a56ab3c021a4615dc89263c86c7fd3f0fd70877ec416b4751af34f2fb5"
+    }
+  ]
+}

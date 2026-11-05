@@ -1,0 +1,22 @@
+{
+  "row": "L5-05",
+  "status": "PASS",
+  "reviewer": "Codex/sweep-b",
+  "date": "2026-11-06",
+  "commit": "25165a0dcdb2133715aabc5ae112f9880f343777",
+  "clauses": [
+    {
+      "clause": "combat: reachable \u2265 90 %; competent run meets \u2265 1 infected per 40 m of route (tune); attacks on player + group \u2265 3/min (tune); passive first attack \u2264 20 s (measured 10.8 s). PO: \"I can just walk, pick up the survivors and walk away\".",
+      "verdict": "PASS",
+      "note": "All objective clauses pass low/high on ordinary competent complete and passive policies: bounded-path minimum100%; unique visible living bodies within10m yield4.588/7.758 encounters per40m with continuous route-distance ledger; complete actual player windups3.166/4.188 per minute; passive first attacks0.05/0.717s. P: PO: can a competent player still just walk, pick up the survivors and walk away? Review perceived rescue pressure only. This native verdict does not settle that feel question."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-b/rows/L5-05.json",
+      "sha256": "5af1ade260bd053787738b4c2197051af365d409205601789d35a922681fc50d",
+      "what": "All objective clauses pass low/high on ordinary competent complete and passive policies: bounded-path minimum100%; unique visible living bodies within10m yield4.588/7.758 encounters per40m with continuous route-distance ledger; complete actual player windups3.166/4.188 per minute; passive first attacks0.05/0.717s. P: PO: can a competent player still just walk, pick up the survivors and walk away? Review perceived rescue pressure only. This native verdict does not settle that feel question."
+    }
+  ],
+  "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS."
+}
