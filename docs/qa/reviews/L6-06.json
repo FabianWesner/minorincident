@@ -1,0 +1,21 @@
+{
+  "row": "L6-06",
+  "status": "FAIL",
+  "reviewer": "Codex/sweep-b",
+  "date": "2026-11-06",
+  "commit": "dfafd9000fb26bd2778b1d0db9cd33be6e1719bb",
+  "clauses": [
+    {
+      "clause": "Infected enter the tunnel from 6 side entries (2 each, alternating sides) **and reach the tracks**; reachable \u2265 95 %; none stand harmless behind the platform/gate line. PO: \"Just let them enter and it's good.\"",
+      "verdict": "FAIL",
+      "note": "Both tiers admit three bodies at each of six alternating side entries, failing the unchanged two-per-entry clause. All18 side bodies reach the actual track floor, have legal birth paths, and record zero sampled path failures. Canonical complete hashes are identical to the read-only observer runs. No count/criterion tuning. Real-input visual route remains pending; count failure alone establishes whole-row FAIL."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-b/L6-trajectory-proof.json",
+      "sha256": "c04692dcd947712fd192bfd33b306d221168788ed65f0ac7dfb87d18b52218f7",
+      "what": "Both tiers admit three bodies at each of six alternating side entries, failing the unchanged two-per-entry clause. All18 side bodies reach the actual track floor, have legal birth paths, and record zero sampled path failures. Canonical complete hashes are identical to the read-only observer runs. No count/criterion tuning. Real-input visual route remains pending; count failure alone establishes whole-row FAIL."
+    }
+  ]
+}
