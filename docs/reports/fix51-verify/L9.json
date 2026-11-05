@@ -5,7 +5,7 @@
   "observerHash": "c064240bbd1dfb4a4ffb12922fa39e6d24b69753af3eda1e03e9a81a51ce4a4a",
   "fixtureHash": "6ef6338509693851d4bf2766a89295d4f7d9f2d376991709644ffcf0b04f8462",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-05T21:51:35.855Z",
+  "generatedAt": "2026-11-05T22:46:05.310Z",
   "policies": [
     {
       "tier": "low",
@@ -54,6 +54,13 @@
       "policy": "controlled-fixtures",
       "outcome": "complete",
       "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L9-low-sweep-c3-physical.json"
+    },
+    {
+      "tier": "low",
+      "policy": "controlled-fixtures",
+      "outcome": "complete",
+      "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L9-low-sweep-c4-routes.json"
     },
     {
@@ -69,6 +76,13 @@
       "outcome": "complete",
       "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L9-high-fixtures.json"
+    },
+    {
+      "tier": "high",
+      "policy": "controlled-fixtures",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L9-high-sweep-c3-physical.json"
     },
     {
       "tier": "high",
@@ -6536,22 +6550,19 @@
     },
     {
       "id": "L9-05",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/controlled-fixture zero durability driving and smoke state: {\"tier\":\"low\",\"mode\":\"zero\",\"setup\":\"One production vehicle.damage(maxHP) call immediately after ordinary Begin; normal bot thereafter.\",\"initial\":{\"tick\":0,\"carId\":667,\"hp\":1000,\"position\":{\"x\":-550,\"y\":1.0499999999999998,\"z\":0,\"yaw\":0},\"driver\":1,\"passengers\":[{\"id\":668,\"seat\":0,\"phase\":\"seated\",\"started\":0,\"from\":{\"x\":-553.35,\"z\":0,\"y\":0.3,\"yaw\":0},\"pauseUntil\":0}]},\"finished\":true,\"finalHash\":… (full values in JSON) (target actual0HP from Begin; completes>1km drive, max road cap0.6, smoke state every driving tick; rendered smoke remains separate; PASS); high/controlled-fixture zero durability driving and smoke state: {\"tier\":\"high\",\"mode\":\"zero\",\"setup\":\"One production vehicle.damage(maxHP) call immediately after ordinary Begin; normal bot thereafter.\",\"initial\":{\"tick\":0,\"carId\":667,\"hp\":1000,\"position\":{\"x\":-550,\"y\":1.0499999999999998,\"z\":0,\"yaw\":0},\"driver\":1,\"passengers\":[{\"id\":668,\"seat\":0,\"phase\":\"seated\",\"started\":0,\"from\":{\"x\":-553.35,\"z\":0,\"y\":0.3,\"yaw\":0},\"pauseUntil\":0}]},\"finished\":true,\"finalHash\"… (full values in JSON) (target actual0HP from Begin; completes>1km drive, max road cap0.6, smoke state every driving tick; rendered smoke remains separate; PASS) Manual review PASS (STALE, Codex sweep-c3): Current-source healthy/zero physical WASD comparisons and ordinary native controls: zero durability remains driveable, never breaks down. Uninterrupted matched straight-road fixed-tick samples measure60.6682053% of healthy peak speed at both qualities, inside58–62%; road speed cap0.6. Separate physical zero runs with ordinary reverse/steer recovery drive1676.98/1610.42m to the forced crash, every pre-crash sample HP0 and smoking. Personally reviewed dense opaque grey exhaust cloud in wide road images after ordinary rendering; close front crop omits rear trail. Healthy controls have no smoke. Actual fall keeps hull/wheels together. Camera-only photos at0.5/1.5; scripted crash camera overrides these requests. All188 new original-size captures inspected and exact raws deleted, including excluded approach-only/stalled diagnostics. Initial tap stored reused drive objects; that auxiliary array is excluded, exact executed physical keyboard commands and trajectories are retained. No game/target/performance changes.",
-      "automatedComplete": false,
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/controlled-fixture zero durability driving and smoke state: {\"tier\":\"low\",\"mode\":\"zero\",\"setup\":\"One production vehicle.damage(maxHP) call immediately after ordinary Begin; normal bot thereafter.\",\"initial\":{\"tick\":0,\"carId\":667,\"hp\":1000,\"position\":{\"x\":-550,\"y\":1.0499999999999998,\"z\":0,\"yaw\":0},\"driver\":1,\"passengers\":[{\"id\":668,\"seat\":0,\"phase\":\"seated\",\"started\":0,\"from\":{\"x\":-553.35,\"z\":0,\"y\":0.3,\"yaw\":0},\"pauseUntil\":0}]},\"finished\":true,\"finalHash\":… (full values in JSON) (target actual0HP from Begin; completes>1km drive, max road cap0.6, smoke state every driving tick; rendered smoke remains separate; PASS); low/controlled-physical physical zero-HP speed smoke and continued driving: {\"validPair\":true,\"healthyPeak\":17.744627516552672,\"emptyPeak\":10.710992914190859,\"ratio\":0.6036189209494172,\"metres\":1631.3425432870574,\"drivingSamples\":1186,\"smoke\":{\"smokeObserved\":true,\"wholeHullAndAttachedWheels\":true,\"what\":\"All96 current captures personally inspected. Wide0HP road photos show large grey multi-billow smoke cloud behind APC; healthy road photos lack that cloud. Tight road cro… (full values in JSON) (target actual 0HP, >1km physical drive to crash; matched straight-road speed58–62% of healthy; road cap0.6; all driving samples smoking; reviewed dense plume; PASS); high/controlled-fixture zero durability driving and smoke state: {\"tier\":\"high\",\"mode\":\"zero\",\"setup\":\"One production vehicle.damage(maxHP) call immediately after ordinary Begin; normal bot thereafter.\",\"initial\":{\"tick\":0,\"carId\":667,\"hp\":1000,\"position\":{\"x\":-550,\"y\":1.0499999999999998,\"z\":0,\"yaw\":0},\"driver\":1,\"passengers\":[{\"id\":668,\"seat\":0,\"phase\":\"seated\",\"started\":0,\"from\":{\"x\":-553.35,\"z\":0,\"y\":0.3,\"yaw\":0},\"pauseUntil\":0}]},\"finished\":true,\"finalHash\"… (full values in JSON) (target actual0HP from Begin; completes>1km drive, max road cap0.6, smoke state every driving tick; rendered smoke remains separate; PASS); high/controlled-physical physical zero-HP speed smoke and continued driving: {\"validPair\":true,\"healthyPeak\":17.744627516552672,\"emptyPeak\":10.710992914190859,\"ratio\":0.6036189209494172,\"metres\":1541.4836405368396,\"drivingSamples\":843,\"smoke\":{\"smokeObserved\":true,\"wholeHullAndAttachedWheels\":true,\"what\":\"All96 current captures personally inspected. Wide0HP road photos show large grey multi-billow smoke cloud behind APC; healthy road photos lack that cloud. Tight road crop… (full values in JSON) (target actual 0HP, >1km physical drive to crash; matched straight-road speed58–62% of healthy; road cap0.6; all driving samples smoking; reviewed dense plume; PASS) Manual review PASS (FRESH, Codex sweep-c4): Both current tiers: healthy and production damage(maxHP) zero setups drive with actual physical WASD to postimpact crawl. Zero runs stayHP0/smoking through driving and cover1631.34m low/1541.48m high. Separate uninterrupted road samples measure17.74463m/s healthy versus10.71099m/s zero,60.3618921%, within58–62%; every zero road cap0.6. Both wide0HP captures show a large grey multi-billow smoke trail, absent in healthy controls; tight crops clip that trail. All96 original visual captures personally inspected and hash-verified/deleted. Eight actual-consumer negative controls reject bad HP, unfinished route, bad speed, absent smoke, unseen image, stale source and missing high; originals restored.",
+      "automatedComplete": true,
       "receipt": [
         "docs/reports/fix55-c/L9-native.json",
         "docs/reports/sweep-c3/L9-05/qualification.json",
-        "docs/reports/sweep-c3/L9-05/physical-full.json.gz",
-        "docs/reports/sweep-c3/L9-05/physical-zero.json.gz",
-        "docs/reports/sweep-c3/L9-05/physical-speed.json.gz",
-        "docs/reports/sweep-c3/L9-05/second-review/review.json",
-        "docs/reports/sweep-c3/L9-05/recovery-review/review.json",
-        "docs/reports/sweep-c3/L9-05/first-review/review.json",
-        "docs/reports/sweep-c3/L9-05/retry-review/review.json",
-        "docs/reports/sweep-c3/L9-05/native.json.gz",
-        "docs/reports/sweep-c3/L9-05/coverage-proof.json"
+        "docs/reports/sweep-c3/L9-05/coverage-proof.json",
+        "docs/reports/sweep-c4/L9-05-full-review.json",
+        "docs/reports/sweep-c4/L9-05-zero-review.json",
+        "docs/reports/sweep-c4/L9-05-full-assembled.json.gz",
+        "docs/reports/sweep-c4/L9-05-zero-assembled.json.gz",
+        "docs/reports/sweep-c4/L9-05-speed-assembled.json.gz"
       ],
       "expected": "**0 HP never breaks down:** speed 60 % ± 2 %, heavy smoke, still drivable.",
       "checks": [
@@ -7272,6 +7283,29 @@
         },
         {
           "id": "L9-05",
+          "clause": "physical zero-HP speed smoke and continued driving",
+          "tier": "low",
+          "policy": "controlled-physical",
+          "status": "PASS",
+          "value": {
+            "validPair": true,
+            "healthyPeak": 17.744627516552672,
+            "emptyPeak": 10.710992914190859,
+            "ratio": 0.6036189209494172,
+            "metres": 1631.3425432870574,
+            "drivingSamples": 1186,
+            "smoke": {
+              "smokeObserved": true,
+              "wholeHullAndAttachedWheels": true,
+              "what": "All96 current captures personally inspected. Wide0HP road photos show large grey multi-billow smoke cloud behind APC; healthy road photos lack that cloud. Tight road crops clip trail. All fall0–9 frames keep whole hull and visible side wheels attached, body and headlights descend together. Postimpact bright flash/fire retains wreck and courier outside; Get clear appears then. Fall camera overrides requestedzoom, yielding duplicate paired framing; not independentzoom proof."
+            }
+          },
+          "target": "actual 0HP, >1km physical drive to crash; matched straight-road speed58–62% of healthy; road cap0.6; all driving samples smoking; reviewed dense plume",
+          "receipt": "docs/reports/sweep-c3/L9-05/qualification.json",
+          "level": "L9"
+        },
+        {
+          "id": "L9-05",
           "clause": "zero durability driving and smoke state",
           "tier": "high",
           "policy": "controlled-fixture",
@@ -7823,6 +7857,29 @@
           "status": "PASS",
           "receipt": "docs/reports/fix55-c/L9-native.json",
           "level": "L9"
+        },
+        {
+          "id": "L9-05",
+          "clause": "physical zero-HP speed smoke and continued driving",
+          "tier": "high",
+          "policy": "controlled-physical",
+          "status": "PASS",
+          "value": {
+            "validPair": true,
+            "healthyPeak": 17.744627516552672,
+            "emptyPeak": 10.710992914190859,
+            "ratio": 0.6036189209494172,
+            "metres": 1541.4836405368396,
+            "drivingSamples": 843,
+            "smoke": {
+              "smokeObserved": true,
+              "wholeHullAndAttachedWheels": true,
+              "what": "All96 current captures personally inspected. Wide0HP road photos show large grey multi-billow smoke cloud behind APC; healthy road photos lack that cloud. Tight road crops clip trail. All fall0–9 frames keep whole hull and visible side wheels attached, body and headlights descend together. Postimpact bright flash/fire retains wreck and courier outside; Get clear appears then. Fall camera overrides requestedzoom, yielding duplicate paired framing; not independentzoom proof."
+            }
+          },
+          "target": "actual 0HP, >1km physical drive to crash; matched straight-road speed58–62% of healthy; road cap0.6; all driving samples smoking; reviewed dense plume",
+          "receipt": "docs/reports/sweep-c3/L9-05/qualification.json",
+          "level": "L9"
         }
       ],
       "historical": {
@@ -7833,7 +7890,7 @@
         "evidence": [],
         "method": "NEXT: Drive a real-input APC reduced to zero HP before the bridge; measure 60% speed and smoke while retaining steering/control, then continue to the forced crash."
       },
-      "remaining": "NEXT: Drive a real-input APC reduced to zero HP before the bridge; measure 60% speed and smoke while retaining steering/control, then continue to the forced crash.",
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
       "review": {
         "tag": "O",
         "instruction": "**0 HP never breaks down:** speed 60 % ± 2 %, heavy smoke, still drivable.",
@@ -7842,70 +7899,55 @@
       "reviewDecision": {
         "row": "L9-05",
         "status": "PASS",
-        "reviewer": "Codex sweep-c3",
+        "reviewer": "Codex sweep-c4",
         "date": "2026-11-05",
-        "commit": "a63290d2fd906d9720f30c131b4f98ce48a25a9f",
+        "commit": "d8d24fd0bd0606bb6682ad4e0d6a5086e4bb3700",
         "clauses": [
           {
             "clause": "**0 HP never breaks down:** speed 60 % ± 2 %, heavy smoke, still drivable.",
             "verdict": "PASS",
-            "note": "Current-source healthy/zero physical WASD comparisons and ordinary native controls: zero durability remains driveable, never breaks down. Uninterrupted matched straight-road fixed-tick samples measure60.6682053% of healthy peak speed at both qualities, inside58–62%; road speed cap0.6. Separate physical zero runs with ordinary reverse/steer recovery drive1676.98/1610.42m to the forced crash, every pre-crash sample HP0 and smoking. Personally reviewed dense opaque grey exhaust cloud in wide road images after ordinary rendering; close front crop omits rear trail. Healthy controls have no smoke. Actual fall keeps hull/wheels together. Camera-only photos at0.5/1.5; scripted crash camera overrides these requests. All188 new original-size captures inspected and exact raws deleted, including excluded approach-only/stalled diagnostics. Initial tap stored reused drive objects; that auxiliary array is excluded, exact executed physical keyboard commands and trajectories are retained. No game/target/performance changes."
+            "note": "Both current tiers: healthy and production damage(maxHP) zero setups drive with actual physical WASD to postimpact crawl. Zero runs stayHP0/smoking through driving and cover1631.34m low/1541.48m high. Separate uninterrupted road samples measure17.74463m/s healthy versus10.71099m/s zero,60.3618921%, within58–62%; every zero road cap0.6. Both wide0HP captures show a large grey multi-billow smoke trail, absent in healthy controls; tight crops clip that trail. All96 original visual captures personally inspected and hash-verified/deleted. Eight actual-consumer negative controls reject bad HP, unfinished route, bad speed, absent smoke, unseen image, stale source and missing high; originals restored."
           }
         ],
         "evidence": [
           {
             "file": "docs/reports/sweep-c3/L9-05/qualification.json",
-            "sha256": "71af0128866c2d8b9b599de85e944fca16242aa20631e1672b0a21be56169e89",
-            "what": "Current-source healthy/zero physical WASD comparisons and ordinary native controls: zero durability remains driveable, never breaks down. Uninterrupted matched straight-road fixed-tick samples measure60.6682053% of healthy peak speed at both qualities, inside58–62%; road speed cap0.6. Separate physical zero runs with ordinary reverse/steer recovery drive1676.98/1610.42m to the forced crash, every pre-crash sample HP0 and smoking. Personally reviewed dense opaque grey exhaust cloud in wide road images after ordinary rendering; close front crop omits rear trail. Healthy controls have no smoke. Actual fall keeps hull/wheels together. Camera-only photos at0.5/1.5; scripted crash camera overrides these requests. All188 new original-size captures inspected and exact raws deleted, including excluded approach-only/stalled diagnostics. Initial tap stored reused drive objects; that auxiliary array is excluded, exact executed physical keyboard commands and trajectories are retained. No game/target/performance changes."
-          },
-          {
-            "file": "docs/reports/sweep-c3/L9-05/physical-full.json.gz",
-            "sha256": "e12d7e7ea34e4b8caacf5593057c3e293d441394641e79a5c3e10a3c2125f63a",
-            "what": "Current-source healthy/zero physical WASD comparisons and ordinary native controls: zero durability remains driveable, never breaks down. Uninterrupted matched straight-road fixed-tick samples measure60.6682053% of healthy peak speed at both qualities, inside58–62%; road speed cap0.6. Separate physical zero runs with ordinary reverse/steer recovery drive1676.98/1610.42m to the forced crash, every pre-crash sample HP0 and smoking. Personally reviewed dense opaque grey exhaust cloud in wide road images after ordinary rendering; close front crop omits rear trail. Healthy controls have no smoke. Actual fall keeps hull/wheels together. Camera-only photos at0.5/1.5; scripted crash camera overrides these requests. All188 new original-size captures inspected and exact raws deleted, including excluded approach-only/stalled diagnostics. Initial tap stored reused drive objects; that auxiliary array is excluded, exact executed physical keyboard commands and trajectories are retained. No game/target/performance changes."
-          },
-          {
-            "file": "docs/reports/sweep-c3/L9-05/physical-zero.json.gz",
-            "sha256": "27e4ebe0844c3d82061c46dd5994730784554093f4fd931fa00fceaa0baa2818",
-            "what": "Current-source healthy/zero physical WASD comparisons and ordinary native controls: zero durability remains driveable, never breaks down. Uninterrupted matched straight-road fixed-tick samples measure60.6682053% of healthy peak speed at both qualities, inside58–62%; road speed cap0.6. Separate physical zero runs with ordinary reverse/steer recovery drive1676.98/1610.42m to the forced crash, every pre-crash sample HP0 and smoking. Personally reviewed dense opaque grey exhaust cloud in wide road images after ordinary rendering; close front crop omits rear trail. Healthy controls have no smoke. Actual fall keeps hull/wheels together. Camera-only photos at0.5/1.5; scripted crash camera overrides these requests. All188 new original-size captures inspected and exact raws deleted, including excluded approach-only/stalled diagnostics. Initial tap stored reused drive objects; that auxiliary array is excluded, exact executed physical keyboard commands and trajectories are retained. No game/target/performance changes."
-          },
-          {
-            "file": "docs/reports/sweep-c3/L9-05/physical-speed.json.gz",
-            "sha256": "f030efca6b827f4cb41846e724f0c5f4a3279adb7eb545e386b02cf97075d97b",
-            "what": "Current-source healthy/zero physical WASD comparisons and ordinary native controls: zero durability remains driveable, never breaks down. Uninterrupted matched straight-road fixed-tick samples measure60.6682053% of healthy peak speed at both qualities, inside58–62%; road speed cap0.6. Separate physical zero runs with ordinary reverse/steer recovery drive1676.98/1610.42m to the forced crash, every pre-crash sample HP0 and smoking. Personally reviewed dense opaque grey exhaust cloud in wide road images after ordinary rendering; close front crop omits rear trail. Healthy controls have no smoke. Actual fall keeps hull/wheels together. Camera-only photos at0.5/1.5; scripted crash camera overrides these requests. All188 new original-size captures inspected and exact raws deleted, including excluded approach-only/stalled diagnostics. Initial tap stored reused drive objects; that auxiliary array is excluded, exact executed physical keyboard commands and trajectories are retained. No game/target/performance changes."
-          },
-          {
-            "file": "docs/reports/sweep-c3/L9-05/second-review/review.json",
-            "sha256": "f2bb9a9e2146122db7aedf5b4bc603bdd3e757b6324b6bd1950033ed2072d85b",
-            "what": "Current-source healthy/zero physical WASD comparisons and ordinary native controls: zero durability remains driveable, never breaks down. Uninterrupted matched straight-road fixed-tick samples measure60.6682053% of healthy peak speed at both qualities, inside58–62%; road speed cap0.6. Separate physical zero runs with ordinary reverse/steer recovery drive1676.98/1610.42m to the forced crash, every pre-crash sample HP0 and smoking. Personally reviewed dense opaque grey exhaust cloud in wide road images after ordinary rendering; close front crop omits rear trail. Healthy controls have no smoke. Actual fall keeps hull/wheels together. Camera-only photos at0.5/1.5; scripted crash camera overrides these requests. All188 new original-size captures inspected and exact raws deleted, including excluded approach-only/stalled diagnostics. Initial tap stored reused drive objects; that auxiliary array is excluded, exact executed physical keyboard commands and trajectories are retained. No game/target/performance changes."
-          },
-          {
-            "file": "docs/reports/sweep-c3/L9-05/recovery-review/review.json",
-            "sha256": "295db0c5b1c56cd637b9dd6866a8ca2338779fb4e42fe18ef8028f313a9d5aee",
-            "what": "Current-source healthy/zero physical WASD comparisons and ordinary native controls: zero durability remains driveable, never breaks down. Uninterrupted matched straight-road fixed-tick samples measure60.6682053% of healthy peak speed at both qualities, inside58–62%; road speed cap0.6. Separate physical zero runs with ordinary reverse/steer recovery drive1676.98/1610.42m to the forced crash, every pre-crash sample HP0 and smoking. Personally reviewed dense opaque grey exhaust cloud in wide road images after ordinary rendering; close front crop omits rear trail. Healthy controls have no smoke. Actual fall keeps hull/wheels together. Camera-only photos at0.5/1.5; scripted crash camera overrides these requests. All188 new original-size captures inspected and exact raws deleted, including excluded approach-only/stalled diagnostics. Initial tap stored reused drive objects; that auxiliary array is excluded, exact executed physical keyboard commands and trajectories are retained. No game/target/performance changes."
-          },
-          {
-            "file": "docs/reports/sweep-c3/L9-05/first-review/review.json",
-            "sha256": "feb17bedb9c66756c3abd3de60fd0f16756c078b41293abe2fa5f82ff7c04b34",
-            "what": "Current-source healthy/zero physical WASD comparisons and ordinary native controls: zero durability remains driveable, never breaks down. Uninterrupted matched straight-road fixed-tick samples measure60.6682053% of healthy peak speed at both qualities, inside58–62%; road speed cap0.6. Separate physical zero runs with ordinary reverse/steer recovery drive1676.98/1610.42m to the forced crash, every pre-crash sample HP0 and smoking. Personally reviewed dense opaque grey exhaust cloud in wide road images after ordinary rendering; close front crop omits rear trail. Healthy controls have no smoke. Actual fall keeps hull/wheels together. Camera-only photos at0.5/1.5; scripted crash camera overrides these requests. All188 new original-size captures inspected and exact raws deleted, including excluded approach-only/stalled diagnostics. Initial tap stored reused drive objects; that auxiliary array is excluded, exact executed physical keyboard commands and trajectories are retained. No game/target/performance changes."
-          },
-          {
-            "file": "docs/reports/sweep-c3/L9-05/retry-review/review.json",
-            "sha256": "0c1b8bd3b5291262e1c6c6ac31f3b7dea7ed980c9e0dfc3e0377525b6f488f1d",
-            "what": "Current-source healthy/zero physical WASD comparisons and ordinary native controls: zero durability remains driveable, never breaks down. Uninterrupted matched straight-road fixed-tick samples measure60.6682053% of healthy peak speed at both qualities, inside58–62%; road speed cap0.6. Separate physical zero runs with ordinary reverse/steer recovery drive1676.98/1610.42m to the forced crash, every pre-crash sample HP0 and smoking. Personally reviewed dense opaque grey exhaust cloud in wide road images after ordinary rendering; close front crop omits rear trail. Healthy controls have no smoke. Actual fall keeps hull/wheels together. Camera-only photos at0.5/1.5; scripted crash camera overrides these requests. All188 new original-size captures inspected and exact raws deleted, including excluded approach-only/stalled diagnostics. Initial tap stored reused drive objects; that auxiliary array is excluded, exact executed physical keyboard commands and trajectories are retained. No game/target/performance changes."
-          },
-          {
-            "file": "docs/reports/sweep-c3/L9-05/native.json.gz",
-            "sha256": "b541d8a6d7fb5360c2f9eed602123a5c2dba6fb65162cc3004d744b7c268ebc0",
-            "what": "Current-source healthy/zero physical WASD comparisons and ordinary native controls: zero durability remains driveable, never breaks down. Uninterrupted matched straight-road fixed-tick samples measure60.6682053% of healthy peak speed at both qualities, inside58–62%; road speed cap0.6. Separate physical zero runs with ordinary reverse/steer recovery drive1676.98/1610.42m to the forced crash, every pre-crash sample HP0 and smoking. Personally reviewed dense opaque grey exhaust cloud in wide road images after ordinary rendering; close front crop omits rear trail. Healthy controls have no smoke. Actual fall keeps hull/wheels together. Camera-only photos at0.5/1.5; scripted crash camera overrides these requests. All188 new original-size captures inspected and exact raws deleted, including excluded approach-only/stalled diagnostics. Initial tap stored reused drive objects; that auxiliary array is excluded, exact executed physical keyboard commands and trajectories are retained. No game/target/performance changes."
+            "sha256": "4a7802248b720e506312c5f167402d49e92ff5637b64a3983361dab55dfe8f62",
+            "what": "Current-source actual keyboard trajectories, speed comparison, personally inspected SHA256 capture review, or actual-consumer fault result; source hashes are never rebound."
           },
           {
             "file": "docs/reports/sweep-c3/L9-05/coverage-proof.json",
             "sha256": "bd9a691989c3fbeed3e6b1b9e41f52ab17d02b75f427ecf8876636a40912f0cb",
-            "what": "Eight temporary source-bound invalid-evidence controls reject; exact original bytes restored."
+            "what": "Current-source actual keyboard trajectories, speed comparison, personally inspected SHA256 capture review, or actual-consumer fault result; source hashes are never rebound."
+          },
+          {
+            "file": "docs/reports/sweep-c4/L9-05-full-review.json",
+            "sha256": "8527e65c6e043fde2f625b36c699835c8cf6331e0ee6ded410b5dbc105662e39",
+            "what": "Current-source actual keyboard trajectories, speed comparison, personally inspected SHA256 capture review, or actual-consumer fault result; source hashes are never rebound."
+          },
+          {
+            "file": "docs/reports/sweep-c4/L9-05-zero-review.json",
+            "sha256": "f0214a58706d38890605f6b3332c14412e760754e2d837e1c6b8a4bcf227a7f9",
+            "what": "Current-source actual keyboard trajectories, speed comparison, personally inspected SHA256 capture review, or actual-consumer fault result; source hashes are never rebound."
+          },
+          {
+            "file": "docs/reports/sweep-c4/L9-05-full-assembled.json.gz",
+            "sha256": "3b6dc320b2d1238b71050a222dcfe98146d2f137a07c8cf8b8ee75393925fd8a",
+            "what": "Current-source actual keyboard trajectories, speed comparison, personally inspected SHA256 capture review, or actual-consumer fault result; source hashes are never rebound."
+          },
+          {
+            "file": "docs/reports/sweep-c4/L9-05-zero-assembled.json.gz",
+            "sha256": "e72e19b78fda9333de999a33150ddeecf3ca1de1eadb18415a020fc6207c4f35",
+            "what": "Current-source actual keyboard trajectories, speed comparison, personally inspected SHA256 capture review, or actual-consumer fault result; source hashes are never rebound."
+          },
+          {
+            "file": "docs/reports/sweep-c4/L9-05-speed-assembled.json.gz",
+            "sha256": "c72bd1104f5f449542e283c674c58089104b69f115b9a40b6ee8090e20a48b2a",
+            "what": "Current-source actual keyboard trajectories, speed comparison, personally inspected SHA256 capture review, or actual-consumer fault result; source hashes are never rebound."
           }
         ],
-        "notes": "Separate uninterrupted physics comparison, rendered smoke review and full physical zero-durability continuation; no perf claim.",
-        "freshness": "STALE",
+        "notes": "Rendered capture run has insufficient high0HP steady-road coverage; only the independent uninterrupted speed run qualifies ratio. Visual and speed producer bytes are separately archived. Auxiliary input tap retained reused drive objects and is excluded; exact executed keyboard commands and trajectories are authoritative. Runnable producer now clones drive samples for future runs, without rebinding current measurements to those changed bytes. No game, count, timer, cap or performance changes.",
+        "freshness": "FRESH",
         "latestRelevantCommit": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7"
       }
     },
@@ -7967,8 +8009,8 @@
       "id": "L9-07",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete crash impact count on ordinary route: 1 (target 1 ≤ value ≤ 1; PASS); low/complete wreck objective starts after crash impact: {\"objectiveTick\":7148,\"impactTick\":7148} (target objectiveTick ≥ impactTick; PASS); low/stationary crash impact count on ordinary route: 1 (target 1 ≤ value ≤ 1; PASS); low/stationary wreck objective starts after crash impact: {\"objectiveTick\":7148,\"impactTick\":7148} (target objectiveTick ≥ impactTick; PASS); high/complete crash impact count on ordinary route: 1 (target 1 ≤ value ≤ 1; PASS); high/complete wreck objective starts after crash impact: {\"objectiveTick\":7148,\"impactTick\":7148} (target objectiveTick ≥ impactTick; PASS); high/stationary crash impact count on ordinary route: 1 (target 1 ≤ value ≤ 1; PASS); high/stationary wreck objective starts after crash impact: {\"objectiveTick\":7148,\"impactTick\":7148} (target objectiveTick ≥ impactTick; PASS); low/controlled-fixture canonical crash once and wreck objective ordering: {\"signals\":[{\"tick\":6848,\"name\":\"l9.crash-approach\"},{\"tick\":7028,\"name\":\"l9.bridge-collapse\"},{\"tick\":7148,\"name\":\"l9.crash-impact\"},{\"tick\":7688,\"name\":\"l9.crawl-finished\"}],\"objectives\":[{\"tick\":7148,\"id\":\"reach-outskirts\"}],\"states\":[{\"tick\":1,\"phase\":\"driving\",\"hp\":1000,\"position\":{\"x\":-550,\"y\":1.0482969284057617,\"z\":0,\"yaw\":0},\"driver\":1,\"wheels\":4,\"entityPresent\":true},{\"tick\":6848,\"phase\":… (full values in JSON) (target exactly one impact; wreck objective at/after impact; completed crash sequence; PASS); low/controlled-fixture zero crash once and wreck objective ordering: {\"signals\":[{\"tick\":15881,\"name\":\"l9.crash-approach\"},{\"tick\":16061,\"name\":\"l9.bridge-collapse\"},{\"tick\":16181,\"name\":\"l9.crash-impact\"},{\"tick\":16721,\"name\":\"l9.crawl-finished\"}],\"objectives\":[{\"tick\":16181,\"id\":\"reach-outskirts\"}],\"states\":[{\"tick\":1,\"phase\":\"driving\",\"hp\":0,\"position\":{\"x\":-550,\"y\":1.0482969284057617,\"z\":0,\"yaw\":0},\"driver\":1,\"wheels\":4,\"entityPresent\":true},{\"tick\":15881,\"phas… (full values in JSON) (target exactly one impact; wreck objective at/after impact; completed crash sequence; PASS); high/controlled-fixture canonical crash once and wreck objective ordering: {\"signals\":[{\"tick\":6848,\"name\":\"l9.crash-approach\"},{\"tick\":7028,\"name\":\"l9.bridge-collapse\"},{\"tick\":7148,\"name\":\"l9.crash-impact\"},{\"tick\":7688,\"name\":\"l9.crawl-finished\"}],\"objectives\":[{\"tick\":7148,\"id\":\"reach-outskirts\"}],\"states\":[{\"tick\":1,\"phase\":\"driving\",\"hp\":1000,\"position\":{\"x\":-550,\"y\":1.0482969284057617,\"z\":0,\"yaw\":0},\"driver\":1,\"wheels\":4,\"entityPresent\":true},{\"tick\":6848,\"phase\":… (full values in JSON) (target exactly one impact; wreck objective at/after impact; completed crash sequence; PASS); high/controlled-fixture zero crash once and wreck objective ordering: {\"signals\":[{\"tick\":15869,\"name\":\"l9.crash-approach\"},{\"tick\":16049,\"name\":\"l9.bridge-collapse\"},{\"tick\":16169,\"name\":\"l9.crash-impact\"},{\"tick\":16709,\"name\":\"l9.crawl-finished\"}],\"objectives\":[{\"tick\":16169,\"id\":\"reach-outskirts\"}],\"states\":[{\"tick\":1,\"phase\":\"driving\",\"hp\":0,\"position\":{\"x\":-550,\"y\":1.0482969284057617,\"z\":0,\"yaw\":0},\"driver\":1,\"wheels\":4,\"entityPresent\":true},{\"tick\":15869,\"phas… (full values in JSON) (target exactly one impact; wreck objective at/after impact; completed crash sequence; PASS) Manual review PASS (STALE, Codex sweep-c3): Current-source actual healthy and zero-HP physical WASD drives, both qualities, reach post-impact crawl. Exactly one impact per case; reach-outskirts objective starts on that same tick (full6858/6858; zero16347/12762). Every sampled pre-impact HUD remains Drive toward the city; Get clear of the wreck appears only at/after impact. All falling snapshots keep original hull entity and4 physics wheels, and personally inspected10-frame visual strips show complete green hull descending/turning with attached rendered wheels; no floating wheels or vanished hull. Zero final photos show attached burning wreck under crash flash with courier crawling clear. Existing native full/zero controls independently qualify one-shot/ordering. Scripted crash camera overrides requested0.5/1.5, so these paired images are the actual fixed cinematic view, not independent zoom proof. Initial approach-only and stalled zero diagnostics excluded. No game or target changes.",
-      "automatedComplete": false,
+      "value": "low/complete crash impact count on ordinary route: 1 (target 1 ≤ value ≤ 1; PASS); low/complete wreck objective starts after crash impact: {\"objectiveTick\":7148,\"impactTick\":7148} (target objectiveTick ≥ impactTick; PASS); low/stationary crash impact count on ordinary route: 1 (target 1 ≤ value ≤ 1; PASS); low/stationary wreck objective starts after crash impact: {\"objectiveTick\":7148,\"impactTick\":7148} (target objectiveTick ≥ impactTick; PASS); high/complete crash impact count on ordinary route: 1 (target 1 ≤ value ≤ 1; PASS); high/complete wreck objective starts after crash impact: {\"objectiveTick\":7148,\"impactTick\":7148} (target objectiveTick ≥ impactTick; PASS); high/stationary crash impact count on ordinary route: 1 (target 1 ≤ value ≤ 1; PASS); high/stationary wreck objective starts after crash impact: {\"objectiveTick\":7148,\"impactTick\":7148} (target objectiveTick ≥ impactTick; PASS); low/controlled-fixture canonical crash once and wreck objective ordering: {\"signals\":[{\"tick\":6848,\"name\":\"l9.crash-approach\"},{\"tick\":7028,\"name\":\"l9.bridge-collapse\"},{\"tick\":7148,\"name\":\"l9.crash-impact\"},{\"tick\":7688,\"name\":\"l9.crawl-finished\"}],\"objectives\":[{\"tick\":7148,\"id\":\"reach-outskirts\"}],\"states\":[{\"tick\":1,\"phase\":\"driving\",\"hp\":1000,\"position\":{\"x\":-550,\"y\":1.0482969284057617,\"z\":0,\"yaw\":0},\"driver\":1,\"wheels\":4,\"entityPresent\":true},{\"tick\":6848,\"phase\":… (full values in JSON) (target exactly one impact; wreck objective at/after impact; completed crash sequence; PASS); low/controlled-fixture zero crash once and wreck objective ordering: {\"signals\":[{\"tick\":15881,\"name\":\"l9.crash-approach\"},{\"tick\":16061,\"name\":\"l9.bridge-collapse\"},{\"tick\":16181,\"name\":\"l9.crash-impact\"},{\"tick\":16721,\"name\":\"l9.crawl-finished\"}],\"objectives\":[{\"tick\":16181,\"id\":\"reach-outskirts\"}],\"states\":[{\"tick\":1,\"phase\":\"driving\",\"hp\":0,\"position\":{\"x\":-550,\"y\":1.0482969284057617,\"z\":0,\"yaw\":0},\"driver\":1,\"wheels\":4,\"entityPresent\":true},{\"tick\":15881,\"phas… (full values in JSON) (target exactly one impact; wreck objective at/after impact; completed crash sequence; PASS); low/controlled-physical physical full and zero whole-body crash and objective ordering: {\"validPair\":true,\"crashes\":[{\"mode\":\"full\",\"impacts\":[{\"type\":\"mission.signal\",\"tick\":9960,\"name\":\"l9.crash-impact\",\"actorId\":667}],\"objectives\":[{\"type\":\"objective.started\",\"id\":\"reach-outskirts\",\"tick\":9960}],\"fallSamples\":10,\"intact\":true,\"hudOrdered\":true},{\"mode\":\"zero\",\"impacts\":[{\"type\":\"mission.signal\",\"tick\":14585,\"name\":\"l9.crash-impact\",\"actorId\":667}],\"objectives\":[{\"type\":\"objective.… (full values in JSON) (target full and0HP actual drives reach crawl; one impact; whole hull/wheels throughout falling samples and reviewed frames; objective/HUD at or after impact; PASS); high/controlled-fixture canonical crash once and wreck objective ordering: {\"signals\":[{\"tick\":6848,\"name\":\"l9.crash-approach\"},{\"tick\":7028,\"name\":\"l9.bridge-collapse\"},{\"tick\":7148,\"name\":\"l9.crash-impact\"},{\"tick\":7688,\"name\":\"l9.crawl-finished\"}],\"objectives\":[{\"tick\":7148,\"id\":\"reach-outskirts\"}],\"states\":[{\"tick\":1,\"phase\":\"driving\",\"hp\":1000,\"position\":{\"x\":-550,\"y\":1.0482969284057617,\"z\":0,\"yaw\":0},\"driver\":1,\"wheels\":4,\"entityPresent\":true},{\"tick\":6848,\"phase\":… (full values in JSON) (target exactly one impact; wreck objective at/after impact; completed crash sequence; PASS); high/controlled-fixture zero crash once and wreck objective ordering: {\"signals\":[{\"tick\":15869,\"name\":\"l9.crash-approach\"},{\"tick\":16049,\"name\":\"l9.bridge-collapse\"},{\"tick\":16169,\"name\":\"l9.crash-impact\"},{\"tick\":16709,\"name\":\"l9.crawl-finished\"}],\"objectives\":[{\"tick\":16169,\"id\":\"reach-outskirts\"}],\"states\":[{\"tick\":1,\"phase\":\"driving\",\"hp\":0,\"position\":{\"x\":-550,\"y\":1.0482969284057617,\"z\":0,\"yaw\":0},\"driver\":1,\"wheels\":4,\"entityPresent\":true},{\"tick\":15869,\"phas… (full values in JSON) (target exactly one impact; wreck objective at/after impact; completed crash sequence; PASS); high/controlled-physical physical full and zero whole-body crash and objective ordering: {\"validPair\":true,\"crashes\":[{\"mode\":\"full\",\"impacts\":[{\"type\":\"mission.signal\",\"tick\":7305,\"name\":\"l9.crash-impact\",\"actorId\":667}],\"objectives\":[{\"type\":\"objective.started\",\"id\":\"reach-outskirts\",\"tick\":7305}],\"fallSamples\":10,\"intact\":true,\"hudOrdered\":true},{\"mode\":\"zero\",\"impacts\":[{\"type\":\"mission.signal\",\"tick\":10473,\"name\":\"l9.crash-impact\",\"actorId\":667}],\"objectives\":[{\"type\":\"objective.… (full values in JSON) (target full and0HP actual drives reach crawl; one impact; whole hull/wheels throughout falling samples and reviewed frames; objective/HUD at or after impact; PASS) Manual review PASS (STALE, Codex sweep-c3): Current-source actual healthy and zero-HP physical WASD drives, both qualities, reach post-impact crawl. Exactly one impact per case; reach-outskirts objective starts on that same tick (full6858/6858; zero16347/12762). Every sampled pre-impact HUD remains Drive toward the city; Get clear of the wreck appears only at/after impact. All falling snapshots keep original hull entity and4 physics wheels, and personally inspected10-frame visual strips show complete green hull descending/turning with attached rendered wheels; no floating wheels or vanished hull. Zero final photos show attached burning wreck under crash flash with courier crawling clear. Existing native full/zero controls independently qualify one-shot/ordering. Scripted crash camera overrides requested0.5/1.5, so these paired images are the actual fixed cinematic view, not independent zoom proof. Initial approach-only and stalled zero diagnostics excluded. No game or target changes.",
+      "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L9-low-complete.json",
         "docs/reports/fix51-verify/receipts/L9-low-stationary.json",
@@ -7976,6 +8018,7 @@
         "docs/reports/fix51-verify/receipts/L9-high-stationary.json",
         "docs/reports/fix55-c/L9-native.json",
         "docs/reports/sweep-c3/L9-05/qualification.json",
+        "docs/reports/sweep-c4/L9-05-prior-qualification.json",
         "docs/reports/sweep-c3/L9-05/physical-full.json.gz",
         "docs/reports/sweep-c3/L9-05/physical-zero.json.gz",
         "docs/reports/sweep-c3/L9-05/second-review/review.json",
@@ -8331,6 +8374,64 @@
         },
         {
           "id": "L9-07",
+          "clause": "physical full and zero whole-body crash and objective ordering",
+          "tier": "low",
+          "policy": "controlled-physical",
+          "status": "PASS",
+          "value": {
+            "validPair": true,
+            "crashes": [
+              {
+                "mode": "full",
+                "impacts": [
+                  {
+                    "type": "mission.signal",
+                    "tick": 9960,
+                    "name": "l9.crash-impact",
+                    "actorId": 667
+                  }
+                ],
+                "objectives": [
+                  {
+                    "type": "objective.started",
+                    "id": "reach-outskirts",
+                    "tick": 9960
+                  }
+                ],
+                "fallSamples": 10,
+                "intact": true,
+                "hudOrdered": true
+              },
+              {
+                "mode": "zero",
+                "impacts": [
+                  {
+                    "type": "mission.signal",
+                    "tick": 14585,
+                    "name": "l9.crash-impact",
+                    "actorId": 667
+                  }
+                ],
+                "objectives": [
+                  {
+                    "type": "objective.started",
+                    "id": "reach-outskirts",
+                    "tick": 14585
+                  }
+                ],
+                "fallSamples": 10,
+                "intact": true,
+                "hudOrdered": true
+              }
+            ],
+            "visual": true
+          },
+          "target": "full and0HP actual drives reach crawl; one impact; whole hull/wheels throughout falling samples and reviewed frames; objective/HUD at or after impact",
+          "receipt": "docs/reports/sweep-c3/L9-05/qualification.json",
+          "level": "L9"
+        },
+        {
+          "id": "L9-07",
           "clause": "canonical crash once and wreck objective ordering",
           "tier": "high",
           "policy": "controlled-fixture",
@@ -8572,6 +8673,64 @@
           "status": "PASS",
           "receipt": "docs/reports/fix55-c/L9-native.json",
           "level": "L9"
+        },
+        {
+          "id": "L9-07",
+          "clause": "physical full and zero whole-body crash and objective ordering",
+          "tier": "high",
+          "policy": "controlled-physical",
+          "status": "PASS",
+          "value": {
+            "validPair": true,
+            "crashes": [
+              {
+                "mode": "full",
+                "impacts": [
+                  {
+                    "type": "mission.signal",
+                    "tick": 7305,
+                    "name": "l9.crash-impact",
+                    "actorId": 667
+                  }
+                ],
+                "objectives": [
+                  {
+                    "type": "objective.started",
+                    "id": "reach-outskirts",
+                    "tick": 7305
+                  }
+                ],
+                "fallSamples": 10,
+                "intact": true,
+                "hudOrdered": true
+              },
+              {
+                "mode": "zero",
+                "impacts": [
+                  {
+                    "type": "mission.signal",
+                    "tick": 10473,
+                    "name": "l9.crash-impact",
+                    "actorId": 667
+                  }
+                ],
+                "objectives": [
+                  {
+                    "type": "objective.started",
+                    "id": "reach-outskirts",
+                    "tick": 10473
+                  }
+                ],
+                "fallSamples": 10,
+                "intact": true,
+                "hudOrdered": true
+              }
+            ],
+            "visual": true
+          },
+          "target": "full and0HP actual drives reach crawl; one impact; whole hull/wheels throughout falling samples and reviewed frames; objective/HUD at or after impact",
+          "receipt": "docs/reports/sweep-c3/L9-05/qualification.json",
+          "level": "L9"
         }
       ],
       "historical": {
@@ -8584,7 +8743,7 @@
         ],
         "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record one uninterrupted crash from full HP and one from zero HP, with vehicle-part visibility and wreck objective event order."
       },
-      "remaining": "Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: Crash exactly once (full or 0 HP); APC falls whole (no floating wheels/vanishing hull); \"Get clear of the wreck\" appears only after the crash.",
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
       "review": {
         "tag": "O",
         "instruction": "Crash exactly once (full or 0 HP); APC falls whole (no floating wheels/vanishing hull); \"Get clear of the wreck\" appears only after the crash.",
@@ -8605,7 +8764,7 @@
         ],
         "evidence": [
           {
-            "file": "docs/reports/sweep-c3/L9-05/qualification.json",
+            "file": "docs/reports/sweep-c4/L9-05-prior-qualification.json",
             "sha256": "71af0128866c2d8b9b599de85e944fca16242aa20631e1672b0a21be56169e89",
             "what": "Current-source actual healthy and zero-HP physical WASD drives, both qualities, reach post-impact crawl. Exactly one impact per case; reach-outskirts objective starts on that same tick (full6858/6858; zero16347/12762). Every sampled pre-impact HUD remains Drive toward the city; Get clear of the wreck appears only at/after impact. All falling snapshots keep original hull entity and4 physics wheels, and personally inspected10-frame visual strips show complete green hull descending/turning with attached rendered wheels; no floating wheels or vanished hull. Zero final photos show attached burning wreck under crash flash with courier crawling clear. Existing native full/zero controls independently qualify one-shot/ordering. Scripted crash camera overrides requested0.5/1.5, so these paired images are the actual fixed cinematic view, not independent zoom proof. Initial approach-only and stalled zero diagnostics excluded. No game or target changes."
           },
@@ -8640,7 +8799,7 @@
             "what": "Eight source-bound duplicate impact, early objective/HUD, missing hull/wheel, unfinished, unseen and stale controls reject; exactbytes restored."
           }
         ],
-        "notes": "Full unchanged row, native event-order controls plus current physical whole-hull fall review.",
+        "notes": "Full unchanged row, native event-order controls plus current physical whole-hull fall review. Prior qualification manifest archived byte-for-byte by sweep-c4; this historical verdict is not requalified by that path move.",
         "freshness": "STALE",
         "latestRelevantCommit": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7"
       }

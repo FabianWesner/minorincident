@@ -1,0 +1,39 @@
+{
+  "full": {
+    "file": "docs/reports/sweep-c3/L9-05/physical-full.json.gz",
+    "sha256": "e12d7e7ea34e4b8caacf5593057c3e293d441394641e79a5c3e10a3c2125f63a"
+  },
+  "zero": {
+    "file": "docs/reports/sweep-c3/L9-05/physical-zero.json.gz",
+    "sha256": "27e4ebe0844c3d82061c46dd5994730784554093f4fd931fa00fceaa0baa2818"
+  },
+  "fullProducer": {
+    "file": "docs/reports/sweep-c3/L9-05/second-producer.mjs",
+    "sha256": "fb564975e97bc53bcf9ecf0c058fdfe902791afa635e31004d485bf3fe44bced"
+  },
+  "zeroProducer": {
+    "file": "tools/qa/accept/sweep-c3-l9-zero.mjs",
+    "sha256": "409515562b5a18837664b74da58dc6c362dc993ed6d68ef0dd385c97a051584b"
+  },
+  "fullReview": {
+    "file": "docs/reports/sweep-c3/L9-05/second-review/review.json",
+    "sha256": "f2bb9a9e2146122db7aedf5b4bc603bdd3e757b6324b6bd1950033ed2072d85b"
+  },
+  "zeroReview": {
+    "file": "docs/reports/sweep-c3/L9-05/recovery-review/review.json",
+    "sha256": "295db0c5b1c56cd637b9dd6866a8ca2338779fb4e42fe18ef8028f313a9d5aee"
+  },
+  "visual": {
+    "smokeObserved": true,
+    "wholeHullAndAttachedWheels": true,
+    "what": "All original-size panels personally inspected. Zero APC trails an opaque grey exhaust cloud in wide road frames, healthy control does not; close front camera crops the rear plume. Full/zero hulls stay whole with attached wheels through falling frames; post-impact wreck visible. Cinematic controls its own camera and overrides requested zoom."
+  },
+  "speed": {
+    "file": "docs/reports/sweep-c3/L9-05/physical-speed.json.gz",
+    "sha256": "f030efca6b827f4cb41846e724f0c5f4a3279adb7eb545e386b02cf97075d97b"
+  },
+  "speedProducer": {
+    "file": "docs/reports/sweep-c3/L9-05/first-producer.mjs",
+    "sha256": "4f0da90e690fb7385e33ed3a0ac73e77021986c9cd58fe3530f204ecf4887ffd"
+  }
+}
