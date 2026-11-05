@@ -98,10 +98,13 @@ export const l3Dressing: readonly L3Dressing[] = [
   ...([[154.0, -4.6], [154.0, 4.6], [162.0, -1.0]] as const).map(([x, z]) => d('army', 'army', 'prop.jersey-barrier', x, z, { yaw: 0 })),
 ].map(entry => entry.street === 'army' ? { ...entry, x: entry.x + l3ArmyOffset } : entry);
 
-/** Two staggered crash lines force Oak -> Boulevard; their ends overlap the solid lot frontages. */
+/** Two staggered crash lines force Oak -> Boulevard; their ends overlap the solid lot frontages.
+ * fix65-a (L3-12): each line stands at the east mouth of its open cross-link alley (x -91.5..-88.5 and -16.5..-13.5), not
+ * 14-24 m past it. A screenshot player who meets the wreck now sees the open alley beside it in the same frame instead of a
+ * dead-end street that needs an unseen backtrack. The route itself (Oak, then the Boulevard) is unchanged. */
 export const l3Roadblocks = [
-  {x:-72,z:0,halfWidth:5}, {x:-72,z:-28,halfWidth:6},
-  {x:12,z:0,halfWidth:5}, {x:12,z:28,halfWidth:5},
+  {x:-85.5,z:0,halfWidth:5}, {x:-85.5,z:-28,halfWidth:6},
+  {x:-10,z:0,halfWidth:5}, {x:-10,z:28,halfWidth:5},
 ] as const;
 
 /** The big hull of each crash line (PO 10-12: a blocker must read as a real vehicle, never a box): bus, army truck, bus, APC. */
