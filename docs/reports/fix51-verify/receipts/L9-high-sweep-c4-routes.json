@@ -1,0 +1,248 @@
+{
+  "version": 1,
+  "level": "L9",
+  "tier": "high",
+  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+  "fixtureHash": "287e2e31df501067df041d4c4003bcc55dbed23e18263cb35a8e7e90c11df5d0",
+  "errors": [],
+  "observations": {
+    "proofPath": "docs/reports/sweep-c4/L9-04-high-physical.json.gz",
+    "reviewPath": "docs/reports/sweep-c4/L9-04-review.json"
+  },
+  "checks": [
+    {
+      "id": "L9-04",
+      "clause": "physical matched safe route retains more durability than shortcut",
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "value": {
+        "validPair": true,
+        "safe": 940,
+        "shortcut": 870
+      },
+      "target": "same healthy seed1 start; both physical drives finish at normal pre-crash approach; safe pre-crash HP strictly greater",
+      "status": "PASS",
+      "receipt": "docs/reports/sweep-c4/L9-04-high-physical.json.gz"
+    },
+    {
+      "id": "L9-04",
+      "clause": "physical route contact and attack billing",
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "value": [
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 2612,
+          "sourceId": 667,
+          "targetId": 822,
+          "source": "contact",
+          "contactId": 1,
+          "attackId": null,
+          "before": 1000,
+          "after": 990
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 8731,
+          "sourceId": 667,
+          "targetId": 1158,
+          "source": "contact",
+          "contactId": 2,
+          "attackId": null,
+          "before": 990,
+          "after": 980
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 9480,
+          "sourceId": 667,
+          "targetId": 1158,
+          "source": "contact",
+          "contactId": 3,
+          "attackId": null,
+          "before": 980,
+          "after": 970
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 9746,
+          "sourceId": 667,
+          "targetId": 1158,
+          "source": "contact",
+          "contactId": 4,
+          "attackId": null,
+          "before": 970,
+          "after": 960
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 9846,
+          "sourceId": 667,
+          "targetId": 1158,
+          "source": "contact",
+          "contactId": 5,
+          "attackId": null,
+          "before": 960,
+          "after": 950
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 11474,
+          "sourceId": 667,
+          "targetId": 1158,
+          "source": "contact",
+          "contactId": 6,
+          "attackId": null,
+          "before": 950,
+          "after": 940
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 1158,
+          "sourceId": 667,
+          "targetId": 748,
+          "source": "contact",
+          "contactId": 1,
+          "attackId": null,
+          "before": 1000,
+          "after": 990
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 1195,
+          "sourceId": 667,
+          "targetId": 749,
+          "source": "contact",
+          "contactId": 2,
+          "attackId": null,
+          "before": 990,
+          "after": 980
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 2344,
+          "sourceId": 667,
+          "targetId": 775,
+          "source": "contact",
+          "contactId": 3,
+          "attackId": null,
+          "before": 980,
+          "after": 970
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 2995,
+          "sourceId": 667,
+          "targetId": 822,
+          "source": "contact",
+          "contactId": 4,
+          "attackId": null,
+          "before": 970,
+          "after": 960
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3004,
+          "sourceId": 667,
+          "targetId": 817,
+          "source": "contact",
+          "contactId": 5,
+          "attackId": null,
+          "before": 960,
+          "after": 950
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3454,
+          "sourceId": 667,
+          "targetId": 865,
+          "source": "contact",
+          "contactId": 6,
+          "attackId": null,
+          "before": 950,
+          "after": 940
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3457,
+          "sourceId": 667,
+          "targetId": 862,
+          "source": "contact",
+          "contactId": 7,
+          "attackId": null,
+          "before": 940,
+          "after": 930
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3474,
+          "sourceId": 667,
+          "targetId": 861,
+          "source": "contact",
+          "contactId": 8,
+          "attackId": null,
+          "before": 930,
+          "after": 920
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3474,
+          "sourceId": 667,
+          "targetId": 867,
+          "source": "contact",
+          "contactId": 9,
+          "attackId": null,
+          "before": 920,
+          "after": 910
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3481,
+          "sourceId": 667,
+          "targetId": 866,
+          "source": "contact",
+          "contactId": 10,
+          "attackId": null,
+          "before": 910,
+          "after": 900
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3930,
+          "sourceId": 667,
+          "targetId": 919,
+          "source": "contact",
+          "contactId": 11,
+          "attackId": null,
+          "before": 900,
+          "after": 890
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3938,
+          "sourceId": 667,
+          "targetId": 926,
+          "source": "contact",
+          "contactId": 12,
+          "attackId": null,
+          "before": 890,
+          "after": 880
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3950,
+          "sourceId": 667,
+          "targetId": 923,
+          "source": "contact",
+          "contactId": 13,
+          "attackId": null,
+          "before": 880,
+          "after": 870
+        }
+      ],
+      "target": "nonempty actual hit ledger; ten damage per unique contact/attack transaction",
+      "status": "PASS",
+      "receipt": "docs/reports/sweep-c4/L9-04-high-physical.json.gz"
+    }
+  ]
+}
