@@ -1,0 +1,253 @@
+{
+  "row": "L6-05",
+  "status": "PASS",
+  "revision": "f322429f3998ee50dbce9f3bdc50b950d3b03efb",
+  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
+  "criterion": "combat: **reachable \u2265 95 %** (every infected spawns inside the walkable station/tunnel, none behind the tunnel wall); passive first attack \u2264 15 s after each breach caption; attacks on player \u2265 4/min (tune).",
+  "criteriaSha256": "144ccc0bf29d3dab1d91e5b38e3bf40c1ee16f78c83917ef9c55207fcccbd63a",
+  "observation": "Both tiers complete/passive bounded-path minimum100%; complete player windups5.012/min; passive player windups411.669/min. Actual passive first attacks after breach1/2 are1.617/6.267s. Separate every-tick trajectory proof (L6-trajectory-proof.json) follows every admission: all birth centres inside authored walkable station/tunnel floor polygons and all have legal birth paths; no behind-wall births. Read-only complete route hashes match canonical controls. Numeric combat criterion requalified; no subjective claim.",
+  "checks": [
+    {
+      "id": "L6-05",
+      "clause": "combat hard rule on actual player windups",
+      "level": "L6",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "seconds": 35.916666666666664,
+        "playerWindups": 3,
+        "groupWindups": 8,
+        "attacksPerMinute": 5.0116009280742455
+      },
+      "target": "nonzero player windups in each combat policy",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-complete.json"
+    },
+    {
+      "id": "L6-05",
+      "clause": "real player/group windups per minute",
+      "level": "L6",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 5.0116009280742455,
+      "target": "4 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-complete.json"
+    },
+    {
+      "id": "L6-05",
+      "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+      "level": "L6",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 100,
+      "target": "95 \u2264 value \u2264 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-complete.json"
+    },
+    {
+      "id": "L6-05",
+      "clause": "combat hard rule on actual player windups",
+      "level": "L6",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "seconds": 28.566666666666666,
+        "playerWindups": 196,
+        "groupWindups": 3,
+        "attacksPerMinute": 411.6686114352392
+      },
+      "target": "nonzero player windups in each combat policy",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-stationary.json"
+    },
+    {
+      "id": "L6-05",
+      "clause": "stationary first real player attack (phase clock)",
+      "level": "L6",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "seconds": 1.6166666666666667,
+        "windowSeconds": 28.566666666666666
+      },
+      "target": "\u226415 s",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-stationary.json"
+    },
+    {
+      "id": "L6-05",
+      "clause": "real player/group windups per minute",
+      "level": "L6",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 411.6686114352392,
+      "target": "4 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-stationary.json"
+    },
+    {
+      "id": "L6-05",
+      "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+      "level": "L6",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 100,
+      "target": "95 \u2264 value \u2264 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-stationary.json"
+    },
+    {
+      "id": "L6-05",
+      "clause": "stationary first attack after l6.breach1",
+      "level": "L6",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 1.6166666666666667,
+      "target": "player windup\u226415s after this breach caption",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-stationary.json"
+    },
+    {
+      "id": "L6-05",
+      "clause": "stationary first attack after l6.breach2",
+      "level": "L6",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 6.266666666666667,
+      "target": "player windup\u226415s after this breach caption",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-stationary.json"
+    },
+    {
+      "id": "L6-05",
+      "clause": "combat hard rule on actual player windups",
+      "level": "L6",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "seconds": 35.916666666666664,
+        "playerWindups": 3,
+        "groupWindups": 8,
+        "attacksPerMinute": 5.0116009280742455
+      },
+      "target": "nonzero player windups in each combat policy",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-complete.json"
+    },
+    {
+      "id": "L6-05",
+      "clause": "real player/group windups per minute",
+      "level": "L6",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 5.0116009280742455,
+      "target": "4 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-complete.json"
+    },
+    {
+      "id": "L6-05",
+      "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+      "level": "L6",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 100,
+      "target": "95 \u2264 value \u2264 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-complete.json"
+    },
+    {
+      "id": "L6-05",
+      "clause": "combat hard rule on actual player windups",
+      "level": "L6",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "seconds": 28.566666666666666,
+        "playerWindups": 196,
+        "groupWindups": 3,
+        "attacksPerMinute": 411.6686114352392
+      },
+      "target": "nonzero player windups in each combat policy",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-stationary.json"
+    },
+    {
+      "id": "L6-05",
+      "clause": "stationary first real player attack (phase clock)",
+      "level": "L6",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "seconds": 1.6166666666666667,
+        "windowSeconds": 28.566666666666666
+      },
+      "target": "\u226415 s",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-stationary.json"
+    },
+    {
+      "id": "L6-05",
+      "clause": "real player/group windups per minute",
+      "level": "L6",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 411.6686114352392,
+      "target": "4 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-stationary.json"
+    },
+    {
+      "id": "L6-05",
+      "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+      "level": "L6",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 100,
+      "target": "95 \u2264 value \u2264 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-stationary.json"
+    },
+    {
+      "id": "L6-05",
+      "clause": "stationary first attack after l6.breach1",
+      "level": "L6",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 1.6166666666666667,
+      "target": "player windup\u226415s after this breach caption",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-stationary.json"
+    },
+    {
+      "id": "L6-05",
+      "clause": "stationary first attack after l6.breach2",
+      "level": "L6",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 6.266666666666667,
+      "target": "player windup\u226415s after this breach caption",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-stationary.json"
+    }
+  ],
+  "receipts": [
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-complete.json",
+      "sha256": "57be6f07d03eca45f8ee9961d92b52fe06a9fe22c85004378324ab1cc0034dea"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-stationary.json",
+      "sha256": "a16942b4471be191a8c0f340ef9cdf727ea3827df9868a8926db5414e77a547e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-complete.json",
+      "sha256": "755b7b22077441d6d7830670a4fafb6cd5c397feeb441331c9ba0667ad335b4b"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-stationary.json",
+      "sha256": "03142d52daf67af16e80432f48ef15894c5e7c0b6809e8269c5018b4eeac5c3a"
+    }
+  ]
+}
