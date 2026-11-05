@@ -1,57 +1,32 @@
 {
   "row": "L3-16",
   "status": "FAIL",
-  "reviewer": "Codex fix62-a",
+  "reviewer": "Codex fix64-a",
   "date": "2026-11-05",
-  "commit": "ba261cb1a0076bb617f99ea85488ff713b79635a",
+  "commit": "5fcfe692e8d8b9386e8cce10834e87011c736b94",
   "clauses": [
     {
       "clause": "Late-afternoon light, \u2265 2 smoke columns in every street frame; streets read their damage type.",
       "verdict": "FAIL",
-      "note": "Retained emitters and stronger close-zoom visibility fix default/wide early street counterexamples, but both tiers at moving x-80/x-40 zoom0.5 still lack two identifiable rising columns. Full 24-frame matrix personally reviewed; keep FAIL. Static poses are presentation checks, not route evidence. P: judge warm low-angle light and the three street damage identities."
+      "note": "Fresh final24-frame low/high, three-street, actual zoom0.5/1/1.5 matrix inspected. Default zoom1 moving frames show two forms; closest Commerce frames still show only one identifiable vertical stem and a clipped diffuse right patch. Two framing/size trials were rejected because they moved broad haze into the foreground without reliable full-matrix readability. Original game smoke restored."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix62-a/L3-16-browser.json.gz",
-      "sha256": "9666064b2da861d124a574d2e24dd6b464f134d9456a698c8644dd667d7d3b8c",
-      "what": "Retained emitters and stronger close-zoom visibility fix default/wide early street counterexamples, but both tiers at moving x-80/x-40 zoom0.5 still lack two identifiable rising columns. Full 24-frame matrix personally reviewed; keep FAIL. Static poses are presentation checks, not route evidence. P: judge warm low-angle light and the three street damage identities."
+      "file": "docs/reports/fix64-a/L3-16-image-review.json",
+      "sha256": "9dfbfce09822bf1cdff6f9bf1883332ade2faf16dea0918eae452a35829555ba",
+      "what": "All54 baseline/trial/final records inspected and hashed; final24 actual zoom/street/quality matrix, exact count counterexample, scoped default-zoom success and PO review prompt."
     },
     {
-      "file": "docs/reports/fix62-a/L3-16-image-review.json",
-      "sha256": "945dffdf4c5b0cee770071eecc0ebf71e8cec345a4c3fc3e0792c60aeae2032e",
-      "what": "Retained emitters and stronger close-zoom visibility fix default/wide early street counterexamples, but both tiers at moving x-80/x-40 zoom0.5 still lack two identifiable rising columns. Full 24-frame matrix personally reviewed; keep FAIL. Static poses are presentation checks, not route evidence. P: judge warm low-angle light and the three street damage identities."
+      "file": "docs/reports/fix64-a/L3-16-rejected-1.patch",
+      "sha256": "3a731ceada640288dda7b1ea5eeef502fe1b6486556b4fb28f66de5ed4c25e32",
+      "what": "Rejected lower-stem/crest-framing selector trial; no shipped emitter/rate/pool change."
     },
     {
-      "file": "docs/reports/fix62-a/reviewed/smoke-01.jpg",
-      "sha256": "2e191b5c725d5786137924ac3a196cde4a6be85fa41b16fbba69dd73561468ab",
-      "what": "Retained emitters and stronger close-zoom visibility fix default/wide early street counterexamples, but both tiers at moving x-80/x-40 zoom0.5 still lack two identifiable rising columns. Full 24-frame matrix personally reviewed; keep FAIL. Static poses are presentation checks, not route evidence. P: judge warm low-angle light and the three street damage identities."
-    },
-    {
-      "file": "docs/reports/fix62-a/reviewed/smoke-02.jpg",
-      "sha256": "3009eb3d71ef8cf9fb2b1cd407ea4b247d2a47c889f7d26b2f3d89eccd5567d9",
-      "what": "Retained emitters and stronger close-zoom visibility fix default/wide early street counterexamples, but both tiers at moving x-80/x-40 zoom0.5 still lack two identifiable rising columns. Full 24-frame matrix personally reviewed; keep FAIL. Static poses are presentation checks, not route evidence. P: judge warm low-angle light and the three street damage identities."
-    },
-    {
-      "file": "docs/reports/fix62-a/reviewed/smoke-03.jpg",
-      "sha256": "e07520046caa03c19641a2734c9530aa79f96550d6fb0a85c456af56e8dc74dd",
-      "what": "Retained emitters and stronger close-zoom visibility fix default/wide early street counterexamples, but both tiers at moving x-80/x-40 zoom0.5 still lack two identifiable rising columns. Full 24-frame matrix personally reviewed; keep FAIL. Static poses are presentation checks, not route evidence. P: judge warm low-angle light and the three street damage identities."
-    },
-    {
-      "file": "docs/reports/fix62-a/reviewed/smoke-04.jpg",
-      "sha256": "cc9d54ceacb73d0316d4387a5ffeb3937e95ae2a20264644f5865b274cdd358c",
-      "what": "Retained emitters and stronger close-zoom visibility fix default/wide early street counterexamples, but both tiers at moving x-80/x-40 zoom0.5 still lack two identifiable rising columns. Full 24-frame matrix personally reviewed; keep FAIL. Static poses are presentation checks, not route evidence. P: judge warm low-angle light and the three street damage identities."
-    },
-    {
-      "file": "docs/reports/fix62-a/reviewed/smoke-05.jpg",
-      "sha256": "8c3e894df0a37bfa65efefbe77a9f5e6a46ee1f2af24dfc9baba8fe1a2762c86",
-      "what": "Retained emitters and stronger close-zoom visibility fix default/wide early street counterexamples, but both tiers at moving x-80/x-40 zoom0.5 still lack two identifiable rising columns. Full 24-frame matrix personally reviewed; keep FAIL. Static poses are presentation checks, not route evidence. P: judge warm low-angle light and the three street damage identities."
-    },
-    {
-      "file": "docs/reports/fix62-a/reviewed/smoke-06.jpg",
-      "sha256": "bd34db488e073df40a8ae9b13f812834eb3cf1363629317c97b38a5f2ab15395",
-      "what": "Retained emitters and stronger close-zoom visibility fix default/wide early street counterexamples, but both tiers at moving x-80/x-40 zoom0.5 still lack two identifiable rising columns. Full 24-frame matrix personally reviewed; keep FAIL. Static poses are presentation checks, not route evidence. P: judge warm low-angle light and the three street damage identities."
+      "file": "docs/reports/fix64-a/L3-16-rejected-2.patch",
+      "sha256": "7607718f1182a85fd4cf293315999dba755aa996ac24a5d9ae7e914c70048060",
+      "what": "Rejected stable framing plus smaller puff-size trial; original smoke source restored byte-for-byte."
     }
   ],
-  "notes": "No cap, spawn count, or target changes. Real VFX presentation clock advanced alongside paused simulation; earlier frozen-clock captures excluded. Moving prefix uses native complete InputFrames; static street poses disclosed. Courier protection for presentation only."
+  "notes": "P: inspect final low/high Oak, Commerce and Boulevard at both zoom limits: does the amber light read late afternoon, and are residential wrecked gardens, looted shop fronts and the boulevard jam sufficiently distinct? Smoke count remains an objective FAIL."
 }
