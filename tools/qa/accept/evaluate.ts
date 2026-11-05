@@ -702,7 +702,7 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
     ...['complete', 'stationary'].flatMap(policy => ['combat hard rule on actual player windups', 'real player/group windups per minute', 'minimum bounded-path reachable share within30m (path≤2.5×direct)'].map(clause => ({ clause, policy }))),
     { clause: 'stationary first real player attack (phase clock)', policy: 'stationary' },
   ]],
-  ['L7-03', ['physical rocket cadence and overlapping flight','clicked empty-ground impact','one physical rocket kills24-body three-metre cohort','three-metre movement gap in controlled cohort','reviewed night rockets blood and pointblank impact peak'].map(clause=>({clause,policy:'real-input-webgl2'}))],
+  ['L7-03', ['physical rocket cadence and overlapping flight','clicked empty-ground impact','one physical rocket kills24-body three-metre cohort','three-metre movement gap in controlled cohort','reviewed night rockets blood and pointblank impact peak','physical rocket first-hit detonation','physical rocket catalog max-range detonation'].map(clause=>({clause,policy:'real-input-webgl2'}))],
   ['L7-04', ['actual resident and later regular admissions', 'actual resident and later Alpha admissions', 'concurrent cap'].map(clause => ({ clause, policy: 'complete' }))],
   ['L6-13', [{ clause: 'ordinary fists-only route completion', policy: 'controlled-fixture' }]],
   ['L6-10', [{ clause: 'native fixed-gate/platform marker trajectory', policy: 'controlled-fixture' }]],

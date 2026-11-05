@@ -1,32 +1,37 @@
 {
   "row": "L7-03",
   "status": "PASS",
-  "reviewer": "Codex sweep-c3",
+  "reviewer": "Codex sweep-c4",
   "date": "2026-11-05",
-  "commit": "022868d43e39ad551ab78cd37a1fb8ba80d14748",
+  "commit": "30d8936fe5193c7633743905be1c29f5c940211c",
   "clauses": [
     {
-      "clause": "Rocket: cadence **2.4/s**, no wait for impact; detonates at the clicked ground point (or first hit / max range); visible in the dark; one rocket kills \u2265 20/24 regulars within 3 m and opens a \u2265 3 m gap; no white-out at point blank.",
+      "clause": "Rocket: cadence **2.4/s**, no wait for impact; detonates at the clicked ground point (or first hit / max range); visible in the dark; one rocket kills ≥ 20/24 regulars within 3 m and opens a ≥ 3 m gap; no white-out at point blank.",
       "verdict": "PASS",
-      "note": "Current-source controlled night horde-arena fixtures at both tiers use actual Shift+LMB ground clicks and production rockets. Held shots at25tick intervals =2.4/s, second shot precedes first impact; all empty-ground impacts within0.1m of clickedpoint. One shot kills24/24 ordinary60HP regulars initially within3m, leaving no living cohort bodies in>=3m gap. All56 original-size captures personally inspected across14 sheets: yellow-orange rockets visible on dark ground; blast, red blood and bodies readable; pointblank13/14/16/18tick peaks retain courier face/body/boots/launcher and groundgrid without whiteout. AI frozen and courier protected to isolate ballistics; controlled capability only, no campaign pressure claim. Raw hashes verified then exactraws deleted; originalproducer unchanged."
+      "note": "Both qualities: held actual mouse shots every25ticks (2.4/s), second launch before first impact; clicked12m empty ground hits within0.1m; one actual shot kills24/24 normal60HP bodies within3m and clears the3m centre. All56 visual and18 final boundary captures personally inspected: yellow/orange rockets visible on dark grid, blast blood and bodies visible, pointblank courier face/clothing/boots/launcher remain readable at13/14/16/18ticks; near-white pixel fraction≤0.002812. First body at6m stops rocket at5.65m. Actual physical Space input with no aimPoint detonates at35m; a50m ground click detonates at50m as E29§5.2 requires. No game/target/cap changes; protected courier and frozen AI are explicit isolated ballistics setup."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c3/L7-03/L7-03-physical.json.gz",
-      "sha256": "588a6a0fc7d3d9c0739ced013cc1fec85b9dd2bc6f64c1dc0a2010853607b0ad",
-      "what": "Immutable original physical fixture/individual seen-note review or exact raw-cleanup ledger. All56 capture cells personally inspected."
+      "file": "docs/reports/fix55-c/L7-03-physical.json",
+      "sha256": "a81e52816f2de5ec816bfab35ca267004f0004cc20199ba5464ec3e6ac2193da",
+      "what": "Current-source actual mouse/keyboard fixture with event ledger, or personally inspected per-capture SHA256 and seen notes; image sheets stay under test-results."
     },
     {
-      "file": "docs/reports/sweep-c3/L7-03/L7-03-review.json.gz",
-      "sha256": "cc69cbf6af12347af68f9dd0f99c8ac534479bb9b5aa29258e49b050175c13cf",
-      "what": "Immutable original physical fixture/individual seen-note review or exact raw-cleanup ledger. All56 capture cells personally inspected."
+      "file": "docs/reports/fix55-c/L7-03-review.json",
+      "sha256": "645b827ca4a2f8efc0c991c97be03d0d8f92d446d0632f32b635353d0216f9c1",
+      "what": "Current-source actual mouse/keyboard fixture with event ledger, or personally inspected per-capture SHA256 and seen notes; image sheets stay under test-results."
     },
     {
-      "file": "docs/reports/sweep-c3/L7-03/raw-cleanup.json",
-      "sha256": "dadbc1c5ff17b7acdef4b95fb21aef7375f56bae42cf877b1dbd0ada562068a6",
-      "what": "Immutable original physical fixture/individual seen-note review or exact raw-cleanup ledger. All56 capture cells personally inspected."
+      "file": "docs/reports/sweep-c4/L7-03-ballistics.json",
+      "sha256": "faecac97daafaf57328254a6dd243a711fff124f150aa95b15ac4baa797b5b95",
+      "what": "Current-source actual mouse/keyboard fixture with event ledger, or personally inspected per-capture SHA256 and seen notes; image sheets stay under test-results."
+    },
+    {
+      "file": "docs/reports/sweep-c4/L7-03-ballistics-review.json",
+      "sha256": "9870deb0e2feaee1b74a8cfb1c7c0f815c024b16338710d06f11e504c1645b84",
+      "what": "Current-source actual mouse/keyboard fixture with event ledger, or personally inspected per-capture SHA256 and seen notes; image sheets stay under test-results."
     }
   ],
-  "notes": "Full unchanged criterion reviewed with existing physical adapter and its numeric/visual checks; no game/checker/target changes."
+  "notes": "Full unchanged criterion reviewed at both qualities. This is controlled capability coverage; it does not establish campaign difficulty or route pressure."
 }

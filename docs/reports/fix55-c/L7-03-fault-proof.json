@@ -1,0 +1,51 @@
+{
+  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+  "observerHash": "c064240bbd1dfb4a4ffb12922fa39e6d24b69753af3eda1e03e9a81a51ce4a4a",
+  "revision": "30d8936fe5193c7633743905be1c29f5c940211c",
+  "toolSha256": "31868dfe542b60b0dd64eabeb36cdc0de91dc7eb2a1ce0d93a323b940e5e61ac",
+  "method": "Six source-bound receipt fault controls; update paired input hash so each clause, rather than provenance alone, must reject the fault. Exact original input/review bytes restored in finally.",
+  "rows": [
+    {
+      "fault": "cadence",
+      "status": "rejected",
+      "failures": [
+        "physical rocket cadence and overlapping flight"
+      ]
+    },
+    {
+      "fault": "late-flight",
+      "status": "rejected",
+      "failures": [
+        "physical rocket cadence and overlapping flight"
+      ]
+    },
+    {
+      "fault": "missed-ground",
+      "status": "rejected",
+      "failures": [
+        "clicked empty-ground impact"
+      ]
+    },
+    {
+      "fault": "nineteen-kills",
+      "status": "rejected",
+      "failures": [
+        "one physical rocket kills24-body three-metre cohort"
+      ]
+    },
+    {
+      "fault": "blocked-gap",
+      "status": "rejected",
+      "failures": [
+        "three-metre movement gap in controlled cohort"
+      ]
+    },
+    {
+      "fault": "unreviewed-flash",
+      "status": "rejected",
+      "failures": [
+        "reviewed night rockets blood and pointblank impact peak"
+      ]
+    }
+  ]
+}
